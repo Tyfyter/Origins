@@ -1,11 +1,8 @@
 using Terraria.ModLoader;
 
-namespace Origins
-{
-	class Origins : Mod
-	{
-		public Origins()
-		{
+namespace Origins {
+	class Origins : Mod {
+		public Origins() {
 		}
 	}
 }

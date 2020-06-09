@@ -1,3 +1,3 @@
-author = Tyfyter2002 and Chee
+author = Tyfyter2002, Chee, and epicgabe01
 version = 0.1
 displayName = Origins
