@@ -1,15 +1,19 @@
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins {
 	public class Origins : Mod {
+        public static Origins instance;
         public static bool[] ExplosiveProjectiles;
         public static bool[] ExplosiveItems;
         public static bool[] ExplosiveAmmo;
         public static Dictionary<int,int> ExplosiveBaseDamage;
         public static List<int> ExplosiveModOnHit;
 		public Origins() {
+
 		}
         public override void AddRecipes() {
         #region explosive weapon registry
@@ -70,12 +74,23 @@ namespace Origins {
 #endregion base damage
         #endregion explosive weapon registry
         }
+        public override void Load() {
+            instance = this;
+        }
         public override void Unload() {
             ExplosiveProjectiles = null;
             ExplosiveItems = null;
             ExplosiveAmmo = null;
             ExplosiveBaseDamage = null;
             ExplosiveModOnHit = null;
+            instance = null;
+        }
+    }
+    public static class OriginExtensions {
+        public static void PlaySound(string Name, Vector2 Position, float Volume = 1f, float PitchVariance = 1f){
+            if (Main.dedServ || string.IsNullOrEmpty(Name)) return;
+            var sound = Origins.instance.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/" + Name);
+            Main.PlaySound(sound.WithVolume(Volume).WithPitchVariance(PitchVariance), Position);
         }
     }
 }
