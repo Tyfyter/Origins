@@ -1,0 +1,32 @@
+using Microsoft.Xna.Framework;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Origins.Items.Weapons {
+	public class Fiberglass_Pistol : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Fiberglass Pistol");
+			Tooltip.SetDefault("Be careful, it's sharp");
+		}
+		public override void SetDefaults() {
+			item.damage = 12;
+			item.ranged = true;
+			item.width = 18;
+			item.height = 36;
+			item.useTime = 10;
+			item.useAnimation = 10;
+			item.useStyle = 5;
+			item.knockBack = 1;
+			item.value = 5000;
+			item.shootSpeed = 14;
+			item.autoReuse = true;
+            item.useAmmo = AmmoID.Bullet;
+            item.shoot = ProjectileID.Bullet;
+			item.rare = ItemRarityID.Green;
+			item.UseSound = SoundID.Item11;
+		}
+        public override Vector2? HoldoutOffset() {
+            return new Vector2(-0.5f,0);
+        }
+    }
+}

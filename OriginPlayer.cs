@@ -8,20 +8,29 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using static Origins.Items.OriginGlobalItem;
 
 namespace Origins {
     public class OriginPlayer : ModPlayer {
         public bool Fiberglass_Set = false;
+        public bool Miner_Set = false;
+        public float Explosive_Damage = 1;
         public bool DrawShirt = false;
         public bool DrawPants = false;
         public override void ResetEffects() {
-            Fiberglass_Set = false;
             DrawShirt = false;
             DrawPants = false;
+            Fiberglass_Set = false;
+            Miner_Set = false;
+            Explosive_Damage = 1;
         }
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
             if(DrawShirt) {
-                layers.Insert(layers.IndexOf(PlayerLayer.Body), PlayerShirt);
+                int itemindex = layers.IndexOf(PlayerLayer.HeldItem);
+                PlayerLayer itemlayer = layers[itemindex];
+                layers.RemoveAt(itemindex);
+                layers.Insert(layers.IndexOf(PlayerLayer.MountFront), itemlayer);
+                layers.Insert(layers.IndexOf(PlayerLayer.MountFront), PlayerShirt);
                 PlayerShirt.visible = true;
             }
             if(DrawPants) {
@@ -30,8 +39,23 @@ namespace Origins {
             }
         }
         public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat) {
+            if(IsExplosive(item))add+=Explosive_Damage-1;
             if(Fiberglass_Set) {
                 flat+=4;
+            }
+        }
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+            if(Origins.ExplosiveModOnHit.Contains(proj.type)) {
+                damage = (int)(damage*(player.allDamage+Explosive_Damage-1)*0.8f);
+            }
+            if(Fiberglass_Set) {
+                damage+=4;
+            }
+        }
+		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
+            if(Miner_Set)if(proj.owner == player.whoAmI) {
+                damage = (int)(damage/Explosive_Damage);
+                damage-=damage/5;
             }
         }
         public static PlayerLayer PlayerShirt = new PlayerLayer("Origins", "PlayerShirt", null, delegate(PlayerDrawInfo drawInfo2){
