@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -28,5 +29,11 @@ namespace Origins.Items.Weapons {
         public override Vector2? HoldoutOffset() {
             return new Vector2(-0.5f,0);
         }
+		public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox){
+			hitbox.Width = player.itemWidth;
+			hitbox.Height = player.itemHeight;
+            hitbox.X = (int)player.itemLocation.X;
+            hitbox.Y = (int)player.itemLocation.Y;
+		}
     }
 }

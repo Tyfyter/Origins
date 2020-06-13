@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.World;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Origins {
         public float Explosive_Damage = 1;
         public bool DrawShirt = false;
         public bool DrawPants = false;
+        public bool ZoneVoid = false;
         public override void ResetEffects() {
             DrawShirt = false;
             DrawPants = false;
@@ -58,6 +60,9 @@ namespace Origins {
                 damage-=damage/5;
             }
         }
+		public override void UpdateBiomes() {
+			ZoneVoid = OriginWorld.voidTiles > 200;
+		}
         public static PlayerLayer PlayerShirt = new PlayerLayer("Origins", "PlayerShirt", null, delegate(PlayerDrawInfo drawInfo2){
             Player drawPlayer = drawInfo2.drawPlayer;
 	        Vector2 Position = drawInfo2.position;

@@ -12,6 +12,7 @@ namespace Origins {
         public static bool[] ExplosiveAmmo;
         public static Dictionary<int,int> ExplosiveBaseDamage;
         public static List<int> ExplosiveModOnHit;
+        public static string lake = "LakeGen failed?";
 		public Origins() {
 
 		}

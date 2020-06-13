@@ -7,12 +7,23 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
-    public class Angelium : ModItem {}
-    public class Bark : ModItem {}
+    public class Angelium : ModItem {
+        public override void SetDefaults() {
+            item.maxStack = 999;
+        }
+    }
+    public class Bark : ModItem {
+        public override void SetDefaults() {
+            item.maxStack = 999;
+        }
+    }
     public class Bat_Hide : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bat Hide");
             //Tooltip.SetDefault();
+        }
+        public override void SetDefaults() {
+            item.maxStack = 999;
         }
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
@@ -27,20 +38,41 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Ember Onyx");
         }
     }
-    public class Rubber : ModItem {}
+    public class Rubber : ModItem {
+        public override void SetDefaults() {
+            item.maxStack = 999;
+        }
+    }
     public class Silicon_Wafer : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Silicon Wafer");
+        }
+        public override void SetDefaults() {
+            item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ItemID.SandBlock, 3);
+            recipe.AddTile(TileID.GlassKiln);
+            recipe.AddTile(TileID.AlchemyTable);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
     public class Tree_Sap : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Sap");
         }
+        public override void SetDefaults() {
+            item.maxStack = 999;
+        }
     }
     public class Viridium_Bar : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Viridium Bar");
+        }
+        public override void SetDefaults() {
+            item.maxStack = 999;
         }
     }
 }
