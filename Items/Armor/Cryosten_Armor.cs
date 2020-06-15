@@ -30,7 +30,7 @@ namespace Origins.Items.Armor.Cryosten {
 	public class Cryosten_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Cryosten Breastplate");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("20% increased maximum health");
 		}
 		public override void SetDefaults() {
             item.defense = 3;
@@ -43,13 +43,14 @@ namespace Origins.Items.Armor.Cryosten {
 	public class Cryosten_Greaves : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Cryosten Greaves");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("5% increased movement speed\nincreased movement speed on ice");
 		}
 		public override void SetDefaults() {
             item.defense = 2;
 		}
         public override void UpdateEquip(Player player) {
             player.moveSpeed+=0.05f;
+            player.iceSkate = true;
         }
     }
 }
