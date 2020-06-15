@@ -66,8 +66,7 @@ namespace Origins.World {
                 //for (int i = 0; i < Main.maxTilesX / 5000; i++) {
                 int X = WorldGen.genRand.Next(50, Main.maxTilesX - 50);
                 int Y = WorldGen.genRand.Next((int)WorldGen.worldSurfaceLow, (int)WorldGen.worldSurfaceHigh);
-                Origins.lake = "LakeGen:"+X+", "+Y;
-                mod.Logger.Info(Origins.lake);
+                mod.Logger.Info("LakeGen:"+X+", "+Y);
                 //WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
                 WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);
                 //WorldGen.digTunnel(X, 500, 5, 5, 10, 10, true);

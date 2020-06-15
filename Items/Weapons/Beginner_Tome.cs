@@ -6,18 +6,19 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons {
 	public class Beginner_Tome : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Beginner Tome");
+			DisplayName.SetDefault("Beginner's Tome");
 			Tooltip.SetDefault("Be careful, it's book");
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);
-			item.damage = 17;
+			item.damage = 14;
 			item.magic = true;
 			item.noMelee = true;
 			item.width = 28;
 			item.height = 30;
 			item.useTime = 20;
 			item.useAnimation = 20;
+			item.mana = 8;
 			item.value = 5000;
             item.shoot = ModContent.ProjectileType<Beginner_Spell>();
 			item.rare = ItemRarityID.Green;

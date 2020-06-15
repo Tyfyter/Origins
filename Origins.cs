@@ -7,19 +7,25 @@ using Terraria.ModLoader;
 namespace Origins {
 	public class Origins : Mod {
         public static Origins instance;
+        /// <summary>
+        /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes
+        /// </summary>
         public static bool[] ExplosiveProjectiles;
+        /// <summary>
+        /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes
+        /// </summary>
         public static bool[] ExplosiveItems;
+        /// <summary>
+        /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes
+        /// </summary>
         public static bool[] ExplosiveAmmo;
         public static Dictionary<int,int> ExplosiveBaseDamage;
         public static List<int> ExplosiveModOnHit;
-        public static string lake = "LakeGen failed?";
 		public Origins() {
-
-		}
+            instance = this;
+        }
         public override void AddRecipes() {
         #region explosive weapon registry
-            ExplosiveBaseDamage = new Dictionary<int, int>();
-            ExplosiveModOnHit = new List<int>() { };
             ExplosiveProjectiles = new bool[ProjectileID.Sets.CanDistortWater.Length];
             ExplosiveItems = (bool[])ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn.Clone();
 #region items
@@ -58,13 +64,13 @@ namespace Origins {
             ExplosiveAmmo[AmmoID.StyngerBolt] = true;
 #endregion ammo
 #region base damage
-            ExplosiveBaseDamage.Add(ItemID.Bomb, 80);
-            ExplosiveBaseDamage.Add(ItemID.StickyBomb, 80);
-            ExplosiveBaseDamage.Add(ItemID.BouncyBomb, 80);
-            ExplosiveBaseDamage.Add(ItemID.BombFish, 80);
-            ExplosiveBaseDamage.Add(ItemID.Dynamite, 200);
-            ExplosiveBaseDamage.Add(ItemID.StickyDynamite, 200);
-            ExplosiveBaseDamage.Add(ItemID.BouncyDynamite, 200);
+            ExplosiveBaseDamage.Add(ItemID.Bomb, 70);
+            ExplosiveBaseDamage.Add(ItemID.StickyBomb, 70);
+            ExplosiveBaseDamage.Add(ItemID.BouncyBomb, 70);
+            ExplosiveBaseDamage.Add(ItemID.BombFish, 70);
+            ExplosiveBaseDamage.Add(ItemID.Dynamite, 175);
+            ExplosiveBaseDamage.Add(ItemID.StickyDynamite, 175);
+            ExplosiveBaseDamage.Add(ItemID.BouncyDynamite, 175);
             ExplosiveModOnHit.Add(ProjectileID.Bomb);
             ExplosiveModOnHit.Add(ProjectileID.StickyBomb);
             ExplosiveModOnHit.Add(ProjectileID.BouncyBomb);
@@ -76,7 +82,8 @@ namespace Origins {
         #endregion explosive weapon registry
         }
         public override void Load() {
-            instance = this;
+            ExplosiveBaseDamage = new Dictionary<int, int>();
+            ExplosiveModOnHit = new List<int>() {};
         }
         public override void Unload() {
             ExplosiveProjectiles = null;
@@ -85,6 +92,14 @@ namespace Origins {
             ExplosiveBaseDamage = null;
             ExplosiveModOnHit = null;
             instance = null;
+        }
+        public static void AddExplosive(Item item, bool noProj = false) {
+            ExplosiveItems[item.type] = true;
+            ExplosiveAmmo[item.type] = true;
+            if(item.ammo!=AmmoID.None)ExplosiveAmmo[item.ammo] = true;
+            if(item.useAmmo!=AmmoID.None)ExplosiveAmmo[item.useAmmo] = true;
+            if(!noProj&&item.shoot!=ProjectileID.None)ExplosiveProjectiles[item.shoot] = true;
+            instance.Logger.Info($"Registered {item.Name} as explosive :"+ExplosiveItems[item.type]);
         }
     }
     public static class OriginExtensions {

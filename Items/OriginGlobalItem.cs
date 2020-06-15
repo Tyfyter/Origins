@@ -10,6 +10,32 @@ using Terraria.ModLoader;
 
 namespace Origins.Items {
     public class OriginGlobalItem : GlobalItem {
+        public override void SetDefaults(Item item) {
+            switch(item.type) {
+                case ItemID.Grenade:
+                item.damage = (int)(item.damage*0.8);
+                break;
+                case ItemID.ShadewoodHelmet:
+                case ItemID.EbonwoodHelmet:
+                item.defense = 4;
+                break;
+                case ItemID.ShadewoodBreastplate:
+                case ItemID.EbonwoodBreastplate:
+                item.defense = 6;
+                break;
+                case ItemID.ShadewoodGreaves:
+                case ItemID.EbonwoodGreaves:
+                item.defense = 5;
+                break;
+                case ItemID.PearlwoodHelmet:
+                case ItemID.PearlwoodGreaves:
+                item.defense = 6;
+                break;
+                case ItemID.PearlwoodBreastplate:
+                item.defense = 7;
+                break;
+            }
+		}
         public override void UpdateEquip(Item item, Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
             switch(item.type) {
@@ -18,8 +44,18 @@ namespace Origins.Items {
                 break;
             }
         }
+        public override bool OnPickup(Item item, Player player) {
+            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+            if(originPlayer.Cryosten_Set) {
+                if(item.type == ItemID.Heart||item.type == ItemID.CandyApple||item.type == ItemID.SugarPlum) {
+                    originPlayer.cryostenLifeRegenCount+=20;
+                }
+            }
+            return true;
+        }
         public override string IsArmorSet(Item head, Item body, Item leg) {
             if(head.type==ItemID.MiningHelmet&&body.type==ItemID.MiningShirt&&leg.type==ItemID.MiningPants) return "miner";
+            if(head.type==ItemID.PearlwoodHelmet&&body.type==ItemID.PearlwoodBreastplate&&leg.type==ItemID.PearlwoodGreaves) return "pearlwood";
             return "";
         }
         public override void UpdateArmorSet(Player player, string set) {
@@ -28,20 +64,29 @@ namespace Origins.Items {
                 player.setBonus+="\n20% reduced self-damage";
                 player.GetModPlayer<OriginPlayer>().Miner_Set = true;
                 break;
+                case "pearlwood":
+                player.setBonus+="\n15% increased damage\nReduces damage taken by 5%";
+                player.allDamage+=0.15f;
+                player.endurance+=0.05f;
+                break;
             }
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
             try {
                 if(IsExplosive(item)) {
-                    if(NeedsDamageLine(item)){
+                    if(NeedsDamageLine(item)&&Origins.ExplosiveBaseDamage.ContainsKey(item.type)) {
                         Main.HoverItem.damage = Origins.ExplosiveBaseDamage[item.type];
-                        tooltips.Insert(1, new TooltipLine(mod, "Damage", $"{Main.player[item.owner].GetWeaponDamage(Main.HoverItem)} {Language.GetText("explosive")} {Lang.tip[55]}"));
+                        tooltips.Insert(1, new TooltipLine(mod, "Damage", $"{Main.player[item.owner].GetWeaponDamage(Main.HoverItem)} {Language.GetText("explosive")} {Language.GetText("damage")}"));
                         return;
-                    }
-                    for(int i = 1; i < tooltips.Count; i++) {
-                        TooltipLine tooltip = tooltips[i];
-                        if(tooltip.Name.Equals("Damage")) {
-                            tooltip.text = tooltip.text.Insert(tooltip.text.IndexOf(' '), " "+Language.GetText("explosive"));
+                    } else {
+                        for(int i = 1; i < tooltips.Count; i++) {
+                            TooltipLine tooltip = tooltips[i];
+                            if(tooltip.Name.Equals("Damage")) {
+                                tooltip.text = tooltip.text.Insert(tooltip.text.IndexOf(' '), " "+Language.GetText("explosive"));
+                            }else if(tooltip.Name.Equals("CritChance")) {
+                                tooltips.RemoveAt(i);
+                                return;
+                            }
                         }
                     }
                 }else switch(item.type) {
