@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
+using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -84,6 +86,7 @@ namespace Origins {
         public override void Load() {
             ExplosiveBaseDamage = new Dictionary<int, int>();
             ExplosiveModOnHit = new List<int>() {};
+            OriginExtensions.drawPlayerItemPos = (Func<float,int,Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos",BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float,int,Vector2>), Main.instance);
         }
         public override void Unload() {
             ExplosiveProjectiles = null;
@@ -92,6 +95,7 @@ namespace Origins {
             ExplosiveBaseDamage = null;
             ExplosiveModOnHit = null;
             instance = null;
+            OriginExtensions.drawPlayerItemPos = null;
         }
         public static void AddExplosive(Item item, bool noProj = false) {
             ExplosiveItems[item.type] = true;
@@ -103,10 +107,14 @@ namespace Origins {
         }
     }
     public static class OriginExtensions {
+        public static Func<float, int, Vector2> drawPlayerItemPos;
         public static void PlaySound(string Name, Vector2 Position, float Volume = 1f, float PitchVariance = 1f){
             if (Main.dedServ || string.IsNullOrEmpty(Name)) return;
             var sound = Origins.instance.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/" + Name);
             Main.PlaySound(sound.WithVolume(Volume).WithPitchVariance(PitchVariance), Position);
+        }
+        public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {
+            return drawPlayerItemPos(gravdir, itemtype);
         }
     }
 }

@@ -3,28 +3,28 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons {
-	public class Fiberglass_Pistol : ModItem {
+namespace Origins.Items.Weapons.Fiberglass {
+	public class Fiberglass_Bow : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fiberglass Pistol");
+			DisplayName.SetDefault("Fiberglass Bow");
 			Tooltip.SetDefault("Be careful, it's sharp");
 		}
 		public override void SetDefaults() {
-			item.damage = 12;
+			item.damage = 17;
 			item.ranged = true;
 			item.width = 18;
 			item.height = 36;
-			item.useTime = 10;
-			item.useAnimation = 10;
+			item.useTime = 14;
+			item.useAnimation = 14;
 			item.useStyle = 5;
 			item.knockBack = 1;
 			item.value = 5000;
 			item.shootSpeed = 14;
 			item.autoReuse = true;
-            item.useAmmo = AmmoID.Bullet;
-            item.shoot = ProjectileID.Bullet;
+            item.useAmmo = AmmoID.Arrow;
+            item.shoot = ProjectileID.WoodenArrowFriendly;
 			item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item11;
+			item.UseSound = SoundID.Item5;
 		}
         public override Vector2? HoldoutOffset() {
             return new Vector2(-0.5f,0);
@@ -35,5 +35,5 @@ namespace Origins.Items.Weapons {
             hitbox.X = (int)player.itemLocation.X;
             hitbox.Y = (int)player.itemLocation.Y;
 		}
-    }
+	}
 }

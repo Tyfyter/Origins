@@ -1,0 +1,3 @@
+Broken Fiberglass Sword
+Unstrung Glass Bow (Manually animate for inventory visuals, mess with player layers for use visuals)
+Fiberglass Shards

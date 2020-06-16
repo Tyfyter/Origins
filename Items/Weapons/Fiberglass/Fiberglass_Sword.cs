@@ -1,7 +1,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons {
+namespace Origins.Items.Weapons.Fiberglass {
 	public class Fiberglass_Sword : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Sword");

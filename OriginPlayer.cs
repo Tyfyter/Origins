@@ -18,9 +18,10 @@ namespace Origins {
         public bool Cryosten_Helmet = false;
         public float Explosive_Damage = 1;
         public bool Miner_Set = false;
+        public bool ZoneVoid = false;
         public bool DrawShirt = false;
         public bool DrawPants = false;
-        public bool ZoneVoid = false;
+        public bool ItemLayerWrench = false;
         public int cryostenLifeRegenCount = 0;
         public override void ResetEffects() {
             DrawShirt = false;
@@ -68,12 +69,15 @@ namespace Origins {
             }
         }
 		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
-            if(Miner_Set)if(proj.owner == player.whoAmI) {
+            if(Miner_Set)if(proj.owner == player.whoAmI && proj.friendly) {
                 damage = (int)(damage/Explosive_Damage);
                 damage-=damage/5;
             }
         }
-		public override void UpdateBiomes() {
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
+            return damage != 0;
+        }
+        public override void UpdateBiomes() {
 			ZoneVoid = OriginWorld.voidTiles > 200;
 		}
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
@@ -89,6 +93,11 @@ namespace Origins {
                 layers.Insert(layers.IndexOf(PlayerLayer.Legs), PlayerPants);
                 PlayerPants.visible = true;
             }
+            if(ItemLayerWrench && !player.HeldItem.noUseGraphic) {
+                layers[layers.IndexOf(PlayerLayer.HeldItem)] = FiberglassBowLayer;
+                FiberglassBowLayer.visible = true;
+            }
+            ItemLayerWrench = false;
         }
         public static PlayerLayer PlayerShirt = new PlayerLayer("Origins", "PlayerShirt", null, delegate(PlayerDrawInfo drawInfo2){
             Player drawPlayer = drawInfo2.drawPlayer;
@@ -129,5 +138,25 @@ namespace Origins {
 		    //drawData = new DrawData(Main.playerTextures[skinVariant, 13], new Vector2((float)((int)(Position.X - Main.screenPosition.X - (float)(drawPlayer.bodyFrame.Width / 2) + (float)(drawPlayer.width / 2))), (float)((int)(Position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + new Vector2((float)(drawPlayer.bodyFrame.Width / 2), (float)(drawPlayer.bodyFrame.Height / 2)), new Rectangle?(drawPlayer.bodyFrame), drawInfo2.shirtColor, drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
 		    //Main.playerDrawData.Add(drawData);
         });
+        public static PlayerLayer FiberglassBowLayer = new PlayerLayer("Origins", "FiberglassBowLayer", null, delegate(PlayerDrawInfo drawInfo2) {
+            Player drawPlayer = drawInfo2.drawPlayer;
+            float num77 = drawPlayer.itemRotation + 0.785f * (float)drawPlayer.direction;
+            Item item = drawPlayer.inventory[drawPlayer.selectedItem];
+            Texture2D itemTexture = Main.itemTexture[item.type];
+            IAnimatedItem aItem = (IAnimatedItem)item.modItem;
+			int num80 = 10;
+			Vector2 vector7 = new Vector2(itemTexture.Width / 2, itemTexture.Height / 2);
+            Vector2 vector8 = OriginExtensions.DrawPlayerItemPos(drawPlayer.gravDir, item.type);
+			num80 = (int)vector8.X;
+			vector7.Y = vector8.Y;
+			Vector2 origin4 = new Vector2(-num80, itemTexture.Height / 2);
+			if (drawPlayer.direction == -1) {
+				origin4 = new Vector2(itemTexture.Width + num80, itemTexture.Height / 2);
+			}
+            origin4.X-=drawPlayer.width/2;
+            Vector4 col = drawInfo2.faceColor.ToVector4()/drawPlayer.skinColor.ToVector4();
+			DrawData value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + vector7.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + vector7.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(new Color(col.X,col.Y,col.Z,col.W)), drawPlayer.itemRotation, origin4, item.scale, drawInfo2.spriteEffects, 0);
+			Main.playerDrawData.Add(value);
+		});
     }
 }
