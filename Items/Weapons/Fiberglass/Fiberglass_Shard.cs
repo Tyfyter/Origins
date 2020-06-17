@@ -35,10 +35,12 @@ namespace Origins.Items.Weapons.Fiberglass {
 			projectile.width = 5;
 			projectile.height = 5;
             projectile.extraUpdates = 1;
+			projectile.penetrate = 7;
             projectile.hide = true;
-            projectile.light = 0;
+            projectile.light = 0.025f;
         }
         public override bool OnTileCollide(Vector2 oldVelocity) {
+            if(Main.rand.Next(projectile.penetrate)==0)return true;
             projectile.position+=oldVelocity.SafeNormalize(oldVelocity)*12*(projectile.velocity.Length()/21f);
             projectile.velocity*=0;
             projectile.aiStyle = 0;
@@ -47,7 +49,7 @@ namespace Origins.Items.Weapons.Fiberglass {
             projectile.damage = 1;
             projectile.width = 15;
             projectile.height = 15;
-            return Main.rand.Next(7)==0;
+            return false;
         }
         public override bool? CanHitNPC(NPC target) {
             return projectile.damage == 1?false:base.CanHitNPC(target);
@@ -61,7 +63,7 @@ namespace Origins.Items.Weapons.Fiberglass {
             }
         }
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI){
-            drawCacheProjsBehindNPCsAndTiles.Add(index);
+            if(projectile.hide)drawCacheProjsBehindNPCsAndTiles.Add(index);
         }
     }
 }
