@@ -8,14 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using static Origins.Items.OriginGlobalItem;
+using Terraria.ID;
 
 namespace Origins {
     public class OriginPlayer : ModPlayer {
         public bool Fiberglass_Set = false;
         public bool Cryosten_Set = false;
         public bool Cryosten_Helmet = false;
+        public bool Felnum_Set = false;
+        public float Felnum_Shock = 0;
+        //public const int FelnumMax = 100;
         public float Explosive_Damage = 1;
         public bool Miner_Set = false;
         public bool ZoneVoid = false;
@@ -29,6 +34,12 @@ namespace Origins {
             Fiberglass_Set = false;
             Cryosten_Set = false;
             Cryosten_Helmet = false;
+            if(!Felnum_Set) {
+                Felnum_Shock = 0;
+            } else if (Felnum_Shock>player.statLifeMax2){
+                Felnum_Shock-=(Felnum_Shock-player.statLifeMax2)/player.statLifeMax2*5+1;
+            }
+            Felnum_Set = false;
             Miner_Set = false;
             Explosive_Damage = 1f;
             if(cryostenLifeRegenCount>0)cryostenLifeRegenCount--;
@@ -56,6 +67,21 @@ namespace Origins {
             if(Fiberglass_Set) {
                 flat+=4;
             }
+        }
+        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
+            if(Felnum_Shock>19) {
+                damage+=(int)(Felnum_Shock/15);
+                Felnum_Shock = 0;
+				Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
+            }
+        }
+        public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+            if(item.shoot>ProjectileID.None&&Felnum_Shock>19) {
+                damage+=(int)(Felnum_Shock/15);
+                Felnum_Shock = 0;
+				Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
+            }
+            return true;
         }
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
             if(Origins.ExplosiveModOnHit.Contains(proj.type)) {
@@ -92,6 +118,10 @@ namespace Origins {
             if(DrawPants) {
                 layers.Insert(layers.IndexOf(PlayerLayer.Legs), PlayerPants);
                 PlayerPants.visible = true;
+            }
+            if(Felnum_Shock>0) {
+                layers.Add(FelnumGlow);
+                FelnumGlow.visible = true;
             }
             if(ItemLayerWrench && !player.HeldItem.noUseGraphic) {
                 layers[layers.IndexOf(PlayerLayer.HeldItem)] = FiberglassBowLayer;
@@ -158,5 +188,51 @@ namespace Origins {
 			DrawData value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + vector7.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + vector7.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(new Color(col.X,col.Y,col.Z,col.W)), drawPlayer.itemRotation, origin4, item.scale, drawInfo2.spriteEffects, 0);
 			Main.playerDrawData.Add(value);
 		});
+        public static PlayerLayer FelnumGlow = new PlayerLayer("Origins", "FelnumGlow", null, delegate(PlayerDrawInfo drawInfo2){
+            Player drawPlayer = drawInfo2.drawPlayer;
+            Vector2 Position;
+            Rectangle? Frame;
+            Texture2D Texture;
+            SpriteEffects spriteEffects = SpriteEffects.None;
+            if (drawPlayer.direction == -1){
+                spriteEffects |= SpriteEffects.FlipHorizontally;
+            }
+            if (drawPlayer.gravDir == -1f){
+                spriteEffects |= SpriteEffects.FlipVertically;
+            }
+            DrawData item;
+            int a = (int)Math.Max(Math.Min((drawPlayer.GetModPlayer<OriginPlayer>().Felnum_Shock*255)/drawPlayer.statLifeMax2, 255), 1);
+            if(drawPlayer.head == Origins.FelnumHeadArmorID) {
+                Position = new Vector2((float)((int)(drawInfo2.position.X - Main.screenPosition.X - (float)drawPlayer.bodyFrame.Width / 2f + (float)drawPlayer.width / 2f)), (float)((int)(drawInfo2.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + drawInfo2.headOrigin;
+                Frame = new Rectangle?(drawPlayer.bodyFrame);
+                Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Head");
+                item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.headRotation, drawInfo2.headOrigin, 1f, spriteEffects, 0);
+                item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
+                Main.playerDrawData.Add(item);
+            }
+            if(drawPlayer.body == Origins.FelnumBodyArmorID) {
+                Position = new Vector2((float)((int)(drawInfo2.position.X - Main.screenPosition.X - (float)drawPlayer.bodyFrame.Width / 2f + (float)drawPlayer.width / 2f)), (float)((int)(drawInfo2.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + drawInfo2.bodyOrigin;
+                Frame = new Rectangle?(drawPlayer.bodyFrame);
+                Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Arm");
+                item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
+                item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
+                Main.playerDrawData.Add(item);
+
+                Position = new Vector2((float)((int)(drawInfo2.position.X - Main.screenPosition.X - (float)drawPlayer.bodyFrame.Width / 2f + (float)drawPlayer.width / 2f)), (float)((int)(drawInfo2.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.bodyPosition + drawInfo2.bodyOrigin;
+                Frame = new Rectangle?(drawPlayer.bodyFrame);
+                Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Body");
+                item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
+                item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
+                Main.playerDrawData.Add(item);
+            }
+            if(drawPlayer.legs == Origins.FelnumLegsArmorID) {
+                Position = new Vector2((int)(drawInfo2.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f), (int)(drawInfo2.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.legPosition + drawInfo2.legOrigin;
+                Frame = new Rectangle?(drawPlayer.legFrame);
+                Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Leg");
+                item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.legRotation, drawInfo2.legOrigin, 1f, spriteEffects, 0);
+                item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[2].type);
+                Main.playerDrawData.Add(item);
+            }
+        });
     }
 }

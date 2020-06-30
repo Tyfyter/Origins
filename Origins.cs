@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Items.Armor.Felnum;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -23,6 +24,9 @@ namespace Origins {
         public static bool[] ExplosiveAmmo;
         public static Dictionary<int,int> ExplosiveBaseDamage;
         public static List<int> ExplosiveModOnHit;
+        public static int FelnumHeadArmorID;
+        public static int FelnumBodyArmorID;
+        public static int FelnumLegsArmorID;
 		public Origins() {
             instance = this;
         }
@@ -82,6 +86,9 @@ namespace Origins {
             ExplosiveModOnHit.Add(ProjectileID.BouncyDynamite);
 #endregion base damage
         #endregion explosive weapon registry
+            FelnumHeadArmorID = ModContent.GetInstance<Felnum_Helmet>().item.headSlot;
+            FelnumBodyArmorID = ModContent.GetInstance<Felnum_Breastplate>().item.bodySlot;
+            FelnumLegsArmorID = ModContent.GetInstance<Felnum_Greaves>().item.legSlot;
         }
         public override void Load() {
             ExplosiveBaseDamage = new Dictionary<int, int>();
