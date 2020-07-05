@@ -77,6 +77,9 @@ namespace Origins {
         }
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             if(item.shoot>ProjectileID.None&&Felnum_Shock>19) {
+                Projectile p = new Projectile();
+                p.SetDefaults(item.shoot);
+                if(p.melee)return true;
                 damage+=(int)(Felnum_Shock/15);
                 Felnum_Shock = 0;
 				Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
@@ -92,6 +95,11 @@ namespace Origins {
             }
             if(Fiberglass_Set) {
                 damage+=4;
+            }
+            if(proj.melee&&Felnum_Shock>19) {
+                damage+=(int)(Felnum_Shock/15);
+                Felnum_Shock = 0;
+				Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             }
         }
 		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
@@ -206,6 +214,17 @@ namespace Origins {
                 Position = new Vector2((float)((int)(drawInfo2.position.X - Main.screenPosition.X - (float)drawPlayer.bodyFrame.Width / 2f + (float)drawPlayer.width / 2f)), (float)((int)(drawInfo2.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + drawInfo2.headOrigin;
                 Frame = new Rectangle?(drawPlayer.bodyFrame);
                 Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Head");
+                item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.headRotation, drawInfo2.headOrigin, 1f, spriteEffects, 0);
+                item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
+                Main.playerDrawData.Add(item);
+                Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Eye");
+                item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.headRotation, drawInfo2.headOrigin, 1f, spriteEffects, 0);
+                item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
+                Main.playerDrawData.Add(item);
+            } else if(drawInfo2.drawHair||drawInfo2.drawAltHair||drawPlayer.head == ArmorIDs.Head.FamiliarWig) {
+                Position = new Vector2((float)((int)(drawInfo2.position.X - Main.screenPosition.X - (float)drawPlayer.bodyFrame.Width / 2f + (float)drawPlayer.width / 2f)), (float)((int)(drawInfo2.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + drawInfo2.headOrigin;
+                Frame = new Rectangle?(drawPlayer.bodyFrame);
+                Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Eye");
                 item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.headRotation, drawInfo2.headOrigin, 1f, spriteEffects, 0);
                 item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
                 Main.playerDrawData.Add(item);

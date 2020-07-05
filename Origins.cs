@@ -41,6 +41,7 @@ namespace Origins {
             //ExplosiveItems[ProjectileID.Bomb] = true;
             //ExplosiveItems[ProjectileID.StickyBomb] = true;
             ExplosiveItems[ItemID.BouncyBomb] = true;
+            ExplosiveItems[ItemID.HellfireArrow] = true;
             //ExplosiveItems[ProjectileID.Dynamite] = true;
             //ExplosiveItems[ProjectileID.StickyDynamite] = true;
             //ExplosiveItems[ProjectileID.BouncyDynamite] = true;
@@ -59,6 +60,7 @@ namespace Origins {
             ExplosiveProjectiles[ProjectileID.Dynamite] = true;
             ExplosiveProjectiles[ProjectileID.StickyDynamite] = true;
             ExplosiveProjectiles[ProjectileID.BouncyDynamite] = true;
+            ExplosiveProjectiles[ProjectileID.HellfireArrow] = true;
             ExplosiveProjectiles[ProjectileID.BombFish] = true;
             ExplosiveProjectiles[ProjectileID.PartyGirlGrenade] = true;
             ExplosiveProjectiles[ProjectileID.Beenade] = true;
