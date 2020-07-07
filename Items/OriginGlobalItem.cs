@@ -40,13 +40,13 @@ namespace Origins.Items {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
             switch(item.type) {
                 case ItemID.MiningShirt:
-                originPlayer.Explosive_Damage+=0.05f;
+                originPlayer.explosiveDamage+=0.05f;
                 break;
             }
         }
         public override bool OnPickup(Item item, Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-            if(originPlayer.Cryosten_Set) {
+            if(originPlayer.cryostenSet) {
                 if(item.type == ItemID.Heart||item.type == ItemID.CandyApple||item.type == ItemID.SugarPlum) {
                     originPlayer.cryostenLifeRegenCount+=20;
                 }
@@ -62,7 +62,7 @@ namespace Origins.Items {
             switch(set) {
                 case "miner":
                 player.setBonus+="\n20% reduced self-damage";
-                player.GetModPlayer<OriginPlayer>().Miner_Set = true;
+                player.GetModPlayer<OriginPlayer>().minerSet = true;
                 break;
                 case "pearlwood":
                 player.setBonus+="\n15% increased damage\nReduces damage taken by 5%";

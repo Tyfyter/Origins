@@ -18,11 +18,11 @@ namespace Origins.Items.Armor.Felnum {
         public override void UpdateArmorSet(Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
             player.setBonus = "Weapon damage increased by 4";
-            originPlayer.Felnum_Set = true;
+            originPlayer.felnumSet = true;
             if(player.velocity.Length()>4) {
-                originPlayer.Felnum_Shock+=player.velocity.Length()/4;
-            } else if (originPlayer.Felnum_Shock>0){
-                originPlayer.Felnum_Shock--;
+                originPlayer.felnumShock+=player.velocity.Length()/4;
+            } else if (originPlayer.felnumShock>0){
+                originPlayer.felnumShock--;
             }
             if(player.HasBuff(BuffID.Electrified)) {
                 int id = BuffID.BeetleMight1;

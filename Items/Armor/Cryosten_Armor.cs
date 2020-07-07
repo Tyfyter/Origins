@@ -13,14 +13,14 @@ namespace Origins.Items.Armor.Cryosten {
             item.defense = 2;
 		}
         public override void UpdateEquip(Player player) {
-            player.GetModPlayer<OriginPlayer>().Cryosten_Helmet = true;
+            player.GetModPlayer<OriginPlayer>().cryostenHelmet = true;
         }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
             return body.type == ModContent.ItemType<Cryosten_Breastplate>() && legs.type == ModContent.ItemType<Cryosten_Greaves>();
         }
         public override void UpdateArmorSet(Player player) {
             player.setBonus = "Life restoration from hearts increased";
-            player.GetModPlayer<OriginPlayer>().Cryosten_Set = true;
+            player.GetModPlayer<OriginPlayer>().cryostenSet = true;
             if(player.HasBuff(BuffID.Chilled))player.buffTime[player.FindBuffIndex(BuffID.Chilled)]--;
             if(player.HasBuff(BuffID.Frozen))player.buffTime[player.FindBuffIndex(BuffID.Frozen)]--;
             if(player.HasBuff(BuffID.Frostburn))player.buffTime[player.FindBuffIndex(BuffID.Frostburn)]--;

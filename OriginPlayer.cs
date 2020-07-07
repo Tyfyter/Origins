@@ -12,40 +12,44 @@ using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using static Origins.Items.OriginGlobalItem;
 using Terraria.ID;
+using Origins.Projectiles;
 
 namespace Origins {
     public class OriginPlayer : ModPlayer {
-        public bool Fiberglass_Set = false;
-        public bool Cryosten_Set = false;
-        public bool Cryosten_Helmet = false;
-        public bool Felnum_Set = false;
-        public float Felnum_Shock = 0;
+        public bool fiberglassSet = false;
+        public bool cryostenSet = false;
+        public bool cryostenHelmet = false;
+        public bool felnumSet = false;
+        public float felnumShock = 0;
+        public float oldFelnumShock = 0;
         //public const int FelnumMax = 100;
-        public float Explosive_Damage = 1;
-        public bool Miner_Set = false;
+        public float explosiveDamage = 1;
+        public bool minerSet = false;
         public bool ZoneVoid = false;
         public bool DrawShirt = false;
         public bool DrawPants = false;
         public bool ItemLayerWrench = false;
+        internal static bool ItemChecking = false;
         public int cryostenLifeRegenCount = 0;
         public override void ResetEffects() {
             DrawShirt = false;
             DrawPants = false;
-            Fiberglass_Set = false;
-            Cryosten_Set = false;
-            Cryosten_Helmet = false;
-            if(!Felnum_Set) {
-                Felnum_Shock = 0;
-            } else if (Felnum_Shock>player.statLifeMax2){
-                Felnum_Shock-=(Felnum_Shock-player.statLifeMax2)/player.statLifeMax2*5+1;
+            fiberglassSet = false;
+            cryostenSet = false;
+            cryostenHelmet = false;
+            oldFelnumShock = felnumShock;
+            if(!felnumSet) {
+                felnumShock = 0;
+            } else if (felnumShock>player.statLifeMax2){
+                felnumShock-=(felnumShock-player.statLifeMax2)/player.statLifeMax2*5+1;
             }
-            Felnum_Set = false;
-            Miner_Set = false;
-            Explosive_Damage = 1f;
+            felnumSet = false;
+            minerSet = false;
+            explosiveDamage = 1f;
             if(cryostenLifeRegenCount>0)cryostenLifeRegenCount--;
         }
         public override void PostUpdateMiscEffects() {
-			if (Cryosten_Helmet){
+			if (cryostenHelmet){
 				if(player.statLife!=player.statLifeMax2&&(int)Main.time%(cryostenLifeRegenCount>0?5:15)==0)for (int i = 0; i < 10; i++){
 					int num6 = Dust.NewDust(player.position, player.width, player.height, 92);
 					Main.dust[num6].noGravity = true;
@@ -60,51 +64,52 @@ namespace Origins {
 			}
         }
         public override void UpdateLifeRegen() {
-			if (Cryosten_Helmet)player.lifeRegenCount+=cryostenLifeRegenCount>0?180:1;
+			if (cryostenHelmet)player.lifeRegenCount+=cryostenLifeRegenCount>0?180:1;
         }
         public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat) {
-            if(IsExplosive(item))add+=Explosive_Damage-1;
-            if(Fiberglass_Set) {
+            if(IsExplosive(item))add+=explosiveDamage-1;
+            if(fiberglassSet) {
                 flat+=4;
             }
         }
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
-            if(Felnum_Shock>19) {
-                damage+=(int)(Felnum_Shock/15);
-                Felnum_Shock = 0;
+            if(felnumShock>19) {
+                damage+=(int)(felnumShock/15);
+                felnumShock = 0;
 				Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             }
         }
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            if(item.shoot>ProjectileID.None&&Felnum_Shock>19) {
+            if(item.shoot>ProjectileID.None&&felnumShock>19) {
                 Projectile p = new Projectile();
                 p.SetDefaults(item.shoot);
+                OriginGlobalProj.felnumEffectNext = true;
                 if(p.melee)return true;
-                damage+=(int)(Felnum_Shock/15);
-                Felnum_Shock = 0;
+                damage+=(int)(felnumShock/15);
+                felnumShock = 0;
 				Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             }
             return true;
         }
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
             if(Origins.ExplosiveModOnHit.Contains(proj.type)) {
-                damage = (int)(damage*(player.allDamage+Explosive_Damage-1)*0.7f);
+                damage = (int)(damage*(player.allDamage+explosiveDamage-1)*0.7f);
             }
             if(Origins.ExplosiveProjectiles[proj.type]) {
                 damage+=target.defense/10;
             }
-            if(Fiberglass_Set) {
+            if(fiberglassSet) {
                 damage+=4;
             }
-            if(proj.melee&&Felnum_Shock>19) {
-                damage+=(int)(Felnum_Shock/15);
-                Felnum_Shock = 0;
+            if(proj.melee&&felnumShock>19) {
+                damage+=(int)(felnumShock/15);
+                felnumShock = 0;
 				Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             }
         }
 		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
-            if(Miner_Set)if(proj.owner == player.whoAmI && proj.friendly) {
-                damage = (int)(damage/Explosive_Damage);
+            if(minerSet)if(proj.owner == player.whoAmI && proj.friendly) {
+                damage = (int)(damage/explosiveDamage);
                 damage-=damage/5;
             }
         }
@@ -114,6 +119,13 @@ namespace Origins {
         public override void UpdateBiomes() {
 			ZoneVoid = OriginWorld.voidTiles > 200;
 		}
+        public override bool PreItemCheck() {
+            ItemChecking = true;
+            return true;
+        }
+        public override void PostItemCheck() {
+            ItemChecking = false;
+        }
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
             if(DrawShirt) {
                 int itemindex = layers.IndexOf(PlayerLayer.HeldItem);
@@ -127,7 +139,7 @@ namespace Origins {
                 layers.Insert(layers.IndexOf(PlayerLayer.Legs), PlayerPants);
                 PlayerPants.visible = true;
             }
-            if(Felnum_Shock>0) {
+            if(felnumShock>0) {
                 layers.Add(FelnumGlow);
                 FelnumGlow.visible = true;
             }
@@ -209,7 +221,7 @@ namespace Origins {
                 spriteEffects |= SpriteEffects.FlipVertically;
             }
             DrawData item;
-            int a = (int)Math.Max(Math.Min((drawPlayer.GetModPlayer<OriginPlayer>().Felnum_Shock*255)/drawPlayer.statLifeMax2, 255), 1);
+            int a = (int)Math.Max(Math.Min((drawPlayer.GetModPlayer<OriginPlayer>().felnumShock*255)/drawPlayer.statLifeMax2, 255), 1);
             if(drawPlayer.head == Origins.FelnumHeadArmorID) {
                 Position = new Vector2((float)((int)(drawInfo2.position.X - Main.screenPosition.X - (float)drawPlayer.bodyFrame.Width / 2f + (float)drawPlayer.width / 2f)), (float)((int)(drawInfo2.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + drawInfo2.headOrigin;
                 Frame = new Rectangle?(drawPlayer.bodyFrame);

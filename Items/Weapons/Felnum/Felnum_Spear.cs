@@ -8,7 +8,7 @@ namespace Origins.Items.Weapons.Felnum {
 	public class Felnum_Spear : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Boar Spear");
-			Tooltip.SetDefault("It's even sharper now");
+			Tooltip.SetDefault("Recieves 50% higher damage bonuses");
 		}
 		public override void SetDefaults() {
 			item.damage = 18;
@@ -29,7 +29,10 @@ namespace Origins.Items.Weapons.Felnum {
 			item.rare = ItemRarityID.Green;
 			item.UseSound = SoundID.Item1;
 		}
-	}
+        public override void GetWeaponDamage(Player player, ref int damage) {
+            if(!OriginPlayer.ItemChecking)damage+=(damage-18)/2;
+        }
+    }
     public class Felnum_Spear_Stab : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Felnum/Felnum_Spear";
         public override void SetStaticDefaults() {
@@ -80,8 +83,8 @@ namespace Origins.Items.Weapons.Felnum {
             damage+=(damage-18)/2;
             Player player = Main.player[projectile.owner];
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-            if(originPlayer.Felnum_Shock>19) {
-                damage+=(int)(originPlayer.Felnum_Shock/30);
+            if(originPlayer.felnumShock>19) {
+                damage+=(int)(originPlayer.felnumShock/30);
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
