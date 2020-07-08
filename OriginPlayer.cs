@@ -13,6 +13,8 @@ using Terraria.ModLoader;
 using static Origins.Items.OriginGlobalItem;
 using Terraria.ID;
 using Origins.Projectiles;
+using Origins.Items.Materials;
+using Origins.Items.Weapons;
 
 namespace Origins {
     public class OriginPlayer : ModPlayer {
@@ -113,6 +115,30 @@ namespace Origins {
                 damage-=damage/5;
             }
         }
+        public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
+            if(vendor.type==NPCID.Demolitionist&&item.type==ModContent.ItemType<Peat_Moss>()) {
+                OriginWorld originWorld = ModContent.GetInstance<OriginWorld>();
+                if(originWorld.peatSold<20 && item.type==ModContent.ItemType<Peat_Moss>()) {
+                    if(item.stack>=20-originWorld.peatSold) {
+                        item.stack-=20-originWorld.peatSold;
+                        originWorld.peatSold = 20;
+                        int nextSlot = 0;
+                        for(; ++nextSlot<shopInventory.Length&&!shopInventory[nextSlot].IsAir;);
+				        if(nextSlot<shopInventory.Length)shopInventory[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
+				        if(nextSlot<shopInventory.Length)shopInventory[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
+				        if(nextSlot<shopInventory.Length)shopInventory[nextSlot].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
+                    } else {
+                        originWorld.peatSold+=item.stack;
+                        item.TurnToAir();
+                    }
+                }
+            }
+        }
+        /*public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item) {
+            if(item.type==ModContent.ItemType<Peat_Moss>()) {
+
+            }
+        }*/
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
             return damage != 0;
         }

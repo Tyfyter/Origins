@@ -75,4 +75,14 @@ namespace Origins.Items.Materials {
             item.maxStack = 999;
         }
     }
+    public class Peat_Moss : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Peat Moss");
+            Tooltip.SetDefault("The demolitionist might find this interesting");
+        }
+        public override void SetDefaults() {
+            item.maxStack = 999;
+            item.value = 200;//2 silver
+        }
+    }
 }

@@ -15,6 +15,8 @@ namespace Origins.Items {
                 case ItemID.Grenade:
                 item.damage = (int)(item.damage*0.8);
                 break;
+            }
+            if(OriginConfig.Instance.WoodBuffs)switch(item.type) {
                 case ItemID.ShadewoodHelmet:
                 case ItemID.EbonwoodHelmet:
                 item.defense = 4;
@@ -55,7 +57,7 @@ namespace Origins.Items {
         }
         public override string IsArmorSet(Item head, Item body, Item leg) {
             if(head.type==ItemID.MiningHelmet&&body.type==ItemID.MiningShirt&&leg.type==ItemID.MiningPants) return "miner";
-            if(head.type==ItemID.PearlwoodHelmet&&body.type==ItemID.PearlwoodBreastplate&&leg.type==ItemID.PearlwoodGreaves) return "pearlwood";
+            if(OriginConfig.Instance.WoodBuffs&&head.type==ItemID.PearlwoodHelmet&&body.type==ItemID.PearlwoodBreastplate&&leg.type==ItemID.PearlwoodGreaves) return "pearlwood";
             return "";
         }
         public override void UpdateArmorSet(Player player, string set) {
@@ -63,12 +65,13 @@ namespace Origins.Items {
                 case "miner":
                 player.setBonus+="\n20% reduced self-damage";
                 player.GetModPlayer<OriginPlayer>().minerSet = true;
-                break;
-                case "pearlwood":
+                return;
+            }
+            if(OriginConfig.Instance.WoodBuffs&&set=="pearlwood") {
                 player.setBonus+="\n15% increased damage\nReduces damage taken by 5%";
                 player.allDamage+=0.15f;
                 player.endurance+=0.05f;
-                break;
+                return;
             }
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
