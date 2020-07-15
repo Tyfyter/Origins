@@ -24,6 +24,7 @@ namespace Origins.Items.Weapons.Felnum {
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             Vector2 speed = new Vector2(speedX, speedY);
             damage+=(damage-19)/2;
+			Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             Projectile.NewProjectile(position, speed.RotatedByRandom(0.5f)*Main.rand.NextFloat(0.9f,1.1f), type, damage, knockBack, item.owner, speed.ToRotation(), Main.rand.NextFloat());
             return false;
         }

@@ -25,8 +25,9 @@ namespace Origins {
         public float felnumShock = 0;
         public float oldFelnumShock = 0;
         //public const int FelnumMax = 100;
-        public float explosiveDamage = 1;
+        public bool bombHandlingDevice = false;
         public bool minerSet = false;
+        public float explosiveDamage = 1;
         public bool ZoneVoid = false;
         public bool DrawShirt = false;
         public bool DrawPants = false;
@@ -47,6 +48,7 @@ namespace Origins {
             }
             felnumSet = false;
             minerSet = false;
+            bombHandlingDevice = false;
             explosiveDamage = 1f;
             if(cryostenLifeRegenCount>0)cryostenLifeRegenCount--;
         }
@@ -75,14 +77,18 @@ namespace Origins {
             }
         }
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
-            if(felnumShock>19) {
+            if(felnumShock>29) {
                 damage+=(int)(felnumShock/15);
                 felnumShock = 0;
 				Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             }
         }
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            if(item.shoot>ProjectileID.None&&felnumShock>19) {
+            if(bombHandlingDevice&&item.useAmmo == 0&&IsExplosive(item)) {
+                speedX*=1.5f;
+                speedY*=1.5f;
+            }
+            if(item.shoot>ProjectileID.None&&felnumShock>29) {
                 Projectile p = new Projectile();
                 p.SetDefaults(item.shoot);
                 OriginGlobalProj.felnumEffectNext = true;
@@ -103,7 +109,7 @@ namespace Origins {
             if(fiberglassSet) {
                 damage+=4;
             }
-            if(proj.melee&&felnumShock>19) {
+            if(proj.melee&&felnumShock>29) {
                 damage+=(int)(felnumShock/15);
                 felnumShock = 0;
 				Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);

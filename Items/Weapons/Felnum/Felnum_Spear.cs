@@ -83,7 +83,7 @@ namespace Origins.Items.Weapons.Felnum {
             damage+=(damage-18)/2;
             Player player = Main.player[projectile.owner];
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-            if(originPlayer.felnumShock>19) {
+            if(originPlayer.felnumShock>29) {
                 damage+=(int)(originPlayer.felnumShock/30);
             }
         }
