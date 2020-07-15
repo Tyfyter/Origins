@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Felnum {
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.Grenade);
-            item.maxStack = 999;
+            //item.maxStack = 999;
             item.damage = 32;
 			item.value*=4;
             item.shoot = ModContent.ProjectileType<Shock_Grenade_P>();

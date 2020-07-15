@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons {
+namespace Origins.Items.Weapons.Explosives {
 	public class Impact_Dynamite : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Dynamite");
@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons {
         }
     }
     public class Impact_Dynamite_P : ModProjectile {
-        public override string Texture => "Origins/Items/Weapons/Impact_Dynamite";
+        public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Dynamite";
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Dynamite);
             projectile.penetrate = 1;

@@ -1,5 +1,5 @@
 ﻿using Origins.Items.Materials;
-using Origins.Items.Weapons;
+using Origins.Items.Weapons.Explosives;
 using Origins.World;
 using System;
 using System.Collections.Generic;

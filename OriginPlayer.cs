@@ -14,7 +14,7 @@ using static Origins.Items.OriginGlobalItem;
 using Terraria.ID;
 using Origins.Projectiles;
 using Origins.Items.Materials;
-using Origins.Items.Weapons;
+using Origins.Items.Weapons.Explosives;
 
 namespace Origins {
     public class OriginPlayer : ModPlayer {

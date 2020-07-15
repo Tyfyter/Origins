@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons {
+namespace Origins.Items.Weapons.Explosives {
 	public class Impact_Bomb : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Bomb");
@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons {
         }
     }
     public class Impact_Bomb_P : ModProjectile {
-        public override string Texture => "Origins/Items/Weapons/Impact_Bomb";
+        public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Bomb";
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bomb);
             projectile.penetrate = 1;

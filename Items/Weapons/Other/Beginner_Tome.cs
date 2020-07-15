@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons {
+namespace Origins.Items.Weapons.Other {
 	public class Beginner_Tome : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Beginner's Tome");
