@@ -19,6 +19,7 @@ namespace Origins.Items.Weapons.Explosives {
             item.shoot = ModContent.ProjectileType<Impact_Grenade_P>();
 			item.shootSpeed*=2;
             item.knockBack = 10f;
+            item.ammo = ItemID.Grenade;
 			item.rare = ItemRarityID.Green;
 		}
         public override void AddRecipes() {

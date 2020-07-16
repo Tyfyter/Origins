@@ -1,5 +1,6 @@
 ﻿using Origins.Items.Materials;
 using Origins.Items.Weapons.Explosives;
+using Origins.Items.Weapons.Felnum.Tier2;
 using Origins.World;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,17 @@ namespace Origins.NPCs {
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
             }
+        }
+        public override bool PreAI(NPC npc) {
+            if(npc.HasBuff(ModContent.BuffType<ImpaledBuff>())) {
+                npc.position-=npc.velocity;
+                return false;
+            }
+            return base.PreAI(npc);
+        }
+        public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot) {
+            if(npc.HasBuff(ModContent.BuffType<ImpaledBuff>()))return false;
+            return base.CanHitPlayer(npc, target, ref cooldownSlot);
         }
     }
 }

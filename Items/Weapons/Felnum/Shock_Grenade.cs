@@ -20,10 +20,14 @@ namespace Origins.Items.Weapons.Felnum {
             item.shoot = ModContent.ProjectileType<Shock_Grenade_P>();
 			item.shootSpeed*=1.5f;
             item.knockBack = 15f;
+            item.ammo = ItemID.Grenade;
 			item.rare = ItemRarityID.Green;
 		}
         public override void AddRecipes() {
             Origins.AddExplosive(item);
+        }
+        public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref int damage, ref float knockback) {
+            damage-=16;
         }
     }
     public class Shock_Grenade_P : ModProjectile {

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Armor.Felnum;
+using Origins.Items.Weapons.Explosives;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -65,6 +66,8 @@ namespace Origins {
             ExplosiveProjectiles[ProjectileID.PartyGirlGrenade] = true;
             ExplosiveProjectiles[ProjectileID.Beenade] = true;
             ExplosiveProjectiles[ProjectileID.MolotovCocktail] = true;
+            ExplosiveProjectiles[ModContent.ProjectileType<Awe_Grenade_P>()] = true;
+            ExplosiveProjectiles[ModContent.ProjectileType<Awe_Grenade_Blast>()] = true;
 #endregion projectiles
 #region ammo
             ExplosiveAmmo = (bool[])ExplosiveItems.Clone();

@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
     public class Angelium : ModItem {
+        //add lore here
         public override void SetDefaults() {
             item.maxStack = 999;
         }
@@ -34,6 +35,7 @@ namespace Origins.Items.Materials {
         }
     }
     public class Ember_Onyx : ModItem {
+        //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Ember Onyx");
         }
@@ -68,6 +70,7 @@ namespace Origins.Items.Materials {
         }
     }
     public class Viridium_Bar : ModItem {
+        //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Viridium Bar");
         }
@@ -83,6 +86,19 @@ namespace Origins.Items.Materials {
         public override void SetDefaults() {
             item.maxStack = 999;
             item.value = 200;//2 silver
+        }
+    }
+    public class Felnum_Bar : ModItem {
+        /*
+         * brown color in its natural form
+         * tinted silver color when hardened
+         * exhibits a property named "electrical greed" where it grows hard blue crystals from anywhere it would lose electrons, to effectively "reclaim" them, even if it already has a strong negative charge
+         */
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Felnum Bar");
+        }
+        public override void SetDefaults() {
+            item.maxStack = 999;
         }
     }
 }

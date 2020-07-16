@@ -14,6 +14,13 @@ namespace Origins.Items {
             switch(item.type) {
                 case ItemID.Grenade:
                 item.damage = (int)(item.damage*0.8);
+                item.ammo = ItemID.Grenade;
+                break;
+                case ItemID.BouncyGrenade:
+                case ItemID.StickyGrenade:
+                case ItemID.PartyGirlGrenade:
+                case ItemID.Beenade:
+                item.ammo = ItemID.Grenade;
                 break;
             }
             if(OriginConfig.Instance.WoodBuffs)switch(item.type) {
