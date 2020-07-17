@@ -59,6 +59,11 @@ namespace Origins {
         public static Vector2 Clamp(this Vector2 value, Vector2 min, Vector2 max) {
             return new Vector2(MathHelper.Clamp(value.X,min.X,max.X), MathHelper.Clamp(value.Y,min.Y,max.Y));
         }
+        public static double AngleDif(double alpha, double beta) {
+            double phi = Math.Abs(beta - alpha) % (Math.PI*2);       // This is either the distance or 360 - distance
+            double distance = phi > Math.PI ? (Math.PI*2) - phi : phi;
+            return distance;
+        }
         public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox) {
             float xoffset = 10f;
             float yoffset = 24f;

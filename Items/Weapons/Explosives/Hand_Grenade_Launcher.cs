@@ -49,7 +49,7 @@ namespace Origins.Items.Weapons.Explosives {
                 if(type == ModContent.ProjectileType<Impact_Grenade_P>()) {
                     type = ModContent.ProjectileType<Impact_Grenade_Blast>();
                     Vector2 speed = new Vector2(speedX, speedY);
-                    position+=speed*3;
+                    position+=speed.SafeNormalize(Vector2.Zero)*40;
                     /*float mult = 0.75f;
                     for(int i = 0; ++i < 5;) {
                         switch(i) {
@@ -67,7 +67,8 @@ namespace Origins.Items.Weapons.Explosives {
                         }
                         Projectile.NewProjectile(position, speed.RotatedBy(((i-5/2f)/5))*mult, type, damage/6, knockBack, player.whoAmI, speed.X*mult, speed.Y*mult);
                     }*/
-                        Projectile.NewProjectile(position, speed, type, damage/6, knockBack, player.whoAmI);
+			        Main.PlaySound(2, (int)position.X, (int)position.Y, 14, 1f);
+                    Projectile.NewProjectile(position, speed, type, damage*10, knockBack*3, player.whoAmI);
                     return false;
                 }
             }
@@ -151,6 +152,8 @@ namespace Origins.Items.Weapons.Explosives {
     }
     public class Impact_Grenade_Blast  : ModProjectile {
         public override string Texture => "Terraria/Projectile_694";
+        public override bool CloneNewInstances => true;
+        float dist;
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Grenade);
             projectile.aiStyle = 0;
@@ -166,7 +169,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override void AI() {
 			Player player = Main.player[projectile.owner];
             Vector2 unit = projectile.velocity.SafeNormalize(Vector2.Zero);
-            projectile.Center = player.MountedCenter + unit*43 + unit.RotatedBy(MathHelper.PiOver2*player.direction)*4;
+            projectile.Center = player.MountedCenter + unit*36 + unit.RotatedBy(MathHelper.PiOver2*player.direction)*-2;
             projectile.rotation = projectile.velocity.ToRotation();
             /*projectile.velocity = Vector2.Lerp(projectile.velocity, new Vector2(projectile.ai[0], projectile.ai[1]), 0.05f);
             Dust dust = Dust.NewDustPerfect(projectile.Center, 6, Vector2.Zero, 100, Scale: 1.25f);
@@ -174,12 +177,18 @@ namespace Origins.Items.Weapons.Explosives {
             dust.noGravity = true;*/
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-            Vector2 closest = (projectile.Center+projectile.velocity).Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());
-            double rot = Math.Abs(((projectile.Center-closest).ToRotation()+Math.PI)-(projectile.rotation+Math.PI))+0.5;
-            /*if((projectile.Center-closest).Length()<=96) {
-                Main.NewText($"{(projectile.Center-closest).ToRotation()} - {projectile.rotation} + 0.5 = {rot}");
+            Vector2 closest = (projectile.Center+projectile.velocity*2).Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());
+            double rot = AngleDif((closest-projectile.Center).ToRotation(), projectile.rotation)+0.5f;//Math.Abs(((projectile.Center-closest).ToRotation()+Math.PI)-(projectile.rotation+Math.PI))+0.5;
+            /*if((projectile.Center-closest).Length()<=48) {
+                //Main.NewText($"{(projectile.Center-closest).ToRotation()} - {projectile.rotation} + 0.5 = {rot}");
+                //Main.NewText($"{AngleDif((projectile.Center-closest).ToRotation(), projectile.rotation)}");
+                Main.NewText($"{(projectile.Center-closest).Length()}<={48/rot} (48/{rot})");
             }*/
-            return (projectile.Center-closest).Length()<=96/rot;
+            dist = (float)((projectile.Center-closest).Length()*rot/5.5f)+1;
+            return (projectile.Center-closest).Length()<=48/rot;
+        }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+            damage = (int)(damage/dist);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
             int frame = (8 - projectile.timeLeft)/2;
