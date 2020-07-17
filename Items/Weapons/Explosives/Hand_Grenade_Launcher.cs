@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Felnum;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics;
@@ -43,6 +44,31 @@ namespace Origins.Items.Weapons.Explosives {
                     type = ModContent.ProjectileType<Awe_Grenade_P>();
                     speedX*=1.25f;
                     speedY*=1.25f;
+                    return true;
+                }
+                if(type == ModContent.ProjectileType<Impact_Grenade_P>()) {
+                    type = ModContent.ProjectileType<Impact_Grenade_Blast>();
+                    Vector2 speed = new Vector2(speedX, speedY);
+                    position+=speed*3;
+                    /*float mult = 0.75f;
+                    for(int i = 0; ++i < 5;) {
+                        switch(i) {
+                            case 2:
+                            mult = 1.5f;
+                            break;
+                            case 1:
+                            case 3:
+                            mult = 1f;
+                            break;
+                            case 0:
+                            case 4:
+                            mult = 0.75f;
+                            break;
+                        }
+                        Projectile.NewProjectile(position, speed.RotatedBy(((i-5/2f)/5))*mult, type, damage/6, knockBack, player.whoAmI, speed.X*mult, speed.Y*mult);
+                    }*/
+                        Projectile.NewProjectile(position, speed, type, damage/6, knockBack, player.whoAmI);
+                    return false;
                 }
             }
             return true;
@@ -121,6 +147,44 @@ namespace Origins.Items.Weapons.Explosives {
 			spriteBatch.End();
 			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, null, Main.Transform);
             return false;
+        }
+    }
+    public class Impact_Grenade_Blast  : ModProjectile {
+        public override string Texture => "Terraria/Projectile_694";
+        public override void SetDefaults() {
+            projectile.CloneDefaults(ProjectileID.Grenade);
+            projectile.aiStyle = 0;
+            projectile.timeLeft = 8;
+            projectile.width = projectile.height = 5;
+            projectile.penetrate = -1;
+            projectile.tileCollide = false;
+            if(!Main.projectileLoaded[694]) {
+                Main.projectileTexture[694] = Main.instance.OurLoad<Texture2D>(string.Concat(new object[] { "Images", Path.DirectorySeparatorChar, "Projectile_694" }));
+                Main.projectileLoaded[694] = true;
+            }
+        }
+        public override void AI() {
+			Player player = Main.player[projectile.owner];
+            Vector2 unit = projectile.velocity.SafeNormalize(Vector2.Zero);
+            projectile.Center = player.MountedCenter + unit*43 + unit.RotatedBy(MathHelper.PiOver2*player.direction)*4;
+            projectile.rotation = projectile.velocity.ToRotation();
+            /*projectile.velocity = Vector2.Lerp(projectile.velocity, new Vector2(projectile.ai[0], projectile.ai[1]), 0.05f);
+            Dust dust = Dust.NewDustPerfect(projectile.Center, 6, Vector2.Zero, 100, Scale: 1.25f);
+            //dust.shader = GameShaders.Armor.GetSecondaryShader(6, Main.LocalPlayer);
+            dust.noGravity = true;*/
+        }
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+            Vector2 closest = (projectile.Center+projectile.velocity).Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());
+            double rot = Math.Abs(((projectile.Center-closest).ToRotation()+Math.PI)-(projectile.rotation+Math.PI))+0.5;
+            /*if((projectile.Center-closest).Length()<=96) {
+                Main.NewText($"{(projectile.Center-closest).ToRotation()} - {projectile.rotation} + 0.5 = {rot}");
+            }*/
+            return (projectile.Center-closest).Length()<=96/rot;
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
+            int frame = (8 - projectile.timeLeft)/2;
+            spriteBatch.Draw(Main.projectileTexture[694], projectile.Center - Main.screenPosition, new Rectangle(0,80*frame,80,80), lightColor, projectile.rotation+MathHelper.PiOver2, new Vector2(40, 80), 1f, SpriteEffects.None, 0f);
+			return false;
         }
     }
 }

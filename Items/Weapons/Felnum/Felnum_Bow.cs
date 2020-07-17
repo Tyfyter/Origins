@@ -26,9 +26,12 @@ namespace Origins.Items.Weapons.Felnum {
         public override Vector2? HoldoutOffset() {
             return new Vector2(-8f,0);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            damage+=(damage-19)/2;
-            return true;
+        public override void GetWeaponDamage(Player player, ref int damage) {
+            if(!OriginPlayer.ItemChecking)damage+=(damage-18)/2;
         }
+        /*public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+            //damage+=(damage-19)/2;
+            return true;
+        }*/
     }
 }

@@ -26,6 +26,14 @@ namespace Origins {
     public interface IAnimatedItem {
         DrawAnimation Animation { get; }
     }
+    public interface IElementalItem {
+        short element { get; }
+    }
+    public static class Elements {
+        public const short fire = 1;
+        public const short earth = 2;
+        public const short acid = 4;
+    }
     public static class OriginExtensions {
         public static Func<float, int, Vector2> drawPlayerItemPos;
         public static void PlaySound(string Name, Vector2 Position, float Volume = 1f, float PitchVariance = 1f){

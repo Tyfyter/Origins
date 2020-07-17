@@ -1,4 +1,5 @@
 ﻿using Origins.Items.Materials;
+using Origins.Items.Weapons.Acid;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
 using Origins.World;
@@ -30,6 +31,16 @@ namespace Origins.NPCs {
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot) {
             if(npc.HasBuff(ModContent.BuffType<ImpaledBuff>()))return false;
             return base.CanHitPlayer(npc, target, ref cooldownSlot);
+        }
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit) {
+            if(npc.HasBuff(ModContent.BuffType<SolventBuff>())) {
+                damage+=Math.Max(npc.defense/2, 20);
+            }
+        }
+        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+            if(npc.HasBuff(ModContent.BuffType<SolventBuff>())) {
+                damage+=Math.Max(npc.defense/2, 20);
+            }
         }
     }
 }
