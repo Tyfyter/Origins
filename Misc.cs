@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
+using SysDraw = System.Drawing;
+using static Bitmap = System.Drawing.Bitmap;
 
 namespace Origins {
     public class DrawAnimationManual : DrawAnimation {
@@ -116,6 +118,28 @@ namespace Origins {
 				hitbox.Height = (int)(hitbox.Height * 1.4);
                 break;
             }
+        }
+        public static void DrawLine(this SpriteBatch spriteBatch, Color color, Vector2 start, Vector2 end, int thickness = 2) {
+            Vector2 drawOrigin = new Vector2(1, 1);
+            Rectangle drawRect = new Rectangle(
+                (int)Math.Round(start.X - Main.screenPosition.X),
+                (int)Math.Round(start.Y - Main.screenPosition.Y),
+                (int)Math.Round((end - start).Length()),
+                thickness);
+
+            spriteBatch.Draw(Origins.instance.GetTexture("Projectiles/Pixel"), drawRect, null, color, (end - start).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
+        }
+        public static Bitmap ToBitmap(this Texture2D tex) {
+            int[] data = new int[tex.Width * tex.Height];
+            tex.GetData(0, new Rectangle(0,0,tex.Width,tex.Height), data, 0, tex.Width * tex.Height);
+            Bitmap bitmap = new Bitmap(tex.Width, tex.Height);
+            for (int x = 0; x < tex.Width; x++){
+                for (int y = 0; y < tex.Height; y++){
+                    SysDraw.Color bitmapColor = SysDraw.Color.FromArgb(data[y * tex.Width + x]);
+                    bitmap.SetPixel(x, y, bitmapColor);
+                }
+            }
+            return bitmap;
         }
     }
 }

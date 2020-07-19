@@ -1,4 +1,5 @@
-﻿using Origins.Items.Materials;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Acid;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
@@ -23,10 +24,11 @@ namespace Origins.NPCs {
         }
         public override bool PreAI(NPC npc) {
             if(npc.HasBuff(ModContent.BuffType<ImpaledBuff>())) {
-                npc.position-=npc.velocity;
+                //npc.position = npc.oldPosition;//-=npc.velocity;
+                npc.velocity = Vector2.Zero;
                 return false;
             }
-            return base.PreAI(npc);
+            return true;
         }
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot) {
             if(npc.HasBuff(ModContent.BuffType<ImpaledBuff>()))return false;

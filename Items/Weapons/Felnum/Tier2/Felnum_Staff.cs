@@ -8,7 +8,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons.Felnum {
+namespace Origins.Items.Weapons.Felnum.Tier2 {
     public class Felnum_Staff : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Hævateinn");

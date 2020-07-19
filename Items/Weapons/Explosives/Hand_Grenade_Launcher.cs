@@ -79,6 +79,9 @@ namespace Origins.Items.Weapons.Explosives {
         }
     }
     public class Awe_Grenade_P : ModProjectile {
+        public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Awe Grenade");
+		}
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Grenade);
             projectile.timeLeft = 45;
@@ -104,6 +107,9 @@ namespace Origins.Items.Weapons.Explosives {
         }
     }
     public class Awe_Grenade_Blast  : ModProjectile {
+        public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Awe Grenade");
+		}
         public override string Texture => "Origins/Projectiles/Pixel";
         const int duration = 15;
         public override void SetDefaults() {
@@ -151,9 +157,13 @@ namespace Origins.Items.Weapons.Explosives {
         }
     }
     public class Impact_Grenade_Blast  : ModProjectile {
+        public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Blast Grenade");
+		}
         public override string Texture => "Terraria/Projectile_694";
         public override bool CloneNewInstances => true;
         float dist;
+
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Grenade);
             projectile.aiStyle = 0;

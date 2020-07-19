@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.World;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -10,11 +11,10 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 	public class Felnum_Broadsword : ModItem, IAnimatedItem {
         internal static DrawAnimationManual animation;
         public DrawAnimation Animation => animation;
-        public int frame = 5;
         public int charge = 0;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Broadsword");
-			Tooltip.SetDefault("Behold");
+			Tooltip.SetDefault("Behold\nHold right click to stab");
             animation = new DrawAnimationManual(6);
             animation.Frame = 5;
 			Main.RegisterItemAnimation(item.type, animation);
@@ -72,8 +72,9 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 
         public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) {
             OriginExtensions.FixedUseItemHitbox(item, player, ref hitbox, ref noHitbox);
-            if(frame == 5) {
+            if(!ModContent.GetInstance<OriginWorld>().felnumBroadswordStab) {
                 hitbox = new Rectangle(0,0,0,0);
+                if(animation.Frame==0) ModContent.GetInstance<OriginWorld>().felnumBroadswordStab = true;
             }
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack){
@@ -110,8 +111,8 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Spear);
             projectile.timeLeft = 16;
-			projectile.width = 20;
-			projectile.height = 20;
+			projectile.width = 32;
+			projectile.height = 32;
         }
         public float movementFactor{
 			get => projectile.ai[0];
@@ -156,6 +157,8 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                 NPC victim = Main.npc[stabee];
                 victim.AddBuff(ModContent.BuffType<ImpaledBuff>(), 1);
                 victim.position+=projectile.position-projectile.oldPosition;
+                victim.Center = Vector2.Lerp(victim.Center,projectile.Center+projectile.velocity, 0.035f);
+                victim.oldPosition = victim.position;
             }
 		}
         public override bool? CanHitNPC(NPC target) {
