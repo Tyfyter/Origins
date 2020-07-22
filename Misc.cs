@@ -9,7 +9,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 using SysDraw = System.Drawing;
-using static Bitmap = System.Drawing.Bitmap;
+using Bitmap = System.Drawing.Bitmap;
 
 namespace Origins {
     public class DrawAnimationManual : DrawAnimation {

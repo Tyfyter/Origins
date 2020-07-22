@@ -1,42 +1,136 @@
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Celestine {
     [AutoloadEquip(EquipType.Head)]
 	public class Celestine_Helmet : ModItem {
-        public override string Texture => "Origins/Items/Armor/Felnum/Felnum_Helmet";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Celestine Helmet");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("10% increased melee and magic critical strike chance");
 		}
 		public override void SetDefaults() {
-            item.defense = 21;
+            item.defense = 8;
 		}
+        public override void UpdateEquip(Player player) {
+            player.meleeCrit+=10;
+            player.magicCrit+=10;
+        }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
             return body.type == ModContent.ItemType<Celestine_Breastplate>() && legs.type == ModContent.ItemType<Celestine_Greaves>();
         }
-	}
+        public override void UpdateArmorSet(Player player) {
+            player.setBonus = "Critical strikes spawn buff boosters";
+            player.GetModPlayer<OriginPlayer>().celestineSet = true;
+        }
+    }
     [AutoloadEquip(EquipType.Body)]
 	public class Celestine_Breastplate : ModItem {
-        public override string Texture => "Origins/Items/Armor/Felnum/Felnum_Breastplate";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Celestine Breastplate");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("20% increased melee and magic damage");
 		}
 		public override void SetDefaults() {
-            item.defense = 32;
+            item.defense = 24;
 		}
+        public override void UpdateEquip(Player player) {
+            player.meleeDamage+=0.2f;
+            player.magicDamage+=0.2f;
+        }
 	}
     [AutoloadEquip(EquipType.Legs)]
 	public class Celestine_Greaves : ModItem {
-        public override string Texture => "Origins/Items/Armor/Felnum/Felnum_Greaves";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Celestine Greaves");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("20% increased melee speed\nIncreased mana regeneration\n10% increased movement speed");
 		}
 		public override void SetDefaults() {
-            item.defense = 25;
+            item.defense = 16;
 		}
+        public override void UpdateEquip(Player player) {
+            player.meleeSpeed+=0.2f;
+            player.manaRegenBuff = true;
+            player.moveSpeed+=0.1f;
+        }
+    }
+    public class Celestine_Mana_Booster : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Celestine Mana Booster");
+            Origins.celestineBoosters[0] = item.type;
+			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5,4));
+			ItemID.Sets.AnimatesAsSoul[item.type] = true;
+			ItemID.Sets.ItemIconPulse[item.type] = true;
+			ItemID.Sets.ItemNoGravity[item.type] = true;
+		}
+        public override void SetDefaults() {
+            item.color = new Color(0,174,174);
+        }
+        public override bool OnPickup(Player player) {
+            player.AddBuff(ModContent.BuffType<Celestine_Mana_Boost_Buff>(), 600);
+            return false;
+        }
+    }
+    public class Celestine_Life_Booster : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Celestine Life Booster");
+            Origins.celestineBoosters[1] = item.type;
+			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5,4));
+			ItemID.Sets.AnimatesAsSoul[item.type] = true;
+			ItemID.Sets.ItemIconPulse[item.type] = true;
+			ItemID.Sets.ItemNoGravity[item.type] = true;
+		}
+        public override void SetDefaults() {
+            item.color = new Color(255,64,33);
+        }
+        public override bool OnPickup(Player player) {
+            player.AddBuff(ModContent.BuffType<Celestine_Life_Boost_Buff>(), 600);
+            return false;
+        }
+    }
+    public class Celestine_Damage_Booster : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Celestine Damage Booster");
+            Origins.celestineBoosters[2] = item.type;
+			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5,4));
+			ItemID.Sets.AnimatesAsSoul[item.type] = true;
+			ItemID.Sets.ItemIconPulse[item.type] = true;
+			ItemID.Sets.ItemNoGravity[item.type] = true;
+		}
+        public override void SetDefaults() {
+            item.color = new Color(255,255,255);
+        }
+        public override bool OnPickup(Player player) {
+            player.AddBuff(ModContent.BuffType<Celestine_Damage_Boost_Buff>(), 600);
+            return false;
+        }
+    }
+    public class Celestine_Mana_Boost_Buff : ModBuff {
+        public override void SetDefaults() {
+            DisplayName.SetDefault("Celestine Mana Boost");
+            Description.SetDefault("Increased mana regeneration");
+        }
+        public override void Update(Player player, ref int buffIndex) {
+            player.manaRegenCount+=3;
+        }
+    }
+    public class Celestine_Life_Boost_Buff : ModBuff {
+        public override void SetDefaults() {
+            DisplayName.SetDefault("Celestine Life Boost");
+            Description.SetDefault("Increased life regeneration");
+        }
+        public override void Update(Player player, ref int buffIndex) {
+            player.lifeRegenCount+=3;
+        }
+    }
+    public class Celestine_Damage_Boost_Buff : ModBuff {
+        public override void SetDefaults() {
+            DisplayName.SetDefault("Celestine Damage Boost");
+            Description.SetDefault("25% increased damage");
+        }
+        public override void Update(Player player, ref int buffIndex) {
+            player.allDamageMult*=1.25f;
+        }
     }
 }

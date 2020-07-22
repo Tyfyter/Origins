@@ -24,6 +24,7 @@ namespace Origins {
         public bool felnumSet = false;
         public float felnumShock = 0;
         public float oldFelnumShock = 0;
+        public bool celestineSet = false;
         //public const int FelnumMax = 100;
         public bool bombHandlingDevice = false;
         public bool minerSet = false;
@@ -47,6 +48,7 @@ namespace Origins {
                 felnumShock-=(felnumShock-player.statLifeMax2)/player.statLifeMax2*5+1;
             }
             felnumSet = false;
+            celestineSet = false;
             minerSet = false;
             bombHandlingDevice = false;
             explosiveDamage = 1f;
@@ -115,7 +117,13 @@ namespace Origins {
 				Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             }
         }
-		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
+        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
+            if(crit&&celestineSet)Item.NewItem(target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
+        }
+        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
+            if(crit&&celestineSet)Item.NewItem(target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
+        }
+        public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
             if(minerSet)if(proj.owner == player.whoAmI && proj.friendly) {
                 damage = (int)(damage/explosiveDamage);
                 damage-=damage/5;

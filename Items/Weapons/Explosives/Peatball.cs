@@ -45,8 +45,8 @@ namespace Origins.Items.Weapons.Explosives {
         public override void Kill(int timeLeft) {
 			projectile.position.X += projectile.width / 2;
 			projectile.position.Y += projectile.height / 2;
-			projectile.width = 64;
-			projectile.height = 64;
+			projectile.width = 48;
+			projectile.height = 48;
 			projectile.position.X -= projectile.width / 2;
 			projectile.position.Y -= projectile.height / 2;
 			projectile.Damage();

@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Acid {
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);
-			item.damage = 100;
+			item.damage = 80;
 			item.magic = true;
 			item.noMelee = true;
 			item.noUseGraphic = true;
@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Acid {
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             int a = Main.rand.Next(5,7);
             for(int i = 0; ++i < a; a = Main.rand.Next(5,7)) {
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(((i-a/2f)/a)*0.75), type, damage/6, knockBack, player.whoAmI);
+                Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(((i-a/2f)/a)*0.75), type, damage/7, knockBack, player.whoAmI, 0, 12f);
             }
             return false;
         }
@@ -52,37 +52,49 @@ namespace Origins.Items.Weapons.Acid {
             projectile.width = projectile.height = 10;
             projectile.light = 0;
             projectile.timeLeft = 180;
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = 20;
         }
         public override void AI() {
-            if(projectile.timeLeft<168) {
-                Lighting.AddLight(projectile.Center, 0, 0.75f, 0.3f);
-                Dust dust = Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity*-0.25f, 100, new Color(0, 255, 0), 1f);
+            if(projectile.ai[1]<=0/*projectile.timeLeft<168*/) {
+                Lighting.AddLight(projectile.Center, 0, 0.75f*projectile.scale, 0.3f*projectile.scale);
+                Dust dust = Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity*-0.25f, 100, new Color(0, 255, 0), projectile.scale);
                 dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
                 dust.noGravity = false;
                 dust.noLight = true;
             } else {
 			    projectile.Center = Main.player[projectile.owner].itemLocation+projectile.velocity;
+                projectile.ai[1]--;
             }
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity) {
+            if(projectile.timeLeft>168&&(projectile.ai[1]%1+1)%1==0.5f) {
+                projectile.velocity-=oldVelocity-projectile.velocity;
+                return false;
+            }
+            return true;
         }
         public override void Kill(int timeLeft) {
             for(int i = 0; i < 7; i++) {
-                Dust dust = Dust.NewDustDirect(projectile.position, 10, 10, 226, 0, 0, 100, new Color(0, 255, 0), 1.25f);
+                Dust dust = Dust.NewDustDirect(projectile.position, 10, 10, 226, 0, 0, 100, new Color(0, 255, 0), 1.25f*projectile.scale);
                 dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
                 dust.noGravity = true;
                 dust.noLight = true;
             }
 			projectile.position.X += projectile.width / 2;
 			projectile.position.Y += projectile.height / 2;
-			projectile.width = 128;
-			projectile.height = 128;
+			projectile.width = (int)(96*projectile.scale);
+			projectile.height = (int)(96*projectile.scale);
 			projectile.position.X -= projectile.width / 2;
 			projectile.position.Y -= projectile.height / 2;
+            projectile.damage = (int)(projectile.damage*0.75f);
 			projectile.Damage();
             Main.PlaySound(SoundID.Item10, projectile.position);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+            if(projectile.timeLeft>168&&(projectile.ai[1]%1+1)%1==0.5f)projectile.penetrate++;
             target.AddBuff(ModContent.BuffType<SolventBuff>(), 480);
-            Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, 226, 0, 0, 100, new Color(0, 255, 0), 1.25f);
+            Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, 226, 0, 0, 100, new Color(0, 255, 0), 1.25f*projectile.scale);
             dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
             dust.noGravity = false;
             dust.noLight = true;

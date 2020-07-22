@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Acid;
 using Origins.Items.Weapons.Felnum;
 using System;
 using System.IO;
@@ -48,8 +49,8 @@ namespace Origins.Items.Weapons.Explosives {
                 }
                 if(type == ModContent.ProjectileType<Impact_Grenade_P>()) {
                     type = ModContent.ProjectileType<Impact_Grenade_Blast>();
-                    Vector2 speed = new Vector2(speedX, speedY);
-                    position+=speed.SafeNormalize(Vector2.Zero)*40;
+                    //Vector2 speed = new Vector2(speedX, speedY);
+                    position+=new Vector2(speedX, speedY).SafeNormalize(Vector2.Zero)*40;
                     /*float mult = 0.75f;
                     for(int i = 0; ++i < 5;) {
                         switch(i) {
@@ -68,9 +69,24 @@ namespace Origins.Items.Weapons.Explosives {
                         Projectile.NewProjectile(position, speed.RotatedBy(((i-5/2f)/5))*mult, type, damage/6, knockBack, player.whoAmI, speed.X*mult, speed.Y*mult);
                     }*/
 			        Main.PlaySound(2, (int)position.X, (int)position.Y, 14, 1f);
-                    Projectile.NewProjectile(position, speed, type, damage*10, knockBack*3, player.whoAmI);
+                    //Projectile.NewProjectile(position, speed, type, damage*10, knockBack*3, player.whoAmI);
+                    damage*=10;
+                    knockBack*=3;
+                    return true;
+                }
+                if(type == ModContent.ProjectileType<Acid_Grenade_P>()) {
+                    Vector2 speed = new Vector2(speedX, speedY);
+                    position+=speed.SafeNormalize(Vector2.Zero)*40;
+                    type = ModContent.ProjectileType<Acid_Splash_P>();
+                    damage-=20;
+                    for(int i = Main.rand.Next(1); ++i < 5;) {
+                        Projectile.NewProjectileDirect(position, speed.RotatedByRandom(0.1*i)*0.6f, type, damage/2, knockBack, player.whoAmI).scale = 0.85f;
+                    }
                     return false;
                 }
+            }
+            if(type == ModContent.ProjectileType<Acid_Grenade_P>()) {
+                damage-=15;
             }
             return true;
         }

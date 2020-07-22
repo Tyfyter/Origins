@@ -12,24 +12,32 @@ namespace Origins {
 	public class Origins : Mod {
         public static Origins instance;
         /// <summary>
-        /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes
+        /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes,
+        /// for cross-mod content use ExplosiveProjectilePreRegistry or AddExplosive instead
         /// </summary>
         public static bool[] ExplosiveProjectiles;
         /// <summary>
-        /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes
+        /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes,
+        /// for cross-mod content use ExplosiveItemPreRegistry or AddExplosive instead
         /// </summary>
         public static bool[] ExplosiveItems;
         /// <summary>
-        /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes
+        /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes,
+        /// for cross-mod content use ExplosiveAmmoPreRegistry or AddExplosive instead
         /// </summary>
         public static bool[] ExplosiveAmmo;
+        public static Stack<int> ExplosiveProjectilePreRegistry;
+        public static Stack<int> ExplosiveItemPreRegistry;
+        public static Stack<int> ExplosiveAmmoPreRegistry;
         public static Dictionary<int,int> ExplosiveBaseDamage;
         public static List<int> ExplosiveModOnHit;
         public static int FelnumHeadArmorID;
         public static int FelnumBodyArmorID;
         public static int FelnumLegsArmorID;
+        public static int[] celestineBoosters;
 		public Origins() {
             instance = this;
+            celestineBoosters = new int[3];
         }
         public override void AddRecipes() {
         #region explosive weapon registry
@@ -89,7 +97,28 @@ namespace Origins {
             ExplosiveModOnHit.Add(ProjectileID.Dynamite);
             ExplosiveModOnHit.Add(ProjectileID.StickyDynamite);
             ExplosiveModOnHit.Add(ProjectileID.BouncyDynamite);
-#endregion base damage
+            #endregion base damage
+#region preregistry
+            Stack<int> stack = ExplosiveItemPreRegistry;
+            int i;
+            while(stack.Count > 0) {
+                i = stack.Pop();
+                ExplosiveItems[i] = true;
+            }
+            stack = ExplosiveProjectilePreRegistry;
+            while(stack.Count > 0) {
+                i = stack.Pop();
+                ExplosiveProjectiles[i] = true;
+            }
+            stack = ExplosiveAmmoPreRegistry;
+            while(stack.Count > 0) {
+                i = stack.Pop();
+                ExplosiveAmmo[i] = true;
+            }
+            ExplosiveItemPreRegistry = null;
+            ExplosiveProjectilePreRegistry = null;
+            ExplosiveAmmoPreRegistry = null;
+#endregion preregistry
         #endregion explosive weapon registry
             FelnumHeadArmorID = ModContent.GetInstance<Felnum_Helmet>().item.headSlot;
             FelnumBodyArmorID = ModContent.GetInstance<Felnum_Breastplate>().item.bodySlot;
@@ -98,6 +127,9 @@ namespace Origins {
         public override void Load() {
             ExplosiveBaseDamage = new Dictionary<int, int>();
             ExplosiveModOnHit = new List<int>() {};
+            ExplosiveProjectilePreRegistry = new Stack<int>();
+            ExplosiveItemPreRegistry = new Stack<int>();
+            ExplosiveAmmoPreRegistry = new Stack<int>();
             OriginExtensions.drawPlayerItemPos = (Func<float,int,Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos",BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float,int,Vector2>), Main.instance);
         }
         public override void Unload() {
@@ -106,10 +138,19 @@ namespace Origins {
             ExplosiveAmmo = null;
             ExplosiveBaseDamage = null;
             ExplosiveModOnHit = null;
-            instance = null;
+            celestineBoosters = null;
             OriginExtensions.drawPlayerItemPos = null;
+            instance = null;
         }
         public static void AddExplosive(Item item, bool noProj = false) {
+            if(ExplosiveItems == null) {
+                ExplosiveItemPreRegistry.Push(item.type);
+                ExplosiveAmmoPreRegistry.Push(item.type);
+                if(item.ammo!=AmmoID.None)ExplosiveAmmoPreRegistry.Push(item.type);
+                if(item.useAmmo!=AmmoID.None)ExplosiveAmmoPreRegistry.Push(item.type);
+                if(!noProj&&item.shoot!=ProjectileID.None)ExplosiveProjectilePreRegistry.Push(item.type);
+                return;
+            }
             ExplosiveItems[item.type] = true;
             ExplosiveAmmo[item.type] = true;
             if(item.ammo!=AmmoID.None)ExplosiveAmmo[item.ammo] = true;
