@@ -12,15 +12,15 @@ namespace Origins.World {
     public class OriginWorld : ModWorld {
 		public static int voidTiles;
         public int peatSold;
-        public bool felnumBroadswordStab = false;
+        //public bool felnumBroadswordStab = false;
 
         public override void Load(TagCompound tag) {
             peatSold = tag.GetAsInt("peatSold");
-            felnumBroadswordStab = tag.GetBool("felnumBroadswordStab");
-            if(felnumBroadswordStab)Felnum_Broadsword.animation.Frame = 0;
+            /*felnumBroadswordStab = tag.GetBool("felnumBroadswordStab");
+            if(felnumBroadswordStab)Felnum_Broadsword.animation.Frame = 0;*/
         }
         public override TagCompound Save() {
-            return new TagCompound() { {"peatSold",  peatSold} , {"felnumBroadswordStab",  felnumBroadswordStab} };
+            return new TagCompound() { {"peatSold",  peatSold} /*, {"felnumBroadswordStab",  felnumBroadswordStab} */};
         }
         public override void ResetNearbyTileEffects() {
 			voidTiles = 0;

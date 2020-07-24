@@ -5,13 +5,21 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace Origins.Items.Weapons.Felnum.Tier2 {
     //this took seven and a half hours to make
 	public class Felnum_Broadsword : ModItem, IAnimatedItem {
+        public override bool CloneNewInstances => true;
         internal static DrawAnimationManual animation;
-        public DrawAnimation Animation => animation;
+        public DrawAnimation Animation {
+            get {
+                animation.Frame = frame;
+                return animation;
+            }
+        }
         public int charge = 0;
+        internal int frame = 5;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Broadsword");
 			Tooltip.SetDefault("Behold\nHold right click to stab");
@@ -70,11 +78,18 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             }
         }
 
+        public override void Load(TagCompound tag) {
+            frame = tag.GetInt("frame");
+        }
+        public override TagCompound Save() {
+            return new TagCompound() {{"frame", frame}};
+        }
+
         public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) {
             OriginExtensions.FixedUseItemHitbox(item, player, ref hitbox, ref noHitbox);
-            if(!ModContent.GetInstance<OriginWorld>().felnumBroadswordStab) {
+            if(frame==5/*!ModContent.GetInstance<OriginWorld>().felnumBroadswordStab*/) {
                 hitbox = new Rectangle(0,0,0,0);
-                if(animation.Frame==0) ModContent.GetInstance<OriginWorld>().felnumBroadswordStab = true;
+                //if(animation.Frame==0) ModContent.GetInstance<OriginWorld>().felnumBroadswordStab = true;
             }
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack){
@@ -97,6 +112,11 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                 player.itemAnimation = 16;
                 player.itemAnimationMax = 16;
             }
+            return false;
+        }
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+            Texture2D texture = Main.itemTexture[item.type];
+            spriteBatch.Draw(texture, position, Animation.GetFrame(texture), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
             return false;
         }
     }
@@ -184,16 +204,19 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             projectile.timeLeft = player.itemAnimation;
             stabee = target.whoAmI;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
             if(noGrow) {
-                spriteBatch.Draw(mod.GetTexture("Items/Weapons/Felnum/Tier2/Felnum_Broadsword_B"), (projectile.Center - projectile.velocity*2) - Main.screenPosition, new Rectangle(0,0,40,40), lightColor, projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(mod.GetTexture("Items/Weapons/Felnum/Tier2/Felnum_Broadsword_B"), (projectile.Center - projectile.velocity*2) - Main.screenPosition, new Rectangle(0, 0, 40, 40), lightColor, projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0f);
                 return false;
             }
             Texture2D texture = mod.GetTexture("Items/Weapons/Felnum/Tier2/Felnum_Broadsword");
-            Rectangle frame = Felnum_Broadsword.animation.GetFrame(texture);
-            if(Felnum_Broadsword.animation.Frame>0)Felnum_Broadsword.animation.Frame--;
-            spriteBatch.Draw(texture, (projectile.Center - projectile.velocity*2) - Main.screenPosition, frame, lightColor, projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0f);
-            return false;
+            if(Main.player[projectile.owner].HeldItem.modItem is Felnum_Broadsword sword) {
+                Rectangle frame = sword.Animation.GetFrame(texture);
+                if(sword.frame>0)sword.frame--;
+                spriteBatch.Draw(texture, (projectile.Center - projectile.velocity*2) - Main.screenPosition, frame, lightColor, projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0f);
+                return false;
+            }
+            return true;
         }
     }
     public class ImpaledBuff : ModBuff {
