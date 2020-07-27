@@ -9,10 +9,16 @@ using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Fiberglass {
 	public class Broken_Fiberglass_Bow : ModItem, IAnimatedItem {
+        public override bool CloneNewInstances => true;
         int strung = 0;
         const int strungMax = 50;
         static DrawAnimationManual animation;
-        public DrawAnimation Animation => animation;
+        public DrawAnimation Animation {
+            get {
+                animation.Frame = strung>0 ? 1 : 0;
+                return animation;
+            }
+        }
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Unstrung Fiberglass Bow");
 			Tooltip.SetDefault("Not very useful without a bowstring\nMaybe you could find something to replace it");
@@ -69,7 +75,7 @@ namespace Origins.Items.Weapons.Fiberglass {
                 if(strung>strungMax)strung = strungMax;
                 return true;
             }
-            animation.Frame = strung>0 ? 1 : 0;
+            //animation.Frame = strung>0 ? 1 : 0;
             if(strung<=0)return false;
             SetDefaults();
             strung--;
@@ -78,10 +84,15 @@ namespace Origins.Items.Weapons.Fiberglass {
         public override bool ConsumeAmmo(Player player) {
             return player.altFunctionUse != 2;
         }
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+            Texture2D texture = Main.itemTexture[item.type];
+            spriteBatch.Draw(texture, position, Animation.GetFrame(texture), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
+            return false;
+        }
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
             if(Main.playerInventory)return;
             float inventoryScale = Main.inventoryScale;
-			ChatManager.DrawColorCodedStringWithShadow(spriteBatch, Main.fontItemStack, strung.ToString(), position + new Vector2(8f, -4f) * inventoryScale, Colors.RarityNormal, 0f, Vector2.Zero, new Vector2(inventoryScale * 0.8f), -1f, inventoryScale);
+			ChatManager.DrawColorCodedStringWithShadow(spriteBatch, Main.fontItemStack, strung.ToString(), position + new Vector2(8f, -4f) * scale, Colors.RarityNormal, 0f, Vector2.Zero, new Vector2(scale * 0.8f), -1f, scale);
         }
     }
 }

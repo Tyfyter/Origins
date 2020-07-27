@@ -141,14 +141,14 @@ namespace Origins.Items.Weapons.Explosives {
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
             Vector2 closest = projectile.Center.Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());
-            return (projectile.Center-closest).Length()<=160*((duration-projectile.timeLeft) / (float)duration);
+            return (projectile.Center-closest).Length()<=160*((duration-projectile.timeLeft) / (float)duration)*projectile.scale;
         }
         public override bool? CanHitNPC(NPC target) {
             return target.friendly?false:base.CanHitNPC(target);
         }
         public override bool CanHitPlayer(Player target) {
             Vector2 closest = projectile.Center.Clamp(target.TopLeft, target.BottomRight);
-            return (projectile.Center-closest).Length()<=160*((duration-projectile.timeLeft) / (float)duration);
+            return (projectile.Center-closest).Length()<=160*((duration-projectile.timeLeft) / (float)duration)*projectile.scale;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
             damage-=(int)(damage*((duration-projectile.timeLeft) / (float)duration)*0.6f);
@@ -163,7 +163,7 @@ namespace Origins.Items.Weapons.Explosives {
 			spriteBatch.End();
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 			float percent = (duration-projectile.timeLeft) / (float)duration;
-			DrawData data = new DrawData(TextureManager.Load("Images/Misc/Perlin"), projectile.Center - Main.screenPosition, new Rectangle(0, 0, 600, 600), new Color(new Vector4(0.35f,0.35f,0.35f,0.6f)*(1f - percent)), 0, new Vector2(300f, 300f), new Vector2(percent, percent/1.61803399f), SpriteEffects.None, 0);
+			DrawData data = new DrawData(TextureManager.Load("Images/Misc/Perlin"), projectile.Center - Main.screenPosition, new Rectangle(0, 0, 600, 600), new Color(new Vector4(0.35f,0.35f,0.35f,0.6f)*(1f - percent)), 0, new Vector2(300f, 300f), new Vector2(percent, percent/1.61803399f)*projectile.scale, SpriteEffects.None, 0);
 			GameShaders.Misc["ForceField"].UseColor(new Vector3(2f));
 			GameShaders.Misc["ForceField"].Apply(data);
 			data.Draw(spriteBatch);

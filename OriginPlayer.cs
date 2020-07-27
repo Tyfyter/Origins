@@ -36,8 +36,10 @@ namespace Origins {
         internal static bool ItemChecking = false;
         public int cryostenLifeRegenCount = 0;
         public override void ResetEffects() {
-            DrawShirt = false;
-            DrawPants = false;
+            if(!player.frozen) {
+                DrawShirt = false;
+                DrawPants = false;
+            }
             fiberglassSet = false;
             cryostenSet = false;
             cryostenHelmet = false;
