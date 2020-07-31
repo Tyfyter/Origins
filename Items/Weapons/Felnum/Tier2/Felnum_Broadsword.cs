@@ -119,6 +119,12 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             spriteBatch.Draw(texture, position, Animation.GetFrame(texture), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
             return false;
         }
+        public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit) {
+            damage+=(damage-21)/2;
+        }
+        public override void GetWeaponDamage(Player player, ref int damage) {
+            if(!OriginPlayer.ItemChecking)damage+=(damage-21)/2;
+        }
     }
     public class Felnum_Broadsword_Stab : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Felnum/Tier2/Felnum_Broadsword_B";

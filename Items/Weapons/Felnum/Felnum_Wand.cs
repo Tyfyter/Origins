@@ -19,16 +19,17 @@ namespace Origins.Items.Weapons.Felnum {
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.CrystalVileShard);
             item.shoot = ModContent.ProjectileType<Felnum_Zap>();
-            item.damage = 19;
+            item.damage = 21;
             item.shootSpeed*=0.66f;
             item.UseSound = null;
         }
         public override void GetWeaponDamage(Player player, ref int damage) {
-            if(!OriginPlayer.ItemChecking)damage+=(damage-18)/2;
+            //if(!OriginPlayer.ItemChecking)
+            damage+=(damage-21)/2;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             Vector2 speed = new Vector2(speedX, speedY);
-            //damage+=(damage-19)/2;
+            //damage+=(damage-35)/2;
 			Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             Projectile.NewProjectile(position, speed, type, damage, knockBack, item.owner);
             return false;
