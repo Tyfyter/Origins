@@ -20,6 +20,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             item.shoot = ModContent.ProjectileType<Felnum_Lightning>();
             item.damage = 47;
             item.shootSpeed/=2;
+			item.rare = ItemRarityID.Lime;
         }
         public override void GetWeaponDamage(Player player, ref int damage) {
             //if(!OriginPlayer.ItemChecking)

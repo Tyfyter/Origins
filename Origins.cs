@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Weapons.Explosives;
 using System;
@@ -157,6 +158,18 @@ namespace Origins {
             if(item.useAmmo!=AmmoID.None)ExplosiveAmmo[item.useAmmo] = true;
             if(!noProj&&item.shoot!=ProjectileID.None)ExplosiveProjectiles[item.shoot] = true;
             instance.Logger.Info($"Registered {item.Name} as explosive :"+ExplosiveItems[item.type]);
+        }
+        public static short AddGlowMask(string name){
+            if (!Main.dedServ){
+                Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
+                for (int i = 0; i < Main.glowMaskTexture.Length; i++){
+                    glowMasks[i] = Main.glowMaskTexture[i];
+                }
+                glowMasks[glowMasks.Length - 1] = instance.GetTexture("Items/" + name);
+                Main.glowMaskTexture = glowMasks;
+                return (short)(glowMasks.Length - 1);
+            }
+            else return 0;
         }
     }
 }

@@ -111,6 +111,9 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                 charge = 0;
                 player.itemAnimation = 16;
                 player.itemAnimationMax = 16;
+                if(frame==5) {
+                    Main.PlaySound(2, (int)position.X, (int)position.Y, 122, 0.5f, 1f);
+                }
             }
             return false;
         }

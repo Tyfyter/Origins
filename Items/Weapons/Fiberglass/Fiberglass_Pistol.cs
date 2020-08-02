@@ -10,12 +10,12 @@ namespace Origins.Items.Weapons.Fiberglass {
 			Tooltip.SetDefault("Be careful, it's sharp");
 		}
 		public override void SetDefaults() {
-			item.damage = 12;
+			item.damage = 11;
 			item.ranged = true;
 			item.width = 18;
 			item.height = 36;
-			item.useTime = 10;
-			item.useAnimation = 10;
+			item.useTime = 12;
+			item.useAnimation = 12;
 			item.useStyle = 5;
 			item.knockBack = 1;
 			item.value = 5000;
