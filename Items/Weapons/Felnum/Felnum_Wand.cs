@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,14 @@ namespace Origins.Items.Weapons.Felnum {
             item.damage = 21;
             item.shootSpeed*=0.66f;
             item.UseSound = null;
+        }
+        public override void AddRecipes() {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 7);
+            recipe.AddIngredient(ItemID.FallenStar);
+            recipe.SetResult(this);
+            recipe.AddTile(TileID.Anvils);
+            recipe.AddRecipe();
         }
         public override void GetWeaponDamage(Player player, ref int damage) {
             //if(!OriginPlayer.ItemChecking)

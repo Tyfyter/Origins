@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using Origins.World;
 using Terraria;
 using Terraria.DataStructures;
@@ -42,6 +43,20 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 			item.rare = ItemRarityID.Lime;
 			item.UseSound = SoundID.Item1;
 		}
+        public override void AddRecipes() {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 12);
+            recipe.AddIngredient(ItemID.OrichalcumBar, 7);
+            recipe.SetResult(this);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.AddRecipe();
+            recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 12);
+            recipe.AddIngredient(ItemID.MythrilBar, 7);
+            recipe.SetResult(this);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.AddRecipe();
+        }
 
         public override bool AltFunctionUse(Player player) {
             return true;

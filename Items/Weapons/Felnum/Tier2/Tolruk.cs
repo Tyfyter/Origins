@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -12,7 +13,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         public static short[] glowmasks;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tolruk");
-			Tooltip.SetDefault("/tɵlɹɘk/\nSprite needs reshaping to be less like dart rifle");
+			Tooltip.SetDefault("[tɵlɹɘk]\nSprite needs reshaping to be less like dart rifle");
             glowmasks = new short[]{
                 -1,//Origins.AddGlowMask("Weapons/Felnum/Tier2/Tolruk_Glow_0"),
                 Origins.AddGlowMask("Weapons/Felnum/Tier2/Tolruk_Glow_1"),
@@ -45,6 +46,20 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 			item.rare = ItemRarityID.Lime;
 			item.UseSound = SoundID.Item11;
 		}
+        public override void AddRecipes() {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 15);
+            recipe.AddIngredient(ItemID.OrichalcumBar, 9);
+            recipe.SetResult(this);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.AddRecipe();
+            recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 15);
+            recipe.AddIngredient(ItemID.MythrilBar, 9);
+            recipe.SetResult(this);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.AddRecipe();
+        }
         public override void HoldStyle(Player player) {
             if(charge>0) {
                 charge--;
@@ -58,7 +73,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             Projectile p = Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), type, damage+charge, knockBack, player.whoAmI);
-            if(p.penetrate>0&&Main.rand.Next(5)==0) {
+            if(p.penetrate>0&&Main.rand.Next(5-charge/10)==0) {
                 p.penetrate++;
                 p.localNPCHitCooldown = 10;
                 p.usesLocalNPCImmunity = true;

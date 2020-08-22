@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,6 +23,13 @@ namespace Origins.Items.Weapons.Felnum {
             item.useTime = item.useAnimation = 32;
             item.shootSpeed*=2.5f;
             item.autoReuse = false;
+        }
+        public override void AddRecipes() {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 7);
+            recipe.SetResult(this);
+            recipe.AddTile(TileID.Anvils);
+            recipe.AddRecipe();
         }
         public override Vector2? HoldoutOffset() {
             return new Vector2(-8f,0);

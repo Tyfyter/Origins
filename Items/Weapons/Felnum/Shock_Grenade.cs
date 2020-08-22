@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -25,6 +26,12 @@ namespace Origins.Items.Weapons.Felnum {
 		}
         public override void AddRecipes() {
             Origins.AddExplosive(item);
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>());
+            recipe.AddIngredient(ItemID.Grenade, 70);
+            recipe.SetResult(this, 70);
+            recipe.AddTile(TileID.Anvils);
+            recipe.AddRecipe();
         }
         public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref int damage, ref float knockback) {
             damage-=16;
