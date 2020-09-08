@@ -10,6 +10,7 @@ using Terraria.DataStructures;
 using Terraria.ModLoader;
 using SysDraw = System.Drawing;
 using Bitmap = System.Drawing.Bitmap;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Origins {
     public class DrawAnimationManual : DrawAnimation {
@@ -38,10 +39,11 @@ namespace Origins {
     }
     public static class OriginExtensions {
         public static Func<float, int, Vector2> drawPlayerItemPos;
-        public static void PlaySound(string Name, Vector2 Position, float Volume = 1f, float PitchVariance = 1f){
+        public static void PlaySound(string Name, Vector2 Position, float Volume = 1f, float PitchVariance = 1f, float? Pitch = null){
             if (Main.dedServ || string.IsNullOrEmpty(Name)) return;
             var sound = Origins.instance.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/" + Name);
-            Main.PlaySound(sound.WithVolume(Volume).WithPitchVariance(PitchVariance), Position);
+            SoundEffectInstance SEI = Main.PlaySound(sound.WithVolume(Volume).WithPitchVariance(PitchVariance), Position);
+            if(Pitch.HasValue)SEI.Pitch = Pitch.Value;
         }
         public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {
             return drawPlayerItemPos(gravdir, itemtype);

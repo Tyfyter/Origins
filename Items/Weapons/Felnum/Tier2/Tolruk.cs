@@ -72,13 +72,15 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 			return new Vector2(-12,0);
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+            Vector2 offset = new Vector2(speedX, speedY).SafeNormalize(Vector2.Zero);
+            position -= offset.RotatedBy(MathHelper.PiOver2) * player.direction * 3;
             Projectile p = Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), type, damage+charge, knockBack, player.whoAmI);
             if(p.penetrate>0&&Main.rand.Next(5-charge/10)==0) {
                 p.penetrate++;
                 p.localNPCHitCooldown = 10;
                 p.usesLocalNPCImmunity = true;
             }
-            PlaySound("DeepBoom", position, 0.5f);
+            PlaySound("DeepBoom", position, 0.15f, Pitch:1f);
             if(charge >= 40) {
                 Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), ModContent.ProjectileType<Tolruk_Bolt>(), damage*3, knockBack, player.whoAmI);
                 charge = 0;

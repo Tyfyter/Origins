@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Felnum {
     public class Felnum_Wand : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Zeus");
+            DisplayName.SetDefault("Magnus");
             Tooltip.SetDefault("Recieves 50% higher damage bonuses");
 			Item.staff[item.type] = true;
         }

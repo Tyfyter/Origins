@@ -101,4 +101,13 @@ namespace Origins.Items.Materials {
             item.maxStack = 999;
         }
     }
+    /*public class Valkyrum_Bar : ModItem {
+        //Alloy of Felnum and Angelium
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Valkyrum Bar");
+        }
+        public override void SetDefaults() {
+            item.maxStack = 999;
+        }
+    }*/
 }

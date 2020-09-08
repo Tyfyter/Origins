@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         public int charge = 0;
         internal int frame = 5;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Felnum Broadsword");
+			DisplayName.SetDefault("Tyrfing"/*"Felnum Broadsword"*/);
 			Tooltip.SetDefault("Behold\nHold right click to stab");
             animation = new DrawAnimationManual(6);
             animation.Frame = 5;
