@@ -154,7 +154,7 @@ namespace Origins.Items.Weapons.Explosives {
             damage-=(int)(damage*((duration-projectile.timeLeft) / (float)duration)*0.6f);
         }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) {
-            damage-=(int)(damage*((duration-projectile.timeLeft) / (float)duration)*0.8f);
+            damage-=(int)(damage*((duration-projectile.timeLeft) / (float)duration)*0.95f);
         }
         public override void ModifyHitPvp(Player target, ref int damage, ref bool crit) {
             damage-=(int)(damage*((duration-projectile.timeLeft) / (float)duration)*0.6f);

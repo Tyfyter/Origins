@@ -24,10 +24,10 @@ namespace Origins.Items.Weapons.Explosives {
             //item.maxStack = 999;
             item.width = 44;
             item.height = 18;
-            item.damage = 24;
+            item.damage = 34;
 			item.value/=2;
-			item.useTime = (int)(item.useTime*1.45);
-			item.useAnimation = (int)(item.useAnimation*1.45);
+			item.useTime = (int)(item.useTime*1.35);
+			item.useAnimation = (int)(item.useAnimation*1.35);
             item.shoot = ModContent.ProjectileType<Thermite_P>();
             item.useAmmo = 0;
             item.knockBack = 2f;
@@ -55,7 +55,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override void AI() {
             if(projectile.wet) {
 			    Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 14);
-                int p = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Awe_Grenade_Blast>(), projectile.damage, 24, projectile.owner);
+                int p = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Awe_Grenade_Blast>(), (int)(projectile.damage*0.75f), 24, projectile.owner);
                 Main.projectile[p].Name = projectile.Name;
                 Main.projectile[p].scale = 0.3f;
                 Main.projectile[p].extraUpdates = 1;
