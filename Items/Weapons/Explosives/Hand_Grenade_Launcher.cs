@@ -79,8 +79,18 @@ namespace Origins.Items.Weapons.Explosives {
                     position+=speed.SafeNormalize(Vector2.Zero)*40;
                     type = ModContent.ProjectileType<Acid_Splash_P>();
                     damage-=20;
-                    for(int i = Main.rand.Next(1); ++i < 5;) {
+                    for(int i = Main.rand.Next(2); ++i < 5;) {
                         Projectile.NewProjectileDirect(position, speed.RotatedByRandom(0.1*i)*0.6f, type, damage/2, knockBack, player.whoAmI).scale = 0.85f;
+                    }
+                    return false;
+                }
+                if(type == ModContent.ProjectileType<Crystal_Grenade_P>()) {
+                    Vector2 speed = new Vector2(speedX, speedY);
+                    position+=speed.SafeNormalize(Vector2.Zero)*40;
+                    type = ModContent.ProjectileType<Crystal_Grenade_Shard>();
+                    damage-=10;
+                    for(int i = Main.rand.Next(3); ++i < 10;) {
+                        Projectile.NewProjectile(position, speed.RotatedByRandom(0.1*i)*0.6f, type, damage/2, knockBack, player.whoAmI);
                     }
                     return false;
                 }

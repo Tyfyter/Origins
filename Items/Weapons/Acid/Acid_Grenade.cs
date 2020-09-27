@@ -48,7 +48,7 @@ namespace Origins.Items.Weapons.Acid {
 			projectile.Damage();
 			//Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 2f, 1f);
             int t = ModContent.ProjectileType<Acid_Splash_P>();
-            for(int i = Main.rand.Next(1); i < 4; i++)Projectile.NewProjectileDirect(projectile.Center, Main.rand.NextVector2Unit()*4, t, projectile.damage/8, 6, projectile.owner, ai1:-0.5f).scale = 0.85f;
+            for(int i = Main.rand.Next(2); i < 4; i++)Projectile.NewProjectileDirect(projectile.Center, (Main.rand.NextVector2Unit()*4)+(projectile.velocity/8), t, projectile.damage/8, 6, projectile.owner, ai1:-0.5f).scale = 0.85f;
         }
     }
 }

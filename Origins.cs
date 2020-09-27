@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -36,6 +38,7 @@ namespace Origins {
         public static int FelnumBodyArmorID;
         public static int FelnumLegsArmorID;
         public static int[] celestineBoosters;
+        public static MiscShaderData perlinFade0;
 		public Origins() {
             instance = this;
             celestineBoosters = new int[3];
@@ -132,6 +135,10 @@ namespace Origins {
             ExplosiveItemPreRegistry = new Stack<int>();
             ExplosiveAmmoPreRegistry = new Stack<int>();
             OriginExtensions.drawPlayerItemPos = (Func<float,int,Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos",BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float,int,Vector2>), Main.instance);
+            perlinFade0 = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/PerlinFade")), "RedFade");
+            perlinFade0.UseImage("Images/Misc/Perlin");
+            perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.6f);
+            perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.6f);
         }
         public override void Unload() {
             ExplosiveProjectiles = null;
@@ -140,6 +147,7 @@ namespace Origins {
             ExplosiveBaseDamage = null;
             ExplosiveModOnHit = null;
             celestineBoosters = null;
+            perlinFade0 = null;
             OriginExtensions.drawPlayerItemPos = null;
             instance = null;
         }
