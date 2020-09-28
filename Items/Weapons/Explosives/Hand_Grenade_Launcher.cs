@@ -90,7 +90,9 @@ namespace Origins.Items.Weapons.Explosives {
                     type = ModContent.ProjectileType<Crystal_Grenade_Shard>();
                     damage-=10;
                     for(int i = Main.rand.Next(3); ++i < 10;) {
-                        Projectile.NewProjectile(position, speed.RotatedByRandom(0.1*i)*0.6f, type, damage/2, knockBack, player.whoAmI);
+                        int p = Projectile.NewProjectile(position, speed.RotatedByRandom(0.025*i)*0.6f, type, damage/2, knockBack, player.whoAmI);
+                        Main.projectile[p].timeLeft+=90;
+                        Main.projectile[p].extraUpdates++;
                     }
                     return false;
                 }

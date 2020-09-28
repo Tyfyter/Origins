@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -121,6 +122,9 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Shard");
             id = projectile.type;
+            ProjectileID.Sets.TrailingMode[id] = 0;
+            //Main.projectileTexture[94] = Main.instance.OurLoad<Texture2D>(string.Concat(new object[]{"Images",Path.DirectorySeparatorChar,"Projectile_94"}));
+		    //Main.projectileLoaded[94] = true;
 		}
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.CrystalStorm);
@@ -135,10 +139,14 @@ namespace Origins.Items.Weapons.Explosives {
             projectile.rotation = Main.rand.NextFloatDirection();
         }
         public override Color? GetAlpha(Color lightColor) {
+            //float a = Math.Min(projectile.timeLeft/10f, 1);
 			return new Color(200, 200, 200, 25);
         }
         public override bool OnTileCollide(Vector2 oldVelocity) {
-            if(projectile.timeLeft<25)return true;
+            if(projectile.timeLeft<25) {
+                projectile.Kill();
+                return false;
+            }
 			if (projectile.velocity.X != oldVelocity.X){
 				projectile.velocity.X = 0f - oldVelocity.X;
 			}
