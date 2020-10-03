@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Acid {
     public class Splashid : ModItem, IElementalItem {
-        public short element => Elements.acid;
+        public ushort element => Elements.Acid;
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acid Splash");

@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Other {
 	public class Tones_Of_Agony : ModItem, IElementalItem {
-        public short element => Elements.earth;
+        public ushort element => Elements.Earth;
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tones Of Agony");

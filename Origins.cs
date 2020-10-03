@@ -34,6 +34,7 @@ namespace Origins {
         public static Stack<int> ExplosiveAmmoPreRegistry;
         public static Dictionary<int,int> ExplosiveBaseDamage;
         public static List<int> ExplosiveModOnHit;
+        public static ushort[] VanillaElements;
         public static int FelnumHeadArmorID;
         public static int FelnumBodyArmorID;
         public static int FelnumLegsArmorID;
@@ -134,6 +135,99 @@ namespace Origins {
             ExplosiveProjectilePreRegistry = new Stack<int>();
             ExplosiveItemPreRegistry = new Stack<int>();
             ExplosiveAmmoPreRegistry = new Stack<int>();
+        #region vanilla weapon elements
+            VanillaElements = ItemID.Sets.Factory.CreateUshortSet(0,
+            #region fire
+                (ushort)ItemID.FlamingArrow, Elements.Fire,
+                (ushort)ItemID.FlareGun, Elements.Fire,
+                (ushort)ItemID.WandofSparking, Elements.Fire,
+                (ushort)ItemID.FieryGreatsword, Elements.Fire,
+                (ushort)ItemID.MoltenPickaxe, Elements.Fire,
+                (ushort)ItemID.MoltenHamaxe, Elements.Fire,
+                (ushort)ItemID.ImpStaff, Elements.Fire,
+                (ushort)ItemID.FlowerofFire, Elements.Fire,
+                (ushort)ItemID.Flamelash, Elements.Fire,
+                (ushort)ItemID.Sunfury, Elements.Fire,
+                (ushort)ItemID.Flamethrower, Elements.Fire,
+                (ushort)ItemID.EldMelter, Elements.Fire,
+                (ushort)ItemID.InfernoFork, Elements.Fire,
+                (ushort)ItemID.Cascade, Elements.Fire,
+                (ushort)ItemID.HelFire, Elements.Fire,
+                (ushort)ItemID.HellwingBow, Elements.Fire,
+                (ushort)ItemID.PhoenixBlaster, Elements.Fire,
+                (ushort)ItemID.MoltenFury, Elements.Fire,
+                (ushort)ItemID.DD2FlameburstTowerT1Popper, Elements.Fire,
+                (ushort)ItemID.DD2FlameburstTowerT2Popper, Elements.Fire,
+                (ushort)ItemID.DD2FlameburstTowerT3Popper, Elements.Fire,
+                (ushort)ItemID.DD2PhoenixBow, Elements.Fire,
+                (ushort)ItemID.FrostburnArrow, Elements.Fire|Elements.Ice,
+                (ushort)ItemID.FlowerofFrost, Elements.Fire|Elements.Ice,
+                (ushort)ItemID.Amarok, Elements.Fire|Elements.Ice,
+                (ushort)ItemID.CursedArrow, Elements.Fire|Elements.Acid,
+                (ushort)ItemID.CursedBullet, Elements.Fire|Elements.Acid,
+                (ushort)ItemID.CursedFlames, Elements.Fire|Elements.Acid,
+                (ushort)ItemID.CursedDart, Elements.Fire|Elements.Acid,
+                (ushort)ItemID.ClingerStaff, Elements.Fire|Elements.Acid,
+                (ushort)ItemID.ShadowFlameBow, Elements.Fire,
+                (ushort)ItemID.ShadowFlameHexDoll, Elements.Fire,
+                (ushort)ItemID.ShadowFlameKnife, Elements.Fire,
+                (ushort)ItemID.SolarFlareAxe, Elements.Fire,
+                (ushort)ItemID.SolarFlareChainsaw, Elements.Fire,
+                (ushort)ItemID.SolarFlareDrill, Elements.Fire,
+                (ushort)ItemID.SolarFlareHammer, Elements.Fire,
+                (ushort)ItemID.SolarFlarePickaxe, Elements.Fire,
+                (ushort)ItemID.DayBreak, Elements.Fire,
+                (ushort)ItemID.SolarEruption, Elements.Fire,
+            #endregion fire
+            #region ice
+                (ushort)ItemID.IceBlade, Elements.Ice,
+                (ushort)ItemID.IceBoomerang, Elements.Ice,
+                (ushort)ItemID.IceRod, Elements.Ice,
+                (ushort)ItemID.IceBow, Elements.Ice,
+                (ushort)ItemID.IceSickle, Elements.Ice,
+                (ushort)ItemID.FrostDaggerfish, Elements.Ice,
+                (ushort)ItemID.FrostStaff, Elements.Ice,
+                (ushort)ItemID.Frostbrand, Elements.Ice,
+                (ushort)ItemID.StaffoftheFrostHydra, Elements.Ice,
+                (ushort)ItemID.NorthPole, Elements.Ice,
+                (ushort)ItemID.BlizzardStaff, Elements.Ice,
+                (ushort)ItemID.SnowballCannon, Elements.Ice,
+                (ushort)ItemID.SnowmanCannon, Elements.Ice,
+            #endregion ice
+            #region earth
+                (ushort)ItemID.CrystalBullet, Elements.Earth,
+                (ushort)ItemID.CrystalDart, Elements.Earth,
+                (ushort)ItemID.CrystalSerpent, Elements.Earth,
+                (ushort)ItemID.CrystalStorm, Elements.Earth,
+                (ushort)ItemID.CrystalVileShard, Elements.Earth,
+                (ushort)ItemID.MeteorStaff, Elements.Earth,
+                (ushort)ItemID.Seedler, Elements.Earth,
+                (ushort)ItemID.MushroomSpear, Elements.Earth,
+                (ushort)ItemID.Hammush, Elements.Earth,
+                (ushort)ItemID.StaffofEarth, Elements.Earth,
+                (ushort)ItemID.BladeofGrass, Elements.Earth,
+                (ushort)ItemID.ThornChakram, Elements.Earth,
+                (ushort)ItemID.PoisonStaff, Elements.Earth,
+                (ushort)ItemID.Toxikarp, Elements.Earth,
+                (ushort)ItemID.VenomArrow, Elements.Earth,
+                (ushort)ItemID.VenomBullet, Elements.Earth,
+                (ushort)ItemID.VenomStaff, Elements.Earth,
+                (ushort)ItemID.SpiderStaff, Elements.Earth,
+                (ushort)ItemID.QueenSpiderStaff, Elements.Earth,
+                (ushort)ItemID.ChlorophyteArrow, Elements.Earth,
+                (ushort)ItemID.ChlorophyteBullet, Elements.Earth,
+                (ushort)ItemID.ChlorophyteChainsaw, Elements.Earth,
+                (ushort)ItemID.ChlorophyteClaymore, Elements.Earth,
+                (ushort)ItemID.ChlorophyteDrill, Elements.Earth,
+                (ushort)ItemID.ChlorophyteGreataxe, Elements.Earth,
+                (ushort)ItemID.ChlorophyteJackhammer, Elements.Earth,
+                (ushort)ItemID.ChlorophytePartisan, Elements.Earth,
+                (ushort)ItemID.ChlorophytePickaxe, Elements.Earth,
+                (ushort)ItemID.ChlorophyteSaber, Elements.Earth,
+                (ushort)ItemID.ChlorophyteShotbow, Elements.Earth,
+                (ushort)ItemID.ChlorophyteWarhammer, Elements.Earth);
+            #endregion earth
+        #endregion vanilla weapon elements
             OriginExtensions.drawPlayerItemPos = (Func<float,int,Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos",BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float,int,Vector2>), Main.instance);
             perlinFade0 = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/PerlinFade")), "RedFade");
             perlinFade0.UseImage("Images/Misc/Perlin");
@@ -146,6 +240,7 @@ namespace Origins {
             ExplosiveAmmo = null;
             ExplosiveBaseDamage = null;
             ExplosiveModOnHit = null;
+            VanillaElements = null;
             celestineBoosters = null;
             perlinFade0 = null;
             OriginExtensions.drawPlayerItemPos = null;

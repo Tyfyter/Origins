@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Caustica : ModItem, IElementalItem {
-        public short element => Elements.acid;
+        public ushort element => Elements.Acid;
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Caustica");
@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             int a = Main.rand.Next(5,7);
             for(int i = 0; ++i < a; a = Main.rand.Next(5,7)) {
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(((i-a/2f)/a)*0.35), type, damage/5, knockBack, player.whoAmI, 0, 12f);
+                Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(((i-a/2f)/a)*0.35), type, damage/2, knockBack, player.whoAmI, 0, 12f);
             }
             return false;
         }

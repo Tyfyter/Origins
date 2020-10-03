@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 using SysDraw = System.Drawing;
 using Bitmap = System.Drawing.Bitmap;
 using Microsoft.Xna.Framework.Audio;
+using Terraria.ID;
 
 namespace Origins {
     public class DrawAnimationManual : DrawAnimation {
@@ -30,12 +31,13 @@ namespace Origins {
         DrawAnimation Animation { get; }
     }
     public interface IElementalItem {
-        short element { get; }
+        ushort element { get; }
     }
     public static class Elements {
-        public const short fire = 1;
-        public const short earth = 2;
-        public const short acid = 4;
+        public const ushort Fire = 1;
+        public const ushort Earth = 2;
+        public const ushort Acid = 4;
+        public const ushort Ice = 4;
     }
     public static class OriginExtensions {
         public static Func<float, int, Vector2> drawPlayerItemPos;
