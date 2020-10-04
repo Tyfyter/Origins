@@ -12,6 +12,7 @@ using SysDraw = System.Drawing;
 using Bitmap = System.Drawing.Bitmap;
 using Microsoft.Xna.Framework.Audio;
 using Terraria.ID;
+using System.Runtime.CompilerServices;
 
 namespace Origins {
     public class DrawAnimationManual : DrawAnimation {
@@ -47,6 +48,7 @@ namespace Origins {
             SoundEffectInstance SEI = Main.PlaySound(sound.WithVolume(Volume).WithPitchVariance(PitchVariance), Position);
             if(Pitch.HasValue)SEI.Pitch = Pitch.Value;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {
             return drawPlayerItemPos(gravdir, itemtype);
         }
@@ -144,6 +146,10 @@ namespace Origins {
                 }
             }
             return bitmap;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double umod(double dividend, double divisor) {
+            return dividend - Math.Floor(dividend/divisor) * divisor;
         }
     }
 }
