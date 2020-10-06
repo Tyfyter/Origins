@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Other {
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tones Of Agony");
-			Tooltip.SetDefault("Chee please add description");
+			Tooltip.SetDefault("A tome full of ancient spells used for harming another with malicious intent.");
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);
