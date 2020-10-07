@@ -4,3 +4,9 @@ bin/*
 Thumbs.db
 .vs/Origins/v15/*
 .vs/
+*.ide-wal
+*.ide-shm
+*.ide
+.vs/Origins/v15/.suo
+.vs/Origins/DesignTimeBuild/.dtbcache
+.vs/Origins/v15/.suo

@@ -8,9 +8,8 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons.Felnum {
+namespace Origins.Items.Accessories {
     public class Bomb_Yeeter : ModItem {
-        public override string Texture => "Terraria/Item_3334";
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomb Handling Device");
             Tooltip.SetDefault("placeholder sprite");
