@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Explosives {
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Caustica");
-			Tooltip.SetDefault("Needs Resprite, currently vampire knives with palette from Caustacyst");
+			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);

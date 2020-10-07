@@ -14,7 +14,6 @@ using static Microsoft.Xna.Framework.MathHelper;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Ace_Shrapnel : ModItem {
-        public override string Texture => "Terraria/Item_"+ItemID.ProximityMineLauncher;
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Ace Shrapnel");
