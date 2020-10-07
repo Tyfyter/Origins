@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Explosives {
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.ProximityMineLauncher);
-			item.damage = 270;
+			item.damage = 170;
 			item.noMelee = true;
             item.useStyle = 5;
 			item.useTime = 28;
@@ -36,7 +36,9 @@ namespace Origins.Items.Weapons.Explosives {
             Origins.AddExplosive(item);
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, 8);
+            type-=ModContent.ProjectileType<Ace_Shrapnel_P>();
+            type/=3;
+            Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<Ace_Shrapnel_P>(), damage/2, knockBack, player.whoAmI, 6+type, 0-type);
             return false;
         }
     }
@@ -55,10 +57,15 @@ namespace Origins.Items.Weapons.Explosives {
             projectile.ignoreWater = true;
         }
         public override void AI() {
-            Dust.NewDustDirect(projectile.Center, 0, 0, 6, Scale:2).noGravity = true;
+            Dust.NewDustDirect(projectile.Center, 0, 0, 6, Scale:0.4f).noGravity = true;
             if(projectile.ai[0]>0 && projectile.timeLeft%6==0) {
                 projectile.ai[0]--;
-                Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedByRandom(1)*1.1f, ModContent.ProjectileType<Ace_Shrapnel_Shard>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI);
+                if(projectile.velocity.Length()<1) {
+                    Vector2 v = Main.rand.NextVector2Unit()*6;
+                    Projectile.NewProjectile(projectile.Center+v*8, v.RotatedBy(PiOver2), ModContent.ProjectileType<Ace_Shrapnel_Shard>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI, projectile.ai[1]+1);
+                    return;
+                }
+                Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedByRandom(1)*1.1f, ModContent.ProjectileType<Ace_Shrapnel_Shard>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI, projectile.ai[1]+1);
             }
         }
         public override bool? CanHitNPC(NPC target) {
@@ -69,35 +76,42 @@ namespace Origins.Items.Weapons.Explosives {
         }
     }
     public class Ace_Shrapnel_Shard : ModProjectile {
+
+        const float cohesion = 0.5f;
+
+        const double chaos = 0.1f;
+
         public override string Texture => "Terraria/Projectile_"+ProjectileID.BoneGloveProj;
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bullet);
             projectile.aiStyle = 0;
-            projectile.penetrate = -1;
+            projectile.penetrate = 3;
             projectile.extraUpdates = 0;
             projectile.width = projectile.height = 10;
             projectile.timeLeft = 120;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 20;
             projectile.ignoreWater = true;
         }
         public override void AI() {
-            Dust.NewDustPerfect(projectile.Center, 0, Vector2.Zero, Scale:0.4f).noGravity = true;
+            Dust.NewDustPerfect(projectile.Center, 1, Vector2.Zero).noGravity = true;
             if(projectile.ai[0]>=0) {
                 Projectile center = Main.projectile[(int)projectile.ai[0]];
                 if(!center.active) {
                     projectile.ai[0] = -1;
                     return;
                 }
-                projectile.velocity = projectile.velocity.RotatedByRandom(0.05);
-                float angle = projectile.velocity.ToRotation();
+                projectile.velocity = projectile.velocity.RotatedByRandom(chaos);
+                //float angle = projectile.velocity.ToRotation();
                 float targetAngle = (center.Center - projectile.Center).ToRotation();
-                projectile.velocity = projectile.velocity.RotatedBy(Clamp((float)umod((targetAngle+angle+Pi), TwoPi)-Pi, -0.05f, 0.05f));
-                Dust.NewDustDirect(projectile.Center+new Vector2(16,0).RotatedBy(targetAngle), 0, 0, 6, Scale:2).noGravity = true;
+                projectile.velocity = (projectile.velocity+new Vector2(cohesion*(projectile.ai[1]>1?2:1),0).RotatedBy(targetAngle)).SafeNormalize(Vector2.Zero)*projectile.velocity.Length();
+                //projectile.velocity = projectile.velocity.RotatedBy(Clamp((float)AngleDif(targetAngle,angle), -0.05f, 0.05f));
+                //Dust.NewDustDirect(projectile.Center+new Vector2(16,0).RotatedBy(targetAngle), 0, 0, 6, Scale:2).noGravity = true;
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
-            return true;
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+            target.immune[projectile.owner]/=2;
+            if(target.life<=0 && projectile.ai[1]<5) {
+                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Ace_Shrapnel_P>(), projectile.damage, projectile.knockBack, projectile.owner, 8-projectile.ai[1], projectile.ai[1]);
+            }
         }
     }
 }

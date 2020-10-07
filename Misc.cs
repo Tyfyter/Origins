@@ -64,8 +64,12 @@ namespace Origins {
             }
             return pos;
         }
+        [Obsolete]
         public static Vector2 Clamp(this Vector2 value, Vector2 min, Vector2 max) {
             return new Vector2(MathHelper.Clamp(value.X,min.X,max.X), MathHelper.Clamp(value.Y,min.Y,max.Y));
+        }
+        public static Vector2 Clamp(this Vector2 value, Rectangle area) {
+            return new Vector2(MathHelper.Clamp(value.X,area.X,area.Right), MathHelper.Clamp(value.Y,area.Y,area.Bottom));
         }
         public static double AngleDif(double alpha, double beta) {
             double phi = Math.Abs(beta - alpha) % (Math.PI*2);       // This is either the distance or 360 - distance
@@ -146,10 +150,6 @@ namespace Origins {
                 }
             }
             return bitmap;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double umod(double dividend, double divisor) {
-            return dividend - Math.Floor(dividend/divisor) * divisor;
         }
     }
 }
