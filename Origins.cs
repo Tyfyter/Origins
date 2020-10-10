@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
 using Terraria.Graphics;
+using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -40,6 +41,7 @@ namespace Origins {
         public static int FelnumLegsArmorID;
         public static int[] celestineBoosters;
         public static MiscShaderData perlinFade0;
+        public static MiscShaderData blackHoleShade;
 		public Origins() {
             instance = this;
             celestineBoosters = new int[3];
@@ -227,12 +229,18 @@ namespace Origins {
                 (ushort)ItemID.ChlorophyteShotbow, Elements.Earth,
                 (ushort)ItemID.ChlorophyteWarhammer, Elements.Earth);
             #endregion earth
-        #endregion vanilla weapon elements
-            OriginExtensions.drawPlayerItemPos = (Func<float,int,Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos",BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float,int,Vector2>), Main.instance);
-            perlinFade0 = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/PerlinFade")), "RedFade");
-            perlinFade0.UseImage("Images/Misc/Perlin");
-            perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.6f);
-            perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.6f);
+            #endregion vanilla weapon elements
+            if(Main.netMode != NetmodeID.Server) {
+                OriginExtensions.drawPlayerItemPos = (Func<float, int, Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float, int, Vector2>), Main.instance);
+                perlinFade0 = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/PerlinFade")), "RedFade");
+                perlinFade0.UseImage("Images/Misc/Perlin");
+                perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.6f);
+                perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.6f);
+                blackHoleShade = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/BlackHole")), "BlackHole");
+                //Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.
+                //Filters.Scene["BlackHole"] = new Filter(new ScreenShaderData(screenRef, "BlackHole"), EffectPriority.VeryHigh);
+                //Filters.Scene["BlackHole"].Load();
+            }
         }
         public override void Unload() {
             ExplosiveProjectiles = null;
@@ -243,6 +251,7 @@ namespace Origins {
             VanillaElements = null;
             celestineBoosters = null;
             perlinFade0 = null;
+            blackHoleShade = null;
             OriginExtensions.drawPlayerItemPos = null;
             instance = null;
         }
