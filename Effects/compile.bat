@@ -1,3 +1,3 @@
 @echo off
-fxcompiler.exe
-timeout 5
+fxcompiler.exe>log.log
+log.log

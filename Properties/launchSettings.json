@@ -3,6 +3,7 @@
     "Terraria": {
       "commandName": "Executable",
       "executablePath": "$(tMLPath)",
+      "commandLineArgs": "-tmlsavedirectory \"C:\\Users\\Tyfyter\\Documents\\My Games\\Terraria\\OriginTML\"",
       "workingDirectory": "$(TerrariaSteamPath)"
     },
     "TerrariaServer": {

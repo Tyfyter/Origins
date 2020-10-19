@@ -1,0 +1,18 @@
+Description file detected: 2
+* BlackHole.fx
+* PerlinFade.fx
+
+Start loading description file: BlackHole.fx ..Done!
+Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\BlackHole.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\BlackHole.fx
+.Done!
+Start compiling font content file: BlackHole.xnb ..Done!
+
+Start loading description file: PerlinFade.fx ..Done!
+Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\PerlinFade.fx: warning X3081: potentially unintended use of a comma expression in a variable initializer
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\PerlinFade.fx
+.Done!
+Start compiling font content file: PerlinFade.xnb ..Done!
+

@@ -137,7 +137,7 @@ namespace Origins {
             ExplosiveProjectilePreRegistry = new Stack<int>();
             ExplosiveItemPreRegistry = new Stack<int>();
             ExplosiveAmmoPreRegistry = new Stack<int>();
-        #region vanilla weapon elements
+            #region vanilla weapon elements
             VanillaElements = ItemID.Sets.Factory.CreateUshortSet(0,
             #region fire
                 (ushort)ItemID.FlamingArrow, Elements.Fire,
@@ -233,7 +233,7 @@ namespace Origins {
             if(Main.netMode != NetmodeID.Server) {
                 OriginExtensions.drawPlayerItemPos = (Func<float, int, Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float, int, Vector2>), Main.instance);
                 perlinFade0 = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/PerlinFade")), "RedFade");
-                perlinFade0.UseImage("Images/Misc/Perlin");
+                //perlinFade0.UseImage("Images/Misc/Perlin");
                 perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.6f);
                 perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.6f);
                 blackHoleShade = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/BlackHole")), "BlackHole");

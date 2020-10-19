@@ -2,11 +2,14 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
+using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
+using static Microsoft.Xna.Framework.MathHelper;
+using SysDraw = System.Drawing;
 
 namespace Origins.Items.Weapons.Explosives {
 	public class Crystal_Grenade : ModItem {
@@ -97,13 +100,41 @@ namespace Origins.Items.Weapons.Explosives {
             }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor) {
+            //SysDraw.Bitmap lightMap = new SysDraw.Bitmap(10, 10);
+            //mod.Logger.Info("setting up variables");
+            Texture2D lightMap = new Texture2D(spriteBatch.GraphicsDevice, 10, 10);
+            Color[] lightData = new Color[100];
+            Vector2 pos = projectile.position;
+            Vector3 col;
+            //mod.Logger.Info("set up variables");
+            for(int x = 0; x < 10; x++) {
+                pos.X+=2;
+                for(int y = 0; y < 10; y++) {
+                    pos.Y+=2;
+                    col = Lighting.GetSubLight(pos);
+                    lightData[(y*10)+x] = new Color(((col.X+col.Y+col.Z)/1.5f-0.66f)*Min(projectile.timeLeft/85f, 1),0,0);
+                    //lightMap.SetPixel(x,y,SysDraw.Color.FromArgb(255,(int)((col.X+col.Y+col.Z)/3),0,0));
+                }
+                pos.Y-=20;
+            }
+            //mod.Logger.Info("setting data");
+            lightMap.SetData(lightData);
+            //mod.Logger.Info("set data");
 			spriteBatch.End();
 			spriteBatch.Begin(SpriteSortMode.Immediate, blendState, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-            DrawData data2 = new DrawData(mod.GetTexture("Items/Weapons/Explosives/Crystal_Grenade_Purple"), projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255,255,255,projectile.timeLeft), projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
-            Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(new Vector2(projectile.position.Y, projectile.position.X));
+            DrawData data2 = new DrawData(mod.GetTexture("Items/Weapons/Explosives/Crystal_Grenade_Purple"), projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255,255,255,255), projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
+            //Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(projectile.position);
+            //Origins.perlinFade0.Shader.Parameters["uRotation"].SetValue(-projectile.rotation);
+            Main.graphics.GraphicsDevice.Textures[1] = lightMap;
+            Origins.perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0f);
+            Origins.perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.25f);
             Origins.perlinFade0.Apply(data2);
-            DrawData data = new DrawData(mod.GetTexture("Items/Weapons/Explosives/Crystal_Grenade_Pink"), projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255,255,255,projectile.timeLeft), projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
-            Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(projectile.position);
+            DrawData data = new DrawData(mod.GetTexture("Items/Weapons/Explosives/Crystal_Grenade_Pink"), projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255,255,255,255), projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
+            //Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(projectile.position);
+            //Origins.perlinFade0.Shader.Parameters["uRotation"].SetValue(projectile.rotation);
+            //Main.graphics.GraphicsDevice.Textures[1] = lightMap;
+            Origins.perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.5f);
+            Origins.perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.75f);
             Origins.perlinFade0.Apply(data);
 			data.Draw(spriteBatch);
             spriteBatch.End();
