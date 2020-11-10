@@ -12,10 +12,7 @@ namespace Origins.Items.Accessories {
     public class Bomb_Yeeter : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomb Handling Device");
-            Tooltip.SetDefault("placeholder sprite");
-        }
-        public override void SetDefaults() {
-            item.CloneDefaults(ItemID.YoYoGlove);
+            Tooltip.SetDefault("Also commonly referred to as the 'Bomb Yeeter'");
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().bombHandlingDevice = true;
