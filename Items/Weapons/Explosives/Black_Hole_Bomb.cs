@@ -7,6 +7,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using System;
+using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
 
 namespace Origins.Items.Weapons.Explosives {
@@ -36,6 +37,8 @@ namespace Origins.Items.Weapons.Explosives {
         const int initDur = 5;
         const int maxDur = 1800;
         const int growDur = 180;
+        const float distExp = 2.5f;
+        const float strengthMult = 512f;
         const int collapseDur = 10;
         const int totalDur = growDur+collapseDur;
         public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Bomb";
@@ -45,6 +48,8 @@ namespace Origins.Items.Weapons.Explosives {
             projectile.penetrate = -1;
             projectile.timeLeft = maxDur;
             projectile.scale = 0;
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = 4;
         }
         public override void AI() {
             if(Main.netMode != NetmodeID.Server) {
@@ -62,20 +67,34 @@ namespace Origins.Items.Weapons.Explosives {
                 scale = (collapseDur-projectile.timeLeft)/(collapseDur/2f);
             }
             //float range = 80*(projectile.scale+scale);
-            float strength = 32*(1+percent)*(projectile.scale+scale);
+            float strength = strengthMult*(1+percent)*(projectile.scale+scale);
             NPC target;
             for(int i = 0; i < Main.npc.Length; i++) {
                 target = Main.npc[i];
                 if(target.CanBeChasedBy()) {
                     float dist = (target.Center-projectile.Center).Length()/16f;
-                    float distSQ = (float)Math.Pow(dist,1.5f);
-                    float force = strength*(target.knockBackResist*0.95f+0.05f)/distSQ;
-                    if(force>1)target.velocity-=((target.Center-projectile.Center).SafeNormalize(Vector2.Zero)*Min(force, dist));
-                    if(force>=(projectile.Center.Clamp(target.Hitbox)-projectile.Center).Length()&&target.immune[projectile.owner]<=0) {
-                        target.StrikeNPC(projectile.damage/5, 0, 0);
-                        target.immune[projectile.owner] = 10;
+                    float distSQ = (float)Math.Pow(dist,distExp);
+                    float force = strength/distSQ;
+                    Vector2 dir = (projectile.Center-target.Center).SafeNormalize(Vector2.Zero);
+                    float point = (target.knockBackResist*0.9f+0.1f);
+                    point*=(float)Math.Min(AngleDif(dir.ToRotation(), target.velocity.ToRotation())+Clamp(force-target.velocity.Length(),0,1), 1);
+                    if(force>1)target.velocity = Vector2.Lerp(target.velocity, dir*Min(force, dist), point);
+                    if(force>=(projectile.Center.Clamp(target.Hitbox)-projectile.Center).Length()) {
+                        if(projectile.timeLeft>totalDur&&projectile.Hitbox.Intersects(target.Hitbox))OnHitNPC(target, 0, 0, false);
+                        if(projectile.localNPCImmunity[target.whoAmI]<=0) {
+                            target.StrikeNPC(projectile.damage/3, 0, 0);
+                            projectile.localNPCImmunity[target.whoAmI] = 10;
+                        }
                     }
                 }
+            }
+            Item targetItem;
+            for(int i = 0; i < Main.item.Length; i++) {
+                targetItem = Main.item[i];
+                float dist = (targetItem.Center-projectile.Center).Length()/16f;
+                float distSQ = (float)Math.Pow(dist,distExp);
+                float force = strength/distSQ;
+                if(force>1)targetItem.velocity = Vector2.Lerp(targetItem.velocity, (projectile.Center-targetItem.Center).SafeNormalize(Vector2.Zero)*Min(force, dist), 0.9f);
             }
         }
         public override bool OnTileCollide(Vector2 oldVelocity) {
@@ -103,8 +122,8 @@ namespace Origins.Items.Weapons.Explosives {
             projectile.friendly = true;
 			projectile.position.X += projectile.width / 2;
 			projectile.position.Y += projectile.height / 2;
-			projectile.width = 128;
-			projectile.height = 128;
+			projectile.width = 192;
+			projectile.height = 192;
 			projectile.position.X -= projectile.width / 2;
 			projectile.position.Y -= projectile.height / 2;
 			projectile.Damage();
