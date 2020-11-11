@@ -240,7 +240,7 @@ namespace Origins {
         });
         public static PlayerLayer ShootWrenchLayer = new PlayerLayer("Origins", "FiberglassBowLayer", null, delegate(PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;
-            float num77 = drawPlayer.itemRotation + 0.785f * (float)drawPlayer.direction;
+            float num77 = drawPlayer.itemRotation + MathHelper.PiOver4 * drawPlayer.direction;
             Item item = drawPlayer.inventory[drawPlayer.selectedItem];
             Texture2D itemTexture = Main.itemTexture[item.type];
             IAnimatedItem aItem = (IAnimatedItem)item.modItem;
@@ -260,21 +260,21 @@ namespace Origins {
 		});
         public static PlayerLayer SlashWrenchLayer = new PlayerLayer("Origins", "FelnumBroadswordLayer", null, delegate(PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;
-            float num77 = drawPlayer.itemRotation + 0.785f * (float)drawPlayer.direction;
+            float num77 = drawPlayer.itemRotation + MathHelper.PiOver4 * drawPlayer.direction;
             Item item = drawPlayer.inventory[drawPlayer.selectedItem];
             Texture2D itemTexture = Main.itemTexture[item.type];
             IAnimatedItem aItem = (IAnimatedItem)item.modItem;
             Rectangle frame = aItem.Animation.GetFrame(itemTexture);
-	        Color currentColor = Lighting.GetColor((int)((double)drawInfo2.position.X + (double)drawPlayer.width * 0.5) / 16, (int)(((double)drawInfo2.position.Y + (double)drawPlayer.height * 0.5) / 16.0));
+	        Color currentColor = Lighting.GetColor((int)(drawInfo2.position.X + drawPlayer.width * 0.5) / 16, (int)((drawInfo2.position.Y + drawPlayer.height * 0.5) / 16.0));
             SpriteEffects spriteEffects = (drawPlayer.direction==1?0:SpriteEffects.FlipHorizontally) | (drawPlayer.gravDir==1f?0:SpriteEffects.FlipVertically);
-            DrawData value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, drawPlayer.inventory[drawPlayer.selectedItem].GetAlpha(currentColor), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * (float)drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
+            DrawData value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, drawPlayer.inventory[drawPlayer.selectedItem].GetAlpha(currentColor), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
 			Main.playerDrawData.Add(value);
-			if (drawPlayer.inventory[drawPlayer.selectedItem].color != default(Color)){
-				value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, drawPlayer.inventory[drawPlayer.selectedItem].GetColor(currentColor), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * (float)drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
+			if (drawPlayer.inventory[drawPlayer.selectedItem].color != default){
+				value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, drawPlayer.inventory[drawPlayer.selectedItem].GetColor(currentColor), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
 				Main.playerDrawData.Add(value);
 			}
 			if (drawPlayer.inventory[drawPlayer.selectedItem].glowMask != -1){
-				value = new DrawData(Main.glowMaskTexture[drawPlayer.inventory[drawPlayer.selectedItem].glowMask], new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, new Color(250, 250, 250, item.alpha), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * (float)drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
+				value = new DrawData(Main.glowMaskTexture[drawPlayer.inventory[drawPlayer.selectedItem].glowMask], new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, new Color(250, 250, 250, item.alpha), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
 				Main.playerDrawData.Add(value);
 			}
 		});
@@ -293,7 +293,7 @@ namespace Origins {
             DrawData item;
             int a = (int)Math.Max(Math.Min((drawPlayer.GetModPlayer<OriginPlayer>().felnumShock*255)/drawPlayer.statLifeMax2, 255), 1);
             if(drawPlayer.head == Origins.FelnumHeadArmorID) {
-                Position = new Vector2((float)((int)(drawInfo2.position.X - Main.screenPosition.X - (float)drawPlayer.bodyFrame.Width / 2f + (float)drawPlayer.width / 2f)), (float)((int)(drawInfo2.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + drawInfo2.headOrigin;
+                Position = new Vector2(drawInfo2.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f, drawInfo2.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + drawInfo2.headOrigin;
                 Frame = new Rectangle?(drawPlayer.bodyFrame);
                 Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Head");
                 item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.headRotation, drawInfo2.headOrigin, 1f, spriteEffects, 0);
@@ -304,7 +304,7 @@ namespace Origins {
                 item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
                 Main.playerDrawData.Add(item);
             } else if(drawInfo2.drawHair||drawInfo2.drawAltHair||drawPlayer.head == ArmorIDs.Head.FamiliarWig) {
-                Position = new Vector2((float)((int)(drawInfo2.position.X - Main.screenPosition.X - (float)drawPlayer.bodyFrame.Width / 2f + (float)drawPlayer.width / 2f)), (float)((int)(drawInfo2.position.Y - Main.screenPosition.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f))) + drawPlayer.headPosition + drawInfo2.headOrigin;
+                Position = new Vector2(drawInfo2.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f, drawInfo2.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + drawInfo2.headOrigin;
                 Frame = new Rectangle?(drawPlayer.bodyFrame);
                 Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Eye");
                 item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.headRotation, drawInfo2.headOrigin, 1f, spriteEffects, 0);
