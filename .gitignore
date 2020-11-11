@@ -10,3 +10,8 @@ Thumbs.db
 .vs/Origins/v15/.suo
 .vs/Origins/DesignTimeBuild/.dtbcache
 .vs/Origins/v15/.suo
+*.ide-wal
+.vs/Origins/DesignTimeBuild/.dtbcache
+.vs/Origins/v15/.suo
+*.ide
+*.ide-shm
