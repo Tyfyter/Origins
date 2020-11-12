@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             type-=ModContent.ProjectileType<Ace_Shrapnel_P>();
             type/=3;
-            Projectile.NewProjectile(position, new Vector2(speedX, speedY), ModContent.ProjectileType<Ace_Shrapnel_P>(), damage/2, knockBack, player.whoAmI, 6+type, 0-type);
+            Projectile.NewProjectile(position, new Vector2(speedX, speedY), item.shoot, damage/2, knockBack, player.whoAmI, 6+type, 0-type);
             return false;
         }
     }

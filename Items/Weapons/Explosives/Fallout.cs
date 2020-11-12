@@ -33,8 +33,8 @@ namespace Origins.Items.Weapons.Explosives {
             Origins.AddExplosive(item);
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			type = item.shoot+(type-item.shoot)/3;
-            Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);
+			//type = item.shoot+(type-item.shoot)/3;
+            Projectile.NewProjectile(position, new Vector2(speedX, speedY), item.shoot, damage, knockBack, player.whoAmI, 0, type-item.shoot+ProjectileID.RocketI);
             return false;
         }
     }
@@ -72,7 +72,7 @@ namespace Origins.Items.Weapons.Explosives {
 			projectile.position.X -= projectile.width / 2;
 			projectile.position.Y -= projectile.height / 2;
 			projectile.Damage();
-            Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Fallout_Field>(), projectile.damage, projectile.knockBack, projectile.owner);
+            Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Fallout_Field>(), projectile.damage, projectile.knockBack, projectile.owner, 0, projectile.ai[1]);
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
             return projectile.ai[0]>0?(bool?)((projectile.Center.Clamp(targetHitbox)-projectile.Center).Length()<=320):null;
@@ -90,7 +90,7 @@ namespace Origins.Items.Weapons.Explosives {
         }
         public override void AI() {
             if(projectile.timeLeft%15==0) {
-                Projectile.NewProjectile(projectile.Center+Main.rand.NextVector2Circular(160,160)+Main.rand.NextVector2Circular(160,160), Vector2.Zero, ModContent.ProjectileType<Fallout_Cloud>(), projectile.damage, projectile.knockBack, projectile.owner);
+                Projectile.NewProjectile(projectile.Center+Main.rand.NextVector2Circular(160,160)+Main.rand.NextVector2Circular(160,160), Vector2.Zero, ModContent.ProjectileType<Fallout_Cloud>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.ai[1]);
             }
             for(int i = 0; i < 6; i++) {
                 Dust dust = Dust.NewDustDirect(projectile.Center+Main.rand.NextVector2Circular(140,140)+Main.rand.NextVector2Circular(140,140), 0, 0, 226, 0, 0, 100, new Color(0, 255, 0), 0.75f*projectile.scale);
@@ -118,7 +118,7 @@ namespace Origins.Items.Weapons.Explosives {
             projectile.timeLeft = 0;
         }
         public override bool PreKill(int timeLeft) {
-            projectile.type = ProjectileID.RocketI;
+            projectile.type = (int)projectile.ai[0];
             return true;
         }
         public override void Kill(int timeLeft) {

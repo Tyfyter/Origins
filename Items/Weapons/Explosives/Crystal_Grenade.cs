@@ -154,8 +154,8 @@ namespace Origins.Items.Weapons.Explosives {
 			DisplayName.SetDefault("Crystal Shard");
             id = projectile.type;
             ProjectileID.Sets.TrailingMode[id] = 0;
-            //Main.projectileTexture[94] = Main.instance.OurLoad<Texture2D>(string.Concat(new object[]{"Images",Path.DirectorySeparatorChar,"Projectile_94"}));
-		    //Main.projectileLoaded[94] = true;
+            Main.projectileTexture[94] = Main.instance.OurLoad<Texture2D>(string.Concat(new object[]{"Images",Path.DirectorySeparatorChar,"Projectile_94"}));
+		    Main.projectileLoaded[94] = true;
 		}
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.CrystalStorm);

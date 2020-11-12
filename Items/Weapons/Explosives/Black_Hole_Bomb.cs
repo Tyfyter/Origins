@@ -71,7 +71,7 @@ namespace Origins.Items.Weapons.Explosives {
             NPC target;
             for(int i = 0; i < Main.npc.Length; i++) {
                 target = Main.npc[i];
-                if(target.CanBeChasedBy()) {
+                if(target.CanBeChasedBy()||(target.lifeMax==1&&!target.dontTakeDamage)) {
                     float dist = (target.Center-projectile.Center).Length()/16f;
                     float distSQ = (float)Math.Pow(dist,distExp);
                     float force = strength/distSQ;

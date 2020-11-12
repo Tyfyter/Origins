@@ -37,6 +37,10 @@ namespace Origins.Items.Weapons.Explosives {
         public override void AddRecipes() {
             Origins.AddExplosive(item);
         }
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+            type = item.shoot;
+            return true;
+        }
     }
     public class Thermite_P  : ModProjectile {
         public override void SetStaticDefaults() {

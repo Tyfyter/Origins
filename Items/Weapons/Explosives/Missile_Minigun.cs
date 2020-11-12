@@ -63,11 +63,13 @@ namespace Origins.Items.Weapons.Explosives {
                 target = Main.npc[i];
                 if(!target.CanBeChasedBy()) continue;
                 //float ta = (float)AngleDif((target.Center - projectile.Center).ToRotation(), angle);
-                Vector2 toHit = (projectile.Center.Clamp(target.Hitbox) - projectile.Center);
+                Vector2 toHit = (projectile.Center.Clamp(target.Hitbox.Add(target.velocity)) - projectile.Center);
+                if(!Collision.CanHitLine(projectile.Center+projectile.velocity, 1, 1, projectile.Center+toHit, 1, 1))continue;
                 float tdist = toHit.Length();
                 float ta = (float)Math.Abs(AngleDif(toHit.ToRotation(), angle));
                 if(tdist<=dist && ta<=targetOffset) {
-                    targetAngle = (target.Center - projectile.Center).ToRotation();
+                    targetAngle = ((target.Center+target.velocity) - projectile.Center).ToRotation();
+                    targetOffset = ta;
                     dist = tdist;
                 }
                 /*if(!((Math.Abs(ta)>Math.Abs(targetOffset)) || (tdist>dist))) {
