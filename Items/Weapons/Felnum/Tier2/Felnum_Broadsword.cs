@@ -137,6 +137,11 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             spriteBatch.Draw(texture, position, Animation.GetFrame(texture), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
             return false;
         }
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
+            Texture2D texture = Main.itemTexture[item.type];
+            spriteBatch.Draw(texture, item.position-Main.screenPosition, Animation.GetFrame(texture), lightColor, 0f, default(Vector2), scale, SpriteEffects.None, 0f);
+            return false;
+        }
         public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit) {
             damage+=(damage-21)/2;
         }
