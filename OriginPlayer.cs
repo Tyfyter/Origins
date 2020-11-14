@@ -15,6 +15,7 @@ using Terraria.ID;
 using Origins.Projectiles;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Explosives;
+using Origins.Items.Armor.Defiled;
 
 namespace Origins {
     public class OriginPlayer : ModPlayer {
@@ -28,6 +29,7 @@ namespace Origins {
         //public const int FelnumMax = 100;
         public bool bombHandlingDevice = false;
         public bool minerSet = false;
+        public bool defiledSet = false;
         public float explosiveDamage = 1;
         public bool ZoneVoid = false;
         public bool DrawShirt = false;
@@ -52,6 +54,7 @@ namespace Origins {
             felnumSet = false;
             celestineSet = false;
             minerSet = false;
+            defiledSet = false;
             bombHandlingDevice = false;
             explosiveDamage = 1f;
             if(cryostenLifeRegenCount>0)cryostenLifeRegenCount--;
@@ -156,6 +159,22 @@ namespace Origins {
             }
         }*/
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
+            if(defiledSet) {
+                float manaDamage = damage*0.15f;
+                float costMult = 3;
+                float costMult2 = (1/(player.magicDamage+player.allDamage-1f))/(player.magicDamageMult*player.allDamageMult);
+                if(player.statMana < manaDamage*costMult) {
+                    manaDamage = player.statMana/costMult;
+                }
+                if(player.magicCuffs) {
+                    if(costMult2>1) costMult2 = 1/costMult2;
+                }
+                if(manaDamage*costMult*costMult2>=1f)player.ManaEffect((int)-(manaDamage*costMult*costMult2));
+                player.CheckMana((int)Math.Floor(manaDamage*costMult*costMult2), true);
+                damage = (int)(damage-manaDamage);
+                player.magicCuffs = false;
+                player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Buff>(),10);
+            }
             return damage != 0;
         }
         public override void UpdateBiomes() {

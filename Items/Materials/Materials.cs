@@ -110,4 +110,13 @@ namespace Origins.Items.Materials {
             item.maxStack = 999;
         }
     }*/
+    public class Defiled_Bar : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Defiled Bar");
+        }
+        public override void SetDefaults() {
+            item.maxStack = 999;
+        }
+    }
 }
