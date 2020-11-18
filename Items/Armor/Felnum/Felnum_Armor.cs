@@ -7,17 +7,20 @@ namespace Origins.Items.Armor.Felnum {
 	public class Felnum_Helmet : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Helmet");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("4% increased damage");
 		}
 		public override void SetDefaults() {
             item.defense = 5;
 		}
+        public override void UpdateEquip(Player player) {
+            player.allDamage+=0.04f;
+        }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
             return body.type == ModContent.ItemType<Felnum_Breastplate>() && legs.type == ModContent.ItemType<Felnum_Greaves>();
         }
         public override void UpdateArmorSet(Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-            player.setBonus = "Weapon damage increased by 4";
+            player.setBonus = "Moving quickly will build up a static charge to boost your next attack's damage";
             originPlayer.felnumSet = true;
             if(player.velocity.Length()>4) {
                 originPlayer.felnumShock+=player.velocity.Length()/4;
@@ -41,20 +44,27 @@ namespace Origins.Items.Armor.Felnum {
 	public class Felnum_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Breastplate");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("2% increased damage\n5% increased movement speed");
 		}
 		public override void SetDefaults() {
             item.defense = 6;
 		}
+        public override void UpdateEquip(Player player) {
+            player.allDamage+=0.02f;
+            player.moveSpeed+=0.05f;
+        }
 	}
     [AutoloadEquip(EquipType.Legs)]
 	public class Felnum_Greaves : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Greaves");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("5% increased movement speed");
 		}
 		public override void SetDefaults() {
             item.defense = 5;
 		}
-	}
+        public override void UpdateEquip(Player player) {
+            player.moveSpeed+=0.05f;
+        }
+    }
 }

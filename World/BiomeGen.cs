@@ -7,7 +7,11 @@ using Terraria.World.Generation;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent.Generation;
 using System.Linq;
-
+using System.Reflection;
+using System;
+using static Terraria.WorldGen;
+using static Terraria.ModLoader.ModContent;
+using Origins.Tiles;
 
 namespace Origins.World {
     public class BiomeGen : ModWorld {
@@ -37,43 +41,412 @@ namespace Origins.World {
             }));*/
             #endregion _
             int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
-            if (genIndex == -1) {
-                return;
+            if(genIndex != -1) {
+                int duskStoneID = TileType<Dusk_Stone>();
+                tasks.Insert(genIndex + 1, new PassLegacy("HELL Biome", delegate (GenerationProgress progress) {
+                    progress.Message = "Generating HELL Biome";
+                    //for(int i = 0; i < Main.maxTilesX / 900; i++) {       //900 is how many biomes. the bigger is the number = less biomes
+                    int X = (int)(Main.maxTilesX*0.4);//WorldGen.genRand.Next(1, Main.maxTilesX - 300);
+                    TestRunners.HellRunner(X, Main.maxTilesY-25, 650, WorldGen.genRand.Next(100, 200), duskStoneID, false, 0f, 0f, true, true);
+                    //Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh-1).type = TileID.AmberGemspark;
+                    //Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh+1).type = TileID.AmberGemspark;
+                    //Framing.GetTileSafely(X-1, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
+                    //Framing.GetTileSafely(X+1, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
+                    //Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
+                    mod.Logger.Info(HellSpikes.Count+" Void Spikes: "+string.Join(", ", HellSpikes));
+                    for(; HellSpikes.Count>0;) {
+                        (Point, int) i = HellSpikes[0];
+                        Point p = i.Item1;
+                        HellSpikes.RemoveAt(0);
+                        Vector2 vel = new Vector2(0, (p.Y<Main.maxTilesY-150) ? 2.75f : -2.75f).RotatedByRandom(1.25f);
+                        TestRunners.SpikeRunner(p.X, p.Y, duskStoneID, vel, i.Item2, randomtwist: true);
+                    }
+                    //Tile tile2;
+                    byte dirs = 0;
+                    for(int k = TestRunners.duskLeft; k < TestRunners.duskRight; k++) {
+                        for(int l = TestRunners.duskBottom; l > TestRunners.duskTop; l--) {
+                            //tile2 = Main.tile[k, l];
+                            if(Main.tile[k, l].type == duskStoneID) {
+                                dirs = 0;
+                                if(Main.tile[k-1, l].active())dirs|=1;
+                                if(Main.tile[k+1, l].active())dirs|=2;
+                                if(Main.tile[k, l-1].active())dirs|=4;
+                                if(Main.tile[k, l+1].active())dirs|=8;
+                                switch(dirs) {
+                                    //top slopes
+                                    case 6:
+                                    Main.tile[k, l].slope(SlopeID.TopLeft);
+                                    Main.tile[k, l].halfBrick(false);
+                                    break;
+                                    case 9:
+                                    Main.tile[k, l].slope(SlopeID.TopRight);
+                                    Main.tile[k, l].halfBrick(false);
+                                    break;
+                                    //bottom slopes
+                                    case 5:
+                                    if(Main.tile[k, l].halfBrick())break;
+                                    Main.tile[k, l].slope(SlopeID.BottomLeft);
+                                    break;
+                                    case 10:
+                                    if(Main.tile[k, l].halfBrick())break;
+                                    Main.tile[k, l].slope(SlopeID.BottomRight);
+                                    break;
+                                    default:
+                                    Main.tile[k, l].slope(0);
+                                    Main.tile[k, l].halfBrick(false);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    //}
+                }));
+                tasks.Insert(genIndex + 1, new PassLegacy("FirstLake", delegate (GenerationProgress progress) {
+                    mod.Logger.Info("Generating Lake");
+                    progress.Message = "Generating Lake";
+                    //for (int i = 0; i < Main.maxTilesX / 5000; i++) {
+                    int X = WorldGen.genRand.Next(50, Main.maxTilesX - 50);
+                    int Y = WorldGen.genRand.Next((int)WorldGen.worldSurfaceLow, (int)WorldGen.worldSurfaceHigh);
+                    mod.Logger.Info("LakeGen:"+X+", "+Y);
+                    //WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
+                    WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);
+                    //WorldGen.digTunnel(X, 500, 5, 5, 10, 10, true);
+                    WorldGen.digTunnel(X, Y, 3, 0, 30, 6, true);
+                    //WorldGen.digTunnel(X, Y, 0, 90, 25, 50, true);
+                    //}
+                }));
             }
-            tasks.Insert(genIndex + 1, new PassLegacy("HELL Biome", delegate (GenerationProgress progress) {
-            progress.Message = "Generating HELL Biome";
-            //for(int i = 0; i < Main.maxTilesX / 900; i++) {       //900 is how many biomes. the bigger is the number = less biomes
-                int X = (int)(Main.maxTilesX*0.4);//WorldGen.genRand.Next(1, Main.maxTilesX - 300);
-                TestRunners.HellRunner(X, Main.maxTilesY-25, 650, WorldGen.genRand.Next(100, 200), TileID.AmberGemspark, false, 0f, 0f, true, true);
-                //Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh-1).type = TileID.AmberGemspark;
-                //Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh+1).type = TileID.AmberGemspark;
-                //Framing.GetTileSafely(X-1, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
-                //Framing.GetTileSafely(X+1, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
-                //Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
-                mod.Logger.Info(HellSpikes.Count+" Void Spikes: "+string.Join(", ", HellSpikes));
-                for(;HellSpikes.Count>0;) {
-                    (Point, int) i = HellSpikes[0];
-                    Point p = i.Item1;
-                    HellSpikes.RemoveAt(0);
-                    Vector2 vel = new Vector2(0, (p.Y<Main.maxTilesY-150)?2.75f:-2.75f).RotatedByRandom(1.25f);
-                    TestRunners.SpikeRunner(p.X, p.Y, TileID.GraniteBlock, vel, i.Item2, randomtwist:true);
-                }
-            //}
-            }));
-            tasks.Insert(genIndex + 1, new PassLegacy("FirstLake", delegate (GenerationProgress progress) {
-                mod.Logger.Info("Generating Lake");
-                progress.Message = "Generating Lake";
-                //for (int i = 0; i < Main.maxTilesX / 5000; i++) {
-                int X = WorldGen.genRand.Next(50, Main.maxTilesX - 50);
-                int Y = WorldGen.genRand.Next((int)WorldGen.worldSurfaceLow, (int)WorldGen.worldSurfaceHigh);
-                mod.Logger.Info("LakeGen:"+X+", "+Y);
-                //WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
-                WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);
-                //WorldGen.digTunnel(X, 500, 5, 5, 10, 10, true);
-                WorldGen.digTunnel(X, Y, 3, 0, 30, 6, true);
-                //WorldGen.digTunnel(X, Y, 0, 90, 25, 50, true);
-                //}
-            }));
+            genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
+            if(genIndex != -1) {
+                bool dungeonLeft = dungeonX < Main.maxTilesX / 2;
+                int JungleX = (int)typeof(WorldGen).GetField("JungleX", BindingFlags.NonPublic|BindingFlags.Static).GetValue(null);
+                int i2;
+                FieldInfo grassSpread = typeof(WorldGen).GetField("grassSpread", BindingFlags.NonPublic|BindingFlags.Static);
+                tasks[genIndex] = new PassLegacy("Alternate World Evil", (GenerationProgress progress) => {
+                    if (crimson) {
+			            progress.Message = Lang.gen[72].Value+"n't";
+			            for (int num487 = 0; (double)num487 < (double)Main.maxTilesX * 0.00045; num487++) {
+				            float value14 = (float)((double)num487 / ((double)Main.maxTilesX * 0.00045));
+				            progress.Set(value14);
+				            bool flag38 = false;
+				            int num488 = 0;
+				            int num489 = 0;
+				            int num490 = 0;
+				            while (!flag38) {
+					            int num491 = 0;
+					            flag38 = true;
+					            int num492 = Main.maxTilesX / 2;
+					            int num493 = 200;
+					            num488 = (!dungeonLeft ? genRand.Next(320, Main.maxTilesX - 600) : genRand.Next(600, Main.maxTilesX - 320));
+					            num489 = num488 - genRand.Next(200) - 100;
+					            num490 = num488 + genRand.Next(200) + 100;
+					            if (num489 < 285) {
+						            num489 = 285;
+					            }
+					            if (num490 > Main.maxTilesX - 285) {
+						            num490 = Main.maxTilesX - 285;
+					            }
+					            if (dungeonLeft && num489 < 400) {
+						            num489 = 400;
+					            }
+					            else if (!dungeonLeft && num489 > Main.maxTilesX - 400) {
+						            num489 = Main.maxTilesX - 400;
+					            }
+					            if (num488 > num492 - num493 && num488 < num492 + num493) {
+						            flag38 = false;
+					            }
+					            if (num489 > num492 - num493 && num489 < num492 + num493) {
+						            flag38 = false;
+					            }
+					            if (num490 > num492 - num493 && num490 < num492 + num493) {
+						            flag38 = false;
+					            }
+					            if (num488 > UndergroundDesertLocation.X && num488 < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+						            flag38 = false;
+					            }
+					            if (num489 > UndergroundDesertLocation.X && num489 < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+						            flag38 = false;
+					            }
+					            if (num490 > UndergroundDesertLocation.X && num490 < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+						            flag38 = false;
+					            }
+					            for (int num494 = num489; num494 < num490; num494++) {
+						            for (int num495 = 0; num495 < (int)Main.worldSurface; num495 += 5) {
+							            if (Main.tile[num494, num495].active() && Main.tileDungeon[Main.tile[num494, num495].type]) {
+								            flag38 = false;
+								            break;
+							            }
+							            if (!flag38) {
+								            break;
+							            }
+						            }
+					            }
+					            if (num491 < 200 && JungleX > num489 && JungleX < num490) {
+						            num491++;
+						            flag38 = false;
+					            }
+				            }
+				            CrimStart(num488, (int)worldSurfaceLow - 10);
+				            for (int num496 = num489; num496 < num490; num496++) {
+					            for (int num497 = (int)worldSurfaceLow; (double)num497 < Main.worldSurface - 1.0; num497++) {
+						            if (Main.tile[num496, num497].active()) {
+							            int num498 = num497 + genRand.Next(10, 14);
+							            for (int num499 = num497; num499 < num498; num499++) {
+								            if ((Main.tile[num496, num499].type == 59 || Main.tile[num496, num499].type == 60) && num496 >= num489 + genRand.Next(5) && num496 < num490 - genRand.Next(5)) {
+									            Main.tile[num496, num499].type = 0;
+								            }
+							            }
+							            break;
+						            }
+					            }
+				            }
+				            double num500 = Main.worldSurface + 40.0;
+				            for (int num501 = num489; num501 < num490; num501++) {
+					            num500 += (double)genRand.Next(-2, 3);
+					            if (num500 < Main.worldSurface + 30.0) {
+						            num500 = Main.worldSurface + 30.0;
+					            }
+					            if (num500 > Main.worldSurface + 50.0) {
+						            num500 = Main.worldSurface + 50.0;
+					            }
+					            i2 = num501;
+					            bool planted = false;
+					            for (int num502 = (int)worldSurfaceLow; (double)num502 < num500; num502++) {
+						            if (Main.tile[i2, num502].active()) {
+							            if (Main.tile[i2, num502].type == 53 && i2 >= num489 + genRand.Next(5) && i2 <= num490 - genRand.Next(5)) {
+								            Main.tile[i2, num502].type = 234;
+							            }
+							            if (Main.tile[i2, num502].type == 0 && (double)num502 < Main.worldSurface - 1.0 && !planted) {
+								            grassSpread.SetValue(null, 0);
+								            SpreadGrass(i2, num502, 0, TileID.DiamondGemsparkOff, repeat: true, 0);
+							            }
+							            planted = true;
+							            if (Main.tile[i2, num502].wall == 216) {
+								            Main.tile[i2, num502].wall = 218;
+							            }
+							            else if (Main.tile[i2, num502].wall == 187) {
+								            Main.tile[i2, num502].wall = 221;
+							            }
+							            if (Main.tile[i2, num502].type == 1) {
+								            if (i2 >= num489 + genRand.Next(5) && i2 <= num490 - genRand.Next(5)) {
+									            Main.tile[i2, num502].type = 203;
+								            }
+							            }
+							            else if (Main.tile[i2, num502].type == 2) {
+								            Main.tile[i2, num502].type = 199;
+							            }
+							            else if (Main.tile[i2, num502].type == 161) {
+								            Main.tile[i2, num502].type = 200;
+							            }
+							            else if (Main.tile[i2, num502].type == 396) {
+								            Main.tile[i2, num502].type = 401;
+							            }
+							            else if (Main.tile[i2, num502].type == 397) {
+								            Main.tile[i2, num502].type = 399;
+							            }
+						            }
+					            }
+				            }
+				            int num503 = genRand.Next(10, 15);
+				            for (int num504 = 0; num504 < num503; num504++) {
+					            int num505 = 0;
+					            bool flag40 = false;
+					            int num506 = 0;
+					            while (!flag40) {
+						            num505++;
+						            int num507 = genRand.Next(num489 - num506, num490 + num506);
+						            int num508 = genRand.Next((int)(Main.worldSurface - (double)(num506 / 2)), (int)(Main.worldSurface + 100.0 + (double)num506));
+						            if (num505 > 100) {
+							            num506++;
+							            num505 = 0;
+						            }
+						            if (!Main.tile[num507, num508].active()) {
+							            for (; !Main.tile[num507, num508].active(); num508++) {
+							            }
+							            num508--;
+						            }
+						            else {
+							            while (Main.tile[num507, num508].active() && (double)num508 > Main.worldSurface) {
+								            num508--;
+							            }
+						            }
+						            if (num506 > 10 || (Main.tile[num507, num508 + 1].active() && Main.tile[num507, num508 + 1].type == 203)) {
+							            Place3x2(num507, num508, 26, 1);
+							            if (Main.tile[num507, num508].type == 26) {
+								            flag40 = true;
+							            }
+						            }
+						            if (num506 > 100) {
+							            flag40 = true;
+						            }
+					            }
+				            }
+			            }
+		            } else {
+                        crimson = true;
+			            progress.Message = "Corruptionn't";
+			            for (int num509 = 0; (double)num509 < (double)Main.maxTilesX * 0.00045; num509++) {
+				            float value15 = (float)((double)num509 / ((double)Main.maxTilesX * 0.00045));
+				            progress.Set(value15);
+				            bool flag41 = false;
+				            int num510 = 0;
+				            int num511 = 0;
+				            int num512 = 0;
+				            while (!flag41) {
+					            int num513 = 0;
+					            flag41 = true;
+					            int num514 = Main.maxTilesX / 2;
+					            int num515 = 200;
+					            num510 = genRand.Next(320, Main.maxTilesX - 320);
+					            num511 = num510 - genRand.Next(200) - 100;
+					            num512 = num510 + genRand.Next(200) + 100;
+					            if (num511 < 285) {
+						            num511 = 285;
+					            }
+					            if (num512 > Main.maxTilesX - 285) {
+						            num512 = Main.maxTilesX - 285;
+					            }
+					            if (num510 > num514 - num515 && num510 < num514 + num515) {
+						            flag41 = false;
+					            }
+					            if (num511 > num514 - num515 && num511 < num514 + num515) {
+						            flag41 = false;
+					            }
+					            if (num512 > num514 - num515 && num512 < num514 + num515) {
+						            flag41 = false;
+					            }
+					            if (num510 > UndergroundDesertLocation.X && num510 < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+						            flag41 = false;
+					            }
+					            if (num511 > UndergroundDesertLocation.X && num511 < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+						            flag41 = false;
+					            }
+					            if (num512 > UndergroundDesertLocation.X && num512 < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+						            flag41 = false;
+					            }
+					            for (int num516 = num511; num516 < num512; num516++) {
+						            for (int num517 = 0; num517 < (int)Main.worldSurface; num517 += 5) {
+							            if (Main.tile[num516, num517].active() && Main.tileDungeon[Main.tile[num516, num517].type]) {
+								            flag41 = false;
+								            break;
+							            }
+							            if (!flag41) {
+								            break;
+							            }
+						            }
+					            }
+					            if (num513 < 200 && JungleX > num511 && JungleX < num512) {
+						            num513++;
+						            flag41 = false;
+					            }
+				            }
+				            int num518 = 0;
+				            for (int num519 = num511; num519 < num512; num519++) {
+					            if (num518 > 0) {
+						            num518--;
+					            }
+					            /*if (num519 == num510 || num518 == 0) {
+						            for (int num520 = (int)worldSurfaceLow; (double)num520 < Main.worldSurface - 1.0; num520++) {
+							            if (Main.tile[num519, num520].active() || Main.tile[num519, num520].wall > 0) {
+								            if (num519 == num510) {
+									            num518 = 20;
+									            ChasmRunner(num519, num520, genRand.Next(150) + 150, makeOrb: true);
+								            }
+								            else if (genRand.Next(35) == 0 && num518 == 0) {
+									            num518 = 30;
+									            ChasmRunner(num519, num520, genRand.Next(50) + 50, makeOrb: true);
+								            }
+								            break;
+							            }
+						            }
+					            }*/
+					            for (int num521 = (int)worldSurfaceLow; (double)num521 < Main.worldSurface - 1.0; num521++) {
+						            if (Main.tile[num519, num521].active()) {
+							            int num522 = num521 + genRand.Next(10, 14);
+							            for (int num523 = num521; num523 < num522; num523++) {
+								            if ((Main.tile[num519, num523].type == 59 || Main.tile[num519, num523].type == 60) && num519 >= num511 + genRand.Next(5) && num519 < num512 - genRand.Next(5)) {
+									            Main.tile[num519, num523].type = 0;
+								            }
+							            }
+							            break;
+						            }
+					            }
+				            }
+				            double num524 = Main.worldSurface + 40.0;
+				            for (int num525 = num511; num525 < num512; num525++) {
+					            num524 += (double)genRand.Next(-2, 3);
+					            if (num524 < Main.worldSurface + 30.0) {
+						            num524 = Main.worldSurface + 30.0;
+					            }
+					            if (num524 > Main.worldSurface + 50.0) {
+						            num524 = Main.worldSurface + 50.0;
+					            }
+					            i2 = num525;
+					            bool flag42 = false;
+                                Tile tile;
+					            for (int num526 = (int)worldSurfaceLow; (double)num526 < num524; num526++) {
+                                    tile = Main.tile[i2, num526];
+						            if (tile.active()) {
+							            if (tile.type == TileID.Sand && i2 >= num511 + genRand.Next(5) && i2 <= num512 - genRand.Next(5)) {
+								            tile.type = TileID.Silt;
+
+							            }
+							            if (tile.type == 0 && (double)num526 < Main.worldSurface - 1.0 && !flag42) {
+								            grassSpread.SetValue(null, 0);
+								            SpreadGrass(i2, num526, 0, TileID.MushroomGrass, repeat: true, 1);
+							            }
+							            flag42 = true;
+							            if (tile.type == TileID.Stone && i2 >= num511 + genRand.Next(5) && i2 <= num512 - genRand.Next(5)) {
+								            tile.type = TileID.DiamondGemspark;
+							            }
+							            if (tile.wall == WallID.HardenedSand) {
+								            tile.wall = WallID.HallowHardenedSand;
+							            }
+							            else if (tile.wall == WallID.Sandstone) {
+								            tile.wall = WallID.HallowSandstone;
+							            }
+							            if (tile.type == TileID.Grass) {
+								            tile.type = TileID.MushroomGrass;
+                                            tile.color(1);
+							            } else if (tile.type == TileID.IceBlock) {
+								            tile.type = TileID.Stone;
+							            } else if (tile.type == TileID.Sandstone) {
+								            tile.type = TileID.HallowSandstone;
+							            }else if (tile.type == TileID.HardenedSand) {
+								            tile.type = TileID.HallowHardenedSand;
+							            }
+						            }
+					            }
+				            }
+				            for (int num527 = num511; num527 < num512; num527++) {
+					            for (int num528 = 0; num528 < Main.maxTilesY - 50; num528++) {
+						            if (Main.tile[num527, num528].active() && Main.tile[num527, num528].type == 31) {
+							            int num529 = num527 - 13;
+							            int num530 = num527 + 13;
+							            int num531 = num528 - 13;
+							            int num532 = num528 + 13;
+							            for (int num533 = num529; num533 < num530; num533++) {
+								            if (num533 > 10 && num533 < Main.maxTilesX - 10) {
+									            for (int num534 = num531; num534 < num532; num534++) {
+										            if (Math.Abs(num533 - num527) + Math.Abs(num534 - num528) < 9 + genRand.Next(11) && genRand.Next(3) != 0 && Main.tile[num533, num534].type != 31) {
+											            Main.tile[num533, num534].active(active: true);
+											            Main.tile[num533, num534].type = 25;
+											            if (Math.Abs(num533 - num527) <= 1 && Math.Abs(num534 - num528) <= 1) {
+												            Main.tile[num533, num534].active(active: false);
+											            }
+										            }
+										            if (Main.tile[num533, num534].type != 31 && Math.Abs(num533 - num527) <= 2 + genRand.Next(3) && Math.Abs(num534 - num528) <= 2 + genRand.Next(3)) {
+											            Main.tile[num533, num534].active(active: false);
+										            }
+									            }
+								            }
+							            }
+						            }
+					            }
+				            }
+			            }
+		            }});
+            }
         }
     }
 }

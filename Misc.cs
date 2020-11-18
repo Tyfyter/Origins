@@ -40,6 +40,13 @@ namespace Origins {
         public const ushort Acid = 4;
         public const ushort Ice = 4;
     }
+    public static class SlopeID {
+        public const byte None = 0;
+        public const byte BottomLeft = 1;
+        public const byte BottomRight = 2;
+        public const byte TopLeft = 3;
+        public const byte TopRight = 4;
+    }
     public static class OriginExtensions {
         public static Func<float, int, Vector2> drawPlayerItemPos;
         public static void PlaySound(string Name, Vector2 Position, float Volume = 1f, float PitchVariance = 1f, float? Pitch = null){

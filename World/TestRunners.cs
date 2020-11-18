@@ -30,6 +30,10 @@ namespace Origins.World {
             }
             return new Point((int)x,(int)y);
         }
+        internal static int duskLeft;
+        internal static int duskRight;
+        internal static int duskTop;
+        internal static int duskBottom;
         public static void HellRunner(int i, int j, double strength, int steps, int type, bool addTile = false, float speedX = 0f, float speedY = 0f, bool noYChange = false, bool overRide = true) {
 	        double num = strength;
 	        float num2 = steps;
@@ -51,27 +55,27 @@ namespace Origins.World {
 		        }
 		        num = strength * (double)(num2 / (float)steps);
 		        num2 -= 1f;
-		        int left = (int)((double)vector.X - num * 0.5);
-		        int right = (int)((double)vector.X + num * 0.5);
-		        int top = (int)((double)vector.Y - num * 0.5);
-		        int bottom = (int)((double)vector.Y + num * 0.5);
-		        if (left < 1) {
-			        left = 1;
+		        duskLeft = (int)((double)vector.X - num * 0.5);
+		        duskRight = (int)((double)vector.X + num * 0.5);
+		        duskTop = (int)((double)vector.Y - num * 0.5);
+		        duskBottom = (int)((double)vector.Y + num * 0.5);
+		        if (duskLeft < 1) {
+			        duskLeft = 1;
 		        }
-		        if (right > Main.maxTilesX - 1) {
-			        right = Main.maxTilesX - 1;
+		        if (duskRight > Main.maxTilesX - 1) {
+			        duskRight = Main.maxTilesX - 1;
 		        }
-		        if (top < Main.maxTilesY-200) {
-			        top = Main.maxTilesY-200;
+		        if (duskTop < Main.maxTilesY-200) {
+			        duskTop = Main.maxTilesY-200;
 		        }
-		        if (bottom > Main.maxTilesY - 1) {
-			        bottom = Main.maxTilesY - 1;
+		        if (duskBottom > Main.maxTilesY - 1) {
+			        duskBottom = Main.maxTilesY - 1;
 		        }
                 int tilesSinceSpike = 0;
                 Point? spike = null;
-		        for (int k = left; k < right; k++) {
+		        for (int k = duskLeft; k < duskRight; k++) {
                     spike = null;
-			        for (int l = bottom; l > top; l--) {
+			        for (int l = duskBottom; l > duskTop; l--) {
 				        if (!((Math.Abs(k - vector.X) + Math.Abs(l - vector.Y)) < strength * 0.5)){
 					        continue;
 				        }
@@ -89,7 +93,7 @@ namespace Origins.World {
 					        tile.active(active: true);
 					        tile.liquid = 0;
 					        tile.lava(lava: false);
-                            WorldGen.paintTile(k, l, 29);
+                            //WorldGen.paintTile(k, l, 29);
                             Main.tile[k+1, l].slope(0);
                             Main.tile[k-1, l].slope(0);
                             Main.tile[k, l+1].slope(0);
@@ -114,7 +118,7 @@ namespace Origins.World {
 					            tile.active(active: true);
 					            //tile.liquid = 0;
 					            //tile.lava(lava: false);
-                                WorldGen.paintTile(k, l, 29);
+                                //WorldGen.paintTile(k, l, 29);
 					        }
 				        }
 			        }
@@ -123,7 +127,7 @@ namespace Origins.World {
                         if(WorldGen.genRand.Next(0, 10+BiomeGen.HellSpikes.Count)<=tilesSinceSpike/5) {
                             Origins.instance.Logger.Info("Adding spike @ "+k+", "+l);
                             BiomeGen.HellSpikes.Add((new Point(k, l), WorldGen.genRand.Next(5,10)+tilesSinceSpike/5));
-                            WorldGen.paintTile(k, l, 11);
+                            //WorldGen.paintTile(k, l, 11);
                             tilesSinceSpike = -7;
                         } else {
                             tilesSinceSpike++;

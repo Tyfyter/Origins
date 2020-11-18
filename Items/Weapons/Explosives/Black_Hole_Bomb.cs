@@ -39,6 +39,8 @@ namespace Origins.Items.Weapons.Explosives {
         const int growDur = 180;
         const float distExp = 2.5f;
         const float strengthMult = 512f;
+        const float knockbackResistanceSignificance = 0.9f;
+        const float dotDivisor = 2;
         const int collapseDur = 10;
         const int totalDur = growDur+collapseDur;
         public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Bomb";
@@ -69,20 +71,22 @@ namespace Origins.Items.Weapons.Explosives {
             //float range = 80*(projectile.scale+scale);
             float strength = strengthMult*(1+percent)*(projectile.scale+scale);
             NPC target;
+            float kbrs;
             for(int i = 0; i < Main.npc.Length; i++) {
                 target = Main.npc[i];
-                if(target.CanBeChasedBy()||(target.lifeMax==1&&!target.dontTakeDamage)) {
+                kbrs = knockbackResistanceSignificance*(target.defense/50f);
+                if((target.CanBeChasedBy()||(target.lifeMax==1&&!target.dontTakeDamage))&&!(target.type==NPCID.MoonLordFreeEye||target.type==NPCID.MoonLordHand||target.type==NPCID.MoonLordHead||target.type==NPCID.MoonLordCore)) {
                     float dist = (target.Center-projectile.Center).Length()/16f;
                     float distSQ = (float)Math.Pow(dist,distExp);
                     float force = strength/distSQ;
                     Vector2 dir = (projectile.Center-target.Center).SafeNormalize(Vector2.Zero);
-                    float point = (target.knockBackResist*0.9f+0.1f);
+                    float point = (target.knockBackResist*kbrs+(1f-kbrs));
                     point*=(float)Math.Min(AngleDif(dir.ToRotation(), target.velocity.ToRotation())+Clamp(force-target.velocity.Length(),0,1), 1);
                     if(force>1)target.velocity = Vector2.Lerp(target.velocity, dir*Min(force, dist), point);
                     if(force>=(projectile.Center.Clamp(target.Hitbox)-projectile.Center).Length()) {
                         if(projectile.timeLeft>totalDur&&projectile.Hitbox.Intersects(target.Hitbox))OnHitNPC(target, 0, 0, false);
                         if(projectile.localNPCImmunity[target.whoAmI]<=0) {
-                            target.StrikeNPC(projectile.damage/3, 0, 0);
+                            target.StrikeNPC((int)(projectile.damage/dotDivisor), 0, 0);
                             projectile.localNPCImmunity[target.whoAmI] = 10;
                         }
                     }

@@ -56,7 +56,6 @@ namespace Origins.Items.Materials {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ItemID.SandBlock, 3);
             recipe.AddTile(TileID.GlassKiln);
-            recipe.AddTile(TileID.AlchemyTable);
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
