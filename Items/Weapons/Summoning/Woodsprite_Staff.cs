@@ -8,7 +8,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons.Other {
+namespace Origins.Items.Weapons.Summoning {
     public class Woodsprite_Staff : ModItem {
         internal static int projectileID = 0;
         internal static int buffID = 0;
@@ -17,8 +17,8 @@ namespace Origins.Items.Weapons.Other {
             Tooltip.SetDefault("Summons a woodsprite to fight for you");
         }
         public override void SetDefaults() {
-            item.damage = 7;
-			item.mana = 40;
+            item.damage = 8;
+			item.mana = 10;
 			item.width = 32;
 			item.height = 32;
 			item.useTime = 36;
