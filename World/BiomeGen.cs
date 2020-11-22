@@ -122,6 +122,8 @@ namespace Origins.World {
                 int JungleX = (int)typeof(WorldGen).GetField("JungleX", BindingFlags.NonPublic|BindingFlags.Static).GetValue(null);
                 int i2;
                 FieldInfo grassSpread = typeof(WorldGen).GetField("grassSpread", BindingFlags.NonPublic|BindingFlags.Static);
+                ushort grassType = TileID.Grass;
+                ushort stoneType = TileID.Stone;
                 tasks[genIndex] = new PassLegacy("Alternate World Evil", (GenerationProgress progress) => {
                     if (crimson) {
 			            progress.Message = Lang.gen[72].Value+"n't";
@@ -284,64 +286,65 @@ namespace Origins.World {
 			            }
 		            } else {
                         crimson = true;
+                        stoneType = (ushort)TileType<Defiled_Stone>();
+                        grassType = (ushort)TileType<Defiled_Grass>();
 			            progress.Message = "Corruptionn't";
-			            for (int num509 = 0; (double)num509 < (double)Main.maxTilesX * 0.00045; num509++) {
-				            float value15 = (float)((double)num509 / ((double)Main.maxTilesX * 0.00045));
+			            for (int genCount = 0; (double)genCount < (double)Main.maxTilesX * 0.00045; genCount++) {
+				            float value15 = (float)((double)genCount / ((double)Main.maxTilesX * 0.00045));
 				            progress.Set(value15);
-				            bool flag41 = false;
-				            int num510 = 0;
-				            int num511 = 0;
-				            int num512 = 0;
-				            while (!flag41) {
-					            int num513 = 0;
-					            flag41 = true;
-					            int num514 = Main.maxTilesX / 2;
-					            int num515 = 200;
-					            num510 = genRand.Next(320, Main.maxTilesX - 320);
-					            num511 = num510 - genRand.Next(200) - 100;
-					            num512 = num510 + genRand.Next(200) + 100;
-					            if (num511 < 285) {
-						            num511 = 285;
+				            bool foundPosition = false;
+				            int centerX = 0;
+				            int genLeft = 0;
+				            int genRight = 0;
+				            while (!foundPosition) {
+					            int jungleCheckCount = 0;
+					            foundPosition = true;
+					            int worldCenter = Main.maxTilesX / 2;
+					            centerX = genRand.Next(320, Main.maxTilesX - 320);
+					            genLeft = centerX - genRand.Next(200) - 100;
+					            genRight = centerX + genRand.Next(200) + 100;
+					            if (genLeft < 285) {
+						            genLeft = 285;
 					            }
-					            if (num512 > Main.maxTilesX - 285) {
-						            num512 = Main.maxTilesX - 285;
+					            if (genRight > Main.maxTilesX - 285) {
+						            genRight = Main.maxTilesX - 285;
 					            }
-					            if (num510 > num514 - num515 && num510 < num514 + num515) {
-						            flag41 = false;
+					            if (centerX > worldCenter - 200 && centerX < worldCenter + 200) {
+						            foundPosition = false;
 					            }
-					            if (num511 > num514 - num515 && num511 < num514 + num515) {
-						            flag41 = false;
+					            if (genLeft > worldCenter - 200 && genLeft < worldCenter + 200) {
+						            foundPosition = false;
 					            }
-					            if (num512 > num514 - num515 && num512 < num514 + num515) {
-						            flag41 = false;
+					            if (genRight > worldCenter - 200 && genRight < worldCenter + 200) {
+						            foundPosition = false;
 					            }
-					            if (num510 > UndergroundDesertLocation.X && num510 < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
-						            flag41 = false;
+					            if (centerX > UndergroundDesertLocation.X && centerX < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+						            foundPosition = false;
 					            }
-					            if (num511 > UndergroundDesertLocation.X && num511 < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
-						            flag41 = false;
+					            if (genLeft > UndergroundDesertLocation.X && genLeft < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+						            foundPosition = false;
 					            }
-					            if (num512 > UndergroundDesertLocation.X && num512 < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
-						            flag41 = false;
+					            if (genRight > UndergroundDesertLocation.X && genRight < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+						            foundPosition = false;
 					            }
-					            for (int num516 = num511; num516 < num512; num516++) {
-						            for (int num517 = 0; num517 < (int)Main.worldSurface; num517 += 5) {
-							            if (Main.tile[num516, num517].active() && Main.tileDungeon[Main.tile[num516, num517].type]) {
-								            flag41 = false;
+					            for (int checkX = genLeft; checkX < genRight; checkX++) {
+						            for (int checkY = 0; checkY < (int)Main.worldSurface; checkY += 5) {
+							            if (Main.tile[checkX, checkY].active() && Main.tileDungeon[Main.tile[checkX, checkY].type]) {
+								            foundPosition = false;
 								            break;
 							            }
-							            if (!flag41) {
+							            if (!foundPosition) {
 								            break;
 							            }
 						            }
 					            }
-					            if (num513 < 200 && JungleX > num511 && JungleX < num512) {
-						            num513++;
-						            flag41 = false;
+					            if (jungleCheckCount < 200 && JungleX > genLeft && JungleX < genRight) {
+						            jungleCheckCount++;
+						            foundPosition = false;
 					            }
 				            }
 				            int num518 = 0;
-				            for (int num519 = num511; num519 < num512; num519++) {
+				            for (int num519 = genLeft; num519 < genRight; num519++) {
 					            if (num518 > 0) {
 						            num518--;
 					            }
@@ -364,7 +367,7 @@ namespace Origins.World {
 						            if (Main.tile[num519, num521].active()) {
 							            int num522 = num521 + genRand.Next(10, 14);
 							            for (int num523 = num521; num523 < num522; num523++) {
-								            if ((Main.tile[num519, num523].type == 59 || Main.tile[num519, num523].type == 60) && num519 >= num511 + genRand.Next(5) && num519 < num512 - genRand.Next(5)) {
+								            if ((Main.tile[num519, num523].type == 59 || Main.tile[num519, num523].type == 60) && num519 >= genLeft + genRand.Next(5) && num519 < genRight - genRand.Next(5)) {
 									            Main.tile[num519, num523].type = 0;
 								            }
 							            }
@@ -373,7 +376,7 @@ namespace Origins.World {
 					            }
 				            }
 				            double num524 = Main.worldSurface + 40.0;
-				            for (int num525 = num511; num525 < num512; num525++) {
+				            for (int num525 = genLeft; num525 < genRight; num525++) {
 					            num524 += (double)genRand.Next(-2, 3);
 					            if (num524 < Main.worldSurface + 30.0) {
 						            num524 = Main.worldSurface + 30.0;
@@ -387,38 +390,44 @@ namespace Origins.World {
 					            for (int num526 = (int)worldSurfaceLow; (double)num526 < num524; num526++) {
                                     tile = Main.tile[i2, num526];
 						            if (tile.active()) {
-							            if (tile.type == TileID.Sand && i2 >= num511 + genRand.Next(5) && i2 <= num512 - genRand.Next(5)) {
+							            if (tile.type == TileID.Sand && i2 >= genLeft + genRand.Next(5) && i2 <= genRight - genRand.Next(5)) {
 								            tile.type = TileID.Silt;
 
 							            }
 							            if (tile.type == 0 && (double)num526 < Main.worldSurface - 1.0 && !flag42) {
 								            grassSpread.SetValue(null, 0);
-								            SpreadGrass(i2, num526, 0, TileID.MushroomGrass, repeat: true, 1);
+								            SpreadGrass(i2, num526, TileID.Dirt, grassType, repeat: true, 26);
 							            }
 							            flag42 = true;
-							            if (tile.type == TileID.Stone && i2 >= num511 + genRand.Next(5) && i2 <= num512 - genRand.Next(5)) {
-								            tile.type = TileID.DiamondGemspark;
+							            if (tile.type == TileID.Stone && i2 >= genLeft + genRand.Next(5) && i2 <= genRight - genRand.Next(5)) {
+                                            tile.type = stoneType;
 							            }
 							            if (tile.wall == WallID.HardenedSand) {
-								            tile.wall = WallID.HallowHardenedSand;
+								            //tile.wall = WallID.HallowHardenedSand;
+                                            tile.color(26);
 							            }
 							            else if (tile.wall == WallID.Sandstone) {
-								            tile.wall = WallID.HallowSandstone;
+								            //tile.wall = WallID.HallowSandstone;
+                                            tile.color(26);
 							            }
-							            if (tile.type == TileID.Grass) {
-								            tile.type = TileID.MushroomGrass;
-                                            tile.color(1);
+							            if (tile.type == TileID.Grass || tile.type == TileID.JungleGrass || tile.type == TileID.MushroomGrass) {
+								            tile.type = grassType;
+                                            //tile.color(26);
 							            } else if (tile.type == TileID.IceBlock) {
-								            tile.type = TileID.Stone;
+                                            tile.color(27);
+                                            //tile.type = TileID.Stone;
+                                            //WorldGen.paintTile(i2, num526, 26);
 							            } else if (tile.type == TileID.Sandstone) {
-								            tile.type = TileID.HallowSandstone;
+								            //tile.type = TileID.HallowSandstone;
+                                            tile.color(26);
 							            }else if (tile.type == TileID.HardenedSand) {
-								            tile.type = TileID.HallowHardenedSand;
+								            //tile.type = TileID.HallowHardenedSand;
+                                            tile.color(26);
 							            }
 						            }
 					            }
 				            }
-				            for (int num527 = num511; num527 < num512; num527++) {
+				            for (int num527 = genLeft; num527 < genRight; num527++) {
 					            for (int num528 = 0; num528 < Main.maxTilesY - 50; num528++) {
 						            if (Main.tile[num527, num528].active() && Main.tile[num527, num528].type == 31) {
 							            int num529 = num527 - 13;

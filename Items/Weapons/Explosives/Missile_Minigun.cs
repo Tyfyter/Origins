@@ -14,7 +14,7 @@ using static Microsoft.Xna.Framework.MathHelper;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Missile_Minigun : ModItem {
-        public override string Texture => "Origins/Items/Weapons/Explosives/Rocodile_Old";
+        public override string Texture => "Terraria/Item_"+ItemID.ProximityMineLauncher;
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Missile Minigun");

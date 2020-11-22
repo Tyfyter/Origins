@@ -13,7 +13,6 @@ using Terraria.Graphics.Shaders;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Fallout : ModItem {
-        public override string Texture => "Terraria/Item_"+ItemID.ProximityMineLauncher;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fallout");
 			Tooltip.SetDefault("");

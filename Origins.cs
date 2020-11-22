@@ -13,7 +13,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins {
-	public class Origins : Mod {
+    public class Origins : Mod {
         public static Origins instance;
         /// <summary>
         /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes,
@@ -33,7 +33,7 @@ namespace Origins {
         public static Stack<int> ExplosiveProjectilePreRegistry;
         public static Stack<int> ExplosiveItemPreRegistry;
         public static Stack<int> ExplosiveAmmoPreRegistry;
-        public static Dictionary<int,int> ExplosiveBaseDamage;
+        public static Dictionary<int, int> ExplosiveBaseDamage;
         public static List<int> ExplosiveModOnHit;
         public static ushort[] VanillaElements;
         public static int FelnumHeadArmorID;
@@ -237,10 +237,14 @@ namespace Origins {
                 perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.6f);
                 perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.6f);
                 blackHoleShade = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/BlackHole")), "BlackHole");
+				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/BiomeShade")), "VoidShade"), EffectPriority.High);
+				Filters.Scene["Origins:ZoneDefiled"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/BiomeShade")), "DefiledShade"), EffectPriority.High);
+                //Filters.Scene["Origins:ZoneDusk"].GetShader().UseOpacity(0.35f);
                 //Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.
                 //Filters.Scene["BlackHole"] = new Filter(new ScreenShaderData(screenRef, "BlackHole"), EffectPriority.VeryHigh);
                 //Filters.Scene["BlackHole"].Load();
             }
+            //Add
         }
         public override void Unload() {
             ExplosiveProjectiles = null;
@@ -255,6 +259,20 @@ namespace Origins {
             OriginExtensions.drawPlayerItemPos = null;
             instance = null;
         }
+        public override void UpdateMusic(ref int music, ref MusicPriority priority) {
+            if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active) {
+				return;
+			}
+            OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+			if (originPlayer.ZoneVoid&&priority<MusicPriority.Event) {
+				music = Music.Dusk;
+				priority = MusicPriority.Event;
+			}else if (originPlayer.ZoneDefiled&&priority<MusicPriority.Event) {
+				music = Music.Defiled;
+				priority = MusicPriority.Event;
+			}
+        }
+
         public static void AddExplosive(Item item, bool noProj = false) {
             if(ExplosiveItems == null) {
                 ExplosiveItemPreRegistry.Push(item.type);
@@ -282,6 +300,11 @@ namespace Origins {
                 return (short)(glowMasks.Length - 1);
             }
             else return 0;
+        }
+        public static class Music {
+            public static int Dusk = MusicID.Eerie;
+            public static int Defiled = MusicID.Corruption;
+            public static int UndergroundDefiled = MusicID.UndergroundCorruption;
         }
     }
 }

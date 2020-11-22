@@ -1,4 +1,5 @@
 ﻿using Origins.Items.Weapons.Felnum.Tier2;
+using Origins.Tiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using Terraria.ModLoader.IO;
 namespace Origins.World {
     public class OriginWorld : ModWorld {
 		public static int voidTiles;
+		public static int defiledTiles;
         public int peatSold;
         //public bool felnumBroadswordStab = false;
 
@@ -24,10 +26,12 @@ namespace Origins.World {
         }
         public override void ResetNearbyTileEffects() {
 			voidTiles = 0;
+            defiledTiles = 0;
 		}
 
 		public override void TileCountsAvailable(int[] tileCounts) {
-			voidTiles = tileCounts[TileID.AmberGemspark];
+			voidTiles = tileCounts[ModContent.TileType<Dusk_Stone>()];
+			defiledTiles = tileCounts[ModContent.TileType<Defiled_Stone>()]+tileCounts[ModContent.TileType<Defiled_Grass>()];
 		}
     }
 }

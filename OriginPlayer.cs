@@ -16,6 +16,8 @@ using Origins.Projectiles;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Armor.Defiled;
+using System.IO;
+using Terraria.Graphics.Effects;
 
 namespace Origins {
     public class OriginPlayer : ModPlayer {
@@ -32,6 +34,9 @@ namespace Origins {
         public bool defiledSet = false;
         public float explosiveDamage = 1;
         public bool ZoneVoid = false;
+        public float ZoneVoidProgress = 0;
+        public bool ZoneDefiled = false;
+        public float ZoneDefiledProgress = 0;
         public bool DrawShirt = false;
         public bool DrawPants = false;
         public bool ItemLayerWrench = false;
@@ -178,8 +183,49 @@ namespace Origins {
             return damage != 0;
         }
         public override void UpdateBiomes() {
-			ZoneVoid = OriginWorld.voidTiles > 200;
+            ZoneVoid = OriginWorld.voidTiles > 200;
+            ZoneVoidProgress = Math.Min(OriginWorld.voidTiles - 100,100)/150f;
+            ZoneDefiled = OriginWorld.defiledTiles > 200;
+            ZoneDefiledProgress = Math.Min(OriginWorld.defiledTiles - 100,100)/100f;
+            /*if(ZoneVoid) {
+                if(ZoneVoidTime<60)ZoneVoidTime++;
+            } else if(ZoneVoidTime>0) {
+                ZoneVoidTime--;
+            }*/
 		}
+		public override bool CustomBiomesMatch(Player other){
+			OriginPlayer modOther = other.GetModPlayer<OriginPlayer>();
+			return !((ZoneVoid^modOther.ZoneVoid)||(ZoneDefiled^modOther.ZoneDefiled));
+		}
+		public override void SendCustomBiomes(BinaryWriter writer){
+			byte flags = 0;
+			if (ZoneVoid)flags |= 1;
+			if (ZoneDefiled)flags |= 2;
+			writer.Write(flags);
+            //writer.Write(ZoneVoidTime);
+		}
+
+		public override void ReceiveCustomBiomes(BinaryReader reader){
+            byte flags = reader.ReadByte();
+            ZoneVoid = ((flags & 1)!=0);
+            ZoneDefiled = ((flags & 2)!=0);
+            //ZoneVoidTime = reader.ReadInt32();
+		}
+
+		public override void CopyCustomBiomesTo(Player other){
+			OriginPlayer modOther = other.GetModPlayer<OriginPlayer>();
+			//modOther.ZoneVoidTime = ZoneVoidTime;
+			modOther.ZoneVoid = ZoneVoid;
+            modOther.ZoneDefiled = ZoneDefiled;
+		}
+        public override void UpdateBiomeVisuals() {
+            player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", ZoneVoidProgress>0, player.Center);
+            if(ZoneVoidProgress>0)Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(ZoneVoidProgress);
+            player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", ZoneDefiledProgress>0, player.Center);
+            if(ZoneDefiledProgress>0)Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(ZoneDefiledProgress);
+            /*if(ZoneVoidProgress>0) {
+            }*/
+        }
         public override bool PreItemCheck() {
             ItemChecking = true;
             return true;
