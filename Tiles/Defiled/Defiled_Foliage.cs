@@ -10,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace Origins.Tiles {
+namespace Origins.Tiles.Defiled {
     public class Defiled_Foliage : ModTile {
 		public override void SetDefaults(){
 			Main.tileFrameImportant[Type] = true;

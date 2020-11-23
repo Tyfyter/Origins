@@ -12,6 +12,8 @@ using System;
 using static Terraria.WorldGen;
 using static Terraria.ModLoader.ModContent;
 using Origins.Tiles;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Dusk;
 
 namespace Origins.World {
     public class BiomeGen : ModWorld {
