@@ -79,6 +79,7 @@ namespace Origins.Items.Weapons.Explosives {
     }
     public class Fallout_Field : ModProjectile {
         public override string Texture => "Origins/Projectiles/Pixel";
+        public List<Vector2> targets = new List<Vector2>(){};
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.RocketI);
             projectile.aiStyle = 0;
@@ -89,7 +90,10 @@ namespace Origins.Items.Weapons.Explosives {
         }
         public override void AI() {
             if(projectile.timeLeft%15==0) {
-                Projectile.NewProjectile(projectile.Center+Main.rand.NextVector2Circular(160,160)+Main.rand.NextVector2Circular(160,160), Vector2.Zero, ModContent.ProjectileType<Fallout_Cloud>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.ai[1]);
+                Vector2 offset = Main.rand.NextVector2Circular(160, 160)+Main.rand.NextVector2Circular(160, 160);
+                if(targets.Count>0&&Main.rand.Next(3)!=0)offset = Main.rand.Next(targets);
+                Projectile.NewProjectile(projectile.Center+offset, Vector2.Zero, ModContent.ProjectileType<Fallout_Cloud>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.ai[1]);
+                targets.Clear();
             }
             for(int i = 0; i < 6; i++) {
                 Dust dust = Dust.NewDustDirect(projectile.Center+Main.rand.NextVector2Circular(140,140)+Main.rand.NextVector2Circular(140,140), 0, 0, 226, 0, 0, 100, new Color(0, 255, 0), 0.75f*projectile.scale);
@@ -103,6 +107,7 @@ namespace Origins.Items.Weapons.Explosives {
 			projectile.Damage();
         }
         public override bool? CanHitNPC(NPC target) {
+            if((target.Center-projectile.Center).Length()<320)targets.Add(target.Center-projectile.Center);
             return projectile.ai[0]>0?null:(bool?)false;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
@@ -129,14 +134,14 @@ namespace Origins.Items.Weapons.Explosives {
             }
 			projectile.position.X += projectile.width / 2;
 			projectile.position.Y += projectile.height / 2;
-			projectile.width = 96;
-			projectile.height = 96;
+			projectile.width = projectile.ai[0]>ProjectileID.RocketII? 128: 96;
+			projectile.height = projectile.width;
 			projectile.position.X -= projectile.width / 2;
 			projectile.position.Y -= projectile.height / 2;
 			projectile.Damage();
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-            return (projectile.Center.Clamp(targetHitbox)-projectile.Center).Length()<=48;
+            return (projectile.Center.Clamp(targetHitbox)-projectile.Center).Length()<=(projectile.ai[0]>ProjectileID.RocketII? 72:48);
         }
     }
 }

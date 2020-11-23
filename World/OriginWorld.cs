@@ -14,6 +14,8 @@ namespace Origins.World {
 		public static int voidTiles;
 		public static int defiledTiles;
         public int peatSold;
+        public const float biomeShaderSmoothing = 0.025f;
+
         //public bool felnumBroadswordStab = false;
 
         public override void Load(TagCompound tag) {

@@ -123,6 +123,7 @@ namespace Origins.World {
                 int i2;
                 FieldInfo grassSpread = typeof(WorldGen).GetField("grassSpread", BindingFlags.NonPublic|BindingFlags.Static);
                 ushort grassType = TileID.Grass;
+                ushort plantType = TileID.Plants;
                 ushort stoneType = TileID.Stone;
                 tasks[genIndex] = new PassLegacy("Alternate World Evil", (GenerationProgress progress) => {
                     if (crimson) {
@@ -288,6 +289,7 @@ namespace Origins.World {
                         crimson = true;
                         stoneType = (ushort)TileType<Defiled_Stone>();
                         grassType = (ushort)TileType<Defiled_Grass>();
+                        plantType = (ushort)TileType<Defiled_Foliage>();
 			            progress.Message = "Corruptionn't";
 			            for (int genCount = 0; (double)genCount < (double)Main.maxTilesX * 0.00045; genCount++) {
 				            float value15 = (float)((double)genCount / ((double)Main.maxTilesX * 0.00045));
@@ -396,7 +398,7 @@ namespace Origins.World {
 							            }
 							            if (tile.type == 0 && (double)num526 < Main.worldSurface - 1.0 && !flag42) {
 								            grassSpread.SetValue(null, 0);
-								            SpreadGrass(i2, num526, TileID.Dirt, grassType, repeat: true, 26);
+								            SpreadGrass(i2, num526, TileID.Dirt, grassType, repeat: true);
 							            }
 							            flag42 = true;
 							            if (tile.type == TileID.Stone && i2 >= genLeft + genRand.Next(5) && i2 <= genRight - genRand.Next(5)) {
@@ -410,7 +412,10 @@ namespace Origins.World {
 								            //tile.wall = WallID.HallowSandstone;
                                             tile.color(26);
 							            }
-							            if (tile.type == TileID.Grass || tile.type == TileID.JungleGrass || tile.type == TileID.MushroomGrass) {
+							            if (tile.type == TileID.Plants) {
+								            tile.type = grassType;
+                                            //tile.color(26);
+							            } else if (tile.type == TileID.Grass || tile.type == TileID.JungleGrass || tile.type == TileID.MushroomGrass) {
 								            tile.type = grassType;
                                             //tile.color(26);
 							            } else if (tile.type == TileID.IceBlock) {

@@ -35,8 +35,10 @@ namespace Origins {
         public float explosiveDamage = 1;
         public bool ZoneVoid = false;
         public float ZoneVoidProgress = 0;
+        public float ZoneVoidProgressSmoothed = 0;
         public bool ZoneDefiled = false;
         public float ZoneDefiledProgress = 0;
+        public float ZoneDefiledProgressSmoothed = 0;
         public bool DrawShirt = false;
         public bool DrawPants = false;
         public bool ItemLayerWrench = false;
@@ -187,6 +189,28 @@ namespace Origins {
             ZoneVoidProgress = Math.Min(OriginWorld.voidTiles - 100,100)/150f;
             ZoneDefiled = OriginWorld.defiledTiles > 200;
             ZoneDefiledProgress = Math.Min(OriginWorld.defiledTiles - 100,100)/100f;
+            if(ZoneVoidProgress!=ZoneVoidProgressSmoothed) {
+                if(Math.Abs(ZoneVoidProgress-ZoneVoidProgressSmoothed)<OriginWorld.biomeShaderSmoothing) {
+                    ZoneVoidProgressSmoothed = ZoneVoidProgress;
+                } else {
+                    if(ZoneVoidProgress>ZoneVoidProgressSmoothed) {
+                        ZoneVoidProgressSmoothed+=OriginWorld.biomeShaderSmoothing;
+                    }else if(ZoneVoidProgress<ZoneVoidProgressSmoothed) {
+                        ZoneVoidProgressSmoothed-=OriginWorld.biomeShaderSmoothing;
+                    }
+                }
+            }
+            if(ZoneDefiledProgress!=ZoneDefiledProgressSmoothed) {
+                if(Math.Abs(ZoneDefiledProgress-ZoneDefiledProgressSmoothed)<OriginWorld.biomeShaderSmoothing) {
+                    ZoneDefiledProgressSmoothed = ZoneDefiledProgress;
+                } else {
+                    if(ZoneDefiledProgress>ZoneDefiledProgressSmoothed) {
+                        ZoneDefiledProgressSmoothed+=OriginWorld.biomeShaderSmoothing;
+                    }else if(ZoneDefiledProgress<ZoneDefiledProgressSmoothed) {
+                        ZoneDefiledProgressSmoothed-=OriginWorld.biomeShaderSmoothing;
+                    }
+                }
+            }
             /*if(ZoneVoid) {
                 if(ZoneVoidTime<60)ZoneVoidTime++;
             } else if(ZoneVoidTime>0) {
@@ -219,10 +243,10 @@ namespace Origins {
             modOther.ZoneDefiled = ZoneDefiled;
 		}
         public override void UpdateBiomeVisuals() {
-            player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", ZoneVoidProgress>0, player.Center);
-            if(ZoneVoidProgress>0)Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(ZoneVoidProgress);
-            player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", ZoneDefiledProgress>0, player.Center);
-            if(ZoneDefiledProgress>0)Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(ZoneDefiledProgress);
+            player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", ZoneVoidProgressSmoothed>0, player.Center);
+            if(ZoneVoidProgressSmoothed>0)Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(ZoneVoidProgressSmoothed);
+            player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", ZoneDefiledProgressSmoothed>0, player.Center);
+            if(ZoneDefiledProgressSmoothed>0)Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(ZoneDefiledProgressSmoothed);
             /*if(ZoneVoidProgress>0) {
             }*/
         }
