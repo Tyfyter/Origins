@@ -8,7 +8,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Tiles {
+namespace Origins.Tiles.Defiled {
     public class Defiled_Grass : ModTile {
 		public override void SetDefaults() {
             TileID.Sets.Grass[Type] = true;

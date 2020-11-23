@@ -9,25 +9,23 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Origins.Tiles {
-    public class Dusk_Stone : ModTile {
+namespace Origins.Tiles.Defiled {
+    public class Defiled_Stone : ModTile {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			drop = ItemType<Dusk_Stone_Item>();
-			AddMapEntry(new Color(0, 0, 0));
+			Main.tileMergeDirt[Type] = true;
+			drop = ItemType<Defiled_Stone_Item>();
+			AddMapEntry(new Color(200, 200, 200));
 		}
-        public override void PostSetDefaults() {
-            Main.tileNoSunLight[Type] = true;
-        }
     }
-    public class Dusk_Stone_Item : ModItem {
+    public class Defiled_Stone_Item : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Dusk Stone");
+            DisplayName.SetDefault("Defiled Stone");
         }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.StoneBlock);
-            item.createTile = TileType<Dusk_Stone>();
+            item.createTile = TileType<Defiled_Stone>();
 		}
     }
 }
