@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Acid {
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);
-			item.damage = 80;
+			item.damage = 207;
 			item.magic = true;
 			item.noMelee = true;
 			item.noUseGraphic = true;

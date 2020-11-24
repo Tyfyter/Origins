@@ -6,11 +6,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Defiled {
     public class Defiled_Burst : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("?");
+            DisplayName.SetDefault("The Kruncher");
             Tooltip.SetDefault("Very pointy");
         }
         public override void SetDefaults() {
-            item.damage = 15;
+            item.damage = 22;
             item.ranged = true;
             item.noMelee = true;
             item.crit = -1;
@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Defiled {
             item.useAnimation = 43;
             item.useStyle = 5;
             item.knockBack = 5;
-            item.shootSpeed = 4.75f;
+            item.shootSpeed = 10f;
             item.shoot = ProjectileID.Bullet;
             item.useAmmo = AmmoID.Bullet;
             item.value = 5000;

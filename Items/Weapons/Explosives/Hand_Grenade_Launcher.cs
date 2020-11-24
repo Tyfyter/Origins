@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Explosives {
             //item.maxStack = 999;
             item.width = 44;
             item.height = 18;
-            item.damage = 15;
+            item.damage = 17;
 			item.value/=2;
 			item.useTime = (int)(item.useTime*1.15);
 			item.useAnimation = (int)(item.useAnimation*1.15);

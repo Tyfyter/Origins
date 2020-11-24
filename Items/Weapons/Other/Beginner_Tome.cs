@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Other {
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);
-			item.damage = 14;
+			item.damage = 16;
 			item.magic = true;
 			item.noMelee = true;
 			item.width = 28;

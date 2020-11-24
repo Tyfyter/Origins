@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Explosives {
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.ProximityMineLauncher);
-			item.damage = 170;
+			item.damage = 226;
 			item.noMelee = true;
             item.useStyle = 5;
 			item.useTime = 28;

@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Dungeon {
         }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.GoldBow);
-            item.damage = 10;
+            item.damage = 28;
 			item.knockBack = 5;
 			item.crit = 4;
             item.useTime = item.useAnimation = 16;
