@@ -11,14 +11,14 @@ namespace Origins.Items.Weapons.Defiled {
 			Tooltip.SetDefault("Very pointy");
 		}
 		public override void SetDefaults() {
-			item.damage = 21;
+			item.damage = 24;
 			item.melee = true;
             item.noMelee = true;
             item.noUseGraphic = true;
 			item.width = 52;
 			item.height = 56;
-			item.useTime = 35;
-			item.useAnimation = 35;
+			item.useTime = 32;
+			item.useAnimation = 32;
 			item.useStyle = 5;
 			item.knockBack = 5;
             item.shoot = ModContent.ProjectileType<Ripper_Lance_P>();
@@ -81,6 +81,19 @@ namespace Origins.Items.Weapons.Defiled {
 				projectile.rotation -= MathHelper.PiOver2;
 			}
 		}
+        static bool handleHit = false;
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+            handleHit = (!projHitbox.Intersects(targetHitbox))&&Collision.CheckAABBvLineCollision(targetHitbox.Location.ToVector2(), targetHitbox.Size(), Main.player[projectile.owner].MountedCenter+projectile.velocity*2, projectile.Center);
+            if(handleHit) {
+                return true;
+            }
+            return null;
+        }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+            if(handleHit) {
+                damage = (int)(damage*0.65f);
+            }
+        }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
             spriteBatch.Draw(mod.GetTexture("Items/Weapons/Defiled/Ripper_Lance_P"), projectile.Center - Main.screenPosition + projectile.velocity*3, new Rectangle(0, 0, 80, 84), lightColor, projectile.rotation, new Vector2(40+40*projectile.direction,0), projectile.scale, projectile.spriteDirection>0?SpriteEffects.None:SpriteEffects.FlipHorizontally, 0f);
             return false;
