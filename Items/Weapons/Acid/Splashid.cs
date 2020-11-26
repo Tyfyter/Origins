@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Acid {
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);
-			item.damage = 207;
+			item.damage = 52;
 			item.magic = true;
 			item.noMelee = true;
 			item.noUseGraphic = true;
@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Acid {
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             int a = Main.rand.Next(5,7);
             for(int i = 0; ++i < a; a = Main.rand.Next(5,7)) {
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(((i-a/2f)/a)*0.75), type, damage/7, knockBack, player.whoAmI, 0, 12f);
+                Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(((i-a/2f)/a)*0.75), type, (int)(damage/1.75f), knockBack, player.whoAmI, 0, 12f);
             }
             return false;
         }

@@ -83,8 +83,8 @@ namespace Origins.Items.Weapons.Defiled {
 		}
         static bool handleHit = false;
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-            handleHit = (!projHitbox.Intersects(targetHitbox))&&Collision.CheckAABBvLineCollision(targetHitbox.Location.ToVector2(), targetHitbox.Size(), Main.player[projectile.owner].MountedCenter+projectile.velocity*2, projectile.Center);
-            if(handleHit) {
+            handleHit = false;
+            if(projHitbox.Intersects(targetHitbox)||(handleHit=Collision.CheckAABBvLineCollision(targetHitbox.Location.ToVector2(), targetHitbox.Size(), Main.player[projectile.owner].MountedCenter+projectile.velocity*2, projectile.Center))) {
                 return true;
             }
             return null;
