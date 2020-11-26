@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 			item.knockBack = 9;
 			item.value = 5000;
 			item.autoReuse = true;
-            item.useTurn = true;
+            item.useTurn = false;
 			item.rare = ItemRarityID.Lime;
 			item.UseSound = SoundID.Item1;
 		}
