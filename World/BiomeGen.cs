@@ -397,8 +397,8 @@ namespace Origins.World {
 					            for (int num526 = (int)worldSurfaceLow; (double)num526 < num524; num526++) {
                                     tile = Main.tile[i2, num526];
 						            if (tile.active()) {
-							            if (tile.type == TileID.Sand && i2 >= genLeft + genRand.Next(5) && i2 <= genRight - genRand.Next(5)) {
-								            tile.type = TileID.Silt;
+							            if (TileID.Sets.Conversion.Sand[tile.type] && i2 >= genLeft + genRand.Next(5) && i2 <= genRight - genRand.Next(5)) {
+								            tile.type = sandType;
 
 							            }
 							            if (tile.type == 0 && (double)num526 < Main.worldSurface - 1.0 && !flag42) {
@@ -422,9 +422,6 @@ namespace Origins.World {
                                             //tile.color(26);
 							            } else if (TileID.Sets.Conversion.Grass[tile.type]) {
 								            tile.type = grassType;
-                                            //tile.color(26);
-							            } else  if (TileID.Sets.Conversion.Sand[tile.type]) {
-								            tile.type = sandType;
                                             //tile.color(26);
 							            } else if (TileID.Sets.Conversion.Ice[tile.type]) {
                                             tile.color(27);

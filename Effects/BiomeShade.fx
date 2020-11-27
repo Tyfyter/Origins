@@ -39,7 +39,7 @@ float4 DefiledShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : CO
 	float progress = uProgress;
 	float median = (min(color.r,min(color.g,color.b))+max(color.r,max(color.g,color.b)))/2;
 	color.rgb = lerp(color.rgb,median,progress);
-	return color*sampleColor;
+	return color*(sampleColor+(1,1,1,1))/2;
 }
 
 technique Technique1{

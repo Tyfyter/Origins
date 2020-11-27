@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria;
 
 namespace Origins.World {
     public partial class OriginWorld : ModWorld {
@@ -39,7 +40,8 @@ namespace Origins.World {
 
 		public override void TileCountsAvailable(int[] tileCounts) {
 			voidTiles = tileCounts[ModContent.TileType<Dusk_Stone>()];
-			defiledTiles = tileCounts[ModContent.TileType<Defiled_Stone>()]+tileCounts[ModContent.TileType<Defiled_Grass>()];
-		}
+			defiledTiles = tileCounts[ModContent.TileType<Defiled_Stone>()]+tileCounts[ModContent.TileType<Defiled_Grass>()]+tileCounts[ModContent.TileType<Defiled_Sand>()];
+            Main.sandTiles+=tileCounts[ModContent.TileType<Defiled_Sand>()];
+        }
     }
 }

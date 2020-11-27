@@ -95,7 +95,7 @@ namespace Origins.Items.Weapons.Defiled {
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
-            spriteBatch.Draw(mod.GetTexture("Items/Weapons/Defiled/Ripper_Lance_P"), projectile.Center - Main.screenPosition + projectile.velocity*3, new Rectangle(0, 0, 80, 84), lightColor, projectile.rotation, new Vector2(40+40*projectile.direction,0), projectile.scale, projectile.spriteDirection>0?SpriteEffects.None:SpriteEffects.FlipHorizontally, 0f);
+            spriteBatch.Draw(mod.GetTexture("Items/Weapons/Defiled/Ripper_Lance_P"), projectile.Center - Main.screenPosition + projectile.velocity*3, new Rectangle(0, 0, 80, 84), lightColor, projectile.rotation, new Vector2(40+40*projectile.spriteDirection,0), projectile.scale, projectile.spriteDirection>0?SpriteEffects.None:SpriteEffects.FlipHorizontally, 0f);
             return false;
         }
     }

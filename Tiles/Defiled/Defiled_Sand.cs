@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,8 +42,10 @@ namespace Origins.Tiles.Defiled {
 
 				if (Main.netMode == NetmodeID.SinglePlayer) {
 					Main.tile[i, j].ClearTile();
+                    OriginGlobalProj.hostileNext = true;
 					int proj = Projectile.NewProjectile(positionX, positionY, 0f, 0.41f, projectileType, 10, 0f, Main.myPlayer);
 					Main.projectile[proj].ai[0] = 1f;
+					Main.projectile[proj].hostile = true;
 					WorldGen.SquareTileFrame(i, j);
 				}
 				else if (Main.netMode == NetmodeID.Server) {
@@ -87,9 +90,10 @@ namespace Origins.Tiles.Defiled {
         }
     }
     public class Defiled_Sand_Ball : ModProjectile {
-
-		protected bool falling = true;
+        public override bool CloneNewInstances => true;
+        protected bool falling = true;
 		protected int tileType;
+        bool init = true;
 		protected const int dustType = 51;
 
 		public override void SetStaticDefaults() {
@@ -99,13 +103,19 @@ namespace Origins.Tiles.Defiled {
 
 		public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.SandBallGun);
+            projectile.hostile = false;
 			projectile.knockBack = 6f;
 			projectile.penetrate = -1;
+            projectile.aiStyle = 1;
 			//Set the tile type to ExampleSand
 			tileType = TileType<Defiled_Sand>();
 		}
 
 		public override void AI() {
+            if(init) {
+                falling = projectile.hostile;
+                init = false;
+            }
 			//Change the 5 to determine how much dust will spawn. lower for more, higher for less
 			if (Main.rand.Next(5) == 0) {
 				int dust = Dust.NewDust(projectile.position, projectile.width, projectile.height, dustType);
@@ -145,11 +155,19 @@ namespace Origins.Tiles.Defiled {
 		}
 
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) {
+            Vector2 velocity = projectile.velocity;
 			if (falling)
 				projectile.velocity = Collision.AnyCollision(projectile.position, projectile.velocity, projectile.width, projectile.height, true);
 			else
-				projectile.velocity = Collision.TileCollision(projectile.position, projectile.velocity, projectile.width, projectile.height, fallThrough, fallThrough, 1);
-
+				projectile.velocity = Collision.TileCollision(projectile.position, projectile.velocity, projectile.width, projectile.height, true, true, 1);
+            if(falling) {
+				int tileX = (int)(projectile.Center.X) / 16;
+				int tileY = (int)(projectile.Center.Y) / 16;
+                if(projectile.velocity!=velocity||Main.tile[tileX, tileY + 1].active())projectile.Kill();
+            }else if(projectile.velocity!=velocity) {
+                falling = true;
+                projectile.hostile = true;
+            }
 			return false;
 		}
 
@@ -184,10 +202,6 @@ namespace Origins.Tiles.Defiled {
 				}
 			}
 		}
-        public override bool CanHitPlayer(Player target) {
-            if(projectile.knockBack != 6f&&projectile.owner==target.whoAmI) return false;
-            return true;
-        }
 
         public override bool CanDamage() => projectile.localAI[1] != -1f;
     }
