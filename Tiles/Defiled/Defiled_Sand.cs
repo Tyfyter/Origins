@@ -100,10 +100,6 @@ namespace Origins.Tiles.Defiled {
 		public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.SandBallGun);
 			projectile.knockBack = 6f;
-			projectile.width = 10;
-			projectile.height = 10;
-			projectile.friendly = true;
-			projectile.hostile = true;
 			projectile.penetrate = -1;
 			//Set the tile type to ExampleSand
 			tileType = TileType<Defiled_Sand>();
