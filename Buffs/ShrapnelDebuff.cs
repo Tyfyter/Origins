@@ -10,7 +10,7 @@ using Origins.NPCs;
 namespace Origins.Buffs {
     public class ShrapnelDebuff : ModBuff {
         public override void SetDefaults() {
-            DisplayName.SetDefault("Ace Shrapnel");
+            DisplayName.SetDefault("Impeding Shrapnel");
             canBeCleared = false;
             Main.persistentBuff[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
