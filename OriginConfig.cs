@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria.ModLoader;
@@ -12,10 +14,32 @@ namespace Origins {
     public class OriginConfig : ModConfig {
         public static OriginConfig Instance;
         public override ConfigScope Mode => ConfigScope.ServerSide;
+        [Label("Use alternate world evil biomes")]
+        [OptionStrings(new string[]{"never","50/50","always"})]
+        [DefaultValue("50/50")]
+        public string altWorldEvil;
+        [JsonIgnore]
+        public sbyte worldTypeSkew = 0;
+
         [Header("Vanilla Buffs")]
 
         [Label("Infected Wood Items")]
         [DefaultValue(true)]
         public bool WoodBuffs = true;
+
+        [OnDeserialized]
+        internal void OnDeserialized(StreamingContext context) {
+            switch(altWorldEvil) {
+                case "never":
+                worldTypeSkew = -1;
+                break;
+                case "always":
+                worldTypeSkew = 1;
+                break;
+                default:
+                worldTypeSkew = 0;
+                break;
+            }
+        }
     }
 }

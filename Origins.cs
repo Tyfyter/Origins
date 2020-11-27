@@ -244,7 +244,7 @@ namespace Origins {
                 //Filters.Scene["BlackHole"] = new Filter(new ScreenShaderData(screenRef, "BlackHole"), EffectPriority.VeryHigh);
                 //Filters.Scene["BlackHole"].Load();
             }
-            //Add
+            Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
         }
         public override void Unload() {
             ExplosiveProjectiles = null;
@@ -301,10 +301,17 @@ namespace Origins {
             }
             else return 0;
         }
+        public static int AddSound(string path, SoundType type = SoundType.Custom, ModSound modSound = null) {
+            instance.AddSound(type, "Origins/"+path, modSound);
+            return SoundLoader.GetSoundSlot(type, "Origins/"+path);
+        }
         public static class Music {
             public static int Dusk = MusicID.Eerie;
             public static int Defiled = MusicID.Corruption;
             public static int UndergroundDefiled = MusicID.UndergroundCorruption;
+        }
+        public static class Sounds {
+            public static int Krunch = 36;
         }
     }
 }

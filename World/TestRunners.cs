@@ -124,9 +124,9 @@ namespace Origins.World {
 			        }
                     if(spike.HasValue) {
                         int l = spike.Value.Y;
-                        if(WorldGen.genRand.Next(0, 10+BiomeGen.HellSpikes.Count)<=tilesSinceSpike/5) {
+                        if(WorldGen.genRand.Next(0, 10+OriginWorld.HellSpikes.Count)<=tilesSinceSpike/5) {
                             Origins.instance.Logger.Info("Adding spike @ "+k+", "+l);
-                            BiomeGen.HellSpikes.Add((new Point(k, l), WorldGen.genRand.Next(5,10)+tilesSinceSpike/5));
+                            OriginWorld.HellSpikes.Add((new Point(k, l), WorldGen.genRand.Next(5,10)+tilesSinceSpike/5));
                             //WorldGen.paintTile(k, l, 11);
                             tilesSinceSpike = -7;
                         } else {

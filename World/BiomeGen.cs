@@ -16,7 +16,7 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
 
 namespace Origins.World {
-    public class BiomeGen : ModWorld {
+    public partial class OriginWorld : ModWorld {
         internal static List<(Point, int)> HellSpikes = new List<(Point, int)>() {};
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight) {
             #region _
@@ -119,7 +119,8 @@ namespace Origins.World {
                 }));
             }
             genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
-            if(genIndex != -1) {
+            worldEvil = crimson?evil_crimson:evil_corruption;
+            if(genIndex != -1&&(WorldGen.genRand.Next(0,2)+OriginConfig.Instance.worldTypeSkew)>0) {
                 bool dungeonLeft = dungeonX < Main.maxTilesX / 2;
                 int JungleX = (int)typeof(WorldGen).GetField("JungleX", BindingFlags.NonPublic|BindingFlags.Static).GetValue(null);
                 int i2;
@@ -127,6 +128,7 @@ namespace Origins.World {
                 ushort grassType = TileID.Grass;
                 ushort plantType = TileID.Plants;
                 ushort stoneType = TileID.Stone;
+                ushort sandType = TileID.Sand;
                 tasks[genIndex] = new PassLegacy("Alternate World Evil", (GenerationProgress progress) => {
                     if (crimson) {
 			            progress.Message = Lang.gen[72].Value+"n't";
@@ -292,6 +294,7 @@ namespace Origins.World {
                         stoneType = (ushort)TileType<Defiled_Stone>();
                         grassType = (ushort)TileType<Defiled_Grass>();
                         plantType = (ushort)TileType<Defiled_Foliage>();
+                        sandType = (ushort)TileType<Defiled_Sand>();
 			            progress.Message = "Corruptionn't";
 			            for (int genCount = 0; (double)genCount < (double)Main.maxTilesX * 0.00045; genCount++) {
 				            float value15 = (float)((double)genCount / ((double)Main.maxTilesX * 0.00045));
@@ -417,17 +420,20 @@ namespace Origins.World {
 							            if (tile.type == TileID.Plants) {
 								            tile.type = grassType;
                                             //tile.color(26);
-							            } else if (tile.type == TileID.Grass || tile.type == TileID.JungleGrass || tile.type == TileID.MushroomGrass) {
+							            } else if (TileID.Sets.Conversion.Grass[tile.type]) {
 								            tile.type = grassType;
                                             //tile.color(26);
-							            } else if (tile.type == TileID.IceBlock) {
+							            } else  if (TileID.Sets.Conversion.Sand[tile.type]) {
+								            tile.type = sandType;
+                                            //tile.color(26);
+							            } else if (TileID.Sets.Conversion.Ice[tile.type]) {
                                             tile.color(27);
                                             //tile.type = TileID.Stone;
                                             //WorldGen.paintTile(i2, num526, 26);
-							            } else if (tile.type == TileID.Sandstone) {
+							            } else if (TileID.Sets.Conversion.Sandstone[tile.type]) {
 								            //tile.type = TileID.HallowSandstone;
                                             tile.color(26);
-							            }else if (tile.type == TileID.HardenedSand) {
+							            }else if (TileID.Sets.Conversion.HardenedSand[tile.type]) {
 								            //tile.type = TileID.HallowHardenedSand;
                                             tile.color(26);
 							            }
@@ -461,7 +467,15 @@ namespace Origins.World {
 					            }
 				            }
 			            }
-		            }});
+		            }
+                    ushort oreType = crimson?TileID.Crimtane:TileID.Demonite;
+                    ushort altOreType = (ushort)(crimson?TileType<Defiled_Ore>():TileType<Defiled_Ore>());
+                    for(int y = 0; y < Main.maxTilesY; y++){
+                        for(int x = 0; x < Main.maxTilesX; x++){
+                                if(Main.tile[x, y].type==oreType)Main.tile[x, y].type = altOreType;
+                        }
+                    }
+                });
             }
         }
     }

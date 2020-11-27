@@ -12,21 +12,25 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.World {
-    public class OriginWorld : ModWorld {
+    public partial class OriginWorld : ModWorld {
 		public static int voidTiles;
 		public static int defiledTiles;
         public int peatSold;
         public const float biomeShaderSmoothing = 0.025f;
+        public byte worldEvil = 0;
+        public const byte evil_corruption = 0b0001;//1
+        public const byte evil_crimson = 0b0010;//2
+        //difference of 4
+        public const byte evil_wastelands = 0b0101;//5
+        public const byte evil_riven = 0b0110;//6
 
-        //public bool felnumBroadswordStab = false;
 
         public override void Load(TagCompound tag) {
             peatSold = tag.GetAsInt("peatSold");
-            /*felnumBroadswordStab = tag.GetBool("felnumBroadswordStab");
-            if(felnumBroadswordStab)Felnum_Broadsword.animation.Frame = 0;*/
+            worldEvil = tag.GetByte("worldEvil");
         }
         public override TagCompound Save() {
-            return new TagCompound() { {"peatSold",  peatSold} /*, {"felnumBroadswordStab",  felnumBroadswordStab} */};
+            return new TagCompound() { {"peatSold",  peatSold} , {"worldEvil",  worldEvil} };
         }
         public override void ResetNearbyTileEffects() {
 			voidTiles = 0;

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -26,7 +27,7 @@ namespace Origins.Items.Weapons.Defiled {
             item.value = 5000;
             item.useTurn = false;
             item.rare = ItemRarityID.Blue;
-            item.UseSound = SoundID.Item36;
+            item.UseSound = new LegacySoundStyle(SoundID.Item, Origins.Sounds.Krunch);
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             for(int i = 0; i<5; i++)Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedByRandom(i/10f), type, damage, knockBack, player.whoAmI);
