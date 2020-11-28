@@ -1,0 +1,99 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="BurstCannon_data" version="1.3.0" audacityversion="2.3.2" sel0="0.0000000000" sel1="0.8753061224" vpos="288" h="0.2406184292" zoom="1708.0985915493" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags>
+		<tag name="Software" value="Lavf58.45.100"/>
+	</tags>
+	<wavetrack name="BurstCannon" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="36920">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808992.au" len="36920" min="-0.430237" max="0.39505" rms="0.051684"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="BurstCannon" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="36920">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808ffc.au" len="36920" min="-0.434387" max="0.418091" rms="0.052059"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="BurstCannon" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="36920">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808a2b.au" len="36920" min="-0.340416" max="0.360582" rms="0.057723"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="0.83718821" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1681">
+				<waveblock start="0">
+					<simpleblockfile filename="e08082d7.au" len="1681" min="-0.000684" max="0.000586" rms="0.000211"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="BurstCannon" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="36920">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808fea.au" len="36920" min="-0.423812" max="0.396491" rms="0.057001"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="0.83718821" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1681">
+				<waveblock start="0">
+					<simpleblockfile filename="e080863b.au" len="1681" min="-0.00071" max="0.000548" rms="0.000236"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="BurstCannon" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="36920">
+				<waveblock start="0">
+					<simpleblockfile filename="e08088cd.au" len="36920" min="-0.378333" max="0.332875" rms="0.058872"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="0.83718821" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1681">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808fa5.au" len="1681" min="-0.000172" max="0.000023" rms="0.000029"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="BurstCannon" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0" colorindex="0">
+		<waveclip offset="0.00000000" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="36920">
+				<waveblock start="0">
+					<simpleblockfile filename="e0808bc1.au" len="36920" min="-0.387733" max="0.39196" rms="0.061359"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="0.83718821" colorindex="0">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1681">
+				<waveblock start="0">
+					<simpleblockfile filename="e08085ac.au" len="1681" min="-0.000152" max="0.000031" rms="0.00003"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>
