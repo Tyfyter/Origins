@@ -13,6 +13,7 @@ using Bitmap = System.Drawing.Bitmap;
 using Microsoft.Xna.Framework.Audio;
 using Terraria.ID;
 using System.Runtime.CompilerServices;
+using static Origins.Items.OriginGlobalItem;
 
 namespace Origins {
     public class DrawAnimationManual : DrawAnimation {
@@ -159,6 +160,26 @@ namespace Origins {
                 }
             }
             return bitmap;
+        }
+        public static int GetWeaponCrit(this Player player, Item item) {
+            int crit = 4+item.crit;
+            if(item.melee) {
+                crit+=player.meleeCrit-4;
+                if(player.HeldItem.melee)crit-=player.HeldItem.crit;
+            }
+            if(item.ranged) {
+                crit+=player.rangedCrit-4;
+                if(player.HeldItem.ranged)crit-=player.HeldItem.crit;
+            }
+            if(item.magic) {
+                crit+=player.magicCrit-4;
+                if(player.HeldItem.magic)crit-=player.HeldItem.crit;
+            }
+            /*if(IsExplosive(item)) {
+                crit+=player.GetModPlayer<OriginPlayer>().explosiveCrit-4;
+                if(IsExplosive(player.HeldItem))crit-=player.HeldItem.crit;
+            }*/
+            return crit;
         }
     }
 }

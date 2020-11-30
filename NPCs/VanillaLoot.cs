@@ -9,7 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs {
-    class VanillaLoot : GlobalNPC{
+    public partial class OriginGlobalNPC : GlobalNPC{
         public override void NPCLoot(NPC npc) {
             switch(npc.type) {
                 case NPCID.CaveBat:

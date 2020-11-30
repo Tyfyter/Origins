@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Explosives {
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.ProximityMineLauncher);
-			item.damage = 226;
+			item.damage = 115;
 			item.noMelee = true;
             item.useStyle = 5;
 			item.useTime = 28;
@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             type-=ModContent.ProjectileType<Ace_Shrapnel_P>();
             type/=3;
-            Projectile.NewProjectile(position, new Vector2(speedX, speedY), item.shoot, damage/2, knockBack, player.whoAmI, 6+type, 0-type);
+            Projectile.NewProjectile(position, new Vector2(speedX, speedY), item.shoot, damage, knockBack, player.whoAmI, 6+type, 0-type);
             return false;
         }
     }

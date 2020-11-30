@@ -14,7 +14,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs {
-    public class OriginGlobalNPC : GlobalNPC {
+    public partial class OriginGlobalNPC : GlobalNPC {
         public override void SetupShop(int type, Chest shop, ref int nextSlot) {
             if(type==NPCID.Demolitionist && ModContent.GetInstance<OriginWorld>().peatSold>=20) {
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());

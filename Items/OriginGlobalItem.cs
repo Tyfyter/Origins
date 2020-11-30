@@ -45,9 +45,21 @@ namespace Origins.Items {
                 break;
             }
 		}
+        public override void GetWeaponCrit(Item item, Player player, ref int crit) {
+            if(IsExplosive(item)) {
+                //int c = crit;
+                crit+=player.GetModPlayer<OriginPlayer>().explosiveCrit-4;
+                //int c2 = crit;
+                if(IsExplosive(player.HeldItem))crit-=player.HeldItem.crit;
+                //player.chatOverhead.NewMessage($"{c}->{c2}->{crit}",5);
+            }
+        }
         public override void UpdateEquip(Item item, Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
             switch(item.type) {
+                case ItemID.MiningHelmet:
+                originPlayer.explosiveCrit+=3;
+                break;
                 case ItemID.MiningShirt:
                 originPlayer.explosiveDamage+=0.05f;
                 break;
@@ -86,20 +98,29 @@ namespace Origins.Items {
                 if(IsExplosive(item)) {
                     if(NeedsDamageLine(item)&&Origins.ExplosiveBaseDamage.ContainsKey(item.type)) {
                         Main.HoverItem.damage = Origins.ExplosiveBaseDamage[item.type];
-                        tooltips.Insert(1, new TooltipLine(mod, "Damage", $"{Main.player[item.owner].GetWeaponDamage(Main.HoverItem)} {Language.GetText("explosive")} {Language.GetText("damage")}"));
+                        Player player = Main.player[item.owner];
+                        tooltips.Insert(1, new TooltipLine(mod, "Damage", $"{player.GetWeaponDamage(Main.HoverItem)} {Language.GetText("explosive")}{Language.GetText("LegacyTooltip.55")}"));
+                        int crit = player.GetWeaponCrit(item);
+                        ItemLoader.GetWeaponCrit(item, player, ref crit);
+                        PlayerHooks.GetWeaponCrit(player, item, ref crit);
+                        tooltips.Insert(2, new TooltipLine(mod, "CritChance", $"{crit}{Language.GetText("LegacyTooltip.41")}"));
                         return;
                     } else {
                         for(int i = 1; i < tooltips.Count; i++) {
                             TooltipLine tooltip = tooltips[i];
                             if(tooltip.Name.Equals("Damage")) {
                                 tooltip.text = tooltip.text.Insert(tooltip.text.IndexOf(' '), " "+Language.GetText("explosive"));
-                            }else if(tooltip.Name.Equals("CritChance")) {
+                                return;
+                            }/*else if(tooltip.Name.Equals("CritChance")) {
                                 tooltips.RemoveAt(i);
                                 return;
-                            }
+                            }*/
                         }
                     }
                 }else switch(item.type) {
+                        case ItemID.MiningHelmet:
+                    tooltips.Insert(3, new TooltipLine(mod, "Tooltip0", "3% increased explosive critical strike chance"));
+                    break;
                     case ItemID.MiningShirt:
                     tooltips.Insert(3, new TooltipLine(mod, "Tooltip0", "5% increased explosive damage"));
                     break;

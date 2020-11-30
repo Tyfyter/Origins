@@ -15,7 +15,9 @@ namespace Origins.Items.Accessories {
             Tooltip.SetDefault("Also commonly referred to as the 'Bomb Yeeter'");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.YoYoGlove); //just to make it equippable. ooooh...
+            item.CloneDefaults(ItemID.YoYoGlove);
+            item.handOffSlot = -1;//the current spritesheet is in 1.4's format, so it's not usable yet
+            item.handOnSlot = -1;
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().bombHandlingDevice = true;

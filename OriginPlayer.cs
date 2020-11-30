@@ -18,6 +18,7 @@ using Origins.Items.Weapons.Explosives;
 using Origins.Items.Armor.Defiled;
 using System.IO;
 using Terraria.Graphics.Effects;
+using System.Runtime.CompilerServices;
 
 namespace Origins {
     public class OriginPlayer : ModPlayer {
@@ -29,19 +30,27 @@ namespace Origins {
         public float oldFelnumShock = 0;
         public bool celestineSet = false;
         //public const int FelnumMax = 100;
-        public bool bombHandlingDevice = false;
         public bool minerSet = false;
         public bool defiledSet = false;
+
+        public bool bombHandlingDevice = false;
+        public bool dimStarlight = false;
+
         public float explosiveDamage = 1;
+        public int explosiveCrit = 4;
+
         public bool ZoneVoid = false;
         public float ZoneVoidProgress = 0;
         public float ZoneVoidProgressSmoothed = 0;
+
         public bool ZoneDefiled = false;
         public float ZoneDefiledProgress = 0;
         public float ZoneDefiledProgressSmoothed = 0;
+
         public bool DrawShirt = false;
         public bool DrawPants = false;
         public bool ItemLayerWrench = false;
+
         internal static bool ItemChecking = false;
         public int cryostenLifeRegenCount = 0;
         public override void ResetEffects() {
@@ -63,7 +72,12 @@ namespace Origins {
             minerSet = false;
             defiledSet = false;
             bombHandlingDevice = false;
+            dimStarlight = false;
             explosiveDamage = 1f;
+            explosiveCrit = 4;
+            if(IsExplosive(player.HeldItem)) {
+                explosiveCrit += player.HeldItem.crit;
+            }
             if(cryostenLifeRegenCount>0)cryostenLifeRegenCount--;
         }
         public override void PostUpdateMiscEffects() {
@@ -130,10 +144,16 @@ namespace Origins {
             }
         }
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
-            if(crit&&celestineSet)Item.NewItem(target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
+            if(crit) {
+                if(celestineSet)Item.NewItem(target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
+                if(dimStarlight)Item.NewItem(target.position, target.width, target.height, ItemID.Star);
+            }
         }
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
-            if(crit&&celestineSet)Item.NewItem(target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
+            if(crit) {
+                if(celestineSet)Item.NewItem(target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
+                if(dimStarlight)Item.NewItem(target.position, target.width, target.height, ItemID.Star);
+            }
         }
         public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
             if(minerSet)if(proj.owner == player.whoAmI && proj.friendly) {
@@ -185,11 +205,13 @@ namespace Origins {
             return damage != 0;
         }
         public override void UpdateBiomes() {
-            ZoneVoid = OriginWorld.voidTiles > 200;
-            ZoneVoidProgress = Math.Min(OriginWorld.voidTiles - 100,100)/150f;
+            ZoneVoid = OriginWorld.voidTiles > 300;
+            ZoneVoidProgress = Math.Min(OriginWorld.voidTiles - 200, 200)/300f;
             ZoneDefiled = OriginWorld.defiledTiles > 200;
-            ZoneDefiledProgress = Math.Min(OriginWorld.defiledTiles - 100,100)/100f;
-            if(ZoneVoidProgress!=ZoneVoidProgressSmoothed) {
+            ZoneDefiledProgress = Math.Min(OriginWorld.defiledTiles - 100, 100)/100f;
+            smoothBiomeShader(ref ZoneVoidProgressSmoothed, ZoneVoidProgress, OriginWorld.biomeShaderSmoothing);
+            smoothBiomeShader(ref ZoneDefiledProgressSmoothed, ZoneDefiledProgress, OriginWorld.biomeShaderSmoothing);
+            /*if(ZoneVoidProgress!=ZoneVoidProgressSmoothed) {
                 if(Math.Abs(ZoneVoidProgress-ZoneVoidProgressSmoothed)<OriginWorld.biomeShaderSmoothing) {
                     ZoneVoidProgressSmoothed = ZoneVoidProgress;
                 } else {
@@ -210,13 +232,22 @@ namespace Origins {
                         ZoneDefiledProgressSmoothed-=OriginWorld.biomeShaderSmoothing;
                     }
                 }
-            }
-            /*if(ZoneVoid) {
-                if(ZoneVoidTime<60)ZoneVoidTime++;
-            } else if(ZoneVoidTime>0) {
-                ZoneVoidTime--;
             }*/
 		}
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        static void smoothBiomeShader(ref float smoothed, float target, float rate) {
+            if(target!=smoothed) {
+                if(Math.Abs(target-smoothed)<rate) {
+                    smoothed = target;
+                } else {
+                    if(target>smoothed) {
+                        smoothed+=rate;
+                    }else if(target<smoothed) {
+                        smoothed-=rate;
+                    }
+                }
+            }
+        }
 		public override bool CustomBiomesMatch(Player other){
 			OriginPlayer modOther = other.GetModPlayer<OriginPlayer>();
 			return !((ZoneVoid^modOther.ZoneVoid)||(ZoneDefiled^modOther.ZoneDefiled));

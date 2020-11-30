@@ -81,6 +81,18 @@ namespace Origins {
             ExplosiveProjectiles[ProjectileID.PartyGirlGrenade] = true;
             ExplosiveProjectiles[ProjectileID.Beenade] = true;
             ExplosiveProjectiles[ProjectileID.MolotovCocktail] = true;
+            ExplosiveProjectiles[ProjectileID.RocketI] = true;
+            ExplosiveProjectiles[ProjectileID.RocketII] = true;
+            ExplosiveProjectiles[ProjectileID.RocketIII] = true;
+            ExplosiveProjectiles[ProjectileID.RocketIV] = true;
+            ExplosiveProjectiles[ProjectileID.GrenadeI] = true;
+            ExplosiveProjectiles[ProjectileID.GrenadeII] = true;
+            ExplosiveProjectiles[ProjectileID.GrenadeIII] = true;
+            ExplosiveProjectiles[ProjectileID.GrenadeIV] = true;
+            ExplosiveProjectiles[ProjectileID.ProximityMineI] = true;
+            ExplosiveProjectiles[ProjectileID.ProximityMineII] = true;
+            ExplosiveProjectiles[ProjectileID.ProximityMineIII] = true;
+            ExplosiveProjectiles[ProjectileID.ProximityMineIV] = true;
             ExplosiveProjectiles[ModContent.ProjectileType<Awe_Grenade_P>()] = true;
             ExplosiveProjectiles[ModContent.ProjectileType<Awe_Grenade_Blast>()] = true;
 #endregion projectiles
@@ -287,7 +299,7 @@ namespace Origins {
             if(item.ammo!=AmmoID.None)ExplosiveAmmo[item.ammo] = true;
             if(item.useAmmo!=AmmoID.None)ExplosiveAmmo[item.useAmmo] = true;
             if(!noProj&&item.shoot!=ProjectileID.None)ExplosiveProjectiles[item.shoot] = true;
-            instance.Logger.Info($"Registered {item.Name} as explosive :"+ExplosiveItems[item.type]);
+            instance.Logger.Info($"Registered {item.Name} as explosive: "+ExplosiveItems[item.type]);
         }
         public static short AddGlowMask(string name){
             if (!Main.dedServ){
