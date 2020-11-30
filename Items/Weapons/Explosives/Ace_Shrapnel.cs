@@ -11,6 +11,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
+using Origins.NPCs;
+using InstGNPC = Origins.NPCs.OriginInstancedGlobalNPC;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Ace_Shrapnel : ModItem {
@@ -80,6 +82,9 @@ namespace Origins.Items.Weapons.Explosives {
 
         const double chaos = 0.1f;
 
+        public static int maxHits = 3;
+        public static int hitCD = 5;
+
         public override string Texture => "Terraria/Projectile_"+ProjectileID.BoneGloveProj;
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bullet);
@@ -89,6 +94,8 @@ namespace Origins.Items.Weapons.Explosives {
             projectile.width = projectile.height = 10;
             projectile.timeLeft = 120;
             projectile.ignoreWater = true;
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = 10;
         }
         public override void AI() {
             Dust.NewDustPerfect(projectile.Center, 1, Vector2.Zero).noGravity = true;
@@ -106,10 +113,25 @@ namespace Origins.Items.Weapons.Explosives {
                 //Dust.NewDustDirect(projectile.Center+new Vector2(16,0).RotatedBy(targetAngle), 0, 0, 6, Scale:2).noGravity = true;
             }
         }
+        public override bool? CanHitNPC(NPC target) {
+            InstGNPC instGNPC = target.GetGlobalNPC<InstGNPC>();
+            if(instGNPC.shrapnelTime>0) {
+                return instGNPC.shrapnelCount<maxHits ? null : (bool?)false;
+            }
+            return null;
+        }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             target.immune[projectile.owner]/=2;
             if(target.life<=0 && projectile.ai[1]<5) {
                 Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Ace_Shrapnel_P>(), projectile.damage, projectile.knockBack, projectile.owner, 8-projectile.ai[1], projectile.ai[1]);
+            } else {
+                InstGNPC instGNPC = target.GetGlobalNPC<InstGNPC>();
+                instGNPC.shrapnelCount++;
+                if(instGNPC.shrapnelTime<1) {
+                    instGNPC.shrapnelTime = hitCD;
+                } else {
+                    projectile.penetrate++;
+                }
             }
         }
     }

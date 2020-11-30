@@ -13,22 +13,22 @@ using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
 
 namespace Origins.Items.Weapons.Explosives {
-    public class Ace_Shrapnel : ModItem {
-
+    public class Ace_Shrapnel_Alt : ModItem {
+        public override string Texture => "Origins/Items/Weapons/Explosives/Ace_Shrapnel";
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Ace Shrapnel");
 			Tooltip.SetDefault("Needs item & shard sprites");
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.ProximityMineLauncher);
-			item.damage = 300;
+			item.damage = 150;
 			item.noMelee = true;
             item.useStyle = 5;
 			item.useTime = 20;
 			item.useAnimation = 28;
             item.shootSpeed/=1;
 			item.value = 5000;
-            item.shoot = ModContent.ProjectileType<Ace_Shrapnel_P>();
+            item.shoot = ModContent.ProjectileType<Ace_Shrapnel_Alt_P>();
 			item.rare = ItemRarityID.Lime;
 		}
         public override void AddRecipes() {
@@ -37,11 +37,11 @@ namespace Origins.Items.Weapons.Explosives {
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             type-=ModContent.ProjectileType<Ace_Shrapnel_P>();
             type/=3;
-            Projectile.NewProjectile(position, new Vector2(speedX, speedY), item.shoot, damage/2, knockBack, player.whoAmI, 6+type, 0-type);
+            Projectile.NewProjectile(position, new Vector2(speedX, speedY), item.shoot, damage, knockBack, player.whoAmI, 6+type, 0-type);
             return false;
         }
     }
-    public class Ace_Shrapnel_P : ModProjectile {
+    public class Ace_Shrapnel_Alt_P : ModProjectile {
         public override string Texture => "Origins/Projectiles/Pixel";
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bullet);
@@ -61,10 +61,10 @@ namespace Origins.Items.Weapons.Explosives {
                 projectile.ai[0]--;
                 if(projectile.velocity.Length()<1) {
                     Vector2 v = Main.rand.NextVector2Unit()*6;
-                    Projectile.NewProjectile(projectile.Center+v*8, v.RotatedBy(PiOver2), ModContent.ProjectileType<Ace_Shrapnel_Shard>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI, projectile.ai[1]+1);
+                    Projectile.NewProjectile(projectile.Center+v*8, v.RotatedBy(PiOver2), ModContent.ProjectileType<Ace_Shrapnel_Alt_Shard>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI, projectile.ai[1]+1);
                     return;
                 }
-                Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedByRandom(1)*1.1f, ModContent.ProjectileType<Ace_Shrapnel_Shard>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI, projectile.ai[1]+1);
+                Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedByRandom(1)*1.1f, ModContent.ProjectileType<Ace_Shrapnel_Alt_Shard>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI, projectile.ai[1]+1);
             }
         }
         public override bool? CanHitNPC(NPC target) {
@@ -74,11 +74,11 @@ namespace Origins.Items.Weapons.Explosives {
             return false;
         }
     }
-    public class Ace_Shrapnel_Shard : ModProjectile {
+    public class Ace_Shrapnel_Alt_Shard : ModProjectile {
 
         const float cohesion = 0.1f;
 
-        const double chaos = 1000.0f;
+        const double chaos = Math.PI;
 
         public override string Texture => "Terraria/Projectile_"+ProjectileID.BoneGloveProj;
         public override void SetDefaults() {
@@ -109,7 +109,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             target.immune[projectile.owner]/=2;
             if(target.life<=0 && projectile.ai[1]<5) {
-                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Ace_Shrapnel_P>(), projectile.damage, projectile.knockBack, projectile.owner, 8-projectile.ai[1], projectile.ai[1]);
+                Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Ace_Shrapnel_Alt_P>(), projectile.damage, projectile.knockBack, projectile.owner, 8-projectile.ai[1], projectile.ai[1]);
             }
         }
     }

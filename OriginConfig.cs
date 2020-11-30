@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Origins.Items.Weapons.Explosives;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,7 +16,7 @@ namespace Origins {
         public static OriginConfig Instance;
         public override ConfigScope Mode => ConfigScope.ServerSide;
         [Label("Use alternate world evil biomes")]
-        [OptionStrings(new string[]{"never","50/50","always"})]
+        [OptionStrings(new string[] { "never", "50/50", "always" })]
         [DefaultValue("50/50")]
         public string altWorldEvil;
         [JsonIgnore]
@@ -26,6 +27,24 @@ namespace Origins {
         [Label("Infected Wood Items")]
         [DefaultValue(true)]
         public bool WoodBuffs = true;
+
+        [Label("Deb_A-S_field1")]
+        [DefaultValue(3)]
+        public int Ace_Shrap_MH{
+            get => Ace_Shrapnel_Shard.maxHits;
+            set {
+                Ace_Shrapnel_Shard.maxHits = value;
+            }
+        }
+
+        [Label("Deb_A-S_field2")]
+        [DefaultValue(5)]
+        public int Ace_Shrap_CD{
+            get => Ace_Shrapnel_Shard.hitCD;
+            set {
+                Ace_Shrapnel_Shard.hitCD = value;
+            }
+        }
 
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context) {
