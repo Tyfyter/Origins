@@ -1,4 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
+using Origins.Items.Weapons.Summon;
+using Origins.Items.Weapons.Summon.Minions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,44 +21,48 @@ namespace Origins.Items.Weapons.Summon {
         }
         public override void SetDefaults() {
             item.damage = 8;
-			item.mana = 10;
-			item.width = 32;
-			item.height = 32;
-			item.useTime = 36;
-			item.useAnimation = 36;
-			item.useStyle = 1;
-			item.value = Item.buyPrice(0, 30, 0, 0);
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item44;
+            item.mana = 10;
+            item.width = 32;
+            item.height = 32;
+            item.useTime = 36;
+            item.useAnimation = 36;
+            item.useStyle = 1;
+            item.value = Item.buyPrice(0, 30, 0, 0);
+            item.rare = ItemRarityID.Blue;
+            item.UseSound = SoundID.Item44;
             buffID = ModContent.BuffType<Woodsprite_Buff>();
             item.buffType = buffID;
             item.shoot = projectileID;
-			item.noMelee = true;
-			item.summon = true;
+            item.noMelee = true;
+            item.summon = true;
         }
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			player.AddBuff(item.buffType, 2);
-			position = Main.MouseWorld;
-			return true;
-		}
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+            player.AddBuff(item.buffType, 2);
+            position = Main.MouseWorld;
+            return true;
+        }
     }
-	public class Woodsprite_Buff : ModBuff {
-		public override void SetDefaults() {
-			DisplayName.SetDefault("Woodsprite");
-			Description.SetDefault("The woodsprite will fight for you");
-			Main.buffNoSave[Type] = true;
-			Main.buffNoTimeDisplay[Type] = true;
-		}
+}
+namespace Origins.Buffs {
+    public class Woodsprite_Buff : ModBuff {
+        public override void SetDefaults() {
+            DisplayName.SetDefault("Woodsprite");
+            Description.SetDefault("The woodsprite will fight for you");
+            Main.buffNoSave[Type] = true;
+            Main.buffNoTimeDisplay[Type] = true;
+        }
 
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Woodsprite_Staff.projectileID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
-		}
-	}
+        public override void Update(Player player, ref int buffIndex) {
+            if(player.ownedProjectileCounts[Woodsprite_Staff.projectileID] > 0) {
+                player.buffTime[buffIndex] = 18000;
+            } else {
+                player.DelBuff(buffIndex);
+                buffIndex--;
+            }
+        }
+    }
+}
+namespace Origins.Items.Weapons.Summon.Minions {
     public class Woodsprite : ModProjectile {
 		public override void SetStaticDefaults() {
             Woodsprite_Staff.projectileID = projectile.type;

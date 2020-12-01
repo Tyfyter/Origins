@@ -79,7 +79,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 			    item.useAnimation = 16;
 			    item.useStyle = 1;
 			    item.knockBack = 9;
-                item.shoot = 0;
+                item.shoot = ProjectileID.None;
                 item.shootSpeed = 0;
                 item.noUseGraphic = false;
                 item.noMelee = false;

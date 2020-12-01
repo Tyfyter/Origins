@@ -48,6 +48,11 @@ namespace Origins {
         public const byte TopLeft = 3;
         public const byte TopRight = 4;
     }
+    public static class AIStyleID {
+        public const byte Slime = 1;
+        public const byte Fighter = 3;
+        public const byte Tortoise = 39;
+    }
     public static class OriginExtensions {
         public static Func<float, int, Vector2> drawPlayerItemPos;
         public static void PlaySound(string Name, Vector2 Position, float Volume = 1f, float PitchVariance = 1f, float? Pitch = null){

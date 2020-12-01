@@ -56,7 +56,7 @@ namespace Origins.Items.Weapons.Explosives {
                     Crystal_Grenade_P.blendState.AlphaDestinationBlend = (Blend)((int)Crystal_Grenade_P.blendState.AlphaDestinationBlend%13);
                     Main.NewText(Crystal_Grenade_P.blendState.AlphaDestinationBlend);
                 }
-                item.shoot = 0;
+                item.shoot = ProjectileID.None;
                 item.consumable = false;
                 return true;
             }
