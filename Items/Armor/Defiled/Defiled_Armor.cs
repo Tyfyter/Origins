@@ -1,5 +1,6 @@
 using Origins.Items.Materials;
 using Terraria;
+using Origins.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
 

@@ -14,7 +14,7 @@ namespace Origins.NPCs.Defiled {
         byte anger = 0;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Mite");
-            Main.npcFrameCount[npc.type] = 2;
+            Main.npcFrameCount[npc.type] = 4;
         }
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.Bunny);
@@ -22,7 +22,7 @@ namespace Origins.NPCs.Defiled {
             npc.lifeMax = 22;
             npc.defense = 6;
             npc.damage = 34;
-            npc.width = 32;
+            npc.width = 34;
             npc.height = 28;
             npc.friendly = false;
         }
@@ -37,7 +37,6 @@ namespace Origins.NPCs.Defiled {
                     npc.aiStyle = -1;
                 }
             }
-            npc.rotation = 0;
             if(npc.HasPlayerTarget) {
                 npc.FaceTarget();
                 npc.spriteDirection = npc.direction;
