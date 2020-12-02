@@ -49,7 +49,7 @@ namespace Origins {
         public const byte TopRight = 4;
     }
     public static class AIStyleID {
-        		///<summary>
+        ///<summary>
 		///Doesn't move.
 		///</summary>
 		public const int None = 0;
