@@ -6,15 +6,15 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Defiled {
     [AutoloadEquip(EquipType.Head)]
-	public class Defiled_Helmet : ModItem {
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled Helmet");
-			Tooltip.SetDefault("Increases mana regeneration rate");
-		}
-		public override void SetDefaults() {
+    public class Defiled_Helmet : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Defiled Helmet");
+            Tooltip.SetDefault("Increases mana regeneration rate");
+        }
+        public override void SetDefaults() {
             item.defense = 6;
             item.rare = ItemRarityID.Blue;
-		}
+        }
         public override void UpdateEquip(Player player) {
             player.manaRegen+=2;
         }
@@ -33,18 +33,18 @@ namespace Origins.Items.Armor.Defiled {
             recipe.AddTile(TileID.Anvils);
             recipe.AddRecipe();
         }
-	}
+    }
     [AutoloadEquip(EquipType.Body)]
-	public class Defiled_Breastplate : ModItem {
+    public class Defiled_Breastplate : ModItem {
         public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled Breastplate");
-			Tooltip.SetDefault("5% increased magic damage");
-		}
-		public override void SetDefaults() {
+            DisplayName.SetDefault("Defiled Breastplate");
+            Tooltip.SetDefault("5% increased magic damage");
+        }
+        public override void SetDefaults() {
             item.defense = 7;
             item.wornArmor = true;
             item.rare = ItemRarityID.Blue;
-		}
+        }
         public override void UpdateEquip(Player player) {
             player.magicDamage+=0.05f;
         }
@@ -56,17 +56,17 @@ namespace Origins.Items.Armor.Defiled {
             recipe.AddTile(TileID.Anvils);
             recipe.AddRecipe();
         }
-	}
+    }
     [AutoloadEquip(EquipType.Legs)]
-	public class Defiled_Greaves : ModItem {
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled Greaves");
-			Tooltip.SetDefault("5% increased movement speed");
-		}
-		public override void SetDefaults() {
+    public class Defiled_Greaves : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Defiled Greaves");
+            Tooltip.SetDefault("5% increased movement speed");
+        }
+        public override void SetDefaults() {
             item.defense = 6;
             item.rare = ItemRarityID.Blue;
-		}
+        }
         public override void UpdateEquip(Player player) {
             player.moveSpeed+=0.05f;
         }
@@ -78,7 +78,9 @@ namespace Origins.Items.Armor.Defiled {
             recipe.AddTile(TileID.Anvils);
             recipe.AddRecipe();
         }
-	}
+    }
+}
+namespace Origins.Buffs {
     public class Defiled_Exhaustion_Buff : ModBuff {
         public override void SetDefaults() {
             DisplayName.SetDefault("Defiled Exhaustion");
