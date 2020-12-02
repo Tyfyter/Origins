@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Defiled {
             Tooltip.SetDefault("Very pointy");
         }
         public override void SetDefaults() {
-            item.damage = 22;
+            item.damage = 16;
             item.ranged = true;
             item.noMelee = true;
             item.crit = -1;
@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Defiled {
             item.useAnimation = 43;
             item.useStyle = 5;
             item.knockBack = 5;
-            item.shootSpeed = 10f;
+            item.shootSpeed = 20f;
             item.shoot = ProjectileID.Bullet;
             item.useAmmo = AmmoID.Bullet;
             item.value = 5000;
