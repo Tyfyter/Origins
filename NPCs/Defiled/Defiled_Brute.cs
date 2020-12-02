@@ -43,7 +43,7 @@ namespace Origins.NPCs.Defiled {
             }
             
             else if(anger == 1) {
-                anger = 4;
+                anger = 1;
             }
             return npc.aiStyle!=1;
         }
@@ -51,7 +51,7 @@ namespace Origins.NPCs.Defiled {
             npc.frame = new Rectangle(0, 15*(frame&4)/2, 168, 168);
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) {
-            anger = 6;
+            anger = 1;
             return true;
         }
     }
