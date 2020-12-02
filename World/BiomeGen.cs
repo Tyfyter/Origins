@@ -132,8 +132,8 @@ namespace Origins.World {
                 tasks[genIndex] = new PassLegacy("Alternate World Evil", (GenerationProgress progress) => {
                     if (crimson) {
 			            progress.Message = Lang.gen[72].Value+"n't";
-			            for (int num487 = 0; (double)num487 < (double)Main.maxTilesX * 0.00045; num487++) {
-				            float value14 = (float)((double)num487 / ((double)Main.maxTilesX * 0.00045));
+			            for (int num487 = 0; num487 < Main.maxTilesX * 0.00045; num487++) {
+				            float value14 = (float)(num487 / (Main.maxTilesX * 0.00045));
 				            progress.Set(value14);
 				            bool flag38 = false;
 				            int num488 = 0;

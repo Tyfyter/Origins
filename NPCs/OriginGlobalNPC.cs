@@ -4,6 +4,7 @@ using Origins.Items.Weapons.Acid;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
 using Origins.NPCs.Defiled;
+using Origins.Tiles.Defiled;
 using Origins.World;
 using System;
 using System.Collections.Generic;
@@ -48,17 +49,27 @@ namespace Origins.NPCs {
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
             if(Main.LocalPlayer.GetModPlayer<OriginPlayer>().ZoneDefiled) {
                 pool[0] = 0;
-                byte flatTiles = 0;
+                int yPos = spawnInfo.spawnTileY;
                 Tile tile;
+                for(int i = 0; i < Defiled_Mite.spawnCheckDistance; i++) {
+                    tile = Main.tile[spawnInfo.spawnTileX, ++yPos];
+                    if(tile.active()) {
+                        yPos--;
+                        break;
+                    }
+                }
+                bool? halfSlab = null;
                 for(int i = spawnInfo.spawnTileX-1; i<spawnInfo.spawnTileX+2; i++) {
-                    tile = Main.tile[i, spawnInfo.spawnTileY+1];
-                    if(!tile.active()||!Main.tileSolid[tile.type]||tile.slope()!=SlopeID.None)flatTiles++;//break;
-                    //flatTiles++;
+                    tile = Main.tile[i, yPos+1];
+                    if(!tile.active()||!Main.tileSolid[tile.type]||tile.slope()!=SlopeID.None||(halfSlab.HasValue&&halfSlab.Value!=tile.halfBrick())) {
+                        tile = null;
+                        goto SkipMiteSpawn;
+                    }
+                    halfSlab = tile.halfBrick();
                 }
                 tile = null;
-                if(flatTiles>2) {//check if on flat ground
-                    pool.Add(ModContent.NPCType<Defiled_Mite>(), 1);
-                }
+                pool.Add(ModContent.NPCType<Defiled_Mite>(), 1);
+                SkipMiteSpawn:;
             }
         }
     }
