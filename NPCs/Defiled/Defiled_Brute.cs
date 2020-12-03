@@ -32,7 +32,7 @@ namespace Origins.NPCs.Defiled {
                     npc.aiStyle = 41;
                 }/* else {
                     npc.target = 0;
-                    npc.aiStyle = 3;
+                    npc.aiStyle = 41;
                 }*/
             }
             if (npc.HasPlayerTarget) {

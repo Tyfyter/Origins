@@ -23,6 +23,7 @@ namespace Origins.NPCs.Defiled {
             npc.width = 136;
             npc.height = 44;
             npc.friendly = false;
+            npc.lifeRegen = 50;
         }
         public override void AI() {
             npc.FaceTarget();
@@ -30,6 +31,8 @@ namespace Origins.NPCs.Defiled {
             if(++npc.frameCounter>5) {
                 npc.frame = new Rectangle(0, (npc.frame.Y+44)%176, 136, 44);
                 npc.frameCounter = 0;
+            }
+            if (npc.life<npc.lifeMax) {
             }
         }
     }
