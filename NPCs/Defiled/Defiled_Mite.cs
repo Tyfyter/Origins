@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 namespace Origins.NPCs.Defiled {
     public class Defiled_Mite : ModNPC {
         internal const int spawnCheckDistance = 15;
-        public const int aggroRange = 60;
+        public const int aggroRange = 128;
         byte frame = 0;
         byte anger = 0;
         public override void SetStaticDefaults() {
@@ -75,6 +75,13 @@ namespace Origins.NPCs.Defiled {
                 }
             }
             return base.SpawnNPC(tileX, tileY);
+        }
+        public override void HitEffect(int hitDirection, double damage) {
+            if(npc.life<0) {
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF1_Gore"));
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
+                for(int i = 0; i < 3; i++)Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
+            }
         }
     }
 }

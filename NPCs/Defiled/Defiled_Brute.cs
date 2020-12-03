@@ -45,5 +45,11 @@ namespace Origins.NPCs.Defiled {
                 npc.frameCounter = 0;
             }
         }
+        public override void HitEffect(int hitDirection, double damage) {
+            if(npc.life<0) {
+                for(int i = 0; i < 6; i++)Gore.NewGore(npc.position+new Vector2(Main.rand.Next(npc.width),Main.rand.Next(npc.height)), npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
+                for(int i = 0; i < 10; i++)Gore.NewGore(npc.position+new Vector2(Main.rand.Next(npc.width),Main.rand.Next(npc.height)), npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
+            }
+        }
     }
 }

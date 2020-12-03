@@ -11,6 +11,7 @@ namespace Origins.NPCs.Defiled {
         public override void AI() {
             if(Main.netMode != NetmodeID.MultiplayerClient) {
                 if(npc.ai[0] == 0f) {
+                    npc.spriteDirection = Main.rand.NextBool() ?1:-1;
                     npc.ai[3] = npc.whoAmI;
                     npc.realLife = npc.whoAmI;
                     int current = 0;
@@ -30,6 +31,7 @@ namespace Origins.NPCs.Defiled {
                     Main.npc[current].ai[3] = npc.whoAmI;
                     Main.npc[current].realLife = npc.whoAmI;
                     Main.npc[current].ai[1] = last;
+                    Main.npc[current].spriteDirection = Main.rand.NextBool() ?1:-1;
                     Main.npc[last].ai[0] = current;
                     NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
                 }
@@ -108,6 +110,21 @@ namespace Origins.NPCs.Defiled {
                 return false;
             }
             return null;
+        }
+        public override void HitEffect(int hitDirection, double damage) {
+            if(npc.life<0) {
+                NPC current = Main.npc[npc.realLife];
+                while(current.ai[0]!=0) {
+                    deathEffect(current);
+                    current = Main.npc[(int)current.ai[0]];
+                }
+            }
+        }
+        protected static void deathEffect(NPC npc) {
+            Gore.NewGore(npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF3_Gore"));
+            //Gore.NewGore(npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
+            Gore.NewGore(npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
+            //for(int i = 0; i < 3; i++)
         }
     }
 }
