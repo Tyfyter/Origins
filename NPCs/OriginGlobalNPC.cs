@@ -47,8 +47,10 @@ namespace Origins.NPCs {
             }
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
-            if(Main.LocalPlayer.GetModPlayer<OriginPlayer>().ZoneDefiled) {
+            Player player = Main.LocalPlayer;
+            if(player.GetModPlayer<OriginPlayer>().ZoneDefiled) {
                 pool[0] = 0;
+                if(player.ZoneSkyHeight)pool.Add(ModContent.NPCType<Defiled_Flyer>(), 1);
                 int yPos = spawnInfo.spawnTileY;
                 Tile tile;
                 for(int i = 0; i < Defiled_Mite.spawnCheckDistance; i++) {

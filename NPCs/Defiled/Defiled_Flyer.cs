@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Flyer : ModNPC {
-        byte frame = 0;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Phantom");
             Main.npcFrameCount[npc.type] = 4;
@@ -24,12 +23,14 @@ namespace Origins.NPCs.Defiled {
             npc.width = 136;
             npc.height = 44;
             npc.friendly = false;
+        }
+        public override void AI() {
             npc.FaceTarget();
             npc.spriteDirection = npc.direction;
-        }
-
-        public override void FindFrame(int frameHeight) {
-            npc.frame = new Rectangle(0, 15*(frame&4)/2, 136, 44);
+            if(++npc.frameCounter>5) {
+                npc.frame = new Rectangle(0, (npc.frame.Y+44)%176, 136, 44);
+                npc.frameCounter = 0;
+            }
         }
     }
 }
