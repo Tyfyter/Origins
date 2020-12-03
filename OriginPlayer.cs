@@ -244,7 +244,7 @@ namespace Origins {
             }*/
 		}
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        static void smoothBiomeShader(ref float smoothed, float target, float rate) {
+        private static void smoothBiomeShader(ref float smoothed, float target, float rate) {
             if(target!=smoothed) {
                 if(Math.Abs(target-smoothed)<rate) {
                     smoothed = target;
