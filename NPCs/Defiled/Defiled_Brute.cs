@@ -41,7 +41,7 @@ namespace Origins.NPCs.Defiled {
             }
             if(++npc.frameCounter>7) {
                 //add frame height to frame y position and modulo by frame height multiplied by walking frame count
-                npc.frame = new Rectangle(0, (npc.frame.Y+170)%680, 178, 168);
+                npc.frame = new Rectangle(0, (npc.frame.Y+170)%680, 182, 170);
                 npc.frameCounter = 0;
             }
         }

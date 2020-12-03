@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework;
 namespace Origins.NPCs.Defiled {
     public class Defiled_Mite : ModNPC {
         internal const int spawnCheckDistance = 15;
-        public const int aggroRange = 240;
+        public const int aggroRange = 60;
         byte frame = 0;
         byte anger = 0;
         public override void SetStaticDefaults() {
