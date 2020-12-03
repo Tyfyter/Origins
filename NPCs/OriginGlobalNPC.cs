@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Origins.World.BiomeData;
 
 namespace Origins.NPCs {
     public partial class OriginGlobalNPC : GlobalNPC {
@@ -50,28 +51,31 @@ namespace Origins.NPCs {
             Player player = Main.LocalPlayer;
             if(player.GetModPlayer<OriginPlayer>().ZoneDefiled) {
                 pool[0] = 0;
-                if(player.ZoneSkyHeight)pool.Add(ModContent.NPCType<Defiled_Flyer>(), 1);
-                int yPos = spawnInfo.spawnTileY;
-                Tile tile;
-                for(int i = 0; i < Defiled_Mite.spawnCheckDistance; i++) {
-                    tile = Main.tile[spawnInfo.spawnTileX, ++yPos];
-                    if(tile.active()) {
-                        yPos--;
-                        break;
+                pool.Add(ModContent.NPCType<Defiled_Brute>(), DefiledWastelands.SpawnRates.Brute);
+                if(spawnInfo.playerFloorY <= Main.worldSurface+50&&spawnInfo.spawnTileY < Main.worldSurface-50)pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer*(player.ZoneSkyHeight?2:1));
+                if(spawnInfo.spawnTileY>Main.rockLayer) {
+                    int yPos = spawnInfo.spawnTileY;
+                    Tile tile;
+                    for(int i = 0; i < Defiled_Mite.spawnCheckDistance; i++) {
+                        tile = Main.tile[spawnInfo.spawnTileX, ++yPos];
+                        if(tile.active()) {
+                            yPos--;
+                            break;
+                        }
                     }
-                }
-                bool? halfSlab = null;
-                for(int i = spawnInfo.spawnTileX-1; i<spawnInfo.spawnTileX+2; i++) {
-                    tile = Main.tile[i, yPos+1];
-                    if(!tile.active()||!Main.tileSolid[tile.type]||tile.slope()!=SlopeID.None||(halfSlab.HasValue&&halfSlab.Value!=tile.halfBrick())) {
-                        tile = null;
-                        goto SkipMiteSpawn;
+                    bool? halfSlab = null;
+                    for(int i = spawnInfo.spawnTileX-1; i<spawnInfo.spawnTileX+2; i++) {
+                        tile = Main.tile[i, yPos+1];
+                        if(!tile.active()||!Main.tileSolid[tile.type]||tile.slope()!=SlopeID.None||(halfSlab.HasValue&&halfSlab.Value!=tile.halfBrick())) {
+                            tile = null;
+                            goto SkipMiteSpawn;
+                        }
+                        halfSlab = tile.halfBrick();
                     }
-                    halfSlab = tile.halfBrick();
+                    tile = null;
+                    pool.Add(ModContent.NPCType<Defiled_Mite>(), DefiledWastelands.SpawnRates.Mite);
+                    SkipMiteSpawn:;
                 }
-                tile = null;
-                pool.Add(ModContent.NPCType<Defiled_Mite>(), 1);
-                SkipMiteSpawn:;
             }
         }
     }

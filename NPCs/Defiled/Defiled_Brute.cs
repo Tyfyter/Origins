@@ -10,8 +10,6 @@ using Microsoft.Xna.Framework;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Brute : ModNPC {
-        byte frame = 0;
-        byte anger = 0;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Krusher");
             Main.npcFrameCount[npc.type] = 7;
@@ -26,33 +24,26 @@ namespace Origins.NPCs.Defiled {
             npc.height = 108;
             npc.friendly = false;
         }
-        public override bool PreAI() {
+        public override void AI() {
             npc.TargetClosest();
-            npc.aiStyle = npc.HasPlayerTarget ? AIStyleID.Fighter : -1;
+            npc.aiStyle = AIStyleID.Fighter;
             if(((npc.Center-npc.targetRect.Center.ToVector2())*new Vector2(1,2)).Length()>480) {
                 if(npc.life<npc.lifeMax) {
                     npc.aiStyle = 41;
-                } else {
+                }/* else {
                     npc.target = 0;
                     npc.aiStyle = 3;
-                }
+                }*/
             }
             if (npc.HasPlayerTarget) {
                 npc.FaceTarget();
                 npc.spriteDirection = npc.direction;
             }
-            
-            else if(anger == 1) {
-                anger = 1;
+            if(++npc.frameCounter>7) {
+                //add frame height to frame y position and modulo by frame height multiplied by walking frame count
+                npc.frame = new Rectangle(0, (npc.frame.Y+170)%680, 178, 168);
+                npc.frameCounter = 0;
             }
-            return npc.aiStyle!=1;
-        }
-        public override void FindFrame(int frameHeight) {
-            npc.frame = new Rectangle(0, 15*(frame&4)/2, 168, 168);
-        }
-        public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) {
-            anger = 1;
-            return true;
         }
     }
 }

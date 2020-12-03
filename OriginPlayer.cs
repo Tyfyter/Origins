@@ -19,6 +19,7 @@ using System.IO;
 using Terraria.Graphics.Effects;
 using System.Runtime.CompilerServices;
 using Origins.Buffs;
+using Origins.World.BiomeData;
 
 namespace Origins {
     public class OriginPlayer : ModPlayer {
@@ -35,6 +36,7 @@ namespace Origins {
 
         public bool bombHandlingDevice = false;
         public bool dimStarlight = false;
+        public byte dimStarlightCooldown = 0;
 
         public float explosiveDamage = 1;
         public int explosiveCrit = 4;
@@ -79,6 +81,7 @@ namespace Origins {
                 explosiveCrit += player.HeldItem.crit;
             }
             if(cryostenLifeRegenCount>0)cryostenLifeRegenCount--;
+            if(dimStarlightCooldown>0)dimStarlightCooldown--;
         }
         public override void PostUpdateMiscEffects() {
 			if (cryostenHelmet){
@@ -146,13 +149,19 @@ namespace Origins {
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
             if(crit) {
                 if(celestineSet)Item.NewItem(target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
-                if(dimStarlight)Item.NewItem(target.position, target.width, target.height, ItemID.Star);
+                if(dimStarlight&&dimStarlightCooldown<1) {
+                    Item.NewItem(target.position, target.width, target.height, ItemID.Star);
+                    dimStarlightCooldown = 90;
+                }
             }
         }
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
             if(crit) {
                 if(celestineSet)Item.NewItem(target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
-                if(dimStarlight)Item.NewItem(target.position, target.width, target.height, ItemID.Star);
+                if(dimStarlight&&dimStarlightCooldown<1) {
+                    Item.NewItem(target.position, target.width, target.height, ItemID.Star);
+                    dimStarlightCooldown = 90;
+                }
             }
         }
         public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
@@ -207,8 +216,8 @@ namespace Origins {
         public override void UpdateBiomes() {
             ZoneVoid = OriginWorld.voidTiles > 300;
             ZoneVoidProgress = Math.Min(OriginWorld.voidTiles - 200, 200)/300f;
-            ZoneDefiled = OriginWorld.defiledTiles > 200;
-            ZoneDefiledProgress = Math.Min(OriginWorld.defiledTiles - 100, 100)/100f;
+            ZoneDefiled = OriginWorld.defiledTiles > DefiledWastelands.NeededTiles;
+            ZoneDefiledProgress = Math.Min(OriginWorld.defiledTiles - (DefiledWastelands.NeededTiles-DefiledWastelands.ShaderTileCount), DefiledWastelands.ShaderTileCount)/DefiledWastelands.ShaderTileCount;
             smoothBiomeShader(ref ZoneVoidProgressSmoothed, ZoneVoidProgress, OriginWorld.biomeShaderSmoothing);
             smoothBiomeShader(ref ZoneDefiledProgressSmoothed, ZoneDefiledProgress, OriginWorld.biomeShaderSmoothing);
             /*if(ZoneVoidProgress!=ZoneVoidProgressSmoothed) {

@@ -18,8 +18,10 @@ namespace Origins.Items.Accessories {
             item.accessory = true;
         }
         public override void UpdateEquip(Player player) {
-            player.GetModPlayer<OriginPlayer>().dimStarlight = true;
-            Lighting.AddLight(player.Center,0.1f,0.1f,0.1f);
+            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+            originPlayer.dimStarlight = true;
+            float light = 0.1f+(originPlayer.dimStarlightCooldown/1000f);
+            Lighting.AddLight(player.Center,light,light,light);
         }
     }
 }
