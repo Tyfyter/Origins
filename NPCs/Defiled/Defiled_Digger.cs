@@ -7,6 +7,9 @@ namespace Origins.NPCs.Defiled {
     public class Defiled_Digger_Head : Defiled_Digger {
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.DiggerHead);
+            npc.lifeMax = 80;
+            npc.defense = 8;
+            npc.damage = 38;
         }
         public override void AI() {
             if(Main.netMode != NetmodeID.MultiplayerClient) {
