@@ -29,10 +29,8 @@ namespace Origins.NPCs.Defiled {
             npc.FaceTarget();
             npc.spriteDirection = npc.direction;
             if(++npc.frameCounter>5) {
-                npc.frame = new Rectangle(0, (npc.frame.Y+44)%176, 136, 44);
+                npc.frame = new Rectangle(0, (npc.frame.Y+46)%184, 136, 44);
                 npc.frameCounter = 0;
-            }
-            if (npc.life<npc.lifeMax) {
             }
         }
         public override void HitEffect(int hitDirection, double damage) {

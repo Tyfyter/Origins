@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Origins.Items.Weapons.Explosives;
+using Origins.NPCs.Defiled;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,6 +46,15 @@ namespace Origins {
                 Ace_Shrapnel_Shard.hitCD = value;
             }
         }
+
+        /*[Label("Deb_D-B_field1")]
+        [DefaultValue(0.75f)]
+        public float Brute_Speed{
+            get => Defiled_Brute.speedMult;
+            set {
+                Defiled_Brute.speedMult = value;
+            }
+        }*/
 
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context) {

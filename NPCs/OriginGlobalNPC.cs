@@ -48,7 +48,7 @@ namespace Origins.NPCs {
             }
         }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
-            Player player = Main.LocalPlayer;
+            Player player = spawnInfo.player;
             if(player.GetModPlayer<OriginPlayer>().ZoneDefiled) {
                 pool[0] = 0;
                 pool.Add(ModContent.NPCType<Defiled_Brute>(), DefiledWastelands.SpawnRates.Brute);
