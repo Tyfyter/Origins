@@ -129,6 +129,7 @@ namespace Origins.World {
                 ushort plantType = TileID.Plants;
                 ushort stoneType = TileID.Stone;
                 ushort sandType = TileID.Sand;
+                ushort iceType = TileID.IceBlock;
                 tasks[genIndex] = new PassLegacy("Alternate World Evil", (GenerationProgress progress) => {
                     if (crimson) {
 			            progress.Message = Lang.gen[72].Value+"n't";
@@ -295,9 +296,10 @@ namespace Origins.World {
                         grassType = (ushort)TileType<Defiled_Grass>();
                         plantType = (ushort)TileType<Defiled_Foliage>();
                         sandType = (ushort)TileType<Defiled_Sand>();
+                        iceType = (ushort)TileType<Defiled_Ice>();
 			            progress.Message = "Corruptionn't";
-			            for (int genCount = 0; (double)genCount < (double)Main.maxTilesX * 0.00045; genCount++) {
-				            float value15 = (float)((double)genCount / ((double)Main.maxTilesX * 0.00045));
+			            for (int genCount = 0; genCount < Main.maxTilesX * 0.00045; genCount++) {
+				            float value15 = (float)(genCount / (Main.maxTilesX * 0.00045));
 				            progress.Set(value15);
 				            bool foundPosition = false;
 				            int centerX = 0;
@@ -370,7 +372,7 @@ namespace Origins.World {
 							            }
 						            }
 					            }*/
-					            for (int num521 = (int)worldSurfaceLow; (double)num521 < Main.worldSurface - 1.0; num521++) {
+					            for (int num521 = (int)worldSurfaceLow; num521 < Main.worldSurface - 1.0; num521++) {
 						            if (Main.tile[num519, num521].active()) {
 							            int num522 = num521 + genRand.Next(10, 14);
 							            for (int num523 = num521; num523 < num522; num523++) {
@@ -384,7 +386,7 @@ namespace Origins.World {
 				            }
 				            double num524 = Main.worldSurface + 40.0;
 				            for (int num525 = genLeft; num525 < genRight; num525++) {
-					            num524 += (double)genRand.Next(-2, 3);
+					            num524 += genRand.Next(-2, 3);
 					            if (num524 < Main.worldSurface + 30.0) {
 						            num524 = Main.worldSurface + 30.0;
 					            }
@@ -394,14 +396,14 @@ namespace Origins.World {
 					            i2 = num525;
 					            bool flag42 = false;
                                 Tile tile;
-					            for (int num526 = (int)worldSurfaceLow; (double)num526 < num524; num526++) {
+					            for (int num526 = (int)worldSurfaceLow; num526 < num524; num526++) {
                                     tile = Main.tile[i2, num526];
 						            if (tile.active()) {
 							            if (TileID.Sets.Conversion.Sand[tile.type] && i2 >= genLeft + genRand.Next(5) && i2 <= genRight - genRand.Next(5)) {
 								            tile.type = sandType;
 
 							            }
-							            if (tile.type == 0 && (double)num526 < Main.worldSurface - 1.0 && !flag42) {
+							            if (tile.type == 0 && num526 < Main.worldSurface - 1.0 && !flag42) {
 								            grassSpread.SetValue(null, 0);
 								            SpreadGrass(i2, num526, TileID.Dirt, grassType, repeat: true);
 							            }
@@ -410,28 +412,19 @@ namespace Origins.World {
                                             tile.type = stoneType;
 							            }
 							            if (tile.wall == WallID.HardenedSand) {
-								            //tile.wall = WallID.HallowHardenedSand;
                                             tile.color(26);
-							            }
-							            else if (tile.wall == WallID.Sandstone) {
-								            //tile.wall = WallID.HallowSandstone;
+							            }else if (tile.wall == WallID.Sandstone) {
                                             tile.color(26);
 							            }
 							            if (tile.type == TileID.Plants) {
-								            tile.type = grassType;
-                                            //tile.color(26);
+								            tile.type = plantType;
 							            } else if (TileID.Sets.Conversion.Grass[tile.type]) {
 								            tile.type = grassType;
-                                            //tile.color(26);
 							            } else if (TileID.Sets.Conversion.Ice[tile.type]) {
-                                            tile.color(27);
-                                            //tile.type = TileID.Stone;
-                                            //WorldGen.paintTile(i2, num526, 26);
+                                            tile.type = iceType;
 							            } else if (TileID.Sets.Conversion.Sandstone[tile.type]) {
-								            //tile.type = TileID.HallowSandstone;
                                             tile.color(26);
 							            }else if (TileID.Sets.Conversion.HardenedSand[tile.type]) {
-								            //tile.type = TileID.HallowHardenedSand;
                                             tile.color(26);
 							            }
 						            }
