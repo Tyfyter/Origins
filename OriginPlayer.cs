@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ModLoader;
 using static Origins.Items.OriginGlobalItem;
+using static Origins.OriginExtensions;
 using Terraria.ID;
 using Origins.Projectiles;
 using Origins.Items.Materials;
@@ -218,8 +219,8 @@ namespace Origins {
             ZoneVoidProgress = Math.Min(OriginWorld.voidTiles - 200, 200)/300f;
             ZoneDefiled = OriginWorld.defiledTiles > DefiledWastelands.NeededTiles;
             ZoneDefiledProgress = Math.Min(OriginWorld.defiledTiles - (DefiledWastelands.NeededTiles-DefiledWastelands.ShaderTileCount), DefiledWastelands.ShaderTileCount)/DefiledWastelands.ShaderTileCount;
-            smoothBiomeShader(ref ZoneVoidProgressSmoothed, ZoneVoidProgress, OriginWorld.biomeShaderSmoothing);
-            smoothBiomeShader(ref ZoneDefiledProgressSmoothed, ZoneDefiledProgress, OriginWorld.biomeShaderSmoothing);
+            LinearSmoothing(ref ZoneVoidProgressSmoothed, ZoneVoidProgress, OriginWorld.biomeShaderSmoothing);
+            LinearSmoothing(ref ZoneDefiledProgressSmoothed, ZoneDefiledProgress, OriginWorld.biomeShaderSmoothing);
             /*if(ZoneVoidProgress!=ZoneVoidProgressSmoothed) {
                 if(Math.Abs(ZoneVoidProgress-ZoneVoidProgressSmoothed)<OriginWorld.biomeShaderSmoothing) {
                     ZoneVoidProgressSmoothed = ZoneVoidProgress;
@@ -243,20 +244,6 @@ namespace Origins {
                 }
             }*/
 		}
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static void smoothBiomeShader(ref float smoothed, float target, float rate) {
-            if(target!=smoothed) {
-                if(Math.Abs(target-smoothed)<rate) {
-                    smoothed = target;
-                } else {
-                    if(target>smoothed) {
-                        smoothed+=rate;
-                    }else if(target<smoothed) {
-                        smoothed-=rate;
-                    }
-                }
-            }
-        }
 		public override bool CustomBiomesMatch(Player other){
 			OriginPlayer modOther = other.GetModPlayer<OriginPlayer>();
 			return !((ZoneVoid^modOther.ZoneVoid)||(ZoneDefiled^modOther.ZoneDefiled));

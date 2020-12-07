@@ -652,6 +652,32 @@ namespace Origins {
             }
             return bitmap;
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void LinearSmoothing(ref float smoothed, float target, float rate) {
+            if(target!=smoothed) {
+                if(Math.Abs(target-smoothed)<rate) {
+                    smoothed = target;
+                } else {
+                    if(target>smoothed) {
+                        smoothed+=rate;
+                    }else if(target<smoothed) {
+                        smoothed-=rate;
+                    }
+                }
+            }
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void LinearSmoothing(ref Vector2 smoothed, Vector2 target, float rate) {
+            if(target!=smoothed) {
+                Vector2 diff = (target-smoothed);
+                if((target-smoothed).Length()<rate) {
+                    smoothed = target;
+                } else {
+                    diff.Normalize();
+                    smoothed+=diff*rate;
+                }
+            }
+        }
         public static int GetWeaponCrit(this Player player, Item item) {
             int crit = 4+item.crit;
             if(item.melee) {
