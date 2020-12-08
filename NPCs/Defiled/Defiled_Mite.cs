@@ -20,7 +20,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.Bunny);
-            npc.aiStyle = AIStyleID.None;
+            npc.aiStyle = NPCAIStyleID.None;
             npc.lifeMax = 22;
             npc.defense = 6;
             npc.damage = 34;
@@ -30,13 +30,13 @@ namespace Origins.NPCs.Defiled {
         }
         public override bool PreAI() {
             npc.TargetClosest();
-            npc.aiStyle = npc.HasPlayerTarget ? AIStyleID.Fighter : AIStyleID.None;
+            npc.aiStyle = npc.HasPlayerTarget ? NPCAIStyleID.Fighter : NPCAIStyleID.None;
             if(((npc.Center-npc.targetRect.Center.ToVector2())*new Vector2(1,2)).Length()>aggroRange) {
                 if(npc.life<npc.lifeMax) {
-                    npc.aiStyle = AIStyleID.Tortoise;
+                    npc.aiStyle = NPCAIStyleID.Tortoise;
                 } else {
                     npc.target = -1;
-                    npc.aiStyle = AIStyleID.None;
+                    npc.aiStyle = NPCAIStyleID.None;
                 }
             }
             if(npc.HasPlayerTarget) {
@@ -47,16 +47,16 @@ namespace Origins.NPCs.Defiled {
                 npc.rotation = 0;
                 if(anger!=0) {
                     if(anger>1)anger--;
-                    npc.aiStyle = AIStyleID.Tortoise;
-                }else if(npc.aiStyle==AIStyleID.None) {
+                    npc.aiStyle = NPCAIStyleID.Tortoise;
+                }else if(npc.aiStyle==NPCAIStyleID.None) {
                     npc.velocity.X*=0.85f;
-                } else if(npc.aiStyle==AIStyleID.Fighter){
+                } else if(npc.aiStyle==NPCAIStyleID.Fighter){
                     frame = (byte)((frame+1)&15);
                 }
             }else {
                 if(anger == 1) anger = 0;
             }
-            return npc.aiStyle!=AIStyleID.None;
+            return npc.aiStyle!=NPCAIStyleID.None;
         }
         public override void FindFrame(int frameHeight) {
             npc.frame = new Rectangle(0, 30*(frame&12)/4, 32, 30);

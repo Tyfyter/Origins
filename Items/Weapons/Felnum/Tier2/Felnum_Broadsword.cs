@@ -11,10 +11,10 @@ using Terraria.ModLoader.IO;
 
 namespace Origins.Items.Weapons.Felnum.Tier2 {
     //this took seven and a half hours to make
-	public class Felnum_Broadsword : ModItem, IAnimatedItem {
+	public class Felnum_Broadsword : IAnimatedItem {
         public override bool CloneNewInstances => true;
         internal static DrawAnimationManual animation;
-        public DrawAnimation Animation {
+        public override DrawAnimation Animation {
             get {
                 animation.Frame = frame;
                 return animation;

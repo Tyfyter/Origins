@@ -16,7 +16,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.DiggerHead);
-            npc.aiStyle = AIStyleID.Fighter;
+            npc.aiStyle = NPCAIStyleID.Fighter;
             npc.lifeMax = 360;
             npc.defense = 30;
             npc.damage = 64;
@@ -106,7 +106,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.DiggerBody);
-            npc.aiStyle = AIStyleID.None;
+            npc.aiStyle = NPCAIStyleID.None;
             npc.height = 28;
             npc.width = 32;
             npc.noGravity = false;
@@ -123,7 +123,7 @@ namespace Origins.NPCs.Defiled {
     public class Defiled_Hunter_Tail : Defiled_Hunter {
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.DiggerTail);
-            npc.aiStyle = AIStyleID.None;
+            npc.aiStyle = NPCAIStyleID.None;
             npc.height = 28;
             npc.width = 32;
             npc.noGravity = false;

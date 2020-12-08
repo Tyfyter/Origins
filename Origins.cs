@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Weapons.Explosives;
+using Origins.Items.Weapons.Felnum.Tier2;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -269,6 +270,7 @@ namespace Origins {
             perlinFade0 = null;
             blackHoleShade = null;
             OriginExtensions.drawPlayerItemPos = null;
+            Tolruk.glowmasks = null;
             instance = null;
         }
         public override void UpdateMusic(ref int music, ref MusicPriority priority) {

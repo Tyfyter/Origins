@@ -19,7 +19,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.Zombie);
-            npc.aiStyle = AIStyleID.Fighter;
+            npc.aiStyle = NPCAIStyleID.Fighter;
             npc.lifeMax = 160;
             npc.defense = 9;
             npc.damage = 49;

@@ -8,12 +8,12 @@ using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Fiberglass {
-	public class Broken_Fiberglass_Bow : ModItem, IAnimatedItem {
+	public class Broken_Fiberglass_Bow : IAnimatedItem {
         public override bool CloneNewInstances => true;
         int strung = 0;
         const int strungMax = 50;
         static DrawAnimationManual animation;
-        public DrawAnimation Animation {
+        public override DrawAnimation Animation {
             get {
                 animation.Frame = strung>0 ? 1 : 0;
                 return animation;

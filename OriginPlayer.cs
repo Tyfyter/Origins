@@ -373,6 +373,10 @@ namespace Origins {
             Vector4 col = drawInfo2.faceColor.ToVector4()/drawPlayer.skinColor.ToVector4();
 			DrawData value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + vector7.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + vector7.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(new Color(col.X,col.Y,col.Z,col.W)), drawPlayer.itemRotation, origin4, item.scale, drawInfo2.spriteEffects, 0);
 			Main.playerDrawData.Add(value);
+			if (drawPlayer.inventory[drawPlayer.selectedItem].glowMask != -1){
+				value = new DrawData(Main.glowMaskTexture[item.glowMask], new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + vector7.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + vector7.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(aItem.GlowmaskTint??new Color(col.X,col.Y,col.Z,col.W)), drawPlayer.itemRotation, origin4, item.scale, drawInfo2.spriteEffects, 0);
+				Main.playerDrawData.Add(value);
+			}
 		});
         public static PlayerLayer SlashWrenchLayer = new PlayerLayer("Origins", "FelnumBroadswordLayer", null, delegate(PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;
@@ -390,7 +394,7 @@ namespace Origins {
 				Main.playerDrawData.Add(value);
 			}
 			if (drawPlayer.inventory[drawPlayer.selectedItem].glowMask != -1){
-				value = new DrawData(Main.glowMaskTexture[drawPlayer.inventory[drawPlayer.selectedItem].glowMask], new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, new Color(250, 250, 250, item.alpha), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
+				value = new DrawData(Main.glowMaskTexture[drawPlayer.inventory[drawPlayer.selectedItem].glowMask], new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, aItem.GlowmaskTint??new Color(250, 250, 250, item.alpha), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
 				Main.playerDrawData.Add(value);
 			}
 		});

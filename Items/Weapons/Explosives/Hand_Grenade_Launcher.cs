@@ -199,7 +199,7 @@ namespace Origins.Items.Weapons.Explosives {
             projectile.width = projectile.height = 5;
             projectile.penetrate = -1;
             projectile.tileCollide = false;
-            if(!Main.projectileLoaded[694]) {
+            if(!Main.projectileLoaded[694]&&Main.netMode!=NetmodeID.Server) {
                 Main.projectileTexture[694] = Main.instance.OurLoad<Texture2D>(string.Concat(new object[] { "Images", Path.DirectorySeparatorChar, "Projectile_694" }));
                 Main.projectileLoaded[694] = true;
             }

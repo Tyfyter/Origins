@@ -29,8 +29,9 @@ namespace Origins {
 		    return texture.Frame(FrameCount, 1, Frame, 0);
 	    }
     }
-    public interface IAnimatedItem {
-        DrawAnimation Animation { get; }
+    public abstract class IAnimatedItem : ModItem{
+        public abstract DrawAnimation Animation { get; }
+        public virtual Color? GlowmaskTint { get => null; }
     }
     public interface IElementalItem {
         ushort element { get; }
@@ -48,7 +49,7 @@ namespace Origins {
         public const byte TopLeft = 3;
         public const byte TopRight = 4;
     }
-    public static class AIStyleID {
+    public static class NPCAIStyleID {
         ///<summary>
 		///Doesn't move.
 		///</summary>
