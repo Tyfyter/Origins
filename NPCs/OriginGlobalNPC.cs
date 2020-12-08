@@ -51,8 +51,14 @@ namespace Origins.NPCs {
             Player player = spawnInfo.player;
             if(player.GetModPlayer<OriginPlayer>().ZoneDefiled) {
                 pool[0] = 0;
+
                 pool.Add(ModContent.NPCType<Defiled_Brute>(), DefiledWastelands.SpawnRates.Brute);
+
                 if(spawnInfo.playerFloorY <= Main.worldSurface+50&&spawnInfo.spawnTileY < Main.worldSurface-50)pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer*(player.ZoneSkyHeight?2:1));
+                if(Main.hardMode) {
+                    pool.Add(ModContent.NPCType<Defiled_Hunter_Head>(), DefiledWastelands.SpawnRates.Hunter);
+                }
+
                 if(spawnInfo.spawnTileY>Main.worldSurface) {
                     pool.Add(ModContent.NPCType<Defiled_Digger_Head>(), DefiledWastelands.SpawnRates.Worm);
                     int yPos = spawnInfo.spawnTileY;

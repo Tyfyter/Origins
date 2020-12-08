@@ -9,7 +9,7 @@ using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Hunter_Head : Defiled_Hunter {
-        public const float speedMult = 2.5f;
+        public const float speed = 4f;
         public override void SetStaticDefaults() {
             Main.npcFrameCount[npc.type] = 4;
             base.SetStaticDefaults();
@@ -33,7 +33,11 @@ namespace Origins.NPCs.Defiled {
         public override void AI() {
             if(Main.netMode != NetmodeID.MultiplayerClient) {
                 npc.oldPosition = npc.position;
-                LinearSmoothing(ref npc.rotation, npc.velocity.ToRotation(), 0.5f);
+                if(npc.collideY) {
+                    npc.rotation = npc.velocity.ToRotation();
+                } else {
+                    LinearSmoothing(ref npc.rotation, npc.velocity.ToRotation(), 0.5f);
+                }
                 if(ai[0] == 0f) {
                     ai[3] = npc.whoAmI;
                     npc.realLife = npc.whoAmI;
@@ -64,10 +68,25 @@ namespace Origins.NPCs.Defiled {
                     //NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
                 }
             }
-            if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X/=speedMult;
+            //if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X/=speedMult;
         }
         public override void PostAI() {
-            if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=speedMult;
+            //if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=speedMult;
+		        if (npc.velocity.X < -speed || npc.velocity.X > speed) {
+			        if (npc.velocity.Y == 0f) {
+				        npc.velocity *= 0.7f;
+			        }
+		        }else if (npc.velocity.X < speed && npc.direction == 1) {
+			        npc.velocity.X += 0.1f;
+			        if (npc.velocity.X > speed) {
+				        npc.velocity.X = speed;
+			        }
+		        }else if (npc.velocity.X > -speed && npc.direction == -1) {
+			        npc.velocity.X -= 0.1f;
+			        if (npc.velocity.X < -speed) {
+				        npc.velocity.X = -speed;
+			        }
+		        }
         }
         public override void FindFrame(int frameHeight) {
             if(++npc.frameCounter>animationTime) {
@@ -127,10 +146,36 @@ namespace Origins.NPCs.Defiled {
             npc.immune = head.immune;
             if(Main.netMode != NetmodeID.MultiplayerClient) {
                 NPC next = Main.npc[ai[1]];
-                LinearSmoothing(ref npc.rotation, next.oldRot[1], npc.collideY?0.1f:0.3f);
+                if(Math.Abs(AngleDif(npc.rotation, next.oldRot[1]))>MathHelper.PiOver2) {
+                    npc.rotation = next.oldRot[1];
+                } else {
+                    LinearSmoothing(ref npc.rotation, next.oldRot[1], npc.collideY?0.1f:0.3f);
+                }
                 //Vector2 targetPos = next.oldPosition + new Vector2(next.width/2, next.height/2) - new Vector2(24, 0).RotatedBy(npc.rotation);;
                 //npc.velocity = targetPos - npc.Center;
-                npc.Center = next.oldPosition + new Vector2(next.width/2, next.height/2) - new Vector2(24, 0).RotatedBy(npc.rotation);
+
+                Vector2 targetPos = next.oldPosition - new Vector2(24, 0).RotatedBy(npc.rotation);
+                Vector2 unit = new Vector2(1,0).RotatedBy(npc.rotation);
+                /*Vector2? validPos = null;
+                for(int i = -2; i <= 2; i++) {
+                    if(Collision.CanHit(targetPos,32,28,targetPos+unit-new Vector2(0,8*i),32,28)) {
+                        validPos = targetPos-new Vector2(0, 8*i);
+                    }
+                }
+                if(validPos.HasValue) {
+                    npc.Center = targetPos + new Vector2(next.width/2, next.height/2);
+                } else if((targetPos-npc.Center).Length()>16){
+                    npc.Center = targetPos;
+                }*/
+                Vector2 offset = Collision.AdvancedTileCollision(new bool[TileLoader.TileCount], targetPos - new Vector2(0,8), new Vector2(0,16), 32, 30);
+                npc.position = targetPos + offset - new Vector2(0, 8);
+                //LerpSmoothing(ref npc.position, targetPos + offset - new Vector2(0,8), 0.9f, 4);
+                //Vector2 center = npc.Center;
+                //float dist = Math.Max((targetPos-center).Length()-8, 0);
+                //LinearSmoothing(ref center.X, targetPos.X, 1+dist);
+                //LinearSmoothing(ref center.Y, targetPos.Y, 1+dist);
+                //npc.Center = center;
+                //npc.Center = next.oldPosition + new Vector2(next.width/2, next.height/2) - new Vector2(24, 0).RotatedBy(npc.rotation);
             }
         }
 

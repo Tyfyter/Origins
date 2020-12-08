@@ -678,6 +678,27 @@ namespace Origins {
                 }
             }
         }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void LerpSmoothing(ref float smoothed, float target, float rate, float snap) {
+            if(target!=smoothed) {
+                if(Math.Abs(target-smoothed)<snap) {
+                    smoothed = target;
+                } else {
+                    smoothed = MathHelper.Lerp(smoothed, target, rate);
+                }
+            }
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void LerpSmoothing(ref Vector2 smoothed, Vector2 target, float rate, float snap) {
+            if(target!=smoothed) {
+                Vector2 diff = (target-smoothed);
+                if((target-smoothed).Length()<snap) {
+                    smoothed = target;
+                } else {
+                    smoothed = Vector2.Lerp(smoothed, target, rate);
+                }
+            }
+        }
         public static int GetWeaponCrit(this Player player, Item item) {
             int crit = 4+item.crit;
             if(item.melee) {
