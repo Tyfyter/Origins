@@ -17,6 +17,9 @@ namespace Origins.NPCs.Defiled {
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.DiggerHead);
             npc.aiStyle = AIStyleID.Fighter;
+            npc.lifeMax = 360;
+            npc.defense = 30;
+            npc.damage = 64;
             npc.height = 30;
             npc.width = 32;
             npc.noGravity = false;
