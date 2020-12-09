@@ -30,9 +30,9 @@ namespace Origins.Items.Weapons.Other {
             item.crit = 46;
 			item.width = 42;
 			item.height = 14;
-			item.useTime = 22;
-			item.useAnimation = 22;
-			item.mana = 12;
+			item.useTime = 16;
+			item.useAnimation = 16;
+			item.mana = 10;
 			item.value = 70000;
             item.shoot = ModContent.ProjectileType<Laser_Tag_Laser>();
 			item.rare = ItemRarityID.Green;
@@ -65,10 +65,10 @@ namespace Origins.Items.Weapons.Other {
             } catch(Exception) { }
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            if(crit)damage*=99;
+            if(crit)damage*=199;
         }
         public override void ModifyHitPvp(Player target, ref int damage, ref bool crit) {
-            if(crit)damage*=99;
+            if(crit)damage*=199;
         }
         public override void OnHitPvp(Player target, int damage, bool crit) {
             target.AddBuff(BuffID.Cursed, 600);

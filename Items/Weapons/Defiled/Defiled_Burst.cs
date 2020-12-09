@@ -17,8 +17,8 @@ namespace Origins.Items.Weapons.Defiled {
             item.crit = -1;
             item.width = 56;
             item.height = 18;
-            item.useTime = 43;
-            item.useAnimation = 43;
+            item.useTime = 36;
+            item.useAnimation = 36;
             item.useStyle = 5;
             item.knockBack = 5;
             item.shootSpeed = 20f;
