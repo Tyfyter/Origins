@@ -14,16 +14,22 @@ namespace Origins.Tiles.Defiled {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+            Main.tileLighted[Type] = true;
 			drop = ItemType<Defiled_Ore_Item>();
-			AddMapEntry(new Color(225, 225, 225));
+			ModTranslation name = CreateMapEntryName();
+			name.SetDefault("Lost Ore");
+			AddMapEntry(new Color(225, 225, 225), name);
 		}
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+            r = g = b = 0.25f;
+        }
     }
     public class Defiled_Ore_Item : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Lost Ore");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.StoneBlock);
+            item.CloneDefaults(ItemID.DemoniteOre);
             item.createTile = TileType<Defiled_Ore>();
 		}
     }

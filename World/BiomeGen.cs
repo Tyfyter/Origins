@@ -291,7 +291,6 @@ namespace Origins.World {
 				            }
 			            }
 		            } else {
-                        crimson = true;
                         stoneType = (ushort)TileType<Defiled_Stone>();
                         grassType = (ushort)TileType<Defiled_Grass>();
                         plantType = (ushort)TileType<Defiled_Foliage>();
@@ -458,13 +457,23 @@ namespace Origins.World {
 				            }
 			            }
 		            }
-                    ushort oreType = crimson?TileID.Crimtane:TileID.Demonite;
-                    ushort altOreType = (ushort)(crimson?TileType<Defiled_Ore>():TileType<Defiled_Ore>());
-                    for(int y = 0; y < Main.maxTilesY; y++){
-                        for(int x = 0; x < Main.maxTilesX; x++){
-                                if(Main.tile[x, y].type==oreType)Main.tile[x, y].type = altOreType;
+                });
+                genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Altars"));
+                tasks[genIndex+1] = new PassLegacy("Alternate World Evil", (GenerationProgress progress) => {
+                    ushort oreType = crimson ? TileID.Crimtane : TileID.Demonite;
+                    ushort altOreType = (ushort)(crimson ? TileType<Defiled_Ore>() : TileType<Defiled_Ore>());
+                    ushort altarType = (ushort)(crimson ? TileType<Defiled_Altar>() : TileType<Defiled_Altar>());
+                    for(int y = 0; y < Main.maxTilesY; y++) {
+                        for(int x = 0; x < Main.maxTilesX; x++) {
+                            if(Main.tile[x, y].type==oreType)
+                                Main.tile[x, y].type = altOreType;
+                            else if(Main.tile[x, y].type==TileID.DemonAltar) {
+                                Main.tile[x, y].frameX%=54;
+                                Main.tile[x, y].type = altarType;
+                            }
                         }
                     }
+                    crimson = true;
                 });
             }
         }
