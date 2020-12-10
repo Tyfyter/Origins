@@ -133,11 +133,54 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             }
             Vector2 dir = Main.rand.NextVector2Unit();
             oldPos[0] = (projectile.Center+dir*3, dir);
+            Texture2D texture = mod.GetTexture("Projectiles/Pixel");
+            Vector2 displ = Vector2.Zero;
+            for(int i = l; --i>0;) {
+                if(oldPos[i].Item1.HasValue) {
+                    displ = oldPos[i-1].Item1.Value-oldPos[i].Item1.Value;
+                    DrawLaser(spriteBatch, texture, oldPos[i].Item1.Value, Vector2.Normalize(displ), 1, new Vector2(2, 2), displ.Length(), Color.Aqua);
+                }
+            }
+            if(oldPos[0].Item1.HasValue) {
+                displ = projectile.Center-oldPos[0].Item1.Value+Main.rand.NextVector2Unit()*2;
+                DrawLaser(spriteBatch, texture, oldPos[0].Item1.Value, Vector2.Normalize(displ), 1, new Vector2(2, 2), displ.Length(), Color.Aqua);
+            }
+            return false;
+        }
+        public void DrawLaser(SpriteBatch spriteBatch, Texture2D texture, Vector2 start, Vector2 unit, float step, Vector2? uScale = null, float maxDist = 200f, Color color = default){
+            Vector2 scale = uScale??new Vector2(0.66f, 0.66f);
+            Vector2 origin = start;
+            float maxl = (float)Math.Sqrt(Main.screenWidth*Main.screenWidth+Main.screenHeight*Main.screenHeight);//(_targetPos-start).Length();
+            float r = unit.ToRotation();// + rotation??(float)(Math.PI/2);
+            float l = unit.Length()*2.5f;
+            int t = projectile.timeLeft>10?25-projectile.timeLeft:projectile.timeLeft;
+            float s = Math.Min(t/15f,1f);
+            Vector2 perpUnit = unit.RotatedBy(MathHelper.PiOver2);
+            for (float i = 0; i <= maxDist; i += step){
+                if(i*unit.Length()>maxl)break;
+                origin = start + i * unit;
+                spriteBatch.Draw(texture, origin - Main.screenPosition,
+                    new Rectangle(0, 0, 1, 1), color, r,
+                    new Vector2(0.5f, 0.5f), scale, 0, 0);
+                spriteBatch.Draw(texture, origin - Main.screenPosition + perpUnit*Main.rand.NextFloat(-1f,1f),
+                    new Rectangle(0, 0, 1, 1), color, r,
+                    new Vector2(0.5f, 0.5f), scale, 0, 0);
+                Lighting.AddLight(origin, color.R/255f, color.G/255f, color.B/255f);
+            }
+        }
+        /*public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+            int l = Math.Min(projectile.timeLeft, 14);
+            for(int i = l; --i>0;) {
+                oldPos[i] = oldPos[i-1];
+                oldPos[i].Item1+=oldPos[i].Item2;
+            }
+            Vector2 dir = Main.rand.NextVector2Unit();
+            oldPos[0] = (projectile.Center+dir*3, dir);
             for(int i = l; --i>0;) {
                 if(oldPos[i].Item1.HasValue)spriteBatch.DrawLine(new Color(100,255,255), oldPos[i].Item1.Value, oldPos[i-1].Item1.Value, 2);
             }
             if(oldPos[0].Item1.HasValue)spriteBatch.DrawLine(new Color(100,255,255), oldPos[0].Item1.Value, projectile.Center+Main.rand.NextVector2Unit()*2, 2);
             return false;
-        }
+        }*/
     }
 }

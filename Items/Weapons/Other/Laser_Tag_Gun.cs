@@ -39,6 +39,15 @@ namespace Origins.Items.Weapons.Other {
             item.glowMask = glowmask;
             item.scale = 1;
 		}
+        public override void UpdateInventory(Player player) {
+            OriginPlayer modPlayer = player.GetModPlayer<OriginPlayer>();
+            item.crit = 46;
+            if((modPlayer.oldBonuses&1)!=0||modPlayer.fiberglassSet) {
+                item.crit = 0;
+            }else if((modPlayer.oldBonuses&2)!=0||modPlayer.felnumSet) {
+                item.crit = -14;
+            }
+        }
         public override Vector2? HoldoutOffset() {
             return new Vector2(3-(11*Main.player[item.owner].direction),0);
         }

@@ -69,7 +69,7 @@ namespace Origins.Items.Weapons.Felnum {
             projectile.tileCollide = false;
             projectile.position+=oldVelocity;
             projectile.velocity = Vector2.Zero;
-            projectile.timeLeft = 7;
+            projectile.timeLeft = 14;
             return false;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) {

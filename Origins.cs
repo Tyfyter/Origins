@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Armor.Felnum;
+using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
 using System;
@@ -40,6 +41,7 @@ namespace Origins {
         public static int FelnumHeadArmorID;
         public static int FelnumBodyArmorID;
         public static int FelnumLegsArmorID;
+        public static int PlagueTexanJacketID;
         public static int[] celestineBoosters;
         public static MiscShaderData perlinFade0;
         public static MiscShaderData blackHoleShade;
@@ -143,6 +145,7 @@ namespace Origins {
             FelnumHeadArmorID = ModContent.GetInstance<Felnum_Helmet>().item.headSlot;
             FelnumBodyArmorID = ModContent.GetInstance<Felnum_Breastplate>().item.bodySlot;
             FelnumLegsArmorID = ModContent.GetInstance<Felnum_Greaves>().item.legSlot;
+            PlagueTexanJacketID = ModContent.GetInstance<Plague_Texan_Jacket>().item.bodySlot;
         }
         public override void Load() {
             ExplosiveBaseDamage = new Dictionary<int, int>();
