@@ -14,6 +14,8 @@ using Microsoft.Xna.Framework.Audio;
 using Terraria.ID;
 using System.Runtime.CompilerServices;
 using static Origins.Items.OriginGlobalItem;
+using System.Reflection;
+using Terraria.Utilities;
 
 namespace Origins {
     public class DrawAnimationManual : DrawAnimation {
@@ -719,6 +721,32 @@ namespace Origins {
                 if(IsExplosive(player.HeldItem))crit-=player.HeldItem.crit;
             }*/
             return crit;
+        }
+        internal static MethodInfo MemberwiseClone;
+        internal static FieldInfo inext;
+        internal static FieldInfo inextp;
+        internal static FieldInfo SeedArray;
+        internal static void initClone() {
+             MemberwiseClone = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic|BindingFlags.Instance);
+             inext = typeof(Random).GetField("inext", BindingFlags.NonPublic|BindingFlags.Instance);
+             inextp = typeof(Random).GetField("inextp", BindingFlags.NonPublic|BindingFlags.Instance);
+             SeedArray = typeof(Random).GetField("SeedArray", BindingFlags.NonPublic|BindingFlags.Instance);
+        }
+        internal static void unInitClone() {
+            MemberwiseClone = null;
+            inext = null;
+            inextp = null;
+            SeedArray = null;
+        }
+        public static Random Clone(this Random r) {
+            Random o = (Random)MemberwiseClone.Invoke(r, BindingFlags.NonPublic, null, null, null);
+            SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).Clone(), BindingFlags.NonPublic, null, null);
+            return o;
+        }
+        public static UnifiedRandom Clone(this UnifiedRandom r) {
+            UnifiedRandom o = (UnifiedRandom)MemberwiseClone.Invoke(r, BindingFlags.NonPublic, null, null, null);
+            SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).Clone(), BindingFlags.NonPublic, null, null);
+            return o;
         }
     }
 }

@@ -261,6 +261,7 @@ namespace Origins {
                 //Filters.Scene["BlackHole"].Load();
             }
             Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
+            OriginExtensions.initClone();
         }
         public override void Unload() {
             ExplosiveProjectiles = null;
@@ -275,6 +276,7 @@ namespace Origins {
             OriginExtensions.drawPlayerItemPos = null;
             Tolruk.glowmasks = null;
             instance = null;
+            OriginExtensions.unInitClone();
         }
         public override void UpdateMusic(ref int music, ref MusicPriority priority) {
             if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active) {
