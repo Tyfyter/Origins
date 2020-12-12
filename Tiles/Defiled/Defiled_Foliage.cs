@@ -36,13 +36,4 @@ namespace Origins.Tiles.Defiled {
 			return false;
 		}
     }
-    public class Defiled_Grass_Seeds : ModItem {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Seeds");
-        }
-        public override void SetDefaults() {
-            item.CloneDefaults(ItemID.GrassSeeds);
-            //item.createTile;
-		}
-    }
 }
