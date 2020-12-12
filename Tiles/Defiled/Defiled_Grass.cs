@@ -47,8 +47,11 @@ namespace Origins.Tiles.Defiled {
         }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.GrassSeeds);
-            item.createTile = ModContent.TileType<Defiled_Grass>();
-            //item.placeStyle =
+            item.placeStyle = ModContent.TileType<Defiled_Grass>();
 		}
+        public override bool ConsumeItem(Player player) {
+            Main.tile[Player.tileTargetX, Player.tileTargetY].type = (ushort)item.placeStyle;
+            return true;
+        }
     }
 }
