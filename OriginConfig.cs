@@ -30,6 +30,13 @@ namespace Origins {
         [DefaultValue(true)]
         public bool WoodBuffs = true;
 
+        [Header("Other")]
+
+        [Label("Universal Grass Merge")]
+        [ReloadRequired]
+        [DefaultValue(true)]
+        public bool GrassMerge = true;
+
         [Label("Deb_A-S_field1")]
         [DefaultValue(3)]
         public int Ace_Shrap_MH{

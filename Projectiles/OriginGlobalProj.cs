@@ -4,7 +4,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Projectiles {
@@ -35,6 +37,24 @@ namespace Origins.Projectiles {
             if (Origins.ExplosiveProjectiles[projectile.type] && Main.rand.Next(1, 101) <= Main.player[projectile.owner].GetModPlayer<OriginPlayer>().explosiveCrit){
 				crit = true;
 			}
+        }
+        public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
+            if(Origins.ExplosiveProjectiles[projectile.type]) {
+                OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
+                if(originPlayer.madHand) {
+                    target.AddBuff(BuffID.Oiled, 600);
+                    target.AddBuff(BuffID.OnFire, 600);
+                }
+            }
+        }
+        public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
+            if(Origins.ExplosiveProjectiles[projectile.type]) {
+                OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
+                if(originPlayer.madHand&&(projectile.timeLeft<=3||projectile.penetrate==0)){
+                    hitbox.Inflate(hitbox.Width/4,hitbox.Height/4);
+                    //Main.NewText($"{hitbox.Width},{hitbox.Height}");
+                }
+            }
         }
         /*
             try {

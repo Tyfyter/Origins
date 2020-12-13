@@ -35,9 +35,11 @@ namespace Origins {
         public bool bombHandlingDevice = false;
         public bool dimStarlight = false;
         public byte dimStarlightCooldown = 0;
+        public bool madHand = false;
 
         public float explosiveDamage = 1;
         public int explosiveCrit = 4;
+        public float explosiveThrowSpeed = 1;
 
         public bool ZoneVoid = false;
         public float ZoneVoidProgress = 0;
@@ -78,8 +80,10 @@ namespace Origins {
             defiledSet = false;
             bombHandlingDevice = false;
             dimStarlight = false;
+            madHand = false;
             explosiveDamage = 1f;
             explosiveCrit = 4;
+            explosiveThrowSpeed = 1f;
             if(IsExplosive(player.HeldItem)) {
                 explosiveCrit += player.HeldItem.crit;
             }
@@ -124,9 +128,9 @@ namespace Origins {
             }
         }
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            if(bombHandlingDevice&&item.useAmmo == 0&&IsExplosive(item)) {
-                speedX*=1.5f;
-                speedY*=1.5f;
+            if(item.useAmmo == 0&&IsExplosive(item)) {
+                speedX*=explosiveThrowSpeed;
+                speedY*=explosiveThrowSpeed;
             }
             if(item.shoot>ProjectileID.None&&felnumShock>29) {
                 Projectile p = new Projectile();

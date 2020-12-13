@@ -4,8 +4,10 @@ using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
+using Origins.Tiles;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.Graphics;
@@ -122,30 +124,58 @@ namespace Origins {
             #endregion base damage
 #region preregistry
             Stack<int> stack = ExplosiveItemPreRegistry;
-            int i;
+            //int i;
             while(stack.Count > 0) {
-                i = stack.Pop();
-                ExplosiveItems[i] = true;
+                //i = stack.Pop();
+                ExplosiveItems[stack.Pop()] = true;
             }
             stack = ExplosiveProjectilePreRegistry;
             while(stack.Count > 0) {
-                i = stack.Pop();
-                ExplosiveProjectiles[i] = true;
+                //i = stack.Pop();
+                ExplosiveProjectiles[stack.Pop()] = true;
             }
             stack = ExplosiveAmmoPreRegistry;
             while(stack.Count > 0) {
-                i = stack.Pop();
-                ExplosiveAmmo[i] = true;
+                //i = stack.Pop();
+                ExplosiveAmmo[stack.Pop()] = true;
             }
             ExplosiveItemPreRegistry = null;
             ExplosiveProjectilePreRegistry = null;
             ExplosiveAmmoPreRegistry = null;
 #endregion preregistry
         #endregion explosive weapon registry
+        #region armor slot ids
             FelnumHeadArmorID = ModContent.GetInstance<Felnum_Helmet>().item.headSlot;
             FelnumBodyArmorID = ModContent.GetInstance<Felnum_Breastplate>().item.bodySlot;
             FelnumLegsArmorID = ModContent.GetInstance<Felnum_Greaves>().item.legSlot;
             PlagueTexanJacketID = ModContent.GetInstance<Plague_Texan_Jacket>().item.bodySlot;
+            #endregion
+            for(int oID = 0; oID < OriginTile.IDs.Count; oID++) {
+                OriginTile oT = OriginTile.IDs[oID];
+                Main.tileMerge[oT.mergeID][oT.Type] = true;
+                Main.tileMerge[oT.Type][oT.mergeID] = true;
+                for(int i = 0; i < TileLoader.TileCount; i++) {
+                    if(Main.tileMerge[oT.mergeID][i]) Main.tileMerge[i][oT.Type] = true;
+                    if(Main.tileMerge[i][oT.mergeID]) Main.tileMerge[oT.Type][i] = true;
+                }
+            }
+            if(OriginConfig.Instance.GrassMerge) {
+                List<int> grasses = new List<int>() { };
+                for(int i = 0; i<TileLoader.TileCount;  i++) {
+                    if(TileID.Sets.Grass[i]||TileID.Sets.GrassSpecial[i]) {
+                        grasses.Add(i);
+                    }
+                }
+                IEnumerable<(int, int)> pairs = grasses.SelectMany(
+                    (val, index) => grasses.Skip(index+1),
+                    (a, b) => (a, b)
+                );
+                foreach((int,int) pair in pairs) {
+                    Main.tileMerge[pair.Item1][pair.Item2] = true;
+                    Main.tileMerge[pair.Item2][pair.Item1] = true;
+                }
+
+            }
         }
         public override void Load() {
             ExplosiveBaseDamage = new Dictionary<int, int>();
@@ -262,6 +292,7 @@ namespace Origins {
             }
             Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
             OriginExtensions.initClone();
+            OriginTile.IDs = new List<OriginTile>() { };
         }
         public override void Unload() {
             ExplosiveProjectiles = null;
@@ -277,6 +308,7 @@ namespace Origins {
             Tolruk.glowmasks = null;
             instance = null;
             OriginExtensions.unInitClone();
+            OriginTile.IDs = null;
         }
         public override void UpdateMusic(ref int music, ref MusicPriority priority) {
             if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active) {

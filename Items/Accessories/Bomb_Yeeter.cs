@@ -21,6 +21,7 @@ namespace Origins.Items.Accessories {
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().bombHandlingDevice = true;
+            player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed+=0.5f;
         }
     }
 }

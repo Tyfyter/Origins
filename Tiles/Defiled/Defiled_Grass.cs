@@ -9,17 +9,18 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Grass : ModTile {
+    public class Defiled_Grass : OriginTile {
 		public override void SetDefaults() {
             TileID.Sets.Grass[Type] = true;
             TileID.Sets.NeedsGrassFraming[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
+            Main.tileMerge[Type] = Main.tileMerge[TileID.Grass];
             Main.tileMerge[Type][TileID.Dirt] = true;
             Main.tileMerge[TileID.Dirt][Type] = true;
             Main.tileMerge[Type][TileID.Mud] = true;
             Main.tileMerge[TileID.Mud][Type] = true;
             for(int i = 0; i < TileLoader.TileCount; i++) {
-                if(TileID.Sets.Grass[i]) {
+                if(TileID.Sets.Grass[i]||TileID.Sets.GrassSpecial[i]) {
                     Main.tileMerge[Type][i] = true;
                     Main.tileMerge[i][Type] = true;
                 }

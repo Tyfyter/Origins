@@ -10,13 +10,19 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Stone : ModTile {
+    public class Defiled_Stone : OriginTile {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = true;
+            Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
+            Main.tileMerge[Type][TileID.Stone] = true;
+            /*for(int i = 0; i < TileLoader.TileCount; i++) {
+                Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
+            }*/
 			drop = ItemType<Defiled_Stone_Item>();
 			AddMapEntry(new Color(200, 200, 200));
+            mergeID = TileID.Stone;
 		}
     }
     public class Defiled_Stone_Item : ModItem {

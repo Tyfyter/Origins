@@ -10,16 +10,19 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Ice : ModTile {
+    public class Defiled_Ice : OriginTile {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 		    TileID.Sets.Ices[Type] = true;
 		    TileID.Sets.IcesSlush[Type] = true;
 		    TileID.Sets.IcesSnow[Type] = true;
-			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = true;
+            Main.tileMerge[Type] = Main.tileMerge[TileID.IceBlock];
+            Main.tileMerge[Type][TileID.IceBlock] = true;
+			Main.tileBlockLight[Type] = true;
 			drop = ItemType<Defiled_Ice_Item>();
 			AddMapEntry(new Color(225, 225, 225));
+            mergeID = TileID.IceBlock;
 		}
         public override void FloorVisuals(Player player) {
             player.slippy = true;

@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Sand : ModTile {
+    public class Defiled_Sand : OriginTile {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -19,6 +19,7 @@ namespace Origins.Tiles.Defiled {
             TileID.Sets.Falling[Type] = true;
 			drop = ItemType<Defiled_Sand_Item>();
 			AddMapEntry(new Color(175, 175, 175));
+            mergeID = TileID.Sand;
 		}
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			if (WorldGen.noTileActions)
