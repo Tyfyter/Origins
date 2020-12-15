@@ -728,9 +728,9 @@ namespace Origins {
         internal static FieldInfo SeedArray;
         internal static void initClone() {
              MemberwiseClone = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic|BindingFlags.Instance);
-             inext = typeof(Random).GetField("inext", BindingFlags.NonPublic|BindingFlags.Instance);
-             inextp = typeof(Random).GetField("inextp", BindingFlags.NonPublic|BindingFlags.Instance);
-             SeedArray = typeof(Random).GetField("SeedArray", BindingFlags.NonPublic|BindingFlags.Instance);
+             inext = typeof(UnifiedRandom).GetField("inext", BindingFlags.NonPublic|BindingFlags.Instance);
+             inextp = typeof(UnifiedRandom).GetField("inextp", BindingFlags.NonPublic|BindingFlags.Instance);
+             SeedArray = typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic|BindingFlags.Instance);
         }
         internal static void unInitClone() {
             MemberwiseClone = null;

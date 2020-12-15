@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using MonoMod.RuntimeDetour;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Weapons.Explosives;
@@ -305,6 +306,8 @@ namespace Origins {
             }
             Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
             OriginExtensions.initClone();
+            On.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
+            //IL.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
         }
         public override void Unload() {
             ExplosiveProjectiles = null;

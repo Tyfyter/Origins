@@ -1,4 +1,6 @@
 using Microsoft.Xna.Framework;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
 using Origins.Walls;
@@ -124,7 +126,6 @@ namespace Origins.World {
                 }));
             }
             genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
-            worldEvil = crimson ? evil_crimson : evil_corruption;
             if(genIndex != -1&&(WorldGen.genRand.Next(0, 2)+OriginConfig.Instance.worldTypeSkew)>0) {
                 bool dungeonLeft = dungeonX < Main.maxTilesX / 2;
                 int JungleX = (int)typeof(WorldGen).GetField("JungleX", BindingFlags.NonPublic|BindingFlags.Static).GetValue(null);
@@ -138,8 +139,8 @@ namespace Origins.World {
                 ushort sandstoneType = TileID.Sandstone;
                 ushort hardenedSandType = TileID.HardenedSand;
                 ushort iceType = TileID.IceBlock;
-                worldEvil|=4;
                 tasks[genIndex] = new PassLegacy("Alternate World Evil", (GenerationProgress progress) => {
+                worldEvil = crimson ? evil_riven : evil_wastelands;
                     if(crimson) {
                         progress.Message = Lang.gen[72].Value+"n't";
                         for(int num487 = 0; num487 < Main.maxTilesX * 0.00045; num487++) {
@@ -510,11 +511,40 @@ namespace Origins.World {
                 }));
             }
         }
+        public static void GERunnerHook(On.Terraria.WorldGen.orig_GERunner orig, int i, int j, float speedX = 0f, float speedY = 0f, bool good = true) {
+            byte worldEvil = GetInstance<OriginWorld>().worldEvil;
+            if(!good&&(worldEvil&4)!=0) {
+                ERunner(i, j, worldEvil, speedX, speedY);
+                return;
+            }
+            orig(i, j, speedX, speedY, good);
+        }
+        /* didn't notice On.Terraria
+        public static bool GERunnerClone(int i, int j, float speedX = 0f, float speedY = 0f, bool good = true) {
+            if(check goes here) {
+                return false;
+            }
+            return true;
+        }
+        internal static void GERunnerHook(ILContext il) {
+            ILCursor cursor = new ILCursor(il);
+            ILLabel label = il.DefineLabel();
+            cursor.Emit(OpCodes.Ldarg_0);
+            cursor.Emit(OpCodes.Ldarg_1);
+            cursor.Emit(OpCodes.Ldarg_S, "speedX");
+            cursor.Emit(OpCodes.Ldarg_S, "speedY");
+            cursor.Emit(OpCodes.Ldarg_S, "good");
+            cursor.Emit(OpCodes.Call, typeof(OriginWorld).GetMethod("GERunnerClone", new Type[] { typeof(int), typeof(int), typeof(float), typeof(float), typeof(bool) }));
+            cursor.Emit(OpCodes.Brtrue, label);
+            cursor.Emit(OpCodes.Ret);
+            cursor.MarkLabel(label);
+        }*/
         protected internal static UnifiedRandom hardmodeGenRand;
-        public override void ModifyHardmodeTasks(List<GenPass> list) {
+        /*public override void ModifyHardmodeTasks(List<GenPass> list) {
             if((worldEvil&4)!=0) {
                 int index = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Evil"));
                 if(index>-1) {
+                    mod.Logger.Info("attempting to place hardmode evil stripe");
                     float highMult = hardmodeGenRand.Next(300, 400) * 0.001f;
                     float lowMult = hardmodeGenRand.Next(200, 300) * 0.001f;
                     int goodPos = (int)(Main.maxTilesX * highMult);
@@ -536,47 +566,50 @@ namespace Origins.World {
                     } else if(evilPos > goodPos) {
                         evilPos = (int)(Main.maxTilesX * (1f - lowMult));
                     }
+                    mod.Logger.Info("adding hardmode evil stripe to generation");
                     list[index] = new PassLegacy("Hardmode Evil", (GenerationProgress progress) => {
                         ERunner(evilPos, 0, worldEvil, 3f * (0f - dirMult), 5f);
                     });
                 }
             }
-        }
+        }*/
         static void ERunner(int i, int j, byte worldEvil, float speedX = 0f, float speedY = 0f) {
-            int num = genRand.Next(200, 250);
-            float num2 = Main.maxTilesX / 4200;
-            num = (int)(num * num2);
-            Vector2 vector = default;
-            vector.X = i;
-            vector.Y = j;
-            Vector2 vector2 = default;
-            vector2.X = genRand.Next(-10, 11) * 0.1f;
-            vector2.Y = genRand.Next(-10, 11) * 0.1f;
+            int size = genRand.Next(200, 250);
+            float sizeMult = Main.maxTilesX / 4200;
+            size = (int)(size * sizeMult);
+            Vector2 pos = default;
+            pos.X = i;
+            pos.Y = j;
+            Vector2 velocity = default;
+            velocity.X = genRand.Next(-10, 11) * 0.1f;
+            velocity.Y = genRand.Next(-10, 11) * 0.1f;
             if(speedX != 0f || speedY != 0f) {
-                vector2.X = speedX;
-                vector2.Y = speedY;
+                velocity.X = speedX;
+                velocity.Y = speedY;
             }
-            bool flag = true;
-            while(flag) {
-                int num4 = (int)(vector.X - num * 0.5);
-                int num5 = (int)(vector.X + num * 0.5);
-                int num6 = (int)(vector.Y - num * 0.5);
-                int num7 = (int)(vector.Y + num * 0.5);
-                if(num4 < 0) {
-                    num4 = 0;
+            int loopCount = 0;
+            long conversionCount = 0;
+            bool cont = true;
+            while(cont) {
+                int minX = (int)(pos.X - size * 0.5);
+                int maxX = (int)(pos.X + size * 0.5);
+                int minY = (int)(pos.Y - size * 0.5);
+                int maxY = (int)(pos.Y + size * 0.5);
+                if(minX < 0) {
+                    minX = 0;
                 }
-                if(num5 > Main.maxTilesX) {
-                    num5 = Main.maxTilesX;
+                if(maxX > Main.maxTilesX) {
+                    maxX = Main.maxTilesX;
                 }
-                if(num6 < 0) {
-                    num6 = 0;
+                if(minY < 0) {
+                    minY = 0;
                 }
-                if(num7 > Main.maxTilesY) {
-                    num7 = Main.maxTilesY;
+                if(maxY > Main.maxTilesY) {
+                    maxY = Main.maxTilesY;
                 }
-                for(int k = num4; k < num5; k++) {
-                    for(int l = num6; l < num7; l++) {
-                        if(!(Math.Abs(k - vector.X) + Math.Abs(l - vector.Y) < num * 0.5 * (1.0 + genRand.Next(-10, 11) * 0.015))) {
+                for(int k = minX; k < maxX; k++) {
+                    for(int l = minY; l < maxY; l++) {
+                        if(!(Math.Abs(k - pos.X) + Math.Abs(l - pos.Y) < size * 0.5 * (1.0 + genRand.Next(-10, 11) * 0.015))) {
                             continue;
                         }
                         if(Main.tile[k, l].wall == 63 || Main.tile[k, l].wall == 65 || Main.tile[k, l].wall == 66 || Main.tile[k, l].wall == 68) {
@@ -588,21 +621,25 @@ namespace Origins.World {
                         }
                         if(ConvertTile(ref Main.tile[k, l].type, worldEvil, true)) {
                             SquareTileFrame(k, l);
+                            conversionCount++;
                         }
                     }
                 }
-                vector += vector2;
-                vector2.X += genRand.Next(-10, 11) * 0.05f;
-                if(vector2.X > speedX + 1f) {
-                    vector2.X = speedX + 1f;
+                pos += velocity;
+                velocity.X += genRand.Next(-10, 11) * 0.05f;
+                if(velocity.X > speedX + 1f) {
+                    velocity.X = speedX + 1f;
                 }
-                if(vector2.X < speedX - 1f) {
-                    vector2.X = speedX - 1f;
+                if(velocity.X < speedX - 1f) {
+                    velocity.X = speedX - 1f;
                 }
-                if(vector.X < (-num) || vector.Y < -num || vector.X > Main.maxTilesX + num || vector.Y > Main.maxTilesX + num) {
-                    flag = false;
+                if(pos.X < (-size) || pos.Y < -size || pos.X > Main.maxTilesX + size || pos.Y > Main.maxTilesX + size) {
+                    cont = false;
                 }
+                loopCount++;
             }
+            Origins.instance.Logger.Info("hardmode evil stripe generation complete in "+loopCount+" loops with "+conversionCount+" tile conversions");
+
         }
         public static void getEvilTileConversionTypes(byte evilType, out ushort stoneType, out ushort stoneWallType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType) {
             switch(evilType) {
