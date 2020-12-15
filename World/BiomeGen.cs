@@ -43,6 +43,7 @@ namespace Origins.World {
             }
             }));*/
             #endregion _
+            tasks.Insert(0, new PassLegacy("setting worldEvil type", (GenerationProgress progress)=>{worldEvil|=crimson?evil_crimson:evil_corruption;}));
             int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
             if(genIndex != -1) {
                 int duskStoneID = TileType<Dusk_Stone>();
