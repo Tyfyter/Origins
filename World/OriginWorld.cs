@@ -43,5 +43,29 @@ namespace Origins.World {
 			defiledTiles = tileCounts[ModContent.TileType<Defiled_Stone>()]+tileCounts[ModContent.TileType<Defiled_Grass>()]+tileCounts[ModContent.TileType<Defiled_Sand>()]+tileCounts[ModContent.TileType<Defiled_Ice>()];
             Main.sandTiles+=tileCounts[ModContent.TileType<Defiled_Sand>()];
         }
+
+        public static bool ConvertTile(ref ushort tileType, byte evilType, bool aggressive = false) {
+            getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort stoneWallType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);
+            if(TileID.Sets.Conversion.Grass[tileType]) {
+                tileType = grassType;
+                return true;
+            }else if(TileID.Sets.Conversion.Stone[tileType]) {
+                tileType = stoneType;
+                return true;
+            }else if(TileID.Sets.Conversion.Sandstone[tileType]) {
+                tileType = sandstoneType;
+                return true;
+            }else if(TileID.Sets.Conversion.HardenedSand[tileType]) {
+                tileType = hardenedSandType;
+                return true;
+            }else if(TileID.Sets.Conversion.Ice[tileType]) {
+                tileType = iceType;
+                return true;
+            }else if(TileID.Sets.Conversion.Sand[tileType]||(aggressive&&TileID.Sets.Falling[tileType])) {
+                tileType = sandType;
+                return true;
+            }
+            return false;
+        }
     }
 }

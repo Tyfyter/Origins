@@ -5,6 +5,7 @@ using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
 using Origins.Tiles;
+using Origins.World;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -320,6 +321,7 @@ namespace Origins {
             instance = null;
             OriginExtensions.unInitClone();
             OriginTile.IDs = null;
+            OriginWorld.hardmodeGenRand = null;
         }
         public override void UpdateMusic(ref int music, ref MusicPriority priority) {
             if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active) {
