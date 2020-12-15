@@ -14,6 +14,7 @@ using static Terraria.ModLoader.ModContent;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
+using Origins.Walls;
 
 namespace Origins.World {
     public partial class OriginWorld : ModWorld {
@@ -128,8 +129,12 @@ namespace Origins.World {
                 ushort grassType = TileID.Grass;
                 ushort plantType = TileID.Plants;
                 ushort stoneType = TileID.Stone;
+                ushort stoneWallType = WallID.Stone;
                 ushort sandType = TileID.Sand;
+                ushort sandstoneType = TileID.Sandstone;
+                ushort hardenedSandType = TileID.HardenedSand;
                 ushort iceType = TileID.IceBlock;
+                worldEvil|=4;
                 tasks[genIndex] = new PassLegacy("Alternate World Evil", (GenerationProgress progress) => {
                     if (crimson) {
 			            progress.Message = Lang.gen[72].Value+"n't";
@@ -291,11 +296,7 @@ namespace Origins.World {
 				            }
 			            }
 		            } else {
-                        stoneType = (ushort)TileType<Defiled_Stone>();
-                        grassType = (ushort)TileType<Defiled_Grass>();
-                        plantType = (ushort)TileType<Defiled_Foliage>();
-                        sandType = (ushort)TileType<Defiled_Sand>();
-                        iceType = (ushort)TileType<Defiled_Ice>();
+                        getEvilTileConversionTypes(evil_wastelands, out stoneType, out stoneWallType, out grassType, out plantType, out sandType, out sandstoneType, out hardenedSandType, out iceType);
 			            progress.Message = "Corruptionn't";
 			            for (int genCount = 0; genCount < Main.maxTilesX * 0.00045; genCount++) {
 				            float value15 = (float)(genCount / (Main.maxTilesX * 0.00045));
@@ -410,7 +411,9 @@ namespace Origins.World {
 							            if (tile.type == TileID.Stone && i2 >= genLeft + genRand.Next(5) && i2 <= genRight - genRand.Next(5)) {
                                             tile.type = stoneType;
 							            }
-							            if (tile.wall == WallID.HardenedSand) {
+							            if (tile.wall == WallID.Stone) {
+                                            tile.wall = stoneWallType;
+							            }else if (tile.wall == WallID.HardenedSand) {
                                             tile.color(26);
 							            }else if (tile.wall == WallID.Sandstone) {
                                             tile.color(26);
@@ -422,9 +425,9 @@ namespace Origins.World {
 							            } else if (TileID.Sets.Conversion.Ice[tile.type]) {
                                             tile.type = iceType;
 							            } else if (TileID.Sets.Conversion.Sandstone[tile.type]) {
-                                            tile.color(26);
+                                            tile.type = sandstoneType;
 							            }else if (TileID.Sets.Conversion.HardenedSand[tile.type]) {
-                                            tile.color(26);
+                                            tile.type = hardenedSandType;
 							            }
 						            }
 					            }
@@ -475,6 +478,42 @@ namespace Origins.World {
                     }
                     crimson = true;
                 });
+            }
+        }
+        public static void getEvilTileConversionTypes(byte evilType, out ushort stoneType, out ushort stoneWallType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType) {
+            switch(evilType) {
+                case evil_wastelands:
+                stoneType = (ushort)TileType<Defiled_Stone>();
+                stoneWallType = (ushort)WallType<Defiled_Stone_Wall>();
+                grassType = (ushort)TileType<Defiled_Grass>();
+                plantType = (ushort)TileType<Defiled_Foliage>();
+                sandType = (ushort)TileType<Defiled_Sand>();
+                sandstoneType = (ushort)TileType<Defiled_Sandstone>();
+                hardenedSandType = (ushort)TileType<Hardened_Defiled_Sand>();
+                iceType = (ushort)TileType<Defiled_Ice>();
+                break;
+                case evil_riven:
+                throw new NotImplementedException();
+                case evil_crimson:
+                stoneType = TileID.Crimstone;
+                stoneWallType = WallID.CrimstoneUnsafe;
+                grassType = TileID.FleshGrass;
+                plantType = TileID.FleshWeeds;
+                sandType = TileID.Crimsand;
+                sandstoneType = TileID.CrimsonSandstone;
+                hardenedSandType = TileID.CrimsonHardenedSand;
+                iceType = TileID.FleshIce;
+                break;
+                default:
+                stoneType = TileID.Ebonstone;
+                stoneWallType = WallID.EbonstoneUnsafe;
+                grassType = TileID.CorruptGrass;
+                plantType = TileID.CorruptPlants;
+                sandType = TileID.Ebonsand;
+                sandstoneType = TileID.CorruptSandstone;
+                hardenedSandType = TileID.CorruptHardenedSand;
+                iceType = TileID.CorruptIce;
+                break;
             }
         }
     }

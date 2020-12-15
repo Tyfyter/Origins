@@ -10,7 +10,11 @@ namespace Origins.Tiles {
         public static List<OriginTile> IDs;
         public ushort mergeID;
         public override bool Autoload(ref string name, ref string texture) {
-            if(IDs!=null)IDs.Add(this);
+            if(IDs!=null) {
+                IDs.Add(this);
+            } else {
+                IDs = new List<OriginTile>() {this};
+            }
             mergeID = Type;
             return true;
         }

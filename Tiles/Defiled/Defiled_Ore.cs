@@ -19,6 +19,7 @@ namespace Origins.Tiles.Defiled {
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Lost Ore");
 			AddMapEntry(new Color(225, 225, 225), name);
+            mergeID = TileID.Demonite;
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
             r = g = b = 0.25f;

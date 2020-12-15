@@ -14,10 +14,10 @@ namespace Origins.Tiles.Defiled {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			Main.tileMergeDirt[Type] = true;
+			/*Main.tileMergeDirt[Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
             Main.tileMerge[Type][TileID.Stone] = true;
-            /*for(int i = 0; i < TileLoader.TileCount; i++) {
+            for(int i = 0; i < TileLoader.TileCount; i++) {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
             }*/
 			drop = ItemType<Defiled_Stone_Item>();

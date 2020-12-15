@@ -150,13 +150,25 @@ namespace Origins {
             FelnumLegsArmorID = ModContent.GetInstance<Felnum_Greaves>().item.legSlot;
             PlagueTexanJacketID = ModContent.GetInstance<Plague_Texan_Jacket>().item.bodySlot;
             #endregion
+            Logger.Info("fixing tilemerge for "+OriginTile.IDs.Count+" tiles");
+            Main.tileMerge[TileID.Sand][TileID.Sandstone] = true;
+            Main.tileMerge[TileID.Sand][TileID.HardenedSand] = true;
+            Main.tileMerge[TileID.Sandstone][TileID.HardenedSand] = true;
             for(int oID = 0; oID < OriginTile.IDs.Count; oID++) {
                 OriginTile oT = OriginTile.IDs[oID];
+                Logger.Info("fixing tilemerge for "+oT.GetType());
+                Main.tileMergeDirt[oT.Type] = Main.tileMergeDirt[oT.mergeID];
+                Main.tileMerge[oT.Type] = Main.tileMerge[oT.mergeID];
                 Main.tileMerge[oT.mergeID][oT.Type] = true;
                 Main.tileMerge[oT.Type][oT.mergeID] = true;
                 for(int i = 0; i < TileLoader.TileCount; i++) {
-                    if(Main.tileMerge[oT.mergeID][i]) Main.tileMerge[i][oT.Type] = true;
-                    if(Main.tileMerge[i][oT.mergeID]) Main.tileMerge[oT.Type][i] = true;
+                    if(Main.tileMerge[oT.mergeID][i]) {
+                        Main.tileMerge[i][oT.Type] = true;
+                        Main.tileMerge[oT.Type][i] = true;
+                    } else if(Main.tileMerge[i][oT.mergeID]) {
+                        Main.tileMerge[oT.Type][i] = true;
+                        Main.tileMerge[i][oT.Type] = true;
+                    }
                 }
             }
             if(OriginConfig.Instance.GrassMerge) {
@@ -292,7 +304,6 @@ namespace Origins {
             }
             Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
             OriginExtensions.initClone();
-            OriginTile.IDs = new List<OriginTile>() { };
         }
         public override void Unload() {
             ExplosiveProjectiles = null;

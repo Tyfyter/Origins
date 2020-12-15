@@ -15,7 +15,10 @@ namespace Origins.Tiles.Defiled {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			Main.tileMergeDirt[Type] = true;
+			/*Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.Sand];
+            Main.tileMerge[TileID.Sand][Type] = true;
+            Main.tileMerge[Type] = Main.tileMerge[TileID.Sand];
+            Main.tileMerge[Type][TileID.Sand] = true;*/
             TileID.Sets.Falling[Type] = true;
 			drop = ItemType<Defiled_Sand_Item>();
 			AddMapEntry(new Color(175, 175, 175));
