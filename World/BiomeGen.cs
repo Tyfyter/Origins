@@ -468,7 +468,7 @@ namespace Origins.World {
                 tasks.Insert(genIndex+1, new PassLegacy("Evil Weeds and Sand", (GenerationProgress progress) => {
                     for(int i = 0; i < Main.maxTilesX; i++) {
                         for(int j = 1; j < Main.maxTilesY; j++) {
-                            if(Main.tile[i, j].type == grassType && Main.tile[i, j].nactive() && !(Main.tile[i, j].halfBrick()||Main.tile[i, j].slope()!=SlopeID.None)) {
+                            if(Main.tile[i, j].type == grassType && Main.tile[i, j].active() && !(Main.tile[i, j].halfBrick()||Main.tile[i, j].slope()!=SlopeID.None)) {
                                 if(!Main.tile[i, j - 1].active()) {
                                     PlaceTile(i, j - 1, plantType, mute: true);
                                 }
@@ -486,7 +486,7 @@ namespace Origins.World {
                 tasks.Insert(genIndex+1, new PassLegacy("Evil Biome Cleanup", (GenerationProgress progress) => {
                     for(int i = 0; i < Main.maxTilesX; i++) {
                         for(int j = 1; j < Main.maxTilesY; j++) {
-                            if(Main.tile[i, j].type == grassType && Main.tile[i, j].nactive()) {
+                            if(Main.tile[i, j].type == grassType && Main.tile[i, j].active()) {
                                 if(Main.tile[i-1, j].type == TileID.Grass) {
                                     Main.tile[i-1, j].type = grassType;
                                     if(Main.tile[i-1, j-1].type == TileID.Plants)
@@ -520,6 +520,7 @@ namespace Origins.World {
             }
             orig(i, j, speedX, speedY, good);
         }
+
         /* didn't notice On.Terraria
         public static bool GERunnerClone(int i, int j, float speedX = 0f, float speedY = 0f, bool good = true) {
             if(check goes here) {
@@ -539,9 +540,9 @@ namespace Origins.World {
             cursor.Emit(OpCodes.Brtrue, label);
             cursor.Emit(OpCodes.Ret);
             cursor.MarkLabel(label);
-        }*/
+        }
         protected internal static UnifiedRandom hardmodeGenRand;
-        /*public override void ModifyHardmodeTasks(List<GenPass> list) {
+        public override void ModifyHardmodeTasks(List<GenPass> list) {
             if((worldEvil&4)!=0) {
                 int index = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Evil"));
                 if(index>-1) {

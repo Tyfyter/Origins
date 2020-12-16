@@ -10,11 +10,12 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Sandstone : OriginTile {
+    public class Defiled_Sandstone : DefiledTile {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.Sandstone];
+            TileID.Sets.Conversion.Sandstone[Type] = true;
             //Main.tileMerge[TileID.Sandstone][Type] = true;
             //Main.tileMerge[Type] = Main.tileMerge[TileID.Sandstone];
             //Main.tileMerge[Type][TileID.Sandstone] = true;

@@ -307,6 +307,7 @@ namespace Origins {
             Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
             OriginExtensions.initClone();
             On.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
+            On.Terraria.WorldGen.Convert+=OriginWorld.ConvertHook;
             //IL.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
         }
         public override void Unload() {
@@ -324,7 +325,7 @@ namespace Origins {
             instance = null;
             OriginExtensions.unInitClone();
             OriginTile.IDs = null;
-            OriginWorld.hardmodeGenRand = null;
+            ModContent.GetInstance<OriginWorld>().defiledResurgenceTiles = null;
         }
         public override void UpdateMusic(ref int music, ref MusicPriority priority) {
             if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active) {

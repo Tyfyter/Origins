@@ -10,10 +10,11 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Hardened_Defiled_Sand : OriginTile {
+    public class Hardened_Defiled_Sand : DefiledTile {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+            TileID.Sets.Conversion.HardenedSand[Type] = true;
 			/*Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.HardenedSand];
             Main.tileMerge[TileID.HardenedSand][Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.HardenedSand];

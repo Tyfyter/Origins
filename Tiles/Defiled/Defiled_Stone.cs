@@ -10,10 +10,11 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Stone : OriginTile {
+    public class Defiled_Stone : DefiledTile {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+            TileID.Sets.Conversion.Stone[Type] = true;
 			/*Main.tileMergeDirt[Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
             Main.tileMerge[Type][TileID.Stone] = true;

@@ -35,8 +35,26 @@ namespace Origins.Tiles.Defiled {
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
             Main.tile[i, j].frameX = (short)(Main.rand.Next(6)*18);
-            if(!TileObjectData.GetTileData(Main.tile[i, j]).isValidTileAnchor(Main.tile[i, j+1].type)) {
-                WorldGen.KillTile(i, j, noItem:WorldGen.gen);
+            ushort anchorType = Main.tile[i, j+1].type;
+            if(!TileObjectData.GetTileData(Main.tile[i, j]).isValidTileAnchor(anchorType)) {
+                if(TileID.Sets.Conversion.Grass[anchorType]) {
+                    switch(anchorType) {
+                        case TileID.Grass:
+                        Main.tile[i, j].type = TileID.Plants;
+                        return true;
+                        case TileID.CorruptGrass:
+                        Main.tile[i, j].type = TileID.CorruptPlants;
+                        return true;
+                        case TileID.FleshGrass:
+                        Main.tile[i, j].type = TileID.FleshWeeds;
+                        return true;
+                        case TileID.HallowedGrass:
+                        Main.tile[i, j].type = TileID.HallowedGrass;
+                        return true;
+                    }
+                } else {
+                    WorldGen.KillTile(i, j, noItem:WorldGen.gen);
+                }
             }
             return false;
         }

@@ -47,12 +47,6 @@ namespace Origins.NPCs {
                 damage+=Math.Max(npc.defense/2, 20);
             }
         }
-        public override bool PreNPCLoot(NPC npc) {
-            if(npc.type == NPCID.WallofFlesh && Main.netMode != NetmodeID.MultiplayerClient) {
-                OriginWorld.hardmodeGenRand = WorldGen.genRand.Clone();
-            }
-            return true;
-        }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
             Player player = spawnInfo.player;
             if(player.GetModPlayer<OriginPlayer>().ZoneDefiled) {

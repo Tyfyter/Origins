@@ -10,12 +10,13 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Ice : OriginTile {
+    public class Defiled_Ice : DefiledTile {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 		    TileID.Sets.Ices[Type] = true;
 		    TileID.Sets.IcesSlush[Type] = true;
 		    TileID.Sets.IcesSnow[Type] = true;
+            TileID.Sets.Conversion.Ice[Type] = true;
 			Main.tileMergeDirt[Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.IceBlock];
             Main.tileMerge[Type][TileID.IceBlock] = true;
