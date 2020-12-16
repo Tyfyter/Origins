@@ -19,7 +19,7 @@ namespace Origins.Tiles {
                 case TileID.Plants:
                 case TileID.CorruptPlants:
                 case TileID.FleshWeeds:
-                case TileID.HallowedGrass:
+                case TileID.HallowedPlants:
                 ConvertPlantsByAnchor(ref Main.tile[i, j].type, Main.tile[i, j+1].type);
                 break;
             }
