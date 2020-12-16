@@ -135,7 +135,9 @@ namespace Origins.World {
                 ushort grassType = TileID.Grass;
                 ushort plantType = TileID.Plants;
                 ushort stoneType = TileID.Stone;
-                ushort stoneWallType = WallID.Stone;
+                ushort[] stoneWallTypes = new ushort[] {WallID.Stone};
+                ushort[] hardenedSandWallTypes = new ushort[] {WallID.HardenedSand};
+                ushort[] sandstoneWallTypes = new ushort[] {WallID.Sandstone};
                 ushort sandType = TileID.Sand;
                 ushort sandstoneType = TileID.Sandstone;
                 ushort hardenedSandType = TileID.HardenedSand;
@@ -295,7 +297,8 @@ namespace Origins.World {
                             }
                         }
                     } else {
-                        getEvilTileConversionTypes(evil_wastelands, out stoneType, out stoneWallType, out grassType, out plantType, out sandType, out sandstoneType, out hardenedSandType, out iceType);
+                        getEvilTileConversionTypes(evil_wastelands, out stoneType, out grassType, out plantType, out sandType, out sandstoneType, out hardenedSandType, out iceType);
+                        getEvilWallConversionTypes(evil_wastelands, out stoneWallTypes, out hardenedSandWallTypes, out sandstoneWallTypes);
                         progress.Message = "Corruptionn't";
                         for(int genCount = 0; genCount < Main.maxTilesX * 0.00045; genCount++) {
                             float value15 = (float)(genCount / (Main.maxTilesX * 0.00045));
@@ -407,11 +410,11 @@ namespace Origins.World {
                                         }
                                         flag42 = true;
                                         if(tile.wall == WallID.Stone) {
-                                            tile.wall = stoneWallType;
+                                            tile.wall = genRand.Next(stoneWallTypes);
                                         } else if(tile.wall == WallID.HardenedSand) {
-                                            tile.color(26);
+                                            tile.wall = genRand.Next(hardenedSandWallTypes);
                                         } else if(tile.wall == WallID.Sandstone) {
-                                            tile.color(26);
+                                            tile.wall = genRand.Next(sandstoneWallTypes);
                                         }
                                         if(tile.type == TileID.Plants) {
                                             tile.type = plantType;
@@ -643,11 +646,10 @@ namespace Origins.World {
             Origins.instance.Logger.Info("hardmode evil stripe generation complete in "+loopCount+" loops with "+conversionCount+" tile conversions");
 
         }
-        public static void getEvilTileConversionTypes(byte evilType, out ushort stoneType, out ushort stoneWallType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType) {
+        public static void getEvilTileConversionTypes(byte evilType, out ushort stoneType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType) {
             switch(evilType) {
                 case evil_wastelands:
                 stoneType = (ushort)TileType<Defiled_Stone>();
-                stoneWallType = (ushort)WallType<Defiled_Stone_Wall>();
                 grassType = (ushort)TileType<Defiled_Grass>();
                 plantType = (ushort)TileType<Defiled_Foliage>();
                 sandType = (ushort)TileType<Defiled_Sand>();
@@ -659,7 +661,6 @@ namespace Origins.World {
                 throw new NotImplementedException();
                 case evil_crimson:
                 stoneType = TileID.Crimstone;
-                stoneWallType = WallID.CrimstoneUnsafe;
                 grassType = TileID.FleshGrass;
                 plantType = TileID.FleshWeeds;
                 sandType = TileID.Crimsand;
@@ -669,13 +670,33 @@ namespace Origins.World {
                 break;
                 default:
                 stoneType = TileID.Ebonstone;
-                stoneWallType = WallID.EbonstoneUnsafe;
                 grassType = TileID.CorruptGrass;
                 plantType = TileID.CorruptPlants;
                 sandType = TileID.Ebonsand;
                 sandstoneType = TileID.CorruptSandstone;
                 hardenedSandType = TileID.CorruptHardenedSand;
                 iceType = TileID.CorruptIce;
+                break;
+            }
+        }
+        public static void getEvilWallConversionTypes(byte evilType, out ushort[] stoneWallTypes, out ushort[] hardenedSandWallTypes, out ushort[] sandstoneWallTypes) {
+            switch(evilType) {
+                case evil_wastelands:
+                stoneWallTypes = new ushort[] { (ushort)WallType<Defiled_Stone_Wall>() };
+                hardenedSandWallTypes = new ushort[] { (ushort)WallType<Hardened_Defiled_Sand_Wall>() };
+                sandstoneWallTypes = new ushort[] { (ushort)WallType<Defiled_Sandstone_Wall>() };
+                break;
+                case evil_riven:
+                throw new NotImplementedException();
+                case evil_crimson:
+                stoneWallTypes = new ushort[] { WallID.CrimstoneUnsafe };
+                hardenedSandWallTypes = new ushort[] { WallID.CrimsonHardenedSand };
+                sandstoneWallTypes = new ushort[] { WallID.CrimsonSandstone };
+                break;
+                default:
+                stoneWallTypes = new ushort[] { WallID.EbonstoneUnsafe };
+                hardenedSandWallTypes = new ushort[] { WallID.CorruptHardenedSand };
+                sandstoneWallTypes = new ushort[] { WallID.CorruptSandstone };
                 break;
             }
         }

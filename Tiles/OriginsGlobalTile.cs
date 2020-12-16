@@ -21,7 +21,7 @@ namespace Origins.Tiles {
                 case TileID.FleshWeeds:
                 case TileID.HallowedPlants:
                 ConvertPlantsByAnchor(ref Main.tile[i, j].type, Main.tile[i, j+1].type);
-                break;
+                return true;
             }
             if(type==ModContent.TileType<Defiled_Foliage>()) {
                 ConvertPlantsByAnchor(ref Main.tile[i, j].type, Main.tile[i, j+1].type);

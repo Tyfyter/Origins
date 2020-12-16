@@ -47,6 +47,23 @@ namespace Origins.NPCs {
                 damage+=Math.Max(npc.defense/2, 20);
             }
         }
+        public override bool PreNPCLoot(NPC npc) {
+            byte worldEvil = ModContent.GetInstance<OriginWorld>().worldEvil;
+            if((worldEvil&4)!=0) {
+                switch(npc.type) {
+                    case NPCID.EaterofWorldsHead:
+                    case NPCID.EaterofWorldsBody:
+                    case NPCID.EaterofWorldsTail:
+                    case NPCID.BrainofCthulhu:
+                    break;
+                    default:
+                    NPCLoader.blockLoot.Add(ItemID.CorruptSeeds);
+                    NPCLoader.blockLoot.Add(ItemID.DemoniteOre);
+                    break;
+                }
+            }
+            return true;
+        }
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
             Player player = spawnInfo.player;
             if(player.GetModPlayer<OriginPlayer>().ZoneDefiled) {

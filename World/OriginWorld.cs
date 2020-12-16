@@ -115,9 +115,24 @@ namespace Origins.World {
                 break;
             }
         }
+        public static bool ConvertWall(ref ushort tileType, byte evilType, bool convert = true) {
+            getEvilWallConversionTypes(evilType, out ushort[] stoneTypes, out ushort[] hardenedSandTypes, out ushort[] sandstoneTypes);
+            switch(tileType) {
+                case WallID.Stone:
+                if(convert)tileType = WorldGen.genRand.Next(stoneTypes);
+                return true;
+                case WallID.Sandstone:
+                if(convert)tileType = WorldGen.genRand.Next(sandstoneTypes);
+                return true;
+                case WallID.HardenedSand:
+                if(convert)tileType = WorldGen.genRand.Next(hardenedSandTypes);
+                return true;
+            }
+            return false;
+        }
 
         public static bool ConvertTileWeak(ref ushort tileType, byte evilType, bool convert = true) {
-            getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort stoneWallType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);
+            getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);
             switch(tileType) {
                 case TileID.Grass:
                 if(convert)tileType = grassType;
@@ -145,7 +160,7 @@ namespace Origins.World {
             return false;
         }
         public static bool ConvertTile(ref ushort tileType, byte evilType, bool aggressive = false) {
-            getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort stoneWallType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);
+            getEvilTileConversionTypes(evilType, out ushort stoneType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType);
             if(TileID.Sets.Conversion.Grass[tileType]) {
                 tileType = grassType;
                 return true;

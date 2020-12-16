@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.RuntimeDetour;
+using Origins.Items;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Weapons.Explosives;
@@ -308,6 +309,7 @@ namespace Origins {
             OriginExtensions.initClone();
             On.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
             On.Terraria.WorldGen.Convert+=OriginWorld.ConvertHook;
+            On.Terraria.Item.NewItem_int_int_int_int_int_int_bool_int_bool_bool+=OriginGlobalItem.NewItemHook;
             //IL.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
         }
         public override void Unload() {

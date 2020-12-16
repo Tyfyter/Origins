@@ -61,6 +61,7 @@ namespace Origins.Tiles.Defiled {
                 if(rand.elements.Count>0) {
                     (int x, int y) pos = rand.Get();
                     OriginWorld.ConvertTileWeak(ref Main.tile[pos.x, pos.y].type, OriginWorld.evil_wastelands);
+                    OriginWorld.ConvertWall(ref Main.tile[pos.x, pos.y].wall, OriginWorld.evil_wastelands);
 				    WorldGen.SquareTileFrame(pos.x, pos.y);
 				    NetMessage.SendTileSquare(-1, pos.x, pos.y, 1);
                 } else {
