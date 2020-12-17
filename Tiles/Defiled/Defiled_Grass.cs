@@ -78,7 +78,7 @@ namespace Origins.Tiles.Defiled {
                 }
                 break;
                 case 1:
-                if(!Main.tile[i, j-1].active()) {
+                if(!Main.tile[i, j-1].active()&&!(Main.tile[i, j].slope()!=0||Main.tile[i, j].halfBrick())) {
                     Main.tile[i, j-1].ResetToType((ushort)ModContent.TileType<Defiled_Foliage>());
                 } else {
                     goto retry;
