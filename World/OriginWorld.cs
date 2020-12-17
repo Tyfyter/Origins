@@ -31,6 +31,7 @@ namespace Origins.World {
             peatSold = tag.GetAsInt("peatSold");
             worldEvil = tag.GetByte("worldEvil");
             defiledResurgenceTiles = new List<(int, int)>(){};
+            defiledAltResurgenceTiles = new List<(int, int, ushort)>(){};
         }
         public override TagCompound Save() {
             return new TagCompound() { {"peatSold",  peatSold} , {"worldEvil",  worldEvil} };
@@ -46,14 +47,26 @@ namespace Origins.World {
             Main.sandTiles+=tileCounts[ModContent.TileType<Defiled_Sand>()];
         }
         protected internal List<(int, int)> defiledResurgenceTiles;
+        protected internal List<(int, int, ushort)> defiledAltResurgenceTiles;
         public override void PostUpdate() {
-            if(defiledResurgence&&defiledResurgenceTiles.Count>0&&WorldGen.genRand.Next(5)==0) {
-                int index = WorldGen.genRand.Next(defiledResurgenceTiles.Count);
-                (int k, int l) pos = defiledResurgenceTiles[index];
-				ConvertTile(ref Main.tile[pos.k, pos.l].type, evil_wastelands);
-				WorldGen.SquareTileFrame(pos.k, pos.l);
-				NetMessage.SendTileSquare(-1, pos.k, pos.l, 1);
-                defiledResurgenceTiles.RemoveAt(index);
+            if(defiledResurgence) {
+                if(defiledResurgenceTiles.Count>0&&WorldGen.genRand.Next(5)==0) {
+                    int index = WorldGen.genRand.Next(defiledResurgenceTiles.Count);
+                    (int k, int l) pos = defiledResurgenceTiles[index];
+                    ConvertTile(ref Main.tile[pos.k, pos.l].type, evil_wastelands);
+                    WorldGen.SquareTileFrame(pos.k, pos.l);
+                    NetMessage.SendTileSquare(-1, pos.k, pos.l, 1);
+                    defiledResurgenceTiles.RemoveAt(index);
+                }else if(defiledAltResurgenceTiles.Count>0&&WorldGen.genRand.Next(30)==0) {
+                    int index = WorldGen.genRand.Next(defiledAltResurgenceTiles.Count);
+                    (int k, int l, ushort type) tile = defiledAltResurgenceTiles[index];
+                    if(Main.tile[tile.k, tile.l].active()) {
+                        Main.tile[tile.k, tile.l].type = tile.type;
+                        WorldGen.SquareTileFrame(tile.k, tile.l);
+                        NetMessage.SendTileSquare(-1, tile.k, tile.l, 1);
+                    }
+                    defiledAltResurgenceTiles.RemoveAt(index);
+                }
             }
         }
         /// <summary>

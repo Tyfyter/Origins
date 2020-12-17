@@ -36,7 +36,16 @@ namespace Origins.Tiles.Defiled {
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
             fail = true;
             noItem = true;
+            OriginWorld originWorld = ModContent.GetInstance<OriginWorld>();
+            originWorld.defiledAltResurgenceTiles.Add((i, j, Type));
+            bool half = Main.tile[i, j].halfBrick();
+            byte slope = Main.tile[i, j].slope();
             Main.tile[i, j].ResetToType(TileID.Dirt);
+            WorldGen.SquareTileFrame(i, j);
+            Main.tile[i, j].halfBrick(half);
+            Main.tile[i, j].slope(slope);
+            NetMessage.SendTileSquare(-1, i, j, 1);
+
         }
         public override void RandomUpdate(int i, int j) {
             int retryCount = 0;

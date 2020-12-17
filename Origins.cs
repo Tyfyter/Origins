@@ -331,6 +331,7 @@ namespace Origins {
             OriginExtensions.unInitClone();
             OriginTile.IDs = null;
             ModContent.GetInstance<OriginWorld>().defiledResurgenceTiles = null;
+            ModContent.GetInstance<OriginWorld>().defiledAltResurgenceTiles = null;
         }
         public override void UpdateMusic(ref int music, ref MusicPriority priority) {
             if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active) {
