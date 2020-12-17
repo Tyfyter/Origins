@@ -306,7 +306,10 @@ namespace Origins {
                 //Filters.Scene["BlackHole"].Load();
             }
             Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
-            OriginExtensions.initClone();
+            //OriginExtensions.initClone();
+            Music.Dusk = MusicID.Eerie;
+            Music.Defiled = MusicID.Corruption;
+            Music.UndergroundDefiled = MusicID.UndergroundCorruption;
             On.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
             On.Terraria.WorldGen.Convert+=OriginWorld.ConvertHook;
             On.Terraria.Item.NewItem_int_int_int_int_int_int_bool_int_bool_bool+=OriginGlobalItem.NewItemHook;
@@ -333,12 +336,13 @@ namespace Origins {
             if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active) {
 				return;
 			}
+            Vector2 position = Main.LocalPlayer.Bottom/16;
             OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 			if (originPlayer.ZoneVoid&&priority<MusicPriority.Event) {
 				music = Music.Dusk;
 				priority = MusicPriority.Event;
 			}else if (originPlayer.ZoneDefiled&&priority<MusicPriority.Event) {
-				music = Music.Defiled;
+				music = (position.Y>=(Main.worldSurface+30))?Music.UndergroundDefiled:Music.Defiled;
 				priority = MusicPriority.Event;
 			}
         }

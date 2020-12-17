@@ -738,11 +738,6 @@ namespace Origins {
             inextp = null;
             SeedArray = null;
         }
-        public static Random Clone(this Random r) {
-            Random o = (Random)MemberwiseClone.Invoke(r, BindingFlags.NonPublic, null, null, null);
-            SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).Clone(), BindingFlags.NonPublic, null, null);
-            return o;
-        }
         public static UnifiedRandom Clone(this UnifiedRandom r) {
             UnifiedRandom o = (UnifiedRandom)MemberwiseClone.Invoke(r, BindingFlags.NonPublic, null, null, null);
             SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).Clone(), BindingFlags.NonPublic, null, null);
