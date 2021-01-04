@@ -330,8 +330,11 @@ namespace Origins {
             instance = null;
             OriginExtensions.unInitClone();
             OriginTile.IDs = null;
-            ModContent.GetInstance<OriginWorld>().defiledResurgenceTiles = null;
-            ModContent.GetInstance<OriginWorld>().defiledAltResurgenceTiles = null;
+            OriginWorld worldInstance = ModContent.GetInstance<OriginWorld>();
+            if(!(worldInstance is null)) {
+                worldInstance.defiledResurgenceTiles = null;
+                worldInstance.defiledAltResurgenceTiles = null;
+            }
         }
         public override void UpdateMusic(ref int music, ref MusicPriority priority) {
             if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active) {
