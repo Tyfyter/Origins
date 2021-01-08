@@ -14,6 +14,7 @@ namespace Origins.Tiles.Dusk {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			drop = ItemType<Dusk_Stone_Item>();
 			AddMapEntry(new Color(0, 0, 0));
 		}

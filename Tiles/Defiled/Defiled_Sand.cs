@@ -16,6 +16,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             TileID.Sets.Conversion.Sand[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			/*Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.Sand];
             Main.tileMerge[TileID.Sand][Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.Sand];
@@ -23,6 +24,7 @@ namespace Origins.Tiles.Defiled {
             TileID.Sets.Falling[Type] = true;
 			drop = ItemType<Defiled_Sand_Item>();
 			AddMapEntry(new Color(175, 175, 175));
+			SetModTree(Defiled_Tree.Instance);
             mergeID = TileID.Sand;
 		}
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
@@ -79,6 +81,10 @@ namespace Origins.Tiles.Defiled {
 				return false;
 			}
 			return true;
+		}
+		public override int SaplingGrowthType(ref int style) {
+			style = 0;
+			return ModContent.TileType<Defiled_Tree_Sapling>();
 		}
     }
     public class Defiled_Sand_Item : ModItem {

@@ -11,6 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria;
+using Microsoft.Xna.Framework;
 
 namespace Origins.World {
     public partial class OriginWorld : ModWorld {
@@ -194,6 +195,29 @@ namespace Origins.World {
                 return true;
             }
             return false;
+        }
+        public static byte GetTileAdj(int i, int j) {
+            byte adj = 0;
+            if(Main.tile[i-1, j-1].active())adj|=AdjID.tl;
+            if(Main.tile[i, j-1].active())  adj|=AdjID.t;
+            if(Main.tile[i+1, j-1].active())adj|=AdjID.tr;
+            if(Main.tile[i-1, j].active())  adj|=AdjID.l;
+            if(Main.tile[i+1, j].active())  adj|=AdjID.r;
+            if(Main.tile[i-1, j+1].active())adj|=AdjID.bl;
+            if(Main.tile[i, j+1].active())  adj|=AdjID.b;
+            if(Main.tile[i+1, j+1].active())adj|=AdjID.br;
+            return adj;
+        }
+        public static List<Vector2> GetTileDirs(int i, int j) {
+            List<Vector2> dirs = new List<Vector2>(8);
+            for(int k = 1; k <= 1; k++) {
+                for(int l = 1; l <= 1; l++) {
+                    if(!(k==0&&l==0)&&Main.tile[i+k,j+l].active()) {
+                        dirs.Add(new Vector2(k,l));
+                    }
+                }
+            }
+            return dirs;
         }
     }
 }

@@ -17,6 +17,14 @@ namespace Origins.Items.Armor.Acrid{
         public override void UpdateEquip(Player player) {
             Lighting.AddLight(player.Center, new Vector3(0, 1, (float)Math.Abs(Math.Sin(Main.GameUpdateCount/60f))));
         }
+        public override bool IsArmorSet(Item head, Item body, Item legs) {
+            return body.type == ModContent.ItemType<Acrid_Breastplate>() && legs.type == ModContent.ItemType<Acrid_Greaves>();
+        }
+        public override void UpdateArmorSet(Player player) {
+            player.buffImmune[BuffID.Poisoned] = true;
+            player.buffImmune[BuffID.Venom] = true;
+            player.breathMax*=2;
+        }
     }
     [AutoloadEquip(EquipType.Body)]
 	public class Acrid_Breastplate : ModItem {
@@ -41,7 +49,7 @@ namespace Origins.Items.Armor.Acrid{
             item.defense = 14;
         }
         public override void UpdateEquip(Player player) {
-            player.swimTime = 2;
+            player.accFlipper = true;
         }
     }
 }

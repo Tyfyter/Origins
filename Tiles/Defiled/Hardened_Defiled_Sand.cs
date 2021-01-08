@@ -15,6 +15,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             TileID.Sets.Conversion.HardenedSand[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			/*Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.HardenedSand];
             Main.tileMerge[TileID.HardenedSand][Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.HardenedSand];

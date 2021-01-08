@@ -17,6 +17,7 @@ namespace Origins.Tiles.Defiled {
 		    TileID.Sets.IcesSlush[Type] = true;
 		    TileID.Sets.IcesSnow[Type] = true;
             TileID.Sets.Conversion.Ice[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileMergeDirt[Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.IceBlock];
             Main.tileMerge[Type][TileID.IceBlock] = true;

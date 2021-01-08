@@ -47,31 +47,34 @@ namespace Origins.World {
             int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
             if(genIndex != -1) {
                 int duskStoneID = TileType<Dusk_Stone>();
-                tasks.Insert(genIndex + 1, new PassLegacy("HELL Biome", delegate (GenerationProgress progress) {
-                    progress.Message = "Generating HELL Biome";
+                tasks.Insert(genIndex + 1, new PassLegacy("Dusk Biome", delegate (GenerationProgress progress) {
+                    progress.Message = "Generating Dusk Biome";
                     //for(int i = 0; i < Main.maxTilesX / 900; i++) {       //900 is how many biomes. the bigger is the number = less biomes
                     int X = (int)(Main.maxTilesX*0.4);//WorldGen.genRand.Next(1, Main.maxTilesX - 300);
-                    TestRunners.HellRunner(X, Main.maxTilesY-25, 650, WorldGen.genRand.Next(100, 200), duskStoneID, false, 0f, 0f, true, true);
+                    GenRunners.HellRunner(X, Main.maxTilesY-25, 650, WorldGen.genRand.Next(100, 200), duskStoneID, false, 0f, 0f, true, true);
                     //Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh-1).type = TileID.AmberGemspark;
                     //Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh+1).type = TileID.AmberGemspark;
                     //Framing.GetTileSafely(X-1, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
                     //Framing.GetTileSafely(X+1, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
                     //Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
                     mod.Logger.Info(HellSpikes.Count+" Void Spikes: "+string.Join(", ", HellSpikes));
-                    for(; HellSpikes.Count>0;) {
+                    while(HellSpikes.Count>0) {
                         (Point, int) i = HellSpikes[0];
                         Point p = i.Item1;
                         HellSpikes.RemoveAt(0);
                         Vector2 vel = new Vector2(0, (p.Y<Main.maxTilesY-150) ? 2.75f : -2.75f).RotatedByRandom(1.25f);
-                        TestRunners.SpikeRunner(p.X, p.Y, duskStoneID, vel, i.Item2, randomtwist: true);
+                        //TestRunners.SpikeRunner(p.X, p.Y, duskStoneID, vel, i.Item2, randomtwist: true);
+                        bool twist = genRand.NextBool();
+                        GenRunners.SmoothSpikeRunner(p.X, p.Y, i.Item2*0.75, duskStoneID, vel, decay:genRand.NextFloat(0.75f,1f), twist:twist?0.3f:0, randomtwist: twist, cutoffStrength:1);
                     }
                     //Tile tile2;
-                    byte dirs = 0;
-                    for(int k = TestRunners.duskLeft; k < TestRunners.duskRight; k++) {
-                        for(int l = TestRunners.duskBottom; l > TestRunners.duskTop; l--) {
+                    //byte dirs = 0;
+                    for(int k = GenRunners.duskLeft; k < GenRunners.duskRight; k++) {
+                        for(int l = GenRunners.duskBottom; l > GenRunners.duskTop; l--) {
                             //tile2 = Main.tile[k, l];
                             if(Main.tile[k, l].type == duskStoneID) {
-                                dirs = 0;
+                                GenRunners.AutoSlope(k,l,true);
+                                /*dirs = 0;
                                 if(Main.tile[k-1, l].active())
                                     dirs|=1;
                                 if(Main.tile[k+1, l].active())
@@ -105,13 +108,13 @@ namespace Origins.World {
                                     Main.tile[k, l].slope(0);
                                     Main.tile[k, l].halfBrick(false);
                                     break;
-                                }
+                                }*/
                             }
                         }
                     }
                     //}
                 }));
-                tasks.Insert(genIndex + 1, new PassLegacy("FirstLake", delegate (GenerationProgress progress) {
+                if(false)tasks.Insert(genIndex + 1, new PassLegacy("FirstLake", delegate (GenerationProgress progress) {
                     mod.Logger.Info("Generating Lake");
                     progress.Message = "Generating Lake";
                     //for (int i = 0; i < Main.maxTilesX / 5000; i++) {
@@ -142,6 +145,7 @@ namespace Origins.World {
                 ushort sandstoneType = TileID.Sandstone;
                 ushort hardenedSandType = TileID.HardenedSand;
                 ushort iceType = TileID.IceBlock;
+                List<(Point, int)> EvilSpikes = new List<(Point, int)>() { };
                 tasks[genIndex] = new PassLegacy("Alternate World Evil", (GenerationProgress progress) => {
                 worldEvil = crimson ? evil_riven : evil_wastelands;
                     if(crimson) {
@@ -297,6 +301,8 @@ namespace Origins.World {
                             }
                         }
                     } else {
+                        defiledResurgenceTiles = new List<(int, int)> { };
+                        defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
                         getEvilTileConversionTypes(evil_wastelands, out stoneType, out grassType, out plantType, out sandType, out sandstoneType, out hardenedSandType, out iceType);
                         getEvilWallConversionTypes(evil_wastelands, out stoneWallTypes, out hardenedSandWallTypes, out sandstoneWallTypes);
                         progress.Message = "Corruptionn't";
@@ -469,11 +475,20 @@ namespace Origins.World {
                 }));
                 genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Weeds"));
                 tasks.Insert(genIndex+1, new PassLegacy("Evil Weeds and Sand", (GenerationProgress progress) => {
+                    int tilesSinceSpike = 0;
                     for(int i = 0; i < Main.maxTilesX; i++) {
                         for(int j = 1; j < Main.maxTilesY; j++) {
                             if(Main.tile[i, j].type == grassType && Main.tile[i, j].active() && !(Main.tile[i, j].halfBrick()||Main.tile[i, j].slope()!=SlopeID.None)) {
                                 if(!Main.tile[i, j - 1].active()) {
                                     PlaceTile(i, j - 1, plantType, mute: true);
+                                }
+                                if(worldEvil == evil_wastelands) {
+                                    if(genRand.Next(0, 10+EvilSpikes.Count)<=tilesSinceSpike/5) {
+                                        EvilSpikes.Add((new Point(i, j), genRand.Next(9,18)+tilesSinceSpike/5));
+                                        tilesSinceSpike = -15;
+                                    } else {
+                                        tilesSinceSpike++;
+                                    }
                                 }
                             } else {
                                 if(Main.tile[i, j].active() && (!SolidTile(i, j + 1) || !SolidTile(i, j + 2))) {
@@ -483,10 +498,32 @@ namespace Origins.World {
                             }
                         }
                     }
+                    if(EvilSpikes.Count>0) {
+                        mod.Logger.Info($"Adding {EvilSpikes.Count} Evil Spikes");
+                    }
                     crimson = true;
                 }));
                 genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
-                tasks.Insert(genIndex+1, new PassLegacy("Evil Biome Cleanup", (GenerationProgress progress) => {
+                tasks.Insert(genIndex+1, new PassLegacy("Evil Biome Cleanup and Features", (GenerationProgress progress) => {
+                    while(EvilSpikes.Count>0) {
+                        (Point, int) i = EvilSpikes[0];
+                        Point p = i.Item1;
+                        EvilSpikes.RemoveAt(0);
+                        Vector2 vel = -GetTileDirs(p.X,p.Y).TakeAverage();
+                        if(vel.Length()==0f) {
+                            vel = genRand.NextVector2Circular(0.5f,0.5f);
+                        } else {
+                            vel = vel.RotatedByRandom(0.75f);
+                        }
+                        //TestRunners.SpikeRunner(p.X, p.Y, duskStoneID, vel, i.Item2, randomtwist: true);
+                        double size = i.Item2*0.25;
+                        if(genRand.Next(5) == 0) {
+                            size+=6;
+                            p = new Point(p.X+(int)(vel.X*18),p.Y+(int)(vel.Y*18));
+                        }
+                        bool twist = genRand.NextBool();
+                        GenRunners.SmoothSpikeRunner(p.X, p.Y, size, stoneType, vel, decay:genRand.NextFloat(0.15f,0.35f), twist:twist?genRand.NextFloat(-0.05f,0.05f):1f, randomtwist:!twist, cutoffStrength:1.5);
+                    }
                     for(int i = 0; i < Main.maxTilesX; i++) {
                         for(int j = 1; j < Main.maxTilesY; j++) {
                             if(Main.tile[i, j].type == grassType && Main.tile[i, j].active()) {

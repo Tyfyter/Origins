@@ -17,6 +17,7 @@ namespace Origins.Tiles.Defiled {
             TileID.Sets.NeedsGrassFraming[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.Conversion.Grass[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.Grass];
             Main.tileMerge[Type][TileID.Dirt] = true;
             Main.tileMerge[TileID.Dirt][Type] = true;
@@ -31,13 +32,17 @@ namespace Origins.Tiles.Defiled {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(200, 200, 200));
+			SetModTree(Defiled_Tree.Instance);
             drop = ItemID.DirtBlock;
 		}
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
             fail = true;
             noItem = true;
             OriginWorld originWorld = ModContent.GetInstance<OriginWorld>();
-            originWorld.defiledAltResurgenceTiles.Add((i, j, Type));
+            if(!(originWorld is null)) {
+                if(originWorld.defiledAltResurgenceTiles is null)originWorld.defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
+                originWorld.defiledAltResurgenceTiles.Add((i, j, Type));
+            }
             bool half = Main.tile[i, j].halfBrick();
             byte slope = Main.tile[i, j].slope();
             Main.tile[i, j].ResetToType(TileID.Dirt);
@@ -89,6 +94,10 @@ namespace Origins.Tiles.Defiled {
                 break;
             }
         }
+		public override int SaplingGrowthType(ref int style) {
+			style = 0;
+			return ModContent.TileType<Defiled_Tree_Sapling>();
+		}
         /*public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
             Main.tile[i, i].type = TileID.CorruptGrass;
             WorldGen.TileFrame(i,j,true,noBreak);

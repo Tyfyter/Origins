@@ -15,6 +15,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             TileID.Sets.Conversion.Stone[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			/*Main.tileMergeDirt[Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
             Main.tileMerge[Type][TileID.Stone] = true;
@@ -23,6 +24,7 @@ namespace Origins.Tiles.Defiled {
             }*/
 			drop = ItemType<Defiled_Stone_Item>();
 			AddMapEntry(new Color(200, 200, 200));
+			SetModTree(Defiled_Tree.Instance);
             mergeID = TileID.Stone;
 		}
     }

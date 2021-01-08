@@ -91,6 +91,7 @@ namespace Origins {
                 cryostenLifeRegenCount--;
             if(dimStarlightCooldown>0)
                 dimStarlightCooldown--;
+            player.breathMax = 200;
             PlagueSight = false;
         }
         public override void PostUpdateMiscEffects() {

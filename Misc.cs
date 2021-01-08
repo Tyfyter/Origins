@@ -722,6 +722,14 @@ namespace Origins {
             }*/
             return crit;
         }
+        public static Vector2 TakeAverage(this List<Vector2> vectors) {
+            Vector2 sum = default;
+            int count = vectors.Count;
+            for(int i = 0; i < vectors.Count; i++) {
+                sum+=vectors[i];
+            }
+            return count!=0 ? sum/count : sum;
+        }
         internal static MethodInfo MemberwiseClone;
         internal static FieldInfo inext;
         internal static FieldInfo inextp;

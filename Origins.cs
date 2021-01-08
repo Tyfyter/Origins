@@ -313,6 +313,12 @@ namespace Origins {
             On.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
             On.Terraria.WorldGen.Convert+=OriginWorld.ConvertHook;
             On.Terraria.Item.NewItem_int_int_int_int_int_int_bool_int_bool_bool+=OriginGlobalItem.NewItemHook;
+            Tiles.Defiled.Defiled_Tree.Load();
+            OriginWorld worldInstance = ModContent.GetInstance<OriginWorld>();
+            if(!(worldInstance is null)) {
+                worldInstance.defiledResurgenceTiles = new List<(int, int)> { };
+                worldInstance.defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
+            }
             //IL.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
         }
         public override void Unload() {
@@ -328,6 +334,7 @@ namespace Origins {
             OriginExtensions.drawPlayerItemPos = null;
             Tolruk.glowmasks = null;
             instance = null;
+            Tiles.Defiled.Defiled_Tree.Unload();
             OriginExtensions.unInitClone();
             OriginTile.IDs = null;
             OriginWorld worldInstance = ModContent.GetInstance<OriginWorld>();
