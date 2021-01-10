@@ -313,6 +313,16 @@ namespace Origins {
             On.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
             On.Terraria.WorldGen.Convert+=OriginWorld.ConvertHook;
             On.Terraria.Item.NewItem_int_int_int_int_int_int_bool_int_bool_bool+=OriginGlobalItem.NewItemHook;
+            Mod blockSwap = ModLoader.GetMod("BlockSwap");
+            if(!(blockSwap is null || blockSwap.Version>new Version(1,0,1)))On.Terraria.TileObject.CanPlace+=(On.Terraria.TileObject.orig_CanPlace orig, int x, int y, int type, int style, int dir, out TileObject objectData, bool onlyCheck, bool checkStay) => {
+				if (type == 20){
+					Tile soil = Main.tile[x, y + 1];
+					if (soil.active()){
+                        TileLoader.SaplingGrowthType(soil.type, ref type, ref style);
+					}
+				}
+                return orig(x, y, type, style, dir, out objectData, onlyCheck, checkStay);
+            };
             Tiles.Defiled.Defiled_Tree.Load();
             OriginWorld worldInstance = ModContent.GetInstance<OriginWorld>();
             if(!(worldInstance is null)) {

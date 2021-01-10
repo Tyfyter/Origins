@@ -31,7 +31,7 @@ namespace Origins.Tiles.Defiled
 		}
 
 		public override int DropWood() {
-			return ModContent.ItemType<Items.Materials.Defiled_Bar>();//temporary drop type
+			return ModContent.ItemType<Defiled_Stone_Item>();//temporary drop type
 		}
 
 		public override Texture2D GetTexture() {
@@ -51,7 +51,6 @@ namespace Origins.Tiles.Defiled
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = true;
-            Main.tileFrameImportant[Type] = true;
 
 			TileObjectData.newTile.Width = 1;
 			TileObjectData.newTile.Height = 2;
