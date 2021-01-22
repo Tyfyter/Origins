@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria;
 using Microsoft.Xna.Framework;
+using Terraria.Utilities;
 
 namespace Origins.World {
     public partial class OriginWorld : ModWorld {
@@ -69,6 +70,38 @@ namespace Origins.World {
                     defiledAltResurgenceTiles.RemoveAt(index);
                 }
             }
+        }
+        public override void PostWorldGen() {
+            Dictionary<int, int> ShadowChests = new Dictionary<int, int>();
+            Dictionary<int, int> ShadowChestLoots = new Dictionary<int, int>();
+            Chest chest;
+            int lootType;
+            for(int chestIndex = 0; chestIndex < Main.chest.Length; chestIndex++) {
+                chest = Main.chest[chestIndex];
+				// If you look at the sprite for Chests by extracting Tiles_21.xnb, you'll see that the nth chest is the ____ Chest. Since we are counting from 0, this is where n comes from. 36 comes from the width of each tile including padding.
+				if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 4 * 36){
+                    lootType = chest.item[0].type;
+                    ShadowChests.Add(chestIndex, lootType);
+                    if(ShadowChestLoots.ContainsKey(lootType)) {
+                        ShadowChestLoots[lootType]++;
+                    } else {
+                        ShadowChestLoots.Add(lootType, 1);
+                    }
+				}
+            }
+            chest = null;
+            WeightedRandom<int> random = new WeightedRandom<int>(WorldGen.genRand);
+            bool cull = false;
+            foreach(KeyValuePair<int,int> kvp in ShadowChestLoots) {
+                if(kvp.Value>1) {
+                    cull = true;
+                }
+                random.Add(kvp.Key, kvp.Value);
+            }
+            if(cull)random.elements.RemoveAll((e)=>e.Item2<=1);
+            lootType = random.Get();
+            chest = Main.chest[WorldGen.genRand.Next(ShadowChests.Where((kvp) => kvp.Value==lootType).Select((kvp) => kvp.Key).ToArray())];
+            chest.item[0].SetDefaults();
         }
         /// <summary>
         /// the first clentaminator conversion type from Origins (from ASCII 'Org')

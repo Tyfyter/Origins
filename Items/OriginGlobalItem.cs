@@ -26,6 +26,10 @@ namespace Origins.Items {
                 case ItemID.Beenade:
                 item.ammo = ItemID.Grenade;
                 break;
+                case ItemID.Fireblossom:
+                item.ammo = ItemID.Fireblossom;
+                item.consumable = true;
+                break;
             }
             if(OriginConfig.Instance.WoodBuffs)switch(item.type) {
                 case ItemID.ShadewoodHelmet:
