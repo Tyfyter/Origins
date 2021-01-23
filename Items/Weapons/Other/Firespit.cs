@@ -1,0 +1,45 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Terraria;
+using Terraria.ModLoader;
+using Microsoft.Xna.Framework;
+using Terraria.ID;
+
+namespace Origins.Items.Weapons.Other {
+    public class Firespit : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Firespit");
+            Tooltip.SetDefault("");
+        }
+        public override void SetDefaults() {
+            item.damage = 40;
+            item.magic = true;
+            item.useStyle = 5;
+            item.crit = 1;
+            item.useAnimation = 35;
+            item.useTime = 1;
+            item.mana = 16;
+            item.width = 58;
+            item.height = 22;
+            item.shoot = ProjectileID.Flamelash;
+            item.shootSpeed = 6.75f;
+            item.UseSound = null;
+            //item.reuseDelay = 9;
+        }
+        public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
+        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+            if(player.itemAnimationMax-player.itemAnimation > 9)return false;
+            Vector2 velocity = new Vector2(speedX, speedY);
+            Vector2 offset = Vector2.Normalize(velocity);
+            offset = offset*24+offset.RotatedBy(-MathHelper.PiOver2*player.direction)*8;
+            Main.PlaySound(SoundID.Item, position+offset, 20);
+            Projectile projectile = Projectile.NewProjectileDirect(position+offset, velocity.RotatedByRandom(0.5), type, damage, knockBack, player.whoAmI);
+            projectile.extraUpdates+=1;
+            projectile.aiStyle = 1;
+            return false;
+        }
+    }
+}
