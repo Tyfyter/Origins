@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
+using Origins.Projectiles.Weapons;
 
 namespace Origins.Items.Weapons.Other {
     public class Firespit : ModItem {
@@ -24,7 +25,7 @@ namespace Origins.Items.Weapons.Other {
             item.mana = 16;
             item.width = 58;
             item.height = 22;
-            item.shoot = ProjectileID.Flamelash;
+            item.shoot = ModContent.ProjectileType<Lava_Shot>();
             item.shootSpeed = 6.75f;
             item.UseSound = null;
             //item.reuseDelay = 9;
@@ -36,10 +37,13 @@ namespace Origins.Items.Weapons.Other {
             Vector2 offset = Vector2.Normalize(velocity);
             offset = offset*24+offset.RotatedBy(-MathHelper.PiOver2*player.direction)*8;
             Main.PlaySound(SoundID.Item, position+offset, 20);
-            Projectile projectile = Projectile.NewProjectileDirect(position+offset, velocity.RotatedByRandom(0.5), type, damage, knockBack, player.whoAmI);
-            projectile.extraUpdates+=1;
-            projectile.aiStyle = 1;
-            return false;
+            position+=offset;
+            velocity = velocity.RotatedByRandom(0.5);
+            speedX = velocity.X;
+            speedY = velocity.Y;
+            Lava_Shot.damageType = 3;
+            return true;
+            //Projectile projectile = Projectile.NewProjectileDirect(, type, damage, knockBack, player.whoAmI);
         }
     }
 }

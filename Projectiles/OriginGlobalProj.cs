@@ -34,6 +34,11 @@ namespace Origins.Projectiles {
             }
         }
         public override void AI(Projectile projectile) {
+            switch(projectile.aiStyle) {
+                case -1:
+                projectile.rotation = projectile.velocity.ToRotation();
+                break;
+            }
             if(felnumEffect) {
                 if(projectile.melee) {
                     if(Main.player[projectile.owner].GetModPlayer<OriginPlayer>().felnumShock>19)Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1)*0.5f, Scale:0.5f);
