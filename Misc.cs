@@ -730,24 +730,43 @@ namespace Origins {
             }
             return count!=0 ? sum/count : sum;
         }
-        internal static MethodInfo MemberwiseClone;
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2 Vec2FromPolar(float theta, float magnitude = 1f) {
+            return new Vector2((float)(magnitude*Math.Cos(theta)),(float)(magnitude*Math.Sin(theta)));
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float NormDot(Vector2 a, Vector2 b) {
+            return (Vector2.Normalize(a)*Vector2.Normalize(b)).Sum();
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float Sum(this Vector2 a) {
+            return a.X+a.Y;
+        }
+        public static T[] BuildArray<T>(int length, params int[] nonNullIndeces) where T : new() {
+            T[] o = new T[length];
+            for(int i = 0; i < nonNullIndeces.Length; i++) {
+                o[nonNullIndeces[i]] = new T();
+            }
+            return o;
+        }
+        internal static MethodInfo memberwiseClone;
         internal static FieldInfo inext;
         internal static FieldInfo inextp;
         internal static FieldInfo SeedArray;
         internal static void initClone() {
-             MemberwiseClone = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic|BindingFlags.Instance);
+             memberwiseClone = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic|BindingFlags.Instance);
              inext = typeof(UnifiedRandom).GetField("inext", BindingFlags.NonPublic|BindingFlags.Instance);
              inextp = typeof(UnifiedRandom).GetField("inextp", BindingFlags.NonPublic|BindingFlags.Instance);
              SeedArray = typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic|BindingFlags.Instance);
         }
         internal static void unInitClone() {
-            MemberwiseClone = null;
+            memberwiseClone = null;
             inext = null;
             inextp = null;
             SeedArray = null;
         }
         public static UnifiedRandom Clone(this UnifiedRandom r) {
-            UnifiedRandom o = (UnifiedRandom)MemberwiseClone.Invoke(r, BindingFlags.NonPublic, null, null, null);
+            UnifiedRandom o = (UnifiedRandom)memberwiseClone.Invoke(r, BindingFlags.NonPublic, null, null, null);
             SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).Clone(), BindingFlags.NonPublic, null, null);
             return o;
         }

@@ -73,21 +73,18 @@ namespace Origins.World {
             }
         }
         public override void PostWorldGen() {
-            Dictionary<int, int> ShadowChests = new Dictionary<int, int>();
-            Dictionary<int, int> ShadowChestLoots = new Dictionary<int, int>();
+            ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(55,0,2,4,11,12,13,15,16,17,50,60);
             Chest chest;
             int lootType;
+            ChestLootCache cache;
             for(int i = 0; i < Main.chest.Length; i++) {
                 chest = Main.chest[i];
 				// If you look at the sprite for Chests by extracting Tiles_21.xnb, you'll see that the nth chest is the ____ Chest. Since we are counting from 0, this is where n comes from. 36 comes from the width of each tile including padding.
-				if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers && Main.tile[chest.x, chest.y].frameX == 4 * 36){
+				if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers){
+                    cache = chestLoots[Main.tile[chest.x, chest.y].frameX/36];
+                    if(cache is null)continue;
                     lootType = chest.item[0].type;
-                    ShadowChests.Add(i, lootType);
-                    if(ShadowChestLoots.ContainsKey(lootType)) {
-                        ShadowChestLoots[lootType]++;
-                    } else {
-                        ShadowChestLoots.Add(lootType, 1);
-                    }
+                    cache.AddLoot(lootType, i);
 				}
             }
             chest = null;
@@ -95,26 +92,68 @@ namespace Origins.World {
             Queue<int> items = new Queue<int>();
             items.Enqueue(ModContent.ItemType<Boiler_Pistol>());
             items.Enqueue(ModContent.ItemType<Firespit>());
-            WeightedRandom<int> random = new WeightedRandom<int>(WorldGen.genRand);
-            bool cull = false;
+            cache = chestLoots[4];
+            WeightedRandom<int> random;
             while(items.Count>0) {
-                cull = false;
-                foreach(KeyValuePair<int,int> kvp in ShadowChestLoots) {
-                    if(kvp.Value>1) {
-                        cull = true;
-                    }
-                    random.Add(kvp.Key, kvp.Value);
-                }
-                if(cull)random.elements.RemoveAll((e)=>e.Item2<=1);
+                random = cache.GetWeightedRandom();
                 lootType = random.Get();
-                chestIndex = WorldGen.genRand.Next(ShadowChests.Where((kvp) => kvp.Value==lootType).Select((kvp) => kvp.Key).ToArray());
+                chestIndex = WorldGen.genRand.Next(cache[lootType]);
                 chest = Main.chest[chestIndex];
-                ShadowChests.Remove(chestIndex);
-                ShadowChestLoots[lootType]--;
                 lootType = items.Dequeue();
-                //ShadowChestLoots.Add(lootType, 1);
                 chest.item[0].SetDefaults(lootType);
-                random.Clear();
+                chest.item[0].Prefix(-2);
+                cache[lootType].Remove(chestIndex);
+            }
+            chestIndex = -1;
+            items.Enqueue(ModContent.ItemType<Cryostrike>());
+            cache = chestLoots[11];
+            while(items.Count>0) {
+                random = cache.GetWeightedRandom();
+                lootType = random.Get();
+                chestIndex = WorldGen.genRand.Next(cache[lootType]);
+                chest = Main.chest[chestIndex];
+                lootType = items.Dequeue();
+                chest.item[0].SetDefaults(lootType);
+                chest.item[0].Prefix(-2);
+                cache[lootType].Remove(chestIndex);
+            }
+        }
+        public class ChestLootCache {
+            Dictionary<int, List<int>> ChestLoots = new Dictionary<int, List<int>>();
+            public List<int> this[int lootType] {
+                get {
+                    if(ChestLoots.ContainsKey(lootType)) {
+                        return ChestLoots[lootType];
+                    } else {
+                        return null;
+                    }
+                }
+            }
+            public void AddLoot(int lootType, int chestIndex) {
+                if(ChestLoots.ContainsKey(lootType)) {
+                    ChestLoots[lootType].Add(chestIndex);
+                } else {
+                    ChestLoots.Add(lootType, new List<int>{chestIndex});
+                }
+            }
+            public int CountLoot(int lootType) {
+                if(ChestLoots.ContainsKey(lootType)) {
+                    return ChestLoots[lootType].Count;
+                } else {
+                    return 0;
+                }
+            }
+            public WeightedRandom<int> GetWeightedRandom(bool cullUnique = true, UnifiedRandom random = null) {
+                bool cull = false;
+                WeightedRandom<int> rand = new WeightedRandom<int>(random??WorldGen.genRand);
+                foreach(KeyValuePair<int,List<int>> kvp in ChestLoots) {
+                    if(kvp.Value.Count>1) {
+                        cull = cullUnique;
+                    }
+                    rand.Add(kvp.Key, kvp.Value.Count);
+                }
+                if(cull)rand.elements.RemoveAll((e)=>e.Item2<=1);
+                return rand;
             }
         }
         /// <summary>

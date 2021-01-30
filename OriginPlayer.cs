@@ -57,6 +57,8 @@ namespace Origins {
         internal static bool ItemChecking = false;
         public int cryostenLifeRegenCount = 0;
         internal byte oldBonuses = 0;
+        public const int minionSubSlotValues = 3;
+        public int[] minionSubSlots = new int[minionSubSlotValues];
         public override void ResetEffects() {
             oldBonuses = 0;
             if(fiberglassSet)oldBonuses|=1;
@@ -93,6 +95,7 @@ namespace Origins {
                 dimStarlightCooldown--;
             player.breathMax = 200;
             PlagueSight = false;
+            minionSubSlots = new int[minionSubSlotValues];
         }
         public override void PostUpdateMiscEffects() {
             if(cryostenHelmet) {
