@@ -749,6 +749,18 @@ namespace Origins {
             }
             return o;
         }
+        public static Vector2 OldPos(this Projectile self, int index) {
+            return index==-1 ?self.position:self.oldPos[index];
+        }
+        public static float OldRot(this Projectile self, int index) {
+            return index==-1 ?self.rotation:self.oldRot[index];
+        }
+        public static Vector2 OldPos(this NPC self, int index) {
+            return index==-1 ?self.position:self.oldPos[index];
+        }
+        public static float OldRot(this NPC self, int index) {
+            return index==-1 ?self.rotation:self.oldRot[index];
+        }
         internal static MethodInfo memberwiseClone;
         internal static FieldInfo inext;
         internal static FieldInfo inextp;

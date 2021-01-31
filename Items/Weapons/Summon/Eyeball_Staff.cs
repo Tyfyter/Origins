@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Summon {
         internal static int buffID = 0;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Eyeball Staff");
-            Tooltip.SetDefault("Summons a mini Eye of Cthulhu to fight for you/nCan summon 2 minions per slot");
+            Tooltip.SetDefault("Summons a mini Eye of Cthulhu to fight for you\nCan summon 2 minions per slot");
             ItemID.Sets.StaffMinionSlotsRequired[item.type] = 1;
         }
         public override void SetDefaults() {
@@ -85,7 +85,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 		}
 
 		public sealed override void SetDefaults() {
-			projectile.width = 18;
+			projectile.width = 28;
 			projectile.height = 28;
 			projectile.tileCollide = true;
 			projectile.friendly = true;
@@ -118,9 +118,9 @@ namespace Origins.Items.Weapons.Summon.Minions {
 				projectile.timeLeft = 2;
 			}
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-            originPlayer.minionSubSlots[0]++;
-            int eyeCount = player.ownedProjectileCounts[Eyeball_Staff.projectileID];
-            if(originPlayer.minionSubSlots[0]<=eyeCount-eyeCount%2) {
+            originPlayer.minionSubSlots[0]+=0.5f;
+            int eyeCount = player.ownedProjectileCounts[Eyeball_Staff.projectileID]/2;
+            if(originPlayer.minionSubSlots[0]<=eyeCount) {
                 projectile.minionSlots = 0.5f;
             } else {
                 projectile.minionSlots = 0;
@@ -203,8 +203,8 @@ namespace Origins.Items.Weapons.Summon.Minions {
             #region Movement
             movement:
             // Default movement parameters (here for attacking)
-            float speed = 8f+projectile.localAI[0]/15;
-            float turnSpeed = 1f+Math.Max((projectile.localAI[0]-15)/15,0);
+            float speed = 6f+projectile.localAI[0]/15;
+            float turnSpeed = 1f+Math.Max((projectile.localAI[0]-15)/30,0);
 			float currentSpeed = projectile.velocity.Length();
             projectile.tileCollide = true;
             if(foundTarget) {

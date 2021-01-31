@@ -4,6 +4,7 @@ using Origins.Buffs;
 using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Explosives;
+using Origins.Items.Weapons.Summon;
 using Origins.Projectiles;
 using Origins.World;
 using Origins.World.BiomeData;
@@ -58,7 +59,8 @@ namespace Origins {
         public int cryostenLifeRegenCount = 0;
         internal byte oldBonuses = 0;
         public const int minionSubSlotValues = 3;
-        public int[] minionSubSlots = new int[minionSubSlotValues];
+        public float[] minionSubSlots = new float[minionSubSlotValues];
+        public int wormHeadIndex = -1;
         public override void ResetEffects() {
             oldBonuses = 0;
             if(fiberglassSet)oldBonuses|=1;
@@ -95,7 +97,10 @@ namespace Origins {
                 dimStarlightCooldown--;
             player.breathMax = 200;
             PlagueSight = false;
-            minionSubSlots = new int[minionSubSlotValues];
+            minionSubSlots = new float[minionSubSlotValues];
+        }
+        public override void PostUpdateBuffs() {
+            if(player.ownedProjectileCounts[Rotting_Worm_Staff.projectileID]<1)wormHeadIndex = -1;
         }
         public override void PostUpdateMiscEffects() {
             if(cryostenHelmet) {
