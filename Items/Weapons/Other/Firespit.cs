@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Other {
             Tooltip.SetDefault("");
         }
         public override void SetDefaults() {
-            item.damage = 40;
+            item.damage = 30;
             item.magic = true;
             item.useStyle = 5;
             item.crit = 1;

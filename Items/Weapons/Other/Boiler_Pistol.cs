@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Other {
             item.CloneDefaults(ItemID.Gatligator);
             item.damage = 53;
             item.useAnimation = 18;
-            item.useTime = 9;
+            item.useTime = 12;
             item.width = 48;
             item.height = 26;
             item.useAmmo = ItemID.Fireblossom;
@@ -34,7 +34,7 @@ namespace Origins.Items.Weapons.Other {
             offset = offset*24+offset.RotatedBy(-MathHelper.PiOver2*player.direction)*8;
             Main.PlaySound(SoundID.Item, position+offset, 41);
             position+=offset;
-            item.reuseDelay = 9;
+            item.reuseDelay = 36;
             Lava_Shot.damageType = 2;
             return true;
             //Projectile projectile = Projectile.NewProjectileDirect(position+offset, velocity, type, damage, knockBack, player.whoAmI);
