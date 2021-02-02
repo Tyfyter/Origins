@@ -73,6 +73,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
         public override void SetDefaults() {
             drawOriginOffsetY = -29;
             base.SetDefaults();
+            projectile.minionSlots = 1f;
         }
 
         public override void AI() {
@@ -165,10 +166,10 @@ namespace Origins.Items.Weapons.Summon.Minions {
 
             #region Movement
             bool leap = false;
-            if(foundTarget||distanceToIdlePosition <= 240f) {
+            if(foundTarget||distanceToIdlePosition <= 600f) {
                 if(Collision.CanHitLine(projectile.position, projectile.width, projectile.height, projectile.position+projectile.velocity*4, projectile.width, projectile.height)) {
                     if(projectile.localAI[2]<=0)leap = true;
-                    projectile.localAI[2] = 10;
+                    projectile.localAI[2] = 5;
                 }
             }
             if(distanceToIdlePosition > 900f)projectile.localAI[2] = 0;
@@ -183,7 +184,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
             }else{
                 if(distanceToIdlePosition > 600f) {
                     speed = 16f;
-                } else {
+                } else if(distanceToIdlePosition <= 120f){
                     speed = 4f;
                 }
             }
@@ -208,23 +209,45 @@ namespace Origins.Items.Weapons.Summon.Minions {
 
             #region Worminess
             projectile.rotation = projectile.velocity.ToRotation()+MathHelper.PiOver2;
+            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
             if(projectile.localAI[0]==0f) {
+                //if(originPlayer.wormHeadIndex==-1) {
+                projectile.velocity.Y+=6;
                 projectile.localAI[3] = projectile.whoAmI;
                 int current = 0;
                 int last = projectile.whoAmI;
                 int type = Rotting_Worm_Body.ID;
-                current = Projectile.NewProjectile(projectile.Center, projectile.velocity, type, projectile.damage, projectile.knockBack, projectile.owner);
+                //body
+                current = Projectile.NewProjectile(projectile.Center, Vector2.Zero, type, projectile.damage, projectile.knockBack, projectile.owner);
                 Main.projectile[current].localAI[3] = projectile.whoAmI;
                 Main.projectile[current].localAI[1] = last;
-                //Main.NewText($"{current} {Main.npc[current].realLife} {(Main.npc[current].modNPC as Defiled_Hunter).ai[1]}");
                 Main.projectile[last].localAI[0] = current;
-                //NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
                 last = current;
-                current = Projectile.NewProjectile(projectile.Center, projectile.velocity, Rotting_Worm_Tail.ID, projectile.damage, projectile.knockBack, projectile.owner);
+                //tail
+                current = Projectile.NewProjectile(projectile.Center, Vector2.Zero, Rotting_Worm_Tail.ID, projectile.damage, projectile.knockBack, projectile.owner);
                 Main.projectile[current].localAI[3] = projectile.whoAmI;
                 Main.projectile[current].localAI[1] = last;
                 Main.projectile[last].localAI[0] = current;
-            }
+                /*} else {
+                    Projectile segment = Main.projectile[originPlayer.wormHeadIndex];
+                    int i = 0;
+                    while(segment.type==Rotting_Worm_Staff.projectileID||segment.type==Rotting_Worm_Body.ID) {
+                        segment.damage++;
+                        if(i++>4)break;
+                        segment.whoAmI+=0;
+                        segment = Main.projectile[(int)segment.localAI[0]];
+                    }
+                    if(segment.type==Rotting_Worm_Tail.ID) {
+                        float[] segmentAI = new float[4] { projectile.whoAmI, segment.localAI[1], segment.localAI[2], segment.localAI[3]  };
+                        segment.SetToType(Rotting_Worm_Body.ID);
+                        segment.localAI = segmentAI;
+                        projectile.SetToType(Rotting_Worm_Tail.ID);
+                        projectile.localAI = new float[4] { 0, segment.whoAmI, 0, segmentAI[3]  };
+                    }
+                }*/
+            }/* else {
+                originPlayer.wormHeadIndex = projectile.whoAmI;
+            }*/
             #endregion
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
@@ -236,6 +259,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
         public override void SetStaticDefaults() {
             ID = projectile.type;
             base.SetStaticDefaults();
+            //projectile.minionSlots = 1f;
         }
         public override void SetDefaults() {
             drawOriginOffsetY = -23;
@@ -281,8 +305,9 @@ namespace Origins.Items.Weapons.Summon.Minions {
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 12;
             projectile.scale = 0.5f;
-            projectile.timeLeft = 5;
-            drawOriginOffsetX = -0.5f;
+            projectile.timeLeft = 60;
+            drawOriginOffsetX = 0.5f;
+            //next, last, digging cooldown, head
             if(projectile.localAI.Length==Projectile.maxAI)projectile.localAI = new float[4];
 		}
 
@@ -297,11 +322,13 @@ namespace Origins.Items.Weapons.Summon.Minions {
             float dY = last.Center.Y-projectile.Center.Y;
 		    projectile.rotation = (float)Math.Atan2(dY, dX) + MathHelper.PiOver2;
 		    float dist = (float)Math.Sqrt(dY * dY + dX * dX);
-		    dist = (dist - 21) / dist;
-		    dX *= dist;
-		    dY *= dist;
-		    projectile.position.X += dX;
-		    projectile.position.Y += dY;
+            if(dist!=0f) {
+		        dist = (dist - 21) / dist;
+		        dX *= dist;
+		        dY *= dist;
+		        projectile.position.X += dX;
+		        projectile.position.Y += dY;
+            }
             #endregion
         }
 
@@ -314,11 +341,16 @@ namespace Origins.Items.Weapons.Summon.Minions {
 		public override bool MinionContactDamage() {
 			return true;
 		}
-
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+            damage+=(int)(projectile.velocity.Length()/2);
+        }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if(Main.rand.Next(10)==0) {
-                target.AddBuff(BuffID.Poisoned, 60);
+                target.AddBuff(BuffID.Poisoned, 180);
             }
+        }
+        public override void Kill(int timeLeft) {
+            base.Kill(timeLeft);
         }
     }
 }

@@ -100,7 +100,7 @@ namespace Origins {
             minionSubSlots = new float[minionSubSlotValues];
         }
         public override void PostUpdateBuffs() {
-            if(player.ownedProjectileCounts[Rotting_Worm_Staff.projectileID]<1)wormHeadIndex = -1;
+            //if(player.ownedProjectileCounts[Rotting_Worm_Staff.projectileID]<1)wormHeadIndex = -1;
         }
         public override void PostUpdateMiscEffects() {
             if(cryostenHelmet) {

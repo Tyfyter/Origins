@@ -9,6 +9,7 @@ namespace Origins.Items.Weapons.Other {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Cryostrike");
 			Tooltip.SetDefault("Shoots a piercing icicle");
+            Item.staff[item.type] = true;
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);

@@ -761,6 +761,21 @@ namespace Origins {
         public static float OldRot(this NPC self, int index) {
             return index==-1 ?self.rotation:self.oldRot[index];
         }
+        public static void SetToType(this Projectile self, int type) {
+            float[] ai = self.ai;
+            Vector2 pos = self.Center;
+            int dmg = self.damage;
+            float kb = self.knockBack;
+            int id = self.identity;
+            int owner = self.owner;
+            self.SetDefaults(type);
+            self.ai = ai;
+            self.Center = pos;
+            self.damage = dmg;
+            self.knockBack = kb;
+            self.identity = id;
+            self.owner = owner;
+        }
         internal static MethodInfo memberwiseClone;
         internal static FieldInfo inext;
         internal static FieldInfo inextp;

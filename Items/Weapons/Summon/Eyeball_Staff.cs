@@ -184,9 +184,9 @@ namespace Origins.Items.Weapons.Summon.Minions {
                         float dist = diff.Length();
 						if(dist>targetDist)continue;
 						float dot = NormDot(diff,projectile.velocity);
-						bool inRange = dist < targetDist;
+						bool inRange = dist <= targetDist;
 						bool lineOfSight = Collision.CanHitLine(projectile.position, projectile.width, projectile.height, npc.position, npc.width, npc.height);
-                        if (((dot>targetAngle && inRange) || !foundTarget) && lineOfSight) {
+                        if (((dot>=targetAngle && inRange) || !foundTarget) && lineOfSight) {
                             targetDist = dist;
                             targetAngle = dot;
 							targetCenter = npc.Center;

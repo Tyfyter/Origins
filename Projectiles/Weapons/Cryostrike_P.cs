@@ -22,16 +22,17 @@ namespace Origins.Projectiles.Weapons {
             projectile.penetrate = -1;//when projectile.penetrate reaches 0 the projectile is destroyed
             projectile.extraUpdates = 1;
             projectile.aiStyle = 1;
+            projectile.localNPCHitCooldown = 10;
             drawOffsetY = 0;//-34;
             drawOriginOffsetX = -0.5f;
             projectile.hide = true;
         }
         public override void AI() {
             if(projectile.aiStyle == 0) {
-                if(drawOffsetY > -17) {
+                if(drawOffsetY > -20) {
                     drawOffsetY-=stabVel;
                 } else {
-                    drawOffsetY = -17;
+                    drawOffsetY = -20;
                 }
                 projectile.velocity = Vector2.Zero;
             }
@@ -44,7 +45,8 @@ namespace Origins.Projectiles.Weapons {
             if(projectile.aiStyle != 0) {
                 projectile.aiStyle = 0;
                 projectile.knockBack = 0.1f;
-                projectile.timeLeft = 85;
+                projectile.timeLeft = 180;
+                projectile.usesLocalNPCImmunity = true;
                 stabVel = projectile.velocity.Length()/2;//(oldVelocity-projectile.velocity).Length();
             }
             return false;
