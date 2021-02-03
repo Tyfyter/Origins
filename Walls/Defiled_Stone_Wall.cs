@@ -12,6 +12,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Walls {
     public class Defiled_Stone_Wall : ModWall {
 		public override void SetDefaults() {
+            WallID.Sets.Conversion.Stone[Type] = true;
             Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
 			AddMapEntry(new Color(150, 150, 150));
 		}

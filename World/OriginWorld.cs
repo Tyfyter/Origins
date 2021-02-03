@@ -14,6 +14,7 @@ using Terraria;
 using Microsoft.Xna.Framework;
 using Terraria.Utilities;
 using Origins.Items.Weapons.Other;
+using Origins.Walls;
 
 namespace Origins.World {
     public partial class OriginWorld : ModWorld {
@@ -173,6 +174,7 @@ namespace Origins.World {
                         }
                         current = Main.tile[k,l];
                         ConvertTile(ref current.type, evil_wastelands);
+                        ConvertWall(ref current.wall, evil_wastelands);
                     }
                 }
                 break;
@@ -203,6 +205,13 @@ namespace Origins.World {
                                 tileConvertBuffer = TileID.IceBlock;
                             }
                             if(tileConvertBuffer!=-1&&tileConvertBuffer!=current.type) {
+                                if(WallID.Sets.Conversion.Stone[Main.tile[k, l].wall]) {
+                                    Main.tile[k, l].wall = WallID.Stone;
+                                }else if(WallID.Sets.Conversion.Sandstone[Main.tile[k, l].wall]) {
+                                    Main.tile[k, l].wall = WallID.Sandstone;
+                                }else if(WallID.Sets.Conversion.HardenedSand[Main.tile[k, l].wall]) {
+                                    Main.tile[k, l].wall = WallID.HardenedSand;
+                                }
                                 Main.tile[k, l].type = (ushort)tileConvertBuffer;
                                 WorldGen.SquareTileFrame(k, l);
                                 NetMessage.SendTileSquare(-1, k, l, 1);

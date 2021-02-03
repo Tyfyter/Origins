@@ -12,6 +12,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Walls {
     public class Hardened_Defiled_Sand_Wall : ModWall {
 		public override void SetDefaults() {
+            WallID.Sets.Conversion.HardenedSand[Type] = true;
             Main.wallBlend[Type] = WallID.HardenedSand;//what wall type this wall is considered to be when blending
 			AddMapEntry(new Color(150, 150, 150));
 		}
