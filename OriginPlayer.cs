@@ -22,6 +22,9 @@ using static Origins.OriginExtensions;
 
 namespace Origins {
     public class OriginPlayer : ModPlayer {
+        public const float rivenMaxMult = 0.3f;
+        public float rivenMult => (1f-rivenMaxMult)+Math.Max((player.statLife/(float)player.statLifeMax2)*(rivenMaxMult*2), rivenMaxMult);
+
         public bool fiberglassSet = false;
         public bool cryostenSet = false;
         public bool cryostenHelmet = false;
@@ -32,6 +35,7 @@ namespace Origins {
         //public const int FelnumMax = 100;
         public bool minerSet = false;
         public bool defiledSet = false;
+        public bool rivenSet = false;
 
         public bool bombHandlingDevice = false;
         public bool dimStarlight = false;
@@ -82,6 +86,7 @@ namespace Origins {
             celestineSet = false;
             minerSet = false;
             defiledSet = false;
+            rivenSet = false;
             bombHandlingDevice = false;
             dimStarlight = false;
             madHand = false;
@@ -98,9 +103,6 @@ namespace Origins {
             player.breathMax = 200;
             PlagueSight = false;
             minionSubSlots = new float[minionSubSlotValues];
-        }
-        public override void PostUpdateBuffs() {
-            //if(player.ownedProjectileCounts[Rotting_Worm_Staff.projectileID]<1)wormHeadIndex = -1;
         }
         public override void PostUpdateMiscEffects() {
             if(cryostenHelmet) {
@@ -119,21 +121,22 @@ namespace Origins {
             }
         }
         public override void UpdateLifeRegen() {
-            if(cryostenHelmet)
-                player.lifeRegenCount+=cryostenLifeRegenCount>0 ? 180 : 1;
+            if(cryostenHelmet)player.lifeRegenCount+=cryostenLifeRegenCount>0 ? 180 : 1;
         }
         public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat) {
-            if(IsExplosive(item))
-                add+=explosiveDamage-1;
+            if(IsExplosive(item))add+=explosiveDamage-1;
             if(fiberglassSet) {
                 flat+=4;
+            }
+            if(rivenSet&&!ItemChecking) {
+                mult*=rivenMult;
             }
         }
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
             if(felnumShock>29) {
                 damage+=(int)(felnumShock/15);
                 felnumShock = 0;
-                Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
+                Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             }
         }
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
@@ -149,7 +152,7 @@ namespace Origins {
                     return true;
                 damage+=(int)(felnumShock/15);
                 felnumShock = 0;
-                Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
+                Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             }
             return true;
         }
@@ -166,7 +169,7 @@ namespace Origins {
             if(proj.melee&&felnumShock>29) {
                 damage+=(int)(felnumShock/15);
                 felnumShock = 0;
-                Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
+                Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             }
         }
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {

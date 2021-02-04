@@ -54,7 +54,8 @@ namespace Origins.Projectiles {
         }
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
             //this is actually how vanilla does projectile crits, which might explain why there are no vanilla multiclass weapons, since a 4% crit chance with a 4-class weapon would crit ~15% of the time
-            if (Origins.ExplosiveProjectiles[projectile.type] && Main.rand.Next(1, 101) <= Main.player[projectile.owner].GetModPlayer<OriginPlayer>().explosiveCrit){
+            OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
+            if(Origins.ExplosiveProjectiles[projectile.type] && Main.rand.Next(1, 101) <= originPlayer.explosiveCrit){
 				crit = true;
 			}
             if(viperEffect) {
@@ -64,6 +65,9 @@ namespace Origins.Projectiles {
                         break;
                     }
                 }
+            }
+            if(originPlayer.rivenSet) {
+                damage = (int)(damage*originPlayer.rivenMult);
             }
         }
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {

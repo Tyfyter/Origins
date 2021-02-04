@@ -164,7 +164,6 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			Vector2 targetCenter = projectile.Center;
             int target = -1;
 			bool foundTarget = false;
-            if(projectile.ai[1]<0) goto movement;
 
 			if (player.HasMinionAttackTargetNPC) {
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
@@ -176,6 +175,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 					foundTarget = true;
 				}
 			}
+            if(projectile.ai[1]<0) goto movement;
 			if (!foundTarget) {
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					NPC npc = Main.npc[i];
@@ -214,7 +214,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
                     projectile.ai[1] = 0;
                 } else {
                     if(++projectile.ai[1]>180) {
-                        projectile.ai[1] = -60;
+                        projectile.ai[1] = -30;
                     }
                 }
                 if((int)Math.Ceiling(targetAngle)==-1) {

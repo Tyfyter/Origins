@@ -19,6 +19,7 @@ namespace Origins.Items.Weapons.Summon {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Rotting Worm Staff");
             Tooltip.SetDefault("Summons a mini Eater of Worlds to fight for you");
+            ItemID.Sets.StaffMinionSlotsRequired[item.type] = 1;
         }
         public override void SetDefaults() {
             item.damage = 7;
@@ -68,6 +69,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
     public class Rotting_Worm_Head : Mini_EOW_Base {
         public override void SetStaticDefaults() {
             Rotting_Worm_Staff.projectileID = projectile.type;
+			ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
             base.SetStaticDefaults();
         }
         public override void SetDefaults() {
@@ -250,6 +252,11 @@ namespace Origins.Items.Weapons.Summon.Minions {
             }*/
             #endregion
         }
+        public override void Kill(int timeLeft) {
+            projectile.active = false;
+            Projectile body = Main.projectile[(int)projectile.localAI[0]];
+            if(body.active&&body.type==Rotting_Worm_Body.ID)body.Kill();
+        }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
             damage+=(int)projectile.velocity.Length();
         }
@@ -265,6 +272,10 @@ namespace Origins.Items.Weapons.Summon.Minions {
             drawOriginOffsetY = -23;
             base.SetDefaults();
         }
+        public override bool PreKill(int timeLeft) {
+            Projectile head = Main.projectile[(int)projectile.localAI[1]];
+            return !head.active||!(head.type==Rotting_Worm_Staff.projectileID||head.type==Rotting_Worm_Body.ID);
+        }
     }
     public class Rotting_Worm_Tail : Mini_EOW_Base {
         internal static int ID = 0;
@@ -275,6 +286,10 @@ namespace Origins.Items.Weapons.Summon.Minions {
         public override void SetDefaults() {
             drawOriginOffsetY = -32;
             base.SetDefaults();
+        }
+        public override bool PreKill(int timeLeft) {
+            Projectile head = Main.projectile[(int)projectile.localAI[1]];
+            return !head.active||!(head.type==Rotting_Worm_Staff.projectileID||head.type==Rotting_Worm_Body.ID);
         }
     }
     public abstract class Mini_EOW_Base : ModProjectile {
@@ -288,7 +303,6 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[projectile.type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
-			ProjectileID.Sets.MinionSacrificable[projectile.type] = true;
 			ProjectileID.Sets.Homing[projectile.type] = true;
             ProjectileID.Sets.TrailCacheLength[projectile.type] = 3;
             ProjectileID.Sets.TrailingMode[projectile.type] = 2;
@@ -305,7 +319,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 12;
             projectile.scale = 0.5f;
-            projectile.timeLeft = 60;
+            projectile.timeLeft = 2;
             drawOriginOffsetX = 0.5f;
             //next, last, digging cooldown, head
             if(projectile.localAI.Length==Projectile.maxAI)projectile.localAI = new float[4];
@@ -314,10 +328,13 @@ namespace Origins.Items.Weapons.Summon.Minions {
         public override void AI() {
             #region Worminess
 			Player player = Main.player[projectile.owner];
+            Projectile last = Main.projectile[(int)projectile.localAI[1]];
+            if(!last.active||!(last.type==Rotting_Worm_Staff.projectileID||last.type==Rotting_Worm_Body.ID)) {
+                return;
+            }
 			if (player.HasBuff(Rotting_Worm_Staff.buffID)) {
 				projectile.timeLeft = 2;
 			}
-            Projectile last = Main.projectile[(int)projectile.localAI[1]];
             float dX = last.Center.X-projectile.Center.X;
             float dY = last.Center.Y-projectile.Center.Y;
 		    projectile.rotation = (float)Math.Atan2(dY, dX) + MathHelper.PiOver2;
@@ -350,7 +367,11 @@ namespace Origins.Items.Weapons.Summon.Minions {
             }
         }
         public override void Kill(int timeLeft) {
-            base.Kill(timeLeft);
+            projectile.active = false;
+            Projectile head = Main.projectile[(int)projectile.localAI[3]];
+            if(head.active) {
+                head.Kill();
+            }
         }
     }
 }
