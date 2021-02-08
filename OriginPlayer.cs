@@ -128,7 +128,7 @@ namespace Origins {
             if(fiberglassSet) {
                 flat+=4;
             }
-            if(rivenSet&&!ItemChecking) {
+            if(rivenSet&&item.summon&&!ItemChecking) {
                 mult*=rivenMult;
             }
         }
@@ -170,6 +170,9 @@ namespace Origins {
                 damage+=(int)(felnumShock/15);
                 felnumShock = 0;
                 Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
+            }
+            if(proj.minion&&rivenSet) {
+                damage = (int)(damage*rivenMult);
             }
         }
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {

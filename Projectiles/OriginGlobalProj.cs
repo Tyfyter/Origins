@@ -66,9 +66,6 @@ namespace Origins.Projectiles {
                     }
                 }
             }
-            if(originPlayer.rivenSet) {
-                damage = (int)(damage*originPlayer.rivenMult);
-            }
         }
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
             if(Origins.ExplosiveProjectiles[projectile.type]) {

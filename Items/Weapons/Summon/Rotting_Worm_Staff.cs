@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-//using static Origins.OriginExtensions;
+using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Summon {
     public class Rotting_Worm_Staff : ModItem {
@@ -149,7 +149,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
                         Vector2 diff = projectile.Center-projectile.Center;
                         float dist = diff.Length();
 						if(dist>targetDist)continue;
-						float dot = OriginExtensions.NormDot(diff,projectile.velocity);
+						float dot = NormDot(diff,projectile.velocity);
 						bool inRange = dist < targetDist;
                         //bool jumpOfHight = (npc.Bottom.Y-projectile.Top.Y)<160;
                         if(((dot>targetAngle && inRange) || !foundTarget)) {
@@ -196,9 +196,9 @@ namespace Origins.Items.Weapons.Summon.Minions {
                 projectile.localAI[2]--;
                 if(leap) {
                     turnSpeed = 10f;
-                    targetCenter.Y-=64*OriginExtensions.NormDot(projectile.velocity, foundTarget ? targetCenter - projectile.Center : vectorToIdlePosition);
+                    targetCenter.Y-=64*NormDot(projectile.velocity, foundTarget ? targetCenter - projectile.Center : vectorToIdlePosition);
                 }
-            }else OriginExtensions.LinearSmoothing(ref currentSpeed, speed, currentSpeed<1?1:0.1f);
+            }else LinearSmoothing(ref currentSpeed, speed, currentSpeed<1?1:0.1f);
             Vector2 direction = foundTarget?targetCenter - projectile.Center:vectorToIdlePosition;
 			direction.Normalize();
             projectile.velocity = Vector2.Normalize(projectile.velocity+direction*turnSpeed)*currentSpeed;

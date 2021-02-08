@@ -797,5 +797,46 @@ namespace Origins {
             SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).Clone(), BindingFlags.NonPublic, null, null);
             return o;
         }
+        public static ModRecipe Clone(this Recipe r, Mod mod) {
+            ModRecipe o = new ModRecipe(mod);
+
+            o.createItem = new Item();
+            o.createItem.SetDefaults(r.createItem.type);
+            o.requiredItem = r.requiredItem.Select(CloneByID).ToArray();
+            o.requiredTile = r.requiredTile.ToArray();
+            o.acceptedGroups = r.acceptedGroups.ToList();
+
+            o.anyFragment = r.anyFragment;
+            o.anyIronBar = r.anyIronBar;
+            o.anyPressurePlate = r.anyPressurePlate;
+            o.anySand = r.anySand;
+            o.anyWood = r.anyWood;
+
+            o.alchemy = r.alchemy;
+
+            o.needWater = r.needWater;
+            o.needLava = r.needLava;
+            o.needHoney = r.needHoney;
+            o.needSnowBiome = r.needSnowBiome;
+
+            return o;
+        }
+        public static string Stringify(this Recipe r) {
+            ItemID.Search.TryGetName(r.createItem.type, out string resultName);
+            return $"result: {resultName} " +
+                $"alchemy: {r.alchemy} " +
+                $"required Items: {string.Join(", ",r.requiredItem.Select((i) => { ItemID.Search.TryGetName(i.type, out string name); return name; }))} " +
+                $"required Tiles: {string.Join(", ",r.requiredTile.Select((i) => { TileID.Search.TryGetName(i, out string name); return name; }))}";
+        }
+        public static Item CloneByID(this Item item) {
+            Item v = new Item();
+            v.SetDefaults(item.type);
+            return v;
+        }
+        public static Item ItemFromType(int type) {
+            Item v = new Item();
+            v.SetDefaults(type);
+            return v;
+        }
     }
 }

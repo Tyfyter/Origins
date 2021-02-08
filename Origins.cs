@@ -4,6 +4,7 @@ using MonoMod.RuntimeDetour;
 using Origins.Items;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
 using Origins.Tiles;
@@ -18,6 +19,7 @@ using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.OriginExtensions;
 
 namespace Origins {
     public class Origins : Mod {
@@ -399,6 +401,22 @@ namespace Origins {
         public static int AddSound(string path, SoundType type = SoundType.Custom, ModSound modSound = null) {
             instance.AddSound(type, "Origins/"+path, modSound);
             return SoundLoader.GetSoundSlot(type, "Origins/"+path);
+        }
+        public override void PostAddRecipes() {
+            int l = Main.recipe.Length;
+            Recipe r;
+            ModRecipe recipe;
+            int roseID = ModContent.ItemType<Wilting_Rose_Item>();
+            for(int i = 0; i < l; i++) {
+                r = Main.recipe[i];
+                if(!r.requiredItem.ToList().Exists((ing)=>ing.type==ItemID.Deathweed)) {
+                    continue;
+                }
+                recipe = r.Clone(this);
+                recipe.requiredItem = recipe.requiredItem.Select((it)=>it.type==ItemID.Deathweed?ItemFromType(roseID):it.CloneByID()).ToArray();
+                Logger.Info("adding procedural recipe: "+recipe.Stringify());
+                recipe.AddRecipe();
+            }
         }
         public static class Music {
             public static int Dusk = MusicID.Eerie;

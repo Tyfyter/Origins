@@ -118,4 +118,40 @@ namespace Origins.Items.Materials {
             item.maxStack = 999;
         }
     }
+    public class Undead_Chunk : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Undead Chunk");
+        }
+        public override void SetDefaults() {
+            item.maxStack = 999;
+        }
+    }
+    public class Infested_Bar : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Infested Bar");
+        }
+        public override void SetDefaults() {
+            item.maxStack = 999;
+        }
+    }
+    public class Riven_Sample : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Riven Sample");
+        }
+        public override void SetDefaults() {
+            item.maxStack = 999;
+        }
+    }
+    public class Wilting_Rose_Item : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Wilting Rose");
+        }
+        public override void SetDefaults() {
+            item.maxStack = 999;
+        }
+    }
 }
