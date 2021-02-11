@@ -15,6 +15,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.World.BiomeData;
+using Origins.Buffs;
 
 namespace Origins.NPCs {
     public partial class OriginGlobalNPC : GlobalNPC {
@@ -37,15 +38,11 @@ namespace Origins.NPCs {
             if(npc.HasBuff(ModContent.BuffType<ImpaledBuff>()))return false;
             return base.CanHitPlayer(npc, target, ref cooldownSlot);
         }
-        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref int damage, ref float knockback, ref bool crit) {
-            if(npc.HasBuff(ModContent.BuffType<SolventBuff>())) {
-                damage+=Math.Max(npc.defense/2, 20);
+        public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) {
+            if(npc.HasBuff(SolventDebuff.ID)&&crit) {
+                damage*=1.3;
             }
-        }
-        public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            if(npc.HasBuff(ModContent.BuffType<SolventBuff>())) {
-                damage+=Math.Max(npc.defense/2, 20);
-            }
+            return true;
         }
         public override bool PreNPCLoot(NPC npc) {
             byte worldEvil = ModContent.GetInstance<OriginWorld>().worldEvil;

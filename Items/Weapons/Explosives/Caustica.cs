@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Caustica : ModItem, IElementalItem {
-        public ushort element => Elements.Acid;
+        public ushort Element => Elements.Acid;
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Caustica");
@@ -107,7 +108,7 @@ namespace Origins.Items.Weapons.Explosives {
                 projectile.ai[0]++;
                 projectile.ai[1] = target.whoAmI;
             }
-            target.AddBuff(ModContent.BuffType<Acid.SolventBuff>(), 480);
+            target.AddBuff(ModContent.BuffType<SolventDebuff>(), 480);
             //target.AddBuff(ModContent.BuffType<Toxic>(), 480);
             target.AddBuff(BuffID.CursedInferno, 480);
             target.AddBuff(BuffID.Venom, 480);

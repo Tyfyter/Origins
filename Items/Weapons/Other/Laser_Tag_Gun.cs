@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Other {
 	public class Laser_Tag_Gun : IAnimatedItem, IElementalItem {
-        public ushort element => Elements.Earth;
+        public ushort Element => Elements.Earth;
         static DrawAnimationManual animation;
         public override DrawAnimation Animation => animation;
         public override Color? GlowmaskTint => Main.teamColor[Main.player[item.owner].team];

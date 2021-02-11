@@ -36,7 +36,10 @@ namespace Origins {
         public virtual Color? GlowmaskTint { get => null; }
     }
     public interface IElementalItem {
-        ushort element { get; }
+        ushort Element { get; }
+    }
+    public interface IElementalProjectile {
+        ushort Element { get; }
     }
     public static class Elements {
         public const ushort Fire = 1;

@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
 using Origins.NPCs;
-using InstGNPC = Origins.NPCs.OriginInstancedGlobalNPC;
+using GNPC = Origins.NPCs.OriginGlobalNPC;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Ace_Shrapnel : ModItem {
@@ -114,9 +114,9 @@ namespace Origins.Items.Weapons.Explosives {
             }
         }
         public override bool? CanHitNPC(NPC target) {
-            InstGNPC instGNPC = target.GetGlobalNPC<InstGNPC>();
-            if(instGNPC.shrapnelTime>0) {
-                return instGNPC.shrapnelCount<maxHits ? null : (bool?)false;
+            GNPC gnpc = target.GetGlobalNPC<GNPC>();
+            if(gnpc.shrapnelTime>0) {
+                return gnpc.shrapnelCount<maxHits ? null : (bool?)false;
             }
             return null;
         }
@@ -125,10 +125,10 @@ namespace Origins.Items.Weapons.Explosives {
             if(target.life<=0 && projectile.ai[1]<5) {
                 Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Ace_Shrapnel_P>(), projectile.damage, projectile.knockBack, projectile.owner, 8-projectile.ai[1], projectile.ai[1]);
             } else {
-                InstGNPC instGNPC = target.GetGlobalNPC<InstGNPC>();
-                instGNPC.shrapnelCount++;
-                if(instGNPC.shrapnelTime<1) {
-                    instGNPC.shrapnelTime = hitCD;
+                GNPC gnpc = target.GetGlobalNPC<GNPC>();
+                gnpc.shrapnelCount++;
+                if(gnpc.shrapnelTime<1) {
+                    gnpc.shrapnelTime = hitCD;
                 } else {
                     projectile.penetrate++;
                 }

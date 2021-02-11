@@ -227,6 +227,9 @@ namespace Origins {
             }
         }*/
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
+            if(player.HasBuff(SolventDebuff.ID)&&Main.rand.Next(9)<3) {
+                crit = true;
+            }
             if(defiledSet) {
                 float manaDamage = damage*0.15f;
                 float costMult = 3;

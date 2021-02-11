@@ -52,6 +52,8 @@ namespace Origins {
         public static int[] celestineBoosters;
         public static MiscShaderData perlinFade0;
         public static MiscShaderData blackHoleShade;
+        public static MiscShaderData solventShader;
+        public static Texture2D cellNoiseTexture;
 		public Origins() {
             instance = this;
             celestineBoosters = new int[3];
@@ -302,6 +304,9 @@ namespace Origins {
                 blackHoleShade = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/BlackHole")), "BlackHole");
 				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/BiomeShade")), "VoidShade"), EffectPriority.High);
 				Filters.Scene["Origins:ZoneDefiled"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/BiomeShade")), "DefiledShade"), EffectPriority.High);
+                solventShader = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/Solvent")), "Dissolve");
+                GameShaders.Misc["Origins:Solvent"] = solventShader;
+                cellNoiseTexture = GetTexture("Textures/Cell_Noise");
                 //Filters.Scene["Origins:ZoneDusk"].GetShader().UseOpacity(0.35f);
                 //Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.
                 //Filters.Scene["BlackHole"] = new Filter(new ScreenShaderData(screenRef, "BlackHole"), EffectPriority.VeryHigh);
@@ -343,6 +348,8 @@ namespace Origins {
             celestineBoosters = null;
             perlinFade0 = null;
             blackHoleShade = null;
+            solventShader = null;
+            cellNoiseTexture = null;
             OriginExtensions.drawPlayerItemPos = null;
             Tolruk.glowmasks = null;
             instance = null;

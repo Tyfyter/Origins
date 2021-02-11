@@ -11,6 +11,10 @@ using Origins.Items.Weapons.Explosives;
 
 namespace Origins.Items.Weapons.Ammo {
     public class Thermite_Canister : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Thermite Canister");
+            //Tooltip.SetDefault();
+        }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.RocketI);
             item.damage = 30;

@@ -15,6 +15,7 @@ using Microsoft.Xna.Framework;
 using Terraria.Utilities;
 using Origins.Items.Weapons.Other;
 using Origins.Walls;
+using static Origins.World.OriginWorld.LootQueueAction;
 
 namespace Origins.World {
     public partial class OriginWorld : ModWorld {
@@ -74,7 +75,7 @@ namespace Origins.World {
             }
         }
         public override void PostWorldGen() {
-            ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(55,0,2,4,11,12,13,15,16,17,50,60);
+            ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(56,0,2,4,11,12,13,15,16,17,50,51);//60 was included for some reason
             Chest chest;
             int lootType;
             ChestLootCache cache;
@@ -88,20 +89,27 @@ namespace Origins.World {
                     cache.AddLoot(lootType, i);
 				}
             }
-            chest = null;
+            ApplyLootQueue(chestLoots,
+                (CHANGE_QUEUE, 4),
+                (ENQUEUE, ModContent.ItemType<Boiler_Pistol>()),
+                (ENQUEUE, ModContent.ItemType<Firespit>()),
+                (CHANGE_QUEUE, 11),
+                (ENQUEUE, ModContent.ItemType<Cryostrike>()));
+            /*chest = null;
             int chestIndex = -1;
             Queue<int> items = new Queue<int>();
             items.Enqueue(ModContent.ItemType<Boiler_Pistol>());
             items.Enqueue(ModContent.ItemType<Firespit>());
             cache = chestLoots[4];
             WeightedRandom<int> random;
+            int newLootType;
             while(items.Count>0) {
                 random = cache.GetWeightedRandom();
                 lootType = random.Get();
                 chestIndex = WorldGen.genRand.Next(cache[lootType]);
                 chest = Main.chest[chestIndex];
-                lootType = items.Dequeue();
-                chest.item[0].SetDefaults(lootType);
+                newLootType = items.Dequeue();
+                chest.item[0].SetDefaults(newLootType);
                 chest.item[0].Prefix(-2);
                 cache[lootType].Remove(chestIndex);
             }
@@ -113,11 +121,52 @@ namespace Origins.World {
                 lootType = random.Get();
                 chestIndex = WorldGen.genRand.Next(cache[lootType]);
                 chest = Main.chest[chestIndex];
-                lootType = items.Dequeue();
-                chest.item[0].SetDefaults(lootType);
+                newLootType = items.Dequeue();
+                chest.item[0].SetDefaults(newLootType);
+                chest.item[0].Prefix(-2);
+                cache[lootType].Remove(chestIndex);
+            }*/
+        }
+        public static void ApplyLootQueue(ChestLootCache[] lootCache, params (LootQueueAction action, int param)[] actions) {
+            int lootType;
+            ChestLootCache cache = null;
+            Chest chest;
+            int chestIndex = -1;
+            Queue<int> items = new Queue<int>();
+            WeightedRandom<int> random;
+            int newLootType;
+            if(actions[0].action==CHANGE_QUEUE) {
+                cache = lootCache[actions[0].param];
+            } else {
+                throw new ArgumentException("the first action in ApplyLootQueue must be CHANGE_QUEUE", "actions");
+            }
+            int actionIndex = 1;
+            cont:
+            if(actionIndex<actions.Length&&actions[actionIndex].action==ENQUEUE) {
+                items.Enqueue(actions[actionIndex].param);
+                Origins.instance.Logger.Info("adding item "+actions[actionIndex].param+" to world");
+                actionIndex++;
+                goto cont;
+            }
+            while(items.Count>0) {
+                random = cache.GetWeightedRandom();
+                lootType = random.Get();
+                chestIndex = WorldGen.genRand.Next(cache[lootType]);
+                chest = Main.chest[chestIndex];
+                newLootType = items.Dequeue();
+                chest.item[0].SetDefaults(newLootType);
                 chest.item[0].Prefix(-2);
                 cache[lootType].Remove(chestIndex);
             }
+            if(actionIndex<actions.Length&&actions[actionIndex].action==CHANGE_QUEUE) {
+                cache = lootCache[actions[actionIndex].param];
+                actionIndex++;
+                goto cont;
+            }
+        }
+        public enum LootQueueAction {
+            ENQUEUE,
+            CHANGE_QUEUE
         }
         public class ChestLootCache {
             Dictionary<int, List<int>> ChestLoots = new Dictionary<int, List<int>>();

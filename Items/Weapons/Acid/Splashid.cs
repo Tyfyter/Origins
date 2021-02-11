@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Acid {
     public class Splashid : ModItem, IElementalItem {
-        public ushort element => Elements.Acid;
+        public ushort Element => Elements.Acid;
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acid Splash");
@@ -43,7 +44,8 @@ namespace Origins.Items.Weapons.Acid {
             return false;
         }
     }
-    public class Acid_Splash_P : ModProjectile {
+    public class Acid_Splash_P : ModProjectile, IElementalProjectile {
+        public ushort Element => Elements.Acid;
         public override string Texture => "Origins/Projectiles/Pixel";
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bullet);
@@ -93,7 +95,7 @@ namespace Origins.Items.Weapons.Acid {
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if(projectile.timeLeft>168&&(projectile.ai[1]%1+1)%1==0.5f)projectile.penetrate++;
-            target.AddBuff(ModContent.BuffType<SolventBuff>(), 480);
+            target.AddBuff(ModContent.BuffType<SolventDebuff>(), 480);
             Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, 226, 0, 0, 100, new Color(0, 255, 0), 1.25f*projectile.scale);
             dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
             dust.noGravity = false;
@@ -101,18 +103,6 @@ namespace Origins.Items.Weapons.Acid {
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
             return false;
-        }
-    }
-    public class SolventBuff : ModBuff {
-        public override bool Autoload(ref string name, ref string texture) {
-            texture = "Terraria/Buff_160";
-            return true;
-        }
-        public override void SetDefaults() {
-            DisplayName.SetDefault("Solvent");
-        }
-        public override void Update(NPC npc, ref int buffIndex) {
-            npc.lifeRegen -= 12;
         }
     }
 }
