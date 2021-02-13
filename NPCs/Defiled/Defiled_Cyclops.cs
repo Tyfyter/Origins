@@ -27,56 +27,26 @@ namespace Origins.NPCs.Defiled {
             npc.height = 118;
             npc.friendly = false;
         }
-        public override bool PreAI() {
-            if(!attacking) {
-                npc.Hitbox = new Rectangle((int)npc.position.X-(npc.direction == 1 ? 70 : 52), (int)npc.position.Y, 110, npc.height);
-            }
-            return true;
-        }
         public override void AI() {
             npc.TargetClosest();
-            if(npc.Hitbox.Intersects(npc.targetRect)) {
-                if(!attacking) {
-                    npc.frame = new Rectangle(0, 680, 182, 170);
-                    npc.frameCounter = 0;
-                    npc.velocity.X*=0.25f;
-                }
-                attacking = true;
-            }
             if (npc.HasPlayerTarget) {
                 npc.FaceTarget();
                 npc.spriteDirection = npc.direction;
             }
-            if(attacking) {
-                if(++npc.frameCounter>7) {
-                    //add frame height to frame y position and modulo by frame height multiplied by walking frame count
-                    if(npc.frame.Y>=1018) {
-                        if(npc.frameCounter>19) {
-                            npc.frame = new Rectangle(0, 0, 182, 170);
-                            npc.frameCounter = 0;
-                            attacking = false;
-                        }
-                    } else {
-                        npc.frame = new Rectangle(0, (npc.frame.Y+170)%1188, 182, 170);
-                        npc.frameCounter = 0;
-                    }
-                }
-            }else{
-                if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X/=speedMult;
-                if(++npc.frameCounter>9) {
-                    //add frame height to frame y position and modulo by frame height multiplied by walking frame count
-                    npc.frame = new Rectangle(0, (npc.frame.Y+170)%680, 182, 170);
-                    npc.frameCounter = 0;
-                }
-            }
+			if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X/=speedMult;
+			if(++npc.frameCounter>7) {
+				//add frame height to frame y position and modulo by frame height multiplied by walking frame count
+				npc.frame = new Rectangle(0, (npc.frame.Y+120)%360, 110, 118);
+				npc.frameCounter = 0;
+			}
         }
         public override void PostAI() {
-            if(!attacking) {
-                if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=speedMult;
+			if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=speedMult;
+            /*if(!attacking) {
                 npc.Hitbox = new Rectangle((int)npc.position.X+(npc.oldDirection == 1 ? 70 : 52), (int)npc.position.Y, 56, npc.height);
-            }
+            }*/
         }
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) {
+        /*public override bool CanHitPlayer(Player target, ref int cooldownSlot) {
             switch(GetMeleeCollisionData(target.Hitbox)) {
                 case 2:
                 double damage = target.Hurt(PlayerDeathReason.ByNPC(npc.whoAmI), npc.damage*3, npc.direction);
@@ -116,11 +86,11 @@ namespace Origins.NPCs.Defiled {
                 return 1;
             }
             return 0;
-        }
+        }*/
         public override void HitEffect(int hitDirection, double damage) {
             if(npc.life<0) {
-                for(int i = 0; i < 6; i++)Gore.NewGore(npc.position+new Vector2(Main.rand.Next(npc.width),Main.rand.Next(npc.height)), npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
-                for(int i = 0; i < 10; i++)Gore.NewGore(npc.position+new Vector2(Main.rand.Next(npc.width),Main.rand.Next(npc.height)), npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
+                for(int i = 0; i < 3; i++)Gore.NewGore(npc.position+new Vector2(Main.rand.Next(npc.width),Main.rand.Next(npc.height)), npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
+                for(int i = 0; i < 6; i++)Gore.NewGore(npc.position+new Vector2(Main.rand.Next(npc.width),Main.rand.Next(npc.height)), npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
             }
         }
     }

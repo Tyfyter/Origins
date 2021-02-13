@@ -18,6 +18,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Caustica");
 			Tooltip.SetDefault("");
+            Origins.ExplosiveItems[item.type] = true;
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);
@@ -36,9 +37,6 @@ namespace Origins.Items.Weapons.Explosives {
             item.shoot = ModContent.ProjectileType<Caustica_P>();
 			item.rare = ItemRarityID.Lime;
 		}
-        public override void AddRecipes() {
-            Origins.AddExplosive(item);
-        }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             int a = Main.rand.Next(5,7);
             for(int i = 0; ++i < a; a = Main.rand.Next(5,7)) {
@@ -48,6 +46,11 @@ namespace Origins.Items.Weapons.Explosives {
         }
     }
     public class Caustica_P : ModProjectile {
+
+        public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Caustica");
+            Origins.ExplosiveProjectiles[projectile.type] = true;
+		}
         public override string Texture => "Origins/Projectiles/Pixel";
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bullet);

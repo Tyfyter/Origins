@@ -33,16 +33,16 @@ float4 Dissolve(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 		value = (color2.b*fade2)+(color2.g*(1-fade2));
 	}
 	value = pow(value, 2);
-	if(value < 0.1){
-		color.rb *= 0.25;
-		color.g *= 0.3;
+	if(value<0.1){
+		color.rb *= 0.35;
+		color.g *= 0.6;
 	}else if(value<0.15){
 		color.rb *= 0.5;
-		color.g *= 0.55;
+		color.g *= 0.9;
 	}else{
 		color.rb *= 0.95;
 	}
-	return color;
+	return color*sampleColor;
 }
 
 technique Technique1{

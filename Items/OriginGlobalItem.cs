@@ -140,6 +140,14 @@ namespace Origins.Items {
         public static bool NeedsDamageLine(Item item) {
             return !(item.melee||item.ranged||item.magic||item.summon||item.thrown);
         }
+        public static ushort GetItemElement(Item item) {
+            if(item.modItem is null) {
+                return Origins.VanillaElements[item.type];
+            }else if(item.modItem is IElementalItem elementalItem) {
+                return elementalItem.Element;
+            }
+            return 0;
+        }
         public static int BlockNewItem(OnTerraria.Item.orig_NewItem_int_int_int_int_int_int_bool_int_bool_bool orig, int X, int Y, int Width, int Height, int Type, int Stack = 1, bool noBroadcast = false, int pfix = 0, bool noGrabDelay = false, bool reverseLookup = false) {
             if((ModContent.GetInstance<OriginWorld>().worldEvil&4)!=0) {
                 switch(Type) {
