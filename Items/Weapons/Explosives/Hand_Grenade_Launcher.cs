@@ -109,6 +109,7 @@ namespace Origins.Items.Weapons.Explosives {
     public class Awe_Grenade_P : ModProjectile {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Awe Grenade");
+            Origins.ExplosiveProjectiles[projectile.type] = true;
 		}
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Grenade);
@@ -137,6 +138,7 @@ namespace Origins.Items.Weapons.Explosives {
     public class Awe_Grenade_Blast  : ModProjectile {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Awe Grenade");
+            Origins.ExplosiveProjectiles[projectile.type] = true;
 		}
         public override string Texture => "Origins/Projectiles/Pixel";
         const int duration = 15;

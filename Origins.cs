@@ -24,32 +24,23 @@ using static Origins.OriginExtensions;
 namespace Origins {
     public class Origins : Mod {
         public static Origins instance;
-        /// <summary>
-        /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes,
-        /// for cross-mod content use ExplosiveProjectilePreRegistry or AddExplosive instead
-        /// </summary>
+
         public static bool[] ExplosiveProjectiles;
-        /// <summary>
-        /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes,
-        /// for cross-mod content use ExplosiveItemPreRegistry or AddExplosive instead
-        /// </summary>
         public static bool[] ExplosiveItems;
-        /// <summary>
-        /// Due to the placement of ResizeArrays this can only be set after Mod.AddRecipes,
-        /// for cross-mod content use ExplosiveAmmoPreRegistry or AddExplosive instead
-        /// </summary>
         public static bool[] ExplosiveAmmo;
-        public static Stack<int> ExplosiveProjectilePreRegistry;
-        public static Stack<int> ExplosiveItemPreRegistry;
-        public static Stack<int> ExplosiveAmmoPreRegistry;
+
         public static Dictionary<int, int> ExplosiveBaseDamage;
         public static List<int> ExplosiveModOnHit;
         public static ushort[] VanillaElements;
+
         public static int FelnumHeadArmorID;
         public static int FelnumBodyArmorID;
         public static int FelnumLegsArmorID;
+
         public static int PlagueTexanJacketID;
+
         public static int[] celestineBoosters;
+
         public static MiscShaderData perlinFade0;
         public static MiscShaderData blackHoleShade;
         public static MiscShaderData solventShader;
@@ -59,61 +50,7 @@ namespace Origins {
             celestineBoosters = new int[3];
         }
         public override void AddRecipes() {
-        #region explosive weapon registry
-            ExplosiveProjectiles = new bool[ProjectileID.Sets.CanDistortWater.Length];
-            ExplosiveItems = (bool[])ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn.Clone();
-#region items
-            //ExplosiveItems[ProjectileID.Grenade] = true;
-            //ExplosiveItems[ProjectileID.StickyGrenade] = true;
-            //ExplosiveItems[ProjectileID.BouncyGrenade] = true;
-            //ExplosiveItems[ProjectileID.Bomb] = true;
-            //ExplosiveItems[ProjectileID.StickyBomb] = true;
-            ExplosiveItems[ItemID.BouncyBomb] = true;
-            ExplosiveItems[ItemID.HellfireArrow] = true;
-            //ExplosiveItems[ProjectileID.Dynamite] = true;
-            //ExplosiveItems[ProjectileID.StickyDynamite] = true;
-            //ExplosiveItems[ProjectileID.BouncyDynamite] = true;
-            ExplosiveItems[ItemID.BombFish] = true;
-            ExplosiveItems[ItemID.PartyGirlGrenade] = true;
-            ExplosiveItems[ItemID.Beenade] = true;
-            ExplosiveItems[ItemID.MolotovCocktail] = true;
-#endregion items
-#region projectiles
-            ExplosiveProjectiles[ProjectileID.Grenade] = true;
-            ExplosiveProjectiles[ProjectileID.StickyGrenade] = true;
-            ExplosiveProjectiles[ProjectileID.BouncyGrenade] = true;
-            ExplosiveProjectiles[ProjectileID.Bomb] = true;
-            ExplosiveProjectiles[ProjectileID.StickyBomb] = true;
-            ExplosiveProjectiles[ProjectileID.BouncyBomb] = true;
-            ExplosiveProjectiles[ProjectileID.Dynamite] = true;
-            ExplosiveProjectiles[ProjectileID.StickyDynamite] = true;
-            ExplosiveProjectiles[ProjectileID.BouncyDynamite] = true;
-            ExplosiveProjectiles[ProjectileID.HellfireArrow] = true;
-            ExplosiveProjectiles[ProjectileID.BombFish] = true;
-            ExplosiveProjectiles[ProjectileID.PartyGirlGrenade] = true;
-            ExplosiveProjectiles[ProjectileID.Beenade] = true;
-            ExplosiveProjectiles[ProjectileID.MolotovCocktail] = true;
-            ExplosiveProjectiles[ProjectileID.RocketI] = true;
-            ExplosiveProjectiles[ProjectileID.RocketII] = true;
-            ExplosiveProjectiles[ProjectileID.RocketIII] = true;
-            ExplosiveProjectiles[ProjectileID.RocketIV] = true;
-            ExplosiveProjectiles[ProjectileID.GrenadeI] = true;
-            ExplosiveProjectiles[ProjectileID.GrenadeII] = true;
-            ExplosiveProjectiles[ProjectileID.GrenadeIII] = true;
-            ExplosiveProjectiles[ProjectileID.GrenadeIV] = true;
-            ExplosiveProjectiles[ProjectileID.ProximityMineI] = true;
-            ExplosiveProjectiles[ProjectileID.ProximityMineII] = true;
-            ExplosiveProjectiles[ProjectileID.ProximityMineIII] = true;
-            ExplosiveProjectiles[ProjectileID.ProximityMineIV] = true;
-            ExplosiveProjectiles[ModContent.ProjectileType<Awe_Grenade_P>()] = true;
-            ExplosiveProjectiles[ModContent.ProjectileType<Awe_Grenade_Blast>()] = true;
-#endregion projectiles
-#region ammo
-            ExplosiveAmmo = (bool[])ExplosiveItems.Clone();
-            ExplosiveAmmo[AmmoID.Rocket] = true;
-            ExplosiveAmmo[AmmoID.StyngerBolt] = true;
-#endregion ammo
-#region base damage
+        #region vanilla explosive base damage registry
             ExplosiveBaseDamage.Add(ItemID.Bomb, 70);
             ExplosiveBaseDamage.Add(ItemID.StickyBomb, 70);
             ExplosiveBaseDamage.Add(ItemID.BouncyBomb, 70);
@@ -128,35 +65,13 @@ namespace Origins {
             ExplosiveModOnHit.Add(ProjectileID.Dynamite);
             ExplosiveModOnHit.Add(ProjectileID.StickyDynamite);
             ExplosiveModOnHit.Add(ProjectileID.BouncyDynamite);
-            #endregion base damage
-#region preregistry
-            Stack<int> stack = ExplosiveItemPreRegistry;
-            //int i;
-            while(stack.Count > 0) {
-                //i = stack.Pop();
-                ExplosiveItems[stack.Pop()] = true;
-            }
-            stack = ExplosiveProjectilePreRegistry;
-            while(stack.Count > 0) {
-                //i = stack.Pop();
-                ExplosiveProjectiles[stack.Pop()] = true;
-            }
-            stack = ExplosiveAmmoPreRegistry;
-            while(stack.Count > 0) {
-                //i = stack.Pop();
-                ExplosiveAmmo[stack.Pop()] = true;
-            }
-            ExplosiveItemPreRegistry = null;
-            ExplosiveProjectilePreRegistry = null;
-            ExplosiveAmmoPreRegistry = null;
-#endregion preregistry
-        #endregion explosive weapon registry
+        #endregion vanilla explosive base damage registry
         #region armor slot ids
             FelnumHeadArmorID = ModContent.GetInstance<Felnum_Helmet>().item.headSlot;
             FelnumBodyArmorID = ModContent.GetInstance<Felnum_Breastplate>().item.bodySlot;
             FelnumLegsArmorID = ModContent.GetInstance<Felnum_Greaves>().item.legSlot;
             PlagueTexanJacketID = ModContent.GetInstance<Plague_Texan_Jacket>().item.bodySlot;
-            #endregion
+        #endregion
             Logger.Info("fixing tilemerge for "+OriginTile.IDs.Count+" tiles");
             Main.tileMerge[TileID.Sand][TileID.Sandstone] = true;
             Main.tileMerge[TileID.Sand][TileID.HardenedSand] = true;
@@ -199,9 +114,50 @@ namespace Origins {
         public override void Load() {
             ExplosiveBaseDamage = new Dictionary<int, int>();
             ExplosiveModOnHit = new List<int>() {};
-            ExplosiveProjectilePreRegistry = new Stack<int>();
-            ExplosiveItemPreRegistry = new Stack<int>();
-            ExplosiveAmmoPreRegistry = new Stack<int>();
+            //Explosive item types
+            NonFishItem.ResizeItemArrays+=() => {
+                ExplosiveItems = ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn.ToArray();
+                ExplosiveItems[ItemID.BouncyBomb] = true;
+                ExplosiveItems[ItemID.HellfireArrow] = true;
+                ExplosiveItems[ItemID.BombFish] = true;
+                ExplosiveItems[ItemID.PartyGirlGrenade] = true;
+                ExplosiveItems[ItemID.Beenade] = true;
+                ExplosiveItems[ItemID.MolotovCocktail] = true;
+            };
+            //Explosive projectile & ammo types
+            NonFishItem.ResizeOtherArrays+=() => {
+                ExplosiveProjectiles = new bool[ProjectileID.Sets.CanDistortWater.Length];
+                ExplosiveProjectiles[ProjectileID.Grenade] = true;
+                ExplosiveProjectiles[ProjectileID.StickyGrenade] = true;
+                ExplosiveProjectiles[ProjectileID.BouncyGrenade] = true;
+                ExplosiveProjectiles[ProjectileID.Bomb] = true;
+                ExplosiveProjectiles[ProjectileID.StickyBomb] = true;
+                ExplosiveProjectiles[ProjectileID.BouncyBomb] = true;
+                ExplosiveProjectiles[ProjectileID.Dynamite] = true;
+                ExplosiveProjectiles[ProjectileID.StickyDynamite] = true;
+                ExplosiveProjectiles[ProjectileID.BouncyDynamite] = true;
+                ExplosiveProjectiles[ProjectileID.HellfireArrow] = true;
+                ExplosiveProjectiles[ProjectileID.BombFish] = true;
+                ExplosiveProjectiles[ProjectileID.PartyGirlGrenade] = true;
+                ExplosiveProjectiles[ProjectileID.Beenade] = true;
+                ExplosiveProjectiles[ProjectileID.MolotovCocktail] = true;
+                ExplosiveProjectiles[ProjectileID.RocketI] = true;
+                ExplosiveProjectiles[ProjectileID.RocketII] = true;
+                ExplosiveProjectiles[ProjectileID.RocketIII] = true;
+                ExplosiveProjectiles[ProjectileID.RocketIV] = true;
+                ExplosiveProjectiles[ProjectileID.GrenadeI] = true;
+                ExplosiveProjectiles[ProjectileID.GrenadeII] = true;
+                ExplosiveProjectiles[ProjectileID.GrenadeIII] = true;
+                ExplosiveProjectiles[ProjectileID.GrenadeIV] = true;
+                ExplosiveProjectiles[ProjectileID.ProximityMineI] = true;
+                ExplosiveProjectiles[ProjectileID.ProximityMineII] = true;
+                ExplosiveProjectiles[ProjectileID.ProximityMineIII] = true;
+                ExplosiveProjectiles[ProjectileID.ProximityMineIV] = true;
+
+                ExplosiveAmmo = ExplosiveItems.ToArray();
+                ExplosiveAmmo[AmmoID.Rocket] = true;
+                ExplosiveAmmo[AmmoID.StyngerBolt] = true;
+            };
             #region vanilla weapon elements
             VanillaElements = ItemID.Sets.Factory.CreateUshortSet(0,
             #region fire
@@ -378,14 +334,6 @@ namespace Origins {
         }
 
         public static void AddExplosive(Item item, bool noProj = false) {
-            if(ExplosiveItems == null) {
-                ExplosiveItemPreRegistry.Push(item.type);
-                ExplosiveAmmoPreRegistry.Push(item.type);
-                if(item.ammo!=AmmoID.None)ExplosiveAmmoPreRegistry.Push(item.type);
-                if(item.useAmmo!=AmmoID.None)ExplosiveAmmoPreRegistry.Push(item.type);
-                if(!noProj&&item.shoot!=ProjectileID.None)ExplosiveProjectilePreRegistry.Push(item.type);
-                return;
-            }
             ExplosiveItems[item.type] = true;
             ExplosiveAmmo[item.type] = true;
             if(item.ammo!=AmmoID.None)ExplosiveAmmo[item.ammo] = true;
@@ -432,6 +380,20 @@ namespace Origins {
         }
         public static class Sounds {
             public static int Krunch = 36;
+        }
+    }
+    public sealed class NonFishItem : ModItem {
+        public override string Texture => "Terraria/Item_2290";
+        public static event Action ResizeItemArrays;
+        public static event Action ResizeOtherArrays;
+        public override bool IsQuestFish() {
+            ResizeItemArrays();
+            ResizeItemArrays = null;
+            return false;
+        }
+        public override void SetStaticDefaults() {
+            ResizeOtherArrays();
+            ResizeOtherArrays = null;
         }
     }
 }

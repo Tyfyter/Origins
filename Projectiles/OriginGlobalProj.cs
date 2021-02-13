@@ -18,8 +18,11 @@ namespace Origins.Projectiles {
         //bool init = true;
         bool felnumEffect = false;
         bool viperEffect = false;
+        bool? explosiveOverride = null;
+        //ModProjectile.SetDefaults is run before GlobalProjectiles' SetDefaults, so these can be used from SetDefaults
         public static bool felnumEffectNext = false;
         public static bool viperEffectNext = false;
+        public static bool? explosiveOverrideNext = null;
         public static bool hostileNext = false;
         public override void SetDefaults(Projectile projectile) {
             if(hostileNext) {
@@ -28,6 +31,8 @@ namespace Origins.Projectiles {
             }
             felnumEffect = felnumEffectNext;
             felnumEffectNext = false;
+            explosiveOverride = explosiveOverrideNext;
+            explosiveOverrideNext = null;
             if(viperEffectNext) {
                 viperEffect = true;
                 projectile.extraUpdates+=2;
@@ -56,7 +61,7 @@ namespace Origins.Projectiles {
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
             //this is actually how vanilla does projectile crits, which might explain why there are no vanilla multiclass weapons, since a 4% crit chance with a 4-class weapon would crit ~15% of the time
             OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-            if(Origins.ExplosiveProjectiles[projectile.type] && Main.rand.Next(1, 101) <= originPlayer.explosiveCrit){
+            if(IsExplosive(projectile) && Main.rand.Next(1, 101) <= originPlayer.explosiveCrit){
 				crit = true;
 			}
             if(viperEffect) {
@@ -69,7 +74,7 @@ namespace Origins.Projectiles {
             }
         }
         public override bool PreKill(Projectile projectile, int timeLeft) {
-            if(felnumEffect&&projectile.aiStyle==60) {
+            if(felnumEffect&&projectile.type==ProjectileID.WaterGun) {//projectile.aiStyle==60
                 OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
                 Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Shock_Grenade_Shock>(), (int)(originPlayer.felnumShock / 2.5f), projectile.knockBack, projectile.owner).timeLeft = 1;
                 originPlayer.felnumShock = 0;
@@ -78,7 +83,7 @@ namespace Origins.Projectiles {
             return true;
         }
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
-            if(Origins.ExplosiveProjectiles[projectile.type]) {
+            if(IsExplosive(projectile)) {
                 OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
                 if(originPlayer.madHand) {
                     target.AddBuff(BuffID.Oiled, 600);
@@ -87,12 +92,18 @@ namespace Origins.Projectiles {
             }
         }
         public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
-            if(Origins.ExplosiveProjectiles[projectile.type]) {
+            if(IsExplosive(projectile)) {
                 OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
                 if(originPlayer.madHand&&(projectile.timeLeft<=3||projectile.penetrate==0)){
                     hitbox.Inflate(hitbox.Width/4,hitbox.Height/4);
                 }
             }
+        }
+        public bool IsExplosive(Projectile projectile) {
+            return explosiveOverride??Origins.ExplosiveProjectiles[projectile.type];
+        }
+        public static bool IsExplosiveProjectile(Projectile projectile) {
+            return projectile.GetGlobalProjectile<OriginGlobalProj>().explosiveOverride??Origins.ExplosiveProjectiles[projectile.type];
         }
     }
 }

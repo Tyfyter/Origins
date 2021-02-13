@@ -160,9 +160,9 @@ namespace Origins {
             if(Origins.ExplosiveModOnHit.Contains(proj.type)) {
                 damage = (int)(damage*(player.allDamage+explosiveDamage-1)*0.7f);
             }
-            if(Origins.ExplosiveProjectiles[proj.type]) {
+            /*if(OriginGlobalProj.IsExplosiveProjectile(proj)) {
                 damage+=target.defense/10;
-            }
+            }*/
             if(fiberglassSet) {
                 damage+=4;
             }

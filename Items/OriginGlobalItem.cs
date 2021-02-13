@@ -119,10 +119,7 @@ namespace Origins.Items {
                             if(tooltip.Name.Equals("Damage")) {
                                 tooltip.text = tooltip.text.Insert(tooltip.text.IndexOf(' '), " "+Language.GetText("explosive"));
                                 return;
-                            }/*else if(tooltip.Name.Equals("CritChance")) {
-                                tooltips.RemoveAt(i);
-                                return;
-                            }*/
+                            }
                         }
                     }
                 }else switch(item.type) {
