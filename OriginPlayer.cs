@@ -148,7 +148,7 @@ namespace Origins {
                 Projectile p = new Projectile();
                 p.SetDefaults(item.shoot);
                 OriginGlobalProj.felnumEffectNext = true;
-                if(p.melee)
+                if(p.melee || p.aiStyle == 60)
                     return true;
                 damage+=(int)(felnumShock/15);
                 felnumShock = 0;
@@ -166,8 +166,8 @@ namespace Origins {
             if(fiberglassSet) {
                 damage+=4;
             }
-            if(proj.melee&&felnumShock>29) {
-                damage+=(int)(felnumShock/15);
+            if(proj.melee && felnumShock > 29) {
+                damage+=(int)(felnumShock / 15);
                 felnumShock = 0;
                 Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             }

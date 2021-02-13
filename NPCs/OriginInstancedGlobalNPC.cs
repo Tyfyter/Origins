@@ -25,9 +25,11 @@ namespace Origins.NPCs {
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor) {
             if(npc.HasBuff(SolventDebuff.ID)) {
 			    spriteBatch.End();
-                //Origins.solventShader.Shader.Parameters["uProgress"].SetValue();
-			    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, Origins.solventShader.Shader, Main.GameViewMatrix.ZoomMatrix);
+	            Origins.solventShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTime);
+                Origins.solventShader.Shader.Parameters["uSourceRect"].SetValue(new Vector4(npc.frame.X,npc.frame.Y,npc.frame.Width,npc.frame.Height));
+                Origins.solventShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(npc.frame.Y,npc.frame.Height,Main.npcTexture[npc.type].Height));
                 Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;
+			    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, Origins.solventShader.Shader, Main.GameViewMatrix.ZoomMatrix);
             }
             return true;
         }

@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Origins.Items.Weapons.Felnum;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -66,6 +67,15 @@ namespace Origins.Projectiles {
                     }
                 }
             }
+        }
+        public override bool PreKill(Projectile projectile, int timeLeft) {
+            if(felnumEffect&&projectile.aiStyle==60) {
+                OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
+                Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Shock_Grenade_Shock>(), (int)(originPlayer.felnumShock / 2.5f), projectile.knockBack, projectile.owner).timeLeft = 1;
+                originPlayer.felnumShock = 0;
+                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 2f, 1f);
+            }
+            return true;
         }
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
             if(Origins.ExplosiveProjectiles[projectile.type]) {
