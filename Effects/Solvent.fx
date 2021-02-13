@@ -36,9 +36,11 @@ float4 Dissolve(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 	if(value<0.1){
 		color.rb *= 0.35;
 		color.g *= 0.6;
+                color.g+=0.06;
 	}else if(value<0.15){
 		color.rb *= 0.5;
 		color.g *= 0.9;
+                color.g+=0.1;
 	}else{
 		color.rb *= 0.95;
 	}
