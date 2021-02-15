@@ -154,4 +154,15 @@ namespace Origins.Items.Materials {
             item.maxStack = 999;
         }
     }
+    public class Defiled_Key : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Defiled Key");
+        }
+        public override void SetDefaults() {
+			item.width = 14;
+			item.height = 20;
+			item.maxStack = 99;
+        }
+    }
 }

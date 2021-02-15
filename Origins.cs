@@ -394,6 +394,7 @@ namespace Origins {
         public override void SetStaticDefaults() {
             ResizeOtherArrays();
             ResizeOtherArrays = null;
+            DisplayName.SetDefault("That Which Is Not a Fish");
         }
     }
 }

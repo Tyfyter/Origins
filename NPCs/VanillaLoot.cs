@@ -23,6 +23,11 @@ namespace Origins.NPCs {
                 default:
                 break;
             }
+            Player closestPlayer = Main.player[Player.FindClosest(npc.position, npc.width, npc.height)];
+            OriginPlayer originPlayer = closestPlayer.GetModPlayer<OriginPlayer>();
+		    if (Main.rand.Next(2500) == 0 && originPlayer.ZoneDefiled){
+			    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Defiled_Key>());
+		    }
         }
     }
 }

@@ -14,7 +14,6 @@ float2 uImageSize0;
 float2 uImageSize1;
 float2 uOffset;
 float uScale;
-float4 uSourceRect2;
 
 float4 Dissolve(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	float4 color = tex2D(uImage0, coords);
@@ -36,12 +35,12 @@ float4 Dissolve(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 	if(value<0.1){
 		color.rb *= 0.35;
 		color.g *= 0.6;
-                color.g+=0.06;
-	}else if(value<0.15){
+		color.g += 0.06*color.a;
+	} else if(value<0.15) {
 		color.rb *= 0.5;
 		color.g *= 0.9;
-                color.g+=0.1;
-	}else{
+		color.g += 0.1*color.a;
+	} else {
 		color.rb *= 0.95;
 	}
 	return color*sampleColor;

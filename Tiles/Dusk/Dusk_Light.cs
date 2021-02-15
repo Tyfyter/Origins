@@ -21,7 +21,7 @@ namespace Origins.Tiles.Dusk {
 		}
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-            float m = 2.5f;
+            float m = 0.5f;
             r = 37.2f*m;
             g = 6.7f*m;
             b = 49.2f*m;

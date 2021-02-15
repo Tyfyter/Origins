@@ -21,6 +21,6 @@
     <Folder Include="Projectiles\Pets\" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="pushd %~dp0&#xD;&#xA;cmd.exe" />
+    <Exec Command="cd $(ProjectDir)\effects&#xD;&#xA;compile.bat" />
   </Target>
 </Project>

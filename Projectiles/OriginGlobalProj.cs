@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items.Weapons.Felnum;
 using Terraria;
 using Terraria.Graphics.Shaders;
@@ -19,11 +20,13 @@ namespace Origins.Projectiles {
         bool felnumEffect = false;
         bool viperEffect = false;
         bool? explosiveOverride = null;
+        int killLink = -1;
         //ModProjectile.SetDefaults is run before GlobalProjectiles' SetDefaults, so these can be used from SetDefaults
         public static bool felnumEffectNext = false;
         public static bool viperEffectNext = false;
         public static bool? explosiveOverrideNext = null;
         public static bool hostileNext = false;
+        public static int killLinkNext = -1;
         public override void SetDefaults(Projectile projectile) {
             if(hostileNext) {
                 projectile.hostile = true;
@@ -33,6 +36,11 @@ namespace Origins.Projectiles {
             felnumEffectNext = false;
             explosiveOverride = explosiveOverrideNext;
             explosiveOverrideNext = null;
+            if(killLinkNext!=-1) {
+                killLink = killLinkNext;
+                Main.projectile[killLink].GetGlobalProjectile<OriginGlobalProj>().killLink = projectile.whoAmI;
+                killLinkNext = -1;
+            }
             if(viperEffectNext) {
                 viperEffect = true;
                 projectile.extraUpdates+=2;
@@ -50,7 +58,7 @@ namespace Origins.Projectiles {
                     if(Main.player[projectile.owner].GetModPlayer<OriginPlayer>().felnumShock>19)Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1)*0.5f, Scale:0.5f);
                 }else Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1)*0.5f, Scale:0.5f);
             }
-            if(viperEffect) {
+            if(viperEffect&&projectile.extraUpdates != 19) {
                 Lighting.AddLight(projectile.Center, 0, 0.75f*projectile.scale, 0.3f*projectile.scale);
                 Dust dust = Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1f)*-0.25f, 100, new Color(0, 255, 0), projectile.scale/2);
                 dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
@@ -65,11 +73,15 @@ namespace Origins.Projectiles {
 				crit = true;
 			}
             if(viperEffect) {
+                bool crt = crit;
                 for(int i = 0; i < target.buffType.Length; i++) {
-                    if(Main.debuff[target.buffType[i]]) {
+                    if(Main.debuff[target.buffType[i]]&&target.buffType[i]!=SolventDebuff.ID) {
                         crit = true;
                         break;
                     }
+                }
+                if(crt || Main.rand.Next(0, 9)==0) {
+                    target.AddBuff(SolventDebuff.ID, 450);
                 }
             }
         }
@@ -81,6 +93,12 @@ namespace Origins.Projectiles {
                 Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 2f, 1f);
             }
             return true;
+        }
+        public override void Kill(Projectile projectile, int timeLeft) {
+            if(killLink != -1&&projectile.penetrate == 0) {
+                Main.projectile[killLink].active = false;
+                killLink = -1;
+            }
         }
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
             if(IsExplosive(projectile)) {
