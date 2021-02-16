@@ -231,7 +231,7 @@ namespace Origins {
                 crit = true;
             }
             if(defiledSet) {
-                float manaDamage = damage*0.15f;
+                float manaDamage = Math.Max(damage-player.statDefense*(Main.expertMode?0.75f:0.5f), 1)*0.15f;
                 float costMult = 3;
                 float costMult2 = (1/(player.magicDamage+player.allDamage-1f))/(player.magicDamageMult*player.allDamageMult);
                 if(player.statMana < manaDamage*costMult) {
