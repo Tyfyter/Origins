@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Other {
             item.shoot = ModContent.ProjectileType<Lava_Shot>();
             item.shootSpeed*=1.75f;
             item.UseSound = null;
-            item.scale = 0.8f
+            item.scale = 0.8f;
         }
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
