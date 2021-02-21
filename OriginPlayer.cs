@@ -308,14 +308,10 @@ namespace Origins {
             modOther.ZoneDefiled = ZoneDefiled;
         }
         public override void UpdateBiomeVisuals() {
+            if(ZoneVoidProgressSmoothed > 0)Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(ZoneVoidProgressSmoothed);
+            if(ZoneDefiledProgressSmoothed > 0)Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(ZoneDefiledProgressSmoothed);
             player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", ZoneVoidProgressSmoothed>0, player.Center);
-            if(ZoneVoidProgressSmoothed>0)
-                Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(ZoneVoidProgressSmoothed);
             player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", ZoneDefiledProgressSmoothed>0, player.Center);
-            if(ZoneDefiledProgressSmoothed>0)
-                Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(ZoneDefiledProgressSmoothed);
-            /*if(ZoneVoidProgress>0) {
-            }*/
         }
         public override bool PreItemCheck() {
             ItemChecking = true;
@@ -400,25 +396,24 @@ namespace Origins {
         });
         public static PlayerLayer ShootWrenchLayer = new PlayerLayer("Origins", "FiberglassBowLayer", null, delegate (PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;
-            float num77 = drawPlayer.itemRotation + MathHelper.PiOver4 * drawPlayer.direction;
             Item item = drawPlayer.inventory[drawPlayer.selectedItem];
             Texture2D itemTexture = Main.itemTexture[item.type];
             IAnimatedItem aItem = (IAnimatedItem)item.modItem;
-            int num80 = 10;
-            Vector2 vector7 = new Vector2(itemTexture.Width / 2, itemTexture.Height / 2);
-            Vector2 vector8 = OriginExtensions.DrawPlayerItemPos(drawPlayer.gravDir, item.type);
-            num80 = (int)vector8.X;
-            vector7.Y = vector8.Y;
-            Vector2 origin4 = new Vector2(-num80, itemTexture.Height / 2);
+            int drawXPos = 10;
+            Vector2 ItemCenter = new Vector2(itemTexture.Width / 2, itemTexture.Height / 2);
+            Vector2 drawItemPos = OriginExtensions.DrawPlayerItemPos(drawPlayer.gravDir, item.type);
+            drawXPos = (int)drawItemPos.X;
+            ItemCenter.Y = drawItemPos.Y;
+            Vector2 drawOrigin = new Vector2(-drawXPos, itemTexture.Height / 2);
             if(drawPlayer.direction == -1) {
-                origin4 = new Vector2(itemTexture.Width + num80, itemTexture.Height / 2);
+                drawOrigin = new Vector2(itemTexture.Width + drawXPos, itemTexture.Height / 2);
             }
-            origin4.X-=drawPlayer.width/2;
+            drawOrigin.X-=drawPlayer.width/2;
             Vector4 col = drawInfo2.faceColor.ToVector4()/drawPlayer.skinColor.ToVector4();
-            DrawData value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + vector7.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + vector7.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(new Color(col.X, col.Y, col.Z, col.W)), drawPlayer.itemRotation, origin4, item.scale, drawInfo2.spriteEffects, 0);
+            DrawData value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + ItemCenter.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + ItemCenter.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(new Color(col.X, col.Y, col.Z, col.W)), drawPlayer.itemRotation, drawOrigin, item.scale, drawInfo2.spriteEffects, 0);
             Main.playerDrawData.Add(value);
             if(drawPlayer.inventory[drawPlayer.selectedItem].glowMask != -1) {
-                value = new DrawData(Main.glowMaskTexture[item.glowMask], new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + vector7.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + vector7.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(aItem.GlowmaskTint??new Color(col.X, col.Y, col.Z, col.W)), drawPlayer.itemRotation, origin4, item.scale, drawInfo2.spriteEffects, 0);
+                value = new DrawData(Main.glowMaskTexture[item.glowMask], new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + ItemCenter.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + ItemCenter.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(aItem.GlowmaskTint??new Color(col.X, col.Y, col.Z, col.W)), drawPlayer.itemRotation, drawOrigin, item.scale, drawInfo2.spriteEffects, 0);
                 Main.playerDrawData.Add(value);
             }
         });
