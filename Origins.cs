@@ -79,7 +79,7 @@ namespace Origins {
             for(int oID = 0; oID < OriginTile.IDs.Count; oID++) {
                 OriginTile oT = OriginTile.IDs[oID];
                 Logger.Info("fixing tilemerge for "+oT.GetType());
-                Main.tileMergeDirt[oT.Type] = Main.tileMergeDirt[oT.mergeID];
+                //Main.tileMergeDirt[oT.Type] = Main.tileMergeDirt[oT.mergeID];
                 Main.tileMerge[oT.Type] = Main.tileMerge[oT.mergeID];
                 Main.tileMerge[oT.mergeID][oT.Type] = true;
                 Main.tileMerge[oT.Type][oT.mergeID] = true;

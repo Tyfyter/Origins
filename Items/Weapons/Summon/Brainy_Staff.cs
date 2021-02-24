@@ -122,9 +122,6 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			Vector2 idlePosition = player.Top;
             idlePosition.X -= 48f*player.direction;
 
-
-			// All of this code below this line is adapted from Spazmamini code (ID 388, aiStyle 66)
-
 			// Teleport to player if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - projectile.Center;
 			float distanceToIdlePosition = vectorToIdlePosition.Length();

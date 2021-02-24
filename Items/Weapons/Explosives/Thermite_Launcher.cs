@@ -72,7 +72,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override void Kill(int timeLeft) {
             Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, (int)(projectile.damage*0.75f), 16, projectile.owner, -1, 1);
             for(int i = 0; i < 5; i++) {
-                Projectile.NewProjectile(projectile.Center, (projectile.velocity/2)+Vec2FromPolar((i/Main.rand.NextFloat(5,7))*MathHelper.TwoPi, Main.rand.NextFloat(2,4)), ModContent.ProjectileType<Thermite_P>(), (int)(projectile.damage*0.75f), 16, projectile.owner);
+                Projectile.NewProjectile(projectile.Center, (projectile.velocity/2)+Vec2FromPolar((i/Main.rand.NextFloat(5,7))*MathHelper.TwoPi, Main.rand.NextFloat(2,4)), ModContent.ProjectileType<Thermite_P>(), (int)(projectile.damage*0.75f), 0, projectile.owner);
             }
         }
         public override void AI() {

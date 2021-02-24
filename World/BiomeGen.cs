@@ -482,7 +482,7 @@ namespace Origins.World {
                                 if(!Main.tile[i, j - 1].active()) {
                                     PlaceTile(i, j - 1, plantType, mute: true);
                                 }
-                                if(worldEvil == evil_wastelands) {
+                                if(worldEvil == evil_wastelands && Main.tileSolid[Main.tile[i, j].type]) {
                                     if(genRand.Next(0, 10+EvilSpikes.Count)<=tilesSinceSpike/5) {
                                         EvilSpikes.Add((new Point(i, j), genRand.Next(9,18)+tilesSinceSpike/5));
                                         tilesSinceSpike = -15;
