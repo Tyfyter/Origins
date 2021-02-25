@@ -312,9 +312,76 @@ namespace Origins.World {
             float r = speed.ToRotation();
             for(int l = X0; l < X1; l++) {
                 for(int k = Y0; k < Y1; k++) {
-                    AutoSlopeForSpike(l, k, r);
+                    AutoSlopeForSpike(l, k);
                 }
             }
+            NetMessage.SendTileRange(Main.myPlayer, X0, Y0, X1-X0, Y1-Y1);
+        }
+        public static void VeinRunner(int i, int j, double strength, Vector2 speed, double length, float twist = 0, bool randomtwist = false){
+	        Vector2 pos = new Vector2(i,j);
+            Tile tile;
+            if(randomtwist)twist = Math.Abs(twist);
+            int X0 = int.MaxValue;
+            int X1 = 0;
+            int Y0 = int.MaxValue;
+            int Y1 = 0;
+            strength = Math.Pow(strength, 2);
+            double decay = speed.Length();
+            bool ag = TileID.Sets.CanBeClearedDuringGeneration[TileID.AmberGemspark];
+            TileID.Sets.CanBeClearedDuringGeneration[TileID.AmberGemspark] = false;
+            while (length > 0) {
+		        length-=decay;
+		        int minX = (int)(pos.X - strength * 0.5);
+		        int maxX = (int)(pos.X + strength * 0.5);
+		        int minY = (int)(pos.Y - strength * 0.5);
+		        int maxY = (int)(pos.Y + strength * 0.5);
+		        if (minX < 1) {
+			        minX = 1;
+		        }
+		        if (maxX > Main.maxTilesX - 1) {
+			        maxX = Main.maxTilesX - 1;
+		        }
+		        if (minY < 1) {
+			        minY = 1;
+		        }
+		        if (maxY > Main.maxTilesY - 1) {
+			        maxY = Main.maxTilesY - 1;
+		        }
+				Main.tile[(int)pos.X, (int)pos.Y].ResetToType(TileID.AmberGemspark);
+		        for (int l = minX; l < maxX; l++) {
+			        for (int k = minY; k < maxY; k++) {
+				        if ((Math.Pow(Math.Abs(l - pos.X), 2) + Math.Pow(Math.Abs(k - pos.Y), 2)) > strength) {//if (!((Math.Abs(l - pos.X) + Math.Abs(k - pos.Y)) < strength)) {
+					        continue;
+				        }
+					    tile = Main.tile[l, k];
+					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.type]){
+					        Main.tile[l, k].active(active: false);
+                            WorldGen.SquareTileFrame(l,k);
+                            if(l>X1) {
+                                X1 = l;
+                            }else if(l<X0) {
+                                X0 = l;
+                            }
+                            if(k>Y1) {
+                                Y1 = k;
+                            }else if(k<Y0) {
+                                Y0 = k;
+                            }
+					    }
+			        }
+		        }
+		        pos += speed;
+                if(randomtwist||twist!=0.0) {
+                    speed = randomtwist?speed.RotatedBy(WorldGen.genRand.NextFloat(-twist,twist)):speed.RotatedBy(twist);
+                }
+	        }
+            float r = speed.ToRotation();
+            for(int l = X0; l < X1; l++) {
+                for(int k = Y0; k < Y1; k++) {
+                    AutoSlopeForSpike(l, k);
+                }
+            }
+            TileID.Sets.CanBeClearedDuringGeneration[TileID.AmberGemspark] = ag;
             NetMessage.SendTileRange(Main.myPlayer, X0, Y0, X1-X0, Y1-Y1);
         }
         public static void AutoSlope(int i, int j, bool resetSlope = false) {
@@ -359,7 +426,7 @@ namespace Origins.World {
                 break;
             }
         }
-        public static void AutoSlopeForSpike(int i, int j, float angle) {
+        public static void AutoSlopeForSpike(int i, int j) {
             byte adj = 0;
 			Tile tile = Main.tile[i, j];
             tile.halfBrick(false);

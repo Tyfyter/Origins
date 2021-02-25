@@ -310,7 +310,7 @@ namespace Origins {
             Tolruk.glowmasks = null;
             instance = null;
             Tiles.Defiled.Defiled_Tree.Unload();
-            OriginExtensions.unInitClone();
+            OriginExtensions.unInitExt();
             OriginTile.IDs = null;
             OriginWorld worldInstance = ModContent.GetInstance<OriginWorld>();
             if(!(worldInstance is null)) {

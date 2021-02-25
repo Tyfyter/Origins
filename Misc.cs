@@ -16,8 +16,133 @@ using System.Runtime.CompilerServices;
 using static Origins.Items.OriginGlobalItem;
 using System.Reflection;
 using Terraria.Utilities;
+using System.Collections;
+using System.Runtime.Serialization;
 
 namespace Origins {
+    public class LinkedQueue<T> : ICollection<T> {
+        public int Count {
+            get { return _items.Count; }
+        }
+
+        public void Enqueue(T item) {
+            _items.AddLast(item);
+        }
+
+        public T Dequeue() {
+            if (_items.First is null)
+               throw new InvalidOperationException("Queue empty.");
+
+            var item = _items.First.Value;
+            _items.RemoveFirst();
+
+            return item;
+        }
+        #region shorthand
+        /// <summary>
+        /// shorthand for Dequeue
+        /// </summary>
+        public T DQ => Dequeue();
+        /// <summary>
+        /// shorthand for Enqueue
+        /// </summary>
+        public void NQ(T value) => Enqueue(value);
+        /// <summary>
+        /// shorthand for Dequeue/Enqueue
+        /// </summary>
+        public T Q {
+            get => Dequeue();
+            set => Enqueue(value);
+        }
+        #endregion
+        public bool Remove(T item) {
+            return _items.Remove(item);
+        }
+
+        public void RemoveAt(int index) {
+            _items.Remove(GetNodeEnumerator().Skip(index).First());
+        }
+
+        public IEnumerable<T> GetEnumerator() {
+            while(Count>0)yield return Dequeue();
+        }
+
+        public IEnumerable<LinkedListNode<T>> GetNodeEnumerator() {
+            IEnumerator<LinkedListNode<T>> enumerator = new LLNodeEnumerator<T>(_items);
+            yield return enumerator.Current;
+            while(enumerator.MoveNext())yield return enumerator.Current;
+        }
+
+        public T[] ToArray() {
+            return _items.ToArray();
+        }
+        #region ICollection implementation
+        [Obsolete]
+        public void Add(T item) {
+            Enqueue(item);
+        }
+
+        public void Clear() {
+            _items.Clear();
+        }
+
+        public bool Contains(T item) {
+            return _items.Contains(item);
+        }
+
+        public void CopyTo(T[] array, int arrayIndex) {
+            _items.CopyTo(array, arrayIndex);
+        }
+
+        [Obsolete]
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() {
+            throw new NotImplementedException();
+        }
+
+        [Obsolete]
+        IEnumerator IEnumerable.GetEnumerator() {
+            throw new NotImplementedException();
+        }
+
+        public bool IsReadOnly => false;
+        #endregion
+        private LinkedList<T> _items = new LinkedList<T>();
+    }
+    public struct LLNodeEnumerator<T> : IEnumerator<LinkedListNode<T>>{
+        internal static FieldInfo LLVersion;
+        private LinkedList<T> list;
+        private LinkedListNode<T> current;
+        private int version;
+        private int index;
+        public LLNodeEnumerator(LinkedList<T> list) {
+            this.list = list;
+            version = list.GetVersion();
+            current = list.First;
+            index = 0;
+        }
+
+        public LinkedListNode<T> Current => current;
+
+        object IEnumerator.Current => current;
+
+        public void Dispose() {}
+
+        public bool MoveNext() {
+            VersionCheck();
+            current = current.Next;
+            return !(current is null);
+        }
+
+        public void Reset() {
+            VersionCheck();
+            current = list.First;
+        }
+        void VersionCheck() {
+            if (version != list.GetVersion()) {
+                throw new InvalidOperationException("Collection has been modified");
+            }
+        }
+    }
     public class DrawAnimationManual : DrawAnimation {
 	    public DrawAnimationManual(int frameCount) {
 		    Frame = 0;
@@ -589,31 +714,17 @@ namespace Origins {
             byte stage = 3;
             if (player.itemAnimation < player.itemAnimationMax * 0.333) {
                 stage = 1;
-				if (item.width >= 92) xoffset = 38f;
-				else if (item.width >= 64) xoffset = 28f;
-				else if (item.width >= 52) xoffset = 24f;
-				else if (item.width > 32) xoffset = 14f;
+				if (item.width >= 92) xoffset = 38f; else if (item.width >= 64) xoffset = 28f; else if (item.width >= 52) xoffset = 24f; else if (item.width > 32) xoffset = 14f;
 			} else if (player.itemAnimation < player.itemAnimationMax * 0.666) {
                 stage = 2;
-				if (item.width >= 92) xoffset = 38f;
-				else if (item.width >= 64) xoffset = 28f;
-				else if (item.width >= 52) xoffset = 24f;
-				else if (item.width > 32) xoffset = 18f;
+				if (item.width >= 92) xoffset = 38f; else if (item.width >= 64) xoffset = 28f; else if (item.width >= 52) xoffset = 24f; else if (item.width > 32) xoffset = 18f;
 				yoffset = 10f;
-				if (item.height >= 64) yoffset = 14f;
-				else if (item.height >= 52) yoffset = 12f;
-				else if (item.height > 32) yoffset = 8f;
+				if (item.height >= 64) yoffset = 14f; else if (item.height >= 52) yoffset = 12f; else if (item.height > 32) yoffset = 8f;
 			} else {
 				xoffset = 6f;
-				if (item.width >= 92) xoffset = 38f;
-				else if (item.width >= 64) xoffset = 28f;
-				else if (item.width >= 52) xoffset = 24f;
-				else if (item.width >= 48) xoffset = 18f;
-				else if (item.width > 32) xoffset = 14f;
+				if (item.width >= 92) xoffset = 38f; else if (item.width >= 64) xoffset = 28f; else if (item.width >= 52) xoffset = 24f; else if (item.width >= 48) xoffset = 18f; else if (item.width > 32) xoffset = 14f;
 				yoffset = 10f;
-				if (item.height >= 64) yoffset = 14f;
-				else if (item.height >= 52) yoffset = 12f;
-				else if (item.height > 32) yoffset = 8f;
+				if (item.height >= 64) yoffset = 14f; else if (item.height >= 52) yoffset = 12f; else if (item.height > 32) yoffset = 8f;
 			}
 			hitbox.X = (int)(player.itemLocation.X = player.position.X + player.width * 0.5f + (item.width * 0.5f - xoffset) * player.direction);
 			hitbox.Y = (int)(player.itemLocation.Y = player.position.Y + yoffset + player.mount.PlayerOffsetHitbox);
@@ -783,13 +894,13 @@ namespace Origins {
         internal static FieldInfo inext;
         internal static FieldInfo inextp;
         internal static FieldInfo SeedArray;
-        internal static void initClone() {
-             memberwiseClone = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic|BindingFlags.Instance);
-             inext = typeof(UnifiedRandom).GetField("inext", BindingFlags.NonPublic|BindingFlags.Instance);
-             inextp = typeof(UnifiedRandom).GetField("inextp", BindingFlags.NonPublic|BindingFlags.Instance);
-             SeedArray = typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic|BindingFlags.Instance);
+        internal static void initExt() {
+            memberwiseClone = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic|BindingFlags.Instance);
+            inext = typeof(UnifiedRandom).GetField("inext", BindingFlags.NonPublic|BindingFlags.Instance);
+            inextp = typeof(UnifiedRandom).GetField("inextp", BindingFlags.NonPublic|BindingFlags.Instance);
+            SeedArray = typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic|BindingFlags.Instance);
         }
-        internal static void unInitClone() {
+        internal static void unInitExt() {
             memberwiseClone = null;
             inext = null;
             inextp = null;
@@ -840,6 +951,10 @@ namespace Origins {
             Item v = new Item();
             v.SetDefaults(type);
             return v;
+        }
+        public static int GetVersion<T>(this LinkedList<T> ll) {
+            if(LLNodeEnumerator<T>.LLVersion is null)LLNodeEnumerator<T>.LLVersion = typeof(LinkedList<T>).GetField("Version", BindingFlags.NonPublic|BindingFlags.Instance);
+            return (int)LLNodeEnumerator<T>.LLVersion.GetValue(ll);
         }
     }
 }
