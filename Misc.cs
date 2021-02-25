@@ -18,6 +18,7 @@ using System.Reflection;
 using Terraria.Utilities;
 using System.Collections;
 using System.Runtime.Serialization;
+using System.Diagnostics;
 
 namespace Origins {
     public class LinkedQueue<T> : ICollection<T> {
@@ -30,15 +31,16 @@ namespace Origins {
         }
 
         public T Dequeue() {
-            if (_items.First is null)
-               throw new InvalidOperationException("Queue empty.");
+            if(_items.First is null)
+                throw new InvalidOperationException("Queue empty.");
 
             var item = _items.First.Value;
             _items.RemoveFirst();
 
             return item;
         }
-        #region shorthand
+        //convenient shorthand that's incompatible with the vs debugger
+        /*# region shorthand
         /// <summary>
         /// shorthand for Dequeue
         /// </summary>
@@ -54,7 +56,7 @@ namespace Origins {
             get => Dequeue();
             set => Enqueue(value);
         }
-        #endregion
+        # endregion*/
         public bool Remove(T item) {
             return _items.Remove(item);
         }
@@ -64,13 +66,13 @@ namespace Origins {
         }
 
         public IEnumerable<T> GetEnumerator() {
-            while(Count>0)yield return Dequeue();
+            while(Count > 0) yield return Dequeue();
         }
 
         public IEnumerable<LinkedListNode<T>> GetNodeEnumerator() {
             IEnumerator<LinkedListNode<T>> enumerator = new LLNodeEnumerator<T>(_items);
             yield return enumerator.Current;
-            while(enumerator.MoveNext())yield return enumerator.Current;
+            while(enumerator.MoveNext()) yield return enumerator.Current;
         }
 
         public T[] ToArray() {
@@ -953,7 +955,7 @@ namespace Origins {
             return v;
         }
         public static int GetVersion<T>(this LinkedList<T> ll) {
-            if(LLNodeEnumerator<T>.LLVersion is null)LLNodeEnumerator<T>.LLVersion = typeof(LinkedList<T>).GetField("Version", BindingFlags.NonPublic|BindingFlags.Instance);
+            if(LLNodeEnumerator<T>.LLVersion is null)LLNodeEnumerator<T>.LLVersion = typeof(LinkedList<T>).GetField("version", BindingFlags.NonPublic|BindingFlags.Instance);
             return (int)LLNodeEnumerator<T>.LLVersion.GetValue(ll);
         }
     }
