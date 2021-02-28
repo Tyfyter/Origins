@@ -11,6 +11,7 @@ namespace Origins.Items.Tools {
             item.CloneDefaults(ItemID.DeathbringerPickaxe);
 			item.damage = 14;
 			item.melee = true;
+            item.pick = 0;
             item.hammer = 60;
 			item.width = 34;
 			item.height = 34;
