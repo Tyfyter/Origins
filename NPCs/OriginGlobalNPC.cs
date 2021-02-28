@@ -57,6 +57,9 @@ namespace Origins.NPCs {
                     NPCLoader.blockLoot.Add(ItemID.CorruptSeeds);
                     NPCLoader.blockLoot.Add(ItemID.DemoniteOre);
                     break;
+                    case NPCID.SkeletronHead:
+                    downedSkeletron = NPC.downedBoss3;
+                    break;
                 }
             }
             return true;

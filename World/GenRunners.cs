@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Terraria;
 using static Origins.World.AdjID;
+using static Terraria.WorldGen;
 
 namespace Origins.World {
     public class GenRunners{
@@ -388,6 +389,73 @@ namespace Origins.World {
             NetMessage.SendTileRange(Main.myPlayer, X0, Y0, X1-X0, Y1-Y1);
             return (pos, speed);
         }
+        public static void FelnumRunner(int i, int j, double strength, int steps, int type, float speedX = 0f, float speedY = 0f) {
+			double currStrength = strength;
+			float step = steps;
+			Vector2 pos = default;
+			pos.X = i;
+			pos.Y = j;
+			Vector2 speed = default;
+			speed.X = genRand.Next(-10, 11) * 0.1f;
+			speed.Y = genRand.Next(-10, 11) * 0.1f;
+			if (speedX != 0f || speedY != 0f) {
+				speed.X = speedX;
+				speed.Y = speedY;
+			}
+			while (currStrength > 0.0 && step > 0f) {
+				if (pos.Y < 0f && step > 0f && type == 59) {
+					step = 0f;
+				}
+				currStrength = strength * (step / steps);
+				step -= 1f;
+				int num3 = (int)(pos.X - currStrength * 0.5);
+				int num4 = (int)(pos.X + currStrength * 0.5);
+				int num5 = (int)(pos.Y - currStrength * 0.5);
+				int num6 = (int)(pos.Y + currStrength * 0.5);
+				if (num3 < 1) {
+					num3 = 1;
+				}
+				if (num4 > Main.maxTilesX - 1) {
+					num4 = Main.maxTilesX - 1;
+				}
+				if (num5 < 1) {
+					num5 = 1;
+				}
+				if (num6 > Main.maxTilesY - 1) {
+					num6 = Main.maxTilesY - 1;
+				}
+				for (int k = num3; k < num4; k++) {
+					for (int l = num5; l < num6; l++) {
+						if (!((Math.Abs(k - pos.X) + Math.Abs(l - pos.Y)) < strength * 0.5 * (1.0 + genRand.Next(-10, 11) * 0.015))) {
+							continue;
+						}
+						Tile tile = Main.tile[k, l];
+						if (tile.type==TileID.Cloud||tile.type==TileID.Dirt||tile.type==TileID.Grass||tile.type==TileID.Stone||tile.type==TileID.RainCloud||tile.type==TileID.Stone) {
+							tile.type = (ushort)type;
+                            if(!tile.active()&&OriginWorld.GetAdjTileCount(k,l)>3) {
+                                tile.active(true);
+                            }
+                            SquareTileFrame(k,l);
+						}
+					}
+				}
+				pos += speed;
+				speed.X += genRand.Next(-10, 11) * 0.05f;
+				if (speed.X > 1f) {
+					speed.X = 1f;
+				}
+				if (speed.X < -1f) {
+					speed.X = -1f;
+				}
+				speed.Y += genRand.Next(-10, 11) * 0.05f;
+				if (speed.Y > 1f) {
+					speed.Y = 1f;
+				}
+				if (speed.Y < -1f) {
+					speed.Y = -1f;
+				}
+			}
+		}
         public static void AutoSlope(int i, int j, bool resetSlope = false) {
             byte adj = 0;
 			Tile tile = Main.tile[i, j];

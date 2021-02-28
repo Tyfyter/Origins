@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Origins.Tiles;
+using Origins.Tiles.Defiled;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -99,6 +101,13 @@ namespace Origins.Items.Materials {
         public override void SetDefaults() {
             item.maxStack = 999;
         }
+        public override void AddRecipes() {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Ore_Item>(), 3);
+            recipe.AddTile(TileID.Furnaces);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
     }
     /*public class Valkyrum_Bar : ModItem {
         //Alloy of Felnum and Angelium
@@ -116,6 +125,13 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 3);
+            recipe.AddTile(TileID.Furnaces);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
         }
     }
     public class Undead_Chunk : ModItem {
@@ -135,6 +151,13 @@ namespace Origins.Items.Materials {
         public override void SetDefaults() {
             item.maxStack = 999;
         }
+        /*public override void AddRecipes() {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 3);
+            recipe.AddTile(TileID.Furnaces);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }*/
     }
     public class Riven_Sample : ModItem {
         //add lore here

@@ -206,6 +206,18 @@ namespace Origins.World {
                 return rand;
             }
         }
+        public static byte GetAdjTileCount(int i, int j) {
+            byte count = 0;
+            if(Main.tile[i-1,j-1].active()) count++;
+            if(Main.tile[i,j-1].active())   count++;
+            if(Main.tile[i+1,j-1].active()) count++;
+            if(Main.tile[i-1,j].active())   count++;
+            if(Main.tile[i+1,j].active())   count++;
+            if(Main.tile[i-1,j+1].active()) count++;
+            if(Main.tile[i,j+1].active())   count++;
+            if(Main.tile[i+1,j+1].active()) count++;
+            return count;
+        }
         /// <summary>
         /// the first clentaminator conversion type from Origins (from ASCII 'Org')
         /// </summary>
