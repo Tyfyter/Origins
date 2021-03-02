@@ -108,7 +108,6 @@ namespace Origins {
                     Main.tileMerge[pair.Item1][pair.Item2] = true;
                     Main.tileMerge[pair.Item2][pair.Item1] = true;
                 }
-
             }
         }
         public override void Load() {

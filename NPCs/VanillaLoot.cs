@@ -31,7 +31,7 @@ namespace Origins.NPCs {
             }
             Player closestPlayer = Main.player[Player.FindClosest(npc.position, npc.width, npc.height)];
             OriginPlayer originPlayer = closestPlayer.GetModPlayer<OriginPlayer>();
-		    if (Main.rand.Next(2500) == 0 && originPlayer.ZoneDefiled){
+		    if (Main.rand.Next(2500) == 0 && originPlayer.ZoneDefiled) {
 			    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Defiled_Key>());
 		    }
         }
@@ -42,21 +42,22 @@ namespace Origins.NPCs {
                 int type = TileID.BlueDungeonBrick;
                 Tile tile = new Tile();
                 int fails = 0;
-                int runCount = 0;
-                for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * 4E-06); k++) {
+                int success = 0;
+                for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * (Main.expertMode?6E-06:4E-06)); k++) {
                     int tries = 0;
                     type = TileID.BlueDungeonBrick;
                     while(type!=TileID.Cloud&&type!=TileID.Dirt&&type!=TileID.Grass&&type!=TileID.Stone&&type!=TileID.RainCloud) {
 				        x = WorldGen.genRand.Next(0, Main.maxTilesX);
-						y = WorldGen.genRand.Next(90, (int)Main.worldSurface - 150);
+						y = WorldGen.genRand.Next(90, (int)OriginWorld.worldSurfaceLow - 5);
                         tile = Framing.GetTileSafely(x, y);
                         type = tile.active()?tile.type:TileID.BlueDungeonBrick;
                         if(++tries >= 150) {
                             if(++fails%2==0)k--;
+                            success--;
                             type = TileID.Dirt;
                         }
                     }
-                    runCount++;
+                    success++;
 				    GenRunners.FelnumRunner(x, y, WorldGen.genRand.Next(2, 6), WorldGen.genRand.Next(2, 6), felnumOre);
 			    }
                 //Main.NewText($"generation complete, ran {runCount} times with {fails} fails");

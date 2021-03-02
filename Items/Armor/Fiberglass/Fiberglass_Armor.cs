@@ -18,7 +18,8 @@ namespace Origins.Items.Armor.Fiberglass {
         public override void UpdateArmorSet(Player player) {
             player.setBonus = "Weapon damage increased by 4";
             player.GetModPlayer<OriginPlayer>().fiberglassSet = true;
-            if(player.HasBuff(BuffID.Invisibility))player.buffTime[player.FindBuffIndex(BuffID.Invisibility)]++;
+            int inv = player.FindBuffIndex(BuffID.Invisibility);
+            if(inv>-1)player.buffTime[inv]++;
         }
         public override void DrawHair(ref bool drawHair, ref bool drawAltHair) { drawAltHair = true; }
 	}

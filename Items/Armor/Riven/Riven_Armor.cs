@@ -36,7 +36,7 @@ namespace Origins.Items.Armor.Riven {
         }
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
+            recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 15);
             //recipe.AddIngredient(ModContent.ItemType<>(), 10);
             recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
@@ -73,7 +73,7 @@ namespace Origins.Items.Armor.Riven {
         }
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
+            recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 25);
             //recipe.AddIngredient(ModContent.ItemType<>(), 20);
             recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
@@ -102,7 +102,7 @@ namespace Origins.Items.Armor.Riven {
         }
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
+            recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 20);
             //recipe.AddIngredient(ModContent.ItemType<>(), 15);
             recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);

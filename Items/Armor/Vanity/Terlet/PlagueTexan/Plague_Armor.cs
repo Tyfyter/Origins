@@ -23,7 +23,10 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
         public override void SetDefaults() {
             item.vanity = true;
         }
-	}
+        public override void DrawHands(ref bool drawHands, ref bool drawArms) {
+            drawHands = true;
+        }
+    }
     [AutoloadEquip(EquipType.Legs)]
 	public class Plague_Texan_Jeans : ModItem {
 		public override void SetStaticDefaults() {

@@ -24,6 +24,8 @@ namespace Origins.World {
         public int peatSold;
         public const float biomeShaderSmoothing = 0.025f;
         public byte worldEvil = 0;
+        private static double? _worldSurfaceLow;
+        public static double worldSurfaceLow => _worldSurfaceLow??Main.worldSurface-165;
         public bool defiledResurgence = true;
         public const byte evil_corruption = 0b0001;//1
         public const byte evil_crimson = 0b0010;//2
@@ -35,11 +37,16 @@ namespace Origins.World {
         public override void Load(TagCompound tag) {
             peatSold = tag.GetAsInt("peatSold");
             worldEvil = tag.GetByte("worldEvil");
+            if(tag.ContainsKey("worldSurfaceLow"))_worldSurfaceLow = tag.GetDouble("worldSurfaceLow");
             defiledResurgenceTiles = new List<(int, int)>(){};
             defiledAltResurgenceTiles = new List<(int, int, ushort)>(){};
         }
         public override TagCompound Save() {
-            return new TagCompound() { {"peatSold",  peatSold} , {"worldEvil",  worldEvil} };
+            TagCompound o = new TagCompound() { {"peatSold",  peatSold} , {"worldEvil",  worldEvil} };
+            if(_worldSurfaceLow.HasValue) {
+                o.Add("worldSurfaceLow", _worldSurfaceLow);
+            }
+            return o;
         }
         public override void ResetNearbyTileEffects() {
 			voidTiles = 0;
@@ -95,37 +102,7 @@ namespace Origins.World {
                 (ENQUEUE, ModContent.ItemType<Firespit>()),
                 (CHANGE_QUEUE, 11),
                 (ENQUEUE, ModContent.ItemType<Cryostrike>()));
-            /*chest = null;
-            int chestIndex = -1;
-            Queue<int> items = new Queue<int>();
-            items.Enqueue(ModContent.ItemType<Boiler_Pistol>());
-            items.Enqueue(ModContent.ItemType<Firespit>());
-            cache = chestLoots[4];
-            WeightedRandom<int> random;
-            int newLootType;
-            while(items.Count>0) {
-                random = cache.GetWeightedRandom();
-                lootType = random.Get();
-                chestIndex = WorldGen.genRand.Next(cache[lootType]);
-                chest = Main.chest[chestIndex];
-                newLootType = items.Dequeue();
-                chest.item[0].SetDefaults(newLootType);
-                chest.item[0].Prefix(-2);
-                cache[lootType].Remove(chestIndex);
-            }
-            chestIndex = -1;
-            items.Enqueue(ModContent.ItemType<Cryostrike>());
-            cache = chestLoots[11];
-            while(items.Count>0) {
-                random = cache.GetWeightedRandom();
-                lootType = random.Get();
-                chestIndex = WorldGen.genRand.Next(cache[lootType]);
-                chest = Main.chest[chestIndex];
-                newLootType = items.Dequeue();
-                chest.item[0].SetDefaults(newLootType);
-                chest.item[0].Prefix(-2);
-                cache[lootType].Remove(chestIndex);
-            }*/
+            _worldSurfaceLow = WorldGen.worldSurfaceLow;
         }
         public static void ApplyLootQueue(ChestLootCache[] lootCache, params (LootQueueAction action, int param)[] actions) {
             int lootType;

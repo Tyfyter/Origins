@@ -436,6 +436,9 @@ namespace Origins.World {
                                 tile.active(true);
                             }
                             SquareTileFrame(k,l);
+					        if (Main.netMode == NetmodeID.Server) {
+						        NetMessage.SendTileSquare(-1, k, l, 1);
+					        }
 						}
 					}
 				}

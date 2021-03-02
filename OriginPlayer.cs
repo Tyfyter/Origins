@@ -41,6 +41,7 @@ namespace Origins {
         public bool dimStarlight = false;
         public byte dimStarlightCooldown = 0;
         public bool madHand = false;
+        public bool fiberglassDagger = false;
 
         public float explosiveDamage = 1;
         public int explosiveCrit = 4;
@@ -90,6 +91,7 @@ namespace Origins {
             bombHandlingDevice = false;
             dimStarlight = false;
             madHand = false;
+            fiberglassDagger = false;
             explosiveDamage = 1f;
             explosiveCrit = 4;
             explosiveThrowSpeed = 1f;
@@ -128,6 +130,9 @@ namespace Origins {
             if(fiberglassSet) {
                 flat+=4;
             }
+            if(fiberglassDagger) {
+                flat+=8;
+            }
             if(rivenSet&&item.summon&&!ItemChecking) {
                 mult*=rivenMult;
             }
@@ -162,10 +167,13 @@ namespace Origins {
             }
             /*if(OriginGlobalProj.IsExplosiveProjectile(proj)) {
                 damage+=target.defense/10;
-            }*/
+            }
             if(fiberglassSet) {
                 damage+=4;
             }
+            if(fiberglassDagger) {
+                damage+=8;
+            }*/
             if(proj.melee && felnumShock > 29) {
                 damage+=(int)(felnumShock / 15);
                 felnumShock = 0;
@@ -257,28 +265,6 @@ namespace Origins {
             ZoneDefiledProgress = Math.Min(OriginWorld.defiledTiles - (DefiledWastelands.NeededTiles-DefiledWastelands.ShaderTileCount), DefiledWastelands.ShaderTileCount)/DefiledWastelands.ShaderTileCount;
             LinearSmoothing(ref ZoneVoidProgressSmoothed, ZoneVoidProgress, OriginWorld.biomeShaderSmoothing);
             LinearSmoothing(ref ZoneDefiledProgressSmoothed, ZoneDefiledProgress, OriginWorld.biomeShaderSmoothing);
-            /*if(ZoneVoidProgress!=ZoneVoidProgressSmoothed) {
-                if(Math.Abs(ZoneVoidProgress-ZoneVoidProgressSmoothed)<OriginWorld.biomeShaderSmoothing) {
-                    ZoneVoidProgressSmoothed = ZoneVoidProgress;
-                } else {
-                    if(ZoneVoidProgress>ZoneVoidProgressSmoothed) {
-                        ZoneVoidProgressSmoothed+=OriginWorld.biomeShaderSmoothing;
-                    }else if(ZoneVoidProgress<ZoneVoidProgressSmoothed) {
-                        ZoneVoidProgressSmoothed-=OriginWorld.biomeShaderSmoothing;
-                    }
-                }
-            }
-            if(ZoneDefiledProgress!=ZoneDefiledProgressSmoothed) {
-                if(Math.Abs(ZoneDefiledProgress-ZoneDefiledProgressSmoothed)<OriginWorld.biomeShaderSmoothing) {
-                    ZoneDefiledProgressSmoothed = ZoneDefiledProgress;
-                } else {
-                    if(ZoneDefiledProgress>ZoneDefiledProgressSmoothed) {
-                        ZoneDefiledProgressSmoothed+=OriginWorld.biomeShaderSmoothing;
-                    }else if(ZoneDefiledProgress<ZoneDefiledProgressSmoothed) {
-                        ZoneDefiledProgressSmoothed-=OriginWorld.biomeShaderSmoothing;
-                    }
-                }
-            }*/
         }
         public override bool CustomBiomesMatch(Player other) {
             OriginPlayer modOther = other.GetModPlayer<OriginPlayer>();
@@ -353,7 +339,7 @@ namespace Origins {
         }
         public override void ModifyDrawInfo(ref PlayerDrawInfo drawInfo) {
             if(PlagueSight) drawInfo.eyeColor = new Color(255,215,0);
-            if(drawInfo.drawPlayer.body==Origins.PlagueTexanJacketID) drawInfo.drawHands = true;
+            //if(drawInfo.drawPlayer.body==Origins.PlagueTexanJacketID) drawInfo.drawHands = true;
         }
         public override void FrameEffects() {
             for(int i = 13; i < 18+player.extraAccessorySlots; i++) {
