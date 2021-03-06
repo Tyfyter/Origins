@@ -9,7 +9,7 @@ namespace Origins.Items.Tools {
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.MoltenHamaxe);
+            item.CloneDefaults(ItemID.TitaniumWaraxe);
 			item.damage = 31;
 			item.melee = true;
             item.pick = 0;

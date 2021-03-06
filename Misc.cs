@@ -146,16 +146,18 @@ namespace Origins {
         }
     }
     public class DrawAnimationManual : DrawAnimation {
-	    public DrawAnimationManual(int frameCount) {
+        public bool Vertical;
+	    public DrawAnimationManual(int frameCount, bool vertical = false) {
 		    Frame = 0;
 		    FrameCounter = 0;
 		    FrameCount = frameCount;
+            Vertical = vertical;
 	    }
 
 	    public override void Update() {}
 
 	    public override Rectangle GetFrame(Texture2D texture) {
-		    return texture.Frame(FrameCount, 1, Frame, 0);
+		    return Vertical?texture.Frame(1, FrameCount, 0, Frame):texture.Frame(FrameCount, 1, Frame, 0);
 	    }
     }
     public abstract class IAnimatedItem : ModItem{
