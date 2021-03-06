@@ -30,7 +30,7 @@ namespace Origins {
         public static bool[] ExplosiveAmmo;
 
         public static Dictionary<int, int> ExplosiveBaseDamage;
-        public static List<int> ExplosiveModOnHit;
+        public static bool[] ExplosiveModOnHit;
         public static ushort[] VanillaElements;
 
         public static int FelnumHeadArmorID;
@@ -58,13 +58,6 @@ namespace Origins {
             ExplosiveBaseDamage.Add(ItemID.Dynamite, 175);
             ExplosiveBaseDamage.Add(ItemID.StickyDynamite, 175);
             ExplosiveBaseDamage.Add(ItemID.BouncyDynamite, 175);
-            ExplosiveModOnHit.Add(ProjectileID.Bomb);
-            ExplosiveModOnHit.Add(ProjectileID.StickyBomb);
-            ExplosiveModOnHit.Add(ProjectileID.BouncyBomb);
-            ExplosiveModOnHit.Add(ProjectileID.BombFish);
-            ExplosiveModOnHit.Add(ProjectileID.Dynamite);
-            ExplosiveModOnHit.Add(ProjectileID.StickyDynamite);
-            ExplosiveModOnHit.Add(ProjectileID.BouncyDynamite);
         #endregion vanilla explosive base damage registry
         #region armor slot ids
             FelnumHeadArmorID = ModContent.GetInstance<Felnum_Helmet>().item.headSlot;
@@ -112,7 +105,6 @@ namespace Origins {
         }
         public override void Load() {
             ExplosiveBaseDamage = new Dictionary<int, int>();
-            ExplosiveModOnHit = new List<int>() {};
             //Explosive item types
             NonFishItem.ResizeItemArrays+=() => {
                 ExplosiveItems = ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn.ToArray();
@@ -152,6 +144,15 @@ namespace Origins {
                 ExplosiveProjectiles[ProjectileID.ProximityMineII] = true;
                 ExplosiveProjectiles[ProjectileID.ProximityMineIII] = true;
                 ExplosiveProjectiles[ProjectileID.ProximityMineIV] = true;
+
+                ExplosiveModOnHit = new bool[ProjectileID.Sets.CanDistortWater.Length];
+                ExplosiveModOnHit[ProjectileID.Bomb] = true;
+                ExplosiveModOnHit[ProjectileID.StickyBomb] = true;
+                ExplosiveModOnHit[ProjectileID.BouncyBomb] = true;
+                ExplosiveModOnHit[ProjectileID.BombFish] = true;
+                ExplosiveModOnHit[ProjectileID.Dynamite] = true;
+                ExplosiveModOnHit[ProjectileID.StickyDynamite] = true;
+                ExplosiveModOnHit[ProjectileID.BouncyDynamite] = true;
 
                 ExplosiveAmmo = ExplosiveItems.ToArray();
                 ExplosiveAmmo[AmmoID.Rocket] = true;

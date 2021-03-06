@@ -19,7 +19,6 @@ namespace Origins.Items.Tools {
 			item.useAnimation = 22;
 			item.knockBack = 4f;
 			item.value = 3600;
-			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item1;
 		}
         public override float UseTimeMultiplier(Player player) {

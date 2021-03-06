@@ -14,14 +14,13 @@ namespace Origins.Items.Tools {
 			item.melee = true;
             item.pick = 0;
             item.hammer = 65;
-            item.axe = 110;
+            item.axe = 22;
 			item.width = 34;
 			item.height = 34;
 			item.useTime = 22;
 			item.useAnimation = 22;
 			item.knockBack = 4f;
 			item.value = 3600;
-			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item1;
 		}
         public override float UseTimeMultiplier(Player player) {

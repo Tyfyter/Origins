@@ -82,13 +82,12 @@ namespace Origins.World {
             }
         }
         public override void PostWorldGen() {
-            ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(56,0,2,4,11,12,13,15,16,17,50,51);//60 was included for some reason
+            ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(56,0,2,4,11,12,13,15,16,17,50,51);
             Chest chest;
             int lootType;
             ChestLootCache cache;
             for(int i = 0; i < Main.chest.Length; i++) {
                 chest = Main.chest[i];
-				// If you look at the sprite for Chests by extracting Tiles_21.xnb, you'll see that the nth chest is the ____ Chest. Since we are counting from 0, this is where n comes from. 36 comes from the width of each tile including padding.
 				if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers){
                     cache = chestLoots[Main.tile[chest.x, chest.y].frameX/36];
                     if(cache is null)continue;

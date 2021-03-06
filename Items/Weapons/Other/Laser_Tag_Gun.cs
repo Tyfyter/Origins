@@ -40,15 +40,20 @@ namespace Origins.Items.Weapons.Other {
             item.scale = 1;
 		}
         public override void UpdateInventory(Player player) {
+        }
+        int GetCritMod(Player player) {
             OriginPlayer modPlayer = player.GetModPlayer<OriginPlayer>();
-            int a = item.prefix;
-            item.SetDefaults(item.type);
-            if((modPlayer.oldBonuses&1)!=0||modPlayer.fiberglassSet) {
-                item.crit = 0;
-            }else if((modPlayer.oldBonuses&2)!=0||modPlayer.felnumSet) {
-                item.crit = -14;
+            int critMod = 0;
+            if((modPlayer.oldBonuses&1)!=0||modPlayer.fiberglassSet||modPlayer.fiberglassDagger) {
+                critMod = -50;
             }
-            item.Prefix(a);
+            if((modPlayer.oldBonuses&2)!=0||modPlayer.felnumSet) {
+                critMod = -64;
+            }
+            return critMod;
+        }
+        public override void GetWeaponCrit(Player player, ref int crit) {
+            if(player.HeldItem.type != item.type)crit+=GetCritMod(player);
         }
         public override Vector2? HoldoutOffset() {
             return new Vector2(3-(11*Main.player[item.owner].direction),0);
@@ -57,6 +62,9 @@ namespace Origins.Items.Weapons.Other {
             if(player.itemAnimation!=0) {
                 player.GetModPlayer<OriginPlayer>().ItemLayerWrench = true;
             }
+            int critMod = GetCritMod(player);
+            player.rangedCrit+=critMod;
+            player.magicCrit+=critMod;
         }
     }
     public class Laser_Tag_Laser : ModProjectile {

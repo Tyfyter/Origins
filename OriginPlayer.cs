@@ -46,6 +46,7 @@ namespace Origins {
         public float explosiveDamage = 1;
         public int explosiveCrit = 4;
         public float explosiveThrowSpeed = 1;
+        public float explosiveSelfDamage = 1;
 
         public bool ZoneVoid = false;
         public float ZoneVoidProgress = 0;
@@ -68,7 +69,7 @@ namespace Origins {
         public int wormHeadIndex = -1;
         public override void ResetEffects() {
             oldBonuses = 0;
-            if(fiberglassSet)oldBonuses|=1;
+            if(fiberglassSet||fiberglassDagger)oldBonuses|=1;
             if(felnumSet)oldBonuses|=2;
             if(!player.frozen) {
                 DrawShirt = false;
@@ -95,6 +96,7 @@ namespace Origins {
             explosiveDamage = 1f;
             explosiveCrit = 4;
             explosiveThrowSpeed = 1f;
+            explosiveSelfDamage = 1f;
             if(IsExplosive(player.HeldItem)) {
                 explosiveCrit += player.HeldItem.crit;
             }
@@ -127,11 +129,12 @@ namespace Origins {
         }
         public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat) {
             if(IsExplosive(item))add+=explosiveDamage-1;
+            bool ammoBased = item.useAmmo != AmmoID.None || (item.ammo != AmmoID.None && player.HeldItem.useAmmo == item.ammo);
             if(fiberglassSet) {
-                flat+=4;
+                flat+=ammoBased?2:4;
             }
             if(fiberglassDagger) {
-                flat+=8;
+                flat+=ammoBased?4:8;
             }
             if(rivenSet&&item.summon&&!ItemChecking) {
                 mult*=rivenMult;
@@ -162,18 +165,9 @@ namespace Origins {
             return true;
         }
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            if(Origins.ExplosiveModOnHit.Contains(proj.type)) {
+            if(Origins.ExplosiveModOnHit[proj.type]) {
                 damage = (int)(damage*(player.allDamage+explosiveDamage-1)*0.7f);
             }
-            /*if(OriginGlobalProj.IsExplosiveProjectile(proj)) {
-                damage+=target.defense/10;
-            }
-            if(fiberglassSet) {
-                damage+=4;
-            }
-            if(fiberglassDagger) {
-                damage+=8;
-            }*/
             if(proj.melee && felnumShock > 29) {
                 damage+=(int)(felnumShock / 15);
                 felnumShock = 0;
@@ -204,11 +198,15 @@ namespace Origins {
             }
         }
         public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
-            if(minerSet)
-                if(proj.owner == player.whoAmI && proj.friendly) {
-                    damage = (int)(damage/explosiveDamage);
-                    damage-=damage/5;
+            if(proj.owner == player.whoAmI && proj.friendly && OriginGlobalProj.IsExplosiveProjectile(proj)) {
+                if(minerSet) {
+                    explosiveSelfDamage-=0.2f;
+                    explosiveSelfDamage*=1/explosiveDamage;
+                    //damage = (int)(damage/explosiveDamage);
+                    //damage-=damage/5;
                 }
+                damage = (int)(damage*explosiveSelfDamage);
+            }
         }
         public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
             if(vendor.type==NPCID.Demolitionist&&item.type==ModContent.ItemType<Peat_Moss>()) {
