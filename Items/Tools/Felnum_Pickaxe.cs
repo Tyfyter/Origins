@@ -15,7 +15,7 @@ namespace Origins.Items.Tools {
             item.pick = 75;
 			item.width = 34;
 			item.height = 32;
-			item.useTime = 22;
+            item.useTime = 13;
 			item.useAnimation = 22;
 			item.knockBack = 4f;
 			item.value = 3600;

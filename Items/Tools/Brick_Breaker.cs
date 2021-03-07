@@ -15,8 +15,8 @@ namespace Origins.Items.Tools {
             item.hammer = 60;
 			item.width = 34;
 			item.height = 34;
-			item.useTime = 22;
-			item.useAnimation = 22;
+			item.useTime = 17;
+			item.useAnimation = 27;
 			item.knockBack = 4f;
 			item.value = 3600;
 			item.rare = ItemRarityID.Blue;
