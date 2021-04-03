@@ -36,7 +36,7 @@ namespace Origins.NPCs {
 		    }
         }
         void GenFelnumOre() {
-            if(Main.netMode != NetmodeID.MultiplayerClient) {
+            if(!Main.gameMenu && Main.netMode != NetmodeID.MultiplayerClient) {
                 int x = 0, y = 0;
                 int felnumOre = ModContent.TileType<Felnum_Ore>();
                 int type = TileID.BlueDungeonBrick;

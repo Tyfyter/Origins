@@ -30,6 +30,7 @@ namespace Origins.NPCs.Fiberglass {
             npc.alpha = 200;
         }
         public override void AI() {
+            npc.velocity *= 0.85f;
             npc.TargetClosest();
 		    npc.spriteDirection = npc.direction;
 		    npc.rotation = (npc.Center-Main.player[npc.target].Center).ToRotation();
@@ -56,6 +57,19 @@ namespace Origins.NPCs.Fiberglass {
         public override void NPCLoot() {
             if(Main.rand.Next(10)==0)Item.NewItem(npc.Center, ModContent.ItemType<Broken_Fiberglass_Bow>());
         }
+        public override void HitEffect(int hitDirection, double damage) {
+            npc.velocity.X += hitDirection * 3;
+            if(damage>npc.life*2f){
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
+            }
+            if(npc.life<0) {
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
+            } else if(damage>npc.lifeMax*0.5f){
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
+            }
+        }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor) {
             for(int i = npc.oldPos.Length - 1; i > 0; i--) {
                 spriteBatch.Draw(Main.npcTexture[npc.type], npc.oldPos[i] + new Vector2(13.5f,13.5f) - Main.screenPosition, new Rectangle(0,0,18,36), oldColor[i], npc.oldRot[i], new Vector2(9,18), 1f, oldDir[i] != 1?SpriteEffects.None:SpriteEffects.FlipHorizontally, 1f);
@@ -71,9 +85,8 @@ namespace Origins.NPCs.Fiberglass {
             float rot = npc.rotation+MathHelper.Pi/2f;
             WeightedRandom<Vector2> options = new WeightedRandom<Vector2>();
             for(int i = 0; i < 16; i++) {
-                int length = 0;
                 Vector2 unit = new Vector2(4, 0).RotatedBy(rot+Main.rand.NextFloat(-0.05f, 0.05f));
-                Vector2 pos = GetLoSLength(Main.player[npc.target].Center, new Point(8,8), unit, new Point(8,8), 75, out length);
+                Vector2 pos = GetLoSLength(Main.player[npc.target].Center, new Point(8,8), unit, new Point(8,8), 75, out int length);
                 pos-=unit*(length<75 ? 4 : 1);
                 if(length>=32) {
                     options.Add(pos, length*Main.rand.NextFloat(0.9f, 1.1f));
@@ -82,9 +95,8 @@ namespace Origins.NPCs.Fiberglass {
                 rot+=MathHelper.Pi/16f;
             }
             if(options.elements.Count==0)for(int i = 0; i < 16; i++) {
-                int length = 0;
                 Vector2 unit = new Vector2(4, 0).RotatedBy(rot+Main.rand.NextFloat(-0.05f, 0.05f));
-                Vector2 pos = GetLoSLength(Main.player[npc.target].Center, new Point(8,8), unit, new Point(8,8), 75, out length);
+                Vector2 pos = GetLoSLength(Main.player[npc.target].Center, new Point(8,8), unit, new Point(8,8), 75, out int length);
                 pos-=unit*(length<75 ? 4 : 1);
                 if(length>=24) {
                     options.Add(pos, length*Main.rand.NextFloat(0.9f, 1.1f));
@@ -115,6 +127,7 @@ namespace Origins.NPCs.Fiberglass {
             npc.width = npc.height = 27;
         }
         public override void AI() {
+            npc.velocity *= 0.85f;
             npc.TargetClosest();
 		    npc.spriteDirection = npc.direction;
 		    npc.rotation = (npc.Center-Main.player[npc.target].Center).ToRotation();
@@ -143,6 +156,19 @@ namespace Origins.NPCs.Fiberglass {
                     Main.projectile[proj].friendly = false;
                     Main.projectile[proj].hide = false;
                 }
+            }
+        }
+        public override void HitEffect(int hitDirection, double damage) {
+            npc.velocity.X += hitDirection * 3;
+            if(damage>npc.life*2f){
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
+            }
+            if(npc.life<0) {
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
+            } else if(damage>npc.lifeMax*0.5f){
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
             }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor) {
@@ -292,6 +318,22 @@ namespace Origins.NPCs.Fiberglass {
             npc.localAI[0] = 0;
             npc.rotation%=MathHelper.Pi;
             npc.noTileCollide = true;
+        }
+        public override void NPCLoot() {
+            if(Main.rand.Next(7)==0)Item.NewItem(npc.Center, ModContent.ItemType<Broken_Fiberglass_Sword>());
+        }
+        public override void HitEffect(int hitDirection, double damage) {
+            npc.velocity.X += hitDirection * 3;
+            if(damage>npc.life*2f){
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
+            }
+            if(npc.life<0) {
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
+            } else if(damage>npc.lifeMax*0.5f){
+                Gore.NewGore(npc.position, npc.velocity, mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
+            }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor) {
             for(int i = npc.oldPos.Length - 1; i > 0; i--) {

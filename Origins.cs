@@ -273,6 +273,16 @@ namespace Origins {
             Music.Dusk = MusicID.Eerie;
             Music.Defiled = MusicID.Corruption;
             Music.UndergroundDefiled = MusicID.UndergroundCorruption;
+            /*On.Terraria.NPC.UpdateCollision+=(orig, self)=>{
+                if(self.modNPC is ITileCollideNPC tcnpc) {
+                    tcnpc.PreUpdateCollision();
+                    orig(self);
+                    tcnpc.PostUpdateCollision();
+                } else {
+                    orig(self);
+                }
+            };*/
+            On.Terraria.NPC.GetMeleeCollisionData += NPC_GetMeleeCollisionData;
             On.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
             On.Terraria.WorldGen.Convert+=OriginWorld.ConvertHook;
             On.Terraria.Item.NewItem_int_int_int_int_int_int_bool_int_bool_bool+=OriginGlobalItem.NewItemHook;
@@ -294,6 +304,17 @@ namespace Origins {
             }
             //IL.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
         }
+
+        private void NPC_GetMeleeCollisionData(On.Terraria.NPC.orig_GetMeleeCollisionData orig, Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect) {
+            NPC self = Main.npc[enemyIndex];
+            MeleeCollisionNPCData.knockbackMult = 1f;
+            if(self.modNPC is IMeleeCollisionDataNPC meleeNPC) {
+                meleeNPC.GetMeleeCollisionData(victimHitbox, enemyIndex, ref specialHitSetter, ref damageMultiplier, ref npcRect, ref MeleeCollisionNPCData.knockbackMult);
+            } else {
+                orig(victimHitbox, enemyIndex, ref specialHitSetter, ref damageMultiplier, ref npcRect);
+            }
+        }
+
         public override void Unload() {
             ExplosiveProjectiles = null;
             ExplosiveItems = null;

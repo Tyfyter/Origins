@@ -62,23 +62,26 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         public override bool AltFunctionUse(Player player) {
             return true;
         }
+        public override void GetWeaponKnockback(Player player, ref float knockback) {
+            if(player.altFunctionUse == 2) knockback *= 2.1111111111111111111111111111111f;
+        }
 
         public override bool CanUseItem(Player player) {
             if(player.altFunctionUse == 2) {
-			    item.useTime = 1;
-			    item.useAnimation = 16;
+			    //item.useTime = 1;
+			    //item.useAnimation = 16;
 			    item.useStyle = 5;
-			    item.knockBack = 19;
+			    //item.knockBack = 19;
                 item.shoot = ModContent.ProjectileType<Felnum_Broadsword_Stab>();
                 item.shootSpeed = 3.4f;
                 item.noUseGraphic = true;
                 item.noMelee = true;
 			    item.UseSound = null;
             } else {
-			    item.useTime = 16;
-			    item.useAnimation = 16;
+			    //item.useTime = 16;
+			    //item.useAnimation = 16;
 			    item.useStyle = 1;
-			    item.knockBack = 9;
+			    //item.knockBack = 9;
                 item.shoot = ProjectileID.None;
                 item.shootSpeed = 0;
                 item.noUseGraphic = false;
@@ -110,6 +113,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack){
             if(player.controlUseTile&&(charge>=15||player.CheckMana(4, true))){
+                player.itemTime = 0;
                 player.itemAnimation = 5;
                 if(charge<15){
                     if(++charge>=15)for(int i = 0; i < 3; i++){
@@ -138,11 +142,11 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             spriteBatch.Draw(texture, position, Animation.GetFrame(texture), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
             return false;
         }
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
+        /*public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
             Texture2D texture = Main.itemTexture[item.type];
             spriteBatch.Draw(texture, item.position-Main.screenPosition, Animation.GetFrame(texture), lightColor, 0f, default(Vector2), scale, SpriteEffects.None, 0f);
             return false;
-        }
+        }*/
         public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit) {
             damage+=(damage-21)/2;
         }

@@ -208,6 +208,12 @@ namespace Origins {
                 damage = (int)(damage*explosiveSelfDamage);
             }
         }
+        public override void OnHitByNPC(NPC npc, int damage, bool crit) {
+            if(!player.noKnockback && damage!=0) {
+                player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
+            }
+            MeleeCollisionNPCData.knockbackMult = 1f;
+        }
         public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
             if(vendor.type==NPCID.Demolitionist&&item.type==ModContent.ItemType<Peat_Moss>()) {
                 OriginWorld originWorld = ModContent.GetInstance<OriginWorld>();

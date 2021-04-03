@@ -146,23 +146,38 @@ namespace Origins {
         }
     }
     public class DrawAnimationManual : DrawAnimation {
-        public bool Vertical;
-	    public DrawAnimationManual(int frameCount, bool vertical = false) {
+	    public DrawAnimationManual(int frameCount) {
 		    Frame = 0;
 		    FrameCounter = 0;
 		    FrameCount = frameCount;
-            Vertical = vertical;
+            TicksPerFrame = -1;
 	    }
 
 	    public override void Update() {}
 
 	    public override Rectangle GetFrame(Texture2D texture) {
-		    return Vertical?texture.Frame(1, FrameCount, 0, Frame):texture.Frame(FrameCount, 1, Frame, 0);
+            if(TicksPerFrame==-1)FrameCounter = 0;
+		    return texture.Frame(FrameCount, 1, Frame, 0);
 	    }
     }
     public abstract class IAnimatedItem : ModItem{
         public abstract DrawAnimation Animation { get; }
         public virtual Color? GlowmaskTint { get => null; }
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
+            Texture2D texture = Main.itemTexture[item.type];
+            spriteBatch.Draw(texture, item.position-Main.screenPosition, Animation.GetFrame(texture), lightColor, 0f, default(Vector2), scale, SpriteEffects.None, 0f);
+            return false;
+        }
+    }
+    /*public interface ITileCollideNPC {
+        void PreUpdateCollision();
+        void PostUpdateCollision();
+    }*/
+    public interface IMeleeCollisionDataNPC {
+        void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult);
+    }
+    public static class MeleeCollisionNPCData {
+        public static float knockbackMult = 1f;
     }
     public interface IElementalItem {
         ushort Element { get; }
@@ -712,6 +727,12 @@ namespace Origins {
             double distance = phi > Math.PI ? (Math.PI*2) - phi : phi;
             return distance;
         }
+        public static float AngleDif(float alpha, float beta, out int dir) {
+            float phi = Math.Abs(beta - alpha) % MathHelper.TwoPi;       // This is either the distance or 360 - distance
+            dir = (phi > MathHelper.Pi)?-1:1;
+            float distance = phi > MathHelper.Pi ? MathHelper.TwoPi - phi : phi;
+            return distance;
+        }
         public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox) {
             float xoffset = 10f;
             float yoffset = 24f;
@@ -817,6 +838,18 @@ namespace Origins {
                     smoothed = target;
                 } else {
                     smoothed = Vector2.Lerp(smoothed, target, rate);
+                }
+            }
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void AngularSmoothing(ref float smoothed, float target, float rate, bool snap) {
+            if(target!=smoothed) {
+                float diff = AngleDif(smoothed, target, out int dir);
+                diff = Math.Abs(diff);
+                if(diff<rate||(snap&&diff>MathHelper.Pi-rate)) {
+                    smoothed = target;
+                } else {
+                    smoothed-=rate*dir;
                 }
             }
         }

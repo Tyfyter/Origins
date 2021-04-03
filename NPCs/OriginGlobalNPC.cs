@@ -44,6 +44,10 @@ namespace Origins.NPCs {
             }
             return true;
         }
+        public override void OnHitNPC(NPC npc, NPC target, int damage, float knockback, bool crit) {
+            knockback*=MeleeCollisionNPCData.knockbackMult;
+            MeleeCollisionNPCData.knockbackMult = 1f;
+        }
         public override bool PreNPCLoot(NPC npc) {
             byte worldEvil = ModContent.GetInstance<OriginWorld>().worldEvil;
             if((worldEvil&4)!=0) {

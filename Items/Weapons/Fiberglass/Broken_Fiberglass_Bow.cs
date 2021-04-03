@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -67,8 +68,8 @@ namespace Origins.Items.Weapons.Fiberglass {
                     strung+=25;
                 }
 			    item.noUseGraphic = true;
-			    item.useTime = 20;
-			    item.useAnimation = 20;
+                //item.useTime = 4;//20;
+                //item.useAnimation = 4;//20;
 			    item.useStyle = 1;
                 item.shoot = ProjectileID.None;
 			    item.UseSound = null;
@@ -79,6 +80,11 @@ namespace Origins.Items.Weapons.Fiberglass {
             if(strung<=0)return false;
             SetDefaults();
             strung--;
+            if(strung <= 0) {
+                Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 102, 0.75f, 1);
+                Vector2 pos = player.Center + (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * (10 - player.direction * 2);
+                Gore.NewGoreDirect(pos, player.velocity, mod.GetGoreSlot("Gores/NPCs/FG2_Gore")).position = pos;
+            }
             return base.CanUseItem(player);
         }
         public override bool ConsumeAmmo(Player player) {
@@ -92,7 +98,8 @@ namespace Origins.Items.Weapons.Fiberglass {
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
             if(Main.playerInventory)return;
             float inventoryScale = Main.inventoryScale;
-			ChatManager.DrawColorCodedStringWithShadow(spriteBatch, Main.fontItemStack, strung.ToString(), position + new Vector2(8f, -4f) * scale, Colors.RarityNormal, 0f, Vector2.Zero, new Vector2(scale * 0.8f), -1f, scale);
+            string str = strung.ToString();
+			ChatManager.DrawColorCodedStringWithShadow(spriteBatch, Main.fontItemStack, str, position + new Vector2(16f+str.Length, -4f) * scale, Colors.RarityNormal, 0f, Vector2.Zero, new Vector2(scale * 0.8f), -1f, scale);
         }
     }
 }
