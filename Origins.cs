@@ -273,15 +273,13 @@ namespace Origins {
             Music.Dusk = MusicID.Eerie;
             Music.Defiled = MusicID.Corruption;
             Music.UndergroundDefiled = MusicID.UndergroundCorruption;
-            /*On.Terraria.NPC.UpdateCollision+=(orig, self)=>{
-                if(self.modNPC is ITileCollideNPC tcnpc) {
-                    tcnpc.PreUpdateCollision();
-                    orig(self);
-                    tcnpc.PostUpdateCollision();
-                } else {
-                    orig(self);
-                }
-            };*/
+            On.Terraria.NPC.UpdateCollision+=(orig, self)=>{
+                ITileCollideNPC tcnpc = self.modNPC as ITileCollideNPC;
+                int realID = self.type;
+                self.type = tcnpc?.CollisionType??realID;
+                orig(self);
+                self.type = realID;
+            };
             On.Terraria.NPC.GetMeleeCollisionData += NPC_GetMeleeCollisionData;
             On.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
             On.Terraria.WorldGen.Convert+=OriginWorld.ConvertHook;

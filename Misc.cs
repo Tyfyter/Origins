@@ -169,10 +169,9 @@ namespace Origins {
             return false;
         }
     }
-    /*public interface ITileCollideNPC {
-        void PreUpdateCollision();
-        void PostUpdateCollision();
-    }*/
+    public interface ITileCollideNPC {
+        int CollisionType { get; }
+    }
     public interface IMeleeCollisionDataNPC {
         void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult);
     }
