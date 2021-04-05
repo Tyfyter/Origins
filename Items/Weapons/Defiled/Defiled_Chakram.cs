@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Defiled {
 	public class Defiled_Chakram : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled_Chakram");
+			DisplayName.SetDefault("Krakram");
 			Tooltip.SetDefault("Very pointy");
 		}
 		public override void SetDefaults() {
