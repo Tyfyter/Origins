@@ -347,7 +347,7 @@ namespace Origins {
         }
         public override void FrameEffects() {
             for(int i = 13; i < 18+player.extraAccessorySlots; i++) {
-                if(player.armor[i].type==Plague_Texan_Sight.id)Plague_Texan_Sight.ApplyVisuals(player);
+                if(player.armor[i].type==Plague_Texan_Sight.ID)Plague_Texan_Sight.ApplyVisuals(player);
             }
         }
         //public static PlayerLayer PlagueEyes = new PlayerLayer("Origins", "PlagueEyes", null, (drawInfo)=> {drawInfo.eyeColor = Color.Goldenrod;});

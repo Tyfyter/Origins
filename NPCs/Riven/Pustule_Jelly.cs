@@ -10,12 +10,10 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 
 namespace Origins.NPCs.Riven {
-    public class Pustule_Jelly : ModNPC{
-        public static int id { get; private set; }
+    public class Pustule_Jelly : ModNPC {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Pustule Jelly");
             Main.npcFrameCount[npc.type] = 4;
-            id = npc.type;
         }
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.BloodJelly);

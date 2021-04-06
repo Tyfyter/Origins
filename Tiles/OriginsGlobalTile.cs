@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 namespace Origins.Tiles {
     public class OriginsGlobalTile : GlobalTile {
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged) {
-            if(Main.tile[i, j - 1].type == Defiled_Altar.id && type != Defiled_Altar.id)return false;
+            if(Main.tile[i, j - 1].type == Defiled_Altar.ID && type != Defiled_Altar.ID)return false;
             return true;
         }
         public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak) {

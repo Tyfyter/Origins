@@ -149,11 +149,11 @@ namespace Origins.Items.Weapons.Explosives {
     }
     public class Crystal_Grenade_Shard : ModProjectile {
         public override string Texture => "Origins/Projectiles/Pixel";
-        static int id = 0;
+        public static int ID { get; private set; } = 0;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Shard");
-            id = projectile.type;
-            ProjectileID.Sets.TrailingMode[id] = 0;
+            ID = projectile.type;
+            ProjectileID.Sets.TrailingMode[ID] = 0;
             if(Main.netMode!=NetmodeID.Server) {
                 Main.projectileTexture[94] = Main.instance.OurLoad<Texture2D>(string.Concat(new object[]{"Images",Path.DirectorySeparatorChar,"Projectile_94"}));
 		        Main.projectileLoaded[94] = true;
@@ -194,7 +194,7 @@ namespace Origins.Items.Weapons.Explosives {
             return true;
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor) {
-            projectile.type = id;
+            projectile.type = ID;
         }
     }
 }

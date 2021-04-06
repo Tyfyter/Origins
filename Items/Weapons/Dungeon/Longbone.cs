@@ -41,10 +41,10 @@ namespace Origins.Items.Weapons.Dungeon {
         }
     }
     public class Bone_Bolt : ModProjectile {
-        public static int id = -1;
+        public static int ID { get; private set; } = -1;
         public override string Texture => "Terraria/Projectile_117";
         public override void SetStaticDefaults() {
-            id = projectile.type;
+            ID = projectile.type;
             DisplayName.SetDefault("Bone Bolt");
         }
         public override void SetDefaults() {
@@ -58,14 +58,14 @@ namespace Origins.Items.Weapons.Dungeon {
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             projectile.type = (int)projectile.localAI[0];
             projectile.StatusNPC(target.whoAmI);
-            projectile.type = id;
+            projectile.type = ID;
             if((int)projectile.localAI[0] == ProjectileID.HellfireArrow) {
                 projectile.Kill();
             }
         }
         public override bool PreKill(int timeLeft) {
             if((int)projectile.localAI[0] == ProjectileID.HellfireArrow) {
-                int t = Bone_Shard.id;
+                int t = Bone_Shard.ID;
                 Longbone.t = (int)projectile.localAI[0];
                 Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedByRandom(0.3f), t, projectile.damage/5, 2, projectile.owner).localNPCImmunity = projectile.localNPCImmunity;
                 Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedByRandom(0.3f), t, projectile.damage/5, 2, projectile.owner).localNPCImmunity = projectile.localNPCImmunity;
@@ -83,7 +83,7 @@ namespace Origins.Items.Weapons.Dungeon {
             return true;
         }
         public override void Kill(int timeLeft) {
-            int t = Bone_Shard.id;
+            int t = Bone_Shard.ID;
             Longbone.t = (int)projectile.localAI[0];
             Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedByRandom(0.3f), t, projectile.damage/5, 2, projectile.owner).localNPCImmunity = projectile.localNPCImmunity;
             Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedByRandom(0.3f), t, projectile.damage/5, 2, projectile.owner).localNPCImmunity = projectile.localNPCImmunity;
@@ -163,10 +163,10 @@ namespace Origins.Items.Weapons.Dungeon {
         }
     }
     public class Bone_Shard : ModProjectile {
-        public static int id = -1;
+        public static int ID { get; private set; } = -1;
         public override string Texture => "Origins/Projectiles/Weapons/BoneS_hard";
         public override void SetStaticDefaults() {
-            id = projectile.type;
+            ID = projectile.type;
             DisplayName.SetDefault("BoneS hard");
         }
         public override void SetDefaults() {
@@ -179,7 +179,7 @@ namespace Origins.Items.Weapons.Dungeon {
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             projectile.type = (int)projectile.localAI[0];
             projectile.StatusNPC(target.whoAmI);
-            projectile.type = id;
+            projectile.type = ID;
             if((int)projectile.localAI[0] == ProjectileID.HellfireArrow) {
                 projectile.Kill();
             }

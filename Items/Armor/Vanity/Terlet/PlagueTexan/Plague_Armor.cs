@@ -38,11 +38,11 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
         }
     }
 	public class Plague_Texan_Sight : ModItem {
-        internal static int id;
+        public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Plague Texan's Gift");
 			Tooltip.SetDefault("Great for impersonating Origins devs!'\nForesight is '20/20'");
-            id = item.type;
+            ID = item.type;
 		}
         public override void SetDefaults() {
             item.accessory = true;

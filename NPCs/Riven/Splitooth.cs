@@ -11,12 +11,10 @@ using Terraria.DataStructures;
 
 namespace Origins.NPCs.Riven {
     public class Splitooth : ModNPC, ITileCollideNPC {
-        public static int id { get; private set; }
         public int CollisionType => NPCID.SandsharkCrimson;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Splitooth");
             Main.npcFrameCount[npc.type] = 4;
-            id = npc.type;
         }
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.SandsharkCrimson);

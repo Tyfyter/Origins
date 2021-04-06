@@ -27,7 +27,7 @@ namespace Origins.NPCs {
             }
         }
         public override bool PreAI(NPC npc) {
-            if(npc.HasBuff(ModContent.BuffType<ImpaledBuff>())) {
+            if(npc.HasBuff(Impaled_Debuff.ID)) {
                 //npc.position = npc.oldPosition;//-=npc.velocity;
                 npc.velocity = Vector2.Zero;
                 return false;
@@ -35,7 +35,7 @@ namespace Origins.NPCs {
             return true;
         }
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot) {
-            if(npc.HasBuff(ModContent.BuffType<ImpaledBuff>()))return false;
+            if(npc.HasBuff(Impaled_Debuff.ID)||npc.HasBuff(Stunned_Debuff.ID))return false;
             return base.CanHitPlayer(npc, target, ref cooldownSlot);
         }
         public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) {

@@ -12,6 +12,8 @@ using Terraria.ModLoader.IO;
 namespace Origins.Items.Weapons.Felnum.Tier2 {
     //this took seven and a half hours to make
 	public class Felnum_Broadsword : IAnimatedItem {
+        public const int baseDamage = 58;
+
         public override bool CloneNewInstances => true;
         internal static DrawAnimationManual animation;
         public override DrawAnimation Animation {
@@ -30,11 +32,11 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 			Main.RegisterItemAnimation(item.type, animation);
 		}
 		public override void SetDefaults() {
-			item.damage = 58;
+			item.damage = baseDamage;
 			item.melee = true;
 			item.width = 42;
 			item.height = 42;
-			item.useTime = 16;
+			item.useTime = 48;
 			item.useAnimation = 16;
 			item.useStyle = 1;
 			item.knockBack = 9;
@@ -82,8 +84,8 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 			    //item.useAnimation = 16;
 			    item.useStyle = 1;
 			    //item.knockBack = 9;
-                item.shoot = ProjectileID.None;
-                item.shootSpeed = 0;
+                item.shoot = ModContent.ProjectileType<Felnum_Broadsword_Shard>();
+                item.shootSpeed = 6.5f;
                 item.noUseGraphic = false;
                 item.noMelee = false;
 			    item.UseSound = SoundID.Item1;
@@ -112,27 +114,43 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             }
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack){
-            if(player.controlUseTile&&(charge>=15||player.CheckMana(4, true))){
-                player.itemTime = 0;
-                player.itemAnimation = 5;
-                if(charge<15){
-                    if(++charge>=15)for(int i = 0; i < 3; i++){
-                        int a = Dust.NewDust(position-new Vector2(speedX,speedY), 0, 0, 92);
+            if(player.altFunctionUse == 2) {
+                if(player.controlUseTile && (charge >= 15 || frame == 0 || player.CheckMana(7, true))) {
+                    player.itemTime = 0;
+                    player.itemAnimation = 5;
+                    if(charge < 15) {
+                        if(++charge >= 15)
+                            for(int i = 0; i < 3; i++) {
+                                int a = Dust.NewDust(position - new Vector2(speedX, speedY), 0, 0, 92);
+                                Main.dust[a].noGravity = true;
+                            }
+                    } else if(Main.GameUpdateCount % 12 <= 1) {
+                        int a = Dust.NewDust(position - new Vector2(speedX, speedY), 0, 0, 92);
                         Main.dust[a].noGravity = true;
                     }
-                }else if(Main.GameUpdateCount%12<=1){
-                    int a = Dust.NewDust(position-new Vector2(speedX,speedY), 0, 0, 92);
-                    Main.dust[a].noGravity = true;
+                    return false;
                 }
-                return false;
-            }
-            if(charge>=15) {
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, ai1:animation.Frame>0?0:-1);
-                charge = 0;
-                player.itemAnimation = 16;
-                player.itemAnimationMax = 16;
-                if(frame==5) {
-                    Main.PlaySound(2, (int)position.X, (int)position.Y, 122, 0.5f, 1f);
+                if(charge >= 15) {
+                    Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, ai1: animation.Frame > 0 ? 0 : -1);
+                    charge = 0;
+                    player.itemAnimation = 16;
+                    player.itemAnimationMax = 16;
+                    if(frame == 5) {
+                        Main.PlaySound(2, (int)position.X, (int)position.Y, 122, 0.75f, 1f);
+                    }
+                }
+            } else {
+                Main.PlaySound(2, (int)position.X, (int)position.Y, 122, 0.25f, 1f);
+                int prev = -1;
+                int curr = -1;
+                Vector2 speed = new Vector2(speedX, speedY);
+                Vector2 perp = speed.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero);
+                for(int i = 3; --i> -3;) {
+                    curr = Projectile.NewProjectile(position+perp*i*4, speed.RotatedBy(i/16d)*(1.5f-System.Math.Abs(i/6f)), type, damage/3, knockBack, player.whoAmI, prev);
+                    if(prev>0) {
+                        Main.projectile[prev].ai[1] = curr;
+                    }
+                    prev = curr;
                 }
             }
             return false;
@@ -148,10 +166,133 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             return false;
         }*/
         public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit) {
-            damage+=(damage-21)/2;
+            damage+=(damage-baseDamage)/2;
         }
         public override void GetWeaponDamage(Player player, ref int damage) {
-            if(!OriginPlayer.ItemChecking)damage+=(damage-21)/2;
+            if(!OriginPlayer.ItemChecking)damage+=(damage-baseDamage)/2;
+        }
+    }
+    public class Felnum_Broadsword_Shard : ModProjectile {
+        public const float magRange = 16*7.5f;
+		public const float speed = 16f;
+		public const float inertia = 1f;
+
+        public override string Texture => "Origins/Items/Weapons/Felnum/Tier2/Felnum_Broadsword_Shard";
+        public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Felnum Broadsword");
+            Main.projFrames[projectile.type] = 3;
+		}
+        public override void SetDefaults() {
+            projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
+            projectile.melee = true;
+            projectile.ranged = false;
+            projectile.aiStyle = 0;
+            projectile.extraUpdates = 1;
+            projectile.timeLeft = 60;
+			projectile.width = 10;
+			projectile.height = 10;
+            projectile.penetrate = -1;
+            //projectile.usesLocalNPCImmunity = true;
+            //projectile.localNPCHitCooldown = 12;
+            projectile.tileCollide = false;
+            projectile.frame = Main.rand.Next(3);
+            projectile.spriteDirection = Main.rand.NextBool()?1:-1;
+            projectile.ai[0] = -1f;
+            projectile.ai[1] = -1f;
+        }
+		public override void AI() {
+            projectile.rotation += projectile.spriteDirection*0.3f;
+            if(projectile.localAI[1] > 0) {
+                projectile.localAI[1]--;
+                projectile.timeLeft = 61;
+                if(projectile.localAI[1] <= 0) {
+                    projectile.localAI[1] = -projectile.localAI[0];
+                    projectile.localAI[0] = 0;
+                }
+                return;
+            }
+            if(projectile.timeLeft < 57)projectile.tileCollide = true;
+			Vector2 targetCenter = projectile.Center;
+			bool foundTarget = false;
+            float rangeMult = 1f;
+            if(projectile.localAI[1] < 0) rangeMult = -projectile.localAI[1];
+			for (int i = 0; i < Main.maxNPCs; i++) {
+				NPC npc = Main.npc[i];
+				if (npc.CanBeChasedBy() && npc.HasBuff(Mag_Debuff.ID)) {
+					float distance = Vector2.Distance(npc.Center, projectile.Center);
+					bool closest = Vector2.Distance(projectile.Center, targetCenter) > distance;
+                    bool inRange = distance < magRange*rangeMult;
+					if ((!foundTarget || closest) && inRange) {
+						targetCenter = npc.Center;
+						foundTarget = true;
+					}
+				}
+			}
+            if(foundTarget) {
+				Vector2 direction = targetCenter - projectile.Center;
+				direction.Normalize();
+				direction *= speed;
+				projectile.velocity = (projectile.velocity * (inertia - 1) + direction) / inertia;
+                if(direction.Length()<=projectile.velocity.Length()) {
+                    //projectile.Center = targetCenter;
+                    projectile.velocity = direction;
+                    projectile.localAI[0] = 1;
+                }
+            }
+		}
+        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+            if(target.CanBeChasedBy()) target.buffImmune[Mag_Debuff.ID] = false;
+            target.AddBuff(Mag_Debuff.ID, 180);
+            target.immune[projectile.owner] = 1;
+            if(projectile.localAI[0] == 1) {
+                projectile.localAI[0] = -1;
+                projectile.position.X += projectile.width / 2;
+                projectile.position.Y += projectile.height / 2;
+                projectile.width = 64;
+                projectile.height = 64;
+                projectile.position.X -= projectile.width / 2;
+                projectile.position.Y -= projectile.height / 2;
+                target.immune[projectile.owner] = 0;
+                projectile.damage *= 2;
+                projectile.Damage();
+                projectile.Kill();
+            } else if(projectile.localAI[0] == -1) {
+                return;
+            }
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+            if(projectile.localAI[1] > 0)return true;
+            Dust dust;
+            for(int i = 0; i < 2; i++) {
+                for(int i2 = 1; i2 < 3; i2++) {
+                    if(projectile.ai[i] >= 0) {
+                        Projectile proj = Main.projectile[(int)projectile.ai[i]];
+                        if(proj.active && proj.type == projectile.type) {
+                            dust = Dust.NewDustPerfect(Vector2.Lerp(projectile.Center, proj.Center, 0.33f*i2), 226, Vector2.Lerp(projectile.velocity, proj.velocity, 0.33f), 200, Scale: 0.25f);
+                            dust.noGravity = true;
+                            dust.noLight = true;
+                        } else {
+                            projectile.ai[i] = -1f;
+                        }
+                    }
+                }
+            }
+            dust = Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity, 200, Scale:0.25f);
+            dust.noGravity = true;
+            //dust.noLight = true;
+            //spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition, new Rectangle(0, 10*projectile.frame, 10, 10), lightColor, projectile.rotation, new Vector2(5, 5), 1f, SpriteEffects.None, 0f);
+            return true;
+        }
+    }
+    public class Mag_Debuff : ModBuff {
+        public static int ID { get; private set; }
+        public override bool Autoload(ref string name, ref string texture) {
+            texture = "Terraria/Buff_160";
+            return true;
+        }
+        public override void SetDefaults() {
+            DisplayName.SetDefault("Magnetized");
+            ID = Type;
         }
     }
     public class Felnum_Broadsword_Stab : ModProjectile {
@@ -209,7 +350,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                     return;
                 }
                 NPC victim = Main.npc[stabee];
-                victim.AddBuff(ModContent.BuffType<ImpaledBuff>(), 1);
+                victim.AddBuff(Impaled_Debuff.ID, 2);
                 victim.position+=projectile.position-projectile.oldPosition;
                 victim.Center = Vector2.Lerp(victim.Center,projectile.Center+projectile.velocity, 0.035f);
                 victim.oldPosition = victim.position;
@@ -223,11 +364,29 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             return base.CanHitNPC(target);
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            if(stabee == -1) knockback = 0;
-            else crit = true;
+            if(stabee == -1) {
+                knockback = 0;
+            } else {
+                crit = true;
+            }
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            if(stabee>=0)return;
+            if(stabee >= 0) {
+                target.AddBuff(Mag_Debuff.ID, 180);
+                int proj;
+                bool bias = Main.rand.NextBool();
+                for(int i = 8; --i>0;) {
+                    proj = Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.PiOver2*((bias^i%2==0)?-1:1)).RotatedByRandom(1f)*Main.rand.NextFloat(0.25f,0.3f), ModContent.ProjectileType<Felnum_Broadsword_Shard>(), damage/6, projectile.knockBack, projectile.owner);
+                    Main.projectile[proj].localAI[1] = 45;
+                    Main.projectile[proj].localAI[0] = 3;
+                    Main.projectile[proj].tileCollide = false;
+                }
+                target.velocity += projectile.velocity * target.knockBackResist * 2;
+                target.DelBuff(target.FindBuffIndex(Impaled_Debuff.ID));
+                target.AddBuff(Stunned_Debuff.ID, 5);
+                stabee = -2;
+                return;
+            }
             if(target.boss || target.type == NPCID.TargetDummy || stabee == -2) {
                 stabee = -2;
                 return;
@@ -253,13 +412,26 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             return true;
         }
     }
-    public class ImpaledBuff : ModBuff {
+    public class Impaled_Debuff : ModBuff {
+        public static int ID { get; private set; }
         public override bool Autoload(ref string name, ref string texture) {
             texture = "Terraria/Buff_160";
             return true;
         }
         public override void SetDefaults() {
             DisplayName.SetDefault("Impaled");
+            ID = Type;
+        }
+    }
+    public class Stunned_Debuff : ModBuff {
+        public static int ID { get; private set; }
+        public override bool Autoload(ref string name, ref string texture) {
+            texture = "Terraria/Buff_160";
+            return true;
+        }
+        public override void SetDefaults() {
+            DisplayName.SetDefault("Stunned");
+            ID = Type;
         }
     }
 }

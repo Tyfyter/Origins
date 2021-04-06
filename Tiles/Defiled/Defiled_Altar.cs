@@ -16,7 +16,7 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Tiles.Defiled {
     public class Defiled_Altar : ModTile {
-        public static int id;
+        public static int ID { get; private set; }
 		public override void SetDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
@@ -30,7 +30,7 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(200, 200, 200), name);
 			disableSmartCursor = true;
 			adjTiles = new int[] { TileID.DemonAltar };
-            id = Type;
+            ID = Type;
 		}
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) {

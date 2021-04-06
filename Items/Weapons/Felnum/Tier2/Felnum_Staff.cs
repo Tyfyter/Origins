@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Felnum.Tier2 {
     public class Felnum_Staff : ModItem {
+        public const int baseDamage = 78;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Hævateinn");
             Tooltip.SetDefault("Recieves 50% higher damage bonuses\nplaceholder sprite... maybe.");
@@ -19,7 +20,9 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.CrystalVileShard);
             item.shoot = ModContent.ProjectileType<Felnum_Lightning>();
-            item.damage = 47;
+            item.damage = baseDamage;
+            item.useAnimation = 30;
+            item.useTime = 30;
             item.shootSpeed/=2;
 			item.rare = ItemRarityID.Lime;
         }
@@ -39,7 +42,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         }
         public override void GetWeaponDamage(Player player, ref int damage) {
             //if(!OriginPlayer.ItemChecking)
-            damage+=(damage-35)/2;
+            damage+=(damage-baseDamage)/2;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             Vector2 speed = new Vector2(speedX, speedY);
@@ -65,9 +68,32 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         }
         public override void AI() {
             projectile.type = ProjectileID.CultistBossLightningOrbArc;
+			Vector2 targetPos = projectile.Center;
+			bool foundTarget = false;
+            Vector2 testPos;
+            for (int i = 0; i < Main.maxNPCs; i++) {
+				NPC target = Main.npc[i];
+				if (target.CanBeChasedBy() && !target.HasBuff(ModContent.BuffType<LightningImmuneFixBuff>())) {
+                    testPos = projectile.Center.Clamp(target.Hitbox);
+					Vector2 difference = testPos-projectile.Center;
+                    float distance = difference.Length();
+					bool closest = Vector2.Distance(projectile.Center, targetPos) > distance;
+                    bool inRange = distance < 96 && (difference.SafeNormalize(Vector2.Zero)*projectile.velocity.SafeNormalize(Vector2.Zero)).Length()>0.1f;//magRange;
+					if ((!foundTarget || closest) && inRange) {
+						targetPos = testPos;
+						foundTarget = true;
+					}
+				}
+			}
+            if(foundTarget) {
+				Vector2 direction = targetPos - projectile.Center;
+				direction.Normalize();
+				direction *= projectile.velocity.Length();
+				projectile.velocity = direction;
+            }
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            target.AddBuff(ModContent.BuffType<LightningImmuneFixBuff>(), 10);
+            target.AddBuff(ModContent.BuffType<LightningImmuneFixBuff>(), 4);
         }
         public override bool? CanHitNPC(NPC target) {
             return target.HasBuff(ModContent.BuffType<LightningImmuneFixBuff>())?false:base.CanHitNPC(target);

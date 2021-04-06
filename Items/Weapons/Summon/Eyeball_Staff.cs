@@ -234,7 +234,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
                     projectile.tileCollide = false;
                 }
             }
-            LinearSmoothing(ref currentSpeed, speed, currentSpeed<1?1:0.1f+projectile.localAI[0]/90f);
+            LinearSmoothing(ref currentSpeed, speed, currentSpeed<1?1:0.1f+projectile.localAI[0]/60f);
             Vector2 direction = foundTarget?targetCenter - projectile.Center:vectorToIdlePosition;
 			direction.Normalize();
             projectile.velocity = Vector2.Normalize(projectile.velocity+direction*turnSpeed)*currentSpeed;
@@ -258,7 +258,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
             if(projectile.localAI[0]>0)projectile.localAI[0]--;
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            damage+=(int)(projectile.localAI[0]/3);
+            damage+=(int)(projectile.localAI[0]/6);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             Vector2 intersect = Rectangle.Intersect(projectile.Hitbox,target.Hitbox).Center.ToVector2()-projectile.Hitbox.Center.ToVector2();
@@ -268,7 +268,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
             if(intersect.Y!=0&&(Math.Sign(intersect.Y)==Math.Sign(projectile.velocity.Y))) {
                 projectile.velocity.Y = -projectile.velocity.Y;
             }
-            projectile.localAI[0]+=30-projectile.localAI[0]/3;
+            projectile.localAI[0]+=20-projectile.localAI[0]/6;
             projectile.ai[1] = 0;
         }
     }

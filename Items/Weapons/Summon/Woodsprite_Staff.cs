@@ -89,7 +89,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			projectile.minionSlots = 1f;
 			projectile.penetrate = -1;
             projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 12;
+            projectile.localNPCHitCooldown = 18;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
