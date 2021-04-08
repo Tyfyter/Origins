@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Defiled {
     public class Defiled_Chakram_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Defiled/Defiled_Chakram";
         public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled_Chakram");
+			DisplayName.SetDefault("Krakram");
 		}
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.ThornChakram);
