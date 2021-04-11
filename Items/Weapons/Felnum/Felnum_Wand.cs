@@ -21,8 +21,8 @@ namespace Origins.Items.Weapons.Felnum {
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.CrystalVileShard);
             item.shoot = ModContent.ProjectileType<Felnum_Zap>();
-            item.damage = 21;
-            item.shootSpeed*=0.66f;
+            item.damage = 34;
+            //item.shootSpeed*=0.66f;
             item.UseSound = null;
         }
         public override void AddRecipes() {
@@ -49,7 +49,7 @@ namespace Origins.Items.Weapons.Felnum {
         (Vector2?, Vector2)[] oldPos = new (Vector2?,Vector2)[7];
         public override string Texture => "Terraria/Projectile_3";
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Zeus");
+            DisplayName.SetDefault("Magnus");
         }
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);

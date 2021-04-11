@@ -12,12 +12,12 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.Grenade);
             //item.maxStack = 999;
-            item.damage = 46;
+            item.damage = 38;
 			item.value*=2;
 			item.useTime = (int)(item.useTime*0.75);
 			item.useAnimation = (int)(item.useAnimation*0.75);
             item.shoot = ModContent.ProjectileType<Impact_Grenade_P>();
-			item.shootSpeed*=2;
+			item.shootSpeed*=1.75f;
             item.knockBack = 10f;
             item.ammo = ItemID.Grenade;
 			item.rare = ItemRarityID.Green;

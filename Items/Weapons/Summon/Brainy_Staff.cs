@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Summon {
             Tooltip.SetDefault("Summons a mini Brain of Cthulhu to fight for you");
         }
         public override void SetDefaults() {
-            item.damage = 12;
+            item.damage = 10;
             item.mana = 10;
             item.width = 32;
             item.height = 32;
@@ -192,8 +192,8 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			#region Movement
 
 			// Default movement parameters (here for attacking)
-			float speed = 16f;
-			float inertia = 12f;
+			float speed = 12f;
+			float inertia = 16f;
 
 			if (foundTarget) {
                 projectile.tileCollide = true;

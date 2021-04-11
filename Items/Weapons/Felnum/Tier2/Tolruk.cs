@@ -9,11 +9,12 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Felnum.Tier2 {
 	public class Tolruk : ModItem {
+        public const int baseDamage = 37;
         int charge = 0;
         public static short[] glowmasks;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tolruk");
-			Tooltip.SetDefault("[tɵlɹɘk]\nSprite needs reshaping to be less like dart rifle");
+			Tooltip.SetDefault("Recieves 50% higher damage bonuses\n[tɵlɹɘk]\nSprite needs reshaping to be less like dart rifle");
             glowmasks = new short[]{
                 -1,//Origins.AddGlowMask("Weapons/Felnum/Tier2/Tolruk_Glow_0"),
                 Origins.AddGlowMask("Weapons/Felnum/Tier2/Tolruk_Glow_1"),
@@ -29,7 +30,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             };
 		}
 		public override void SetDefaults() {
-			item.damage = 30;
+			item.damage = baseDamage;
 			item.ranged = true;
             item.noMelee = true;
 			item.width = 18;
@@ -48,14 +49,8 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 		}
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 15);
-            recipe.AddIngredient(ItemID.OrichalcumBar, 9);
-            recipe.SetResult(this);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.AddRecipe();
-            recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 15);
-            recipe.AddIngredient(ItemID.MythrilBar, 9);
+            recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15);
+            recipe.AddIngredient(ItemID.Uzi, 1);
             recipe.SetResult(this);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.AddRecipe();
@@ -71,6 +66,9 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 		public override Vector2? HoldoutOffset(){
 			return new Vector2(-12,0);
 		}
+        public override void GetWeaponDamage(Player player, ref int damage) {
+            damage+=(damage-baseDamage)/2;
+        }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             Vector2 offset = new Vector2(speedX, speedY).SafeNormalize(Vector2.Zero);
             position -= offset.RotatedBy(MathHelper.PiOver2) * player.direction * 3;

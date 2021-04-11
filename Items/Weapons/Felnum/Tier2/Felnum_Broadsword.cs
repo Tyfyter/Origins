@@ -12,7 +12,7 @@ using Terraria.ModLoader.IO;
 namespace Origins.Items.Weapons.Felnum.Tier2 {
     //this took seven and a half hours to make
 	public class Felnum_Broadsword : IAnimatedItem {
-        public const int baseDamage = 58;
+        public const int baseDamage = 88;
 
         public override bool CloneNewInstances => true;
         internal static DrawAnimationManual animation;
@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         internal int frame = 5;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tyrfing"/*"Felnum Broadsword"*/);
-			Tooltip.SetDefault("Behold\nHold right click to stab");
+			Tooltip.SetDefault("Recieves 50% higher damage bonuses\nHold right click to stab\nBehold");
             animation = new DrawAnimationManual(6);
             animation.Frame = 5;
 			Main.RegisterItemAnimation(item.type, animation);
@@ -48,14 +48,8 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 		}
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 12);
-            recipe.AddIngredient(ItemID.OrichalcumBar, 7);
-            recipe.SetResult(this);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.AddRecipe();
-            recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 12);
-            recipe.AddIngredient(ItemID.MythrilBar, 7);
+            recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 12);
+            recipe.AddIngredient(ItemID.Excalibur, 1);
             recipe.SetResult(this);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.AddRecipe();
@@ -169,7 +163,8 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             damage+=(damage-baseDamage)/2;
         }
         public override void GetWeaponDamage(Player player, ref int damage) {
-            if(!OriginPlayer.ItemChecking)damage+=(damage-baseDamage)/2;
+            //if(!OriginPlayer.ItemChecking)
+            damage +=(damage-baseDamage)/2;
         }
     }
     public class Felnum_Broadsword_Shard : ModProjectile {
@@ -240,6 +235,9 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                 }
             }
 		}
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+            Main.player[projectile.owner].armorPenetration += (int)(target.defense*0.3f);
+        }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if(target.CanBeChasedBy()) target.buffImmune[Mag_Debuff.ID] = false;
             target.AddBuff(Mag_Debuff.ID, 180);

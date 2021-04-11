@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Summon {
             Tooltip.SetDefault("Summons a woodsprite to fight for you");
         }
         public override void SetDefaults() {
-            item.damage = 8;
+            item.damage = 7;
             item.mana = 10;
             item.width = 32;
             item.height = 32;

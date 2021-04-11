@@ -11,12 +11,12 @@ namespace Origins.Items.Weapons.Explosives {
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.Dynamite);
-            item.damage = 132;
+            item.damage = 78;
 			item.value*=2;
 			item.useTime = (int)(item.useTime*0.75);
 			item.useAnimation = (int)(item.useAnimation*0.75);
             item.shoot = ModContent.ProjectileType<Impact_Dynamite_P>();
-			item.shootSpeed*=2;
+			item.shootSpeed*=1.75f;
             item.knockBack = 16f;
 			item.rare = ItemRarityID.Green;
 		}

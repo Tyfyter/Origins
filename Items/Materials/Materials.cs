@@ -109,7 +109,7 @@ namespace Origins.Items.Materials {
             recipe.AddRecipe();
         }
     }
-    /*public class Valkyrum_Bar : ModItem {
+    public class Valkyrum_Bar : ModItem {
         //Alloy of Felnum and Angelium
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Valkyrum Bar");
@@ -117,7 +117,16 @@ namespace Origins.Items.Materials {
         public override void SetDefaults() {
             item.maxStack = 999;
         }
-    }*/
+        public override void AddRecipes() {
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 1);
+            //recipe.AddIngredient(ModContent.ItemType<_Bar>(), 1);
+            recipe.AddIngredient(ItemID.Ectoplasm, 1);
+            recipe.AddTile(TileID.Furnaces);
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
+    }
     public class Defiled_Bar : ModItem {
         //add lore here
         public override void SetStaticDefaults() {

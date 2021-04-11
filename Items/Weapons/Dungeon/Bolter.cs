@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Dungeon {
             item.shootSpeed = 8;
             item.width = 38;
             item.height = 18;
-            item.autoReuse = false;
+            item.autoReuse = true;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             Projectile p = Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);

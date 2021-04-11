@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Defiled {
             Tooltip.SetDefault("Very pointy");
         }
         public override void SetDefaults() {
-            item.damage = 16;
+            item.damage = 15;
             item.ranged = true;
             item.noMelee = true;
             item.crit = -1;

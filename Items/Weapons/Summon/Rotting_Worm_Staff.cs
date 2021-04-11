@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Summon {
             ItemID.Sets.StaffMinionSlotsRequired[item.type] = 1;
         }
         public override void SetDefaults() {
-            item.damage = 7;
+            item.damage = 9;
             item.mana = 10;
             item.width = 32;
             item.height = 32;

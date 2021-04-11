@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         public const int baseDamage = 78;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Hævateinn");
-            Tooltip.SetDefault("Recieves 50% higher damage bonuses\nplaceholder sprite... maybe.");
+            Tooltip.SetDefault("Recieves 50% higher damage bonuses\nsprite needs recoloring.");
 			Item.staff[item.type] = true;
         }
         public override void SetDefaults() {
@@ -28,20 +28,13 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         }
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 15);
-            recipe.AddIngredient(ItemID.OrichalcumBar, 5);
-            recipe.SetResult(this);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.AddRecipe();
-            recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 15);
-            recipe.AddIngredient(ItemID.MythrilBar, 5);
+            recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15);
+            recipe.AddIngredient(ItemID.SkyFracture, 1);
             recipe.SetResult(this);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.AddRecipe();
         }
         public override void GetWeaponDamage(Player player, ref int damage) {
-            //if(!OriginPlayer.ItemChecking)
             damage+=(damage-baseDamage)/2;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
