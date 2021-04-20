@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Acid {
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             int a = Main.rand.Next(5,7);
             for(int i = 0; ++i < a; a = Main.rand.Next(5,7)) {
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(((i-a/2f)/a)*0.75), type, (int)(damage/1.75f), knockBack, player.whoAmI, 0, 12f);
+                Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY).RotatedBy(((i-a/2f)/a)*0.75), type, damage, knockBack, player.whoAmI, 0, 12f).timeLeft+=i;
             }
             return false;
         }
@@ -60,10 +60,12 @@ namespace Origins.Items.Weapons.Acid {
         public override void AI() {
             if(projectile.ai[1]<=0/*projectile.timeLeft<168*/) {
                 Lighting.AddLight(projectile.Center, 0, 0.75f*projectile.scale, 0.3f*projectile.scale);
-                Dust dust = Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity*-0.25f, 100, new Color(0, 255, 0), projectile.scale);
-                dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
-                dust.noGravity = false;
-                dust.noLight = true;
+                if(projectile.timeLeft%3==0) {
+                    Dust dust = Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity * -0.25f, 100, new Color(0, 255, 0), projectile.scale);
+                    dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
+                    dust.noGravity = false;
+                    dust.noLight = true;
+                }
             } else {
 			    projectile.Center = Main.player[projectile.owner].itemLocation+projectile.velocity;
                 projectile.ai[1]--;

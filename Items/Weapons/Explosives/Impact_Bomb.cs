@@ -8,6 +8,7 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Bomb");
 			Tooltip.SetDefault("Be careful, it's not book");
+            Origins.ExplosiveItems[item.type] = true;
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.Bomb);
@@ -20,12 +21,13 @@ namespace Origins.Items.Weapons.Explosives {
             item.knockBack = 13f;
 			item.rare = ItemRarityID.Green;
 		}
-        public override void AddRecipes() {
-            Origins.AddExplosive(item);
-        }
     }
     public class Impact_Bomb_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Bomb";
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Impact Bomb");
+            Origins.ExplosiveProjectiles[projectile.type] = true;
+		}
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bomb);
             projectile.penetrate = 1;

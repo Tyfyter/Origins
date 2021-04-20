@@ -8,10 +8,10 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Grenade");
 			Tooltip.SetDefault("Be careful, it's not book");
+            Origins.ExplosiveItems[item.type] = true;
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.Grenade);
-            //item.maxStack = 999;
             item.damage = 38;
 			item.value*=2;
 			item.useTime = (int)(item.useTime*0.75);
@@ -22,12 +22,13 @@ namespace Origins.Items.Weapons.Explosives {
             item.ammo = ItemID.Grenade;
 			item.rare = ItemRarityID.Green;
 		}
-        public override void AddRecipes() {
-            Origins.AddExplosive(item);
-        }
     }
     public class Impact_Grenade_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Grenade";
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Impact Grenade");
+            Origins.ExplosiveProjectiles[projectile.type] = true;
+		}
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Grenade);
             projectile.timeLeft = 135;
