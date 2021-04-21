@@ -11,8 +11,9 @@ using Terraria.DataStructures;
 
 namespace Origins.NPCs.Riven {
     public class Riven_Fighter : ModNPC {
-        public const float speedMult = 1f;
         public override void SetStaticDefaults() {
+            //explain more than necessary
+            //reference famous glitch from Pokémon
             DisplayName.SetDefault("misingno");
             Main.npcFrameCount[npc.type] = 4;
         }
@@ -32,17 +33,16 @@ namespace Origins.NPCs.Riven {
                 npc.FaceTarget();
                 npc.spriteDirection = npc.direction;
             }
-			if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X/=speedMult;
+            //increment frameCounter every frame and run the following code when it exceeds 7 (i.e. run the following code every 8 frames)
 			if(++npc.frameCounter>7) {
-				//add frame height to frame y position and modulo by frame height multiplied by walking frame count
+				//add frame height (with buffer) to frame y position and modulo by frame height (with buffer) multiplied by walking frame count
 				npc.frame = new Rectangle(0, (npc.frame.Y+64)%256, 40, 62);
+                //reset frameCounter so this doesn't trigger every frame after the first time
 				npc.frameCounter = 0;
 			}
         }
-        public override void PostAI() {
-			if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=speedMult;
-        }
         public override void HitEffect(int hitDirection, double damage) {
+            //spawn gore if npc is dead after being hit
             if(npc.life<0) {
                 for(int i = 0; i < 3; i++)Gore.NewGore(npc.position+new Vector2(Main.rand.Next(npc.width),Main.rand.Next(npc.height)), npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
                 for(int i = 0; i < 6; i++)Gore.NewGore(npc.position+new Vector2(Main.rand.Next(npc.width),Main.rand.Next(npc.height)), npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));

@@ -16,11 +16,12 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Grenade");
 			Tooltip.SetDefault("");
+            Origins.ExplosiveItems[item.type] = true;
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.Grenade);
             //item.maxStack = 999;
-            item.damage = 30;
+            item.damage = 45;
 			item.value*=14;
             item.shoot = ModContent.ProjectileType<Crystal_Grenade_P>();
 			item.shootSpeed*=1.5f;
@@ -29,12 +30,12 @@ namespace Origins.Items.Weapons.Explosives {
 			item.rare = ItemRarityID.Lime;
 		}
         public override void AddRecipes() {
-            Origins.AddExplosive(item);
         }
-        public override bool AltFunctionUse(Player player) {
+        #region blend mode testing
+        /*public override bool AltFunctionUse(Player player) {
             return true;
-        }
-        public override bool CanUseItem(Player player) {
+        }*/
+        /*public override bool CanUseItem(Player player) {
             if(player.altFunctionUse==2) {
                 if(player.controlUp) {
                     Crystal_Grenade_P.blendState.ColorSourceBlend++;
@@ -63,11 +64,12 @@ namespace Origins.Items.Weapons.Explosives {
             item.shoot = ModContent.ProjectileType<Crystal_Grenade_P>();
             item.consumable = true;
             return base.CanUseItem(player);
-        }
+        }*/
+        #endregion
     }
     public class Crystal_Grenade_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Explosives/Crystal_Grenade_Blue";
-        public static BlendState blendState = new BlendState() {
+        public static BlendState blendState => new BlendState() {
             ColorSourceBlend = Blend.SourceAlpha,
             AlphaSourceBlend = Blend.One,
             ColorDestinationBlend = Blend.InverseSourceAlpha,
@@ -75,11 +77,14 @@ namespace Origins.Items.Weapons.Explosives {
         };
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Grenade");
+            Origins.ExplosiveProjectiles[projectile.type] = true;
 		}
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Grenade);
-            projectile.timeLeft = 135;
+            projectile.timeLeft = 135+Main.rand.Next(-35,36);
             projectile.penetrate = -1;
+            projectile.usesLocalNPCImmunity = true;
+            projectile.localNPCHitCooldown = 10;
         }
         public override bool PreKill(int timeLeft) {
             projectile.type = ProjectileID.Grenade;
@@ -95,8 +100,10 @@ namespace Origins.Items.Weapons.Explosives {
 			projectile.Damage();
             //Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 2f, 1f);
             int t = ModContent.ProjectileType<Crystal_Grenade_Shard>();
-            for(int i = Main.rand.Next(3); i < 7; i++) {
-                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, (Main.rand.NextVector2Unit()*6)+(projectile.velocity/12), t, projectile.damage/4, 6, projectile.owner);
+            int count = 14 - Main.rand.Next(3);
+            float rot = TwoPi/count;
+            for(int i = count; i > 0; i--) {
+                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, (Vec2FromPolar(rot*i, 6) + Main.rand.NextVector2Unit())+(projectile.velocity/12), t, projectile.damage/4, 6, projectile.owner);
             }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor) {
@@ -139,12 +146,6 @@ namespace Origins.Items.Weapons.Explosives {
 			data.Draw(spriteBatch);
             spriteBatch.End();
 			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, null, Main.Transform);
-            blendState = new BlendState() {
-                ColorSourceBlend = blendState.ColorSourceBlend,
-                AlphaSourceBlend = blendState.AlphaSourceBlend,
-                ColorDestinationBlend = blendState.ColorDestinationBlend,
-                AlphaDestinationBlend = blendState.AlphaDestinationBlend,
-            };
         }
     }
     public class Crystal_Grenade_Shard : ModProjectile {
@@ -153,6 +154,7 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Shard");
             ID = projectile.type;
+            Origins.ExplosiveProjectiles[projectile.type] = true;
             ProjectileID.Sets.TrailingMode[ID] = 0;
             if(Main.netMode!=NetmodeID.Server) {
                 Main.projectileTexture[94] = Main.instance.OurLoad<Texture2D>(string.Concat(new object[]{"Images",Path.DirectorySeparatorChar,"Projectile_94"}));
