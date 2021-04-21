@@ -81,7 +81,7 @@ namespace Origins.Items.Weapons.Explosives {
 		}
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Grenade);
-            projectile.timeLeft = 135+Main.rand.Next(-35,36);
+            projectile.timeLeft = 135;
             projectile.penetrate = -1;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 10;
@@ -165,7 +165,7 @@ namespace Origins.Items.Weapons.Explosives {
             projectile.CloneDefaults(ProjectileID.CrystalStorm);
             projectile.aiStyle = 0;
             projectile.penetrate = -1;
-            projectile.timeLeft = 30;
+            projectile.timeLeft = 30+Main.rand.Next(-5,16);
             projectile.extraUpdates+=1;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 15;

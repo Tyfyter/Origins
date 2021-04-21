@@ -70,7 +70,13 @@ namespace Origins.Items.Weapons.Explosives {
             return true;
         }
         public override void Kill(int timeLeft) {
-            Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, (int)(projectile.damage*0.75f), 16, projectile.owner, -1, 1);
+            Projectile.NewProjectile(projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, 0, 0, projectile.owner, -1, 1);
+            projectile.damage = (int)(projectile.damage * 0.75f);
+            projectile.knockBack = 16f;
+		    projectile.position = projectile.Center;
+		    projectile.width = (projectile.height = 52);
+		    projectile.Center = projectile.position;
+            projectile.Damage();
             for(int i = 0; i < 5; i++) {
                 Projectile.NewProjectile(projectile.Center, (projectile.velocity/2)+Vec2FromPolar((i/Main.rand.NextFloat(5,7))*MathHelper.TwoPi, Main.rand.NextFloat(2,4)), ModContent.ProjectileType<Thermite_P>(), (int)(projectile.damage*0.75f), 0, projectile.owner);
             }
@@ -81,13 +87,17 @@ namespace Origins.Items.Weapons.Explosives {
     }
     public class Thermite_P : ModProjectile {
         public override string Texture => "Origins/Projectiles/Ammo/Thermite_Canister_P";
+        public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Thermite Canister");
+            Origins.ExplosiveProjectiles[projectile.type] = true;
+		}
         public override void SetDefaults() {
             projectile.friendly = true;
             projectile.width = 6;
             projectile.height = 6;
             projectile.aiStyle = 1;
-            projectile.penetrate = -1;
-            projectile.timeLeft = Main.rand.Next(450, 601);
+            projectile.penetrate = 25;
+            projectile.timeLeft = Main.rand.Next(300, 451);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) {
             width = height = 0;
@@ -105,10 +115,10 @@ namespace Origins.Items.Weapons.Explosives {
             return false;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            target.AddBuff(BuffID.OnFire, Main.rand.Next(450, 601));
+            target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
         }
         public override void OnHitPvp(Player target, int damage, bool crit) {
-            target.AddBuff(BuffID.OnFire, Main.rand.Next(450, 601));
+            target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
             Dust.NewDust(projectile.Center, 0, 0, 6);
