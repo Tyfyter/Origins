@@ -25,7 +25,7 @@ namespace Origins.Tiles {
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
             if(!Main.tile[i,j].active())return;
-            float v = (float)Math.Sin(Main.time/45)*2;
+            float v = (float)Math.Sin((Main.time-i)/45)*2;
             if(v<0)v=0;
             r = 0.4f-(0.4f*v);
             g = 0.3f+(0.2f*v);

@@ -56,7 +56,7 @@ namespace Origins.Projectiles {
             if(felnumEffect) {
                 if(projectile.melee) {
                     if(Main.player[projectile.owner].GetModPlayer<OriginPlayer>().felnumShock>19)Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1)*0.5f, Scale:0.5f);
-                }else Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1)*0.5f, Scale:0.5f);
+                } else Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1)*0.5f, Scale:0.5f);
             }
             if(viperEffect&&projectile.extraUpdates != 19) {
                 Lighting.AddLight(projectile.Center, 0, 0.75f*projectile.scale, 0.3f*projectile.scale);
@@ -69,7 +69,7 @@ namespace Origins.Projectiles {
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
             //this is actually how vanilla does projectile crits, which might explain why there are no vanilla multiclass weapons, since a 4% crit chance with a 4-class weapon would crit ~15% of the time
             OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-            if(IsExplosive(projectile) && Main.rand.Next(1, 101) <= originPlayer.explosiveCrit){
+            if(IsExplosive(projectile) && Main.rand.Next(1, 101) <= originPlayer.explosiveCrit) {
 				crit = true;
 			}
             if(viperEffect) {
@@ -112,7 +112,7 @@ namespace Origins.Projectiles {
         public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
             if(IsExplosive(projectile)) {
                 OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-                if(originPlayer.madHand&&(projectile.timeLeft<=3||projectile.penetrate==0)){
+                if(originPlayer.madHand&&(projectile.timeLeft<=3||projectile.penetrate==0)) {
                     hitbox.Inflate(hitbox.Width/4,hitbox.Height/4);
                 }
             }
@@ -122,6 +122,47 @@ namespace Origins.Projectiles {
         }
         public static bool IsExplosiveProjectile(Projectile projectile) {
             return projectile.GetGlobalProjectile<OriginGlobalProj>().explosiveOverride??Origins.ExplosiveProjectiles[projectile.type];
+        }
+        public static void ClentaminatorAI(Projectile projectile, int conversionType, int dustType, Color color) {
+	        if (projectile.owner == Main.myPlayer) {
+		        WorldGen.Convert((int)(projectile.Center.X) / 16, (int)(projectile.Center.Y) / 16, conversionType, 2);
+	        }
+	        if (projectile.timeLeft > 133) {
+		        projectile.timeLeft = 133;
+	        }
+	        if (projectile.ai[0] > 7f) {
+		        float scale = 1f;
+                switch(projectile.ai[0]) {
+                    case 8f:
+			        scale = 0.2f;
+                    break;
+                    case 9f:
+			        scale = 0.4f;
+                    break;
+                    case 10f:
+			        scale = 0.6f;
+                    break;
+                    case 11f:
+			        scale = 0.8f;
+                    break;
+                }
+		        projectile.ai[0]++;
+		        for (int num354 = 0; num354 < 1; num354++) {
+			        int d = Dust.NewDust(new Vector2(projectile.position.X, projectile.position.Y), projectile.width, projectile.height, dustType, projectile.velocity.X * 0.2f, projectile.velocity.Y * 0.2f, 100, color);
+			        Main.dust[d].noGravity = true;
+			        Dust dust1 = Main.dust[d];
+			        Dust dust2 = dust1;
+			        dust2.scale *= 1.75f;
+			        Main.dust[d].velocity.X *= 2f;
+			        Main.dust[d].velocity.Y *= 2f;
+			        dust1 = Main.dust[d];
+			        dust2 = dust1;
+			        dust2.scale *= scale;
+		        }
+	        } else {
+		        projectile.ai[0]++;
+	        }
+	        projectile.rotation+=0.3f * projectile.direction;
         }
     }
 }
