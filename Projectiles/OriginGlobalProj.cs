@@ -19,6 +19,7 @@ namespace Origins.Projectiles {
         //bool init = true;
         bool felnumEffect = false;
         bool viperEffect = false;
+        bool ownerSafe = false;
         bool? explosiveOverride = null;
         int killLink = -1;
         //ModProjectile.SetDefaults is run before GlobalProjectiles' SetDefaults, so these can be used from SetDefaults
@@ -27,6 +28,7 @@ namespace Origins.Projectiles {
         public static bool? explosiveOverrideNext = null;
         public static bool hostileNext = false;
         public static int killLinkNext = -1;
+        public static bool dreikanNext = false;
         public override void SetDefaults(Projectile projectile) {
             if(hostileNext) {
                 projectile.hostile = true;
@@ -45,6 +47,10 @@ namespace Origins.Projectiles {
                 viperEffect = true;
                 projectile.extraUpdates+=2;
                 viperEffectNext = false;
+            }
+            if(dreikanNext) {
+                projectile.extraUpdates+=2;
+                dreikanNext = false;
             }
         }
         public override void AI(Projectile projectile) {
@@ -84,6 +90,9 @@ namespace Origins.Projectiles {
                     target.AddBuff(SolventDebuff.ID, 450);
                 }
             }
+        }
+        public override bool CanHitPlayer(Projectile projectile, Player target) {
+            return ownerSafe?target.whoAmI!=projectile.owner:true;
         }
         public override bool PreKill(Projectile projectile, int timeLeft) {
             if(felnumEffect&&projectile.type==ProjectileID.WaterGun) {//projectile.aiStyle==60
