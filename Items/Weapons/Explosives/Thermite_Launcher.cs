@@ -86,7 +86,7 @@ namespace Origins.Items.Weapons.Explosives {
         }
     }
     public class Thermite_P : ModProjectile {
-        public override string Texture => "Origins/Projectiles/Ammo/Thermite_Canister_P";
+        public override string Texture => "Origins/Projectiles/Ammo/Napalm_Pellet_P";
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Thermite Canister");
             Origins.ExplosiveProjectiles[projectile.type] = true;
@@ -98,6 +98,10 @@ namespace Origins.Items.Weapons.Explosives {
             projectile.aiStyle = 1;
             projectile.penetrate = 25;
             projectile.timeLeft = Main.rand.Next(300, 451);
+        }
+        public override void AI() {
+			float v = 0.75f+(float)(0.125f*(Math.Sin(projectile.timeLeft/5f)+2*Math.Sin(projectile.timeLeft/60f)));
+            Lighting.AddLight(projectile.Center, v,v*0.5f,0);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) {
             width = height = 0;
@@ -120,9 +124,9 @@ namespace Origins.Items.Weapons.Explosives {
         public override void OnHitPvp(Player target, int damage, bool crit) {
             target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
-            Dust.NewDust(projectile.Center, 0, 0, 6);
-            return false;
+        public override Color? GetAlpha(Color lightColor) {
+			int v = 200+(int)(25*(Math.Sin(projectile.timeLeft/5f)+Math.Sin(projectile.timeLeft/60f)));
+            return new Color(v+20,v+25,v-150,0);
         }
     }
 }
