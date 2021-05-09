@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Other {
             if(type==ProjectileID.Bullet)type = item.shoot;
             Main.PlaySound(SoundID.Item, position, 40);
             Main.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 36, 0.75f);
-            OriginGlobalProj.dreikanNext = true;
+            OriginGlobalProj.extraUpdatesNext = 2;
             return true;
         }
     }

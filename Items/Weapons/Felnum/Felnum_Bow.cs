@@ -11,13 +11,14 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Felnum {
     public class Felnum_Bow : ModItem {
+        public const int baseDamage = 19;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Felnum Longbow");
-            Tooltip.SetDefault("Recieves 50% higher damage bonuses\nplaceholder sprite, needs better shading.");
+            Tooltip.SetDefault("Recieves 50% higher damage bonuses");
         }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.GoldBow);
-            item.damage = 19;
+            item.damage = baseDamage;
             item.width = 18;
             item.height = 58;
             item.useTime = item.useAnimation = 32;
@@ -35,7 +36,7 @@ namespace Origins.Items.Weapons.Felnum {
             return new Vector2(-8f,0);
         }
         public override void GetWeaponDamage(Player player, ref int damage) {
-            if(!OriginPlayer.ItemChecking)damage+=(damage-18)/2;
+            if(!OriginPlayer.ItemChecking)damage+=(damage-baseDamage)/2;
         }
         /*public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             //damage+=(damage-19)/2;

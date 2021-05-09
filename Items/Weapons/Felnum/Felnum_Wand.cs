@@ -13,6 +13,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Felnum {
     public class Felnum_Wand : ModItem {
+        public const int baseDamage = 34;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Magnus");
             Tooltip.SetDefault("Recieves 50% higher damage bonuses");
@@ -21,7 +22,7 @@ namespace Origins.Items.Weapons.Felnum {
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.CrystalVileShard);
             item.shoot = ModContent.ProjectileType<Felnum_Zap>();
-            item.damage = 34;
+            item.damage = baseDamage;
             //item.shootSpeed*=0.66f;
             item.UseSound = null;
         }
@@ -35,7 +36,7 @@ namespace Origins.Items.Weapons.Felnum {
         }
         public override void GetWeaponDamage(Player player, ref int damage) {
             //if(!OriginPlayer.ItemChecking)
-            damage+=(damage-21)/2;
+            damage+=(damage-baseDamage)/2;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             Vector2 speed = new Vector2(speedX, speedY);

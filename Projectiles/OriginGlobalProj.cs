@@ -17,18 +17,20 @@ namespace Origins.Projectiles {
         public override bool InstancePerEntity => true;
         public override bool CloneNewInstances => true;
         //bool init = true;
-        bool felnumEffect = false;
-        bool viperEffect = false;
-        bool ownerSafe = false;
+        public bool felnumEffect = false;
+        public bool viperEffect = false;
+        public bool ownerSafe = false;
         bool? explosiveOverride = null;
-        int killLink = -1;
+        public int killLink = -1;
+        public float godHunterEffect = 0f;
         //ModProjectile.SetDefaults is run before GlobalProjectiles' SetDefaults, so these can be used from SetDefaults
         public static bool felnumEffectNext = false;
         public static bool viperEffectNext = false;
         public static bool? explosiveOverrideNext = null;
         public static bool hostileNext = false;
         public static int killLinkNext = -1;
-        public static bool dreikanNext = false;
+        public static int extraUpdatesNext = -1;
+        public static float godHunterEffectNext = 0f;
         public override void SetDefaults(Projectile projectile) {
             if(hostileNext) {
                 projectile.hostile = true;
@@ -48,9 +50,13 @@ namespace Origins.Projectiles {
                 projectile.extraUpdates+=2;
                 viperEffectNext = false;
             }
-            if(dreikanNext) {
-                projectile.extraUpdates+=2;
-                dreikanNext = false;
+            if(extraUpdatesNext!=0) {
+                projectile.extraUpdates+=extraUpdatesNext;
+                extraUpdatesNext = 0;
+            }
+            if(godHunterEffectNext!=0) {
+                godHunterEffect = godHunterEffectNext;
+                godHunterEffectNext = 0;
             }
         }
         public override void AI(Projectile projectile) {
@@ -89,6 +95,9 @@ namespace Origins.Projectiles {
                 if(crt || Main.rand.Next(0, 9)==0) {
                     target.AddBuff(SolventDebuff.ID, 450);
                 }
+            }
+            if(target.boss && godHunterEffect != 0f) {
+                damage += (int)(damage*godHunterEffect);
             }
         }
         public override bool CanHitPlayer(Projectile projectile, Player target) {

@@ -7,17 +7,18 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Felnum {
 	public class Felnum_Spear : ModItem {
+        public const int baseDamage = 18;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Boar Spear");
 			Tooltip.SetDefault("Recieves 50% higher damage bonuses");
 		}
 		public override void SetDefaults() {
-			item.damage = 18;
+			item.damage = baseDamage;
 			item.melee = true;
             item.noMelee = true;
             item.noUseGraphic = true;
-			item.width = 38;
-			item.height = 38;
+			item.width = 48;
+			item.height = 48;
 			item.useTime = 24;
 			item.useAnimation = 24;
 			item.useStyle = 5;
@@ -38,11 +39,11 @@ namespace Origins.Items.Weapons.Felnum {
             recipe.AddRecipe();
         }
         public override void GetWeaponDamage(Player player, ref int damage) {
-            if(!OriginPlayer.ItemChecking)damage+=(damage-18)/2;
+            if(!OriginPlayer.ItemChecking)damage+=(damage-baseDamage)/2;
         }
     }
     public class Felnum_Spear_Stab : ModProjectile {
-        public override string Texture => "Origins/Items/Weapons/Felnum/Felnum_Spear";
+        public override string Texture => "Origins/Items/Weapons/Felnum/Felnum_Spear_P";
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Boar Spear");
 		}
@@ -68,14 +69,14 @@ namespace Origins.Items.Weapons.Felnum {
 			projectile.position.Y = ownerMountedCenter.Y - (projectile.height / 2);
 			if (!projOwner.frozen) {
 				if (movementFactor == 0f){
-                    movementFactor = 2.3f;
+                    movementFactor = 2.5f;
                     if(projectile.timeLeft == 26)projectile.timeLeft = projOwner.itemAnimationMax;
 					projectile.netUpdate = true;
 				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 1){
-					movementFactor-=2.3f;
+					movementFactor-=2.5f;
 				}else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1){
-					movementFactor+=2.5f;
+					movementFactor+=2.7f;
                 }
 			}
 			projectile.position += projectile.velocity * movementFactor;
@@ -96,7 +97,7 @@ namespace Origins.Items.Weapons.Felnum {
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
-            spriteBatch.Draw(mod.GetTexture("Items/Weapons/Felnum/Felnum_Spear_P"), (projectile.Center) - Main.screenPosition, new Rectangle(0, 0, 58, 58), lightColor, projectile.rotation, new Vector2(49,9), projectile.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mod.GetTexture("Items/Weapons/Felnum/Felnum_Spear_P"), (projectile.Center) - Main.screenPosition, new Rectangle(0, 0, 72, 72), lightColor, projectile.rotation, new Vector2(62,8), projectile.scale, SpriteEffects.None, 0f);
             return false;
         }
     }
