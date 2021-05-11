@@ -42,6 +42,7 @@ namespace Origins {
         public byte dimStarlightCooldown = 0;
         public bool madHand = false;
         public bool fiberglassDagger = false;
+        public bool advancedImaging = false;
 
         public float explosiveDamage = 1;
         public int explosiveCrit = 4;
@@ -93,6 +94,7 @@ namespace Origins {
             dimStarlight = false;
             madHand = false;
             fiberglassDagger = false;
+            advancedImaging = false;
             explosiveDamage = 1f;
             explosiveCrit = 4;
             explosiveThrowSpeed = 1f;
@@ -151,6 +153,10 @@ namespace Origins {
             if(item.useAmmo == 0&&IsExplosive(item)) {
                 speedX*=explosiveThrowSpeed;
                 speedY*=explosiveThrowSpeed;
+            }
+            if(advancedImaging) {
+                speedX*=1.3f;
+                speedY*=1.3f;
             }
             if(item.shoot>ProjectileID.None&&felnumShock>29) {
                 Projectile p = new Projectile();

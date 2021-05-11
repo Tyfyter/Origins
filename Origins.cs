@@ -301,6 +301,20 @@ namespace Origins {
                 worldInstance.defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
             }
             //IL.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
+            On.Terraria.Main.DrawInterface_Resources_Breath += FixedDrawBreath;
+        }
+
+        private static void FixedDrawBreath(On.Terraria.Main.orig_DrawInterface_Resources_Breath orig) {
+            Player localPlayer = Main.LocalPlayer;
+            int breath = localPlayer.breath;
+            int breathMax = localPlayer.breathMax;
+            if(breathMax > 400) {
+                localPlayer.breathMax = 400;
+                localPlayer.breath = breath==breathMax?400:(int)(breath / (breathMax / 400f));
+            }
+            orig();
+            localPlayer.breath = breath;
+            localPlayer.breathMax = breathMax;
         }
 
         private void NPC_GetMeleeCollisionData(On.Terraria.NPC.orig_GetMeleeCollisionData orig, Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect) {
