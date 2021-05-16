@@ -16,7 +16,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.YoYoGlove);
-            item.handOffSlot = -1;//the current spritesheet is in 1.4's format, so it's not usable yet
+            item.handOffSlot = -1;
             item.handOnSlot = -1;
         }
         public override void UpdateEquip(Player player) {

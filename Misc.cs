@@ -145,6 +145,20 @@ namespace Origins {
             }
         }
     }
+    public struct PolarVec2 {
+        public float R;
+        public float Theta;
+        public PolarVec2(float r, float theta) {
+            R = r;
+            Theta = theta;
+        }
+        public static explicit operator Vector2(PolarVec2 pv) {
+            return new Vector2((float)(pv.R*Math.Cos(pv.Theta)),(float)(pv.R*Math.Sin(pv.Theta)));
+        }
+        public static explicit operator PolarVec2(Vector2 vec) {
+            return new PolarVec2(vec.Length(), vec.ToRotation());
+        }
+    }
     public class DrawAnimationManual : DrawAnimation {
 	    public DrawAnimationManual(int frameCount) {
 		    Frame = 0;

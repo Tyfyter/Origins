@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Other {
 	public class Dreikan : ModItem {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dreikan");
-			Tooltip.SetDefault("Like \"Drakin\" with a heavy Aussie accend");
+			Tooltip.SetDefault("Like \"Drakin\" with a heavy Aussie accent");
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.SniperRifle);
