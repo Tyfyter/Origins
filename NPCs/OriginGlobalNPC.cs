@@ -75,6 +75,8 @@ namespace Origins.NPCs {
             if(player.GetModPlayer<OriginPlayer>().ZoneDefiled) {
                 pool[0] = 0;
 
+                pool.Add(ModContent.NPCType<Defiled_Cyclops>(), DefiledWastelands.SpawnRates.Cyclops);
+
                 pool.Add(ModContent.NPCType<Defiled_Brute>(), DefiledWastelands.SpawnRates.Brute);
 
                 if(spawnInfo.playerFloorY <= Main.worldSurface+50&&spawnInfo.spawnTileY < Main.worldSurface-50)pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer*(player.ZoneSkyHeight?2:1));
