@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Felnum {
 			item.knockBack = 6;
 			item.value = 5000;
 			item.autoReuse = true;
-            item.useTurn = true;
+            item.useTurn = false;
 			item.shootSpeed = 3;
             item.shoot = ModContent.ProjectileType<Felnum_Spear_Stab>();
 			item.rare = ItemRarityID.Green;

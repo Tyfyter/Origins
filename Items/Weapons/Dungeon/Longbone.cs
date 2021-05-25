@@ -48,7 +48,11 @@ namespace Origins.Items.Weapons.Dungeon {
             DisplayName.SetDefault("Bone Bolt");
         }
         public override void SetDefaults() {
-            projectile.CloneDefaults(Longbone.t);
+            try {
+                projectile.CloneDefaults(Longbone.t);
+            } catch(Exception) {
+                projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
+            }
             projectile.timeLeft = 30;
             projectile.extraUpdates = 1;
             projectile.localAI[0] = Longbone.t;
