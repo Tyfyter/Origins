@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Dungeon {
     public class Longbone : ModItem {
-        internal static int t = -1;
+        internal static int t = ProjectileID.WoodenArrowFriendly;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bolterbow");
             Tooltip.SetDefault("Turns most arrows into fragile bone arrows");
@@ -48,11 +48,7 @@ namespace Origins.Items.Weapons.Dungeon {
             DisplayName.SetDefault("Bone Bolt");
         }
         public override void SetDefaults() {
-            try {
-                projectile.CloneDefaults(Longbone.t);
-            } catch(Exception) {
-                projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
-            }
+            projectile.CloneDefaults(Longbone.t);
             projectile.timeLeft = 30;
             projectile.extraUpdates = 1;
             projectile.localAI[0] = Longbone.t;
