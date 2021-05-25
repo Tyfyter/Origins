@@ -30,7 +30,7 @@ namespace Origins.NPCs.Defiled {
             if(!npc.HasValidTarget)npc.direction = Math.Sign(npc.velocity.X);
             npc.spriteDirection = npc.direction;
             if(++npc.frameCounter>5) {
-                npc.frame = new Rectangle(0, (npc.frame.Y+40)%164, 104, 38);
+                npc.frame = new Rectangle(0, (npc.frame.Y+46)%184, 136, 44);
                 npc.frameCounter = 0;
             }
         }
