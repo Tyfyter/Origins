@@ -20,8 +20,8 @@ namespace Origins.NPCs.Defiled {
             npc.lifeMax = 40;
             npc.defense = 8;
             npc.damage = 20;
-            npc.width = 136;
-            npc.height = 44;
+            npc.width = 104;
+            npc.height = 38;
             npc.friendly = false;
             npc.lifeRegen = 50;
         }
@@ -30,7 +30,7 @@ namespace Origins.NPCs.Defiled {
             if(!npc.HasValidTarget)npc.direction = Math.Sign(npc.velocity.X);
             npc.spriteDirection = npc.direction;
             if(++npc.frameCounter>5) {
-                npc.frame = new Rectangle(0, (npc.frame.Y+46)%184, 136, 44);
+                npc.frame = new Rectangle(0, (npc.frame.Y+38)%152, 104, 36);
                 npc.frameCounter = 0;
             }
         }

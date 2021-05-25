@@ -144,6 +144,10 @@ namespace Origins.NPCs.Defiled {
         }
 
         public override void AI() {
+            if(npc.realLife < 0) {
+                npc.active = false;
+                return;
+            }
             NPC head = Main.npc[npc.realLife];
             npc.life = head.active ? npc.lifeMax : 0;
             npc.immune = head.immune;
@@ -195,6 +199,20 @@ namespace Origins.NPCs.Defiled {
         public override bool? CanBeHitByProjectile(Projectile projectile) {
             if(npc.realLife==npc.whoAmI)return null;
             if((projectile.usesLocalNPCImmunity?projectile.localNPCImmunity[npc.realLife]:Main.npc[npc.realLife].immune[projectile.owner])>0) {
+                return false;
+            }
+            return null;
+        }
+
+        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
+            if(npc.realLife!=npc.whoAmI) {
+                NPC head = Main.npc[npc.realLife];
+                head.immune[player.whoAmI] = Math.Max(head.immune[player.whoAmI], npc.immune[player.whoAmI]);
+            }
+        }
+        public override bool? CanBeHitByItem(Player player, Item item) {
+            if(npc.realLife==npc.whoAmI)return null;
+            if(Main.npc[npc.realLife].immune[player.whoAmI]>0) {
                 return false;
             }
             return null;

@@ -1,4 +1,5 @@
 ﻿using Origins.Items.Materials;
+using Origins.Items.Weapons.Other;
 using Origins.Tiles;
 using Origins.World;
 using System;
@@ -25,6 +26,10 @@ namespace Origins.NPCs {
                 break;
                 case NPCID.SkeletronHead:
                 if(!downedSkeletron)GenFelnumOre();
+                break;
+                case NPCID.ArmoredSkeleton:
+                case NPCID.SkeletonArcher:
+                if(Main.rand.Next(50)==0)Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Tiny_Sniper>());
                 break;
                 default:
                 break;

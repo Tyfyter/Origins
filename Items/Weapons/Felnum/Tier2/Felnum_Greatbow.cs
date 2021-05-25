@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
     public class Felnum_Greatbow : ModItem {
         public static int baseDamage = 78;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Valkyrum Greatbow (needs name, what do you think of \"Astoxo\"?)");
+            DisplayName.SetDefault("Astoxo");
             Tooltip.SetDefault("Recieves 50% higher damage bonuses");
         }
         public override void SetDefaults() {
@@ -57,7 +57,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             return true;
         }
         public override void GetWeaponDamage(Player player, ref int damage) {
-            if(!OriginPlayer.ItemChecking)damage+=(damage-baseDamage)/2;
+            damage+=(damage-baseDamage)/2;//if(!OriginPlayer.ItemChecking)
         }
     }
 }

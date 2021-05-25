@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Other {
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.SniperRifle);
-            item.damage = 96;
+            item.damage = 60;
             item.crit = 36;
             item.useAnimation = 33;
             item.useTime = 33;
