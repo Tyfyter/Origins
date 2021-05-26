@@ -10,11 +10,11 @@ namespace Origins.Items.Weapons.Other {
 	public class Tiny_Sniper : ModItem {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tiny Sniper");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Comically small, comically powerful");
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.SniperRifle);
-            item.damage = 60;
+            item.damage = 96;
             item.crit = 36;
             item.useAnimation = 33;
             item.useTime = 33;

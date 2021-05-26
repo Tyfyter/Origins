@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Explosives {
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.Bomb);
-            item.damage = 300;
+            item.damage = 500;
 			item.value*=2;
 			item.useTime = (int)(item.useTime*0.75);
 			item.useAnimation = (int)(item.useAnimation*0.75);
