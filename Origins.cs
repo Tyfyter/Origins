@@ -8,9 +8,11 @@ using Origins.Items.Materials;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
 using Origins.Tiles;
+using Origins.Tiles.Defiled;
 using Origins.World;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Terraria;
@@ -20,6 +22,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
+using MC = Terraria.ModLoader.ModContent;
 
 namespace Origins {
     public class Origins : Mod {
@@ -302,6 +305,39 @@ namespace Origins {
             }
             //IL.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
             On.Terraria.Main.DrawInterface_Resources_Breath += FixedDrawBreath;
+            On.Terraria.WorldGen.CountTiles += WorldGen_CountTiles;
+            On.Terraria.WorldGen.AddUpAlignmentCounts += WorldGen_AddUpAlignmentCounts;
+        }
+
+        private void WorldGen_CountTiles(On.Terraria.WorldGen.orig_CountTiles orig, int X) {
+            if(X == 0)OriginWorld.UpdateTotalEvilTiles();
+            orig(X);
+        }
+
+        private void WorldGen_AddUpAlignmentCounts(On.Terraria.WorldGen.orig_AddUpAlignmentCounts orig, bool clearCounts) {
+            int[] tileCounts = WorldGen.tileCounts;
+            if(clearCounts)OriginWorld.totalDefiled2 = 0;
+            OriginWorld.totalDefiled2 += tileCounts[MC.TileType<Defiled_Stone>()]+tileCounts[MC.TileType<Defiled_Grass>()]+tileCounts[MC.TileType<Defiled_Sand>()]+tileCounts[MC.TileType<Defiled_Ice>()];
+            orig(clearCounts);
+        }
+        public override void HandlePacket(BinaryReader reader, int whoAmI) {
+            byte type = reader.ReadByte();
+            if(Main.netMode == NetmodeID.MultiplayerClient) {
+                switch(type) {
+                    default:
+                    Logger.Warn($"Invalid packet type ({type}) recieved on client");
+                    break;
+                }
+            }else if(Main.netMode == NetmodeID.Server) {
+                switch(type) {
+                    case MessageID.TileCounts:
+                    OriginWorld.tDefiled = reader.ReadByte();
+                    break;
+                    default:
+                    Logger.Warn($"Invalid packet type ({type}) recieved on server");
+                    break;
+                }
+            }
         }
 
         private static void FixedDrawBreath(On.Terraria.Main.orig_DrawInterface_Resources_Breath orig) {

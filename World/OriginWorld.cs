@@ -33,6 +33,10 @@ namespace Origins.World {
         public const byte evil_wastelands = 0b0101;//5
         public const byte evil_riven = 0b0110;//6
 
+		public static int totalDefiled;
+		public static int totalDefiled2;
+		public static byte tDefiled;
+
 
         public override void Load(TagCompound tag) {
             peatSold = tag.GetAsInt("peatSold");
@@ -260,6 +264,19 @@ namespace Origins.World {
                 orig(i, j, conversionType, size);
                 break;
             }
+        }
+        internal static void UpdateTotalEvilTiles() {
+	        totalDefiled = totalDefiled2;
+	        tDefiled = (byte)Math.Round((totalDefiled / (float)WorldGen.totalSolid2) * 100f);
+	        if (tDefiled == 0 && totalDefiled > 0){
+		        tDefiled = 1;
+	        }
+	        if (Main.netMode == NetmodeID.Server){
+		        ModPacket packet = Origins.instance.GetPacket(2);
+                packet.Write(MessageID.TileCounts);
+                packet.Write(tDefiled);
+	        }
+	        totalDefiled2 = 0;
         }
         public static bool ConvertWall(ref ushort tileType, byte evilType, bool convert = true) {
             getEvilWallConversionTypes(evilType, out ushort[] stoneTypes, out ushort[] hardenedSandTypes, out ushort[] sandstoneTypes);
