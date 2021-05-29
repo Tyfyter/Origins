@@ -12,6 +12,7 @@ using Origins.Tiles.Defiled;
 using Origins.World;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -20,6 +21,7 @@ using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
@@ -307,6 +309,64 @@ namespace Origins {
             On.Terraria.Main.DrawInterface_Resources_Breath += FixedDrawBreath;
             On.Terraria.WorldGen.CountTiles += WorldGen_CountTiles;
             On.Terraria.WorldGen.AddUpAlignmentCounts += WorldGen_AddUpAlignmentCounts;
+            Terraria.IO.WorldFile.OnWorldLoad += () => {
+	            if (Main.netMode != NetmodeID.MultiplayerClient){
+			        for(int i = 0; i < Main.maxTilesX; i++)WorldGen.CountTiles(i);
+	            }
+            };
+            On.Terraria.Lang.GetDryadWorldStatusDialog += Lang_GetDryadWorldStatusDialog;
+        }
+
+        private string Lang_GetDryadWorldStatusDialog(On.Terraria.Lang.orig_GetDryadWorldStatusDialog orig) {
+            const int good = 1;
+            const int evil = 2;
+            const int blood = 4;
+            const int defiled = 8;
+	        string text = "";
+	        int tGood = WorldGen.tGood;
+	        int tEvil = WorldGen.tEvil;
+	        int tBlood = WorldGen.tBlood;
+            int tDefiled = OriginWorld.tDefiled;
+            int tBad = tEvil + tBlood + tDefiled;
+            if(tDefiled==0) {
+                return orig();
+            }
+            int tHas = (tGood>0?good:0)|(tEvil>0?evil:0)|(tBlood>0?blood:0)|(tDefiled>0?defiled:0);
+            switch(tHas) {
+                case good | evil | blood:
+                text = Language.GetTextValue("DryadSpecialText.WorldStatusAll", Main.worldName, tGood, tEvil, tBlood);
+                break;
+                case good | evil:
+                text = Language.GetTextValue("DryadSpecialText.WorldStatusHallowCorrupt", Main.worldName, tGood, tEvil, tBlood);
+                break;
+                case good | blood:
+                text = Language.GetTextValue("DryadSpecialText.WorldStatusHallowCrimson", Main.worldName, tGood, tEvil, tBlood);
+                break;
+                case evil | blood:
+                text = Language.GetTextValue("DryadSpecialText.WorldStatusCorruptCrimson", Main.worldName, tGood, tEvil, tBlood);
+                break;
+                case evil:
+                text = Language.GetTextValue("DryadSpecialText.WorldStatusCorrupt", Main.worldName, tGood, tEvil, tBlood);
+                break;
+                case blood:
+                text = Language.GetTextValue("DryadSpecialText.WorldStatusCrimson", Main.worldName, tGood, tEvil, tBlood);
+                break;
+                case good:
+                text = Language.GetTextValue("DryadSpecialText.WorldStatusHallow", Main.worldName, tGood, tEvil, tBlood);
+                break;
+                case 0:
+                text = Language.GetTextValue("DryadSpecialText.WorldStatusPure", Main.worldName, tGood, tEvil, tBlood);
+                break;
+            }
+            //temp fix, unlocalized and never gramatically correct
+            if(tDefiled > 0) text += $" and {tDefiled}% defiled wastelands";
+	        string str = (tGood * 1.2 >= tBad && tGood * 0.8 <= tBad) ?
+                Language.GetTextValue("DryadSpecialText.WorldDescriptionBalanced") : ((tGood >= tBad) ?
+                Language.GetTextValue("DryadSpecialText.WorldDescriptionFairyTale") : ((tBad > tGood + 20) ?
+                Language.GetTextValue("DryadSpecialText.WorldDescriptionGrim") : ((tBad <= 10) ?
+                Language.GetTextValue("DryadSpecialText.WorldDescriptionClose") :
+                Language.GetTextValue("DryadSpecialText.WorldDescriptionWork"))));
+	        return text + " " + str;
         }
 
         private void WorldGen_CountTiles(On.Terraria.WorldGen.orig_CountTiles orig, int X) {
