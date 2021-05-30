@@ -36,6 +36,7 @@ namespace Origins {
         public bool minerSet = false;
         public bool defiledSet = false;
         public bool rivenSet = false;
+        public bool riftSet = false;
 
         public bool bombHandlingDevice = false;
         public bool dimStarlight = false;
@@ -90,6 +91,7 @@ namespace Origins {
             minerSet = false;
             defiledSet = false;
             rivenSet = false;
+            riftSet = false;//armor not yet implemented, but the set bonus is functional
             bombHandlingDevice = false;
             dimStarlight = false;
             madHand = false;
@@ -150,17 +152,42 @@ namespace Origins {
             }
         }
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            if(item.useAmmo == 0&&IsExplosive(item)) {
-                speedX*=explosiveThrowSpeed;
-                speedY*=explosiveThrowSpeed;
-            }
             if(advancedImaging) {
                 speedX*=1.3f;
                 speedY*=1.3f;
             }
+            if(IsExplosive(item)) {
+                if(item.useAmmo == 0) {
+                    speedX*=explosiveThrowSpeed;
+                    speedY*=explosiveThrowSpeed;
+                }
+                if(riftSet) {
+                    Fraction dmg = new Fraction(2, 2);
+                    int c = (madHand ? 1 : 0) + (Main.rand.Next(2) == 0 ? 1 : 0);
+                    dmg.D+=c;
+                    damage *= dmg;
+                    double rot = Main.rand.Next(2) == 0?-0.1:0.1;
+                    Vector2 _position;
+                    Vector2 velocity;
+                    int _type;
+                    int _damage;
+                    float _knockBack;
+                    for(int i = c; i-->0;) {
+                        _position = position;
+                        velocity = new Vector2(speedX, speedY).RotatedBy(rot);
+                        _type = type;
+                        _damage = damage;
+                        _knockBack = knockBack;
+                        if(ItemLoader.Shoot(item, player, ref _position, ref velocity.X, ref velocity.Y, ref _type, ref _damage, ref _knockBack)) {
+                            Projectile.NewProjectile(_position, velocity, _type, _damage, _knockBack, player.whoAmI);
+                        }
+                        rot = -rot;
+                    }
+                }
+            }
             if(item.shoot>ProjectileID.None&&felnumShock>29) {
                 Projectile p = new Projectile();
-                p.SetDefaults(item.shoot);
+                p.SetDefaults(type);
                 OriginGlobalProj.felnumEffectNext = true;
                 if(p.melee || p.aiStyle == 60)
                     return true;

@@ -159,6 +159,57 @@ namespace Origins {
             return new PolarVec2(vec.Length(), vec.ToRotation());
         }
     }
+    /// <summary>
+    /// Because it's a little more convenient than an extension method for every number type
+    /// </summary>
+    public struct Fraction {
+        public static Fraction Half => new Fraction(1, 2);
+        public static Fraction Third => new Fraction(1, 3);
+        public static Fraction Quarter => new Fraction(1, 4);
+        public static Fraction Fifth => new Fraction(1, 5);
+        public static Fraction Sixth => new Fraction(1, 6);
+        public int numerator;
+        public int denominator;
+        public int N {get=>numerator;set=>numerator=value;}
+        public int D {get=>denominator;set=>denominator=value;}
+        public Fraction(int numerator, int denominator) {
+            this.numerator = numerator;
+            this.denominator = denominator;
+        }
+        public static Fraction operator +(Fraction f1, Fraction f2) {
+            return new Fraction((f1.N * f2.D) + (f2.N * f1.D), f1.D*f2.D);
+        }
+        public static Fraction operator -(Fraction f1, Fraction f2) {
+            return new Fraction((f1.N * f2.D) - (f2.N * f1.D), f1.D*f2.D);
+        }
+        public static Fraction operator *(Fraction f1, Fraction f2) {
+            return new Fraction(f1.N * f2.N, f1.D * f2.D);
+        }
+        public static Fraction operator /(Fraction f1, Fraction f2) {
+            return new Fraction(f1.N * f2.D, f1.D * f2.N);
+        }
+        public static Fraction operator *(Fraction frac, int i) {
+            return new Fraction(frac.N*i, frac.D);
+        }
+        public static int operator *(int i, Fraction frac) {
+            return (i * frac.N) / frac.D;
+        }
+        public static Fraction operator /(Fraction frac, int i) {
+            return new Fraction(frac.N, frac.D*i);
+        }
+        public static int operator /(int i, Fraction frac) {
+            return (i * frac.D) / frac.N;
+        }
+        public static explicit operator float(Fraction frac) {
+            return frac.N/(float)frac.D;
+        }
+        public static explicit operator double(Fraction frac) {
+            return frac.N/(double)frac.D;
+        }
+        public override string ToString() {
+            return N+"/"+D;
+        }
+    }
     public class DrawAnimationManual : DrawAnimation {
 	    public DrawAnimationManual(int frameCount) {
 		    Frame = 0;

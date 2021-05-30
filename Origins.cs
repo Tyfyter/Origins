@@ -322,16 +322,18 @@ namespace Origins {
             const int evil = 2;
             const int blood = 4;
             const int defiled = 8;
+            const int riven = 16;
 	        string text = "";
 	        int tGood = WorldGen.tGood;
 	        int tEvil = WorldGen.tEvil;
 	        int tBlood = WorldGen.tBlood;
             int tDefiled = OriginWorld.tDefiled;
+            int tRiven = 0;//OriginWorld.tRiven;
             int tBad = tEvil + tBlood + tDefiled;
-            if(tDefiled==0) {
+            if(tDefiled==0&&tRiven==0) {
                 return orig();
             }
-            int tHas = (tGood>0?good:0)|(tEvil>0?evil:0)|(tBlood>0?blood:0)|(tDefiled>0?defiled:0);
+            int tHas = (tGood>0?good:0)|(tEvil>0?evil:0)|(tBlood>0?blood:0)|(tDefiled>0?defiled:0)|(tRiven>0?riven:0);
             switch(tHas) {
                 case good | evil | blood:
                 text = Language.GetTextValue("DryadSpecialText.WorldStatusAll", Main.worldName, tGood, tEvil, tBlood);
@@ -360,6 +362,7 @@ namespace Origins {
             }
             //temp fix, unlocalized and never gramatically correct
             if(tDefiled > 0) text += $" and {tDefiled}% defiled wastelands";
+            if(tRiven > 0) text += $" and {tRiven}% riven";
 	        string str = (tGood * 1.2 >= tBad && tGood * 0.8 <= tBad) ?
                 Language.GetTextValue("DryadSpecialText.WorldDescriptionBalanced") : ((tGood >= tBad) ?
                 Language.GetTextValue("DryadSpecialText.WorldDescriptionFairyTale") : ((tBad > tGood + 20) ?
