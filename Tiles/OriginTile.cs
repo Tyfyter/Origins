@@ -47,4 +47,28 @@ namespace Origins.Tiles {
             }
         }
     }
+    /// <summary>
+    /// contains riven hive spread code
+    /// </summary>
+    public abstract class RivenTile : OriginTile {
+        public override void RandomUpdate(int i, int j) {
+            if(!Main.hardMode)return;
+            WeightedRandom<(int, int)> rand = new WeightedRandom<(int, int)>();
+            Tile current;
+            for(int y = -3; y < 4; y++) {
+                for(int x = -3; x < 4; x++) {
+                    current = Main.tile[i+x, j+y];
+                    if(OriginWorld.ConvertTileWeak(ref current.type, OriginWorld.evil_riven, false)) {
+                        if(Main.tile[i+x, j+y-1].type!=TileID.Sunflower)rand.Add((i+x,j+y));
+                    }
+                }
+            }
+            if(rand.elements.Count>0) {
+                (int x, int y) pos = rand.Get();
+                OriginWorld.ConvertTileWeak(ref Main.tile[pos.x, pos.y].type, OriginWorld.evil_riven);
+				WorldGen.SquareTileFrame(pos.x, pos.y);
+				NetMessage.SendTileSquare(-1, pos.x, pos.y, 1);
+            }
+        }
+    }
 }

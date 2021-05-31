@@ -695,7 +695,14 @@ namespace Origins.World {
                 iceType = (ushort)TileType<Defiled_Ice>();
                 break;
                 case evil_riven:
-                throw new NotImplementedException();
+                stoneType = (ushort)TileType<Tiles.Riven.Riven_Flesh>();
+                grassType = TileID.FleshGrass;
+                plantType = TileID.FleshWeeds;
+                sandType = TileID.Crimsand;
+                sandstoneType = TileID.CrimsonSandstone;
+                hardenedSandType = TileID.CrimsonHardenedSand;
+                iceType = TileID.FleshIce;
+                break;
                 case evil_crimson:
                 stoneType = TileID.Crimstone;
                 grassType = TileID.FleshGrass;
