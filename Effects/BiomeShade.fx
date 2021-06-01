@@ -44,17 +44,17 @@ float4 DefiledShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : CO
 
 float4 RivenShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
 	const float pi = 3.1415926535897932384626433832795;
-	const float pisquared = 9.8696044010893586188344909998761;
-	const float mult = 1.75;
+	const float pisquared = 10;//9.8696044010893586188344909998761;
+	const float mult = 1.85;
 	float4 color = tex2D(uImage0, coords);
 	float progress = uProgress;
 	//float time = uTime/3;
 	float xval = (coords.x-0.5)*mult;
 	float yval = (coords.y-0.5)*mult;
 	float r = sqrt((xval*xval)+(yval*yval))*progress;
-	float tpi = (atan(yval/xval)+sin(uTime/pisquared)/pi)*pisquared;
+	float tpi = (atan(yval/xval)+(sin(uTime/pisquared)/pi))*pisquared;
 	float aval = r+(lerp((cos(uTime)+0.5), cos(tpi), sin(tpi))*0.05)*r;
-	aval = clamp(aval, 0, 1); 
+	aval = clamp(aval, 0, 1)*progress; 
 	color.rgb = lerp(color.rgb, color.rgb*float3(1, 0.45, 0.15), aval);
 	if(aval>0.75)color.rgb = lerp(color.rgb, 0, (aval-0.75)*3);
 	return color;

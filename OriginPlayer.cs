@@ -301,7 +301,8 @@ namespace Origins {
             ZoneDefiled = OriginWorld.defiledTiles > DefiledWastelands.NeededTiles;
             ZoneDefiledProgress = Math.Min(OriginWorld.defiledTiles - (DefiledWastelands.NeededTiles-DefiledWastelands.ShaderTileCount), DefiledWastelands.ShaderTileCount)/DefiledWastelands.ShaderTileCount;
             LinearSmoothing(ref ZoneVoidProgressSmoothed, ZoneVoidProgress, OriginWorld.biomeShaderSmoothing);
-            LinearSmoothing(ref ZoneDefiledProgressSmoothed, ZoneDefiledProgress, OriginWorld.biomeShaderSmoothing);
+            LinearSmoothing(ref ZoneDefiledProgressSmoothed, ZoneDefiledProgress, OriginWorld.biomeShaderSmoothing*0.1f);
+            //LinearSmoothing(ref ZoneRivenProgressSmoothed, ZoneRivenProgress, OriginWorld.biomeShaderSmoothing);
         }
         public override bool CustomBiomesMatch(Player other) {
             OriginPlayer modOther = other.GetModPlayer<OriginPlayer>();
@@ -332,9 +333,11 @@ namespace Origins {
         }
         public override void UpdateBiomeVisuals() {
             if(ZoneVoidProgressSmoothed > 0)Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(ZoneVoidProgressSmoothed);
-            if(ZoneDefiledProgressSmoothed > 0)Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(ZoneDefiledProgressSmoothed);
+            if(ZoneDefiledProgressSmoothed > 0)Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(ZoneDefiledProgressSmoothed);
+            //if(ZoneRivenProgressSmoothed > 0)Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(ZoneRivenProgressSmoothed);
             player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", ZoneVoidProgressSmoothed>0, player.Center);
-            player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", ZoneDefiledProgressSmoothed>0, player.Center);
+            player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", ZoneDefiledProgressSmoothed>0, player.Center);//ZoneDefiled
+            //player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", ZoneRivenProgressSmoothed>0, player.Center);
         }
         public override bool PreItemCheck() {
             ItemChecking = true;
