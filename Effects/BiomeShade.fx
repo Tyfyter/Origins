@@ -42,11 +42,32 @@ float4 DefiledShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : CO
 	return color*(sampleColor+(1,1,1,1))/2;
 }
 
+float4 RivenShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
+	const float pi = 3.1415926535897932384626433832795;
+	const float pisquared = 9.8696044010893586188344909998761;
+	const float mult = 1.75;
+	float4 color = tex2D(uImage0, coords);
+	float progress = uProgress;
+	//float time = uTime/3;
+	float xval = (coords.x-0.5)*mult;
+	float yval = (coords.y-0.5)*mult;
+	float r = sqrt((xval*xval)+(yval*yval))*progress;
+	float tpi = (atan(yval/xval)+sin(uTime/pisquared)/pi)*pisquared;
+	float aval = r+(lerp((cos(uTime)+0.5), cos(tpi), sin(tpi))*0.05)*r;
+	aval = clamp(aval, 0, 1); 
+	color.rgb = lerp(color.rgb, color.rgb*float3(1, 0.45, 0.15), aval);
+	if(aval>0.75)color.rgb = lerp(color.rgb, 0, (aval-0.75)*3);
+	return color;
+}
+
 technique Technique1{
 	pass VoidShade{
 		PixelShader = compile ps_2_0 VoidShade();
 	}
 	pass DefiledShade{
 		PixelShader = compile ps_2_0 DefiledShade();
+	}
+	pass RivenShade{
+		PixelShader = compile ps_2_0 RivenShade();
 	}
 }

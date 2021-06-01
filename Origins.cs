@@ -263,8 +263,11 @@ namespace Origins {
                 perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.6f);
                 perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.6f);
                 blackHoleShade = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/BlackHole")), "BlackHole");
+
 				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/BiomeShade")), "VoidShade"), EffectPriority.High);
 				Filters.Scene["Origins:ZoneDefiled"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/BiomeShade")), "DefiledShade"), EffectPriority.High);
+				Filters.Scene["Origins:ZoneRiven"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/BiomeShade")), "RivenShade"), EffectPriority.High);
+
                 solventShader = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/Solvent")), "Dissolve");
                 GameShaders.Misc["Origins:Solvent"] = solventShader;
                 cellNoiseTexture = GetTexture("Textures/Cell_Noise_Pixel");
