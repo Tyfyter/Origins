@@ -1,7 +1,7 @@
 ﻿namespace Origins.World.BiomeData {
     public static class RivenHive {
         public const int NeededTiles = 200;
-        public const int ShaderTileCount = 75;
+        public const int ShaderTileCount = 25;
         public static class SpawnRates {
             public const float Fighter = 1;
             public const float Mummy = 1;

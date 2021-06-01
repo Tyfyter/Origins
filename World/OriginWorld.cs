@@ -16,17 +16,19 @@ using Terraria.Utilities;
 using Origins.Items.Weapons.Other;
 using Origins.Walls;
 using static Origins.World.OriginWorld.LootQueueAction;
+using Origins.Tiles.Riven;
 
 namespace Origins.World {
     public partial class OriginWorld : ModWorld {
 		public static int voidTiles;
 		public static int defiledTiles;
+		public static int rivenTiles;
         public int peatSold;
         public const float biomeShaderSmoothing = 0.025f;
         public byte worldEvil = 0;
         private static double? _worldSurfaceLow;
         public static double worldSurfaceLow => _worldSurfaceLow??Main.worldSurface-165;
-        public bool defiledResurgence = true;
+        public bool defiledResurgence => Main.hardMode;//true;
         public const byte evil_corruption = 0b0001;//1
         public const byte evil_crimson = 0b0010;//2
         //difference of 4
@@ -55,11 +57,16 @@ namespace Origins.World {
         public override void ResetNearbyTileEffects() {
 			voidTiles = 0;
             defiledTiles = 0;
+            rivenTiles = 0;
 		}
 
 		public override void TileCountsAvailable(int[] tileCounts) {
 			voidTiles = tileCounts[ModContent.TileType<Dusk_Stone>()];
+
 			defiledTiles = tileCounts[ModContent.TileType<Defiled_Stone>()]+tileCounts[ModContent.TileType<Defiled_Grass>()]+tileCounts[ModContent.TileType<Defiled_Sand>()]+tileCounts[ModContent.TileType<Defiled_Ice>()];
+
+            rivenTiles = tileCounts[ModContent.TileType<Riven_Flesh>()];//+tileCounts[ModContent.TileType<Defiled_Grass>()]+tileCounts[ModContent.TileType<Defiled_Sand>()]+tileCounts[ModContent.TileType<Defiled_Ice>()];
+
             Main.sandTiles+=tileCounts[ModContent.TileType<Defiled_Sand>()];
         }
         protected internal List<(int, int)> defiledResurgenceTiles;

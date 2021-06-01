@@ -58,6 +58,10 @@ namespace Origins {
         public float ZoneDefiledProgress = 0;
         public float ZoneDefiledProgressSmoothed = 0;
 
+        public bool ZoneRiven = false;
+        public float ZoneRivenProgress = 0;
+        public float ZoneRivenProgressSmoothed = 0;
+
         public bool DrawShirt = false;
         public bool DrawPants = false;
         public bool ItemLayerWrench = false;
@@ -298,11 +302,16 @@ namespace Origins {
         public override void UpdateBiomes() {
             ZoneVoid = OriginWorld.voidTiles > 300;
             ZoneVoidProgress = Math.Min(OriginWorld.voidTiles - 200, 200)/300f;
+
             ZoneDefiled = OriginWorld.defiledTiles > DefiledWastelands.NeededTiles;
             ZoneDefiledProgress = Math.Min(OriginWorld.defiledTiles - (DefiledWastelands.NeededTiles-DefiledWastelands.ShaderTileCount), DefiledWastelands.ShaderTileCount)/DefiledWastelands.ShaderTileCount;
+
+            ZoneRiven = OriginWorld.defiledTiles > RivenHive.NeededTiles;
+            ZoneRivenProgress = Math.Min(OriginWorld.defiledTiles - (RivenHive.NeededTiles-RivenHive.ShaderTileCount), RivenHive.ShaderTileCount)/RivenHive.ShaderTileCount;
+
             LinearSmoothing(ref ZoneVoidProgressSmoothed, ZoneVoidProgress, OriginWorld.biomeShaderSmoothing);
-            LinearSmoothing(ref ZoneDefiledProgressSmoothed, ZoneDefiledProgress, OriginWorld.biomeShaderSmoothing*0.1f);
-            //LinearSmoothing(ref ZoneRivenProgressSmoothed, ZoneRivenProgress, OriginWorld.biomeShaderSmoothing);
+            LinearSmoothing(ref ZoneDefiledProgressSmoothed, ZoneDefiledProgress, OriginWorld.biomeShaderSmoothing);
+            LinearSmoothing(ref ZoneRivenProgressSmoothed, ZoneRivenProgress, OriginWorld.biomeShaderSmoothing*0.1f);
         }
         public override bool CustomBiomesMatch(Player other) {
             OriginPlayer modOther = other.GetModPlayer<OriginPlayer>();
