@@ -37,24 +37,6 @@ namespace Origins {
         [DefaultValue(true)]
         public bool GrassMerge = true;
 
-        [Label("Deb_A-S_field1")]
-        [DefaultValue(3)]
-        public int Ace_Shrap_MH{
-            get => Ace_Shrapnel_Shard.maxHits;
-            set {
-                Ace_Shrapnel_Shard.maxHits = value;
-            }
-        }
-
-        [Label("Deb_A-S_field2")]
-        [DefaultValue(5)]
-        public int Ace_Shrap_CD{
-            get => Ace_Shrapnel_Shard.hitCD;
-            set {
-                Ace_Shrapnel_Shard.hitCD = value;
-            }
-        }
-
         [OnDeserialized]
         internal void OnDeserialized(StreamingContext context) {
             switch(altWorldEvil) {

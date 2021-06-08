@@ -306,8 +306,8 @@ namespace Origins {
             ZoneDefiled = OriginWorld.defiledTiles > DefiledWastelands.NeededTiles;
             ZoneDefiledProgress = Math.Min(OriginWorld.defiledTiles - (DefiledWastelands.NeededTiles-DefiledWastelands.ShaderTileCount), DefiledWastelands.ShaderTileCount)/DefiledWastelands.ShaderTileCount;
 
-            ZoneRiven = OriginWorld.defiledTiles > RivenHive.NeededTiles;
-            ZoneRivenProgress = Math.Min(OriginWorld.defiledTiles - (RivenHive.NeededTiles-RivenHive.ShaderTileCount), RivenHive.ShaderTileCount)/RivenHive.ShaderTileCount;
+            ZoneRiven = OriginWorld.rivenTiles > RivenHive.NeededTiles;
+            ZoneRivenProgress = Math.Min(OriginWorld.rivenTiles - (RivenHive.NeededTiles-RivenHive.ShaderTileCount), RivenHive.ShaderTileCount)/RivenHive.ShaderTileCount;
 
             LinearSmoothing(ref ZoneVoidProgressSmoothed, ZoneVoidProgress, OriginWorld.biomeShaderSmoothing);
             LinearSmoothing(ref ZoneDefiledProgressSmoothed, ZoneDefiledProgress, OriginWorld.biomeShaderSmoothing);
@@ -323,15 +323,16 @@ namespace Origins {
                 flags |= 1;
             if(ZoneDefiled)
                 flags |= 2;
+            if(ZoneRiven)
+                flags |= 4;
             writer.Write(flags);
-            //writer.Write(ZoneVoidTime);
         }
 
         public override void ReceiveCustomBiomes(BinaryReader reader) {
             byte flags = reader.ReadByte();
             ZoneVoid = ((flags & 1)!=0);
             ZoneDefiled = ((flags & 2)!=0);
-            //ZoneVoidTime = reader.ReadInt32();
+            ZoneRiven = ((flags & 4)!=0);
         }
 
         public override void CopyCustomBiomesTo(Player other) {
@@ -339,14 +340,15 @@ namespace Origins {
             //modOther.ZoneVoidTime = ZoneVoidTime;
             modOther.ZoneVoid = ZoneVoid;
             modOther.ZoneDefiled = ZoneDefiled;
+            modOther.ZoneRiven = ZoneRiven;
         }
         public override void UpdateBiomeVisuals() {
             if(ZoneVoidProgressSmoothed > 0)Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(ZoneVoidProgressSmoothed);
-            if(ZoneDefiledProgressSmoothed > 0)Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(ZoneDefiledProgressSmoothed);
-            //if(ZoneRivenProgressSmoothed > 0)Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(ZoneRivenProgressSmoothed);
+            if(ZoneDefiledProgressSmoothed > 0)Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(ZoneDefiledProgressSmoothed);
+            if(ZoneRivenProgressSmoothed > 0)Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(ZoneRivenProgressSmoothed);
             player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", ZoneVoidProgressSmoothed>0, player.Center);
-            player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", ZoneDefiledProgressSmoothed>0, player.Center);//ZoneDefiled
-            //player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", ZoneRivenProgressSmoothed>0, player.Center);
+            player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", ZoneDefiledProgressSmoothed>0, player.Center);
+            player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", ZoneRivenProgressSmoothed>0, player.Center);
         }
         public override bool PreItemCheck() {
             ItemChecking = true;

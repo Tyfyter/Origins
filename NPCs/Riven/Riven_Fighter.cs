@@ -12,9 +12,7 @@ using Terraria.DataStructures;
 namespace Origins.NPCs.Riven {
     public class Riven_Fighter : ModNPC {
         public override void SetStaticDefaults() {
-            //explain more than necessary
-            //reference famous glitch from Pokémon
-            DisplayName.SetDefault("misingno");
+            DisplayName.SetDefault("Riven Acolyte");
             Main.npcFrameCount[npc.type] = 4;
         }
         public override void SetDefaults() {

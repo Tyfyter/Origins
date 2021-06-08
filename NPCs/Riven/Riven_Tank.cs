@@ -13,7 +13,7 @@ namespace Origins.NPCs.Riven {
     public class Riven_Tank : ModNPC, IMeleeCollisionDataNPC {
         public const float speedMult = 0.75f;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("misingno");
+            DisplayName.SetDefault("Riven Giant");
             Main.npcFrameCount[npc.type] = 4;
         }
         public override void SetDefaults() {
