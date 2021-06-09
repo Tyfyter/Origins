@@ -910,7 +910,8 @@ namespace Origins {
             if(target!=smoothed) {
                 float diff = AngleDif(smoothed, target, out int dir);
                 diff = Math.Abs(diff);
-                if(diff<rate||(snap&&diff>MathHelper.Pi-rate)) {
+                float aRate = Math.Abs(rate);
+                if(diff<aRate||(snap&&diff>MathHelper.Pi-aRate)) {
                     smoothed = target;
                 } else {
                     smoothed-=rate*dir;

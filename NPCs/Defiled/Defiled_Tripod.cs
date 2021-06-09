@@ -8,10 +8,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Tripod : ModNPC {
-        public const float speedMult = 1.5f;
+        public const float horizontalSpeed = 3.2f;
+        public const float horizontalAirSpeed = 2f;
+        public const float verticalSpeed = 4f;
         bool attacking = false;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Tripod");
@@ -35,7 +38,6 @@ namespace Origins.NPCs.Defiled {
                 npc.spriteDirection = npc.direction;
             }
 
-            npc.rotation = 0;
             npc.velocity = npc.oldVelocity * new Vector2(npc.collideX?0.5f:1, npc.collideY?0.75f:1);
             int targetVMinDirection = Math.Sign(npc.targetRect.Bottom - npc.Bottom.Y);
             int targetVMaxDirection = Math.Sign(npc.targetRect.Top - npc.Bottom.Y);
@@ -46,9 +48,15 @@ namespace Origins.NPCs.Defiled {
             float absX = moveDir==0?0:npc.velocity.X / moveDir;
 
             if(npc.collideY) {
+                npc.ai[1] = 0;
+                //npc.rotation = 0;
+                LinearSmoothing(ref npc.rotation, 0, 0.15f);
                 if(moveDir != -npc.direction) {
-                    if(absX < 4)
+                    if(absX < horizontalSpeed) {
                         npc.velocity.X += npc.direction * 0.5f;
+                    } else {
+                        LinearSmoothing(ref npc.velocity.X, npc.direction*horizontalSpeed, 0.1f);
+                    }
                 } else {
                     npc.velocity.X += npc.direction * 0.15f;
                 }
@@ -60,11 +68,15 @@ namespace Origins.NPCs.Defiled {
                             //npc.velocity.X *= 2;
                             npc.position.X += npc.direction;
                         } else {
-
-                            if(npc.velocity.Y > -4)
+                            if(npc.velocity.Y > -4) {
                                 npc.velocity.Y -= 1;
+                            }
                             if(moveDir != -npc.direction) {
-                                npc.rotation = -MathHelper.PiOver2 * moveDir;
+                                LinearSmoothing(ref npc.rotation, -MathHelper.PiOver2 * moveDir, 0.15f);
+                                //npc.rotation = -MathHelper.PiOver2 * moveDir;
+                                if(targetVMinDirection==-1) {
+                                    npc.position.Y--;
+                                }
                             }
                         }
                     } else if(moveDir == npc.direction && absX > 3) {
@@ -77,23 +89,25 @@ namespace Origins.NPCs.Defiled {
                     }
                 }
             } else if(npc.collideX) {
+                npc.ai[1] = 0;
                 if(targetVMinDirection==-1) {
-                    if(npc.velocity.Y > -4)
-                        npc.velocity.Y -= 1;
+                    if(npc.velocity.Y > -verticalSpeed)npc.velocity.Y -= 1;
                     if(moveDir != -npc.direction) {
-                        npc.rotation = -MathHelper.PiOver2 * moveDir;
+                        LinearSmoothing(ref npc.rotation, -MathHelper.PiOver2 * moveDir, 0.15f);
+                        //npc.rotation = -MathHelper.PiOver2 * moveDir;
                     }
                 } else {
                     //npc.velocity.X *= 2;
                     npc.position.X += npc.direction;
                 }
             } else {
+                if(++npc.ai[1]>3)LinearSmoothing(ref npc.rotation, 0, 0.15f);
                 if(moveDir != -npc.direction) {
-                    if(absX<2)npc.velocity.X += npc.direction*0.2f;
+                    if(absX<horizontalAirSpeed)npc.velocity.X += npc.direction*0.2f;
                 }
             }
 
-			if(npc.velocity.X*npc.direction>0.5f&&++npc.frameCounter>6) {
+			if(npc.velocity.RotatedBy(-npc.rotation).X*npc.direction>0.5f&&++npc.frameCounter>6) {
 				//add frame height to frame y position and modulo by frame height multiplied by walking frame count
 				npc.frame = new Rectangle(0, (npc.frame.Y+100)%400, 98, 98);
 				npc.frameCounter = 0;
