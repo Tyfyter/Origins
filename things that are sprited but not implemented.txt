@@ -1,48 +1,48 @@
 Enemies:
 Defiled_Amalgamation†*
-Riven_Abomination†*
+Riven_Abomination*
 Defiled_Clipper
-Defiled_Reaper†*
+Defiled_Reaper*
 Defiled_Sandshark
 Defiled_Shark?
-Riven_Mimic
-Unriven_Beast_1†
+Riven_Mimic‖
+Unriven_Beast_1
 
 Armor:
-Mimic†*
+Mimic*
 
 Weapons:
 Toxic_Slash‡
 Klang_Launcher
 Abrasion_Spikes†*
 Barrel_Blaster*
-RPG†
-Starburst‡
-Assimilator‡
-Burst_O_Bubble†
+RPG
+Starburst
+Assimilator
+Burst_O_Bubble
 Contagion†
-Proxy_Staff†
+Proxy_Staff
 Bomb_Artifact
-AC20*§
+AC20*
 Beginners_Staff†
-Bled_Out_Staff†
+Bled_Out_Staff
 Boulder_Blender
 Burning_Ember*
 Cometburn‡*
 Eyndum_Scar‡†
-Fist_Fury†
-Gravaulter‡†*
+Fist_Fury¶
+Gravaulter‡*
 Ion_Minigun‡*
 Magic_Orb†
-Nanostaff‡*
+Nanostaff*
 Nuclear_arm*
-Ooze_Gooze‡†*
-Phantom_Fury†*
-Rigged_Cuboid‡†*
+Ooze_Gooze‡*
+Phantom_Fury*
+Rigged_Cuboid*
 Singulus†
-Syah_Nara†
+Syah_Nara
 Telephone_Pole‡
-Unending_Energy‡†*
+Unending_Energy†*
 Void_Spectral*
 
 *likely needs projectile/use sprites
@@ -51,3 +51,4 @@ Void_Spectral*
 §needs implementation of Mech system for full implementation
 ‖partially implemented
 ?seems to be equivalent for nonexistant vanilla thing
+¶"is that a JoJo reference?"

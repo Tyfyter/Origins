@@ -81,9 +81,12 @@ namespace Origins.Items.Weapons.Defiled {
             Vector2 offset = projectile.velocity.SafeNormalize(Vector2.Zero) * 58;
             Texture2D texture = mod.GetTexture("Projectiles/Weapons/Dismay_Mid");
             int c = 0;
+            Vector2 pos;
             for(int i = (int)totalLength; i > 0; i -= 58) {
                 c++;
-                spriteBatch.Draw(texture, (projectile.Center-Main.screenPosition)-(offset*c), new Rectangle(0, 0, 18, System.Math.Min(58, i)), lightColor, projectile.rotation, new Vector2(9,0), projectile.scale, SpriteEffects.None, 0);
+                pos = (projectile.Center - Main.screenPosition) - (offset * c);
+                //lightColor = new Color(Lighting.GetSubLight(pos));//projectile.GetAlpha(new Color(Lighting.GetSubLight(pos)));
+                spriteBatch.Draw(texture, pos, new Rectangle(0, 0, 18, System.Math.Min(58, i)), lightColor, projectile.rotation, new Vector2(9,0), projectile.scale, SpriteEffects.None, 0);
             }
             return false;
         }
