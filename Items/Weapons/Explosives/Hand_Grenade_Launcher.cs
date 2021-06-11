@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Acid;
 using Origins.Items.Weapons.Felnum;
+using Origins.Projectiles.Weapons;
 using System;
 using System.IO;
 using Terraria;
@@ -77,7 +78,7 @@ namespace Origins.Items.Weapons.Explosives {
                 if(type == ModContent.ProjectileType<Acid_Grenade_P>()) {
                     Vector2 speed = new Vector2(speedX, speedY);
                     position+=speed.SafeNormalize(Vector2.Zero)*40;
-                    type = ModContent.ProjectileType<Acid_Splash_P>();
+                    type = ModContent.ProjectileType<Acid_Shot>();
                     damage-=20;
                     for(int i = Main.rand.Next(2); ++i < 5;) {
                         Projectile.NewProjectileDirect(position, speed.RotatedByRandom(0.1*i)*0.6f, type, damage/2, knockBack, player.whoAmI).scale = 0.85f;

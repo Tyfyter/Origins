@@ -101,7 +101,7 @@ namespace Origins.NPCs.Defiled {
                     npc.position.X += npc.direction;
                 }
             } else {
-                if(++npc.ai[1]>3)LinearSmoothing(ref npc.rotation, 0, 0.15f);
+                if(++npc.ai[1]>1)LinearSmoothing(ref npc.rotation, 0, 0.15f);
                 if(moveDir != -npc.direction) {
                     if(absX<horizontalAirSpeed)npc.velocity.X += npc.direction*0.2f;
                 }

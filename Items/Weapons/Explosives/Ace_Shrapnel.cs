@@ -42,6 +42,10 @@ namespace Origins.Items.Weapons.Explosives {
         }
     }
     public class Ace_Shrapnel_P : ModProjectile {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Ace Shrapnel");
+            Origins.ExplosiveProjectiles[projectile.type] = true;
+		}
         public override string Texture => "Origins/Projectiles/Pixel";
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bullet);
@@ -61,7 +65,7 @@ namespace Origins.Items.Weapons.Explosives {
                 projectile.ai[0]--;
                 if(projectile.velocity.Length()<1) {
                     Vector2 v = Main.rand.NextVector2Unit()*6;
-                    Projectile.NewProjectile(projectile.Center+v*8, v.RotatedBy(PiOver2), ModContent.ProjectileType<Ace_Shrapnel_Shard>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI, projectile.ai[1]+1);
+                    Projectile.NewProjectile(projectile.Center+v*8, v, ModContent.ProjectileType<Ace_Shrapnel_Shard>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI, projectile.ai[1]+1);
                     return;
                 }
                 Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedByRandom(1)*1.1f, ModContent.ProjectileType<Ace_Shrapnel_Shard>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.whoAmI, projectile.ai[1]+1);
@@ -81,6 +85,10 @@ namespace Origins.Items.Weapons.Explosives {
         const double chaos = Math.PI;
 
         public override string Texture => "Terraria/Projectile_"+ProjectileID.BoneGloveProj;
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Shrapnel");
+            Origins.ExplosiveProjectiles[projectile.type] = true;
+		}
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bullet);
             projectile.aiStyle = 0;

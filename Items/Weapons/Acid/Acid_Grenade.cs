@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Projectiles.Weapons;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -47,7 +48,7 @@ namespace Origins.Items.Weapons.Acid {
 			projectile.position.Y -= projectile.height / 2;
 			projectile.Damage();
 			//Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 2f, 1f);
-            int t = ModContent.ProjectileType<Acid_Splash_P>();
+            int t = ModContent.ProjectileType<Acid_Shot>();
             for(int i = Main.rand.Next(3); i < 6; i++)Projectile.NewProjectileDirect(projectile.Center, (Main.rand.NextVector2Unit()*4)+(projectile.velocity/8), t, projectile.damage/8, 6, projectile.owner, ai1:-0.5f).scale = 0.85f;
         }
     }

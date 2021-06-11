@@ -103,7 +103,7 @@ namespace Origins.Items.Weapons.Explosives {
             int count = 14 - Main.rand.Next(3);
             float rot = TwoPi/count;
             for(int i = count; i > 0; i--) {
-                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, (Vec2FromPolar(rot*i, 6) + Main.rand.NextVector2Unit())+(projectile.velocity/12), t, projectile.damage/4, 6, projectile.owner);
+                Projectile.NewProjectile(projectile.Center, (Vec2FromPolar(rot*i, 6) + Main.rand.NextVector2Unit())+(projectile.velocity/12), t, projectile.damage/4, 6, projectile.owner);
             }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color lightColor) {
