@@ -452,6 +452,7 @@ namespace Origins {
                 worldInstance.defiledResurgenceTiles = null;
                 worldInstance.defiledAltResurgenceTiles = null;
             }
+            Bomboomstick.Unload();
         }
         public override void UpdateMusic(ref int music, ref MusicPriority priority) {
             if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active) {

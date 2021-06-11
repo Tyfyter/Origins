@@ -374,6 +374,25 @@ namespace Origins {
                 layers.Add(FelnumGlow);
                 FelnumGlow.visible = true;
             }
+            if(player.itemAnimation != 0 && player.HeldItem.modItem is ICustomDrawItem) {
+                switch(player.HeldItem.useStyle) {
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                    break;
+
+                    default:
+                    case 5:
+                    layers[layers.IndexOf(PlayerLayer.HeldItem)] = CustomShootLayer;
+                    CustomShootLayer.visible = true;
+                    break;
+                    /*default:
+                    layers[layers.IndexOf(PlayerLayer.HeldItem)] = SlashWrenchLayer;
+                    SlashWrenchLayer.visible = true;
+                    break;*/
+                }
+            }
             if(ItemLayerWrench && !player.HeldItem.noUseGraphic) {
                 switch(player.HeldItem.useStyle) {
                     case 5:
@@ -473,6 +492,24 @@ namespace Origins {
                 value = new DrawData(Main.glowMaskTexture[drawPlayer.inventory[drawPlayer.selectedItem].glowMask], new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, aItem.GlowmaskTint??new Color(250, 250, 250, item.alpha), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
                 Main.playerDrawData.Add(value);
             }
+        });
+        internal static PlayerLayer CustomShootLayer => new PlayerLayer("Origins", "RejectAutomationLayer", null, delegate (PlayerDrawInfo drawInfo) {
+            Player drawPlayer = drawInfo.drawPlayer;
+            Item item = drawPlayer.HeldItem;
+            Texture2D itemTexture = Main.itemTexture[item.type];
+            ICustomDrawItem aItem = (ICustomDrawItem)item.modItem;
+            int drawXPos = 0;
+            Vector2 itemCenter = new Vector2(itemTexture.Width / 2, itemTexture.Height / 2);
+            Vector2 drawItemPos = DrawPlayerItemPos(drawPlayer.gravDir, item.type);
+            drawXPos = (int)drawItemPos.X;
+            itemCenter.Y = drawItemPos.Y;
+            Vector2 drawOrigin = new Vector2(drawXPos, itemTexture.Height / 2);
+            if(drawPlayer.direction == -1) {
+                drawOrigin = new Vector2(itemTexture.Width + drawXPos, itemTexture.Height / 2);
+            }
+            drawOrigin.X-=drawPlayer.width/2;
+            Vector4 lightColor = drawInfo.faceColor.ToVector4()/drawPlayer.skinColor.ToVector4();
+            aItem.DrawInHand(itemTexture, drawInfo, itemCenter, lightColor, drawOrigin);
         });
         public static PlayerLayer FelnumGlow = new PlayerLayer("Origins", "FelnumGlow", null, delegate (PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;

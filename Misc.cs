@@ -234,6 +234,9 @@ namespace Origins {
             return false;
         }
     }
+    public interface ICustomDrawItem {
+        void DrawInHand(Texture2D itemTexture, PlayerDrawInfo drawInfo, Vector2 itemCenter, Vector4 lightColor, Vector2 drawOrigin);
+    }
     public interface ITileCollideNPC {
         int CollisionType { get; }
     }
