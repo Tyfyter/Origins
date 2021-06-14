@@ -995,6 +995,12 @@ namespace Origins {
             self.identity = id;
             self.owner = owner;
         }
+        public static void CloneFrame(this NPC self, int type, int frameHeight) {
+            int t = self.type;
+            self.type = NPCID.BigMimicCrimson;
+            self.VanillaFindFrame(frameHeight);
+            self.type = t;
+        }
         internal static MethodInfo memberwiseClone;
         internal static FieldInfo inext;
         internal static FieldInfo inextp;

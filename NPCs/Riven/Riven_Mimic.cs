@@ -13,10 +13,13 @@ namespace Origins.NPCs.Riven {
     public class Riven_Mimic : ModNPC {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Mimic");
-            Main.npcFrameCount[npc.type] = 4;
+            Main.npcFrameCount[npc.type] = 14;
         }
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.BigMimicCrimson);
+        }
+        public override void FindFrame(int frameHeight) {
+            npc.CloneFrame(NPCID.BigMimicCrimson, frameHeight);
         }
         public override void HitEffect(int hitDirection, double damage) {
             //spawn gore if npc is dead after being hit
