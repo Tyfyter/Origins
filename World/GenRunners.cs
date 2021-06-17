@@ -98,7 +98,7 @@ namespace Origins.World {
                             //WorldGen.paintTile(k, l, 29);
                             Main.tile[k+1, l].slope(0);
                             Main.tile[k-1, l].slope(0);
-                            Main.tile[k, l+1].slope(0);
+        if(l<Main.maxTilesY)Main.tile[k, l+1].slope(0);
                             Main.tile[k, l-1].slope(0);
                             if(Main.tile[k, l-1].liquid != 0)continue;
                             spike = new Point(k,l);

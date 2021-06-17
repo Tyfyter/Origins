@@ -97,6 +97,7 @@ namespace Origins.World {
             Chest chest;
             int lootType;
             ChestLootCache cache;
+            bool noLoot = true;
             for(int i = 0; i < Main.chest.Length; i++) {
                 chest = Main.chest[i];
 				if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers){
@@ -104,8 +105,10 @@ namespace Origins.World {
                     if(cache is null)continue;
                     lootType = chest.item[0].type;
                     cache.AddLoot(lootType, i);
+                    noLoot = false;
 				}
             }
+            if(noLoot)return;
             ApplyLootQueue(chestLoots,
                 (CHANGE_QUEUE, 4),
                 (ENQUEUE, ModContent.ItemType<Boiler_Pistol>()),
