@@ -31,7 +31,7 @@ namespace Origins.World {
         public bool defiledResurgence => Main.hardMode;//true;
         public const byte evil_corruption = 0b0001;//1
         public const byte evil_crimson = 0b0010;//2
-        //difference of 4
+        //difference of 4 (2^2)
         public const byte evil_wastelands = 0b0101;//5
         public const byte evil_riven = 0b0110;//6
 
@@ -65,7 +65,7 @@ namespace Origins.World {
 
 			defiledTiles = tileCounts[ModContent.TileType<Defiled_Stone>()]+tileCounts[ModContent.TileType<Defiled_Grass>()]+tileCounts[ModContent.TileType<Defiled_Sand>()]+tileCounts[ModContent.TileType<Defiled_Ice>()];
 
-            rivenTiles = tileCounts[ModContent.TileType<Riven_Flesh>()];//+tileCounts[ModContent.TileType<Defiled_Grass>()]+tileCounts[ModContent.TileType<Defiled_Sand>()]+tileCounts[ModContent.TileType<Defiled_Ice>()];
+            rivenTiles = tileCounts[ModContent.TileType<Riven_Flesh>()];//+tileCounts[ModContent.TileType<Riven_Grass>()]+tileCounts[ModContent.TileType<Riven_Sand>()]+tileCounts[ModContent.TileType<Riven_Ice>()];
 
             Main.sandTiles+=tileCounts[ModContent.TileType<Defiled_Sand>()];
         }
@@ -110,10 +110,10 @@ namespace Origins.World {
             }
             if(noLoot)return;
             ApplyLootQueue(chestLoots,
-                (CHANGE_QUEUE, 4),
+                (CHANGE_QUEUE, ChestID.LockedShadow),
                 (ENQUEUE, ModContent.ItemType<Boiler_Pistol>()),
                 (ENQUEUE, ModContent.ItemType<Firespit>()),
-                (CHANGE_QUEUE, 11),
+                (CHANGE_QUEUE, ChestID.Ice),
                 (ENQUEUE, ModContent.ItemType<Cryostrike>()));
             _worldSurfaceLow = WorldGen.worldSurfaceLow;
         }

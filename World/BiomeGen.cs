@@ -560,61 +560,6 @@ namespace Origins.World {
             }
             orig(i, j, speedX, speedY, good);
         }
-
-        /* didn't notice On.Terraria
-        public static bool GERunnerClone(int i, int j, float speedX = 0f, float speedY = 0f, bool good = true) {
-            if(check goes here) {
-                return false;
-            }
-            return true;
-        }
-        internal static void GERunnerHook(ILContext il) {
-            ILCursor cursor = new ILCursor(il);
-            ILLabel label = il.DefineLabel();
-            cursor.Emit(OpCodes.Ldarg_0);
-            cursor.Emit(OpCodes.Ldarg_1);
-            cursor.Emit(OpCodes.Ldarg_S, "speedX");
-            cursor.Emit(OpCodes.Ldarg_S, "speedY");
-            cursor.Emit(OpCodes.Ldarg_S, "good");
-            cursor.Emit(OpCodes.Call, typeof(OriginWorld).GetMethod("GERunnerClone", new Type[] { typeof(int), typeof(int), typeof(float), typeof(float), typeof(bool) }));
-            cursor.Emit(OpCodes.Brtrue, label);
-            cursor.Emit(OpCodes.Ret);
-            cursor.MarkLabel(label);
-        }
-        protected internal static UnifiedRandom hardmodeGenRand;
-        public override void ModifyHardmodeTasks(List<GenPass> list) {
-            if((worldEvil&4)!=0) {
-                int index = list.FindIndex(genpass => genpass.Name.Equals("Hardmode Evil"));
-                if(index>-1) {
-                    mod.Logger.Info("attempting to place hardmode evil stripe");
-                    float highMult = hardmodeGenRand.Next(300, 400) * 0.001f;
-                    float lowMult = hardmodeGenRand.Next(200, 300) * 0.001f;
-                    int goodPos = (int)(Main.maxTilesX * highMult);
-                    int evilPos = (int)(Main.maxTilesX * (1f - highMult));
-                    int dirMult = 1;
-                    if(hardmodeGenRand.Next(2) == 0) {
-                        evilPos = (int)(Main.maxTilesX * highMult);
-                        goodPos = (int)(Main.maxTilesX * (1f - highMult));
-                        dirMult = -1;
-                    }
-                    int dungeonSide = 1;
-                    if(dungeonX < Main.maxTilesX / 2) {
-                        dungeonSide = -1;
-                    }
-                    if(dungeonSide < 0) {
-                        if(evilPos < goodPos) {
-                            evilPos = (int)(Main.maxTilesX * lowMult);
-                        }
-                    } else if(evilPos > goodPos) {
-                        evilPos = (int)(Main.maxTilesX * (1f - lowMult));
-                    }
-                    mod.Logger.Info("adding hardmode evil stripe to generation");
-                    list[index] = new PassLegacy("Hardmode Evil", (GenerationProgress progress) => {
-                        ERunner(evilPos, 0, worldEvil, 3f * (0f - dirMult), 5f);
-                    });
-                }
-            }
-        }*/
         static void ERunner(int i, int j, byte worldEvil, float speedX = 0f, float speedY = 0f) {
             int size = genRand.Next(200, 250);
             float sizeMult = Main.maxTilesX / 4200;
@@ -681,7 +626,6 @@ namespace Origins.World {
                 loopCount++;
             }
             Origins.instance.Logger.Info("hardmode evil stripe generation complete in "+loopCount+" loops with "+conversionCount+" tile conversions");
-
         }
         public static void getEvilTileConversionTypes(byte evilType, out ushort stoneType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType) {
             switch(evilType) {
@@ -731,7 +675,10 @@ namespace Origins.World {
                 sandstoneWallTypes = new ushort[] { (ushort)WallType<Defiled_Sandstone_Wall>() };
                 break;
                 case evil_riven:
-                throw new NotImplementedException();
+                stoneWallTypes = new ushort[] { WallID.CrimstoneUnsafe };
+                hardenedSandWallTypes = new ushort[] { WallID.CrimsonHardenedSand };
+                sandstoneWallTypes = new ushort[] { WallID.CrimsonSandstone };
+                break;
                 case evil_crimson:
                 stoneWallTypes = new ushort[] { WallID.CrimstoneUnsafe };
                 hardenedSandWallTypes = new ushort[] { WallID.CrimsonHardenedSand };

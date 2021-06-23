@@ -42,6 +42,7 @@ namespace Origins.Projectiles {
             explosiveOverrideNext = null;
             if(killLinkNext!=-1) {
                 killLink = killLinkNext;
+                //sync killLink ids
                 Main.projectile[killLink].GetGlobalProjectile<OriginGlobalProj>().killLink = projectile.whoAmI;
                 killLinkNext = -1;
             }

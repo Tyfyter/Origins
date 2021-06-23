@@ -12,7 +12,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Projectiles.Weapons {
     public class Lava_Shot : ModProjectile {
         /// <summary>
-        /// melee:1 ranged:2 magic:3 summon:4
+        /// melee: 1 ranged: 2 magic: 3 summon: 4
         /// </summary>
         public static byte damageType = 0;
         public float frameCount = 15;
@@ -43,7 +43,7 @@ namespace Origins.Projectiles.Weapons {
         }
         public override void AI() {
             Lighting.AddLight(projectile.Center, 0.75f, 0.35f, 0f);
-			if (++projectile.frameCounter >= (int)frameCount) {//Main.GameUpdateCount%10==0&&
+			if (++projectile.frameCounter >= (int)frameCount) {
 				projectile.frameCounter = 0;
 				if (++projectile.frame >= 2) {
 					projectile.frame = 0;
@@ -60,6 +60,7 @@ namespace Origins.Projectiles.Weapons {
             //float alpha = projectile.frameCounter<=3 ? 0.5f : 1;
             bool m = projectile.frameCounter<=3;
             Texture2D texture = Main.projectileTexture[projectile.type];//0f/projectile.frameCounter
+            //projectile.frame^1: bitwise xor with 1 to use the other frame's height
             if(m)spriteBatch.Draw(texture, projectile.Center-Main.screenPosition, new Rectangle(0, (projectile.frame^1)*26, 56, 26), new Color(1f,1f,1f,0.5f), projectile.rotation-MathHelper.PiOver2, new Vector2(44,10), projectile.scale, projectile.velocity.X<0?SpriteEffects.FlipVertically:SpriteEffects.None, 0f);
             spriteBatch.Draw(texture, projectile.Center-Main.screenPosition, new Rectangle(0, projectile.frame*26, 56, 26), new Color(1f,1f,1f,m?0.5f:1f), projectile.rotation-MathHelper.PiOver2, new Vector2(44,10), projectile.scale, projectile.velocity.X<0?SpriteEffects.FlipVertically:SpriteEffects.None, 0f);
             return false;

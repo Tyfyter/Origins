@@ -5,7 +5,7 @@ Defiled_Clipper
 Defiled_Reaper*
 Defiled_Sandshark
 Defiled_Shark?
-Riven_Mimic‖*(missing 10 frames)
+Riven_Mimic*(missing 10 frames)
 Unriven_Beast_1
 
 Armor:

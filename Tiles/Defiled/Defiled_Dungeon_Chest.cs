@@ -47,7 +47,6 @@ namespace Origins.Tiles.Defiled {
             item.consumable = true;
             item.value = 500;
             item.createTile = ModContent.TileType<Defiled_Dungeon_Chest>();
-            item.placeStyle = 1;
         }
     }
 }

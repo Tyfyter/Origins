@@ -39,7 +39,10 @@ namespace Origins.Items.Weapons.Acid {
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             int a = Main.rand.Next(5,7);
+			//++i < a: increments i and returns true if i < a/2
+			//a = Main.rand.Next(5,7): randomize a every loop so ((i-a/2f)/a) returns a random value but maintains a mostly constant spread
             for(int i = 0; ++i < a; a = Main.rand.Next(5,7)) {
+				//((i-a/2f)/a): returns a value based on i between -0.5 and 0.5
                 Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY).RotatedBy(((i-a/2f)/a)*0.75), type, damage, knockBack, player.whoAmI, 0, 12f).timeLeft+=i;
             }
             return false;

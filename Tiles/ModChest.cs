@@ -40,7 +40,7 @@ namespace Origins.Tiles {
 
 		public override bool HasSmartInteract() => true;
 
-        public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX < 36;
+        public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX >= 36;
 
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual) {
             frameXAdjustment = 36;
