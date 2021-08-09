@@ -815,7 +815,7 @@ namespace Origins {
     public static class OriginExtensions {
         public static Func<float, int, Vector2> drawPlayerItemPos;
         public static void PlaySound(string Name, Vector2 Position, float Volume = 1f, float PitchVariance = 1f, float? Pitch = null){
-            if (Main.dedServ || string.IsNullOrEmpty(Name)) return;
+            if (Main.netMode==NetmodeID.Server || string.IsNullOrEmpty(Name)) return;
             var sound = Origins.instance.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/" + Name);
             SoundEffectInstance SEI = Main.PlaySound(sound.WithVolume(Volume).WithPitchVariance(PitchVariance), Position);
             if(Pitch.HasValue)SEI.Pitch = Pitch.Value;
@@ -965,15 +965,29 @@ namespace Origins {
             }
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void AngularSmoothing(ref float smoothed, float target, float rate, bool snap) {
+        public static void AngularSmoothing(ref float smoothed, float target, float rate) {
             if(target!=smoothed) {
                 float diff = AngleDif(smoothed, target, out int dir);
                 diff = Math.Abs(diff);
                 float aRate = Math.Abs(rate);
-                if(diff<aRate||(snap&&diff>MathHelper.Pi-aRate)) {
+                if(diff<aRate) {
                     smoothed = target;
                 } else {
-                    smoothed-=rate*dir;
+                    smoothed+=rate*dir;
+                }
+            }
+        }
+        public static void AngularSmoothing(ref float smoothed, float target, float rate, out bool equal) {
+            equal = true;
+            if(target!=smoothed) {
+                float diff = AngleDif(smoothed, target, out int dir);
+                diff = Math.Abs(diff);
+                float aRate = Math.Abs(rate);
+                if(diff<=aRate) {
+                    smoothed = target;
+                } else {
+                    smoothed+=rate*dir;
+                    equal = false;
                 }
             }
         }

@@ -478,7 +478,7 @@ namespace Origins {
             instance.Logger.Info($"Registered {item.Name} as explosive: "+ExplosiveItems[item.type]);
         }
         public static short AddGlowMask(string name){
-            if (!Main.dedServ){
+            if (Main.netMode!=NetmodeID.Server){
                 Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
                 for (int i = 0; i < Main.glowMaskTexture.Length; i++){
                     glowMasks[i] = Main.glowMaskTexture[i];

@@ -154,12 +154,16 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Shard");
             ID = projectile.type;
-            Origins.ExplosiveProjectiles[projectile.type] = true;
-            ProjectileID.Sets.TrailingMode[ID] = 0;
-            if(Main.netMode!=NetmodeID.Server) {
-                Main.projectileTexture[94] = Main.instance.OurLoad<Texture2D>(string.Concat(new object[]{"Images",Path.DirectorySeparatorChar,"Projectile_94"}));
-		        Main.projectileLoaded[94] = true;
-            }
+			try{
+				Origins.ExplosiveProjectiles[projectile.type] = true;
+				ProjectileID.Sets.TrailingMode[ID] = 0;
+				if(Main.netMode!=NetmodeID.Server) {
+					Main.projectileTexture[94] = Main.instance.OurLoad<Texture2D>(string.Concat(new object[]{"Images",Path.DirectorySeparatorChar,"Projectile_94"}));
+					Main.projectileLoaded[94] = true;
+				}
+			}catch(Exception){
+                Origins.instance.Logger.Warn(Main.netMode+" "+Main.dedServ);
+			}
 		}
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.CrystalStorm);
