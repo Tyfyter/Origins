@@ -17,7 +17,7 @@ namespace Origins.Gores.NPCs {
             if(gore.velocity.Y >= 0f && gore.velocity.Y < 0.5f) {
                 if(gore.frame>0)gore.frame--;
                 if(gore.frame == 0) {
-                    AngularSmoothing(ref gore.rotation, Math.Abs(AngleDif(gore.rotation, 0)) > MathHelper.PiOver2 ? MathHelper.PiOver2 : 0, 0.5f, true);
+                    AngularSmoothing(ref gore.rotation, Math.Abs(AngleDif(gore.rotation, 0)) > MathHelper.PiOver2 ? MathHelper.PiOver2 : 0, 0.5f);
                     gore.velocity.X *= 0.95f;
                 }
             }

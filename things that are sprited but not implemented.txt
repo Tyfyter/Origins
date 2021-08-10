@@ -43,7 +43,6 @@ Singulus†
 Syah_Nara
 Telephone_Pole‡
 Unending_Energy†*
-Void_Spectral*
 
 *likely needs projectile/use sprites
 †insufficient functionality info for implementation of original idea

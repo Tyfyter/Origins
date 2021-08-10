@@ -69,12 +69,18 @@ namespace Origins.Items.Weapons.Other {
             projectile.CloneDefaults(ProjectileID.SpiritFlame);
             projectile.aiStyle = 0;
             projectile.penetrate = 2;
-			projectile.timeLeft = 120-Main.rand.Next(30);
+			projectile.timeLeft = 120;
             projectile.localAI[1] = Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi);
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 10;
+            if(projectile.localAI.Length<3)projectile.localAI = projectile.localAI.WithLength(3);
+            projectile.localAI[2] = Main.rand.Next(30);
         }
         public override void AI() {
+	        if (projectile.localAI[2] > 0f) {
+                projectile.localAI[2]--;
+                projectile.timeLeft--;
+	        }
 	        if (projectile.localAI[0] > 0f) {
                 projectile.localAI[0]--;
 	        }
@@ -97,11 +103,11 @@ namespace Origins.Items.Weapons.Other {
 			        projectile.netUpdate = true;
 		        }
 	        }
-
+            float scaleFactor = MathHelper.Clamp((30-projectile.localAI[2])*0.04f, 0.1f, 1f);
 			Dust dust = Dust.NewDustDirect(projectile.Center, 0, 0, 27, 0f, -2f);
 			dust.noGravity = true;
             dust.velocity = projectile.oldVelocity * 0.5f;
-			dust.scale = 0.85f+(float)Math.Sin(projectile.timeLeft)*0.15f;
+			dust.scale = (0.85f+(float)Math.Sin(projectile.timeLeft)*0.15f)*scaleFactor;
 			dust.fadeIn = 0.5f;
 			dust.alpha = 200;
 
@@ -122,7 +128,7 @@ namespace Origins.Items.Weapons.Other {
                             changed = true;
                         }
                         if(velocity.Theta != angle) {
-                            OriginExtensions.AngularSmoothing(ref velocity.Theta, angle, 0.1f, false);
+                            OriginExtensions.AngularSmoothing(ref velocity.Theta, angle, 0.1f);
                             changed = true;
                         }
                         if(changed) {
@@ -143,7 +149,7 @@ namespace Origins.Items.Weapons.Other {
                 }
 
                 if(velocity.Theta != projectile.localAI[1]) {
-                    OriginExtensions.AngularSmoothing(ref velocity.Theta, projectile.localAI[1], (targetVel-0.5f)*0.03f, false);
+                    OriginExtensions.AngularSmoothing(ref velocity.Theta, projectile.localAI[1], (targetVel-0.5f)*0.03f);
                     changed = true;
                 } else {
                     projectile.localAI[1] = Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi);

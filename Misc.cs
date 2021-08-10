@@ -1133,6 +1133,16 @@ namespace Origins {
             v.SetDefaults(type);
             return v;
         }
+        public static T[] WithLength<T>(this T[] input, int length) {
+            T[] output = new T[length];
+            if(length>input.Length) {
+                length = input.Length;
+            }
+            for(int i = 0; i < length; i++) {
+                output[i] = input[i];
+            }
+            return output;
+        }
         public static int GetVersion<T>(this LinkedList<T> ll) {
             if(LLNodeEnumerator<T>.LLVersion is null)LLNodeEnumerator<T>.LLVersion = typeof(LinkedList<T>).GetField("version", BindingFlags.NonPublic|BindingFlags.Instance);
             return (int)LLNodeEnumerator<T>.LLVersion.GetValue(ll);
