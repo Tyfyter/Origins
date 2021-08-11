@@ -12,9 +12,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins.Items.Weapons.Other {
     public class Void_Spectral : ModItem {
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Void Spectral");
             Tooltip.SetDefault("");
+            glowmask = Origins.AddGlowMask("Weapons/Other/Void_Spectral_Glow");
         }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.ToxicFlask);
@@ -24,6 +26,7 @@ namespace Origins.Items.Weapons.Other {
             item.useAnimation = item.useTime = 27;
             item.width = 56;
             item.height = 46;
+            item.glowMask = glowmask;
             item.shoot = ModContent.ProjectileType<Void_Spectral_P>();
             item.shootSpeed *= 1.5f;
         }
@@ -58,6 +61,25 @@ namespace Origins.Items.Weapons.Other {
 					Projectile.NewProjectile(projectile.Center+Main.rand.NextVector2Circular(64, 64), velocity, type, projectile.damage, 1f, projectile.owner, ai1:projectile.ai[1]*Main.rand.NextFloat(0.85f, 1.15f));
                 }
 			}
+        }
+        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+            Texture2D texture = Main.projectileTexture[projectile.type];
+            spriteBatch.Draw(
+                texture,
+                projectile.Center - Main.screenPosition,
+                null,
+                lightColor.MultiplyRGBA(new Color(255, 255, 255, 200)),
+                projectile.rotation,
+                texture.Size()*0.5f,
+                projectile.scale,
+                projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+                0);
+			Dust dust = Dust.NewDustDirect(projectile.Center + (new Vector2(14, -14).RotatedBy(projectile.rotation)*projectile.scale) - new Vector2(4,4), 0, 0, 27, 0f, -2f, Scale:(1.25f+(float)Math.Sin(projectile.timeLeft)*0.25f));
+			dust.noGravity = true;
+            dust.velocity = Vector2.Zero;//projectile.oldVelocity * 0.5f;
+			dust.fadeIn = 0.5f;
+			dust.alpha = 200;
+            return false;
         }
     }
     public class Void_Spectral_Wisp : ModProjectile {
@@ -107,7 +129,7 @@ namespace Origins.Items.Weapons.Other {
 			Dust dust = Dust.NewDustDirect(projectile.Center, 0, 0, 27, 0f, -2f);
 			dust.noGravity = true;
             dust.velocity = projectile.oldVelocity * 0.5f;
-			dust.scale = (0.85f+(float)Math.Sin(projectile.timeLeft)*0.15f)*scaleFactor;
+			dust.scale = scaleFactor;
 			dust.fadeIn = 0.5f;
 			dust.alpha = 200;
 
