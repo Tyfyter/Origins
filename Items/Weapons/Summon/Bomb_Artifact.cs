@@ -250,7 +250,12 @@ namespace Origins.Items.Weapons.Summon.Minions {
                     projectile.velocity.Y = -jumpStrength;
                 }
                 Rectangle hitbox = new Rectangle((int)projectile.Center.X-24, (int)projectile.Center.Y-24, 48, 48);
-                if(distanceFromTarget > 40f || !hitbox.Intersects(Main.npc[target].Hitbox)) {
+                NPC targetNPC = Main.npc[target];
+                int targetMovDir = Math.Sign(targetNPC.velocity.X);
+                Rectangle targetFutureHitbox = targetNPC.Hitbox;
+                targetFutureHitbox.X += (int)(targetNPC.velocity.X*10);
+                bool waitForStart = (targetMovDir == directionX && !hitbox.Intersects(targetFutureHitbox));
+                if(distanceFromTarget > 48f || !hitbox.Intersects(targetNPC.Hitbox) || (waitForStart && projectile.ai[0] <= 0f)) {
                     projectile.ai[0] = 0f;
 				    direction.Normalize();
 				    direction *= speed;
