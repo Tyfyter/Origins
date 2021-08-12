@@ -22,7 +22,6 @@ Assimilator
 Burst_O_Bubble
 Contagion†
 Proxy_Staff
-Bomb_Artifact
 AC20*
 Beginners_Staff†
 Bled_Out_Staff

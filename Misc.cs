@@ -1143,9 +1143,96 @@ namespace Origins {
             }
             return output;
         }
+        public static Rectangle BoxOf(Vector2 a, Vector2 b, float buffer) {
+            return BoxOf(a,b,new Vector2(buffer));
+        }
+        public static Rectangle BoxOf(Vector2 a, Vector2 b, Vector2 buffer = default) {
+            Vector2 position = Vector2.Min(a,b)-buffer;
+            Vector2 dimensions = (Vector2.Max(a,b)+buffer)-position;
+            return new Rectangle((int)position.X,(int)position.Y,(int)dimensions.X,(int)dimensions.Y);
+        }
+        public static bool CanBeHitBy(this NPC npc, Player player, Item item, bool checkImmortal = true) {
+            if(!npc.active||(checkImmortal&&npc.immortal)||npc.dontTakeDamage) {
+                return false;
+            }
+            bool itemCanHitNPC = ItemLoader.CanHitNPC(item, player, npc)??true;
+            if (!itemCanHitNPC) {
+	            return false;
+            }
+            bool canBeHitByItem = NPCLoader.CanBeHitByItem(npc, player, item)??true;
+            if (!canBeHitByItem) {
+	            return false;
+            }
+            bool playerCanHitNPC = PlayerHooks.CanHitNPC(player, item, npc)??true;
+            if (!playerCanHitNPC) {
+	            return false;
+            }
+            if(npc.friendly) {
+                switch(npc.type) {
+                    case NPCID.Guide:
+                    return player.killGuide;
+                    case NPCID.Clothier:
+                    return player.killClothier;
+                    default:
+                    return false;
+                }
+            }
+            return true;
+        }
         public static int GetVersion<T>(this LinkedList<T> ll) {
             if(LLNodeEnumerator<T>.LLVersion is null)LLNodeEnumerator<T>.LLVersion = typeof(LinkedList<T>).GetField("version", BindingFlags.NonPublic|BindingFlags.Instance);
             return (int)LLNodeEnumerator<T>.LLVersion.GetValue(ll);
+        }
+
+        public static int GetNearestPlayerFrame(Player player) {
+		    float rot = player.itemRotation * player.direction;
+		    if (rot < -0.75){
+			    if (player.gravDir == -1f) {
+				    return 4;
+			    }
+			    return 2;
+		    }
+		    if (rot > 0.6){
+			    if (player.gravDir == -1f) {
+				    return 2;
+			    }
+			    return 4;
+		    }
+		    return 3;
+        }
+
+        public static int GetNearestPlayerFrame(float angle, int direction, float gravDir = 1) {
+		    float rot = angle * direction;
+		    if (rot < -0.75){
+			    if (gravDir == -1f) {
+				    return 4;
+			    }
+			    return 2;
+		    }
+		    if (rot > 0.6){
+			    if (gravDir == -1f) {
+				    return 2;
+			    }
+			    return 4;
+		    }
+		    return 3;
+        }
+
+        public static int GetNearestPlayerFrame(float angle, float gravDir = 1) {
+		    double rot = Math.Sin(angle);
+		    if (rot < -0.15){
+			    if (gravDir == -1f) {
+				    return 4;
+			    }
+			    return 2;
+		    }
+		    if (rot > 0.15){
+			    if (gravDir == -1f) {
+				    return 2;
+			    }
+			    return 4;
+		    }
+		    return 3;
         }
     }
 }
