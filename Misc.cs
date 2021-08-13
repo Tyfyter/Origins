@@ -1234,5 +1234,20 @@ namespace Origins {
 		    }
 		    return 3;
         }
+
+        public static void DrawLightningArc(this SpriteBatch spriteBatch, Vector2[] positions, Texture2D texture = null, float scale = 1f, params (float scale, Color color)[] colors) {
+            if(texture is null) {
+                texture = Main.extraTexture[33];
+            }
+            Vector2 size;
+            int colorLength = colors.Length;
+            for(int colorIndex = 0; colorIndex < colorLength; colorIndex++) {
+                size = new Vector2(scale) * colors[colorIndex].scale;
+                DelegateMethods.c_1 = colors[colorIndex].color;
+                for(int i = positions.Length; --i > 0;) {
+                    Utils.DrawLaser(spriteBatch, texture, positions[i], positions[i - 1], size, DelegateMethods.LightningLaserDraw);
+                }
+            }
+        }
     }
 }

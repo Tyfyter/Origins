@@ -88,20 +88,17 @@ namespace Origins.Items.Weapons.Felnum {
                 Vector2 dir = Main.rand.NextVector2Unit();
                 oldPos[0] = (projectile.Center+dir*2, dir/2);
             }
-            Texture2D texture = mod.GetTexture("Projectiles/Pixel");
-            Vector2 displ = Vector2.Zero;
-            for(int i = l; --i>0;) {
-                if(oldPos[i].Item1.HasValue) {
-                displ = oldPos[i-1].Item1.Value-oldPos[i].Item1.Value;
-                DrawLaser(spriteBatch, texture, oldPos[i].Item1.Value, Vector2.Normalize(displ), 1, new Vector2(2, 2), displ.Length(), Color.Aqua);
-                }
-                //if(oldPos[i].Item1.HasValue)spriteBatch.DrawLine(Color.Aqua, oldPos[i].Item1.Value, oldPos[i-1].Item1.Value, 2);
+            List<Vector2> positions = oldPos.Where(i=>i.Item1.HasValue).Select(i=>i.Item1.Value-Main.screenPosition).ToList();
+            positions.Insert(0, projectile.Center-Main.screenPosition);
+            spriteBatch.DrawLightningArc(positions.ToArray(),
+                null,
+                1f,
+                (0.15f, new Color(80, 204, 219, 0) * 0.5f),
+                (0.1f, new Color(80, 251, 255, 0) * 0.5f),
+                (0.05f, new Color(200, 255, 255, 0) * 0.5f));
+            for(int i = 0; i < positions.Count; i++) {
+                Lighting.AddLight(positions[i] + Main.screenPosition, 0.15f, 0.4f, 0.43f);
             }
-            if(oldPos[0].Item1.HasValue) {
-                displ = projectile.Center-oldPos[0].Item1.Value+Main.rand.NextVector2Unit()*2;
-                DrawLaser(spriteBatch, texture, oldPos[0].Item1.Value, Vector2.Normalize(displ), 1, new Vector2(2, 2), displ.Length(), Color.Aqua);
-            }
-            //if(oldPos[0].Item1.HasValue)spriteBatch.DrawLine(Color.Aqua, oldPos[0].Item1.Value, projectile.Center+Main.rand.NextVector2Unit()*2, 2);
             return false;
         }
         /// <summary>
