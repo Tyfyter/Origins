@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Origins.Projectiles.Misc;
 
 namespace Origins.Items.Weapons.Felnum {
     public class Felnum_Wand : ModItem {
@@ -90,7 +91,8 @@ namespace Origins.Items.Weapons.Felnum {
             }
             List<Vector2> positions = oldPos.Where(i=>i.Item1.HasValue).Select(i=>i.Item1.Value-Main.screenPosition).ToList();
             positions.Insert(0, projectile.Center-Main.screenPosition);
-            spriteBatch.DrawLightningArc(positions.ToArray(),
+            spriteBatch.DrawLightningArc(
+                positions.ToArray(),
                 null,
                 1f,
                 (0.15f, new Color(80, 204, 219, 0) * 0.5f),

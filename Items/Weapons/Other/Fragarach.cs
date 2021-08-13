@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.DataStructures;
+using Origins.Projectiles.Misc;
 
 namespace Origins.Items.Weapons.Other {
     public class Fragarach : ModItem {
@@ -38,7 +39,7 @@ namespace Origins.Items.Weapons.Other {
             item.scale = 1f;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips) {
-            tooltips[0].overrideColor = new Color(50, 200, 200).MultiplyRGBA(Main.mouseTextColorReal);
+            tooltips[0].overrideColor = new Color(50, 230, 230).MultiplyRGBA(Main.mouseTextColorReal);
         }
     }
     public class Fragarach_P : ModProjectile {
@@ -51,9 +52,18 @@ namespace Origins.Items.Weapons.Other {
             projectile.localNPCHitCooldown = 10;
             projectile.penetrate = 5;
             projectile.extraUpdates = 1;
+            projectile.idStaticNPCHitCooldown = 10;
         }
         public override void AI() {
-            base.AI();
+            if(projectile.idStaticNPCHitCooldown > 0) {
+                projectile.idStaticNPCHitCooldown--;
+            }else if(projectile.timeLeft%5==0) {
+                Vector2 pos = projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height));
+                Projectile proj = Projectile.NewProjectileDirect(pos, Main.rand.NextVector2CircularEdge(3,3), Felnum_Shock_Leader.ID, projectile.damage/6, 0, projectile.owner, pos.X, pos.Y);
+                if(proj.modProjectile is Felnum_Shock_Leader shock) {
+                    shock.OnStrike += () => projectile.idStaticNPCHitCooldown = 10;
+                }
+            }
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
             base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
@@ -89,7 +99,7 @@ namespace Origins.Items.Weapons.Other {
 		    return new Color(num7, num7, num7, num7);
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
-            return base.PreDraw(spriteBatch, lightColor);
+            return true;
         }
     }
 }

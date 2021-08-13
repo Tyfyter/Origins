@@ -102,14 +102,19 @@ namespace Origins.Items.Weapons.Felnum {
             }
         }
         public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
-            Vector2 drawOrigin = new Vector2(1, 1);
+            //Vector2 drawOrigin = new Vector2(1, 1);
+            /*
             Rectangle drawRect = new Rectangle(
                 (int)Math.Round(projectile.Center.X - Main.screenPosition.X),
                 (int)Math.Round(projectile.Center.Y - Main.screenPosition.Y),
                 (int)Math.Round((projectile.oldPosition - projectile.position).Length()),
-                2);
+                2);//*/
 
-            spriteBatch.Draw(mod.GetTexture("Projectiles/Pixel"), drawRect, null, Color.Aquamarine, (projectile.oldPosition - projectile.position).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
+            //spriteBatch.Draw(mod.GetTexture("Projectiles/Pixel"), drawRect, null, Color.Aquamarine, (projectile.oldPosition - projectile.position).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
+            spriteBatch.DrawLightningArcBetween(
+                projectile.oldPosition - Main.screenPosition,
+                projectile.position - Main.screenPosition,
+                Main.rand.NextFloat(-4,4));
             Vector2 dest = (projectile.oldPosition - projectile.position)+new Vector2(projectile.width,projectile.height)/2;
             for(int i = 0; i < 16; i++) {
                 Dust.NewDustPerfect(Vector2.Lerp(projectile.Center, dest, i/16f), 226, Main.rand.NextVector2Circular(1,1), Scale:0.5f);

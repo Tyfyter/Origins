@@ -6,6 +6,7 @@ using Origins.Items.Materials;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Summon;
 using Origins.Projectiles;
+using Origins.Projectiles.Misc;
 using Origins.World;
 using Origins.World.BiomeData;
 using System;
@@ -87,8 +88,19 @@ namespace Origins {
             oldFelnumShock = felnumShock;
             if(!felnumSet) {
                 felnumShock = 0;
-            } else if(felnumShock>player.statLifeMax2) {
-                felnumShock-=(felnumShock-player.statLifeMax2)/player.statLifeMax2*5+1;
+            } else {
+
+                if(felnumShock > player.statLifeMax2) {
+                    if(Main.rand.Next(20)==0) {
+                        Vector2 pos = new Vector2(Main.rand.Next(4, player.width-4), Main.rand.Next(4, player.height-4));
+                        Projectile proj = Projectile.NewProjectileDirect(player.position + pos, Main.rand.NextVector2CircularEdge(3,3), Felnum_Shock_Leader.ID, (int)(felnumShock*0.1f), 0, player.whoAmI, pos.X, pos.Y);
+                        if(proj.modProjectile is Felnum_Shock_Leader shock) {
+                            shock.Parent = player;
+                            shock.OnStrike += () => felnumShock *= 0.9f;
+                        }
+                    }
+                    felnumShock -= (felnumShock - player.statLifeMax2) / player.statLifeMax2 * 5 + 1;
+                }
             }
             felnumSet = false;
             celestineSet = false;
@@ -208,7 +220,7 @@ namespace Origins {
             if(proj.melee && felnumShock > 29) {
                 damage+=(int)(felnumShock / 15);
                 felnumShock = 0;
-                Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
+                Main.PlaySound(SoundID.Item, (int)proj.Center.X, (int)proj.Center.Y, 122, 2f, 1f);
             }
             if(proj.minion&&rivenSet) {
                 damage = (int)(damage*rivenMult);

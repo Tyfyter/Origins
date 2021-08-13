@@ -19,6 +19,7 @@ using Terraria.Utilities;
 using System.Collections;
 using System.Runtime.Serialization;
 using System.Diagnostics;
+using System.IO;
 
 namespace Origins {
     public class LinkedQueue<T> : ICollection<T> {
@@ -1241,6 +1242,7 @@ namespace Origins {
             }
             Vector2 size;
             int colorLength = colors.Length;
+            DelegateMethods.f_1 = 1;
             for(int colorIndex = 0; colorIndex < colorLength; colorIndex++) {
                 size = new Vector2(scale) * colors[colorIndex].scale;
                 DelegateMethods.c_1 = colors[colorIndex].color;
@@ -1248,6 +1250,22 @@ namespace Origins {
                     Utils.DrawLaser(spriteBatch, texture, positions[i], positions[i - 1], size, DelegateMethods.LightningLaserDraw);
                 }
             }
+        }
+
+        public static void DrawLightningArcBetween(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, float sineMult, float precision = 0.1f) {
+            List<Vector2> positions = new List<Vector2>();
+            Vector2 normal = (end - start).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2) * (sineMult + Math.Sign(sineMult));
+            for(float i = 0; i < 1f; i += precision) {
+                positions.Add(Vector2.Lerp(start, end, i) + (normal * (float)Math.Sin(i*Math.PI) * Main.rand.NextFloat(0.75f, 1.25f)));
+            }
+            positions.Add(end);
+            spriteBatch.DrawLightningArc(
+                positions.ToArray(),
+                null,
+                1.333f,
+                (0.15f, new Color(80, 204, 219, 0) * 0.5f),
+                (0.1f, new Color(80, 251, 255, 0) * 0.5f),
+                (0.05f, new Color(200, 255, 255, 0) * 0.5f));
         }
     }
 }
