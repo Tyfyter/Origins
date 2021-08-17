@@ -25,7 +25,6 @@ namespace Origins.NPCs.Defiled {
             npc.damage = 42;
             npc.width = 52;
             npc.height = 68;
-            npc.scale = 0.85f;
             npc.friendly = false;
         }
         public override void AI() {
