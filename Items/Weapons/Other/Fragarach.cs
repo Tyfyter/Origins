@@ -43,8 +43,10 @@ namespace Origins.Items.Weapons.Other {
         }
     }
     public class Fragarach_P : ModProjectile {
+        public static int ID { get; private set; }
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Fragarach");
+            ID = projectile.type;
         }
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.TerraBeam);
@@ -68,8 +70,13 @@ namespace Origins.Items.Weapons.Other {
             }else if(projectile.timeLeft%7==0) {
                 Vector2 pos = projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height));
                 Projectile proj = Projectile.NewProjectileDirect(pos, Main.rand.NextVector2CircularEdge(3,3), Felnum_Shock_Leader.ID, projectile.damage/6, 0, projectile.owner, pos.X, pos.Y);
+                Projectile parent = this.projectile;
                 if(proj.modProjectile is Felnum_Shock_Leader shock) {
-                    shock.OnStrike += () => projectile.ai[0] = 14;
+                    shock.OnStrike += () => {
+                        if(parent.active && parent.type == Fragarach_P.ID) {
+                            parent.ai[0] = 14;
+                        }
+                    };
                 }
             }
         }
@@ -81,10 +88,13 @@ namespace Origins.Items.Weapons.Other {
         }
         public override void Kill(int timeLeft) {
 			Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 10, volumeScale:2);
+            Vector2 shockVelocity = -projectile.oldVelocity;
+            shockVelocity.Normalize();
+            shockVelocity *= 3;
 			for (int i = 4; i < 31; i++) {
-                if(i%3==0) {
+                if(i%2==0) {
                     Vector2 pos = projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height));
-                    Projectile.NewProjectileDirect(pos, -projectile.velocity.RotatedByRandom(2), Felnum_Shock_Leader.ID, projectile.damage/6, 0, projectile.owner, pos.X, pos.Y).usesLocalNPCImmunity = false;
+                    Projectile.NewProjectileDirect(pos, shockVelocity.RotatedByRandom(2.5), Felnum_Shock_Leader.ID, projectile.damage/3, 0, projectile.owner, pos.X, pos.Y).usesLocalNPCImmunity = false;
                 }
 				float offsetX = projectile.oldVelocity.X * (30f / i);
 				float offsetY = projectile.oldVelocity.Y * (30f / i);

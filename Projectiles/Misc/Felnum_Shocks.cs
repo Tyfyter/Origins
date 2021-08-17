@@ -22,8 +22,8 @@ namespace Origins.Projectiles.Misc {
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bullet);
             projectile.aiStyle = 0;
-            projectile.timeLeft = 20;
-            projectile.extraUpdates = 19;
+            projectile.timeLeft = 30;
+            projectile.extraUpdates = 29;
             projectile.width = projectile.height = 2;
             projectile.penetrate = 1;
             projectile.light = 0;
@@ -40,12 +40,12 @@ namespace Origins.Projectiles.Misc {
         }
         public override void Kill(int timeLeft) {
             if(timeLeft>0) {
+                if(!(OnStrike is null))OnStrike();
                 Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 60, 0.65f, 1f);
                 Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, Felnum_Shock_Arc.ID, 0, 0, projectile.owner, projectile.ai[0], projectile.ai[1]);
                 if(proj.modProjectile is Felnum_Shock_Arc shock) {
                     shock.Parent = Parent;
                 }
-                if(!(OnStrike is null))OnStrike();
             }
         }
     }

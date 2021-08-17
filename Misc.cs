@@ -1236,6 +1236,10 @@ namespace Origins {
 		    return 3;
         }
 
+        public static bool Contains(this Rectangle area, Vector2 point) {
+            return area.Contains((int)point.X, (int)point.Y);
+        }
+
         public static void DrawLightningArc(this SpriteBatch spriteBatch, Vector2[] positions, Texture2D texture = null, float scale = 1f, params (float scale, Color color)[] colors) {
             if(texture is null) {
                 texture = Main.extraTexture[33];
@@ -1253,6 +1257,10 @@ namespace Origins {
         }
 
         public static void DrawLightningArcBetween(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, float sineMult, float precision = 0.1f) {
+            Rectangle screen = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+            if(!screen.Contains(start) && !screen.Contains(end)){
+                return;
+            }
             List<Vector2> positions = new List<Vector2>();
             Vector2 normal = (end - start).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2) * (sineMult + Math.Sign(sineMult));
             for(float i = 0; i < 1f; i += precision) {
