@@ -106,6 +106,8 @@ namespace Origins.NPCs.Defiled {
                     Main.npc[npc.realLife].immune[projectile.owner] = npc.immune[projectile.owner];
                 }
             }
+            Rectangle spawnbox = projectile.Hitbox.MoveToWithin(npc.Hitbox);
+            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(Main.rand.NextVectorIn(spawnbox), projectile.velocity, mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
         }
         public override bool? CanBeHitByProjectile(Projectile projectile) {
             if(npc.realLife==npc.whoAmI)return null;
@@ -113,6 +115,11 @@ namespace Origins.NPCs.Defiled {
                 return false;
             }
             return null;
+        }
+        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
+            int halfWidth = npc.width / 2;
+            int baseX = player.direction > 0 ? 0 : halfWidth;
+            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(npc.position+new Vector2(baseX + Main.rand.Next(halfWidth),Main.rand.Next(npc.height)), new Vector2(knockback*player.direction, -0.1f*knockback), mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
         }
         public override void HitEffect(int hitDirection, double damage) {
             if(npc.life<0) {

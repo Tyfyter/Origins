@@ -52,16 +52,24 @@ namespace Origins.Items.Weapons.Other {
             projectile.localNPCHitCooldown = 10;
             projectile.penetrate = 5;
             projectile.extraUpdates = 1;
-            projectile.idStaticNPCHitCooldown = 10;
+            projectile.ai[0] = 21;
+        }
+        public override bool PreAI() {
+            if(projectile.ai[1] == 0f) {
+                projectile.ai[1] = 1f;
+                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 109, 1.5f, -0.25f);
+                projectile.ai[0] = 21;
+            }
+            return true;
         }
         public override void AI() {
-            if(projectile.idStaticNPCHitCooldown > 0) {
-                projectile.idStaticNPCHitCooldown--;
-            }else if(projectile.timeLeft%5==0) {
+            if(projectile.ai[0] > 0) {
+                projectile.ai[0]--;
+            }else if(projectile.timeLeft%7==0) {
                 Vector2 pos = projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height));
                 Projectile proj = Projectile.NewProjectileDirect(pos, Main.rand.NextVector2CircularEdge(3,3), Felnum_Shock_Leader.ID, projectile.damage/6, 0, projectile.owner, pos.X, pos.Y);
                 if(proj.modProjectile is Felnum_Shock_Leader shock) {
-                    shock.OnStrike += () => projectile.idStaticNPCHitCooldown = 10;
+                    shock.OnStrike += () => projectile.ai[0] = 14;
                 }
             }
         }
@@ -72,8 +80,12 @@ namespace Origins.Items.Weapons.Other {
             base.OnHitNPC(target, damage, knockback, crit);
         }
         public override void Kill(int timeLeft) {
-			Main.PlaySound(SoundID.Item10, projectile.position);
+			Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 10, volumeScale:2);
 			for (int i = 4; i < 31; i++) {
+                if(i%3==0) {
+                    Vector2 pos = projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height));
+                    Projectile.NewProjectileDirect(pos, -projectile.velocity.RotatedByRandom(2), Felnum_Shock_Leader.ID, projectile.damage/6, 0, projectile.owner, pos.X, pos.Y).usesLocalNPCImmunity = false;
+                }
 				float offsetX = projectile.oldVelocity.X * (30f / i);
 				float offsetY = projectile.oldVelocity.Y * (30f / i);
 				int dustIndex = Dust.NewDust(new Vector2(projectile.oldPosition.X - offsetX, projectile.oldPosition.Y - offsetY), 8, 8, 111, projectile.oldVelocity.X, projectile.oldVelocity.Y, 100, default(Color), 1.8f);

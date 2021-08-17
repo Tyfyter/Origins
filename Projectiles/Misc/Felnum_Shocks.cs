@@ -22,15 +22,25 @@ namespace Origins.Projectiles.Misc {
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Bullet);
             projectile.aiStyle = 0;
-            projectile.timeLeft = 25;
-            projectile.extraUpdates = 24;
+            projectile.timeLeft = 20;
+            projectile.extraUpdates = 19;
             projectile.width = projectile.height = 2;
             projectile.penetrate = 1;
             projectile.light = 0;
+            projectile.usesLocalNPCImmunity = true;
+        }
+        public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+            hitbox.X -= 2;
+            hitbox.Y -= 2;
+            hitbox.Width += 4;
+            hitbox.Height += 4;
+        }
+        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+            damage += target.defense / 2;
         }
         public override void Kill(int timeLeft) {
             if(timeLeft>0) {
-                Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 109, 0.5f, 0.5f);
+                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 60, 0.65f, 1f);
                 Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, Felnum_Shock_Arc.ID, 0, 0, projectile.owner, projectile.ai[0], projectile.ai[1]);
                 if(proj.modProjectile is Felnum_Shock_Arc shock) {
                     shock.Parent = Parent;

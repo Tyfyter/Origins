@@ -1267,5 +1267,20 @@ namespace Origins {
                 (0.1f, new Color(80, 251, 255, 0) * 0.5f),
                 (0.05f, new Color(200, 255, 255, 0) * 0.5f));
         }
+        public static Rectangle MoveToWithin(this Rectangle value, Rectangle area) {
+            Rectangle output = value;
+            if(output.Width > area.Width) {
+                output.Width = area.Width;
+            }
+            if(output.Height > area.Height) {
+                output.Height = area.Height;
+            }
+            output.X = Math.Min(Math.Max(output.X, area.X), (area.X + area.Width) - output.Width);
+            output.Y = Math.Min(Math.Max(output.Y, area.Y), (area.Y + area.Height) - output.Height);
+            return output;
+        }
+        public static Vector2 NextVectorIn(this UnifiedRandom random, Rectangle area) {
+            return area.TopLeft() + new Vector2(Main.rand.Next(area.Width), Main.rand.Next(area.Height));
+        }
     }
 }
