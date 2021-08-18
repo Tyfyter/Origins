@@ -70,11 +70,12 @@ namespace Origins.Items.Weapons.Other {
             }else if(projectile.timeLeft%7==0) {
                 Vector2 pos = projectile.position + new Vector2(Main.rand.Next(projectile.width), Main.rand.Next(projectile.height));
                 Projectile proj = Projectile.NewProjectileDirect(pos, Main.rand.NextVector2CircularEdge(3,3), Felnum_Shock_Leader.ID, projectile.damage/6, 0, projectile.owner, pos.X, pos.Y);
-                Projectile parent = this.projectile;
+                ModProjectile parent = this;
+                //Projectile parentProjectile = this.projectile;
                 if(proj.modProjectile is Felnum_Shock_Leader shock) {
                     shock.OnStrike += () => {
-                        if(parent.active && parent.type == Fragarach_P.ID) {
-                            parent.ai[0] = 14;
+                        if(parent == projectile.modProjectile) {
+                            projectile.ai[0] = 14;
                         }
                     };
                 }

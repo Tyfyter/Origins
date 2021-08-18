@@ -26,6 +26,9 @@ namespace Origins.Items.Weapons.Felnum {
             item.damage = baseDamage;
             //item.shootSpeed*=0.66f;
             item.UseSound = null;
+            //item.mana = 0;
+            //item.useTime = 1;
+            //item.useAnimation = 10;
         }
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
@@ -44,6 +47,7 @@ namespace Origins.Items.Weapons.Felnum {
             //damage+=(damage-35)/2;
 			Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             Projectile.NewProjectile(position, speed, type, damage, knockBack, item.owner);
+            //Projectile.NewProjectile(position, speed, 777, damage, knockBack, item.owner, position.X, position.Y);
             return false;
         }
     }

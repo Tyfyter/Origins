@@ -27,6 +27,16 @@ namespace Origins.NPCs {
             }
         }
         public override bool PreAI(NPC npc) {
+            if(shockTime>0) {
+                npc.noGravity = true;
+                npc.velocity = Vector2.Zero;
+                npc.position = npc.oldPosition;
+                if(--shockTime==0) {
+                    npc.life = 0;
+                    npc.checkDead();
+                }
+                return false;
+            }
             if(npc.HasBuff(Impaled_Debuff.ID)) {
                 //npc.position = npc.oldPosition;//-=npc.velocity;
                 npc.velocity = Vector2.Zero;

@@ -15,6 +15,7 @@ namespace Origins.NPCs {
         public override bool InstancePerEntity => true;
         internal int shrapnelCount = 0;
         internal int shrapnelTime = 0;
+        internal int shockTime = 0;
         public override void AI(NPC npc) {
             if(shrapnelTime>0) {
                 if(--shrapnelTime<1) {

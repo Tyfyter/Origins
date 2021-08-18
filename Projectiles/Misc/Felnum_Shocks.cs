@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.NPCs;
 
 namespace Origins.Projectiles.Misc {
     public class Felnum_Shock_Leader : ModProjectile {
@@ -36,13 +37,17 @@ namespace Origins.Projectiles.Misc {
             hitbox.Height += 4;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+            if(damage >= target.life) {
+                damage = target.life - 1;
+                target.GetGlobalNPC<OriginGlobalNPC>().shockTime = 15;
+            }
             damage += target.defense / 2;
         }
         public override void Kill(int timeLeft) {
             if(timeLeft>0) {
                 if(!(OnStrike is null))OnStrike();
                 Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 60, 0.65f, 1f);
-                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, Felnum_Shock_Arc.ID, 0, 0, projectile.owner, projectile.ai[0], projectile.ai[1]);
+                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, Felnum_Shock_Arc.ID, projectile.damage, 0, projectile.owner, projectile.ai[0], projectile.ai[1]);
                 if(proj.modProjectile is Felnum_Shock_Arc shock) {
                     shock.Parent = Parent;
                 }
@@ -62,6 +67,13 @@ namespace Origins.Projectiles.Misc {
             projectile.penetrate = -1;
             projectile.hide = true;
             projectile.localAI[0] = (float)Math.Pow(Main.rand.NextFloat(-4, 4), 2);
+        }
+        public override void Kill(int timeLeft) {
+            projectile.position.X -= 4;
+            projectile.position.Y -= 4;
+            projectile.width = projectile.height = 8;
+            projectile.friendly = true;
+            projectile.Damage();
         }
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI) {
             drawCacheProjsOverWiresUI.Add(index);
