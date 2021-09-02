@@ -12,14 +12,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Bomboomstick : ModItem, ICustomDrawItem {
-        public static Texture2D useTexture { get; private set; }
+        public static Texture2D UseTexture { get; private set; }
         internal static void Unload() {
-            useTexture = null;
+            UseTexture = null;
         }
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomboomstick");
             if(Main.netMode == NetmodeID.Server)return;
-            useTexture = mod.GetTexture("Items/Weapons/Explosives/Bomboomstick_Use");
+            UseTexture = mod.GetTexture("Items/Weapons/Explosives/Bomboomstick_Use");
         }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.Boomstick);
@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Explosives {
             }
 
             Main.playerDrawData.Add(new DrawData(
-                useTexture,
+                UseTexture,
                 pos,
                 new Rectangle(0, 24*(frame), 96, 22),
                 item.GetAlpha(new Color(lightColor.X, lightColor.Y, lightColor.Z, lightColor.W)),

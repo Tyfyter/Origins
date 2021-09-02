@@ -159,6 +159,11 @@ namespace Origins {
         public static explicit operator PolarVec2(Vector2 vec) {
             return new PolarVec2(vec.Length(), vec.ToRotation());
         }
+        public static PolarVec2 Zero => new PolarVec2();
+        public static PolarVec2 UnitRight => new PolarVec2(1, 0);
+        public static PolarVec2 UnitUp => new PolarVec2(1, MathHelper.PiOver2);
+        public static PolarVec2 UnitLeft => new PolarVec2(1, MathHelper.Pi);
+        public static PolarVec2 UnitDown => new PolarVec2(1, -MathHelper.PiOver2);
     }
     /// <summary>
     /// Because it's a little more convenient than an extension method for every number type

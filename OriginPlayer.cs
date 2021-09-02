@@ -74,6 +74,7 @@ namespace Origins {
         public const int minionSubSlotValues = 3;
         public float[] minionSubSlots = new float[minionSubSlotValues];
         public int wormHeadIndex = -1;
+        public int heldProjectile = -1;
         public override void ResetEffects() {
             oldBonuses = 0;
             if(fiberglassSet||fiberglassDagger)oldBonuses|=1;
@@ -127,6 +128,9 @@ namespace Origins {
             player.breathMax = 200;
             PlagueSight = false;
             minionSubSlots = new float[minionSubSlotValues];
+        }
+        public override void PostUpdate() {
+            heldProjectile = -1;
         }
         public override void PostUpdateMiscEffects() {
             if(cryostenHelmet) {
