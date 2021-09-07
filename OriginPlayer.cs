@@ -18,6 +18,7 @@ using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using static Origins.Items.OriginGlobalItem;
 using static Origins.OriginExtensions;
 
@@ -38,6 +39,7 @@ namespace Origins {
         public bool defiledSet = false;
         public bool rivenSet = false;
         public bool riftSet = false;
+        public bool eyndumSet = false;
 
         public bool bombHandlingDevice = false;
         public bool dimStarlight = false;
@@ -67,6 +69,8 @@ namespace Origins {
         public bool DrawPants = false;
         public bool ItemLayerWrench = false;
         public bool PlagueSight = false;
+
+        public Ref<Item> eyndumCore = null;
 
         internal static bool ItemChecking = false;
         public int cryostenLifeRegenCount = 0;
@@ -108,7 +112,8 @@ namespace Origins {
             minerSet = false;
             defiledSet = false;
             rivenSet = false;
-            riftSet = false;//armor not yet implemented, but the set bonus is functional
+            riftSet = false;
+            eyndumSet = false;
             bombHandlingDevice = false;
             dimStarlight = false;
             madHand = false;
@@ -146,6 +151,11 @@ namespace Origins {
                         Main.dust[num6].velocity.X = -num7 * 0.075f;
                         Main.dust[num6].velocity.Y = -num8 * 0.075f;
                     }
+            }
+        }
+        public override void PostUpdateEquips() {
+            if (eyndumCore?.Value?.modItem is ModItem equippedCore) {
+                equippedCore.UpdateEquip(player);
             }
         }
         public override void UpdateLifeRegen() {
@@ -315,6 +325,18 @@ namespace Origins {
             }
             return damage != 0;
         }
+        public override void Load(TagCompound tag) {
+            if (tag.SafeGet<Item>("EyndumCore") is Item eyndumCoreItem) {
+                eyndumCore = new Ref<Item>(eyndumCoreItem);
+            }
+        }
+        public override TagCompound Save() {
+            TagCompound output = new TagCompound();
+            if (!(eyndumCore is null)) {
+                output.Add("EyndumCore", eyndumCore.Value);
+            }
+            return output;
+        }
         public override void UpdateBiomes() {
             ZoneVoid = OriginWorld.voidTiles > 300;
             ZoneVoidProgress = Math.Min(OriginWorld.voidTiles - 200, 200)/300f;
@@ -390,7 +412,18 @@ namespace Origins {
                 layers.Add(FelnumGlow);
                 FelnumGlow.visible = true;
             }
-            if(player.itemAnimation != 0 && player.HeldItem.modItem is ICustomDrawItem) {
+            if (Origins.HelmetGlowMasks.TryGetValue(player.head, out Texture2D helmetMask)) {
+                layers.Insert(layers.IndexOf(PlayerLayer.Head) + 1, CreateHeadGlowmask(helmetMask));
+            }
+            if (Origins.BreastplateGlowMasks.TryGetValue(player.Male ? player.body : -player.body, out Texture2D breastplateMask)) {
+                layers.Insert(layers.IndexOf(PlayerLayer.Body) + 1, CreateBodyGlowmask(breastplateMask));
+            } else if (Origins.BreastplateGlowMasks.TryGetValue(player.Male ? -player.body : player.body, out Texture2D fBreastplateMask)) {
+                layers.Insert(layers.IndexOf(PlayerLayer.Body) + 1, CreateBodyGlowmask(fBreastplateMask));
+            }
+            if (Origins.LeggingGlowMasks.TryGetValue(player.legs, out Texture2D leggingMask)) {
+                layers.Insert(layers.IndexOf(PlayerLayer.Legs) + 1, CreateLegsGlowmask(leggingMask));
+            }
+            if (player.itemAnimation != 0 && player.HeldItem.modItem is ICustomDrawItem) {
                 switch(player.HeldItem.useStyle) {
                     case 1:
                     case 2:
@@ -584,5 +617,52 @@ namespace Origins {
                 Main.playerDrawData.Add(item);
             }
         });
+        public static PlayerLayer CreateHeadGlowmask(Texture2D texture) => new PlayerLayer("Origins", "HeadGlowmask", null, delegate (PlayerDrawInfo drawInfo2) {
+            Player drawPlayer = drawInfo2.drawPlayer;
+            SpriteEffects spriteEffects = SpriteEffects.None;
+            if (drawPlayer.direction == -1) {
+                spriteEffects |= SpriteEffects.FlipHorizontally;
+            }
+            if (drawPlayer.gravDir == -1f) {
+                spriteEffects |= SpriteEffects.FlipVertically;
+            }
+            Vector2 Position = new Vector2((int)(drawInfo2.position.X + (float)drawPlayer.width / 2f - (float)drawPlayer.bodyFrame.Width / 2f - Main.screenPosition.X), (int)(drawInfo2.position.Y + (float)drawPlayer.height - (float)drawPlayer.bodyFrame.Height + 4f - Main.screenPosition.Y)) + drawPlayer.headPosition + drawInfo2.headOrigin;
+            //Vector2 Position = new Vector2(drawInfo2.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f, drawInfo2.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + drawInfo2.headOrigin;
+            Rectangle? Frame = new Rectangle?(drawPlayer.bodyFrame);
+            DrawData item = new DrawData(texture, Position, Frame, Color.White, drawPlayer.headRotation, drawInfo2.headOrigin, 1f, spriteEffects, 0);
+            item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
+            Main.playerDrawData.Add(item);
+        }) {visible = true};
+        public static PlayerLayer CreateBodyGlowmask(Texture2D texture) => new PlayerLayer("Origins", "BodyGlowmask", null, delegate (PlayerDrawInfo drawInfo2) {
+            Player drawPlayer = drawInfo2.drawPlayer;
+            SpriteEffects spriteEffects = SpriteEffects.None;
+            if (drawPlayer.direction == -1) {
+                spriteEffects |= SpriteEffects.FlipHorizontally;
+            }
+            if (drawPlayer.gravDir == -1f) {
+                spriteEffects |= SpriteEffects.FlipVertically;
+            }
+            Vector2 Position = new Vector2(((int)(drawInfo2.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f)), (int)(drawInfo2.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + drawInfo2.bodyOrigin;
+            Rectangle? Frame = new Rectangle?(drawPlayer.bodyFrame);
+            DrawData item = new DrawData(texture, Position, Frame, Color.White, drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
+            item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
+            Main.playerDrawData.Add(item);
+        }) { visible = true };
+
+        public static PlayerLayer CreateLegsGlowmask(Texture2D texture) => new PlayerLayer("Origins", "LegsGlowmask", null, delegate (PlayerDrawInfo drawInfo2) {
+            Player drawPlayer = drawInfo2.drawPlayer;
+            SpriteEffects spriteEffects = SpriteEffects.None;
+            if (drawPlayer.direction == -1) {
+                spriteEffects |= SpriteEffects.FlipHorizontally;
+            }
+            if (drawPlayer.gravDir == -1f) {
+                spriteEffects |= SpriteEffects.FlipVertically;
+            }
+            Vector2 Position = new Vector2((int)(drawInfo2.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f), (int)(drawInfo2.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.legPosition + drawInfo2.legOrigin;
+            Rectangle? Frame = new Rectangle?(drawPlayer.legFrame);
+            DrawData item = new DrawData(texture, Position, Frame, Color.White, drawPlayer.legRotation, drawInfo2.legOrigin, 1f, spriteEffects, 0);
+            item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[2].type);
+            Main.playerDrawData.Add(item);
+        }) { visible = true };
     }
 }

@@ -282,8 +282,8 @@ namespace Origins.World {
 					        continue;
 				        }
 					    tile = Main.tile[l, k];
-					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.type]){
-						    tile.type = (ushort)type;
+					    if (!tile.active()) {//TileID.Sets.CanBeClearedDuringGeneration[tile.type]
+							tile.type = (ushort)type;
 					        Main.tile[l, k].active(active: true);
 					        Main.tile[l, k].liquid = 0;
 					        Main.tile[l, k].lava(lava: false);

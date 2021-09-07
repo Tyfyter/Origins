@@ -3,12 +3,14 @@ using Microsoft.Xna.Framework.Graphics;
 using MonoMod.RuntimeDetour;
 using Origins.Items;
 using Origins.Items.Armor.Felnum;
+using Origins.Items.Armor.Rift;
 using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
+using Origins.UI;
 using Origins.World;
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.UI;
 using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
 
@@ -37,20 +40,30 @@ namespace Origins {
         public static Dictionary<int, int> ExplosiveBaseDamage;
         public static bool[] ExplosiveModOnHit;
         public static ushort[] VanillaElements;
+        #region Armor IDs
+        public static int FelnumHeadArmorID { get; private set; }
+        public static int FelnumBodyArmorID { get; private set; }
+        public static int FelnumLegsArmorID { get; private set; }
 
-        public static int FelnumHeadArmorID;
-        public static int FelnumBodyArmorID;
-        public static int FelnumLegsArmorID;
+        public static int PlagueTexanJacketID { get; private set; }
 
-        public static int PlagueTexanJacketID;
+        public static int RiftHeadArmorID { get; private set; }
+        public static int RiftBodyArmorID { get; private set; }
+        public static int RiftLegsArmorID { get; private set; }
+        public static Dictionary<int, Texture2D> HelmetGlowMasks { get; private set; }
+        public static Dictionary<int, Texture2D> BreastplateGlowMasks { get; private set; }
+        public static Dictionary<int, Texture2D> LeggingGlowMasks { get; private set; }
 
+        #endregion Armor IDs
         public static int[] celestineBoosters;
 
         public static MiscShaderData perlinFade0;
         public static MiscShaderData blackHoleShade;
         public static MiscShaderData solventShader;
         public static Texture2D cellNoiseTexture;
-		public Origins() {
+
+        public UserInterface eyndumCoreUI;
+        public Origins() {
             instance = this;
             celestineBoosters = new int[3];
         }
@@ -69,7 +82,10 @@ namespace Origins {
             FelnumBodyArmorID = ModContent.GetInstance<Felnum_Breastplate>().item.bodySlot;
             FelnumLegsArmorID = ModContent.GetInstance<Felnum_Greaves>().item.legSlot;
             PlagueTexanJacketID = ModContent.GetInstance<Plague_Texan_Jacket>().item.bodySlot;
-        #endregion
+            RiftHeadArmorID = ModContent.GetInstance<Rift_Helmet>().item.headSlot;
+            RiftBodyArmorID = ModContent.GetInstance<Rift_Breastplate>().item.bodySlot;
+            RiftLegsArmorID = ModContent.GetInstance<Rift_Greaves>().item.legSlot;
+            #endregion
             Logger.Info("fixing tilemerge for "+OriginTile.IDs.Count+" tiles");
             Main.tileMerge[TileID.Sand][TileID.Sandstone] = true;
             Main.tileMerge[TileID.Sand][TileID.HardenedSand] = true;
@@ -256,7 +272,10 @@ namespace Origins {
                 (ushort)ItemID.ChlorophyteWarhammer, Elements.Earth);
             #endregion earth
             #endregion vanilla weapon elements
-            if(Main.netMode != NetmodeID.Server) {
+            HelmetGlowMasks = new Dictionary<int, Texture2D> { };
+            BreastplateGlowMasks = new Dictionary<int, Texture2D> { };
+            LeggingGlowMasks = new Dictionary<int, Texture2D> { };
+            if (Main.netMode != NetmodeID.Server) {
                 OriginExtensions.drawPlayerItemPos = (Func<float, int, Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float, int, Vector2>), Main.instance);
                 perlinFade0 = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/PerlinFade")), "RedFade");
                 //perlinFade0.UseImage("Images/Misc/Perlin");
@@ -275,6 +294,7 @@ namespace Origins {
                 //Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.
                 //Filters.Scene["BlackHole"] = new Filter(new ScreenShaderData(screenRef, "BlackHole"), EffectPriority.VeryHigh);
                 //Filters.Scene["BlackHole"].Load();
+                eyndumCoreUI = new UserInterface();
             }
             Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
             //OriginExtensions.initClone();
@@ -443,6 +463,9 @@ namespace Origins {
             cellNoiseTexture = null;
             OriginExtensions.drawPlayerItemPos = null;
             Tolruk.glowmasks = null;
+            HelmetGlowMasks = null;
+            BreastplateGlowMasks = null;
+            LeggingGlowMasks = null;
             instance = null;
             Tiles.Defiled.Defiled_Tree.Unload();
             OriginExtensions.unInitExt();
@@ -453,6 +476,36 @@ namespace Origins {
                 worldInstance.defiledAltResurgenceTiles = null;
             }
             Bomboomstick.Unload();
+            eyndumCoreUI = null;
+        }
+        public override void UpdateUI(GameTime gameTime) {
+            if (Main.playerInventory) {
+                if (eyndumCoreUI?.CurrentState is Eyndum_Core_UI eyndumCoreUIState) {
+                    if (eyndumCoreUIState?.itemSlot?.item == Main.LocalPlayer.GetModPlayer<OriginPlayer>().eyndumCore) {
+                        eyndumCoreUI.Update(gameTime);
+                    } else {
+                        eyndumCoreUI.SetState(null);
+                    }
+                }
+            }
+        }
+        public void SetEyndumCoreUI() {
+            if (!(eyndumCoreUI.CurrentState is Eyndum_Core_UI)) {
+                eyndumCoreUI.SetState(new Eyndum_Core_UI());
+            }
+        }
+        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
+            int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
+            if (inventoryIndex != -1) {//error prevention & null check
+                layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
+                    "Origins: Eyndum Core UI",
+                    delegate {
+                        eyndumCoreUI?.Draw(Main.spriteBatch, new GameTime());
+                        return true;
+                    },
+                    InterfaceScaleType.UI) { Active = Main.playerInventory }
+                );
+            }
         }
         public override void UpdateMusic(ref int music, ref MusicPriority priority) {
             if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active) {
@@ -508,6 +561,15 @@ namespace Origins {
                 Logger.Info("adding procedural recipe: "+recipe.Stringify());
                 recipe.AddRecipe();
             }
+        }
+        internal static void AddHelmetGlowmask(int armorID, string texture) {
+            HelmetGlowMasks.Add(armorID, instance.GetTexture(texture));
+        }
+        internal static void AddBreastplateGlowmask(int armorID, string texture) {
+            BreastplateGlowMasks.Add(armorID, instance.GetTexture(texture));
+        }
+        internal static void AddLeggingGlowMask(int armorID, string texture) {
+            LeggingGlowMasks.Add(armorID, instance.GetTexture(texture));
         }
         public static class Music {
             public static int Dusk = MusicID.Eerie;

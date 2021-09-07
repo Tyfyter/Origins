@@ -20,6 +20,7 @@ using System.Collections;
 using System.Runtime.Serialization;
 using System.Diagnostics;
 using System.IO;
+using Terraria.ModLoader.IO;
 
 namespace Origins {
     public class LinkedQueue<T> : ICollection<T> {
@@ -1294,6 +1295,13 @@ namespace Origins {
         }
         public static Vector2 NextVectorIn(this UnifiedRandom random, Rectangle area) {
             return area.TopLeft() + new Vector2(Main.rand.Next(area.Width), Main.rand.Next(area.Height));
+        }
+        public static T SafeGet<T>(this TagCompound self, string key) {
+            try {
+                return self.Get<T>(key);
+            } catch (Exception) {
+                return default;
+            }
         }
     }
 }

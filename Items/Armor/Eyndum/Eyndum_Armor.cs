@@ -4,29 +4,24 @@ using Origins.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Armor.Rift {
+namespace Origins.Items.Armor.Eyndum {
     [AutoloadEquip(EquipType.Head)]
-    public class Rift_Helmet : ModItem {
+    public class Eyndum_Helmet : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Rift Helmet");
-            Tooltip.SetDefault("Increased explosive velocity");
-            if (Main.netMode != NetmodeID.Server) {
-                Origins.AddHelmetGlowmask(item.headSlot, "Items/Armor/Rift/Rift_Helmet_Head_Glow");
-            }
+            DisplayName.SetDefault("Eyndum Helmet");
         }
         public override void SetDefaults() {
             item.defense = 8;
             item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
-            player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed+=0.2f;
         }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
-            return body.type == ModContent.ItemType<Rift_Breastplate>() && legs.type == ModContent.ItemType<Rift_Greaves>();
+            return body.type == ModContent.ItemType<Eyndum_Breastplate>() && legs.type == ModContent.ItemType<Eyndum_Greaves>();
         }
         public override void UpdateArmorSet(Player player) {
-            player.setBonus = "Explosive projectiles have a chance to be duplicated";
-            player.GetModPlayer<OriginPlayer>().riftSet = true;
+            player.GetModPlayer<OriginPlayer>().eyndumSet = true;
+            Origins.instance.SetEyndumCoreUI();
         }
         public override void AddRecipes() {
             /*ModRecipe recipe = new ModRecipe(mod);
@@ -38,14 +33,9 @@ namespace Origins.Items.Armor.Rift {
         }
     }
     [AutoloadEquip(EquipType.Body)]
-    public class Rift_Breastplate : ModItem {
+    public class Eyndum_Breastplate : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Rift Breastplate");
-            Tooltip.SetDefault("5% increased magic damage");
-            if (Main.netMode != NetmodeID.Server) {
-                Origins.AddBreastplateGlowmask(item.bodySlot, "Items/Armor/Rift/Rift_Breastplate_Body_Glow");
-                Origins.AddBreastplateGlowmask(-item.bodySlot, "Items/Armor/Rift/Rift_Breastplate_FemaleBody_Glow");
-            }
+            DisplayName.SetDefault("Eyndum Breastplate");
         }
         public override void SetDefaults() {
             item.defense = 16;
@@ -53,7 +43,7 @@ namespace Origins.Items.Armor.Rift {
             item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
-            player.statLifeMax2+=20;
+
         }
         public override void AddRecipes() {
             /*ModRecipe recipe = new ModRecipe(mod);
@@ -65,21 +55,16 @@ namespace Origins.Items.Armor.Rift {
         }
     }
     [AutoloadEquip(EquipType.Legs)]
-    public class Rift_Greaves : ModItem {
+    public class Eyndum_Greaves : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Rift Greaves");
-            Tooltip.SetDefault("20% increased movement speed");
-            if (Main.netMode != NetmodeID.Server) {
-                Origins.AddLeggingGlowMask(item.legSlot, "Items/Armor/Rift/Rift_Greaves_Legs_Glow");
-            }
+            DisplayName.SetDefault("Eyndum Greaves");
         }
         public override void SetDefaults() {
             item.defense = 12;
             item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
-            player.moveSpeed += 0.2f;
-            player.runAcceleration += 0.02f;
+
         }
         public override void AddRecipes() {
             /*ModRecipe recipe = new ModRecipe(mod);
