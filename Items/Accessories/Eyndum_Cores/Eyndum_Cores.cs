@@ -30,9 +30,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
         }
         public override void UpdateEquip(Player player) {
             player.wingTimeMax *= 2;
-            player.moveSpeed *= 1.5f;
-            player.runAcceleration *= 1.5f;
-            player.maxRunSpeed *= 1.5f;
+            player.moveSpeed *= 4f;
+            player.runAcceleration *= 3f;
+            player.maxRunSpeed *= 3f;
             player.jumpSpeedBoost += 5;
         }
     }
@@ -42,7 +42,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             DisplayName.SetDefault("Combat Core");
         }
         public override void UpdateEquip(Player player) {
-            player.allDamageMult *= 1.25f;
+            player.allDamageMult *= 1.48f;
         }
     }
     public class Construction_Core : Eyndum_Core {
@@ -52,9 +52,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
         }
         public override void UpdateEquip(Player player) {
             player.tileSpeed *= 2f;
-            player.wallSpeed *= 2f;
-            player.pickSpeed *= 2f;
-            player.blockRange += 15;
+            player.wallSpeed *= 2.5f;
+            player.pickSpeed *= 3f;
+            player.blockRange += 40;
         }
     }
     public class Lifeforce_Core : Eyndum_Core {
@@ -64,7 +64,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
         }
         public override void UpdateEquip(Player player) {
             player.statLifeMax2 += player.statLifeMax2 / 2;
-            player.lifeRegenCount += player.statLifeMax2 / 20;
+            player.lifeRegenCount += player.statLifeMax2 / 22;
         }
     }
 }
