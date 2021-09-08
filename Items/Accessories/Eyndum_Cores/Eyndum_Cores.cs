@@ -12,6 +12,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
     public abstract class Eyndum_Core : ModItem {
         public abstract Color CoreGlowColor { get; }
         public override bool CanRightClick() {
+            if (Terraria.GameInput.PlayerInput.Triggers.Old.MouseRight) {
+                return false;
+            }
             Item equippedItem = Main.LocalPlayer.GetModPlayer<OriginPlayer>().eyndumCore.Value;
             if (equippedItem.type!=item.type) {
                 int e = equippedItem.type;

@@ -153,9 +153,9 @@ namespace Origins.World {
                         getEvilTileConversionTypes(evil_riven, out stoneType, out grassType, out plantType, out sandType, out sandstoneType, out hardenedSandType, out iceType);
                         getEvilWallConversionTypes(evil_riven, out stoneWallTypes, out hardenedSandWallTypes, out sandstoneWallTypes);
                         progress.Message = Lang.gen[72].Value+"n't";
-                        for(int num487 = 0; num487 < Main.maxTilesX * 0.00045; num487++) {
-                            float value14 = (float)(num487 / (Main.maxTilesX * 0.00045));
-                            progress.Set(value14);
+                        for(int startX = 0; startX < Main.maxTilesX * 0.00045; startX++) {
+                            float attemptProgress = (float)(startX / (Main.maxTilesX * 0.00045));
+                            progress.Set(attemptProgress);
                             bool validSpot = false;
                             int startPos = 0;
                             int minX = 0;
@@ -213,7 +213,7 @@ namespace Origins.World {
                                     validSpot = false;
                                 }
                             }
-                            CrimStart(startPos, (int)worldSurfaceLow - 10);
+                            //CrimStart(startPos, (int)worldSurfaceLow - 10);
                             for(int jungleCheckX = minX; jungleCheckX < maxX; jungleCheckX++) {
                                 for(int jungleCheckY = (int)worldSurfaceLow; jungleCheckY < Main.worldSurface - 1.0; jungleCheckY++) {
                                     if(Main.tile[jungleCheckX, jungleCheckY].active()) {
@@ -245,7 +245,7 @@ namespace Origins.World {
                                         }
                                         if(Main.tile[i2, convertY].type == 0 && convertY < Main.worldSurface - 1.0 && !planted) {
                                             grassSpread.SetValue(null, 0);
-                                            SpreadGrass(i2, convertY, 0, TileID.DiamondGemsparkOff, repeat: true, 0);
+                                            SpreadGrass(i2, convertY, 0, grassType, repeat: true, 0);
                                         }
                                         planted = true;
                                         switch(Main.tile[i2, convertY].wall) {
@@ -472,8 +472,8 @@ namespace Origins.World {
                 genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Altars"));
                 tasks.Insert(genIndex+1, new PassLegacy("Alternate World Evil Altars", (GenerationProgress progress) => {
                     ushort oreType = crimson ? TileID.Crimtane : TileID.Demonite;
-                    ushort altOreType = (ushort)(crimson ? TileType<Defiled_Ore>() : TileType<Infested_Ore>());
-                    ushort altarType = (ushort)(crimson ? TileType<Defiled_Altar>() : TileType<Riven_Altar>());
+                    ushort altOreType = (ushort)(crimson ? TileType<Infested_Ore>() : TileType<Defiled_Ore>());
+                    ushort altarType = (ushort)(crimson ? TileType<Riven_Altar>() : TileType<Defiled_Altar>());
                     for(int y = 0; y < Main.maxTilesY; y++) {
                         for(int x = 0; x < Main.maxTilesX; x++) {
                             if(Main.tile[x, y].type==oreType)
@@ -518,8 +518,8 @@ namespace Origins.World {
                 genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
                 tasks.Insert(genIndex+1, new PassLegacy("Evil Biome Cleanup and Features", (GenerationProgress progress) => {
                     while(EvilSpikes.Count>0) {
-                        (Point, int) i = EvilSpikes[0];
-                        Point p = i.Item1;
+                        (Point pos, int size) i = EvilSpikes[0];
+                        Point p = i.pos;
                         EvilSpikes.RemoveAt(0);
                         Vector2 vel = -GetTileDirs(p.X,p.Y).TakeAverage();
                         if(vel.Length()==0f) {
@@ -528,10 +528,16 @@ namespace Origins.World {
                             vel = vel.RotatedByRandom(0.75f);
                         }
                         //TestRunners.SpikeRunner(p.X, p.Y, duskStoneID, vel, i.Item2, randomtwist: true);
-                        double size = i.Item2*0.25;
+                        double size = i.size*0.25;
                         if(genRand.Next(5) == 0) {
                             size+=6;
-                            p = new Point(p.X+(int)(vel.X*18),p.Y+(int)(vel.Y*18));
+                            Vector2 tempPos = new Vector2(p.X, p.Y);
+                            while (Main.tile[(int)tempPos.X, (int)tempPos.Y].active() && Main.tileSolid[Main.tile[(int)tempPos.X, (int)tempPos.Y].type]) {
+                                tempPos += vel;
+                            }
+                            tempPos -= vel * 3;
+                            p = tempPos.ToPoint();
+                            //p = new Point(p.X+(int)(vel.X*18),p.Y+(int)(vel.Y*18));
                         }
                         bool twist = genRand.NextBool();
                         GenRunners.SmoothSpikeRunner(p.X, p.Y, size, stoneType, vel, decay:genRand.NextFloat(0.15f,0.35f), twist:twist?genRand.NextFloat(-0.05f,0.05f):1f, randomtwist:!twist, cutoffStrength:1.5);
