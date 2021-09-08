@@ -282,7 +282,7 @@ namespace Origins.World {
 					        continue;
 				        }
 					    tile = Main.tile[l, k];
-					    if (!tile.active()) {//TileID.Sets.CanBeClearedDuringGeneration[tile.type]
+					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.type]) {
 							tile.type = (ushort)type;
 					        Main.tile[l, k].active(active: true);
 					        Main.tile[l, k].liquid = 0;
