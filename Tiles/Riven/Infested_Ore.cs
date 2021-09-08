@@ -22,7 +22,9 @@ namespace Origins.Tiles.Riven {
             mergeID = TileID.Crimtane;
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-            r = g = b = 0.25f;
+            r = 0.2f;
+            g = 0.15f;
+            b = 0.06f;
         }
     }
     public class Infested_Ore_Item : ModItem {

@@ -21,17 +21,19 @@ namespace Tyfyter.Utils {
 		    ItemSlot.Draw(spriteBatch, ref item, ItemSlot.Context.ChatItem, position, lightColor);
         }
         public class SingleItemSlotUI : UIState {
-			public RefItemSlot itemSlot = null;
+            public virtual float SlotX => 0;
+            public virtual float SlotY => 0;
+            public RefItemSlot itemSlot = null;
 			protected internal Queue<Action> itemSlotQueue = new Queue<Action>() { };
             /// <summary>
             /// Passes the parameters to an action to be added in Update
             /// </summary>
-            public void SafeSetItemSlot(Ref<Item> item, Vector2 position, bool usePercent = false, Func<Item, bool> ValidItemFunc = null, Color? slotColor = null, int context = ItemSlot.Context.InventoryItem, float slotScale = 1f, params (Texture2D texture, Color color)[] extraTextures) {
+            public void SafeSetItemSlot(Ref<Item> item, Vector2 position, bool usePercent = false, Func<Item, bool> ValidItemFunc = null, Color? slotColor = null, int context = ItemSlot.Context.InventoryItem, float slotScale = 1f, bool shiftClickToInventory = false, params (Texture2D texture, Color color)[] extraTextures) {
                 if (item.Value is null) {
                     item.Value = new Item();
                     item.Value.SetDefaults(0);
                 }
-                itemSlotQueue.Enqueue(() => SetItemSlot(item, position, usePercent, ValidItemFunc, slotColor, context, slotScale, extraTextures));
+                itemSlotQueue.Enqueue(() => SetItemSlot(item, position, usePercent, ValidItemFunc, slotColor, context, slotScale, shiftClickToInventory, extraTextures));
             }
             /// <summary>
             /// Adds a reference-based item slot to the ui state
@@ -43,11 +45,12 @@ namespace Tyfyter.Utils {
             /// <param name="colorContext">passed to RefItemSlot constructor</param>
             /// <param name="context">passed to RefItemSlot constructor</param>
             /// <param name="slotScale">passed to RefItemSlot constructor</param>
-            public void SetItemSlot(Ref<Item> item, Vector2 position, bool usePercent = false, Func<Item, bool> _ValidItemFunc = null, Color? slotColor = null, int context = ItemSlot.Context.InventoryItem, float slotScale = 1f, params (Texture2D texture, Color color)[] extraTextures) {
+            public void SetItemSlot(Ref<Item> item, Vector2 position, bool usePercent = false, Func<Item, bool> _ValidItemFunc = null, Color? slotColor = null, int context = ItemSlot.Context.InventoryItem, float slotScale = 1f, bool shiftClickToInventory = false, params (Texture2D texture, Color color)[] extraTextures) {
                 RefItemSlot itemSlot = new RefItemSlot(_item: item, context: context, scale: slotScale) {
                     ValidItemFunc = _ValidItemFunc ?? (i => true),
                     colorMult = slotColor ?? Color.White,
-                    extraTextures = extraTextures
+                    extraTextures = extraTextures,
+                    shiftClickToInventory = shiftClickToInventory
                 };
                 if (usePercent) {
                     itemSlot.Left = new StyleDimension { Percent = position.X };
@@ -64,17 +67,16 @@ namespace Tyfyter.Utils {
                 if (itemSlotQueue.Count > 0) {
                     itemSlotQueue.Dequeue()();
                 }
-                int slotX = Main.screenWidth - 64 - 28 - 142;
-                int slotY = (int)((float)(174 + (!Main.mapFullscreen && Main.mapStyle == 1 ? 256 : 0)) + (float)(1 * 56) * 0.85f);
-                itemSlot.Left = new StyleDimension { Pixels = slotX };
-                itemSlot.Top = new StyleDimension { Pixels = slotY };
+                itemSlot.Left = new StyleDimension { Pixels = SlotX };
+                itemSlot.Top = new StyleDimension { Pixels = SlotY };
                 base.Update(gameTime);
             }
         }
 		public class RefItemSlot : UIElement {
 			public static Color MissingSlotColor => new Color(160, 160, 160, 160);
 			public bool slotSourceMissing = false;
-			internal Ref<Item> item;
+            public bool shiftClickToInventory = false;
+            internal Ref<Item> item;
 			internal readonly int _context;
 			private readonly float _scale;
 			internal Func<Item, bool> ValidItemFunc;
@@ -97,13 +99,17 @@ namespace Tyfyter.Utils {
 
 				if (ContainsPoint(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
 					Main.LocalPlayer.mouseInterface = true;
+                    int context = _context;
+                    if (shiftClickToInventory && ItemSlot.ShiftInUse) {
+                        context = ItemSlot.Context.EquipAccessory;
+                    }
 					if (slotSourceMissing) {
 						if (Main.mouseItem?.IsAir ?? true) {
-							ItemSlot.Handle(ref item.Value, _context);
+							ItemSlot.Handle(ref item.Value, context);
 						}
 					} else {
 						if (ValidItemFunc == null || ValidItemFunc(Main.mouseItem)) {
-							ItemSlot.Handle(ref item.Value, _context);
+							ItemSlot.Handle(ref item.Value, context);
 						}
 					}
 				}
