@@ -197,4 +197,15 @@ namespace Origins.Items.Materials {
 			item.maxStack = 99;
         }
     }
+    public class Riven_Key : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Riven Key");
+        }
+        public override void SetDefaults() {
+            item.width = 14;
+            item.height = 20;
+            item.maxStack = 99;
+        }
+    }
 }

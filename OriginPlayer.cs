@@ -478,8 +478,8 @@ namespace Origins {
                 FelnumGlow.visible = true;
             }
             if (eyndumSet) {
-                if (eyndumCore?.Value?.modItem is IEyndum_Core equippedCore) {
-                    layers.Insert(layers.IndexOf(PlayerLayer.Body) + 1, CreateEyndumCoreLayer(equippedCore.GetCoreGlowColor()));
+                if (eyndumCore?.Value?.modItem is Eyndum_Core equippedCore) {
+                    layers.Insert(layers.IndexOf(PlayerLayer.Body) + 1, CreateEyndumCoreLayer(equippedCore.CoreGlowColor));
                 }
             }
             if (Origins.HelmetGlowMasks.TryGetValue(player.head, out Texture2D helmetMask)) {

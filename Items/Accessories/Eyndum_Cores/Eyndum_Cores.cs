@@ -5,11 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories.Eyndum_Cores {
     public abstract class Eyndum_Core : ModItem {
         public abstract Color CoreGlowColor { get; }
+        public override bool CanRightClick() {
+            Item equippedItem = Main.LocalPlayer.GetModPlayer<OriginPlayer>().eyndumCore.Value;
+            if (equippedItem.type!=item.type) {
+                int e = equippedItem.type;
+                int t = item.type;
+                equippedItem.SetDefaults(t);
+                item.SetDefaults(e);
+                Main.PlaySound(SoundID.Grab);
+            }
+            return false;
+        }
     }
     public class Agility_Core : Eyndum_Core {
         public override Color CoreGlowColor => new Color(255, 220, 0, 160);
@@ -30,6 +42,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             DisplayName.SetDefault("Combat Core");
         }
         public override void UpdateEquip(Player player) {
+            player.allDamageMult *= 1.25f;
         }
     }
     public class Construction_Core : Eyndum_Core {
@@ -38,6 +51,10 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             DisplayName.SetDefault("Construction Core");
         }
         public override void UpdateEquip(Player player) {
+            player.tileSpeed *= 2f;
+            player.wallSpeed *= 2f;
+            player.pickSpeed *= 2f;
+            player.blockRange += 15;
         }
     }
     public class Lifeforce_Core : Eyndum_Core {
@@ -47,6 +64,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
         }
         public override void UpdateEquip(Player player) {
             player.statLifeMax2 += player.statLifeMax2 / 2;
+            player.lifeRegenCount += player.statLifeMax2 / 20;
         }
     }
 }

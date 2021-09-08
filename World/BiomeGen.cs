@@ -3,6 +3,7 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
+using Origins.Tiles.Riven;
 using Origins.Walls;
 using System;
 using System.Collections.Generic;
@@ -147,121 +148,132 @@ namespace Origins.World {
                 ushort iceType = TileID.IceBlock;
                 List<(Point, int)> EvilSpikes = new List<(Point, int)>() { };
                 tasks[genIndex] = new PassLegacy("Alternate World Evil", (GenerationProgress progress) => {
-                worldEvil = crimson ? evil_riven : evil_wastelands;
+                    worldEvil = crimson ? evil_riven : evil_wastelands;
                     if(crimson) {
+                        getEvilTileConversionTypes(evil_riven, out stoneType, out grassType, out plantType, out sandType, out sandstoneType, out hardenedSandType, out iceType);
+                        getEvilWallConversionTypes(evil_riven, out stoneWallTypes, out hardenedSandWallTypes, out sandstoneWallTypes);
                         progress.Message = Lang.gen[72].Value+"n't";
                         for(int num487 = 0; num487 < Main.maxTilesX * 0.00045; num487++) {
                             float value14 = (float)(num487 / (Main.maxTilesX * 0.00045));
                             progress.Set(value14);
-                            bool flag38 = false;
-                            int num488 = 0;
-                            int num489 = 0;
-                            int num490 = 0;
-                            while(!flag38) {
-                                int num491 = 0;
-                                flag38 = true;
-                                int num492 = Main.maxTilesX / 2;
-                                int num493 = 200;
-                                num488 = (!dungeonLeft ? genRand.Next(320, Main.maxTilesX - 600) : genRand.Next(600, Main.maxTilesX - 320));
-                                num489 = num488 - genRand.Next(200) - 100;
-                                num490 = num488 + genRand.Next(200) + 100;
-                                if(num489 < 285) {
-                                    num489 = 285;
+                            bool validSpot = false;
+                            int startPos = 0;
+                            int minX = 0;
+                            int maxX = 0;
+                            while(!validSpot) {
+                                int avoidJungleTries = 0;
+                                validSpot = true;
+                                int halfX = Main.maxTilesX / 2;
+                                int minWidth = 200;
+                                startPos = (!dungeonLeft ? genRand.Next(320, Main.maxTilesX - 600) : genRand.Next(600, Main.maxTilesX - 320));
+                                minX = startPos - genRand.Next(200) - 100;
+                                maxX = startPos + genRand.Next(200) + 100;
+                                if(minX < 285) {
+                                    minX = 285;
                                 }
-                                if(num490 > Main.maxTilesX - 285) {
-                                    num490 = Main.maxTilesX - 285;
+                                if(maxX > Main.maxTilesX - 285) {
+                                    maxX = Main.maxTilesX - 285;
                                 }
-                                if(dungeonLeft && num489 < 400) {
-                                    num489 = 400;
-                                } else if(!dungeonLeft && num489 > Main.maxTilesX - 400) {
-                                    num489 = Main.maxTilesX - 400;
+                                if(dungeonLeft && minX < 400) {
+                                    minX = 400;
+                                } else if(!dungeonLeft && minX > Main.maxTilesX - 400) {
+                                    minX = Main.maxTilesX - 400;
                                 }
-                                if(num488 > num492 - num493 && num488 < num492 + num493) {
-                                    flag38 = false;
+                                if(startPos > halfX - minWidth && startPos < halfX + minWidth) {
+                                    validSpot = false;
                                 }
-                                if(num489 > num492 - num493 && num489 < num492 + num493) {
-                                    flag38 = false;
+                                if(minX > halfX - minWidth && minX < halfX + minWidth) {
+                                    validSpot = false;
                                 }
-                                if(num490 > num492 - num493 && num490 < num492 + num493) {
-                                    flag38 = false;
+                                if(maxX > halfX - minWidth && maxX < halfX + minWidth) {
+                                    validSpot = false;
                                 }
-                                if(num488 > UndergroundDesertLocation.X && num488 < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
-                                    flag38 = false;
+                                if(startPos > UndergroundDesertLocation.X && startPos < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+                                    validSpot = false;
                                 }
-                                if(num489 > UndergroundDesertLocation.X && num489 < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
-                                    flag38 = false;
+                                if(minX > UndergroundDesertLocation.X && minX < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+                                    validSpot = false;
                                 }
-                                if(num490 > UndergroundDesertLocation.X && num490 < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
-                                    flag38 = false;
+                                if(maxX > UndergroundDesertLocation.X && maxX < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+                                    validSpot = false;
                                 }
-                                for(int num494 = num489; num494 < num490; num494++) {
-                                    for(int num495 = 0; num495 < (int)Main.worldSurface; num495 += 5) {
-                                        if(Main.tile[num494, num495].active() && Main.tileDungeon[Main.tile[num494, num495].type]) {
-                                            flag38 = false;
+                                for(int dungeonCheckX = minX; dungeonCheckX < maxX; dungeonCheckX++) {
+                                    for(int dungeonCheckY = 0; dungeonCheckY < (int)Main.worldSurface; dungeonCheckY += 5) {
+                                        if(Main.tile[dungeonCheckX, dungeonCheckY].active() && Main.tileDungeon[Main.tile[dungeonCheckX, dungeonCheckY].type]) {
+                                            validSpot = false;
                                             break;
                                         }
-                                        if(!flag38) {
+                                        if(!validSpot) {
                                             break;
                                         }
                                     }
                                 }
-                                if(num491 < 200 && JungleX > num489 && JungleX < num490) {
-                                    num491++;
-                                    flag38 = false;
+                                if(avoidJungleTries < 200 && JungleX > minX && JungleX < maxX) {
+                                    avoidJungleTries++;
+                                    validSpot = false;
                                 }
                             }
-                            CrimStart(num488, (int)worldSurfaceLow - 10);
-                            for(int num496 = num489; num496 < num490; num496++) {
-                                for(int num497 = (int)worldSurfaceLow; num497 < Main.worldSurface - 1.0; num497++) {
-                                    if(Main.tile[num496, num497].active()) {
-                                        int num498 = num497 + genRand.Next(10, 14);
-                                        for(int num499 = num497; num499 < num498; num499++) {
-                                            if((Main.tile[num496, num499].type == 59 || Main.tile[num496, num499].type == 60) && num496 >= num489 + genRand.Next(5) && num496 < num490 - genRand.Next(5)) {
-                                                Main.tile[num496, num499].type = 0;
+                            CrimStart(startPos, (int)worldSurfaceLow - 10);
+                            for(int jungleCheckX = minX; jungleCheckX < maxX; jungleCheckX++) {
+                                for(int jungleCheckY = (int)worldSurfaceLow; jungleCheckY < Main.worldSurface - 1.0; jungleCheckY++) {
+                                    if(Main.tile[jungleCheckX, jungleCheckY].active()) {
+                                        int maxDepth = jungleCheckY + genRand.Next(10, 14);
+                                        for(int depth = jungleCheckY; depth < maxDepth; depth++) {
+                                            if((Main.tile[jungleCheckX, depth].type == TileID.Mud || Main.tile[jungleCheckX, depth].type == TileID.JungleGrass) && jungleCheckX >= minX + genRand.Next(5) && jungleCheckX < maxX - genRand.Next(5)) {
+                                                Main.tile[jungleCheckX, depth].type = TileID.Dirt;
                                             }
                                         }
                                         break;
                                     }
                                 }
                             }
-                            double num500 = Main.worldSurface + 40.0;
-                            for(int num501 = num489; num501 < num490; num501++) {
-                                num500 += genRand.Next(-2, 3);
-                                if(num500 < Main.worldSurface + 30.0) {
-                                    num500 = Main.worldSurface + 30.0;
+                            double lowSurface = Main.worldSurface + 40.0;
+                            for(int currentX = minX; currentX < maxX; currentX++) {
+                                lowSurface += genRand.Next(-2, 3);
+                                if(lowSurface < Main.worldSurface + 30.0) {
+                                    lowSurface = Main.worldSurface + 30.0;
                                 }
-                                if(num500 > Main.worldSurface + 50.0) {
-                                    num500 = Main.worldSurface + 50.0;
+                                if(lowSurface > Main.worldSurface + 50.0) {
+                                    lowSurface = Main.worldSurface + 50.0;
                                 }
-                                i2 = num501;
+                                i2 = currentX;
                                 bool planted = false;
-                                for(int num502 = (int)worldSurfaceLow; num502 < num500; num502++) {
-                                    if(Main.tile[i2, num502].active()) {
-                                        if(Main.tile[i2, num502].type == 53 && i2 >= num489 + genRand.Next(5) && i2 <= num490 - genRand.Next(5)) {
-                                            Main.tile[i2, num502].type = 234;
+                                for(int convertY = (int)worldSurfaceLow; convertY < lowSurface; convertY++) {
+                                    if(Main.tile[i2, convertY].active()) {
+                                        if(Main.tile[i2, convertY].type == TileID.Sand && i2 >= minX + genRand.Next(5) && i2 <= maxX - genRand.Next(5)) {
+                                            Main.tile[i2, convertY].type = sandType;
                                         }
-                                        if(Main.tile[i2, num502].type == 0 && num502 < Main.worldSurface - 1.0 && !planted) {
+                                        if(Main.tile[i2, convertY].type == 0 && convertY < Main.worldSurface - 1.0 && !planted) {
                                             grassSpread.SetValue(null, 0);
-                                            SpreadGrass(i2, num502, 0, TileID.DiamondGemsparkOff, repeat: true, 0);
+                                            SpreadGrass(i2, convertY, 0, TileID.DiamondGemsparkOff, repeat: true, 0);
                                         }
                                         planted = true;
-                                        if(Main.tile[i2, num502].wall == 216) {
-                                            Main.tile[i2, num502].wall = 218;
-                                        } else if(Main.tile[i2, num502].wall == 187) {
-                                            Main.tile[i2, num502].wall = 221;
+                                        switch(Main.tile[i2, convertY].wall) {
+                                            case WallID.HardenedSand:
+                                            Main.tile[i2, convertY].wall = genRand.Next(hardenedSandWallTypes);
+                                            break;
+                                            case WallID.Sandstone:
+                                            Main.tile[i2, convertY].wall = genRand.Next(sandstoneWallTypes);
+                                            break;
                                         }
-                                        if(Main.tile[i2, num502].type == 1) {
-                                            if(i2 >= num489 + genRand.Next(5) && i2 <= num490 - genRand.Next(5)) {
-                                                Main.tile[i2, num502].type = 203;
+                                        switch (Main.tile[i2, convertY].type) {
+                                            case TileID.Stone:
+                                            if (i2 >= minX + genRand.Next(5) && i2 <= maxX - genRand.Next(5)) {
+                                                Main.tile[i2, convertY].type = stoneType;
                                             }
-                                        } else if(Main.tile[i2, num502].type == 2) {
-                                            Main.tile[i2, num502].type = 199;
-                                        } else if(Main.tile[i2, num502].type == 161) {
-                                            Main.tile[i2, num502].type = 200;
-                                        } else if(Main.tile[i2, num502].type == 396) {
-                                            Main.tile[i2, num502].type = 401;
-                                        } else if(Main.tile[i2, num502].type == 397) {
-                                            Main.tile[i2, num502].type = 399;
+                                            break;
+                                            case TileID.Grass:
+                                            Main.tile[i2, convertY].type = grassType;
+                                            break;
+                                            case TileID.IceBlock:
+                                            Main.tile[i2, convertY].type = iceType;
+                                            break;
+                                            case TileID.HardenedSand:
+                                            Main.tile[i2, convertY].type = hardenedSandType;
+                                            break;
+                                            case TileID.Sandstone:
+                                            Main.tile[i2, convertY].type = sandstoneType;
+                                            break;
                                         }
                                     }
                                 }
@@ -273,7 +285,7 @@ namespace Origins.World {
                                 int num506 = 0;
                                 while(!flag40) {
                                     num505++;
-                                    int num507 = genRand.Next(num489 - num506, num490 + num506);
+                                    int num507 = genRand.Next(minX - num506, maxX + num506);
                                     int num508 = genRand.Next((int)(Main.worldSurface - num506 / 2), (int)(Main.worldSurface + 100.0 + num506));
                                     if(num505 > 100) {
                                         num506++;
@@ -289,7 +301,7 @@ namespace Origins.World {
                                         }
                                     }
                                     if(num506 > 10 || (Main.tile[num507, num508 + 1].active() && Main.tile[num507, num508 + 1].type == 203)) {
-                                        Place3x2(num507, num508, 26, 1);
+                                        Place3x2(num507, num508, TileID.DemonAltar, 0);
                                         if(Main.tile[num507, num508].type == 26) {
                                             flag40 = true;
                                         }
@@ -460,8 +472,8 @@ namespace Origins.World {
                 genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Altars"));
                 tasks.Insert(genIndex+1, new PassLegacy("Alternate World Evil Altars", (GenerationProgress progress) => {
                     ushort oreType = crimson ? TileID.Crimtane : TileID.Demonite;
-                    ushort altOreType = (ushort)(crimson ? TileType<Defiled_Ore>() : TileType<Defiled_Ore>());
-                    ushort altarType = (ushort)(crimson ? TileType<Defiled_Altar>() : TileType<Defiled_Altar>());
+                    ushort altOreType = (ushort)(crimson ? TileType<Defiled_Ore>() : TileType<Infested_Ore>());
+                    ushort altarType = (ushort)(crimson ? TileType<Defiled_Altar>() : TileType<Riven_Altar>());
                     for(int y = 0; y < Main.maxTilesY; y++) {
                         for(int x = 0; x < Main.maxTilesX; x++) {
                             if(Main.tile[x, y].type==oreType)
@@ -640,12 +652,12 @@ namespace Origins.World {
                 break;
                 case evil_riven:
                 stoneType = (ushort)TileType<Tiles.Riven.Riven_Flesh>();
-                grassType = TileID.FleshGrass;
-                plantType = TileID.FleshWeeds;
-                sandType = TileID.Crimsand;
-                sandstoneType = TileID.CrimsonSandstone;
-                hardenedSandType = TileID.CrimsonHardenedSand;
-                iceType = TileID.FleshIce;
+                grassType = stoneType;
+                plantType = (ushort)TileType<Tiles.Riven.Riven_Foliage>();
+                sandType = stoneType;
+                sandstoneType = stoneType;
+                hardenedSandType = stoneType;
+                iceType = stoneType;
                 break;
                 case evil_crimson:
                 stoneType = TileID.Crimstone;
