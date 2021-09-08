@@ -9,6 +9,9 @@ namespace Origins.Items.Armor.Eyndum {
     public class Eyndum_Helmet : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Eyndum Helmet");
+            if (Main.netMode != NetmodeID.Server) {
+                Origins.AddHelmetGlowmask(item.headSlot, "Items/Armor/Eyndum/Eyndum_Helmet_Head_Glow");
+            }
         }
         public override void SetDefaults() {
             item.defense = 8;
@@ -36,6 +39,10 @@ namespace Origins.Items.Armor.Eyndum {
     public class Eyndum_Breastplate : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Eyndum Breastplate");
+            if (Main.netMode != NetmodeID.Server) {
+                Origins.AddBreastplateGlowmask(item.bodySlot, "Items/Armor/Eyndum/Eyndum_Breastplate_Body_Glow");
+                Origins.AddBreastplateGlowmask(-item.bodySlot, "Items/Armor/Eyndum/Eyndum_Breastplate_FemaleBody_Glow");
+            }
         }
         public override void SetDefaults() {
             item.defense = 16;
@@ -58,6 +65,9 @@ namespace Origins.Items.Armor.Eyndum {
     public class Eyndum_Greaves : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Eyndum Greaves");
+            if (Main.netMode != NetmodeID.Server) {
+                Origins.AddLeggingGlowMask(item.legSlot, "Items/Armor/Eyndum/Eyndum_Greaves_Legs_Glow");
+            }
         }
         public override void SetDefaults() {
             item.defense = 12;

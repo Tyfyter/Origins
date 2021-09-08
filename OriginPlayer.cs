@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Items.Accessories.Eyndum_Cores;
 using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Explosives;
@@ -154,13 +155,76 @@ namespace Origins {
             }
         }
         public override void PostUpdateEquips() {
-            if (eyndumCore?.Value?.modItem is ModItem equippedCore) {
-                equippedCore.UpdateEquip(player);
+            if (eyndumSet) {
+                ApplyEyndumSetBuffs();
+                if (eyndumCore?.Value?.modItem is ModItem equippedCore) {
+                    equippedCore.UpdateEquip(player);
+                }
             }
+        }
+        public void ApplyEyndumSetBuffs() {
+            #region movement
+            float speedMult = (player.moveSpeed - 1) * 0.5f;
+            player.runAcceleration += (player.runAcceleration / player.moveSpeed) * speedMult;
+            player.maxRunSpeed += (player.maxRunSpeed / player.moveSpeed) * speedMult;
+            player.extraFall += player.extraFall / 2;
+            player.wingTimeMax += player.wingTimeMax / 2;
+            player.jumpSpeedBoost += player.jumpSpeedBoost * 0.5f;
+            if (player.spikedBoots == 1) player.spikedBoots = 2;
+            #endregion
+            #region defence
+            player.statLifeMax2 += (player.statLifeMax2 - player.statLifeMax) / 2;
+            player.statDefense += player.statDefense / 2;
+            player.endurance += player.endurance * 0.5f;
+            player.lifeRegen += player.lifeRegen / 2;
+            player.thorns += player.thorns * 0.5f;
+            player.lavaMax += player.lavaMax / 2;
+            #endregion
+            #region damage
+            player.armorPenetration += player.armorPenetration / 2;
+
+            player.allDamage += (player.allDamage - 1) * 0.5f;
+            player.meleeDamage += (player.meleeDamage - 1) * 0.5f;
+            player.rangedDamage += (player.rangedDamage - 1) * 0.5f;
+            player.magicDamage += (player.magicDamage - 1) * 0.5f;
+            player.minionDamage += (player.minionDamage - 1) * 0.5f;
+
+            player.allDamageMult += (player.allDamageMult - 1) * 0.5f;
+            player.meleeDamageMult += (player.meleeDamageMult - 1) * 0.5f;
+            player.rangedDamageMult += (player.rangedDamageMult - 1) * 0.5f;
+            player.magicDamageMult += (player.magicDamageMult - 1) * 0.5f;
+            player.minionDamageMult += (player.minionDamageMult - 1) * 0.5f;
+
+            player.arrowDamage += (player.arrowDamage - 1) * 0.5f;
+            player.bulletDamage += (player.bulletDamage - 1) * 0.5f;
+            player.rocketDamage += (player.rocketDamage - 1) * 0.5f;
+
+            player.meleeSpeed += (player.meleeSpeed - 1) * 0.5f;
+
+            explosiveDamage += (explosiveDamage - 1) * 0.5f;
+            explosiveThrowSpeed += (explosiveThrowSpeed - 1) * 0.5f;
+            explosiveSelfDamage += (explosiveSelfDamage - 1) * 0.5f;
+            #endregion
+            #region resources
+            player.statManaMax2 += (player.statManaMax2 - player.statManaMax) / 2;
+            player.manaCost += (player.manaCost - 1) * 0.5f;
+            player.maxMinions += (player.maxMinions - 1) / 2;
+            player.maxTurrets += (player.maxTurrets - 1) / 2;
+            player.manaRegenBonus += player.manaRegenBonus / 2;
+            player.manaRegenDelayBonus += player.manaRegenDelayBonus / 2;
+            #endregion
+            #region utility
+            player.wallSpeed += (player.wallSpeed - 1) * 0.5f;
+            player.tileSpeed += (player.tileSpeed - 1) * 0.5f;
+            player.pickSpeed *= (player.pickSpeed - 1) * 0.5f;
+            player.aggro += player.aggro / 2;
+            player.blockRange += player.blockRange / 2;
+            #endregion
         }
         public override void UpdateLifeRegen() {
             if(cryostenHelmet)player.lifeRegenCount+=cryostenLifeRegenCount>0 ? 180 : 1;
         }
+        #region attacks
         public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat) {
             if(IsExplosive(item))add+=explosiveDamage-1;
             bool ammoBased = item.useAmmo != AmmoID.None || (item.ammo != AmmoID.None && player.HeldItem.useAmmo == item.ammo);
@@ -277,30 +341,6 @@ namespace Origins {
             }
             MeleeCollisionNPCData.knockbackMult = 1f;
         }
-        public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
-            if(vendor.type==NPCID.Demolitionist&&item.type==ModContent.ItemType<Peat_Moss>()) {
-                OriginWorld originWorld = ModContent.GetInstance<OriginWorld>();
-                if(originWorld.peatSold<20 && item.type==ModContent.ItemType<Peat_Moss>()) {
-                    if(item.stack>=20-originWorld.peatSold) {
-                        item.stack-=20-originWorld.peatSold;
-                        originWorld.peatSold = 20;
-                        int nextSlot = 0;
-                        for(; ++nextSlot<shopInventory.Length&&!shopInventory[nextSlot].IsAir;);
-                        if(nextSlot<shopInventory.Length)shopInventory[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
-                        if(nextSlot<shopInventory.Length)shopInventory[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
-                        if(nextSlot<shopInventory.Length)shopInventory[nextSlot].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
-                    } else {
-                        originWorld.peatSold+=item.stack;
-                        item.TurnToAir();
-                    }
-                }
-            }
-        }
-        /*public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item) {
-            if(item.type==ModContent.ItemType<Peat_Moss>()) {
-
-            }
-        }*/
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
             if(player.HasBuff(SolventDebuff.ID)&&Main.rand.Next(9)<3) {
                 crit = true;
@@ -325,6 +365,31 @@ namespace Origins {
             }
             return damage != 0;
         }
+        #endregion
+        public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
+            if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {
+                OriginWorld originWorld = ModContent.GetInstance<OriginWorld>();
+                if (originWorld.peatSold < 20 && item.type == ModContent.ItemType<Peat_Moss>()) {
+                    if (item.stack >= 20 - originWorld.peatSold) {
+                        item.stack -= 20 - originWorld.peatSold;
+                        originWorld.peatSold = 20;
+                        int nextSlot = 0;
+                        for (; ++nextSlot < shopInventory.Length && !shopInventory[nextSlot].IsAir;) ;
+                        if (nextSlot < shopInventory.Length) shopInventory[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
+                        if (nextSlot < shopInventory.Length) shopInventory[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
+                        if (nextSlot < shopInventory.Length) shopInventory[nextSlot].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
+                    } else {
+                        originWorld.peatSold += item.stack;
+                        item.TurnToAir();
+                    }
+                }
+            }
+        }
+        /*public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item) {
+            if(item.type==ModContent.ItemType<Peat_Moss>()) {
+
+            }
+        }*/
         public override void Load(TagCompound tag) {
             if (tag.SafeGet<Item>("EyndumCore") is Item eyndumCoreItem) {
                 eyndumCore = new Ref<Item>(eyndumCoreItem);
@@ -337,6 +402,7 @@ namespace Origins {
             }
             return output;
         }
+        #region biomes
         public override void UpdateBiomes() {
             ZoneVoid = OriginWorld.voidTiles > 300;
             ZoneVoidProgress = Math.Min(OriginWorld.voidTiles - 200, 200)/300f;
@@ -365,14 +431,12 @@ namespace Origins {
                 flags |= 4;
             writer.Write(flags);
         }
-
         public override void ReceiveCustomBiomes(BinaryReader reader) {
             byte flags = reader.ReadByte();
             ZoneVoid = ((flags & 1)!=0);
             ZoneDefiled = ((flags & 2)!=0);
             ZoneRiven = ((flags & 4)!=0);
         }
-
         public override void CopyCustomBiomesTo(Player other) {
             OriginPlayer modOther = other.GetModPlayer<OriginPlayer>();
             //modOther.ZoneVoidTime = ZoneVoidTime;
@@ -388,6 +452,7 @@ namespace Origins {
             player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", ZoneDefiledProgressSmoothed>0, player.Center);
             player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", ZoneRivenProgressSmoothed>0, player.Center);
         }
+        #endregion
         public override bool PreItemCheck() {
             ItemChecking = true;
             return true;
@@ -411,6 +476,11 @@ namespace Origins {
             if(felnumShock>0) {
                 layers.Add(FelnumGlow);
                 FelnumGlow.visible = true;
+            }
+            if (eyndumSet) {
+                if (eyndumCore?.Value?.modItem is IEyndum_Core equippedCore) {
+                    layers.Insert(layers.IndexOf(PlayerLayer.Body) + 1, CreateEyndumCoreLayer(equippedCore.GetCoreGlowColor()));
+                }
             }
             if (Origins.HelmetGlowMasks.TryGetValue(player.head, out Texture2D helmetMask)) {
                 layers.Insert(layers.IndexOf(PlayerLayer.Head) + 1, CreateHeadGlowmask(helmetMask));
@@ -648,7 +718,6 @@ namespace Origins {
             item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
             Main.playerDrawData.Add(item);
         }) { visible = true };
-
         public static PlayerLayer CreateLegsGlowmask(Texture2D texture) => new PlayerLayer("Origins", "LegsGlowmask", null, delegate (PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;
             SpriteEffects spriteEffects = SpriteEffects.None;
@@ -662,6 +731,21 @@ namespace Origins {
             Rectangle? Frame = new Rectangle?(drawPlayer.legFrame);
             DrawData item = new DrawData(texture, Position, Frame, Color.White, drawPlayer.legRotation, drawInfo2.legOrigin, 1f, spriteEffects, 0);
             item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[2].type);
+            Main.playerDrawData.Add(item);
+        }) { visible = true };
+        public static PlayerLayer CreateEyndumCoreLayer(Color color) => new PlayerLayer("Origins", "EyndumCore", null, delegate (PlayerDrawInfo drawInfo2) {
+            Player drawPlayer = drawInfo2.drawPlayer;
+            SpriteEffects spriteEffects = SpriteEffects.None;
+            if (drawPlayer.direction == -1) {
+                spriteEffects |= SpriteEffects.FlipHorizontally;
+            }
+            if (drawPlayer.gravDir == -1f) {
+                spriteEffects |= SpriteEffects.FlipVertically;
+            }
+            Vector2 Position = new Vector2(((int)(drawInfo2.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f)), (int)(drawInfo2.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + drawInfo2.bodyOrigin;
+            Rectangle? Frame = new Rectangle?(drawPlayer.bodyFrame);
+            DrawData item = new DrawData(Origins.eyndumCoreTexture, Position, Frame, color, drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
+            item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
             Main.playerDrawData.Add(item);
         }) { visible = true };
     }

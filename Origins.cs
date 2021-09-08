@@ -61,6 +61,8 @@ namespace Origins {
         public static MiscShaderData blackHoleShade;
         public static MiscShaderData solventShader;
         public static Texture2D cellNoiseTexture;
+        public static Texture2D eyndumCoreUITexture;
+        public static Texture2D eyndumCoreTexture;
 
         public UserInterface eyndumCoreUI;
         public Origins() {
@@ -295,6 +297,8 @@ namespace Origins {
                 //Filters.Scene["BlackHole"] = new Filter(new ScreenShaderData(screenRef, "BlackHole"), EffectPriority.VeryHigh);
                 //Filters.Scene["BlackHole"].Load();
                 eyndumCoreUI = new UserInterface();
+                eyndumCoreUITexture = GetTexture("UI/CoreSlot");
+                eyndumCoreTexture = GetTexture("Items/Armor/Eyndum/Eyndum_Breastplate_Body_Core");
             }
             Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
             //OriginExtensions.initClone();
@@ -477,12 +481,24 @@ namespace Origins {
             }
             Bomboomstick.Unload();
             eyndumCoreUI = null;
+            eyndumCoreUITexture = null;
+            eyndumCoreTexture = null;
         }
         public override void UpdateUI(GameTime gameTime) {
             if (Main.playerInventory) {
                 if (eyndumCoreUI?.CurrentState is Eyndum_Core_UI eyndumCoreUIState) {
-                    if (eyndumCoreUIState?.itemSlot?.item == Main.LocalPlayer.GetModPlayer<OriginPlayer>().eyndumCore) {
-                        eyndumCoreUI.Update(gameTime);
+                    OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+                    if (eyndumCoreUIState?.itemSlot?.item == originPlayer.eyndumCore) {
+                        if (!originPlayer.eyndumSet) {
+                            if (eyndumCoreUIState?.itemSlot?.item?.Value?.IsAir ?? true) {
+                                eyndumCoreUI.SetState(null);
+                            } else {
+                                eyndumCoreUIState.hasSetBonus = false;
+                                eyndumCoreUI.Update(gameTime);
+                            }
+                        } else {
+                            eyndumCoreUI.Update(gameTime);
+                        }
                     } else {
                         eyndumCoreUI.SetState(null);
                     }
