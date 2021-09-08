@@ -45,7 +45,11 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             DisplayName.SetDefault("Combat Core");
         }
         public override void UpdateEquip(Player player) {
-            player.allDamageMult *= 1.48f;
+            player.allDamageMult *= 1.24f;
+            player.moveSpeed *= 1.5f;
+            player.runAcceleration *= 1.5f;
+            player.maxRunSpeed *= 1.5f;
+            player.jumpSpeedBoost += 3;
         }
     }
     public class Construction_Core : Eyndum_Core {
@@ -57,6 +61,8 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             player.tileSpeed *= 2f;
             player.wallSpeed *= 2.5f;
             player.pickSpeed *= 3f;
+            Player.tileRangeX += 30;
+            Player.tileRangeY += 30;
             player.blockRange += 40;
         }
     }

@@ -5,6 +5,7 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
 using Origins.Tiles.Riven;
 using Origins.Walls;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -49,6 +50,7 @@ namespace Origins.World {
             if(genIndex != -1) {
                 int duskStoneID = TileType<Dusk_Stone>();
                 tasks.Insert(genIndex + 1, new PassLegacy("Dusk Biome", delegate (GenerationProgress progress) {
+                    Main.rand = genRand;
                     progress.Message = "Generating Dusk Biome";
                     //for(int i = 0; i < Main.maxTilesX / 900; i++) {       //900 is how many biomes. the bigger is the number = less biomes
                     int X = (int)(Main.maxTilesX*0.4);//WorldGen.genRand.Next(1, Main.maxTilesX - 300);
@@ -213,6 +215,7 @@ namespace Origins.World {
                                     validSpot = false;
                                 }
                             }
+                            RivenHive.Gen.StartHive(startPos, (int)worldSurfaceLow - 10);
                             //CrimStart(startPos, (int)worldSurfaceLow - 10);
                             for(int jungleCheckX = minX; jungleCheckX < maxX; jungleCheckX++) {
                                 for(int jungleCheckY = (int)worldSurfaceLow; jungleCheckY < Main.worldSurface - 1.0; jungleCheckY++) {

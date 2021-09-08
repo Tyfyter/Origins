@@ -11,6 +11,7 @@ using Terraria.UI.Chat;
 using System;
 using System.Linq;
 using static Tyfyter.Utils.UITools;
+using Origins.Items.Accessories.Eyndum_Cores;
 
 namespace Origins.UI {
     public class Eyndum_Core_UI : SingleItemSlotUI {
@@ -26,7 +27,7 @@ namespace Origins.UI {
                 item = new Ref<Item>(new Item());
                 item.Value.SetDefaults(0);
             }
-            SetItemSlot(item, new Vector2(SlotX, SlotY), slotColor: new Color(50, 106, 46, 220), shiftClickToInventory: true, extraTextures: (Origins.eyndumCoreUITexture, new Color(50, 106, 46, 160)));
+            SetItemSlot(item, new Vector2(SlotX, SlotY), _ValidItemFunc:(i)=> (i?.IsAir??true) || i.modItem is Eyndum_Core, slotColor: new Color(50, 106, 46, 220), shiftClickToInventory: true, extraTextures: (Origins.eyndumCoreUITexture, new Color(50, 106, 46, 160)));
         }
         public override void Update(GameTime gameTime) {
             itemSlot.slotSourceMissing = !hasSetBonus;

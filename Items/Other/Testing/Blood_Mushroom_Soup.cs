@@ -71,6 +71,7 @@ namespace Origins.Items.Other.Testing {
             Tile mouseTile  = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
+                case 2|p0:
                 case 1|p0:
                 case 0|p0:
                 p.Enqueue(Player.tileTargetX);
@@ -111,6 +112,7 @@ namespace Origins.Items.Other.Testing {
             double mousePackedDouble = (Main.MouseScreen.X/16d + (Main.screenWidth/16d) * Main.MouseScreen.Y/16d)/16d;
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
+                case 2|p0:
                 case 1|p0:
                 case 0|p0:
                 return $"i,j: {Player.tileTargetX}, {Player.tileTargetY}";
@@ -181,6 +183,11 @@ namespace Origins.Items.Other.Testing {
                         veins.Push(((ret.p, ret.v.RotatedByRandom(0.05)), --count));
                     }
                 }
+                break;
+                case 2:
+                int rivenX = (int)p.Dequeue();
+                int rivenY = (int)p.Dequeue();
+                World.BiomeData.RivenHive.Gen.StartHive(rivenX, rivenY);
                 break;
             }
         }
