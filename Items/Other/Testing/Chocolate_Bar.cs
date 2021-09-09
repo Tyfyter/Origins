@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.World;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
@@ -17,7 +18,9 @@ namespace Origins.Items.Other.Testing {
         const float upperLegLength = 34.2f;
         const float lowerLegLength = 33.4f;
         Arm arm;
+        Arm arm2;
         Vector2 target = Vector2.Zero;
+        Vector2 target2 = Vector2.Zero;
         int mode;
         const int modeCount = 10;
         public override void SetStaticDefaults() {
@@ -52,12 +55,20 @@ namespace Origins.Items.Other.Testing {
                             bone0 = new PolarVec2(upperLegLength, upperLegAngle),
                             bone1 = new PolarVec2(lowerLegLength, lowerLegAngle)
                         };
+                        arm2 = new Arm() {
+                            bone0 = new PolarVec2(upperLegLength, upperLegAngle),
+                            bone1 = new PolarVec2(lowerLegLength, lowerLegAngle)
+                        };
                         break;
                     }
                 } else {
                     switch (mode) {
                         case 0:
-                        target = Main.MouseWorld;
+                        if (player.controlSmart) {
+                            target2 = Main.MouseWorld;
+                        } else {
+                            target = Main.MouseWorld;
+                        }
                         break;
                     }
                 }
@@ -65,43 +76,61 @@ namespace Origins.Items.Other.Testing {
             }
             return false;
         }
-        public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-            if (Main.LocalPlayer.HeldItem.type == item.type) {
-                switch (mode) {
-                    case 0:
-                    Texture2D upperLegTexture = mod.GetTexture("NPCs/Fiberglass/Fiberglass_Threader_Leg_Upper");
-                    Texture2D lowerLegTexture = mod.GetTexture("NPCs/Fiberglass/Fiberglass_Threader_Leg_Lower");
-                    Player player = Main.LocalPlayer;
-                    Vector2 start = player.TopLeft + new Vector2((player.direction-1) * player.width * 0.5f, 0);
-                    if (arm is null) {
-                        arm = new Arm() {
-                            bone0 = new PolarVec2(upperLegLength, upperLegAngle),
-                            bone1 = new PolarVec2(lowerLegLength, lowerLegAngle)
-                        };
-                    }
-                    arm.start = start;
-                    float[] targets = arm.GetTargetAngles(target);
-                    OriginExtensions.AngularSmoothing(ref arm.bone0.Theta, targets[0], 0.2f);
-                    OriginExtensions.AngularSmoothing(ref arm.bone1.Theta, targets[1], 0.2f);
-                    Vector2 diff = (target - start);
-                    float dist = diff.Length() / (upperLegLength + lowerLegLength);
-                    float minLength = 0.7f;
-                    float maxLength = 0.9f;
-                    if (player.controlJump) {
-                        minLength = 1f;
-                        maxLength = 1f;
-                    }
-                    if (dist != 0) {
-                        if (dist < minLength) {
-                            player.velocity -= diff.SafeNormalize(Vector2.Zero) / (dist * 3);
-                        } else if (dist < 1f && dist > maxLength) {
-                            player.velocity += diff.SafeNormalize(Vector2.Zero) * (dist * 8 - 4);
-                        }
-                    }
-                    spriteBatch.Draw(upperLegTexture, arm.start - Main.screenPosition, null, Color.White, arm.bone0.Theta, new Vector2(3,9), 1f, SpriteEffects.None, 0);
-                    spriteBatch.Draw(lowerLegTexture, arm.start + (Vector2)arm.bone0 - Main.screenPosition, null, Color.White, arm.bone0.Theta+arm.bone1.Theta, new Vector2(3, 9), 1f, SpriteEffects.None, 0);
-                    break;
+        public void DrawAnimations(PlayerDrawInfo drawInfo) {
+            switch (mode) {
+                case 0:
+                Texture2D upperLegTexture = mod.GetTexture("NPCs/Fiberglass/Fiberglass_Threader_Leg_Upper");
+                Texture2D lowerLegTexture = mod.GetTexture("NPCs/Fiberglass/Fiberglass_Threader_Leg_Lower");
+                Player player = Main.LocalPlayer;
+                Vector2 start = player.Right;
+                if (arm is null) {
+                    arm = new Arm() {
+                        bone0 = new PolarVec2(upperLegLength, upperLegAngle),
+                        bone1 = new PolarVec2(lowerLegLength, lowerLegAngle)
+                    };
                 }
+                if (arm2 is null) {
+                    arm2 = new Arm() {
+                        bone0 = new PolarVec2(upperLegLength, upperLegAngle),
+                        bone1 = new PolarVec2(lowerLegLength, lowerLegAngle)
+                    };
+                }
+                arm.start = start;
+                float[] targets = arm.GetTargetAngles(target);
+                OriginExtensions.AngularSmoothing(ref arm.bone0.Theta, targets[0], 0.2f);
+                OriginExtensions.AngularSmoothing(ref arm.bone1.Theta, targets[1], 0.2f);
+
+                Vector2 screenStart = arm.start - Main.screenPosition;
+                Main.playerDrawData.Add(new DrawData(upperLegTexture, screenStart, null, Color.White, arm.bone0.Theta, new Vector2(3, 9), 1f, SpriteEffects.None, 0));
+                Main.playerDrawData.Add(new DrawData(lowerLegTexture, screenStart + (Vector2)arm.bone0, null, Color.White, arm.bone0.Theta + arm.bone1.Theta, new Vector2(4, 8), 1f, SpriteEffects.None, 0));
+
+                Vector2 start2 = player.Left;
+                
+                arm2.start = start2;
+                float[] targets2 = arm2.GetTargetAngles(target2, true);
+                OriginExtensions.AngularSmoothing(ref arm2.bone0.Theta, targets2[0], 0.2f);
+                OriginExtensions.AngularSmoothing(ref arm2.bone1.Theta, targets2[1], 0.2f);
+
+                Vector2 screenStart2 = arm2.start - Main.screenPosition;
+                Main.playerDrawData.Add(new DrawData(upperLegTexture, screenStart2, null, Color.White, arm2.bone0.Theta, new Vector2(3, 3), 1f, SpriteEffects.FlipVertically, 0));
+                Main.playerDrawData.Add(new DrawData(lowerLegTexture, screenStart2 + (Vector2)arm2.bone0, null, Color.White, arm2.bone0.Theta + arm2.bone1.Theta, new Vector2(4, 0), 1f, SpriteEffects.FlipVertically, 0));
+                
+                /*Vector2 diff = (target - start);
+                float dist = diff.Length() / (upperLegLength + lowerLegLength);
+                float minLength = 0.7f;
+                float maxLength = 0.9f;
+                if (player.controlJump) {
+                    minLength = 1f;
+                    maxLength = 1f;
+                }
+                if (dist != 0) {
+                    if (dist < minLength) {
+                        player.velocity -= diff.SafeNormalize(Vector2.Zero) / (dist * 3);
+                    } else if (dist < 1f && dist > maxLength) {
+                        player.velocity += diff.SafeNormalize(Vector2.Zero) * (dist * 8 - 4);
+                    }
+                }*/
+                break;
             }
         }
     }

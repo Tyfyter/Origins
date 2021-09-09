@@ -4,6 +4,7 @@ using Origins.Buffs;
 using Origins.Items.Accessories.Eyndum_Cores;
 using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Materials;
+using Origins.Items.Other.Testing;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Summon;
 using Origins.Projectiles;
@@ -525,6 +526,9 @@ namespace Origins {
                 }
             }
             ItemLayerWrench = false;
+            if (player.HeldItem.modItem is Chocolate_Bar animator) {
+                layers.Add(new PlayerLayer("Origins (debugging tool)", "animator", (v)=>animator.DrawAnimations(v)));
+            }
         }
         public override void ModifyDrawInfo(ref PlayerDrawInfo drawInfo) {
             if(PlagueSight) drawInfo.eyeColor = new Color(255,215,0);

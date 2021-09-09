@@ -21,6 +21,7 @@ using System.Runtime.Serialization;
 using System.Diagnostics;
 using System.IO;
 using Terraria.ModLoader.IO;
+using Tyfyter.Utils;
 
 namespace Origins {
     public class LinkedQueue<T> : ICollection<T> {
@@ -955,7 +956,7 @@ namespace Origins {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void AngularSmoothing(ref float smoothed, float target, float rate) {
             if(target!=smoothed) {
-                float diff = AngleDif(smoothed, target, out int dir);
+                float diff = GeometryUtils.AngleDif(smoothed, target, out int dir);
                 diff = Math.Abs(diff);
                 float aRate = Math.Abs(rate);
                 if(diff<aRate) {
@@ -968,7 +969,7 @@ namespace Origins {
         public static void AngularSmoothing(ref float smoothed, float target, float rate, out bool equal) {
             equal = true;
             if(target!=smoothed) {
-                float diff = AngleDif(smoothed, target, out int dir);
+                float diff = GeometryUtils.AngleDif(smoothed, target, out int dir);
                 diff = Math.Abs(diff);
                 float aRate = Math.Abs(rate);
                 if(diff<=aRate) {
@@ -1226,7 +1227,6 @@ namespace Origins {
         public static bool Contains(this Rectangle area, Vector2 point) {
             return area.Contains((int)point.X, (int)point.Y);
         }
-
         public static void DrawLightningArc(this SpriteBatch spriteBatch, Vector2[] positions, Texture2D texture = null, float scale = 1f, params (float scale, Color color)[] colors) {
             if(texture is null) {
                 texture = Main.extraTexture[33];

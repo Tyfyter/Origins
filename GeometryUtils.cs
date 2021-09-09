@@ -22,4 +22,17 @@ namespace Tyfyter.Utils {
         public static PolarVec2 UnitLeft => new PolarVec2(1, MathHelper.Pi);
         public static PolarVec2 UnitDown => new PolarVec2(1, -MathHelper.PiOver2);
     }
+    public static class GeometryUtils {
+        public static double AngleDif(double alpha, double beta) {
+            double phi = Math.Abs(beta - alpha) % (Math.PI * 2);       // This is either the distance or 360 - distance
+            double distance = ((phi > Math.PI) ^ (alpha > beta)) ? (Math.PI * 2) - phi : phi;
+            return distance;
+        }
+        public static float AngleDif(float alpha, float beta, out int dir) {
+            float phi = Math.Abs(beta - alpha) % MathHelper.TwoPi;       // This is either the distance or 360 - distance
+            dir = ((phi > MathHelper.Pi) ^ (alpha > beta)) ? -1 : 1;
+            float distance = phi > MathHelper.Pi ? MathHelper.TwoPi - phi : phi;
+            return distance;
+        }
+    }
 }
