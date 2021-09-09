@@ -2,6 +2,7 @@
 using System;
 using Terraria;
 using Terraria.ID;
+using Tyfyter.Utils;
 using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {

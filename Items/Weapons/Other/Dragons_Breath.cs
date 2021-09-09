@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Other {
 	public class Dragons_Breath : ModItem {

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Origins.Projectiles.Weapons;
 using Microsoft.Xna.Framework.Graphics;
+using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Other {
     public class Burning_Ember : ModItem {
