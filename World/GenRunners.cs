@@ -358,7 +358,7 @@ namespace Origins.World {
 					    tile = Main.tile[l, k];
 					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.type]){
 					        Main.tile[l, k].active(active: false);
-                            WorldGen.SquareTileFrame(l,k);
+                            //WorldGen.SquareTileFrame(l,k);
                             if(l>X1) {
                                 X1 = l;
                             }else if(l<X0) {
@@ -380,16 +380,11 @@ namespace Origins.World {
 #if DEBUG
 			Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.EmeraldGemspark;
 #endif
-            float r = speed.ToRotation();
-            for(int l = X0; l < X1; l++) {
-                for(int k = Y0; k < Y1; k++) {
-                    AutoSlopeForSpike(l, k);
-                }
-            }
-            NetMessage.SendTileRange(Main.myPlayer, X0, Y0, X1-X0, Y1-Y1);
+			WorldGen.RangeFrame(X0, Y0, X1, Y1);
+			NetMessage.SendTileRange(Main.myPlayer, X0, Y0, X1-X0, Y1-Y1);
             return (pos, speed);
         }
-		public static (Vector2 position, Vector2 velocity) WalledVeinRunner(int i, int j, double strength, Vector2 speed, double length, ushort wallType, float wallThickness, float twist = 0, bool randomtwist = false) {
+		public static (Vector2 position, Vector2 velocity) WalledVeinRunner(int i, int j, double strength, Vector2 speed, double length, ushort wallBlockType, float wallThickness, float twist = 0, bool randomtwist = false, int wallType = -1) {
 			Vector2 pos = new Vector2(i, j);
 			Tile tile;
 			if (randomtwist) twist = Math.Abs(twist);
@@ -397,14 +392,17 @@ namespace Origins.World {
 			int X1 = 0;
 			int Y0 = int.MaxValue;
 			int Y1 = 0;
+			double baseStrength = strength;
 			strength = Math.Pow(strength, 2);
 			double decay = speed.Length();
+			bool hasWall = wallType!=-1;
+			ushort _wallType = hasWall?(ushort)wallType:(ushort)0;
 			while (length > 0) {
 				length -= decay;
-				int minX = (int)(pos.X - strength * 0.5);
-				int maxX = (int)(pos.X + strength * 0.5);
-				int minY = (int)(pos.Y - strength * 0.5);
-				int maxY = (int)(pos.Y + strength * 0.5);
+				int minX = (int)(pos.X - strength);
+				int maxX = (int)(pos.X + strength);
+				int minY = (int)(pos.Y - strength);
+				int maxY = (int)(pos.Y + strength);
 				if (minX < 1) {
 					minX = 1;
 				}
@@ -423,20 +421,25 @@ namespace Origins.World {
 				for (int l = minX; l < maxX; l++) {
 					for (int k = minY; k < maxY; k++) {
 						double dist = (Math.Pow(Math.Abs(l - pos.X), 2) + Math.Pow(Math.Abs(k - pos.Y), 2));
+						tile = Main.tile[l, k];
 						if (dist > strength) {
+							double d = Math.Sqrt(dist);
+							if (d < baseStrength + wallThickness && TileID.Sets.CanBeClearedDuringGeneration[tile.type] && tile.wall != _wallType) {
+								tile.active(active: true);
+								tile.ResetToType(wallBlockType);
+								//WorldGen.SquareTileFrame(l, k);
+								if (hasWall) {
+									tile.wall = _wallType;
+								}
+							}
 							continue;
 						}
-						tile = Main.tile[l, k];
 						if (TileID.Sets.CanBeClearedDuringGeneration[tile.type]) {
-							if (dist + wallThickness > Math.Max(strength, 0)) {
-                                //if (Main.tile[l, k].active()) {
-									Main.tile[l, k].ResetToType(wallType);
-									WorldGen.SquareTileFrame(l, k);
-								//}
-								continue;
-							}
 							Main.tile[l, k].active(active: false);
-							WorldGen.SquareTileFrame(l, k);
+							//WorldGen.SquareTileFrame(l, k);
+							if (hasWall) {
+								tile.wall = _wallType;
+							}
 							if (l > X1) {
 								X1 = l;
 							} else if (l < X0) {
@@ -458,12 +461,19 @@ namespace Origins.World {
 #if DEBUG
 			//Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.EmeraldGemspark;
 #endif
-			float r = speed.ToRotation();
-			for (int l = X0; l < X1; l++) {
-				for (int k = Y0; k < Y1; k++) {
-					AutoSlopeForSpike(l, k);
-				}
+			if (X0 < 1) {
+				X0 = 1;
 			}
+			if (Y0 > Main.maxTilesX - 1) {
+				Y0 = Main.maxTilesX - 1;
+			}
+			if (X1 < 1) {
+				X1 = 1;
+			}
+			if (Y1 > Main.maxTilesY - 1) {
+				Y1 = Main.maxTilesY - 1;
+			}
+			WorldGen.RangeFrame(X0, Y0, X1, Y1);
 			NetMessage.SendTileRange(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
 			return (pos, speed);
 		}

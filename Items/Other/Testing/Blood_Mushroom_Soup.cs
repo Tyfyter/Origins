@@ -71,7 +71,16 @@ namespace Origins.Items.Other.Testing {
             Tile mouseTile  = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
+                case 3|p0:
+                p.Enqueue(Player.tileTargetX);
+                p.Enqueue(Player.tileTargetY);
+                Apply();
+                break;
                 case 2|p0:
+                p.Enqueue(Player.tileTargetX);
+                p.Enqueue(Player.tileTargetY);
+                Apply();
+                break;
                 case 1|p0:
                 case 0|p0:
                 p.Enqueue(Player.tileTargetX);
@@ -112,7 +121,10 @@ namespace Origins.Items.Other.Testing {
             double mousePackedDouble = (Main.MouseScreen.X/16d + (Main.screenWidth/16d) * Main.MouseScreen.Y/16d)/16d;
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
+                case 3|p0:
+                return "place riven cave";
                 case 2|p0:
+                return "place riven start";
                 case 1|p0:
                 case 0|p0:
                 return $"i,j: {Player.tileTargetX}, {Player.tileTargetY}";
@@ -185,9 +197,10 @@ namespace Origins.Items.Other.Testing {
                 }
                 break;
                 case 2:
-                int rivenX = (int)p.Dequeue();
-                int rivenY = (int)p.Dequeue();
-                World.BiomeData.RivenHive.Gen.StartHive(rivenX, rivenY);
+                World.BiomeData.RivenHive.Gen.StartHive((int)p.Dequeue(), (int)p.Dequeue());
+                break;
+                case 3:
+                World.BiomeData.RivenHive.Gen.HiveCave((int)p.Dequeue(), (int)p.Dequeue());
                 break;
             }
         }

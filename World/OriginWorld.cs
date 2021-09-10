@@ -71,6 +71,7 @@ namespace Origins.World {
         }
         protected internal List<(int, int)> defiledResurgenceTiles;
         protected internal List<(int, int, ushort)> defiledAltResurgenceTiles;
+        protected internal Queue<(int, int)> queuedKillTiles;
         public override void PostUpdate() {
             if(defiledResurgence) {
                 if(defiledResurgenceTiles.Count>0&&WorldGen.genRand.Next(5)==0) {
@@ -91,6 +92,20 @@ namespace Origins.World {
                     defiledAltResurgenceTiles.RemoveAt(index);
                 }
             }
+            int q = 100;
+            while (!WorldGen.gen && (queuedKillTiles?.Count??0) > 0) {
+                var (i, j) = queuedKillTiles.Dequeue();
+                WorldGen.KillTile(i, j, true);
+                if (q--<0) {
+                    break;
+                }
+            }
+        }
+        public void QueueKillTile(int i, int j) {
+            if (queuedKillTiles is null) {
+                queuedKillTiles = new Queue<(int, int)>();
+            }
+            queuedKillTiles.Enqueue((i, j));
         }
         public override void PostWorldGen() {
             ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(56,0,2,4,11,12,13,15,16,17,50,51);
