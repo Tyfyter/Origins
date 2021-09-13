@@ -348,7 +348,7 @@ namespace Origins.World {
 			        maxY = Main.maxTilesY - 1;
 		        }
 #if DEBUG
-				Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.AmberGemspark;
+				//Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.AmberGemspark;
 #endif
 		        for (int l = minX; l < maxX; l++) {
 			        for (int k = minY; k < maxY; k++) {
@@ -378,7 +378,7 @@ namespace Origins.World {
                 }
 	        }
 #if DEBUG
-			Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.EmeraldGemspark;
+			//Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.EmeraldGemspark;
 #endif
 			WorldGen.RangeFrame(X0, Y0, X1, Y1);
 			NetMessage.SendTileRange(Main.myPlayer, X0, Y0, X1-X0, Y1-Y1);
@@ -394,15 +394,16 @@ namespace Origins.World {
 			int Y1 = 0;
 			double baseStrength = strength;
 			strength = Math.Pow(strength, 2);
+			wallThickness *= wallThickness;
 			double decay = speed.Length();
 			bool hasWall = wallType!=-1;
 			ushort _wallType = hasWall?(ushort)wallType:(ushort)0;
 			while (length > 0) {
 				length -= decay;
-				int minX = (int)(pos.X - strength);
-				int maxX = (int)(pos.X + strength);
-				int minY = (int)(pos.Y - strength);
-				int maxY = (int)(pos.Y + strength);
+				int minX = (int)(pos.X - (strength + wallThickness) * 0.5);
+				int maxX = (int)(pos.X + (strength + wallThickness) * 0.5);
+				int minY = (int)(pos.Y - (strength + wallThickness) * 0.5);
+				int maxY = (int)(pos.Y + (strength + wallThickness) * 0.5);
 				if (minX < 1) {
 					minX = 1;
 				}

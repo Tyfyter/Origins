@@ -248,7 +248,7 @@ namespace Origins.World {
                                         }
                                         if(Main.tile[i2, convertY].type == 0 && convertY < Main.worldSurface - 1.0 && !planted) {
                                             grassSpread.SetValue(null, 0);
-                                            SpreadGrass(i2, convertY, 0, grassType, repeat: true, 0);
+                                            SpreadGrass(i2, convertY, grassType, grassType, repeat: true, 0);
                                         }
                                         planted = true;
                                         switch(Main.tile[i2, convertY].wall) {

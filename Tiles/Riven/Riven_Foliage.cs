@@ -17,9 +17,9 @@ namespace Origins.Tiles.Riven {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = true;
 			Main.tileNoFail[Type] = true;
-			AddMapEntry(new Color(175, 175, 175));
+            AddMapEntry(new Color(220, 138, 110));
 
-			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
+            TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 
 			TileObjectData.newTile.AnchorValidTiles = new int[]{
 				ModContent.TileType<Riven_Flesh>()

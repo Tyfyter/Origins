@@ -200,7 +200,7 @@ namespace Origins.Items.Other.Testing {
                 World.BiomeData.RivenHive.Gen.StartHive((int)p.Dequeue(), (int)p.Dequeue());
                 break;
                 case 3:
-                World.BiomeData.RivenHive.Gen.HiveCave((int)p.Dequeue(), (int)p.Dequeue());
+                World.BiomeData.RivenHive.Gen.HiveCave((int)p.Dequeue(), (int)p.Dequeue(), 0.5f);
                 break;
             }
         }
