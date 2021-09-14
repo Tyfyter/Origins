@@ -12,10 +12,15 @@ using Terraria.ObjectData;
 using Terraria.Enums;
 using Terraria.Localization;
 using Origins.Items.Materials;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins.Tiles.Riven {
-    public class Riven_Dungeon_Chest : ModChest {
+    public class Riven_Dungeon_Chest : ModChest, GlowingModTile {
+        public Texture2D GlowTexture { get; private set; }
         public override void SetDefaults() {
+            if (Main.netMode != NetmodeID.Server) {
+                GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Dungeon_Chest_Glow");
+            }
             base.SetDefaults();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Riven Chest");
@@ -28,7 +33,15 @@ namespace Origins.Tiles.Riven {
 			chest = "Riven Chest";
 			chestDrop = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
             keyItem = ModContent.ItemType<Riven_Key>();
-		}
+        }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+            this.DrawTileGlow(i, j, spriteBatch);
+        }
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+            r = 0.2f;
+            g = 0.15f;
+            b = 0.06f;
+        }
     }
     public class Riven_Dungeon_Chest_Item : ModItem {
         public override void SetStaticDefaults() {

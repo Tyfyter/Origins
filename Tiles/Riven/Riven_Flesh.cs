@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,13 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Riven_Flesh : RivenTile {
-		public override void SetDefaults() {
-			Main.tileSolid[Type] = true;
+    public class Riven_Flesh : RivenTile, GlowingModTile {
+        public Texture2D GlowTexture { get; private set; }
+        public override void SetDefaults() {
+            if (Main.netMode != NetmodeID.Server) {
+                //GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Flesh_Glow");
+            }
+            Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             TileID.Sets.Conversion.Stone[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -27,7 +32,10 @@ namespace Origins.Tiles.Riven {
 			//SetModTree(Defiled_Tree.Instance);
             mergeID = TileID.Stone;
             soundType = SoundID.NPCKilled;
-		}
+        }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+            this.DrawTileGlow(i, j, spriteBatch);
+        }
     }
     public class Riven_Flesh_Item : ModItem {
         public override void SetStaticDefaults() {

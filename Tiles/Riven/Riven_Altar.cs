@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,13 @@ using Terraria.Utilities;
 using static Origins.OriginExtensions;
 
 namespace Origins.Tiles.Riven {
-    public class Riven_Altar : ModTile {
-        public static int ID { get; private set; }
+    public class Riven_Altar : ModTile, GlowingModTile {
+		public Texture2D GlowTexture { get; private set; }
+		public static int ID { get; private set; }
 		public override void SetDefaults() {
+			if (Main.netMode != NetmodeID.Server) {
+				GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Altar_Glow");
+			}
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
             Main.tileHammer[Type] = true;
@@ -151,7 +156,12 @@ namespace Origins.Tiles.Riven {
 	        AchievementsHelper.NotifyProgressionEvent(6);
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-            r = g = b = 0.5f;
-        }
-    }
+			r = 0.2f;
+			g = 0.15f;
+			b = 0.06f;
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			this.DrawTileGlow(i, j, spriteBatch);
+		}
+	}
 }

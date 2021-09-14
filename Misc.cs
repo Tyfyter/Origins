@@ -22,6 +22,7 @@ using System.Diagnostics;
 using System.IO;
 using Terraria.ModLoader.IO;
 using Tyfyter.Utils;
+using Origins.Tiles;
 
 namespace Origins {
     public class LinkedQueue<T> : ICollection<T> {
@@ -1283,6 +1284,17 @@ namespace Origins {
             } catch (Exception) {
                 return default;
             }
+        }
+        public static void DrawTileGlow(this GlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
+            if (self.GlowTexture is null) {
+                return;
+            }
+            Tile tile = Main.tile[i, j];
+            Vector2 vector = new Vector2(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen) {
+                vector = Vector2.Zero;
+            }
+            spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.frameX, tile.frameY, 16, 16), new Color(255, 255, 255, 255), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
         }
     }
 }

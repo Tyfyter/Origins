@@ -12,9 +12,13 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
-    public class Riven_Foliage : ModTile {
-		public override void SetDefaults(){
-			Main.tileFrameImportant[Type] = true;
+    public class Riven_Foliage : ModTile, GlowingModTile {
+        public Texture2D GlowTexture { get; private set; }
+        public override void SetDefaults() {
+            if (Main.netMode != NetmodeID.Server) {
+                GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Foliage_Glow");
+            }
+            Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = true;
 			Main.tileNoFail[Type] = true;
             AddMapEntry(new Color(220, 138, 110));
@@ -61,6 +65,9 @@ namespace Origins.Tiles.Riven {
 
         public override bool Drop(int i, int j){
 			return false;
-		}
+        }
+        public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+            this.DrawTileGlow(i, j, spriteBatch);
+        }
     }
 }
