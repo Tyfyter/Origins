@@ -2,6 +2,7 @@
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Achievements;
 using Terraria.ID;
@@ -113,10 +114,12 @@ namespace Origins.World.BiomeData {
 			public static Point HiveCave(int i, int j, float sizeMult = 1f) {
 				ushort fleshID = (ushort)ModContent.TileType<Riven_Flesh>();
 				ushort fleshWallID = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
+				ushort lesionID = (ushort)ModContent.TileType<Riven_Lesion>();
 				int i2 = i + (int)(genRand.Next(-26, 26) * sizeMult);
 				int j2 = j + (int)(genRand.Next(-2, 22) * sizeMult);
+				Queue<Point> lesionPlacementSpots = new Queue<Point>();
 				for (int x = i2 - (int)(33 * sizeMult + 5); x < i2 + (int)(33 * sizeMult + 5); x++) {
-					for (int y = j2 - (int)(28 * sizeMult + 4); y < j2 + (int)(28 * sizeMult + 4); y++) {
+					for (int y = j2 + (int)(28 * sizeMult + 4); y >= j2 - (int)(28 * sizeMult + 4); y--) {
 						float sq = Math.Max(Math.Abs(y - j2) * 1.5f, Math.Abs(x - i2));
 						float diff = (float)Math.Sqrt((sq * sq + (((y - j2) * (y - j2) * 1.5f) + (x - i2) * (x - i2))) * 0.5f * (GetWallDistOffset(x) * 0.0316076058772687986171132238548f + 1));
 						if (diff > 35 * sizeMult) {
@@ -126,8 +129,36 @@ namespace Origins.World.BiomeData {
 						Main.tile[x, y].wall = fleshWallID;
 						if (diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult) {
 							Main.tile[x, y].active(false);
+							if (diff > 34 * sizeMult - 5 && Main.tile[x, y+1].TileIsType(fleshID)) {
+								lesionPlacementSpots.Enqueue(new Point(x, y));
+							}
 						}
 					}
+				}
+				List<Point> validLesionPlacementSpots = new List<Point>();
+                while (lesionPlacementSpots.Count>0) {
+					Point current = lesionPlacementSpots.Dequeue();
+					if (!Main.tile[current.X, current.Y].active() && !Main.tile[current.X, current.Y - 1].active() && Main.tile[current.X, current.Y + 1].active()) {
+						if (!Main.tile[current.X - 1, current.Y].active() && !Main.tile[current.X - 1, current.Y - 1].active() && Main.tile[current.X - 1, current.Y + 1].active()) {
+							validLesionPlacementSpots.Add(new Point(current.X - 1, current.Y));
+						}
+						if (!Main.tile[current.X + 1, current.Y].active() && !Main.tile[current.X + 1, current.Y - 1].active() && Main.tile[current.X + 1, current.Y + 1].active()) {
+							validLesionPlacementSpots.Add(new Point(current.X, current.Y));
+						}
+					}
+                }
+                for (int index = 0; index < 4; index++) {
+                    if (validLesionPlacementSpots.Count < 1 || lesionCount > 18) {
+						break;
+                    }
+					Point current = genRand.Next(validLesionPlacementSpots);
+
+					Place2x2(current.X, current.Y, lesionID, 0);
+
+					lesionCount++;
+					validLesionPlacementSpots.Remove(current.OffsetBy(-1));
+					validLesionPlacementSpots.Remove(current);
+					validLesionPlacementSpots.Remove(current.OffsetBy(1));
 				}
 				return new Point(i2, j2);
 			}

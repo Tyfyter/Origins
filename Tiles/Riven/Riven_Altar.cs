@@ -18,6 +18,8 @@ using static Origins.OriginExtensions;
 namespace Origins.Tiles.Riven {
     public class Riven_Altar : ModTile, GlowingModTile {
 		public Texture2D GlowTexture { get; private set; }
+		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
+		public float GlowValue => (float)(Math.Sin(Main.GlobalTime) + 2) * 0.5f;
 		public static int ID { get; private set; }
 		public override void SetDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
@@ -47,6 +49,11 @@ namespace Origins.Tiles.Riven {
 
         public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			r = 0.2f * GlowValue;
+			g = 0.15f * GlowValue;
+			b = 0.06f * GlowValue;
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
@@ -154,11 +161,6 @@ namespace Origins.Tiles.Riven {
 
 	        WorldGen.altarCount++;
 	        AchievementsHelper.NotifyProgressionEvent(6);
-		}
-        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			r = 0.2f;
-			g = 0.15f;
-			b = 0.06f;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
