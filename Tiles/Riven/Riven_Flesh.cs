@@ -13,6 +13,8 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Riven {
     public class Riven_Flesh : RivenTile, GlowingModTile {
         public Texture2D GlowTexture { get; private set; }
+        public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
+        public float GlowValue => (float)(Math.Sin(Main.GlobalTime) + 2) * 0.5f;
         public override void SetDefaults() {
             if (Main.netMode != NetmodeID.Server) {
                 //GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Flesh_Glow");

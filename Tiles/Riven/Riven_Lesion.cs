@@ -17,6 +17,8 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Tiles.Riven {
     public class Riven_Lesion : ModTile, GlowingModTile {
         public Texture2D GlowTexture { get; private set; }
+        public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
+        public float GlowValue => (float)(Math.Sin(Main.GlobalTime) + 2) * 0.5f;
         public override void SetDefaults() {
             if (Main.netMode != NetmodeID.Server) {
                 GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Lesion_Glow");
@@ -26,7 +28,8 @@ namespace Origins.Tiles.Riven {
 			Main.tileShine[Type] = 1200;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
-			Main.tileValue[Type] = 500;
+            Main.tileLighted[Type] = true;
+            Main.tileValue[Type] = 500;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
@@ -52,9 +55,9 @@ namespace Origins.Tiles.Riven {
             this.DrawTileGlow(i, j, spriteBatch);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-            r = 0.2f;
-            g = 0.15f;
-            b = 0.06f;
+            r = 0.05f * GlowValue;
+            g = 0.0165f * GlowValue;
+            b = 0.015f * GlowValue;
         }
     }
     public class Riven_Lesion_Item : ModItem {

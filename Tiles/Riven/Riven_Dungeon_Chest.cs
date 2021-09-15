@@ -17,6 +17,7 @@ using Microsoft.Xna.Framework.Graphics;
 namespace Origins.Tiles.Riven {
     public class Riven_Dungeon_Chest : ModChest, GlowingModTile {
         public Texture2D GlowTexture { get; private set; }
+        public Color GlowColor => Color.White;
         public override void SetDefaults() {
             if (Main.netMode != NetmodeID.Server) {
                 GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Dungeon_Chest_Glow");

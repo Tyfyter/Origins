@@ -14,6 +14,8 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Riven {
     public class Riven_Foliage : ModTile, GlowingModTile {
         public Texture2D GlowTexture { get; private set; }
+        public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
+        public float GlowValue => (float)(Math.Sin(Main.GlobalTime) + 2) * 0.5f;
         public override void SetDefaults() {
             if (Main.netMode != NetmodeID.Server) {
                 GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Foliage_Glow");
@@ -30,7 +32,7 @@ namespace Origins.Tiles.Riven {
 			};
 
 			TileObjectData.addTile(Type);
-            soundType = SoundID.Grass;
+            soundType = SoundID.NPCKilled;
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects){

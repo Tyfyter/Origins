@@ -11,5 +11,6 @@ using Terraria.ModLoader;
 namespace Origins.Tiles {
     public interface GlowingModTile {
         Texture2D GlowTexture { get; }
+        Color GlowColor { get; }
     }
 }

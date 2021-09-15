@@ -1294,7 +1294,16 @@ namespace Origins {
             if (Main.drawToScreen) {
                 vector = Vector2.Zero;
             }
-            spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.frameX, tile.frameY, 16, 16), new Color(255, 255, 255, 255), 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.frameX, tile.frameY, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+        }
+        /// <summary>
+        /// checks if a tile is active and is the provided type
+        /// </summary>
+        public static bool TileIsType(this Tile self, int type) {
+            return self.active() && self.type == type;
+        }
+        public static Point OffsetBy(this Point self, int x = 0, int y = 0) {
+            return new Point(self.X + x, self.Y + y);
         }
     }
 }
