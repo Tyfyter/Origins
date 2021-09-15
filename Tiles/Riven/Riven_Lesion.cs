@@ -56,7 +56,7 @@ namespace Origins.Tiles.Riven {
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
             r = 0.05f * GlowValue;
-            g = 0.0165f * GlowValue;
+            g = 0.0375f * GlowValue;
             b = 0.015f * GlowValue;
         }
     }

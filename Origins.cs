@@ -301,6 +301,8 @@ namespace Origins {
                 eyndumCoreTexture = GetTexture("Items/Armor/Eyndum/Eyndum_Breastplate_Body_Core");
             }
             Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
+            Sounds.HeavyCannon = AddSound("Sounds/Custom/HeavyCannon", SoundType.Item);
+            Sounds.EnergyRipple = AddSound("Sounds/Custom/EnergyRipple", SoundType.Item);
             //OriginExtensions.initClone();
             Music.Dusk = MusicID.Eerie;
             Music.Defiled = MusicID.Corruption;
@@ -594,6 +596,8 @@ namespace Origins {
         }
         public static class Sounds {
             public static int Krunch = 36;
+            public static int HeavyCannon = 36;
+            public static int EnergyRipple = 8;
         }
     }
     public sealed class NonFishItem : ModItem {
