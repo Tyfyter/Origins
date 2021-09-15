@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Dungeon {
     public class Bolter : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bolt Gun");
-            Tooltip.SetDefault("very much NOT placeholder sprite");
+            Tooltip.SetDefault("Get boned");
         }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.Handgun);

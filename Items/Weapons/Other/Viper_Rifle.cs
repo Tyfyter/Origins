@@ -25,6 +25,7 @@ namespace Origins.Items.Weapons.Other {
             item.height = 40;
             item.autoReuse = false;
             item.scale = 0.75f;
+            item.UseSound = new LegacySoundStyle(SoundID.Item, Origins.Sounds.HeavyCannon);
         }
         public override Vector2? HoldoutOffset() => new Vector2(-6, 0);
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
