@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Bomb";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Black Hole Bomb");
-			Tooltip.SetDefault("Be very careful.");
+			Tooltip.SetDefault("Explode. Implode");
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.Bomb);

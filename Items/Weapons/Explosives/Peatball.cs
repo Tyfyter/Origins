@@ -7,7 +7,7 @@ namespace Origins.Items.Weapons.Explosives {
 	public class Peatball : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Peat Ball");
-			Tooltip.SetDefault("Peat Ball");
+			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.Snowball);

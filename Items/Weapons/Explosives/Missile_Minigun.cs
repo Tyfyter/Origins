@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Explosives {
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Missile Minigun");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Light 'em up");
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.ProximityMineLauncher);
