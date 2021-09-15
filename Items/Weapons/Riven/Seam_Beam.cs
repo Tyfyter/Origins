@@ -25,7 +25,6 @@ namespace Origins.Items.Weapons.Riven {
             item.height = 10;
             item.value = 10000;
             item.rare = ItemRarityID.Pink;
-            item.UseSound = new LegacySoundStyle(SoundID.Item, Origins.Sounds.EnergyRipple);
         }
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
