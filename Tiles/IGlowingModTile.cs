@@ -9,7 +9,7 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles {
-    public interface GlowingModTile {
+    public interface IGlowingModTile {
         Texture2D GlowTexture { get; }
         Color GlowColor { get; }
     }

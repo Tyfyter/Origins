@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
-    public class Riven_Foliage : ModTile, GlowingModTile {
+    public class Riven_Foliage : ModTile, IGlowingModTile {
         public Texture2D GlowTexture { get; private set; }
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
         public float GlowValue => (float)(Math.Sin(Main.GlobalTime) + 2) * 0.5f;

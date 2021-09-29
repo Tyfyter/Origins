@@ -1285,7 +1285,7 @@ namespace Origins {
                 return default;
             }
         }
-        public static void DrawTileGlow(this GlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
+        public static void DrawTileGlow(this IGlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
             if (self.GlowTexture is null) {
                 return;
             }
@@ -1304,6 +1304,16 @@ namespace Origins {
         }
         public static Point OffsetBy(this Point self, int x = 0, int y = 0) {
             return new Point(self.X + x, self.Y + y);
+        }
+        public static byte PackToByte<T>(this (T h, T g, T f, T e, T d, T c, T b, T a) value, Func<T, bool> method) {
+            return (byte)((method(value.h) ? 128 : 0) |
+                (method(value.g) ? 64 : 0) |
+                (method(value.f) ? 32 : 0) |
+                (method(value.e) ? 16 : 0) |
+                (method(value.d) ? 8 : 0) |
+                (method(value.c) ? 4 : 0) |
+                (method(value.b) ? 2 : 0) |
+                (method(value.a) ? 1 : 0));
         }
     }
 }

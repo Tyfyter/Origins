@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Infested_Ore : OriginTile, GlowingModTile {
+    public class Infested_Ore : OriginTile, IGlowingModTile {
         public Texture2D GlowTexture { get; private set; }
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
         public float GlowValue => (float)(Math.Sin(Main.GlobalTime)+2)*0.5f;

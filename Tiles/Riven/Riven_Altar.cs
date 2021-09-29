@@ -16,7 +16,7 @@ using Terraria.Utilities;
 using static Origins.OriginExtensions;
 
 namespace Origins.Tiles.Riven {
-    public class Riven_Altar : ModTile, GlowingModTile {
+    public class Riven_Altar : ModTile, IGlowingModTile {
 		public Texture2D GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => (float)(Math.Sin(Main.GlobalTime) + 2) * 0.5f;

@@ -8,16 +8,17 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Tyfyter.Utils;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Riven_Flesh : RivenTile, GlowingModTile {
+    public class Riven_Flesh : RivenTile, IGlowingModTile {
         public Texture2D GlowTexture { get; private set; }
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
         public float GlowValue => (float)(Math.Sin(Main.GlobalTime) + 2) * 0.5f;
         public override void SetDefaults() {
             if (Main.netMode != NetmodeID.Server) {
-                //GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Flesh_Glow");
+                GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Flesh_Glow");
             }
             Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -34,6 +35,9 @@ namespace Origins.Tiles.Riven {
 			//SetModTree(Defiled_Tree.Instance);
             mergeID = TileID.Stone;
             soundType = SoundID.NPCKilled;
+        }
+        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+            return true;
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
             this.DrawTileGlow(i, j, spriteBatch);

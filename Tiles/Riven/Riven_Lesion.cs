@@ -15,7 +15,7 @@ using Origins.Items.Materials;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins.Tiles.Riven {
-    public class Riven_Lesion : ModTile, GlowingModTile {
+    public class Riven_Lesion : ModTile, IGlowingModTile {
         public Texture2D GlowTexture { get; private set; }
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
         public float GlowValue => (float)(Math.Sin(Main.GlobalTime) + 2) * 0.5f;
