@@ -208,4 +208,20 @@ namespace Origins.Items.Materials {
             item.maxStack = 99;
         }
     }
+    public class Brine_Sample : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Brine Sample");
+        }
+        public override void SetDefaults() {
+            item.CloneDefaults(ItemID.ShadowScale);
+        }
+        public override void AddRecipes() {
+            Brine_Recipe recipe = new Brine_Recipe(mod);
+            recipe.AddIngredient(ItemID.Bottle);
+            recipe.needWater = true;
+            recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
+    }
 }

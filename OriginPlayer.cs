@@ -67,6 +67,10 @@ namespace Origins {
         public float ZoneRivenProgress = 0;
         public float ZoneRivenProgressSmoothed = 0;
 
+        public bool ZoneBrine = false;
+        public float ZoneBrineProgress = 0;
+        public float ZoneBrineProgressSmoothed = 0;
+
         public bool DrawShirt = false;
         public bool DrawPants = false;
         public bool ItemLayerWrench = false;
@@ -96,7 +100,6 @@ namespace Origins {
             if(!felnumSet) {
                 felnumShock = 0;
             } else {
-
                 if(felnumShock > player.statLifeMax2) {
                     if(Main.rand.Next(20)==0) {
                         Vector2 pos = new Vector2(Main.rand.Next(4, player.width-4), Main.rand.Next(4, player.height-4));
@@ -109,6 +112,9 @@ namespace Origins {
                     felnumShock -= (felnumShock - player.statLifeMax2) / player.statLifeMax2 * 5 + 1;
                 }
             }
+            ///DEBUGGING
+            ZoneBrine = madHand;
+            ///DEBUGGING
             felnumSet = false;
             celestineSet = false;
             minerSet = false;
