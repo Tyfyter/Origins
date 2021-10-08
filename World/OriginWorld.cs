@@ -17,12 +17,14 @@ using Origins.Items.Weapons.Other;
 using Origins.Walls;
 using static Origins.World.OriginWorld.LootQueueAction;
 using Origins.Tiles.Riven;
+using Origins.Tiles.Brine;
 
 namespace Origins.World {
     public partial class OriginWorld : ModWorld {
 		public static int voidTiles;
 		public static int defiledTiles;
-		public static int rivenTiles;
+        public static int rivenTiles;
+        public static int brineTiles;
         public int peatSold;
         public const float biomeShaderSmoothing = 0.025f;
         public byte worldEvil = 0;
@@ -58,7 +60,8 @@ namespace Origins.World {
 			voidTiles = 0;
             defiledTiles = 0;
             rivenTiles = 0;
-		}
+            brineTiles = 0;
+        }
 
 		public override void TileCountsAvailable(int[] tileCounts) {
 			voidTiles = tileCounts[ModContent.TileType<Dusk_Stone>()];
@@ -66,6 +69,8 @@ namespace Origins.World {
 			defiledTiles = tileCounts[ModContent.TileType<Defiled_Stone>()]+tileCounts[ModContent.TileType<Defiled_Grass>()]+tileCounts[ModContent.TileType<Defiled_Sand>()]+tileCounts[ModContent.TileType<Defiled_Ice>()];
 
             rivenTiles = tileCounts[ModContent.TileType<Riven_Flesh>()];//+tileCounts[ModContent.TileType<Riven_Grass>()]+tileCounts[ModContent.TileType<Riven_Sand>()]+tileCounts[ModContent.TileType<Riven_Ice>()];
+
+            brineTiles = tileCounts[ModContent.TileType<Sulphur_Stone>()];
 
             Main.sandTiles+=tileCounts[ModContent.TileType<Defiled_Sand>()];
         }

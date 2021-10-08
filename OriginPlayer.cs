@@ -112,9 +112,6 @@ namespace Origins {
                     felnumShock -= (felnumShock - player.statLifeMax2) / player.statLifeMax2 * 5 + 1;
                 }
             }
-            ///DEBUGGING
-            ZoneBrine = madHand;
-            ///DEBUGGING
             felnumSet = false;
             celestineSet = false;
             minerSet = false;
@@ -420,29 +417,34 @@ namespace Origins {
             ZoneRiven = OriginWorld.rivenTiles > RivenHive.NeededTiles;
             ZoneRivenProgress = Math.Min(OriginWorld.rivenTiles - (RivenHive.NeededTiles-RivenHive.ShaderTileCount), RivenHive.ShaderTileCount)/RivenHive.ShaderTileCount;
 
+            ZoneBrine = OriginWorld.brineTiles > BrinePool.NeededTiles;
+
             LinearSmoothing(ref ZoneVoidProgressSmoothed, ZoneVoidProgress, OriginWorld.biomeShaderSmoothing);
             LinearSmoothing(ref ZoneDefiledProgressSmoothed, ZoneDefiledProgress, OriginWorld.biomeShaderSmoothing);
             LinearSmoothing(ref ZoneRivenProgressSmoothed, ZoneRivenProgress, OriginWorld.biomeShaderSmoothing*0.1f);
         }
         public override bool CustomBiomesMatch(Player other) {
             OriginPlayer modOther = other.GetModPlayer<OriginPlayer>();
-            return !((ZoneVoid^modOther.ZoneVoid)||(ZoneDefiled^modOther.ZoneDefiled));
+            return !((ZoneVoid^modOther.ZoneVoid) || (ZoneDefiled ^ modOther.ZoneDefiled) || (ZoneRiven ^ modOther.ZoneRiven) || (ZoneBrine ^ modOther.ZoneBrine));
         }
         public override void SendCustomBiomes(BinaryWriter writer) {
             byte flags = 0;
-            if(ZoneVoid)
+            if (ZoneVoid)
                 flags |= 1;
-            if(ZoneDefiled)
+            if (ZoneDefiled)
                 flags |= 2;
-            if(ZoneRiven)
+            if (ZoneRiven)
                 flags |= 4;
+            if (ZoneBrine)
+                flags |= 8;
             writer.Write(flags);
         }
         public override void ReceiveCustomBiomes(BinaryReader reader) {
             byte flags = reader.ReadByte();
-            ZoneVoid = ((flags & 1)!=0);
-            ZoneDefiled = ((flags & 2)!=0);
-            ZoneRiven = ((flags & 4)!=0);
+            ZoneVoid = ((flags & 1) != 0);
+            ZoneDefiled = ((flags & 2) != 0);
+            ZoneRiven = ((flags & 4) != 0);
+            ZoneBrine = ((flags & 8) != 0);
         }
         public override void CopyCustomBiomesTo(Player other) {
             OriginPlayer modOther = other.GetModPlayer<OriginPlayer>();
@@ -450,6 +452,7 @@ namespace Origins {
             modOther.ZoneVoid = ZoneVoid;
             modOther.ZoneDefiled = ZoneDefiled;
             modOther.ZoneRiven = ZoneRiven;
+            modOther.ZoneBrine = ZoneBrine;
         }
         public override void UpdateBiomeVisuals() {
             if(ZoneVoidProgressSmoothed > 0)Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(ZoneVoidProgressSmoothed);
