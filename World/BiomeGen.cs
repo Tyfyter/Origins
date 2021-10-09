@@ -45,6 +45,7 @@ namespace Origins.World {
             }
             }));*/
             #endregion _
+            ConvertableFieldInfo<int> _JungleX = new ConvertableFieldInfo<int>(typeof(WorldGen).GetField("JungleX", BindingFlags.NonPublic | BindingFlags.Static));
             tasks.Insert(0, new PassLegacy("setting worldEvil type", (GenerationProgress progress)=>{worldEvil|=crimson?evil_crimson:evil_corruption;}));
             int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
             if(genIndex != -1) {
@@ -117,25 +118,26 @@ namespace Origins.World {
                     }
                     //}
                 }));
-                if(false)tasks.Insert(genIndex + 1, new PassLegacy("FirstLake", delegate (GenerationProgress progress) {
-                    mod.Logger.Info("Generating Lake");
-                    progress.Message = "Generating Lake";
+                tasks.Insert(genIndex + 1, new PassLegacy("BrinePool", delegate (GenerationProgress progress) {
+                    mod.Logger.Info("Pooling Brine");
+                    progress.Message = "Pooling Brine";
                     //for (int i = 0; i < Main.maxTilesX / 5000; i++) {
-                    int X = WorldGen.genRand.Next(50, Main.maxTilesX - 50);
-                    int Y = WorldGen.genRand.Next((int)WorldGen.worldSurfaceLow, (int)WorldGen.worldSurfaceHigh);
-                    mod.Logger.Info("LakeGen:"+X+", "+Y);
+                    int JungleX = (int)_JungleX;
+                    int X = WorldGen.genRand.Next(JungleX - 100, JungleX + 100);
+                    int Y = WorldGen.genRand.Next((int)WorldGen.worldSurfaceLow, (int)WorldGen.worldSurfaceHigh) + (int)(WorldGen.worldSurfaceHigh - WorldGen.worldSurfaceLow);
+                    mod.Logger.Info("BrineGen:" + X+", "+Y);
                     //WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
-                    WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);
+                    //WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);
                     //WorldGen.digTunnel(X, 500, 5, 5, 10, 10, true);
-                    WorldGen.digTunnel(X, Y, 3, 0, 30, 6, true);
+                    //WorldGen.digTunnel(X, Y, 3, 0, 30, 6, true);
                     //WorldGen.digTunnel(X, Y, 0, 90, 25, 50, true);
+                    BrinePool.Gen.BrineStart(X, Y);
                     //}
                 }));
             }
             genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
             if(genIndex != -1&&(WorldGen.genRand.Next(0, 2)+OriginConfig.Instance.worldTypeSkew)>0) {
                 bool dungeonLeft = dungeonX < Main.maxTilesX / 2;
-                int JungleX = (int)typeof(WorldGen).GetField("JungleX", BindingFlags.NonPublic|BindingFlags.Static).GetValue(null);
                 int i2;
                 FieldInfo grassSpread = typeof(WorldGen).GetField("grassSpread", BindingFlags.NonPublic|BindingFlags.Static);
                 ushort grassType = TileID.Grass;
@@ -149,7 +151,8 @@ namespace Origins.World {
                 ushort hardenedSandType = TileID.HardenedSand;
                 ushort iceType = TileID.IceBlock;
                 List<(Point, int)> EvilSpikes = new List<(Point, int)>() { };
-                tasks[genIndex] = new PassLegacy("Alternate World Evil", (GenerationProgress progress) => {
+                tasks[genIndex] = new PassLegacy("Corruption", (GenerationProgress progress) => {
+                    int JungleX = (int)_JungleX;
                     worldEvil = crimson ? evil_riven : evil_wastelands;
                     if(crimson) {
                         getEvilTileConversionTypes(evil_riven, out stoneType, out grassType, out plantType, out sandType, out sandstoneType, out hardenedSandType, out iceType);

@@ -71,12 +71,9 @@ namespace Origins.Items.Other.Testing {
             Tile mouseTile  = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
-                case 3|p0:
-                p.Enqueue(Player.tileTargetX);
-                p.Enqueue(Player.tileTargetY);
-                Apply();
-                break;
                 case 2|p0:
+                case 3|p0:
+                case 4|p0:
                 p.Enqueue(Player.tileTargetX);
                 p.Enqueue(Player.tileTargetY);
                 Apply();
@@ -121,6 +118,8 @@ namespace Origins.Items.Other.Testing {
             double mousePackedDouble = (Main.MouseScreen.X/16d + (Main.screenWidth/16d) * Main.MouseScreen.Y/16d)/16d;
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
+                case 4|p0:
+                return "place brine pool";
                 case 3|p0:
                 return "place riven cave";
                 case 2|p0:
@@ -201,6 +200,9 @@ namespace Origins.Items.Other.Testing {
                 break;
                 case 3:
                 World.BiomeData.RivenHive.Gen.HiveCave((int)p.Dequeue(), (int)p.Dequeue());
+                break;
+                case 4:
+                World.BiomeData.BrinePool.Gen.BrineStart((int)p.Dequeue(), (int)p.Dequeue());
                 break;
             }
         }

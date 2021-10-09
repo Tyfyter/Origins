@@ -17,7 +17,7 @@ namespace Origins.Tiles.Brine {
             TileID.Sets.Conversion.Stone[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			drop = ItemType<Sulphur_Stone_Item>();
-			AddMapEntry(new Color(109, 101, 13));
+			AddMapEntry(new Color(18, 73, 56));
             mergeID = TileID.Stone;
 		}
     }

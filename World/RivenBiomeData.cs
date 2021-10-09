@@ -21,6 +21,7 @@ namespace Origins.World.BiomeData {
 			public const float Jelly = 0.8f;
 			public const float Tank = 0.6f;
 			public const float Shark1 = 0.4f;
+			public const float Worm = 0.6f;
 			public const float Crawler = 0.8f;
 		}
 		public static class Gen {

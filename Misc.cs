@@ -200,6 +200,20 @@ namespace Origins {
             return N+"/"+D;
         }
     }
+    public struct ConvertableFieldInfo<T> {
+        FieldInfo fieldInfo;
+        object obj;
+        public ConvertableFieldInfo(FieldInfo fieldInfo, object obj = null) {
+            this.fieldInfo = fieldInfo;
+            this.obj = obj;
+            if (!typeof(T).IsAssignableFrom(fieldInfo.FieldType)) {
+                throw new InvalidCastException($"field {fieldInfo.Name} of type {fieldInfo.FieldType} cannot be converted to {typeof(T)}");
+            }
+        }
+        public static explicit operator T(ConvertableFieldInfo<T> convertableFieldInfo) {
+            return (T)convertableFieldInfo.fieldInfo.GetValue(convertableFieldInfo.obj);
+        }
+    }
     public class DrawAnimationManual : DrawAnimation {
 	    public DrawAnimationManual(int frameCount) {
 		    Frame = 0;

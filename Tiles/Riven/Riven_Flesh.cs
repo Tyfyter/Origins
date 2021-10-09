@@ -36,8 +36,18 @@ namespace Origins.Tiles.Riven {
             mergeID = TileID.Stone;
             soundType = SoundID.NPCKilled;
         }
+        bool recursion = false;
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-            return true;
+            if (recursion) {
+                return true;
+            }
+            recursion = true;
+            WorldGen.TileFrame(i, j, resetFrame, noBreak);
+            recursion = false;
+            if (Main.tile[i, j].frameX == 54 && Main.tile[i, j].frameY == 18 && WorldGen.genRand.Next(4) != 0) {
+                Main.tile[i, j].frameX = (short)(18 * (WorldGen.genRand.Next(1, 3)));
+            }
+            return false;
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
             this.DrawTileGlow(i, j, spriteBatch);

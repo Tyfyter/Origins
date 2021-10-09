@@ -54,10 +54,10 @@ namespace Origins.NPCs {
             }
             return true;
         }
-        public override void OnHitNPC(NPC npc, NPC target, int damage, float knockback, bool crit) {
+        /*public override void OnHitNPC(NPC npc, NPC target, int damage, float knockback, bool crit) {
             knockback*=MeleeCollisionNPCData.knockbackMult;
             MeleeCollisionNPCData.knockbackMult = 1f;
-        }
+        }*/
         public override bool PreNPCLoot(NPC npc) {
             byte worldEvil = ModContent.GetInstance<OriginWorld>().worldEvil;
             if((worldEvil&4)!=0) {
@@ -118,6 +118,50 @@ namespace Origins.NPCs {
                     pool.Add(ModContent.NPCType<Defiled_Mite>(), DefiledWastelands.SpawnRates.Mite);
                     SkipMiteSpawn:;
                 }
+            } else if (player.GetModPlayer<OriginPlayer>().ZoneRiven) {
+                pool[0] = 0;
+
+                pool.Add(ModContent.NPCType<Riven.Riven_Fighter>(), RivenHive.SpawnRates.Fighter);
+
+                pool.Add(ModContent.NPCType<Riven.Riven_Tank>(), RivenHive.SpawnRates.Tank);
+
+                if (spawnInfo.water) pool.Add(ModContent.NPCType<Riven.Pustule_Jelly> (), RivenHive.SpawnRates.Jelly);
+
+                //if (spawnInfo.playerFloorY <= Main.worldSurface + 50 && spawnInfo.spawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
+                if (Main.hardMode) {
+                    pool.Add(ModContent.NPCType<Riven.Rivenator_Head>(), RivenHive.SpawnRates.Worm);
+                    if (player.ZoneDesert) {
+                        pool.Add(ModContent.NPCType<Riven.Riven_Mummy>(), RivenHive.SpawnRates.Mummy);
+                    }
+                    if (Terraria.GameContent.Events.Sandstorm.Happening && player.ZoneSandstorm) {
+                        pool.Add(ModContent.NPCType<Riven.Splitooth>(), RivenHive.SpawnRates.Shark1);
+                    }
+                }
+
+                /*if (spawnInfo.spawnTileY > Main.worldSurface) {
+                    pool.Add(ModContent.NPCType<Defiled_Digger_Head>(), DefiledWastelands.SpawnRates.Worm);
+                    int yPos = spawnInfo.spawnTileY;
+                    Tile tile;
+                    for (int i = 0; i < Defiled_Mite.spawnCheckDistance; i++) {
+                        tile = Main.tile[spawnInfo.spawnTileX, ++yPos];
+                        if (tile.active()) {
+                            yPos--;
+                            break;
+                        }
+                    }
+                    bool? halfSlab = null;
+                    for (int i = spawnInfo.spawnTileX - 1; i < spawnInfo.spawnTileX + 2; i++) {
+                        tile = Main.tile[i, yPos + 1];
+                        if (!tile.active() || !Main.tileSolid[tile.type] || tile.slope() != SlopeID.None || (halfSlab.HasValue && halfSlab.Value != tile.halfBrick())) {
+                            tile = null;
+                            goto SkipMiteSpawn;
+                        }
+                        halfSlab = tile.halfBrick();
+                    }
+                    tile = null;
+                    pool.Add(ModContent.NPCType<Defiled_Mite>(), DefiledWastelands.SpawnRates.Mite);
+                SkipMiteSpawn:;
+                }*/
             }
         }
     }
