@@ -26,7 +26,8 @@ namespace Origins.Projectiles.Weapons {
             projectile.light = 0;
             projectile.aiStyle = 1;
             projectile.extraUpdates++;
-            switch(damageType) {
+            projectile.timeLeft = 300;
+            switch (damageType) {
                 case 1:
                 projectile.melee = true;
                 break;
@@ -49,6 +50,10 @@ namespace Origins.Projectiles.Weapons {
 					projectile.frame = 0;
 				}
 			}
+            if (projectile.wet) {
+                projectile.timeLeft--;
+                Dust.NewDust(projectile.position, projectile.width, projectile.height, DustID.BreatheBubble);
+            }
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             target.AddBuff(BuffID.OnFire, crit?600:300);

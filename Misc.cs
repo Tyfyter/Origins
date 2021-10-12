@@ -860,6 +860,9 @@ namespace Origins {
             float distance = phi > MathHelper.Pi ? MathHelper.TwoPi - phi : phi;
             return distance;
         }
+        public static Vector2 RotatedByRandom(this Vector2 vec, double maxRadians, UnifiedRandom rand) {
+            return vec.RotatedBy(rand.NextDouble() * maxRadians - rand.NextDouble() * maxRadians);
+        }
         public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox) {
             float xoffset = 10f;
             float yoffset = 24f;

@@ -109,6 +109,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			projectile.penetrate = -1;
             projectile.usesLocalNPCImmunity = true;
             projectile.localNPCHitCooldown = 1;
+            projectile.ignoreWater = false;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots

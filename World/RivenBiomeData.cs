@@ -37,8 +37,7 @@ namespace Origins.World.BiomeData {
 				if (j2 > Main.worldSurface) {
 					j2 = (int)Main.worldSurface;
 				}
-				for (; !SolidTile(i, j2); j2++) {
-				}
+				for (; !SolidTile(i, j2); j2++) {}
 				Vector2 position = new Vector2(i, j2);
 				for (int x = i - 30; x < i + 30; x++) {
 					for (int y = j2 - 25; y < j2 + 15; y++) {
@@ -52,7 +51,7 @@ namespace Origins.World.BiomeData {
 						}
 					}
 				}
-				Vector2 vector = new Vector2(0, -1).RotatedByRandom(1.6f);
+				Vector2 vector = new Vector2(0, -1).RotatedByRandom(1.6f, genRand);
 				int distance = 0;
 				while (Main.tile[(int)position.X, (int)position.Y].active() && Main.tileSolid[Main.tile[(int)position.X, (int)position.Y].type]) {
 					//Main.tile[(int)position.X, (int)position.Y].ResetToType(TileID.EmeraldGemspark);
@@ -65,28 +64,28 @@ namespace Origins.World.BiomeData {
 				vector = -vector;
 				(Vector2 position, Vector2 velocity) last = (position, vector);
 				//Tile t = Main.tile[(int)last.position.X, (int)last.position.Y];
-				(int x, int y, Vector2 direction, double length) startValues = ((int)last.position.X, (int)last.position.Y, last.velocity.RotatedByRandom(0.5f), distance * genRand.NextFloat(0.4f, 0.6f));
-				last = GenRunners.WalledVeinRunner(startValues.x, startValues.y, strength, startValues.direction, startValues.length, weakFleshID, wallThickness);
+				(int x, int y, Vector2 direction, double length) startValues = ((int)last.position.X, (int)last.position.Y, last.velocity.RotatedByRandom(0.5f, genRand), distance * genRand.NextFloat(0.4f, 0.6f));
+				last = GenRunners.WalledVeinRunner(startValues.x, startValues.y, strength * genRand.NextFloat(0.9f, 1.1f), startValues.direction, startValues.length, weakFleshID, wallThickness);
 				//t.ResetToType(TileID.AmethystGemspark);
 				Vector2 manualVel = new Vector2(last.velocity.X, 0.2f);
 				//t = Main.tile[(int)last.position.X, (int)last.position.Y];
-				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength, Vector2.Normalize(new Vector2(-manualVel.X, 0.2f)), genRand.NextFloat(distance * 0.4f, distance * 0.6f) * (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
-				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength, Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
-				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength, Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
-				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength, new Vector2(0, 1).RotatedByRandom(0.2f), genRand.NextFloat(distance * 0.4f, distance * 0.6f), weakFleshID, wallThickness, wallType: fleshWallID);
+				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(new Vector2(-manualVel.X, 0.2f)), genRand.NextFloat(distance * 0.4f, distance * 0.6f) * (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
+				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
+				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
+				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(0, 1).RotatedByRandom(0.2f, genRand), genRand.NextFloat(distance * 0.4f, distance * 0.6f), weakFleshID, wallThickness, wallType: fleshWallID);
 				//t.ResetToType(TileID.AmethystGemspark);
 				manualVel.X = -manualVel.X;
 				//t = Main.tile[(int)last.position.X, (int)last.position.Y];
-				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength, Vector2.Normalize(new Vector2(-manualVel.X, 0.2f)), genRand.NextFloat(distance * 0.4f, distance * 0.6f) * (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
-				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength, Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
-				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength, Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
-				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength, new Vector2(0, 1).RotatedByRandom(0.2f), genRand.NextFloat(distance * 0.4f, distance * 0.6f), weakFleshID, wallThickness, wallType: fleshWallID);
+				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(new Vector2(-manualVel.X, 0.2f)), genRand.NextFloat(distance * 0.4f, distance * 0.6f) * (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
+				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
+				GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), Vector2.Normalize(manualVel), genRand.NextFloat(distance * 0.4f, distance * 0.6f) / (Math.Abs(manualVel.X) + 0.5f), weakFleshID, wallThickness, wallType: fleshWallID);
+				last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(0, 1).RotatedByRandom(0.2f, genRand), genRand.NextFloat(distance * 0.4f, distance * 0.6f), weakFleshID, wallThickness, wallType: fleshWallID);
 				//t.ResetToType(TileID.AmethystGemspark);
 				for (int index = 0; index < 10; index++) {
 					//t = Main.tile[(int)last.position.X, (int)last.position.Y];
-					last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength, last.velocity.RotatedByRandom(0.8f), genRand.NextFloat(distance * 0.2f, distance * 0.3f), weakFleshID, wallThickness, wallType: fleshWallID);
+					last = GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), last.velocity.RotatedByRandom(0.8f, genRand), genRand.NextFloat(distance * 0.2f, distance * 0.3f), weakFleshID, wallThickness, wallType: fleshWallID);
 					if (index < 8) {
-						GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength, last.velocity.RotatedBy(genRand.Next(2) * 2 - 1).RotatedByRandom(0.8f), genRand.NextFloat(distance * 0.4f, distance * 0.6f), weakFleshID, wallThickness, wallType: fleshWallID);
+						GenRunners.WalledVeinRunner((int)last.position.X, (int)last.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), last.velocity.RotatedBy(genRand.Next(2) * 2 - 1).RotatedByRandom(0.8f, genRand), genRand.NextFloat(distance * 0.4f, distance * 0.6f), weakFleshID, wallThickness, wallType: fleshWallID);
 					}
 					PolarVec2 vel = new PolarVec2(1, last.velocity.ToRotation());
 					OriginExtensions.AngularSmoothing(ref vel.Theta, MathHelper.PiOver2, 0.7f);
@@ -100,17 +99,14 @@ namespace Origins.World.BiomeData {
 				GenRunners.VeinRunner((int)last.position.X, (int)last.position.Y, strength, cavernOpening.SafeNormalize(Vector2.Zero), cavernOpening.Length());
 				GenRunners.VeinRunner(startValues.x, startValues.y, strength, startValues.direction, startValues.length);
 				(Vector2 position, Vector2 velocity)[] arms = new (Vector2 position, Vector2 velocity)[4];
-				arms[0] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength, new Vector2(1, -0.25f).RotatedByRandom(0.2f), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
+				arms[0] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(1, -0.25f).RotatedByRandom(0.2f, genRand), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
 				HiveCave((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
-				arms[1] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength, new Vector2(1, 0.25f).RotatedByRandom(0.2f), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
+				arms[1] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(1, 0.25f).RotatedByRandom(0.2f, genRand), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
 				HiveCave((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
-				arms[2] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength, new Vector2(-1, -0.25f).RotatedByRandom(0.2f), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
+				arms[2] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(-1, -0.25f).RotatedByRandom(0.2f, genRand), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
 				HiveCave((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
-				arms[3] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength, new Vector2(-1, 0.25f).RotatedByRandom(0.2f), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
+				arms[3] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(-1, 0.25f).RotatedByRandom(0.2f, genRand), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
 				HiveCave((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
-				for (int arm = 0; arm < 4; arm++) {
-					GenRunners.VeinRunner((int)arms[arm].position.X, (int)arms[arm].position.Y, strength, -arms[arm].velocity, 24);
-				}
 			}
 			public static Point HiveCave(int i, int j, float sizeMult = 1f) {
 				ushort fleshID = (ushort)ModContent.TileType<Riven_Flesh>();
@@ -126,7 +122,9 @@ namespace Origins.World.BiomeData {
 						if (diff > 35 * sizeMult) {
 							continue;
 						}
-						Main.tile[x, y].ResetToType(fleshID);
+						if (Main.tile[x, y].wall != fleshWallID) {
+							Main.tile[x, y].ResetToType(fleshID);
+						}
 						Main.tile[x, y].wall = fleshWallID;
 						if (diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult) {
 							Main.tile[x, y].active(false);

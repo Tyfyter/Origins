@@ -51,7 +51,6 @@ namespace Origins.World {
             if(genIndex != -1) {
                 int duskStoneID = TileType<Dusk_Stone>();
                 tasks.Insert(genIndex + 1, new PassLegacy("Dusk Biome", delegate (GenerationProgress progress) {
-                    Main.rand = genRand;
                     progress.Message = "Generating Dusk Biome";
                     //for(int i = 0; i < Main.maxTilesX / 900; i++) {       //900 is how many biomes. the bigger is the number = less biomes
                     int X = (int)(Main.maxTilesX*0.4);//WorldGen.genRand.Next(1, Main.maxTilesX - 300);
@@ -66,7 +65,7 @@ namespace Origins.World {
                         (Point, int) i = HellSpikes[0];
                         Point p = i.Item1;
                         HellSpikes.RemoveAt(0);
-                        Vector2 vel = new Vector2(0, (p.Y<Main.maxTilesY-150) ? 2.75f : -2.75f).RotatedByRandom(1.25f);
+                        Vector2 vel = new Vector2(0, (p.Y<Main.maxTilesY-150) ? 2.75f : -2.75f).RotatedByRandom(1.25f, genRand);
                         //TestRunners.SpikeRunner(p.X, p.Y, duskStoneID, vel, i.Item2, randomtwist: true);
                         bool twist = genRand.NextBool();
                         GenRunners.SmoothSpikeRunner(p.X, p.Y, i.Item2*0.75, duskStoneID, vel, decay:genRand.NextFloat(0.75f,1f), twist:twist?0.3f:0, randomtwist: twist, cutoffStrength:1);
@@ -531,7 +530,7 @@ namespace Origins.World {
                         if(vel.Length()==0f) {
                             vel = genRand.NextVector2Circular(0.5f,0.5f);
                         } else {
-                            vel = vel.RotatedByRandom(0.75f);
+                            vel = vel.RotatedByRandom(0.75f, genRand);
                         }
                         //TestRunners.SpikeRunner(p.X, p.Y, duskStoneID, vel, i.Item2, randomtwist: true);
                         double size = i.size*0.25;
