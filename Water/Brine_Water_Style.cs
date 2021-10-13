@@ -15,9 +15,9 @@ namespace Origins.Water {
         public override int GetDropletGore() => GoreID.ChimneySmoke1 + Main.rand.Next(3);
         public override int GetSplashDust() => 99;
         public override void LightColorMultiplier(ref float r, ref float g, ref float b) {
-            r = 0.16f;
-            g = 0.78f;
-            b = 0.68f;
+            r = 0.5f;
+            g = 0.9f;
+            b = 0.83f;
         }
         public override Color BiomeHairColor() => new Color(20, 102, 87);
     }

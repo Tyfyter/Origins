@@ -15,6 +15,9 @@ namespace Origins.Items.Armor.Acrid{
             item.defense = 10;
         }
         public override void UpdateEquip(Player player) {
+            if(player.wet){
+                player.nightVision = true;
+            }
             Lighting.AddLight(player.Center, new Vector3(0, 1, (float)Math.Abs(Math.Sin(Main.GameUpdateCount/60f))));
         }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
@@ -23,7 +26,10 @@ namespace Origins.Items.Armor.Acrid{
         public override void UpdateArmorSet(Player player) {
             player.buffImmune[BuffID.Poisoned] = true;
             player.buffImmune[BuffID.Venom] = true;
-            player.breathMax*=2;
+            player.breathMax += (int)(player.breathMax*1.8f);
+            if (Main.GameUpdateCount%4 != 0) {
+                player.ignoreWater = true;
+            }
         }
     }
     [AutoloadEquip(EquipType.Body)]
