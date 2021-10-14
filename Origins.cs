@@ -357,13 +357,13 @@ namespace Origins {
 	        int tEvil = WorldGen.tEvil;
 	        int tBlood = WorldGen.tBlood;
             int tDefiled = OriginWorld.tDefiled;
-            int tRiven = 0;//OriginWorld.tRiven;
-            int tBad = tEvil + tBlood + tDefiled;
+            int tRiven = OriginWorld.tRiven;
+            int tBad = tEvil + tBlood + tDefiled + tRiven;
             if(tDefiled==0&&tRiven==0) {
                 return orig();
             }
             int tHas = (tGood>0?good:0)|(tEvil>0?evil:0)|(tBlood>0?blood:0)|(tDefiled>0?defiled:0)|(tRiven>0?riven:0);
-            switch(tHas) {
+            switch(tHas & (good | evil | blood)) {
                 case good | evil | blood:
                 text = Language.GetTextValue("DryadSpecialText.WorldStatusAll", Main.worldName, tGood, tEvil, tBlood);
                 break;
@@ -408,14 +408,21 @@ namespace Origins {
 
         private void WorldGen_AddUpAlignmentCounts(On.Terraria.WorldGen.orig_AddUpAlignmentCounts orig, bool clearCounts) {
             int[] tileCounts = WorldGen.tileCounts;
-            if(clearCounts)OriginWorld.totalDefiled2 = 0;
-            OriginWorld.totalDefiled2 += tileCounts[MC.TileType<Defiled_Stone>()]+tileCounts[MC.TileType<Defiled_Grass>()]+tileCounts[MC.TileType<Defiled_Sand>()]+tileCounts[MC.TileType<Defiled_Ice>()];
+            if (clearCounts) {
+                OriginWorld.totalDefiled2 = 0;
+                OriginWorld.totalRiven2 = 0;
+            }
+            OriginWorld.totalDefiled2 += tileCounts[MC.TileType<Defiled_Stone>()] + tileCounts[MC.TileType<Defiled_Grass>()] + tileCounts[MC.TileType<Defiled_Sand>()]+tileCounts[MC.TileType<Defiled_Ice>()];
+            OriginWorld.totalDefiled2 += tileCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
             orig(clearCounts);
         }
         public override void HandlePacket(BinaryReader reader, int whoAmI) {
             byte type = reader.ReadByte();
             if(Main.netMode == NetmodeID.MultiplayerClient) {
                 switch(type) {
+                    case MessageID.TileCounts:
+                    OriginWorld.tDefiled = reader.ReadByte();
+                    break;
                     default:
                     Logger.Warn($"Invalid packet type ({type}) recieved on client");
                     break;

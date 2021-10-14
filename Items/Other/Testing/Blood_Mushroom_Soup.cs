@@ -23,7 +23,7 @@ namespace Origins.Items.Other.Testing {
 			item.width = 16;
 			item.height = 26;
 			item.value = 25000;
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
             item.useStyle = ItemUseStyleID.HoldingUp;
             item.useAnimation = 10;
             item.useTime = 10;
@@ -74,6 +74,8 @@ namespace Origins.Items.Other.Testing {
                 case 2|p0:
                 case 3|p0:
                 case 4|p0:
+                case 5|p0:
+                case 6|p0:
                 p.Enqueue(Player.tileTargetX);
                 p.Enqueue(Player.tileTargetY);
                 Apply();
@@ -118,6 +120,10 @@ namespace Origins.Items.Other.Testing {
             double mousePackedDouble = (Main.MouseScreen.X/16d + (Main.screenWidth/16d) * Main.MouseScreen.Y/16d)/16d;
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
+                case 6|p0:
+                return "place defiled cave";
+                case 5|p0:
+                return "place defiled start";
                 case 4|p0:
                 return "place brine pool";
                 case 3|p0:
@@ -203,6 +209,12 @@ namespace Origins.Items.Other.Testing {
                 break;
                 case 4:
                 World.BiomeData.BrinePool.Gen.BrineStart((int)p.Dequeue(), (int)p.Dequeue());
+                break;
+                case 5:
+                World.BiomeData.DefiledWastelands.Gen.StartDefiled((int)p.Dequeue(), (int)p.Dequeue());
+                break;
+                case 6:
+                World.BiomeData.DefiledWastelands.Gen.DefiledCave((int)p.Dequeue(), (int)p.Dequeue());
                 break;
             }
         }
