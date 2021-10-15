@@ -154,4 +154,24 @@ namespace Origins.Tiles.Defiled {
             r = g = b = 0.5f;
         }
     }
+    public class Defiled_Altar_Item : ModItem {
+        public override string Texture => "Origins/Tiles/Defiled/Defiled_Altar";
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Defiled Altar (Debugging Item)");
+        }
+
+        public override void SetDefaults() {
+            item.width = 26;
+            item.height = 22;
+            item.maxStack = 99;
+            item.useTurn = true;
+            item.autoReuse = true;
+            item.useAnimation = 15;
+            item.useTime = 10;
+            item.useStyle = ItemUseStyleID.SwingThrow;
+            item.consumable = true;
+            item.value = 500;
+            item.createTile = ModContent.TileType<Defiled_Altar>();
+        }
+    }
 }

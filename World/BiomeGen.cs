@@ -471,6 +471,9 @@ namespace Origins.World {
                                     }
                                 }
                             }
+                            int startY;
+                            for (startY = (int)WorldGen.worldSurfaceHigh; !Main.tile[centerX, startY].active(); startY++);
+                            DefiledWastelands.Gen.StartDefiled(centerX, startY + 25);
                         }
                     }
                 });

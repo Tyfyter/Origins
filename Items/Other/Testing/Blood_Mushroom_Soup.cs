@@ -71,11 +71,15 @@ namespace Origins.Items.Other.Testing {
             Tile mouseTile  = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
+                case 6|p0:
+                p.Enqueue(Main.MouseWorld.X/16);
+                p.Enqueue(Main.MouseWorld.Y/16);
+                Apply();
+                break;
                 case 2|p0:
                 case 3|p0:
                 case 4|p0:
                 case 5|p0:
-                case 6|p0:
                 p.Enqueue(Player.tileTargetX);
                 p.Enqueue(Player.tileTargetY);
                 Apply();
@@ -121,7 +125,7 @@ namespace Origins.Items.Other.Testing {
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
                 case 6|p0:
-                return "place defiled cave";
+                return "place defiled stone ring";
                 case 5|p0:
                 return "place defiled start";
                 case 4|p0:
@@ -214,7 +218,7 @@ namespace Origins.Items.Other.Testing {
                 World.BiomeData.DefiledWastelands.Gen.StartDefiled((int)p.Dequeue(), (int)p.Dequeue());
                 break;
                 case 6:
-                World.BiomeData.DefiledWastelands.Gen.DefiledCave((int)p.Dequeue(), (int)p.Dequeue());
+                World.BiomeData.DefiledWastelands.Gen.DefiledRib((float)p.Dequeue(), (float)p.Dequeue(), 8, 0.75f);
                 break;
             }
         }
