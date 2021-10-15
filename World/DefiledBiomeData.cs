@@ -95,13 +95,14 @@ namespace Origins.World.BiomeData {
 							veins.Enqueue(next);
 						}
 						float size = genRand.NextFloat(0.3f, 0.4f);
-						DefiledCave(next.data.position.X, next.data.position.Y, size);
+						if (airCheckVec.Y >= Main.worldSurface) {
+							DefiledCave(next.data.position.X, next.data.position.Y, size);
+						}
 						DefiledRib(next.data.position.X, next.data.position.Y, size * 30, 0.75f);
 						fisureCheckSpots.Add(next.data.position);
 						break;
 					}
                 }
-				DefiledRibs(i, j);
 			}
 			public static void DefiledCave(float i, float j, float sizeMult = 1f) {
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
