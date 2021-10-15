@@ -135,6 +135,7 @@ namespace Origins.World {
                 }));
             }
             genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
+            Stack<Point> DefiledHearts = new Stack<Point>() { };
             if(genIndex != -1&&(WorldGen.genRand.Next(0, 2)+OriginConfig.Instance.worldTypeSkew)>0) {
                 bool dungeonLeft = dungeonX < Main.maxTilesX / 2;
                 int i2;
@@ -472,8 +473,10 @@ namespace Origins.World {
                                 }
                             }
                             int startY;
-                            for (startY = (int)WorldGen.worldSurfaceHigh; !Main.tile[centerX, startY].active(); startY++);
-                            DefiledWastelands.Gen.StartDefiled(centerX, startY + 25);
+                            for (startY = (int)WorldGen.worldSurfaceLow; !Main.tile[centerX, startY].active(); startY++);
+                            Point start = new Point(centerX, startY + genRand.Next(105, 150));
+                            DefiledWastelands.Gen.StartDefiled(start.X, start.Y);
+                            DefiledHearts.Push(start);
                         }
                     }
                 });
@@ -575,6 +578,12 @@ namespace Origins.World {
                         }
                     }
                     crimson = (worldEvil&evil_crimson)!=0;
+                    Point heart;
+                    while(DefiledHearts.Count>0) {
+                        heart = DefiledHearts.Pop();
+				        DefiledWastelands.Gen.DefiledRibs(heart.X, heart.Y);
+                        WorldGen.Place3x3Wall(heart.X, heart.Y, TileID.GemLocks, 5);
+                    }
                 }));
             }
         }
