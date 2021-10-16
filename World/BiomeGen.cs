@@ -474,7 +474,7 @@ namespace Origins.World {
                             }
                             int startY;
                             for (startY = (int)WorldGen.worldSurfaceLow; !Main.tile[centerX, startY].active(); startY++);
-                            Point start = new Point(centerX, startY + genRand.Next(105, 150));
+                            Point start = new Point(centerX, startY + genRand.Next(105, 150));//range of depths
                             DefiledWastelands.Gen.StartDefiled(start.X, start.Y);
                             DefiledHearts.Push(start);
                         }

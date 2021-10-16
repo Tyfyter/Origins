@@ -28,9 +28,9 @@ namespace Origins.World.BiomeData {
 		public static class Gen {
 			static int fisureCount = 0;
 			public static void StartDefiled(float i, float j) {
-				const float strength = 2.8f;
+				const float strength = 2.8f; //width of tunnels
 				const float wallThickness = 3.1f;
-				const float distance = 32;
+				const float distance = 40; //tunnel length
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
 				ushort stoneWallID = (ushort)ModContent.WallType<Defiled_Stone_Wall>();
 				Vector2 startVec = new Vector2(i, j);
@@ -61,50 +61,89 @@ namespace Origins.World.BiomeData {
                     }
 					switch (selector) {
 						case 0:
-						case 1:
-						next = (current.generation + 1, DefiledVeinRunner((int)current.data.position.X, (int)current.data.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), current.data.velocity.RotatedBy(genRand.NextBool()? genRand.NextFloat(-0.6f, -0.1f) : genRand.NextFloat(0.2f, 0.6f)), genRand.NextFloat(distance * 0.8f, distance * 1.2f), stoneID, wallThickness, wallType: stoneWallID));
-                        airCheckVec = next.data.position;
-						if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
+						case 1: {
+							next = (current.generation + 1,
+								DefiledVeinRunner(
+									(int)current.data.position.X,
+									(int)current.data.position.Y,
+									strength * genRand.NextFloat(0.9f, 1.1f), //tunnel width randomization
+									current.data.velocity.RotatedBy(genRand.NextBool() ? genRand.NextFloat(-0.6f, -0.1f) : genRand.NextFloat(0.2f, 0.6f)), //random rotation
+									genRand.NextFloat(distance * 0.8f, distance * 1.2f), //tunnel length
+									stoneID,
+									wallThickness,
+									wallType: stoneWallID));
+							airCheckVec = next.data.position;
+							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
+								break;
+							}
+							if (endChance > current.generation) {
+								veins.Enqueue(next);
+							}
 							break;
-						}
-						if (endChance > current.generation) {
-							veins.Enqueue(next);
-                        }
-						break;
-						case 2:
-						next = (current.generation + 2, DefiledVeinRunner((int)current.data.position.X, (int)current.data.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), current.data.velocity.RotatedBy(-0.4f + genRand.NextFloat(-1, 0.2f)), genRand.NextFloat(distance * 0.8f, distance * 1.2f), stoneID, wallThickness, wallType: stoneWallID));
-						airCheckVec = next.data.position;
-						if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
+						}//single vein
+						case 2: {
+							next = (current.generation + 2,
+								DefiledVeinRunner(
+									(int)current.data.position.X,
+									(int)current.data.position.Y,
+									strength * genRand.NextFloat(0.9f, 1.1f),
+									current.data.velocity.RotatedBy(-0.4f + genRand.NextFloat(-1, 0.2f)),
+									genRand.NextFloat(distance * 0.8f, distance * 1.2f),
+									stoneID,
+									wallThickness,
+									wallType: stoneWallID));
+							airCheckVec = next.data.position;
+							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
+								break;
+							}
+							if (endChance > current.generation) {
+								veins.Enqueue(next);
+							}
+							next = (current.generation + 2,
+								DefiledVeinRunner(
+									(int)current.data.position.X,
+									(int)current.data.position.Y,
+									strength * genRand.NextFloat(0.9f, 1.1f),
+									current.data.velocity.RotatedBy(0.4f + genRand.NextFloat(-0.2f, 1)),
+									genRand.NextFloat(distance * 0.8f, distance * 1.2f),
+									stoneID,
+									wallThickness,
+									wallType: stoneWallID));
+							airCheckVec = next.data.position;
+							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
+								break;
+							}
+							if (endChance > current.generation) {
+								veins.Enqueue(next);
+							}
 							break;
-						}
-						if (endChance > current.generation) {
-							veins.Enqueue(next);
-						}
-						next = (current.generation + 2, DefiledVeinRunner((int)current.data.position.X, (int)current.data.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), current.data.velocity.RotatedBy(0.4f + genRand.NextFloat(-0.2f, 1)), genRand.NextFloat(distance * 0.8f, distance * 1.2f), stoneID, wallThickness, wallType: stoneWallID));
-						airCheckVec = next.data.position;
-						if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
+						}//split vein
+						case 3: {
+							next = (current.generation + 2,
+								DefiledVeinRunner(
+									(int)current.data.position.X,
+									(int)current.data.position.Y,
+									strength * genRand.NextFloat(0.9f, 1.1f),
+									current.data.velocity.RotatedBy(genRand.NextBool() ? genRand.NextFloat(-0.4f, -0.2f) : genRand.NextFloat(0.2f, 0.4f)),
+									genRand.NextFloat(distance * 0.8f, distance * 1.2f),
+									stoneID,
+									wallThickness,
+									wallType: stoneWallID));
+							airCheckVec = next.data.position;
+							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
+								break;
+							}
+							if (endChance > next.generation) {
+								veins.Enqueue(next);
+							}
+							float size = genRand.NextFloat(0.3f, 0.4f);
+							if (airCheckVec.Y >= Main.worldSurface) {
+								DefiledCave(next.data.position.X, next.data.position.Y, size);
+							}
+							DefiledRib(next.data.position.X, next.data.position.Y, size * 30, 0.75f);
+							fisureCheckSpots.Add(next.data.position);
 							break;
-						}
-						if (endChance > current.generation) {
-							veins.Enqueue(next);
-						}
-						break;
-						case 3:
-						next = (current.generation + 2, DefiledVeinRunner((int)current.data.position.X, (int)current.data.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), current.data.velocity.RotatedBy(genRand.NextBool() ? genRand.NextFloat(-0.4f, -0.2f) : genRand.NextFloat(0.2f, 0.4f)), genRand.NextFloat(distance * 0.8f, distance * 1.2f), stoneID, wallThickness, wallType: stoneWallID));
-						airCheckVec = next.data.position;
-						if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
-							break;
-						}
-						if (endChance > next.generation) {
-							veins.Enqueue(next);
-						}
-						float size = genRand.NextFloat(0.3f, 0.4f);
-						if (airCheckVec.Y >= Main.worldSurface) {
-							DefiledCave(next.data.position.X, next.data.position.Y, size);
-						}
-						DefiledRib(next.data.position.X, next.data.position.Y, size * 30, 0.75f);
-						fisureCheckSpots.Add(next.data.position);
-						break;
+						}//vein & cave
 					}
                 }
 				ushort fissureID = (ushort)ModContent.TileType<Defiled_Fissure>();
