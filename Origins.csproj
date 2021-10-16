@@ -16,10 +16,14 @@
     <Exec Command="&quot;$(tMLBuildServerPath)&quot; -tmlsavedirectory &quot;C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML&quot; -build $(ProjectDir) -eac $(TargetPath) -define &quot;$(DefineConstants)&quot; -unsafe $(AllowUnsafeBlocks)" />
   </Target>
   <ItemGroup>
+    <Compile Remove="Projectiles\Minions\**" />
+    <EmbeddedResource Remove="Projectiles\Minions\**" />
+    <None Remove="Projectiles\Minions\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Projectiles\Minions\" />
     <Folder Include="Projectiles\Pets\" />
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">

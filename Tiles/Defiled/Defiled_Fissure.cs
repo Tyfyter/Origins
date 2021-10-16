@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Weapons.Defiled;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,23 +37,24 @@ namespace Origins.Tiles.Defiled {
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) {
             Player player = Main.LocalPlayer;
-			if (Main.hardMode && player.HeldItem.hammer >= 45) {
-
+			if (player.HeldItem.hammer >= 45) {
 				return true;
 			}
-
+			Projectile.NewProjectile(new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0:0, ai1:Main.myPlayer);
             return false;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
 		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-            if (Main.netMode == NetmodeID.MultiplayerClient || !Main.hardMode || WorldGen.noTileActions || WorldGen.gen){
-		        return;
-	        }
-		}
+        
+        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+            if (noBreak) {
+                return true;
+            }
+            World.BiomeData.DefiledWastelands.CheckFissure(i, j, Type);
+            return true;
+        }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
             r = g = b = 0.3f;
         }

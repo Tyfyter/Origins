@@ -163,48 +163,50 @@ namespace Origins.Items.Other.Testing {
         }
         void Apply() {
             switch(mode) {
-                case 0:
-                GenRunners.VeinRunner(
-                    i:(int)p.Dequeue(),
-                    j:(int)p.Dequeue(),
-                    strength:(double)p.Dequeue(),
-                    speed:(Vector2)p.Dequeue(),
-                    length:(double)p.Dequeue(),
-                    twist:(float)p.Dequeue(),
-                    randomtwist:(bool)p.Dequeue());
-                break;
-                case 1:
-                int i = (int)p.Dequeue();
-                int j = (int)p.Dequeue();
-                double strength = (double)p.Dequeue();
-                Vector2 speed = (Vector2)p.Dequeue();
-                Stack<((Vector2, Vector2), byte)> veins = new Stack<((Vector2, Vector2), byte)>();
-                double length = (double)p.Dequeue();
-                float twist = (float)p.Dequeue();
-                bool twistRand = (bool)p.Dequeue();
-                veins.Push(((new Vector2(i,j), speed), (p.Count>0?(byte)p.Dequeue():(byte)10)));
-                ((Vector2 p, Vector2 v) v, byte count) curr;
-                (Vector2 p, Vector2 v) ret;
-                byte count;
-                while(veins.Count>0) {
-                    curr = veins.Pop();
-                    count = curr.count;
-                    ret = GenRunners.VeinRunner(
-                        i:(int)curr.v.p.X,
-                        j:(int)curr.v.p.Y,
-                        strength:strength,
-                        speed:curr.v.v,
-                        length:length,
-                        twist:twist,
-                        randomtwist:twistRand);
-                    if(count>0&&Main.rand.Next(3)==0) {
-                        veins.Push(((ret.p, ret.v.RotatedBy(Main.rand.NextBool()?-1:1)), (byte)Main.rand.Next(--count)));
-                    }
-                    if(count>0) {
-                        veins.Push(((ret.p, ret.v.RotatedByRandom(0.05)), --count));
-                    }
+                case 0: {
+                    GenRunners.VeinRunner(
+                        i: (int)p.Dequeue(),
+                        j: (int)p.Dequeue(),
+                        strength: (double)p.Dequeue(),
+                        speed: (Vector2)p.Dequeue(),
+                        length: (double)p.Dequeue(),
+                        twist: (float)p.Dequeue(),
+                        randomtwist: (bool)p.Dequeue());
+                    break;
                 }
-                break;
+                case 1: {
+                    int i = (int)p.Dequeue();
+                    int j = (int)p.Dequeue();
+                    double strength = (double)p.Dequeue();
+                    Vector2 speed = (Vector2)p.Dequeue();
+                    Stack<((Vector2, Vector2), byte)> veins = new Stack<((Vector2, Vector2), byte)>();
+                    double length = (double)p.Dequeue();
+                    float twist = (float)p.Dequeue();
+                    bool twistRand = (bool)p.Dequeue();
+                    veins.Push(((new Vector2(i, j), speed), (p.Count > 0 ? (byte)p.Dequeue() : (byte)10)));
+                    ((Vector2 p, Vector2 v) v, byte count) curr;
+                    (Vector2 p, Vector2 v) ret;
+                    byte count;
+                    while (veins.Count > 0) {
+                        curr = veins.Pop();
+                        count = curr.count;
+                        ret = GenRunners.VeinRunner(
+                            i: (int)curr.v.p.X,
+                            j: (int)curr.v.p.Y,
+                            strength: strength,
+                            speed: curr.v.v,
+                            length: length,
+                            twist: twist,
+                            randomtwist: twistRand);
+                        if (count > 0 && Main.rand.Next(3) == 0) {
+                            veins.Push(((ret.p, ret.v.RotatedBy(Main.rand.NextBool() ? -1 : 1)), (byte)Main.rand.Next(--count)));
+                        }
+                        if (count > 0) {
+                            veins.Push(((ret.p, ret.v.RotatedByRandom(0.05)), --count));
+                        }
+                    }
+                    break;
+                }
                 case 2:
                 World.BiomeData.RivenHive.Gen.StartHive((int)p.Dequeue(), (int)p.Dequeue());
                 break;
@@ -217,9 +219,18 @@ namespace Origins.Items.Other.Testing {
                 case 5:
                 World.BiomeData.DefiledWastelands.Gen.StartDefiled((int)p.Dequeue(), (int)p.Dequeue());
                 break;
-                case 6:
-                World.BiomeData.DefiledWastelands.Gen.DefiledRib((float)p.Dequeue(), (float)p.Dequeue(), 8, 0.75f);
-                break;
+                case 6: {
+                    Vector2 a = new Vector2((float)p.Dequeue(), (float)p.Dequeue());
+                    World.BiomeData.DefiledWastelands.Gen.DefiledRibs((int)a.X, (int)a.Y);
+                    for (int i = (int)a.X - 1; i < (int)a.X + 3; i++) {
+                        for (int j = (int)a.Y - 2; j < (int)a.Y + 2; j++) {
+                            Main.tile[i, j].active(false);
+                        }
+                    }
+                    TileObject.CanPlace((int)a.X, (int)a.Y, (ushort)ModContent.TileType<Tiles.Defiled.Defiled_Heart>(), 0, 1, out var data);
+                    TileObject.Place(data);
+                    break;
+                }
             }
         }
     }

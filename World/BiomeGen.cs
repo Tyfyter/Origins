@@ -581,8 +581,15 @@ namespace Origins.World {
                     Point heart;
                     while(DefiledHearts.Count>0) {
                         heart = DefiledHearts.Pop();
-				        DefiledWastelands.Gen.DefiledRibs(heart.X, heart.Y);
-                        WorldGen.Place3x3Wall(heart.X, heart.Y, TileID.GemLocks, 5);
+				        DefiledWastelands.Gen.DefiledRibs(heart.X + genRand.NextFloat(-0.5f, 0.5f), heart.Y + genRand.NextFloat(-0.5f, 0.5f));
+                        for (int i = heart.X - 1; i < heart.X + 3; i++) {
+                            for (int j = heart.Y - 2; j < heart.Y + 2; j++) {
+                                Main.tile[i, j].active(false);
+                            }
+                        }
+                        TileObject.CanPlace(heart.X, heart.Y, (ushort)TileType<Defiled_Heart>(), 0, 1, out var data);
+                        TileObject.Place(data);
+                        Defiled_Hearts.Add(heart);
                     }
                 }));
             }

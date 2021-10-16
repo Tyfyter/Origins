@@ -43,17 +43,19 @@ namespace Origins.World {
         public static int totalRiven;
         public static int totalRiven2;
         public static byte tRiven;
-
+        public List<Point> Defiled_Hearts { get; set; } = new List<Point>();
 
         public override void Load(TagCompound tag) {
             peatSold = tag.GetAsInt("peatSold");
             worldEvil = tag.GetByte("worldEvil");
             if(tag.ContainsKey("worldSurfaceLow"))_worldSurfaceLow = tag.GetDouble("worldSurfaceLow");
+            if(tag.ContainsKey("defiledHearts"))Defiled_Hearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint).ToList();
+
             defiledResurgenceTiles = new List<(int, int)>(){};
             defiledAltResurgenceTiles = new List<(int, int, ushort)>(){};
         }
         public override TagCompound Save() {
-            TagCompound o = new TagCompound() { {"peatSold",  peatSold} , {"worldEvil",  worldEvil} };
+            TagCompound o = new TagCompound() { {"peatSold",  peatSold}, {"worldEvil",  worldEvil}, { "defiledHearts", Defiled_Hearts.Select(Utils.ToVector2).ToList() } };
             if(_worldSurfaceLow.HasValue) {
                 o.Add("worldSurfaceLow", _worldSurfaceLow);
             }

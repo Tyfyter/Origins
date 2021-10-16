@@ -85,6 +85,7 @@ namespace Origins {
         public float[] minionSubSlots = new float[minionSubSlotValues];
         public int wormHeadIndex = -1;
         public int heldProjectile = -1;
+        public int rapidSpawnFrames = 0;
         public override void ResetEffects() {
             oldBonuses = 0;
             if(fiberglassSet||fiberglassDagger)oldBonuses|=1;
@@ -135,6 +136,8 @@ namespace Origins {
                 cryostenLifeRegenCount--;
             if(dimStarlightCooldown>0)
                 dimStarlightCooldown--;
+            if(rapidSpawnFrames>0)
+                rapidSpawnFrames--;
             player.breathMax = 200;
             PlagueSight = false;
             minionSubSlots = new float[minionSubSlotValues];

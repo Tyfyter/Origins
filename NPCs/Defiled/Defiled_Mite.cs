@@ -25,7 +25,7 @@ namespace Origins.NPCs.Defiled {
             npc.defense = 6;
             npc.damage = 34;
             npc.width = 34;
-            npc.height = 28;
+            npc.height = 26;
             npc.friendly = false;
         }
         public override bool PreAI() {
@@ -50,8 +50,11 @@ namespace Origins.NPCs.Defiled {
                     npc.aiStyle = NPCAIStyleID.Tortoise;
                 }else if(npc.aiStyle==NPCAIStyleID.None) {
                     npc.velocity.X*=0.85f;
-                } else if(npc.aiStyle==NPCAIStyleID.Fighter){
+                }
+                if(Math.Sign(npc.velocity.X) == npc.direction){
                     frame = (byte)((frame+1)&15);
+                } else if(Math.Sign(npc.velocity.X) == -npc.direction){
+                    frame = (byte)((frame-1)&15);
                 }
             }else {
                 if(anger == 1) anger = 0;
@@ -59,7 +62,7 @@ namespace Origins.NPCs.Defiled {
             return npc.aiStyle!=NPCAIStyleID.None;
         }
         public override void FindFrame(int frameHeight) {
-            npc.frame = new Rectangle(0, 30*(frame&12)/4, 32, 30);
+            npc.frame = new Rectangle(0, 28*(frame&12)/4, 32, 26);
         }
         public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) {
             anger = 6;

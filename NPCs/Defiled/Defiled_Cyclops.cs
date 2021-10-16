@@ -24,8 +24,9 @@ namespace Origins.NPCs.Defiled {
             npc.defense = 8;
             npc.damage = 42;
             npc.width = 52;
-            npc.height = 68;
+            npc.height = 66;
             npc.friendly = false;
+            npc.scale = 0.9f;
         }
         public override void AI() {
             npc.TargetClosest();
@@ -36,7 +37,7 @@ namespace Origins.NPCs.Defiled {
 			if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X/=speedMult;
 			if(++npc.frameCounter>7) {
 				//add frame height to frame y position and modulo by frame height multiplied by walking frame count
-				npc.frame = new Rectangle(0, (npc.frame.Y+70)%280, 52, 68);
+				npc.frame = new Rectangle(0, (npc.frame.Y+66)%264, 52, 64);
 				npc.frameCounter = 0;
 			}
         }

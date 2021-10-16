@@ -8,6 +8,10 @@ using Tyfyter.Utils;
 using static Terraria.WorldGen;
 using System;
 using Terraria.ID;
+using Origins.Items.Weapons.Defiled;
+using Terraria.Localization;
+using Terraria.GameContent.Achievements;
+using Origins.Projectiles.Misc;
 
 namespace Origins.World.BiomeData {
     public static class DefiledWastelands {
@@ -24,8 +28,8 @@ namespace Origins.World.BiomeData {
 		public static class Gen {
 			static int fisureCount = 0;
 			public static void StartDefiled(float i, float j) {
-				const float strength = 2.4f;
-				const float wallThickness = 3f;
+				const float strength = 2.8f;
+				const float wallThickness = 3.1f;
 				const float distance = 32;
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
 				ushort stoneWallID = (ushort)ModContent.WallType<Defiled_Stone_Wall>();
@@ -58,7 +62,7 @@ namespace Origins.World.BiomeData {
 					switch (selector) {
 						case 0:
 						case 1:
-						next = (current.generation + 1, DefiledVeinRunner((int)current.data.position.X, (int)current.data.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), current.data.velocity.RotatedBy(genRand.NextBool()? genRand.NextFloat(-0.3f, -0.1f) : genRand.NextFloat(0.1f, 0.3f)), genRand.NextFloat(distance * 0.8f, distance * 1.2f), stoneID, wallThickness, wallType: stoneWallID));
+						next = (current.generation + 1, DefiledVeinRunner((int)current.data.position.X, (int)current.data.position.Y, strength * genRand.NextFloat(0.9f, 1.1f), current.data.velocity.RotatedBy(genRand.NextBool()? genRand.NextFloat(-0.6f, -0.1f) : genRand.NextFloat(0.2f, 0.6f)), genRand.NextFloat(distance * 0.8f, distance * 1.2f), stoneID, wallThickness, wallType: stoneWallID));
                         airCheckVec = next.data.position;
 						if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
 							break;
@@ -103,6 +107,26 @@ namespace Origins.World.BiomeData {
 						break;
 					}
                 }
+				ushort fissureID = (ushort)ModContent.TileType<Defiled_Fissure>();
+                while (fisureCount < 6 && fisureCheckSpots.Count > 0) {
+					int ch = genRand.Next(fisureCheckSpots.Count);
+                    for (int o = 0; o > -5; o = o > 0 ? -o : -o + 1) {
+						Vector2 p = fisureCheckSpots[ch];
+						int loop = 0;
+                        for (; !Main.tile[(int)p.X, (int)p.Y + 1].active(); p.Y++) {
+                            if (++loop > 10) {
+								break;
+                            }
+                        }
+                        if (TileObject.CanPlace((int)p.X, (int)p.Y, fissureID, 0, 0, out TileObject to)) {
+							WorldGen.Place2x2((int)p.X, (int)p.Y, fissureID, 0);
+							fisureCount++;
+							break;
+                        }
+                    }
+					fisureCheckSpots.RemoveAt(ch);
+                }
+				Main.NewText(fisureCount);
 			}
 			public static void DefiledCave(float i, float j, float sizeMult = 1f) {
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
@@ -131,7 +155,7 @@ namespace Origins.World.BiomeData {
 						if (diff > 16 * sizeMult) {
 							continue;
 						}
-                        if (Math.Cos(diff*0.7f)<=0) {
+                        if (Math.Cos(diff*0.7f)<=0.1f) {
 							Main.tile[x, y].ResetToType(stoneID);
                         } else {
 							Main.tile[x, y].active(false);
@@ -261,6 +285,112 @@ namespace Origins.World.BiomeData {
 				float fx2 = fx0 * (float)(Math.Min(Math.Pow(quarx % 3, quarx % 5), 2) + 0.5f);
 				return fx0 - fx2 + fx1;
 			}
+		}
+		
+		public static void CheckFissure(int i, int j, int type) {
+			if (destroyObject) {
+				return;
+			}
+            int x = Main.tile[i, j].frameX != 0 ? i - 1 : i;
+            int y = Main.tile[i, j].frameY != 0 && Main.tile[i, j].frameY != 36 ? j - 1 : j;
+            for (int k = 0; k < 2; k++) {
+				for (int l = 0; l < 2; l++) {
+					Tile tile = Main.tile[x + k, y + l];
+					if (tile != null && (!tile.nactive() || tile.type != type)) {
+						destroyObject = true;
+						break;
+					}
+				}
+				if (destroyObject) {
+					break;
+				}
+			}
+			if (!destroyObject) {
+				return;
+			}
+			for (int m = x; m < x + 2; m++) {
+				for (int n = y; n < y + 2; n++) {
+					if (Main.tile[m, n].type == type) {
+						KillTile(m, n);
+					}
+				}
+			}
+			if (Main.netMode != NetmodeID.MultiplayerClient && !noTileActions) {
+				if (genRand.Next(2) == 0) {
+					spawnMeteor = true;
+				}
+				int selection = Main.rand.Next(5);
+				if (!shadowOrbSmashed) {
+					selection = 0;
+				}
+				switch (selection) {
+					case 0: 
+					Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<Defiled_Burst>(), 1, noBroadcast: false, -1);
+					int stack2 = WorldGen.genRand.Next(100, 101);
+					Item.NewItem(i * 16, j * 16, 32, 32, ItemID.MusketBall, stack2);
+					break;
+				
+					case 1:
+					Item.NewItem(i * 16, j * 16, 32, 32, ItemID.Vilethorn, 1, noBroadcast: false, -1);
+					break;
+
+					case 2:
+					Item.NewItem(i * 16, j * 16, 32, 32, ItemID.BallOHurt, 1, noBroadcast: false, -1);
+					break;
+
+					case 3:
+					Item.NewItem(i * 16, j * 16, 32, 32, ItemID.ShadowOrb, 1, noBroadcast: false, -1);
+					break;
+
+					case 4:
+					Item.NewItem(i * 16, j * 16, 32, 32, ItemID.BandofStarpower, 1, noBroadcast: false, -1);
+					break;
+				}
+				shadowOrbSmashed = true;
+				float fx = x * 16;
+				float fy = y * 16;
+				float dist = -1f;
+				int player = 0;
+				for (int index = 0; index < 255; index++) {
+					float curDist = Math.Abs(Main.player[index].position.X - fx) + Math.Abs(Main.player[index].position.Y - fy);
+					if (curDist < dist || dist == -1f) {
+						player = index;
+						dist = curDist;
+					}
+				}
+				Projectile.NewProjectile(new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, ai0:1, ai1:player);
+				/*
+				shadowOrbCount++;
+				if (shadowOrbCount >= 3) {
+					shadowOrbCount = 0;
+					float fx = x * 16;
+					float fy = y * 16;
+					float distance = -1f;
+					int plr = 0;
+					for (int pindex = 0; pindex < 255; pindex++) {
+						float currentDist = Math.Abs(Main.player[pindex].position.X - fx) + Math.Abs(Main.player[pindex].position.Y - fy);
+						if (currentDist < distance || distance == -1f) {
+							plr = pindex;
+							distance = currentDist;
+						}
+					}
+					NPC.SpawnOnPlayer(plr, 1);
+				} else {
+					LocalizedText localizedText = Lang.misc[10];
+					if (shadowOrbCount == 2) {
+						localizedText = Lang.misc[11];
+					}
+					if (Main.netMode == NetmodeID.SinglePlayer) {
+						Main.NewText(localizedText.ToString(), 50, byte.MaxValue, 130);
+					}else if (Main.netMode == NetmodeID.Server) {
+						NetMessage.BroadcastChatMessage(NetworkText.FromKey(localizedText.Key), new Color(50, 255, 130));
+					}
+					AchievementsHelper.NotifyProgressionEvent(7);
+				}
+				 */
+			}
+			Main.PlaySound(SoundID.NPCKilled, i * 16, j * 16);
+			destroyObject = false;
 		}
 	}
 }

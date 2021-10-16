@@ -12,6 +12,7 @@ using Terraria.DataStructures;
 namespace Origins.NPCs.Defiled {
     public class Defiled_Brute : ModNPC, IMeleeCollisionDataNPC {
         public const float speedMult = 0.75f;
+        public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
         bool attacking = false;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Krusher");
@@ -28,6 +29,10 @@ namespace Origins.NPCs.Defiled {
             npc.friendly = false;
         }
         public override bool PreAI() {
+            if(!attacking) {
+                if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X/=SpeedMult;
+                //npc.Hitbox = new Rectangle((int)npc.position.X+(npc.oldDirection == 1 ? 70 : 52), (int)npc.position.Y, 56, npc.height);
+            }
             return true;
         }
         public override void AI() {
@@ -60,18 +65,21 @@ namespace Origins.NPCs.Defiled {
                         npc.frameCounter = 0;
                     }
                 }
+                if (npc.collideY) {
+                    npc.velocity.X*=0.5f;
+                }
             }else{
-                if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X/=speedMult;
                 if(++npc.frameCounter>9) {
                     //add frame height to frame y position and modulo by frame height multiplied by walking frame count
                     npc.frame = new Rectangle(0, (npc.frame.Y+170)%680, 182, 170);
                     npc.frameCounter = 0;
                 }
+                if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=SpeedMult;
             }
         }
         public override void PostAI() {
             if(!attacking) {
-                if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=speedMult;
+                //if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=SpeedMult;
                 //npc.Hitbox = new Rectangle((int)npc.position.X+(npc.oldDirection == 1 ? 70 : 52), (int)npc.position.Y, 56, npc.height);
             }
         }
