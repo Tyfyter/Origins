@@ -39,6 +39,7 @@ namespace Origins.Projectiles.Misc {
             int y = (int)(projectile.position.Y / 16);
             WorldGen.TileFrame(x, y, true);
             Framing.WallFrame(x, y, true);
+            Lighting.AddLight(projectile.Center, 0.15f, 0.15f, 0.15f);
             if (x == Target.X && y == Target.Y) {
                 projectile.Kill();
             }
