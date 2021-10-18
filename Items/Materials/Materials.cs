@@ -49,7 +49,7 @@ namespace Origins.Items.Materials {
     }
     public class Silicon_Wafer : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Silicon Wafer");
+            DisplayName.SetDefault("Silicon Packet");
         }
         public override void SetDefaults() {
             item.maxStack = 999;
@@ -149,7 +149,7 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Undead Chunk");
         }
         public override void SetDefaults() {
-            item.maxStack = 999;
+            item.maxStack = 99;
         }
     }
     public class Infested_Bar : ModItem {
@@ -174,7 +174,7 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Riven Sample");
         }
         public override void SetDefaults() {
-            item.maxStack = 999;
+            item.maxStack = 99;
         }
     }
     public class Wilting_Rose_Item : ModItem {
