@@ -35,6 +35,8 @@ namespace Origins.Tiles.Riven {
 			//SetModTree(Defiled_Tree.Instance);
             mergeID = TileID.Stone;
             soundType = SoundID.NPCKilled;
+            minPick = 65;
+            mineResist = 1.5f;
         }
         bool recursion = false;
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {

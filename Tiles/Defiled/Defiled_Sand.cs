@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Projectiles;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,6 +87,10 @@ namespace Origins.Tiles.Defiled {
 			style = 0;
 			return ModContent.TileType<Defiled_Tree_Sapling>();
 		}
+        public override bool CreateDust(int i, int j, ref int type) {
+            type = DefiledWastelands.DefaultTileDust;
+            return true;
+        }
     }
     public class Defiled_Sand_Item : ModItem {
         public override void SetStaticDefaults() {

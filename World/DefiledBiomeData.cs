@@ -17,6 +17,7 @@ namespace Origins.World.BiomeData {
     public static class DefiledWastelands {
         public const int NeededTiles = 200;
         public const int ShaderTileCount = 75;
+		public const short DefaultTileDust = DustID.Titanium;
         public static class SpawnRates {
             public const float Cyclops = 1;
             public const float Mite = 1;

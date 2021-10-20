@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Ore : OriginTile {
+    public class Defiled_Ore : OriginTile, IComplexMineDamageTile {
 		public override void SetDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -21,8 +21,17 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(225, 225, 225), name);
             mergeID = TileID.Demonite;
 		}
+        public override bool CreateDust(int i, int j, ref int type) {
+            type = DustID.WhiteTorch;
+            return true;
+        }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
             r = g = b = 0.25f;
+        }
+        public void MinePower(int i, int j, int minePower, ref int damage) {
+            if (minePower >= 55 || j <= Main.worldSurface) {
+                damage += (int)(minePower / mineResist);
+            }
         }
     }
     public class Defiled_Ore_Item : ModItem {

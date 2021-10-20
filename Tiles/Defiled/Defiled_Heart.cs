@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Weapons.Defiled;
 using Origins.World;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,10 @@ namespace Origins.Tiles.Defiled {
 			adjTiles = new int[] { TileID.ShadowOrbs };
             ID = Type;
 		}
+        public override bool CreateDust(int i, int j, ref int type) {
+            type = DefiledWastelands.DefaultTileDust;
+            return true;
+        }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
             r = g = b = 0.3f;
         }

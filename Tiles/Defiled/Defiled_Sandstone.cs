@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,10 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(150, 150, 150));
             mergeID = TileID.Sandstone;
 		}
+        public override bool CreateDust(int i, int j, ref int type) {
+            type = DefiledWastelands.DefaultTileDust;
+            return true;
+        }
     }
     public class Defiled_Sandstone_Item : ModItem {
         public override void SetStaticDefaults() {

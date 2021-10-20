@@ -247,6 +247,9 @@ namespace Origins {
     public interface IMeleeCollisionDataNPC {
         void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult);
     }
+    interface IComplexMineDamageTile {
+        void MinePower(int i, int j, int minePower, ref int damage);
+    }
     public static class MeleeCollisionNPCData {
         public static float knockbackMult = 1f;
     }

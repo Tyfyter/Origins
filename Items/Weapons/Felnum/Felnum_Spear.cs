@@ -34,8 +34,8 @@ namespace Origins.Items.Weapons.Felnum {
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 8);
-            recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
+            recipe.SetResult(this);
             recipe.AddRecipe();
         }
         public override void GetWeaponDamage(Player player, ref int damage) {

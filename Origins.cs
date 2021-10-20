@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MonoMod.RuntimeDetour;
+using MonoMod.RuntimeDetour.HookGen;
 using Origins.Items;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Rift;
@@ -344,6 +345,7 @@ namespace Origins {
 	            }
             };
             On.Terraria.Lang.GetDryadWorldStatusDialog += Lang_GetDryadWorldStatusDialog;
+            HookEndpointManager.Add(typeof(TileLoader).GetMethod("MineDamage", BindingFlags.Public|BindingFlags.Static), (hook_MinePower)MineDamage);
         }
 
         private string Lang_GetDryadWorldStatusDialog(On.Terraria.Lang.orig_GetDryadWorldStatusDialog orig) {
@@ -400,7 +402,18 @@ namespace Origins {
                 Language.GetTextValue("DryadSpecialText.WorldDescriptionWork"))));
 	        return text + " " + str;
         }
-
+        private delegate void orig_MinePower(int minePower, ref int damage);
+        private delegate void hook_MinePower(orig_MinePower orig, int minePower, ref int damage);
+        private void MineDamage(orig_MinePower orig, int minePower, ref int damage) {
+	        ModTile modTile = MC.GetModTile(Main.tile[Player.tileTargetX, Player.tileTargetY].type);
+            if (modTile is null) {
+                damage += minePower;
+            } else if(modTile is IComplexMineDamageTile damageTile){
+                damageTile.MinePower(Player.tileTargetX, Player.tileTargetY, minePower, ref damage);
+            } else {
+                damage += ((int)(minePower / modTile.mineResist));
+            }
+        }
         private void WorldGen_CountTiles(On.Terraria.WorldGen.orig_CountTiles orig, int X) {
             if(X == 0)OriginWorld.UpdateTotalEvilTiles();
             orig(X);
