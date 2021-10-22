@@ -20,6 +20,9 @@ namespace Origins.Tiles.Brine {
 			AddMapEntry(new Color(18, 73, 56));
             mergeID = TileID.Stone;
 		}
+        public override bool CanExplode(int i, int j) {
+            return false;
+        }
     }
     public class Sulphur_Stone_Item : ModItem {
         public override void SetStaticDefaults() {
