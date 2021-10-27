@@ -111,7 +111,7 @@ namespace Origins.Items.Weapons.Explosives {
                 projectile.ai[0]++;
                 projectile.ai[1] = target.whoAmI;
             }
-            target.AddBuff(ModContent.BuffType<SolventDebuff>(), 480);
+            target.AddBuff(Solvent_Debuff.ID, 480);
             //target.AddBuff(ModContent.BuffType<Toxic>(), 480);
             target.AddBuff(BuffID.CursedInferno, 480);
             target.AddBuff(BuffID.Venom, 480);

@@ -1,7 +1,8 @@
-Description file detected: 4
+Description file detected: 5
 * BiomeShade.fx
 * BlackHole.fx
 * PerlinFade.fx
+* Rasterize.fx
 * Solvent.fx
 
 Start loading description file: BiomeShade.fx ..Done!
@@ -30,6 +31,10 @@ Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
 File: C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\PerlinFade.fx
 .Done!
 Start compiling font content file: PerlinFade.xnb ..Done!
+
+Start loading description file: Rasterize.fx ..Done!
+Start compiling font..Done!
+Start compiling font content file: Rasterize.xnb ..Done!
 
 Start loading description file: Solvent.fx ..Done!
 Start compiling font..Done!

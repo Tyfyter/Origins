@@ -61,6 +61,7 @@ namespace Origins {
         public static MiscShaderData perlinFade0;
         public static MiscShaderData blackHoleShade;
         public static MiscShaderData solventShader;
+        public static MiscShaderData rasterizeShader;
         public static Texture2D cellNoiseTexture;
         public static Texture2D eyndumCoreUITexture;
         public static Texture2D eyndumCoreTexture;
@@ -293,6 +294,9 @@ namespace Origins {
                 solventShader = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/Solvent")), "Dissolve");
                 GameShaders.Misc["Origins:Solvent"] = solventShader;
                 cellNoiseTexture = GetTexture("Textures/Cell_Noise_Pixel");
+
+                rasterizeShader = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/Rasterize")), "Rasterize");
+                GameShaders.Misc["Origins:Rasterize"] = rasterizeShader;
                 //Filters.Scene["Origins:ZoneDusk"].GetShader().UseOpacity(0.35f);
                 //Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.
                 //Filters.Scene["BlackHole"] = new Filter(new ScreenShaderData(screenRef, "BlackHole"), EffectPriority.VeryHigh);
@@ -486,6 +490,7 @@ namespace Origins {
             perlinFade0 = null;
             blackHoleShade = null;
             solventShader = null;
+            rasterizeShader = null;
             cellNoiseTexture = null;
             OriginExtensions.drawPlayerItemPos = null;
             Tolruk.glowmasks = null;

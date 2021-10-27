@@ -1325,6 +1325,10 @@ namespace Origins {
         public static Point OffsetBy(this Point self, int x = 0, int y = 0) {
             return new Point(self.X + x, self.Y + y);
         }
+        public static Vector2 WithMaxLength(this Vector2 vector, float length) {
+            float pLength = vector.LengthSquared();
+            return pLength > length * length ? Vector2.Normalize(vector) * length: vector;
+        }
         public static byte PackToByte<T>(this (T h, T g, T f, T e, T d, T c, T b, T a) value, Func<T, bool> method) {
             return (byte)((method(value.h) ? 128 : 0) |
                 (method(value.g) ? 64 : 0) |

@@ -49,6 +49,7 @@ namespace Origins {
         public bool madHand = false;
         public bool fiberglassDagger = false;
         public bool advancedImaging = false;
+        public bool rasterize = false;
 
         public float explosiveDamage = 1;
         public int explosiveCrit = 4;
@@ -98,6 +99,7 @@ namespace Origins {
             cryostenSet = false;
             cryostenHelmet = false;
             oldFelnumShock = felnumShock;
+            rasterize = false;
             if(!felnumSet) {
                 felnumShock = 0;
             } else {
@@ -320,6 +322,9 @@ namespace Origins {
                     dimStarlightCooldown = 90;
                 }
             }
+            if (rasterize) { 
+                target.AddBuff(Rasterized_Debuff.ID, 24);
+            }
         }
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
             if(crit) {
@@ -329,6 +334,9 @@ namespace Origins {
                     Item.NewItem(target.position, target.width, target.height, ItemID.Star);
                     dimStarlightCooldown = 90;
                 }
+            }
+            if (rasterize && Main.rand.NextBool()) { 
+                target.AddBuff(Rasterized_Debuff.ID, 24);
             }
         }
         public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
@@ -349,7 +357,7 @@ namespace Origins {
             MeleeCollisionNPCData.knockbackMult = 1f;
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
-            if(player.HasBuff(SolventDebuff.ID)&&Main.rand.Next(9)<3) {
+            if(player.HasBuff(Solvent_Debuff.ID)&&Main.rand.Next(9)<3) {
                 crit = true;
             }
             if(defiledSet) {

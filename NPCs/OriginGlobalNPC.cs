@@ -19,6 +19,9 @@ using Origins.Buffs;
 
 namespace Origins.NPCs {
     public partial class OriginGlobalNPC : GlobalNPC {
+        public override void SetDefaults(NPC npc) {
+            npc.buffImmune[Rasterized_Debuff.ID] = npc.buffImmune[BuffID.Confused];
+        }
         public override void SetupShop(int type, Chest shop, ref int nextSlot) {
             if(type==NPCID.Demolitionist && ModContent.GetInstance<OriginWorld>().peatSold>=20) {
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
@@ -42,6 +45,10 @@ namespace Origins.NPCs {
                 npc.velocity = Vector2.Zero;
                 return false;
             }
+            if (rasterizedTime > 0) {
+                npc.velocity = Vector2.Lerp(npc.velocity, npc.oldVelocity, rasterizedTime * 0.25f);
+                npc.position = Vector2.Lerp(npc.position, npc.oldPosition, rasterizedTime * 0.25f);
+            }
             return true;
         }
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot) {
@@ -49,7 +56,7 @@ namespace Origins.NPCs {
             return base.CanHitPlayer(npc, target, ref cooldownSlot);
         }
         public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) {
-            if(npc.HasBuff(SolventDebuff.ID)&&crit) {
+            if(npc.HasBuff(Solvent_Debuff.ID)&&crit) {
                 damage*=1.3;
             }
             return true;

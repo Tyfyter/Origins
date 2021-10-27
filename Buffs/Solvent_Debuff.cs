@@ -8,8 +8,8 @@ using Terraria.ModLoader;
 using Origins.NPCs;
 
 namespace Origins.Buffs {
-    public class SolventDebuff : ModBuff {
-        public static int ID = -1;
+    public class Solvent_Debuff : ModBuff {
+        public static int ID { get; private set; } = -1;
         public override void SetDefaults() {
             DisplayName.SetDefault("Solvent");
             ID = Type;

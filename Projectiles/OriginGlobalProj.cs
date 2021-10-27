@@ -88,13 +88,13 @@ namespace Origins.Projectiles {
             if(viperEffect) {
                 bool crt = crit;
                 for(int i = 0; i < target.buffType.Length; i++) {
-                    if(Main.debuff[target.buffType[i]]&&target.buffType[i]!=SolventDebuff.ID) {
+                    if(Main.debuff[target.buffType[i]]&&target.buffType[i]!=Solvent_Debuff.ID) {
                         crit = true;
                         break;
                     }
                 }
                 if(crt || Main.rand.Next(0, 9)==0) {
-                    target.AddBuff(SolventDebuff.ID, 450);
+                    target.AddBuff(Solvent_Debuff.ID, 450);
                 }
             }
             if(target.boss && godHunterEffect != 0f) {

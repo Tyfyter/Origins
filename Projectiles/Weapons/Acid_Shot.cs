@@ -65,7 +65,7 @@ namespace Origins.Projectiles.Weapons {
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if(projectile.timeLeft>168&&(projectile.ai[1]%1+1)%1==0.5f)projectile.penetrate++;
-            target.AddBuff(ModContent.BuffType<SolventDebuff>(), 480);
+            target.AddBuff(ModContent.BuffType<Solvent_Debuff>(), 480);
             Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, 226, 0, 0, 100, new Color(0, 255, 0), 1.25f*projectile.scale);
             dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
             dust.noGravity = false;
