@@ -22,6 +22,7 @@ namespace Origins.Tiles.Riven {
             Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
+            TileID.Sets.Ore[Type] = true;
 			drop = ItemType<Infested_Ore_Item>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Infested Ore");

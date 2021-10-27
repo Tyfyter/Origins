@@ -15,6 +15,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
+            TileID.Sets.Ore[Type] = true;
 			drop = ItemType<Defiled_Ore_Item>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Lost Ore");

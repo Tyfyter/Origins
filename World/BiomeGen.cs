@@ -218,7 +218,17 @@ namespace Origins.World {
                                     validSpot = false;
                                 }
                             }
+
+                            bool gr = TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite];
+                            bool mb = TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble];
+                            TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = true;
+                            TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = true;
+
                             RivenHive.Gen.StartHive(startPos, (int)worldSurfaceLow - 10);
+
+                            TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = gr;
+                            TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = mb;
+
                             //CrimStart(startPos, (int)worldSurfaceLow - 10);
                             for(int jungleCheckX = minX; jungleCheckX < maxX; jungleCheckX++) {
                                 for(int jungleCheckY = (int)worldSurfaceLow; jungleCheckY < Main.worldSurface - 1.0; jungleCheckY++) {
@@ -475,11 +485,21 @@ namespace Origins.World {
                             int startY;
                             for (startY = (int)WorldGen.worldSurfaceLow; !Main.tile[centerX, startY].active(); startY++);
                             Point start = new Point(centerX, startY + genRand.Next(105, 150));//range of depths
+
+                            bool gr = TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite];
+                            bool mb = TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble];
+                            TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = true;
+                            TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = true;
+
                             DefiledWastelands.Gen.StartDefiled(start.X, start.Y);
                             DefiledHearts.Push(start);
+
+                            TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = gr;
+                            TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = mb;
                         }
                     }
                 });
+                
                 genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Altars"));
                 tasks.Insert(genIndex+1, new PassLegacy("Alternate World Evil Altars", (GenerationProgress progress) => {
                     ushort oreType = crimson ? TileID.Crimtane : TileID.Demonite;
