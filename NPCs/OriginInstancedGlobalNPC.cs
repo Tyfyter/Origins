@@ -20,7 +20,7 @@ namespace Origins.NPCs {
         public override void ResetEffects(NPC npc) {
             int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
             if (rasterized >= 0) {
-                rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 4), npc.buffTime[rasterized] - 1);
+                rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 16), npc.buffTime[rasterized] - 1);
             }
         }
         public override void AI(NPC npc) {
@@ -34,7 +34,7 @@ namespace Origins.NPCs {
             if(rasterizedTime > 0) {
 			    spriteBatch.End();
 	            Origins.rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTime);
-	            Origins.rasterizeShader.Shader.Parameters["uOffset"].SetValue(npc.velocity.WithMaxLength(4) * 0.25f * rasterizedTime);
+	            Origins.rasterizeShader.Shader.Parameters["uOffset"].SetValue(npc.velocity.WithMaxLength(4) * 0.0625f * rasterizedTime);
 	            Origins.rasterizeShader.Shader.Parameters["uWorldPosition"].SetValue(npc.position);
                 Origins.rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(Main.npcTexture[npc.type].Width, Main.npcTexture[npc.type].Height, npc.frame.Y));
                 Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;

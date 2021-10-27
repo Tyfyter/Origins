@@ -323,7 +323,7 @@ namespace Origins {
                 }
             }
             if (rasterize) { 
-                target.AddBuff(Rasterized_Debuff.ID, 24);
+                target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
             }
         }
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
@@ -335,8 +335,8 @@ namespace Origins {
                     dimStarlightCooldown = 90;
                 }
             }
-            if (rasterize && Main.rand.NextBool()) { 
-                target.AddBuff(Rasterized_Debuff.ID, 24);
+            if (rasterize) { 
+                target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);//
             }
         }
         public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
