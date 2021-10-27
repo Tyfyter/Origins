@@ -12,12 +12,8 @@ namespace Origins.Buffs {
         public const int duration = 24;
         public static int ID { get; private set; } = -1;
         public override void SetDefaults() {
-            DisplayName.SetDefault("Solvent");
+            DisplayName.SetDefault("Rasterized");
             ID = Type;
-        }
-        public override bool Autoload(ref string name, ref string texture) {
-            texture = "Terraria/Buff_160";
-            return true;
         }
     }
 }
