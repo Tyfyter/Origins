@@ -28,7 +28,8 @@ namespace Origins {
     public class OriginPlayer : ModPlayer {
         public const float rivenMaxMult = 0.3f;
         public float rivenMult => (1f-rivenMaxMult)+Math.Max((player.statLife/(float)player.statLifeMax2)*(rivenMaxMult*2), rivenMaxMult);
-
+        
+        #region set bonuses
         public bool fiberglassSet = false;
         public bool cryostenSet = false;
         public bool cryostenHelmet = false;
@@ -36,13 +37,14 @@ namespace Origins {
         public float felnumShock = 0;
         public float oldFelnumShock = 0;
         public bool celestineSet = false;
-        //public const int FelnumMax = 100;
         public bool minerSet = false;
         public bool defiledSet = false;
         public bool rivenSet = false;
         public bool riftSet = false;
         public bool eyndumSet = false;
+        #endregion set bonuses
 
+        #region accessories
         public bool bombHandlingDevice = false;
         public bool dimStarlight = false;
         public byte dimStarlightCooldown = 0;
@@ -50,12 +52,16 @@ namespace Origins {
         public bool fiberglassDagger = false;
         public bool advancedImaging = false;
         public bool rasterize = false;
+        #endregion
 
+        #region explosive stats
         public float explosiveDamage = 1;
         public int explosiveCrit = 4;
         public float explosiveThrowSpeed = 1;
         public float explosiveSelfDamage = 1;
+        #endregion
 
+        #region biomes
         public bool ZoneVoid = false;
         public float ZoneVoidProgress = 0;
         public float ZoneVoidProgressSmoothed = 0;
@@ -71,6 +77,12 @@ namespace Origins {
         public bool ZoneBrine = false;
         public float ZoneBrineProgress = 0;
         public float ZoneBrineProgressSmoothed = 0;
+        #endregion
+
+        #region buffs
+        public int rapidSpawnFrames = 0;
+        public int rasterizedTime = 0;
+        #endregion
 
         public bool DrawShirt = false;
         public bool DrawPants = false;
@@ -86,7 +98,6 @@ namespace Origins {
         public float[] minionSubSlots = new float[minionSubSlotValues];
         public int wormHeadIndex = -1;
         public int heldProjectile = -1;
-        public int rapidSpawnFrames = 0;
         public override void ResetEffects() {
             oldBonuses = 0;
             if(fiberglassSet||fiberglassDagger)oldBonuses|=1;
@@ -140,18 +151,27 @@ namespace Origins {
                 dimStarlightCooldown--;
             if(rapidSpawnFrames>0)
                 rapidSpawnFrames--;
+            int rasterized = player.FindBuffIndex(Rasterized_Debuff.ID);
+            if (rasterized >= 0) {
+                rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 8), player.buffTime[rasterized] - 1);
+            }
             player.breathMax = 200;
             PlagueSight = false;
             minionSubSlots = new float[minionSubSlotValues];
         }
         public override void PostUpdate() {
             heldProjectile = -1;
+            if (rasterizedTime > 0) {
+                player.velocity = Vector2.Lerp(player.velocity, player.oldVelocity, rasterizedTime * 0.06f);
+                player.position = Vector2.Lerp(player.position, player.oldPosition, rasterizedTime * 0.06f);
+            }
+            player.oldVelocity = player.velocity;
         }
         public override void PostUpdateMiscEffects() {
             if(cryostenHelmet) {
                 if(player.statLife!=player.statLifeMax2&&(int)Main.time%(cryostenLifeRegenCount>0 ? 5 : 15)==0)
                     for(int i = 0; i < 10; i++) {
-                        int num6 = Dust.NewDust(player.position, player.width, player.height, 92);
+                        int num6 = Dust.NewDust(player.position, player.width, player.height, DustID.Frost);
                         Main.dust[num6].noGravity = true;
                         Main.dust[num6].velocity *= 0.75f;
                         int num7 = Main.rand.Next(-40, 41);
@@ -170,6 +190,7 @@ namespace Origins {
                     equippedCore.UpdateEquip(player);
                 }
             }
+            player.buffImmune[Rasterized_Debuff.ID] = player.buffImmune[BuffID.Cursed];
         }
         public void ApplyEyndumSetBuffs() {
             #region movement
@@ -399,6 +420,8 @@ namespace Origins {
                     }
                 }
             }
+        }
+        public override void PreUpdateMovement() {
         }
         /*public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item) {
             if(item.type==ModContent.ItemType<Peat_Moss>()) {

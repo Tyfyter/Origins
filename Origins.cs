@@ -350,6 +350,30 @@ namespace Origins {
             };
             On.Terraria.Lang.GetDryadWorldStatusDialog += Lang_GetDryadWorldStatusDialog;
             HookEndpointManager.Add(typeof(TileLoader).GetMethod("MineDamage", BindingFlags.Public|BindingFlags.Static), (hook_MinePower)MineDamage);
+            On.Terraria.Main.DrawPlayer_DrawAllLayers += Main_DrawPlayer_DrawAllLayers;
+        }
+
+        private void Main_DrawPlayer_DrawAllLayers(On.Terraria.Main.orig_DrawPlayer_DrawAllLayers orig, Main self, Player drawPlayer, int projectileDrawPosition, int cHead) {
+            bool shaded = false;
+            try {
+                int rasterizedTime = drawPlayer.GetModPlayer<OriginPlayer>().rasterizedTime;
+                if (rasterizedTime > 0) {
+                    shaded = true;
+                    Main.spriteBatch.End();
+                    rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTime);
+                    rasterizeShader.Shader.Parameters["uOffset"].SetValue(drawPlayer.velocity.WithMaxLength(4) * 0.0625f * rasterizedTime);
+                    rasterizeShader.Shader.Parameters["uWorldPosition"].SetValue(drawPlayer.position);
+                    rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(40, 1120, 0));
+                    Main.graphics.GraphicsDevice.Textures[1] = cellNoiseTexture;
+                    Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, rasterizeShader.Shader, Main.GameViewMatrix.ZoomMatrix);
+                }
+                orig(self, drawPlayer, projectileDrawPosition, cHead);
+            } finally {
+                if (shaded) {
+                    Main.spriteBatch.End();
+                    Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, null, Main.Transform);
+                }
+            }
         }
 
         private string Lang_GetDryadWorldStatusDialog(On.Terraria.Lang.orig_GetDryadWorldStatusDialog orig) {

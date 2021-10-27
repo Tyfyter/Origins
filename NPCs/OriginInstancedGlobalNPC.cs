@@ -36,7 +36,7 @@ namespace Origins.NPCs {
 	            Origins.rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTime);
 	            Origins.rasterizeShader.Shader.Parameters["uOffset"].SetValue(npc.velocity.WithMaxLength(4) * 0.0625f * rasterizedTime);
 	            Origins.rasterizeShader.Shader.Parameters["uWorldPosition"].SetValue(npc.position);
-                Origins.rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(Main.npcTexture[npc.type].Width, Main.npcTexture[npc.type].Height, npc.frame.Y));
+                Origins.rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(Main.npcTexture[npc.type].Width, Main.npcTexture[npc.type].Height, 0));
                 Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;
 			    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, Origins.rasterizeShader.Shader, Main.GameViewMatrix.ZoomMatrix);
                 return true;
