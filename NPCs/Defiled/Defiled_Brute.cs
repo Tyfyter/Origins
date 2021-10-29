@@ -10,13 +10,13 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Brute : ModNPC, IMeleeCollisionDataNPC {
+    public class Defiled_Brute : ModNPC {
         public const float speedMult = 0.75f;
-        public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
-        bool attacking = false;
+        //public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
+        //bool attacking = false;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Krusher");
-            Main.npcFrameCount[npc.type] = 7;
+            Main.npcFrameCount[npc.type] = 4;
         }
         public override void SetDefaults() {
             npc.CloneDefaults(NPCID.Zombie);
@@ -24,20 +24,20 @@ namespace Origins.NPCs.Defiled {
             npc.lifeMax = 160;
             npc.defense = 9;
             npc.damage = 49;
-            npc.width = 56;
-            npc.height = 108;
+            npc.width = 76;
+            npc.height = 66;
             npc.friendly = false;
         }
         public override bool PreAI() {
-            if(!attacking) {
-                if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X/=SpeedMult;
+            //if(!attacking) {
+                if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X/=speedMult;
                 //npc.Hitbox = new Rectangle((int)npc.position.X+(npc.oldDirection == 1 ? 70 : 52), (int)npc.position.Y, 56, npc.height);
-            }
+            //}
             return true;
         }
         public override void AI() {
             npc.TargetClosest();
-            if(npc.localAI[3]<=0&&npc.targetRect.Intersects(new Rectangle((int)npc.position.X-(npc.direction == 1 ? 70 : 52), (int)npc.position.Y, 178, npc.height))) {
+            /*if(npc.localAI[3]<=0&&npc.targetRect.Intersects(new Rectangle((int)npc.position.X-(npc.direction == 1 ? 70 : 52), (int)npc.position.Y, 178, npc.height))) {
                 if(!attacking) {
                     npc.frame = new Rectangle(0, 680, 182, 170);
                     npc.frameCounter = 0;
@@ -45,12 +45,12 @@ namespace Origins.NPCs.Defiled {
                 }
                 attacking = true;
             }
-            if(npc.localAI[3]>0)npc.localAI[3]--;
+            if(npc.localAI[3]>0)npc.localAI[3]--;*/
             if (npc.HasPlayerTarget) {
                 npc.FaceTarget();
                 npc.spriteDirection = npc.direction;
             }
-            if(attacking) {
+            /*if(attacking) {
                 if(++npc.frameCounter>7) {
                     //add frame height to frame y position and modulo by frame height multiplied by walking frame count
                     if(npc.frame.Y>=1018) {
@@ -68,22 +68,22 @@ namespace Origins.NPCs.Defiled {
                 if (npc.collideY) {
                     npc.velocity.X*=0.5f;
                 }
-            }else{
+            //}else{*/
                 if(++npc.frameCounter>9) {
                     //add frame height to frame y position and modulo by frame height multiplied by walking frame count
-                    npc.frame = new Rectangle(0, (npc.frame.Y+170)%680, 182, 170);
+                    npc.frame = new Rectangle(0, (npc.frame.Y+66)%264, 76, 66);
                     npc.frameCounter = 0;
                 }
-                if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=SpeedMult;
-            }
+                if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=speedMult;
+            //}
         }
         public override void PostAI() {
-            if(!attacking) {
+            //if(!attacking) {
                 //if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=SpeedMult;
                 //npc.Hitbox = new Rectangle((int)npc.position.X+(npc.oldDirection == 1 ? 70 : 52), (int)npc.position.Y, 56, npc.height);
-            }
+            //}
         }
-        public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
+        /*public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
             bool flip = npc.direction == 1;
             //Rectangle armHitbox = new Rectangle((int)npc.position.X+(flip?0:108), (int)npc.position.Y, 70, npc.height);
             bool h = victimHitbox.Intersects(npcRect);
@@ -101,8 +101,8 @@ namespace Origins.NPCs.Defiled {
                 npcRect = armHitbox;
                 return;
             }
-            npcRect = new Rectangle((int)npc.position.X+(flip?70:52), (int)npc.position.Y, 56, npc.height);*/
-        }
+            npcRect = new Rectangle((int)npc.position.X+(flip?70:52), (int)npc.position.Y, 56, npc.height);* /
+        }*/
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
             Rectangle spawnbox = projectile.Hitbox.MoveToWithin(npc.Hitbox);
             for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(Main.rand.NextVectorIn(spawnbox), projectile.velocity, mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
