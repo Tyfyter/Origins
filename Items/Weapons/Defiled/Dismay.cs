@@ -24,6 +24,7 @@ namespace Origins.Items.Weapons.Defiled {
             item.knockBack = 5;
             //item.shootSpeed = 20f;
             item.shoot = ModContent.ProjectileType<Dismay_Spike>();
+            item.shootSpeed *= 1.2f;
             item.useTurn = false;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
@@ -65,7 +66,7 @@ namespace Origins.Items.Weapons.Defiled {
                 //if(projectile.timeLeft == 25)projectile.timeLeft = projOwner.itemAnimationMax-1;
 				projectile.netUpdate = true;
 			}
-			if (projectile.timeLeft > 15){
+			if (projectile.timeLeft > 17){
 				movementFactor+=1f;
             }
 			projectile.position += projectile.velocity * movementFactor;

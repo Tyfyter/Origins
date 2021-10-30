@@ -117,13 +117,15 @@ namespace Origins.World {
                     }
                     //}
                 }));
-                tasks.Insert(genIndex + 1, new PassLegacy("BrinePool", delegate (GenerationProgress progress) {
+                tasks.Insert(genIndex + 1, new PassLegacy("Brine Pool", delegate (GenerationProgress progress) {
                     mod.Logger.Info("Pooling Brine");
                     progress.Message = "Pooling Brine";
                     //for (int i = 0; i < Main.maxTilesX / 5000; i++) {
                     int JungleX = (int)_JungleX;
                     int X = WorldGen.genRand.Next(JungleX - 100, JungleX + 100);
-                    int Y = WorldGen.genRand.Next((int)WorldGen.worldSurfaceLow, (int)WorldGen.worldSurfaceHigh) + (int)(WorldGen.worldSurfaceHigh - WorldGen.worldSurfaceLow);
+                    int Y;
+                    for (Y = (int)WorldGen.worldSurfaceLow; !Main.tile[X, Y].active(); Y++);
+                    Y += WorldGen.genRand.Next(100, 200);
                     mod.Logger.Info("BrineGen:" + X+", "+Y);
                     //WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
                     //WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);

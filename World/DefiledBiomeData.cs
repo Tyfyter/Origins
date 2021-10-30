@@ -173,7 +173,7 @@ namespace Origins.World.BiomeData {
 				ushort stoneWallID = (ushort)ModContent.WallType<Defiled_Stone_Wall>();
 				for (int x = (int)Math.Floor(i - (28 * sizeMult + 5)); x < (int)Math.Ceiling(i + (28 * sizeMult + 5)); x++) {
 					for (int y = (int)Math.Ceiling(j + (28 * sizeMult + 4)); y >= (int)Math.Floor(j - (28 * sizeMult + 4)); y--) {
-						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
+						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
 						if (diff > 35 * sizeMult) {
 							continue;
 						}
@@ -191,7 +191,7 @@ namespace Origins.World.BiomeData {
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
 				for (int x = (int)Math.Floor(i - (28 * sizeMult + 5)); x < (int)Math.Ceiling(i + (28 * sizeMult + 5)); x++) {
 					for (int y = (int)Math.Ceiling(j + (28 * sizeMult + 4)); y >= (int)Math.Floor(j - (28 * sizeMult + 4)); y--) {
-						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
+						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
 						if (diff > 16 * sizeMult) {
 							continue;
 						}
@@ -210,7 +210,7 @@ namespace Origins.World.BiomeData {
                         if (Main.tile[x, y].active() && Main.tileSolid[Main.tile[x, y].type]) {
 							continue;
                         }
-						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
+						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
 						if (diff > size + thickness || diff < size - thickness) {
 							continue;
 						}
@@ -254,8 +254,8 @@ namespace Origins.World.BiomeData {
 					}
 					for (int l = minX; l < maxX; l++) {
 						for (int k = minY; k < maxY; k++) {
-							float el = l + (GetWallDistOffset((float)length + k) + 0.5f) / 2.5f;
-							float ek = k + (GetWallDistOffset((float)length + l) + 0.5f) / 2.5f;
+							float el = l + (GenRunners.GetWallDistOffset((float)length + k) + 0.5f) / 2.5f;
+							float ek = k + (GenRunners.GetWallDistOffset((float)length + l) + 0.5f) / 2.5f;
 							double dist = Math.Pow(Math.Abs(el - pos.X), 2) + Math.Pow(Math.Abs(ek - pos.Y), 2);
 							tile = Main.tile[l, k];
 							bool openAir = (k < Main.worldSurface && tile.wall == WallID.None);
@@ -313,17 +313,6 @@ namespace Origins.World.BiomeData {
 				RangeFrame(X0, Y0, X1, Y1);
 				NetMessage.SendTileRange(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
 				return (pos, speed);
-			}
-			//range seems to be -3 to ~2
-			public static float GetWallDistOffset(float value) {
-				float x = value * 0.4f;
-				float halfx = x * 0.5f;
-				float quarx = x * 0.5f;
-				float fx0 = (float)Math.Min(Math.Pow(halfx % 3, halfx % 5), 2);
-				halfx += 0.5f;
-				float fx1 = (float)Math.Min(Math.Pow(halfx % 3, halfx % 5), 2);
-				float fx2 = fx0 * (float)(Math.Min(Math.Pow(quarx % 3, quarx % 5), 2) + 0.5f);
-				return fx0 - fx2 + fx1;
 			}
 		}
 		

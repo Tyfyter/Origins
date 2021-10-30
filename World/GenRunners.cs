@@ -654,6 +654,28 @@ namespace Origins.World {
                 break;
             }
         }
+		public static float GetWallDistOffset(float value) {
+			float x = value * 0.4f;
+			float halfx = x * 0.5f;
+			float quarx = x * 0.5f;
+            if (value < 0) {
+				float nx0 = (float)-Math.Min(Math.Pow(-halfx % 3, halfx % 5), 2);
+				halfx += 0.5f;
+				float nx1;
+				if (halfx < 0) {
+					nx1 = (float)-Math.Min(Math.Pow(-halfx % 3, halfx % 5), 2);
+				}else{
+					nx1 = (float)Math.Min(Math.Pow(halfx % 3, halfx % 5), 2);
+				}
+				float nx2 = nx0 * (float)(-Math.Min(Math.Pow(-quarx % 3, quarx % 5), 2) + 0.5f);
+				return nx0 - nx2 + nx1;
+            }
+			float fx0 = (float)Math.Min(Math.Pow(halfx % 3, halfx % 5), 2);
+			halfx += 0.5f;
+			float fx1 = (float)Math.Min(Math.Pow(halfx % 3, halfx % 5), 2);
+			float fx2 = fx0 * (float)(Math.Min(Math.Pow(quarx % 3, quarx % 5), 2) + 0.5f);
+			return fx0 - fx2 + fx1;
+		}
     }
     public static class AdjID {
         public const byte tl = 1;

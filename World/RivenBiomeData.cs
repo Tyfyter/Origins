@@ -118,7 +118,7 @@ namespace Origins.World.BiomeData {
 				for (int x = i2 - (int)(33 * sizeMult + 5); x < i2 + (int)(33 * sizeMult + 5); x++) {
 					for (int y = j2 + (int)(28 * sizeMult + 4); y >= j2 - (int)(28 * sizeMult + 4); y--) {
 						float sq = Math.Max(Math.Abs(y - j2) * 1.5f, Math.Abs(x - i2));
-						float diff = (float)Math.Sqrt((sq * sq + (((y - j2) * (y - j2) * 1.5f) + (x - i2) * (x - i2))) * 0.5f * (GetWallDistOffset(x) * 0.0316076058772687986171132238548f + 1));
+						float diff = (float)Math.Sqrt((sq * sq + (((y - j2) * (y - j2) * 1.5f) + (x - i2) * (x - i2))) * 0.5f * (GenRunners.GetWallDistOffset(x) * 0.0316076058772687986171132238548f + 1));
 						if (diff > 35 * sizeMult) {
 							continue;
 						}
@@ -160,16 +160,6 @@ namespace Origins.World.BiomeData {
 					validLesionPlacementSpots.Remove(current.OffsetBy(1));
 				}
 				return new Point(i2, j2);
-			}
-			public static float GetWallDistOffset(float value) {
-				float x = value * 0.4f;
-				float halfx = x * 0.5f;
-				float quarx = x * 0.5f;
-				float fx0 = (float)Math.Min(Math.Pow(halfx % 3, halfx % 5), 2);
-				halfx += 0.5f;
-				float fx1 = (float)Math.Min(Math.Pow(halfx % 3, halfx % 5), 2);
-				float fx2 = fx0 * (float)(Math.Min(Math.Pow(quarx % 3, quarx % 5), 2) + 0.5f);
-				return fx0 - fx2 + fx1;
 			}
 		}
 		public static void CheckLesion(int i, int j, int type) {
