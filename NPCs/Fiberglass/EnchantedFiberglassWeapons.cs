@@ -71,15 +71,22 @@ namespace Origins.NPCs.Fiberglass {
             }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor) {
+            const int color_loss = 20;
             for(int i = npc.oldPos.Length - 1; i > 0; i--) {
                 spriteBatch.Draw(Main.npcTexture[npc.type], npc.oldPos[i] + new Vector2(13.5f,13.5f) - Main.screenPosition, new Rectangle(0,0,18,36), oldColor[i], npc.oldRot[i], new Vector2(9,18), 1f, oldDir[i] != 1?SpriteEffects.None:SpriteEffects.FlipHorizontally, 1f);
                 oldDir[i] = oldDir[i - 1];
                 oldColor[i] = oldColor[i - 1];
-                oldColor[i].A-=5;
+                oldColor[i].R-=color_loss;
+                oldColor[i].G-=color_loss;
+                oldColor[i].B-=color_loss;
+                oldColor[i].A-=color_loss;
             }
 		    oldDir[0] = npc.spriteDirection;
 		    oldColor[0] = drawColor;
-            oldColor[0].A-=5;
+            oldColor[0].R-=color_loss;
+            oldColor[0].G-=color_loss;
+            oldColor[0].B-=color_loss;
+            oldColor[0].A-=color_loss;
         }
         void teleport() {
             float rot = npc.rotation+MathHelper.Pi/2f;
@@ -172,15 +179,22 @@ namespace Origins.NPCs.Fiberglass {
             }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor) {
+            const int color_loss = 20;
             for(int i = npc.oldPos.Length - 1; i > 0; i--) {
                 spriteBatch.Draw(Main.npcTexture[npc.type], npc.oldPos[i] + new Vector2(13.5f,19) - Main.screenPosition, new Rectangle(0,0,38,22), oldColor[i], npc.oldRot[i], new Vector2(19,11), 1f, oldDir[i] != 1?SpriteEffects.None:SpriteEffects.FlipHorizontally, 1f);
                 oldDir[i] = oldDir[i - 1];
                 oldColor[i] = oldColor[i - 1];
-                oldColor[i].A-=5;
+                oldColor[i].R-=color_loss;
+                oldColor[i].G-=color_loss;
+                oldColor[i].B-=color_loss;
+                oldColor[i].A-=color_loss;
             }
 		    oldDir[0] = npc.spriteDirection;
 		    oldColor[0] = drawColor;
-            oldColor[0].A-=5;
+            oldColor[0].R-=color_loss;
+            oldColor[0].G-=color_loss;
+            oldColor[0].B-=color_loss;
+            oldColor[0].A-=color_loss;
         }
     }
     public class Enchanted_Fiberglass_Sword : ModNPC {
@@ -336,15 +350,22 @@ namespace Origins.NPCs.Fiberglass {
             }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Color drawColor) {
+            const int color_loss = 20;
             for(int i = npc.oldPos.Length - 1; i > 0; i--) {
                 spriteBatch.Draw(Main.npcTexture[npc.type], npc.oldPos[i] + new Vector2(21,21) - Main.screenPosition, new Rectangle(0,0,42,42), oldColor[i], npc.oldRot[i], new Vector2(21,21), 1f, oldDir[i] != 1?SpriteEffects.None:SpriteEffects.FlipHorizontally, 1f);
                 oldDir[i] = oldDir[i - 1];
                 oldColor[i] = oldColor[i - 1];
-                oldColor[i].A-=10;
+                oldColor[i].R-=color_loss;
+                oldColor[i].G-=color_loss;
+                oldColor[i].B-=color_loss;
+                oldColor[i].A-=color_loss;
             }
 		    oldDir[0] = npc.spriteDirection;
 		    oldColor[0] = drawColor;
-            oldColor[0].A-=10;
+            oldColor[0].R-=color_loss;
+            oldColor[0].G-=color_loss;
+            oldColor[0].B-=color_loss;
+            oldColor[0].A-=color_loss;
         }
     }
 }

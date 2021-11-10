@@ -244,6 +244,10 @@ namespace Origins {
     public interface ITileCollideNPC {
         int CollisionType { get; }
     }
+    public interface ISandsharkNPC {
+        void PreUpdateCollision();
+        void PostUpdateCollision();
+    }
     public interface IMeleeCollisionDataNPC {
         void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult);
     }

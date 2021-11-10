@@ -313,8 +313,19 @@ namespace Origins {
             Music.Defiled = MusicID.Corruption;
             Music.UndergroundDefiled = MusicID.UndergroundCorruption;
             On.Terraria.NPC.UpdateCollision+=(orig, self)=>{
-                ITileCollideNPC tcnpc = self.modNPC as ITileCollideNPC;
                 int realID = self.type;
+                if (self.modNPC is ISandsharkNPC shark) {
+                    self.type = NPCID.SandShark;
+                    try {
+                        shark.PreUpdateCollision();
+                        orig(self);
+                    } finally {
+                        shark.PostUpdateCollision();
+                    }
+                    self.type = realID;
+                    return;
+                }
+                ITileCollideNPC tcnpc = self.modNPC as ITileCollideNPC;
                 self.type = tcnpc?.CollisionType??realID;
                 orig(self);
                 self.type = realID;

@@ -8,10 +8,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Origins.Tiles.Riven;
 
 namespace Origins.NPCs.Riven {
-    public class Splitooth : ModNPC, ITileCollideNPC {
-        public int CollisionType => NPCID.SandsharkCrimson;
+    public class Splitooth : ModNPC, ISandsharkNPC {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Splitooth");
             Main.npcFrameCount[npc.type] = 4;
@@ -23,6 +23,23 @@ namespace Origins.NPCs.Riven {
             npc.defense = 20;
             npc.damage = 70;
             npc.gfxOffY = 10f;
+        }
+        public void PreUpdateCollision() {
+            TileID.Sets.ForAdvancedCollision.ForSandshark[ModContent.TileType<Weak_Riven_Flesh>()] = true;
+            TileID.Sets.ForAdvancedCollision.ForSandshark[ModContent.TileType<Riven_Flesh>()] = true;
+        }
+        public void PostUpdateCollision() {
+            TileID.Sets.ForAdvancedCollision.ForSandshark[ModContent.TileType<Weak_Riven_Flesh>()] = false;
+            TileID.Sets.ForAdvancedCollision.ForSandshark[ModContent.TileType<Riven_Flesh>()] = false;
+        }
+        public override bool PreAI() {
+            TileID.Sets.Conversion.Sand[ModContent.TileType<Weak_Riven_Flesh>()] = true;
+            TileID.Sets.Conversion.Sand[ModContent.TileType<Riven_Flesh>()] = true;
+            return true;
+        }
+        public override void PostAI() {
+            TileID.Sets.Conversion.Sand[ModContent.TileType<Weak_Riven_Flesh>()] = false;
+            TileID.Sets.Conversion.Sand[ModContent.TileType<Riven_Flesh>()] = false;
         }
         public override void FindFrame(int frameHeight) {
 		    npc.spriteDirection = npc.direction;

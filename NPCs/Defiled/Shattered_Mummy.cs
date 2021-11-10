@@ -21,8 +21,8 @@ namespace Origins.NPCs.Defiled {
             npc.lifeMax = 110;
             npc.defense = 8;
             npc.damage = 42;
-            npc.width = 40;
-            npc.height = 62;
+            npc.width = 32;
+            npc.height = 48;
             npc.friendly = false;
         }
         public override void AI() {
@@ -34,7 +34,7 @@ namespace Origins.NPCs.Defiled {
             //increment frameCounter every frame and run the following code when it exceeds 7 (i.e. run the following code every 8 frames)
 			if(++npc.frameCounter>7) {
 				//add frame height (with buffer) to frame y position and modulo by frame height (with buffer) multiplied by walking frame count
-				npc.frame = new Rectangle(0, (npc.frame.Y+48)%192, 36, 46);
+				npc.frame = new Rectangle(0, (npc.frame.Y+50)%200, 32, 48);
                 //reset frameCounter so this doesn't trigger every frame after the first time
 				npc.frameCounter = 0;
 			}
