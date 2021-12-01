@@ -101,7 +101,7 @@ namespace Origins.Items.Weapons.Explosives {
         }
         public override void AI() {
 			float v = 0.75f+(float)(0.125f*(Math.Sin(projectile.timeLeft/5f)+2*Math.Sin(projectile.timeLeft/60f)));
-            Lighting.AddLight(projectile.Center, v,v*0.5f,0);
+            Lighting.AddLight(projectile.Center, v, v*0.5f, 0);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) {
             width = height = 0;

@@ -39,6 +39,7 @@ namespace Origins {
         public bool celestineSet = false;
         public bool minerSet = false;
         public bool defiledSet = false;
+        public bool reshapingChunk = false;
         public bool rivenSet = false;
         public bool riftSet = false;
         public bool eyndumSet = false;
@@ -130,6 +131,7 @@ namespace Origins {
             celestineSet = false;
             minerSet = false;
             defiledSet = false;
+            reshapingChunk = false;
             rivenSet = false;
             riftSet = false;
             eyndumSet = false;
@@ -382,11 +384,11 @@ namespace Origins {
                 crit = true;
             }
             if(defiledSet) {
-                float manaDamage = Math.Max(damage-player.statDefense*(Main.expertMode?0.75f:0.5f), 1)*0.15f;
+                float manaDamage = Math.Max(damage-player.statDefense*(Main.expertMode?0.75f:0.5f), 1) * (reshapingChunk ? 0.25f : 0.15f);
                 float costMult = 3;
                 float costMult2 = (1/(player.magicDamage+player.allDamage-1f))/(player.magicDamageMult*player.allDamageMult);
-                if(player.statMana < manaDamage*costMult) {
-                    manaDamage = player.statMana/costMult;
+                if(player.statMana < manaDamage*costMult*costMult2) {
+                    manaDamage = player.statMana/(costMult*costMult2);
                 }
                 if(player.magicCuffs) {
                     if(costMult2>1)
@@ -398,6 +400,8 @@ namespace Origins {
                 damage = (int)(damage-manaDamage);
                 player.magicCuffs = false;
                 player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Buff>(), 10);
+            }else if (reshapingChunk) {
+                damage -= damage / 20;
             }
             return damage != 0;
         }
