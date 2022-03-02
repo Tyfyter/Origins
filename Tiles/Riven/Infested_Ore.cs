@@ -16,7 +16,7 @@ namespace Origins.Tiles.Riven {
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
         public float GlowValue => (float)(Math.Sin(Main.GlobalTime)+2)*0.5f;
         public override void SetDefaults() {
-            if (Main.netMode != NetmodeID.Server) {
+			if (!Main.dedServ) {
                 GlowTexture = mod.GetTexture("Tiles/Riven/Infested_Ore_Glow");
             }
             Main.tileSolid[Type] = true;

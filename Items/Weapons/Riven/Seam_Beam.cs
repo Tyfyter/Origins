@@ -68,8 +68,10 @@ namespace Origins.Items.Weapons.Riven {
         }
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Seam Beam");
-            startTexture = mod.GetTexture("Projectiles/Weapons/Seam_Beam_Start");
-            endTexture = mod.GetTexture("Projectiles/Weapons/Seam_Beam_End");
+            if (!Main.dedServ) {
+                startTexture = mod.GetTexture("Projectiles/Weapons/Seam_Beam_Start");
+                endTexture = mod.GetTexture("Projectiles/Weapons/Seam_Beam_End");
+            }
 		}
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) {

@@ -279,7 +279,7 @@ namespace Origins {
             HelmetGlowMasks = new Dictionary<int, Texture2D> { };
             BreastplateGlowMasks = new Dictionary<int, Texture2D> { };
             LeggingGlowMasks = new Dictionary<int, Texture2D> { };
-            if (Main.netMode != NetmodeID.Server) {
+			if (!Main.dedServ) {
                 OriginExtensions.drawPlayerItemPos = (Func<float, int, Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float, int, Vector2>), Main.instance);
                 perlinFade0 = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/PerlinFade")), "RedFade");
                 //perlinFade0.UseImage("Images/Misc/Perlin");

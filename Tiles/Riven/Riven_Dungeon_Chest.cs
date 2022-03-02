@@ -19,7 +19,7 @@ namespace Origins.Tiles.Riven {
         public Texture2D GlowTexture { get; private set; }
         public Color GlowColor => Color.White;
         public override void SetDefaults() {
-            if (Main.netMode != NetmodeID.Server) {
+			if (!Main.dedServ) {
                 GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Dungeon_Chest_Glow");
             }
             base.SetDefaults();

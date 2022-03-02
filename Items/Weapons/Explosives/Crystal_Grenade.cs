@@ -157,7 +157,9 @@ namespace Origins.Items.Weapons.Explosives {
 			try{
 				Origins.ExplosiveProjectiles[projectile.type] = true;
 				ProjectileID.Sets.TrailingMode[ID] = 0;
-				if(Main.netMode!=NetmodeID.Server) {
+                mod.Logger.Info("loading crystal shard");
+				if(!Main.dedServ) {
+                    mod.Logger.Info("not dedicated server");
 					Main.projectileTexture[94] = Main.instance.OurLoad<Texture2D>(string.Concat(new object[]{"Images",Path.DirectorySeparatorChar,"Projectile_94"}));
 					Main.projectileLoaded[94] = true;
 				}

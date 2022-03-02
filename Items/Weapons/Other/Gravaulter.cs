@@ -104,12 +104,13 @@ namespace Origins.Items.Weapons.Other {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Gravaulter");
             ID = projectile.type;
-            if (Main.netMode == NetmodeID.Server) return;
-            RockTextures = new Texture2D[]{
-                mod.GetTexture("Items/Weapons/Other/Gravaulter_P"),
-                mod.GetTexture("Items/Weapons/Other/Gravaulter_P2"),
-                mod.GetTexture("Items/Weapons/Other/Gravaulter_P3")
-            };
+            if (!Main.dedServ) {
+                RockTextures = new Texture2D[]{
+                    mod.GetTexture("Items/Weapons/Other/Gravaulter_P"),
+                    mod.GetTexture("Items/Weapons/Other/Gravaulter_P2"),
+                    mod.GetTexture("Items/Weapons/Other/Gravaulter_P3")
+                };
+            }
         }
         public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.Meteor1);

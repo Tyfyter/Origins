@@ -18,8 +18,9 @@ namespace Origins.Items.Weapons.Explosives {
         }
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomboomstick");
-            if(Main.netMode == NetmodeID.Server)return;
-            UseTexture = mod.GetTexture("Items/Weapons/Explosives/Bomboomstick_Use");
+            if (!Main.dedServ) {
+                UseTexture = mod.GetTexture("Items/Weapons/Explosives/Bomboomstick_Use");
+            }
         }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.Boomstick);
