@@ -16,12 +16,58 @@ namespace Tyfyter.Utils {
         public static explicit operator PolarVec2(Vector2 vec) {
             return new PolarVec2(vec.Length(), vec.ToRotation());
         }
+        public PolarVec2 RotatedBy(float offset) {
+            return new PolarVec2(R, Theta+offset);
+        }
+        public PolarVec2 WithRotation(float theta) {
+            return new PolarVec2(R, theta);
+        }
+        public PolarVec2 WithLength(float length) {
+            return new PolarVec2(length, Theta);
+        }
+        public static bool operator ==(PolarVec2 a, PolarVec2 b) {
+            return a.Theta == b.Theta && a.R == b.R;
+        }
+        public static bool operator !=(PolarVec2 a, PolarVec2 b) {
+            return a.Theta != b.Theta || a.R != b.R;
+        }
+        public static PolarVec2 operator *(PolarVec2 a, float scalar) {
+            return new PolarVec2(a.R*scalar, a.Theta);
+        }
+        public static PolarVec2 operator *(float scalar, PolarVec2 a) {
+            return new PolarVec2(a.R*scalar, a.Theta);
+        }
+        public static PolarVec2 operator /(PolarVec2 a, float scalar) {
+            return new PolarVec2(a.R/scalar, a.Theta);
+        }
         public static PolarVec2 Zero => new PolarVec2();
         public static PolarVec2 UnitRight => new PolarVec2(1, 0);
         public static PolarVec2 UnitUp => new PolarVec2(1, MathHelper.PiOver2);
         public static PolarVec2 UnitLeft => new PolarVec2(1, MathHelper.Pi);
         public static PolarVec2 UnitDown => new PolarVec2(1, -MathHelper.PiOver2);
     }
+	public struct Triangle {
+        public readonly Vector2 a;
+        public readonly Vector2 b;
+        public readonly Vector2 c;
+        public Triangle(Vector2 a, Vector2 b, Vector2 c) {
+            this.a = a;
+            this.b = b;
+            this.c = c;
+        }
+        public bool Intersects(Rectangle rect) {
+            return Collision.CheckAABBvLineCollision2(rect.TopLeft(), rect.Size(), a, b) ||
+            Collision.CheckAABBvLineCollision2(rect.TopLeft(), rect.Size(), b, c) ||
+            Collision.CheckAABBvLineCollision2(rect.TopLeft(), rect.Size(), c, a) ||
+            Contains(rect.TopLeft());
+        }
+		public bool Contains(Vector2 point){
+			bool b0 = Vector2.Dot(new Vector2(point.X - a.X, point.Y - a.Y), new Vector2(a.Y - b.Y, b.X - a.X)) > 0;
+			bool b1 = Vector2.Dot(new Vector2(point.X - b.X, point.Y - b.Y), new Vector2(b.Y - c.Y, c.X - b.X)) > 0;
+			bool b2 = Vector2.Dot(new Vector2(point.X - c.X, point.Y - c.Y), new Vector2(c.Y - a.Y, a.X - c.X)) > 0;
+			return (b0 == b1 && b1 == b2);
+		}
+	}
     public static class GeometryUtils {
         public static double AngleDif(double alpha, double beta) {
             double phi = Math.Abs(beta - alpha) % (Math.PI * 2);       // This is either the distance or 360 - distance
