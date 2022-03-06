@@ -17,9 +17,9 @@ namespace Origins.Items.Weapons.Felnum {
             item.CloneDefaults(ItemID.Grenade);
             //item.maxStack = 999;
             item.damage = 32;
-			item.value*=4;
+			item.value *= 4;
             item.shoot = ModContent.ProjectileType<Shock_Grenade_P>();
-			item.shootSpeed*=1.5f;
+			item.shootSpeed *= 1.5f;
             item.knockBack = 15f;
             item.ammo = ItemID.Grenade;
 			item.rare = ItemRarityID.Green;

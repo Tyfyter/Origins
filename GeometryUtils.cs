@@ -67,6 +67,13 @@ namespace Tyfyter.Utils {
 			bool b2 = Vector2.Dot(new Vector2(point.X - c.X, point.Y - c.Y), new Vector2(c.Y - a.Y, a.X - c.X)) > 0;
 			return (b0 == b1 && b1 == b2);
 		}
+        public (Vector2 min, Vector2 max) GetBounds() {
+            float minX = (int)Math.Min(Math.Min(a.X, b.X), c.X);
+            float minY = (int)Math.Min(Math.Min(a.Y, b.Y), c.Y);
+            float maxX = (int)Math.Max(Math.Max(a.X, b.X), c.X);
+            float maxY = (int)Math.Max(Math.Max(a.Y, b.Y), c.Y);
+            return (new Vector2(minX, minY), new Vector2(maxX, maxY));
+		}
 	}
     public static class GeometryUtils {
         public static double AngleDif(double alpha, double beta) {

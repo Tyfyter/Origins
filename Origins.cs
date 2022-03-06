@@ -600,11 +600,11 @@ namespace Origins {
 			}
         }
 
-        public static void AddExplosive(Item item, bool noProj = false) {
+        public static void AddExplosive(Item item, bool noProj = false, bool noAmmo = false) {
             ExplosiveItems[item.type] = true;
             ExplosiveAmmo[item.type] = true;
-            if(item.ammo!=AmmoID.None)ExplosiveAmmo[item.ammo] = true;
-            if(item.useAmmo!=AmmoID.None)ExplosiveAmmo[item.useAmmo] = true;
+            if(!noAmmo&&item.ammo!=AmmoID.None)ExplosiveAmmo[item.ammo] = true;
+            if(!noAmmo&&item.useAmmo!=AmmoID.None)ExplosiveAmmo[item.useAmmo] = true;
             if(!noProj&&item.shoot!=ProjectileID.None)ExplosiveProjectiles[item.shoot] = true;
             instance.Logger.Info($"Registered {item.Name} as explosive: "+ExplosiveItems[item.type]);
         }

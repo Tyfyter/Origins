@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,7 +23,11 @@ namespace Origins.Items.Weapons.Explosives {
 			item.rare = ItemRarityID.Blue;
 		}
         public override void AddRecipes() {
-            Origins.AddExplosive(item);
+            ModRecipe recipe = new ModRecipe(mod);
+            recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
+            recipe.SetResult(this, 4);
+            recipe.AddRecipe();
+            Origins.AddExplosive(item, noAmmo:true);
         }
     }
     public class Peatball_P : ModProjectile {

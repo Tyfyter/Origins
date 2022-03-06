@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs {
@@ -31,6 +32,13 @@ namespace Origins.NPCs {
                 case NPCID.SkeletonArcher:
                 if(Main.rand.Next(50)==0)Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Tiny_Sniper>());
                 break;
+                case NPCID.MossHornet:
+                case NPCID.BigMossHornet:
+                case NPCID.GiantMossHornet:
+                case NPCID.LittleMossHornet:
+                case NPCID.TinyMossHornet:
+                if(Main.rand.NextBool(4))Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Peat_Moss>(), Main.rand.Next(1, 4));
+                break;
                 default:
                 break;
             }
@@ -41,11 +49,17 @@ namespace Origins.NPCs {
 		    }
         }
         void GenFelnumOre() {
+            string text = "The clouds have been blessed with Felnum.";
+			if (Main.netMode == NetmodeID.SinglePlayer) {
+                Main.NewText(text, Colors.RarityPurple);
+			}else if (Main.netMode == NetmodeID.Server) {
+                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), Colors.RarityPurple);
+			}
             if(!Main.gameMenu && Main.netMode != NetmodeID.MultiplayerClient) {
                 int x = 0, y = 0;
                 int felnumOre = ModContent.TileType<Felnum_Ore>();
-                int type = TileID.BlueDungeonBrick;
-                Tile tile = new Tile();
+                int type;
+                Tile tile;
                 int fails = 0;
                 int success = 0;
                 for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * (Main.expertMode?6E-06:4E-06)); k++) {
