@@ -1,5 +1,6 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
+using System.Runtime.InteropServices;
 using Terraria;
 
 namespace Tyfyter.Utils {
@@ -25,7 +26,8 @@ namespace Tyfyter.Utils {
         public PolarVec2 WithLength(float length) {
             return new PolarVec2(length, Theta);
         }
-        public static bool operator ==(PolarVec2 a, PolarVec2 b) {
+
+		public static bool operator ==(PolarVec2 a, PolarVec2 b) {
             return a.Theta == b.Theta && a.R == b.R;
         }
         public static bool operator !=(PolarVec2 a, PolarVec2 b) {
@@ -39,6 +41,17 @@ namespace Tyfyter.Utils {
         }
         public static PolarVec2 operator /(PolarVec2 a, float scalar) {
             return new PolarVec2(a.R/scalar, a.Theta);
+        }
+        public override bool Equals(object obj) {
+            return (obj is PolarVec2 other) && other == this;
+        }
+        public override int GetHashCode() {
+            unchecked {
+                return (R.GetHashCode() * 397) ^ Theta.GetHashCode();
+            }
+        }
+        public override string ToString() {
+            return $"{{r = {R}, θ = {Theta}}}";
         }
         public static PolarVec2 Zero => new PolarVec2();
         public static PolarVec2 UnitRight => new PolarVec2(1, 0);
