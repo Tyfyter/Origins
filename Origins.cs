@@ -533,7 +533,7 @@ namespace Origins {
             BreastplateGlowMasks = null;
             LeggingGlowMasks = null;
             instance = null;
-            Tiles.Defiled.Defiled_Tree.Unload();
+			Defiled_Tree.Unload();
             OriginExtensions.unInitExt();
             OriginTile.IDs = null;
             OriginWorld worldInstance = ModContent.GetInstance<OriginWorld>();

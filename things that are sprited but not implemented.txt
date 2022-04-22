@@ -26,11 +26,7 @@ AC20*
 Beginners_Staff†
 Bled_Out_Staff
 Boulder_Blender
-Burning_Ember*
-Cometburn‡*
-Eyndum_Scar‡†
 Fist_Fury¶
-Gravaulter‡*
 Ion_Minigun‡*
 Magic_Orb†
 Nanostaff*
@@ -46,7 +42,6 @@ Unending_Energy†*
 *likely needs projectile/use sprites
 †insufficient functionality info for implementation of original idea
 ‡buff/debuff with insufficient functionality info for implementation of original idea
-§needs implementation of Mech system for full implementation
 ‖partially implemented
 ?seems to be equivalent for nonexistant vanilla thing
 ¶"is that a JoJo reference?"

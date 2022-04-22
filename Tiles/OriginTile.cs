@@ -11,7 +11,7 @@ using Terraria.Utilities;
 
 namespace Origins.Tiles {
     public abstract class OriginTile : ModTile {
-        public static List<OriginTile> IDs;
+        public static List<OriginTile> IDs { get; internal set; }
         public ushort mergeID;
         public override bool Autoload(ref string name, ref string texture) {
             if(IDs!=null) {
