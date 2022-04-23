@@ -39,6 +39,12 @@ namespace Tyfyter.Utils {
         public static PolarVec2 operator *(float scalar, PolarVec2 a) {
             return new PolarVec2(a.R*scalar, a.Theta);
         }
+        public static Vector2 operator *(PolarVec2 a, Vector2 scalar) {
+            return ((Vector2)a) * scalar;
+        }
+        public static Vector2 operator *(Vector2 scalar, PolarVec2 a) {
+            return ((Vector2)a) * scalar;
+        }
         public static PolarVec2 operator /(PolarVec2 a, float scalar) {
             return new PolarVec2(a.R/scalar, a.Theta);
         }
