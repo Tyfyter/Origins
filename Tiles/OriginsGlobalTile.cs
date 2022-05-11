@@ -14,7 +14,12 @@ namespace Origins.Tiles {
             if(Main.tile[i, j - 1].type == Defiled_Altar.ID && type != Defiled_Altar.ID)return false;
             return true;
         }
-        public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak) {
+		public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem) {
+			/*if () {
+
+			}*/
+		}
+		public override bool TileFrame(int i, int j, int type, ref bool resetFrame, ref bool noBreak) {
             switch(type) {
                 case TileID.Plants:
                 case TileID.CorruptPlants:

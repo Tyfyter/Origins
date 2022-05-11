@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Runtime.InteropServices;
 using Terraria;
 
 namespace Tyfyter.Utils {

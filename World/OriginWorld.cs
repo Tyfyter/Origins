@@ -79,9 +79,10 @@ namespace Origins.World {
 
             Main.sandTiles+=tileCounts[ModContent.TileType<Defiled_Sand>()];
         }
-        protected internal List<(int, int)> defiledResurgenceTiles;
-        protected internal List<(int, int, ushort)> defiledAltResurgenceTiles;
-        protected internal Queue<(int, int)> queuedKillTiles;
+        protected internal List<(int x, int y)> defiledResurgenceTiles;
+        protected internal List<(int x, int y, ushort)> defiledAltResurgenceTiles;
+        protected internal Queue<(int x, int y)> queuedKillTiles;
+        protected internal HashSet<Point> anoxicAirTiles;
         public override void PostUpdate() {
             if(defiledResurgence) {
                 if(defiledResurgenceTiles.Count>0&&WorldGen.genRand.Next(5)==0) {
