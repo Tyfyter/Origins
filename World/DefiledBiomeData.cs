@@ -12,6 +12,7 @@ using Origins.Items.Weapons.Defiled;
 using Terraria.Localization;
 using Terraria.GameContent.Achievements;
 using Origins.Projectiles.Misc;
+using Origins.Items.Accessories;
 
 namespace Origins.World.BiomeData {
     public static class DefiledWastelands {
@@ -364,7 +365,7 @@ namespace Origins.World.BiomeData {
 					break;
 
 					case 2:
-					Item.NewItem(i * 16, j * 16, 32, 32, ItemID.BallOHurt, 1, noBroadcast: false, -1);
+					Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<Ripper_Lance>(), 1, noBroadcast: false, -1);
 					break;
 
 					case 3:
@@ -372,7 +373,7 @@ namespace Origins.World.BiomeData {
 					break;
 
 					case 4:
-					Item.NewItem(i * 16, j * 16, 32, 32, ItemID.BandofStarpower, 1, noBroadcast: false, -1);
+					Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<Dim_Starlight>(), 1, noBroadcast: false, -1);
 					break;
 				}
 				shadowOrbSmashed = true;

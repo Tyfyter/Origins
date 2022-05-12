@@ -55,7 +55,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
             }
         }
         public static void ApplyVisuals(Player player) {
-            player.GetModPlayer<OriginPlayer>().PlagueSight = true;
+            player.GetModPlayer<OriginPlayer>().plagueSight = true;
             Lighting.AddLight(player.Center+new Vector2(3*player.direction,-6), Color.Gold.ToVector3()/3f);
         }
     }

@@ -33,7 +33,7 @@ namespace Origins.Items.Armor.Fiberglass {
             item.defense = 6;
 		}
         public override void UpdateVanity(Player player, EquipType equipType) {
-            player.GetModPlayer<OriginPlayer>().DrawShirt = true;
+            player.GetModPlayer<OriginPlayer>().drawShirt = true;
         }
 	}
     [AutoloadEquip(EquipType.Legs)]
@@ -46,7 +46,7 @@ namespace Origins.Items.Armor.Fiberglass {
             item.defense = 5;
 		}
         public override void UpdateVanity(Player player, EquipType equipType) {
-            player.GetModPlayer<OriginPlayer>().DrawPants = true;
+            player.GetModPlayer<OriginPlayer>().drawPants = true;
         }
 	}
 }

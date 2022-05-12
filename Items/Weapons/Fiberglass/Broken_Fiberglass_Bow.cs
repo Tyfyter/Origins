@@ -52,7 +52,7 @@ namespace Origins.Items.Weapons.Fiberglass {
             return new TagCompound() {{"strung", strung}};
         }
         public override void HoldItem(Player player) {
-            if(player.itemAnimation!=0)player.GetModPlayer<OriginPlayer>().ItemLayerWrench = true;
+            if(player.itemAnimation!=0)player.GetModPlayer<OriginPlayer>().itemLayerWrench = true;
         }
         public override Vector2? HoldoutOffset() {
             return new Vector2(-0.5f,0);

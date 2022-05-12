@@ -4,6 +4,7 @@ using Origins.Buffs;
 using Origins.Items.Accessories.Eyndum_Cores;
 using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Materials;
+using Origins.Items.Other.Fish;
 using Origins.Items.Other.Testing;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Summon;
@@ -63,19 +64,19 @@ namespace Origins {
         #endregion
 
         #region biomes
-        public bool ZoneVoid = false;
+        public bool ZoneVoid { get; private set; } = false;
         public float ZoneVoidProgress = 0;
         public float ZoneVoidProgressSmoothed = 0;
 
-        public bool ZoneDefiled = false;
+        public bool ZoneDefiled { get; private set; } = false;
         public float ZoneDefiledProgress = 0;
         public float ZoneDefiledProgressSmoothed = 0;
 
-        public bool ZoneRiven = false;
+        public bool ZoneRiven { get; private set; } = false;
         public float ZoneRivenProgress = 0;
         public float ZoneRivenProgressSmoothed = 0;
 
-        public bool ZoneBrine = false;
+        public bool ZoneBrine { get; private set; } = false;
         public float ZoneBrineProgress = 0;
         public float ZoneBrineProgressSmoothed = 0;
         #endregion
@@ -83,12 +84,13 @@ namespace Origins {
         #region buffs
         public int rapidSpawnFrames = 0;
         public int rasterizedTime = 0;
+        public bool fervorPotion = false;
         #endregion
 
-        public bool DrawShirt = false;
-        public bool DrawPants = false;
-        public bool ItemLayerWrench = false;
-        public bool PlagueSight = false;
+        public bool drawShirt = false;
+        public bool drawPants = false;
+        public bool itemLayerWrench = false;
+        public bool plagueSight = false;
 
         public Ref<Item> eyndumCore = null;
 
@@ -104,8 +106,8 @@ namespace Origins {
             if(fiberglassSet||fiberglassDagger)oldBonuses|=1;
             if(felnumSet)oldBonuses|=2;
             if(!player.frozen) {
-                DrawShirt = false;
-                DrawPants = false;
+                drawShirt = false;
+                drawPants = false;
             }
             fiberglassSet = false;
             cryostenSet = false;
@@ -140,6 +142,7 @@ namespace Origins {
             madHand = false;
             fiberglassDagger = false;
             advancedImaging = false;
+            fervorPotion = false;
             explosiveDamage = 1f;
             explosiveCrit = 4;
             explosiveThrowSpeed = 1f;
@@ -158,7 +161,7 @@ namespace Origins {
                 rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 8), player.buffTime[rasterized] - 1);
             }
             player.breathMax = 200;
-            PlagueSight = false;
+            plagueSight = false;
             minionSubSlots = new float[minionSubSlotValues];
         }
         public override void PostUpdate() {
@@ -204,7 +207,7 @@ namespace Origins {
             player.jumpSpeedBoost += player.jumpSpeedBoost * 0.5f;
             if (player.spikedBoots == 1) player.spikedBoots = 2;
             #endregion
-            #region defence
+            #region defense
             player.statLifeMax2 += (player.statLifeMax2 - player.statLifeMax) / 2;
             player.statDefense += player.statDefense / 2;
             player.endurance += player.endurance * 0.5f;
@@ -276,6 +279,18 @@ namespace Origins {
                 felnumShock = 0;
                 Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
             }
+        }
+		public override float UseTimeMultiplier(Item item) {
+			if (fervorPotion && item.damage > 0) {
+                return 1.05f;
+            }
+			return 1f;
+        }
+        public override float MeleeSpeedMultiplier(Item item) {
+            if (fervorPotion && item.damage > 0) {
+                return 1.05f;
+            }
+            return 1f;
         }
         public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             if(advancedImaging) {
@@ -500,8 +515,50 @@ namespace Origins {
             player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", ZoneDefiledProgressSmoothed>0, player.Center);
             player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", ZoneRivenProgressSmoothed>0, player.Center);
         }
-        #endregion
-        public override bool PreItemCheck() {
+		public override void CatchFish(Item fishingRod, Item bait, int power, int liquidType, int poolSize, int worldLayer, int questFish, ref int caughtType, ref bool junk) {
+            int num7 = 300 / poolSize;
+            int num8 = 1050 / poolSize;
+            int num10 = 4500 / poolSize;
+            if (num7 < 3) {
+                num7 = 3;
+            }
+            if (num8 < 4) {
+                num8 = 4;
+            }
+            if (num10 < 6) {
+                num10 = 6;
+            }
+            bool flag4 = false;
+            bool flag5 = false;
+            bool flag7 = false;
+            if (Main.rand.Next(num7) == 0) {
+                flag4 = true;
+            }
+            if (Main.rand.Next(num8) == 0) {
+                flag5 = true;
+            }
+            if (Main.rand.Next(num10) == 0) {
+                flag7 = true;
+            }
+            bool zoneDefiled = ZoneDefiled;
+            bool zoneRiven = ZoneRiven;
+			if (zoneDefiled && zoneDefiled) {
+				if (Main.rand.NextBool()) {
+                    zoneDefiled = false;
+                } else {
+                    zoneRiven = false;
+				}
+			}
+            if (zoneDefiled) {
+                if (flag7 && Main.hardMode && Main.rand.Next(2) == 0) {
+                    //caughtType = ItemID.Toxikarp;//put defiled fish weapon here
+                } else if (flag4 && !flag5) {
+                    caughtType = ModContent.ItemType<Prikish>();
+                }
+            }
+		}
+		#endregion
+		public override bool PreItemCheck() {
             ItemChecking = true;
             return true;
         }
@@ -509,7 +566,7 @@ namespace Origins {
             ItemChecking = false;
         }
         public override void ModifyDrawLayers(List<PlayerLayer> layers) {
-            if(DrawShirt) {
+            if(drawShirt) {
                 int itemindex = layers.IndexOf(PlayerLayer.HeldItem);
                 PlayerLayer itemlayer = layers[itemindex];
                 layers.RemoveAt(itemindex);
@@ -517,7 +574,7 @@ namespace Origins {
                 layers.Insert(layers.IndexOf(PlayerLayer.MountFront), PlayerShirt);
                 PlayerShirt.visible = true;
             }
-            if(DrawPants) {
+            if(drawPants) {
                 layers.Insert(layers.IndexOf(PlayerLayer.Legs), PlayerPants);
                 PlayerPants.visible = true;
             }
@@ -560,7 +617,7 @@ namespace Origins {
                     break;*/
                 }
             }
-            if(ItemLayerWrench && !player.HeldItem.noUseGraphic) {
+            if(itemLayerWrench && !player.HeldItem.noUseGraphic) {
                 switch(player.HeldItem.useStyle) {
                     case 5:
                     layers[layers.IndexOf(PlayerLayer.HeldItem)] = ShootWrenchLayer;
@@ -572,13 +629,13 @@ namespace Origins {
                     break;
                 }
             }
-            ItemLayerWrench = false;
+            itemLayerWrench = false;
             if (player.HeldItem.modItem is Chocolate_Bar animator) {
                 layers.Add(new PlayerLayer("Origins (debugging tool)", "animator", (v)=>animator.DrawAnimations(v)));
             }
         }
         public override void ModifyDrawInfo(ref PlayerDrawInfo drawInfo) {
-            if(PlagueSight) drawInfo.eyeColor = new Color(255,215,0);
+            if(plagueSight) drawInfo.eyeColor = new Color(255,215,0);
             //if(drawInfo.drawPlayer.body==Origins.PlagueTexanJacketID) drawInfo.drawHands = true;
         }
         public override void FrameEffects() {

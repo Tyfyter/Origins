@@ -89,7 +89,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 
         public override void HoldItem(Player player) {
             if(player.itemAnimation!=0 && player.altFunctionUse != 2) {
-                player.GetModPlayer<OriginPlayer>().ItemLayerWrench = true;
+                player.GetModPlayer<OriginPlayer>().itemLayerWrench = true;
             }
         }
 

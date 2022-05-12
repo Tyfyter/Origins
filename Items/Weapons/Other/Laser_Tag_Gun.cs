@@ -60,7 +60,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override void HoldItem(Player player) {
             if(player.itemAnimation!=0) {
-                player.GetModPlayer<OriginPlayer>().ItemLayerWrench = true;
+                player.GetModPlayer<OriginPlayer>().itemLayerWrench = true;
             }
             int critMod = GetCritMod(player);
             player.rangedCrit+=critMod;

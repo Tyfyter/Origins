@@ -657,7 +657,7 @@ namespace Origins.World {
 		/// <summary>
 		/// When I wrote this code, only God knew how it worked, that fact has not changed
 		/// </summary>
-		/// <param name="value">the x value along the continuous function</param>
+		/// <param name="value">the x value along the mostly continuous function</param>
 		/// <returns>mostly continuous noise based on the value of x, may have some near-looping period</returns>
 		public static float GetWallDistOffset(float value) {
 			float x = value * 0.4f;
