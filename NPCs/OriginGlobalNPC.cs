@@ -49,6 +49,7 @@ namespace Origins.NPCs {
                 npc.velocity = Vector2.Lerp(npc.velocity, npc.oldVelocity, rasterizedTime * 0.0625f);
                 npc.position = Vector2.Lerp(npc.position, npc.oldPosition, rasterizedTime * 0.0625f);
             }
+            if(infusionSpikes is object) infusionSpikes.Clear();
             return true;
         }
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot) {

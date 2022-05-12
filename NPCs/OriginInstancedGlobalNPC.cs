@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs {
@@ -17,6 +18,7 @@ namespace Origins.NPCs {
         internal int shrapnelTime = 0;
         internal int shockTime = 0;
         internal int rasterizedTime = 0;
+        internal List<int> infusionSpikes;
         public override void ResetEffects(NPC npc) {
             int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
             if (rasterized >= 0) {
@@ -29,6 +31,23 @@ namespace Origins.NPCs {
                     shrapnelCount = 0;
                 }
             }
+        }
+        public static void AddInfusionSpike(NPC npc, int projectileID) {
+            OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
+            if (globalNPC.infusionSpikes is null) globalNPC.infusionSpikes = new List<int>();
+            globalNPC.infusionSpikes.Add(projectileID);
+			if (globalNPC.infusionSpikes.Count >= 7) {
+                float damage = 0;
+                Projectile proj = null;
+                for (int i = 0; i < globalNPC.infusionSpikes.Count; i++) {
+                    proj = Main.projectile[globalNPC.infusionSpikes[i]];
+                    damage += proj.damage * 0.95f;
+                    proj.Kill();
+                }
+                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Weapons.Defiled_Spike_Explosion>(), (int)damage, 0, proj.owner, 7);
+                globalNPC.infusionSpikes.Clear();
+            }
+
         }
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor) {
             if(rasterizedTime > 0) {

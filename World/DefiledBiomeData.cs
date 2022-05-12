@@ -361,7 +361,7 @@ namespace Origins.World.BiomeData {
 					break;
 				
 					case 1:
-					Item.NewItem(i * 16, j * 16, 32, 32, ItemID.Vilethorn, 1, noBroadcast: false, -1);
+					Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<Infusion>(), 1, noBroadcast: false, -1);
 					break;
 
 					case 2:
