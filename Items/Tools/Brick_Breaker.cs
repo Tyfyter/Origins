@@ -1,3 +1,4 @@
+using Origins.Items.Materials;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,6 +22,14 @@ namespace Origins.Items.Tools {
 			item.value = 3600;
 			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item1;
+		}
+		public override void AddRecipes() {
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10);
+			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 5);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
 		}
 	}
 }

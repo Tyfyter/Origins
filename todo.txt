@@ -1,0 +1,10 @@
+Concept, sprite & implementation:
+	Defiled fish weapon
+	Defiled mimic drops
+
+Sprite & implementation:
+	Defiled axe
+	Maybe defiled yoyo and/or flail
+
+Just implementation:
+	Enchanted Bident

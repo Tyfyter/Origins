@@ -28,7 +28,7 @@ namespace Origins.Items.Armor.Defiled {
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
-            //recipe.AddIngredient(ModContent.ItemType<>(), 10);
+            recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 10);
             recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
             recipe.AddRecipe();
@@ -51,7 +51,7 @@ namespace Origins.Items.Armor.Defiled {
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
-            //recipe.AddIngredient(ModContent.ItemType<>(), 20);
+            recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 20);
             recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
             recipe.AddRecipe();
@@ -73,7 +73,7 @@ namespace Origins.Items.Armor.Defiled {
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
-            //recipe.AddIngredient(ModContent.ItemType<>(), 15);
+            recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 15);
             recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
             recipe.AddRecipe();

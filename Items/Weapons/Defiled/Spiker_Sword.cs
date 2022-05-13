@@ -1,3 +1,4 @@
+using Origins.Items.Materials;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,6 +21,21 @@ namespace Origins.Items.Weapons.Defiled {
             item.useTurn = true;
 			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item1;
+		}
+		public override void AddRecipes() {
+			ModRecipe recipe = new ModRecipe(mod);
+			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10);
+			recipe.AddTile(TileID.Anvils);
+			recipe.SetResult(this);
+			recipe.AddRecipe();
+			recipe = new ModRecipe(mod);
+			recipe.AddIngredient(this);
+			recipe.AddIngredient(ItemID.Muramasa);
+			recipe.AddIngredient(ItemID.BladeofGrass);
+			recipe.AddIngredient(ItemID.FieryGreatsword);
+			recipe.AddTile(TileID.DemonAltar);
+			recipe.SetResult(ItemID.NightsEdge);
+			recipe.AddRecipe();
 		}
 	}
 }

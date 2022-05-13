@@ -15,7 +15,6 @@ namespace Origins.NPCs.Defiled {
         public const float horizontalSpeed = 3.2f;
         public const float horizontalAirSpeed = 2f;
         public const float verticalSpeed = 4f;
-        bool attacking = false;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Tripod");
             Main.npcFrameCount[npc.type] = 4;
@@ -128,5 +127,10 @@ namespace Origins.NPCs.Defiled {
                 for(int i = 0; i < 6; i++)Gore.NewGore(npc.position+new Vector2(Main.rand.Next(npc.width),Main.rand.Next(npc.height)), npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
             }
         }
-    }
+		public override void NPCLoot() {
+			if (Main.rand.NextBool(100)) {
+                Item.NewItem(npc.Hitbox, ItemID.Vitamins, prefixGiven:-1);
+			}
+		}
+	}
 }

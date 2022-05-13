@@ -365,7 +365,7 @@ namespace Origins.World.BiomeData {
 					break;
 
 					case 2:
-					Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<Ripper_Lance>(), 1, noBroadcast: false, -1);
+					Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<Defiled_Chakram>(), 1, noBroadcast: false, -1);
 					break;
 
 					case 3:
