@@ -7,4 +7,4 @@ Sprite & implementation:
 	Maybe defiled yoyo and/or flail
 
 Just implementation:
-	Enchanted Bident
+	
