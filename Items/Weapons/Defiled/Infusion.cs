@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.NPCs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,15 +15,15 @@ namespace Origins.Items.Weapons.Defiled {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Infusion");
 			Tooltip.SetDefault("");
-			Item.staff[item.type] = true;
 		}
 		public override void SetDefaults() {
-			item.damage = 20;
-			item.melee = true;
+			item.damage = 19;
+			item.magic = true;
+			item.mana = 7;
             item.noMelee = true;
             item.noUseGraphic = false;
-			item.width = 52;
-			item.height = 56;
+			item.width = 30;
+			item.height = 36;
 			item.useTime = 20;
 			item.useAnimation = 20;
 			item.useStyle = 5;
@@ -33,6 +34,16 @@ namespace Origins.Items.Weapons.Defiled {
             item.useTurn = false;
 			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item1;
+			item.autoReuse = true;
+		}
+		public override Vector2? HoldoutOffset() {
+			return new Vector2(8, 0);
+		}
+		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+			Vector2 vel = new Vector2(speedX, speedY).RotatedByRandom(0.075f);
+			speedX = vel.X;
+			speedY = vel.Y;
+			return true;
 		}
 	}
     public class Infusion_P : ModProjectile {
@@ -47,6 +58,8 @@ namespace Origins.Items.Weapons.Defiled {
 		}
 		public override void SetDefaults() {
             projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
+			projectile.ranged = false;
+			projectile.magic = true;
 			projectile.usesLocalNPCImmunity = true;
 			projectile.localNPCHitCooldown = 15;
 			projectile.width = 8;
@@ -62,7 +75,7 @@ namespace Origins.Items.Weapons.Defiled {
 				NPC target = Main.npc[EmbedTarget];
 				projectile.Center = target.Center + (Vector2)embedPos.RotatedBy(target.rotation);
 				projectile.rotation = embedRotation + target.rotation;
-				if(projectile.numUpdates == 0 && EmbedTime > 10) NPCs.OriginGlobalNPC.AddInfusionSpike(target, projectile.whoAmI);
+				if(projectile.numUpdates == 0 && EmbedTime > 10) OriginGlobalNPC.AddInfusionSpike(target, projectile.whoAmI);
 				if (!target.active) {
 					EmbedTime = embed_duration + 1;
 				}

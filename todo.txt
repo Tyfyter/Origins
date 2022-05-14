@@ -8,3 +8,5 @@ Sprite & implementation:
 
 Just implementation:
 	
+Implemented with placeholder sprite:
+	Low Signal (implementation not yet polished)

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Projectiles.Weapons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,7 +45,7 @@ namespace Origins.NPCs {
                     damage += proj.damage * 0.95f;
                     proj.Kill();
                 }
-                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Projectiles.Weapons.Defiled_Spike_Explosion>(), (int)damage, 0, proj.owner, 7);
+                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Defiled_Spike_Explosion>(), (int)damage, 0, proj.owner, 7);
                 globalNPC.infusionSpikes.Clear();
             }
 

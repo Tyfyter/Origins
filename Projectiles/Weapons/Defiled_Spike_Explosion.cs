@@ -17,6 +17,7 @@ namespace Origins.Projectiles.Weapons {
 			projectile.timeLeft = 600;
             projectile.usesLocalNPCImmunity = true;
             projectile.hide = true;
+            projectile.rotation = Main.rand.NextFloatDirection();
         }
         public override void AI() {
 			if (projectile.ai[0] > 0) {
