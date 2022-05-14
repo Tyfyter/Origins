@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Felnum {
         public const int baseDamage = 34;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Magnus");
-            Tooltip.SetDefault("Recieves 50% higher damage bonuses");
+            Tooltip.SetDefault("Receives 50% higher damage bonuses");
 			Item.staff[item.type] = true;
         }
         public override void SetDefaults() {

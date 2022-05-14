@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Felnum {
         public const int baseDamage = 19;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Felnum Longbow");
-            Tooltip.SetDefault("Recieves 50% higher damage bonuses");
+            Tooltip.SetDefault("Receives 50% higher damage bonuses");
         }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.GoldBow);

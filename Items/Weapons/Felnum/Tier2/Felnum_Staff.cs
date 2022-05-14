@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         public const int baseDamage = 78;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Hævateinn");
-            Tooltip.SetDefault("Recieves 50% higher damage bonuses\nsprite needs recoloring.");
+            Tooltip.SetDefault("Receives 50% higher damage bonuses\nsprite needs recoloring.");
 			Item.staff[item.type] = true;
         }
         public override void SetDefaults() {

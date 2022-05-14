@@ -59,9 +59,9 @@ namespace Origins.Items.Weapons.Riven {
             //projectile.name = "Wind";  //this is the projectile name
             projectile.width = 10;
             projectile.height = 10;
-            projectile.friendly = true;     //this defines if the projectile is frendly
+            projectile.friendly = true;     //this defines if the projectile is friendly
             projectile.penetrate = -1;  //this defines the projectile penetration, -1 = infinity
-            projectile.tileCollide = true;   //this defines if the tile can colide with walls
+            projectile.tileCollide = true;   //this defines if the tile can collide with walls
             projectile.magic = true;
             projectile.timeLeft = 32;
             //projectile.hide = true;

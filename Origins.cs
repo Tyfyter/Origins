@@ -430,7 +430,7 @@ namespace Origins {
                 text = Language.GetTextValue("DryadSpecialText.WorldStatusPure", Main.worldName, tGood, tEvil, tBlood);
                 break;
             }
-            //temp fix, unlocalized and never gramatically correct
+            //temp fix, unlocalized and never grammatically correct
             if(tDefiled > 0) text += $" and {tDefiled}% defiled wastelands";
             if(tRiven > 0) text += $" and {tRiven}% riven";
 	        string str = (tGood * 1.2 >= tBad && tGood * 0.8 <= tBad) ?
@@ -476,7 +476,7 @@ namespace Origins {
                     OriginWorld.tDefiled = reader.ReadByte();
                     break;
                     default:
-                    Logger.Warn($"Invalid packet type ({type}) recieved on client");
+                    Logger.Warn($"Invalid packet type ({type}) received on client");
                     break;
                 }
             }else if(Main.netMode == NetmodeID.Server) {
@@ -485,7 +485,7 @@ namespace Origins {
                     OriginWorld.tDefiled = reader.ReadByte();
                     break;
                     default:
-                    Logger.Warn($"Invalid packet type ({type}) recieved on server");
+                    Logger.Warn($"Invalid packet type ({type}) received on server");
                     break;
                 }
             }

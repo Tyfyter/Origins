@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         internal int frame = 5;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tyrfing"/*"Felnum Broadsword"*/);
-			Tooltip.SetDefault("Recieves 50% higher damage bonuses\nHold right click to stab\nBehold");
+			Tooltip.SetDefault("Receives 50% higher damage bonuses\nHold right click to stab\nBehold");
             animation = new DrawAnimationManual(6);
             animation.Frame = 5;
 			Main.RegisterItemAnimation(item.type, animation);

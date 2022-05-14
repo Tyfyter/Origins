@@ -91,7 +91,7 @@ namespace Origins.Tiles.Defiled
 			if (WorldGen.genRand.Next(20) == 0)
 			{
 				Tile tile = Framing.GetTileSafely(i, j); // Safely get the tile at the given coordinates
-				bool growSucess; // A bool to see if the tree growing was sucessful.
+				bool growSucess; // A bool to see if the tree growing was successful.
 
 				// Style 0 is for the ExampleTree sapling, and style 1 is for ExamplePalmTree, so here we check frameX to call the correct method.
 				// Any pixels before 54 on the tilesheet are for ExampleTree while any pixels above it are for ExamplePalmTree
@@ -103,7 +103,7 @@ namespace Origins.Tiles.Defiled
 				// A flag to check if a player is near the sapling
 				bool isPlayerNear = WorldGen.PlayerLOS(i, j);
 
-				//If growing the tree was a sucess and the player is near, show growing effects
+				//If growing the tree was a success and the player is near, show growing effects
 				if (growSucess && isPlayerNear)
 					WorldGen.TreeGrowFXCheck(i, j);
 			}

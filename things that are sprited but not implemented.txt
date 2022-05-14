@@ -43,5 +43,5 @@ Unending_Energy†*
 †insufficient functionality info for implementation of original idea
 ‡buff/debuff with insufficient functionality info for implementation of original idea
 ‖partially implemented
-?seems to be equivalent for nonexistant vanilla thing
+?seems to be equivalent for nonexistent vanilla thing
 ¶"is that a JoJo reference?"

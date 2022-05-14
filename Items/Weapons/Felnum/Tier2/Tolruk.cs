@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         public static short[] glowmasks;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tolruk");
-			Tooltip.SetDefault("Recieves 50% higher damage bonuses\n[tɵlɹɘk]\nSprite needs reshaping to be less like dart rifle");
+			Tooltip.SetDefault("Receives 50% higher damage bonuses\n[tɵlɹɘk]\nSprite needs reshaping to be less like dart rifle");
             glowmasks = new short[]{
                 -1,//Origins.AddGlowMask("Weapons/Felnum/Tier2/Tolruk_Glow_0"),
                 Origins.AddGlowMask("Weapons/Felnum/Tier2/Tolruk_Glow_1"),

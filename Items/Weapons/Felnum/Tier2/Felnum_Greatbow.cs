@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         public static int baseDamage = 78;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Astoxo");
-            Tooltip.SetDefault("Recieves 50% higher damage bonuses");
+            Tooltip.SetDefault("Receives 50% higher damage bonuses");
         }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.Tsunami);

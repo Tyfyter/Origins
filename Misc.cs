@@ -502,7 +502,7 @@ namespace Origins {
 		///</summary>
 		public const int Creeper = 55;
 		///<summary>
-		/// Moves directly towards player, gaining momentum. Emits blue-ish particles.
+		/// Moves directly towards player, gaining momentum. Emits blueish particles.
 		///</summary>
 		public const int Dungeon_Spirit = 56;
 		///<summary>
