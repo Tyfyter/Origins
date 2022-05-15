@@ -1,47 +1,42 @@
 Enemies:
-Defiled_Amalgamation†*
+Defiled_Amalgamation
 Riven_Abomination*
 Defiled_Clipper
 Defiled_Reaper*
 Defiled_Sandshark
 Defiled_Shark?
-Riven_Mimic*(missing 10 frames)
+Riven_Mimic*(missing 10 frames. Mimics are time-consuming...)
 Unriven_Beast_1
 
 Armor:
-Mimic*
+Mimic
 
 Weapons:
-Toxic_Slash‡
+Toxic_Slash (Toxic shock in #buffs... , 'Oozed" is a vanilla debuff)
 Klang_Launcher
-Abrasion_Spikes†*
-Barrel_Blaster*
+Barrel_Blaster
 RPG
 Starburst
 Assimilator
 Burst_O_Bubble
-Contagion†
+Contagion* (Need to sprite the crawly and form)
 Proxy_Staff
-AC20*
-Beginners_Staff†
 Bled_Out_Staff
 Boulder_Blender
 Fist_Fury¶
-Ion_Minigun‡*
-Magic_Orb†
-Nanostaff*
-Nuclear_arm*
-Ooze_Gooze‡*
-Phantom_Fury*
+Ion_Minigun* (Electrified is  vanilla debuff)
+Nanostaff
+Nuclear_arm
+Ooze_Gooze (uses gel as ammo)
+Phantom_Fury
 Rigged_Cuboid*
-Singulus†
-Syah_Nara
-Telephone_Pole‡
-Unending_Energy†*
+Singulus*
+Telephone_Pole
+Unending_Energy*
 
 *likely needs projectile/use sprites
 †insufficient functionality info for implementation of original idea
 ‡buff/debuff with insufficient functionality info for implementation of original idea
 ‖partially implemented
-?seems to be equivalent for nonexistent vanilla thing
-¶"is that a JoJo reference?"
+?seems to be equivalent for nonexistent vanilla thing. Yes
+¶"is that a JoJo reference?" Likely yes.

@@ -1,12 +1,12 @@
 Concept, sprite & implementation:
-	Defiled fish weapon
 	Defiled mimic drops
 
 Sprite & implementation:
-	Defiled axe
+	Defiled axe (you don't chop down Defiled trees, you mine them. Consistency reason for no implem.)
 	Maybe defiled yoyo and/or flail
 
 Just implementation:
+	Defiled fish weapon
 	
 Implemented with placeholder sprite:
 	Low Signal (implementation not yet polished)
