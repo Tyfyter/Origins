@@ -2,7 +2,7 @@ Concept, sprite & implementation:
 	Defiled mimic drops
 
 Sprite & implementation:
-	Defiled axe (you don't chop down Defiled trees, you mine them. Consistency reason for no implem.)
+	Defiled axe (you don't chop down Defiled trees, you mine them. Consistency reason for no implementation.)
 	Maybe defiled yoyo and/or flail
 
 Just implementation:
