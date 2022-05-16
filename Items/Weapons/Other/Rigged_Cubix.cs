@@ -12,14 +12,14 @@ namespace Origins.Items.Weapons.Other {
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);
-			item.damage = 50;
+			item.damage = 88;
 			item.magic = true;
 			item.noMelee = true;
 			item.width = 28;
 			item.height = 30;
-			item.useTime = 9;
+			item.useTime = 3;
 			item.useAnimation = 54;
-			item.shootSpeed = 8;
+			item.shootSpeed = 14;
 			item.mana = 8;
 			item.value = 5000;
             item.shoot = ModContent.ProjectileType<Rigged_Cubix_P>();
@@ -50,7 +50,7 @@ namespace Origins.Items.Weapons.Other {
 			projectile.tileCollide = false;
 		}
         public override void AI() {
-			projectile.rotation += 0.1f * projectile.direction;
+			projectile.rotation += 16f * projectile.direction;
 			projectile.extraUpdates = 0;
 			if (projectile.ai[0] > 0) {
 				int targetID = (int)projectile.ai[0];
@@ -60,7 +60,7 @@ namespace Origins.Items.Weapons.Other {
 					PolarVec2 diff = (PolarVec2)(target.Center - projectile.Center);
 					OriginExtensions.AngularSmoothing(ref velocity.Theta, diff.Theta, diff.R < 96 ? 0.35f : 0.25f);
 					projectile.velocity = (Vector2)velocity;
-					projectile.rotation += 0.2f * projectile.direction;
+					projectile.rotation += 0f * projectile.direction;
 					projectile.extraUpdates = 1;
 				} else {
 					projectile.ai[0] = -1;
