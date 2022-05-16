@@ -17,14 +17,14 @@ namespace Origins.Items.Weapons.Defiled {
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults() {
-			item.damage = 19;
+			item.damage = 5;
 			item.magic = true;
 			item.mana = 7;
             item.noMelee = true;
             item.noUseGraphic = false;
 			item.width = 30;
 			item.height = 36;
-			item.useTime = 20;
+			item.useTime = 7;
 			item.useAnimation = 20;
 			item.useStyle = 5;
 			item.knockBack = 5;
