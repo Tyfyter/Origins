@@ -78,7 +78,7 @@ namespace Origins.Items.Weapons.Defiled {
 			if (nodes is null) {
 				projectile.timeLeft = (int)(projectile.ai[0] * 4);
 				projectile.localNPCHitCooldown = projectile.timeLeft;
-				projectile.localAI[1] = 20f / projectile.ai[0];
+				projectile.localAI[1] = 16f / projectile.ai[0];
 				projectile.localAI[0] = owner.direction;
 				projectile.ai[0] = projectile.direction = (lastSlapDir = !lastSlapDir) ? 1 : -1;
 				//projectile.ai[1] = (Main.MouseWorld - owner.MountedCenter).ToRotation();
