@@ -13,6 +13,7 @@ namespace Origins.Items.Weapons.Other {
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);
 			item.damage = 88;
+			item.crit = -3;
 			item.magic = true;
 			item.noMelee = true;
 			item.width = 28;
@@ -20,15 +21,20 @@ namespace Origins.Items.Weapons.Other {
 			item.useTime = 3;
 			item.useAnimation = 54;
 			item.shootSpeed = 14;
-			item.mana = 8;
+			item.mana = 4;
 			item.value = 5000;
             item.shoot = ModContent.ProjectileType<Rigged_Cubix_P>();
 			item.rare = ItemRarityID.Green;
+			item.UseSound = null;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			Vector2 vel = new Vector2(speedX, speedY).RotatedByRandom(0.075f);
 			speedX = vel.X;
 			speedY = vel.Y;
+			if (player.itemAnimation != 0 && !player.CheckMana(item, pay:true)) {
+				return false;
+			}
+			Main.PlaySound(SoundID.Item12, position);
 			return true;
 		}
 	}
@@ -50,7 +56,7 @@ namespace Origins.Items.Weapons.Other {
 			projectile.tileCollide = false;
 		}
         public override void AI() {
-			projectile.rotation += 16f * projectile.direction;
+			//projectile.rotation += 16f * projectile.direction;
 			projectile.extraUpdates = 0;
 			if (projectile.ai[0] > 0) {
 				int targetID = (int)projectile.ai[0];
@@ -60,7 +66,7 @@ namespace Origins.Items.Weapons.Other {
 					PolarVec2 diff = (PolarVec2)(target.Center - projectile.Center);
 					OriginExtensions.AngularSmoothing(ref velocity.Theta, diff.Theta, diff.R < 96 ? 0.35f : 0.25f);
 					projectile.velocity = (Vector2)velocity;
-					projectile.rotation += 0f * projectile.direction;
+					//projectile.rotation += 0f * projectile.direction;
 					projectile.extraUpdates = 1;
 				} else {
 					projectile.ai[0] = -1;

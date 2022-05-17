@@ -6,6 +6,7 @@ using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Materials;
 using Origins.Items.Other.Fish;
 using Origins.Items.Other.Testing;
+using Origins.Items.Weapons.Defiled;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Summon;
 using Origins.Projectiles;
@@ -551,7 +552,7 @@ namespace Origins {
 			}
             if (zoneDefiled) {
                 if (flag7 && Main.hardMode && Main.rand.Next(2) == 0) {
-                    //caughtType = ItemID.Toxikarp;//put defiled fish weapon here
+                    caughtType = ModContent.ItemType<Knee_Slapper>();
                 } else if (flag4 && !flag5) {
                     caughtType = ModContent.ItemType<Prikish>();
                 }

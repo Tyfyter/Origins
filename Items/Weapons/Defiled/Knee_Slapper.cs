@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Defiled {
 			item.shootSpeed = 16f;
 			item.value = 5000;
             item.useTurn = true;
-			item.rare = ItemRarityID.Blue;
+			item.rare = ItemRarityID.Purple + 2;
 			item.UseSound = SoundID.Item1;
 			item.autoReuse = true;
 		}
@@ -93,24 +93,32 @@ namespace Origins.Items.Weapons.Defiled {
 			}
 			owner.direction = (int)projectile.localAI[0];
 			projectile.direction = (int)projectile.ai[0];
-			//Vector2 basePosition = owner.MountedCenter;
-			//Vector2 position = Main.player[projectile.owner].MountedCenter;
+			Vector2 basePosition = owner.MountedCenter;
+			//Vector2 position = default;
 			PolarVec2 position = GetSwingStartOffset;
 			for (int i = 0; i < nodes.Count; i++) {
 				PolarVec2 vec = nodes[i];
 				position.R += vec.R;
 				position.Theta += vec.Theta;
+				//position += (Vector2)vec;
 				//Dust.NewDustPerfect(basePosition + (Vector2)position, 6, Vector2.Zero).noGravity = true;
 				vec.Theta += projectile.direction * 0.015f * projectile.localAI[1];// / (i + 1);
 				nodes[i] = vec;
 			}
 			owner.heldProj = projectile.whoAmI;
 			/*
-			PolarVec2 vec = nodes[i];
-			position += (Vector2)vec;
-			Dust.NewDustPerfect(position, 6, Vector2.Zero);
-			vec.Theta += 0.1f;// / (i + 1);
-			nodes[i] = vec;*/
+			Vector2 basePosition = owner.MountedCenter;
+			Vector2 position = default;
+			//PolarVec2 position = GetSwingStartOffset;
+			for (int i = 0; i < nodes.Count; i++) {
+				PolarVec2 vec = nodes[i];
+				//position.R += vec.R;
+				//position.Theta += vec.Theta;
+				position += (Vector2)vec;
+				Dust.NewDustPerfect(basePosition + (Vector2)position, 6, Vector2.Zero).noGravity = true;
+				vec.Theta += projectile.direction * 0.015f * projectile.localAI[1] * i;// / (i + 1);
+				nodes[i] = vec;
+			}*/
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			projectile.direction = (int)projectile.ai[0];

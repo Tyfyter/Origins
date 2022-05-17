@@ -1,12 +1,13 @@
 Concept, sprite & implementation:
 	Defiled mimic drops
+		Dart weapon could be shotgun, given the vanilla evil biome mimics both have dart versions of the orb/heart guns
 
 Sprite & implementation:
-	Defiled axe (you don't chop down Defiled trees, you mine them. Consistency reason for no implementation.)
+	Defiled axe (the evil biome axes are barely used for their respective trees, and are usually either crafted to improve the speed at which the user can mine regular trees or for use as weapons)
 	Maybe defiled yoyo and/or flail
 
 Just implementation:
-	Defiled fish weapon
+	
 	
 Implemented with placeholder sprite:
 	Low Signal (implementation not yet polished)
