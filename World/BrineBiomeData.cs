@@ -67,7 +67,7 @@ namespace Origins.World.BiomeData {
 							case WallID.TinBrick:
 							case WallID.GoldBrick:
 							case WallID.MudstoneBrick:
-							if (genRand.Next(5) == 0) {
+							if (genRand.NextBool(5)) {
 								goto default;
 							}
 							break;
@@ -150,7 +150,7 @@ namespace Origins.World.BiomeData {
 							case WallID.TinBrick:
 							case WallID.GoldBrick:
 							case WallID.MudstoneBrick:
-							if (genRand.Next(5) == 0) {
+							if (genRand.NextBool(5)) {
 								goto default;
 							}
 							break;

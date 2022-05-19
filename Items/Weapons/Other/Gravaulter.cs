@@ -231,7 +231,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public void LightAndDust(Vector2 position) {
             Lighting.AddLight(position, 0, 0.5f, 0);
-            if (Main.rand.Next(90) == 0) {
+            if (Main.rand.NextBool(90)) {
                 Dust dust = Dust.NewDustDirect(position, 0, 0, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 0.5f);
                 dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
                 dust.fadeIn = Main.rand.NextFloat(0.1f);

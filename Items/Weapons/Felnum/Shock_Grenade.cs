@@ -94,7 +94,7 @@ namespace Origins.Items.Weapons.Felnum {
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             projectile.damage-=(int)((projectile.Center-closest).Length()/16f);
-            if(Main.rand.Next(5)!=0)projectile.timeLeft+=crit?2:1;
+            if(!Main.rand.NextBool(5))projectile.timeLeft+=crit?2:1;
             Vector2 dest = projectile.Center;
             projectile.Center = Vector2.Lerp(closest, new Vector2(target.position.X+Main.rand.NextFloat(target.width),target.position.Y+Main.rand.NextFloat(target.height)), 0.5f);
             for(int i = 0; i < 16; i++) {

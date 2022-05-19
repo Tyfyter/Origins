@@ -32,7 +32,7 @@ namespace Origins.Items.Other.Testing {
 			item.width = 16;
 			item.height = 26;
 			item.value = 25000;
-			item.rare = 2;
+			item.rare = ItemRarityID.Green;
 			item.useStyle = ItemUseStyleID.HoldingUp;
 			item.useAnimation = 10;
 			item.useTime = 10;

@@ -10,10 +10,12 @@ using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Other {
 	public class Dragons_Breath : ModItem {
+        static short glowmask;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dragon's Breath");
 			Tooltip.SetDefault("");
-		}
+            glowmask = Origins.AddGlowMask(this);
+        }
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.SniperRifle);
             item.damage = 25;
@@ -26,7 +28,8 @@ namespace Origins.Items.Weapons.Other {
             item.shootSpeed = 2.5f;
             item.knockBack = 2.5f;
             item.useAmmo = AmmoID.None;
-		}
+            item.glowMask = glowmask;
+        }
         public override Vector2? HoldoutOffset() {
             return new Vector2(-8,2);
         }

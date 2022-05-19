@@ -11,9 +11,11 @@ using Origins.Projectiles.Weapons;
 
 namespace Origins.Items.Weapons.Other {
     public class Firespit : ModItem {
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Firespit");
             Tooltip.SetDefault("");
+            glowmask = Origins.AddGlowMask(this);
         }
         public override void SetDefaults() {
             item.damage = 30;
@@ -29,6 +31,7 @@ namespace Origins.Items.Weapons.Other {
             item.shootSpeed = 6.75f;
             item.UseSound = null;
             //item.reuseDelay = 9;
+            item.glowMask = glowmask;
         }
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {

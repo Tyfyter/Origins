@@ -13,12 +13,14 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summon {
     public class Woodsprite_Staff : ModItem {
-        internal static int projectileID = 0;
+		static short glowmask;
+		internal static int projectileID = 0;
         internal static int buffID = 0;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Woodsprite Staff");
             Tooltip.SetDefault("Summons a woodsprite to fight for you");
-        }
+			glowmask = Origins.AddGlowMask(this);
+		}
         public override void SetDefaults() {
             item.damage = 7;
             item.mana = 10;
@@ -35,7 +37,8 @@ namespace Origins.Items.Weapons.Summon {
             item.shoot = projectileID;
             item.noMelee = true;
             item.summon = true;
-        }
+			item.glowMask = glowmask;
+		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             player.AddBuff(item.buffType, 2);
             position = Main.MouseWorld;

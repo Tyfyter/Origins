@@ -55,7 +55,7 @@ namespace Origins.NPCs.Fiberglass {
             teleport();
         }
         public override void NPCLoot() {
-            if(Main.rand.Next(10)==0)Item.NewItem(npc.Center, ModContent.ItemType<Broken_Fiberglass_Bow>());
+            if(Main.rand.NextBool(10))Item.NewItem(npc.Center, ModContent.ItemType<Broken_Fiberglass_Bow>());
         }
         public override void HitEffect(int hitDirection, double damage) {
             npc.velocity.X += hitDirection * 3;
@@ -334,7 +334,7 @@ namespace Origins.NPCs.Fiberglass {
             npc.noTileCollide = true;
         }
         public override void NPCLoot() {
-            if(Main.rand.Next(7)==0)Item.NewItem(npc.Center, ModContent.ItemType<Broken_Fiberglass_Sword>());
+            if(Main.rand.NextBool(7))Item.NewItem(npc.Center, ModContent.ItemType<Broken_Fiberglass_Sword>());
         }
         public override void HitEffect(int hitDirection, double damage) {
             npc.velocity.X += hitDirection * 3;

@@ -49,7 +49,19 @@ namespace Origins.NPCs {
                 npc.velocity = Vector2.Lerp(npc.velocity, npc.oldVelocity, rasterizedTime * 0.0625f);
                 npc.position = Vector2.Lerp(npc.position, npc.oldPosition, rasterizedTime * 0.0625f);
             }
-            if(infusionSpikes is object) infusionSpikes.Clear();
+            if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
+				if (toxicShockTime < Toxic_Shock_Debuff.stun_duration) {
+                    toxicShockTime++;
+                    npc.position -= npc.velocity;
+                    return false;
+                }
+			} else {
+                toxicShockTime = 0;
+            }
+            if (npc.HasBuff(BuffID.OgreSpit) && (npc.collideX || npc.collideY)) {
+                npc.velocity *= 0.95f;
+            }
+            if (infusionSpikes is object) infusionSpikes.Clear();
             return true;
         }
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot) {
@@ -57,9 +69,12 @@ namespace Origins.NPCs {
             return base.CanHitPlayer(npc, target, ref cooldownSlot);
         }
         public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) {
-            if(npc.HasBuff(Solvent_Debuff.ID)&&crit) {
+            if(npc.HasBuff(Solvent_Debuff.ID) && crit) {
                 damage*=1.3;
             }
+			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
+                damage += defense * 0.1f;
+			}
             return true;
         }
         /*public override void OnHitNPC(NPC npc, NPC target, int damage, float knockback, bool crit) {

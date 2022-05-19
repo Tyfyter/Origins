@@ -191,7 +191,7 @@ namespace Origins.World.BiomeData {
 				}
 			}
 			if (Main.netMode != NetmodeID.MultiplayerClient && !noTileActions) {
-				if (genRand.Next(2) == 0) {
+				if (genRand.NextBool(2)) {
 					spawnMeteor = true;
 				}
 				int num3 = Main.rand.Next(5);

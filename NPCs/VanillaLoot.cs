@@ -30,7 +30,7 @@ namespace Origins.NPCs {
                 break;
                 case NPCID.ArmoredSkeleton:
                 case NPCID.SkeletonArcher:
-                if(Main.rand.Next(50)==0)Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Tiny_Sniper>());
+                if(Main.rand.NextBool(50))Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Tiny_Sniper>());
                 break;
                 case NPCID.MossHornet:
                 case NPCID.BigMossHornet:
@@ -44,7 +44,7 @@ namespace Origins.NPCs {
             }
             Player closestPlayer = Main.player[Player.FindClosest(npc.position, npc.width, npc.height)];
             OriginPlayer originPlayer = closestPlayer.GetModPlayer<OriginPlayer>();
-		    if (Main.rand.Next(2500) == 0 && originPlayer.ZoneDefiled) {
+		    if (Main.rand.NextBool(2500)&& originPlayer.ZoneDefiled) {
 			    Item.NewItem((int)npc.position.X, (int)npc.position.Y, npc.width, npc.height, ModContent.ItemType<Defiled_Key>());
 		    }
         }

@@ -10,6 +10,12 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Riven {
 	public class Seam_Beam : ModItem {
+        static short glowmask;
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Seam Beam");
+            Tooltip.SetDefault("");
+            glowmask = Origins.AddGlowMask(this);
+        }
 
         public override void SetDefaults(){
             item.damage = 42;
@@ -27,6 +33,7 @@ namespace Origins.Items.Weapons.Riven {
             item.value = 10000;
             item.rare = ItemRarityID.Pink;
             item.UseSound = new LegacySoundStyle(SoundID.Item, Origins.Sounds.EnergyRipple);
+            item.glowMask = glowmask;
         }
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
@@ -34,10 +41,6 @@ namespace Origins.Items.Weapons.Riven {
             recipe.SetResult(this);
             recipe.AddRecipe();
         }
-		public override void SetStaticDefaults(){
-			DisplayName.SetDefault("Seam Beam");
-			Tooltip.SetDefault("");
-		}
         public override bool AltFunctionUse(Player player) {
             return true;
         }

@@ -86,6 +86,7 @@ namespace Origins {
         public int rapidSpawnFrames = 0;
         public int rasterizedTime = 0;
         public bool fervorPotion = false;
+        public bool toxicShock = false;
         #endregion
 
         public bool drawShirt = false;
@@ -119,7 +120,7 @@ namespace Origins {
                 felnumShock = 0;
             } else {
                 if(felnumShock > player.statLifeMax2) {
-                    if(Main.rand.Next(20)==0) {
+                    if(Main.rand.NextBool(20)) {
                         Vector2 pos = new Vector2(Main.rand.Next(4, player.width-4), Main.rand.Next(4, player.height-4));
                         Projectile proj = Projectile.NewProjectileDirect(player.position + pos, Main.rand.NextVector2CircularEdge(3,3), Felnum_Shock_Leader.ID, (int)(felnumShock*0.1f), 0, player.whoAmI, pos.X, pos.Y);
                         if(proj.modProjectile is Felnum_Shock_Leader shock) {
@@ -144,6 +145,7 @@ namespace Origins {
             fiberglassDagger = false;
             advancedImaging = false;
             fervorPotion = false;
+            toxicShock = false;
             explosiveDamage = 1f;
             explosiveCrit = 4;
             explosiveThrowSpeed = 1f;
@@ -305,10 +307,10 @@ namespace Origins {
                 }
                 if(riftSet) {
                     Fraction dmg = new Fraction(2, 2);
-                    int c = (madHand ? 1 : 0) + (Main.rand.Next(2) == 0 ? 1 : 0);
+                    int c = (madHand ? 1 : 0) + (Main.rand.NextBool(2)? 1 : 0);
                     dmg.D+=c;
                     damage *= dmg;
-                    double rot = Main.rand.Next(2) == 0?-0.1:0.1;
+                    double rot = Main.rand.NextBool(2)?-0.1:0.1;
                     Vector2 _position;
                     Vector2 velocity;
                     int _type;
@@ -419,6 +421,9 @@ namespace Origins {
             }else if (reshapingChunk) {
                 damage -= damage / 20;
             }
+			if (toxicShock) {
+                damage += player.statDefense / 10;
+			}
             return damage != 0;
         }
         #endregion
@@ -532,13 +537,13 @@ namespace Origins {
             bool flag4 = false;
             bool flag5 = false;
             bool flag7 = false;
-            if (Main.rand.Next(num7) == 0) {
+            if (Main.rand.NextBool(num7)) {
                 flag4 = true;
             }
-            if (Main.rand.Next(num8) == 0) {
+            if (Main.rand.NextBool(num8)) {
                 flag5 = true;
             }
-            if (Main.rand.Next(num10) == 0) {
+            if (Main.rand.NextBool(num10)) {
                 flag7 = true;
             }
             bool zoneDefiled = ZoneDefiled;
@@ -551,7 +556,7 @@ namespace Origins {
 				}
 			}
             if (zoneDefiled) {
-                if (flag7 && Main.hardMode && Main.rand.Next(2) == 0) {
+                if (flag7 && Main.hardMode && Main.rand.NextBool(2)) {
                     caughtType = ModContent.ItemType<Knee_Slapper>();
                 } else if (flag4 && !flag5) {
                     caughtType = ModContent.ItemType<Prikish>();

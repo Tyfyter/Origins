@@ -359,7 +359,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
             damage+=(int)(projectile.velocity.Length()/2);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            if(Main.rand.Next(10)==0) {
+            if(Main.rand.NextBool(10)) {
                 target.AddBuff(BuffID.Poisoned, 180);
             }
         }

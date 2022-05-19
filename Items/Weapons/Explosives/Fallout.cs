@@ -13,10 +13,12 @@ using Terraria.Graphics.Shaders;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Fallout : ModItem {
+        static short glowmask;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fallout");
 			Tooltip.SetDefault("");
-		}
+            glowmask = Origins.AddGlowMask(this);
+        }
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.ProximityMineLauncher);
 			item.damage = 250;
@@ -27,7 +29,8 @@ namespace Origins.Items.Weapons.Explosives {
             item.shoot = ModContent.ProjectileType<Fallout_P1>();
 			item.rare = ItemRarityID.Lime;
             item.autoReuse = true;
-		}
+            item.glowMask = glowmask;
+        }
         public override void AddRecipes() {
             Origins.AddExplosive(item);
         }
@@ -91,7 +94,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override void AI() {
             if(projectile.timeLeft%15==0) {
                 Vector2 offset = Main.rand.NextVector2Circular(160, 160)+Main.rand.NextVector2Circular(160, 160);
-                if(targets.Count>0&&Main.rand.Next(3)!=0)offset = Main.rand.Next(targets);
+                if(targets.Count>0&&!Main.rand.NextBool(3))offset = Main.rand.Next(targets);
                 Projectile.NewProjectile(projectile.Center+offset, Vector2.Zero, ModContent.ProjectileType<Fallout_Cloud>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.ai[1]);
                 targets.Clear();
             }

@@ -468,7 +468,7 @@ namespace Origins.World {
                                         for(int num533 = num529; num533 < num530; num533++) {
                                             if(num533 > 10 && num533 < Main.maxTilesX - 10) {
                                                 for(int num534 = num531; num534 < num532; num534++) {
-                                                    if(Math.Abs(num533 - num527) + Math.Abs(num534 - num528) < 9 + genRand.Next(11) && genRand.Next(3) != 0 && Main.tile[num533, num534].type != 31) {
+                                                    if(Math.Abs(num533 - num527) + Math.Abs(num534 - num528) < 9 + genRand.Next(11) && !genRand.NextBool(3)&& Main.tile[num533, num534].type != 31) {
                                                         Main.tile[num533, num534].active(active: true);
                                                         Main.tile[num533, num534].type = 25;
                                                         if(Math.Abs(num533 - num527) <= 1 && Math.Abs(num534 - num528) <= 1) {
@@ -562,7 +562,7 @@ namespace Origins.World {
                         }
                         //TestRunners.SpikeRunner(p.X, p.Y, duskStoneID, vel, i.Item2, randomtwist: true);
                         double size = i.size*0.25;
-                        if(genRand.Next(5) == 0) {
+                        if(genRand.NextBool(5)) {
                             size+=6;
                             Vector2 tempPos = new Vector2(p.X, p.Y);
                             while (Main.tile[(int)tempPos.X, (int)tempPos.Y].active() && Main.tileSolid[Main.tile[(int)tempPos.X, (int)tempPos.Y].type]) {

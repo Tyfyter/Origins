@@ -43,7 +43,7 @@ namespace Origins.Items.Weapons.Fiberglass {
             projectile.light = 0.025f;
         }
         public override void AI() {
-            if (Main.rand.Next(200)==0){
+            if (Main.rand.NextBool(200)){
 	            Main.dust[Dust.NewDust(projectile.Center+new Vector2(6,6).RotatedBy(projectile.rotation), 0, 0, 204, 0f, 0f, 0, new Color(255,255,255), 1f)].velocity*=0.2f;
             }
             if(projectile.damage == 1) {
@@ -60,7 +60,7 @@ namespace Origins.Items.Weapons.Fiberglass {
             }
         }
         public override bool OnTileCollide(Vector2 oldVelocity) {
-            if(Main.rand.Next(projectile.penetrate)==0)return true;
+            if(Main.rand.NextBool(projectile.penetrate))return true;
             projectile.aiStyle = 0;
             projectile.hostile = true;
             projectile.friendly = true;

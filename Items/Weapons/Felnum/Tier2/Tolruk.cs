@@ -73,7 +73,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             Vector2 offset = new Vector2(speedX, speedY).SafeNormalize(Vector2.Zero);
             position -= offset.RotatedBy(MathHelper.PiOver2) * player.direction * 3;
             Projectile p = Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), type, damage+charge, knockBack, player.whoAmI);
-            if(p.penetrate>0&&Main.rand.Next(5-charge/10)==0) {
+            if(p.penetrate>0&&Main.rand.NextBool(5-charge/10)) {
                 p.penetrate++;
                 p.localNPCHitCooldown = 10;
                 p.usesLocalNPCImmunity = true;

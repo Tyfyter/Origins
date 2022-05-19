@@ -608,7 +608,7 @@ namespace Origins {
             if(!noProj&&item.shoot!=ProjectileID.None)ExplosiveProjectiles[item.shoot] = true;
             instance.Logger.Info($"Registered {item.Name} as explosive: "+ExplosiveItems[item.type]);
         }
-        public static short AddGlowMask(string name){
+        internal static short AddGlowMask(string name){
             if (Main.netMode!=NetmodeID.Server){
                 Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
                 for (int i = 0; i < Main.glowMaskTexture.Length; i++){
@@ -619,6 +619,17 @@ namespace Origins {
                 return (short)(glowMasks.Length - 1);
             }
             else return 0;
+        }
+        public static short AddGlowMask(ModItem item) {
+            if (Main.netMode != NetmodeID.Server) {
+                Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
+                for (int i = 0; i < Main.glowMaskTexture.Length; i++) {
+                    glowMasks[i] = Main.glowMaskTexture[i];
+                }
+                glowMasks[glowMasks.Length - 1] = ModContent.GetTexture(item.Texture+"_Glow");
+                Main.glowMaskTexture = glowMasks;
+                return (short)(glowMasks.Length - 1);
+            } else return 0;
         }
         public static int AddSound(string path, SoundType type = SoundType.Custom, ModSound modSound = null) {
             instance.AddSound(type, "Origins/"+path, modSound);

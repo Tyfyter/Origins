@@ -7,10 +7,12 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Riven {
 	public class Riverang : ModItem {
-		public override void SetStaticDefaults() {
+        static short glowmask;
+        public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Riverang");
 			Tooltip.SetDefault("Not very aerodynamic");
-		}
+            glowmask = Origins.AddGlowMask(this);
+        }
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.ThornChakram);
 			item.damage = 28;
@@ -24,7 +26,8 @@ namespace Origins.Items.Weapons.Riven {
 			item.value = 5000;
 			item.rare = ItemRarityID.Blue;
 			item.UseSound = SoundID.Item1;
-		}
+            item.glowMask = glowmask;
+        }
         public override bool CanUseItem(Player player) {
             return player.ownedProjectileCounts[item.shoot]<=0;
         }

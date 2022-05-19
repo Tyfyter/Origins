@@ -60,7 +60,7 @@ namespace Origins.Tiles.Defiled {
 	            case 0:
 		        if (WorldGen.oreTier1 == -1) {
 			        WorldGen.oreTier1 = TileID.Cobalt;
-			        if (WorldGen.genRand.Next(2) == 0) {
+			        if (WorldGen.genRand.NextBool(2)) {
 				        WorldGen.oreTier1 = TileID.Palladium;
 			        }
 		        }
@@ -75,7 +75,7 @@ namespace Origins.Tiles.Defiled {
 	            case 1:
 		        if (WorldGen.oreTier2 == -1) {
 			        WorldGen.oreTier2 = TileID.Mythril;
-			        if (WorldGen.genRand.Next(2) == 0) {
+			        if (WorldGen.genRand.NextBool(2)) {
 				        WorldGen.oreTier2 = TileID.Orichalcum;
 			        }
 		        }
@@ -89,7 +89,7 @@ namespace Origins.Tiles.Defiled {
 	            default:
 		        if (WorldGen.oreTier3 == -1) {
 			        WorldGen.oreTier3 = TileID.Adamantite;
-			        if (WorldGen.genRand.Next(2) == 0) {
+			        if (WorldGen.genRand.NextBool(2)) {
 				        WorldGen.oreTier3 = TileID.Titanium;
 			        }
 		        }

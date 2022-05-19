@@ -46,7 +46,7 @@ namespace Origins.Tiles.Riven {
             recursion = true;
             WorldGen.TileFrame(i, j, resetFrame, noBreak);
             recursion = false;
-            if (Main.tile[i, j].frameX == 54 && Main.tile[i, j].frameY == 18 && WorldGen.genRand.Next(4) != 0) {
+            if (Main.tile[i, j].frameX == 54 && Main.tile[i, j].frameY == 18 && !WorldGen.genRand.NextBool(4)) {
                 Main.tile[i, j].frameX = (short)(18 * (WorldGen.genRand.Next(1, 3)));
             }
             return false;

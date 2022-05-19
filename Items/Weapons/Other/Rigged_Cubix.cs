@@ -6,9 +6,11 @@ using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Other {
 	public class Rigged_Cubix : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Rigged Cubix");
 			Tooltip.SetDefault("");
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);
@@ -26,6 +28,7 @@ namespace Origins.Items.Weapons.Other {
             item.shoot = ModContent.ProjectileType<Rigged_Cubix_P>();
 			item.rare = ItemRarityID.Green;
 			item.UseSound = null;
+			item.glowMask = glowmask;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			Vector2 vel = new Vector2(speedX, speedY).RotatedByRandom(0.075f);

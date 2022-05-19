@@ -19,6 +19,7 @@ namespace Origins.NPCs {
         internal int shrapnelTime = 0;
         internal int shockTime = 0;
         internal int rasterizedTime = 0;
+        internal int toxicShockTime = 0;
         internal List<int> infusionSpikes;
         public override void ResetEffects(NPC npc) {
             int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);

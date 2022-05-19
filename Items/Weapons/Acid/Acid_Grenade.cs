@@ -9,10 +9,12 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Acid {
 	public class Acid_Grenade : ModItem {
-		public override void SetStaticDefaults() {
+        static short glowmask;
+        public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acid Grenade");
 			Tooltip.SetDefault("");
-		}
+            glowmask = Origins.AddGlowMask(this);
+        }
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.Grenade);
             //item.maxStack = 999;
@@ -23,7 +25,8 @@ namespace Origins.Items.Weapons.Acid {
             item.knockBack = 5f;
             item.ammo = ItemID.Grenade;
 			item.rare = ItemRarityID.Lime;
-		}
+            item.glowMask = glowmask;
+        }
         public override void AddRecipes() {
             Origins.AddExplosive(item);
         }

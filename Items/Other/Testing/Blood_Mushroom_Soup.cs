@@ -198,7 +198,7 @@ namespace Origins.Items.Other.Testing {
                             length: length,
                             twist: twist,
                             randomtwist: twistRand);
-                        if (count > 0 && Main.rand.Next(3) == 0) {
+                        if (count > 0 && Main.rand.NextBool(3)) {
                             veins.Push(((ret.p, ret.v.RotatedBy(Main.rand.NextBool() ? -1 : 1)), (byte)Main.rand.Next(--count)));
                         }
                         if (count > 0) {

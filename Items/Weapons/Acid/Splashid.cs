@@ -14,11 +14,12 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Acid {
     public class Splashid : ModItem, IElementalItem {
-        public ushort Element => Elements.Acid;
-
+		static short glowmask;
+		public ushort Element => Elements.Acid;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acid Splash");
 			Tooltip.SetDefault("");
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.RubyStaff);
@@ -36,6 +37,7 @@ namespace Origins.Items.Weapons.Acid {
 			item.value = 5000;
             item.shoot = ModContent.ProjectileType<Acid_Shot>();
 			item.rare = ItemRarityID.Lime;
+			item.glowMask = glowmask;
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             int a = Main.rand.Next(5,7);
