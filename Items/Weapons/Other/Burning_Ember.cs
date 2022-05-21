@@ -105,8 +105,8 @@ namespace Origins.Items.Weapons.Other {
             const int backset = 2;
             if(min+backset<positions.Length)for(int n = 0; n < 4; n++) {
                 offset += velocity;
-                if(Main.rand.NextBool(3))Dust.NewDust(positions[min+backset] + offset, projectile.width, projectile.height, 6);
-                if(Main.rand.NextBool(3))Dust.NewDust(positions[min+backset] - offset, projectile.width, projectile.height, 6);
+                if(Main.rand.NextBool(3))Dust.NewDust(positions[min+backset] + offset, projectile.width, projectile.height, DustID.Fire);
+                if(Main.rand.NextBool(3))Dust.NewDust(positions[min+backset] - offset, projectile.width, projectile.height, DustID.Fire);
             }
             //spriteBatch.Draw(mod.GetTexture("Projectiles/ClawFeather"), oldPositions[oldPositions.Count-1], null, lightColor, projectile.rotation, projectile.Center, 1, SpriteEffects.None, 0);
             return false;

@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Fiberglass {
         }
         public override void AI() {
             if (Main.rand.NextBool(200)){
-	            Main.dust[Dust.NewDust(projectile.Center+new Vector2(6,6).RotatedBy(projectile.rotation), 0, 0, 204, 0f, 0f, 0, new Color(255,255,255), 1f)].velocity*=0.2f;
+	            Main.dust[Dust.NewDust(projectile.Center+new Vector2(6,6).RotatedBy(projectile.rotation), 0, 0, DustID.TreasureSparkle, 0f, 0f, 0, new Color(255,255,255), 1f)].velocity*=0.2f;
             }
             if(projectile.damage == 1) {
                 Vector2 center = projectile.Center;// - new Vector2(0, 4).RotatedBy(projectile.rotation);

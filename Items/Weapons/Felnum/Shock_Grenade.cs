@@ -56,7 +56,7 @@ namespace Origins.Items.Weapons.Felnum {
 			projectile.position.X -= projectile.width / 2;
 			projectile.position.Y -= projectile.height / 2;
 			projectile.Damage();
-			Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 2f, 1f);
+			Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 2f, 1f);
             int t = ModContent.ProjectileType<Shock_Grenade_Shock>();
             for(int i = Main.rand.Next(2); i < 3; i++)Projectile.NewProjectile(projectile.Center, Vector2.Zero, t, (int)((projectile.damage-32)*1.5f)+16, 6, projectile.owner);
         }

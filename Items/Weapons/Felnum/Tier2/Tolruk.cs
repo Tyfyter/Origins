@@ -8,13 +8,13 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Felnum.Tier2 {
-	public class Tolruk : ModItem {
+    public class Tolruk : ModItem {
         public const int baseDamage = 37;
         int charge = 0;
         public static short[] glowmasks;
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tolruk");
-			Tooltip.SetDefault("Receives 50% higher damage bonuses\n[tɵlɹɘk]\nSprite needs reshaping to be less like dart rifle");
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Tolruk");
+            Tooltip.SetDefault("Receives 50% higher damage bonuses\n[tɵlɹɘk]\nSprite needs reshaping to be less like dart rifle");
             glowmasks = new short[]{
                 -1,//Origins.AddGlowMask("Weapons/Felnum/Tier2/Tolruk_Glow_0"),
                 Origins.AddGlowMask("Weapons/Felnum/Tier2/Tolruk_Glow_1"),
@@ -28,25 +28,25 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                 Origins.AddGlowMask("Weapons/Felnum/Tier2/Tolruk_Glow_9"),
                 Origins.AddGlowMask("Weapons/Felnum/Tier2/Tolruk_Glow_10")
             };
-		}
-		public override void SetDefaults() {
-			item.damage = baseDamage;
-			item.ranged = true;
+        }
+        public override void SetDefaults() {
+            item.damage = baseDamage;
+            item.ranged = true;
             item.noMelee = true;
-			item.width = 18;
-			item.height = 36;
-			item.useTime = 10;
-			item.useAnimation = 10;
-			item.useStyle = 5;
-			item.knockBack = 1;
-			item.value = 500000;
-			item.shootSpeed = 14;
-			item.autoReuse = true;
+            item.width = 18;
+            item.height = 36;
+            item.useTime = 10;
+            item.useAnimation = 10;
+            item.useStyle = 5;
+            item.knockBack = 1;
+            item.value = 500000;
+            item.shootSpeed = 14;
+            item.autoReuse = true;
             item.useAmmo = AmmoID.Bullet;
             item.shoot = ProjectileID.Bullet;
-			item.rare = ItemRarityID.Lime;
-			item.UseSound = SoundID.Item11;
-		}
+            item.rare = ItemRarityID.Lime;
+            item.UseSound = SoundID.Item11;
+        }
         public override void AddRecipes() {
             ModRecipe recipe = new ModRecipe(mod);
             recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15);
@@ -56,16 +56,17 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             recipe.AddRecipe();
         }
         public override void HoldStyle(Player player) {
-            if(charge>0) {
+            if (charge > 0) {
                 charge--;
             }
         }
         public override void HoldItem(Player player) {
-            item.glowMask = glowmasks[Math.Min(charge/4,10)];
+            item.glowMask = glowmasks[Math.Min(charge / 4, 10)];
         }
-		public override Vector2? HoldoutOffset(){
-			return new Vector2(-12,0);
-		}
+        public override Vector2? HoldoutOffset() {
+            return new Vector2(-12, 0);
+        }
+        [Obsolete]
         public override void GetWeaponDamage(Player player, ref int damage) {
             damage+=(damage-baseDamage)/2;
         }
@@ -83,7 +84,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                 Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), ModContent.ProjectileType<Tolruk_Bolt>(), damage*3, knockBack, player.whoAmI);
                 charge = 0;
                 PlaySound("DeepBoom", position, 2);
-                Main.PlaySound(2, (int)position.X, (int)position.Y, 122, 3f, 1f);
+                Main.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 122, 3f, 1f);
             } else charge+=4;
             return false;
         }

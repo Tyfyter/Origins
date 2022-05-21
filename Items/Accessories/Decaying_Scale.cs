@@ -9,22 +9,17 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Dim_Starlight : ModItem {
-        static short glowmask;
+    public class Decaying_Scale : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Dim Starlight");
-            Tooltip.SetDefault("Spawns mana stars on crits");
-            glowmask = Origins.AddGlowMask(this);
+            DisplayName.SetDefault("Decaying Scale");
+            Tooltip.SetDefault("Attacks inflict Toxic Shock and Solvent on enemies\nEffects are stronger while using Acrid Armor");
         }
         public override void SetDefaults() {
             item.accessory = true;
-            item.glowMask = glowmask;
         }
         public override void UpdateEquip(Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-            originPlayer.dimStarlight = true;
-            float light = 0.1f+(originPlayer.dimStarlightCooldown/1000f);
-            Lighting.AddLight(player.Center,light,light,light);
+            originPlayer.decayingScale = true;
         }
     }
 }

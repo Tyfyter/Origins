@@ -11,9 +11,11 @@ using Origins.Projectiles.Weapons;
 
 namespace Origins.Items.Weapons.Other {
     public class Boiler_Pistol : ModItem {
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Boiler Pistol");
             Tooltip.SetDefault("Uses fireblossoms as ammo");
+            glowmask = Origins.AddGlowMask(this);
         }
         public override void SetDefaults() {
             item.CloneDefaults(ItemID.Gatligator);
@@ -27,6 +29,7 @@ namespace Origins.Items.Weapons.Other {
             item.shootSpeed*=1.75f;
             item.UseSound = null;
             item.scale = 0.8f;
+            item.glowMask = glowmask;
         }
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {

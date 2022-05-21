@@ -35,7 +35,7 @@ namespace Origins.Projectiles.Weapons {
             }
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.duration);
+            target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
             target.AddBuff(BuffID.OgreSpit, 480);
             Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 1.25f*projectile.scale);
             dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);

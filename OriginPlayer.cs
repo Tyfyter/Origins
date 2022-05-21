@@ -45,6 +45,7 @@ namespace Origins {
         public bool rivenSet = false;
         public bool riftSet = false;
         public bool eyndumSet = false;
+        public bool mimicSet = false;
         #endregion set bonuses
 
         #region accessories
@@ -55,6 +56,7 @@ namespace Origins {
         public bool fiberglassDagger = false;
         public bool advancedImaging = false;
         public bool rasterize = false;
+        public bool decayingScale = false;
         #endregion
 
         #region explosive stats
@@ -115,7 +117,6 @@ namespace Origins {
             cryostenSet = false;
             cryostenHelmet = false;
             oldFelnumShock = felnumShock;
-            rasterize = false;
             if(!felnumSet) {
                 felnumShock = 0;
             } else {
@@ -139,11 +140,14 @@ namespace Origins {
             rivenSet = false;
             riftSet = false;
             eyndumSet = false;
+            mimicSet = false;
             bombHandlingDevice = false;
             dimStarlight = false;
             madHand = false;
             fiberglassDagger = false;
             advancedImaging = false;
+            rasterize = false;
+            decayingScale = false;
             fervorPotion = false;
             toxicShock = false;
             explosiveDamage = 1f;
@@ -366,6 +370,10 @@ namespace Origins {
             if (rasterize) { 
                 target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
             }
+            if (decayingScale) {
+                target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
+                target.AddBuff(Solvent_Debuff.ID, 300);
+            }
         }
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
             if(crit) {
@@ -377,7 +385,11 @@ namespace Origins {
                 }
             }
             if (rasterize) { 
-                target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);//
+                target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
+            }
+            if (decayingScale) {
+                target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
+                target.AddBuff(Solvent_Debuff.ID, 300);
             }
         }
         public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {

@@ -4,14 +4,14 @@ using Origins.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Armor.Rift {
+namespace Origins.Items.Armor.Mimic {
     [AutoloadEquip(EquipType.Head)]
-    public class Rift_Helmet : ModItem {
+    public class Mimic_Helmet : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Rift Helmet");
-            Tooltip.SetDefault("Increased explosive velocity");
+            DisplayName.SetDefault("Mimic Helmet");
+            Tooltip.SetDefault("Slightly increased explosive velocity");
             if (Main.netMode != NetmodeID.Server) {
-                Origins.AddHelmetGlowmask(item.headSlot, "Items/Armor/Rift/Rift_Helmet_Head_Glow");
+                Origins.AddHelmetGlowmask(item.headSlot, "Items/Armor/Mimic/Mimic_Helmet_Head_Glow");
             }
         }
         public override void SetDefaults() {
@@ -19,14 +19,14 @@ namespace Origins.Items.Armor.Rift {
             item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
-            player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed+=0.2f;
+            player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed+=0.1f;
         }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
-            return body.type == ModContent.ItemType<Rift_Breastplate>() && legs.type == ModContent.ItemType<Rift_Greaves>();
+            return body.type == ModContent.ItemType<Mimic_Breastplate>() && legs.type == ModContent.ItemType<Mimic_Greaves>();
         }
         public override void UpdateArmorSet(Player player) {
-            player.setBonus = "Explosive projectiles have a chance to be duplicated";
-            player.GetModPlayer<OriginPlayer>().riftSet = true;
+            player.setBonus = "Not yet implemented";
+            player.GetModPlayer<OriginPlayer>().mimicSet = true;
         }
         public override void AddRecipes() {
             /*ModRecipe recipe = new ModRecipe(mod);
@@ -38,13 +38,13 @@ namespace Origins.Items.Armor.Rift {
         }
     }
     [AutoloadEquip(EquipType.Body)]
-    public class Rift_Breastplate : ModItem {
+    public class Mimic_Breastplate : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Rift Breastplate");
-            Tooltip.SetDefault("Increases maximum health by 20");
+            DisplayName.SetDefault("Mimic Breastplate");
+            Tooltip.SetDefault("Increased life regeneration");
             if (Main.netMode != NetmodeID.Server) {
-                Origins.AddBreastplateGlowmask(item.bodySlot, "Items/Armor/Rift/Rift_Breastplate_Body_Glow");
-                Origins.AddBreastplateGlowmask(-item.bodySlot, "Items/Armor/Rift/Rift_Breastplate_FemaleBody_Glow");
+                Origins.AddBreastplateGlowmask(item.bodySlot, "Items/Armor/Mimic/Mimic_Breastplate_Body_Glow");
+                Origins.AddBreastplateGlowmask(-item.bodySlot, "Items/Armor/Mimic/Mimic_Breastplate_FemaleBody_Glow");
             }
         }
         public override void SetDefaults() {
@@ -53,7 +53,7 @@ namespace Origins.Items.Armor.Rift {
             item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
-            player.statLifeMax2+=20;
+            player.lifeRegenCount+=20;
         }
         public override void AddRecipes() {
             /*ModRecipe recipe = new ModRecipe(mod);
@@ -65,12 +65,12 @@ namespace Origins.Items.Armor.Rift {
         }
     }
     [AutoloadEquip(EquipType.Legs)]
-    public class Rift_Greaves : ModItem {
+    public class Mimic_Greaves : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Rift Greaves");
-            Tooltip.SetDefault("20% increased movement speed");
+            DisplayName.SetDefault("Mimic Greaves");
+            Tooltip.SetDefault("10% increased explosive damage");
             if (Main.netMode != NetmodeID.Server) {
-                Origins.AddLeggingGlowMask(item.legSlot, "Items/Armor/Rift/Rift_Greaves_Legs_Glow");
+                //Origins.AddLeggingGlowMask(item.legSlot, "Items/Armor/Mimic/Mimic_Greaves_Legs_Glow");
             }
         }
         public override void SetDefaults() {
@@ -78,8 +78,7 @@ namespace Origins.Items.Armor.Rift {
             item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
-            player.moveSpeed += 0.2f;
-            player.runAcceleration += 0.02f;
+            player.GetModPlayer<OriginPlayer>().explosiveDamage += 0.1f;
         }
         public override void AddRecipes() {
             /*ModRecipe recipe = new ModRecipe(mod);

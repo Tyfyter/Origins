@@ -52,7 +52,7 @@ namespace Origins.Items.Weapons.Explosives {
         }
         public override void AI() {
             projectile.rotation = projectile.velocity.ToRotation() + PiOver2;
-            int num248 = Dust.NewDust(projectile.Center - projectile.velocity * 0.5f-new Vector2(0,4), 0, 0, 6, 0f, 0f, 100);
+            int num248 = Dust.NewDust(projectile.Center - projectile.velocity * 0.5f-new Vector2(0,4), 0, 0, DustID.Fire, 0f, 0f, 100);
 			Dust dust3 = Main.dust[num248];
 			dust3.scale *= 1f + Main.rand.Next(10) * 0.1f;
 			dust3.velocity *= 0.2f;
@@ -99,7 +99,7 @@ namespace Origins.Items.Weapons.Explosives {
                 targets.Clear();
             }
             for(int i = 0; i < 6; i++) {
-                Dust dust = Dust.NewDustDirect(projectile.Center+Main.rand.NextVector2Circular(140,140)+Main.rand.NextVector2Circular(140,140), 0, 0, 226, 0, 0, 100, new Color(0, 255, 0), 0.75f*projectile.scale);
+                Dust dust = Dust.NewDustDirect(projectile.Center+Main.rand.NextVector2Circular(140,140)+Main.rand.NextVector2Circular(140,140), 0, 0, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 0.75f*projectile.scale);
                 dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
                 dust.noGravity = true;
                 dust.noLight = true;
@@ -130,7 +130,7 @@ namespace Origins.Items.Weapons.Explosives {
         }
         public override void Kill(int timeLeft) {
             for(int i = 0; i < 7; i++) {
-                Dust dust = Dust.NewDustDirect(projectile.position, 10, 10, 226, 0, 0, 100, new Color(0, 255, 0), 1.25f*projectile.scale);
+                Dust dust = Dust.NewDustDirect(projectile.position, 10, 10, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 1.25f*projectile.scale);
                 dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
                 dust.noGravity = true;
                 dust.noLight = true;

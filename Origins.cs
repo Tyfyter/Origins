@@ -620,13 +620,17 @@ namespace Origins {
             }
             else return 0;
         }
-        public static short AddGlowMask(ModItem item) {
+        public static short AddGlowMask(ModItem item, string suffix = "_Glow") {
             if (Main.netMode != NetmodeID.Server) {
+                string name = item.Texture + suffix;
+                if (!ModContent.TextureExists(name)) {
+                    return 0;
+                }
                 Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
                 for (int i = 0; i < Main.glowMaskTexture.Length; i++) {
                     glowMasks[i] = Main.glowMaskTexture[i];
                 }
-                glowMasks[glowMasks.Length - 1] = ModContent.GetTexture(item.Texture+"_Glow");
+                glowMasks[glowMasks.Length - 1] = ModContent.GetTexture(name);
                 Main.glowMaskTexture = glowMasks;
                 return (short)(glowMasks.Length - 1);
             } else return 0;
@@ -652,12 +656,15 @@ namespace Origins {
             }
         }
         internal static void AddHelmetGlowmask(int armorID, string texture) {
+            if (!instance.TextureExists(texture)) return;
             HelmetGlowMasks.Add(armorID, instance.GetTexture(texture));
         }
         internal static void AddBreastplateGlowmask(int armorID, string texture) {
+            if (!instance.TextureExists(texture)) return;
             BreastplateGlowMasks.Add(armorID, instance.GetTexture(texture));
         }
         internal static void AddLeggingGlowMask(int armorID, string texture) {
+            if (!instance.TextureExists(texture)) return;
             LeggingGlowMasks.Add(armorID, instance.GetTexture(texture));
         }
         public static class Music {

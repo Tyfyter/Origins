@@ -54,8 +54,10 @@ namespace Origins.NPCs {
                     toxicShockTime++;
                     npc.position -= npc.velocity;
                     return false;
+				} else if (toxicShockTime <= Toxic_Shock_Debuff.stun_duration * 3) {
+                    toxicShockTime++;
                 }
-			} else {
+            } else if (toxicShockTime > 0) {
                 toxicShockTime = 0;
             }
             if (npc.HasBuff(BuffID.OgreSpit) && (npc.collideX || npc.collideY)) {

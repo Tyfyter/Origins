@@ -13,36 +13,35 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Acid {
-    public class Toxic_Slash : ModItem, IElementalItem {
+    public class The_Foot : ModItem, IElementalItem {
         public ushort Element => Elements.Acid;
-		public override bool OnlyShootOnSwing => true;
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Toxic Slash");
+			DisplayName.SetDefault("The Foot");
 			Tooltip.SetDefault("");
-			glowmask = Origins.AddGlowMask("Weapons/Acid/Toxic_Slash_Glow");
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.TrueExcalibur);
-			item.damage = 45;
+			item.damage = 90;
 			item.melee = true;
 			item.autoReuse = true;
             item.useStyle = 1;
 			item.width = 28;
 			item.height = 30;
-			item.useTime = 27;
-			item.useAnimation = 28;
+			item.useTime = 32;
+			item.useAnimation = 32;
 			item.value = 5000;
-            item.shoot = ModContent.ProjectileType<Gooey_Exaultion_P>();
+            item.shoot = ProjectileID.None;
 			item.rare = ItemRarityID.Lime;
 			item.glowMask = glowmask;
 		}
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit) {
-			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
+			target.AddBuff(Toxic_Shock_Debuff.ID, 180);
+			target.AddBuff(BuffID.Venom, 600);
+			target.AddBuff(BuffID.Bleeding, 600);
+			target.AddBuff(BuffID.CursedInferno, 600);
+			target.AddBuff(BuffID.Ichor, 600);
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			damage -= damage / 3;
-			return Main.rand.NextBool();
-        }
     }
 }

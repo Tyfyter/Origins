@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Explosives {
 	public class Hand_Grenade_Launcher : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Hand Grenade Launcher");
-			Tooltip.SetDefault("Doesn't this defeat the purpose of a hand grenade?");
+			Tooltip.SetDefault("'Doesn't this defeat the purpose of a hand grenade?'");
 		}
 		public override void SetDefaults() {
             item.CloneDefaults(ItemID.GrenadeLauncher);

@@ -34,7 +34,6 @@ namespace Origins.Items.Weapons.Other {
             item.useAnimation = 12;
             item.knockBack = 9.5f;
             item.value = 500000;
-            item.shoot = ProjectileID.None;
             item.rare = ItemRarityID.Purple;
             item.shoot = Gravaulter_P.ID;
             item.shootSpeed = 10f;
