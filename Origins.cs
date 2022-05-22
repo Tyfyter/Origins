@@ -66,7 +66,7 @@ namespace Origins {
         public static Texture2D eyndumCoreUITexture;
         public static Texture2D eyndumCoreTexture;
 
-        public UserInterface eyndumCoreUI;
+        public UserInterface setBonusUI;
         public Origins() {
             instance = this;
             celestineBoosters = new int[3];
@@ -301,7 +301,7 @@ namespace Origins {
                 //Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.
                 //Filters.Scene["BlackHole"] = new Filter(new ScreenShaderData(screenRef, "BlackHole"), EffectPriority.VeryHigh);
                 //Filters.Scene["BlackHole"].Load();
-                eyndumCoreUI = new UserInterface();
+                setBonusUI = new UserInterface();
                 eyndumCoreUITexture = GetTexture("UI/CoreSlot");
                 eyndumCoreTexture = GetTexture("Items/Armor/Eyndum/Eyndum_Breastplate_Body_Core");
             }
@@ -465,7 +465,7 @@ namespace Origins {
                 OriginWorld.totalRiven2 = 0;
             }
             OriginWorld.totalDefiled2 += tileCounts[MC.TileType<Defiled_Stone>()] + tileCounts[MC.TileType<Defiled_Grass>()] + tileCounts[MC.TileType<Defiled_Sand>()]+tileCounts[MC.TileType<Defiled_Ice>()];
-            OriginWorld.totalDefiled2 += tileCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
+            OriginWorld.totalRiven2 += tileCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
             orig(clearCounts);
         }
         public override void HandlePacket(BinaryReader reader, int whoAmI) {
@@ -542,34 +542,46 @@ namespace Origins {
                 worldInstance.defiledAltResurgenceTiles = null;
             }
             Bomboomstick.Unload();
-            eyndumCoreUI = null;
+            setBonusUI = null;
             eyndumCoreUITexture = null;
             eyndumCoreTexture = null;
         }
         public override void UpdateUI(GameTime gameTime) {
             if (Main.playerInventory) {
-                if (eyndumCoreUI?.CurrentState is Eyndum_Core_UI eyndumCoreUIState) {
+                if (setBonusUI?.CurrentState is Eyndum_Core_UI eyndumCoreUIState) {
                     OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
                     if (eyndumCoreUIState?.itemSlot?.item == originPlayer.eyndumCore) {
                         if (!originPlayer.eyndumSet) {
                             if (eyndumCoreUIState?.itemSlot?.item?.Value?.IsAir ?? true) {
-                                eyndumCoreUI.SetState(null);
+                                setBonusUI.SetState(null);
                             } else {
                                 eyndumCoreUIState.hasSetBonus = false;
-                                eyndumCoreUI.Update(gameTime);
+                                setBonusUI.Update(gameTime);
                             }
                         } else {
-                            eyndumCoreUI.Update(gameTime);
+                            setBonusUI.Update(gameTime);
                         }
                     } else {
-                        eyndumCoreUI.SetState(null);
+                        setBonusUI.SetState(null);
+                    }
+                } else if (setBonusUI?.CurrentState is Mimic_Selection_UI) {
+                    OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+                    if (originPlayer.mimicSet) {
+                        setBonusUI.Update(gameTime);
+                    } else {
+                        setBonusUI.SetState(null);
                     }
                 }
             }
         }
         public void SetEyndumCoreUI() {
-            if (!(eyndumCoreUI.CurrentState is Eyndum_Core_UI)) {
-                eyndumCoreUI.SetState(new Eyndum_Core_UI());
+            if (!(setBonusUI.CurrentState is Eyndum_Core_UI)) {
+                setBonusUI.SetState(new Eyndum_Core_UI());
+            }
+        }
+        public void SetMimicSetUI() {
+            if (!(setBonusUI.CurrentState is Mimic_Selection_UI)) {
+                setBonusUI.SetState(new Mimic_Selection_UI());
             }
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
@@ -578,7 +590,7 @@ namespace Origins {
                 layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
                     "Origins: Eyndum Core UI",
                     delegate {
-                        eyndumCoreUI?.Draw(Main.spriteBatch, new GameTime());
+                        setBonusUI?.Draw(Main.spriteBatch, new GameTime());
                         return true;
                     },
                     InterfaceScaleType.UI) { Active = Main.playerInventory }

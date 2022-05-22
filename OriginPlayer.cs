@@ -46,6 +46,7 @@ namespace Origins {
         public bool riftSet = false;
         public bool eyndumSet = false;
         public bool mimicSet = false;
+        public int mimicSetChoices = 0;
         #endregion set bonuses
 
         #region accessories
@@ -660,6 +661,12 @@ namespace Origins {
             for(int i = 13; i < 18+player.extraAccessorySlots; i++) {
                 if(player.armor[i].type==Plague_Texan_Sight.ID)Plague_Texan_Sight.ApplyVisuals(player);
             }
+        }
+        public void SetMimicSetChoice(int level, int choice) {
+            mimicSetChoices = (mimicSetChoices & ~(3 << level * 2)) | ((choice & 3) << level * 2);
+        }
+        public int GetMimicSetChoice(int level) {
+            return (mimicSetChoices >> level * 2) & 3;
         }
         //public static PlayerLayer PlagueEyes = new PlayerLayer("Origins", "PlagueEyes", null, (drawInfo)=> {drawInfo.eyeColor = Color.Goldenrod;});
         public static PlayerLayer PlayerShirt = new PlayerLayer("Origins", "PlayerShirt", null, delegate (PlayerDrawInfo drawInfo2) {

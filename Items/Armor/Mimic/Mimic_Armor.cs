@@ -3,6 +3,7 @@ using Terraria;
 using Origins.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Origins.World;
 
 namespace Origins.Items.Armor.Mimic {
     [AutoloadEquip(EquipType.Head)]
@@ -15,7 +16,7 @@ namespace Origins.Items.Armor.Mimic {
             }
         }
         public override void SetDefaults() {
-            item.defense = 8;
+            item.defense = 11;
             item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
@@ -25,8 +26,54 @@ namespace Origins.Items.Armor.Mimic {
             return body.type == ModContent.ItemType<Mimic_Breastplate>() && legs.type == ModContent.ItemType<Mimic_Greaves>();
         }
         public override void UpdateArmorSet(Player player) {
-            player.setBonus = "Not yet implemented";
-            player.GetModPlayer<OriginPlayer>().mimicSet = true;
+            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+            originPlayer.mimicSet = true;
+            float defiledPercentage = OriginWorld.totalDefiled / (float)WorldGen.totalSolid;
+            originPlayer.explosiveThrowSpeed += 0.2f * defiledPercentage;
+            player.lifeRegenCount += (int)(4 * defiledPercentage);
+            originPlayer.explosiveDamage += 0.2f * defiledPercentage;
+            player.setBonus = string.Format("Not yet fully implemented\nSet bonus scales with the percentage of the world taken over by the defiled wastelands\nCurrent percentage: {0:P1}, ", defiledPercentage);
+            Origins.instance.SetMimicSetUI();
+			if (defiledPercentage > 0.33) {
+				switch (originPlayer.GetMimicSetChoice(0)) {
+                    case 1:
+                    if (player.wings == 0) {
+                        player.wings = 8;
+                    }
+                    if (player.wingsLogic == 0 || player.wingTimeMax <= 180) {
+                        player.wingsLogic = 26;
+                        player.wingTimeMax = 180;
+                    }
+                    break;
+                    case 2:
+                    break;
+                    case 3:
+                    break;
+                }
+            }
+            if (defiledPercentage > 0.66) {
+                switch (originPlayer.GetMimicSetChoice(0)) {
+                    case 1:
+                    player.moveSpeed += 0.66f;
+                    player.runAcceleration += 0.066f;
+                    break;
+                    case 2:
+                    break;
+                    case 3:
+                    break;
+                }
+            }
+            if (defiledPercentage > 0.99) {
+                switch (originPlayer.GetMimicSetChoice(0)) {
+                    case 1:
+                    player.extraAccessorySlots++;
+                    break;
+                    case 2:
+                    break;
+                    case 3:
+                    break;
+                }
+            }
         }
         public override void AddRecipes() {
             /*ModRecipe recipe = new ModRecipe(mod);
@@ -48,12 +95,12 @@ namespace Origins.Items.Armor.Mimic {
             }
         }
         public override void SetDefaults() {
-            item.defense = 16;
+            item.defense = 15;
             item.wornArmor = true;
             item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
-            player.lifeRegenCount+=20;
+            player.lifeRegenCount+=2;
         }
         public override void AddRecipes() {
             /*ModRecipe recipe = new ModRecipe(mod);
