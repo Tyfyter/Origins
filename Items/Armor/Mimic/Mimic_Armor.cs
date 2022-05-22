@@ -77,11 +77,11 @@ namespace Origins.Items.Armor.Mimic {
 		}
 		public override void AddRecipes() {
 			/*ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
-            //recipe.AddIngredient(ModContent.ItemType<>(), 10);
-            recipe.SetResult(this);
-            recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();*/
+			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
+			//recipe.AddIngredient(ModContent.ItemType<>(), 10);
+			recipe.SetResult(this);
+			recipe.AddTile(TileID.Anvils);
+			recipe.AddRecipe();*/
 		}
 	}
 	[AutoloadEquip(EquipType.Body)]
@@ -104,11 +104,11 @@ namespace Origins.Items.Armor.Mimic {
 		}
 		public override void AddRecipes() {
 			/*ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
-            //recipe.AddIngredient(ModContent.ItemType<>(), 20);
-            recipe.SetResult(this);
-            recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();*/
+			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
+			//recipe.AddIngredient(ModContent.ItemType<>(), 20);
+			recipe.SetResult(this);
+			recipe.AddTile(TileID.Anvils);
+			recipe.AddRecipe();*/
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -129,11 +129,11 @@ namespace Origins.Items.Armor.Mimic {
 		}
 		public override void AddRecipes() {
 			/*ModRecipe recipe = new ModRecipe(mod);
-            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
-            //recipe.AddIngredient(ModContent.ItemType<>(), 15);
-            recipe.SetResult(this);
-            recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();*/
+			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
+			//recipe.AddIngredient(ModContent.ItemType<>(), 15);
+			recipe.SetResult(this);
+			recipe.AddTile(TileID.Anvils);
+			recipe.AddRecipe();*/
 		}
 	}
 }
