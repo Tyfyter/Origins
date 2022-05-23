@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using MonoMod.RuntimeDetour;
 using MonoMod.RuntimeDetour.HookGen;
 using Origins.Items;
@@ -41,6 +42,8 @@ namespace Origins {
         public static Dictionary<int, int> ExplosiveBaseDamage;
         public static bool[] ExplosiveModOnHit;
         public static ushort[] VanillaElements;
+
+        public static ModHotKey SetBonusTriggerKey { get; private set; }
         #region Armor IDs
         public static int FelnumHeadArmorID { get; private set; }
         public static int FelnumBodyArmorID { get; private set; }
@@ -304,7 +307,16 @@ namespace Origins {
                 setBonusUI = new UserInterface();
                 eyndumCoreUITexture = GetTexture("UI/CoreSlot");
                 eyndumCoreTexture = GetTexture("Items/Armor/Eyndum/Eyndum_Breastplate_Body_Core");
+				if (OriginClientConfig.Instance.SetBonusDoubleTap) {
+                    On.Terraria.Player.KeyDoubleTap += (On.Terraria.Player.orig_KeyDoubleTap orig, Player self, int keyDir) => {
+                        orig(self, keyDir);
+						if (keyDir == (Main.ReversedUpDownArmorSetBonuses ? 1 : 0)) {
+                            self.GetModPlayer<OriginPlayer>().TriggerSetBonus();
+                        }
+                    };
+				}
             }
+            SetBonusTriggerKey = RegisterHotKey("Trigger Set Bonus", Keys.Q.ToString());
             Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
             Sounds.HeavyCannon = AddSound("Sounds/Custom/HeavyCannon", SoundType.Item);
             Sounds.EnergyRipple = AddSound("Sounds/Custom/EnergyRipple", SoundType.Item);

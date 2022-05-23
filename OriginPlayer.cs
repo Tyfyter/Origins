@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameInput;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
@@ -90,6 +91,11 @@ namespace Origins {
         public int rasterizedTime = 0;
         public bool fervorPotion = false;
         public bool toxicShock = false;
+        #endregion
+
+        #region keybinds
+        public bool controlTriggerSetBonus = false;
+        public bool releaseTriggerSetBonus = false;
         #endregion
 
         public bool drawShirt = false;
@@ -205,6 +211,13 @@ namespace Origins {
             }
             player.buffImmune[Rasterized_Debuff.ID] = player.buffImmune[BuffID.Cursed];
         }
+        public override void ProcessTriggers(TriggersSet triggersSet) {
+            releaseTriggerSetBonus = !controlTriggerSetBonus;
+            controlTriggerSetBonus = triggersSet.KeyStatus["Origins: Trigger Set Bonus"];
+			if (controlTriggerSetBonus && releaseTriggerSetBonus) {
+                TriggerSetBonus();
+			}
+        }
         public void ApplyEyndumSetBuffs() {
             #region movement
             float speedMult = (player.moveSpeed - 1) * 0.5f;
@@ -263,6 +276,11 @@ namespace Origins {
             player.aggro += player.aggro / 2;
             player.blockRange += player.blockRange / 2;
             #endregion
+        }
+        public void TriggerSetBonus() {
+			if (mimicSet) {
+                Main.NewText("Imagine you just triggered a really cool effect instead of just a message");
+			}
         }
         public override void UpdateLifeRegen() {
             if(cryostenHelmet)player.lifeRegenCount+=cryostenLifeRegenCount>0 ? 180 : 1;
