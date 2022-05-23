@@ -48,6 +48,8 @@ namespace Origins {
         public bool eyndumSet = false;
         public bool mimicSet = false;
         public int mimicSetChoices = 0;
+        public int setActiveAbility = 0;
+        public int setAbilityCooldown = 0;
         #endregion set bonuses
 
         #region accessories
@@ -148,6 +150,19 @@ namespace Origins {
             riftSet = false;
             eyndumSet = false;
             mimicSet = false;
+            setActiveAbility = 0;
+            if (setAbilityCooldown > 0) {
+                setAbilityCooldown--;
+                if (setAbilityCooldown == 0) {
+                    Main.PlaySound(SoundID.MaxMana, -1, -1, 1, 1f, 0f);
+                    for (int i = 0; i < 5; i++) {
+                        int dust = Dust.NewDust(player.position, player.width, player.height, DustID.PortalBoltTrail, 0f, 0f, 255, Color.Black, (float)Main.rand.Next(20, 26) * 0.1f);
+                        Main.dust[dust].noLight = true;
+                        Main.dust[dust].noGravity = true;
+                        Main.dust[dust].velocity *= 0.5f;
+                    }
+                }
+			}
             bombHandlingDevice = false;
             dimStarlight = false;
             madHand = false;
@@ -278,8 +293,35 @@ namespace Origins {
             #endregion
         }
         public void TriggerSetBonus() {
-			if (mimicSet) {
-                Main.NewText("Imagine you just triggered a really cool effect instead of just a message");
+            if (setAbilityCooldown > 0) return;
+			switch (setActiveAbility) {
+                case 1: {
+					if (player.CheckMana((int)(40 * player.manaCost), true)) {
+                        Vector2 speed = Vector2.Normalize(Main.MouseWorld - player.MountedCenter) * 14;
+                        int type = ModContent.ProjectileType<Infusion_P>();
+						for (int i = -5; i < 6; i++) {
+                            Projectile.NewProjectile(player.MountedCenter + speed.RotatedBy(MathHelper.PiOver2) * i * 0.25f + speed * (5 - Math.Abs(i)) * 0.75f, speed, type, 40, 7, player.whoAmI);
+						}
+					}
+				}
+                break;
+                case 2: {
+                    if (player.CheckMana((int)(40 * player.manaCost), true)) {
+                        setAbilityCooldown = 1800;
+                        player.AddBuff(BuffID.Rage, 600);
+                        player.AddBuff(BuffID.Wrath, 600);
+                        player.AddBuff(Fervor_Buff.ID, 600);
+                        player.AddBuff(BuffID.Titan, 600);
+                        player.AddBuff(BuffID.Endurance, 600);
+                        player.AddBuff(BuffID.Heartreach, 30);
+                        player.AddBuff(BuffID.Lovestruck, 1800);
+                    }
+                }
+                break;
+                case 3:
+                break;
+                default:
+                break;
 			}
         }
         public override void UpdateLifeRegen() {

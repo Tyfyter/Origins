@@ -17,14 +17,62 @@ namespace Origins.UI {
 	public class Mimic_Selection_UI : UIState {
 		public float StartX => Main.screenWidth - 64 - 14 - 142;
 		public float StartY => (174 + (!Main.mapFullscreen && Main.mapStyle == 1 ? 204 : 0)) + (1 * 56) * 0.85f;
-		public override void OnInitialize() {
+		public string GetAbilityTooltip(int level, int choice) {
+			switch (level) {
+				case 0:
+				switch (choice) {
+					case 0:
+					return "Gives wings";
 
-		}
-		public override void Update(GameTime gameTime) {
+					case 1:
+					break;
+
+					case 2:
+					break;
+				}
+				break;
+
+				case 1:
+				switch (choice) {
+					case 0: 
+					return "Active ability: consume 40 mana to shoot spines in an arc";
+					
+					case 1:
+					return "Active ability: consume 40 mana to gain several buffs for a short time\n30 second cooldown";
+
+					case 2:
+					break;
+				}
+				break;
+
+				case 2:
+				switch (choice) {
+					case 0:
+					return "Gives wings";
+
+					case 1:
+					break;
+
+					case 2:
+					break;
+				}
+				break;
+			}
+			return "";
 		}
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
-			int currentLevel = 3;
+			float defiledPercentage = 1f;//OriginWorld.totalDefiled / (float)WorldGen.totalSolid;
+			int currentLevel = 0;
+			if (defiledPercentage > 0.33) {
+				currentLevel++;
+				if (defiledPercentage > 0.66) {
+					currentLevel++;
+					if (defiledPercentage > 0.99) {
+						currentLevel++;
+					}
+				}
+			}
 			Texture2D[] textures = new Texture2D[] {
 				ModContent.GetTexture("Origins/UI/Defiled_Buff_Choice_Generic_1"),
 				ModContent.GetTexture("Origins/UI/Defiled_Buff_Choice_Generic_2"),
@@ -43,6 +91,7 @@ namespace Origins.UI {
 							originPlayer.SetMimicSetChoice(level, i + 1);
 							Main.PlaySound(SoundID.MenuTick);
 						}
+						Main.hoverItemName = GetAbilityTooltip(level, i);
 						glow = true;
 					}
 					spriteBatch.Draw(textures[i], rectangle, glow ? Color.White : Color.LightSlateGray);

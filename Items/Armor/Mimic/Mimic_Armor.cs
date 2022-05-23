@@ -28,7 +28,7 @@ namespace Origins.Items.Armor.Mimic {
 		public override void UpdateArmorSet(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.mimicSet = true;
-			float defiledPercentage = OriginWorld.totalDefiled / (float)WorldGen.totalSolid;
+			float defiledPercentage = 1f;//OriginWorld.totalDefiled / (float)WorldGen.totalSolid;
 			originPlayer.explosiveThrowSpeed += 0.2f * defiledPercentage;
 			player.lifeRegenCount += (int)(4 * defiledPercentage);
 			originPlayer.explosiveDamage += 0.2f * defiledPercentage;
@@ -52,23 +52,25 @@ namespace Origins.Items.Armor.Mimic {
 				}
 			}
 			if (defiledPercentage > 0.66) {
-				switch (originPlayer.GetMimicSetChoice(0)) {
+				switch (originPlayer.GetMimicSetChoice(1)) {
 					case 1:
-					player.moveSpeed += 0.66f;
-					player.runAcceleration += 0.066f;
+					originPlayer.setActiveAbility = 1;
 					break;
 					case 2:
+					originPlayer.setActiveAbility = 2;
 					break;
 					case 3:
 					break;
 				}
 			}
 			if (defiledPercentage > 0.99) {
-				switch (originPlayer.GetMimicSetChoice(0)) {
+				switch (originPlayer.GetMimicSetChoice(2)) {
 					case 1:
 					player.extraAccessorySlots++;
 					break;
 					case 2:
+					player.moveSpeed += 0.66f;
+					player.runAcceleration += 0.066f;
 					break;
 					case 3:
 					break;
