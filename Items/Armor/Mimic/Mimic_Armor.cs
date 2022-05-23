@@ -28,13 +28,17 @@ namespace Origins.Items.Armor.Mimic {
 		public override void UpdateArmorSet(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.mimicSet = true;
-			float defiledPercentage = 1f;//OriginWorld.totalDefiled / (float)WorldGen.totalSolid;
+
+			float defiledPercentage = 3f;//((OriginWorld.totalDefiled * 3) / (float)WorldGen.totalSolid);
+
 			originPlayer.explosiveThrowSpeed += 0.2f * defiledPercentage;
 			player.lifeRegenCount += (int)(4 * defiledPercentage);
 			originPlayer.explosiveDamage += 0.2f * defiledPercentage;
+
 			player.setBonus = string.Format("Not yet fully implemented\nSet bonus scales with the percentage of the world taken over by the defiled wastelands\nCurrent percentage: {0:P1}, ", defiledPercentage);
 			Origins.instance.SetMimicSetUI();
-			if (defiledPercentage > 0.33) {
+
+			if (defiledPercentage >= 1) {
 				switch (originPlayer.GetMimicSetChoice(0)) {
 					case 1:
 					if (player.wings == 0) {
@@ -51,7 +55,7 @@ namespace Origins.Items.Armor.Mimic {
 					break;
 				}
 			}
-			if (defiledPercentage > 0.66) {
+			if (defiledPercentage >= 2) {
 				switch (originPlayer.GetMimicSetChoice(1)) {
 					case 1:
 					originPlayer.setActiveAbility = 1;
@@ -63,16 +67,22 @@ namespace Origins.Items.Armor.Mimic {
 					break;
 				}
 			}
-			if (defiledPercentage > 0.99) {
+			if (defiledPercentage >= 3) {
 				switch (originPlayer.GetMimicSetChoice(2)) {
 					case 1:
 					player.extraAccessorySlots++;
 					break;
 					case 2:
-					player.moveSpeed += 0.66f;
-					player.runAcceleration += 0.066f;
+					player.moveSpeed += 1.98f;
+					player.runAcceleration += 0.099f;
 					break;
 					case 3:
+					if (player.velocity.Y != 0) {
+						player.allDamageMult *= 1.10f;
+						player.meleeSpeed *= 1.10f;
+						player.rangedCrit += 5;
+						player.manaCost *= 0.7f;
+					}
 					break;
 				}
 			}

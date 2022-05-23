@@ -12,6 +12,7 @@ using System;
 using System.Linq;
 using static Tyfyter.Utils.UITools;
 using Origins.Items.Accessories.Eyndum_Cores;
+using Origins.World;
 
 namespace Origins.UI {
 	public class Mimic_Selection_UI : UIState {
@@ -48,13 +49,13 @@ namespace Origins.UI {
 				case 2:
 				switch (choice) {
 					case 0:
-					return "Gives wings";
+					return "Gives an extra accessory slot";
 
 					case 1:
-					break;
+					return "Greatly increases movement speed";
 
 					case 2:
-					break;
+					return "Increases damage and efficiency while in the air";
 				}
 				break;
 			}
@@ -62,17 +63,7 @@ namespace Origins.UI {
 		}
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
-			float defiledPercentage = 1f;//OriginWorld.totalDefiled / (float)WorldGen.totalSolid;
-			int currentLevel = 0;
-			if (defiledPercentage > 0.33) {
-				currentLevel++;
-				if (defiledPercentage > 0.66) {
-					currentLevel++;
-					if (defiledPercentage > 0.99) {
-						currentLevel++;
-					}
-				}
-			}
+			int currentLevel = 3;//(int)((OriginWorld.totalDefiled * 3) / (float)WorldGen.totalSolid);
 			Texture2D[] textures = new Texture2D[] {
 				ModContent.GetTexture("Origins/UI/Defiled_Buff_Choice_Generic_1"),
 				ModContent.GetTexture("Origins/UI/Defiled_Buff_Choice_Generic_2"),

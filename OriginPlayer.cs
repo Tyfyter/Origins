@@ -308,13 +308,8 @@ namespace Origins {
                 case 2: {
                     if (player.CheckMana((int)(40 * player.manaCost), true)) {
                         setAbilityCooldown = 1800;
-                        player.AddBuff(BuffID.Rage, 600);
-                        player.AddBuff(BuffID.Wrath, 600);
-                        player.AddBuff(Fervor_Buff.ID, 600);
-                        player.AddBuff(BuffID.Titan, 600);
-                        player.AddBuff(BuffID.Endurance, 600);
+                        player.AddBuff(Mimic_Buff.ID, 600);
                         player.AddBuff(BuffID.Heartreach, 30);
-                        player.AddBuff(BuffID.Lovestruck, 1800);
                     }
                 }
                 break;
