@@ -301,8 +301,10 @@ namespace Origins {
                         int type = ModContent.ProjectileType<Infusion_P>();
 						for (int i = -5; i < 6; i++) {
                             Projectile.NewProjectile(player.MountedCenter + speed.RotatedBy(MathHelper.PiOver2) * i * 0.25f + speed * (5 - Math.Abs(i)) * 0.75f, speed, type, 40, 7, player.whoAmI);
-						}
-					}
+                        }
+                        setAbilityCooldown = 30;
+                        if(player.manaRegenDelay < 60) player.manaRegenDelay = 60;
+                    }
 				}
                 break;
                 case 2: {

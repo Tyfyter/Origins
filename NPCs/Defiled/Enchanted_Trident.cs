@@ -30,6 +30,11 @@ namespace Origins.NPCs.Defiled {
                 npc.ai[1] += 0.25f;
 			}
 		}
+		public override void NPCLoot() {
+            if (Main.rand.NextBool(100)|| (Main.expertMode && Main.rand.NextBool(100))) {
+                Item.NewItem(npc.Hitbox, ItemID.Nazar, prefixGiven:-1);
+            }
+        }
 		public override void HitEffect(int hitDirection, double damage) {
 
         }

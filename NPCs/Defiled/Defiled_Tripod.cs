@@ -110,6 +110,10 @@ namespace Origins.NPCs.Defiled {
 				//add frame height to frame y position and modulo by frame height multiplied by walking frame count
 				npc.frame = new Rectangle(0, (npc.frame.Y+100)%400, 98, 98);
 				npc.frameCounter = 0;
+				if (npc.collideY) {
+                    Vector2 stepPos = new Vector2(npc.spriteDirection * -45, 50).RotatedBy(npc.rotation) + npc.Center;
+                    Main.PlaySound(SoundID.MenuTick, (int)stepPos.X, (int)stepPos.Y, volumeScale: Main.rand.NextFloat(0.7f, 0.95f), pitchOffset: Main.rand.NextFloat(-0.2f, 0.2f));
+				}
 			}
         }
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {

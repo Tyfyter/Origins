@@ -39,6 +39,11 @@ namespace Origins.NPCs.Defiled {
 				npc.frameCounter = 0;
 			}
         }
+        public override void NPCLoot() {
+            if (Main.rand.NextBool(100) || (Main.expertMode && Main.rand.NextBool(100))) {
+                Item.NewItem(npc.Hitbox, ItemID.Blindfold, prefixGiven: -1);
+            }
+        }
         public override void HitEffect(int hitDirection, double damage) {
             //spawn gore if npc is dead after being hit
             if(npc.life<0) {
