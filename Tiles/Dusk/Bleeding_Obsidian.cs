@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,11 +17,15 @@ namespace Origins.Tiles.Dusk {
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			drop = ItemType<Bleeding_Obsidian_Item>();
+            drop = ItemType<Bleeding_Obsidian_Shard>();
 			AddMapEntry(new Color(57, 10, 75));
 		}
+		public override bool Drop(int i, int j) {
+            Item.NewItem(i * 16, j * 16, 16, 16, drop, Main.rand.Next(4, 7));
+            return false;
+		}
 
-        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
             float m = 0.1f;
             r = 37.2f*m;
             g = 6.7f*m;

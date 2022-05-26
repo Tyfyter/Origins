@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Defiled {
 		public override string Texture => "Origins/Items/Weapons/Defiled/Defiled_Burst";
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("The Kruncher but it shoots darts");
-            Tooltip.SetDefault("Very pointy");
+            Tooltip.SetDefault("Very darty");
         }
         public override void SetDefaults() {
             item.damage = 25;
@@ -29,10 +29,10 @@ namespace Origins.Items.Weapons.Defiled {
             item.useTurn = false;
             item.rare = ItemRarityID.Pink;
             item.autoReuse = true;
-            item.UseSound = new LegacySoundStyle(SoundID.Item, Origins.Sounds.Krunch);
+            item.UseSound = SoundID.Item99;//new LegacySoundStyle(SoundID.Item, Origins.Sounds.Krunch);
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            for(int i = 0; i<3; i++)Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedByRandom(i/10f), type, damage, knockBack, player.whoAmI);
+            for(int i = 0; i<2; i++)Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedByRandom(i/10f), type, damage, knockBack, player.whoAmI);
             return false;
         }
 	}

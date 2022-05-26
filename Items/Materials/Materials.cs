@@ -1,5 +1,6 @@
 ﻿using Origins.Tiles;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Dusk;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -221,6 +222,21 @@ namespace Origins.Items.Materials {
             recipe.AddIngredient(ItemID.Bottle);
             recipe.needWater = true;
             recipe.SetResult(this);
+            recipe.AddRecipe();
+        }
+    }
+    public class Bleeding_Obsidian_Shard : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Bleeding Obsidian Shard");
+        }
+        public override void SetDefaults() {
+            item.CloneDefaults(ItemID.ShadowScale);
+        }
+        public override void AddRecipes() {
+            Brine_Recipe recipe = new Brine_Recipe(mod);
+            recipe.AddIngredient(this, 6);
+            recipe.SetResult(ModContent.ItemType<Bleeding_Obsidian_Item>());
             recipe.AddRecipe();
         }
     }

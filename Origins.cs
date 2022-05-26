@@ -663,6 +663,17 @@ namespace Origins {
             instance.AddSound(type, "Origins/"+path, modSound);
             return SoundLoader.GetSoundSlot(type, "Origins/"+path);
         }
+        public override void AddRecipeGroups() {
+            RecipeGroup group = new RecipeGroup(() => "Gem Staves", new int[] {
+                ItemID.AmethystStaff,
+                ItemID.TopazStaff,
+                ItemID.SapphireStaff,
+                ItemID.EmeraldStaff,
+                ItemID.RubyStaff,
+                ItemID.DiamondStaff
+            });
+            RecipeGroup.RegisterGroup("Origins:Gem Staves", group);
+        }
         public override void PostAddRecipes() {
             int l = Main.recipe.Length;
             Recipe r;

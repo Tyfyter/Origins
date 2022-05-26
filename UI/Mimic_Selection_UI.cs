@@ -81,6 +81,9 @@ namespace Origins.UI {
 						if (!glow && Main.mouseLeft && Main.mouseLeftRelease) {
 							originPlayer.SetMimicSetChoice(level, i + 1);
 							Main.PlaySound(SoundID.MenuTick);
+						}else if(glow && Main.mouseRight && Main.mouseRightRelease) {
+							originPlayer.SetMimicSetChoice(level, 0);
+							Main.PlaySound(SoundID.MenuTick);
 						}
 						Main.hoverItemName = GetAbilityTooltip(level, i);
 						glow = true;

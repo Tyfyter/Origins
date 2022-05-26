@@ -525,12 +525,16 @@ namespace Origins {
             if (tag.SafeGet<Item>("EyndumCore") is Item eyndumCoreItem) {
                 eyndumCore = new Ref<Item>(eyndumCoreItem);
             }
+            if (tag.SafeGet<int>("MimicSetSelection") is int mimicSetSelection) {
+                mimicSetChoices = mimicSetSelection;
+            }
         }
         public override TagCompound Save() {
             TagCompound output = new TagCompound();
             if (!(eyndumCore is null)) {
                 output.Add("EyndumCore", eyndumCore.Value);
             }
+            output.Add("MimicSetSelection", mimicSetChoices);
             return output;
         }
         #region biomes
