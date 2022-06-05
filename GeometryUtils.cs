@@ -95,9 +95,11 @@ namespace Tyfyter.Utils {
 	}
     public static class GeometryUtils {
         public static double AngleDif(double alpha, double beta) {
-            double phi = Math.Abs(beta - alpha) % (Math.PI * 2);       // This is either the distance or 360 - distance
-            double distance = ((phi > Math.PI) ^ (alpha > beta)) ? (Math.PI * 2) - phi : phi;
-            return distance;
+            double TwoPi = (Math.PI * 2);
+            double phi = Math.Abs(beta - alpha) % TwoPi;       // This is either the distance or 360 - distance
+            double dir = ((phi > Math.PI) ^ (alpha > beta)) ? -1 : 1;
+            double distance = phi > Math.PI ? TwoPi - phi : phi;
+            return distance * dir;
         }
         public static float AngleDif(float alpha, float beta, out int dir) {
             float phi = Math.Abs(beta - alpha) % MathHelper.TwoPi;       // This is either the distance or 360 - distance

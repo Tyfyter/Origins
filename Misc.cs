@@ -856,6 +856,7 @@ namespace Origins {
         public static Rectangle Add(this Rectangle a, Vector2 b) {
             return new Rectangle(a.X+(int)b.X,a.Y+(int)b.Y,a.Width,a.Height);
         }
+        [Obsolete("Currently buggy, marking as obsolete so I know what uses I need to fix")]
         public static double AngleDif(double alpha, double beta) {
             double phi = Math.Abs(beta - alpha) % (Math.PI*2);       // This is either the distance or 360 - distance
             double distance = ((phi > Math.PI)^(alpha>beta)) ? (Math.PI*2) - phi : phi;
