@@ -13,7 +13,7 @@ namespace Origins.Items {
         public override bool Autoload(ref string name) {
             return true;
         }
-        public override void SetDefaults() {
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Heavy Caliber");
         }
         public override float RollChance(Item item) {

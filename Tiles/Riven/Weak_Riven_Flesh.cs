@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
     public class Weak_Riven_Flesh : RivenTile {
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             TileID.Sets.Conversion.Stone[Type] = true;
@@ -33,7 +33,7 @@ namespace Origins.Tiles.Riven {
             fail = false;
         }
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-            if (Main.tile[i, j].active()) {
+            if (Main.tile[i, j].HasTile) {
                 int adj = OriginWorld.GetAdjTileCount(i, j);
                 if (adj < 4) {
                     //Main.tile[i, j].active(false);

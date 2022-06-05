@@ -9,39 +9,38 @@ namespace Origins.Items.Weapons.Other {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bled_Out_Staff");
 			Tooltip.SetDefault("");
-			Item.staff[item.type] = true;
+			Item.staff[Item.type] = true;
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.RubyStaff);
-			item.damage = 47;
-			item.magic = true;
-			item.noMelee = true;
-			item.width = 42;
-			item.height = 42;
-			item.useTime = 20;
-			item.useAnimation = 20;
-			item.mana = 16;
-			item.value = 5000;
-            item.shoot = ModContent.ProjectileType<Bled_Out_Staff_P>();
-			item.rare = ItemRarityID.LightRed;
+            Item.CloneDefaults(ItemID.RubyStaff);
+			Item.damage = 47;
+			Item.DamageType = DamageClass.Magic;
+			Item.noMelee = true;
+			Item.width = 42;
+			Item.height = 42;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
+			Item.mana = 16;
+			Item.value = 5000;
+            Item.shoot = ModContent.ProjectileType<Bled_Out_Staff_P>();
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = Mod.CreateRecipe(Type);
 			recipe.AddRecipeGroup("Origins:Gem Staves", 1);
 			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 45);
-			recipe.SetResult(this);
-			recipe.AddRecipe();
+			recipe.Register();
 		}
 	}
     public class Bled_Out_Staff_P : ModProjectile {
-        public override string Texture => "Terraria/Projectile_125";
+        public override string Texture => "Terraria/Images/Projectile_125";
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.DiamondBolt);//sets the projectile stat values to those of Ruby Bolts
-            projectile.penetrate = 1;//when projectile.penetrate reaches 0 the projectile is destroyed
-            projectile.extraUpdates = 1;
+            Projectile.CloneDefaults(ProjectileID.DiamondBolt);//sets the projectile stat values to those of Ruby Bolts
+            Projectile.penetrate = 1;//when projectile.penetrate reaches 0 the projectile is destroyed
+            Projectile.extraUpdates = 1;
         }
         public override void AI() {
-	        Dust dust = Dust.NewDustDirect(projectile.Center, 0, 0, DustID.DiamondBolt, 0f, 0f, 0, new Color(255,255,0), 1f);
+	        Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.GemDiamond, 0f, 0f, 0, new Color(255,255,0), 1f);
 	        dust.noGravity = true;
 	        dust.velocity/=2;
         }

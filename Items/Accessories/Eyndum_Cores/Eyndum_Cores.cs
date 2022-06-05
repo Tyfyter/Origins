@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,12 +17,12 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
                 return false;
             }
             Item equippedItem = Main.LocalPlayer.GetModPlayer<OriginPlayer>().eyndumCore.Value;
-            if (equippedItem.type!=item.type) {
+            if (equippedItem.type!=Item.type) {
                 int e = equippedItem.type;
-                int t = item.type;
+                int t = Item.type;
                 equippedItem.SetDefaults(t);
-                item.SetDefaults(e);
-                Main.PlaySound(SoundID.Grab);
+                Item.SetDefaults(e);
+                SoundEngine.PlaySound(SoundID.Grab);
             }
             return false;
         }

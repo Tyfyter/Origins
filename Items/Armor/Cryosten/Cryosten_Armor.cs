@@ -10,7 +10,7 @@ namespace Origins.Items.Armor.Cryosten {
 			Tooltip.SetDefault("Increased life regeneration");
 		}
 		public override void SetDefaults() {
-            item.defense = 2;
+            Item.defense = 2;
 		}
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().cryostenHelmet = true;
@@ -33,7 +33,7 @@ namespace Origins.Items.Armor.Cryosten {
 			Tooltip.SetDefault("20% increased maximum health");
 		}
 		public override void SetDefaults() {
-            item.defense = 3;
+            Item.defense = 3;
 		}
         public override void UpdateEquip(Player player) {
             player.statLifeMax2+=player.statLifeMax2/5;
@@ -46,7 +46,7 @@ namespace Origins.Items.Armor.Cryosten {
 			Tooltip.SetDefault("5% increased movement speed\nincreased movement speed on ice");
 		}
 		public override void SetDefaults() {
-            item.defense = 2;
+            Item.defense = 2;
 		}
         public override void UpdateEquip(Player player) {
             player.moveSpeed+=0.05f;

@@ -12,16 +12,16 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dusk {
     public class Bleeding_Obsidian : OriginTile {
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-            drop = ItemType<Bleeding_Obsidian_Shard>();
+            ItemDrop = ItemType<Bleeding_Obsidian_Shard>();
 			AddMapEntry(new Color(57, 10, 75));
 		}
 		public override bool Drop(int i, int j) {
-            Item.NewItem(i * 16, j * 16, 16, 16, drop, Main.rand.Next(4, 7));
+            Item.NewItem(i * 16, j * 16, 16, 16, ItemDrop, Main.rand.Next(4, 7));
             return false;
 		}
 
@@ -37,8 +37,8 @@ namespace Origins.Tiles.Dusk {
             DisplayName.SetDefault("Bleeding Obsidian");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.StoneBlock);
-            item.createTile = TileType<Bleeding_Obsidian>();
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.createTile = TileType<Bleeding_Obsidian>();
 		}
     }
 }

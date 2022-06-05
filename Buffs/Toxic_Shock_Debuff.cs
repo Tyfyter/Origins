@@ -12,7 +12,7 @@ namespace Origins.Buffs {
         public const int stun_duration = 4;
         public const int default_duration = 60;
         public static int ID { get; private set; } = -1;
-        public override void SetDefaults() {
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Toxic Shock");
             ID = Type;
         }

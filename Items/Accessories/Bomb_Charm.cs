@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
             Tooltip.SetDefault("Reduces explosive self-damage by 20%");
         }
         public override void SetDefaults() {
-            item.accessory = true;
+            Item.accessory = true;
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().explosiveSelfDamage-=0.2f;

@@ -15,10 +15,10 @@ namespace Origins.Tiles.Riven {
     public class Riven_Flesh : RivenTile, IGlowingModTile {
         public Texture2D GlowTexture { get; private set; }
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
-        public float GlowValue => (float)(Math.Sin(Main.GlobalTime) + 2) * 0.5f;
-        public override void SetDefaults() {
+        public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
+        public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-                GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Flesh_Glow");
+                GlowTexture = Mod.GetTexture("Tiles/Riven/Riven_Flesh_Glow");
             }
             Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -30,7 +30,7 @@ namespace Origins.Tiles.Riven {
             for(int i = 0; i < TileLoader.TileCount; i++) {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
             }*/
-			drop = ItemType<Riven_Flesh_Item>();
+			ItemDrop = ItemType<Riven_Flesh_Item>();
 			AddMapEntry(new Color(200, 125, 100));
 			//SetModTree(Defiled_Tree.Instance);
             mergeID = TileID.Stone;
@@ -46,8 +46,8 @@ namespace Origins.Tiles.Riven {
             recursion = true;
             WorldGen.TileFrame(i, j, resetFrame, noBreak);
             recursion = false;
-            if (Main.tile[i, j].frameX == 54 && Main.tile[i, j].frameY == 18 && !WorldGen.genRand.NextBool(4)) {
-                Main.tile[i, j].frameX = (short)(18 * (WorldGen.genRand.Next(1, 3)));
+            if (Main.tile[i, j].TileFrameX == 54 && Main.tile[i, j].TileFrameY == 18 && !WorldGen.genRand.NextBool(4)) {
+                Main.tile[i, j].TileFrameX = (short)(18 * (WorldGen.genRand.Next(1, 3)));
             }
             return false;
         }
@@ -60,8 +60,8 @@ namespace Origins.Tiles.Riven {
             DisplayName.SetDefault("Riven Flesh");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.FleshBlock);
-            item.createTile = TileType<Riven_Flesh>();
+            Item.CloneDefaults(ItemID.FleshBlock);
+            Item.createTile = TileType<Riven_Flesh>();
 		}
     }
 }

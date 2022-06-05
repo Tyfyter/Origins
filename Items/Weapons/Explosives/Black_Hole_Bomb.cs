@@ -18,19 +18,19 @@ namespace Origins.Items.Weapons.Explosives {
 			Tooltip.SetDefault("Explode. Implode");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.Bomb);
-            item.damage = 2500;
-			item.value*=2;
-			item.useTime = (int)(item.useTime*0.75);
-			item.useAnimation = (int)(item.useAnimation*0.75);
-            item.shoot = ModContent.ProjectileType<Black_Hole_Bomb_P>();
-			item.shootSpeed*=2;
-            item.knockBack = 13f;
-			item.rare = ItemRarityID.Green;
-            item.color = Color.Black;
+            Item.CloneDefaults(ItemID.Bomb);
+            Item.damage = 2500;
+			Item.value*=2;
+			Item.useTime = (int)(Item.useTime*0.75);
+			Item.useAnimation = (int)(Item.useAnimation*0.75);
+            Item.shoot = ModContent.ProjectileType<Black_Hole_Bomb_P>();
+			Item.shootSpeed*=2;
+            Item.knockBack = 13f;
+			Item.rare = ItemRarityID.Green;
+            Item.color = Color.Black;
 		}
         public override void AddRecipes() {
-            Origins.AddExplosive(item);
+            Origins.AddExplosive(Item);
         }
     }
     public class Black_Hole_Bomb_P : ModProjectile {
@@ -45,49 +45,49 @@ namespace Origins.Items.Weapons.Explosives {
         const int totalDur = growDur+collapseDur;
         public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Bomb";
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Bomb);
-            projectile.aiStyle = 14;
-            projectile.penetrate = -1;
-            projectile.timeLeft = maxDur;
-            projectile.scale = 0;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 4;
+            Projectile.CloneDefaults(ProjectileID.Bomb);
+            Projectile.aiStyle = 14;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = maxDur;
+            Projectile.scale = 0;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 4;
         }
         public override void AI() {
             if(Main.netMode != NetmodeID.Server) {
-                if(projectile.timeLeft > maxDur-initDur) {
-                    projectile.scale+=1f/initDur;
+                if(Projectile.timeLeft > maxDur-initDur) {
+                    Projectile.scale+=1f/initDur;
                 }
-                if(projectile.timeLeft <= 190) {
-                    projectile.alpha = 255;
-                    projectile.scale+=1f/totalDur;
+                if(Projectile.timeLeft <= 190) {
+                    Projectile.alpha = 255;
+                    Projectile.scale+=1f/totalDur;
                 }
             }
-            float percent = Clamp((totalDur-projectile.timeLeft) / (float)growDur,0,1)*2;
+            float percent = Clamp((totalDur-Projectile.timeLeft) / (float)growDur,0,1)*2;
             float scale = 0;
-            if(projectile.timeLeft<collapseDur) {
-                scale = (collapseDur-projectile.timeLeft)/(collapseDur/2f);
+            if(Projectile.timeLeft<collapseDur) {
+                scale = (collapseDur-Projectile.timeLeft)/(collapseDur/2f);
             }
             //float range = 80*(projectile.scale+scale);
-            float strength = strengthMult*(1+percent)*(projectile.scale+scale);
+            float strength = strengthMult*(1+percent)*(Projectile.scale+scale);
             NPC target;
             float kbrs;
             for(int i = 0; i < Main.npc.Length; i++) {
                 target = Main.npc[i];
                 kbrs = knockbackResistanceSignificance*(target.defense/50f);
                 if((target.CanBeChasedBy()||(target.lifeMax==1&&!target.dontTakeDamage))&&!(target.type==NPCID.MoonLordFreeEye||target.type==NPCID.MoonLordHand||target.type==NPCID.MoonLordHead||target.type==NPCID.MoonLordCore)) {
-                    float dist = (target.Center-projectile.Center).Length()/16f;
+                    float dist = (target.Center-Projectile.Center).Length()/16f;
                     float distSQ = (float)Math.Pow(dist,distExp);
                     float force = strength/distSQ;
-                    Vector2 dir = (projectile.Center-target.Center).SafeNormalize(Vector2.Zero);
+                    Vector2 dir = (Projectile.Center-target.Center).SafeNormalize(Vector2.Zero);
                     float point = (target.knockBackResist*kbrs+(1f-kbrs));
                     point*=(float)Math.Min(AngleDif(dir.ToRotation(), target.velocity.ToRotation())+Clamp(force-target.velocity.Length(),0,1), 1);
                     if(force>1)target.velocity = Vector2.Lerp(target.velocity, dir*Min(force, dist), point);
-                    if(force>=(projectile.Center.Clamp(target.Hitbox)-projectile.Center).Length()) {
-                        if(projectile.timeLeft>totalDur&&projectile.Hitbox.Intersects(target.Hitbox))OnHitNPC(target, 0, 0, false);
-                        if(projectile.localNPCImmunity[target.whoAmI]<=0) {
-                            target.StrikeNPC((int)(projectile.damage/dotDivisor), 0, 0);
-                            projectile.localNPCImmunity[target.whoAmI] = 10;
+                    if(force>=(Projectile.Center.Clamp(target.Hitbox)-Projectile.Center).Length()) {
+                        if(Projectile.timeLeft>totalDur&&Projectile.Hitbox.Intersects(target.Hitbox))OnHitNPC(target, 0, 0, false);
+                        if(Projectile.localNPCImmunity[target.whoAmI]<=0) {
+                            target.StrikeNPC((int)(Projectile.damage/dotDivisor), 0, 0);
+                            Projectile.localNPCImmunity[target.whoAmI] = 10;
                         }
                     }
                 }
@@ -95,52 +95,52 @@ namespace Origins.Items.Weapons.Explosives {
             Item targetItem;
             for(int i = 0; i < Main.item.Length; i++) {
                 targetItem = Main.item[i];
-                float dist = (targetItem.Center-projectile.Center).Length()/16f;
+                float dist = (targetItem.Center-Projectile.Center).Length()/16f;
                 float distSQ = (float)Math.Pow(dist,distExp);
                 float force = strength/distSQ;
-                if(force>1)targetItem.velocity = Vector2.Lerp(targetItem.velocity, (projectile.Center-targetItem.Center).SafeNormalize(Vector2.Zero)*Min(force, dist), 0.9f);
+                if(force>1)targetItem.velocity = Vector2.Lerp(targetItem.velocity, (Projectile.Center-targetItem.Center).SafeNormalize(Vector2.Zero)*Min(force, dist), 0.9f);
             }
         }
         public override bool OnTileCollide(Vector2 oldVelocity) {
-            if(projectile.timeLeft<=totalDur)return false;
-            projectile.aiStyle = 0;
-            projectile.velocity = Vector2.Zero;
-            projectile.timeLeft = totalDur;
-            projectile.tileCollide = false;
-            projectile.friendly = false;
+            if(Projectile.timeLeft<=totalDur)return false;
+            Projectile.aiStyle = 0;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.timeLeft = totalDur;
+            Projectile.tileCollide = false;
+            Projectile.friendly = false;
             return false;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            if(projectile.timeLeft<=totalDur)return;
-            projectile.aiStyle = 0;
-            projectile.velocity = Vector2.Zero;
-            projectile.timeLeft = totalDur;
-            projectile.tileCollide = false;
-            projectile.friendly = false;
+            if(Projectile.timeLeft<=totalDur)return;
+            Projectile.aiStyle = 0;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.timeLeft = totalDur;
+            Projectile.tileCollide = false;
+            Projectile.friendly = false;
         }
         public override bool PreKill(int timeLeft) {
-            projectile.type = ProjectileID.RocketI;
+            Projectile.type = ProjectileID.RocketI;
             return true;
         }
         public override void Kill(int timeLeft) {
-            projectile.friendly = true;
-			projectile.position.X += projectile.width / 2;
-			projectile.position.Y += projectile.height / 2;
-			projectile.width = 192;
-			projectile.height = 192;
-			projectile.position.X -= projectile.width / 2;
-			projectile.position.Y -= projectile.height / 2;
-			projectile.Damage();
+            Projectile.friendly = true;
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = 192;
+			Projectile.height = 192;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.Damage();
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor){
+        public override void PostDraw(Color lightColor){
 			spriteBatch.End();
 			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-			float percent = Clamp((totalDur-projectile.timeLeft) / (float)growDur,0,1);
+			float percent = Clamp((totalDur-Projectile.timeLeft) / (float)growDur,0,1);
             float scale = 0;
-            if(projectile.timeLeft<collapseDur) {
-                scale = (collapseDur-projectile.timeLeft)/(collapseDur/2f);
+            if(Projectile.timeLeft<collapseDur) {
+                scale = (collapseDur-Projectile.timeLeft)/(collapseDur/2f);
             }
-			DrawData data = new DrawData(Origins.instance.GetTexture("Projectiles/Pixel"), projectile.Center - Main.screenPosition, new Rectangle(0, 0, 1, 1), new Color(0,0,0,255), 0, new Vector2(0.5f, 0.5f), new Vector2(160,160)*(projectile.scale-scale), SpriteEffects.None, 0);
+			DrawData data = new DrawData(Origins.instance.GetTexture("Projectiles/Pixel"), Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 1, 1), new Color(0,0,0,255), 0, new Vector2(0.5f, 0.5f), new Vector2(160,160)*(Projectile.scale-scale), SpriteEffects.None, 0);
             Origins.blackHoleShade.UseOpacity(0.985f);
             Origins.blackHoleShade.UseSaturation(3f+percent);
             Origins.blackHoleShade.UseColor(0,0,0);

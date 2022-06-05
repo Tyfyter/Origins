@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
@@ -18,17 +19,17 @@ namespace Origins.Projectiles.Misc {
         public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Shock");
-            ID = projectile.type;
+            ID = Projectile.type;
 		}
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Bullet);
-            projectile.aiStyle = 0;
-            projectile.timeLeft = 30;
-            projectile.extraUpdates = 29;
-            projectile.width = projectile.height = 2;
-            projectile.penetrate = 1;
-            projectile.light = 0;
-            projectile.usesLocalNPCImmunity = true;
+            Projectile.CloneDefaults(ProjectileID.Bullet);
+            Projectile.aiStyle = 0;
+            Projectile.timeLeft = 30;
+            Projectile.extraUpdates = 29;
+            Projectile.width = Projectile.height = 2;
+            Projectile.penetrate = 1;
+            Projectile.light = 0;
+            Projectile.usesLocalNPCImmunity = true;
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox) {
             hitbox.X -= 2;
@@ -46,9 +47,9 @@ namespace Origins.Projectiles.Misc {
         public override void Kill(int timeLeft) {
             if(timeLeft>0) {
                 if(!(OnStrike is null))OnStrike();
-                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 60, 0.65f, 1f);
-                Projectile proj = Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, Felnum_Shock_Arc.ID, projectile.damage, 0, projectile.owner, projectile.ai[0], projectile.ai[1]);
-                if(proj.modProjectile is Felnum_Shock_Arc shock) {
+                SoundEngine.PlaySound(SoundID.Item60.WithVolume(0.65f).WithPitch(1f), Projectile.Center);
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, Felnum_Shock_Arc.ID, Projectile.damage, 0, Projectile.owner, Projectile.ai[0], Projectile.ai[1]);
+                if(proj.ModProjectile is Felnum_Shock_Arc shock) {
                     shock.Parent = Parent;
                 }
             }
@@ -59,34 +60,34 @@ namespace Origins.Projectiles.Misc {
         public Entity Parent { get; internal set; }
         public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetStaticDefaults() {
-            ID = projectile.type;
+            ID = Projectile.type;
 		}
         public override void SetDefaults() {
-            projectile.timeLeft = 10;
-            projectile.width = projectile.height = 0;
-            projectile.penetrate = -1;
-            projectile.hide = true;
-            projectile.localAI[0] = (float)Math.Pow(Main.rand.NextFloat(-4, 4), 2);
+            Projectile.timeLeft = 10;
+            Projectile.width = Projectile.height = 0;
+            Projectile.penetrate = -1;
+            Projectile.hide = true;
+            Projectile.localAI[0] = (float)Math.Pow(Main.rand.NextFloat(-4, 4), 2);
         }
         public override void Kill(int timeLeft) {
-            projectile.position.X -= 4;
-            projectile.position.Y -= 4;
-            projectile.width = projectile.height = 8;
-            projectile.friendly = true;
-            projectile.Damage();
+            Projectile.position.X -= 4;
+            Projectile.position.Y -= 4;
+            Projectile.width = Projectile.height = 8;
+            Projectile.friendly = true;
+            Projectile.Damage();
         }
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI) {
-            drawCacheProjsOverWiresUI.Add(index);
-        }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
-            Vector2 arcStart = (Parent?.position??Vector2.Zero) + new Vector2(projectile.ai[0], projectile.ai[1]);
-            spriteBatch.DrawLightningArcBetween(
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+            behindNPCsAndTiles.Add(index);
+		}
+        public override bool PreDraw(ref Color lightColor){
+            Vector2 arcStart = (Parent?.position??Vector2.Zero) + new Vector2(Projectile.ai[0], Projectile.ai[1]);
+            Main.spriteBatch.DrawLightningArcBetween(
                 arcStart - Main.screenPosition,
-                projectile.position - Main.screenPosition,
-                projectile.localAI[0]);
+                Projectile.position - Main.screenPosition,
+                Projectile.localAI[0]);
             //projectile.localAI[0] *= 0.8f;
             for(int i = 0; i < 16; i++) {
-                Lighting.AddLight(Vector2.Lerp(projectile.Center, arcStart, i/16f), 0.15f, 0.4f, 0.43f);
+                Lighting.AddLight(Vector2.Lerp(Projectile.Center, arcStart, i/16f), 0.15f, 0.4f, 0.43f);
             }
             return false;
         }

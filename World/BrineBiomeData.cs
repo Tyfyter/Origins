@@ -34,35 +34,35 @@ namespace Origins.World.BiomeData {
 							continue;
 						}
 
-						switch (Main.tile[x, y].type) {
+						switch (Main.tile[x, y].TileType) {
 							case TileID.IridescentBrick:
 							case TileID.TinBrick:
 							case TileID.GoldBrick:
 							case TileID.Mudstone:
-							if (Main.tileContainer[Main.tile[x, y - 1].type] || genRand.Next(5) > 0) {
+							if (Main.tileContainer[Main.tile[x, y - 1].TileType] || genRand.Next(5) > 0) {
 								break;
 							}
 							goto default;
 							case TileID.LivingMahogany:
-							Main.tile[x, y].type = TileID.Ash;
+							Main.tile[x, y].TileType = TileID.Ash;
 							break;
 							default:
-                            if (Main.tileContainer[Main.tile[x, y].type]) {
+                            if (Main.tileContainer[Main.tile[x, y].TileType]) {
 								break;
                             }
 							Main.tile[x, y].ResetToType(stoneID);
 							if (diff < 70 * sizeMult - 10 || ((y - j) * (y - j)) + ((x - i) * (x - i) * 0.5f) < 700 * sizeMult * sizeMult) {//(x - i) * 
-								if (Main.tileContainer[Main.tile[x, y - 1].type]) {
+								if (Main.tileContainer[Main.tile[x, y - 1].TileType]) {
 									break;
 								}
-								Main.tile[x, y].active(false);
+								Main.tile[x, y].HasTile = false;
 								//if (y > j2 - (sizeMult * 32)) {
 									Main.tile[x, y].liquid = 255;
 								//}
 							}
 							break;
 						}
-						switch (Main.tile[x, y].wall) {
+						switch (Main.tile[x, y].WallType) {
 							case WallID.IridescentBrick:
 							case WallID.TinBrick:
 							case WallID.GoldBrick:
@@ -72,7 +72,7 @@ namespace Origins.World.BiomeData {
 							}
 							break;
 							default:
-							Main.tile[x, y].wall = stoneWallID;
+							Main.tile[x, y].WallType = stoneWallID;
 							break;
 						}
 					}
@@ -96,37 +96,37 @@ namespace Origins.World.BiomeData {
 							continue;
 						}
 						bool change = false;
-						switch (Main.tile[x, y].type) {
+						switch (Main.tile[x, y].TileType) {
 							case TileID.IridescentBrick:
 							case TileID.TinBrick:
 							case TileID.GoldBrick:
 							case TileID.Mudstone:
-							if (Main.tileContainer[Main.tile[x, y - 1].type] || genRand.Next(5) > 0) {
+							if (Main.tileContainer[Main.tile[x, y - 1].TileType] || genRand.Next(5) > 0) {
 								break;
 							}
 							goto default;
 							case TileID.LivingMahogany:
-							Main.tile[x, y].type = TileID.Ash;
+							Main.tile[x, y].TileType = TileID.Ash;
 							break;
 							default:
-                            if (Main.tileContainer[Main.tile[x, y].type]) {
+                            if (Main.tileContainer[Main.tile[x, y].TileType]) {
 								break;
                             }
-							if (y > worldSurfaceHigh || (Main.tile[x, y].active() && Main.tileSolid[Main.tile[x, y].type])) {
+							if (y > worldSurfaceHigh || (Main.tile[x, y].HasTile && Main.tileSolid[Main.tile[x, y].TileType])) {
 								Main.tile[x, y].ResetToType(stoneID);
 								change = true;
 							}
 							if (diff < size * sizeMult - wallSize) {//(x - i) * 
-								if (Main.tileContainer[Main.tile[x, y - 1].type]) {
+								if (Main.tileContainer[Main.tile[x, y - 1].TileType]) {
 									break;
 								}
-								if(Main.tile[x, y].active())change = true;
-								Main.tile[x, y].active(false);
+								if(Main.tile[x, y].HasTile)change = true;
+								Main.tile[x, y].HasTile = false;
 								if (y > worldSurfaceHigh) {
 									Main.tile[x, y].liquid = 255;
 								}
 							}
-							if (y < worldSurfaceHigh && Main.tile[x, y].active() && change) {
+							if (y < worldSurfaceHigh && Main.tile[x, y].HasTile && change) {
                                 if (x>i2) {//right side
                                     if (x>maxX) {
 										maxX = x;
@@ -145,7 +145,7 @@ namespace Origins.World.BiomeData {
                             }
 							break;
 						}
-						switch (Main.tile[x, y].wall) {
+						switch (Main.tile[x, y].WallType) {
 							case WallID.IridescentBrick:
 							case WallID.TinBrick:
 							case WallID.GoldBrick:
@@ -156,7 +156,7 @@ namespace Origins.World.BiomeData {
 							break;
 							default:
 							if (y > worldSurfaceHigh) {
-								Main.tile[x, y].wall = stoneWallID;
+								Main.tile[x, y].WallType = stoneWallID;
 							}
 							break;
 						}
@@ -181,7 +181,7 @@ namespace Origins.World.BiomeData {
 						prog++;
                     }
 					for (int y = (int)(worldSurfaceHigh + 1); y >= minY; y--) {
-						Main.tile[x, y].wall = stoneWallID;
+						Main.tile[x, y].WallType = stoneWallID;
 					}
 				}
 

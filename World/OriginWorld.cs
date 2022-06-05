@@ -15,12 +15,12 @@ using Microsoft.Xna.Framework;
 using Terraria.Utilities;
 using Origins.Items.Weapons.Other;
 using Origins.Walls;
-using static Origins.World.OriginWorld.LootQueueAction;
+using static Origins.OriginWorld.LootQueueAction;
 using Origins.Tiles.Riven;
 using Origins.Tiles.Brine;
 
-namespace Origins.World {
-    public partial class OriginWorld : ModWorld {
+namespace Origins {
+    public partial class OriginWorld : ModSystem {
 		public static int voidTiles;
 		public static int defiledTiles;
         public static int rivenTiles;
@@ -45,7 +45,7 @@ namespace Origins.World {
         public static byte tRiven;
         public List<Point> Defiled_Hearts { get; set; } = new List<Point>();
 
-        public override void Load(TagCompound tag) {
+        public override void LoadWorldData(TagCompound tag) {
             peatSold = tag.GetAsInt("peatSold");
             worldEvil = tag.GetByte("worldEvil");
             if(tag.ContainsKey("worldSurfaceLow"))_worldSurfaceLow = tag.GetDouble("worldSurfaceLow");
@@ -54,7 +54,7 @@ namespace Origins.World {
             defiledResurgenceTiles = new List<(int, int)>(){};
             defiledAltResurgenceTiles = new List<(int, int, ushort)>(){};
         }
-        public override TagCompound Save() {
+        public override void SaveWorldData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */ {
             TagCompound o = new TagCompound() { {"peatSold",  peatSold}, {"worldEvil",  worldEvil}, { "defiledHearts", Defiled_Hearts.Select(Utils.ToVector2).ToList() } };
             if(_worldSurfaceLow.HasValue) {
                 o.Add("worldSurfaceLow", _worldSurfaceLow);
@@ -88,15 +88,15 @@ namespace Origins.World {
                 if(defiledResurgenceTiles.Count>0&&WorldGen.genRand.NextBool(5)) {
                     int index = WorldGen.genRand.Next(defiledResurgenceTiles.Count);
                     (int k, int l) pos = defiledResurgenceTiles[index];
-                    ConvertTile(ref Main.tile[pos.k, pos.l].type, evil_wastelands);
+                    ConvertTile(ref Main.tile[pos.k, pos.l].TileType, evil_wastelands);
                     WorldGen.SquareTileFrame(pos.k, pos.l);
                     NetMessage.SendTileSquare(-1, pos.k, pos.l, 1);
                     defiledResurgenceTiles.RemoveAt(index);
                 }else if(defiledAltResurgenceTiles.Count>0&&WorldGen.genRand.NextBool(30)) {
                     int index = WorldGen.genRand.Next(defiledAltResurgenceTiles.Count);
                     (int k, int l, ushort type) tile = defiledAltResurgenceTiles[index];
-                    if(Main.tile[tile.k, tile.l].active()) {
-                        Main.tile[tile.k, tile.l].type = tile.type;
+                    if(Main.tile[tile.k, tile.l].HasTile) {
+                        Main.tile[tile.k, tile.l].TileType = tile.type;
                         WorldGen.SquareTileFrame(tile.k, tile.l);
                         NetMessage.SendTileSquare(-1, tile.k, tile.l, 1);
                     }
@@ -126,8 +126,8 @@ namespace Origins.World {
             bool noLoot = true;
             for(int i = 0; i < Main.chest.Length; i++) {
                 chest = Main.chest[i];
-				if (chest != null && Main.tile[chest.x, chest.y].type == TileID.Containers){
-                    cache = chestLoots[Main.tile[chest.x, chest.y].frameX/36];
+				if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers){
+                    cache = chestLoots[Main.tile[chest.x, chest.y].TileFrameX/36];
                     if(cache is null)continue;
                     lootType = chest.item[0].type;
                     cache.AddLoot(lootType, i);
@@ -224,14 +224,14 @@ namespace Origins.World {
         }
         public static byte GetAdjTileCount(int i, int j) {
             byte count = 0;
-            if(Main.tile[i-1,j-1].active()) count++;
-            if(Main.tile[i,j-1].active())   count++;
-            if(Main.tile[i+1,j-1].active()) count++;
-            if(Main.tile[i-1,j].active())   count++;
-            if(Main.tile[i+1,j].active())   count++;
-            if(Main.tile[i-1,j+1].active()) count++;
-            if(Main.tile[i,j+1].active())   count++;
-            if(Main.tile[i+1,j+1].active()) count++;
+            if(Main.tile[i-1,j-1].HasTile) count++;
+            if(Main.tile[i,j-1].HasTile)   count++;
+            if(Main.tile[i+1,j-1].HasTile) count++;
+            if(Main.tile[i-1,j].HasTile)   count++;
+            if(Main.tile[i+1,j].HasTile)   count++;
+            if(Main.tile[i-1,j+1].HasTile) count++;
+            if(Main.tile[i,j+1].HasTile)   count++;
+            if(Main.tile[i+1,j+1].HasTile) count++;
             return count;
         }
         /// <summary>
@@ -250,8 +250,8 @@ namespace Origins.World {
                             continue;
                         }
                         current = Main.tile[k,l];
-                        ConvertTile(ref current.type, evil_wastelands);
-                        ConvertWall(ref current.wall, evil_wastelands);
+                        ConvertTile(ref current.TileType, evil_wastelands);
+                        ConvertWall(ref current.WallType, evil_wastelands);
                     }
                 }
                 break;
@@ -260,7 +260,7 @@ namespace Origins.World {
                     for(int l = j - size; l <= j + size; l++) {
                         tileConvertBuffer = -1;
                         current = Main.tile[k,l];
-                        if(originWorld.defiledResurgence&&ModContent.GetModTile(current.type) is DefiledTile) {
+                        if(originWorld.defiledResurgence&&ModContent.GetModTile(current.TileType) is DefiledTile) {
                             originWorld.defiledResurgenceTiles.Add((k,l));
                         }
                         if(conversionType == 0) {
@@ -268,28 +268,28 @@ namespace Origins.World {
                                 continue;
                             }
                             //convert based on conversion sets
-                            if(TileID.Sets.Conversion.Grass[current.type]) {
+                            if(TileID.Sets.Conversion.Grass[current.TileType]) {
                                 tileConvertBuffer = TileID.Grass;
-                            } else if(TileID.Sets.Conversion.Stone[current.type]) {
+                            } else if(TileID.Sets.Conversion.Stone[current.TileType]) {
                                 tileConvertBuffer = TileID.Stone;
-                            } else if(TileID.Sets.Conversion.Sand[current.type]) {
+                            } else if(TileID.Sets.Conversion.Sand[current.TileType]) {
                                 tileConvertBuffer = TileID.Sand;
-                            } else if(TileID.Sets.Conversion.Sandstone[current.type]) {
+                            } else if(TileID.Sets.Conversion.Sandstone[current.TileType]) {
                                 tileConvertBuffer = TileID.Sandstone;
-                            } else if(TileID.Sets.Conversion.HardenedSand[current.type]) {
+                            } else if(TileID.Sets.Conversion.HardenedSand[current.TileType]) {
                                 tileConvertBuffer = TileID.HardenedSand;
-                            } else if(TileID.Sets.Conversion.Ice[current.type]) {
+                            } else if(TileID.Sets.Conversion.Ice[current.TileType]) {
                                 tileConvertBuffer = TileID.IceBlock;
                             }
-                            if(tileConvertBuffer!=-1&&tileConvertBuffer!=current.type) {
-                                if(WallID.Sets.Conversion.Stone[Main.tile[k, l].wall]) {
-                                    Main.tile[k, l].wall = WallID.Stone;
-                                }else if(WallID.Sets.Conversion.Sandstone[Main.tile[k, l].wall]) {
-                                    Main.tile[k, l].wall = WallID.Sandstone;
-                                }else if(WallID.Sets.Conversion.HardenedSand[Main.tile[k, l].wall]) {
-                                    Main.tile[k, l].wall = WallID.HardenedSand;
+                            if(tileConvertBuffer!=-1&&tileConvertBuffer!=current.TileType) {
+                                if(WallID.Sets.Conversion.Stone[Main.tile[k, l].WallType]) {
+                                    Main.tile[k, l].WallType = WallID.Stone;
+                                }else if(WallID.Sets.Conversion.Sandstone[Main.tile[k, l].WallType]) {
+                                    Main.tile[k, l].WallType = WallID.Sandstone;
+                                }else if(WallID.Sets.Conversion.HardenedSand[Main.tile[k, l].WallType]) {
+                                    Main.tile[k, l].WallType = WallID.HardenedSand;
                                 }
-                                Main.tile[k, l].type = (ushort)tileConvertBuffer;
+                                Main.tile[k, l].TileType = (ushort)tileConvertBuffer;
                                 WorldGen.SquareTileFrame(k, l);
                                 NetMessage.SendTileSquare(-1, k, l, 1);
                                 tileConvertBuffer = -1;
@@ -389,21 +389,21 @@ namespace Origins.World {
         }
         public static byte GetTileAdj(int i, int j) {
             byte adj = 0;
-            if(Main.tile[i-1, j-1].active())adj|=AdjID.tl;
-            if(Main.tile[i, j-1].active())  adj|=AdjID.t;
-            if(Main.tile[i+1, j-1].active())adj|=AdjID.tr;
-            if(Main.tile[i-1, j].active())  adj|=AdjID.l;
-            if(Main.tile[i+1, j].active())  adj|=AdjID.r;
-            if(Main.tile[i-1, j+1].active())adj|=AdjID.bl;
-            if(Main.tile[i, j+1].active())  adj|=AdjID.b;
-            if(Main.tile[i+1, j+1].active())adj|=AdjID.br;
+            if(Main.tile[i-1, j-1].HasTile)adj|=AdjID.tl;
+            if(Main.tile[i, j-1].HasTile)  adj|=AdjID.t;
+            if(Main.tile[i+1, j-1].HasTile)adj|=AdjID.tr;
+            if(Main.tile[i-1, j].HasTile)  adj|=AdjID.l;
+            if(Main.tile[i+1, j].HasTile)  adj|=AdjID.r;
+            if(Main.tile[i-1, j+1].HasTile)adj|=AdjID.bl;
+            if(Main.tile[i, j+1].HasTile)  adj|=AdjID.b;
+            if(Main.tile[i+1, j+1].HasTile)adj|=AdjID.br;
             return adj;
         }
         public static List<Vector2> GetTileDirs(int i, int j) {
             List<Vector2> dirs = new List<Vector2>(8);
             for(int k = 1; k <= 1; k++) {
                 for(int l = 1; l <= 1; l++) {
-                    if(!(k==0&&l==0)&&Main.tile[i+k,j+l].active()) {
+                    if(!(k==0&&l==0)&&Main.tile[i+k,j+l].HasTile) {
                         dirs.Add(new Vector2(k,l));
                     }
                 }

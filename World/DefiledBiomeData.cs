@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Origins.Tiles.Defiled;
 using Origins.Walls;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Terraria.WorldGen;
@@ -78,7 +79,7 @@ namespace Origins.World.BiomeData {
 									wallThickness,
 									wallType: stoneWallID));
 							airCheckVec = next.data.position;
-							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
+							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].WallType == WallID.None) {
 								break;
 							}
 							if (endChance > current.generation) {
@@ -98,7 +99,7 @@ namespace Origins.World.BiomeData {
 									wallThickness,
 									wallType: stoneWallID));
 							airCheckVec = next.data.position;
-							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
+							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].WallType == WallID.None) {
 								break;
 							}
 							if (endChance > current.generation) {
@@ -115,7 +116,7 @@ namespace Origins.World.BiomeData {
 									wallThickness,
 									wallType: stoneWallID));
 							airCheckVec = next.data.position;
-							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
+							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].WallType == WallID.None) {
 								break;
 							}
 							if (endChance > current.generation) {
@@ -135,7 +136,7 @@ namespace Origins.World.BiomeData {
 									wallThickness,
 									wallType: stoneWallID));
 							airCheckVec = next.data.position;
-							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].wall == WallID.None) {
+							if (airCheckVec.Y < Main.worldSurface && Main.tile[(int)airCheckVec.X, (int)airCheckVec.Y].WallType == WallID.None) {
 								break;
 							}
 							if (endChance > next.generation) {
@@ -157,7 +158,7 @@ namespace Origins.World.BiomeData {
                     for (int o = 0; o > -5; o = o > 0 ? -o : -o + 1) {
 						Vector2 p = fisureCheckSpots[ch];
 						int loop = 0;
-                        for (; !Main.tile[(int)p.X, (int)p.Y + 1].active(); p.Y++) {
+                        for (; !Main.tile[(int)p.X, (int)p.Y + 1].HasTile; p.Y++) {
                             if (++loop > 10) {
 								break;
                             }
@@ -181,12 +182,13 @@ namespace Origins.World.BiomeData {
 						if (diff > 35 * sizeMult) {
 							continue;
 						}
-						if (Main.tile[x, y].wall != stoneWallID) {
+						if (Main.tile[x, y].WallType != stoneWallID) {
 							Main.tile[x, y].ResetToType(stoneID);
 						}
-						Main.tile[x, y].wall = stoneWallID;
+						Main.tile[x, y].WallType = stoneWallID;
 						if (diff < 35 * sizeMult - 5) {
-							Main.tile[x, y].active(false);
+							Tile tile0 = Main.tile[x, y];
+							tile0.HasTile = false;
 						}
 					}
 				}
@@ -202,7 +204,8 @@ namespace Origins.World.BiomeData {
                         if (Math.Cos(diff*0.7f)<=0.1f) {
 							Main.tile[x, y].ResetToType(stoneID);
                         } else {
-							Main.tile[x, y].active(false);
+							Tile tile0 = Main.tile[x, y];
+							tile0.HasTile = false;
 						}
 					}
 				}
@@ -211,7 +214,7 @@ namespace Origins.World.BiomeData {
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
 				for (int x = (int)Math.Floor(i - size); x < (int)Math.Ceiling(i + size); x++) {
 					for (int y = (int)Math.Ceiling(j + size); y >= (int)Math.Floor(j - size); y--) {
-                        if (Main.tile[x, y].active() && Main.tileSolid[Main.tile[x, y].type]) {
+                        if (Main.tile[x, y].HasTile && Main.tileSolid[Main.tile[x, y].TileType]) {
 							continue;
                         }
 						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
@@ -262,27 +265,30 @@ namespace Origins.World.BiomeData {
 							float ek = k + (GenRunners.GetWallDistOffset((float)length + l) + 0.5f) / 2.5f;
 							double dist = Math.Pow(Math.Abs(el - pos.X), 2) + Math.Pow(Math.Abs(ek - pos.Y), 2);
 							tile = Main.tile[l, k];
-							bool openAir = (k < Main.worldSurface && tile.wall == WallID.None);
+							bool openAir = (k < Main.worldSurface && tile.WallType == WallID.None);
 							if (dist > strength) {
 								double d = Math.Sqrt(dist);
-								if (!openAir && d < baseStrength + basewallThickness && TileID.Sets.CanBeClearedDuringGeneration[tile.type] && tile.wall != _wallType) {
+								if (!openAir && d < baseStrength + basewallThickness && TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && tile.WallType != _wallType) {
 									
-                                    if (!Main.tileContainer[tile.type]) {
-										tile.active(active: true);
+                                    if (!Main.tileContainer[tile.TileType]) {
+										tile.HasTile = true;
 										tile.ResetToType(wallBlockType);
 									}
 									//WorldGen.SquareTileFrame(l, k);
 									if (hasWall) {
-										tile.wall = _wallType;
+										tile.WallType = _wallType;
 									}
 								}
 								continue;
 							}
-							if (TileID.Sets.CanBeClearedDuringGeneration[tile.type]) {
-								if (!Main.tileContainer[tile.type] && !Main.tileContainer[Main.tile[l, k-1].type]) Main.tile[l, k].active(active: false);
+							if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
+								if (!Main.tileContainer[tile.TileType] && !Main.tileContainer[Main.tile[l, k - 1].TileType]) {
+									Tile tile0 = Main.tile[l, k];
+									tile0.HasTile = false;
+								}
 								//WorldGen.SquareTileFrame(l, k);
 								if (hasWall && !openAir) {
-									tile.wall = _wallType;
+									tile.WallType = _wallType;
 								}
 								if (l > X1) {
 									X1 = l;
@@ -324,12 +330,12 @@ namespace Origins.World.BiomeData {
 			if (destroyObject) {
 				return;
 			}
-            int x = Main.tile[i, j].frameX != 0 ? i - 1 : i;
-            int y = Main.tile[i, j].frameY != 0 && Main.tile[i, j].frameY != 36 ? j - 1 : j;
+            int x = Main.tile[i, j].TileFrameX != 0 ? i - 1 : i;
+            int y = Main.tile[i, j].TileFrameY != 0 && Main.tile[i, j].TileFrameY != 36 ? j - 1 : j;
             for (int k = 0; k < 2; k++) {
 				for (int l = 0; l < 2; l++) {
 					Tile tile = Main.tile[x + k, y + l];
-					if (tile != null && (!tile.nactive() || tile.type != type)) {
+					if (tile != null && (!tile.HasUnactuatedTile || tile.TileType != type)) {
 						destroyObject = true;
 						break;
 					}
@@ -343,7 +349,7 @@ namespace Origins.World.BiomeData {
 			}
 			for (int m = x; m < x + 2; m++) {
 				for (int n = y; n < y + 2; n++) {
-					if (Main.tile[m, n].type == type) {
+					if (Main.tile[m, n].TileType == type) {
 						KillTile(m, n);
 					}
 				}
@@ -358,25 +364,25 @@ namespace Origins.World.BiomeData {
 				}
 				switch (selection) {
 					case 0: 
-					Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<Defiled_Burst>(), 1, noBroadcast: false, -1);
+					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Defiled_Burst>(), 1, noBroadcast: false, -1);
 					int stack2 = WorldGen.genRand.Next(100, 101);
-					Item.NewItem(i * 16, j * 16, 32, 32, ItemID.MusketBall, stack2);
+					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ItemID.MusketBall, stack2);
 					break;
 				
 					case 1:
-					Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<Infusion>(), 1, noBroadcast: false, -1);
+					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Infusion>(), 1, noBroadcast: false, -1);
 					break;
 
 					case 2:
-					Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<Defiled_Chakram>(), 1, noBroadcast: false, -1);
+					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Defiled_Chakram>(), 1, noBroadcast: false, -1);
 					break;
 
 					case 3:
-					Item.NewItem(i * 16, j * 16, 32, 32, ItemID.ShadowOrb, 1, noBroadcast: false, -1);
+					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ItemID.ShadowOrb, 1, noBroadcast: false, -1);
 					break;
 
 					case 4:
-					Item.NewItem(i * 16, j * 16, 32, 32, ModContent.ItemType<Dim_Starlight>(), 1, noBroadcast: false, -1);
+					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Dim_Starlight>(), 1, noBroadcast: false, -1);
 					break;
 				}
 				shadowOrbSmashed = true;
@@ -391,7 +397,7 @@ namespace Origins.World.BiomeData {
 						dist = curDist;
 					}
 				}
-				Projectile.NewProjectile(new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, ai0:1, ai1:player);
+				Projectile.NewProjectile(GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, ai0:1, ai1:player);
 				/*
 				shadowOrbCount++;
 				if (shadowOrbCount >= 3) {
@@ -422,7 +428,7 @@ namespace Origins.World.BiomeData {
 				}
 				 */
 			}
-			Main.PlaySound(SoundID.NPCKilled, i * 16, j * 16);
+			SoundEngine.PlaySound(SoundID.NPCDeath1, new Vector2(i * 16, j * 16));
 			destroyObject = false;
 		}
 	}

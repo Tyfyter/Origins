@@ -14,22 +14,22 @@ namespace Origins.Items.Weapons.Riven {
             glowmask = Origins.AddGlowMask(this);
         }
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.ThornChakram);
-			item.damage = 28;
-			item.width = 22;
-			item.height = 28;
-			item.useTime = 18;
-			item.useAnimation = 18;
+            Item.CloneDefaults(ItemID.ThornChakram);
+			Item.damage = 28;
+			Item.width = 22;
+			Item.height = 28;
+			Item.useTime = 18;
+			Item.useAnimation = 18;
 			//item.knockBack = 5;
-            item.shoot = ModContent.ProjectileType<Riverang_P>();
-            item.shootSpeed = 9.75f;
-			item.value = 5000;
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item1;
-            item.glowMask = glowmask;
+            Item.shoot = ModContent.ProjectileType<Riverang_P>();
+            Item.shootSpeed = 9.75f;
+			Item.value = 5000;
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item1;
+            Item.glowMask = glowmask;
         }
         public override bool CanUseItem(Player player) {
-            return player.ownedProjectileCounts[item.shoot]<=0;
+            return player.ownedProjectileCounts[Item.shoot]<=0;
         }
     }
     public class Riverang_P : ModProjectile {
@@ -38,32 +38,32 @@ namespace Origins.Items.Weapons.Riven {
 			DisplayName.SetDefault("Riverang");
 		}
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.ThornChakram);
-            projectile.penetrate = -1;
-			projectile.width = 28;
-			projectile.height = 28;
+            Projectile.CloneDefaults(ProjectileID.ThornChakram);
+            Projectile.penetrate = -1;
+			Projectile.width = 28;
+			Projectile.height = 28;
             //projectile.scale*=1.25f;
         }
         public override bool PreAI() {
-            if(projectile.timeLeft % 10 == 0) {
-			    Vector2 targetPos = projectile.Center;
+            if(Projectile.timeLeft % 10 == 0) {
+			    Vector2 targetPos = Projectile.Center;
 			    bool foundTarget = false;
                 Vector2 testPos;
-                if(projectile.localAI[1]>0) {
-                    projectile.localAI[1]--;
+                if(Projectile.localAI[1]>0) {
+                    Projectile.localAI[1]--;
                 }
-                if(projectile.localAI[0]>0) {
-                    projectile.localAI[0]--;
+                if(Projectile.localAI[0]>0) {
+                    Projectile.localAI[0]--;
                     goto skip;
                 }
                 for (int i = 0; i < Main.maxNPCs; i++) {
 				    NPC target = Main.npc[i];
 				    if (target.CanBeChasedBy()) {
-                        testPos = projectile.Center.Clamp(target.Hitbox);
-					    Vector2 difference = testPos-projectile.Center;
+                        testPos = Projectile.Center.Clamp(target.Hitbox);
+					    Vector2 difference = testPos-Projectile.Center;
                         float distance = difference.Length();
-					    bool closest = Vector2.Distance(projectile.Center, targetPos) > distance;
-                        bool inRange = distance < 40 && (difference.SafeNormalize(Vector2.Zero)*projectile.velocity.SafeNormalize(Vector2.Zero)).Length()>0.1f;
+					    bool closest = Vector2.Distance(Projectile.Center, targetPos) > distance;
+                        bool inRange = distance < 40 && (difference.SafeNormalize(Vector2.Zero)*Projectile.velocity.SafeNormalize(Vector2.Zero)).Length()>0.1f;
 					    if ((!foundTarget || closest) && inRange) {
 						    targetPos = testPos;
 						    foundTarget = true;
@@ -72,18 +72,18 @@ namespace Origins.Items.Weapons.Riven {
 			    }
                 skip:
                 if(foundTarget) {
-                    projectile.velocity = (targetPos - projectile.Center).SafeNormalize(Vector2.UnitX)*projectile.velocity.Length();
-                    projectile.localAI[1] = 10;
+                    Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(Vector2.UnitX)*Projectile.velocity.Length();
+                    Projectile.localAI[1] = 10;
                 } else {
-                    projectile.velocity = projectile.velocity.RotatedByRandom(MathHelper.Min((3600f - projectile.timeLeft) * 0.025f, MathHelper.PiOver2));
+                    Projectile.velocity = Projectile.velocity.RotatedByRandom(MathHelper.Min((3600f - Projectile.timeLeft) * 0.025f, MathHelper.PiOver2));
                 }
             }
             return true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            if(projectile.localAI[1]>0)projectile.localAI[0] = 20;
+            if(Projectile.localAI[1]>0)Projectile.localAI[0] = 20;
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) {
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
             width = 27;
             height = 27;
             return true;

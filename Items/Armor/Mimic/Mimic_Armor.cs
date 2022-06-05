@@ -12,12 +12,12 @@ namespace Origins.Items.Armor.Mimic {
 			DisplayName.SetDefault("Mimic Helmet");
 			Tooltip.SetDefault("Slightly increased explosive velocity");
 			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(item.headSlot, "Items/Armor/Mimic/Mimic_Helmet_Head_Glow");
+				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Mimic/Mimic_Helmet_Head_Glow");
 			}
 		}
 		public override void SetDefaults() {
-			item.defense = 11;
-			item.rare = ItemRarityID.Pink;
+			Item.defense = 11;
+			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed += 0.1f;
@@ -77,10 +77,10 @@ namespace Origins.Items.Armor.Mimic {
 					player.runAcceleration += 0.099f;
 					break;
 					case 3:
-					if (player.velocity.Y != 0) {
-						player.allDamageMult *= 1.10f;
-						player.meleeSpeed *= 1.10f;
-						player.rangedCrit += 5;
+					if (player.velocity.Y == 0) {
+						player.GetDamage(DamageClass.Generic) *= 1.10f;
+						player.GetAttackSpeed(DamageClass.Generic) *= 1.10f;
+						player.GetCritChance(DamageClass.Generic) += 5;
 						player.manaCost *= 0.7f;
 					}
 					break;
@@ -88,12 +88,12 @@ namespace Origins.Items.Armor.Mimic {
 			}
 		}
 		public override void AddRecipes() {
-			/*ModRecipe recipe = new ModRecipe(mod);
+			/*Recipe recipe = Mod.CreateRecipe(Type);
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
 			//recipe.AddIngredient(ModContent.ItemType<>(), 10);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();*/
+			recipe.Register();*/
 		}
 	}
 	[AutoloadEquip(EquipType.Body)]
@@ -102,25 +102,25 @@ namespace Origins.Items.Armor.Mimic {
 			DisplayName.SetDefault("Mimic Breastplate");
 			Tooltip.SetDefault("Increased life regeneration");
 			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddBreastplateGlowmask(item.bodySlot, "Items/Armor/Mimic/Mimic_Breastplate_Body_Glow");
-				Origins.AddBreastplateGlowmask(-item.bodySlot, "Items/Armor/Mimic/Mimic_Breastplate_FemaleBody_Glow");
+				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Mimic/Mimic_Breastplate_Body_Glow");
+				Origins.AddBreastplateGlowmask(-Item.bodySlot, "Items/Armor/Mimic/Mimic_Breastplate_FemaleBody_Glow");
 			}
 		}
 		public override void SetDefaults() {
-			item.defense = 15;
-			item.wornArmor = true;
-			item.rare = ItemRarityID.Pink;
+			Item.defense = 15;
+			Item.wornArmor = true;
+			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
 			player.lifeRegenCount += 2;
 		}
 		public override void AddRecipes() {
-			/*ModRecipe recipe = new ModRecipe(mod);
+			/*Recipe recipe = Mod.CreateRecipe(Type);
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
 			//recipe.AddIngredient(ModContent.ItemType<>(), 20);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();*/
+			recipe.Register();*/
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -133,19 +133,19 @@ namespace Origins.Items.Armor.Mimic {
 			}
 		}
 		public override void SetDefaults() {
-			item.defense = 12;
-			item.rare = ItemRarityID.Pink;
+			Item.defense = 12;
+			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().explosiveDamage += 0.1f;
 		}
 		public override void AddRecipes() {
-			/*ModRecipe recipe = new ModRecipe(mod);
+			/*Recipe recipe = Mod.CreateRecipe(Type);
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
 			//recipe.AddIngredient(ModContent.ItemType<>(), 15);
 			recipe.SetResult(this);
 			recipe.AddTile(TileID.Anvils);
-			recipe.AddRecipe();*/
+			recipe.Register();*/
 		}
 	}
 }

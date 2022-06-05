@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
             Tooltip.SetDefault("Attacks inflict Toxic Shock and Solvent on enemies\nEffects are stronger while using Acrid Armor");
         }
         public override void SetDefaults() {
-            item.accessory = true;
+            Item.accessory = true;
         }
         public override void UpdateEquip(Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

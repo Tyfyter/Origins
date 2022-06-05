@@ -18,11 +18,11 @@ namespace Origins.Tiles.Riven {
     public class Riven_Dungeon_Chest : ModChest, IGlowingModTile {
         public Texture2D GlowTexture { get; private set; }
         public Color GlowColor => Color.White;
-        public override void SetDefaults() {
+        public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-                GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Dungeon_Chest_Glow");
+                GlowTexture = Mod.GetTexture("Tiles/Riven/Riven_Dungeon_Chest_Glow");
             }
-            base.SetDefaults();
+            base.SetStaticDefaults();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Riven Chest");
 			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
@@ -49,17 +49,17 @@ namespace Origins.Tiles.Riven {
             DisplayName.SetDefault("Riven Chest");
         }
         public override void SetDefaults() {
-            item.width = 26;
-            item.height = 22;
-            item.maxStack = 99;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.useAnimation = 15;
-            item.useTime = 10;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.consumable = true;
-            item.value = 500;
-            item.createTile = ModContent.TileType<Riven_Dungeon_Chest>();
+            Item.width = 26;
+            Item.height = 22;
+            Item.maxStack = 99;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
+            Item.value = 500;
+            Item.createTile = ModContent.TileType<Riven_Dungeon_Chest>();
         }
     }
 }

@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
 using Terraria.Graphics.Shaders;
+using Terraria.DataStructures;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Fallout : ModItem {
@@ -20,131 +21,131 @@ namespace Origins.Items.Weapons.Explosives {
             glowmask = Origins.AddGlowMask(this);
         }
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.ProximityMineLauncher);
-			item.damage = 250;
-			item.useTime = 90;
-			item.useAnimation = 90;
-			item.value = 5000;
-            item.shootSpeed*=0.75f;
-            item.shoot = ModContent.ProjectileType<Fallout_P1>();
-			item.rare = ItemRarityID.Lime;
-            item.autoReuse = true;
-            item.glowMask = glowmask;
+            Item.CloneDefaults(ItemID.ProximityMineLauncher);
+			Item.damage = 250;
+			Item.useTime = 90;
+			Item.useAnimation = 90;
+			Item.value = 5000;
+            Item.shootSpeed*=0.75f;
+            Item.shoot = ModContent.ProjectileType<Fallout_P1>();
+			Item.rare = ItemRarityID.Lime;
+            Item.autoReuse = true;
+            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
-            Origins.AddExplosive(item);
+            Origins.AddExplosive(Item);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			//type = item.shoot+(type-item.shoot)/3;
-            Projectile.NewProjectile(position, new Vector2(speedX, speedY), item.shoot, damage, knockBack, player.whoAmI, 0, type-item.shoot+ProjectileID.RocketI);
+            Projectile.NewProjectile(source, position, velocity, Item.shoot, damage, knockback, player.whoAmI, 0, type-Item.shoot+ProjectileID.RocketI);
             return false;
         }
     }
     public class Fallout_P1 : ModProjectile {
-        public override string Texture => "Terraria/Projectile_"+ProjectileID.RocketI;
+        public override string Texture => "Terraria/Images/Projectile_"+ProjectileID.RocketI;
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.RocketI);
-            projectile.aiStyle = 0;
-            projectile.penetrate = 1;
-            projectile.width+=4;
-            projectile.height+=4;
-            projectile.scale = 1.25f;
+            Projectile.CloneDefaults(ProjectileID.RocketI);
+            Projectile.aiStyle = 0;
+            Projectile.penetrate = 1;
+            Projectile.width+=4;
+            Projectile.height+=4;
+            Projectile.scale = 1.25f;
         }
         public override void AI() {
-            projectile.rotation = projectile.velocity.ToRotation() + PiOver2;
-            int num248 = Dust.NewDust(projectile.Center - projectile.velocity * 0.5f-new Vector2(0,4), 0, 0, DustID.Fire, 0f, 0f, 100);
+            Projectile.rotation = Projectile.velocity.ToRotation() + PiOver2;
+            int num248 = Dust.NewDust(Projectile.Center - Projectile.velocity * 0.5f-new Vector2(0,4), 0, 0, DustID.Torch, 0f, 0f, 100);
 			Dust dust3 = Main.dust[num248];
 			dust3.scale *= 1f + Main.rand.Next(10) * 0.1f;
 			dust3.velocity *= 0.2f;
         }
         public override bool OnTileCollide(Vector2 oldVelocity) {
-            projectile.Kill();
+            Projectile.Kill();
             return false;
         }
         public override bool PreKill(int timeLeft) {
-            projectile.type = ProjectileID.RocketI;
+            Projectile.type = ProjectileID.RocketI;
             return true;
         }
         public override void Kill(int timeLeft) {
-            projectile.ai[0] = 1;
-			projectile.position.X += projectile.width / 2;
-			projectile.position.Y += projectile.height / 2;
-			projectile.width = 640;
-			projectile.height = 640;
-			projectile.position.X -= projectile.width / 2;
-			projectile.position.Y -= projectile.height / 2;
-			projectile.Damage();
-            Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Fallout_Field>(), projectile.damage, projectile.knockBack, projectile.owner, 0, projectile.ai[1]);
+            Projectile.ai[0] = 1;
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = 640;
+			Projectile.height = 640;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.Damage();
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Fallout_Field>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 0, Projectile.ai[1]);
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-            return projectile.ai[0]>0?(bool?)((projectile.Center.Clamp(targetHitbox)-projectile.Center).Length()<=320):null;
+            return Projectile.ai[0]>0?(bool?)((Projectile.Center.Clamp(targetHitbox)-Projectile.Center).Length()<=320):null;
         }
     }
     public class Fallout_Field : ModProjectile {
         public override string Texture => "Origins/Projectiles/Pixel";
         public List<Vector2> targets = new List<Vector2>(){};
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.RocketI);
-            projectile.aiStyle = 0;
-            projectile.timeLeft = 900;
-            projectile.tileCollide = false;
-			projectile.width = 640;
-			projectile.height = 640;
+            Projectile.CloneDefaults(ProjectileID.RocketI);
+            Projectile.aiStyle = 0;
+            Projectile.timeLeft = 900;
+            Projectile.tileCollide = false;
+			Projectile.width = 640;
+			Projectile.height = 640;
         }
         public override void AI() {
-            if(projectile.timeLeft%15==0) {
+            if(Projectile.timeLeft%15==0) {
                 Vector2 offset = Main.rand.NextVector2Circular(160, 160)+Main.rand.NextVector2Circular(160, 160);
                 if(targets.Count>0&&!Main.rand.NextBool(3))offset = Main.rand.Next(targets);
-                Projectile.NewProjectile(projectile.Center+offset, Vector2.Zero, ModContent.ProjectileType<Fallout_Cloud>(), projectile.damage, projectile.knockBack, projectile.owner, projectile.ai[1]);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center+offset, Vector2.Zero, ModContent.ProjectileType<Fallout_Cloud>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.ai[1]);
                 targets.Clear();
             }
             for(int i = 0; i < 6; i++) {
-                Dust dust = Dust.NewDustDirect(projectile.Center+Main.rand.NextVector2Circular(140,140)+Main.rand.NextVector2Circular(140,140), 0, 0, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 0.75f*projectile.scale);
+                Dust dust = Dust.NewDustDirect(Projectile.Center+Main.rand.NextVector2Circular(140,140)+Main.rand.NextVector2Circular(140,140), 0, 0, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 0.75f*Projectile.scale);
                 dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
                 dust.noGravity = true;
                 dust.noLight = true;
             }
         }
         public override void Kill(int timeLeft) {
-            projectile.ai[0] = 1;
-			projectile.Damage();
+            Projectile.ai[0] = 1;
+			Projectile.Damage();
         }
         public override bool? CanHitNPC(NPC target) {
-            if((target.Center-projectile.Center).Length()<320)targets.Add(target.Center-projectile.Center);
-            return projectile.ai[0]>0?null:(bool?)false;
+            if((target.Center-Projectile.Center).Length()<320)targets.Add(target.Center-Projectile.Center);
+            return Projectile.ai[0]>0?null:(bool?)false;
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-            return (projectile.Center.Clamp(targetHitbox)-projectile.Center).Length()<=320;
+            return (Projectile.Center.Clamp(targetHitbox)-Projectile.Center).Length()<=320;
         }
     }
     public class Fallout_Cloud : ModProjectile {
         public override string Texture => "Origins/Projectiles/Pixel";
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.RocketI);
-            projectile.aiStyle = 0;
-            projectile.timeLeft = 0;
+            Projectile.CloneDefaults(ProjectileID.RocketI);
+            Projectile.aiStyle = 0;
+            Projectile.timeLeft = 0;
         }
         public override bool PreKill(int timeLeft) {
-            projectile.type = (int)projectile.ai[0];
+            Projectile.type = (int)Projectile.ai[0];
             return true;
         }
         public override void Kill(int timeLeft) {
             for(int i = 0; i < 7; i++) {
-                Dust dust = Dust.NewDustDirect(projectile.position, 10, 10, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 1.25f*projectile.scale);
+                Dust dust = Dust.NewDustDirect(Projectile.position, 10, 10, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 1.25f*Projectile.scale);
                 dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
                 dust.noGravity = true;
                 dust.noLight = true;
             }
-			projectile.position.X += projectile.width / 2;
-			projectile.position.Y += projectile.height / 2;
-			projectile.width = projectile.ai[0]>ProjectileID.RocketII? 128: 96;
-			projectile.height = projectile.width;
-			projectile.position.X -= projectile.width / 2;
-			projectile.position.Y -= projectile.height / 2;
-			projectile.Damage();
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = Projectile.ai[0]>ProjectileID.RocketII? 128: 96;
+			Projectile.height = Projectile.width;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.Damage();
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-            return (projectile.Center.Clamp(targetHitbox)-projectile.Center).Length()<=(projectile.ai[0]>ProjectileID.RocketII? 72:48);
+            return (Projectile.Center.Clamp(targetHitbox)-Projectile.Center).Length()<=(Projectile.ai[0]>ProjectileID.RocketII? 72:48);
         }
     }
 }

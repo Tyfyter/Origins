@@ -4,6 +4,8 @@ using Origins.Walls;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
+using Terraria.Chat;
 using Terraria.GameContent.Achievements;
 using Terraria.ID;
 using Terraria.Localization;
@@ -47,13 +49,13 @@ namespace Origins.World.BiomeData {
 						}
 						Main.tile[x, y].ResetToType(fleshID);
 						if (diff < 750) {
-							Main.tile[x, y].wall = fleshWallID;
+							Main.tile[x, y].WallType = fleshWallID;
 						}
 					}
 				}
 				Vector2 vector = new Vector2(0, -1).RotatedByRandom(1.6f, genRand);
 				int distance = 0;
-				while (Main.tile[(int)position.X, (int)position.Y].active() && Main.tileSolid[Main.tile[(int)position.X, (int)position.Y].type]) {
+				while (Main.tile[(int)position.X, (int)position.Y].HasTile && Main.tileSolid[Main.tile[(int)position.X, (int)position.Y].TileType]) {
 					//Main.tile[(int)position.X, (int)position.Y].ResetToType(TileID.EmeraldGemspark);
 					//SquareTileFrame((int)position.X, (int)position.Y);
 					position += vector;
@@ -122,12 +124,12 @@ namespace Origins.World.BiomeData {
 						if (diff > 35 * sizeMult) {
 							continue;
 						}
-						if (Main.tile[x, y].wall != fleshWallID) {
+						if (Main.tile[x, y].WallType != fleshWallID) {
 							Main.tile[x, y].ResetToType(fleshID);
 						}
-						Main.tile[x, y].wall = fleshWallID;
+						Main.tile[x, y].WallType = fleshWallID;
 						if (diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult) {
-							Main.tile[x, y].active(false);
+							Main.tile[x, y].HasTile = false;
 							if (diff > 34 * sizeMult - 5 && Main.tile[x, y+1].TileIsType(fleshID)) {
 								lesionPlacementSpots.Enqueue(new Point(x, y));
 							}
@@ -137,11 +139,11 @@ namespace Origins.World.BiomeData {
 				List<Point> validLesionPlacementSpots = new List<Point>();
                 while (lesionPlacementSpots.Count>0) {
 					Point current = lesionPlacementSpots.Dequeue();
-					if (!Main.tile[current.X, current.Y].active() && !Main.tile[current.X, current.Y - 1].active() && Main.tile[current.X, current.Y + 1].active()) {
-						if (!Main.tile[current.X - 1, current.Y].active() && !Main.tile[current.X - 1, current.Y - 1].active() && Main.tile[current.X - 1, current.Y + 1].active()) {
+					if (!Main.tile[current.X, current.Y].HasTile && !Main.tile[current.X, current.Y - 1].HasTile && Main.tile[current.X, current.Y + 1].HasTile) {
+						if (!Main.tile[current.X - 1, current.Y].HasTile && !Main.tile[current.X - 1, current.Y - 1].HasTile && Main.tile[current.X - 1, current.Y + 1].HasTile) {
 							validLesionPlacementSpots.Add(new Point(current.X - 1, current.Y));
 						}
-						if (!Main.tile[current.X + 1, current.Y].active() && !Main.tile[current.X + 1, current.Y - 1].active() && Main.tile[current.X + 1, current.Y + 1].active()) {
+						if (!Main.tile[current.X + 1, current.Y].HasTile && !Main.tile[current.X + 1, current.Y - 1].HasTile && Main.tile[current.X + 1, current.Y + 1].HasTile) {
 							validLesionPlacementSpots.Add(new Point(current.X, current.Y));
 						}
 					}
@@ -166,12 +168,12 @@ namespace Origins.World.BiomeData {
 			if (destroyObject) {
 				return;
 			}
-            int x = Main.tile[i, j].frameX != 0 ? i - 1 : i;
-            int y = Main.tile[i, j].frameY != 0 && Main.tile[i, j].frameY != 36 ? j - 1 : j;
+            int x = Main.tile[i, j].TileFrameX != 0 ? i - 1 : i;
+            int y = Main.tile[i, j].TileFrameY != 0 && Main.tile[i, j].TileFrameY != 36 ? j - 1 : j;
             for (int k = 0; k < 2; k++) {
 				for (int l = 0; l < 2; l++) {
 					Tile tile = Main.tile[x + k, y + l];
-					if (tile != null && (!tile.nactive() || tile.type != type)) {
+					if (tile != null && (!tile.HasUnactuatedTile || tile.TileType != type)) {
 						destroyObject = true;
 						break;
 					}
@@ -185,7 +187,7 @@ namespace Origins.World.BiomeData {
 			}
 			for (int m = x; m < x + 2; m++) {
 				for (int n = y; n < y + 2; n++) {
-					if (Main.tile[m, n].type == type) {
+					if (Main.tile[m, n].TileType == type) {
 						KillTile(m, n);
 					}
 				}
@@ -242,12 +244,12 @@ namespace Origins.World.BiomeData {
 					if (Main.netMode == NetmodeID.SinglePlayer) {
 						Main.NewText(localizedText.ToString(), 50, byte.MaxValue, 130);
 					}else if (Main.netMode == NetmodeID.Server) {
-						NetMessage.BroadcastChatMessage(NetworkText.FromKey(localizedText.Key), new Color(50, 255, 130));
+						ChatHelper.BroadcastChatMessage(NetworkText.FromKey(localizedText.Key), new Color(50, 255, 130));
 					}
 					AchievementsHelper.NotifyProgressionEvent(7);
 				}
 			}
-			Main.PlaySound(SoundID.NPCKilled, i * 16, j * 16);
+			SoundEngine.PlaySound(SoundID.NPCKilled, i * 16, j * 16);
 			destroyObject = false;
 		}
 	}

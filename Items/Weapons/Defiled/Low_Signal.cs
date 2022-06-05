@@ -19,24 +19,24 @@ namespace Origins.Items.Weapons.Defiled {
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults() {
-			item.damage = 60;
-			item.magic = true;
-			item.mana = 7;
-            item.noMelee = true;
-            item.noUseGraphic = false;
-			item.width = 30;
-			item.height = 36;
-			item.useTime = 30;
-			item.useAnimation = 30;
-			item.useStyle = 5;
-			item.knockBack = 5;
-            item.shoot = ModContent.ProjectileType<Low_Signal_P>();
-            item.shootSpeed = 14f;
-			item.value = 5000;
-            item.useTurn = false;
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
+			Item.damage = 60;
+			Item.magic = true;
+			Item.mana = 7;
+            Item.noMelee = true;
+            Item.noUseGraphic = false;
+			Item.width = 30;
+			Item.height = 36;
+			Item.useTime = 30;
+			Item.useAnimation = 30;
+			Item.useStyle = 5;
+			Item.knockBack = 5;
+            Item.shoot = ModContent.ProjectileType<Low_Signal_P>();
+            Item.shootSpeed = 14f;
+			Item.value = 5000;
+            Item.useTurn = false;
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(8, 0);
@@ -51,27 +51,27 @@ namespace Origins.Items.Weapons.Defiled {
 			DisplayName.SetDefault("Low Signal");
 		}
 		public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
-			projectile.ranged = false;
-			projectile.magic = true;
-			projectile.timeLeft = 40;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.localNPCHitCooldown = 60;
-			projectile.aiStyle = 0;
-			projectile.width = 8;
-			projectile.height = 8;
-			projectile.penetrate = 1;
-			projectile.hide = true;
+            Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
+			Projectile.ranged = false;
+			Projectile.magic = true;
+			Projectile.timeLeft = 40;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 60;
+			Projectile.aiStyle = 0;
+			Projectile.width = 8;
+			Projectile.height = 8;
+			Projectile.penetrate = 1;
+			Projectile.hide = true;
 		}
 		public override void Kill(int timeLeft) {
-			int[] immune = projectile.localNPCImmunity.ToArray();
+			int[] immune = Projectile.localNPCImmunity.ToArray();
 			Projectile.NewProjectileDirect(
-				projectile.Center,
+				Projectile.Center,
 				Vector2.Zero,
 				ModContent.ProjectileType<Defiled_Spike_Explosion>(),
-				projectile.damage,
+				Projectile.damage,
 				0,
-				projectile.owner,
+				Projectile.owner,
 				7).localNPCImmunity = immune;
 		}
 	}

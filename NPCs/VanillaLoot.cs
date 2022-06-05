@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Chat;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -15,7 +16,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs {
     public partial class OriginGlobalNPC : GlobalNPC {
         bool downedSkeletron = false;
-        public override void NPCLoot(NPC npc) {
+        public override void OnKill(NPC npc) {
             switch(npc.type) {
                 case NPCID.CaveBat:
                 case NPCID.GiantBat:
@@ -53,7 +54,7 @@ namespace Origins.NPCs {
 			if (Main.netMode == NetmodeID.SinglePlayer) {
                 Main.NewText(text, Colors.RarityPurple);
 			}else if (Main.netMode == NetmodeID.Server) {
-                NetMessage.BroadcastChatMessage(NetworkText.FromLiteral(text), Colors.RarityPurple);
+                ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), Colors.RarityPurple);
 			}
             if(!Main.gameMenu && Main.netMode != NetmodeID.MultiplayerClient) {
                 int x = 0, y = 0;
@@ -69,7 +70,7 @@ namespace Origins.NPCs {
 				        x = WorldGen.genRand.Next(0, Main.maxTilesX);
 						y = WorldGen.genRand.Next(90, (int)OriginWorld.worldSurfaceLow - 5);
                         tile = Framing.GetTileSafely(x, y);
-                        type = tile.active()?tile.type:TileID.BlueDungeonBrick;
+                        type = tile.HasTile?tile.TileType:TileID.BlueDungeonBrick;
                         if(++tries >= 150) {
                             if(++fails%2==0)k--;
                             success--;

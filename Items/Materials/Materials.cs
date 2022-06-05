@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,12 +14,12 @@ namespace Origins.Items.Materials {
     public class Angelium : ModItem {
         //add lore here
         public override void SetDefaults() {
-            item.maxStack = 999;
+            Item.maxStack = 999;
         }
     }
     public class Bark : ModItem {
         public override void SetDefaults() {
-            item.maxStack = 999;
+            Item.maxStack = 999;
         }
     }
     public class Bat_Hide : ModItem {
@@ -27,14 +28,13 @@ namespace Origins.Items.Materials {
             //Tooltip.SetDefault();
         }
         public override void SetDefaults() {
-            item.maxStack = 999;
+            Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(ItemID.Leather);
             recipe.AddIngredient(this, 4);
             recipe.AddTile(TileID.HeavyWorkBench);
-            recipe.SetResult(ItemID.Leather);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
     public class Ember_Onyx : ModItem {
@@ -45,7 +45,7 @@ namespace Origins.Items.Materials {
     }
     public class Rubber : ModItem {
         public override void SetDefaults() {
-            item.maxStack = 999;
+            Item.maxStack = 999;
         }
     }
     public class Silicon_Wafer : ModItem {
@@ -53,14 +53,13 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Silicon Packet");
         }
         public override void SetDefaults() {
-            item.maxStack = 999;
+            Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ItemID.SandBlock, 3);
             recipe.AddTile(TileID.GlassKiln);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
     public class Tree_Sap : ModItem {
@@ -68,7 +67,7 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Sap");
         }
         public override void SetDefaults() {
-            item.maxStack = 999;
+            Item.maxStack = 999;
         }
     }
     public class Viridium_Bar : ModItem {
@@ -77,7 +76,7 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Viridium Bar");
         }
         public override void SetDefaults() {
-            item.maxStack = 999;
+            Item.maxStack = 999;
         }
     }
     public class Peat_Moss : ModItem {
@@ -86,8 +85,8 @@ namespace Origins.Items.Materials {
             Tooltip.SetDefault("The demolitionist might find this interesting");
         }
         public override void SetDefaults() {
-            item.maxStack = 999;
-            item.value = 200;//2 silver
+            Item.maxStack = 999;
+            Item.value = 200;//2 silver
         }
     }
     public class Felnum_Bar : ModItem {
@@ -100,14 +99,13 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Felnum Bar");
         }
         public override void SetDefaults() {
-            item.maxStack = 999;
+            Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Ore_Item>(), 3);
             recipe.AddTile(TileID.Furnaces);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
     public class Valkyrum_Bar : ModItem {
@@ -116,16 +114,15 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Valkyrum Bar");
         }
         public override void SetDefaults() {
-            item.maxStack = 999;
+            Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 1);
             //recipe.AddIngredient(ModContent.ItemType<_Bar>(), 1);
             recipe.AddIngredient(ItemID.Ectoplasm, 1);
             recipe.AddTile(TileID.Furnaces);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
     public class Defiled_Bar : ModItem {
@@ -134,14 +131,13 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Defiled Bar");
         }
         public override void SetDefaults() {
-            item.maxStack = 999;
+            Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 3);
             recipe.AddTile(TileID.Furnaces);
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
     public class Undead_Chunk : ModItem {
@@ -150,7 +146,7 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Undead Chunk");
         }
         public override void SetDefaults() {
-            item.maxStack = 99;
+            Item.maxStack = 99;
         }
     }
     public class Infested_Bar : ModItem {
@@ -159,14 +155,14 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Infested Bar");
         }
         public override void SetDefaults() {
-            item.maxStack = 999;
+            Item.maxStack = 999;
         }
         /*public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 3);
             recipe.AddTile(TileID.Furnaces);
             recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }*/
     }
     public class Riven_Sample : ModItem {
@@ -175,7 +171,7 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Riven Sample");
         }
         public override void SetDefaults() {
-            item.maxStack = 99;
+            Item.maxStack = 99;
         }
     }
     public class Wilting_Rose_Item : ModItem {
@@ -184,7 +180,7 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Wilting Rose");
         }
         public override void SetDefaults() {
-            item.maxStack = 999;
+            Item.maxStack = 999;
         }
     }
     public class Defiled_Key : ModItem {
@@ -193,9 +189,9 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Defiled Key");
         }
         public override void SetDefaults() {
-			item.width = 14;
-			item.height = 20;
-			item.maxStack = 99;
+			Item.width = 14;
+			Item.height = 20;
+			Item.maxStack = 99;
         }
     }
     public class Riven_Key : ModItem {
@@ -204,9 +200,9 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Riven Key");
         }
         public override void SetDefaults() {
-            item.width = 14;
-            item.height = 20;
-            item.maxStack = 99;
+            Item.width = 14;
+            Item.height = 20;
+            Item.maxStack = 99;
         }
     }
     public class Brine_Sample : ModItem {
@@ -215,14 +211,16 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Brine Sample");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.ShadowScale);
+            Item.CloneDefaults(ItemID.ShadowScale);
         }
         public override void AddRecipes() {
-            Brine_Recipe recipe = new Brine_Recipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ItemID.Bottle);
-            recipe.needWater = true;
-            recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.AddCondition(
+                Terraria.Localization.NetworkText.FromLiteral("Brine"),
+                (_) => Main.LocalPlayer.adjWater && Main.LocalPlayer.GetModPlayer<OriginPlayer>().ZoneBrine
+            );
+            recipe.Register();
         }
     }
     public class Bleeding_Obsidian_Shard : ModItem {
@@ -231,13 +229,12 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Bleeding Obsidian Shard");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.ShadowScale);
+            Item.CloneDefaults(ItemID.ShadowScale);
         }
         public override void AddRecipes() {
-            Brine_Recipe recipe = new Brine_Recipe(mod);
+            Recipe recipe = Mod.CreateRecipe(ModContent.ItemType<Bleeding_Obsidian_Item>());
             recipe.AddIngredient(this, 6);
-            recipe.SetResult(ModContent.ItemType<Bleeding_Obsidian_Item>());
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

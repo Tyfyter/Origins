@@ -11,12 +11,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dusk {
     public class Dusk_Light : OriginTile {
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			drop = ItemType<Dusk_Light_Item>();
+			ItemDrop = ItemType<Dusk_Light_Item>();
 			AddMapEntry(new Color(95, 17, 125));
 		}
 
@@ -32,8 +32,8 @@ namespace Origins.Tiles.Dusk {
             DisplayName.SetDefault("Dusk Light");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.StoneBlock);
-            item.createTile = TileType<Dusk_Light>();
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.createTile = TileType<Dusk_Light>();
 		}
     }
 }

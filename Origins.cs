@@ -14,6 +14,7 @@ using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.UI;
 using Origins.World;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -43,7 +45,7 @@ namespace Origins {
         public static bool[] ExplosiveModOnHit;
         public static ushort[] VanillaElements;
 
-        public static ModHotKey SetBonusTriggerKey { get; private set; }
+        public static ModKeybind SetBonusTriggerKey { get; private set; }
         #region Armor IDs
         public static int FelnumHeadArmorID { get; private set; }
         public static int FelnumBodyArmorID { get; private set; }
@@ -85,13 +87,13 @@ namespace Origins {
             ExplosiveBaseDamage.Add(ItemID.BouncyDynamite, 175);
         #endregion vanilla explosive base damage registry
         #region armor slot ids
-            FelnumHeadArmorID = ModContent.GetInstance<Felnum_Helmet>().item.headSlot;
-            FelnumBodyArmorID = ModContent.GetInstance<Felnum_Breastplate>().item.bodySlot;
-            FelnumLegsArmorID = ModContent.GetInstance<Felnum_Greaves>().item.legSlot;
-            PlagueTexanJacketID = ModContent.GetInstance<Plague_Texan_Jacket>().item.bodySlot;
-            RiftHeadArmorID = ModContent.GetInstance<Rift_Helmet>().item.headSlot;
-            RiftBodyArmorID = ModContent.GetInstance<Rift_Breastplate>().item.bodySlot;
-            RiftLegsArmorID = ModContent.GetInstance<Rift_Greaves>().item.legSlot;
+            FelnumHeadArmorID = ModContent.GetInstance<Felnum_Helmet>().Item.headSlot;
+            FelnumBodyArmorID = ModContent.GetInstance<Felnum_Breastplate>().Item.bodySlot;
+            FelnumLegsArmorID = ModContent.GetInstance<Felnum_Greaves>().Item.legSlot;
+            PlagueTexanJacketID = ModContent.GetInstance<Plague_Texan_Jacket>().Item.bodySlot;
+            RiftHeadArmorID = ModContent.GetInstance<Rift_Helmet>().Item.headSlot;
+            RiftBodyArmorID = ModContent.GetInstance<Rift_Breastplate>().Item.bodySlot;
+            RiftLegsArmorID = ModContent.GetInstance<Rift_Greaves>().Item.legSlot;
             #endregion
             Logger.Info("fixing tilemerge for "+OriginTile.IDs.Count+" tiles");
             Main.tileMerge[TileID.Sand][TileID.Sandstone] = true;
@@ -326,7 +328,7 @@ namespace Origins {
             Music.UndergroundDefiled = MusicID.UndergroundCorruption;
             On.Terraria.NPC.UpdateCollision+=(orig, self)=>{
                 int realID = self.type;
-                if (self.modNPC is ISandsharkNPC shark) {
+                if (self.ModNPC is ISandsharkNPC shark) {
                     self.type = NPCID.SandShark;
                     try {
                         shark.PreUpdateCollision();
@@ -337,7 +339,7 @@ namespace Origins {
                     self.type = realID;
                     return;
                 }
-                ITileCollideNPC tcnpc = self.modNPC as ITileCollideNPC;
+                ITileCollideNPC tcnpc = self.ModNPC as ITileCollideNPC;
                 self.type = tcnpc?.CollisionType??realID;
                 orig(self);
                 self.type = realID;
@@ -350,8 +352,8 @@ namespace Origins {
             if(!(blockSwap is null || blockSwap.Version>new Version(1,0,1)))On.Terraria.TileObject.CanPlace+=(On.Terraria.TileObject.orig_CanPlace orig, int x, int y, int type, int style, int dir, out TileObject objectData, bool onlyCheck, bool checkStay) => {
 				if (type == 20){
 					Tile soil = Main.tile[x, y + 1];
-					if (soil.active()){
-                        TileLoader.SaplingGrowthType(soil.type, ref type, ref style);
+					if (soil.HasTile){
+                        TileLoader.SaplingGrowthType(soil.TileType, ref type, ref style);
 					}
 				}
                 return orig(x, y, type, style, dir, out objectData, onlyCheck, checkStay);
@@ -383,7 +385,7 @@ namespace Origins {
                 if (rasterizedTime > 0) {
                     shaded = true;
                     Main.spriteBatch.End();
-                    rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTime);
+                    rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
                     rasterizeShader.Shader.Parameters["uOffset"].SetValue(drawPlayer.velocity.WithMaxLength(4) * 0.0625f * rasterizedTime);
                     rasterizeShader.Shader.Parameters["uWorldPosition"].SetValue(drawPlayer.position);
                     rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(40, 1120, 0));
@@ -456,7 +458,7 @@ namespace Origins {
         private delegate void orig_MinePower(int minePower, ref int damage);
         private delegate void hook_MinePower(orig_MinePower orig, int minePower, ref int damage);
         private void MineDamage(orig_MinePower orig, int minePower, ref int damage) {
-	        ModTile modTile = MC.GetModTile(Main.tile[Player.tileTargetX, Player.tileTargetY].type);
+	        ModTile modTile = MC.GetModTile(Main.tile[Player.tileTargetX, Player.tileTargetY].TileType);
             if (modTile is null) {
                 damage += minePower;
             } else if(modTile is IComplexMineDamageTile damageTile){
@@ -519,7 +521,7 @@ namespace Origins {
         private void NPC_GetMeleeCollisionData(On.Terraria.NPC.orig_GetMeleeCollisionData orig, Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect) {
             NPC self = Main.npc[enemyIndex];
             MeleeCollisionNPCData.knockbackMult = 1f;
-            if(self.modNPC is IMeleeCollisionDataNPC meleeNPC) {
+            if(self.ModNPC is IMeleeCollisionDataNPC meleeNPC) {
                 meleeNPC.GetMeleeCollisionData(victimHitbox, enemyIndex, ref specialHitSetter, ref damageMultiplier, ref npcRect, ref MeleeCollisionNPCData.knockbackMult);
             } else {
                 orig(victimHitbox, enemyIndex, ref specialHitSetter, ref damageMultiplier, ref npcRect);
@@ -634,12 +636,12 @@ namespace Origins {
         }
         internal static short AddGlowMask(string name){
             if (Main.netMode!=NetmodeID.Server){
-                Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
-                for (int i = 0; i < Main.glowMaskTexture.Length; i++){
-                    glowMasks[i] = Main.glowMaskTexture[i];
+                Asset<Texture2D>[] glowMasks = new Asset<Texture2D>[TextureAssets.GlowMask.Length + 1];
+                for (int i = 0; i < TextureAssets.GlowMask.Length; i++){
+                    glowMasks[i] = TextureAssets.GlowMask[i];
                 }
                 glowMasks[glowMasks.Length - 1] = instance.GetTexture("Items/" + name);
-                Main.glowMaskTexture = glowMasks;
+                TextureAssets.GlowMask = glowMasks;
                 return (short)(glowMasks.Length - 1);
             }
             else return 0;
@@ -650,12 +652,12 @@ namespace Origins {
                 if (!ModContent.TextureExists(name)) {
                     return 0;
                 }
-                Texture2D[] glowMasks = new Texture2D[Main.glowMaskTexture.Length + 1];
-                for (int i = 0; i < Main.glowMaskTexture.Length; i++) {
-                    glowMasks[i] = Main.glowMaskTexture[i];
+                Texture2D[] glowMasks = new Texture2D[TextureAssets.GlowMask.Value.Length + 1];
+                for (int i = 0; i < TextureAssets.GlowMask.Value.Length; i++) {
+                    glowMasks[i] = TextureAssets.GlowMask[i].Value;
                 }
                 glowMasks[glowMasks.Length - 1] = ModContent.GetTexture(name);
-                Main.glowMaskTexture = glowMasks;
+                TextureAssets.GlowMask.Value = glowMasks;
                 return (short)(glowMasks.Length - 1);
             } else return 0;
         }
@@ -677,30 +679,33 @@ namespace Origins {
         public override void PostAddRecipes() {
             int l = Main.recipe.Length;
             Recipe r;
-            ModRecipe recipe;
+            Recipe recipe;
             int roseID = ModContent.ItemType<Wilting_Rose_Item>();
             for(int i = 0; i < l; i++) {
                 r = Main.recipe[i];
                 if(!r.requiredItem.ToList().Exists((ing)=>ing.type==ItemID.Deathweed)) {
                     continue;
                 }
-                recipe = r.Clone(this);
-                recipe.requiredItem = recipe.requiredItem.Select((it)=>it.type==ItemID.Deathweed?ItemFromType(roseID):it.CloneByID()).ToArray();
+                recipe = CloneRecipe(r);
+                recipe.requiredItem = recipe.requiredItem.Select((it)=>it.type==ItemID.Deathweed?ItemFromType(roseID):it.CloneByID()).ToList();
                 Logger.Info("adding procedural recipe: "+recipe.Stringify());
-                recipe.AddRecipe();
+                recipe.Create();
             }
         }
         internal static void AddHelmetGlowmask(int armorID, string texture) {
-            if (!instance.TextureExists(texture)) return;
-            HelmetGlowMasks.Add(armorID, instance.GetTexture(texture));
+            if (instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
+                HelmetGlowMasks.Add(armorID, asset);
+            }
         }
         internal static void AddBreastplateGlowmask(int armorID, string texture) {
-            if (!instance.TextureExists(texture)) return;
-            BreastplateGlowMasks.Add(armorID, instance.GetTexture(texture));
+            if (instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
+                BreastplateGlowMasks.Add(armorID, asset);
+            }
         }
         internal static void AddLeggingGlowMask(int armorID, string texture) {
-            if (!instance.TextureExists(texture)) return;
-            LeggingGlowMasks.Add(armorID, instance.GetTexture(texture));
+            if (instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
+                LeggingGlowMasks.Add(armorID, asset);
+            }
         }
         public static class Music {
             public static int Dusk = MusicID.Eerie;
@@ -714,7 +719,7 @@ namespace Origins {
         }
     }
     public sealed class NonFishItem : ModItem {
-        public override string Texture => "Terraria/Item_2290";
+        public override string Texture => "Terraria/Images/Item_2290";
         public static event Action ResizeItemArrays;
         public static event Action ResizeOtherArrays;
         public override bool IsQuestFish() {

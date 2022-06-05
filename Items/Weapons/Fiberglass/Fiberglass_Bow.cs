@@ -10,21 +10,21 @@ namespace Origins.Items.Weapons.Fiberglass {
 			Tooltip.SetDefault("Be careful, it's sharp");
 		}
 		public override void SetDefaults() {
-			item.damage = 17;
-			item.ranged = true;
-			item.width = 18;
-			item.height = 36;
-			item.useTime = 14;
-			item.useAnimation = 14;
-			item.useStyle = 5;
-			item.knockBack = 1;
-			item.value = 5000;
-			item.shootSpeed = 14;
-			item.autoReuse = true;
-            item.useAmmo = AmmoID.Arrow;
-            item.shoot = ProjectileID.WoodenArrowFriendly;
-			item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item5;
+			Item.damage = 17;
+			Item.ranged = true;
+			Item.width = 18;
+			Item.height = 36;
+			Item.useTime = 14;
+			Item.useAnimation = 14;
+			Item.useStyle = 5;
+			Item.knockBack = 1;
+			Item.value = 5000;
+			Item.shootSpeed = 14;
+			Item.autoReuse = true;
+            Item.useAmmo = AmmoID.Arrow;
+            Item.shoot = ProjectileID.WoodenArrowFriendly;
+			Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item5;
 		}
         public override Vector2? HoldoutOffset() {
             return new Vector2(-0.5f,0);

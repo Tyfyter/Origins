@@ -16,43 +16,43 @@ namespace Origins.Items.Weapons.Acid {
             glowmask = Origins.AddGlowMask(this);
         }
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.Grenade);
+            Item.CloneDefaults(ItemID.Grenade);
             //item.maxStack = 999;
-            item.damage = 30;
-			item.value*=14;
-            item.shoot = ModContent.ProjectileType<Acid_Grenade_P>();
-			item.shootSpeed*=1.5f;
-            item.knockBack = 5f;
-            item.ammo = ItemID.Grenade;
-			item.rare = ItemRarityID.Lime;
-            item.glowMask = glowmask;
+            Item.damage = 30;
+			Item.value*=14;
+            Item.shoot = ModContent.ProjectileType<Acid_Grenade_P>();
+			Item.shootSpeed*=1.5f;
+            Item.knockBack = 5f;
+            Item.ammo = ItemID.Grenade;
+			Item.rare = ItemRarityID.Lime;
+            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
-            Origins.AddExplosive(item);
+            Origins.AddExplosive(Item);
         }
     }
     public class Acid_Grenade_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Acid/Acid_Grenade";
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Grenade);
-            projectile.timeLeft = 135;
-            projectile.penetrate = 1;
+            Projectile.CloneDefaults(ProjectileID.Grenade);
+            Projectile.timeLeft = 135;
+            Projectile.penetrate = 1;
         }
         public override bool PreKill(int timeLeft) {
-            projectile.type = ProjectileID.Grenade;
+            Projectile.type = ProjectileID.Grenade;
             return true;
         }
         public override void Kill(int timeLeft) {
-			projectile.position.X += projectile.width / 2;
-			projectile.position.Y += projectile.height / 2;
-			projectile.width = 128;
-			projectile.height = 128;
-			projectile.position.X -= projectile.width / 2;
-			projectile.position.Y -= projectile.height / 2;
-			projectile.Damage();
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = 128;
+			Projectile.height = 128;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.Damage();
 			//Main.PlaySound(2, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 2f, 1f);
             int t = ModContent.ProjectileType<Acid_Shot>();
-            for(int i = Main.rand.Next(3); i < 6; i++)Projectile.NewProjectileDirect(projectile.Center, (Main.rand.NextVector2Unit()*4)+(projectile.velocity/8), t, projectile.damage/8, 6, projectile.owner, ai1:-0.5f).scale = 0.85f;
+            for(int i = Main.rand.Next(3); i < 6; i++)Projectile.NewProjectileDirect(Projectile.Center, (Main.rand.NextVector2Unit()*4)+(Projectile.velocity/8), t, Projectile.damage/8, 6, Projectile.owner, ai1:-0.5f).scale = 0.85f;
         }
     }
 }

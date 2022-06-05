@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,20 +13,20 @@ namespace Origins.Items.Weapons.Defiled {
             Tooltip.SetDefault("Very pointy for a book");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.CursedFlames);
-            item.damage = 50;
-            item.magic = true;
-            item.noMelee = true;
-            item.crit = 6;
-            item.width = 28;
-            item.height = 30;
-            item.useTime = 5;
-            item.useAnimation = 25;
-            item.knockBack = 5;
+            Item.CloneDefaults(ItemID.CursedFlames);
+            Item.damage = 50;
+            Item.magic = true;
+            Item.noMelee = true;
+            Item.crit = 6;
+            Item.width = 28;
+            Item.height = 30;
+            Item.useTime = 5;
+            Item.useAnimation = 25;
+            Item.knockBack = 5;
             //item.shootSpeed = 20f;
-            item.shoot = ModContent.ProjectileType<Dismay_Spike>();
-            item.shootSpeed *= 1.2f;
-            item.useTurn = false;
+            Item.shoot = ModContent.ProjectileType<Dismay_Spike>();
+            Item.shootSpeed *= 1.2f;
+            Item.useTurn = false;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             int n = (player.itemAnimationMax-player.itemAnimation)/player.itemTime+1;
@@ -39,55 +40,55 @@ namespace Origins.Items.Weapons.Defiled {
     public class Dismay_Spike : ModProjectile {
         public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
-            projectile.timeLeft = 25;
-			projectile.width = 18;
-			projectile.height = 18;
-            projectile.aiStyle = 0;
-            projectile.penetrate = -1;
-            projectile.tileCollide = false;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 25;
-            projectile.ownerHitCheck = true;
+            Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
+            Projectile.timeLeft = 25;
+			Projectile.width = 18;
+			Projectile.height = 18;
+            Projectile.aiStyle = 0;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 25;
+            Projectile.ownerHitCheck = true;
         }
         public float movementFactor{
-			get => projectile.ai[0];
-			set => projectile.ai[0] = value;
+			get => Projectile.ai[0];
+			set => Projectile.ai[0] = value;
 		}
         public override void AI() {
-			Player projOwner = Main.player[projectile.owner];
+			Player projOwner = Main.player[Projectile.owner];
 			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
-            projectile.direction = projOwner.direction;
-            projectile.spriteDirection = projOwner.direction;
-			projectile.position.X = ownerMountedCenter.X - (projectile.width / 2);
-			projectile.position.Y = ownerMountedCenter.Y - (projectile.height / 2);
+            Projectile.direction = projOwner.direction;
+            Projectile.spriteDirection = projOwner.direction;
+			Projectile.position.X = ownerMountedCenter.X - (Projectile.width / 2);
+			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (movementFactor == 0f){
                 movementFactor = 1f;
                 //if(projectile.timeLeft == 25)projectile.timeLeft = projOwner.itemAnimationMax-1;
-				projectile.netUpdate = true;
+				Projectile.netUpdate = true;
 			}
-			if (projectile.timeLeft > 17){
+			if (Projectile.timeLeft > 17){
 				movementFactor+=1f;
             }
-			projectile.position += projectile.velocity * movementFactor;
-			projectile.rotation = projectile.velocity.ToRotation();
-			projectile.rotation += MathHelper.PiOver2;
+			Projectile.position += Projectile.velocity * movementFactor;
+			Projectile.rotation = Projectile.velocity.ToRotation();
+			Projectile.rotation += MathHelper.PiOver2;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
-            float totalLength = projectile.velocity.Length() * movementFactor;
+        public override bool PreDraw(ref Color lightColor) {
+            float totalLength = Projectile.velocity.Length() * movementFactor;
             int avg = (lightColor.R + lightColor.G + lightColor.B)/3;
             lightColor = Color.Lerp(lightColor, new Color(avg, avg, avg), 0.5f);
-            spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center-Main.screenPosition, new Rectangle(0, 0, 18, System.Math.Min(58, (int)totalLength)), lightColor, projectile.rotation, new Vector2(9,0), projectile.scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center-Main.screenPosition, new Rectangle(0, 0, 18, System.Math.Min(58, (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9,0), Projectile.scale, SpriteEffects.None, 0);
             totalLength -= 58;
-            Vector2 offset = projectile.velocity.SafeNormalize(Vector2.Zero) * 58;
-            Texture2D texture = mod.GetTexture("Projectiles/Weapons/Dismay_Mid");
+            Vector2 offset = Projectile.velocity.SafeNormalize(Vector2.Zero) * 58;
+            Texture2D texture = Mod.GetTexture("Projectiles/Weapons/Dismay_Mid");
             int c = 0;
             Vector2 pos;
             for(int i = (int)totalLength; i > 0; i -= 58) {
                 c++;
-                pos = (projectile.Center - Main.screenPosition) - (offset * c);
+                pos = (Projectile.Center - Main.screenPosition) - (offset * c);
                 //lightColor = new Color(Lighting.GetSubLight(pos));//projectile.GetAlpha(new Color(Lighting.GetSubLight(pos)));
-                spriteBatch.Draw(texture, pos, new Rectangle(0, 0, 18, System.Math.Min(58, i)), lightColor, projectile.rotation, new Vector2(9,0), projectile.scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, pos, new Rectangle(0, 0, 18, System.Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9,0), Projectile.scale, SpriteEffects.None, 0);
             }
             return false;
         }

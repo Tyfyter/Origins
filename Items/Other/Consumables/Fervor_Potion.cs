@@ -15,18 +15,18 @@ namespace Origins.Items.Other.Consumables {
 			Tooltip.SetDefault("Increases attack speed by 10%");
 		}
 		public override void SetDefaults() {
-			item.CloneDefaults(ItemID.WrathPotion);
-			item.buffType = Fervor_Buff.ID;
+			Item.CloneDefaults(ItemID.WrathPotion);
+			Item.buffType = Fervor_Buff.ID;
 		}
 		public override void AddRecipes() {
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = Mod.CreateRecipe(Type);
 			recipe.AddIngredient(ItemID.BottledWater);
 			recipe.AddIngredient(ModContent.ItemType<Prikish>());
 			recipe.AddIngredient(ItemID.Deathweed);
 			recipe.AddTile(TileID.Bottles);
 			recipe.alchemy = true;
 			recipe.SetResult(this);
-			recipe.AddRecipe();
+			recipe.Register();
 		}
 	}
 }

@@ -17,52 +17,52 @@ namespace Origins.Items.Weapons.Other {
             glowmask = Origins.AddGlowMask(this);
         }
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.SniperRifle);
-            item.damage = 25;
-            item.crit = 11;
-            item.useAnimation = 43;
-            item.useTime = 43;
-            item.width = 78;
-            item.height = 34;
-            item.shoot = ModContent.ProjectileType<Dragons_Breath_P>();
-            item.shootSpeed = 2.5f;
-            item.knockBack = 2.5f;
-            item.useAmmo = AmmoID.None;
-            item.glowMask = glowmask;
+            Item.CloneDefaults(ItemID.SniperRifle);
+            Item.damage = 25;
+            Item.crit = 11;
+            Item.useAnimation = 43;
+            Item.useTime = 43;
+            Item.width = 78;
+            Item.height = 34;
+            Item.shoot = ModContent.ProjectileType<Dragons_Breath_P>();
+            Item.shootSpeed = 2.5f;
+            Item.knockBack = 2.5f;
+            Item.useAmmo = AmmoID.None;
+            Item.glowMask = glowmask;
         }
         public override Vector2? HoldoutOffset() {
             return new Vector2(-8,2);
         }
     }
     public class Dragons_Breath_P : ModProjectile {
-        public override string Texture => "Terraria/Item_37";
+        public override string Texture => "Terraria/Images/Item_37";
         List<Particle> particles;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dragon's Breath");
-            Origins.ExplosiveProjectiles[projectile.type] = true;
+            Origins.ExplosiveProjectiles[Projectile.type] = true;
         }
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
-            projectile.aiStyle = 0;
-            projectile.ignoreWater = false;
-            projectile.extraUpdates = 0;
-            projectile.penetrate = -1;
-            projectile.width = 4;
-            projectile.height = 4;
-            projectile.timeLeft = 400;
+            Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
+            Projectile.aiStyle = 0;
+            Projectile.ignoreWater = false;
+            Projectile.extraUpdates = 0;
+            Projectile.penetrate = -1;
+            Projectile.width = 4;
+            Projectile.height = 4;
+            Projectile.timeLeft = 400;
             particles = new List<Particle>{};
         }
         public override void AI() {
             //projectile.ignoreWater = true;
-            if(projectile.timeLeft%12==0) {
+            if(Projectile.timeLeft%12==0) {
                 float n = Main.rand.Next(4)*MathHelper.PiOver2;
-                particles.Add(new Particle(new PolarVec2(0, projectile.velocity.ToRotation()+n), projectile.timeLeft%60==0?1:-1));
+                particles.Add(new Particle(new PolarVec2(0, Projectile.velocity.ToRotation()+n), Projectile.timeLeft%60==0?1:-1));
             }
-            if(projectile.timeLeft < 12 && particles.Count>0)projectile.timeLeft = 11;
-            Vector2 center = projectile.Center;
-            projectile.oldPosition = center;
-            if(projectile.timeLeft > 12) {
-                Dust.NewDustPerfect(center, 6, Vector2.Zero, Scale: projectile.timeLeft > 72 ? 2 : (projectile.timeLeft / 36f)).noGravity = true;
+            if(Projectile.timeLeft < 12 && particles.Count>0)Projectile.timeLeft = 11;
+            Vector2 center = Projectile.Center;
+            Projectile.oldPosition = center;
+            if(Projectile.timeLeft > 12) {
+                Dust.NewDustPerfect(center, 6, Vector2.Zero, Scale: Projectile.timeLeft > 72 ? 2 : (Projectile.timeLeft / 36f)).noGravity = true;
             }
 
             Stack<int> dead = new Stack<int>();
@@ -75,9 +75,9 @@ namespace Origins.Items.Weapons.Other {
                 count -= 2;
                 lowParticleCount = projectile.timeLeft > 12;
             }*/
-            if(Main.player[projectile.owner].ownedProjectileCounts[projectile.type]>3)lowParticleCount = true;
-            for(projectile.frameCounter = 0; projectile.frameCounter < particles.Count; projectile.frameCounter++) {
-                particle = particles[projectile.frameCounter];
+            if(Main.player[Projectile.owner].ownedProjectileCounts[Projectile.type]>3)lowParticleCount = true;
+            for(Projectile.frameCounter = 0; Projectile.frameCounter < particles.Count; Projectile.frameCounter++) {
+                particle = particles[Projectile.frameCounter];
                 sign = particle.Age > 0 ? 1 : -1;
                 age = particle.Age * sign;
                 if(age < 30) {
@@ -85,48 +85,48 @@ namespace Origins.Items.Weapons.Other {
                 } else {
                     particle.Pos.R -= 0.1f;
                     if(particle.Pos.R<=0) {
-                        dead.Push(projectile.frameCounter);
+                        dead.Push(Projectile.frameCounter);
                         continue;
                     }
                 }
-                projectile.Center = center + (Vector2)particle.Pos;
-                projectile.Damage();
-                if(!lowParticleCount||((projectile.frameCounter+projectile.timeLeft)%3!=0))Dust.NewDustPerfect(center+(Vector2)particle.Pos, 6, Vector2.Zero).noGravity = true;
+                Projectile.Center = center + (Vector2)particle.Pos;
+                Projectile.Damage();
+                if(!lowParticleCount||((Projectile.frameCounter+Projectile.timeLeft)%3!=0))Dust.NewDustPerfect(center+(Vector2)particle.Pos, 6, Vector2.Zero).noGravity = true;
                 particle.Age += sign;
                 particle.Pos.Theta += sign * 0.1f - ((50 - particle.Pos.R)/250);
             }
             while(dead.Count>0)particles.RemoveAt(dead.Pop());
-            projectile.frameCounter = 0;
+            Projectile.frameCounter = 0;
 
-            projectile.Center = center;
+            Projectile.Center = center;
             //projectile.ignoreWater = false;
-	        Lighting.AddLight(projectile.Center, 0.5f, 0.25f, 0.05f);
+	        Lighting.AddLight(Projectile.Center, 0.5f, 0.25f, 0.05f);
         }
         public override bool OnTileCollide(Vector2 oldVelocity) {
-            projectile.tileCollide = false;
-            projectile.velocity = Vector2.Zero;
-            projectile.timeLeft /= 2;
+            Projectile.tileCollide = false;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.timeLeft /= 2;
             return false;
         }
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            projectile.frame = 0;
-            if(projectile.velocity==Vector2.Zero)hitDirection = target.Center.X > projectile.Center.X?-1:1;
+            Projectile.frame = 0;
+            if(Projectile.velocity==Vector2.Zero)hitDirection = target.Center.X > Projectile.Center.X?-1:1;
             else {
-                Vector2 diff = (target.Center - (projectile.Center + projectile.velocity*2)).SafeNormalize(default);
-                float dot = Vector2.Dot(diff, Vector2.Normalize(projectile.velocity));
+                Vector2 diff = (target.Center - (Projectile.Center + Projectile.velocity*2)).SafeNormalize(default);
+                float dot = Vector2.Dot(diff, Vector2.Normalize(Projectile.velocity));
                 if(dot<0) {
-                    projectile.frame = 1;
+                    Projectile.frame = 1;
                     target.oldVelocity = target.velocity;
                 }
             }
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            bool centered = target.Hitbox.Contains(projectile.oldPosition.ToPoint());
+            bool centered = target.Hitbox.Contains(Projectile.oldPosition.ToPoint());
             target.AddBuff(BuffID.Daybreak, centered?30:5);
-			target.immune[projectile.owner] = 12;
-            if(projectile.timeLeft < 12 || centered)projectile.velocity*=0.95f;
-            if(projectile.frame == 1) {
-                PolarVec2 vel = particles[projectile.frameCounter].Pos;
+			target.immune[Projectile.owner] = 12;
+            if(Projectile.timeLeft < 12 || centered)Projectile.velocity*=0.95f;
+            if(Projectile.frame == 1) {
+                PolarVec2 vel = particles[Projectile.frameCounter].Pos;
                 vel.R = knockback*-1.5f;
                 if(crit)vel.R *= 2;
                 target.velocity = Vector2.Lerp(target.velocity, (Vector2)vel, target.knockBackResist);

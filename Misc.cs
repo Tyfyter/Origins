@@ -6,7 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 using SysDraw = System.Drawing;
 using Bitmap = System.Drawing.Bitmap;
@@ -23,6 +25,7 @@ using System.IO;
 using Terraria.ModLoader.IO;
 using Tyfyter.Utils;
 using Origins.Tiles;
+using ReLogic.Content;
 
 namespace Origins {
     public class LinkedQueue<T> : ICollection<T> {
@@ -224,22 +227,35 @@ namespace Origins {
 
 	    public override void Update() {}
 
-	    public override Rectangle GetFrame(Texture2D texture) {
+	    public override Rectangle GetFrame(Texture2D texture, int frameCounterOverride = -1) {
             if(TicksPerFrame==-1)FrameCounter = 0;
+			if (frameCounterOverride != -1) {
+                return texture.Frame(FrameCount, 1, (frameCounterOverride / TicksPerFrame)%FrameCount, 0);
+			}
 		    return texture.Frame(FrameCount, 1, Frame, 0);
 	    }
     }
-    public abstract class IAnimatedItem : ModItem{
+    public struct AutoCastingAsset<T> where T : class {
+        public T Value => asset.Value;
+
+        readonly Asset<T> asset;
+        AutoCastingAsset(Asset<T> asset) {
+            this.asset = asset;
+        }
+        public static implicit operator AutoCastingAsset<T>(Asset<T> asset) => new(asset);
+        public static implicit operator T(AutoCastingAsset<T> asset) => asset.Value;
+    }
+    public abstract class AnimatedModItem : ModItem {
         public abstract DrawAnimation Animation { get; }
         public virtual Color? GlowmaskTint { get => null; }
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-            Texture2D texture = Main.itemTexture[item.type];
-            spriteBatch.Draw(texture, item.position-Main.screenPosition, Animation.GetFrame(texture), lightColor, 0f, default(Vector2), scale, SpriteEffects.None, 0f);
+            Texture2D texture = TextureAssets.Item[Item.type].Value;
+            spriteBatch.Draw(texture, Item.position-Main.screenPosition, Animation.GetFrame(texture), lightColor, 0f, default(Vector2), scale, SpriteEffects.None, 0f);
             return false;
         }
     }
     public interface ICustomDrawItem {
-        void DrawInHand(Texture2D itemTexture, PlayerDrawInfo drawInfo, Vector2 itemCenter, Vector4 lightColor, Vector2 drawOrigin);
+        void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin);
     }
     public interface ITileCollideNPC {
         int CollisionType { get; }
@@ -825,10 +841,34 @@ namespace Origins {
     }
     public static class OriginExtensions {
         public static Func<float, int, Vector2> drawPlayerItemPos;
+        public static SoundStyle WithPitch(this SoundStyle soundStyle, float pitch) {
+            soundStyle.Pitch = pitch;
+            return soundStyle;
+        }
+        public static SoundStyle WithPitchVarience(this SoundStyle soundStyle, float pitchVarience) {
+            soundStyle.PitchVariance = pitchVarience;
+            return soundStyle;
+        }
+        public static SoundStyle WithPitchRange(this SoundStyle soundStyle, float min, float max) {
+            soundStyle.PitchRange = (min, max);
+            return soundStyle;
+        }
+        public static SoundStyle WithVolume(this SoundStyle soundStyle, float volume) {
+            soundStyle.Volume = volume;
+            return soundStyle;
+        }
+        public static StatModifier MultiplyBonuses(this StatModifier statModifier, float factor) {
+            return new StatModifier(
+                (statModifier.Additive - 1) * factor + 1,
+                (statModifier.Multiplicative - 1) * factor + 1,
+                statModifier.Flat * factor,
+                statModifier.Base * factor
+            );
+		}
         public static void PlaySound(string Name, Vector2 Position, float Volume = 1f, float PitchVariance = 1f, float? Pitch = null){
             if (Main.netMode==NetmodeID.Server || string.IsNullOrEmpty(Name)) return;
             var sound = Origins.instance.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/" + Name);
-            SoundEffectInstance SEI = Main.PlaySound(sound.WithVolume(Volume).WithPitchVariance(PitchVariance), Position);
+            SoundEffectInstance SEI = SoundEngine.PlaySound(sound.WithVolume(Volume).WithPitchVariance(PitchVariance), Position);
             if(Pitch.HasValue)SEI.Pitch = Pitch.Value;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1107,34 +1147,10 @@ namespace Origins {
             SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).Clone(), BindingFlags.NonPublic, null, null);
             return o;
         }
-        public static ModRecipe Clone(this Recipe r, Mod mod) {
-            ModRecipe o = new ModRecipe(mod);
-
-            o.createItem = new Item();
-            o.createItem.SetDefaults(r.createItem.type);
-            o.requiredItem = r.requiredItem.Select(CloneByID).ToArray();
-            o.requiredTile = r.requiredTile.ToArray();
-            o.acceptedGroups = r.acceptedGroups.ToList();
-
-            o.anyFragment = r.anyFragment;
-            o.anyIronBar = r.anyIronBar;
-            o.anyPressurePlate = r.anyPressurePlate;
-            o.anySand = r.anySand;
-            o.anyWood = r.anyWood;
-
-            o.alchemy = r.alchemy;
-
-            o.needWater = r.needWater;
-            o.needLava = r.needLava;
-            o.needHoney = r.needHoney;
-            o.needSnowBiome = r.needSnowBiome;
-
-            return o;
-        }
         public static string Stringify(this Recipe r) {
             ItemID.Search.TryGetName(r.createItem.type, out string resultName);
             return $"result: {resultName} " +
-                $"alchemy: {r.alchemy} " +
+                //$"alchemy: {r.alchemy} " +
                 $"required Items: {string.Join(", ",r.requiredItem.Select((i) => { ItemID.Search.TryGetName(i.type, out string name); return name; }))} " +
                 $"required Tiles: {string.Join(", ",r.requiredTile.Select((i) => { TileID.Search.TryGetName(i, out string name); return name; }))}";
         }
@@ -1178,7 +1194,7 @@ namespace Origins {
             if (!canBeHitByItem) {
 	            return false;
             }
-            bool playerCanHitNPC = PlayerHooks.CanHitNPC(player, item, npc)??true;
+            bool playerCanHitNPC = PlayerLoader.CanHitNPC(player, item, npc)??true;
             if (!playerCanHitNPC) {
 	            return false;
             }
@@ -1319,13 +1335,13 @@ namespace Origins {
             if (Main.drawToScreen) {
                 vector = Vector2.Zero;
             }
-            spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.frameX, tile.frameY, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
         }
         /// <summary>
         /// checks if a tile is active and is the provided type
         /// </summary>
         public static bool TileIsType(this Tile self, int type) {
-            return self.active() && self.type == type;
+            return self.HasTile && self.TileType == type;
         }
         public static Point OffsetBy(this Point self, int x = 0, int y = 0) {
             return new Point(self.X + x, self.Y + y);

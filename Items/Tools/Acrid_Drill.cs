@@ -12,16 +12,16 @@ namespace Origins.Items.Tools {
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.TitaniumDrill);
-			item.damage = 28;
-            item.pick = 195;
-			item.width = 34;
-			item.height = 32;
-			item.knockBack*=2f;
-            item.shootSpeed = 56f;
-            item.shoot = ModContent.ProjectileType<Acrid_Drill_P>();
-			item.value = 3600;
-			item.rare = ItemRarityID.LightRed;
+            Item.CloneDefaults(ItemID.TitaniumDrill);
+			Item.damage = 28;
+            Item.pick = 195;
+			Item.width = 34;
+			Item.height = 32;
+			Item.knockBack*=2f;
+            Item.shootSpeed = 56f;
+            Item.shoot = ModContent.ProjectileType<Acrid_Drill_P>();
+			Item.value = 3600;
+			Item.rare = ItemRarityID.LightRed;
 		}
         public override float UseTimeMultiplier(Player player) {
             return player.wet?1.5f:1;
@@ -30,17 +30,17 @@ namespace Origins.Items.Tools {
     public class Acrid_Drill_P : ModProjectile {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Drill");
-			Main.projFrames[projectile.type] = 2;
+			Main.projFrames[Projectile.type] = 2;
 		}
 		public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.TitaniumDrill);
+            Projectile.CloneDefaults(ProjectileID.TitaniumDrill);
 		}
         public override void AI() {
-            if(Main.player[projectile.owner].wet)++projectile.frameCounter;
-			if (++projectile.frameCounter > 4) {
-				projectile.frameCounter = 0;
-				if (++projectile.frame > 1) {
-					projectile.frame = 0;
+            if(Main.player[Projectile.owner].wet)++Projectile.frameCounter;
+			if (++Projectile.frameCounter > 4) {
+				Projectile.frameCounter = 0;
+				if (++Projectile.frame > 1) {
+					Projectile.frame = 0;
 				}
 			}
         }

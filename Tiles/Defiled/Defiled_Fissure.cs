@@ -18,7 +18,7 @@ using static Origins.OriginExtensions;
 namespace Origins.Tiles.Defiled {
     public class Defiled_Fissure : ModTile {
         public static int ID { get; private set; }
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
             Main.tileHammer[Type] = true;
@@ -66,17 +66,17 @@ namespace Origins.Tiles.Defiled {
         }
 
         public override void SetDefaults() {
-            item.width = 26;
-            item.height = 22;
-            item.maxStack = 99;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.useAnimation = 15;
-            item.useTime = 10;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.consumable = true;
-            item.value = 500;
-            item.createTile = ModContent.TileType<Defiled_Fissure>();
+            Item.width = 26;
+            Item.height = 22;
+            Item.maxStack = 99;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
+            Item.value = 500;
+            Item.createTile = ModContent.TileType<Defiled_Fissure>();
         }
     }
 }

@@ -14,15 +14,15 @@ namespace Origins.NPCs.Riven {
     public class Splitooth : ModNPC, ISandsharkNPC {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Splitooth");
-            Main.npcFrameCount[npc.type] = 4;
+            Main.npcFrameCount[NPC.type] = 4;
         }
         public override void SetDefaults() {
-            npc.CloneDefaults(NPCID.SandsharkCrimson);
-            npc.width = 96;
-            npc.lifeMax = 380;
-            npc.defense = 20;
-            npc.damage = 70;
-            npc.gfxOffY = 10f;
+            NPC.CloneDefaults(NPCID.SandsharkCrimson);
+            NPC.width = 96;
+            NPC.lifeMax = 380;
+            NPC.defense = 20;
+            NPC.damage = 70;
+            NPC.gfxOffY = 10f;
         }
         public void PreUpdateCollision() {
             TileID.Sets.ForAdvancedCollision.ForSandshark[ModContent.TileType<Weak_Riven_Flesh>()] = true;
@@ -42,12 +42,12 @@ namespace Origins.NPCs.Riven {
             TileID.Sets.Conversion.Sand[ModContent.TileType<Riven_Flesh>()] = false;
         }
         public override void FindFrame(int frameHeight) {
-		    npc.spriteDirection = npc.direction;
-		    npc.frameCounter += 1.0;
-		    if (npc.frameCounter >= 20.0){
-			    npc.frameCounter = 0.0;
+		    NPC.spriteDirection = NPC.direction;
+		    NPC.frameCounter += 1.0;
+		    if (NPC.frameCounter >= 20.0){
+			    NPC.frameCounter = 0.0;
 		    }
-		    npc.frame.Y = 38 * (int)(npc.frameCounter / 5.0);
+		    NPC.frame.Y = 38 * (int)(NPC.frameCounter / 5.0);
         }
 
         /*public override void HitEffect(int hitDirection, double damage) {

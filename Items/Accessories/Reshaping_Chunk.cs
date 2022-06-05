@@ -14,12 +14,12 @@ namespace Origins.Items.Accessories {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Reshaping Chunk");
             Tooltip.SetDefault("Strengthens the set bonus of Defiled Armor\nReduces damage taken by 5% if Defiled Armor is not equipped");
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(9, 3));
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(9, 3));
         }
         public override void SetDefaults() {
-            item.accessory = true;
-            item.width = 22;
-            item.height = 20;
+            Item.accessory = true;
+            Item.width = 22;
+            Item.height = 20;
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().reshapingChunk = true;

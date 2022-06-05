@@ -16,13 +16,13 @@ namespace Origins.Items.Weapons.Other {
             Tooltip.SetDefault("Crude and dangerous");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.Gatligator);
-            item.damage = 39;
-            item.useAnimation = item.useTime = 10;
-            item.shootSpeed*=2;
-            item.width = 106;
-            item.height = 32;
-            item.scale = 0.7f;
+            Item.CloneDefaults(ItemID.Gatligator);
+            Item.damage = 39;
+            Item.useAnimation = Item.useTime = 10;
+            Item.shootSpeed*=2;
+            Item.width = 106;
+            Item.height = 32;
+            Item.scale = 0.7f;
         }
         public override Vector2? HoldoutOffset() => new Vector2(-18, 0);
     }

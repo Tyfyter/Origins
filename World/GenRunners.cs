@@ -81,43 +81,43 @@ namespace Origins.World {
 				        if (!((Math.Abs(k - vector.X) + Math.Abs(l - vector.Y)) < strength * 0.5)){
 					        continue;
 				        }
-                        if(Main.tile[k, l].type == TileID.Pots) {
-                            Main.tile[k, l].type = 0;
-                            Main.tile[k, l].active(false);
+                        if(Main.tile[k, l].TileType == TileID.Pots) {
+                            Main.tile[k, l].TileType = 0;
+                            Main.tile[k, l].HasTile = false;
                             continue;
                         }
-                        if(Main.tile[k, l].type == type) {
+                        if(Main.tile[k, l].TileType == type) {
                             continue;
                         }
                         if(Main.tile[k, l].liquid != 0) {
 					        Tile tile = Main.tile[k, l];
-						    tile.type = (ushort)type;
-					        tile.active(active: true);
+						    tile.TileType = (ushort)type;
+					        tile.HasTile = true;
 					        tile.liquid = 0;
-					        tile.lava(lava: false);
+					        tile.lava/* Suggestion: LiquidType = ... */(lava: false);
                             //WorldGen.paintTile(k, l, 29);
-                            Main.tile[k+1, l].slope(0);
-                            Main.tile[k-1, l].slope(0);
-        if(l<Main.maxTilesY)Main.tile[k, l+1].slope(0);
-                            Main.tile[k, l-1].slope(0);
+                            Main.tile[k+1, l].Slope = 0;
+                            Main.tile[k-1, l].Slope = 0;
+        if(l<Main.maxTilesY)Main.tile[k, l+1].Slope = 0;
+                            Main.tile[k, l-1].Slope = 0;
                             if(Main.tile[k, l-1].liquid != 0)continue;
                             spike = new Point(k,l);
                             continue;
                         }
-				        if ((Main.tile[k, l].active()) || Main.tile[k, l].wall == WallID.ObsidianBrickUnsafe || Main.tile[k, l].wall == WallID.HellstoneBrickUnsafe) {
+				        if ((Main.tile[k, l].HasTile) || Main.tile[k, l].WallType == WallID.ObsidianBrickUnsafe || Main.tile[k, l].WallType == WallID.HellstoneBrickUnsafe) {
 					        Tile tile = Main.tile[k, l];
-					        if (TileID.Sets.CanBeClearedDuringGeneration[tile.type]) {
-                                if(tile.type == TileID.ObsidianBrick || tile.type == TileID.HellstoneBrick || tile.wall != 0 || (!Main.tileSolid[tile.type] && tile.type != TileID.Containers && tile.type != TileID.Containers2)) {
-                                    tile.wall = 0;
-                                    bool tileleft = Main.tile[k-1, l].type==type&&Main.tile[k-1, l].active();
-                                    if(!tileleft && Main.tile[k, l-1].type != TileID.Containers && Main.tile[k, l-1].type != TileID.Containers2) {
-                                        tile.type = 0;
-                                        tile.active(false);
+					        if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
+                                if(tile.TileType == TileID.ObsidianBrick || tile.TileType == TileID.HellstoneBrick || tile.WallType != 0 || (!Main.tileSolid[tile.TileType] && tile.TileType != TileID.Containers && tile.TileType != TileID.Containers2)) {
+                                    tile.WallType = 0;
+                                    bool tileleft = Main.tile[k-1, l].TileType==type&&Main.tile[k-1, l].HasTile;
+                                    if(!tileleft && Main.tile[k, l-1].TileType != TileID.Containers && Main.tile[k, l-1].TileType != TileID.Containers2) {
+                                        tile.TileType = 0;
+                                        tile.HasTile = false;
                                         continue;
                                     }
                                 }
-						        tile.type = (ushort)type;
-					            tile.active(active: true);
+						        tile.TileType = (ushort)type;
+					            tile.HasTile = true;
 					            //tile.liquid = 0;
 					            //tile.lava(lava: false);
                                 //WorldGen.paintTile(k, l, 29);
@@ -282,11 +282,11 @@ namespace Origins.World {
 					        continue;
 				        }
 					    tile = Main.tile[l, k];
-					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.type]) {
-							tile.type = (ushort)type;
-					        Main.tile[l, k].active(active: true);
+					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
+							tile.TileType = (ushort)type;
+					        Main.tile[l, k].HasTile = true;
 					        Main.tile[l, k].liquid = 0;
-					        Main.tile[l, k].lava(lava: false);
+					        Main.tile[l, k].lava/* Suggestion: LiquidType = ... */(lava: false);
                             WorldGen.SquareTileFrame(l,k);
                             if(l>X1) {
                                 X1 = l;
@@ -356,8 +356,8 @@ namespace Origins.World {
 					        continue;
 				        }
 					    tile = Main.tile[l, k];
-					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.type]){
-					        Main.tile[l, k].active(active: false);
+					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]){
+					        Main.tile[l, k].HasTile = false;
                             //WorldGen.SquareTileFrame(l,k);
                             if(l>X1) {
                                 X1 = l;
@@ -425,21 +425,21 @@ namespace Origins.World {
 						tile = Main.tile[l, k];
 						if (dist > strength) {
 							double d = Math.Sqrt(dist);
-							if (d < baseStrength + wallThickness && TileID.Sets.CanBeClearedDuringGeneration[tile.type] && tile.wall != _wallType) {
-								tile.active(active: true);
+							if (d < baseStrength + wallThickness && TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && tile.WallType != _wallType) {
+								tile.HasTile = true;
 								tile.ResetToType(wallBlockType);
 								//WorldGen.SquareTileFrame(l, k);
 								if (hasWall) {
-									tile.wall = _wallType;
+									tile.WallType = _wallType;
 								}
 							}
 							continue;
 						}
-						if (TileID.Sets.CanBeClearedDuringGeneration[tile.type]) {
-							Main.tile[l, k].active(active: false);
+						if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
+							Main.tile[l, k].HasTile = false;
 							//WorldGen.SquareTileFrame(l, k);
 							if (hasWall) {
-								tile.wall = _wallType;
+								tile.WallType = _wallType;
 							}
 							if (l > X1) {
 								X1 = l;
@@ -519,10 +519,10 @@ namespace Origins.World {
 							continue;
 						}
 						Tile tile = Main.tile[k, l];
-						if (tile.type==TileID.Cloud||tile.type==TileID.Dirt||tile.type==TileID.Grass||tile.type==TileID.Stone||tile.type==TileID.RainCloud||tile.type==TileID.Stone) {
-							tile.type = (ushort)type;
-                            if(!tile.active()&&OriginWorld.GetAdjTileCount(k,l)>3) {
-                                tile.active(true);
+						if (tile.TileType==TileID.Cloud||tile.TileType==TileID.Dirt||tile.TileType==TileID.Grass||tile.TileType==TileID.Stone||tile.TileType==TileID.RainCloud||tile.TileType==TileID.Stone) {
+							tile.TileType = (ushort)type;
+                            if(!tile.HasTile&&OriginWorld.GetAdjTileCount(k,l)>3) {
+                                tile.HasTile = true;
                             }
                             SquareTileFrame(k,l);
 					        if (Main.netMode == NetmodeID.Server) {
@@ -552,34 +552,34 @@ namespace Origins.World {
             byte adj = 0;
 			Tile tile = Main.tile[i, j];
             if(resetSlope) {
-                tile.halfBrick(false);
-                tile.slope(SlopeID.None);
+                tile.IsHalfBlock = false;
+                tile.Slope = SlopeID.None;
             }
-            if(Main.tile[i-1, j-1].active())adj|=tl;
-            if(Main.tile[i, j-1].active())  adj|=t;
-            if(Main.tile[i+1, j-1].active())adj|=tr;
-            if(Main.tile[i-1, j].active())  adj|=l;
-            if(Main.tile[i+1, j].active())  adj|=r;
-            if(Main.tile[i-1, j+1].active())adj|=bl;
-            if(Main.tile[i, j+1].active())  adj|=b;
-            if(Main.tile[i+1, j+1].active())adj|=br;
+            if(Main.tile[i-1, j-1].HasTile)adj|=tl;
+            if(Main.tile[i, j-1].HasTile)  adj|=t;
+            if(Main.tile[i+1, j-1].HasTile)adj|=tr;
+            if(Main.tile[i-1, j].HasTile)  adj|=l;
+            if(Main.tile[i+1, j].HasTile)  adj|=r;
+            if(Main.tile[i-1, j+1].HasTile)adj|=bl;
+            if(Main.tile[i, j+1].HasTile)  adj|=b;
+            if(Main.tile[i+1, j+1].HasTile)adj|=br;
             bool sloped = true;
             retry:
             switch(adj) {
                 case bl|b|br:
-                tile.halfBrick(true);
+                tile.IsHalfBlock = true;
                 break;
                 case t|l:
-                tile.slope(SlopeID.TopLeft);
+                tile.Slope = SlopeID.TopLeft;
                 break;
                 case t|r:
-                tile.slope(SlopeID.TopRight);
+                tile.Slope = SlopeID.TopRight;
                 break;
                 case b|l:
-                tile.slope(SlopeID.BottomLeft);
+                tile.Slope = SlopeID.BottomLeft;
                 break;
                 case b|r:
-                tile.slope(SlopeID.BottomRight);
+                tile.Slope = SlopeID.BottomRight;
                 break;
                 default:
                 if(sloped) {
@@ -593,57 +593,57 @@ namespace Origins.World {
         public static void AutoSlopeForSpike(int i, int j) {
             byte adj = 0;
 			Tile tile = Main.tile[i, j];
-            tile.halfBrick(false);
-            tile.slope(SlopeID.None);
-            if(Main.tile[i-1, j-1].active())adj|=tl;
-            if(Main.tile[i, j-1].active())  adj|=t;
-            if(Main.tile[i+1, j-1].active())adj|=tr;
-            if(Main.tile[i-1, j].active())  adj|=l;
-            if(Main.tile[i+1, j].active())  adj|=r;
-            if(Main.tile[i-1, j+1].active())adj|=bl;
-            if(Main.tile[i, j+1].active())  adj|=b;
-            if(Main.tile[i+1, j+1].active())adj|=br;
+            tile.IsHalfBlock = false;
+            tile.Slope = SlopeID.None;
+            if(Main.tile[i-1, j-1].HasTile)adj|=tl;
+            if(Main.tile[i, j-1].HasTile)  adj|=t;
+            if(Main.tile[i+1, j-1].HasTile)adj|=tr;
+            if(Main.tile[i-1, j].HasTile)  adj|=l;
+            if(Main.tile[i+1, j].HasTile)  adj|=r;
+            if(Main.tile[i-1, j+1].HasTile)adj|=bl;
+            if(Main.tile[i, j+1].HasTile)  adj|=b;
+            if(Main.tile[i+1, j+1].HasTile)adj|=br;
             bool sloped = true;
             retry:
             switch(adj) {
                 case bl|b|br:
-                tile.halfBrick(true);
+                tile.IsHalfBlock = true;
                 break;
                 case t|l:
-                tile.slope(SlopeID.TopLeft);
+                tile.Slope = SlopeID.TopLeft;
                 break;
                 case t|r:
-                tile.slope(SlopeID.TopRight);
+                tile.Slope = SlopeID.TopRight;
                 break;
                 case b|l:
-                tile.slope(SlopeID.BottomLeft);
+                tile.Slope = SlopeID.BottomLeft;
                 break;
                 case b|r:
-                tile.slope(SlopeID.BottomRight);
+                tile.Slope = SlopeID.BottomRight;
                 break;
                 case b|bl:
-                tile.slope(SlopeID.BottomRight);
+                tile.Slope = SlopeID.BottomRight;
                 break;
                 case b|br:
-                tile.slope(SlopeID.BottomLeft);
+                tile.Slope = SlopeID.BottomLeft;
                 break;
                 case t|tl:
-                tile.slope(SlopeID.TopRight);
+                tile.Slope = SlopeID.TopRight;
                 break;
                 case t|tr:
-                tile.slope(SlopeID.TopLeft);
+                tile.Slope = SlopeID.TopLeft;
                 break;
                 case l|tl:
-                tile.slope(SlopeID.BottomLeft);
+                tile.Slope = SlopeID.BottomLeft;
                 break;
                 case l|bl:
-                tile.slope(SlopeID.TopLeft);
+                tile.Slope = SlopeID.TopLeft;
                 break;
                 case r|tr:
-                tile.slope(SlopeID.BottomRight);
+                tile.Slope = SlopeID.BottomRight;
                 break;
                 case r|br:
-                tile.slope(SlopeID.BottomLeft);
+                tile.Slope = SlopeID.BottomLeft;
                 break;
                 default:
                 if(sloped) {

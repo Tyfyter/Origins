@@ -8,50 +8,50 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Dynamite");
 			Tooltip.SetDefault("Be careful, it's not book");
-            Origins.ExplosiveItems[item.type] = true;
+            Origins.ExplosiveItems[Item.type] = true;
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.Dynamite);
-            item.damage = 78;
-			item.value*=2;
-			item.useTime = (int)(item.useTime*0.75);
-			item.useAnimation = (int)(item.useAnimation*0.75);
-            item.shoot = ModContent.ProjectileType<Impact_Dynamite_P>();
-			item.shootSpeed*=1.75f;
-            item.knockBack = 16f;
-			item.rare = ItemRarityID.Green;
+            Item.CloneDefaults(ItemID.Dynamite);
+            Item.damage = 78;
+			Item.value*=2;
+			Item.useTime = (int)(Item.useTime*0.75);
+			Item.useAnimation = (int)(Item.useAnimation*0.75);
+            Item.shoot = ModContent.ProjectileType<Impact_Dynamite_P>();
+			Item.shootSpeed*=1.75f;
+            Item.knockBack = 16f;
+			Item.rare = ItemRarityID.Green;
 		}
     }
     public class Impact_Dynamite_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Dynamite";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Dynamite");
-            Origins.ExplosiveProjectiles[projectile.type] = true;
+            Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Dynamite);
-            projectile.penetrate = 1;
-            projectile.timeLeft = 225;
+            Projectile.CloneDefaults(ProjectileID.Dynamite);
+            Projectile.penetrate = 1;
+            Projectile.timeLeft = 225;
         }
         public override void AI() {
-            if(projectile.timeLeft<150 && Main.rand.Next(0, projectile.timeLeft) <= 1) projectile.Kill();
+            if(Projectile.timeLeft<150 && Main.rand.Next(0, Projectile.timeLeft) <= 1) Projectile.Kill();
         }
         public override bool OnTileCollide(Vector2 oldVelocity) {
-            projectile.Kill();
+            Projectile.Kill();
             return false;
         }
         public override bool PreKill(int timeLeft) {
-            projectile.type = ProjectileID.Dynamite;
+            Projectile.type = ProjectileID.Dynamite;
             return true;
         }
         public override void Kill(int timeLeft) {
-			projectile.position.X += projectile.width / 2;
-			projectile.position.Y += projectile.height / 2;
-			projectile.width = 200;
-			projectile.height = 200;
-			projectile.position.X -= projectile.width / 2;
-			projectile.position.Y -= projectile.height / 2;
-			projectile.Damage();
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = 200;
+			Projectile.height = 200;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.Damage();
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Origins.Items.Armor.Acrid{
 			Tooltip.SetDefault("Emits light when worn");
 		}
         public override void SetDefaults() {
-            item.defense = 10;
+            Item.defense = 10;
         }
         public override void UpdateEquip(Player player) {
             if(player.wet){
@@ -39,7 +39,7 @@ namespace Origins.Items.Armor.Acrid{
 			Tooltip.SetDefault("Increases life regeneration");
 		}
         public override void SetDefaults() {
-            item.defense = 18;
+            Item.defense = 18;
         }
         public override void UpdateEquip(Player player) {
             player.lifeRegenCount+=2;
@@ -52,7 +52,7 @@ namespace Origins.Items.Armor.Acrid{
 			Tooltip.SetDefault("Grants the ability to swim");
 		}
         public override void SetDefaults() {
-            item.defense = 14;
+            Item.defense = 14;
         }
         public override void UpdateEquip(Player player) {
             player.accFlipper = true;

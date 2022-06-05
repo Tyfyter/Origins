@@ -17,8 +17,8 @@ namespace Origins.Items.Accessories {
             glowmask = Origins.AddGlowMask(this);
         }
         public override void SetDefaults() {
-            item.accessory = true;
-            item.glowMask = glowmask;
+            Item.accessory = true;
+            Item.glowMask = glowmask;
         }
         public override void UpdateEquip(Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

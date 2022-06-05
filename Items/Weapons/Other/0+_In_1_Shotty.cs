@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Other {
             DisplayName.SetDefault("2 in 1 Shotty");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.Boomstick);
+            Item.CloneDefaults(ItemID.Boomstick);
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             Vector2 speed = new Vector2(speedX, speedY);
@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Other {
             DisplayName.SetDefault("3 in 1 Shotty");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.Boomstick);
+            Item.CloneDefaults(ItemID.Boomstick);
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             Vector2 speed = new Vector2(speedX, speedY);

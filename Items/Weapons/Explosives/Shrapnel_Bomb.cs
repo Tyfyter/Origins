@@ -8,48 +8,48 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Shrapnel Bomb");
 			Tooltip.SetDefault("Explodes into shrapnel");
-            Origins.ExplosiveItems[item.type] = true;
+            Origins.ExplosiveItems[Item.type] = true;
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.Bomb);
-            item.damage = 89;
-			item.value*=2;
-			item.useTime = (int)(item.useTime*1.15);
-			item.useAnimation = (int)(item.useAnimation*1.15);
-            item.shoot = ModContent.ProjectileType<Shrapnel_Bomb_P>();
-			item.shootSpeed*=0.95f;
-            item.knockBack = 13f;
-			item.rare = ItemRarityID.Green;
+            Item.CloneDefaults(ItemID.Bomb);
+            Item.damage = 89;
+			Item.value*=2;
+			Item.useTime = (int)(Item.useTime*1.15);
+			Item.useAnimation = (int)(Item.useAnimation*1.15);
+            Item.shoot = ModContent.ProjectileType<Shrapnel_Bomb_P>();
+			Item.shootSpeed*=0.95f;
+            Item.knockBack = 13f;
+			Item.rare = ItemRarityID.Green;
 		}
     }
     public class Shrapnel_Bomb_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Explosives/Shrapnel_Bomb";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Shrapnel Bomb");
-            Origins.ExplosiveProjectiles[projectile.type] = true;
+            Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Bomb);
-            projectile.penetrate = 1;
-            projectile.timeLeft = 135;
+            Projectile.CloneDefaults(ProjectileID.Bomb);
+            Projectile.penetrate = 1;
+            Projectile.timeLeft = 135;
         }
         public override bool PreKill(int timeLeft) {
-            projectile.type = ProjectileID.Bomb;
+            Projectile.type = ProjectileID.Bomb;
             return true;
         }
         public override void Kill(int timeLeft) {
-			projectile.position.X += projectile.width / 2;
-			projectile.position.Y += projectile.height / 2;
-			projectile.width = 128;
-			projectile.height = 128;
-			projectile.position.X -= projectile.width / 2;
-			projectile.position.Y -= projectile.height / 2;
-			projectile.Damage();
-            int center = Projectile.NewProjectile(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Ace_Shrapnel_P>(), projectile.damage, projectile.knockBack, projectile.owner);
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = 128;
+			Projectile.height = 128;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.Damage();
+            int center = Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Ace_Shrapnel_P>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             Vector2 v;
             for(int i = 4; i-->0;) {
                 v = Main.rand.NextVector2Unit()*6;
-                Projectile.NewProjectile(projectile.Center+v*8, v, ModContent.ProjectileType<Ace_Shrapnel_Shard>(), projectile.damage/2, projectile.knockBack/4, projectile.owner, center, 4);
+                Projectile.NewProjectile(Projectile.Center+v*8, v, ModContent.ProjectileType<Ace_Shrapnel_Shard>(), Projectile.damage/2, Projectile.knockBack/4, Projectile.owner, center, 4);
             }
         }
     }

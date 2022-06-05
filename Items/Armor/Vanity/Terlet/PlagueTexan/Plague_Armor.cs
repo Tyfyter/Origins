@@ -11,7 +11,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 			Tooltip.SetDefault("Great for impersonating Origins devs!'\n");
 		}
         public override void SetDefaults() {
-            item.vanity = true;
+            Item.vanity = true;
         }
 	}
     [AutoloadEquip(EquipType.Body)]
@@ -21,7 +21,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 			Tooltip.SetDefault("Great for impersonating Origins devs!'\n");
 		}
         public override void SetDefaults() {
-            item.vanity = true;
+            Item.vanity = true;
         }
         public override void DrawHands(ref bool drawHands, ref bool drawArms) {
             drawHands = true;
@@ -34,7 +34,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 			Tooltip.SetDefault("Great for impersonating Origins devs!'\n");
 		}
         public override void SetDefaults() {
-            item.vanity = true;
+            Item.vanity = true;
         }
     }
 	public class Plague_Texan_Sight : ModItem {
@@ -42,10 +42,10 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Plague Texan's Gift");
 			Tooltip.SetDefault("Great for impersonating Origins devs!'\nForesight is '20/20'");
-            ID = item.type;
+            ID = Item.type;
 		}
         public override void SetDefaults() {
-            item.accessory = true;
+            Item.accessory = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual) {
             player.dangerSense = true;

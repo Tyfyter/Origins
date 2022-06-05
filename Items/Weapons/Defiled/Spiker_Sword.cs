@@ -9,33 +9,33 @@ namespace Origins.Items.Weapons.Defiled {
 			Tooltip.SetDefault("Very pointy");
 		}
 		public override void SetDefaults() {
-			item.damage = 30;
-			item.melee = true;
-			item.width = 42;
-			item.height = 50;
-			item.useTime = 28;
-			item.useAnimation = 28;
-			item.useStyle = 1;
-			item.knockBack = 7.5f;
-			item.value = 5000;
-            item.useTurn = true;
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item1;
+			Item.damage = 30;
+			Item.melee = true;
+			Item.width = 42;
+			Item.height = 50;
+			Item.useTime = 28;
+			Item.useAnimation = 28;
+			Item.useStyle = 1;
+			Item.knockBack = 7.5f;
+			Item.value = 5000;
+            Item.useTurn = true;
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item1;
 		}
 		public override void AddRecipes() {
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = Mod.CreateRecipe(Type);
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
-			recipe.AddRecipe();
-			recipe = new ModRecipe(mod);
+			recipe.Register();
+			recipe = Mod.CreateRecipe(Type);
 			recipe.AddIngredient(this);
 			recipe.AddIngredient(ItemID.Muramasa);
 			recipe.AddIngredient(ItemID.BladeofGrass);
 			recipe.AddIngredient(ItemID.FieryGreatsword);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.SetResult(ItemID.NightsEdge);
-			recipe.AddRecipe();
+			recipe.Register();
 		}
 	}
 }

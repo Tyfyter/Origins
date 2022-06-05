@@ -18,10 +18,10 @@ namespace Origins.Tiles.Riven {
     public class Riven_Lesion : ModTile, IGlowingModTile {
         public Texture2D GlowTexture { get; private set; }
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
-        public float GlowValue => (float)(Math.Sin(Main.GlobalTime) + 2) * 0.5f;
-        public override void SetDefaults() {
+        public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
+        public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-                GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Lesion_Glow");
+                GlowTexture = Mod.GetTexture("Tiles/Riven/Riven_Lesion_Glow");
             }
 			Main.tileSpelunker[Type] = true;
 			Main.tileShine2[Type] = true;
@@ -29,7 +29,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
             Main.tileLighted[Type] = true;
-            Main.tileValue[Type] = 500;
+            Main.tileOreFinderPriority[Type] = 500;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
@@ -65,17 +65,17 @@ namespace Origins.Tiles.Riven {
             DisplayName.SetDefault("Riven Lesion (Debugging Item)");
         }
         public override void SetDefaults() {
-            item.width = 26;
-            item.height = 22;
-            item.maxStack = 99;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.useAnimation = 15;
-            item.useTime = 10;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.consumable = true;
-            item.value = 500;
-            item.createTile = ModContent.TileType<Riven_Lesion>();
+            Item.width = 26;
+            Item.height = 22;
+            Item.maxStack = 99;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
+            Item.value = 500;
+            Item.createTile = ModContent.TileType<Riven_Lesion>();
         }
     }
 }

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Origins.Projectiles;
 using Terraria.Audio;
+using Terraria.DataStructures;
 
 namespace Origins.Items.Weapons.Other {
     public class Viper_Rifle : ModItem {
@@ -17,29 +18,34 @@ namespace Origins.Items.Weapons.Other {
             Tooltip.SetDefault("Has a chance to inflict \"Solvent\", increasing critical damage\nDeals critical damage on otherwise afflicted enemies");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.Gatligator);
-            item.damage = 48;
-            item.crit = 5;
-            item.knockBack = 6.75f;
-            item.useAnimation = item.useTime = 27;
-            item.width = 114;
-            item.height = 40;
-            item.autoReuse = false;
-            item.scale = 0.75f;
-            item.UseSound = new LegacySoundStyle(SoundID.Item, Origins.Sounds.HeavyCannon);
+            Item.CloneDefaults(ItemID.Gatligator);
+            Item.damage = 48;
+            Item.crit = 5;
+            Item.knockBack = 6.75f;
+            Item.useAnimation = Item.useTime = 27;
+            Item.width = 114;
+            Item.height = 40;
+            Item.autoReuse = false;
+            Item.scale = 0.75f;
+            Item.UseSound = new LegacySoundStyle(SoundID.Item, Origins.Sounds.HeavyCannon);
         }
         public override Vector2? HoldoutOffset() => new Vector2(-6, 0);
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+            Vector2 unit = Vector2.Normalize(velocity);
+            position += unit * 16;
+            float dist = 80 - velocity.Length();
+            position += unit * dist;
+        }
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             OriginGlobalProj.viperEffectNext = true;
-            Vector2 unit = Vector2.Normalize(new Vector2(speedX, speedY));
-            position+=unit*16;
-            float dist = 80 - new Vector2(speedX, speedY).Length();
-            Projectile barrelProj = Projectile.NewProjectileDirect(position, unit*(dist/20), type, damage, knockBack, player.whoAmI);
+            Vector2 unit = Vector2.Normalize(velocity);
+            float dist = 80 - velocity.Length();
+            position -= unit * dist;
+            Projectile barrelProj = Projectile.NewProjectileDirect(source, position, unit * (dist / 20), type, damage, knockback, player.whoAmI);
             barrelProj.extraUpdates = 19;
             barrelProj.timeLeft = 20;
             OriginGlobalProj.viperEffectNext = true;
             OriginGlobalProj.killLinkNext = barrelProj.whoAmI;
-            position+=unit*dist;
             return true;
         }
     }

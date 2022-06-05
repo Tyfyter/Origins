@@ -4,17 +4,18 @@ using Origins.Items.Materials;
 using Origins.World;
 using System.Runtime.CompilerServices;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Items.Weapons.Felnum.Tier2 {
     //this took seven and a half hours to make
-	public class Felnum_Broadsword : IAnimatedItem {
-        public const int baseDamage = 88;
+	public class Felnum_Broadsword : AnimatedModItem {
 
-        public override bool CloneNewInstances => true;
+        protected override bool CloneNewInstances => true;
         internal static DrawAnimationManual animation;
         public override DrawAnimation Animation {
             get {
@@ -29,36 +30,35 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 			Tooltip.SetDefault("Receives 50% higher damage bonuses\nHold right click to stab\nBehold");
             animation = new DrawAnimationManual(6);
             animation.Frame = 5;
-			Main.RegisterItemAnimation(item.type, animation);
+			Main.RegisterItemAnimation(Item.type, animation);
 		}
 		public override void SetDefaults() {
-			item.damage = baseDamage;
-			item.melee = true;
-			item.width = 42;
-			item.height = 42;
-			item.useTime = 48;
-			item.useAnimation = 16;
-			item.useStyle = 1;
-			item.knockBack = 9;
-			item.value = 5000;
-			item.autoReuse = true;
-            item.useTurn = false;
-			item.rare = ItemRarityID.Lime;
-			item.UseSound = SoundID.Item1;
+			Item.damage = 88;
+			Item.DamageType = DamageClass.Melee;
+			Item.width = 42;
+			Item.height = 42;
+			Item.useTime = 48;
+			Item.useAnimation = 16;
+			Item.useStyle = 1;
+			Item.knockBack = 9;
+			Item.value = 5000;
+			Item.autoReuse = true;
+            Item.useTurn = false;
+			Item.rare = ItemRarityID.Lime;
+			Item.UseSound = SoundID.Item1;
 		}
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 12);
             recipe.AddIngredient(ItemID.Excalibur, 1);
-            recipe.SetResult(this);
             recipe.AddTile(TileID.MythrilAnvil);
-            recipe.AddRecipe();
+            recipe.Register();
         }
 
         public override bool AltFunctionUse(Player player) {
             return true;
         }
-        public override void GetWeaponKnockback(Player player, ref float knockback) {
+        public override void ModifyWeaponKnockback(Player player, ref StatModifier knockback) {
             if(player.altFunctionUse == 2) knockback *= 2.1111111111111111111111111111111f;
         }
 
@@ -66,23 +66,23 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             if(player.altFunctionUse == 2) {
 			    //item.useTime = 1;
 			    //item.useAnimation = 16;
-			    item.useStyle = 5;
+			    Item.useStyle = 5;
 			    //item.knockBack = 19;
-                item.shoot = ModContent.ProjectileType<Felnum_Broadsword_Stab>();
-                item.shootSpeed = 3.4f;
-                item.noUseGraphic = true;
-                item.noMelee = true;
-			    item.UseSound = null;
+                Item.shoot = ModContent.ProjectileType<Felnum_Broadsword_Stab>();
+                Item.shootSpeed = 3.4f;
+                Item.noUseGraphic = true;
+                Item.noMelee = true;
+			    Item.UseSound = null;
             } else {
 			    //item.useTime = 16;
 			    //item.useAnimation = 16;
-			    item.useStyle = 1;
+			    Item.useStyle = 1;
 			    //item.knockBack = 9;
-                item.shoot = ModContent.ProjectileType<Felnum_Broadsword_Shard>();
-                item.shootSpeed = 6.5f;
-                item.noUseGraphic = false;
-                item.noMelee = false;
-			    item.UseSound = SoundID.Item1;
+                Item.shoot = ModContent.ProjectileType<Felnum_Broadsword_Shard>();
+                Item.shootSpeed = 6.5f;
+                Item.noUseGraphic = false;
+                Item.noMelee = false;
+			    Item.UseSound = SoundID.Item1;
             }
             return base.CanUseItem(player);
         }
@@ -93,54 +93,56 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             }
         }
 
-        public override void Load(TagCompound tag) {
+        public override void LoadData(TagCompound tag) {
             frame = tag.GetInt("frame");
         }
-        public override TagCompound Save() {
-            return new TagCompound() {{"frame", frame}};
+        public override void SaveData(TagCompound tag) {
+            tag.Add("frame", frame);
         }
 
         public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) {
-            OriginExtensions.FixedUseItemHitbox(item, player, ref hitbox, ref noHitbox);
+            OriginExtensions.FixedUseItemHitbox(Item, player, ref hitbox, ref noHitbox);
             if(frame==5/*!ModContent.GetInstance<OriginWorld>().felnumBroadswordStab*/) {
                 hitbox = new Rectangle(0,0,0,0);
                 //if(animation.Frame==0) ModContent.GetInstance<OriginWorld>().felnumBroadswordStab = true;
             }
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack){
-            if(player.altFunctionUse == 2) {
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
+            damage = damage.MultiplyBonuses(1.5f);
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+		    if(player.altFunctionUse == 2) {
                 if(player.controlUseTile && (charge >= 15 || frame == 0 || player.CheckMana(7, true))) {
                     player.itemTime = 0;
                     player.itemAnimation = 5;
                     if(charge < 15) {
                         if(++charge >= 15)
                             for(int i = 0; i < 3; i++) {
-                                int a = Dust.NewDust(position - new Vector2(speedX, speedY), 0, 0, 92);
+                                int a = Dust.NewDust(position - velocity, 0, 0, DustID.Frost);
                                 Main.dust[a].noGravity = true;
                             }
                     } else if(Main.GameUpdateCount % 12 <= 1) {
-                        int a = Dust.NewDust(position - new Vector2(speedX, speedY), 0, 0, 92);
+                        int a = Dust.NewDust(position - velocity, 0, 0, DustID.Frost);
                         Main.dust[a].noGravity = true;
                     }
                     return false;
                 }
                 if(charge >= 15) {
-                    Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, ai1: animation.Frame > 0 ? 0 : -1);
+                    Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: animation.Frame > 0 ? 0 : -1);
                     charge = 0;
                     player.itemAnimation = 16;
                     player.itemAnimationMax = 16;
                     if(frame == 5) {
-                        Main.PlaySound(2, (int)position.X, (int)position.Y, 122, 0.75f, 1f);
+                        SoundEngine.PlaySound(2, (int)position.X, (int)position.Y, 122, 0.75f, 1f);
                     }
                 }
             } else {
-                Main.PlaySound(2, (int)position.X, (int)position.Y, 122, 0.25f, 1f);
+                SoundEngine.PlaySound(2, (int)position.X, (int)position.Y, 122, 0.25f, 1f);
                 int prev = -1;
                 int curr = -1;
-                Vector2 speed = new Vector2(speedX, speedY);
-                Vector2 perp = speed.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero);
+                Vector2 perp = velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero);
                 for(int i = 3; --i> -3;) {
-                    curr = Projectile.NewProjectile(position+perp*i*4, speed.RotatedBy(i/16d)*(1.5f-System.Math.Abs(i/6f)), type, damage/3, knockBack, player.whoAmI, prev);
+                    curr = Projectile.NewProjectile(source, position + perp*i*4, velocity.RotatedBy(i/16d)*(1.5f-System.Math.Abs(i/6f)), type, damage/3, knockback, player.whoAmI, prev);
                     if(prev>0) {
                         Main.projectile[prev].ai[1] = curr;
                     }
@@ -150,7 +152,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             return false;
         }
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-            Texture2D texture = Main.itemTexture[item.type];
+            Texture2D texture = TextureAssets.Item[Item.type].Value;
             spriteBatch.Draw(texture, position, Animation.GetFrame(texture), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
             return false;
         }
@@ -159,13 +161,6 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             spriteBatch.Draw(texture, item.position-Main.screenPosition, Animation.GetFrame(texture), lightColor, 0f, default(Vector2), scale, SpriteEffects.None, 0f);
             return false;
         }*/
-        public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit) {
-            damage+=(damage-baseDamage)/2;
-        }
-        public override void GetWeaponDamage(Player player, ref int damage) {
-            //if(!OriginPlayer.ItemChecking)
-            damage +=(damage-baseDamage)/2;
-        }
     }
     public class Felnum_Broadsword_Shard : ModProjectile {
         public const float magRange = 16*7.5f;
@@ -175,47 +170,46 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         public override string Texture => "Origins/Items/Weapons/Felnum/Tier2/Felnum_Broadsword_Shard";
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Broadsword");
-            Main.projFrames[projectile.type] = 3;
+            Main.projFrames[Projectile.type] = 3;
 		}
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
-            projectile.melee = true;
-            projectile.ranged = false;
-            projectile.aiStyle = 0;
-            projectile.extraUpdates = 1;
-            projectile.timeLeft = 60;
-			projectile.width = 10;
-			projectile.height = 10;
-            projectile.penetrate = -1;
+            Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.aiStyle = 0;
+            Projectile.extraUpdates = 1;
+            Projectile.timeLeft = 60;
+			Projectile.width = 10;
+			Projectile.height = 10;
+            Projectile.penetrate = -1;
             //projectile.usesLocalNPCImmunity = true;
             //projectile.localNPCHitCooldown = 12;
-            projectile.tileCollide = false;
-            projectile.frame = Main.rand.Next(3);
-            projectile.spriteDirection = Main.rand.NextBool()?1:-1;
-            projectile.ai[0] = -1f;
-            projectile.ai[1] = -1f;
+            Projectile.tileCollide = false;
+            Projectile.frame = Main.rand.Next(3);
+            Projectile.spriteDirection = Main.rand.NextBool()?1:-1;
+            Projectile.ai[0] = -1f;
+            Projectile.ai[1] = -1f;
         }
 		public override void AI() {
-            projectile.rotation += projectile.spriteDirection*0.3f;
-            if(projectile.localAI[1] > 0) {
-                projectile.localAI[1]--;
-                projectile.timeLeft = 61;
-                if(projectile.localAI[1] <= 0) {
-                    projectile.localAI[1] = -projectile.localAI[0];
-                    projectile.localAI[0] = 0;
+            Projectile.rotation += Projectile.spriteDirection*0.3f;
+            if(Projectile.localAI[1] > 0) {
+                Projectile.localAI[1]--;
+                Projectile.timeLeft = 61;
+                if(Projectile.localAI[1] <= 0) {
+                    Projectile.localAI[1] = -Projectile.localAI[0];
+                    Projectile.localAI[0] = 0;
                 }
                 return;
             }
-            if(projectile.timeLeft < 57)projectile.tileCollide = true;
-			Vector2 targetCenter = projectile.Center;
+            if(Projectile.timeLeft < 57)Projectile.tileCollide = true;
+			Vector2 targetCenter = Projectile.Center;
 			bool foundTarget = false;
             float rangeMult = 1f;
-            if(projectile.localAI[1] < 0) rangeMult = -projectile.localAI[1];
+            if(Projectile.localAI[1] < 0) rangeMult = -Projectile.localAI[1];
 			for (int i = 0; i < Main.maxNPCs; i++) {
 				NPC npc = Main.npc[i];
 				if (npc.CanBeChasedBy() && npc.HasBuff(Mag_Debuff.ID)) {
-					float distance = Vector2.Distance(npc.Center, projectile.Center);
-					bool closest = Vector2.Distance(projectile.Center, targetCenter) > distance;
+					float distance = Vector2.Distance(npc.Center, Projectile.Center);
+					bool closest = Vector2.Distance(Projectile.Center, targetCenter) > distance;
                     bool inRange = distance < magRange*rangeMult;
 					if ((!foundTarget || closest) && inRange) {
 						targetCenter = npc.Center;
@@ -224,58 +218,58 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 				}
 			}
             if(foundTarget) {
-				Vector2 direction = targetCenter - projectile.Center;
+				Vector2 direction = targetCenter - Projectile.Center;
 				direction.Normalize();
 				direction *= speed;
-				projectile.velocity = (projectile.velocity * (inertia - 1) + direction) / inertia;
-                if(direction.Length()<=projectile.velocity.Length()) {
+				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
+                if(direction.Length()<=Projectile.velocity.Length()) {
                     //projectile.Center = targetCenter;
-                    projectile.velocity = direction;
-                    projectile.localAI[0] = 1;
+                    Projectile.velocity = direction;
+                    Projectile.localAI[0] = 1;
                 }
             }
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            Main.player[projectile.owner].armorPenetration += (int)(target.defense*0.3f);
+            Main.player[Projectile.owner].armorPenetration += (int)(target.defense*0.3f);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if(target.CanBeChasedBy()) target.buffImmune[Mag_Debuff.ID] = false;
             target.AddBuff(Mag_Debuff.ID, 180);
-            target.immune[projectile.owner] = 1;
-            if(projectile.localAI[0] == 1) {
-                projectile.localAI[0] = -1;
-                projectile.position.X += projectile.width / 2;
-                projectile.position.Y += projectile.height / 2;
-                projectile.width = 64;
-                projectile.height = 64;
-                projectile.position.X -= projectile.width / 2;
-                projectile.position.Y -= projectile.height / 2;
-                target.immune[projectile.owner] = 0;
-                projectile.damage *= 2;
-                projectile.Damage();
-                projectile.Kill();
-            } else if(projectile.localAI[0] == -1) {
+            target.immune[Projectile.owner] = 1;
+            if(Projectile.localAI[0] == 1) {
+                Projectile.localAI[0] = -1;
+                Projectile.position.X += Projectile.width / 2;
+                Projectile.position.Y += Projectile.height / 2;
+                Projectile.width = 64;
+                Projectile.height = 64;
+                Projectile.position.X -= Projectile.width / 2;
+                Projectile.position.Y -= Projectile.height / 2;
+                target.immune[Projectile.owner] = 0;
+                Projectile.damage *= 2;
+                Projectile.Damage();
+                Projectile.Kill();
+            } else if(Projectile.localAI[0] == -1) {
                 return;
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
-            if(projectile.localAI[1] > 0)return true;
+        public override bool PreDraw(ref Color lightColor) {
+            if(Projectile.localAI[1] > 0)return true;
             Dust dust;
             for(int i = 0; i < 2; i++) {
                 for(int i2 = 1; i2 < 3; i2++) {
-                    if(projectile.ai[i] >= 0) {
-                        Projectile proj = Main.projectile[(int)projectile.ai[i]];
-                        if(proj.active && proj.type == projectile.type) {
-                            dust = Dust.NewDustPerfect(Vector2.Lerp(projectile.Center, proj.Center, 0.33f*i2), 226, Vector2.Lerp(projectile.velocity, proj.velocity, 0.33f), 200, Scale: 0.25f);
+                    if(Projectile.ai[i] >= 0) {
+                        Projectile proj = Main.projectile[(int)Projectile.ai[i]];
+                        if(proj.active && proj.type == Projectile.type) {
+                            dust = Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center, proj.Center, 0.33f*i2), 226, Vector2.Lerp(Projectile.velocity, proj.velocity, 0.33f), 200, Scale: 0.25f);
                             dust.noGravity = true;
                             dust.noLight = true;
                         } else {
-                            projectile.ai[i] = -1f;
+                            Projectile.ai[i] = -1f;
                         }
                     }
                 }
             }
-            dust = Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity, 200, Scale:0.25f);
+            dust = Dust.NewDustPerfect(Projectile.Center, 226, Projectile.velocity, 200, Scale:0.25f);
             dust.noGravity = true;
             //dust.noLight = true;
             //spriteBatch.Draw(Main.projectileTexture[projectile.type], projectile.Center - Main.screenPosition, new Rectangle(0, 10*projectile.frame, 10, 10), lightColor, projectile.rotation, new Vector2(5, 5), 1f, SpriteEffects.None, 0f);
@@ -283,64 +277,61 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         }
     }
     public class Mag_Debuff : ModBuff {
-        public static int ID { get; private set; }
-        public override bool Autoload(ref string name, ref string texture) {
-            texture = "Terraria/Buff_160";
-            return true;
-        }
-        public override void SetDefaults() {
+		public override string Texture => "Terraria/Images/Buff_160";
+		public static int ID { get; private set; }
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Magnetized");
             ID = Type;
         }
     }
     public class Felnum_Broadsword_Stab : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Felnum/Tier2/Felnum_Broadsword_B";
-        public override bool CloneNewInstances => true;
+        protected override bool CloneNewInstances => true;
         int stabee = -1;
         bool noGrow = false;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Broadsword");
 		}
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Spear);
-            projectile.timeLeft = 16;
-			projectile.width = 32;
-			projectile.height = 32;
+            Projectile.CloneDefaults(ProjectileID.Spear);
+            Projectile.timeLeft = 16;
+			Projectile.width = 32;
+			Projectile.height = 32;
         }
         public float movementFactor{
-			get => projectile.ai[0];
-			set => projectile.ai[0] = value;
+			get => Projectile.ai[0];
+			set => Projectile.ai[0] = value;
 		}
 
 		public override void AI() {
-			Player projOwner = Main.player[projectile.owner];
+			Player projOwner = Main.player[Projectile.owner];
 			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
-			projectile.direction = projOwner.direction;
-			projOwner.heldProj = projectile.whoAmI;
+			Projectile.direction = projOwner.direction;
+			projOwner.heldProj = Projectile.whoAmI;
 			projOwner.itemTime = projOwner.itemAnimation;
-			projectile.position.X = ownerMountedCenter.X - (projectile.width / 2);
-			projectile.position.Y = ownerMountedCenter.Y - (projectile.height / 2);
+			Projectile.position.X = ownerMountedCenter.X - (Projectile.width / 2);
+			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (!projOwner.frozen) {
 				if (movementFactor == 0f){
                     movementFactor = 4.7f;
-                    if(projectile.ai[1]==-1)noGrow = true;
-                    projectile.ai[1] = 4;
-					projectile.netUpdate = true;
+                    if(Projectile.ai[1]==-1)noGrow = true;
+                    Projectile.ai[1] = 4;
+					Projectile.netUpdate = true;
 				}
 				if (projOwner.itemAnimation < 3){
 					movementFactor-=1.7f;
-				} else if (projectile.ai[1]>0){
+				} else if (Projectile.ai[1]>0){
 					movementFactor+=1.3f;
-                    projectile.ai[1]--;
+                    Projectile.ai[1]--;
                 }
 			}
-			projectile.position += projectile.velocity * movementFactor;
+			Projectile.position += Projectile.velocity * movementFactor;
 			if (projOwner.itemAnimation == 0) {
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
-            if (projectile.spriteDirection == 1) {
-				projectile.rotation -= MathHelper.Pi/2f;
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
+            if (Projectile.spriteDirection == 1) {
+				Projectile.rotation -= MathHelper.Pi/2f;
 			}
             if(stabee >= 0) {
                 if(!Main.npc[stabee].active) {
@@ -349,13 +340,13 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                 }
                 NPC victim = Main.npc[stabee];
                 victim.AddBuff(Impaled_Debuff.ID, 2);
-                victim.position+=projectile.position-projectile.oldPosition;
-                victim.Center = Vector2.Lerp(victim.Center,projectile.Center+projectile.velocity, 0.035f);
+                victim.position+=Projectile.position-Projectile.oldPosition;
+                victim.Center = Vector2.Lerp(victim.Center,Projectile.Center+Projectile.velocity, 0.035f);
                 victim.oldPosition = victim.position;
             }
 		}
         public override bool? CanHitNPC(NPC target) {
-			Player player = Main.player[projectile.owner];
+			Player player = Main.player[Projectile.owner];
             if(stabee >= 0) {
                 return target.whoAmI == stabee && player.itemAnimation == 3;
             }
@@ -374,12 +365,12 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                 int proj;
                 bool bias = Main.rand.NextBool();
                 for(int i = 8; --i>0;) {
-                    proj = Projectile.NewProjectile(projectile.Center, projectile.velocity.RotatedBy(MathHelper.PiOver2*((bias^i%2==0)?-1:1)).RotatedByRandom(1f)*Main.rand.NextFloat(0.25f,0.3f), ModContent.ProjectileType<Felnum_Broadsword_Shard>(), damage/6, projectile.knockBack, projectile.owner);
+                    proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedBy(MathHelper.PiOver2*((bias^i%2==0)?-1:1)).RotatedByRandom(1f)*Main.rand.NextFloat(0.25f,0.3f), ModContent.ProjectileType<Felnum_Broadsword_Shard>(), damage/6, Projectile.knockBack, Projectile.owner);
                     Main.projectile[proj].localAI[1] = 45;
                     Main.projectile[proj].localAI[0] = 3;
                     Main.projectile[proj].tileCollide = false;
                 }
-                target.velocity += projectile.velocity * target.knockBackResist * 2;
+                target.velocity += Projectile.velocity * target.knockBackResist * 2;
                 target.DelBuff(target.FindBuffIndex(Impaled_Debuff.ID));
                 target.AddBuff(Stunned_Debuff.ID, 5);
                 stabee = -2;
@@ -389,45 +380,39 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                 stabee = -2;
                 return;
             }
-            Player player = Main.player[projectile.owner];
+            Player player = Main.player[Projectile.owner];
             player.itemAnimation+=player.itemAnimationMax;
             player.itemAnimationMax*=2;
-            projectile.timeLeft = player.itemAnimation;
+            Projectile.timeLeft = player.itemAnimation;
             stabee = target.whoAmI;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+        public override bool PreDraw(ref Color lightColor) {
             if(noGrow) {
-                spriteBatch.Draw(mod.GetTexture("Items/Weapons/Felnum/Tier2/Felnum_Broadsword_B"), (projectile.Center - projectile.velocity*2) - Main.screenPosition, new Rectangle(0, 0, 40, 40), lightColor, projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(Mod.GetTexture("Items/Weapons/Felnum/Tier2/Felnum_Broadsword_B"), (Projectile.Center - Projectile.velocity*2) - Main.screenPosition, new Rectangle(0, 0, 40, 40), lightColor, Projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0f);
                 return false;
             }
-            Texture2D texture = mod.GetTexture("Items/Weapons/Felnum/Tier2/Felnum_Broadsword");
-            if(Main.player[projectile.owner].HeldItem.modItem is Felnum_Broadsword sword) {
+            Texture2D texture = Mod.GetTexture("Items/Weapons/Felnum/Tier2/Felnum_Broadsword");
+            if(Main.player[Projectile.owner].HeldItem.ModItem is Felnum_Broadsword sword) {
                 Rectangle frame = sword.Animation.GetFrame(texture);
                 if(sword.frame>0)sword.frame--;
-                spriteBatch.Draw(texture, (projectile.Center - projectile.velocity*2) - Main.screenPosition, frame, lightColor, projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(texture, (Projectile.Center - Projectile.velocity*2) - Main.screenPosition, frame, lightColor, Projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0f);
                 return false;
             }
             return true;
         }
     }
     public class Impaled_Debuff : ModBuff {
-        public static int ID { get; private set; }
-        public override bool Autoload(ref string name, ref string texture) {
-            texture = "Terraria/Buff_160";
-            return true;
-        }
-        public override void SetDefaults() {
+		public override string Texture => "Terraria/Images/Buff_160";
+		public static int ID { get; private set; }
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Impaled");
             ID = Type;
         }
     }
     public class Stunned_Debuff : ModBuff {
-        public static int ID { get; private set; }
-        public override bool Autoload(ref string name, ref string texture) {
-            texture = "Terraria/Buff_160";
-            return true;
-        }
-        public override void SetDefaults() {
+		public override string Texture => "Terraria/Images/Buff_160";
+		public static int ID { get; private set; }
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Stunned");
             ID = Type;
         }

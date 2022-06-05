@@ -2,15 +2,17 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Fiberglass {
-	public class Broken_Fiberglass_Bow : IAnimatedItem {
-        public override bool CloneNewInstances => true;
+	public class Broken_Fiberglass_Bow : AnimatedModItem {
+        protected override bool CloneNewInstances => true;
         int strung = 0;
         const int strungMax = 50;
         static DrawAnimationManual animation;
@@ -24,31 +26,31 @@ namespace Origins.Items.Weapons.Fiberglass {
 			DisplayName.SetDefault("Unstrung Fiberglass Bow");
 			Tooltip.SetDefault("Not very useful without a bowstring\nMaybe you could find something to replace it");
             animation = new DrawAnimationManual(2);
-			Main.RegisterItemAnimation(item.type, animation);
+			Main.RegisterItemAnimation(Item.type, animation);
 		}
 		public override void SetDefaults() {
-			item.damage = 17;
-			item.ranged = true;
-			item.noMelee = true;
-			item.noUseGraphic = false;
-			item.width = 18;
-			item.height = 36;
-			item.useTime = 20;
-			item.useAnimation = 20;
-			item.useStyle = 5;
-			item.knockBack = 1;
-			item.value = 5000;
-			item.shootSpeed = 9;
-			item.autoReuse = false;
-            item.useAmmo = AmmoID.Arrow;
-            item.shoot = ProjectileID.WoodenArrowFriendly;
-			item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item5;
+			Item.damage = 17;
+			Item.ranged = true;
+			Item.noMelee = true;
+			Item.noUseGraphic = false;
+			Item.width = 18;
+			Item.height = 36;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
+			Item.useStyle = 5;
+			Item.knockBack = 1;
+			Item.value = 5000;
+			Item.shootSpeed = 9;
+			Item.autoReuse = false;
+            Item.useAmmo = AmmoID.Arrow;
+            Item.shoot = ProjectileID.WoodenArrowFriendly;
+			Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item5;
 		}
-        public override void Load(TagCompound tag) {
+        public override void LoadData(TagCompound tag) {
             strung = tag.GetInt("strung");
         }
-        public override TagCompound Save() {
+        public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */ {
             return new TagCompound() {{"strung", strung}};
         }
         public override void HoldItem(Player player) {
@@ -67,12 +69,12 @@ namespace Origins.Items.Weapons.Fiberglass {
                 }else if(player.ConsumeItem(ItemID.Vine)&&strung<strungMax-10) {
                     strung+=25;
                 }
-			    item.noUseGraphic = true;
+			    Item.noUseGraphic = true;
                 //item.useTime = 4;//20;
                 //item.useAnimation = 4;//20;
-			    item.useStyle = 1;
-                item.shoot = ProjectileID.None;
-			    item.UseSound = null;
+			    Item.useStyle = 1;
+                Item.shoot = ProjectileID.None;
+			    Item.UseSound = null;
                 if(strung>strungMax)strung = strungMax;
                 return true;
             }
@@ -81,9 +83,9 @@ namespace Origins.Items.Weapons.Fiberglass {
             SetDefaults();
             strung--;
             if(strung <= 0) {
-                Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 102, 0.75f, 1);
+                SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 102, 0.75f, 1);
                 Vector2 pos = player.Center + (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * (10 - player.direction * 2);
-                Gore.NewGoreDirect(pos, player.velocity, mod.GetGoreSlot("Gores/NPCs/FG2_Gore")).position = pos;
+                Gore.NewGoreDirect(pos, player.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore")).position = pos;
             }
             return base.CanUseItem(player);
         }
@@ -91,7 +93,7 @@ namespace Origins.Items.Weapons.Fiberglass {
             return player.altFunctionUse != 2;
         }
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-            Texture2D texture = Main.itemTexture[item.type];
+            Texture2D texture = TextureAssets.Item[Item.type].Value;
             spriteBatch.Draw(texture, position, Animation.GetFrame(texture), drawColor, 0f, origin, scale, SpriteEffects.None, 0f);
             return false;
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
@@ -19,57 +20,57 @@ namespace Origins.Projectiles.Weapons {
         public override string Texture => "Origins/Projectiles/Weapons/Lava_Cast_P";
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Magma Shot");
-			Main.projFrames[projectile.type] = 2;
+			Main.projFrames[Projectile.type] = 2;
         }
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Flamelash);
-            projectile.light = 0;
-            projectile.aiStyle = 1;
-            projectile.extraUpdates++;
-            projectile.timeLeft = 300;
+            Projectile.CloneDefaults(ProjectileID.Flamelash);
+            Projectile.light = 0;
+            Projectile.aiStyle = 1;
+            Projectile.extraUpdates++;
+            Projectile.timeLeft = 300;
             switch (damageType) {
                 case 1:
-                projectile.melee = true;
+                Projectile.melee = true;
                 break;
                 case 2:
-                projectile.ranged = true;
+                Projectile.ranged = true;
                 break;
                 case 3:
-                projectile.magic = true;
+                Projectile.magic = true;
                 break;
                 case 4:
-                projectile.minion = true;
+                Projectile.minion = true;
                 break;
             }
         }
         public override void AI() {
-            Lighting.AddLight(projectile.Center, 0.75f, 0.35f, 0f);
-			if (++projectile.frameCounter >= (int)frameCount) {
-				projectile.frameCounter = 0;
-				if (++projectile.frame >= 2) {
-					projectile.frame = 0;
+            Lighting.AddLight(Projectile.Center, 0.75f, 0.35f, 0f);
+			if (++Projectile.frameCounter >= (int)frameCount) {
+				Projectile.frameCounter = 0;
+				if (++Projectile.frame >= 2) {
+					Projectile.frame = 0;
 				}
 			}
-            if (projectile.wet) {
-                projectile.timeLeft--;
-                Dust.NewDust(projectile.position, projectile.width, projectile.height, 34);
+            if (Projectile.wet) {
+                Projectile.timeLeft--;
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 34);
             }
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             target.AddBuff(BuffID.OnFire, crit?600:300);
             target.AddBuff(BuffID.Oiled, crit?60:30);
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+        public override bool PreDraw(ref Color lightColor) {
             //
             //float alpha = (float)Math.Pow(projectile.frameCounter/frameCount, 0.5f);
             //float alpha = projectile.frameCounter<=3 ? 0.5f : 1;
-            bool m = projectile.frameCounter<=3;
-            Texture2D texture = Main.projectileTexture[projectile.type];//0f/projectile.frameCounter
-            bool flip = projectile.velocity.X < 0;
-            float fade = (float)Math.Sqrt(projectile.timeLeft / 300f);
+            bool m = Projectile.frameCounter<=3;
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;//0f/projectile.frameCounter
+            bool flip = Projectile.velocity.X < 0;
+            float fade = (float)Math.Sqrt(Projectile.timeLeft / 300f);
             //projectile.frame^1: bitwise XOR with 1 to use the other frame's height
-            if (m)spriteBatch.Draw(texture, projectile.Center-Main.screenPosition, new Rectangle(0, (projectile.frame^1)*26, 56, 26), new Color(1f,1f,1f,0.5f) * fade, projectile.rotation-MathHelper.PiOver2, new Vector2(44, flip ? 13 : 10), projectile.scale, flip ? SpriteEffects.FlipVertically:SpriteEffects.None, 0f);
-            spriteBatch.Draw(texture, projectile.Center-Main.screenPosition, new Rectangle(0, projectile.frame*26, 56, 26), new Color(1f,1f,1f,m?0.5f:1f) * fade, projectile.rotation-MathHelper.PiOver2, new Vector2(44, flip ? 13 : 10), projectile.scale, flip ? SpriteEffects.FlipVertically:SpriteEffects.None, 0f);
+            if (m)spriteBatch.Draw(texture, Projectile.Center-Main.screenPosition, new Rectangle(0, (Projectile.frame^1)*26, 56, 26), new Color(1f,1f,1f,0.5f) * fade, Projectile.rotation-MathHelper.PiOver2, new Vector2(44, flip ? 13 : 10), Projectile.scale, flip ? SpriteEffects.FlipVertically:SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, Projectile.Center-Main.screenPosition, new Rectangle(0, Projectile.frame*26, 56, 26), new Color(1f,1f,1f,m?0.5f:1f) * fade, Projectile.rotation-MathHelper.PiOver2, new Vector2(44, flip ? 13 : 10), Projectile.scale, flip ? SpriteEffects.FlipVertically:SpriteEffects.None, 0f);
             return false;
         }
     }

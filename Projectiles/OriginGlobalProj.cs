@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Weapons.Felnum;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,7 +16,7 @@ using Terraria.ModLoader;
 namespace Origins.Projectiles {
     public class OriginGlobalProj : GlobalProjectile {
         public override bool InstancePerEntity => true;
-        public override bool CloneNewInstances => true;
+        protected override bool CloneNewInstances => true;
         //bool init = true;
         public bool felnumEffect = false;
         public bool viperEffect = false;
@@ -107,9 +108,9 @@ namespace Origins.Projectiles {
         public override bool PreKill(Projectile projectile, int timeLeft) {
             if(felnumEffect&&projectile.type==ProjectileID.WaterGun) {//projectile.aiStyle==60
                 OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-                Projectile.NewProjectileDirect(projectile.Center, Vector2.Zero, ModContent.ProjectileType<Shock_Grenade_Shock>(), (int)(originPlayer.felnumShock / 2.5f), projectile.knockBack, projectile.owner).timeLeft = 1;
+                Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<Shock_Grenade_Shock>(), (int)(originPlayer.felnumShock / 2.5f), projectile.knockBack, projectile.owner).timeLeft = 1;
                 originPlayer.felnumShock = 0;
-                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 2f, 1f);
+                SoundEngine.PlaySound(SoundID.Item122, projectile.Center, 122, 2f, 1f);
             }
             return true;
         }

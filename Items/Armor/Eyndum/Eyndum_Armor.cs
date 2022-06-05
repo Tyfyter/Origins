@@ -10,12 +10,12 @@ namespace Origins.Items.Armor.Eyndum {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Eyndum Helmet");
             if (Main.netMode != NetmodeID.Server) {
-                Origins.AddHelmetGlowmask(item.headSlot, "Items/Armor/Eyndum/Eyndum_Helmet_Head_Glow");
+                Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Eyndum/Eyndum_Helmet_Head_Glow");
             }
         }
         public override void SetDefaults() {
-            item.defense = 8;
-            item.rare = ItemRarityID.Pink;
+            Item.defense = 8;
+            Item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
         }
@@ -27,12 +27,12 @@ namespace Origins.Items.Armor.Eyndum {
             Origins.instance.SetEyndumCoreUI();
         }
         public override void AddRecipes() {
-            /*ModRecipe recipe = new ModRecipe(mod);
+            /*Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
             //recipe.AddIngredient(ModContent.ItemType<>(), 10);
             recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();*/
+            recipe.Register();*/
         }
     }
     [AutoloadEquip(EquipType.Body)]
@@ -40,25 +40,25 @@ namespace Origins.Items.Armor.Eyndum {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Eyndum Breastplate");
             if (Main.netMode != NetmodeID.Server) {
-                Origins.AddBreastplateGlowmask(item.bodySlot, "Items/Armor/Eyndum/Eyndum_Breastplate_Body_Glow");
-                Origins.AddBreastplateGlowmask(-item.bodySlot, "Items/Armor/Eyndum/Eyndum_Breastplate_FemaleBody_Glow");
+                Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Eyndum/Eyndum_Breastplate_Body_Glow");
+                Origins.AddBreastplateGlowmask(-Item.bodySlot, "Items/Armor/Eyndum/Eyndum_Breastplate_FemaleBody_Glow");
             }
         }
         public override void SetDefaults() {
-            item.defense = 16;
-            item.wornArmor = true;
-            item.rare = ItemRarityID.Pink;
+            Item.defense = 16;
+            Item.wornArmor = true;
+            Item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
 
         }
         public override void AddRecipes() {
-            /*ModRecipe recipe = new ModRecipe(mod);
+            /*Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
             //recipe.AddIngredient(ModContent.ItemType<>(), 20);
             recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();*/
+            recipe.Register();*/
         }
     }
     [AutoloadEquip(EquipType.Legs)]
@@ -66,23 +66,23 @@ namespace Origins.Items.Armor.Eyndum {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Eyndum Greaves");
             if (Main.netMode != NetmodeID.Server) {
-                Origins.AddLeggingGlowMask(item.legSlot, "Items/Armor/Eyndum/Eyndum_Greaves_Legs_Glow");
+                Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Eyndum/Eyndum_Greaves_Legs_Glow");
             }
         }
         public override void SetDefaults() {
-            item.defense = 12;
-            item.rare = ItemRarityID.Pink;
+            Item.defense = 12;
+            Item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
 
         }
         public override void AddRecipes() {
-            /*ModRecipe recipe = new ModRecipe(mod);
+            /*Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
             //recipe.AddIngredient(ModContent.ItemType<>(), 15);
             recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();*/
+            recipe.Register();*/
         }
     }
 }

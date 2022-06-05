@@ -6,33 +6,33 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
     public class Defiled_Digger_Head : Defiled_Digger {
         public override void SetDefaults() {
-            npc.CloneDefaults(NPCID.DiggerHead);
-            npc.lifeMax = 80;
-            npc.defense = 8;
-            npc.damage = 38;
+            NPC.CloneDefaults(NPCID.DiggerHead);
+            NPC.lifeMax = 80;
+            NPC.defense = 8;
+            NPC.damage = 38;
         }
         public override void AI() {
             if(Main.netMode != NetmodeID.MultiplayerClient) {
-                if(npc.ai[0] == 0f) {
-                    npc.spriteDirection = Main.rand.NextBool() ?1:-1;
-                    npc.ai[3] = npc.whoAmI;
-                    npc.realLife = npc.whoAmI;
+                if(NPC.ai[0] == 0f) {
+                    NPC.spriteDirection = Main.rand.NextBool() ?1:-1;
+                    NPC.ai[3] = NPC.whoAmI;
+                    NPC.realLife = NPC.whoAmI;
                     int current = 0;
-                    int last = npc.whoAmI;
+                    int last = NPC.whoAmI;
                     int type = ModContent.NPCType<Defiled_Digger_Body>();
                     for(int k = 0; k < 17; k++) {
-                        current = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, npc.whoAmI);
-                        Main.npc[current].ai[3] = npc.whoAmI;
-                        Main.npc[current].realLife = npc.whoAmI;
+                        current = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
+                        Main.npc[current].ai[3] = NPC.whoAmI;
+                        Main.npc[current].realLife = NPC.whoAmI;
                         Main.npc[current].ai[1] = last;
                         Main.npc[current].spriteDirection = Main.rand.NextBool() ?1:-1;
                         Main.npc[last].ai[0] = current;
                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
                         last = current;
                     }
-                    current = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<Defiled_Digger_Tail>(), npc.whoAmI);
-                    Main.npc[current].ai[3] = npc.whoAmI;
-                    Main.npc[current].realLife = npc.whoAmI;
+                    current = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Defiled_Digger_Tail>(), NPC.whoAmI);
+                    Main.npc[current].ai[3] = NPC.whoAmI;
+                    Main.npc[current].realLife = NPC.whoAmI;
                     Main.npc[current].ai[1] = last;
                     Main.npc[current].spriteDirection = Main.rand.NextBool() ?1:-1;
                     Main.npc[last].ai[0] = current;
@@ -77,13 +77,13 @@ namespace Origins.NPCs.Defiled {
 
     internal class Defiled_Digger_Body : Defiled_Digger {
         public override void SetDefaults() {
-            npc.CloneDefaults(NPCID.DiggerBody);
+            NPC.CloneDefaults(NPCID.DiggerBody);
         }
     }
 
     internal class Defiled_Digger_Tail : Defiled_Digger {
         public override void SetDefaults() {
-            npc.CloneDefaults(NPCID.DiggerTail);
+            NPC.CloneDefaults(NPCID.DiggerTail);
         }
     }
 
@@ -93,37 +93,37 @@ namespace Origins.NPCs.Defiled {
         }
 
         public override void AI() {
-            NPC head = Main.npc[npc.realLife];
-            npc.life = head.active ? npc.lifeMax : 0;
-            npc.immune = head.immune;
+            NPC head = Main.npc[NPC.realLife];
+            NPC.life = head.active ? NPC.lifeMax : 0;
+            NPC.immune = head.immune;
         }
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
-            if(npc.realLife!=npc.whoAmI) {
+            if(NPC.realLife!=NPC.whoAmI) {
                 if(projectile.usesLocalNPCImmunity) {
-                    projectile.localNPCImmunity[npc.realLife] = projectile.localNPCHitCooldown;
-                    projectile.localNPCImmunity[npc.whoAmI] = 0;
+                    projectile.localNPCImmunity[NPC.realLife] = projectile.localNPCHitCooldown;
+                    projectile.localNPCImmunity[NPC.whoAmI] = 0;
                 } else {
-                    Main.npc[npc.realLife].immune[projectile.owner] = npc.immune[projectile.owner];
+                    Main.npc[NPC.realLife].immune[projectile.owner] = NPC.immune[projectile.owner];
                 }
             }
-            Rectangle spawnbox = projectile.Hitbox.MoveToWithin(npc.Hitbox);
-            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(Main.rand.NextVectorIn(spawnbox), projectile.velocity, mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
+            Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
+            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
         }
         public override bool? CanBeHitByProjectile(Projectile projectile) {
-            if(npc.realLife==npc.whoAmI)return null;
-            if((projectile.usesLocalNPCImmunity?projectile.localNPCImmunity[npc.realLife]:Main.npc[npc.realLife].immune[projectile.owner])>0) {
+            if(NPC.realLife==NPC.whoAmI)return null;
+            if((projectile.usesLocalNPCImmunity?projectile.localNPCImmunity[NPC.realLife]:Main.npc[NPC.realLife].immune[projectile.owner])>0) {
                 return false;
             }
             return null;
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
-            int halfWidth = npc.width / 2;
+            int halfWidth = NPC.width / 2;
             int baseX = player.direction > 0 ? 0 : halfWidth;
-            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(npc.position+new Vector2(baseX + Main.rand.Next(halfWidth),Main.rand.Next(npc.height)), new Vector2(knockback*player.direction, -0.1f*knockback), mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
+            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(NPC.position+new Vector2(baseX + Main.rand.Next(halfWidth),Main.rand.Next(NPC.height)), new Vector2(knockback*player.direction, -0.1f*knockback), Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
         }
         public override void HitEffect(int hitDirection, double damage) {
-            if(npc.life<0) {
-                NPC current = Main.npc[npc.realLife];
+            if(NPC.life<0) {
+                NPC current = Main.npc[NPC.realLife];
                 while(current.ai[0]!=0) {
                     deathEffect(current);
                     current = Main.npc[(int)current.ai[0]];

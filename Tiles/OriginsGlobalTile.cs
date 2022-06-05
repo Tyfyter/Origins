@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 namespace Origins.Tiles {
     public class OriginsGlobalTile : GlobalTile {
         public override bool CanKillTile(int i, int j, int type, ref bool blockDamaged) {
-            if(Main.tile[i, j - 1].type == Defiled_Altar.ID && type != Defiled_Altar.ID)return false;
+            if(Main.tile[i, j - 1].TileType == Defiled_Altar.ID && type != Defiled_Altar.ID)return false;
             return true;
         }
 		public override void KillTile(int i, int j, int type, ref bool fail, ref bool effectOnly, ref bool noItem) {
@@ -25,11 +25,11 @@ namespace Origins.Tiles {
                 case TileID.CorruptPlants:
                 case TileID.FleshWeeds:
                 case TileID.HallowedPlants:
-                ConvertPlantsByAnchor(ref Main.tile[i, j].type, Main.tile[i, j+1].type);
+                ConvertPlantsByAnchor(ref Main.tile[i, j].TileType, Main.tile[i, j+1].TileType);
                 return true;
             }
             if(type==ModContent.TileType<Defiled_Foliage>()) {
-                ConvertPlantsByAnchor(ref Main.tile[i, j].type, Main.tile[i, j+1].type);
+                ConvertPlantsByAnchor(ref Main.tile[i, j].TileType, Main.tile[i, j+1].TileType);
             }
             return true;
         }

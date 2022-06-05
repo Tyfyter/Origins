@@ -15,9 +15,9 @@ namespace Origins.Items.Accessories {
             Tooltip.SetDefault("‘Take my hand, and give them a slap in the face.’");
         }
         public override void SetDefaults() {
-            item.accessory = true;
-            item.width = 22;
-            item.height = 20;
+            Item.accessory = true;
+            Item.width = 22;
+            Item.height = 20;
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().madHand = true;

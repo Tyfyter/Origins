@@ -14,41 +14,41 @@ namespace Origins.NPCs.Riven {
         public const float speedMult = 0.75f;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Giant");
-            Main.npcFrameCount[npc.type] = 4;
+            Main.npcFrameCount[NPC.type] = 4;
         }
         public override void SetDefaults() {
-            npc.CloneDefaults(NPCID.Zombie);
-            npc.aiStyle = NPCAIStyleID.Fighter;
-            npc.lifeMax = 110;
-            npc.defense = 8;
-            npc.damage = 42;
-            npc.width = 56;
-            npc.height = 76;
-            npc.friendly = false;
+            NPC.CloneDefaults(NPCID.Zombie);
+            NPC.aiStyle = NPCAIStyleID.Fighter;
+            NPC.lifeMax = 110;
+            NPC.defense = 8;
+            NPC.damage = 42;
+            NPC.width = 56;
+            NPC.height = 76;
+            NPC.friendly = false;
         }
         public override void AI() {
-            npc.TargetClosest();
-            if (npc.HasPlayerTarget) {
-                npc.FaceTarget();
-                npc.spriteDirection = npc.direction;
+            NPC.TargetClosest();
+            if (NPC.HasPlayerTarget) {
+                NPC.FaceTarget();
+                NPC.spriteDirection = NPC.direction;
             }
-			if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X/=speedMult;
-			if(++npc.frameCounter>7) {
+			if(NPC.collideY&&Math.Sign(NPC.velocity.X)==NPC.direction)NPC.velocity.X/=speedMult;
+			if(++NPC.frameCounter>7) {
 				//add frame height to frame y position and modulo (returns remainder of integer division) by frame height multiplied by walking frame count
-				npc.frame = new Rectangle(0, (npc.frame.Y+78)%312, 80, 76);
-				npc.frameCounter = 0;
+				NPC.frame = new Rectangle(0, (NPC.frame.Y+78)%312, 80, 76);
+				NPC.frameCounter = 0;
 			}
         }
         public override void PostAI() {
-			if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=speedMult;
+			if(NPC.collideY&&Math.Sign(NPC.velocity.X)==NPC.direction)NPC.velocity.X*=speedMult;
         }
 
         public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
-            npcRect.Y += (int)(8*npc.scale);
-            npcRect.Height -= (int)(16*npc.scale);
+            npcRect.Y += (int)(8*NPC.scale);
+            npcRect.Height -= (int)(16*NPC.scale);
 
-            npcRect.X -= (int)(12*npc.scale);
-            npcRect.Width += (int)(24*npc.scale);
+            npcRect.X -= (int)(12*NPC.scale);
+            npcRect.Width += (int)(24*NPC.scale);
         }
 
         /*public override void HitEffect(int hitDirection, double damage) {

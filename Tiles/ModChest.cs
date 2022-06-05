@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent.ObjectInteractions;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
@@ -15,14 +17,14 @@ using Terraria.Localization;
 namespace Origins.Tiles {
     public abstract class ModChest : ModTile {
         public int keyItem { get; protected set; } = -1;
-        public override void SetDefaults() {
+        public override void SetStaticDefaults() {
 			Main.tileSpelunker[Type] = true;
 			Main.tileContainer[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 1200;
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
-			Main.tileValue[Type] = 500;
+			Main.tileOreFinderPriority[Type] = 500;
 			TileID.Sets.HasOutlines[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
@@ -36,11 +38,11 @@ namespace Origins.Tiles {
 			TileObjectData.addTile(Type);
 		}
 
-		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].frameX < 36 ? 1 : 0);
+		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX < 36 ? 1 : 0);
 
-		public override bool HasSmartInteract() => true;
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
-        public override bool IsLockedChest(int i, int j) => Main.tile[i, j].frameX >= 36;
+        public override bool IsLockedChest(int i, int j) => Main.tile[i, j].TileFrameX >= 36;
 
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual) {
             frameXAdjustment = 36;
@@ -52,10 +54,10 @@ namespace Origins.Tiles {
 			int left = i;
 			int top = j;
 			Tile tile = Main.tile[i, j];
-			if (tile.frameX % 36 != 0) {
+			if (tile.TileFrameX % 36 != 0) {
 				left--;
 			}
-			if (tile.frameY != 0) {
+			if (tile.TileFrameY != 0) {
 				top--;
 			}
 			int chest = Chest.FindChest(left, top);
@@ -77,26 +79,26 @@ namespace Origins.Tiles {
 			Chest.DestroyChest(i, j);
 		}
 
-		public override bool NewRightClick(int i, int j) {
+		public override bool RightClick(int i, int j) {
 			Player player = Main.LocalPlayer;
 			Tile tile = Main.tile[i, j];
 			Main.mouseRightRelease = false;
 			int left = i;
 			int top = j;
-			if (tile.frameX % 36 != 0) {
+			if (tile.TileFrameX % 36 != 0) {
 				left--;
 			}
-			if (tile.frameY != 0) {
+			if (tile.TileFrameY != 0) {
 				top--;
 			}
 			if (player.sign >= 0) {
-				Main.PlaySound(SoundID.MenuClose);
+				SoundEngine.PlaySound(SoundID.MenuClose);
 				player.sign = -1;
 				Main.editSign = false;
 				Main.npcChatText = "";
 			}
 			if (Main.editChest) {
-				Main.PlaySound(SoundID.MenuTick);
+				SoundEngine.PlaySound(SoundID.MenuTick);
 				Main.editChest = false;
 				Main.npcChatText = "";
 			}
@@ -109,7 +111,7 @@ namespace Origins.Tiles {
 				if (left == player.chestX && top == player.chestY && player.chest >= 0) {
 					player.chest = -1;
 					Recipe.FindRecipes();
-					Main.PlaySound(SoundID.MenuClose);
+					SoundEngine.PlaySound(SoundID.MenuClose);
 				} else {
 					NetMessage.SendData(MessageID.RequestChestOpen, -1, -1, null, left, (float)top, 0f, 0f, 0, 0, 0);
 					Main.stackSplit = 600;
@@ -127,14 +129,14 @@ namespace Origins.Tiles {
 						Main.stackSplit = 600;
 						if (chest == player.chest) {
 							player.chest = -1;
-							Main.PlaySound(SoundID.MenuClose);
+							SoundEngine.PlaySound(SoundID.MenuClose);
 						} else {
 							player.chest = chest;
 							Main.playerInventory = true;
 							Main.recBigList = false;
 							player.chestX = left;
 							player.chestY = top;
-							Main.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
+							SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
 						}
 						Recipe.FindRecipes();
 					}
@@ -148,34 +150,34 @@ namespace Origins.Tiles {
 			Tile tile = Main.tile[i, j];
 			int left = i;
 			int top = j;
-			if (tile.frameX % 36 != 0) {
+			if (tile.TileFrameX % 36 != 0) {
 				left--;
 			}
-			if (tile.frameY != 0) {
+			if (tile.TileFrameY != 0) {
 				top--;
 			}
 			int chestIndex = Chest.FindChest(left, top);
-			player.showItemIcon2 = -1;
+			player.cursorItemIconID = -1;
 			if (chestIndex < 0) {
-				player.showItemIconText = Language.GetTextValue("LegacyChestType.0");
+				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
 			} else {
-                player.showItemIconText = Main.chest[chestIndex].name.Length > 0 ? Main.chest[chestIndex].name : chest;
-				if (player.showItemIconText.Equals(chest)) {
-					if (IsLockedChest(left,top))player.showItemIcon2 = keyItem;
-                    else player.showItemIcon2 = chestDrop;
-					player.showItemIconText = "";
+                player.cursorItemIconText = Main.chest[chestIndex].name.Length > 0 ? Main.chest[chestIndex].name : chest;
+				if (player.cursorItemIconText.Equals(chest)) {
+					if (IsLockedChest(left,top))player.cursorItemIconID = keyItem;
+                    else player.cursorItemIconID = chestDrop;
+					player.cursorItemIconText = "";
 				}
 			}
 			player.noThrow = 2;
-			player.showItemIcon = true;
+			player.cursorItemIconEnabled = true;
 		}
 
 		public override void MouseOverFar(int i, int j) {
 			MouseOver(i, j);
 			Player player = Main.LocalPlayer;
-			if (player.showItemIconText == "") {
-				player.showItemIcon = false;
-				player.showItemIcon2 = 0;
+			if (player.cursorItemIconText == "") {
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
 			}
 		}
     }

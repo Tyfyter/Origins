@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Fish {
 	public class Prikish : ModItem {
 		public override void SetDefaults() {
-			item.CloneDefaults(ItemID.Ebonkoi);
+			Item.CloneDefaults(ItemID.Ebonkoi);
 		}
 	}
 }

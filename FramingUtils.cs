@@ -24,55 +24,55 @@ namespace Tyfyter.Utils {
 			int downLeft = -1;
 			int down = -1;
 			int downRight = -1;
-			if (tileLeft != null && tileLeft.active()) {
-				left = (Main.tileStone[tileLeft.type] ? 1 : tileLeft.type);
-				if (tileLeft.slope() == 1 || tileLeft.slope() == 3) {
+			if (tileLeft != null && tileLeft.HasTile) {
+				left = (Main.tileStone[tileLeft.TileType] ? 1 : tileLeft.TileType);
+				if (tileLeft.Slope == 1 || tileLeft.Slope == 3) {
 					left = -1;
 				}
 			}
-			if (tileRight != null && tileRight.active()) {
-				right = (Main.tileStone[tileRight.type] ? 1 : tileRight.type);
-				if (tileRight.slope() == 2 || tileRight.slope() == 4) {
+			if (tileRight != null && tileRight.HasTile) {
+				right = (Main.tileStone[tileRight.TileType] ? 1 : tileRight.TileType);
+				if (tileRight.Slope == 2 || tileRight.Slope == 4) {
 					right = -1;
 				}
 			}
-			if (tileUp != null && tileUp.active()) {
-				up = (Main.tileStone[tileUp.type] ? 1 : tileUp.type);
-				if (tileUp.slope() == 3 || tileUp.slope() == 4) {
+			if (tileUp != null && tileUp.HasTile) {
+				up = (Main.tileStone[tileUp.TileType] ? 1 : tileUp.TileType);
+				if (tileUp.Slope == 3 || tileUp.Slope == 4) {
 					up = -1;
 				}
 			}
-			if (tileDown != null && tileDown.active()) {
-				down = (Main.tileStone[tileDown.type] ? 1 : tileDown.type);
-				if (tileDown.slope() == 1 || tileDown.slope() == 2) {
+			if (tileDown != null && tileDown.HasTile) {
+				down = (Main.tileStone[tileDown.TileType] ? 1 : tileDown.TileType);
+				if (tileDown.Slope == 1 || tileDown.Slope == 2) {
 					down = -1;
 				}
 			}
-			if (tileUpLeft != null && tileUpLeft.active()) {
-				upLeft = (Main.tileStone[tileUpLeft.type] ? 1 : tileUpLeft.type);
+			if (tileUpLeft != null && tileUpLeft.HasTile) {
+				upLeft = (Main.tileStone[tileUpLeft.TileType] ? 1 : tileUpLeft.TileType);
 			}
-			if (tileUpRight != null && tileUpRight.active()) {
-				upRight = (Main.tileStone[tileUpRight.type] ? 1 : tileUpRight.type);
+			if (tileUpRight != null && tileUpRight.HasTile) {
+				upRight = (Main.tileStone[tileUpRight.TileType] ? 1 : tileUpRight.TileType);
 			}
-			if (tileDownLeft != null && tileDownLeft.active()) {
-				downLeft = (Main.tileStone[tileDownLeft.type] ? 1 : tileDownLeft.type);
+			if (tileDownLeft != null && tileDownLeft.HasTile) {
+				downLeft = (Main.tileStone[tileDownLeft.TileType] ? 1 : tileDownLeft.TileType);
 			}
-			if (tileDownRight != null && tileDownRight.active()) {
-				downRight = (Main.tileStone[tileDownRight.type] ? 1 : tileDownRight.type);
+			if (tileDownRight != null && tileDownRight.HasTile) {
+				downRight = (Main.tileStone[tileDownRight.TileType] ? 1 : tileDownRight.TileType);
 			}
-			if (tile.slope() == 2) {
+			if (tile.Slope == 2) {
 				up = -1;
 				left = -1;
 			}
-			if (tile.slope() == 1) {
+			if (tile.Slope == 1) {
 				up = -1;
 				right = -1;
 			}
-			if (tile.slope() == 4) {
+			if (tile.Slope == 4) {
 				down = -1;
 				left = -1;
 			}
-			if (tile.slope() == 3) {
+			if (tile.Slope == 3) {
 				down = -1;
 				right = -1;
 			}
@@ -87,14 +87,14 @@ namespace Tyfyter.Utils {
 		/// <param name="mergeDirections">upLeft, up, upRight, left, right, downLeft, down, downRight</param>
 		public static void AutoFrame(int i, int j, int frameOption = -1, byte mergeDirections = 0) {
 			Tile tile = Main.tile[i, j];
-			int type = tile.type;
-			int frameX = tile.frameX;
-			int frameY = tile.frameY;
+			int type = tile.TileType;
+			int frameX = tile.TileFrameX;
+			int frameY = tile.TileFrameY;
 			if (frameOption == -1) {
 				frameOption = WorldGen.genRand.Next(0, 3);
-				tile.frameNumber((byte)frameOption);
+				tile.TileFrameNumber = (byte)frameOption;
 			} else {
-				frameOption = tile.frameNumber();
+				frameOption = tile.TileFrameNumber;
 			}
 			if (Main.tileLargeFrames[type] == 1) {
 				int num58 = j % 4;
@@ -120,76 +120,76 @@ namespace Tyfyter.Utils {
 					if (!upLeft && !upRight) {
 						switch (frameOption) {
 							case 0:
-							tile.frameX = 108;
-							tile.frameY = 18;
+							tile.TileFrameX = 108;
+							tile.TileFrameY = 18;
 							break;
 							case 1:
-							tile.frameX = 126;
-							tile.frameY = 18;
+							tile.TileFrameX = 126;
+							tile.TileFrameY = 18;
 							break;
 							default:
-							tile.frameX = 144;
-							tile.frameY = 18;
+							tile.TileFrameX = 144;
+							tile.TileFrameY = 18;
 							break;
 						}
 					} else if (!downLeft && !downRight) {
 						switch (frameOption) {
 							case 0:
-							tile.frameX = 108;
-							tile.frameY = 36;
+							tile.TileFrameX = 108;
+							tile.TileFrameY = 36;
 							break;
 							case 1:
-							tile.frameX = 126;
-							tile.frameY = 36;
+							tile.TileFrameX = 126;
+							tile.TileFrameY = 36;
 							break;
 							default:
-							tile.frameX = 144;
-							tile.frameY = 36;
+							tile.TileFrameX = 144;
+							tile.TileFrameY = 36;
 							break;
 						}
 					} else if (!upLeft && !downLeft) {
 						switch (frameOption) {
 							case 0:
-							tile.frameX = 180;
-							tile.frameY = 0;
+							tile.TileFrameX = 180;
+							tile.TileFrameY = 0;
 							break;
 							case 1:
-							tile.frameX = 180;
-							tile.frameY = 18;
+							tile.TileFrameX = 180;
+							tile.TileFrameY = 18;
 							break;
 							default:
-							tile.frameX = 180;
-							tile.frameY = 36;
+							tile.TileFrameX = 180;
+							tile.TileFrameY = 36;
 							break;
 						}
 					} else if (!upRight && !downRight) {
 						switch (frameOption) {
 							case 0:
-							tile.frameX = 198;
-							tile.frameY = 0;
+							tile.TileFrameX = 198;
+							tile.TileFrameY = 0;
 							break;
 							case 1:
-							tile.frameX = 198;
-							tile.frameY = 18;
+							tile.TileFrameX = 198;
+							tile.TileFrameY = 18;
 							break;
 							default:
-							tile.frameX = 198;
-							tile.frameY = 36;
+							tile.TileFrameX = 198;
+							tile.TileFrameY = 36;
 							break;
 						}
 					} else {
 						switch (frameOption) {
 							case 0:
-							tile.frameX = 18;
-							tile.frameY = 18;
+							tile.TileFrameX = 18;
+							tile.TileFrameY = 18;
 							break;
 							case 1:
-							tile.frameX = 36;
-							tile.frameY = 18;
+							tile.TileFrameX = 36;
+							tile.TileFrameY = 18;
 							break;
 							default:
-							tile.frameX = 54;
-							tile.frameY = 18;
+							tile.TileFrameX = 54;
+							tile.TileFrameY = 18;
 							break;
 						}
 					}
@@ -197,245 +197,245 @@ namespace Tyfyter.Utils {
 				case down | left | right: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 18;
-						tile.frameY = 0;
+						tile.TileFrameX = 18;
+						tile.TileFrameY = 0;
 						break;
 						case 1:
-						tile.frameX = 36;
-						tile.frameY = 0;
+						tile.TileFrameX = 36;
+						tile.TileFrameY = 0;
 						break;
 						default:
-						tile.frameX = 54;
-						tile.frameY = 0;
+						tile.TileFrameX = 54;
+						tile.TileFrameY = 0;
 						break;
 					}
 				}break;
 				case up | left | right: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 18;
-						tile.frameY = 36;
+						tile.TileFrameX = 18;
+						tile.TileFrameY = 36;
 						break;
 						case 1:
-						tile.frameX = 36;
-						tile.frameY = 36;
+						tile.TileFrameX = 36;
+						tile.TileFrameY = 36;
 						break;
 						default:
-						tile.frameX = 54;
-						tile.frameY = 36;
+						tile.TileFrameX = 54;
+						tile.TileFrameY = 36;
 						break;
 					}
 				}break;
 				case up | down | right: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 0;
-						tile.frameY = 0;
+						tile.TileFrameX = 0;
+						tile.TileFrameY = 0;
 						break;
 						case 1:
-						tile.frameX = 0;
-						tile.frameY = 18;
+						tile.TileFrameX = 0;
+						tile.TileFrameY = 18;
 						break;
 						default:
-						tile.frameX = 0;
-						tile.frameY = 36;
+						tile.TileFrameX = 0;
+						tile.TileFrameY = 36;
 						break;
 					}
 				}break;
 				case up | down | left: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 72;
-						tile.frameY = 0;
+						tile.TileFrameX = 72;
+						tile.TileFrameY = 0;
 						break;
 						case 1:
-						tile.frameX = 72;
-						tile.frameY = 18;
+						tile.TileFrameX = 72;
+						tile.TileFrameY = 18;
 						break;
 						default:
-						tile.frameX = 72;
-						tile.frameY = 36;
+						tile.TileFrameX = 72;
+						tile.TileFrameY = 36;
 						break;
 					}
 				}break;
 				case down | right: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 0;
-						tile.frameY = 54;
+						tile.TileFrameX = 0;
+						tile.TileFrameY = 54;
 						break;
 						case 1:
-						tile.frameX = 36;
-						tile.frameY = 54;
+						tile.TileFrameX = 36;
+						tile.TileFrameY = 54;
 						break;
 						default:
-						tile.frameX = 72;
-						tile.frameY = 54;
+						tile.TileFrameX = 72;
+						tile.TileFrameY = 54;
 						break;
 					}
 				}break;
 				case down | left: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 18;
-						tile.frameY = 54;
+						tile.TileFrameX = 18;
+						tile.TileFrameY = 54;
 						break;
 						case 1:
-						tile.frameX = 54;
-						tile.frameY = 54;
+						tile.TileFrameX = 54;
+						tile.TileFrameY = 54;
 						break;
 						default:
-						tile.frameX = 90;
-						tile.frameY = 54;
+						tile.TileFrameX = 90;
+						tile.TileFrameY = 54;
 						break;
 					}
 				}break;
 				case up | right: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 0;
-						tile.frameY = 72;
+						tile.TileFrameX = 0;
+						tile.TileFrameY = 72;
 						break;
 						case 1:
-						tile.frameX = 36;
-						tile.frameY = 72;
+						tile.TileFrameX = 36;
+						tile.TileFrameY = 72;
 						break;
 						default:
-						tile.frameX = 72;
-						tile.frameY = 72;
+						tile.TileFrameX = 72;
+						tile.TileFrameY = 72;
 						break;
 					}
 				}break;
 				case up | left: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 18;
-						tile.frameY = 72;
+						tile.TileFrameX = 18;
+						tile.TileFrameY = 72;
 						break;
 						case 1:
-						tile.frameX = 54;
-						tile.frameY = 72;
+						tile.TileFrameX = 54;
+						tile.TileFrameY = 72;
 						break;
 						default:
-						tile.frameX = 90;
-						tile.frameY = 72;
+						tile.TileFrameX = 90;
+						tile.TileFrameY = 72;
 						break;
 					}
 				}break;
 				case up | down: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 90;
-						tile.frameY = 0;
+						tile.TileFrameX = 90;
+						tile.TileFrameY = 0;
 						break;
 						case 1:
-						tile.frameX = 90;
-						tile.frameY = 18;
+						tile.TileFrameX = 90;
+						tile.TileFrameY = 18;
 						break;
 						default:
-						tile.frameX = 90;
-						tile.frameY = 36;
+						tile.TileFrameX = 90;
+						tile.TileFrameY = 36;
 						break;
 					}
 				}break;
 				case left | right: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 108;
-						tile.frameY = 72;
+						tile.TileFrameX = 108;
+						tile.TileFrameY = 72;
 						break;
 						case 1:
-						tile.frameX = 126;
-						tile.frameY = 72;
+						tile.TileFrameX = 126;
+						tile.TileFrameY = 72;
 						break;
 						default:
-						tile.frameX = 144;
-						tile.frameY = 72;
+						tile.TileFrameX = 144;
+						tile.TileFrameY = 72;
 						break;
 					}
 				}break;
 				case down: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 108;
-						tile.frameY = 0;
+						tile.TileFrameX = 108;
+						tile.TileFrameY = 0;
 						break;
 						case 1:
-						tile.frameX = 126;
-						tile.frameY = 0;
+						tile.TileFrameX = 126;
+						tile.TileFrameY = 0;
 						break;
 						default:
-						tile.frameX = 144;
-						tile.frameY = 0;
+						tile.TileFrameX = 144;
+						tile.TileFrameY = 0;
 						break;
 					}
 				}break;
 				case up: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 108;
-						tile.frameY = 54;
+						tile.TileFrameX = 108;
+						tile.TileFrameY = 54;
 						break;
 						case 1:
-						tile.frameX = 126;
-						tile.frameY = 54;
+						tile.TileFrameX = 126;
+						tile.TileFrameY = 54;
 						break;
 						default:
-						tile.frameX = 144;
-						tile.frameY = 54;
+						tile.TileFrameX = 144;
+						tile.TileFrameY = 54;
 						break;
 					}
 				}break;
 				case right: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 162;
-						tile.frameY = 0;
+						tile.TileFrameX = 162;
+						tile.TileFrameY = 0;
 						break;
 						case 1:
-						tile.frameX = 162;
-						tile.frameY = 18;
+						tile.TileFrameX = 162;
+						tile.TileFrameY = 18;
 						break;
 						default:
-						tile.frameX = 162;
-						tile.frameY = 36;
+						tile.TileFrameX = 162;
+						tile.TileFrameY = 36;
 						break;
 					}
 				}break;
 				case left: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 216;
-						tile.frameY = 0;
+						tile.TileFrameX = 216;
+						tile.TileFrameY = 0;
 						break;
 						case 1:
-						tile.frameX = 216;
-						tile.frameY = 18;
+						tile.TileFrameX = 216;
+						tile.TileFrameY = 18;
 						break;
 						default:
-						tile.frameX = 216;
-						tile.frameY = 36;
+						tile.TileFrameX = 216;
+						tile.TileFrameY = 36;
 						break;
 					}
 				}break;
 				case 0: {
 					switch (frameOption) {
 						case 0:
-						tile.frameX = 162;
-						tile.frameY = 54;
+						tile.TileFrameX = 162;
+						tile.TileFrameY = 54;
 						break;
 						case 1:
-						tile.frameX = 180;
-						tile.frameY = 54;
+						tile.TileFrameX = 180;
+						tile.TileFrameY = 54;
 						break;
 						default:
-						tile.frameX = 198;
-						tile.frameY = 54;
+						tile.TileFrameX = 198;
+						tile.TileFrameY = 54;
 						break;
 					}
 				}break;
 			}
-			if (tile.frameX != frameX && tile.frameY != frameY) {
+			if (tile.TileFrameX != frameX && tile.TileFrameY != frameY) {
 				WorldGen.tileReframeCount++;
 				if (WorldGen.tileReframeCount < 55) {
 					WorldGen.TileFrame(i - 1, j);

@@ -12,8 +12,8 @@ namespace Origins.Items.Armor.Defiled {
             Tooltip.SetDefault("Increases mana regeneration rate");
         }
         public override void SetDefaults() {
-            item.defense = 6;
-            item.rare = ItemRarityID.Blue;
+            Item.defense = 6;
+            Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
             player.manaRegen+=2;
@@ -26,12 +26,11 @@ namespace Origins.Items.Armor.Defiled {
             player.GetModPlayer<OriginPlayer>().defiledSet = true;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
             recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 10);
-            recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
     [AutoloadEquip(EquipType.Body)]
@@ -41,20 +40,19 @@ namespace Origins.Items.Armor.Defiled {
             Tooltip.SetDefault("5% increased magic damage");
         }
         public override void SetDefaults() {
-            item.defense = 7;
-            item.wornArmor = true;
-            item.rare = ItemRarityID.Blue;
+            Item.defense = 7;
+            Item.wornArmor = true;
+            Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
-            player.magicDamage+=0.05f;
+            player.GetAttackSpeed(DamageClass.Magic) += 0.05f;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
             recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 20);
-            recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
     [AutoloadEquip(EquipType.Legs)]
@@ -64,25 +62,24 @@ namespace Origins.Items.Armor.Defiled {
             Tooltip.SetDefault("5% increased movement speed");
         }
         public override void SetDefaults() {
-            item.defense = 6;
-            item.rare = ItemRarityID.Blue;
+            Item.defense = 6;
+            Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
             player.moveSpeed+=0.05f;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
             recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 15);
-            recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }
 namespace Origins.Buffs {
     public class Defiled_Exhaustion_Buff : ModBuff {
-        public override void SetDefaults() {
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Exhaustion");
         }
         public override void Update(Player player, ref int buffIndex) {

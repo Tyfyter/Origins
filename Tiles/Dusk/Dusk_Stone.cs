@@ -11,11 +11,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dusk {
     public class Dusk_Stone : OriginTile {
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			drop = ItemType<Dusk_Stone_Item>();
+			ItemDrop = ItemType<Dusk_Stone_Item>();
 			AddMapEntry(new Color(0, 0, 0));
 		}
         public override void PostSetDefaults() {
@@ -27,8 +27,8 @@ namespace Origins.Tiles.Dusk {
             DisplayName.SetDefault("Dusk Stone");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.StoneBlock);
-            item.createTile = TileType<Dusk_Stone>();
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.createTile = TileType<Dusk_Stone>();
 		}
     }
 }

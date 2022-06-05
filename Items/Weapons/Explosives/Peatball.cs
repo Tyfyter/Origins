@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,33 +12,33 @@ namespace Origins.Items.Weapons.Explosives {
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.Snowball);
+            Item.CloneDefaults(ItemID.Snowball);
             //item.maxStack = 999;
-            item.damage*=3;
-			item.value+=20;
-			item.useTime = (int)(item.useTime*0.75);
-			item.useAnimation = (int)(item.useAnimation*0.75);
-            item.shoot = ModContent.ProjectileType<Peatball_P>();
-			item.shootSpeed*=1.35f;
-            item.knockBack*=2;
-			item.rare = ItemRarityID.Blue;
+            Item.damage*=3;
+			Item.value+=20;
+			Item.useTime = (int)(Item.useTime*0.75);
+			Item.useAnimation = (int)(Item.useAnimation*0.75);
+            Item.shoot = ModContent.ProjectileType<Peatball_P>();
+			Item.shootSpeed*=1.35f;
+            Item.knockBack*=2;
+			Item.rare = ItemRarityID.Blue;
 		}
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
             recipe.SetResult(this, 4);
-            recipe.AddRecipe();
-            Origins.AddExplosive(item, noAmmo:true);
+            recipe.Register();
+            Origins.AddExplosive(Item, noAmmo:true);
         }
     }
     public class Peatball_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Explosives/Peatball";
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.SnowBallFriendly);
-            projectile.penetrate = 1;
-            projectile.width = 12;
-            projectile.height = 12;
-            projectile.scale = 0.85f;
+            Projectile.CloneDefaults(ProjectileID.SnowBallFriendly);
+            Projectile.penetrate = 1;
+            Projectile.width = 12;
+            Projectile.height = 12;
+            Projectile.scale = 0.85f;
         }
         /*public override bool OnTileCollide(Vector2 oldVelocity) {
             projectile.Kill();
@@ -48,16 +49,16 @@ namespace Origins.Items.Weapons.Explosives {
             return true;
         }*/
         public override void Kill(int timeLeft) {
-			projectile.position.X += projectile.width / 2;
-			projectile.position.Y += projectile.height / 2;
-			projectile.width = 48;
-			projectile.height = 48;
-			projectile.position.X -= projectile.width / 2;
-			projectile.position.Y -= projectile.height / 2;
-			projectile.Damage();
-            Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 14, 0.66f);
-            Main.gore[Gore.NewGore(new Vector2(projectile.Center.X, projectile.Center.Y), default, Main.rand.Next(61, 64))].velocity += Vector2.One;
-            Main.gore[Gore.NewGore(new Vector2(projectile.Center.X, projectile.Center.Y), default, Main.rand.Next(61, 64))].velocity += Vector2.One;
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = 48;
+			Projectile.height = 48;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.Damage();
+            SoundEngine.PlaySound(SoundID.Item14.WithVolume(0.66f), Projectile.Center);
+            Gore.NewGoreDirect(Projectile.GetSource_FromThis(), new Vector2(Projectile.Center.X, Projectile.Center.Y), default, Main.rand.Next(61, 64)).velocity += Vector2.One;
+            Gore.NewGoreDirect(Projectile.GetSource_FromThis(), new Vector2(Projectile.Center.X, Projectile.Center.Y), default, Main.rand.Next(61, 64)).velocity += Vector2.One;
             //Main.gore[Gore.NewGore(new Vector2(projectile.Center.X, projectile.Center.Y), default, Main.rand.Next(61, 64))].velocity += Vector2.One;
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
@@ -18,20 +19,20 @@ namespace Origins.Items.Weapons.Other {
             glowmask = Origins.AddGlowMask(this);
         }
         public override void SetDefaults() {
-            item.damage = 30;
-            item.magic = true;
-            item.useStyle = 5;
-            item.crit = 1;
-            item.useAnimation = 35;
-            item.useTime = 1;
-            item.mana = 16;
-            item.width = 58;
-            item.height = 22;
-            item.shoot = ModContent.ProjectileType<Lava_Shot>();
-            item.shootSpeed = 6.75f;
-            item.UseSound = null;
+            Item.damage = 30;
+            Item.magic = true;
+            Item.useStyle = 5;
+            Item.crit = 1;
+            Item.useAnimation = 35;
+            Item.useTime = 1;
+            Item.mana = 16;
+            Item.width = 58;
+            Item.height = 22;
+            Item.shoot = ModContent.ProjectileType<Lava_Shot>();
+            Item.shootSpeed = 6.75f;
+            Item.UseSound = null;
             //item.reuseDelay = 9;
-            item.glowMask = glowmask;
+            Item.glowMask = glowmask;
         }
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
@@ -39,7 +40,7 @@ namespace Origins.Items.Weapons.Other {
             Vector2 velocity = new Vector2(speedX, speedY);
             Vector2 offset = Vector2.Normalize(velocity);
             offset = offset*24+offset.RotatedBy(-MathHelper.PiOver2*player.direction)*8;
-            Main.PlaySound(SoundID.Item, position+offset, 20);
+            SoundEngine.PlaySound(SoundID.Item, position+offset, 20);
             position+=offset;
             velocity = velocity.RotatedByRandom(0.5);
             speedX = velocity.X;

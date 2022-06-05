@@ -11,12 +11,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
     public class Sulphur_Stone : DefiledTile {
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             TileID.Sets.Conversion.Stone[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			drop = ItemType<Sulphur_Stone_Item>();
+			ItemDrop = ItemType<Sulphur_Stone_Item>();
 			AddMapEntry(new Color(18, 73, 56));
             mergeID = TileID.Stone;
 		}
@@ -29,8 +29,8 @@ namespace Origins.Tiles.Brine {
             DisplayName.SetDefault("Sulphur Stone");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.StoneBlock);
-            item.createTile = TileType<Sulphur_Stone>();
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.createTile = TileType<Sulphur_Stone>();
 		}
     }
 }

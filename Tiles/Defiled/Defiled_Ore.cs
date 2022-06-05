@@ -11,12 +11,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
     public class Defiled_Ore : OriginTile, IComplexMineDamageTile {
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             TileID.Sets.Ore[Type] = true;
-			drop = ItemType<Defiled_Ore_Item>();
+			ItemDrop = ItemType<Defiled_Ore_Item>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Lost Ore");
 			AddMapEntry(new Color(225, 225, 225), name);
@@ -40,8 +40,8 @@ namespace Origins.Tiles.Defiled {
             DisplayName.SetDefault("Lost Ore");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.DemoniteOre);
-            item.createTile = TileType<Defiled_Ore>();
+            Item.CloneDefaults(ItemID.DemoniteOre);
+            Item.createTile = TileType<Defiled_Ore>();
 		}
     }
 }

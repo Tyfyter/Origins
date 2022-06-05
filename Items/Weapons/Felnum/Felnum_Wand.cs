@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,83 +19,79 @@ namespace Origins.Items.Weapons.Felnum {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Magnus");
             Tooltip.SetDefault("Receives 50% higher damage bonuses");
-			Item.staff[item.type] = true;
+			Item.staff[Item.type] = true;
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.CrystalVileShard);
-            item.shoot = ModContent.ProjectileType<Felnum_Zap>();
-            item.damage = baseDamage;
+            Item.CloneDefaults(ItemID.CrystalVileShard);
+            Item.shoot = ModContent.ProjectileType<Felnum_Zap>();
+            Item.damage = baseDamage;
             //item.shootSpeed*=0.66f;
-            item.UseSound = null;
+            Item.UseSound = null;
             //item.mana = 0;
             //item.useTime = 1;
             //item.useAnimation = 10;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 7);
             recipe.AddIngredient(ItemID.FallenStar);
-            recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();
+            recipe.Register();
         }
-        public override void GetWeaponDamage(Player player, ref int damage) {
-            //if(!OriginPlayer.ItemChecking)
-            damage+=(damage-baseDamage)/2;
-        }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            Vector2 speed = new Vector2(speedX, speedY);
-            //damage+=(damage-35)/2;
-			Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
-            Projectile.NewProjectile(position, speed, type, damage, knockBack, item.owner);
+		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
+            damage = damage.MultiplyBonuses(1.5f);
+		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, Item.playerIndexTheItemIsReservedFor);
             //Projectile.NewProjectile(position, speed, 777, damage, knockBack, item.owner, position.X, position.Y);
             return false;
         }
     }
     public class Felnum_Zap : ModProjectile {
         (Vector2?, Vector2)[] oldPos = new (Vector2?,Vector2)[7];
-        public override string Texture => "Terraria/Projectile_3";
+        public override string Texture => "Terraria/Images/Projectile_3";
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Magnus");
         }
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 10;
-            projectile.width = 15;
-            projectile.height = 15;
-            projectile.aiStyle = 0;
-            projectile.extraUpdates = 1;
-            projectile.hostile = false;
-            projectile.friendly = true;
-            projectile.timeLeft*=3;
-            projectile.penetrate = -1;
+            Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
+            Projectile.width = 15;
+            Projectile.height = 15;
+            Projectile.aiStyle = 0;
+            Projectile.extraUpdates = 1;
+            Projectile.hostile = false;
+            Projectile.friendly = true;
+            Projectile.timeLeft*=3;
+            Projectile.penetrate = -1;
         }
         public override bool OnTileCollide(Vector2 oldVelocity) {
-            projectile.friendly = false;
-            projectile.tileCollide = false;
-            projectile.position+=oldVelocity;
-            projectile.velocity = Vector2.Zero;
-            projectile.timeLeft = 14;
+            Projectile.friendly = false;
+            Projectile.tileCollide = false;
+            Projectile.position+=oldVelocity;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.timeLeft = 14;
             return false;
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) {
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
             width = 1;
             height = 1;
             return true;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
-            int l = Math.Min(projectile.timeLeft, 7);
-            if((projectile.timeLeft&1)==0) {
+        public override bool PreDraw(ref Color lightColor) {
+            int l = Math.Min(Projectile.timeLeft, 7);
+            if((Projectile.timeLeft&1)==0) {
                 for(int i = l; --i>0;) {
                     oldPos[i] = oldPos[i-1];
                     oldPos[i].Item1+=oldPos[i].Item2;
                 }
                 Vector2 dir = Main.rand.NextVector2Unit();
-                oldPos[0] = (projectile.Center+dir*2, dir/2);
+                oldPos[0] = (Projectile.Center+dir*2, dir/2);
             }
             List<Vector2> positions = oldPos.Where(i=>i.Item1.HasValue).Select(i=>i.Item1.Value-Main.screenPosition).ToList();
-            positions.Insert(0, projectile.Center-Main.screenPosition);
+            positions.Insert(0, Projectile.Center-Main.screenPosition);
             spriteBatch.DrawLightningArc(
                 positions.ToArray(),
                 null,
@@ -116,7 +113,7 @@ namespace Origins.Items.Weapons.Felnum {
             float maxl = (float)Math.Sqrt(Main.screenWidth*Main.screenWidth+Main.screenHeight*Main.screenHeight);//(_targetPos-start).Length();
             float r = unit.ToRotation();// + rotation??(float)(Math.PI/2);
             float l = unit.Length()*2.5f;
-            int t = projectile.timeLeft>10?25-projectile.timeLeft:projectile.timeLeft;
+            int t = Projectile.timeLeft>10?25-Projectile.timeLeft:Projectile.timeLeft;
             float s = Math.Min(t/15f,1f);
             Vector2 perpUnit = unit.RotatedBy(MathHelper.PiOver2);
             //Dust dust;

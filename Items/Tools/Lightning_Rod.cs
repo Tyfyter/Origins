@@ -16,20 +16,20 @@ namespace Origins.Items.Tools {
 		}
 
 		public override void SetDefaults() {
-			item.CloneDefaults(ItemID.ReinforcedFishingPole);
+			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
 			//Sets the poles fishing power
-			item.fishingPole = 37;
+			Item.fishingPole = 37;
 			//Wooden Fishing Pole is 9f and Golden Fishing Rod is 17f
-			item.shootSpeed = 13.7f;
-			item.shoot = ModContent.ProjectileType<Lightning_Rod_Bobber>();
+			Item.shootSpeed = 13.7f;
+			Item.shoot = ModContent.ProjectileType<Lightning_Rod_Bobber>();
 		}
 
 		public override void AddRecipes() {
-			ModRecipe recipe = new ModRecipe(mod);
+			Recipe recipe = Mod.CreateRecipe(Type);
 			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 8);
 			recipe.AddTile(TileID.Anvils);
 			recipe.SetResult(this);
-			recipe.AddRecipe();
+			recipe.Register();
 		}
 	}
 	public class Lightning_Rod_Bobber : ModProjectile {
@@ -39,20 +39,20 @@ namespace Origins.Items.Tools {
 		}
 
 		public override void SetDefaults() {
-			projectile.CloneDefaults(ProjectileID.BobberReinforced);
+			Projectile.CloneDefaults(ProjectileID.BobberReinforced);
 			drawOriginOffsetY = -8;
 		}
 
-		public override bool PreDrawExtras(SpriteBatch spriteBatch) {
+		public override bool PreDrawExtras() {
 			Color fishingLineColor = new Color(176, 225, 255);
-			Lighting.AddLight(projectile.Center, fishingLineColor.R / 255, fishingLineColor.G / 255, fishingLineColor.B / 255);
+			Lighting.AddLight(Projectile.Center, fishingLineColor.R / 255, fishingLineColor.G / 255, fishingLineColor.B / 255);
 
 			//Change these two values in order to change the origin of where the line is being drawn
 			int xPositionAdditive = 45;
 			float yPositionAdditive = 35f;
 
-			Player player = Main.player[projectile.owner];
-			if (!projectile.bobber || player.inventory[player.selectedItem].holdStyle <= 0)
+			Player player = Main.player[Projectile.owner];
+			if (!Projectile.bobber || player.inventory[player.selectedItem].holdStyle <= 0)
 				return false;
 
 			Vector2 lineOrigin = player.MountedCenter;
@@ -74,7 +74,7 @@ namespace Origins.Items.Tools {
 			}
 			// RotatedRelativePoint adjusts lineOrigin to account for player rotation.
 			lineOrigin = player.RotatedRelativePoint(lineOrigin + new Vector2(8f), true) - new Vector2(8f);
-			Vector2 playerToProjectile = projectile.Center - lineOrigin;
+			Vector2 playerToProjectile = Projectile.Center - lineOrigin;
 			bool canDraw = true;
 			if (playerToProjectile.X == 0f && playerToProjectile.Y == 0f)
 				return false;
@@ -83,7 +83,7 @@ namespace Origins.Items.Tools {
 			playerToProjectileMagnitude = 12f / playerToProjectileMagnitude;
 			playerToProjectile *= playerToProjectileMagnitude;
 			lineOrigin -= playerToProjectile;
-			playerToProjectile = projectile.Center - lineOrigin;
+			playerToProjectile = Projectile.Center - lineOrigin;
 
 			Vector2 lastArcPos = lineOrigin;
 
@@ -102,11 +102,11 @@ namespace Origins.Items.Tools {
 				}
 				playerToProjectile *= 12f / positionMagnitude;
 				lineOrigin += playerToProjectile;
-				playerToProjectile.X = projectile.position.X + projectile.width * 0.5f - lineOrigin.X;
-				playerToProjectile.Y = projectile.position.Y + projectile.height * 0.1f - lineOrigin.Y;
+				playerToProjectile.X = Projectile.position.X + Projectile.width * 0.5f - lineOrigin.X;
+				playerToProjectile.Y = Projectile.position.Y + Projectile.height * 0.1f - lineOrigin.Y;
 				if (positionMagnitude > 12f) {
 					float positionInverseMultiplier = 0.3f;
-					float absVelocitySum = Math.Abs(projectile.velocity.X) + Math.Abs(projectile.velocity.Y);
+					float absVelocitySum = Math.Abs(Projectile.velocity.X) + Math.Abs(Projectile.velocity.Y);
 					if (absVelocitySum > 16f) {
 						absVelocitySum = 16f;
 					}
@@ -120,14 +120,14 @@ namespace Origins.Items.Tools {
 					if (positionInverseMultiplier < 0f) {
 						positionInverseMultiplier = 0f;
 					}
-					absVelocitySum = 1f - projectile.localAI[0] / 100f;
+					absVelocitySum = 1f - Projectile.localAI[0] / 100f;
 					positionInverseMultiplier *= absVelocitySum;
 					if (playerToProjectile.Y > 0f) {
 						playerToProjectile.Y *= 1f + positionInverseMultiplier;
 						playerToProjectile.X *= 1f - positionInverseMultiplier;
 					}
 					else {
-						absVelocitySum = Math.Abs(projectile.velocity.X) / 3f;
+						absVelocitySum = Math.Abs(Projectile.velocity.X) / 3f;
 						if (absVelocitySum > 1f) {
 							absVelocitySum = 1f;
 						}

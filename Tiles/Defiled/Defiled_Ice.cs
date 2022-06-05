@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
     public class Defiled_Ice : DefiledTile {
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 		    TileID.Sets.Ices[Type] = true;
 		    TileID.Sets.IcesSlush[Type] = true;
@@ -23,7 +23,7 @@ namespace Origins.Tiles.Defiled {
             Main.tileMerge[Type] = Main.tileMerge[TileID.IceBlock];
             Main.tileMerge[Type][TileID.IceBlock] = true;
 			Main.tileBlockLight[Type] = true;
-			drop = ItemType<Defiled_Ice_Item>();
+			ItemDrop = ItemType<Defiled_Ice_Item>();
 			AddMapEntry(new Color(225, 225, 225));
             mergeID = TileID.IceBlock;
 		}
@@ -40,8 +40,8 @@ namespace Origins.Tiles.Defiled {
             DisplayName.SetDefault("Defiled Ice");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.StoneBlock);
-            item.createTile = TileType<Defiled_Ice>();
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.createTile = TileType<Defiled_Ice>();
 		}
     }
 }

@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,28 +19,28 @@ namespace Origins.Items.Weapons.Riven {
         }
 
         public override void SetDefaults(){
-            item.damage = 42;
-            item.magic = true;
-            item.mana = 8;
-            item.shoot = ModContent.ProjectileType<Seam_Beam_Beam>();
-            item.shootSpeed = 0f;
-            item.useTime = item.useAnimation = 20;
-            item.useStyle = 5;
-            item.noUseGraphic = false;
-            item.noMelee = true;
-            item.shootSpeed = 1;
-            item.width = 12;
-            item.height = 10;
-            item.value = 10000;
-            item.rare = ItemRarityID.Pink;
-            item.UseSound = new LegacySoundStyle(SoundID.Item, Origins.Sounds.EnergyRipple);
-            item.glowMask = glowmask;
+            Item.damage = 42;
+            Item.magic = true;
+            Item.mana = 8;
+            Item.shoot = ModContent.ProjectileType<Seam_Beam_Beam>();
+            Item.shootSpeed = 0f;
+            Item.useTime = Item.useAnimation = 20;
+            Item.useStyle = 5;
+            Item.noUseGraphic = false;
+            Item.noMelee = true;
+            Item.shootSpeed = 1;
+            Item.width = 12;
+            Item.height = 10;
+            Item.value = 10000;
+            Item.rare = ItemRarityID.Pink;
+            Item.UseSound = new LegacySoundStyle(SoundID.Item, Origins.Sounds.EnergyRipple);
+            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddTile(TileID.DemonAltar);
             recipe.SetResult(this);
-            recipe.AddRecipe();
+            recipe.Register();
         }
         public override bool AltFunctionUse(Player player) {
             return true;
@@ -60,33 +61,33 @@ namespace Origins.Items.Weapons.Riven {
         private Vector2 _targetPos;         //Ending position of the laser beam
         public override void SetDefaults() {
             //projectile.name = "Wind";  //this is the projectile name
-            projectile.width = 10;
-            projectile.height = 10;
-            projectile.friendly = true;     //this defines if the projectile is friendly
-            projectile.penetrate = -1;  //this defines the projectile penetration, -1 = infinity
-            projectile.tileCollide = true;   //this defines if the tile can collide with walls
-            projectile.magic = true;
-            projectile.timeLeft = 32;
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.friendly = true;     //this defines if the projectile is friendly
+            Projectile.penetrate = -1;  //this defines the projectile penetration, -1 = infinity
+            Projectile.tileCollide = true;   //this defines if the tile can collide with walls
+            Projectile.magic = true;
+            Projectile.timeLeft = 32;
             //projectile.hide = true;
         }
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Seam Beam");
             if (!Main.dedServ) {
-                startTexture = mod.GetTexture("Projectiles/Weapons/Seam_Beam_Start");
-                endTexture = mod.GetTexture("Projectiles/Weapons/Seam_Beam_End");
+                startTexture = Mod.GetTexture("Projectiles/Weapons/Seam_Beam_Start");
+                endTexture = Mod.GetTexture("Projectiles/Weapons/Seam_Beam_End");
             }
 		}
 
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) {
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
             width = 1;
             height = 1;
 			return false;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+        public override bool PreDraw(ref Color lightColor) {
             Vector2 unit = velocity;//_targetPos - projectile.Center;
             unit.Normalize();
-            DrawLaser(spriteBatch, projectile.Center, unit, 1, new Vector2(1f,0.55f), maxDist:(_targetPos-projectile.Center).Length());
+            DrawLaser(spriteBatch, Projectile.Center, unit, 1, new Vector2(1f,0.55f), maxDist:(_targetPos-Projectile.Center).Length());
             return false;
 
         }
@@ -103,13 +104,13 @@ namespace Origins.Items.Weapons.Riven {
             float maxl = (_targetPos-start).Length();
             float r = unit.ToRotation();// + rotation??(float)(Math.PI/2);
             float l = unit.Length();//*2.5f;
-            int t = projectile.timeLeft>10?25-projectile.timeLeft:projectile.timeLeft;
+            int t = Projectile.timeLeft>10?25-Projectile.timeLeft:Projectile.timeLeft;
             float s = Math.Min(t/15f,1f);
             Vector2 perpUnit = unit.RotatedBy(MathHelper.PiOver2);
             //Dust dust;
             DrawData data;
             int dustTimer = 48;
-            Texture2D midTexture = Main.projectileTexture[projectile.type];
+            Texture2D midTexture = TextureAssets.Projectile[Projectile.type].Value;
             Texture2D texture = startTexture;
             System.Collections.Generic.Queue<DrawData> drawDatas = new System.Collections.Generic.Queue<DrawData>() { };
             for (float i = 0; i <= maxDist; i += step){
@@ -130,7 +131,7 @@ namespace Origins.Items.Weapons.Riven {
                     new Rectangle((int)i%44, 0, 1, 32), Color.OrangeRed, r,
                     new Vector2(0, 16+(float)Math.Sin(i/4f)*2), scale*new Vector2(1,s), 0, 0);*/
                 data = new DrawData(texture, origin - Main.screenPosition,
-                    new Rectangle((int)i%16, ((projectile.frame+(int)(i/16))%4)*24, 1, 24), Color.White, r,
+                    new Rectangle((int)i%16, ((Projectile.frame+(int)(i/16))%4)*24, 1, 24), Color.White, r,
                     new Vector2(0, 11),
                     scale, 0, 0);
                 drawDatas.Enqueue(data);
@@ -150,7 +151,7 @@ namespace Origins.Items.Weapons.Riven {
                 drawData = drawDatas.Dequeue();
                 if(drawDatas.Count<16) {
                     drawData.texture = endTexture;
-                    drawData.sourceRect = new Rectangle(++di, projectile.frame * 24, 1, 24);
+                    drawData.sourceRect = new Rectangle(++di, Projectile.frame * 24, 1, 24);
                 }
                 drawData.Draw(spriteBatch);
             }
@@ -161,8 +162,8 @@ namespace Origins.Items.Weapons.Riven {
         /// Change the way of collision check of the projectile
         /// </summary>
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-            Player p = Main.player[projectile.owner];
-            Vector2 unit = (Main.player[projectile.owner].MountedCenter - _targetPos);
+            Player p = Main.player[Projectile.owner];
+            Vector2 unit = (Main.player[Projectile.owner].MountedCenter - _targetPos);
             unit.Normalize();
             float point = 0f;
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), p.Center - 45f * unit, _targetPos, 24, ref point);
@@ -175,33 +176,33 @@ namespace Origins.Items.Weapons.Riven {
         /// </summary>
         public override void AI() {
 
-            Vector2 start = projectile.Center;
+            Vector2 start = Projectile.Center;
             Vector2 unit = velocity;
             unit.Normalize();
-            Vector2 samplingPoint = projectile.Center;
+            Vector2 samplingPoint = Projectile.Center;
 
             // Overriding that, if the player shoves the Prism into or through a wall, the interpolation starts at the player's center.
             // This last part prevents the player from projecting beams through walls under any circumstances.
-            Player player = Main.player[projectile.owner];
-			if (projectile.timeLeft == 32) {
+            Player player = Main.player[Projectile.owner];
+			if (Projectile.timeLeft == 32) {
                 velocity = Vector2.Normalize(Main.MouseWorld - player.MountedCenter);
-                projectile.position += velocity * 16;
-                if(!Collision.CanHitLine(player.Center, 0, 0, projectile.Center, 0, 0)) {
-                    samplingPoint = projectile.Center = player.Center;
+                Projectile.position += velocity * 16;
+                if(!Collision.CanHitLine(player.Center, 0, 0, Projectile.Center, 0, 0)) {
+                    samplingPoint = Projectile.Center = player.Center;
                 }
 			}
             float[] laserScanResults = new float[sample_points];
-			Collision.LaserScan(samplingPoint, unit, collision_size * projectile.scale, 1200f, laserScanResults);
+			Collision.LaserScan(samplingPoint, unit, collision_size * Projectile.scale, 1200f, laserScanResults);
 			float averageLengthSample = 0f;
 			for (int i = 0; i < laserScanResults.Length; ++i) {
 				averageLengthSample += laserScanResults[i];
 			}
 			averageLengthSample /= sample_points;
-            _targetPos = projectile.Center + (unit*averageLengthSample);
+            _targetPos = Projectile.Center + (unit*averageLengthSample);
 
-            if(++projectile.frameCounter>5) {
-                projectile.frame = (projectile.frame + 1) % 4;
-                projectile.frameCounter = 0;
+            if(++Projectile.frameCounter>5) {
+                Projectile.frame = (Projectile.frame + 1) % 4;
+                Projectile.frameCounter = 0;
             }
         }
 

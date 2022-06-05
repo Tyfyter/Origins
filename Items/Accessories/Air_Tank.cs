@@ -15,9 +15,9 @@ namespace Origins.Items.Accessories {
             Tooltip.SetDefault("Greatly extends underwater breathing\nImmunity to ‘Suffocation’");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.YoYoGlove);
-            item.handOffSlot = -1;
-            item.handOnSlot = -1;
+            Item.CloneDefaults(ItemID.YoYoGlove);
+            Item.handOffSlot = -1;
+            Item.handOnSlot = -1;
         }
         public override void UpdateEquip(Player player) {
             player.buffImmune[BuffID.Suffocation] = true;

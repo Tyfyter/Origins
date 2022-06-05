@@ -9,17 +9,17 @@ namespace Origins.Items.Tools {
 			Tooltip.SetDefault("Able to mine Hellstone");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.DeathbringerPickaxe);
-			item.damage = 13;
-			item.melee = true;
-            item.pick = 75;
-			item.width = 34;
-			item.height = 32;
-            item.useTime = 13;
-			item.useAnimation = 22;
-			item.knockBack = 4f;
-			item.value = 3600;
-			item.UseSound = SoundID.Item1;
+            Item.CloneDefaults(ItemID.DeathbringerPickaxe);
+			Item.damage = 13;
+			Item.melee = true;
+            Item.pick = 75;
+			Item.width = 34;
+			Item.height = 32;
+            Item.useTime = 13;
+			Item.useAnimation = 22;
+			Item.knockBack = 4f;
+			Item.value = 3600;
+			Item.UseSound = SoundID.Item1;
 		}
         public override float UseTimeMultiplier(Player player) {
             return 1f / ((player.pickSpeed-1)*0.75f+1);

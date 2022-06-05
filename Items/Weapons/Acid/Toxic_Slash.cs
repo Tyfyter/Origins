@@ -23,19 +23,19 @@ namespace Origins.Items.Weapons.Acid {
 			glowmask = Origins.AddGlowMask("Weapons/Acid/Toxic_Slash_Glow");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.TrueExcalibur);
-			item.damage = 45;
-			item.melee = true;
-			item.autoReuse = true;
-            item.useStyle = 1;
-			item.width = 28;
-			item.height = 30;
-			item.useTime = 27;
-			item.useAnimation = 28;
-			item.value = 5000;
-            item.shoot = ModContent.ProjectileType<Gooey_Exaultion_P>();
-			item.rare = ItemRarityID.Lime;
-			item.glowMask = glowmask;
+            Item.CloneDefaults(ItemID.TrueExcalibur);
+			Item.damage = 45;
+			Item.melee = true;
+			Item.autoReuse = true;
+            Item.useStyle = 1;
+			Item.width = 28;
+			Item.height = 30;
+			Item.useTime = 27;
+			Item.useAnimation = 28;
+			Item.value = 5000;
+            Item.shoot = ModContent.ProjectileType<Gooey_Exaultion_P>();
+			Item.rare = ItemRarityID.Lime;
+			Item.glowMask = glowmask;
 		}
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit) {
 			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);

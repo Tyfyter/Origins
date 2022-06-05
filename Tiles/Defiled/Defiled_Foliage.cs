@@ -13,7 +13,7 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Defiled {
     public class Defiled_Foliage : ModTile {
-		public override void SetDefaults(){
+		public override void SetStaticDefaults(){
 			Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = true;
 			Main.tileNoFail[Type] = true;
@@ -34,22 +34,22 @@ namespace Origins.Tiles.Defiled {
 		}
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-            Main.tile[i, j].frameX = (short)(Main.rand.Next(6)*18);
-            ushort anchorType = Main.tile[i, j+1].type;
+            Main.tile[i, j].TileFrameX = (short)(Main.rand.Next(6)*18);
+            ushort anchorType = Main.tile[i, j+1].TileType;
             if(!TileObjectData.GetTileData(Main.tile[i, j]).isValidTileAnchor(anchorType)) {
                 if(TileID.Sets.Conversion.Grass[anchorType]) {
                     switch(anchorType) {
                         case TileID.Grass:
-                        Main.tile[i, j].type = TileID.Plants;
+                        Main.tile[i, j].TileType = TileID.Plants;
                         return true;
                         case TileID.CorruptGrass:
-                        Main.tile[i, j].type = TileID.CorruptPlants;
+                        Main.tile[i, j].TileType = TileID.CorruptPlants;
                         return true;
                         case TileID.FleshGrass:
-                        Main.tile[i, j].type = TileID.FleshWeeds;
+                        Main.tile[i, j].TileType = TileID.FleshWeeds;
                         return true;
                         case TileID.HallowedGrass:
-                        Main.tile[i, j].type = TileID.HallowedGrass;
+                        Main.tile[i, j].TileType = TileID.HallowedGrass;
                         return true;
                     }
                 } else {

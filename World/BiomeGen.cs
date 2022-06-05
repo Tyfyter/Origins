@@ -18,8 +18,8 @@ using Terraria.World.Generation;
 using static Terraria.ModLoader.ModContent;
 using static Terraria.WorldGen;
 
-namespace Origins.World {
-    public partial class OriginWorld : ModWorld {
+namespace Origins {
+    public partial class OriginWorld : ModSystem {
         internal static List<(Point, int)> HellSpikes = new List<(Point, int)>() { };
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight) {
             #region _
@@ -60,7 +60,7 @@ namespace Origins.World {
                     //Framing.GetTileSafely(X-1, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
                     //Framing.GetTileSafely(X+1, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
                     //Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
-                    mod.Logger.Info(HellSpikes.Count+" Void Spikes: "+string.Join(", ", HellSpikes));
+                    Mod.Logger.Info(HellSpikes.Count+" Void Spikes: "+string.Join(", ", HellSpikes));
                     while(HellSpikes.Count>0) {
                         (Point, int) i = HellSpikes[0];
                         Point p = i.Item1;
@@ -75,7 +75,7 @@ namespace Origins.World {
                     for(int k = GenRunners.duskLeft; k < GenRunners.duskRight; k++) {
                         for(int l = GenRunners.duskBottom; l > GenRunners.duskTop; l--) {
                             //tile2 = Main.tile[k, l];
-                            if(Main.tile[k, l].type == duskStoneID) {
+                            if(Main.tile[k, l].TileType == duskStoneID) {
                                 GenRunners.AutoSlope(k,l,true);
                                 /*dirs = 0;
                                 if(Main.tile[k-1, l].active())
@@ -118,15 +118,15 @@ namespace Origins.World {
                     //}
                 }));
                 tasks.Insert(genIndex + 1, new PassLegacy("Brine Pool", delegate (GenerationProgress progress) {
-                    mod.Logger.Info("Pooling Brine");
+                    Mod.Logger.Info("Pooling Brine");
                     progress.Message = "Pooling Brine";
                     //for (int i = 0; i < Main.maxTilesX / 5000; i++) {
                     int JungleX = (int)_JungleX;
                     int X = WorldGen.genRand.Next(JungleX - 100, JungleX + 100);
                     int Y;
-                    for (Y = (int)WorldGen.worldSurfaceLow; !Main.tile[X, Y].active(); Y++);
+                    for (Y = (int)WorldGen.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++);
                     Y += WorldGen.genRand.Next(100, 200);
-                    mod.Logger.Info("BrineGen:" + X+", "+Y);
+                    Mod.Logger.Info("BrineGen:" + X+", "+Y);
                     //WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
                     //WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);
                     //WorldGen.digTunnel(X, 500, 5, 5, 10, 10, true);
@@ -206,7 +206,7 @@ namespace Origins.World {
                                 }
                                 for(int dungeonCheckX = minX; dungeonCheckX < maxX; dungeonCheckX++) {
                                     for(int dungeonCheckY = 0; dungeonCheckY < (int)Main.worldSurface; dungeonCheckY += 5) {
-                                        if(Main.tile[dungeonCheckX, dungeonCheckY].active() && Main.tileDungeon[Main.tile[dungeonCheckX, dungeonCheckY].type]) {
+                                        if(Main.tile[dungeonCheckX, dungeonCheckY].HasTile && Main.tileDungeon[Main.tile[dungeonCheckX, dungeonCheckY].TileType]) {
                                             validSpot = false;
                                             break;
                                         }
@@ -234,11 +234,11 @@ namespace Origins.World {
                             //CrimStart(startPos, (int)worldSurfaceLow - 10);
                             for(int jungleCheckX = minX; jungleCheckX < maxX; jungleCheckX++) {
                                 for(int jungleCheckY = (int)worldSurfaceLow; jungleCheckY < Main.worldSurface - 1.0; jungleCheckY++) {
-                                    if(Main.tile[jungleCheckX, jungleCheckY].active()) {
+                                    if(Main.tile[jungleCheckX, jungleCheckY].HasTile) {
                                         int maxDepth = jungleCheckY + genRand.Next(10, 14);
                                         for(int depth = jungleCheckY; depth < maxDepth; depth++) {
-                                            if((Main.tile[jungleCheckX, depth].type == TileID.Mud || Main.tile[jungleCheckX, depth].type == TileID.JungleGrass) && jungleCheckX >= minX + genRand.Next(5) && jungleCheckX < maxX - genRand.Next(5)) {
-                                                Main.tile[jungleCheckX, depth].type = TileID.Dirt;
+                                            if((Main.tile[jungleCheckX, depth].TileType == TileID.Mud || Main.tile[jungleCheckX, depth].TileType == TileID.JungleGrass) && jungleCheckX >= minX + genRand.Next(5) && jungleCheckX < maxX - genRand.Next(5)) {
+                                                Main.tile[jungleCheckX, depth].TileType = TileID.Dirt;
                                             }
                                         }
                                         break;
@@ -257,40 +257,40 @@ namespace Origins.World {
                                 i2 = currentX;
                                 bool planted = false;
                                 for(int convertY = (int)worldSurfaceLow; convertY < lowSurface; convertY++) {
-                                    if(Main.tile[i2, convertY].active()) {
-                                        if(Main.tile[i2, convertY].type == TileID.Sand && i2 >= minX + genRand.Next(5) && i2 <= maxX - genRand.Next(5)) {
-                                            Main.tile[i2, convertY].type = sandType;
+                                    if(Main.tile[i2, convertY].HasTile) {
+                                        if(Main.tile[i2, convertY].TileType == TileID.Sand && i2 >= minX + genRand.Next(5) && i2 <= maxX - genRand.Next(5)) {
+                                            Main.tile[i2, convertY].TileType = sandType;
                                         }
-                                        if(Main.tile[i2, convertY].type == 0 && convertY < Main.worldSurface - 1.0 && !planted) {
+                                        if(Main.tile[i2, convertY].TileType == 0 && convertY < Main.worldSurface - 1.0 && !planted) {
                                             grassSpread.SetValue(null, 0);
                                             SpreadGrass(i2, convertY, grassType, grassType, repeat: true, 0);
                                         }
                                         planted = true;
-                                        switch(Main.tile[i2, convertY].wall) {
+                                        switch(Main.tile[i2, convertY].WallType) {
                                             case WallID.HardenedSand:
-                                            Main.tile[i2, convertY].wall = genRand.Next(hardenedSandWallTypes);
+                                            Main.tile[i2, convertY].WallType = genRand.Next(hardenedSandWallTypes);
                                             break;
                                             case WallID.Sandstone:
-                                            Main.tile[i2, convertY].wall = genRand.Next(sandstoneWallTypes);
+                                            Main.tile[i2, convertY].WallType = genRand.Next(sandstoneWallTypes);
                                             break;
                                         }
-                                        switch (Main.tile[i2, convertY].type) {
+                                        switch (Main.tile[i2, convertY].TileType) {
                                             case TileID.Stone:
                                             if (i2 >= minX + genRand.Next(5) && i2 <= maxX - genRand.Next(5)) {
-                                                Main.tile[i2, convertY].type = stoneType;
+                                                Main.tile[i2, convertY].TileType = stoneType;
                                             }
                                             break;
                                             case TileID.Grass:
-                                            Main.tile[i2, convertY].type = grassType;
+                                            Main.tile[i2, convertY].TileType = grassType;
                                             break;
                                             case TileID.IceBlock:
-                                            Main.tile[i2, convertY].type = iceType;
+                                            Main.tile[i2, convertY].TileType = iceType;
                                             break;
                                             case TileID.HardenedSand:
-                                            Main.tile[i2, convertY].type = hardenedSandType;
+                                            Main.tile[i2, convertY].TileType = hardenedSandType;
                                             break;
                                             case TileID.Sandstone:
-                                            Main.tile[i2, convertY].type = sandstoneType;
+                                            Main.tile[i2, convertY].TileType = sandstoneType;
                                             break;
                                         }
                                     }
@@ -309,18 +309,18 @@ namespace Origins.World {
                                         num506++;
                                         num505 = 0;
                                     }
-                                    if(!Main.tile[num507, num508].active()) {
-                                        for(; !Main.tile[num507, num508].active(); num508++) {
+                                    if(!Main.tile[num507, num508].HasTile) {
+                                        for(; !Main.tile[num507, num508].HasTile; num508++) {
                                         }
                                         num508--;
                                     } else {
-                                        while(Main.tile[num507, num508].active() && num508 > Main.worldSurface) {
+                                        while(Main.tile[num507, num508].HasTile && num508 > Main.worldSurface) {
                                             num508--;
                                         }
                                     }
-                                    if(num506 > 10 || (Main.tile[num507, num508 + 1].active() && Main.tile[num507, num508 + 1].type == 203)) {
+                                    if(num506 > 10 || (Main.tile[num507, num508 + 1].HasTile && Main.tile[num507, num508 + 1].TileType == 203)) {
                                         Place3x2(num507, num508, TileID.DemonAltar, 0);
-                                        if(Main.tile[num507, num508].type == 26) {
+                                        if(Main.tile[num507, num508].TileType == 26) {
                                             flag40 = true;
                                         }
                                     }
@@ -376,7 +376,7 @@ namespace Origins.World {
                                 }
                                 for(int checkX = genLeft; checkX < genRight; checkX++) {
                                     for(int checkY = 0; checkY < (int)Main.worldSurface; checkY += 5) {
-                                        if(Main.tile[checkX, checkY].active() && Main.tileDungeon[Main.tile[checkX, checkY].type]) {
+                                        if(Main.tile[checkX, checkY].HasTile && Main.tileDungeon[Main.tile[checkX, checkY].TileType]) {
                                             foundPosition = false;
                                             break;
                                         }
@@ -411,11 +411,11 @@ namespace Origins.World {
 						            }
 					            }*/
                                 for(int num521 = (int)worldSurfaceLow; num521 < Main.worldSurface - 1.0; num521++) {
-                                    if(Main.tile[num519, num521].active()) {
+                                    if(Main.tile[num519, num521].HasTile) {
                                         int num522 = num521 + genRand.Next(10, 14);
                                         for(int num523 = num521; num523 < num522; num523++) {
-                                            if((Main.tile[num519, num523].type == 59 || Main.tile[num519, num523].type == 60) && num519 >= genLeft + genRand.Next(5) && num519 < genRight - genRand.Next(5)) {
-                                                Main.tile[num519, num523].type = 0;
+                                            if((Main.tile[num519, num523].TileType == 59 || Main.tile[num519, num523].TileType == 60) && num519 >= genLeft + genRand.Next(5) && num519 < genRight - genRand.Next(5)) {
+                                                Main.tile[num519, num523].TileType = 0;
                                             }
                                         }
                                         break;
@@ -436,31 +436,31 @@ namespace Origins.World {
                                 Tile tile;
                                 for(int num526 = (int)worldSurfaceLow; num526 < num524; num526++) {
                                     tile = Main.tile[i2, num526];
-                                    if(tile.active()) {
+                                    if(tile.HasTile) {
                                         if(i2 >= genLeft + genRand.Next(5) && i2 <= genRight - genRand.Next(5)) {
-                                            ConvertTile(ref tile.type, evil_wastelands);
+                                            ConvertTile(ref tile.TileType, evil_wastelands);
                                         }
-                                        if(tile.type == 0 && num526 < Main.worldSurface - 1.0 && !flag42) {
+                                        if(tile.TileType == 0 && num526 < Main.worldSurface - 1.0 && !flag42) {
                                             grassSpread.SetValue(null, 0);
                                             SpreadGrass(i2, num526, TileID.Dirt, grassType, repeat: true);
                                         }
                                         flag42 = true;
-                                        if(tile.wall == WallID.Stone) {
-                                            tile.wall = genRand.Next(stoneWallTypes);
-                                        } else if(tile.wall == WallID.HardenedSand) {
-                                            tile.wall = genRand.Next(hardenedSandWallTypes);
-                                        } else if(tile.wall == WallID.Sandstone) {
-                                            tile.wall = genRand.Next(sandstoneWallTypes);
+                                        if(tile.WallType == WallID.Stone) {
+                                            tile.WallType = genRand.Next(stoneWallTypes);
+                                        } else if(tile.WallType == WallID.HardenedSand) {
+                                            tile.WallType = genRand.Next(hardenedSandWallTypes);
+                                        } else if(tile.WallType == WallID.Sandstone) {
+                                            tile.WallType = genRand.Next(sandstoneWallTypes);
                                         }
-                                        if(tile.type == TileID.Plants) {
-                                            tile.type = plantType;
+                                        if(tile.TileType == TileID.Plants) {
+                                            tile.TileType = plantType;
                                         }
                                     }
                                 }
                             }
                             for(int num527 = genLeft; num527 < genRight; num527++) {
                                 for(int num528 = 0; num528 < Main.maxTilesY - 50; num528++) {
-                                    if(Main.tile[num527, num528].active() && Main.tile[num527, num528].type == 31) {
+                                    if(Main.tile[num527, num528].HasTile && Main.tile[num527, num528].TileType == 31) {
                                         int num529 = num527 - 13;
                                         int num530 = num527 + 13;
                                         int num531 = num528 - 13;
@@ -468,15 +468,15 @@ namespace Origins.World {
                                         for(int num533 = num529; num533 < num530; num533++) {
                                             if(num533 > 10 && num533 < Main.maxTilesX - 10) {
                                                 for(int num534 = num531; num534 < num532; num534++) {
-                                                    if(Math.Abs(num533 - num527) + Math.Abs(num534 - num528) < 9 + genRand.Next(11) && !genRand.NextBool(3)&& Main.tile[num533, num534].type != 31) {
-                                                        Main.tile[num533, num534].active(active: true);
-                                                        Main.tile[num533, num534].type = 25;
+                                                    if(Math.Abs(num533 - num527) + Math.Abs(num534 - num528) < 9 + genRand.Next(11) && !genRand.NextBool(3)&& Main.tile[num533, num534].TileType != 31) {
+                                                        Main.tile[num533, num534].HasTile = true;
+                                                        Main.tile[num533, num534].TileType = 25;
                                                         if(Math.Abs(num533 - num527) <= 1 && Math.Abs(num534 - num528) <= 1) {
-                                                            Main.tile[num533, num534].active(active: false);
+                                                            Main.tile[num533, num534].HasTile = false;
                                                         }
                                                     }
-                                                    if(Main.tile[num533, num534].type != 31 && Math.Abs(num533 - num527) <= 2 + genRand.Next(3) && Math.Abs(num534 - num528) <= 2 + genRand.Next(3)) {
-                                                        Main.tile[num533, num534].active(active: false);
+                                                    if(Main.tile[num533, num534].TileType != 31 && Math.Abs(num533 - num527) <= 2 + genRand.Next(3) && Math.Abs(num534 - num528) <= 2 + genRand.Next(3)) {
+                                                        Main.tile[num533, num534].HasTile = false;
                                                     }
                                                 }
                                             }
@@ -485,7 +485,7 @@ namespace Origins.World {
                                 }
                             }
                             int startY;
-                            for (startY = (int)WorldGen.worldSurfaceLow; !Main.tile[centerX, startY].active(); startY++);
+                            for (startY = (int)WorldGen.worldSurfaceLow; !Main.tile[centerX, startY].HasTile; startY++);
                             Point start = new Point(centerX, startY + genRand.Next(105, 150));//range of depths
 
                             bool gr = TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite];
@@ -509,11 +509,11 @@ namespace Origins.World {
                     ushort altarType = (ushort)(crimson ? TileType<Riven_Altar>() : TileType<Defiled_Altar>());
                     for(int y = 0; y < Main.maxTilesY; y++) {
                         for(int x = 0; x < Main.maxTilesX; x++) {
-                            if(Main.tile[x, y].type==oreType)
-                                Main.tile[x, y].type = altOreType;
-                            else if(Main.tile[x, y].type==TileID.DemonAltar) {
-                                Main.tile[x, y].frameX%=54;
-                                Main.tile[x, y].type = altarType;
+                            if(Main.tile[x, y].TileType==oreType)
+                                Main.tile[x, y].TileType = altOreType;
+                            else if(Main.tile[x, y].TileType==TileID.DemonAltar) {
+                                Main.tile[x, y].TileFrameX%=54;
+                                Main.tile[x, y].TileType = altarType;
                             }
                         }
                     }
@@ -523,11 +523,11 @@ namespace Origins.World {
                     int tilesSinceSpike = 0;
                     for(int i = 0; i < Main.maxTilesX; i++) {
                         for(int j = 1; j < Main.maxTilesY; j++) {
-                            if(Main.tile[i, j].type == grassType && Main.tile[i, j].active() && !(Main.tile[i, j].halfBrick()||Main.tile[i, j].slope()!=SlopeID.None)) {
-                                if(!Main.tile[i, j - 1].active()) {
+                            if(Main.tile[i, j].TileType == grassType && Main.tile[i, j].HasTile && !(Main.tile[i, j].IsHalfBlock||Main.tile[i, j].Slope!=SlopeID.None)) {
+                                if(!Main.tile[i, j - 1].HasTile) {
                                     PlaceTile(i, j - 1, plantType, mute: true);
                                 }
-                                if(worldEvil == evil_wastelands && Main.tile[i, j].active() && Main.tileSolid[Main.tile[i, j].type]) {
+                                if(worldEvil == evil_wastelands && Main.tile[i, j].HasTile && Main.tileSolid[Main.tile[i, j].TileType]) {
                                     if(genRand.Next(0, 10+EvilSpikes.Count)<=tilesSinceSpike/5) {
                                         EvilSpikes.Add((new Point(i, j), genRand.Next(9,18)+tilesSinceSpike/5));
                                         tilesSinceSpike = -15;
@@ -536,15 +536,15 @@ namespace Origins.World {
                                     }
                                 }
                             } else {
-                                if(Main.tile[i, j].active() && (!SolidTile(i, j + 1) || !SolidTile(i, j + 2))) {
-                                    if(Main.tile[i, j].type==sandType)
-                                        Main.tile[i, j].type = hardenedSandType;
+                                if(Main.tile[i, j].HasTile && (!SolidTile(i, j + 1) || !SolidTile(i, j + 2))) {
+                                    if(Main.tile[i, j].TileType==sandType)
+                                        Main.tile[i, j].TileType = hardenedSandType;
                                 }
                             }
                         }
                     }
                     if(EvilSpikes.Count>0) {
-                        mod.Logger.Info($"Adding {EvilSpikes.Count} Evil Spikes");
+                        Mod.Logger.Info($"Adding {EvilSpikes.Count} Evil Spikes");
                     }
                     crimson = true;
                 }));
@@ -565,7 +565,7 @@ namespace Origins.World {
                         if(genRand.NextBool(5)) {
                             size+=6;
                             Vector2 tempPos = new Vector2(p.X, p.Y);
-                            while (Main.tile[(int)tempPos.X, (int)tempPos.Y].active() && Main.tileSolid[Main.tile[(int)tempPos.X, (int)tempPos.Y].type]) {
+                            while (Main.tile[(int)tempPos.X, (int)tempPos.Y].HasTile && Main.tileSolid[Main.tile[(int)tempPos.X, (int)tempPos.Y].TileType]) {
                                 tempPos += vel;
                             }
                             tempPos -= vel * 3;
@@ -577,24 +577,24 @@ namespace Origins.World {
                     }
                     for(int i = 0; i < Main.maxTilesX; i++) {
                         for(int j = 1; j < Main.maxTilesY; j++) {
-                            if(Main.tile[i, j].type == grassType && Main.tile[i, j].active()) {
-                                if(Main.tile[i-1, j].type == TileID.Grass) {
-                                    Main.tile[i-1, j].type = grassType;
-                                    if(Main.tile[i-1, j-1].type == TileID.Plants)
-                                        Main.tile[i-1, j-1].type = plantType;
+                            if(Main.tile[i, j].TileType == grassType && Main.tile[i, j].HasTile) {
+                                if(Main.tile[i-1, j].TileType == TileID.Grass) {
+                                    Main.tile[i-1, j].TileType = grassType;
+                                    if(Main.tile[i-1, j-1].TileType == TileID.Plants)
+                                        Main.tile[i-1, j-1].TileType = plantType;
                                 }
-                                if(Main.tile[i+1, j].type == TileID.Grass) {
-                                    Main.tile[i+1, j].type = grassType;
-                                    if(Main.tile[i+1, j-1].type == TileID.Plants)
-                                        Main.tile[i+1, j-1].type = plantType;
+                                if(Main.tile[i+1, j].TileType == TileID.Grass) {
+                                    Main.tile[i+1, j].TileType = grassType;
+                                    if(Main.tile[i+1, j-1].TileType == TileID.Plants)
+                                        Main.tile[i+1, j-1].TileType = plantType;
                                 }
-                                if(Main.tile[i, j-1].type == TileID.Grass) {
-                                    Main.tile[i, j-1].type = grassType;
-                                    if(Main.tile[i, j-2].type == TileID.Plants)
-                                        Main.tile[i, j-2].type = plantType;
+                                if(Main.tile[i, j-1].TileType == TileID.Grass) {
+                                    Main.tile[i, j-1].TileType = grassType;
+                                    if(Main.tile[i, j-2].TileType == TileID.Plants)
+                                        Main.tile[i, j-2].TileType = plantType;
                                 }
-                                if(Main.tile[i, j+1].type == TileID.Grass) {
-                                    Main.tile[i, j+1].type = grassType;
+                                if(Main.tile[i, j+1].TileType == TileID.Grass) {
+                                    Main.tile[i, j+1].TileType = grassType;
                                 }
                             }
                         }
@@ -606,7 +606,7 @@ namespace Origins.World {
 				        DefiledWastelands.Gen.DefiledRibs(heart.X + genRand.NextFloat(-0.5f, 0.5f), heart.Y + genRand.NextFloat(-0.5f, 0.5f));
                         for (int i = heart.X - 1; i < heart.X + 3; i++) {
                             for (int j = heart.Y - 2; j < heart.Y + 2; j++) {
-                                Main.tile[i, j].active(false);
+                                Main.tile[i, j].HasTile = false;
                             }
                         }
                         TileObject.CanPlace(heart.X, heart.Y, (ushort)TileType<Defiled_Heart>(), 0, 1, out var data);
@@ -663,14 +663,14 @@ namespace Origins.World {
                         if(!(Math.Abs(k - pos.X) + Math.Abs(l - pos.Y) < size * 0.5 * (1.0 + genRand.Next(-10, 11) * 0.015))) {
                             continue;
                         }
-                        if(Main.tile[k, l].wall == 63 || Main.tile[k, l].wall == 65 || Main.tile[k, l].wall == 66 || Main.tile[k, l].wall == 68) {
+                        if(Main.tile[k, l].WallType == 63 || Main.tile[k, l].WallType == 65 || Main.tile[k, l].WallType == 66 || Main.tile[k, l].WallType == 68) {
                             //Main.tile[k, l].wall = 69;//unsafe grass wall
-                        } else if(Main.tile[k, l].wall == 216) {
+                        } else if(Main.tile[k, l].WallType == 216) {
                             //Main.tile[k, l].wall = 217;//hardened sand
-                        } else if(Main.tile[k, l].wall == 187) {
+                        } else if(Main.tile[k, l].WallType == 187) {
                             //Main.tile[k, l].wall = WallID;//sandstone
                         }
-                        if(ConvertTile(ref Main.tile[k, l].type, worldEvil, true)) {
+                        if(ConvertTile(ref Main.tile[k, l].TileType, worldEvil, true)) {
                             SquareTileFrame(k, l);
                             conversionCount++;
                         }

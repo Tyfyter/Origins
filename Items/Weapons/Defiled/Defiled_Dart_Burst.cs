@@ -12,24 +12,24 @@ namespace Origins.Items.Weapons.Defiled {
             Tooltip.SetDefault("Very darty");
         }
         public override void SetDefaults() {
-            item.damage = 25;
-            item.ranged = true;
-            item.noMelee = true;
-            item.crit = -4;
-            item.width = 56;
-            item.height = 18;
-            item.useTime = 40;
-            item.useAnimation = 40;
-            item.useStyle = 5;
-            item.knockBack = 5;
-            item.shootSpeed = 20f;
-            item.shoot = ProjectileID.PurificationPowder;
-            item.useAmmo = AmmoID.Dart;
-            item.value = 80000;
-            item.useTurn = false;
-            item.rare = ItemRarityID.Pink;
-            item.autoReuse = true;
-            item.UseSound = SoundID.Item99;//new LegacySoundStyle(SoundID.Item, Origins.Sounds.Krunch);
+            Item.damage = 25;
+            Item.ranged = true;
+            Item.noMelee = true;
+            Item.crit = -4;
+            Item.width = 56;
+            Item.height = 18;
+            Item.useTime = 40;
+            Item.useAnimation = 40;
+            Item.useStyle = 5;
+            Item.knockBack = 5;
+            Item.shootSpeed = 20f;
+            Item.shoot = ProjectileID.PurificationPowder;
+            Item.useAmmo = AmmoID.Dart;
+            Item.value = 80000;
+            Item.useTurn = false;
+            Item.rare = ItemRarityID.Pink;
+            Item.autoReuse = true;
+            Item.UseSound = SoundID.Item99;//new LegacySoundStyle(SoundID.Item, Origins.Sounds.Krunch);
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             for(int i = 0; i<2; i++)Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedByRandom(i/10f), type, damage, knockBack, player.whoAmI);

@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,49 +15,49 @@ namespace Origins.Items.Weapons.Other {
 			Tooltip.SetDefault("A tome full of ancient spells used for harming another with malicious intent.");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.RubyStaff);
-			item.damage = 40;
-			item.magic = true;
-			item.noMelee = true;
-			item.width = 28;
-			item.height = 30;
-			item.useTime = 28;
-			item.useAnimation = 28;
-			item.mana = 18;
-			item.value = 5000;
-            item.shoot = ModContent.ProjectileType<Agony_Shard>();
-			item.rare = ItemRarityID.Green;
+            Item.CloneDefaults(ItemID.RubyStaff);
+			Item.damage = 40;
+			Item.magic = true;
+			Item.noMelee = true;
+			Item.width = 28;
+			Item.height = 30;
+			Item.useTime = 28;
+			Item.useAnimation = 28;
+			Item.mana = 18;
+			Item.value = 5000;
+            Item.shoot = ModContent.ProjectileType<Agony_Shard>();
+			Item.rare = ItemRarityID.Green;
 		}
     }
     public class Agony_Shard : ModProjectile {
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Bullet);
-            projectile.penetrate = 5;//when projectile.penetrate reaches 0 the projectile is destroyed
-            projectile.extraUpdates = 2;
-            projectile.aiStyle = 0;
-            projectile.width = projectile.height = 10;
-            projectile.hide = true;
-            projectile.light = 0;
+            Projectile.CloneDefaults(ProjectileID.Bullet);
+            Projectile.penetrate = 5;//when projectile.penetrate reaches 0 the projectile is destroyed
+            Projectile.extraUpdates = 2;
+            Projectile.aiStyle = 0;
+            Projectile.width = Projectile.height = 10;
+            Projectile.hide = true;
+            Projectile.light = 0;
         }
         public override void AI() {
-            projectile.rotation = projectile.velocity.ToRotation()+MathHelper.Pi/2;
-            Dust.NewDust(projectile.Center, 0, 0, 0, Scale:0.4f);
+            Projectile.rotation = Projectile.velocity.ToRotation()+MathHelper.Pi/2;
+            Dust.NewDust(Projectile.Center, 0, 0, 0, Scale:0.4f);
         }
         public override void Kill(int timeLeft) {
-            Dust.NewDust(projectile.position, 10, 10, 0, Scale:0.6f);
-            Dust.NewDust(projectile.position, 10, 10, 0, Scale:0.6f);
-            Dust.NewDust(projectile.position, 10, 10, 0, Scale:0.6f);
-            Main.PlaySound(SoundID.Dig, projectile.position);
+            Dust.NewDust(Projectile.position, 10, 10, 0, Scale:0.6f);
+            Dust.NewDust(Projectile.position, 10, 10, 0, Scale:0.6f);
+            Dust.NewDust(Projectile.position, 10, 10, 0, Scale:0.6f);
+            SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
         }
         public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI){
-            if(projectile.hide)drawCacheProjsBehindNPCsAndTiles.Add(index);
+            if(Projectile.hide)drawCacheProjsBehindNPCsAndTiles.Add(index);
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-            hitbox.X+=(int)projectile.velocity.X;
-            hitbox.Y+=(int)projectile.velocity.Y;
+            hitbox.X+=(int)Projectile.velocity.X;
+            hitbox.Y+=(int)Projectile.velocity.Y;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
-            spriteBatch.Draw(mod.GetTexture("Items/Weapons/Other/Agony_Shard"), (projectile.Center+projectile.velocity) - Main.screenPosition, new Rectangle(0,0,10,14), lightColor, projectile.rotation, new Vector2(5, 7), 1f, SpriteEffects.None, 0f);
+        public override bool PreDraw(ref Color lightColor) {
+            spriteBatch.Draw(Mod.GetTexture("Items/Weapons/Other/Agony_Shard"), (Projectile.Center+Projectile.velocity) - Main.screenPosition, new Rectangle(0,0,10,14), lightColor, Projectile.rotation, new Vector2(5, 7), 1f, SpriteEffects.None, 0f);
             return true;
         }
     }

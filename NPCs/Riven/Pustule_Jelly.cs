@@ -13,24 +13,24 @@ namespace Origins.NPCs.Riven {
     public class Pustule_Jelly : ModNPC {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Pustule Jelly");
-            Main.npcFrameCount[npc.type] = 4;
+            Main.npcFrameCount[NPC.type] = 4;
         }
         public override void SetDefaults() {
-            npc.CloneDefaults(NPCID.BloodJelly);
-            npc.lifeMax = 380;
-            npc.defense = 20;
-            npc.damage = 70;
-            npc.width = 32;
-            npc.height = 42;
-            npc.frame.Height = 40;
+            NPC.CloneDefaults(NPCID.BloodJelly);
+            NPC.lifeMax = 380;
+            NPC.defense = 20;
+            NPC.damage = 70;
+            NPC.width = 32;
+            NPC.height = 42;
+            NPC.frame.Height = 40;
         }
         public override void FindFrame(int frameHeight) {
-		    npc.spriteDirection = npc.direction;
-		    npc.frameCounter += 1.0;
-		    if (npc.frameCounter >= 24.0){
-			    npc.frameCounter = 0.0;
+		    NPC.spriteDirection = NPC.direction;
+		    NPC.frameCounter += 1.0;
+		    if (NPC.frameCounter >= 24.0){
+			    NPC.frameCounter = 0.0;
 		    }
-		    npc.frame.Y = 42 * (int)(npc.frameCounter / 6.0);
+		    NPC.frame.Y = 42 * (int)(NPC.frameCounter / 6.0);
         }
     }
 }

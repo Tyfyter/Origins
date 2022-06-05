@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
@@ -80,10 +81,10 @@ namespace Origins.UI {
 						Main.LocalPlayer.mouseInterface = true;
 						if (!glow && Main.mouseLeft && Main.mouseLeftRelease) {
 							originPlayer.SetMimicSetChoice(level, i + 1);
-							Main.PlaySound(SoundID.MenuTick);
+							SoundEngine.PlaySound(SoundID.MenuTick);
 						}else if(glow && Main.mouseRight && Main.mouseRightRelease) {
 							originPlayer.SetMimicSetChoice(level, 0);
-							Main.PlaySound(SoundID.MenuTick);
+							SoundEngine.PlaySound(SoundID.MenuTick);
 						}
 						Main.hoverItemName = GetAbilityTooltip(level, i);
 						glow = true;

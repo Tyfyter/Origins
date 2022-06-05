@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,84 +20,73 @@ namespace Origins.Items.Weapons.Dungeon {
             Tooltip.SetDefault("Turns most arrows into fragile bone arrows");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.GoldBow);
-            item.damage = 28;
-			item.knockBack = 5;
-			item.crit = 4;
-            item.useTime = item.useAnimation = 16;
-			item.shoot = ModContent.ProjectileType<Bone_Bolt>();
-            item.shootSpeed = 9;
-            item.width = 24;
-            item.height = 56;
-            item.autoReuse = false;
+            Item.CloneDefaults(ItemID.GoldBow);
+            Item.damage = 28;
+			Item.knockBack = 5;
+			Item.crit = 4;
+            Item.useTime = Item.useAnimation = 16;
+			Item.shoot = ModContent.ProjectileType<Bone_Bolt>();
+            Item.shootSpeed = 9;
+            Item.width = 24;
+            Item.height = 56;
+            Item.autoReuse = false;
         }
         public override Vector2? HoldoutOffset() {
             return new Vector2(-8f,0);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            if(type < ProjectileID.Count) {
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+            if (type < ProjectileID.Count) {
                 t = type;
-                type = item.shoot;
+                type = Item.shoot;
             }
-            return true;
         }
     }
     public class Bone_Bolt : ModProjectile {
         public static int ID { get; private set; } = -1;
-        public override string Texture => "Terraria/Projectile_117";
+        public override string Texture => "Terraria/Images/Projectile_117";
         public override void SetStaticDefaults() {
-            ID = projectile.type;
+            ID = Projectile.type;
             DisplayName.SetDefault("Bone Bolt");
         }
         public override void SetDefaults() {
-            projectile.CloneDefaults(Longbone.t);
-            projectile.timeLeft = 30;
-            projectile.extraUpdates = 1;
-            projectile.localAI[0] = Longbone.t;
-            projectile.localNPCHitCooldown = 10;
-            projectile.usesLocalNPCImmunity = true;
+            Projectile.CloneDefaults(Longbone.t);
+            Projectile.timeLeft = 30;
+            Projectile.extraUpdates = 1;
+            Projectile.localAI[0] = Longbone.t;
+            Projectile.localNPCHitCooldown = 10;
+            Projectile.usesLocalNPCImmunity = true;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            projectile.type = (int)projectile.localAI[0];
-            projectile.StatusNPC(target.whoAmI);
-            projectile.type = ID;
-            if((int)projectile.localAI[0] == ProjectileID.HellfireArrow) {
-                projectile.Kill();
+            Projectile.type = (int)Projectile.localAI[0];
+            Projectile.StatusNPC(target.whoAmI);
+            Projectile.type = ID;
+            if((int)Projectile.localAI[0] == ProjectileID.HellfireArrow) {
+                Projectile.Kill();
             }
         }
         public override bool PreKill(int timeLeft) {
-            if((int)projectile.localAI[0] == ProjectileID.HellfireArrow) {
+            if((int)Projectile.localAI[0] == ProjectileID.HellfireArrow) {
                 int t = Bone_Shard.ID;
-                Longbone.t = (int)projectile.localAI[0];
-                Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedByRandom(0.3f), t, projectile.damage/5, 2, projectile.owner).localNPCImmunity = projectile.localNPCImmunity;
-                Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedByRandom(0.3f), t, projectile.damage/5, 2, projectile.owner).localNPCImmunity = projectile.localNPCImmunity;
-                Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedByRandom(0.3f), t, projectile.damage/5, 2, projectile.owner).localNPCImmunity = projectile.localNPCImmunity;
-                SoundEffectInstance sei = Main.PlaySound(SoundID.NPCHit2, projectile.Center);
-                if(sei is null) {
-                    projectile.SetToType(ProjectileID.HellfireArrow);
-                    return false;
-                }
-                sei.Volume*=0.75f;
-                sei.Pitch = Main.rand.NextFloat(0.1f,0.2f);
-                projectile.SetToType(ProjectileID.HellfireArrow);
+                Longbone.t = (int)Projectile.localAI[0];
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedByRandom(0.3f), t, Projectile.damage/5, 2, Projectile.owner).localNPCImmunity = Projectile.localNPCImmunity;
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedByRandom(0.3f), t, Projectile.damage/5, 2, Projectile.owner).localNPCImmunity = Projectile.localNPCImmunity;
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedByRandom(0.3f), t, Projectile.damage/5, 2, Projectile.owner).localNPCImmunity = Projectile.localNPCImmunity;
+                SoundEngine.PlaySound(SoundID.NPCHit2.WithVolume(0.75f).WithPitchRange(0.1f, 0.2f), Projectile.Center);
+                Projectile.SetToType(ProjectileID.HellfireArrow);
                 return true;
             }
             return true;
         }
         public override void Kill(int timeLeft) {
             int t = Bone_Shard.ID;
-            Longbone.t = (int)projectile.localAI[0];
-            Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedByRandom(0.3f), t, projectile.damage/5, 2, projectile.owner).localNPCImmunity = projectile.localNPCImmunity;
-            Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedByRandom(0.3f), t, projectile.damage/5, 2, projectile.owner).localNPCImmunity = projectile.localNPCImmunity;
-            Projectile.NewProjectileDirect(projectile.Center, projectile.velocity.RotatedByRandom(0.3f), t, projectile.damage/5, 2, projectile.owner).localNPCImmunity = projectile.localNPCImmunity;
-            SoundEffectInstance sei = Main.PlaySound(SoundID.NPCHit2, projectile.Center);
-            if(sei is null) {
-                return;
-            }
-            sei.Volume*=0.75f;
-            sei.Pitch = Main.rand.NextFloat(0.1f,0.2f);
+            Longbone.t = (int)Projectile.localAI[0];
+            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedByRandom(0.3f), t, Projectile.damage / 5, 2, Projectile.owner).localNPCImmunity = Projectile.localNPCImmunity;
+            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedByRandom(0.3f), t, Projectile.damage / 5, 2, Projectile.owner).localNPCImmunity = Projectile.localNPCImmunity;
+            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedByRandom(0.3f), t, Projectile.damage / 5, 2, Projectile.owner).localNPCImmunity = Projectile.localNPCImmunity;
+            SoundEngine.PlaySound(SoundID.NPCHit2.WithVolume(0.75f).WithPitchRange(0.1f, 0.2f), Projectile.Center);
+            Projectile.SetToType(ProjectileID.HellfireArrow);
         }
-        internal static void Render(Projectile projectile, SpriteBatch spriteBatch, Color lightColor) {
+        internal static void Render(Projectile projectile, Color lightColor) {
             int d;
             switch((int)projectile.localAI[0]) {
                 case ProjectileID.FireArrow:
@@ -154,48 +145,43 @@ namespace Origins.Items.Weapons.Dungeon {
 				color.G = (byte)(color.G * a);
 				color.B = (byte)(color.B * a);
 				color.A = (byte)(color.A * a);
-                Texture2D texture = Main.projectileTexture[projectile.type];
-				spriteBatch.Draw(texture, new Vector2(projectile.position.X - Main.screenPosition.X - x, projectile.position.Y - Main.screenPosition.Y + (float)(projectile.height / 2) + projectile.gfxOffY - y), new Rectangle(0, 0, texture.Width, texture.Height), color, projectile.rotation, new Vector2(texture.Width/2f,texture.Height/2f), projectile.scale, SpriteEffects.None, 0f);
+                Texture2D texture = TextureAssets.Projectile[projectile.type].Value;
+				Main.EntitySpriteDraw(texture, new Vector2(projectile.position.X - Main.screenPosition.X - x, projectile.position.Y - Main.screenPosition.Y + (float)(projectile.height / 2) + projectile.gfxOffY - y), new Rectangle(0, 0, texture.Width, texture.Height), color, projectile.rotation, new Vector2(texture.Width/2f,texture.Height/2f), projectile.scale, SpriteEffects.None, 0);
 			}
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor) {
-            Render(projectile, spriteBatch, lightColor);
+        public override void PostDraw(Color lightColor) {
+            Render(Projectile, lightColor);
         }
     }
     public class Bone_Shard : ModProjectile {
         public static int ID { get; private set; } = -1;
         public override string Texture => "Origins/Projectiles/Weapons/BoneS_hard";
         public override void SetStaticDefaults() {
-            ID = projectile.type;
+            ID = Projectile.type;
             DisplayName.SetDefault("BoneS hard");
         }
         public override void SetDefaults() {
-            projectile.CloneDefaults(Longbone.t);
-            projectile.extraUpdates = 1;
-            projectile.localNPCHitCooldown = 10;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localAI[0] = Longbone.t;
+            Projectile.CloneDefaults(Longbone.t);
+            Projectile.extraUpdates = 1;
+            Projectile.localNPCHitCooldown = 10;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localAI[0] = Longbone.t;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            projectile.type = (int)projectile.localAI[0];
-            projectile.StatusNPC(target.whoAmI);
-            projectile.type = ID;
-            if((int)projectile.localAI[0] == ProjectileID.HellfireArrow) {
-                projectile.Kill();
+            Projectile.type = (int)Projectile.localAI[0];
+            Projectile.StatusNPC(target.whoAmI);
+            Projectile.type = ID;
+            if((int)Projectile.localAI[0] == ProjectileID.HellfireArrow) {
+                Projectile.Kill();
             }
         }
         public override bool PreKill(int timeLeft) {
-            projectile.SetToType((int)projectile.localAI[0]);
-            SoundEffectInstance sei = Main.PlaySound(SoundID.NPCHit2, projectile.Center);
-            if(sei is null) {
-                return false;
-            }
-            sei.Volume*=0.75f;
-            sei.Pitch = Main.rand.NextFloat(0.2f,0.3f);
+            Projectile.SetToType((int)Projectile.localAI[0]);
+            SoundEngine.PlaySound(SoundID.NPCHit2.WithVolume(0.75f).WithPitchRange(0.1f, 0.2f), Projectile.Center);
             return true;
         }
-        public override void PostDraw(SpriteBatch spriteBatch, Color lightColor) {
-            Bone_Bolt.Render(projectile, spriteBatch, lightColor);
+        public override void PostDraw(Color lightColor) {
+            Bone_Bolt.Render(Projectile, lightColor);
         }
     }
 }

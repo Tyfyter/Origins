@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.World;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,18 +21,18 @@ namespace Origins.Items.Other.Testing {
 		}
 		public override void SetDefaults() {
 			//item.name = "jfdjfrbh";
-			item.width = 16;
-			item.height = 26;
-			item.value = 25000;
-			item.rare = ItemRarityID.Green;
-            item.useStyle = ItemUseStyleID.HoldingUp;
-            item.useAnimation = 10;
-            item.useTime = 10;
+			Item.width = 16;
+			Item.height = 26;
+			Item.value = 25000;
+			Item.rare = ItemRarityID.Green;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.useAnimation = 10;
+            Item.useTime = 10;
 		}
         public override bool AltFunctionUse(Player player) {
             return true;
         }
-        public override bool UseItem(Player player) {
+        public override bool? UseItem(Player player)/* Suggestion: Return null instead of false */ {
             if(Main.myPlayer == player.whoAmI){
                 if(player.altFunctionUse == 2) {
                     p.Clear();
@@ -54,7 +55,7 @@ namespace Origins.Items.Other.Testing {
             return false;
         }
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-            if(Main.LocalPlayer.HeldItem.type==item.type)Utils.DrawBorderStringFourWay(spriteBatch, Main.fontMouseText, GetMouseText(), Main.MouseScreen.X, Math.Max(Main.MouseScreen.Y-24, 18), Colors.RarityNormal, Color.Black, new Vector2(0f));
+            if(Main.LocalPlayer.HeldItem.type==Item.type)Utils.DrawBorderStringFourWay(spriteBatch, FontAssets.MouseText.Value, GetMouseText(), Main.MouseScreen.X, Math.Max(Main.MouseScreen.Y-24, 18), Colors.RarityNormal, Color.Black, new Vector2(0f));
         }
         const long p0 = (0L << 32);
         const long p1 = (1L << 32);
@@ -224,7 +225,7 @@ namespace Origins.Items.Other.Testing {
                     World.BiomeData.DefiledWastelands.Gen.DefiledRibs((int)a.X, (int)a.Y);
                     for (int i = (int)a.X - 1; i < (int)a.X + 3; i++) {
                         for (int j = (int)a.Y - 2; j < (int)a.Y + 2; j++) {
-                            Main.tile[i, j].active(false);
+                            Main.tile[i, j].HasTile = false;
                         }
                     }
                     TileObject.CanPlace((int)a.X, (int)a.Y, (ushort)ModContent.TileType<Tiles.Defiled.Defiled_Heart>(), 0, 1, out var data);

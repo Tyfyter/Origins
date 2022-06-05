@@ -13,19 +13,19 @@ namespace Origins.NPCs.Riven {
     public class Riven_Mimic : ModNPC {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Mimic");
-            Main.npcFrameCount[npc.type] = 14;
+            Main.npcFrameCount[NPC.type] = 14;
         }
         public override void SetDefaults() {
-            npc.CloneDefaults(NPCID.BigMimicCrimson);
+            NPC.CloneDefaults(NPCID.BigMimicCrimson);
         }
         public override void FindFrame(int frameHeight) {
-            npc.CloneFrame(NPCID.BigMimicCrimson, frameHeight);
+            NPC.CloneFrame(NPCID.BigMimicCrimson, frameHeight);
         }
         public override void HitEffect(int hitDirection, double damage) {
             //spawn gore if npc is dead after being hit
-            if(npc.life<0) {
-                for(int i = 0; i < 3; i++)Gore.NewGore(npc.position+new Vector2(Main.rand.Next(npc.width),Main.rand.Next(npc.height)), npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
-                for(int i = 0; i < 6; i++)Gore.NewGore(npc.position+new Vector2(Main.rand.Next(npc.width),Main.rand.Next(npc.height)), npc.velocity, mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
+            if(NPC.life<0) {
+                for(int i = 0; i < 3; i++)Gore.NewGore(NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
+                for(int i = 0; i < 6; i++)Gore.NewGore(NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
             }
         }
     }

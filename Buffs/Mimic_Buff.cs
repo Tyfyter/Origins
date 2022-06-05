@@ -9,22 +9,17 @@ using Origins.NPCs;
 
 namespace Origins.Buffs {
     public class Mimic_Buff : ModBuff {
-        public static int ID { get; private set; } = -1;
-        public override void SetDefaults() {
+		public override string Texture => "Terraria/Images/Buff_160";
+		public static int ID { get; private set; } = -1;
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Mimic_Buff");
             Description.SetDefault("Increased combat stats");
             ID = Type;
         }
-        public override bool Autoload(ref string name, ref string texture) {
-            texture = "Terraria/Buff_160";
-            return true;
-        }
 		public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<OriginPlayer>().fervorPotion = true;
-            player.allDamageMult *= 1.15f;
-            player.meleeCrit += 15;
-            player.rangedCrit += 15;
-            player.magicCrit += 15;
+            player.GetAttackSpeed(DamageClass.Generic) += 0.1f;
+            player.GetAttackSpeed(DamageClass.Generic) *= 1.15f;
+            player.GetCritChance(DamageClass.Generic) += 15;
             player.lifeRegenCount += 20;
         }
 	}

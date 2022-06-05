@@ -17,30 +17,25 @@ namespace Origins.Items.Weapons.Felnum {
             Tooltip.SetDefault("Receives 50% higher damage bonuses");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.GoldBow);
-            item.damage = baseDamage;
-            item.width = 18;
-            item.height = 58;
-            item.useTime = item.useAnimation = 32;
-            item.shootSpeed*=2.5f;
-            item.autoReuse = false;
+            Item.CloneDefaults(ItemID.GoldBow);
+            Item.damage = baseDamage;
+            Item.width = 18;
+            Item.height = 58;
+            Item.useTime = Item.useAnimation = 32;
+            Item.shootSpeed*=2.5f;
+            Item.autoReuse = false;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 8);
-            recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();
+            recipe.Register();
         }
         public override Vector2? HoldoutOffset() {
             return new Vector2(-8f,0);
         }
-        public override void GetWeaponDamage(Player player, ref int damage) {
-            if(!OriginPlayer.ItemChecking)damage+=(damage-baseDamage)/2;
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
+            damage = damage.MultiplyBonuses(1.5f);
         }
-        /*public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            //damage+=(damage-19)/2;
-            return true;
-        }*/
     }
 }

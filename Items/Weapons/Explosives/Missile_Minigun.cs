@@ -11,31 +11,32 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
+using Terraria.DataStructures;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Missile_Minigun : ModItem {
-        public override string Texture => "Terraria/Item_"+ItemID.ProximityMineLauncher;
+        public override string Texture => "Terraria/Images/Item_"+ItemID.ProximityMineLauncher;
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Missile Minigun");
 			Tooltip.SetDefault("Light 'em up");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.ProximityMineLauncher);
-			item.damage = 135;
-			item.useTime = 9;
-			item.useAnimation = 9;
-			item.value = 5000;
-            item.shoot = ModContent.ProjectileType<Missile_Minigun_P1>();
-			item.rare = ItemRarityID.Lime;
-            item.autoReuse = true;
+            Item.CloneDefaults(ItemID.ProximityMineLauncher);
+			Item.damage = 135;
+			Item.useTime = 9;
+			Item.useAnimation = 9;
+			Item.value = 5000;
+            Item.shoot = ModContent.ProjectileType<Missile_Minigun_P1>();
+			Item.rare = ItemRarityID.Lime;
+            Item.autoReuse = true;
 		}
         public override void AddRecipes() {
-            Origins.AddExplosive(item);
+            Origins.AddExplosive(Item);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			type = item.shoot+(type-item.shoot)/3;
-            Projectile.NewProjectile(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI, 8);
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			type = Item.shoot+(type-Item.shoot)/3;
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 8);
             return false;
         }
     }
@@ -43,18 +44,18 @@ namespace Origins.Items.Weapons.Explosives {
 
         const float force = 1;
 
-        public override string Texture => "Terraria/Projectile_"+ProjectileID.RocketI;
+        public override string Texture => "Terraria/Images/Projectile_"+ProjectileID.RocketI;
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.RocketI);
-            projectile.aiStyle = 0;
-            projectile.penetrate = 1;
-            projectile.width-=4;
-            projectile.height-=4;
-            projectile.scale = 0.75f;
+            Projectile.CloneDefaults(ProjectileID.RocketI);
+            Projectile.aiStyle = 0;
+            Projectile.penetrate = 1;
+            Projectile.width-=4;
+            Projectile.height-=4;
+            Projectile.scale = 0.75f;
         }
         public override void AI() {
-            float angle = projectile.velocity.ToRotation();
-            projectile.rotation = angle + PiOver2;
+            float angle = Projectile.velocity.ToRotation();
+            Projectile.rotation = angle + PiOver2;
             float targetOffset = 0.9f;
             float targetAngle = 1;
             NPC target;
@@ -63,12 +64,12 @@ namespace Origins.Items.Weapons.Explosives {
                 target = Main.npc[i];
                 if(!target.CanBeChasedBy()) continue;
                 //float ta = (float)AngleDif((target.Center - projectile.Center).ToRotation(), angle);
-                Vector2 toHit = (projectile.Center.Clamp(target.Hitbox.Add(target.velocity)) - projectile.Center);
-                if(!Collision.CanHitLine(projectile.Center+projectile.velocity, 1, 1, projectile.Center+toHit, 1, 1))continue;
+                Vector2 toHit = (Projectile.Center.Clamp(target.Hitbox.Add(target.velocity)) - Projectile.Center);
+                if(!Collision.CanHitLine(Projectile.Center+Projectile.velocity, 1, 1, Projectile.Center+toHit, 1, 1))continue;
                 float tdist = toHit.Length();
                 float ta = (float)Math.Abs(AngleDif(toHit.ToRotation(), angle));
                 if(tdist<=dist && ta<=targetOffset) {
-                    targetAngle = ((target.Center+target.velocity) - projectile.Center).ToRotation();
+                    targetAngle = ((target.Center+target.velocity) - Projectile.Center).ToRotation();
                     targetOffset = ta;
                     dist = tdist;
                 }
@@ -77,53 +78,53 @@ namespace Origins.Items.Weapons.Explosives {
                     dist = tdist;
                 }*/
             }
-            if(dist<641) projectile.velocity = (projectile.velocity+new Vector2(force,0).RotatedBy(targetAngle)).SafeNormalize(Vector2.Zero)*projectile.velocity.Length();//projectile.velocity = projectile.velocity.RotatedBy(targetOffset);//Clamp(targetOffset, -0.05f, 0.05f)
-            int num248 = Dust.NewDust(projectile.Center - projectile.velocity * 0.5f-new Vector2(0,4), 0, 0, 6, 0f, 0f, 100);
+            if(dist<641) Projectile.velocity = (Projectile.velocity+new Vector2(force,0).RotatedBy(targetAngle)).SafeNormalize(Vector2.Zero)*Projectile.velocity.Length();//projectile.velocity = projectile.velocity.RotatedBy(targetOffset);//Clamp(targetOffset, -0.05f, 0.05f)
+            int num248 = Dust.NewDust(Projectile.Center - Projectile.velocity * 0.5f-new Vector2(0,4), 0, 0, 6, 0f, 0f, 100);
 			Dust dust3 = Main.dust[num248];
 			dust3.scale *= 1f + Main.rand.Next(10) * 0.1f;
 			dust3.velocity *= 0.2f;
         }
         public override bool PreKill(int timeLeft) {
-            projectile.type = ProjectileID.RocketI;
+            Projectile.type = ProjectileID.RocketI;
             return true;
         }
         public override void Kill(int timeLeft) {
-			projectile.position.X += projectile.width / 2;
-			projectile.position.Y += projectile.height / 2;
-			projectile.width = 64;
-			projectile.height = 64;
-			projectile.position.X -= projectile.width / 2;
-			projectile.position.Y -= projectile.height / 2;
-			projectile.Damage();
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = 64;
+			Projectile.height = 64;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.Damage();
         }
     }
     public class Missile_Minigun_P2 : Missile_Minigun_P1 {
-        public override string Texture => "Terraria/Projectile_"+ProjectileID.RocketII;
+        public override string Texture => "Terraria/Images/Projectile_"+ProjectileID.RocketII;
         public override bool PreKill(int timeLeft) {
-            projectile.type = ProjectileID.RocketII;
+            Projectile.type = ProjectileID.RocketII;
             return true;
         }
     }
     public class Missile_Minigun_P3 : Missile_Minigun_P1 {
-        public override string Texture => "Terraria/Projectile_"+ProjectileID.RocketIII;
+        public override string Texture => "Terraria/Images/Projectile_"+ProjectileID.RocketIII;
         public override bool PreKill(int timeLeft) {
-            projectile.type = ProjectileID.RocketIII;
+            Projectile.type = ProjectileID.RocketIII;
             return true;
         }
         public override void Kill(int timeLeft) {
-			projectile.position.X += projectile.width / 2;
-			projectile.position.Y += projectile.height / 2;
-			projectile.width = 96;
-			projectile.height = 96;
-			projectile.position.X -= projectile.width / 2;
-			projectile.position.Y -= projectile.height / 2;
-			projectile.Damage();
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = 96;
+			Projectile.height = 96;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.Damage();
         }
     }
     public class Missile_Minigun_P4 : Missile_Minigun_P3 {
-        public override string Texture => "Terraria/Projectile_"+ProjectileID.RocketIV;
+        public override string Texture => "Terraria/Images/Projectile_"+ProjectileID.RocketIV;
         public override bool PreKill(int timeLeft) {
-            projectile.type = ProjectileID.RocketIV;
+            Projectile.type = ProjectileID.RocketIV;
             return true;
         }
     }

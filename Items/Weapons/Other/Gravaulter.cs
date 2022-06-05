@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -15,35 +17,35 @@ using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Other {
     public class Gravaulter : ModItem {
-        public override bool CloneNewInstances => true;
+        protected override bool CloneNewInstances => true;
         float shootSpeed;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Gravaulter");
             Tooltip.SetDefault("");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.MeteorStaff);
-            item.damage = 99;
-            item.magic = true;
-            item.noUseGraphic = true;
-            item.noMelee = true;
-            item.width = 58;
-            item.height = 58;
-            item.useStyle = 5;
-            item.useTime = 12;
-            item.useAnimation = 12;
-            item.knockBack = 9.5f;
-            item.value = 500000;
-            item.rare = ItemRarityID.Purple;
-            item.shoot = Gravaulter_P.ID;
-            item.shootSpeed = 10f;
-            item.autoReuse = false;
-            item.scale = 1f;
-            item.mana = 6;
-            item.UseSound = null;
+            Item.CloneDefaults(ItemID.MeteorStaff);
+            Item.damage = 99;
+            Item.DamageType = DamageClass.Magic;
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
+            Item.width = 58;
+            Item.height = 58;
+            Item.useStyle = 5;
+            Item.useTime = 12;
+            Item.useAnimation = 12;
+            Item.knockBack = 9.5f;
+            Item.value = 500000;
+            Item.rare = ItemRarityID.Purple;
+            Item.shoot = Gravaulter_P.ID;
+            Item.shootSpeed = 10f;
+            Item.autoReuse = false;
+            Item.scale = 1f;
+            Item.mana = 6;
+            Item.UseSound = null;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips) {
-            tooltips[0].overrideColor = new Color(0, Main.mouseTextColor, 0, Main.mouseTextColor);
+            tooltips[0].OverrideColor = new Color(0, Main.mouseTextColor, 0, Main.mouseTextColor);
         }
         public override void HoldItem(Player player) {
             int heldProjectile = player.GetModPlayer<OriginPlayer>().heldProjectile;
@@ -78,14 +80,14 @@ namespace Origins.Items.Weapons.Other {
         public override bool CanUseItem(Player player) {
             return !player.controlUseTile;
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            if (player.controlUseTile) {
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+		    if (player.controlUseTile) {
                 return false;
             }
             int heldProjectile = player.GetModPlayer<OriginPlayer>().heldProjectile;
             if (heldProjectile < 0 || heldProjectile > Main.maxProjectiles) {
-                shootSpeed = (float)Math.Sqrt(speedX * speedX + speedY * speedY);
-                Projectile.NewProjectile(player.MountedCenter, Vector2.Zero, Gravaulter_P.ID, damage, knockBack, player.whoAmI, player.itemAnimationMax * 2.5f);
+                shootSpeed = velocity.Length();
+                Projectile.NewProjectile(source, player.MountedCenter, Vector2.Zero, Gravaulter_P.ID, damage, knockback, player.whoAmI, player.itemAnimationMax * 2.5f);
                 player.itemTime = 2;
                 player.itemAnimation = 2;
             }
@@ -97,48 +99,48 @@ namespace Origins.Items.Weapons.Other {
         public static int ID { get; private set; }
         public static Texture2D[] RockTextures { get; private set; }
         List<Rock> rocks = new List<Rock>();
-        internal static void Unload() {
+        public override void Unload() {
             RockTextures = null;
         }
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Gravaulter");
-            ID = projectile.type;
+            ID = Projectile.type;
             if (!Main.dedServ) {
                 RockTextures = new Texture2D[]{
-                    mod.GetTexture("Items/Weapons/Other/Gravaulter_P"),
-                    mod.GetTexture("Items/Weapons/Other/Gravaulter_P2"),
-                    mod.GetTexture("Items/Weapons/Other/Gravaulter_P3")
+                    Mod.GetTexture("Items/Weapons/Other/Gravaulter_P"),
+                    Mod.GetTexture("Items/Weapons/Other/Gravaulter_P2"),
+                    Mod.GetTexture("Items/Weapons/Other/Gravaulter_P3")
                 };
             }
         }
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Meteor1);
-            projectile.width = 14;
-            projectile.height = 14;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 10;
-            projectile.penetrate = -1;
-            projectile.extraUpdates = 1;
-            projectile.timeLeft = 600;
-            projectile.tileCollide = false;
-            projectile.aiStyle = 0;
-            projectile.localAI[0] = 1000f;
+            Projectile.CloneDefaults(ProjectileID.Meteor1);
+            Projectile.width = 14;
+            Projectile.height = 14;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
+            Projectile.penetrate = -1;
+            Projectile.extraUpdates = 1;
+            Projectile.timeLeft = 600;
+            Projectile.tileCollide = false;
+            Projectile.aiStyle = 0;
+            Projectile.localAI[0] = 1000f;
         }
         public override void AI() {
-            float rotSpeed = projectile.spriteDirection * (0.05f + (0.01f * rocks.Where(r => r.attached).Count()));
-            projectile.rotation += rotSpeed;
-            if (!projectile.tileCollide) {
-                Player owner = Main.player[projectile.owner];
-                owner.GetModPlayer<OriginPlayer>().heldProjectile = owner.heldProj = projectile.whoAmI;
-                projectile.velocity = Vector2.Zero;
+            float rotSpeed = Projectile.spriteDirection * (0.05f + (0.01f * rocks.Where(r => r.attached).Count()));
+            Projectile.rotation += rotSpeed;
+            if (!Projectile.tileCollide) {
+                Player owner = Main.player[Projectile.owner];
+                owner.GetModPlayer<OriginPlayer>().heldProjectile = owner.heldProj = Projectile.whoAmI;
+                Projectile.velocity = Vector2.Zero;
                 if (rocks.Count < 10) {
-                    if (++projectile.localAI[0] >= projectile.ai[0] && owner.CheckMana(owner.HeldItem, pay:true)) {
-                        projectile.localAI[0] = 0;
+                    if (++Projectile.localAI[0] >= Projectile.ai[0] && owner.CheckMana(owner.HeldItem, pay:true)) {
+                        Projectile.localAI[0] = 0;
                         float[] laserScanResults = new float[3];
                         int tries = 15;
                         retry:
                         PolarVec2 spawnPosition = new PolarVec2(1, Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi));
-                        Collision.LaserScan(projectile.Center, (Vector2)spawnPosition, 1f, 481f, laserScanResults);
+                        Collision.LaserScan(Projectile.Center, (Vector2)spawnPosition, 1f, 481f, laserScanResults);
                         float dist = laserScanResults.Average();
                         if (dist >= 480f) {
                             if (tries-- > 0) {
@@ -149,81 +151,81 @@ namespace Origins.Items.Weapons.Other {
                         }
                         spawnPosition.R = dist;
                         rocks.Add(new Rock(spawnPosition));
-                        Vector2 soundPosition = projectile.Center + (Vector2)spawnPosition;
-                        Main.PlaySound(SoundID.Item, (int)soundPosition.X, (int)soundPosition.Y, 28, 1, -0.3f);
+                        Vector2 soundPosition = Projectile.Center + (Vector2)spawnPosition;
+                        SoundEngine.PlaySound(SoundID.Item, (int)soundPosition.X, (int)soundPosition.Y, 28, 1, -0.3f);
                     }
                 }
                 Rock rock;
                 for (int i = 0; i < rocks.Count; i++) {
                     rock = rocks[i];
                     if (!rock.attached) {
-                        rock.offset.R -= 162f / projectile.ai[0];
+                        rock.offset.R -= 162f / Projectile.ai[0];
                         if (rock.offset.R <= rocks.Count) {
                             rock.attached = true;
                         }
                     } else {
                         rock.offset.Theta += rotSpeed;
                     }
-                    LightAndDust(projectile.Center + (Vector2)rock.offset);
+                    LightAndDust(Projectile.Center + (Vector2)rock.offset);
                 }
-            } else if (projectile.ai[1] > 0) {
-                projectile.ai[1] = 0;
+            } else if (Projectile.ai[1] > 0) {
+                Projectile.ai[1] = 0;
                 Rock rock;
                 for (int i = 0; i < rocks.Count; i++) {
                     rock = rocks[i];
                     if (!rock.attached) {
                         rocks.RemoveAt(i--);
                         PolarVec2 vel = rock.offset;
-                        vel.R = -(162f / projectile.ai[0]);
-                        Projectile.NewProjectile(projectile.Center + (Vector2)rock.offset, (Vector2)vel, Gravaulter_Rock1.ID+rock.type, projectile.damage / 2, projectile.knockBack, projectile.owner, ai1: rotSpeed * projectile.spriteDirection);
+                        vel.R = -(162f / Projectile.ai[0]);
+                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + (Vector2)rock.offset, (Vector2)vel, Gravaulter_Rock1.ID+rock.type, Projectile.damage / 2, Projectile.knockBack, Projectile.owner, ai1: rotSpeed * Projectile.spriteDirection);
                     }
-                    LightAndDust(projectile.Center + (Vector2)rock.offset);
+                    LightAndDust(Projectile.Center + (Vector2)rock.offset);
                 }
                 if (rocks.Count == 0) {
-                    projectile.timeLeft = 0;
+                    Projectile.timeLeft = 0;
                 } else {
-                    projectile.damage = (int)((rocks.Count + 5f) * 0.2f * projectile.damage);
-                    Main.PlaySound(SoundID.Item88, projectile.Center);
+                    Projectile.damage = (int)((rocks.Count + 5f) * 0.2f * Projectile.damage);
+                    SoundEngine.PlaySound(SoundID.Item88, Projectile.Center);
                 }
             } else {
                 Rock rock;
                 for (int i = 0; i < rocks.Count; i++) {
                     rock = rocks[i];
                     rock.offset.Theta += rotSpeed;
-                    LightAndDust(projectile.Center + (Vector2)rock.offset);
+                    LightAndDust(Projectile.Center + (Vector2)rock.offset);
                 }
-                projectile.velocity.Y += 0.06f;
+                Projectile.velocity.Y += 0.06f;
             }
         }
         public void Split() {
             float rotSpeed = (0.15f + (0.03f * rocks.Where(r => r.attached).Count()));
             Rock rock;
             PolarVec2 vel;
-            projectile.velocity *= 0.85f;
+            Projectile.velocity *= 0.85f;
             for (int i = 0; i < rocks.Count; i++) {
                 rock = rocks[i];
                 vel = rock.offset;
                 vel.R *= rotSpeed;
-                vel.Theta += MathHelper.PiOver2 * projectile.spriteDirection;
-                Projectile.NewProjectile(projectile.Center + (Vector2)rock.offset, projectile.velocity + (Vector2)vel, Gravaulter_Rock1.ID + rock.type, projectile.damage / 2, projectile.knockBack, projectile.owner, ai1:rotSpeed * projectile.spriteDirection);
+                vel.Theta += MathHelper.PiOver2 * Projectile.spriteDirection;
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + (Vector2)rock.offset, Projectile.velocity + (Vector2)vel, Gravaulter_Rock1.ID + rock.type, Projectile.damage / 2, Projectile.knockBack, Projectile.owner, ai1:rotSpeed * Projectile.spriteDirection);
             }
-            Main.PlaySound(SoundID.Item89, projectile.Center);
+            SoundEngine.PlaySound(SoundID.Item89, Projectile.Center);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if (target.life > damage) {
-                projectile.Kill();
+                Projectile.Kill();
             }
         }
         public override void OnHitPlayer(Player target, int damage, bool crit) {
             if (target.statLife > damage) {
-                projectile.Kill();
+                Projectile.Kill();
             }
         }
         public override void Kill(int timeLeft) {
             Split();
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-            if (projectile.tileCollide) {
+            if (Projectile.tileCollide) {
                 return null;
             }
             return false;
@@ -238,9 +240,9 @@ namespace Origins.Items.Weapons.Other {
                 dust.noLight = true;
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
+        public override bool PreDraw(ref Color lightColor) {
             Rock rock;
-            Vector2 center = projectile.Center - Main.screenPosition;
+            Vector2 center = Projectile.Center - Main.screenPosition;
             Texture2D texture;
             for (int i = 0; i < rocks.Count; i++) {
                 rock = rocks[i];
@@ -250,10 +252,10 @@ namespace Origins.Items.Weapons.Other {
                     center + (Vector2)rock.offset,
                     null,
                     lightColor,
-                    projectile.rotation + rock.rotation,
+                    Projectile.rotation + rock.rotation,
                     texture.Size() * 0.5f,
-                    projectile.scale,
-                    projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+                    Projectile.scale,
+                    Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
                     0);
             }
             return false;
@@ -274,25 +276,25 @@ namespace Origins.Items.Weapons.Other {
     }
     public abstract class Gravaulter_Rock : ModProjectile {
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Meteor1);
-            projectile.friendly = true;
-            projectile.hostile = false;
-            projectile.width = 14;
-            projectile.height = 14;
-            projectile.usesLocalNPCImmunity = false;
-            projectile.localNPCHitCooldown = 10;
-            projectile.penetrate = 3;
-            projectile.extraUpdates = 1;
-            projectile.timeLeft = 600;
-            projectile.tileCollide = true;
-            projectile.aiStyle = 0;
+            Projectile.CloneDefaults(ProjectileID.Meteor1);
+            Projectile.friendly = true;
+            Projectile.hostile = false;
+            Projectile.width = 14;
+            Projectile.height = 14;
+            Projectile.usesLocalNPCImmunity = false;
+            Projectile.localNPCHitCooldown = 10;
+            Projectile.penetrate = 3;
+            Projectile.extraUpdates = 1;
+            Projectile.timeLeft = 600;
+            Projectile.tileCollide = true;
+            Projectile.aiStyle = 0;
         }
         public override void AI() {
-            projectile.velocity.Y += 0.06f;
-            projectile.rotation += projectile.ai[1];
-            OriginExtensions.LinearSmoothing(ref projectile.ai[1], 0, 0.001f);
-            Lighting.AddLight(projectile.Center, 0, 0.5f, 0);
-            if (Main.rand.Next(100) <= projectile.velocity.Length()) {
+            Projectile.velocity.Y += 0.06f;
+            Projectile.rotation += Projectile.ai[1];
+            OriginExtensions.LinearSmoothing(ref Projectile.ai[1], 0, 0.001f);
+            Lighting.AddLight(Projectile.Center, 0, 0.5f, 0);
+            if (Main.rand.Next(100) <= Projectile.velocity.Length()) {
                 SpawnDust(0f);
             }
         }
@@ -302,38 +304,38 @@ namespace Origins.Items.Weapons.Other {
             }
         }
         public void SpawnDust(float velocityMultiplier = 0.75f) {
-            Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Electric, projectile.velocity.X * velocityMultiplier, projectile.velocity.Y * velocityMultiplier, 100, new Color(0, 255, 0), 0.5f);
+            Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, Projectile.velocity.X * velocityMultiplier, Projectile.velocity.Y * velocityMultiplier, 100, new Color(0, 255, 0), 0.5f);
             dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
             dust.fadeIn = Main.rand.NextFloat(0.1f);
             dust.noGravity = false;
             dust.noLight = true;
         }
         public override bool OnTileCollide(Vector2 oldVelocity) {
-            if (projectile.velocity.Length() < oldVelocity.Length()*0.2f) {
-                projectile.velocity = oldVelocity;
-                Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 89, 0.5f);
+            if (Projectile.velocity.Length() < oldVelocity.Length()*0.2f) {
+                Projectile.velocity = oldVelocity;
+                SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 89, 0.5f);
                 return true;
             }
-            if (projectile.velocity.X == 0) {
-                projectile.velocity.Y *= 0.99f;
+            if (Projectile.velocity.X == 0) {
+                Projectile.velocity.Y *= 0.99f;
             }
-            if (projectile.velocity.Y == 0) {
-                projectile.velocity.X *= 0.99f;
+            if (Projectile.velocity.Y == 0) {
+                Projectile.velocity.X *= 0.99f;
             }
-            projectile.ai[1] = (oldVelocity.X - projectile.velocity.X) * 10;
+            Projectile.ai[1] = (oldVelocity.X - Projectile.velocity.X) * 10;
             return false;
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
-            Texture2D texture = Main.projectileTexture[projectile.type];
+        public override bool PreDraw(ref Color lightColor) {
+            Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
             spriteBatch.Draw(
                 texture,
-                projectile.Center - Main.screenPosition,
+                Projectile.Center - Main.screenPosition,
                 null,
                 lightColor,
-                projectile.rotation,
+                Projectile.rotation,
                 texture.Size() * 0.5f,
-                projectile.scale,
-                projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+                Projectile.scale,
+                Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
                 0);
             return false;
         }
@@ -343,7 +345,7 @@ namespace Origins.Items.Weapons.Other {
         public static int ID { get; private set; }
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Gravaulter");
-            ID = projectile.type;
+            ID = Projectile.type;
         }
     }
     public class Gravaulter_Rock2 : Gravaulter_Rock {

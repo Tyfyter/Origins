@@ -15,9 +15,9 @@ namespace Origins.Items.Accessories {
             Tooltip.SetDefault("Increased projectile speed\nImmunity to Confusion\n\"The future is now.\"");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.YoYoGlove);
-            item.handOffSlot = -1;
-            item.handOnSlot = -1;
+            Item.CloneDefaults(ItemID.YoYoGlove);
+            Item.handOffSlot = -1;
+            Item.handOnSlot = -1;
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().advancedImaging = true;

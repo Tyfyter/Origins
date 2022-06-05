@@ -18,36 +18,36 @@ namespace Origins.Items.Weapons.Defiled {
 			Tooltip.SetDefault("'How does the fish feel about this?'");
 		}
 		public override void SetDefaults() {
-			item.damage = 45;
-			item.melee = true;
-            item.noMelee = true;
-            item.noUseGraphic = true;
-			item.width = 30;
-			item.height = 36;
-			item.useTime = 17;
-			item.useAnimation = 17;
-			item.useStyle = 5;
-			item.knockBack = 5;
-            item.shoot = ModContent.ProjectileType<Knee_Slapper_P>();
-			item.shootSpeed = 16f;
-			item.value = 5000;
-            item.useTurn = true;
-			item.rare = ItemRarityID.Purple + 2;
-			item.UseSound = SoundID.Item1;
-			item.autoReuse = true;
+			Item.damage = 45;
+			Item.melee = true;
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+			Item.width = 30;
+			Item.height = 36;
+			Item.useTime = 17;
+			Item.useAnimation = 17;
+			Item.useStyle = 5;
+			Item.knockBack = 5;
+            Item.shoot = ModContent.ProjectileType<Knee_Slapper_P>();
+			Item.shootSpeed = 16f;
+			Item.value = 5000;
+            Item.useTurn = true;
+			Item.rare = ItemRarityID.Purple + 2;
+			Item.UseSound = SoundID.Item1;
+			Item.autoReuse = true;
 		}
 		public override int ChoosePrefix(UnifiedRandom rand) {
-			if (item.noUseGraphic) {
-				item.noUseGraphic = false;
-				item.Prefix(-2);
-				item.noUseGraphic = true;
-				return item.prefix;
+			if (Item.noUseGraphic) {
+				Item.noUseGraphic = false;
+				Item.Prefix(-2);
+				Item.noUseGraphic = true;
+				return Item.prefix;
 			}
 			return -1;
 		}
 		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
 			Projectile proj = Projectile.NewProjectileDirect(position, Vector2.Zero, type, damage, knockBack, player.whoAmI, player.itemAnimationMax, new Vector2(speedX, speedY).ToRotation());
-			proj.scale = item.scale;
+			proj.scale = Item.scale;
 			return false;
 		}
 	}
@@ -55,44 +55,44 @@ namespace Origins.Items.Weapons.Defiled {
 		static bool lastSlapDir = false;
         public override string Texture => "Origins/Items/Weapons/Defiled/Infusion_P";
 		public List<PolarVec2> nodes;
-		PolarVec2 GetSwingStartOffset => new PolarVec2(0, projectile.ai[1] - projectile.direction * 0.35f);//-MathHelper.PiOver2 + projectile.direction * 0.35f
+		PolarVec2 GetSwingStartOffset => new PolarVec2(0, Projectile.ai[1] - Projectile.direction * 0.35f);//-MathHelper.PiOver2 + projectile.direction * 0.35f
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Knee Slapper");
 		}
 		public override void SetDefaults() {
-			projectile.melee = true;
-			projectile.friendly = true;
-			projectile.usesLocalNPCImmunity = true;
-			projectile.timeLeft = 40;
-			projectile.localNPCHitCooldown = 15;
-			projectile.width = 8;
-			projectile.height = 8;
-			projectile.penetrate = -1;
-			projectile.extraUpdates = 3;
+			Projectile.melee = true;
+			Projectile.friendly = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.timeLeft = 40;
+			Projectile.localNPCHitCooldown = 15;
+			Projectile.width = 8;
+			Projectile.height = 8;
+			Projectile.penetrate = -1;
+			Projectile.extraUpdates = 3;
 			//projectile.hide = true;
-			projectile.ownerHitCheck = false;
-			projectile.tileCollide = false;
+			Projectile.ownerHitCheck = false;
+			Projectile.tileCollide = false;
 		}
 		public override void AI() {
-			Player owner = Main.player[projectile.owner];
+			Player owner = Main.player[Projectile.owner];
 			if (nodes is null) {
-				projectile.timeLeft = (int)(projectile.ai[0] * 4);
-				projectile.localNPCHitCooldown = projectile.timeLeft;
-				projectile.localAI[1] = 16f / projectile.ai[0];
-				projectile.localAI[0] = owner.direction;
-				projectile.ai[0] = projectile.direction = (lastSlapDir = !lastSlapDir) ? 1 : -1;
+				Projectile.timeLeft = (int)(Projectile.ai[0] * 4);
+				Projectile.localNPCHitCooldown = Projectile.timeLeft;
+				Projectile.localAI[1] = 16f / Projectile.ai[0];
+				Projectile.localAI[0] = owner.direction;
+				Projectile.ai[0] = Projectile.direction = (lastSlapDir = !lastSlapDir) ? 1 : -1;
 				//projectile.ai[1] = (Main.MouseWorld - owner.MountedCenter).ToRotation();
-				float offset = projectile.direction * 0.1f * projectile.localAI[1];
+				float offset = Projectile.direction * 0.1f * Projectile.localAI[1];
 				nodes = new List<PolarVec2>() {
-					new PolarVec2(24 * projectile.scale, -offset),
-					new PolarVec2(24 * projectile.scale, -offset * 2),
-					new PolarVec2(24 * projectile.scale, -offset * 3),
-					new PolarVec2(24 * projectile.scale, -offset * 4),
-					new PolarVec2(36 * projectile.scale, -offset * 5)
+					new PolarVec2(24 * Projectile.scale, -offset),
+					new PolarVec2(24 * Projectile.scale, -offset * 2),
+					new PolarVec2(24 * Projectile.scale, -offset * 3),
+					new PolarVec2(24 * Projectile.scale, -offset * 4),
+					new PolarVec2(36 * Projectile.scale, -offset * 5)
 				};
 			}
-			owner.direction = (int)projectile.localAI[0];
-			projectile.direction = (int)projectile.ai[0];
+			owner.direction = (int)Projectile.localAI[0];
+			Projectile.direction = (int)Projectile.ai[0];
 			Vector2 basePosition = owner.MountedCenter;
 			//Vector2 position = default;
 			PolarVec2 position = GetSwingStartOffset;
@@ -102,10 +102,10 @@ namespace Origins.Items.Weapons.Defiled {
 				position.Theta += vec.Theta;
 				//position += (Vector2)vec;
 				//Dust.NewDustPerfect(basePosition + (Vector2)position, 6, Vector2.Zero).noGravity = true;
-				vec.Theta += projectile.direction * 0.015f * projectile.localAI[1];// / (i + 1);
+				vec.Theta += Projectile.direction * 0.015f * Projectile.localAI[1];// / (i + 1);
 				nodes[i] = vec;
 			}
-			owner.heldProj = projectile.whoAmI;
+			owner.heldProj = Projectile.whoAmI;
 			/*
 			Vector2 basePosition = owner.MountedCenter;
 			Vector2 position = default;
@@ -121,8 +121,8 @@ namespace Origins.Items.Weapons.Defiled {
 			}*/
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			projectile.direction = (int)projectile.ai[0];
-			Player owner = Main.player[projectile.owner];
+			Projectile.direction = (int)Projectile.ai[0];
+			Player owner = Main.player[Projectile.owner];
 			Vector2 basePosition = owner.MountedCenter;
 			PolarVec2 position = GetSwingStartOffset;
 			Vector2 lastPosition = basePosition;
@@ -138,9 +138,9 @@ namespace Origins.Items.Weapons.Defiled {
 			}
 			return false;
 		}
-		public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor) {
-			projectile.direction = (int)projectile.ai[0];
-			Player owner = Main.player[projectile.owner];
+		public override bool PreDraw(ref Color lightColor) {
+			Projectile.direction = (int)Projectile.ai[0];
+			Player owner = Main.player[Projectile.owner];
 			Vector2 basePosition = owner.MountedCenter;
 			PolarVec2 position = GetSwingStartOffset;
 			Vector2 lastPosition = basePosition;
@@ -160,7 +160,7 @@ namespace Origins.Items.Weapons.Defiled {
 						new Color(Lighting.GetSubLight(lastPosition)),
 						diff.Theta,
 						new Vector2(-8, 21),
-						new Vector2(diff.R / 30f, 0.9f) * projectile.scale,
+						new Vector2(diff.R / 30f, 0.9f) * Projectile.scale,
 						SpriteEffects.None,
 						0);
 				} else {
@@ -171,7 +171,7 @@ namespace Origins.Items.Weapons.Defiled {
 						new Color(Lighting.GetSubLight(lastPosition)),
 						diff.Theta,
 						new Vector2(2, 21),
-						new Vector2(diff.R / 30f, 0.9f) * projectile.scale,
+						new Vector2(diff.R / 30f, 0.9f) * Projectile.scale,
 						(i % 2 == 0) ? SpriteEffects.None : SpriteEffects.FlipVertically,
 						0);
 				}
@@ -185,7 +185,7 @@ namespace Origins.Items.Weapons.Defiled {
 				new Color(Lighting.GetSubLight(lastPosition)),
 				diff.Theta,
 				new Vector2(2, 21),
-				new Vector2(1, 0.9f) * projectile.scale,
+				new Vector2(1, 0.9f) * Projectile.scale,
 				SpriteEffects.None,
 				0);
 			return false;

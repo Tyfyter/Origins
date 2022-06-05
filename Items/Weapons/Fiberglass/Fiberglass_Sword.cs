@@ -8,19 +8,19 @@ namespace Origins.Items.Weapons.Fiberglass {
 			Tooltip.SetDefault("Be careful, it's sharp");
 		}
 		public override void SetDefaults() {
-			item.damage = 18;
-			item.melee = true;
-			item.width = 42;
-			item.height = 42;
-			item.useTime = 16;
-			item.useAnimation = 16;
-			item.useStyle = 1;
-			item.knockBack = 2;
-			item.value = 5000;
-			item.autoReuse = true;
-            item.useTurn = true;
-			item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item1;
+			Item.damage = 18;
+			Item.melee = true;
+			Item.width = 42;
+			Item.height = 42;
+			Item.useTime = 16;
+			Item.useAnimation = 16;
+			Item.useStyle = 1;
+			Item.knockBack = 2;
+			Item.value = 5000;
+			Item.autoReuse = true;
+            Item.useTurn = true;
+			Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item1;
 		}
 	}
 }

@@ -12,7 +12,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
     public class Defiled_Sandstone : DefiledTile {
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.Sandstone];
@@ -24,7 +24,7 @@ namespace Origins.Tiles.Defiled {
             /*for(int i = 0; i < TileLoader.TileCount; i++) {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Sandstone];
             }*/
-			drop = ItemType<Defiled_Sandstone_Item>();
+			ItemDrop = ItemType<Defiled_Sandstone_Item>();
 			AddMapEntry(new Color(150, 150, 150));
             mergeID = TileID.Sandstone;
 		}
@@ -38,8 +38,8 @@ namespace Origins.Tiles.Defiled {
             DisplayName.SetDefault("Defiled Sandstone");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.StoneBlock);
-            item.createTile = TileType<Defiled_Sandstone>();
+            Item.CloneDefaults(ItemID.StoneBlock);
+            Item.createTile = TileType<Defiled_Sandstone>();
 		}
     }
 }

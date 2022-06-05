@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -87,8 +88,8 @@ namespace Tyfyter.Utils {
                 _context = context;
                 _scale = scale;
                 item = _item;
-                Width.Set(Main.inventoryBack9Texture.Width * scale, 0f);
-                Height.Set(Main.inventoryBack9Texture.Height * scale, 0f);
+                Width.Set(TextureAssets.InventoryBack9.Value.Width * scale, 0f);
+                Height.Set(TextureAssets.InventoryBack9.Value.Height * scale, 0f);
             }
             protected override void DrawSelf(SpriteBatch spriteBatch) {
                 float oldScale = Main.inventoryScale;
@@ -120,7 +121,7 @@ namespace Tyfyter.Utils {
                     slotColorMult = MissingSlotColor;
                 }
                 Item _ = new Item();
-                DrawColoredItemSlot(spriteBatch, ref _, rectangle.TopLeft(), Main.inventoryBack13Texture, slotColor.MultiplyRGBA(slotColorMult));
+                DrawColoredItemSlot(spriteBatch, ref _, rectangle.TopLeft(), TextureAssets.InventoryBack13.Value, slotColor.MultiplyRGBA(slotColorMult));
                 foreach ((Texture2D texture, Color color) texture in extraTextures) {
                     spriteBatch.Draw(texture.texture, rectangle.TopLeft(), null, texture.color.MultiplyRGBA(slotColorMult), 0, default, Main.inventoryScale, SpriteEffects.None, 0);
                 }

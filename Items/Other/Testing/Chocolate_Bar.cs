@@ -29,18 +29,18 @@ namespace Origins.Items.Other.Testing {
 		}
 		public override void SetDefaults() {
 			//item.name = "jfdjfrbh";
-			item.width = 16;
-			item.height = 26;
-			item.value = 25000;
-			item.rare = ItemRarityID.Green;
-			item.useStyle = ItemUseStyleID.HoldingUp;
-			item.useAnimation = 10;
-			item.useTime = 10;
+			Item.width = 16;
+			Item.height = 26;
+			Item.value = 25000;
+			Item.rare = ItemRarityID.Green;
+			Item.useStyle = ItemUseStyleID.HoldUp;
+			Item.useAnimation = 10;
+			Item.useTime = 10;
 		}
 		public override bool AltFunctionUse(Player player) {
 			return true;
 		}
-		public override bool UseItem(Player player) {
+		public override bool? UseItem(Player player)/* Suggestion: Return null instead of false */ {
 			if(Main.myPlayer == player.whoAmI){
 				if(player.altFunctionUse == 2) {
 					if(player.controlSmart) {
@@ -78,9 +78,9 @@ namespace Origins.Items.Other.Testing {
 			return false;
 		}
 		public void DrawAnimations(PlayerDrawInfo drawInfo) {
-			Texture2D upperLegTexture = mod.GetTexture("NPCs/Fiberglass/Fiberglass_Threader_Leg_Upper");
-			Texture2D lowerLegTexture = mod.GetTexture("NPCs/Fiberglass/Fiberglass_Threader_Leg_Lower");
-			Texture2D pixelTexture = mod.GetTexture("Projectiles/Pixel");
+			Texture2D upperLegTexture = Mod.GetTexture("NPCs/Fiberglass/Fiberglass_Threader_Leg_Upper");
+			Texture2D lowerLegTexture = Mod.GetTexture("NPCs/Fiberglass/Fiberglass_Threader_Leg_Lower");
+			Texture2D pixelTexture = Mod.GetTexture("Projectiles/Pixel");
 			switch (mode) {
 				case 0: {
 					Player player = Main.LocalPlayer;
@@ -149,7 +149,7 @@ namespace Origins.Items.Other.Testing {
 				case 1: {
 					//0.65-1 rgb, 0.325-0.5 a
 					float hp = 0.65f;//Main.LocalPlayer.statLife / (float)Main.LocalPlayer.statLifeMax2;
-					Main.playerDrawData.Add(new DrawData(mod.GetTexture("NPCs/ICARUS/ICARUS_Shield"), Main.MouseScreen, null, new Color(hp, hp, hp, hp / 2), 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0));
+					Main.playerDrawData.Add(new DrawData(Mod.GetTexture("NPCs/ICARUS/ICARUS_Shield"), Main.MouseScreen, null, new Color(hp, hp, hp, hp / 2), 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0));
 				}
 				break;
 			}

@@ -3,6 +3,8 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
@@ -11,126 +13,125 @@ namespace Origins.NPCs.Defiled {
     public class Defiled_Hunter_Head : Defiled_Hunter {
         public const float speed = 4f;
         public override void SetStaticDefaults() {
-            Main.npcFrameCount[npc.type] = 4;
+            Main.npcFrameCount[NPC.type] = 4;
             base.SetStaticDefaults();
         }
         public override void SetDefaults() {
-            npc.CloneDefaults(NPCID.DiggerHead);
-            npc.aiStyle = NPCAIStyleID.Fighter;
-            npc.lifeMax = 360;
-            npc.defense = 30;
-            npc.damage = 64;
-            npc.height = 30;
-            npc.width = 32;
-            npc.noGravity = false;
-            npc.noTileCollide = false;
+            NPC.CloneDefaults(NPCID.DiggerHead);
+            NPC.aiStyle = NPCAIStyleID.Fighter;
+            NPC.lifeMax = 360;
+            NPC.defense = 30;
+            NPC.damage = 64;
+            NPC.height = 30;
+            NPC.width = 32;
+            NPC.noGravity = false;
+            NPC.noTileCollide = false;
         }
         public override bool PreAI() {
-            npc.TargetClosest();
-            if(npc.HasPlayerTarget) {
-                npc.FaceTarget();
-                npc.spriteDirection = npc.direction;
+            NPC.TargetClosest();
+            if(NPC.HasPlayerTarget) {
+                NPC.FaceTarget();
+                NPC.spriteDirection = NPC.direction;
             }
             return true;
         }
-        public override void AI() {
-            if(Main.netMode != NetmodeID.MultiplayerClient) {
-                npc.oldPosition = npc.position;
-                if(npc.collideY) {
-                    npc.rotation = npc.velocity.ToRotation();
-                } else {
-                    LinearSmoothing(ref npc.rotation, npc.velocity.ToRotation(), 0.5f);
+		public override void OnSpawn(IEntitySource source) {
+            ai[3] = NPC.whoAmI;
+            NPC.realLife = NPC.whoAmI;
+            int current = 0;
+            int last = NPC.whoAmI;
+            int type = ModContent.NPCType<Defiled_Hunter_Body>();
+            for (int k = 0; k < 4; k++) {
+                current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
+                Main.npc[current].realLife = NPC.whoAmI;
+                Main.npc[current].frame = new Rectangle(0, (k * 32) % 192, 32, 30);
+                Main.npc[current].frameCounter = k % animationTime;
+                if (Main.npc[current].ModNPC is Defiled_Hunter body) {
+                    body.ai[3] = NPC.whoAmI;
+                    body.ai[1] = last;
                 }
-                if(ai[0] == 0f) {
-                    ai[3] = npc.whoAmI;
-                    npc.realLife = npc.whoAmI;
-                    int current = 0;
-                    int last = npc.whoAmI;
-                    int type = ModContent.NPCType<Defiled_Hunter_Body>();
-                    for(int k = 0; k < 4; k++) {
-                        current = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, type, npc.whoAmI);
-                        Main.npc[current].realLife = npc.whoAmI;
-                        Main.npc[current].frame = new Rectangle(0, (k*32)%192, 32, 30);
-                        Main.npc[current].frameCounter = k%animationTime;
-                        if(Main.npc[current].modNPC is Defiled_Hunter body) {
-                            body.ai[3] = npc.whoAmI;
-                            body.ai[1] = last;
-                        }
-                        //Main.NewText($"{current} {Main.npc[current].realLife} {(Main.npc[current].modNPC as Defiled_Hunter).ai[1]}");
-                        if(Main.npc[last].modNPC is Defiled_Hunter lastHunter)lastHunter.ai[0] = current;
-                        //NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
-                        last = current;
-                    }
-                    current = NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<Defiled_Hunter_Tail>(), npc.whoAmI);
-                    Main.npc[current].realLife = npc.whoAmI;
-                    if(Main.npc[current].modNPC is Defiled_Hunter tail) {
-                        tail.ai[3] = npc.whoAmI;
-                        tail.ai[1] = last;
-                    }
-                    if(Main.npc[last].modNPC is Defiled_Hunter lastBody)lastBody.ai[0] = current;
-                    //NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
+                //Main.NewText($"{current} {Main.npc[current].realLife} {(Main.npc[current].modNPC as Defiled_Hunter).ai[1]}");
+                if (Main.npc[last].ModNPC is Defiled_Hunter lastHunter) lastHunter.ai[0] = current;
+                //NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
+                last = current;
+            }
+            current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Defiled_Hunter_Tail>(), NPC.whoAmI);
+            Main.npc[current].realLife = NPC.whoAmI;
+            if (Main.npc[current].ModNPC is Defiled_Hunter tail) {
+                tail.ai[3] = NPC.whoAmI;
+                tail.ai[1] = last;
+            }
+            if (Main.npc[last].ModNPC is Defiled_Hunter lastBody) lastBody.ai[0] = current;
+        }
+		public override void AI() {
+            if(Main.netMode != NetmodeID.MultiplayerClient) {
+                NPC.oldPosition = NPC.position;
+                if(NPC.collideY) {
+                    NPC.rotation = NPC.velocity.ToRotation();
+                } else {
+                    LinearSmoothing(ref NPC.rotation, NPC.velocity.ToRotation(), 0.5f);
                 }
             }
             //if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X/=speedMult;
         }
         public override void PostAI() {
             //if(npc.collideY&&Math.Sign(npc.velocity.X)==npc.direction)npc.velocity.X*=speedMult;
-		        if (npc.velocity.X < -speed || npc.velocity.X > speed) {
-			        if (npc.velocity.Y == 0f) {
-				        npc.velocity *= 0.7f;
+		        if (NPC.velocity.X < -speed || NPC.velocity.X > speed) {
+			        if (NPC.velocity.Y == 0f) {
+				        NPC.velocity *= 0.7f;
 			        }
-		        }else if (npc.velocity.X < speed && npc.direction == 1) {
-			        npc.velocity.X += 0.1f;
-			        if (npc.velocity.X > speed) {
-				        npc.velocity.X = speed;
+		        }else if (NPC.velocity.X < speed && NPC.direction == 1) {
+			        NPC.velocity.X += 0.1f;
+			        if (NPC.velocity.X > speed) {
+				        NPC.velocity.X = speed;
 			        }
-		        }else if (npc.velocity.X > -speed && npc.direction == -1) {
-			        npc.velocity.X -= 0.1f;
-			        if (npc.velocity.X < -speed) {
-				        npc.velocity.X = -speed;
+		        }else if (NPC.velocity.X > -speed && NPC.direction == -1) {
+			        NPC.velocity.X -= 0.1f;
+			        if (NPC.velocity.X < -speed) {
+				        NPC.velocity.X = -speed;
 			        }
 		        }
         }
         public override void FindFrame(int frameHeight) {
-            if(++npc.frameCounter>animationTime) {
-                npc.frame = new Rectangle(0, (npc.frame.Y+28)%112, 32, 26);
-                npc.frameCounter = 0;
+            if(++NPC.frameCounter>animationTime) {
+                NPC.frame = new Rectangle(0, (NPC.frame.Y+28)%112, 32, 26);
+                NPC.frameCounter = 0;
             }
         }
     }
 
     public class Defiled_Hunter_Body : Defiled_Hunter {
         public override void SetStaticDefaults() {
-            Main.npcFrameCount[npc.type] = 6;
+            Main.npcFrameCount[NPC.type] = 6;
             base.SetStaticDefaults();
         }
         public override void SetDefaults() {
-            npc.CloneDefaults(NPCID.DiggerBody);
-            npc.aiStyle = NPCAIStyleID.None;
-            npc.height = 28;
-            npc.width = 32;
-            npc.noGravity = false;
-            npc.noTileCollide = false;
+            NPC.CloneDefaults(NPCID.DiggerBody);
+            NPC.aiStyle = NPCAIStyleID.None;
+            NPC.height = 28;
+            NPC.width = 32;
+            NPC.noGravity = false;
+            NPC.noTileCollide = false;
         }
         public override void FindFrame(int frameHeight) {
-            if(++npc.frameCounter>animationTime) {
-                npc.frame = new Rectangle(0, (npc.frame.Y+32)%192, 32, 30);
-                npc.frameCounter = 0;
+            if(++NPC.frameCounter>animationTime) {
+                NPC.frame = new Rectangle(0, (NPC.frame.Y+32)%192, 32, 30);
+                NPC.frameCounter = 0;
             }
         }
     }
 
     public class Defiled_Hunter_Tail : Defiled_Hunter {
         public override void SetDefaults() {
-            npc.CloneDefaults(NPCID.DiggerTail);
-            npc.aiStyle = NPCAIStyleID.None;
-            npc.height = 28;
-            npc.width = 32;
-            npc.noGravity = false;
-            npc.noTileCollide = false;
+            NPC.CloneDefaults(NPCID.DiggerTail);
+            NPC.aiStyle = NPCAIStyleID.None;
+            NPC.height = 28;
+            NPC.width = 32;
+            NPC.noGravity = false;
+            NPC.noTileCollide = false;
         }
         public override void FindFrame(int frameHeight) {
-            npc.frame = new Rectangle(0, 0, 32, 30);
+            NPC.frame = new Rectangle(0, 0, 32, 30);
         }
     }
 
@@ -139,30 +140,30 @@ namespace Origins.NPCs.Defiled {
         protected internal int[] ai = new int[4];
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Hunter");
-            NPCID.Sets.TrailCacheLength[npc.type] = 2;
-            NPCID.Sets.TrailingMode[npc.type] = 3;
+            NPCID.Sets.TrailCacheLength[NPC.type] = 2;
+            NPCID.Sets.TrailingMode[NPC.type] = 3;
         }
 
         public override void AI() {
-            if(npc.realLife < 0) {
-                npc.active = false;
+            if(NPC.realLife < 0) {
+                NPC.active = false;
                 return;
             }
-            NPC head = Main.npc[npc.realLife];
-            npc.life = head.active ? npc.lifeMax : 0;
-            npc.immune = head.immune;
+            NPC head = Main.npc[NPC.realLife];
+            NPC.life = head.active ? NPC.lifeMax : 0;
+            NPC.immune = head.immune;
             if(Main.netMode != NetmodeID.MultiplayerClient) {
                 NPC next = Main.npc[ai[1]];
-                if(Math.Abs(AngleDif(npc.rotation, next.oldRot[1]))>MathHelper.PiOver2) {
-                    npc.rotation = next.oldRot[1];
+                if(Math.Abs(AngleDif(NPC.rotation, next.oldRot[1]))>MathHelper.PiOver2) {
+                    NPC.rotation = next.oldRot[1];
                 } else {
-                    LinearSmoothing(ref npc.rotation, next.oldRot[1], npc.collideY?0.1f:0.3f);
+                    LinearSmoothing(ref NPC.rotation, next.oldRot[1], NPC.collideY?0.1f:0.3f);
                 }
                 //Vector2 targetPos = next.oldPosition + new Vector2(next.width/2, next.height/2) - new Vector2(24, 0).RotatedBy(npc.rotation);;
                 //npc.velocity = targetPos - npc.Center;
 
-                Vector2 targetPos = next.oldPosition - new Vector2(24, 0).RotatedBy(npc.rotation);
-                Vector2 unit = new Vector2(1,0).RotatedBy(npc.rotation);
+                Vector2 targetPos = next.oldPosition - new Vector2(24, 0).RotatedBy(NPC.rotation);
+                Vector2 unit = new Vector2(1,0).RotatedBy(NPC.rotation);
                 /*Vector2? validPos = null;
                 for(int i = -2; i <= 2; i++) {
                     if(Collision.CanHit(targetPos,32,28,targetPos+unit-new Vector2(0,8*i),32,28)) {
@@ -175,7 +176,7 @@ namespace Origins.NPCs.Defiled {
                     npc.Center = targetPos;
                 }*/
                 Vector2 offset = Collision.AdvancedTileCollision(new bool[TileLoader.TileCount], targetPos - new Vector2(0,8), new Vector2(0,16), 32, 30);
-                npc.position = targetPos + offset - new Vector2(0, 8);
+                NPC.position = targetPos + offset - new Vector2(0, 8);
                 //LerpSmoothing(ref npc.position, targetPos + offset - new Vector2(0,8), 0.9f, 4);
                 //Vector2 center = npc.Center;
                 //float dist = Math.Max((targetPos-center).Length()-8, 0);
@@ -187,53 +188,53 @@ namespace Origins.NPCs.Defiled {
         }
 
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
-            if(npc.realLife!=npc.whoAmI) {
+            if(NPC.realLife!=NPC.whoAmI) {
                 if(projectile.usesLocalNPCImmunity) {
-                    projectile.localNPCImmunity[npc.realLife] = projectile.localNPCHitCooldown;
-                    projectile.localNPCImmunity[npc.whoAmI] = 0;
+                    projectile.localNPCImmunity[NPC.realLife] = projectile.localNPCHitCooldown;
+                    projectile.localNPCImmunity[NPC.whoAmI] = 0;
                 } else {
-                    Main.npc[npc.realLife].immune[projectile.owner] = npc.immune[projectile.owner];
+                    Main.npc[NPC.realLife].immune[projectile.owner] = NPC.immune[projectile.owner];
                 }
             }
-            Rectangle spawnbox = projectile.Hitbox.MoveToWithin(npc.Hitbox);
-            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(Main.rand.NextVectorIn(spawnbox), projectile.velocity, mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
+            Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
+            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
         }
         public override bool? CanBeHitByProjectile(Projectile projectile) {
-            if(npc.realLife==npc.whoAmI)return null;
-            if((projectile.usesLocalNPCImmunity?projectile.localNPCImmunity[npc.realLife]:Main.npc[npc.realLife].immune[projectile.owner])>0) {
+            if(NPC.realLife==NPC.whoAmI)return null;
+            if((projectile.usesLocalNPCImmunity?projectile.localNPCImmunity[NPC.realLife]:Main.npc[NPC.realLife].immune[projectile.owner])>0) {
                 return false;
             }
             return null;
         }
 
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
-            if(npc.realLife!=npc.whoAmI) {
-                NPC head = Main.npc[npc.realLife];
-                head.immune[player.whoAmI] = Math.Max(head.immune[player.whoAmI], npc.immune[player.whoAmI]);
+            if(NPC.realLife!=NPC.whoAmI) {
+                NPC head = Main.npc[NPC.realLife];
+                head.immune[player.whoAmI] = Math.Max(head.immune[player.whoAmI], NPC.immune[player.whoAmI]);
             }
-            int halfWidth = npc.width / 2;
+            int halfWidth = NPC.width / 2;
             int baseX = player.direction > 0 ? 0 : halfWidth;
-            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(npc.position+new Vector2(baseX + Main.rand.Next(halfWidth),Main.rand.Next(npc.height)), new Vector2(knockback*player.direction, -0.1f*knockback), mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
+            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(NPC.position+new Vector2(baseX + Main.rand.Next(halfWidth),Main.rand.Next(NPC.height)), new Vector2(knockback*player.direction, -0.1f*knockback), Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
         }
         public override bool? CanBeHitByItem(Player player, Item item) {
-            if(npc.realLife==npc.whoAmI)return null;
-            if(Main.npc[npc.realLife].immune[player.whoAmI]>0) {
+            if(NPC.realLife==NPC.whoAmI)return null;
+            if(Main.npc[NPC.realLife].immune[player.whoAmI]>0) {
                 return false;
             }
             return null;
         }
         public override void HitEffect(int hitDirection, double damage) {
-            if(npc.life<0) {
-                Defiled_Hunter current = Main.npc[npc.realLife].modNPC as Defiled_Hunter;
+            if(NPC.life<0) {
+                Defiled_Hunter current = Main.npc[NPC.realLife].ModNPC as Defiled_Hunter;
                 while(current.ai[0]!=0) {
-                    deathEffect(current.npc);
-                    current = Main.npc[current.ai[0]].modNPC as Defiled_Hunter;
+                    deathEffect(current.NPC);
+                    current = Main.npc[current.ai[0]].ModNPC as Defiled_Hunter;
                 }
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color drawColor) {
-            Rectangle frame = npc.frame;
-            spriteBatch.Draw(Main.npcTexture[npc.type], npc.Center-Main.screenPosition, frame, drawColor, npc.rotation, new Vector2(frame.Width/2f,frame.Height/2f), npc.scale, SpriteEffects.FlipHorizontally|(npc.spriteDirection>0?SpriteEffects.None:SpriteEffects.FlipVertically), 1);
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+            Rectangle frame = NPC.frame;
+            spriteBatch.Draw(TextureAssets.Npc[NPC.type].Value, NPC.Center-Main.screenPosition, frame, drawColor, NPC.rotation, new Vector2(frame.Width/2f,frame.Height/2f), NPC.scale, SpriteEffects.FlipHorizontally|(NPC.spriteDirection>0?SpriteEffects.None:SpriteEffects.FlipVertically), 1);
             return false;
         }
         protected static void deathEffect(NPC npc) {

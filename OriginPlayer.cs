@@ -16,8 +16,11 @@ using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameInput;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -30,7 +33,7 @@ using static Origins.OriginExtensions;
 namespace Origins {
     public class OriginPlayer : ModPlayer {
         public const float rivenMaxMult = 0.3f;
-        public float rivenMult => (1f-rivenMaxMult)+Math.Max((player.statLife/(float)player.statLifeMax2)*(rivenMaxMult*2), rivenMaxMult);
+        public float rivenMult => (1f-rivenMaxMult)+Math.Max((Player.statLife/(float)Player.statLifeMax2)*(rivenMaxMult*2), rivenMaxMult);
         
         #region set bonuses
         public bool fiberglassSet = false;
@@ -91,7 +94,6 @@ namespace Origins {
         #region buffs
         public int rapidSpawnFrames = 0;
         public int rasterizedTime = 0;
-        public bool fervorPotion = false;
         public bool toxicShock = false;
         #endregion
 
@@ -118,7 +120,7 @@ namespace Origins {
             oldBonuses = 0;
             if(fiberglassSet||fiberglassDagger)oldBonuses|=1;
             if(felnumSet)oldBonuses|=2;
-            if(!player.frozen) {
+            if(!Player.frozen) {
                 drawShirt = false;
                 drawPants = false;
             }
@@ -129,16 +131,16 @@ namespace Origins {
             if(!felnumSet) {
                 felnumShock = 0;
             } else {
-                if(felnumShock > player.statLifeMax2) {
+                if(felnumShock > Player.statLifeMax2) {
                     if(Main.rand.NextBool(20)) {
-                        Vector2 pos = new Vector2(Main.rand.Next(4, player.width-4), Main.rand.Next(4, player.height-4));
-                        Projectile proj = Projectile.NewProjectileDirect(player.position + pos, Main.rand.NextVector2CircularEdge(3,3), Felnum_Shock_Leader.ID, (int)(felnumShock*0.1f), 0, player.whoAmI, pos.X, pos.Y);
-                        if(proj.modProjectile is Felnum_Shock_Leader shock) {
-                            shock.Parent = player;
+                        Vector2 pos = new Vector2(Main.rand.Next(4, Player.width-4), Main.rand.Next(4, Player.height-4));
+                        Projectile proj = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.position + pos, Main.rand.NextVector2CircularEdge(3,3), Felnum_Shock_Leader.ID, (int)(felnumShock*0.1f), 0, Player.whoAmI, pos.X, pos.Y);
+                        if(proj.ModProjectile is Felnum_Shock_Leader shock) {
+                            shock.Parent = Player;
                             shock.OnStrike += () => felnumShock *= 0.9f;
                         }
                     }
-                    felnumShock -= (felnumShock - player.statLifeMax2) / player.statLifeMax2 * 5 + 1;
+                    felnumShock -= (felnumShock - Player.statLifeMax2) / Player.statLifeMax2 * 5 + 1;
                 }
             }
             felnumSet = false;
@@ -154,9 +156,9 @@ namespace Origins {
             if (setAbilityCooldown > 0) {
                 setAbilityCooldown--;
                 if (setAbilityCooldown == 0) {
-                    Main.PlaySound(SoundID.MaxMana, -1, -1, 1, 1f, 0f);
+                    SoundEngine.PlaySound(SoundID.MaxMana.WithPitch(-1));
                     for (int i = 0; i < 5; i++) {
-                        int dust = Dust.NewDust(player.position, player.width, player.height, DustID.PortalBoltTrail, 0f, 0f, 255, Color.Black, (float)Main.rand.Next(20, 26) * 0.1f);
+                        int dust = Dust.NewDust(Player.position, Player.width, Player.height, DustID.PortalBoltTrail, 0f, 0f, 255, Color.Black, (float)Main.rand.Next(20, 26) * 0.1f);
                         Main.dust[dust].noLight = true;
                         Main.dust[dust].noGravity = true;
                         Main.dust[dust].velocity *= 0.5f;
@@ -170,14 +172,13 @@ namespace Origins {
             advancedImaging = false;
             rasterize = false;
             decayingScale = false;
-            fervorPotion = false;
             toxicShock = false;
             explosiveDamage = 1f;
             explosiveCrit = 4;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;
-            if(IsExplosive(player.HeldItem)) {
-                explosiveCrit += player.HeldItem.crit;
+            if(IsExplosive(Player.HeldItem)) {
+                explosiveCrit += Player.HeldItem.crit;
             }
             if(cryostenLifeRegenCount>0)
                 cryostenLifeRegenCount--;
@@ -185,27 +186,27 @@ namespace Origins {
                 dimStarlightCooldown--;
             if(rapidSpawnFrames>0)
                 rapidSpawnFrames--;
-            int rasterized = player.FindBuffIndex(Rasterized_Debuff.ID);
+            int rasterized = Player.FindBuffIndex(Rasterized_Debuff.ID);
             if (rasterized >= 0) {
-                rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 8), player.buffTime[rasterized] - 1);
+                rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 8), Player.buffTime[rasterized] - 1);
             }
-            player.breathMax = 200;
+            Player.breathMax = 200;
             plagueSight = false;
             minionSubSlots = new float[minionSubSlotValues];
         }
         public override void PostUpdate() {
             heldProjectile = -1;
             if (rasterizedTime > 0) {
-                player.velocity = Vector2.Lerp(player.velocity, player.oldVelocity, rasterizedTime * 0.06f);
-                player.position = Vector2.Lerp(player.position, player.oldPosition, rasterizedTime * 0.06f);
+                Player.velocity = Vector2.Lerp(Player.velocity, Player.oldVelocity, rasterizedTime * 0.06f);
+                Player.position = Vector2.Lerp(Player.position, Player.oldPosition, rasterizedTime * 0.06f);
             }
-            player.oldVelocity = player.velocity;
+            Player.oldVelocity = Player.velocity;
         }
         public override void PostUpdateMiscEffects() {
             if(cryostenHelmet) {
-                if(player.statLife!=player.statLifeMax2&&(int)Main.time%(cryostenLifeRegenCount>0 ? 5 : 15)==0)
+                if(Player.statLife!=Player.statLifeMax2&&(int)Main.time%(cryostenLifeRegenCount>0 ? 5 : 15)==0)
                     for(int i = 0; i < 10; i++) {
-                        int num6 = Dust.NewDust(player.position, player.width, player.height, DustID.Frost);
+                        int num6 = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Frost);
                         Main.dust[num6].noGravity = true;
                         Main.dust[num6].velocity *= 0.75f;
                         int num7 = Main.rand.Next(-40, 41);
@@ -220,11 +221,11 @@ namespace Origins {
         public override void PostUpdateEquips() {
             if (eyndumSet) {
                 ApplyEyndumSetBuffs();
-                if (eyndumCore?.Value?.modItem is ModItem equippedCore) {
-                    equippedCore.UpdateEquip(player);
+                if (eyndumCore?.Value?.ModItem is ModItem equippedCore) {
+                    equippedCore.UpdateEquip(Player);
                 }
             }
-            player.buffImmune[Rasterized_Debuff.ID] = player.buffImmune[BuffID.Cursed];
+            Player.buffImmune[Rasterized_Debuff.ID] = Player.buffImmune[BuffID.Cursed];
         }
         public override void ProcessTriggers(TriggersSet triggersSet) {
             releaseTriggerSetBonus = !controlTriggerSetBonus;
@@ -235,83 +236,76 @@ namespace Origins {
         }
         public void ApplyEyndumSetBuffs() {
             #region movement
-            float speedMult = (player.moveSpeed - 1) * 0.5f;
-            player.runAcceleration += (player.runAcceleration / player.moveSpeed) * speedMult;
-            player.maxRunSpeed += (player.maxRunSpeed / player.moveSpeed) * speedMult;
-            player.extraFall += player.extraFall / 2;
-            player.wingTimeMax += player.wingTimeMax / 2;
-            player.jumpSpeedBoost += player.jumpSpeedBoost * 0.5f;
-            if (player.spikedBoots == 1) player.spikedBoots = 2;
+            float speedMult = (Player.moveSpeed - 1) * 0.5f;
+            Player.runAcceleration += (Player.runAcceleration / Player.moveSpeed) * speedMult;
+            Player.maxRunSpeed += (Player.maxRunSpeed / Player.moveSpeed) * speedMult;
+            Player.extraFall += Player.extraFall / 2;
+            Player.wingTimeMax += Player.wingTimeMax / 2;
+            Player.jumpSpeedBoost += Player.jumpSpeedBoost * 0.5f;
+            if (Player.spikedBoots == 1) Player.spikedBoots = 2;
             #endregion
             #region defense
-            player.statLifeMax2 += (player.statLifeMax2 - player.statLifeMax) / 2;
-            player.statDefense += player.statDefense / 2;
-            player.endurance += player.endurance * 0.5f;
-            player.lifeRegen += player.lifeRegen / 2;
-            player.thorns += player.thorns * 0.5f;
-            player.lavaMax += player.lavaMax / 2;
+            Player.statLifeMax2 += (Player.statLifeMax2 - Player.statLifeMax) / 2;
+            Player.statDefense += Player.statDefense / 2;
+            Player.endurance += Player.endurance * 0.5f;
+            Player.lifeRegen += Player.lifeRegen / 2;
+            Player.thorns += Player.thorns * 0.5f;
+            Player.lavaMax += Player.lavaMax / 2;
             #endregion
             #region damage
-            player.armorPenetration += player.armorPenetration / 2;
+            List<DamageClass> damageClasses = (List<DamageClass>)(typeof(DamageClassLoader).GetField("DamageClasses", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null));
+			foreach (DamageClass damageClass in damageClasses) {
+                Player.GetArmorPenetration(damageClass) += Player.GetArmorPenetration(damageClass) * 0.5f;
 
-            player.allDamage += (player.allDamage - 1) * 0.5f;
-            player.meleeDamage += (player.meleeDamage - 1) * 0.5f;
-            player.rangedDamage += (player.rangedDamage - 1) * 0.5f;
-            player.magicDamage += (player.magicDamage - 1) * 0.5f;
-            player.minionDamage += (player.minionDamage - 1) * 0.5f;
+                Player.GetDamage(damageClass) = Player.GetDamage(damageClass).MultiplyBonuses(1.5f);
 
-            player.allDamageMult += (player.allDamageMult - 1) * 0.5f;
-            player.meleeDamageMult += (player.meleeDamageMult - 1) * 0.5f;
-            player.rangedDamageMult += (player.rangedDamageMult - 1) * 0.5f;
-            player.magicDamageMult += (player.magicDamageMult - 1) * 0.5f;
-            player.minionDamageMult += (player.minionDamageMult - 1) * 0.5f;
+                Player.GetAttackSpeed(damageClass) += (Player.GetAttackSpeed(damageClass) - 1) * 0.5f;
+            }
 
-            player.arrowDamage += (player.arrowDamage - 1) * 0.5f;
-            player.bulletDamage += (player.bulletDamage - 1) * 0.5f;
-            player.rocketDamage += (player.rocketDamage - 1) * 0.5f;
+            Player.arrowDamage = Player.arrowDamage.MultiplyBonuses(1.5f);
+            Player.bulletDamage = Player.bulletDamage.MultiplyBonuses(1.5f);
+            Player.rocketDamage = Player.rocketDamage.MultiplyBonuses(1.5f);
 
-            player.meleeSpeed += (player.meleeSpeed - 1) * 0.5f;
-
-            explosiveDamage += (explosiveDamage - 1) * 0.5f;
-            explosiveThrowSpeed += (explosiveThrowSpeed - 1) * 0.5f;
-            explosiveSelfDamage += (explosiveSelfDamage - 1) * 0.5f;
+            //explosiveDamage += (explosiveDamage - 1) * 0.5f;
+            //explosiveThrowSpeed += (explosiveThrowSpeed - 1) * 0.5f;
+            //explosiveSelfDamage += (explosiveSelfDamage - 1) * 0.5f;
             #endregion
             #region resources
-            player.statManaMax2 += (player.statManaMax2 - player.statManaMax) / 2;
-            player.manaCost += (player.manaCost - 1) * 0.5f;
-            player.maxMinions += (player.maxMinions - 1) / 2;
-            player.maxTurrets += (player.maxTurrets - 1) / 2;
-            player.manaRegenBonus += player.manaRegenBonus / 2;
-            player.manaRegenDelayBonus += player.manaRegenDelayBonus / 2;
+            Player.statManaMax2 += (Player.statManaMax2 - Player.statManaMax) / 2;
+            Player.manaCost += (Player.manaCost - 1) * 0.5f;
+            Player.maxMinions += (Player.maxMinions - 1) / 2;
+            Player.maxTurrets += (Player.maxTurrets - 1) / 2;
+            Player.manaRegenBonus += Player.manaRegenBonus / 2;
+            Player.manaRegenDelayBonus += Player.manaRegenDelayBonus / 2;
             #endregion
             #region utility
-            player.wallSpeed += (player.wallSpeed - 1) * 0.5f;
-            player.tileSpeed += (player.tileSpeed - 1) * 0.5f;
-            player.pickSpeed *= (player.pickSpeed - 1) * 0.5f;
-            player.aggro += player.aggro / 2;
-            player.blockRange += player.blockRange / 2;
+            Player.wallSpeed += (Player.wallSpeed - 1) * 0.5f;
+            Player.tileSpeed += (Player.tileSpeed - 1) * 0.5f;
+            Player.pickSpeed *= (Player.pickSpeed - 1) * 0.5f;
+            Player.aggro += Player.aggro / 2;
+            Player.blockRange += Player.blockRange / 2;
             #endregion
         }
         public void TriggerSetBonus() {
             if (setAbilityCooldown > 0) return;
 			switch (setActiveAbility) {
                 case 1: {
-					if (player.CheckMana((int)(40 * player.manaCost), true)) {
-                        Vector2 speed = Vector2.Normalize(Main.MouseWorld - player.MountedCenter) * 14;
+					if (Player.CheckMana((int)(40 * Player.manaCost), true)) {
+                        Vector2 speed = Vector2.Normalize(Main.MouseWorld - Player.MountedCenter) * 14;
                         int type = ModContent.ProjectileType<Infusion_P>();
 						for (int i = -5; i < 6; i++) {
-                            Projectile.NewProjectile(player.MountedCenter + speed.RotatedBy(MathHelper.PiOver2) * i * 0.25f + speed * (5 - Math.Abs(i)) * 0.75f, speed, type, 40, 7, player.whoAmI);
+                            Projectile.NewProjectile(Player.GetSource_FromThis(), Player.MountedCenter + speed.RotatedBy(MathHelper.PiOver2) * i * 0.25f + speed * (5 - Math.Abs(i)) * 0.75f, speed, type, 40, 7, Player.whoAmI);
                         }
                         setAbilityCooldown = 30;
-                        if(player.manaRegenDelay < 60) player.manaRegenDelay = 60;
+                        if(Player.manaRegenDelay < 60) Player.manaRegenDelay = 60;
                     }
 				}
                 break;
                 case 2: {
-                    if (player.CheckMana((int)(40 * player.manaCost), true)) {
+                    if (Player.CheckMana((int)(40 * Player.manaCost), true)) {
                         setAbilityCooldown = 1800;
-                        player.AddBuff(Mimic_Buff.ID, 600);
-                        player.AddBuff(BuffID.Heartreach, 30);
+                        Player.AddBuff(Mimic_Buff.ID, 600);
+                        Player.AddBuff(BuffID.Heartreach, 30);
                     }
                 }
                 break;
@@ -322,50 +316,36 @@ namespace Origins {
 			}
         }
         public override void UpdateLifeRegen() {
-            if(cryostenHelmet)player.lifeRegenCount+=cryostenLifeRegenCount>0 ? 180 : 1;
+            if(cryostenHelmet)Player.lifeRegenCount+=cryostenLifeRegenCount>0 ? 180 : 1;
         }
         #region attacks
-        public override void ModifyWeaponDamage(Item item, ref float add, ref float mult, ref float flat) {
+        public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
             if(IsExplosive(item))add+=explosiveDamage-1;
-            bool ammoBased = item.useAmmo != AmmoID.None || (item.ammo != AmmoID.None && player.HeldItem.useAmmo == item.ammo);
+            bool ammoBased = item.useAmmo != AmmoID.None || (item.ammo != AmmoID.None && Player.HeldItem.useAmmo == item.ammo);
             if(fiberglassSet) {
-                flat+=ammoBased?2:4;
+                damage.Flat+=ammoBased?2:4;
             }
             if(fiberglassDagger) {
-                flat+=ammoBased?4:8;
+                damage.Flat += ammoBased?4:8;
             }
-            if(rivenSet&&item.summon&&!ItemChecking) {
-                mult*=rivenMult;
+            if(rivenSet&&item.CountsAsClass(DamageClass.Summon)&&!ItemChecking) {
+                damage *= rivenMult;
             }
         }
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
             if(felnumShock>29) {
                 damage+=(int)(felnumShock/15);
                 felnumShock = 0;
-                Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
+                SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), target.Center);
             }
         }
-		public override float UseTimeMultiplier(Item item) {
-			if (fervorPotion && item.damage > 0) {
-                return 1.05f;
-            }
-			return 1f;
-        }
-        public override float MeleeSpeedMultiplier(Item item) {
-            if (fervorPotion && item.damage > 0) {
-                return 1.05f;
-            }
-            return 1f;
-        }
-        public override bool Shoot(Item item, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            if(advancedImaging) {
-                speedX*=1.3f;
-                speedY*=1.3f;
+		public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+		    if(advancedImaging) {
+                velocity*=1.3f;
             }
             if(IsExplosive(item)) {
                 if(item.useAmmo == 0) {
-                    speedX*=explosiveThrowSpeed;
-                    speedY*=explosiveThrowSpeed;
+                    velocity *= explosiveThrowSpeed;
                 }
                 if(riftSet) {
                     Fraction dmg = new Fraction(2, 2);
@@ -374,18 +354,18 @@ namespace Origins {
                     damage *= dmg;
                     double rot = Main.rand.NextBool(2)?-0.1:0.1;
                     Vector2 _position;
-                    Vector2 velocity;
+                    Vector2 _velocity;
                     int _type;
                     int _damage;
                     float _knockBack;
                     for(int i = c; i-->0;) {
                         _position = position;
-                        velocity = new Vector2(speedX, speedY).RotatedBy(rot);
+                        _velocity = velocity.RotatedBy(rot);
                         _type = type;
                         _damage = damage;
-                        _knockBack = knockBack;
-                        if(ItemLoader.Shoot(item, player, ref _position, ref velocity.X, ref velocity.Y, ref _type, ref _damage, ref _knockBack)) {
-                            Projectile.NewProjectile(_position, velocity, _type, _damage, _knockBack, player.whoAmI);
+                        _knockBack = knockback;
+                        if(ItemLoader.Shoot(item, Player, source, _position, _velocity, _type, _damage, _knockBack)) {
+                            Projectile.NewProjectile(source, _position, _velocity, _type, _damage, _knockBack, Player.whoAmI);
                         }
                         rot = -rot;
                     }
@@ -395,22 +375,22 @@ namespace Origins {
                 Projectile p = new Projectile();
                 p.SetDefaults(type);
                 OriginGlobalProj.felnumEffectNext = true;
-                if(p.melee || p.aiStyle == 60)
+                if(p.CountsAsClass(DamageClass.Melee) || p.aiStyle == 60)
                     return true;
                 damage+=(int)(felnumShock/15);
                 felnumShock = 0;
-                Main.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
+                SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
             }
             return true;
         }
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
             if(Origins.ExplosiveModOnHit[proj.type]) {
-                damage = (int)(damage*(player.allDamage+explosiveDamage-1)*0.7f);
+                damage = (int)(damage*(Player.allDamage+explosiveDamage-1)*0.7f);
             }
-            if(proj.melee && felnumShock > 29) {
+            if(proj.CountsAsClass(DamageClass.Melee) && felnumShock > 29) {
                 damage+=(int)(felnumShock / 15);
                 felnumShock = 0;
-                Main.PlaySound(SoundID.Item, (int)proj.Center.X, (int)proj.Center.Y, 122, 2f, 1f);
+                SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), proj.Center);
             }
             if(proj.minion&&rivenSet) {
                 damage = (int)(damage*rivenMult);
@@ -419,9 +399,9 @@ namespace Origins {
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
             if(crit) {
                 if(celestineSet)
-                    Item.NewItem(target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
+                    Item.NewItem(item.GetSource_OnHit(target, "SetBonus_Celestine"), target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
                 if(dimStarlight&&dimStarlightCooldown<1) {
-                    Item.NewItem(target.position, target.width, target.height, ItemID.Star);
+                    Item.NewItem(item.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
                     dimStarlightCooldown = 90;
                 }
             }
@@ -436,9 +416,9 @@ namespace Origins {
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
             if(crit) {
                 if(celestineSet)
-                    Item.NewItem(target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
+                    Item.NewItem(proj.GetSource_OnHit(target, "SetBonus_Celestine"), target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
                 if(dimStarlight&&dimStarlightCooldown<1) {
-                    Item.NewItem(target.position, target.width, target.height, ItemID.Star);
+                    Item.NewItem(proj.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
                     dimStarlightCooldown = 90;
                 }
             }
@@ -451,7 +431,7 @@ namespace Origins {
             }
         }
         public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
-            if(proj.owner == player.whoAmI && proj.friendly && OriginGlobalProj.IsExplosiveProjectile(proj)) {
+            if(proj.owner == Player.whoAmI && proj.friendly && OriginGlobalProj.IsExplosiveProjectile(proj)) {
                 if(minerSet) {
                     explosiveSelfDamage-=0.2f;
                     explosiveSelfDamage*=1/explosiveDamage;
@@ -462,37 +442,37 @@ namespace Origins {
             }
         }
         public override void OnHitByNPC(NPC npc, int damage, bool crit) {
-            if(!player.noKnockback && damage!=0) {
-                player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
+            if(!Player.noKnockback && damage!=0) {
+                Player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
             }
             MeleeCollisionNPCData.knockbackMult = 1f;
         }
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
-            if(player.HasBuff(Solvent_Debuff.ID)&&Main.rand.Next(9)<3) {
+            if(Player.HasBuff(Solvent_Debuff.ID)&&Main.rand.Next(9)<3) {
                 crit = true;
             }
             if(defiledSet) {
-                float manaDamage = Math.Max(damage-player.statDefense*(Main.expertMode?0.75f:0.5f), 1) * (reshapingChunk ? 0.25f : 0.15f);
+                float manaDamage = Math.Max(damage-Player.statDefense*(Main.expertMode?0.75f:0.5f), 1) * (reshapingChunk ? 0.25f : 0.15f);
                 float costMult = 3;
-                float costMult2 = (1/(player.magicDamage+player.allDamage-1f))/(player.magicDamageMult*player.allDamageMult);
-                if(player.statMana < manaDamage*costMult*costMult2) {
-                    manaDamage = player.statMana/(costMult*costMult2);
+                float costMult2 = 1/(Player.GetDamage(DamageClass.Magic).Additive/Player.GetDamage(DamageClass.Magic).Multiplicative);
+                if(Player.statMana < manaDamage*costMult*costMult2) {
+                    manaDamage = Player.statMana/(costMult*costMult2);
                 }
-                if(player.magicCuffs) {
+                if(Player.magicCuffs) {
                     if(costMult2>1)
                         costMult2 = 1/costMult2;
                 }
                 if(manaDamage*costMult*costMult2>=1f)
-                    player.ManaEffect((int)-(manaDamage*costMult*costMult2));
-                player.CheckMana((int)Math.Floor(manaDamage*costMult*costMult2), true);
+                    Player.ManaEffect((int)-(manaDamage*costMult*costMult2));
+                Player.CheckMana((int)Math.Floor(manaDamage*costMult*costMult2), true);
                 damage = (int)(damage-manaDamage);
-                player.magicCuffs = false;
-                player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Buff>(), 10);
+                Player.magicCuffs = false;
+                Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Buff>(), 10);
             }else if (reshapingChunk) {
                 damage -= damage / 20;
             }
 			if (toxicShock) {
-                damage += player.statDefense / 10;
+                damage += Player.statDefense / 10;
 			}
             return damage != 0;
         }
@@ -523,7 +503,7 @@ namespace Origins {
 
             }
         }*/
-        public override void Load(TagCompound tag) {
+        public override void LoadData(TagCompound tag) {
             if (tag.SafeGet<Item>("EyndumCore") is Item eyndumCoreItem) {
                 eyndumCore = new Ref<Item>(eyndumCoreItem);
             }
@@ -531,13 +511,11 @@ namespace Origins {
                 mimicSetChoices = mimicSetSelection;
             }
         }
-        public override TagCompound Save() {
-            TagCompound output = new TagCompound();
-            if (!(eyndumCore is null)) {
-                output.Add("EyndumCore", eyndumCore.Value);
+        public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */ {
+            if (eyndumCore is not null) {
+                tag.Add("EyndumCore", eyndumCore.Value);
             }
-            output.Add("MimicSetSelection", mimicSetChoices);
-            return output;
+            tag.Add("MimicSetSelection", mimicSetChoices);
         }
         #region biomes
         public override void UpdateBiomes() {
@@ -591,11 +569,11 @@ namespace Origins {
             if(ZoneVoidProgressSmoothed > 0)Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(ZoneVoidProgressSmoothed);
             if(ZoneDefiledProgressSmoothed > 0)Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(ZoneDefiledProgressSmoothed);
             if(ZoneRivenProgressSmoothed > 0)Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(ZoneRivenProgressSmoothed);
-            player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", ZoneVoidProgressSmoothed>0, player.Center);
-            player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", ZoneDefiledProgressSmoothed>0, player.Center);
-            player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", ZoneRivenProgressSmoothed>0, player.Center);
+            Player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", ZoneVoidProgressSmoothed>0, Player.Center);
+            Player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", ZoneDefiledProgressSmoothed>0, Player.Center);
+            Player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", ZoneRivenProgressSmoothed>0, Player.Center);
         }
-		public override void CatchFish(Item fishingRod, Item bait, int power, int liquidType, int poolSize, int worldLayer, int questFish, ref int caughtType, ref bool junk) {
+		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
             int num7 = 300 / poolSize;
             int num8 = 1050 / poolSize;
             int num10 = 4500 / poolSize;
@@ -663,23 +641,23 @@ namespace Origins {
                 FelnumGlow.visible = true;
             }
             if (eyndumSet) {
-                if (eyndumCore?.Value?.modItem is Eyndum_Core equippedCore) {
+                if (eyndumCore?.Value?.ModItem is Eyndum_Core equippedCore) {
                     layers.Insert(layers.IndexOf(PlayerLayer.Body) + 1, CreateEyndumCoreLayer(equippedCore.CoreGlowColor));
                 }
             }
-            if (Origins.HelmetGlowMasks.TryGetValue(player.head, out Texture2D helmetMask)) {
+            if (Origins.HelmetGlowMasks.TryGetValue(Player.head, out Texture2D helmetMask)) {
                 layers.Insert(layers.IndexOf(PlayerLayer.Head) + 1, CreateHeadGlowmask(helmetMask));
             }
-            if (Origins.BreastplateGlowMasks.TryGetValue(player.Male ? player.body : -player.body, out Texture2D breastplateMask)) {
+            if (Origins.BreastplateGlowMasks.TryGetValue(Player.Male ? Player.body : -Player.body, out Texture2D breastplateMask)) {
                 layers.Insert(layers.IndexOf(PlayerLayer.Body) + 1, CreateBodyGlowmask(breastplateMask));
-            } else if (Origins.BreastplateGlowMasks.TryGetValue(player.Male ? -player.body : player.body, out Texture2D fBreastplateMask)) {
+            } else if (Origins.BreastplateGlowMasks.TryGetValue(Player.Male ? -Player.body : Player.body, out Texture2D fBreastplateMask)) {
                 layers.Insert(layers.IndexOf(PlayerLayer.Body) + 1, CreateBodyGlowmask(fBreastplateMask));
             }
-            if (Origins.LeggingGlowMasks.TryGetValue(player.legs, out Texture2D leggingMask)) {
+            if (Origins.LeggingGlowMasks.TryGetValue(Player.legs, out Texture2D leggingMask)) {
                 layers.Insert(layers.IndexOf(PlayerLayer.Legs) + 1, CreateLegsGlowmask(leggingMask));
             }
-            if (player.itemAnimation != 0 && player.HeldItem.modItem is ICustomDrawItem) {
-                switch(player.HeldItem.useStyle) {
+            if (Player.itemAnimation != 0 && Player.HeldItem.ModItem is ICustomDrawItem) {
+                switch(Player.HeldItem.useStyle) {
                     case 1:
                     case 2:
                     case 3:
@@ -697,8 +675,8 @@ namespace Origins {
                     break;*/
                 }
             }
-            if(itemLayerWrench && !player.HeldItem.noUseGraphic) {
-                switch(player.HeldItem.useStyle) {
+            if(itemLayerWrench && !Player.HeldItem.noUseGraphic) {
+                switch(Player.HeldItem.useStyle) {
                     case 5:
                     layers[layers.IndexOf(PlayerLayer.HeldItem)] = ShootWrenchLayer;
                     ShootWrenchLayer.visible = true;
@@ -710,17 +688,17 @@ namespace Origins {
                 }
             }
             itemLayerWrench = false;
-            if (player.HeldItem.modItem is Chocolate_Bar animator) {
+            if (Player.HeldItem.ModItem is Chocolate_Bar animator) {
                 layers.Add(new PlayerLayer("Origins (debugging tool)", "animator", (v)=>animator.DrawAnimations(v)));
             }
         }
-        public override void ModifyDrawInfo(ref PlayerDrawInfo drawInfo) {
-            if(plagueSight) drawInfo.eyeColor = new Color(255,215,0);
+        public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
+            if(plagueSight) drawInfo.colorEyes = new Color(255,215,0);
             //if(drawInfo.drawPlayer.body==Origins.PlagueTexanJacketID) drawInfo.drawHands = true;
         }
         public override void FrameEffects() {
-            for(int i = 13; i < 18+player.extraAccessorySlots; i++) {
-                if(player.armor[i].type==Plague_Texan_Sight.ID)Plague_Texan_Sight.ApplyVisuals(player);
+            for(int i = 13; i < 18+Player.extraAccessorySlots; i++) {
+                if(Player.armor[i].type==Plague_Texan_Sight.ID)Plague_Texan_Sight.ApplyVisuals(Player);
             }
         }
         public void SetMimicSetChoice(int level, int choice) {
@@ -766,8 +744,8 @@ namespace Origins {
         public static PlayerLayer ShootWrenchLayer = new PlayerLayer("Origins", "FiberglassBowLayer", null, delegate (PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;
             Item item = drawPlayer.inventory[drawPlayer.selectedItem];
-            Texture2D itemTexture = Main.itemTexture[item.type];
-            IAnimatedItem aItem = (IAnimatedItem)item.modItem;
+            Texture2D itemTexture = TextureAssets.Item[item.type].Value;
+            AnimatedModItem aItem = (AnimatedModItem)item.ModItem;
             int drawXPos = 10;
             Vector2 ItemCenter = new Vector2(itemTexture.Width / 2, itemTexture.Height / 2);
             Vector2 drawItemPos = OriginExtensions.DrawPlayerItemPos(drawPlayer.gravDir, item.type);
@@ -782,7 +760,7 @@ namespace Origins {
             DrawData value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + ItemCenter.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + ItemCenter.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(new Color(col.X, col.Y, col.Z, col.W)), drawPlayer.itemRotation, drawOrigin, item.scale, drawInfo2.spriteEffects, 0);
             Main.playerDrawData.Add(value);
             if(drawPlayer.inventory[drawPlayer.selectedItem].glowMask != -1) {
-                value = new DrawData(Main.glowMaskTexture[item.glowMask], new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + ItemCenter.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + ItemCenter.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(aItem.GlowmaskTint??new Color(col.X, col.Y, col.Z, col.W)), drawPlayer.itemRotation, drawOrigin, item.scale, drawInfo2.spriteEffects, 0);
+                value = new DrawData(TextureAssets.GlowMask[item.glowMask].Value, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + ItemCenter.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + ItemCenter.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(aItem.GlowmaskTint??new Color(col.X, col.Y, col.Z, col.W)), drawPlayer.itemRotation, drawOrigin, item.scale, drawInfo2.spriteEffects, 0);
                 Main.playerDrawData.Add(value);
             }
         });
@@ -790,8 +768,8 @@ namespace Origins {
             Player drawPlayer = drawInfo2.drawPlayer;
             float num77 = drawPlayer.itemRotation + MathHelper.PiOver4 * drawPlayer.direction;
             Item item = drawPlayer.inventory[drawPlayer.selectedItem];
-            Texture2D itemTexture = Main.itemTexture[item.type];
-            IAnimatedItem aItem = (IAnimatedItem)item.modItem;
+            Texture2D itemTexture = TextureAssets.Item[item.type].Value;
+            AnimatedModItem aItem = (AnimatedModItem)item.ModItem;
             Rectangle frame = aItem.Animation.GetFrame(itemTexture);
             Color currentColor = Lighting.GetColor((int)(drawInfo2.position.X + drawPlayer.width * 0.5) / 16, (int)((drawInfo2.position.Y + drawPlayer.height * 0.5) / 16.0));
             SpriteEffects spriteEffects = (drawPlayer.direction==1 ? 0 : SpriteEffects.FlipHorizontally) | (drawPlayer.gravDir==1f ? 0 : SpriteEffects.FlipVertically);
@@ -802,27 +780,9 @@ namespace Origins {
                 Main.playerDrawData.Add(value);
             }
             if(drawPlayer.inventory[drawPlayer.selectedItem].glowMask != -1) {
-                value = new DrawData(Main.glowMaskTexture[drawPlayer.inventory[drawPlayer.selectedItem].glowMask], new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, aItem.GlowmaskTint??new Color(250, 250, 250, item.alpha), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
+                value = new DrawData(TextureAssets.GlowMask[drawPlayer.inventory[drawPlayer.selectedItem].glowMask].Value, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, aItem.GlowmaskTint??new Color(250, 250, 250, item.alpha), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
                 Main.playerDrawData.Add(value);
             }
-        });
-        internal static PlayerLayer CustomShootLayer => new PlayerLayer("Origins", "RejectAutomationLayer", null, delegate (PlayerDrawInfo drawInfo) {
-            Player drawPlayer = drawInfo.drawPlayer;
-            Item item = drawPlayer.HeldItem;
-            Texture2D itemTexture = Main.itemTexture[item.type];
-            ICustomDrawItem aItem = (ICustomDrawItem)item.modItem;
-            int drawXPos = 0;
-            Vector2 itemCenter = new Vector2(itemTexture.Width / 2, itemTexture.Height / 2);
-            Vector2 drawItemPos = DrawPlayerItemPos(drawPlayer.gravDir, item.type);
-            drawXPos = (int)drawItemPos.X;
-            itemCenter.Y = drawItemPos.Y;
-            Vector2 drawOrigin = new Vector2(drawXPos, itemTexture.Height / 2);
-            if(drawPlayer.direction == -1) {
-                drawOrigin = new Vector2(itemTexture.Width + drawXPos, itemTexture.Height / 2);
-            }
-            drawOrigin.X-=drawPlayer.width/2;
-            Vector4 lightColor = drawInfo.faceColor.ToVector4()/drawPlayer.skinColor.ToVector4();
-            aItem.DrawInHand(itemTexture, drawInfo, itemCenter, lightColor, drawOrigin);
         });
         public static PlayerLayer FelnumGlow = new PlayerLayer("Origins", "FelnumGlow", null, delegate (PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;

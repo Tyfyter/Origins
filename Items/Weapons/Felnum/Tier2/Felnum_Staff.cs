@@ -6,72 +6,70 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Felnum.Tier2 {
     public class Felnum_Staff : ModItem {
-        public const int baseDamage = 78;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Hævateinn");
             Tooltip.SetDefault("Receives 50% higher damage bonuses\nsprite needs recoloring.");
-			Item.staff[item.type] = true;
+			Item.staff[Item.type] = true;
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.CrystalVileShard);
-            item.shoot = ModContent.ProjectileType<Felnum_Lightning>();
-            item.damage = baseDamage;
-            item.useAnimation = 30;
-            item.useTime = 30;
-            item.shootSpeed/=2;
-			item.rare = ItemRarityID.Lime;
+            Item.CloneDefaults(ItemID.CrystalVileShard);
+            Item.shoot = ModContent.ProjectileType<Felnum_Lightning>();
+            Item.damage = 78;
+            Item.useAnimation = 30;
+            Item.useTime = 30;
+            Item.shootSpeed/=2;
+			Item.rare = ItemRarityID.Lime;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15);
             recipe.AddIngredient(ItemID.SkyFracture, 1);
-            recipe.SetResult(this);
             recipe.AddTile(TileID.MythrilAnvil);
-            recipe.AddRecipe();
+            recipe.Register();
         }
-        public override void GetWeaponDamage(Player player, ref int damage) {
-            damage+=(damage-baseDamage)/2;
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
+            damage = damage.MultiplyBonuses(1.5f);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            Vector2 speed = new Vector2(speedX, speedY);
-            //damage+=(damage-35)/2;
-			Main.PlaySound(2, (int)player.Center.X, (int)player.Center.Y, 122, 2f, 1f);
-            Projectile.NewProjectile(position, speed.RotatedByRandom(0.5f)*Main.rand.NextFloat(0.9f,1.1f), type, damage, knockBack, item.owner, speed.ToRotation(), Main.rand.NextFloat());
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
+            Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.5f)*Main.rand.NextFloat(0.9f,1.1f), type, damage, knockback, Item.playerIndexTheItemIsReservedFor, velocity.ToRotation(), Main.rand.NextFloat());
             return false;
         }
     }
     public class Felnum_Lightning : ModProjectile {
-        public override string Texture => "Terraria/Projectile_466";
+        public override string Texture => "Terraria/Images/Projectile_466";
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Hævateinn");
         }
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 0;
-            projectile.hostile = false;
-            projectile.friendly = true;
-            projectile.timeLeft/=3;
-            projectile.penetrate = -1;
+            Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 0;
+            Projectile.hostile = false;
+            Projectile.friendly = true;
+            Projectile.timeLeft/=3;
+            Projectile.penetrate = -1;
         }
         public override void AI() {
-            projectile.type = ProjectileID.CultistBossLightningOrbArc;
-			Vector2 targetPos = projectile.Center;
+            Projectile.type = ProjectileID.CultistBossLightningOrbArc;
+			Vector2 targetPos = Projectile.Center;
 			bool foundTarget = false;
             Vector2 testPos;
             for (int i = 0; i < Main.maxNPCs; i++) {
 				NPC target = Main.npc[i];
 				if (target.CanBeChasedBy() && !target.HasBuff(ModContent.BuffType<LightningImmuneFixBuff>())) {
-                    testPos = projectile.Center.Clamp(target.Hitbox);
-					Vector2 difference = testPos-projectile.Center;
+                    testPos = Projectile.Center.Clamp(target.Hitbox);
+					Vector2 difference = testPos-Projectile.Center;
                     float distance = difference.Length();
-					bool closest = Vector2.Distance(projectile.Center, targetPos) > distance;
-                    bool inRange = distance < 96 && (difference.SafeNormalize(Vector2.Zero)*projectile.velocity.SafeNormalize(Vector2.Zero)).Length()>0.1f;//magRange;
+					bool closest = Vector2.Distance(Projectile.Center, targetPos) > distance;
+                    bool inRange = distance < 96 && (difference.SafeNormalize(Vector2.Zero)*Projectile.velocity.SafeNormalize(Vector2.Zero)).Length()>0.1f;//magRange;
 					if ((!foundTarget || closest) && inRange) {
 						targetPos = testPos;
 						foundTarget = true;
@@ -79,10 +77,10 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 				}
 			}
             if(foundTarget) {
-				Vector2 direction = targetPos - projectile.Center;
+				Vector2 direction = targetPos - Projectile.Center;
 				direction.Normalize();
-				direction *= projectile.velocity.Length();
-				projectile.velocity = direction;
+				direction *= Projectile.velocity.Length();
+				Projectile.velocity = direction;
             }
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
@@ -93,9 +91,6 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         }
     }
     public class LightningImmuneFixBuff : ModBuff {
-        public override bool Autoload(ref string name, ref string texture) {
-            texture = "Terraria/Buff_204";
-            return base.Autoload(ref name, ref texture);
-        }
-    }
+		public override string Texture => "Terraria/Images/Buff_204";
+	}
 }

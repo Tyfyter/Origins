@@ -115,7 +115,7 @@ namespace Origins.NPCs {
 				if (spawnInfo.playerFloorY <= Main.worldSurface + 50 && spawnInfo.spawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
 				if (Main.hardMode) {
 					pool.Add(ModContent.NPCType<Defiled_Hunter_Head>(), DefiledWastelands.SpawnRates.Hunter);
-					if (TileID.Sets.Conversion.Sand[Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].type]) {
+					if (TileID.Sets.Conversion.Sand[Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType]) {
 						pool.Add(ModContent.NPCType<Defiled_Cyclops>(), DefiledWastelands.SpawnRates.Cyclops);
 					}
 					if (!spawnInfo.playerSafe) {
@@ -131,7 +131,7 @@ namespace Origins.NPCs {
 					Tile tile;
 					for (int i = 0; i < Defiled_Mite.spawnCheckDistance; i++) {
 						tile = Main.tile[spawnInfo.spawnTileX, ++yPos];
-						if (tile.active()) {
+						if (tile.HasTile) {
 							yPos--;
 							break;
 						}
@@ -139,10 +139,10 @@ namespace Origins.NPCs {
 					bool? halfSlab = null;
 					for (int i = spawnInfo.spawnTileX - 1; i < spawnInfo.spawnTileX + 2; i++) {
 						tile = Main.tile[i, yPos + 1];
-						if (!tile.active() || !Main.tileSolid[tile.type] || tile.slope() != SlopeID.None || (halfSlab.HasValue && halfSlab.Value != tile.halfBrick())) {
+						if (!tile.HasTile || !Main.tileSolid[tile.TileType] || tile.Slope != SlopeID.None || (halfSlab.HasValue && halfSlab.Value != tile.IsHalfBlock)) {
 							goto SkipMiteSpawn;
 						}
-						halfSlab = tile.halfBrick();
+						halfSlab = tile.IsHalfBlock;
 					}
 					pool.Add(ModContent.NPCType<Defiled_Mite>(), DefiledWastelands.SpawnRates.Mite);
 					SkipMiteSpawn:;

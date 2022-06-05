@@ -12,7 +12,7 @@ namespace Origins.Items.Armor.Celestine {
 			Tooltip.SetDefault("10% increased melee and magic critical strike chance");
 		}
 		public override void SetDefaults() {
-            item.defense = 8;
+            Item.defense = 8;
 		}
         public override void UpdateEquip(Player player) {
             player.meleeCrit+=10;
@@ -33,7 +33,7 @@ namespace Origins.Items.Armor.Celestine {
 			Tooltip.SetDefault("20% increased melee and magic damage");
 		}
 		public override void SetDefaults() {
-            item.defense = 24;
+            Item.defense = 24;
 		}
         public override void UpdateEquip(Player player) {
             player.meleeDamage+=0.2f;
@@ -47,7 +47,7 @@ namespace Origins.Items.Armor.Celestine {
 			Tooltip.SetDefault("20% increased melee speed\nIncreased mana regeneration\n10% increased movement speed");
 		}
 		public override void SetDefaults() {
-            item.defense = 16;
+            Item.defense = 16;
 		}
         public override void UpdateEquip(Player player) {
             player.meleeSpeed+=0.2f;
@@ -58,14 +58,14 @@ namespace Origins.Items.Armor.Celestine {
     public class Celestine_Mana_Booster : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Celestine Mana Booster");
-            Origins.celestineBoosters[0] = item.type;
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5,4));
-			ItemID.Sets.AnimatesAsSoul[item.type] = true;
-			ItemID.Sets.ItemIconPulse[item.type] = true;
-			ItemID.Sets.ItemNoGravity[item.type] = true;
+            Origins.celestineBoosters[0] = Item.type;
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5,4));
+			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
+			ItemID.Sets.ItemIconPulse[Item.type] = true;
+			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
         public override void SetDefaults() {
-            item.color = new Color(0,174,174);
+            Item.color = new Color(0,174,174);
         }
         public override bool OnPickup(Player player) {
             player.AddBuff(ModContent.BuffType<Celestine_Mana_Boost_Buff>(), 600);
@@ -75,14 +75,14 @@ namespace Origins.Items.Armor.Celestine {
     public class Celestine_Life_Booster : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Celestine Life Booster");
-            Origins.celestineBoosters[1] = item.type;
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5,4));
-			ItemID.Sets.AnimatesAsSoul[item.type] = true;
-			ItemID.Sets.ItemIconPulse[item.type] = true;
-			ItemID.Sets.ItemNoGravity[item.type] = true;
+            Origins.celestineBoosters[1] = Item.type;
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5,4));
+			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
+			ItemID.Sets.ItemIconPulse[Item.type] = true;
+			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
         public override void SetDefaults() {
-            item.color = new Color(255,64,33);
+            Item.color = new Color(255,64,33);
         }
         public override bool OnPickup(Player player) {
             player.AddBuff(ModContent.BuffType<Celestine_Life_Boost_Buff>(), 600);
@@ -92,14 +92,14 @@ namespace Origins.Items.Armor.Celestine {
     public class Celestine_Damage_Booster : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Celestine Damage Booster");
-            Origins.celestineBoosters[2] = item.type;
-			Main.RegisterItemAnimation(item.type, new DrawAnimationVertical(5,4));
-			ItemID.Sets.AnimatesAsSoul[item.type] = true;
-			ItemID.Sets.ItemIconPulse[item.type] = true;
-			ItemID.Sets.ItemNoGravity[item.type] = true;
+            Origins.celestineBoosters[2] = Item.type;
+			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(5,4));
+			ItemID.Sets.AnimatesAsSoul[Item.type] = true;
+			ItemID.Sets.ItemIconPulse[Item.type] = true;
+			ItemID.Sets.ItemNoGravity[Item.type] = true;
 		}
         public override void SetDefaults() {
-            item.color = new Color(255,255,255);
+            Item.color = new Color(255,255,255);
         }
         public override bool OnPickup(Player player) {
             player.AddBuff(ModContent.BuffType<Celestine_Damage_Boost_Buff>(), 600);
@@ -107,7 +107,7 @@ namespace Origins.Items.Armor.Celestine {
         }
     }
     public class Celestine_Mana_Boost_Buff : ModBuff {
-        public override void SetDefaults() {
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Celestine Mana Boost");
             Description.SetDefault("Increased mana regeneration");
         }
@@ -116,7 +116,7 @@ namespace Origins.Items.Armor.Celestine {
         }
     }
     public class Celestine_Life_Boost_Buff : ModBuff {
-        public override void SetDefaults() {
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Celestine Life Boost");
             Description.SetDefault("Increased life regeneration");
         }
@@ -125,7 +125,7 @@ namespace Origins.Items.Armor.Celestine {
         }
     }
     public class Celestine_Damage_Boost_Buff : ModBuff {
-        public override void SetDefaults() {
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Celestine Damage Boost");
             Description.SetDefault("25% increased damage");
         }

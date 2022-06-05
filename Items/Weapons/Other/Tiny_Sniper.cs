@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -13,20 +14,20 @@ namespace Origins.Items.Weapons.Other {
 			Tooltip.SetDefault("Comically small, comically powerful");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.SniperRifle);
-            item.damage = 96;
-            item.crit = 36;
-            item.useAnimation = 33;
-            item.useTime = 33;
-            item.width = 34;
-            item.height = 12;
+            Item.CloneDefaults(ItemID.SniperRifle);
+            Item.damage = 96;
+            Item.crit = 36;
+            Item.useAnimation = 33;
+            Item.useTime = 33;
+            Item.width = 34;
+            Item.height = 12;
             //item.scale = 0.5f;
 		}
         public override Vector2? HoldoutOffset() {
             return new Vector2(-1,0);
         }
         public override bool HoldItemFrame(Player player) {
-            if(item.holdStyle==4) {
+            if(Item.holdStyle==4) {
                 float rot = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.Zero).Y;//player.itemRotation * player.direction;
 		        player.bodyFrame.Y = player.bodyFrame.Height * 3;
                 bool reverseGrav = player.gravDir == -1f;
@@ -47,9 +48,9 @@ namespace Origins.Items.Weapons.Other {
             return false;
         }
         public override void HoldStyle(Player player) {
-            item.holdStyle = ItemHoldStyleID.Default;
-            if(player.scope&&(PlayerInput.UsingGamepad?(PlayerInput.GamepadThumbstickRight.Length() != 0f||!Main.SmartCursorEnabled):Main.mouseRight)) {
-                item.holdStyle = 4;
+            Item.holdStyle = ItemHoldStyleID.Default;
+            if(player.scope&&(PlayerInput.UsingGamepad?(PlayerInput.GamepadThumbstickRight.Length() != 0f||!Main.SmartCursorIsUsed):Main.mouseRight)) {
+                Item.holdStyle = 4;
 				player.itemLocation.X = player.Center.X - 17f - (player.direction * 2);
 				player.itemLocation.Y = player.MountedCenter.Y - 6f;
                 Vector2 diff = Main.MouseWorld - player.MountedCenter;
@@ -61,7 +62,7 @@ namespace Origins.Items.Weapons.Other {
             if(type==ProjectileID.Bullet)type = ProjectileID.BulletHighVelocity;
             player.velocity.X-=speedX/5;
             player.velocity.Y-=speedY/5;
-            Main.PlaySound(SoundID.Item,(int)position.X,(int)position.Y,36, 0.75f);
+            SoundEngine.PlaySound(SoundID.Item,(int)position.X,(int)position.Y,36, 0.75f);
             return true;
         }
     }

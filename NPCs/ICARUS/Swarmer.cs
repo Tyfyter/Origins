@@ -13,23 +13,23 @@ namespace Origins.NPCs.ICARUS {
         byte frame = 0;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Swarmer");
-            Main.npcFrameCount[npc.type] = 3;
+            Main.npcFrameCount[NPC.type] = 3;
         }
         public override void SetDefaults() {
-            npc.CloneDefaults(NPCID.Bunny);
-            npc.aiStyle = 55;
-            npc.lifeMax = 80;
-            npc.defense = 3;
-            npc.damage = 15;
-            npc.width = 18;
-            npc.height = 18;
-            npc.friendly = false;
-            npc.FaceTarget();
-            npc.spriteDirection = npc.direction;
+            NPC.CloneDefaults(NPCID.Bunny);
+            NPC.aiStyle = 55;
+            NPC.lifeMax = 80;
+            NPC.defense = 3;
+            NPC.damage = 15;
+            NPC.width = 18;
+            NPC.height = 18;
+            NPC.friendly = false;
+            NPC.FaceTarget();
+            NPC.spriteDirection = NPC.direction;
         }
 
         public override void FindFrame(int frameHeight) {
-            npc.frame = new Rectangle(0, 15*(frame&4)/2, 18, 18);
+            NPC.frame = new Rectangle(0, 15*(frame&4)/2, 18, 18);
         }
     }
 }

@@ -17,10 +17,4 @@ namespace Origins.Items.Materials {
             return true;
         }
     }
-    public class Brine_Recipe : ModRecipe {
-        public Brine_Recipe(Mod mod) : base(mod) { }
-        public override bool RecipeAvailable() {
-            return Main.LocalPlayer.GetModPlayer<OriginPlayer>().ZoneBrine;
-        }
-    }
 }

@@ -10,7 +10,7 @@ namespace Origins.Items.Armor.Fiberglass {
 			Tooltip.SetDefault("This doesn't seem very protective");
 		}
 		public override void SetDefaults() {
-            item.defense = 5;
+            Item.defense = 5;
 		}
         public override bool IsArmorSet(Item head, Item body, Item legs) {
             return body.type == ModContent.ItemType<Fiberglass_Body>() && legs.type == ModContent.ItemType<Fiberglass_Legs>();
@@ -30,7 +30,7 @@ namespace Origins.Items.Armor.Fiberglass {
 			Tooltip.SetDefault("These don't seem very protective");
 		}
 		public override void SetDefaults() {
-            item.defense = 6;
+            Item.defense = 6;
 		}
         public override void UpdateVanity(Player player, EquipType equipType) {
             player.GetModPlayer<OriginPlayer>().drawShirt = true;
@@ -43,7 +43,7 @@ namespace Origins.Items.Armor.Fiberglass {
 			Tooltip.SetDefault("These don't seem very protective");
 		}
 		public override void SetDefaults() {
-            item.defense = 5;
+            Item.defense = 5;
 		}
         public override void UpdateVanity(Player player, EquipType equipType) {
             player.GetModPlayer<OriginPlayer>().drawPants = true;

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent.Achievements;
 using Terraria.ID;
@@ -17,7 +18,7 @@ using static Origins.OriginExtensions;
 namespace Origins.Tiles.Defiled {
     public class Defiled_Altar : ModTile {
         public static int ID { get; private set; }
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
             Main.tileHammer[Type] = true;
@@ -105,7 +106,7 @@ namespace Origins.Tiles.Defiled {
 		    if (Main.netMode == NetmodeID.SinglePlayer) {
 			    Main.NewText(Lang.misc[messageID].Value, 50, byte.MaxValue, 130);
 		    }else if (Main.netMode == NetmodeID.Server) {
-			    NetMessage.BroadcastChatMessage(NetworkText.FromKey(Lang.misc[messageID].Key), new Color(50, 255, 130));
+			    ChatHelper.BroadcastChatMessage(NetworkText.FromKey(Lang.misc[messageID].Key), new Color(50, 255, 130));
 		    }
 
 	        for (int k = 0; k < veinCount; k++) {
@@ -126,13 +127,13 @@ namespace Origins.Tiles.Defiled {
 	        while (stoneType != 2 && stoneCount++ < 1000) {
 		        int stoneX = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
 		        int stoneY = WorldGen.genRand.Next((int)Main.rockLayer + 50, Main.maxTilesY - 300);
-		        if (!Main.tile[stoneX, stoneY].active() || Main.tile[stoneX, stoneY].type != 1) {
+		        if (!Main.tile[stoneX, stoneY].HasTile || Main.tile[stoneX, stoneY].TileType != 1) {
 			        continue;
 		        }
 		        if (stoneType == 1) {
-				    Main.tile[stoneX, stoneY].type = defiledStoneID;
+				    Main.tile[stoneX, stoneY].TileType = defiledStoneID;
 		        } else {
-			        Main.tile[stoneX, stoneY].type = TileID.Pearlstone;
+			        Main.tile[stoneX, stoneY].TileType = TileID.Pearlstone;
 		        }
 		        if (Main.netMode == NetmodeID.Server) {
 			        NetMessage.SendTileSquare(-1, stoneX, stoneY, 1);
@@ -161,17 +162,17 @@ namespace Origins.Tiles.Defiled {
         }
 
         public override void SetDefaults() {
-            item.width = 26;
-            item.height = 22;
-            item.maxStack = 99;
-            item.useTurn = true;
-            item.autoReuse = true;
-            item.useAnimation = 15;
-            item.useTime = 10;
-            item.useStyle = ItemUseStyleID.SwingThrow;
-            item.consumable = true;
-            item.value = 500;
-            item.createTile = ModContent.TileType<Defiled_Altar>();
+            Item.width = 26;
+            Item.height = 22;
+            Item.maxStack = 99;
+            Item.useTurn = true;
+            Item.autoReuse = true;
+            Item.useAnimation = 15;
+            Item.useTime = 10;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.consumable = true;
+            Item.value = 500;
+            Item.createTile = ModContent.TileType<Defiled_Altar>();
         }
     }
 }

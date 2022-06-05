@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Chat;
 using Terraria.DataStructures;
 using Terraria.GameContent.Achievements;
 using Terraria.ID;
@@ -19,11 +20,11 @@ namespace Origins.Tiles.Riven {
     public class Riven_Altar : ModTile, IGlowingModTile {
 		public Texture2D GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
-		public float GlowValue => (float)(Math.Sin(Main.GlobalTime) + 2) * 0.5f;
+		public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
 		public static int ID { get; private set; }
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
-				GlowTexture = mod.GetTexture("Tiles/Riven/Riven_Altar_Glow");
+				GlowTexture = Mod.GetTexture("Tiles/Riven/Riven_Altar_Glow");
 			}
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
@@ -117,7 +118,7 @@ namespace Origins.Tiles.Riven {
 		    if (Main.netMode == NetmodeID.SinglePlayer) {
 			    Main.NewText(Lang.misc[messageID].Value, 50, byte.MaxValue, 130);
 		    }else if (Main.netMode == NetmodeID.Server) {
-			    NetMessage.BroadcastChatMessage(NetworkText.FromKey(Lang.misc[messageID].Key), new Color(50, 255, 130));
+			    ChatHelper.BroadcastChatMessage(NetworkText.FromKey(Lang.misc[messageID].Key), new Color(50, 255, 130));
 		    }
 
 	        for (int k = 0; k < veinCount; k++) {
@@ -138,13 +139,13 @@ namespace Origins.Tiles.Riven {
 	        while (stoneType != 2 && stoneCount++ < 1000) {
 		        int stoneX = WorldGen.genRand.Next(100, Main.maxTilesX - 100);
 		        int stoneY = WorldGen.genRand.Next((int)Main.rockLayer + 50, Main.maxTilesY - 300);
-		        if (!Main.tile[stoneX, stoneY].active() || Main.tile[stoneX, stoneY].type != 1) {
+		        if (!Main.tile[stoneX, stoneY].HasTile || Main.tile[stoneX, stoneY].TileType != 1) {
 			        continue;
 		        }
 		        if (stoneType == 1) {
-				    Main.tile[stoneX, stoneY].type = rivenStoneID;
+				    Main.tile[stoneX, stoneY].TileType = rivenStoneID;
 		        } else {
-			        Main.tile[stoneX, stoneY].type = TileID.Pearlstone;
+			        Main.tile[stoneX, stoneY].TileType = TileID.Pearlstone;
 		        }
 		        if (Main.netMode == NetmodeID.Server) {
 			        NetMessage.SendTileSquare(-1, stoneX, stoneY, 1);

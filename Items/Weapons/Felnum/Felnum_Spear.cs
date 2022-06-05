@@ -13,65 +13,65 @@ namespace Origins.Items.Weapons.Felnum {
 			Tooltip.SetDefault("Receives 50% higher damage bonuses");
 		}
 		public override void SetDefaults() {
-			item.damage = baseDamage;
-			item.melee = true;
-            item.noMelee = true;
-            item.noUseGraphic = true;
-			item.width = 48;
-			item.height = 48;
-			item.useTime = 24;
-			item.useAnimation = 24;
-			item.useStyle = 5;
-			item.knockBack = 6;
-			item.value = 5000;
-			item.autoReuse = true;
-            item.useTurn = false;
-			item.shootSpeed = 3;
-            item.shoot = ModContent.ProjectileType<Felnum_Spear_Stab>();
-			item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item1;
+			Item.damage = baseDamage;
+			Item.melee = true;
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+			Item.width = 48;
+			Item.height = 48;
+			Item.useTime = 24;
+			Item.useAnimation = 24;
+			Item.useStyle = 5;
+			Item.knockBack = 6;
+			Item.value = 5000;
+			Item.autoReuse = true;
+            Item.useTurn = false;
+			Item.shootSpeed = 3;
+            Item.shoot = ModContent.ProjectileType<Felnum_Spear_Stab>();
+			Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item1;
 		}
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 8);
             recipe.AddTile(TileID.Anvils);
             recipe.SetResult(this);
-            recipe.AddRecipe();
-        }
-        public override void GetWeaponDamage(Player player, ref int damage) {
-            if(!OriginPlayer.ItemChecking)damage+=(damage-baseDamage)/2;
-        }
-    }
+            recipe.Register();
+		}
+		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
+			damage = damage.MultiplyBonuses(1.5f);
+		}
+	}
     public class Felnum_Spear_Stab : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Felnum/Felnum_Spear_P";
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Boar Spear");
 		}
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Spear);
-            projectile.timeLeft = 24;
-			projectile.width = 18;
-			projectile.height = 18;
+            Projectile.CloneDefaults(ProjectileID.Spear);
+            Projectile.timeLeft = 24;
+			Projectile.width = 18;
+			Projectile.height = 18;
             //projectile.scale*=1.25f;
         }
         public float movementFactor{
-			get => projectile.ai[0];
-			set => projectile.ai[0] = value;
+			get => Projectile.ai[0];
+			set => Projectile.ai[0] = value;
 		}
 
 		public override void AI() {
-			Player projOwner = Main.player[projectile.owner];
+			Player projOwner = Main.player[Projectile.owner];
 			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
-			projectile.direction = projOwner.direction;
-			projOwner.heldProj = projectile.whoAmI;
+			Projectile.direction = projOwner.direction;
+			projOwner.heldProj = Projectile.whoAmI;
 			projOwner.itemTime = projOwner.itemAnimation;
-			projectile.position.X = ownerMountedCenter.X - (projectile.width / 2);
-			projectile.position.Y = ownerMountedCenter.Y - (projectile.height / 2);
+			Projectile.position.X = ownerMountedCenter.X - (Projectile.width / 2);
+			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (!projOwner.frozen) {
 				if (movementFactor == 0f){
                     movementFactor = 2.5f;
-                    if(projectile.timeLeft == 26)projectile.timeLeft = projOwner.itemAnimationMax;
-					projectile.netUpdate = true;
+                    if(Projectile.timeLeft == 26)Projectile.timeLeft = projOwner.itemAnimationMax;
+					Projectile.netUpdate = true;
 				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 1){
 					movementFactor-=2.5f;
@@ -79,25 +79,25 @@ namespace Origins.Items.Weapons.Felnum {
 					movementFactor+=2.7f;
                 }
 			}
-			projectile.position += projectile.velocity * movementFactor;
+			Projectile.position += Projectile.velocity * movementFactor;
 			if (projOwner.itemAnimation == 0) {
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
-            if (projectile.spriteDirection == 1) {
-				projectile.rotation -= MathHelper.Pi/2f;
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
+            if (Projectile.spriteDirection == 1) {
+				Projectile.rotation -= MathHelper.Pi/2f;
 			}
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            damage+=(damage-18)/2;
-            Player player = Main.player[projectile.owner];
+            //damage+=(damage-18)/2;
+            Player player = Main.player[Projectile.owner];
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
             if(originPlayer.felnumShock>29) {
                 damage+=(int)(originPlayer.felnumShock/30);
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
-            spriteBatch.Draw(mod.GetTexture("Items/Weapons/Felnum/Felnum_Spear_P"), (projectile.Center) - Main.screenPosition, new Rectangle(0, 0, 72, 72), lightColor, projectile.rotation, new Vector2(62,8), projectile.scale, SpriteEffects.None, 0f);
+        public override bool PreDraw(ref Color lightColor){
+            Main.EntitySpriteDraw(Main., (Projectile.Center) - Main.screenPosition, new Rectangle(0, 0, 72, 72), lightColor, Projectile.rotation, new Vector2(62,8), Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
     }

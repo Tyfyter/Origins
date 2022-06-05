@@ -15,8 +15,8 @@ namespace Origins.Items.Accessories {
             Tooltip.SetDefault("Increases weapon damage by 8, but reduces defense by 8");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.WormScarf);
-            item.neckSlot = -1;
+            Item.CloneDefaults(ItemID.WormScarf);
+            Item.neckSlot = -1;
         }
         public override void UpdateEquip(Player player) {
             player.statDefense -= 8;

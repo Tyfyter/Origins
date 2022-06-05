@@ -19,10 +19,10 @@ namespace Origins.Items.Weapons.Ammo {
             //Tooltip.SetDefault();
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.RocketI);
-            item.damage = 30;
-            item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
-            item.ammo = item.type;
+            Item.CloneDefaults(ItemID.RocketI);
+            Item.damage = 30;
+            Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
+            Item.ammo = Item.type;
         }
     }
     public class White_Solution : ModItem {
@@ -31,18 +31,18 @@ namespace Origins.Items.Weapons.Ammo {
             //Tooltip.SetDefault();
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.GreenSolution);
-            item.shoot = ModContent.ProjectileType<White_Solution_P>()-ProjectileID.PureSpray;
+            Item.CloneDefaults(ItemID.GreenSolution);
+            Item.shoot = ModContent.ProjectileType<White_Solution_P>()-ProjectileID.PureSpray;
         }
     }
     public class White_Solution_P : ModProjectile {
         public override string Texture => "Origins/Projectiles/Pixel";
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.PureSpray);
-            projectile.aiStyle = 0;
+            Projectile.CloneDefaults(ProjectileID.PureSpray);
+            Projectile.aiStyle = 0;
         }
         public override void AI() {
-            OriginGlobalProj.ClentaminatorAI(projectile, OriginWorld.origin_conversion_type, ModContent.DustType<Solution_D>(), Color.GhostWhite);
+            OriginGlobalProj.ClentaminatorAI(Projectile, OriginWorld.origin_conversion_type, ModContent.DustType<Solution_D>(), Color.GhostWhite);
         }
     }
 }

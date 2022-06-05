@@ -15,38 +15,38 @@ using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Other {
     public class Cometburn : ModItem {
-        public override bool CloneNewInstances => true;
+        protected override bool CloneNewInstances => true;
         float shootSpeed;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Cometburn");
             Tooltip.SetDefault("");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.MeteorStaff);
-            item.damage = 99;
-            item.magic = true;
-            item.noUseGraphic = true;
-            item.noMelee = true;
-            item.width = 58;
-            item.height = 58;
-            item.useStyle = 5;
-            item.useTime = 22;
-            item.useAnimation = 22;
-            item.knockBack = 9.5f;
-            item.value = 500000;
-            item.rare = ItemRarityID.Purple;
-            item.shoot = Cometburn_P.ID;
-            item.shootSpeed = 10f;
-            item.autoReuse = true;
-            item.mana = 15;
+            Item.CloneDefaults(ItemID.MeteorStaff);
+            Item.damage = 99;
+            Item.DamageType = DamageClass.Magic;
+            Item.noUseGraphic = true;
+            Item.noMelee = true;
+            Item.width = 58;
+            Item.height = 58;
+            Item.useStyle = 5;
+            Item.useTime = 22;
+            Item.useAnimation = 22;
+            Item.knockBack = 9.5f;
+            Item.value = 500000;
+            Item.rare = ItemRarityID.Purple;
+            Item.shoot = Cometburn_P.ID;
+            Item.shootSpeed = 10f;
+            Item.autoReuse = true;
+            Item.mana = 15;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips) {
-            tooltips[0].overrideColor = new Color(0, Main.mouseTextColor, 0, Main.mouseTextColor);
+            tooltips[0].OverrideColor = new Color(0, Main.mouseTextColor, 0, Main.mouseTextColor);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			for (int i = 0; i < 3; i++) {
-                Vector2 speed = new Vector2(0, item.shootSpeed).RotatedByRandom(1);
-                Projectile.NewProjectile(Main.MouseWorld - new Vector2(0, 72) - (speed * 80), speed, type, damage, knockBack, player.whoAmI, ai1:Main.MouseWorld.Y);
+                Vector2 speed = new Vector2(0, Item.shootSpeed).RotatedByRandom(1);
+                Projectile.NewProjectile(source, Main.MouseWorld - new Vector2(0, 72) - (speed * 80), speed, type, damage, knockback, player.whoAmI, ai1:Main.MouseWorld.Y);
             }
             return false;
         }
@@ -55,28 +55,28 @@ namespace Origins.Items.Weapons.Other {
         public static int ID { get; private set; }
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Cometburn");
-            ID = projectile.type;
+            ID = Projectile.type;
         }
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Meteor1);
-            projectile.width = 42;
-            projectile.height = 44;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 10;
-            projectile.penetrate = -1;
-            projectile.extraUpdates = 1;
+            Projectile.CloneDefaults(ProjectileID.Meteor1);
+            Projectile.width = 42;
+            Projectile.height = 44;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
+            Projectile.penetrate = -1;
+            Projectile.extraUpdates = 1;
         }
 		public override void AI() {
-            Lighting.AddLight(projectile.Center, 0, 0.5f, 0);
+            Lighting.AddLight(Projectile.Center, 0, 0.5f, 0);
             if (Main.rand.NextBool(9)) {
-                Dust dust = Dust.NewDustDirect(projectile.position, projectile.width, projectile.height, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 0.5f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 0.5f);
                 dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);
                 dust.fadeIn = Main.rand.NextFloat(0.1f);
                 dust.noGravity = false;
                 dust.noLight = true;
             }
-			if (projectile.Center.Y > projectile.ai[1]) {
-                projectile.tileCollide = true;
+			if (Projectile.Center.Y > Projectile.ai[1]) {
+                Projectile.tileCollide = true;
 			}
         }
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {

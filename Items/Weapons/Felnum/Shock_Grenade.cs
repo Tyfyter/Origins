@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
@@ -14,24 +15,23 @@ namespace Origins.Items.Weapons.Felnum {
 			Tooltip.SetDefault("Quite shocking");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.Grenade);
+            Item.CloneDefaults(ItemID.Grenade);
             //item.maxStack = 999;
-            item.damage = 32;
-			item.value *= 4;
-            item.shoot = ModContent.ProjectileType<Shock_Grenade_P>();
-			item.shootSpeed *= 1.5f;
-            item.knockBack = 15f;
-            item.ammo = ItemID.Grenade;
-			item.rare = ItemRarityID.Green;
+            Item.damage = 32;
+			Item.value *= 4;
+            Item.shoot = ModContent.ProjectileType<Shock_Grenade_P>();
+			Item.shootSpeed *= 1.5f;
+            Item.knockBack = 15f;
+            Item.ammo = ItemID.Grenade;
+			Item.rare = ItemRarityID.Green;
 		}
         public override void AddRecipes() {
-            Origins.AddExplosive(item);
-            ModRecipe recipe = new ModRecipe(mod);
+            Origins.AddExplosive(Item);
+            Recipe recipe = Mod.CreateRecipe(Type, 70);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>());
             recipe.AddIngredient(ItemID.Grenade, 70);
-            recipe.SetResult(this, 70);
             recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();
+            recipe.Register();
         }
         public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref int damage, ref float knockback) {
             damage-=16;
@@ -40,68 +40,68 @@ namespace Origins.Items.Weapons.Felnum {
     public class Shock_Grenade_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Felnum/Shock_Grenade";
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Grenade);
-            projectile.timeLeft = 135;
-            projectile.penetrate = 1;
+            Projectile.CloneDefaults(ProjectileID.Grenade);
+            Projectile.timeLeft = 135;
+            Projectile.penetrate = 1;
         }
         public override bool PreKill(int timeLeft) {
-            projectile.type = ProjectileID.Grenade;
+            Projectile.type = ProjectileID.Grenade;
             return true;
         }
         public override void Kill(int timeLeft) {
-			projectile.position.X += projectile.width / 2;
-			projectile.position.Y += projectile.height / 2;
-			projectile.width = 128;
-			projectile.height = 128;
-			projectile.position.X -= projectile.width / 2;
-			projectile.position.Y -= projectile.height / 2;
-			projectile.Damage();
-			Main.PlaySound(SoundID.Item, (int)projectile.Center.X, (int)projectile.Center.Y, 122, 2f, 1f);
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = 128;
+			Projectile.height = 128;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.Damage();
+			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 122, 2f, 1f);
             int t = ModContent.ProjectileType<Shock_Grenade_Shock>();
-            for(int i = Main.rand.Next(2); i < 3; i++)Projectile.NewProjectile(projectile.Center, Vector2.Zero, t, (int)((projectile.damage-32)*1.5f)+16, 6, projectile.owner);
+            for(int i = Main.rand.Next(2); i < 3; i++)Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, t, (int)((Projectile.damage-32)*1.5f)+16, 6, Projectile.owner);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             Vector2 dest = Vector2.Lerp(target.Center, new Vector2(target.position.X+Main.rand.NextFloat(target.width),target.position.Y+Main.rand.NextFloat(target.height)), 0.5f);
             for(int i = 0; i < 16; i++) {
-                Dust.NewDustPerfect(Vector2.Lerp(projectile.Center, dest, i/16f), 226, Main.rand.NextVector2Circular(1,1), Scale:0.5f);
+                Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center, dest, i/16f), 226, Main.rand.NextVector2Circular(1,1), Scale:0.5f);
             }
         }
     }
     public class Shock_Grenade_Shock  : ModProjectile {
         public override string Texture => "Origins/Projectiles/Pixel";
-        public override bool CloneNewInstances => true;
+        protected override bool CloneNewInstances => true;
         Vector2 closest;
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Bullet);
-            projectile.aiStyle = 0;
-            projectile.timeLeft = 3;
-            projectile.width = projectile.height = 20;
-            projectile.penetrate = 2;
-            projectile.usesLocalNPCImmunity = true;
-            projectile.localNPCHitCooldown = 30;
+            Projectile.CloneDefaults(ProjectileID.Bullet);
+            Projectile.aiStyle = 0;
+            Projectile.timeLeft = 3;
+            Projectile.width = Projectile.height = 20;
+            Projectile.penetrate = 2;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 30;
         }
         public override void AI() {
-            if(projectile.penetrate == 1) {
-                projectile.penetrate = 2;
+            if(Projectile.penetrate == 1) {
+                Projectile.penetrate = 2;
             }
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-            closest = projectile.Center.Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());
-            return (projectile.Center-closest).Length()<=96;
+            closest = Projectile.Center.Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());
+            return (Projectile.Center-closest).Length()<=96;
         }
         public override bool? CanHitNPC(NPC target) {
-            return projectile.penetrate>1?base.CanHitNPC(target):false;
+            return Projectile.penetrate>1?base.CanHitNPC(target):false;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            projectile.damage-=(int)((projectile.Center-closest).Length()/16f);
-            if(!Main.rand.NextBool(5))projectile.timeLeft+=crit?2:1;
-            Vector2 dest = projectile.Center;
-            projectile.Center = Vector2.Lerp(closest, new Vector2(target.position.X+Main.rand.NextFloat(target.width),target.position.Y+Main.rand.NextFloat(target.height)), 0.5f);
+            Projectile.damage-=(int)((Projectile.Center-closest).Length()/16f);
+            if(!Main.rand.NextBool(5))Projectile.timeLeft+=crit?2:1;
+            Vector2 dest = Projectile.Center;
+            Projectile.Center = Vector2.Lerp(closest, new Vector2(target.position.X+Main.rand.NextFloat(target.width),target.position.Y+Main.rand.NextFloat(target.height)), 0.5f);
             for(int i = 0; i < 16; i++) {
-                Dust.NewDustPerfect(Vector2.Lerp(projectile.Center, dest, i/16f), 226, Main.rand.NextVector2Circular(1,1), Scale:0.5f);
+                Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center, dest, i/16f), 226, Main.rand.NextVector2Circular(1,1), Scale:0.5f);
             }
         }
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
+        public override bool PreDraw(ref Color lightColor){
             //Vector2 drawOrigin = new Vector2(1, 1);
             /*
             Rectangle drawRect = new Rectangle(
@@ -112,12 +112,12 @@ namespace Origins.Items.Weapons.Felnum {
 
             //spriteBatch.Draw(mod.GetTexture("Projectiles/Pixel"), drawRect, null, Color.Aquamarine, (projectile.oldPosition - projectile.position).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
             spriteBatch.DrawLightningArcBetween(
-                projectile.oldPosition - Main.screenPosition,
-                projectile.position - Main.screenPosition,
+                Projectile.oldPosition - Main.screenPosition,
+                Projectile.position - Main.screenPosition,
                 Main.rand.NextFloat(-4,4));
-            Vector2 dest = (projectile.oldPosition - projectile.position)+new Vector2(projectile.width,projectile.height)/2;
+            Vector2 dest = (Projectile.oldPosition - Projectile.position)+new Vector2(Projectile.width,Projectile.height)/2;
             for(int i = 0; i < 16; i++) {
-                Dust.NewDustPerfect(Vector2.Lerp(projectile.Center, dest, i/16f), 226, Main.rand.NextVector2Circular(1,1), Scale:0.5f);
+                Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center, dest, i/16f), 226, Main.rand.NextVector2Circular(1,1), Scale:0.5f);
             }
             return false;
         }

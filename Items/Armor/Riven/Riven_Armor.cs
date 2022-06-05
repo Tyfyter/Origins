@@ -16,11 +16,11 @@ namespace Origins.Items.Armor.Riven {
             GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Mask_Head_Glow");
         }
         public override void SetDefaults() {
-            item.defense = 6;
-            item.rare = ItemRarityID.Blue;
+            Item.defense = 6;
+            Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
-            player.minionDamage+=0.1f;
+            player.GetDamage(DamageClass.Summon) += 0.1f;
             Lighting.AddLight(player.Top+new Vector2(0,8), 0.666f*lightMagnitude, 0.414f*lightMagnitude, 0.132f*lightMagnitude);
         }
         public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
@@ -35,12 +35,11 @@ namespace Origins.Items.Armor.Riven {
             player.GetModPlayer<OriginPlayer>().rivenSet = true;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 15);
             //recipe.AddIngredient(ModContent.ItemType<>(), 10);
-            recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
     [AutoloadEquip(EquipType.Body)]
@@ -56,8 +55,8 @@ namespace Origins.Items.Armor.Riven {
             armGlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Coat_Arms_Glow");
         }
         public override void SetDefaults() {
-            item.defense = 7;
-            item.rare = ItemRarityID.Blue;
+            Item.defense = 7;
+            Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
             player.maxMinions++;
@@ -72,12 +71,11 @@ namespace Origins.Items.Armor.Riven {
             color = Color.White;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 25);
             //recipe.AddIngredient(ModContent.ItemType<>(), 20);
-            recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
     [AutoloadEquip(EquipType.Legs)]
@@ -89,8 +87,8 @@ namespace Origins.Items.Armor.Riven {
             GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Pants_Legs_Glow");
         }
         public override void SetDefaults() {
-            item.defense = 6;
-            item.rare = ItemRarityID.Blue;
+            Item.defense = 6;
+            Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
             player.jumpSpeedBoost+=1f;
@@ -101,12 +99,11 @@ namespace Origins.Items.Armor.Riven {
             glowMaskColor = Color.White;
         }
         public override void AddRecipes() {
-            ModRecipe recipe = new ModRecipe(mod);
+            Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 20);
             //recipe.AddIngredient(ModContent.ItemType<>(), 15);
-            recipe.SetResult(this);
             recipe.AddTile(TileID.Anvils);
-            recipe.AddRecipe();
+            recipe.Register();
         }
     }
 }

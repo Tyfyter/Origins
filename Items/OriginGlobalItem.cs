@@ -11,6 +11,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 
 namespace Origins.Items {
     public class OriginGlobalItem : GlobalItem {
@@ -53,7 +54,7 @@ namespace Origins.Items {
                 break;
             }
 		}
-        public override void GetWeaponCrit(Item item, Player player, ref int crit) {
+        public override void ModifyWeaponCrit(Item item, Player player, ref float crit) {
             if(IsExplosive(item)) {
                 //int c = crit;
                 crit+=player.GetModPlayer<OriginPlayer>().explosiveCrit-4;
@@ -96,7 +97,7 @@ namespace Origins.Items {
             }
             if(OriginConfig.Instance.WoodBuffs&&set=="pearlwood") {
                 player.setBonus+="\n15% increased damage\nReduces damage taken by 5%";
-                player.allDamage+=0.15f;
+                player.GetDamage(DamageClass.Generic)+=0.15f;
                 player.endurance+=0.05f;
                 return;
             }
@@ -106,49 +107,49 @@ namespace Origins.Items {
                 if(IsExplosive(item)) {
                     if(NeedsDamageLine(item)&&Origins.ExplosiveBaseDamage.ContainsKey(item.type)) {
                         Main.HoverItem.damage = Origins.ExplosiveBaseDamage[item.type];
-                        Player player = Main.player[item.owner];
-                        tooltips.Insert(1, new TooltipLine(mod, "Damage", $"{player.GetWeaponDamage(Main.HoverItem)} {Language.GetText("explosive")}{Language.GetText("LegacyTooltip.55")}"));
+                        Player player = Main.player[item.playerIndexTheItemIsReservedFor];
+                        tooltips.Insert(1, new TooltipLine(Mod, "Damage", $"{player.GetWeaponDamage(Main.HoverItem)} {Language.GetText("explosive")}{Language.GetText("LegacyTooltip.55")}"));
                         int crit = player.GetWeaponCrit(item);
-                        ItemLoader.GetWeaponCrit(item, player, ref crit);
-                        PlayerHooks.GetWeaponCrit(player, item, ref crit);
-                        tooltips.Insert(2, new TooltipLine(mod, "CritChance", $"{crit}{Language.GetText("LegacyTooltip.41")}"));
+                        tooltips.Insert(2, new TooltipLine(Mod, "CritChance", $"{crit}{Language.GetText("LegacyTooltip.41")}"));
                         return;
                     } else {
                         for(int i = 1; i < tooltips.Count; i++) {
                             TooltipLine tooltip = tooltips[i];
                             if(tooltip.Name.Equals("Damage")) {
-                                tooltip.text = tooltip.text.Insert(tooltip.text.IndexOf(' '), " "+Language.GetText("explosive"));
+                                tooltip.Text = tooltip.Text.Insert(tooltip.Text.IndexOf(' '), " "+Language.GetText("explosive"));
                                 return;
                             }
                         }
                     }
                 }else switch(item.type) {
                         case ItemID.MiningHelmet:
-                    tooltips.Insert(3, new TooltipLine(mod, "Tooltip0", "3% increased explosive critical strike chance"));
+                    tooltips.Insert(3, new TooltipLine(Mod, "Tooltip0", "3% increased explosive critical strike chance"));
                     break;
                     case ItemID.MiningShirt:
-                    tooltips.Insert(3, new TooltipLine(mod, "Tooltip0", "5% increased explosive damage"));
+                    tooltips.Insert(3, new TooltipLine(Mod, "Tooltip0", "5% increased explosive damage"));
                     break;
                 }
             } catch(Exception e) {
-                mod.Logger.Error(e);
+                Mod.Logger.Error(e);
             }
         }
+        [Obsolete]
         public static bool IsExplosive(Item item) {
             return Origins.ExplosiveItems[item.type]||Origins.ExplosiveAmmo[item.ammo]||Origins.ExplosiveAmmo[item.useAmmo]||Origins.ExplosiveProjectiles[item.shoot];
         }
+        [Obsolete]
         public static bool NeedsDamageLine(Item item) {
-            return !(item.melee||item.ranged||item.magic||item.summon||item.thrown);
+            return false;//!(item.melee||item.ranged||item.magic||item.summon||item.thrown);
         }
         public static ushort GetItemElement(Item item) {
-            if(item.modItem is null) {
+            if(item.ModItem is null) {
                 return Origins.VanillaElements[item.type];
-            }else if(item.modItem is IElementalItem elementalItem) {
+            }else if(item.ModItem is IElementalItem elementalItem) {
                 return elementalItem.Element;
             }
             return 0;
         }
-        public static int BlockNewItem(OnTerraria.Item.orig_NewItem_int_int_int_int_int_int_bool_int_bool_bool orig, int X, int Y, int Width, int Height, int Type, int Stack = 1, bool noBroadcast = false, int pfix = 0, bool noGrabDelay = false, bool reverseLookup = false) {
+        public static int BlockNewItem(OnTerraria.Item.orig_NewItem_IEntitySource_Vector2_int_int_int_int_bool_int_bool_bool orig, IEntitySource source, Vector2 pos, int Width, int Height, int Type, int Stack = 1, bool noBroadcast = false, int pfix = 0, bool noGrabDelay = false, bool reverseLookup = false) {
             if((ModContent.GetInstance<OriginWorld>().worldEvil&4)!=0) {
                 switch(Type) {
                     case ItemID.CorruptSeeds:
@@ -159,14 +160,14 @@ namespace Origins.Items {
                     break;
                 }
             }
-            return orig(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+            return orig(source, pos, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
         }
-        internal static int NewItemHook(OnTerraria.Item.orig_NewItem_int_int_int_int_int_int_bool_int_bool_bool orig, int X, int Y, int Width, int Height, int Type, int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup) {
+        internal static int NewItemHook(OnTerraria.Item.orig_NewItem_IEntitySource_Vector2_int_int_int_int_bool_int_bool_bool orig, IEntitySource source, Vector2 pos, int Width, int Height, int Type, int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup) {
             int num = 400;
             if (NPCLoader.blockLoot.Contains(Type)){
-                num = BlockNewItem(orig, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+                num = BlockNewItem(orig, source, pos, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
             } else {
-                num = orig(X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+                num = orig(source, pos, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
             }
             return num;
         }

@@ -12,21 +12,21 @@ namespace Origins.Items.Weapons.Defiled {
 			Tooltip.SetDefault("Very pointy");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.ThornChakram);
-			item.damage = 25;
-			item.width = 34;
-			item.height = 34;
-			item.useTime = 18;
-			item.useAnimation = 18;
+            Item.CloneDefaults(ItemID.ThornChakram);
+			Item.damage = 25;
+			Item.width = 34;
+			Item.height = 34;
+			Item.useTime = 18;
+			Item.useAnimation = 18;
 			//item.knockBack = 5;
-            item.shoot = ModContent.ProjectileType<Defiled_Chakram_P>();
-            item.shootSpeed = 9.75f;
-			item.value = 5000;
-			item.rare = ItemRarityID.Blue;
-			item.UseSound = SoundID.Item1;
+            Item.shoot = ModContent.ProjectileType<Defiled_Chakram_P>();
+            Item.shootSpeed = 9.75f;
+			Item.value = 5000;
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item1;
 		}
         public override bool CanUseItem(Player player) {
-            return player.ownedProjectileCounts[item.shoot]<=0;
+            return player.ownedProjectileCounts[Item.shoot]<=0;
         }
     }
     public class Defiled_Chakram_P : ModProjectile {
@@ -35,24 +35,24 @@ namespace Origins.Items.Weapons.Defiled {
 			DisplayName.SetDefault("Krakram");
 		}
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.ThornChakram);
-            projectile.penetrate = -1;
-			projectile.width = 34;
-			projectile.height = 34;
-            projectile.localAI[0] = 1;
+            Projectile.CloneDefaults(ProjectileID.ThornChakram);
+            Projectile.penetrate = -1;
+			Projectile.width = 34;
+			Projectile.height = 34;
+            Projectile.localAI[0] = 1;
             //projectile.scale*=1.25f;
         }
         public override bool PreAI() {
-            projectile.aiStyle = 3;
-            projectile.velocity = projectile.velocity.RotatedBy(projectile.localAI[0]*0.15f);
-            projectile.localAI[0] = (float)System.Math.Sin(projectile.timeLeft);
+            Projectile.aiStyle = 3;
+            Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.localAI[0]*0.15f);
+            Projectile.localAI[0] = (float)System.Math.Sin(Projectile.timeLeft);
             return true;
         }
         public override bool? CanHitNPC(NPC target) {
-            projectile.aiStyle = 0;
+            Projectile.aiStyle = 0;
             return null;
         }
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough) {
+        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
             width = 27;
             height = 27;
             return true;

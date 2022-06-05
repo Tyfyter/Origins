@@ -11,23 +11,23 @@ namespace Origins.Items.Weapons.Fiberglass {
 			Tooltip.SetDefault("It's even sharper now");
 		}
 		public override void SetDefaults() {
-			item.damage = 18;
-			item.melee = true;
-            item.noMelee = true;
-            item.noUseGraphic = true;
-			item.width = 24;
-			item.height = 26;
-			item.useTime = 14;
-			item.useAnimation = 14;
-			item.useStyle = 5;
-			item.knockBack = 6;
-			item.value = 5000;
-			item.autoReuse = true;
-            item.useTurn = true;
-			item.shootSpeed = 3;
-            item.shoot = ModContent.ProjectileType<Broken_Fiberglass_Sword_Stab>();
-			item.rare = ItemRarityID.Green;
-			item.UseSound = SoundID.Item1;
+			Item.damage = 18;
+			Item.melee = true;
+            Item.noMelee = true;
+            Item.noUseGraphic = true;
+			Item.width = 24;
+			Item.height = 26;
+			Item.useTime = 14;
+			Item.useAnimation = 14;
+			Item.useStyle = 5;
+			Item.knockBack = 6;
+			Item.value = 5000;
+			Item.autoReuse = true;
+            Item.useTurn = true;
+			Item.shootSpeed = 3;
+            Item.shoot = ModContent.ProjectileType<Broken_Fiberglass_Sword_Stab>();
+			Item.rare = ItemRarityID.Green;
+			Item.UseSound = SoundID.Item1;
 		}
 	}
     public class Broken_Fiberglass_Sword_Stab : ModProjectile {
@@ -36,29 +36,29 @@ namespace Origins.Items.Weapons.Fiberglass {
 			DisplayName.SetDefault("Broken Fiberglass Sword");
 		}
         public override void SetDefaults() {
-            projectile.CloneDefaults(ProjectileID.Spear);
-            projectile.timeLeft = 14;
-			projectile.width = 20;
-			projectile.height = 20;
+            Projectile.CloneDefaults(ProjectileID.Spear);
+            Projectile.timeLeft = 14;
+			Projectile.width = 20;
+			Projectile.height = 20;
         }
         public float movementFactor{
-			get => projectile.ai[0];
-			set => projectile.ai[0] = value;
+			get => Projectile.ai[0];
+			set => Projectile.ai[0] = value;
 		}
 
 		public override void AI() {
-			Player projOwner = Main.player[projectile.owner];
+			Player projOwner = Main.player[Projectile.owner];
 			Vector2 ownerMountedCenter = projOwner.RotatedRelativePoint(projOwner.MountedCenter, true);
-			projectile.direction = projOwner.direction;
-			projOwner.heldProj = projectile.whoAmI;
+			Projectile.direction = projOwner.direction;
+			projOwner.heldProj = Projectile.whoAmI;
 			projOwner.itemTime = projOwner.itemAnimation;
-			projectile.position.X = ownerMountedCenter.X - (float)(projectile.width / 2);
-			projectile.position.Y = ownerMountedCenter.Y - (float)(projectile.height / 2);
+			Projectile.position.X = ownerMountedCenter.X - (float)(Projectile.width / 2);
+			Projectile.position.Y = ownerMountedCenter.Y - (float)(Projectile.height / 2);
 			if (!projOwner.frozen) {
 				if (movementFactor == 0f){
                     movementFactor = 4.7f;
-                    if(projectile.timeLeft == 26)projectile.timeLeft = projOwner.itemAnimationMax;
-					projectile.netUpdate = true;
+                    if(Projectile.timeLeft == 26)Projectile.timeLeft = projOwner.itemAnimationMax;
+					Projectile.netUpdate = true;
 				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 7){
 					movementFactor-=1.7f;
@@ -66,17 +66,17 @@ namespace Origins.Items.Weapons.Fiberglass {
 					movementFactor+=1.3f;
                 }
 			}
-			projectile.position += projectile.velocity * movementFactor;
+			Projectile.position += Projectile.velocity * movementFactor;
 			if (projOwner.itemAnimation == 0) {
-				projectile.Kill();
+				Projectile.Kill();
 			}
-			projectile.rotation = projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
-            if (projectile.spriteDirection == 1) {
-				projectile.rotation -= MathHelper.Pi/2f;
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
+            if (Projectile.spriteDirection == 1) {
+				Projectile.rotation -= MathHelper.Pi/2f;
 			}
 		}
-        public override bool PreDraw(SpriteBatch spriteBatch, Color lightColor){
-            spriteBatch.Draw(mod.GetTexture("Items/Weapons/Fiberglass/Broken_Fiberglass_Sword"), (projectile.Center - projectile.velocity*2) - Main.screenPosition, new Rectangle(0, 0, 24, 26), lightColor, projectile.rotation, new Vector2(12,13), 1f, SpriteEffects.None, 0f);
+        public override bool PreDraw(ref Color lightColor){
+            spriteBatch.Draw(Mod.GetTexture("Items/Weapons/Fiberglass/Broken_Fiberglass_Sword"), (Projectile.Center - Projectile.velocity*2) - Main.screenPosition, new Rectangle(0, 0, 24, 26), lightColor, Projectile.rotation, new Vector2(12,13), 1f, SpriteEffects.None, 0f);
             return false;
         }
     }

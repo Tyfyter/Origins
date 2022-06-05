@@ -15,16 +15,16 @@ namespace Origins.Items.Weapons.Dungeon {
             Tooltip.SetDefault("Get boned");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.Handgun);
-            item.damage = 26;
-			item.knockBack = 5;
-			item.crit = 4;
-            item.useTime = item.useAnimation = 17;
-			item.shoot = ProjectileID.Bullet;
-            item.shootSpeed = 8;
-            item.width = 38;
-            item.height = 18;
-            item.autoReuse = true;
+            Item.CloneDefaults(ItemID.Handgun);
+            Item.damage = 26;
+			Item.knockBack = 5;
+			Item.crit = 4;
+            Item.useTime = Item.useAnimation = 17;
+			Item.shoot = ProjectileID.Bullet;
+            Item.shootSpeed = 8;
+            Item.width = 38;
+            Item.height = 18;
+            Item.autoReuse = true;
         }
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             Projectile p = Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY), type, damage, knockBack, player.whoAmI);

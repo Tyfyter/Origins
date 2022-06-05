@@ -17,22 +17,22 @@ namespace Origins.Items.Weapons.Other {
             Tooltip.SetDefault("");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.Katana);
-            item.damage = 23;
-            item.melee = true;
-            item.noUseGraphic = false;
-            item.noMelee = false;
-            item.width = 46;
-            item.height = 52;
-            item.useStyle = 1;
-            item.useTime = 19;
-            item.useAnimation = 19;
-            item.knockBack = 9.5f;
-            item.value = 50000;
-            item.shoot = ProjectileID.None;
-            item.rare = ItemRarityID.Blue;
-            item.autoReuse = true;
-            item.scale = 1f;
+            Item.CloneDefaults(ItemID.Katana);
+            Item.damage = 23;
+            Item.melee = true;
+            Item.noUseGraphic = false;
+            Item.noMelee = false;
+            Item.width = 46;
+            Item.height = 52;
+            Item.useStyle = 1;
+            Item.useTime = 19;
+            Item.useAnimation = 19;
+            Item.knockBack = 9.5f;
+            Item.value = 50000;
+            Item.shoot = ProjectileID.None;
+            Item.rare = ItemRarityID.Blue;
+            Item.autoReuse = true;
+            Item.scale = 1f;
         }
     }
     /*public class Syah_Nara : ModItem, ICustomDrawItem {

@@ -9,14 +9,11 @@ using Origins.NPCs;
 
 namespace Origins.Buffs {
     public class Solvent_Debuff : ModBuff {
-        public static int ID { get; private set; } = -1;
-        public override void SetDefaults() {
+		public override string Texture => "Terraria/Images/Buff_160";
+		public static int ID { get; private set; } = -1;
+        public override void SetStaticDefaults() {
             DisplayName.SetDefault("Solvent");
             ID = Type;
-        }
-        public override bool Autoload(ref string name, ref string texture) {
-            texture = "Terraria/Buff_160";
-            return true;
         }
     }
 }

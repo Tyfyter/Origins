@@ -22,22 +22,22 @@ namespace Origins.Items.Weapons.Acid {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.RubyStaff);
-			item.damage = 52;
-			item.magic = true;
-			item.noMelee = true;
-			item.noUseGraphic = true;
-            item.useStyle = 1;
-			item.width = 28;
-			item.height = 30;
-			item.useTime = 24;
-			item.useAnimation = 24;
-            item.reuseDelay = 8;
-			item.mana = 18;
-			item.value = 5000;
-            item.shoot = ModContent.ProjectileType<Acid_Shot>();
-			item.rare = ItemRarityID.Lime;
-			item.glowMask = glowmask;
+            Item.CloneDefaults(ItemID.RubyStaff);
+			Item.damage = 52;
+			Item.magic = true;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
+            Item.useStyle = 1;
+			Item.width = 28;
+			Item.height = 30;
+			Item.useTime = 24;
+			Item.useAnimation = 24;
+            Item.reuseDelay = 8;
+			Item.mana = 18;
+			Item.value = 5000;
+            Item.shoot = ModContent.ProjectileType<Acid_Shot>();
+			Item.rare = ItemRarityID.Lime;
+			Item.glowMask = glowmask;
 		}
         public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
             int a = Main.rand.Next(5,7);

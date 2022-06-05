@@ -12,7 +12,7 @@ using Terraria.Utilities;
 
 namespace Origins.Tiles.Defiled {
     public class Defiled_Grass : DefiledTile {
-		public override void SetDefaults() {
+		public override void SetStaticDefaults() {
             TileID.Sets.Grass[Type] = true;
             TileID.Sets.NeedsGrassFraming[Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
@@ -33,7 +33,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(200, 200, 200));
 			SetModTree(Defiled_Tree.Instance);
-            drop = ItemID.DirtBlock;
+            ItemDrop = ItemID.DirtBlock;
 		}
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
             fail = true;
@@ -43,12 +43,12 @@ namespace Origins.Tiles.Defiled {
                 if(originWorld.defiledAltResurgenceTiles is null)originWorld.defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
                 originWorld.defiledAltResurgenceTiles.Add((i, j, Type));
             }
-            bool half = Main.tile[i, j].halfBrick();
-            byte slope = Main.tile[i, j].slope();
+            bool half = Main.tile[i, j].IsHalfBlock;
+            byte slope = Main.tile[i, j].Slope;
             Main.tile[i, j].ResetToType(TileID.Dirt);
             WorldGen.SquareTileFrame(i, j);
-            Main.tile[i, j].halfBrick(half);
-            Main.tile[i, j].slope(slope);
+            Main.tile[i, j].IsHalfBlock = half;
+            Main.tile[i, j].Slope = slope;
             NetMessage.SendTileSquare(-1, i, j, 1);
 
         }
@@ -63,10 +63,10 @@ namespace Origins.Tiles.Defiled {
                 for(int y = -1; y < 2&&(j+y)<Main.worldSurface; y++) {
                     for(int x = -1; x < 2; x++) {
                         current = Main.tile[i+x, j+y];
-                        if(current.type==TileID.Grass) {
-                            if(Main.tile[i+x, j+y-1].type!=TileID.Sunflower)rand.Add((i+x,j+y));
-                        }else if(current.type==TileID.Dirt) {
-                            if(!(Main.tile[i+x-1, j+y].active()&&Main.tile[i+x+1, j+y].active()&&Main.tile[i+x, j+y-1].active()&&Main.tile[i+x, j+y+1].active())) {
+                        if(current.TileType==TileID.Grass) {
+                            if(Main.tile[i+x, j+y-1].TileType!=TileID.Sunflower)rand.Add((i+x,j+y));
+                        }else if(current.TileType==TileID.Dirt) {
+                            if(!(Main.tile[i+x-1, j+y].HasTile&&Main.tile[i+x+1, j+y].HasTile&&Main.tile[i+x, j+y-1].HasTile&&Main.tile[i+x, j+y+1].HasTile)) {
                                 rand.Add((i+x,j+y));
                             }
                         }
@@ -74,8 +74,8 @@ namespace Origins.Tiles.Defiled {
                 }
                 if(rand.elements.Count>0) {
                     (int x, int y) pos = rand.Get();
-                    OriginWorld.ConvertTileWeak(ref Main.tile[pos.x, pos.y].type, OriginWorld.evil_wastelands);
-                    OriginWorld.ConvertWall(ref Main.tile[pos.x, pos.y].wall, OriginWorld.evil_wastelands);
+                    OriginWorld.ConvertTileWeak(ref Main.tile[pos.x, pos.y].TileType, OriginWorld.evil_wastelands);
+                    OriginWorld.ConvertWall(ref Main.tile[pos.x, pos.y].WallType, OriginWorld.evil_wastelands);
 				    WorldGen.SquareTileFrame(pos.x, pos.y);
 				    NetMessage.SendTileSquare(-1, pos.x, pos.y, 1);
                 } else {
@@ -83,7 +83,7 @@ namespace Origins.Tiles.Defiled {
                 }
                 break;
                 case 1:
-                if(!Main.tile[i, j-1].active()&&!(Main.tile[i, j].slope()!=0||Main.tile[i, j].halfBrick())) {
+                if(!Main.tile[i, j-1].HasTile&&!(Main.tile[i, j].Slope!=0||Main.tile[i, j].IsHalfBlock)) {
                     Main.tile[i, j-1].ResetToType((ushort)ModContent.TileType<Defiled_Foliage>());
                 } else {
                     goto retry;
@@ -110,11 +110,11 @@ namespace Origins.Tiles.Defiled {
             DisplayName.SetDefault("Defiled Seeds");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.GrassSeeds);
-            item.placeStyle = ModContent.TileType<Defiled_Grass>();
+            Item.CloneDefaults(ItemID.GrassSeeds);
+            Item.placeStyle = ModContent.TileType<Defiled_Grass>();
 		}
         public override bool ConsumeItem(Player player) {
-            Main.tile[Player.tileTargetX, Player.tileTargetY].type = (ushort)item.placeStyle;
+            Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = (ushort)Item.placeStyle;
             return true;
         }
     }

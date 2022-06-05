@@ -9,19 +9,19 @@ namespace Origins.Items.Tools {
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.MoltenHamaxe);
-			item.damage = 18;
-			item.melee = true;
-            item.pick = 0;
-            item.hammer = 65;
-            item.axe = 22;
-			item.width = 34;
-			item.height = 34;
-			item.useTime = 13;
-			item.useAnimation = 25;
-			item.knockBack = 4f;
-			item.value = 3600;
-			item.UseSound = SoundID.Item1;
+            Item.CloneDefaults(ItemID.MoltenHamaxe);
+			Item.damage = 18;
+			Item.melee = true;
+            Item.pick = 0;
+            Item.hammer = 65;
+            Item.axe = 22;
+			Item.width = 34;
+			Item.height = 34;
+			Item.useTime = 13;
+			Item.useAnimation = 25;
+			Item.knockBack = 4f;
+			Item.value = 3600;
+			Item.UseSound = SoundID.Item1;
 		}
         public override float UseTimeMultiplier(Player player) {
             return 1f / ((player.pickSpeed-1)*0.75f+1);

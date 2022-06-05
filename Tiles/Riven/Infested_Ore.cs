@@ -14,16 +14,16 @@ namespace Origins.Tiles.Riven {
     public class Infested_Ore : OriginTile, IGlowingModTile, IComplexMineDamageTile {
         public Texture2D GlowTexture { get; private set; }
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
-        public float GlowValue => (float)(Math.Sin(Main.GlobalTime)+2)*0.5f;
-        public override void SetDefaults() {
+        public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly)+2)*0.5f;
+        public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-                GlowTexture = mod.GetTexture("Tiles/Riven/Infested_Ore_Glow");
+                GlowTexture = Mod.GetTexture("Tiles/Riven/Infested_Ore_Glow");
             }
             Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             TileID.Sets.Ore[Type] = true;
-			drop = ItemType<Infested_Ore_Item>();
+			ItemDrop = ItemType<Infested_Ore_Item>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Infested Ore");
 			AddMapEntry(new Color(207, 148, 58), name);
@@ -48,8 +48,8 @@ namespace Origins.Tiles.Riven {
             DisplayName.SetDefault("Infested Ore");
         }
         public override void SetDefaults() {
-            item.CloneDefaults(ItemID.CrimtaneOre);
-            item.createTile = TileType<Infested_Ore>();
+            Item.CloneDefaults(ItemID.CrimtaneOre);
+            Item.createTile = TileType<Infested_Ore>();
 		}
     }
 }

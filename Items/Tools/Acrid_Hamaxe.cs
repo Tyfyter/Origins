@@ -9,20 +9,20 @@ namespace Origins.Items.Tools {
 			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults() {
-            item.CloneDefaults(ItemID.TitaniumWaraxe);
-			item.damage = 31;
-			item.melee = true;
-            item.pick = 0;
-            item.hammer = 65;
-            item.axe = 22;
-			item.width = 34;
-			item.height = 34;
-			item.useTime = 7;
-			item.useAnimation = 22;
-			item.knockBack = 4f;
-			item.value = 3600;
-			item.rare = ItemRarityID.LightRed;
-			item.UseSound = SoundID.Item1;
+            Item.CloneDefaults(ItemID.TitaniumWaraxe);
+			Item.damage = 31;
+			Item.melee = true;
+            Item.pick = 0;
+            Item.hammer = 65;
+            Item.axe = 22;
+			Item.width = 34;
+			Item.height = 34;
+			Item.useTime = 7;
+			Item.useAnimation = 22;
+			Item.knockBack = 4f;
+			Item.value = 3600;
+			Item.rare = ItemRarityID.LightRed;
+			Item.UseSound = SoundID.Item1;
 		}
         public override float UseTimeMultiplier(Player player) {
             return player.wet?1.5f:1;

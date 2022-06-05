@@ -8,12 +8,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs {
     public partial class OriginGlobalNPC : GlobalNPC {
-        public override bool CloneNewInstances => true;
+        protected override bool CloneNewInstances => true;
         public override bool InstancePerEntity => true;
         internal int shrapnelCount = 0;
         internal int shrapnelTime = 0;
@@ -46,33 +47,33 @@ namespace Origins.NPCs {
                     damage += proj.damage * 0.95f;
                     proj.Kill();
                 }
-                Projectile.NewProjectile(npc.Center, Vector2.Zero, ModContent.ProjectileType<Defiled_Spike_Explosion>(), (int)damage, 0, proj.owner, 7);
+                Projectile.NewProjectile(proj.GetSource_FromThis(), npc.Center, Vector2.Zero, ModContent.ProjectileType<Defiled_Spike_Explosion>(), (int)damage, 0, proj.owner, 7);
                 globalNPC.infusionSpikes.Clear();
             }
 
         }
-        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor) {
+        public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
             if(rasterizedTime > 0) {
 			    spriteBatch.End();
-	            Origins.rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTime);
+	            Origins.rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
 	            Origins.rasterizeShader.Shader.Parameters["uOffset"].SetValue(npc.velocity.WithMaxLength(4) * 0.0625f * rasterizedTime);
 	            Origins.rasterizeShader.Shader.Parameters["uWorldPosition"].SetValue(npc.position);
-                Origins.rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(Main.npcTexture[npc.type].Width, Main.npcTexture[npc.type].Height, 0));
+                Origins.rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(TextureAssets.Npc[npc.type].Value.Width, TextureAssets.Npc[npc.type].Value.Height, 0));
                 Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;
 			    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, Origins.rasterizeShader.Shader, Main.GameViewMatrix.ZoomMatrix);
                 return true;
             }
             if(npc.HasBuff(Solvent_Debuff.ID)) {
 			    spriteBatch.End();
-	            Origins.solventShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTime);
-                Origins.solventShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(npc.frame.Y,npc.frame.Height,Main.npcTexture[npc.type].Height));
+	            Origins.solventShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
+                Origins.solventShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(npc.frame.Y,npc.frame.Height,TextureAssets.Npc[npc.type].Value.Height));
                 Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;
 			    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, Origins.solventShader.Shader, Main.GameViewMatrix.ZoomMatrix);
                 return true;
             }
             return true;
         }
-        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Color drawColor) {
+        public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
             if(npc.HasBuff(Solvent_Debuff.ID) || rasterizedTime > 0) {
 			    spriteBatch.End();
 			    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, null, Main.Transform);
