@@ -132,23 +132,21 @@ namespace Origins.Items.Weapons.Explosives {
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
         }
-        public override void PostDraw(Color lightColor){
-			spriteBatch.End();
-			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-			float percent = Clamp((totalDur-Projectile.timeLeft) / (float)growDur,0,1);
+        public override void PostDraw(Color lightColor) {
+            Main.spriteBatch.Restart(SpriteSortMode.Immediate);
+            float percent = Clamp((totalDur-Projectile.timeLeft) / (float)growDur,0,1);
             float scale = 0;
             if(Projectile.timeLeft<collapseDur) {
                 scale = (collapseDur-Projectile.timeLeft)/(collapseDur/2f);
             }
-			DrawData data = new DrawData(Origins.instance.GetTexture("Projectiles/Pixel"), Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 1, 1), new Color(0,0,0,255), 0, new Vector2(0.5f, 0.5f), new Vector2(160,160)*(Projectile.scale-scale), SpriteEffects.None, 0);
+			DrawData data = new DrawData(Mod.Assets.Request<Texture2D>("Projectiles/Pixel").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 1, 1), new Color(0,0,0,255), 0, new Vector2(0.5f, 0.5f), new Vector2(160,160)*(Projectile.scale-scale), SpriteEffects.None, 0);
             Origins.blackHoleShade.UseOpacity(0.985f);
             Origins.blackHoleShade.UseSaturation(3f+percent);
             Origins.blackHoleShade.UseColor(0,0,0);
             Origins.blackHoleShade.Shader.Parameters["uScale"].SetValue(0.5f);
             Origins.blackHoleShade.Apply(data);
-			data.Draw(spriteBatch);
-			spriteBatch.End();
-			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, null, Main.Transform);
+            Main.EntitySpriteDraw(data);
+            Main.spriteBatch.Restart();
         }
     }
 }

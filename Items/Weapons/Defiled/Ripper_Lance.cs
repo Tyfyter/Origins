@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Runtime.CompilerServices;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,14 +14,14 @@ namespace Origins.Items.Weapons.Defiled {
 		}
 		public override void SetDefaults() {
 			Item.damage = 24;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
             Item.noMelee = true;
             Item.noUseGraphic = true;
 			Item.width = 52;
 			Item.height = 56;
 			Item.useTime = 32;
 			Item.useAnimation = 32;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
             Item.shoot = ModContent.ProjectileType<Ripper_Lance_P>();
             Item.shootSpeed = 3.75f;
@@ -29,8 +30,8 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(-0.5f*player.direction), type, damage, knockBack, player.whoAmI);
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+		    Projectile.NewProjectile(source, position, velocity.RotatedBy(-0.5f*player.direction), type, damage, knockback, player.whoAmI);
             return false;
         }
 	}
@@ -96,7 +97,7 @@ namespace Origins.Items.Weapons.Defiled {
             }
         }
         public override bool PreDraw(ref Color lightColor){
-            spriteBatch.Draw(Mod.GetTexture("Items/Weapons/Defiled/Ripper_Lance_P"), Projectile.Center - Main.screenPosition + Projectile.velocity*3, new Rectangle(0, 0, 80, 84), lightColor, Projectile.rotation, new Vector2(40+40*Projectile.spriteDirection,0), Projectile.scale, Projectile.spriteDirection>0?SpriteEffects.None:SpriteEffects.FlipHorizontally, 0f);
+            Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Items/Weapons/Defiled/Ripper_Lance_P").Value, Projectile.Center - Main.screenPosition + Projectile.velocity*3, new Rectangle(0, 0, 80, 84), lightColor, Projectile.rotation, new Vector2(40+40*Projectile.spriteDirection,0), Projectile.scale, Projectile.spriteDirection>0?SpriteEffects.None:SpriteEffects.FlipHorizontally, 0);
             return false;
         }
     }

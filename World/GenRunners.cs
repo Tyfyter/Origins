@@ -89,18 +89,18 @@ namespace Origins.World {
                         if(Main.tile[k, l].TileType == type) {
                             continue;
                         }
-                        if(Main.tile[k, l].liquid != 0) {
+                        if(Main.tile[k, l].LiquidAmount != 0) {
 					        Tile tile = Main.tile[k, l];
 						    tile.TileType = (ushort)type;
 					        tile.HasTile = true;
-					        tile.liquid = 0;
-					        tile.lava/* Suggestion: LiquidType = ... */(lava: false);
+					        tile.LiquidAmount = 0;
+							tile.LiquidType = 1;
                             //WorldGen.paintTile(k, l, 29);
                             Main.tile[k+1, l].Slope = 0;
                             Main.tile[k-1, l].Slope = 0;
         if(l<Main.maxTilesY)Main.tile[k, l+1].Slope = 0;
                             Main.tile[k, l-1].Slope = 0;
-                            if(Main.tile[k, l-1].liquid != 0)continue;
+                            if(Main.tile[k, l-1].LiquidAmount != 0)continue;
                             spike = new Point(k,l);
                             continue;
                         }
@@ -285,8 +285,8 @@ namespace Origins.World {
 					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
 							tile.TileType = (ushort)type;
 					        Main.tile[l, k].HasTile = true;
-					        Main.tile[l, k].liquid = 0;
-					        Main.tile[l, k].lava/* Suggestion: LiquidType = ... */(lava: false);
+					        Main.tile[l, k].LiquidAmount = 0;
+					        Main.tile[l, k].LiquidType = 1;
                             WorldGen.SquareTileFrame(l,k);
                             if(l>X1) {
                                 X1 = l;

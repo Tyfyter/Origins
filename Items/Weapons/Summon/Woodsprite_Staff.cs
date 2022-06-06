@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Summon {
             Item.height = 32;
             Item.useTime = 36;
             Item.useAnimation = 36;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.value = Item.buyPrice(0, 30, 0, 0);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item44;

@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Riven {
             Item.shoot = ModContent.ProjectileType<Seam_Beam_Beam>();
             Item.shootSpeed = 0f;
             Item.useTime = Item.useAnimation = 20;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.noUseGraphic = false;
             Item.noMelee = true;
             Item.shootSpeed = 1;
@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Riven {
             Item.height = 10;
             Item.value = 10000;
             Item.rare = ItemRarityID.Pink;
-            Item.UseSound = new LegacySoundStyle(SoundID.Item, Origins.Sounds.EnergyRipple);
+            Item.UseSound = Origins.Sounds.EnergyRipple;
             Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
@@ -50,12 +50,12 @@ namespace Origins.Items.Weapons.Riven {
     }
     public class Seam_Beam_Beam : ModProjectile {
         public override string Texture => "Origins/Projectiles/Weapons/Seam_Beam_Mid";
-        public static Texture2D startTexture { get; private set; }
-        public static Texture2D endTexture { get; private set; }
+        public static AutoCastingAsset<Texture2D> StartTexture { get; private set; }
+        public static AutoCastingAsset<Texture2D> EndTexture { get; private set; }
         Vector2 velocity;
-        internal void Unload() {
-            startTexture = null;
-            endTexture = null;
+        public override void Unload() {
+            StartTexture = null;
+            EndTexture = null;
         }
         private Vector2 _targetPos;         //Ending position of the laser beam
         public override void SetDefaults() {
@@ -72,8 +72,8 @@ namespace Origins.Items.Weapons.Riven {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Seam Beam");
             if (!Main.dedServ) {
-                startTexture = Mod.GetTexture("Projectiles/Weapons/Seam_Beam_Start");
-                endTexture = Mod.GetTexture("Projectiles/Weapons/Seam_Beam_End");
+                StartTexture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Seam_Beam_Start");
+                EndTexture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Seam_Beam_End");
             }
 		}
 
@@ -86,7 +86,7 @@ namespace Origins.Items.Weapons.Riven {
         public override bool PreDraw(ref Color lightColor) {
             Vector2 unit = velocity;//_targetPos - projectile.Center;
             unit.Normalize();
-            DrawLaser(spriteBatch, Projectile.Center, unit, 1, new Vector2(1f,0.55f), maxDist:(_targetPos-Projectile.Center).Length());
+            DrawLaser(Main.spriteBatch, Projectile.Center, unit, 1, new Vector2(1f,0.55f), maxDist:(_targetPos-Projectile.Center).Length());
             return false;
 
         }
@@ -110,7 +110,7 @@ namespace Origins.Items.Weapons.Riven {
             DrawData data;
             int dustTimer = 48;
             Texture2D midTexture = TextureAssets.Projectile[Projectile.type].Value;
-            Texture2D texture = startTexture;
+            Texture2D texture = StartTexture;
             System.Collections.Generic.Queue<DrawData> drawDatas = new System.Collections.Generic.Queue<DrawData>() { };
             for (float i = 0; i <= maxDist; i += step){
                 if((i*l)>maxl)break;
@@ -123,7 +123,7 @@ namespace Origins.Items.Weapons.Riven {
                 if(i==16) {
                     texture = midTexture;
                 } else if(maxl-(i*l)==16) {
-                    texture = endTexture;
+                    texture = EndTexture;
                 }
                 //*/
                 /*spriteBatch.Draw(texture, origin - Main.screenPosition,
@@ -149,7 +149,7 @@ namespace Origins.Items.Weapons.Riven {
             while(drawDatas.Count>0){
                 drawData = drawDatas.Dequeue();
                 if(drawDatas.Count<16) {
-                    drawData.texture = endTexture;
+                    drawData.texture = EndTexture;
                     drawData.sourceRect = new Rectangle(++di, Projectile.frame * 24, 1, 24);
                 }
                 drawData.Draw(spriteBatch);

@@ -22,6 +22,7 @@ namespace Origins.Items.Weapons.Other {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Gravaulter");
             Tooltip.SetDefault("");
+            ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.MeteorStaff);
@@ -31,7 +32,7 @@ namespace Origins.Items.Weapons.Other {
             Item.noMelee = true;
             Item.width = 58;
             Item.height = 58;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.useTime = 12;
             Item.useAnimation = 12;
             Item.knockBack = 9.5f;
@@ -97,7 +98,7 @@ namespace Origins.Items.Weapons.Other {
     public class Gravaulter_P : ModProjectile {
         public override string Texture => "Origins/Projectiles/Pixel";
         public static int ID { get; private set; }
-        public static Texture2D[] RockTextures { get; private set; }
+        public static AutoCastingAsset<Texture2D>[] RockTextures { get; private set; }
         List<Rock> rocks = new List<Rock>();
         public override void Unload() {
             RockTextures = null;
@@ -106,10 +107,10 @@ namespace Origins.Items.Weapons.Other {
             DisplayName.SetDefault("Gravaulter");
             ID = Projectile.type;
             if (!Main.dedServ) {
-                RockTextures = new Texture2D[]{
-                    Mod.GetTexture("Items/Weapons/Other/Gravaulter_P"),
-                    Mod.GetTexture("Items/Weapons/Other/Gravaulter_P2"),
-                    Mod.GetTexture("Items/Weapons/Other/Gravaulter_P3")
+                RockTextures = new AutoCastingAsset<Texture2D>[]{
+                    Mod.Assets.Request<Texture2D>("Items/Weapons/Other/Gravaulter_P"),
+                    Mod.Assets.Request<Texture2D>("Items/Weapons/Other/Gravaulter_P2"),
+                    Mod.Assets.Request<Texture2D>("Items/Weapons/Other/Gravaulter_P3")
                 };
             }
         }
@@ -152,7 +153,7 @@ namespace Origins.Items.Weapons.Other {
                         spawnPosition.R = dist;
                         rocks.Add(new Rock(spawnPosition));
                         Vector2 soundPosition = Projectile.Center + (Vector2)spawnPosition;
-                        SoundEngine.PlaySound(SoundID.Item, (int)soundPosition.X, (int)soundPosition.Y, 28, 1, -0.3f);
+                        SoundEngine.PlaySound(SoundID.Item28.WithPitch(-0.3f), soundPosition);
                     }
                 }
                 Rock rock;
@@ -247,7 +248,7 @@ namespace Origins.Items.Weapons.Other {
             for (int i = 0; i < rocks.Count; i++) {
                 rock = rocks[i];
                 texture = RockTextures[rock.type];
-                spriteBatch.Draw(
+                Main.EntitySpriteDraw(
                     texture,
                     center + (Vector2)rock.offset,
                     null,
@@ -313,7 +314,7 @@ namespace Origins.Items.Weapons.Other {
         public override bool OnTileCollide(Vector2 oldVelocity) {
             if (Projectile.velocity.Length() < oldVelocity.Length()*0.2f) {
                 Projectile.velocity = oldVelocity;
-                SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 89, 0.5f);
+                SoundEngine.PlaySound(SoundID.Item89.WithVolume(0.5f), Projectile.Center);
                 return true;
             }
             if (Projectile.velocity.X == 0) {
@@ -327,7 +328,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override bool PreDraw(ref Color lightColor) {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            spriteBatch.Draw(
+            Main.EntitySpriteDraw(
                 texture,
                 Projectile.Center - Main.screenPosition,
                 null,

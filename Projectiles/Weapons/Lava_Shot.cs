@@ -53,7 +53,7 @@ namespace Origins.Projectiles.Weapons {
 			}
             if (Projectile.wet) {
                 Projectile.timeLeft--;
-                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, 34);
+                Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.BreatheBubble);
             }
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {

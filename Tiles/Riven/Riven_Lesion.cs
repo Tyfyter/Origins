@@ -16,12 +16,12 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins.Tiles.Riven {
     public class Riven_Lesion : ModTile, IGlowingModTile {
-        public Texture2D GlowTexture { get; private set; }
+        public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
         public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
         public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-                GlowTexture = Mod.GetTexture("Tiles/Riven/Riven_Lesion_Glow");
+                GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Lesion_Glow");
             }
 			Main.tileSpelunker[Type] = true;
 			Main.tileShine2[Type] = true;
@@ -41,8 +41,8 @@ namespace Origins.Tiles.Riven {
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Riven Lesion");
             AddMapEntry(new Color(217, 95, 54), name);
-			adjTiles = new int[] { TileID.ShadowOrbs };
-            soundType = SoundID.NPCKilled;
+			AdjTiles = new int[] { TileID.ShadowOrbs };
+            //soundType = SoundID.NPCKilled;
         }
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
             if (noBreak) {

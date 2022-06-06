@@ -70,7 +70,7 @@ namespace Origins {
             brineTiles = 0;
         }
 
-		public override void TileCountsAvailable(int[] tileCounts) {
+		public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts) {
 			voidTiles = tileCounts[ModContent.TileType<Dusk_Stone>()];
 
 			defiledTiles = tileCounts[ModContent.TileType<Defiled_Stone>()]+tileCounts[ModContent.TileType<Defiled_Grass>()]+tileCounts[ModContent.TileType<Defiled_Sand>()]+tileCounts[ModContent.TileType<Defiled_Ice>()];

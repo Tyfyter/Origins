@@ -16,11 +16,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins.Tiles.Riven {
     public class Riven_Dungeon_Chest : ModChest, IGlowingModTile {
-        public Texture2D GlowTexture { get; private set; }
+        public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
         public Color GlowColor => Color.White;
         public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-                GlowTexture = Mod.GetTexture("Tiles/Riven/Riven_Dungeon_Chest_Glow");
+                GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Dungeon_Chest_Glow");
             }
             base.SetStaticDefaults();
 			ModTranslation name = CreateMapEntryName();
@@ -29,10 +29,10 @@ namespace Origins.Tiles.Riven {
 			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
 			name.SetDefault("Locked Riven Chest");
 			AddMapEntry(new Color(140, 140, 140), name, MapChestName);
-			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.Containers };
-			chest = "Riven Chest";
-			chestDrop = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
+			//disableSmartCursor = true;
+			AdjTiles = new int[] { TileID.Containers };
+            ContainerName.SetDefault("Riven Chest");
+			ChestDrop = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
             keyItem = ModContent.ItemType<Riven_Key>();
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {

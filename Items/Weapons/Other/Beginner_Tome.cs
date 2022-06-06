@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Other {
             Projectile.extraUpdates = 1;
         }
         public override void AI() {
-	        Dust dust = Main.dust[Terraria.Dust.NewDust(Projectile.Center, 0, 0, 90, 0f, 0f, 0, new Color(255,0,0), 1f)];
+	        Dust dust = Main.dust[Terraria.Dust.NewDust(Projectile.Center, 0, 0, DustID.GemRuby, 0f, 0f, 0, new Color(255,0,0), 1f)];
 	        dust.noGravity = true;
 	        dust.velocity/=2;
         }

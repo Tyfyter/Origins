@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Other {
             Item.noMelee = false;
             Item.width = 58;
             Item.height = 58;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = 18;
             Item.useAnimation = 18;
             Item.knockBack = 9.5f;
@@ -100,12 +100,12 @@ namespace Origins.Items.Weapons.Other {
                 }
 				float offsetX = Projectile.oldVelocity.X * (30f / i);
 				float offsetY = Projectile.oldVelocity.Y * (30f / i);
-				int dustIndex = Dust.NewDust(new Vector2(Projectile.oldPosition.X - offsetX, Projectile.oldPosition.Y - offsetY), 8, 8, 111, Projectile.oldVelocity.X, Projectile.oldVelocity.Y, 100, default(Color), 1.8f);
+				int dustIndex = Dust.NewDust(new Vector2(Projectile.oldPosition.X - offsetX, Projectile.oldPosition.Y - offsetY), 8, 8, DustID.Clentaminator_Cyan, Projectile.oldVelocity.X, Projectile.oldVelocity.Y, 100, default(Color), 1.8f);
 				Main.dust[dustIndex].noGravity = true;
 				Dust dust1 = Main.dust[dustIndex];
 				Dust dust2 = dust1;
 				dust2.velocity *= 0.5f;
-				dustIndex = Dust.NewDust(new Vector2(Projectile.oldPosition.X - offsetX, Projectile.oldPosition.Y - offsetY), 8, 8, 111, Projectile.oldVelocity.X, Projectile.oldVelocity.Y, 100, default(Color), 1.4f);
+				dustIndex = Dust.NewDust(new Vector2(Projectile.oldPosition.X - offsetX, Projectile.oldPosition.Y - offsetY), 8, 8, DustID.Clentaminator_Cyan, Projectile.oldVelocity.X, Projectile.oldVelocity.Y, 100, default(Color), 1.4f);
 				dust1 = Main.dust[dustIndex];
 				dust2 = dust1;
 				dust2.velocity *= 0.05f;

@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             Item.height = 36;
             Item.useTime = 10;
             Item.useAnimation = 10;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 1;
             Item.value = 500000;
             Item.shootSpeed = 14;
@@ -79,11 +79,11 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                 p.localNPCHitCooldown = 10;
                 p.usesLocalNPCImmunity = true;
             }
-            PlaySound("DeepBoom", position, 0.15f, Pitch:1f);
+            SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitch(1f).WithVolume(0.15f), position);
             if(charge >= 40) {
                 Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<Tolruk_Bolt>(), damage*3, knockback, player.whoAmI);
                 charge = 0;
-                PlaySound("DeepBoom", position, 2);
+                SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(2), position);
                 SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(3), position);
             } else charge+=4;
             return false;
@@ -132,7 +132,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             }
             Vector2 dir = Main.rand.NextVector2Unit();
             oldPos[0] = (Projectile.Center+dir*3, dir);
-            Texture2D texture = Mod.GetTexture("Projectiles/Pixel");
+            Texture2D texture = Mod.Assets.Request<Texture>("Projectiles/Pixel").Value;
             Vector2 displ = Vector2.Zero;
             for(int i = l; --i>0;) {
                 if(oldPos[i].Item1.HasValue) {

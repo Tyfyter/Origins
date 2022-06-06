@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 			Item.height = 42;
 			Item.useTime = 48;
 			Item.useAnimation = 16;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 9;
 			Item.value = 5000;
 			Item.autoReuse = true;
@@ -66,7 +66,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             if(player.altFunctionUse == 2) {
 			    //item.useTime = 1;
 			    //item.useAnimation = 16;
-			    Item.useStyle = 5;
+			    Item.useStyle = ItemUseStyleID.Shoot;
 			    //item.knockBack = 19;
                 Item.shoot = ModContent.ProjectileType<Felnum_Broadsword_Stab>();
                 Item.shootSpeed = 3.4f;
@@ -76,7 +76,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             } else {
 			    //item.useTime = 16;
 			    //item.useAnimation = 16;
-			    Item.useStyle = 1;
+			    Item.useStyle = ItemUseStyleID.Swing;
 			    //item.knockBack = 9;
                 Item.shoot = ModContent.ProjectileType<Felnum_Broadsword_Shard>();
                 Item.shootSpeed = 6.5f;
@@ -388,14 +388,14 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         }
         public override bool PreDraw(ref Color lightColor) {
             if(noGrow) {
-                spriteBatch.Draw(Mod.GetTexture("Items/Weapons/Felnum/Tier2/Felnum_Broadsword_B"), (Projectile.Center - Projectile.velocity*2) - Main.screenPosition, new Rectangle(0, 0, 40, 40), lightColor, Projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0f);
+                Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Items/Weapons/Felnum/Tier2/Felnum_Broadsword_B").Value, (Projectile.Center - Projectile.velocity*2) - Main.screenPosition, new Rectangle(0, 0, 40, 40), lightColor, Projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0);
                 return false;
             }
-            Texture2D texture = Mod.GetTexture("Items/Weapons/Felnum/Tier2/Felnum_Broadsword");
             if(Main.player[Projectile.owner].HeldItem.ModItem is Felnum_Broadsword sword) {
+                Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Weapons/Felnum/Tier2/Felnum_Broadsword").Value;
                 Rectangle frame = sword.Animation.GetFrame(texture);
                 if(sword.frame>0)sword.frame--;
-                spriteBatch.Draw(texture, (Projectile.Center - Projectile.velocity*2) - Main.screenPosition, frame, lightColor, Projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0f);
+                Main.EntitySpriteDraw(texture, (Projectile.Center - Projectile.velocity*2) - Main.screenPosition, frame, lightColor, Projectile.rotation, new Vector2(20, 20), 1f, SpriteEffects.None, 0);
                 return false;
             }
             return true;

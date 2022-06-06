@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Runtime.CompilerServices;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -19,14 +20,14 @@ namespace Origins.Items.Weapons.Defiled {
 		}
 		public override void SetDefaults() {
 			Item.damage = 45;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
             Item.noMelee = true;
             Item.noUseGraphic = true;
 			Item.width = 30;
 			Item.height = 36;
 			Item.useTime = 17;
 			Item.useAnimation = 17;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
             Item.shoot = ModContent.ProjectileType<Knee_Slapper_P>();
 			Item.shootSpeed = 16f;
@@ -45,8 +46,8 @@ namespace Origins.Items.Weapons.Defiled {
 			}
 			return -1;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Projectile proj = Projectile.NewProjectileDirect(position, Vector2.Zero, type, damage, knockBack, player.whoAmI, player.itemAnimationMax, new Vector2(speedX, speedY).ToRotation());
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			Projectile proj = Projectile.NewProjectileDirect(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI, player.itemAnimationMax, velocity.ToRotation());
 			proj.scale = Item.scale;
 			return false;
 		}
@@ -60,7 +61,7 @@ namespace Origins.Items.Weapons.Defiled {
 			DisplayName.SetDefault("Knee Slapper");
 		}
 		public override void SetDefaults() {
-			Projectile.melee = true;
+			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.timeLeft = 40;
@@ -144,7 +145,7 @@ namespace Origins.Items.Weapons.Defiled {
 			Vector2 basePosition = owner.MountedCenter;
 			PolarVec2 position = GetSwingStartOffset;
 			Vector2 lastPosition = basePosition;
-			Texture2D texture = ModContent.GetTexture("Origins/Items/Weapons/Defiled/Knee_Slapper_Body");
+			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Weapons/Defiled/Knee_Slapper_Body").Value;
 			PolarVec2 diff = default;
 			for (int i = 0; i < nodes.Count - 1; i++) {
 				PolarVec2 vec = nodes[i];
@@ -153,8 +154,8 @@ namespace Origins.Items.Weapons.Defiled {
 				//Dust.NewDustPerfect(lastPosition, 6, Vector2.Zero).noGravity = true;
 				diff = (PolarVec2)(basePosition + (Vector2)position - lastPosition);
 				if (i == 0) {
-					spriteBatch.Draw(
-						ModContent.GetTexture("Origins/Items/Weapons/Defiled/Knee_Slapper_Tail"),
+					Main.EntitySpriteDraw(
+						Mod.Assets.Request<Texture2D>("Items/Weapons/Defiled/Knee_Slapper_Tail").Value,
 						lastPosition - Main.screenPosition,
 						null,
 						new Color(Lighting.GetSubLight(lastPosition)),
@@ -164,7 +165,7 @@ namespace Origins.Items.Weapons.Defiled {
 						SpriteEffects.None,
 						0);
 				} else {
-					spriteBatch.Draw(
+					Main.EntitySpriteDraw(
 						texture,
 						lastPosition - Main.screenPosition,
 						null,
@@ -178,8 +179,8 @@ namespace Origins.Items.Weapons.Defiled {
 				lastPosition = basePosition + (Vector2)position;
 			}
 
-			spriteBatch.Draw(
-				ModContent.GetTexture("Origins/Items/Weapons/Defiled/Knee_Slapper_Head"),
+			Main.EntitySpriteDraw(
+				Mod.Assets.Request<Texture2D>("Items/Weapons/Defiled/Knee_Slapper_Head").Value,
 				lastPosition - Main.screenPosition,
 				null,
 				new Color(Lighting.GetSubLight(lastPosition)),

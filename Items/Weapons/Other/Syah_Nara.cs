@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Other {
             Item.noMelee = false;
             Item.width = 46;
             Item.height = 52;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = 19;
             Item.useAnimation = 19;
             Item.knockBack = 9.5f;
@@ -179,7 +179,7 @@ namespace Origins.Items.Weapons.Other {
             float a = (GetRotationCurrent(drawPlayer) * m) + MathHelper.PiOver4 + angle;
             float rot = reverseRot ? 0 : -MathHelper.PiOver4;
             value = new DrawData(itemTexture, drawPlayer.MountedCenter-Main.screenPosition+new Vector2(8,0).RotatedBy(a), new Rectangle(0, 0, 46, 52), new Color(lightColor), a+rot, origin, item.scale, spriteEffects, 1);
-            Main.playerDrawData.Add(value);
+            drawInfo.DrawDataCache.Add(value);
         }
     }*/
 }

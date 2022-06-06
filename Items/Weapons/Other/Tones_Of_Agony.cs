@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Other {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 40;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
 			Item.width = 28;
 			Item.height = 30;
@@ -41,23 +41,23 @@ namespace Origins.Items.Weapons.Other {
         }
         public override void AI() {
             Projectile.rotation = Projectile.velocity.ToRotation()+MathHelper.Pi/2;
-            Dust.NewDust(Projectile.Center, 0, 0, 0, Scale:0.4f);
+            Dust.NewDust(Projectile.Center, 0, 0, DustID.Dirt, Scale:0.4f);
         }
         public override void Kill(int timeLeft) {
-            Dust.NewDust(Projectile.position, 10, 10, 0, Scale:0.6f);
-            Dust.NewDust(Projectile.position, 10, 10, 0, Scale:0.6f);
-            Dust.NewDust(Projectile.position, 10, 10, 0, Scale:0.6f);
+            Dust.NewDust(Projectile.position, 10, 10, DustID.Dirt, Scale:0.6f);
+            Dust.NewDust(Projectile.position, 10, 10, DustID.Dirt, Scale:0.6f);
+            Dust.NewDust(Projectile.position, 10, 10, DustID.Dirt, Scale:0.6f);
             SoundEngine.PlaySound(SoundID.Dig, Projectile.position);
         }
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI){
-            if(Projectile.hide)drawCacheProjsBehindNPCsAndTiles.Add(index);
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+		    if(Projectile.hide) behindNPCsAndTiles.Add(index);
         }
         public override void ModifyDamageHitbox(ref Rectangle hitbox) {
             hitbox.X+=(int)Projectile.velocity.X;
             hitbox.Y+=(int)Projectile.velocity.Y;
         }
         public override bool PreDraw(ref Color lightColor) {
-            spriteBatch.Draw(Mod.GetTexture("Items/Weapons/Other/Agony_Shard"), (Projectile.Center+Projectile.velocity) - Main.screenPosition, new Rectangle(0,0,10,14), lightColor, Projectile.rotation, new Vector2(5, 7), 1f, SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Items/Weapons/Other/Agony_Shard").Value, (Projectile.Center+Projectile.velocity) - Main.screenPosition, new Rectangle(0,0,10,14), lightColor, Projectile.rotation, new Vector2(5, 7), 1f, SpriteEffects.None, 0);
             return true;
         }
     }

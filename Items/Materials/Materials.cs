@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -83,6 +84,7 @@ namespace Origins.Items.Materials {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Peat Moss");
             Tooltip.SetDefault("The demolitionist might find this interesting");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;

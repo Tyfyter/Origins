@@ -12,14 +12,14 @@ namespace Origins.Items.Weapons.Fiberglass {
 		}
 		public override void SetDefaults() {
 			Item.damage = 18;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
             Item.noMelee = true;
             Item.noUseGraphic = true;
 			Item.width = 24;
 			Item.height = 26;
 			Item.useTime = 14;
 			Item.useAnimation = 14;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Rapier;
 			Item.knockBack = 6;
 			Item.value = 5000;
 			Item.autoReuse = true;
@@ -76,7 +76,7 @@ namespace Origins.Items.Weapons.Fiberglass {
 			}
 		}
         public override bool PreDraw(ref Color lightColor){
-            spriteBatch.Draw(Mod.GetTexture("Items/Weapons/Fiberglass/Broken_Fiberglass_Sword"), (Projectile.Center - Projectile.velocity*2) - Main.screenPosition, new Rectangle(0, 0, 24, 26), lightColor, Projectile.rotation, new Vector2(12,13), 1f, SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Items/Weapons/Fiberglass/Broken_Fiberglass_Sword").Value, (Projectile.Center - Projectile.velocity*2) - Main.screenPosition, new Rectangle(0, 0, 24, 26), lightColor, Projectile.rotation, new Vector2(12,13), 1f, SpriteEffects.None, 0);
             return false;
         }
     }

@@ -92,7 +92,7 @@ namespace Origins.Items.Weapons.Felnum {
             }
             List<Vector2> positions = oldPos.Where(i=>i.Item1.HasValue).Select(i=>i.Item1.Value-Main.screenPosition).ToList();
             positions.Insert(0, Projectile.Center-Main.screenPosition);
-            spriteBatch.DrawLightningArc(
+            Main.spriteBatch.DrawLightningArc(
                 positions.ToArray(),
                 null,
                 1f,

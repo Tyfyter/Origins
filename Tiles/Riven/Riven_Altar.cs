@@ -18,13 +18,13 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Tiles.Riven {
     public class Riven_Altar : ModTile, IGlowingModTile {
-		public Texture2D GlowTexture { get; private set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
-				GlowTexture = Mod.GetTexture("Tiles/Riven/Riven_Altar_Glow");
+				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Altar_Glow");
 			}
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
@@ -36,8 +36,8 @@ namespace Origins.Tiles.Riven {
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Riven Altar");
 			AddMapEntry(new Color(182, 136, 69), name);
-			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.DemonAltar };
+			//disableSmartCursor = true;
+			AdjTiles = new int[] { TileID.DemonAltar };
             ID = Type;
 		}
 

@@ -12,12 +12,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
     public class Infested_Ore : OriginTile, IGlowingModTile, IComplexMineDamageTile {
-        public Texture2D GlowTexture { get; private set; }
+        public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
         public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly)+2)*0.5f;
         public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-                GlowTexture = Mod.GetTexture("Tiles/Riven/Infested_Ore_Glow");
+                GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Infested_Ore_Glow");
             }
             Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -36,7 +36,7 @@ namespace Origins.Tiles.Riven {
         }
         public void MinePower(int i, int j, int minePower, ref int damage) {
             if (minePower >= 55 || j <= Main.worldSurface) {
-                damage += (int)(minePower / mineResist);
+                damage += (int)(minePower / MineResist);
             }
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {

@@ -22,6 +22,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Effects;
@@ -56,9 +57,9 @@ namespace Origins {
         public static int RiftHeadArmorID { get; private set; }
         public static int RiftBodyArmorID { get; private set; }
         public static int RiftLegsArmorID { get; private set; }
-        public static Dictionary<int, Texture2D> HelmetGlowMasks { get; private set; }
-        public static Dictionary<int, Texture2D> BreastplateGlowMasks { get; private set; }
-        public static Dictionary<int, Texture2D> LeggingGlowMasks { get; private set; }
+        public static Dictionary<int, AutoCastingAsset<Texture2D>> HelmetGlowMasks { get; private set; }
+        public static Dictionary<int, AutoCastingAsset<Texture2D>> BreastplateGlowMasks { get; private set; }
+        public static Dictionary<int, AutoCastingAsset<Texture2D>> LeggingGlowMasks { get; private set; }
 
         #endregion Armor IDs
         public static int[] celestineBoosters;
@@ -67,9 +68,9 @@ namespace Origins {
         public static MiscShaderData blackHoleShade;
         public static MiscShaderData solventShader;
         public static MiscShaderData rasterizeShader;
-        public static Texture2D cellNoiseTexture;
-        public static Texture2D eyndumCoreUITexture;
-        public static Texture2D eyndumCoreTexture;
+        public static AutoCastingAsset<Texture2D> cellNoiseTexture;
+        public static AutoCastingAsset<Texture2D> eyndumCoreUITexture;
+        public static AutoCastingAsset<Texture2D> eyndumCoreTexture;
 
         public UserInterface setBonusUI;
         public Origins() {
@@ -281,34 +282,34 @@ namespace Origins {
                 (ushort)ItemID.ChlorophyteWarhammer, Elements.Earth);
             #endregion earth
             #endregion vanilla weapon elements
-            HelmetGlowMasks = new Dictionary<int, Texture2D> { };
-            BreastplateGlowMasks = new Dictionary<int, Texture2D> { };
-            LeggingGlowMasks = new Dictionary<int, Texture2D> { };
+            HelmetGlowMasks = new();
+            BreastplateGlowMasks = new();
+            LeggingGlowMasks = new();
 			if (!Main.dedServ) {
                 OriginExtensions.drawPlayerItemPos = (Func<float, int, Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float, int, Vector2>), Main.instance);
-                perlinFade0 = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/PerlinFade")), "RedFade");
+                perlinFade0 = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/PerlinFade", AssetRequestMode.ImmediateLoad).Value), "RedFade");
                 //perlinFade0.UseImage("Images/Misc/Perlin");
                 perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.6f);
                 perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.6f);
-                blackHoleShade = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/BlackHole")), "BlackHole");
+                blackHoleShade = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BlackHole", AssetRequestMode.ImmediateLoad).Value), "BlackHole");
 
-				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/BiomeShade")), "VoidShade"), EffectPriority.High);
-				Filters.Scene["Origins:ZoneDefiled"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/BiomeShade")), "DefiledShade"), EffectPriority.High);
-				Filters.Scene["Origins:ZoneRiven"] = new Filter(new ScreenShaderData(new Ref<Effect>(GetEffect("Effects/BiomeShade")), "RivenShade"), EffectPriority.High);
+				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade", AssetRequestMode.ImmediateLoad).Value), "VoidShade"), EffectPriority.High);
+				Filters.Scene["Origins:ZoneDefiled"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade", AssetRequestMode.ImmediateLoad).Value), "DefiledShade"), EffectPriority.High);
+				Filters.Scene["Origins:ZoneRiven"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade", AssetRequestMode.ImmediateLoad).Value), "RivenShade"), EffectPriority.High);
 
-                solventShader = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/Solvent")), "Dissolve");
+                solventShader = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/Solvent", AssetRequestMode.ImmediateLoad).Value), "Dissolve");
                 GameShaders.Misc["Origins:Solvent"] = solventShader;
-                cellNoiseTexture = GetTexture("Textures/Cell_Noise_Pixel");
+                cellNoiseTexture = Assets.Request<Texture2D>("Textures/Cell_Noise_Pixel");
 
-                rasterizeShader = new MiscShaderData(new Ref<Effect>(GetEffect("Effects/Rasterize")), "Rasterize");
+                rasterizeShader = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/Rasterize", AssetRequestMode.ImmediateLoad).Value), "Rasterize");
                 GameShaders.Misc["Origins:Rasterize"] = rasterizeShader;
                 //Filters.Scene["Origins:ZoneDusk"].GetShader().UseOpacity(0.35f);
                 //Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.
                 //Filters.Scene["BlackHole"] = new Filter(new ScreenShaderData(screenRef, "BlackHole"), EffectPriority.VeryHigh);
                 //Filters.Scene["BlackHole"].Load();
                 setBonusUI = new UserInterface();
-                eyndumCoreUITexture = GetTexture("UI/CoreSlot");
-                eyndumCoreTexture = GetTexture("Items/Armor/Eyndum/Eyndum_Breastplate_Body_Core");
+                eyndumCoreUITexture = Assets.Request<Texture2D>("UI/CoreSlot");
+                eyndumCoreTexture = Assets.Request<Texture2D>("Items/Armor/Eyndum/Eyndum_Breastplate_Body_Core");
 				if (OriginClientConfig.Instance.SetBonusDoubleTap) {
                     On.Terraria.Player.KeyDoubleTap += (On.Terraria.Player.orig_KeyDoubleTap orig, Player self, int keyDir) => {
                         orig(self, keyDir);
@@ -319,9 +320,10 @@ namespace Origins {
 				}
             }
             SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
-            Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
-            Sounds.HeavyCannon = AddSound("Sounds/Custom/HeavyCannon", SoundType.Item);
-            Sounds.EnergyRipple = AddSound("Sounds/Custom/EnergyRipple", SoundType.Item);
+            Sounds.Krunch = new SoundStyle("Origins/Sounds/Custom/BurstCannon", SoundType.Sound);
+            Sounds.HeavyCannon = new SoundStyle("Origins/Sounds/Custom/HeavyCannon", SoundType.Sound);
+            Sounds.EnergyRipple = new SoundStyle("Origins/Sounds/Custom/EnergyRipple", SoundType.Sound);
+            Sounds.DeepBoom = new SoundStyle("Origins/Sounds/Custom/DeepBoom", SoundType.Sound);
             //OriginExtensions.initClone();
             Music.Dusk = MusicID.Eerie;
             Music.Defiled = MusicID.Corruption;
@@ -358,7 +360,7 @@ namespace Origins {
 				}
                 return orig(x, y, type, style, dir, out objectData, onlyCheck, checkStay);
             };
-            Tiles.Defiled.Defiled_Tree.Load();
+            Defiled_Tree.Load();
             OriginWorld worldInstance = ModContent.GetInstance<OriginWorld>();
             if(!(worldInstance is null)) {
                 worldInstance.defiledResurgenceTiles = new List<(int, int)> { };
@@ -384,19 +386,17 @@ namespace Origins {
                 int rasterizedTime = drawPlayer.GetModPlayer<OriginPlayer>().rasterizedTime;
                 if (rasterizedTime > 0) {
                     shaded = true;
-                    Main.spriteBatch.End();
                     rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
                     rasterizeShader.Shader.Parameters["uOffset"].SetValue(drawPlayer.velocity.WithMaxLength(4) * 0.0625f * rasterizedTime);
                     rasterizeShader.Shader.Parameters["uWorldPosition"].SetValue(drawPlayer.position);
                     rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(40, 1120, 0));
                     Main.graphics.GraphicsDevice.Textures[1] = cellNoiseTexture;
-                    Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, rasterizeShader.Shader, Main.GameViewMatrix.ZoomMatrix);
+                    Main.spriteBatch.Restart(SpriteSortMode.Immediate, effect: rasterizeShader.Shader);
                 }
                 orig(self, drawPlayer, projectileDrawPosition, cHead);
             } finally {
                 if (shaded) {
-                    Main.spriteBatch.End();
-                    Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, null, Main.Transform);
+                    Main.spriteBatch.Restart();
                 }
             }
         }
@@ -464,7 +464,7 @@ namespace Origins {
             } else if(modTile is IComplexMineDamageTile damageTile){
                 damageTile.MinePower(Player.tileTargetX, Player.tileTargetY, minePower, ref damage);
             } else {
-                damage += ((int)(minePower / modTile.mineResist));
+                damage += ((int)(minePower / modTile.MineResist));
             }
         }
         private void WorldGen_CountTiles(On.Terraria.WorldGen.orig_CountTiles orig, int X) {
@@ -555,7 +555,6 @@ namespace Origins {
                 worldInstance.defiledResurgenceTiles = null;
                 worldInstance.defiledAltResurgenceTiles = null;
             }
-            Bomboomstick.Unload();
             setBonusUI = null;
             eyndumCoreUITexture = null;
             eyndumCoreTexture = null;
@@ -640,7 +639,7 @@ namespace Origins {
                 for (int i = 0; i < TextureAssets.GlowMask.Length; i++){
                     glowMasks[i] = TextureAssets.GlowMask[i];
                 }
-                glowMasks[glowMasks.Length - 1] = instance.GetTexture("Items/" + name);
+                glowMasks[glowMasks.Length - 1] = instance.Assets.Request<Texture2D>("Items/" + name);
                 TextureAssets.GlowMask = glowMasks;
                 return (short)(glowMasks.Length - 1);
             }
@@ -660,10 +659,6 @@ namespace Origins {
                 }
             }
             return 0;
-        }
-        public static int AddSound(string path, SoundType type = SoundType.Custom, ModSound modSound = null) {
-            instance.AddSound(type, "Origins/"+path, modSound);
-            return SoundLoader.GetSoundSlot(type, "Origins/"+path);
         }
         public override void AddRecipeGroups() {
             RecipeGroup group = new RecipeGroup(() => "Gem Staves", new int[] {
@@ -713,9 +708,10 @@ namespace Origins {
             public static int UndergroundDefiled = MusicID.UndergroundCorruption;
         }
         public static class Sounds {
-            public static int Krunch = 36;
-            public static int HeavyCannon = 36;
-            public static int EnergyRipple = 8;
+            public static SoundStyle Krunch = SoundID.Item36;
+            public static SoundStyle HeavyCannon = SoundID.Item36;
+            public static SoundStyle EnergyRipple = SoundID.Item8;
+            public static SoundStyle DeepBoom = SoundID.Item14;
         }
     }
     public sealed class NonFishItem : ModItem {

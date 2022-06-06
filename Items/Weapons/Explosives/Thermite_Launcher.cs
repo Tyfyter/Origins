@@ -82,7 +82,7 @@ namespace Origins.Items.Weapons.Explosives {
             }
         }
         public override void AI() {
-            Dust.NewDust(Projectile.Center, 0, 0, 6);
+            Dust.NewDust(Projectile.Center, 0, 0, DustID.Torch);
         }
     }
     public class Thermite_P : ModProjectile {

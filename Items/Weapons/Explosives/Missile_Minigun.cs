@@ -79,7 +79,7 @@ namespace Origins.Items.Weapons.Explosives {
                 }*/
             }
             if(dist<641) Projectile.velocity = (Projectile.velocity+new Vector2(force,0).RotatedBy(targetAngle)).SafeNormalize(Vector2.Zero)*Projectile.velocity.Length();//projectile.velocity = projectile.velocity.RotatedBy(targetOffset);//Clamp(targetOffset, -0.05f, 0.05f)
-            int num248 = Dust.NewDust(Projectile.Center - Projectile.velocity * 0.5f-new Vector2(0,4), 0, 0, 6, 0f, 0f, 100);
+            int num248 = Dust.NewDust(Projectile.Center - Projectile.velocity * 0.5f-new Vector2(0,4), 0, 0, DustID.Torch, 0f, 0f, 100);
 			Dust dust3 = Main.dust[num248];
 			dust3.scale *= 1f + Main.rand.Next(10) * 0.1f;
 			dust3.velocity *= 0.2f;

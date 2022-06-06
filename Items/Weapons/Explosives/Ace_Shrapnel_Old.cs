@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Explosives {
             Item.CloneDefaults(ItemID.ProximityMineLauncher);
 			Item.damage = 85;
 			Item.noMelee = true;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
 			Item.useTime = 28;
 			Item.useAnimation = 28;
             Item.shootSpeed/=2;
@@ -65,7 +65,7 @@ namespace Origins.Items.Weapons.Explosives {
             if(npcCDs is null)npcCDs = new sbyte[Main.maxNPCs];
         }
         public override void AI() {
-            Dust.NewDustDirect(Projectile.Center, 0, 0, 6, Scale:0.4f).noGravity = true;
+            Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.Torch, Scale:0.4f).noGravity = true;
             if(Projectile.ai[0]>0 && Projectile.timeLeft%6==0) {
                 Projectile.ai[0]--;
                 if(Projectile.velocity.Length()<1) {

@@ -111,7 +111,7 @@ namespace Origins.Items.Weapons.Felnum {
                 2);//*/
 
             //spriteBatch.Draw(mod.GetTexture("Projectiles/Pixel"), drawRect, null, Color.Aquamarine, (projectile.oldPosition - projectile.position).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
-            spriteBatch.DrawLightningArcBetween(
+            Main.spriteBatch.DrawLightningArcBetween(
                 Projectile.oldPosition - Main.screenPosition,
                 Projectile.position - Main.screenPosition,
                 Main.rand.NextFloat(-4,4));

@@ -236,6 +236,7 @@ namespace Origins {
 	    }
     }
     public struct AutoCastingAsset<T> where T : class {
+        public bool IsLoaded => asset.IsLoaded;
         public T Value => asset.Value;
 
         readonly Asset<T> asset;
@@ -865,11 +866,9 @@ namespace Origins {
                 statModifier.Base * factor
             );
 		}
-        public static void PlaySound(string Name, Vector2 Position, float Volume = 1f, float PitchVariance = 1f, float? Pitch = null){
-            if (Main.netMode==NetmodeID.Server || string.IsNullOrEmpty(Name)) return;
-            var sound = Origins.instance.GetLegacySoundSlot(SoundType.Custom, "Sounds/Custom/" + Name);
-            SoundEffectInstance SEI = SoundEngine.PlaySound(sound.WithVolume(Volume).WithPitchVariance(PitchVariance), Position);
-            if(Pitch.HasValue)SEI.Pitch = Pitch.Value;
+        public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
+            spriteBatch.End();
+            spriteBatch.Begin(sortMode, blendState ?? BlendState.AlphaBlend, samplerState ?? SamplerState.LinearClamp, DepthStencilState.None, rasterizerState ?? Main.Rasterizer, effect, transformMatrix ?? Main.GameViewMatrix.TransformationMatrix);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {
@@ -958,7 +957,7 @@ namespace Origins {
                 (int)Math.Round((end - start).Length()),
                 thickness);
 
-            spriteBatch.Draw(Origins.instance.GetTexture("Projectiles/Pixel"), drawRect, null, color, (end - start).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
+            spriteBatch.Draw(Origins.instance.Assets.Request<Texture2D>("Projectiles/Pixel").Value, drawRect, null, color, (end - start).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
         }
         public static Bitmap ToBitmap(this Texture2D tex) {
             int[] data = new int[tex.Width * tex.Height];
@@ -1307,7 +1306,7 @@ namespace Origins {
             }
         }
         public static void DrawTileGlow(this IGlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
-            if (self.GlowTexture is null) {
+            if (self.GlowTexture.Value is null) {
                 return;
             }
             Tile tile = Main.tile[i, j];

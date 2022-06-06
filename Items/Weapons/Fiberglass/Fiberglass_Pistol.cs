@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Fiberglass {
 			Item.height = 36;
 			Item.useTime = 12;
 			Item.useAnimation = 12;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 1;
 			Item.value = 5000;
 			Item.shootSpeed = 14;

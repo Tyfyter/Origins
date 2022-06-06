@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Fiberglass {
 			Item.height = 36;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 1;
 			Item.value = 5000;
 			Item.shootSpeed = 9;
@@ -72,7 +72,7 @@ namespace Origins.Items.Weapons.Fiberglass {
 			    Item.noUseGraphic = true;
                 //item.useTime = 4;//20;
                 //item.useAnimation = 4;//20;
-			    Item.useStyle = 1;
+			    Item.useStyle = ItemUseStyleID.Swing;
                 Item.shoot = ProjectileID.None;
 			    Item.UseSound = null;
                 if(strung>strungMax)strung = strungMax;

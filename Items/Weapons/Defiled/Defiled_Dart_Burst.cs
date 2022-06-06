@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Defiled {
             Item.height = 18;
             Item.useTime = 40;
             Item.useAnimation = 40;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 5;
             Item.shootSpeed = 20f;
             Item.shoot = ProjectileID.PurificationPowder;

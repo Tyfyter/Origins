@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -12,8 +14,9 @@ namespace Origins.Tiles.Riven {
 		private Mod mod => Origins.instance;
 
         public static Riven_Tree Instance { get; private set; }
+		public override TreePaintingSettings TreeShaderSettings { get; }
 
-        internal static void Load() {
+		internal static void Load() {
             Instance = new Riven_Tree();
         }
 
@@ -33,16 +36,23 @@ namespace Origins.Tiles.Riven {
 			return ModContent.ItemType<Riven_Flesh_Item>();//temporary drop type
 		}
 
-		public override Texture2D GetTexture() {
-			return mod.GetTexture("Tiles/Riven/Riven_Tree");
+		public override Asset<Texture2D> GetTexture() {
+			return mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Tree");
 		}
 
-		public override Texture2D GetTopTextures(int i, int j, ref int frame, ref int frameWidth, ref int frameHeight, ref int xOffsetLeft, ref int yOffset) {
-			return mod.GetTexture("Tiles/Riven/Riven_Tree_Tops");
+		public override void SetStaticDefaults() {
 		}
 
-		public override Texture2D GetBranchTextures(int i, int j, int trunkOffset, ref int frame) {
-			return mod.GetTexture("Tiles/Riven/Riven_Tree_Branches");
+		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
+			throw new System.NotImplementedException();
+		}
+
+		public override Asset<Texture2D> GetTopTextures() {
+			return mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Tree_Tops");
+		}
+
+		public override Asset<Texture2D> GetBranchTextures() {
+			return mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Tree_Branches");
 		}
 	}
     public class Riven_Tree_Sapling : ModTile {
@@ -79,8 +89,8 @@ namespace Origins.Tiles.Riven {
 			//AddMapEntry(new Color(200, 200, 200), treeName);
             //ModContent.GetModTile(ModContent.TileType("Defiled_Tree"));
 
-			sapling = true;
-			adjTiles = new int[] { TileID.Saplings };
+			//sapling = true;
+			AdjTiles = new int[] { TileID.Saplings };
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

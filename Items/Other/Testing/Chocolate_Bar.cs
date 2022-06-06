@@ -77,10 +77,10 @@ namespace Origins.Items.Other.Testing {
 			}
 			return false;
 		}
-		public void DrawAnimations(PlayerDrawInfo drawInfo) {
-			Texture2D upperLegTexture = Mod.GetTexture("NPCs/Fiberglass/Fiberglass_Threader_Leg_Upper");
-			Texture2D lowerLegTexture = Mod.GetTexture("NPCs/Fiberglass/Fiberglass_Threader_Leg_Lower");
-			Texture2D pixelTexture = Mod.GetTexture("Projectiles/Pixel");
+		public void DrawAnimations(ref PlayerDrawSet drawInfo) {
+			AutoCastingAsset<Texture2D> upperLegTexture = Mod.Assets.Request<Texture2D>("NPCs/Fiberglass/Fiberglass_Threader_Leg_Upper");
+			AutoCastingAsset<Texture2D> lowerLegTexture = Mod.Assets.Request<Texture2D>("NPCs/Fiberglass/Fiberglass_Threader_Leg_Lower");
+			AutoCastingAsset<Texture2D> pixelTexture = Mod.Assets.Request<Texture2D>("Projectiles/Pixel");
 			switch (mode) {
 				case 0: {
 					Player player = Main.LocalPlayer;
@@ -103,8 +103,8 @@ namespace Origins.Items.Other.Testing {
 					OriginExtensions.AngularSmoothing(ref arm.bone1.Theta, targets[1], 0.2f);
 
 					Vector2 screenStart = arm.start - Main.screenPosition;
-					Main.playerDrawData.Add(new DrawData(upperLegTexture, screenStart, null, Color.White, arm.bone0.Theta, new Vector2(3, 9), 1f, SpriteEffects.None, 0));
-					Main.playerDrawData.Add(new DrawData(lowerLegTexture, screenStart + (Vector2)arm.bone0, null, Color.White, arm.bone0.Theta + arm.bone1.Theta, new Vector2(4, 8), 1f, SpriteEffects.None, 0));
+					drawInfo.DrawDataCache.Add(new DrawData(upperLegTexture, screenStart, null, Color.White, arm.bone0.Theta, new Vector2(3, 9), 1f, SpriteEffects.None, 0));
+					drawInfo.DrawDataCache.Add(new DrawData(lowerLegTexture, screenStart + (Vector2)arm.bone0, null, Color.White, arm.bone0.Theta + arm.bone1.Theta, new Vector2(4, 8), 1f, SpriteEffects.None, 0));
 
 					Vector2 start2 = player.Left;
 
@@ -114,8 +114,8 @@ namespace Origins.Items.Other.Testing {
 					OriginExtensions.AngularSmoothing(ref arm2.bone1.Theta, targets2[1], 0.2f);
 
 					Vector2 screenStart2 = arm2.start - Main.screenPosition;
-					Main.playerDrawData.Add(new DrawData(upperLegTexture, screenStart2, null, Color.White, arm2.bone0.Theta, new Vector2(3, 3), 1f, SpriteEffects.FlipVertically, 0));
-					Main.playerDrawData.Add(new DrawData(lowerLegTexture, screenStart2 + (Vector2)arm2.bone0, null, Color.White, arm2.bone0.Theta + arm2.bone1.Theta, new Vector2(4, 0), 1f, SpriteEffects.FlipVertically, 0));
+					drawInfo.DrawDataCache.Add(new DrawData(upperLegTexture, screenStart2, null, Color.White, arm2.bone0.Theta, new Vector2(3, 3), 1f, SpriteEffects.FlipVertically, 0));
+					drawInfo.DrawDataCache.Add(new DrawData(lowerLegTexture, screenStart2 + (Vector2)arm2.bone0, null, Color.White, arm2.bone0.Theta + arm2.bone1.Theta, new Vector2(4, 0), 1f, SpriteEffects.FlipVertically, 0));
 
 					/**Vector2 diff = (target - start);
 					float dist = diff.Length() / (upperLegLength + lowerLegLength);
@@ -149,7 +149,7 @@ namespace Origins.Items.Other.Testing {
 				case 1: {
 					//0.65-1 rgb, 0.325-0.5 a
 					float hp = 0.65f;//Main.LocalPlayer.statLife / (float)Main.LocalPlayer.statLifeMax2;
-					Main.playerDrawData.Add(new DrawData(Mod.GetTexture("NPCs/ICARUS/ICARUS_Shield"), Main.MouseScreen, null, new Color(hp, hp, hp, hp / 2), 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0));
+					drawInfo.DrawDataCache.Add(new DrawData(Mod.Assets.Request<Texture2D>("NPCs/ICARUS/ICARUS_Shield").Value, Main.MouseScreen, null, new Color(hp, hp, hp, hp / 2), 0, new Vector2(0, 0), 1f, SpriteEffects.None, 0));
 				}
 				break;
 			}

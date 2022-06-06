@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
@@ -11,13 +12,14 @@ namespace Origins.Items.Weapons.Other {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Rigged Cubix");
 			Tooltip.SetDefault("");
+			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 88;
 			Item.crit = -3;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
 			Item.width = 28;
 			Item.height = 30;
@@ -31,10 +33,10 @@ namespace Origins.Items.Weapons.Other {
 			Item.UseSound = null;
 			Item.glowMask = glowmask;
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Vector2 vel = new Vector2(speedX, speedY).RotatedByRandom(0.075f);
-			speedX = vel.X;
-			speedY = vel.Y;
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			velocity = velocity.RotatedByRandom(0.075f);
+		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.itemAnimation != 0 && !player.CheckMana(Item, pay:true)) {
 				return false;
 			}
@@ -47,7 +49,7 @@ namespace Origins.Items.Weapons.Other {
 			DisplayName.SetDefault("Rigged Cubix");
 		}
 		public override void SetDefaults() {
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.friendly = true;
 			Projectile.penetrate = -1;
 			Projectile.width = 26;

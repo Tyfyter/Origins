@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Other {
             Item.noMelee = true;
             Item.width = 58;
             Item.height = 58;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.useTime = 22;
             Item.useAnimation = 22;
             Item.knockBack = 9.5f;

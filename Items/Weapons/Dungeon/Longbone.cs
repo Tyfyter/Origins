@@ -93,33 +93,33 @@ namespace Origins.Items.Weapons.Dungeon {
                 lightColor.R+=(byte)Math.Min(80,255-lightColor.R);
                 lightColor.G+=(byte)Math.Min(60,255-lightColor.G);
                 lightColor.B+=(byte)Math.Min(10,255-lightColor.B);
-                Dust.NewDust(projectile.Center, 0, 0, 6);
+                Dust.NewDust(projectile.Center, 0, 0, DustID.Torch);
                 break;
                 case ProjectileID.FrostburnArrow:
                 lightColor.G+=(byte)Math.Min(60,255-lightColor.G);
                 lightColor.B+=(byte)Math.Min(80,255-lightColor.B);
-                Dust.NewDust(projectile.Center, 0, 0, 135);
+                Dust.NewDust(projectile.Center, 0, 0, DustID.IceTorch);
                 break;
                 case ProjectileID.CursedArrow:
                 lightColor.R+=(byte)Math.Min(30,255-lightColor.R);
                 lightColor.G+=(byte)Math.Min(80,255-lightColor.G);
-                d = Dust.NewDust(projectile.Center, 0, 0, 178, Scale:0.75f);
+                d = Dust.NewDust(projectile.Center, 0, 0, DustID.BubbleBurst_Green, Scale:0.75f);
                 Main.dust[d].velocity *= 0.5f;
                 break;
                 case ProjectileID.IchorArrow:
                 lightColor.R+=(byte)Math.Min(80,255-lightColor.R);
                 lightColor.G+=(byte)Math.Min(80,255-lightColor.G);
-                Dust.NewDust(projectile.Center, 0, 0, 228);
+                Dust.NewDust(projectile.Center, 0, 0, DustID.GoldFlame);
                 break;
                 case ProjectileID.VenomArrow:
-                d = Dust.NewDust(projectile.Center, 0, 0, 98);
+                d = Dust.NewDust(projectile.Center, 0, 0, DustID.Water_Corruption);
                 Main.dust[d].noGravity = true;
                 break;
                 case ProjectileID.HellfireArrow:
                 lightColor.R+=(byte)Math.Min(80,255-lightColor.R);
                 lightColor.G+=(byte)Math.Min(60,255-lightColor.G);
                 lightColor.B+=(byte)Math.Min(10,255-lightColor.B);
-                Dust.NewDust(projectile.Center, 0, 0, 6);
+                Dust.NewDust(projectile.Center, 0, 0, DustID.Torch);
                 break;
             }
             for (int i = 1; i < 5; i++){

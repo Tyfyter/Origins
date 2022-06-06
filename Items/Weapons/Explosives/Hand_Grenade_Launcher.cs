@@ -14,6 +14,7 @@ using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Tyfyter.Utils;
 using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Explosives {
@@ -132,7 +133,7 @@ namespace Origins.Items.Weapons.Explosives {
 			projectile.Damage();
             */
 			SoundEngine.PlaySound(SoundID.Item38.WithVolume(0.75f), Projectile.Center);
-            PlaySound("DeepBoom", Projectile.Center, 5);
+            SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(5), Projectile.Center);
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Awe_Grenade_Blast>(), Projectile.damage, 24, Projectile.owner);
         }
     }
@@ -175,16 +176,18 @@ namespace Origins.Items.Weapons.Explosives {
             damage-=(int)(damage*((duration-Projectile.timeLeft) / (float)duration)*0.6f);
         }
         public override bool PreDraw(ref Color lightColor){
-			spriteBatch.End();
-			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-			float percent = (duration-Projectile.timeLeft) / (float)duration;
-			DrawData data = new DrawData(TextureManager.Load("Images/Misc/Perlin"), Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 600, 600), new Color(new Vector4(0.35f,0.35f,0.35f,0.6f)*(1f - percent)), 0, new Vector2(300f, 300f), new Vector2(percent, percent/1.61803399f)*Projectile.scale, SpriteEffects.None, 0);
+            Main.spriteBatch.Restart(
+                sortMode: SpriteSortMode.Immediate,
+                samplerState: SamplerState.PointClamp,
+                transformMatrix: Main.LocalPlayer.gravDir == 1f ? Main.GameViewMatrix.ZoomMatrix : Main.GameViewMatrix.TransformationMatrix
+            );
+            float percent = (duration-Projectile.timeLeft) / (float)duration;
+			DrawData data = new DrawData(Main.Assets.Request<Texture2D>("Images/Misc/Perlin").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 600, 600), new Color(new Vector4(0.35f,0.35f,0.35f,0.6f)*(1f - percent)), 0, new Vector2(300f, 300f), new Vector2(percent, percent/1.61803399f)*Projectile.scale, SpriteEffects.None, 0);
 			GameShaders.Misc["ForceField"].UseColor(new Vector3(2f));
 			GameShaders.Misc["ForceField"].Apply(data);
-			data.Draw(spriteBatch);
-			spriteBatch.End();
-			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, null, Main.Transform);
-            return false;
+			data.Draw(Main.spriteBatch);
+			Main.spriteBatch.Restart();
+			return false;
         }
     }
     public class Impact_Grenade_Blast  : ModProjectile {
@@ -218,7 +221,7 @@ namespace Origins.Items.Weapons.Explosives {
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
             Vector2 closest = (Projectile.Center+Projectile.velocity*2).Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());
-            double rot = AngleDif((closest-Projectile.Center).ToRotation(), Projectile.rotation)+0.5f;//Math.Abs(((projectile.Center-closest).ToRotation()+Math.PI)-(projectile.rotation+Math.PI))+0.5;
+            double rot = GeometryUtils.AngleDif((closest-Projectile.Center).ToRotation(), Projectile.rotation, out _)+0.5f;//Math.Abs(((projectile.Center-closest).ToRotation()+Math.PI)-(projectile.rotation+Math.PI))+0.5;
             /*if((projectile.Center-closest).Length()<=48) {
                 //Main.NewText($"{(projectile.Center-closest).ToRotation()} - {projectile.rotation} + 0.5 = {rot}");
                 //Main.NewText($"{AngleDif((projectile.Center-closest).ToRotation(), projectile.rotation)}");
@@ -232,7 +235,7 @@ namespace Origins.Items.Weapons.Explosives {
         }
         public override bool PreDraw(ref Color lightColor){
             int frame = (8 - Projectile.timeLeft)/2;
-            spriteBatch.Draw(TextureAssets.Projectile[694].Value, Projectile.Center - Main.screenPosition, new Rectangle(0,80*frame,80,80), lightColor, Projectile.rotation+MathHelper.PiOver2, new Vector2(40, 80), 1f, SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(TextureAssets.Projectile[694].Value, Projectile.Center - Main.screenPosition, new Rectangle(0,80*frame,80,80), lightColor, Projectile.rotation+MathHelper.PiOver2, new Vector2(40, 80), 1f, SpriteEffects.None, 0);
 			return false;
         }
     }

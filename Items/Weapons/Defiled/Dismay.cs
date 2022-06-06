@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Defiled {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.CursedFlames);
             Item.damage = 50;
-            Item.magic = true;
+            Item.DamageType = DamageClass.Magic;
             Item.noMelee = true;
             Item.crit = 6;
             Item.width = 28;
@@ -28,13 +28,9 @@ namespace Origins.Items.Weapons.Defiled {
             Item.shootSpeed *= 1.2f;
             Item.useTurn = false;
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            int n = (player.itemAnimationMax-player.itemAnimation)/player.itemTime+1;
-            Vector2 velocity = new Vector2(speedX, speedY);
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+		    int n = (player.itemAnimationMax-player.itemAnimation)/player.itemTime+1;
             velocity = velocity.RotatedBy(((n/2)*((n&1)==0?1:-1))*0.3f);
-            speedX = velocity.X;
-            speedY = velocity.Y;
-            return true;
         }
     }
     public class Dismay_Spike : ModProjectile {
@@ -78,17 +74,17 @@ namespace Origins.Items.Weapons.Defiled {
             float totalLength = Projectile.velocity.Length() * movementFactor;
             int avg = (lightColor.R + lightColor.G + lightColor.B)/3;
             lightColor = Color.Lerp(lightColor, new Color(avg, avg, avg), 0.5f);
-            spriteBatch.Draw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center-Main.screenPosition, new Rectangle(0, 0, 18, System.Math.Min(58, (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9,0), Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center-Main.screenPosition, new Rectangle(0, 0, 18, System.Math.Min(58, (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9,0), Projectile.scale, SpriteEffects.None, 0);
             totalLength -= 58;
             Vector2 offset = Projectile.velocity.SafeNormalize(Vector2.Zero) * 58;
-            Texture2D texture = Mod.GetTexture("Projectiles/Weapons/Dismay_Mid");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Dismay_Mid").Value;
             int c = 0;
             Vector2 pos;
             for(int i = (int)totalLength; i > 0; i -= 58) {
                 c++;
                 pos = (Projectile.Center - Main.screenPosition) - (offset * c);
                 //lightColor = new Color(Lighting.GetSubLight(pos));//projectile.GetAlpha(new Color(Lighting.GetSubLight(pos)));
-                spriteBatch.Draw(texture, pos, new Rectangle(0, 0, 18, System.Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9,0), Projectile.scale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(texture, pos, new Rectangle(0, 0, 18, System.Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9,0), Projectile.scale, SpriteEffects.None, 0);
             }
             return false;
         }

@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Acid {
 			Item.magic = true;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
 			Item.width = 28;
 			Item.height = 30;
 			Item.useTime = 24;

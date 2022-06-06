@@ -77,7 +77,7 @@ namespace Origins.Items.Weapons.Other {
                 Projectile.scale,
                 Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
                 0);
-			Dust dust = Dust.NewDustDirect(Projectile.Center + (new Vector2(14, -14).RotatedBy(Projectile.rotation)*Projectile.scale) - new Vector2(4,4), 0, 0, 27, 0f, -2f, Scale:(1.25f+(float)Math.Sin(Projectile.timeLeft)*0.25f));
+			Dust dust = Dust.NewDustDirect(Projectile.Center + (new Vector2(14, -14).RotatedBy(Projectile.rotation)*Projectile.scale) - new Vector2(4,4), 0, 0, DustID.Shadowflame, 0f, -2f, Scale:(1.25f+(float)Math.Sin(Projectile.timeLeft)*0.25f));
 			dust.noGravity = true;
             dust.velocity = Vector2.Zero;//projectile.oldVelocity * 0.5f;
 			dust.fadeIn = 0.5f;
@@ -129,7 +129,7 @@ namespace Origins.Items.Weapons.Other {
 		        }
 	        }
             float scaleFactor = MathHelper.Clamp((30-Projectile.localAI[2])*0.04f, 0.1f, 1f);
-			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, 27, 0f, -2f);
+			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.Shadowflame, 0f, -2f);
 			dust.noGravity = true;
             dust.velocity = Projectile.oldVelocity * 0.5f;
 			dust.scale = scaleFactor;

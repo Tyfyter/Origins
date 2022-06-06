@@ -320,7 +320,6 @@ namespace Origins {
         }
         #region attacks
         public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
-            if(IsExplosive(item))add+=explosiveDamage-1;
             bool ammoBased = item.useAmmo != AmmoID.None || (item.ammo != AmmoID.None && Player.HeldItem.useAmmo == item.ammo);
             if(fiberglassSet) {
                 damage.Flat+=ammoBased?2:4;
@@ -574,30 +573,6 @@ namespace Origins {
             Player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", ZoneRivenProgressSmoothed>0, Player.Center);
         }
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
-            int num7 = 300 / poolSize;
-            int num8 = 1050 / poolSize;
-            int num10 = 4500 / poolSize;
-            if (num7 < 3) {
-                num7 = 3;
-            }
-            if (num8 < 4) {
-                num8 = 4;
-            }
-            if (num10 < 6) {
-                num10 = 6;
-            }
-            bool flag4 = false;
-            bool flag5 = false;
-            bool flag7 = false;
-            if (Main.rand.NextBool(num7)) {
-                flag4 = true;
-            }
-            if (Main.rand.NextBool(num8)) {
-                flag5 = true;
-            }
-            if (Main.rand.NextBool(num10)) {
-                flag7 = true;
-            }
             bool zoneDefiled = ZoneDefiled;
             bool zoneRiven = ZoneRiven;
 			if (zoneDefiled && zoneDefiled) {
@@ -608,13 +583,19 @@ namespace Origins {
 				}
 			}
             if (zoneDefiled) {
-                if (flag7 && Main.hardMode && Main.rand.NextBool(2)) {
+                if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
                     itemDrop = ModContent.ItemType<Knee_Slapper>();
-                } else if (flag4 && !flag5) {
+                } else if (attempt.uncommon && !attempt.rare) {
+                    itemDrop = ModContent.ItemType<Prikish>();
+                }
+            }else if (zoneRiven) {
+                if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
+                    itemDrop = ModContent.ItemType<Knee_Slapper>();
+                } else if (attempt.uncommon && !attempt.rare) {
                     itemDrop = ModContent.ItemType<Prikish>();
                 }
             }
-		}
+        }
 		#endregion
 		public override bool PreItemCheck() {
             ItemChecking = true;
@@ -696,20 +677,20 @@ namespace Origins {
             int skinVariant = drawPlayer.skinVariant;
             DrawData drawData;
             drawData = new DrawData(Main.playerTextures[skinVariant, 14], new Vector2((int)(Position.X - Main.screenPosition.X - drawPlayer.legFrame.Width / 2 + drawPlayer.width / 2), (int)(Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.legFrame.Height + 4f)) + drawPlayer.legPosition + drawInfo2.legOrigin, new Rectangle?(drawPlayer.legFrame), drawInfo2.shirtColor, drawPlayer.legRotation, drawInfo2.legOrigin, 1f, spriteEffects, 0);
-            Main.playerDrawData.Add(drawData);
+            drawInfo.DrawDataCache.Add(drawData);
             if(!drawPlayer.Male) {
                 drawData = new DrawData(Main.playerTextures[skinVariant, 4], new Vector2((int)(Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2 + drawPlayer.width / 2), (int)(Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2), new Rectangle?(drawPlayer.bodyFrame), drawInfo2.underShirtColor, drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
-                Main.playerDrawData.Add(drawData);
+                drawInfo.DrawDataCache.Add(drawData);
                 drawData = new DrawData(Main.playerTextures[skinVariant, 6], new Vector2((int)(Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2 + drawPlayer.width / 2), (int)(Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2), new Rectangle?(drawPlayer.bodyFrame), drawInfo2.shirtColor, drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
-                Main.playerDrawData.Add(drawData);
+                drawInfo.DrawDataCache.Add(drawData);
             } else {
                 drawData = new DrawData(Main.playerTextures[skinVariant, 4], new Vector2((int)(Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2 + drawPlayer.width / 2), (int)(Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2), new Rectangle?(drawPlayer.bodyFrame), drawInfo2.underShirtColor, drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
-                Main.playerDrawData.Add(drawData);
+                drawInfo.DrawDataCache.Add(drawData);
                 drawData = new DrawData(Main.playerTextures[skinVariant, 6], new Vector2((int)(Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2 + drawPlayer.width / 2), (int)(Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2), new Rectangle?(drawPlayer.bodyFrame), drawInfo2.shirtColor, drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
-                Main.playerDrawData.Add(drawData);
+                drawInfo.DrawDataCache.Add(drawData);
             }
             drawData = new DrawData(Main.playerTextures[skinVariant, 5], new Vector2((int)(Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2 + drawPlayer.width / 2), (int)(Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2), new Rectangle?(drawPlayer.bodyFrame), drawInfo2.bodyColor, drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
-            Main.playerDrawData.Add(drawData);
+            drawInfo.DrawDataCache.Add(drawData);
         });
         public static PlayerLayer PlayerPants = new PlayerLayer("Origins", "PlayerPants", null, delegate (PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;
@@ -718,9 +699,9 @@ namespace Origins {
             int skinVariant = drawPlayer.skinVariant;
             DrawData drawData;
             drawData = new DrawData(Main.playerTextures[skinVariant, 11], new Vector2((int)(Position.X - Main.screenPosition.X - drawPlayer.legFrame.Width / 2 + drawPlayer.width / 2), (int)(Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.legFrame.Height + 4f)) + drawPlayer.legPosition + drawInfo2.legOrigin, new Rectangle?(drawPlayer.legFrame), drawInfo2.pantsColor, drawPlayer.legRotation, drawInfo2.legOrigin, 1f, spriteEffects, 0);
-            Main.playerDrawData.Add(drawData);
+            drawInfo.DrawDataCache.Add(drawData);
             drawData = new DrawData(Main.playerTextures[skinVariant, 12], new Vector2((int)(Position.X - Main.screenPosition.X - drawPlayer.legFrame.Width / 2 + drawPlayer.width / 2), (int)(Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.legFrame.Height + 4f)) + drawPlayer.legPosition + drawInfo2.legOrigin, new Rectangle?(drawPlayer.legFrame), drawInfo2.shoeColor, drawPlayer.legRotation, drawInfo2.legOrigin, 1f, spriteEffects, 0);
-            Main.playerDrawData.Add(drawData);
+            drawInfo.DrawDataCache.Add(drawData);
         });
         public static PlayerLayer ShootWrenchLayer = new PlayerLayer("Origins", "FiberglassBowLayer", null, delegate (PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;
@@ -739,10 +720,10 @@ namespace Origins {
             drawOrigin.X-=drawPlayer.width/2;
             Vector4 col = drawInfo2.faceColor.ToVector4()/drawPlayer.skinColor.ToVector4();
             DrawData value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + ItemCenter.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + ItemCenter.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(new Color(col.X, col.Y, col.Z, col.W)), drawPlayer.itemRotation, drawOrigin, item.scale, drawInfo2.spriteEffects, 0);
-            Main.playerDrawData.Add(value);
+            drawInfo.DrawDataCache.Add(value);
             if(drawPlayer.inventory[drawPlayer.selectedItem].glowMask != -1) {
                 value = new DrawData(TextureAssets.GlowMask[item.glowMask].Value, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X + ItemCenter.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y + ItemCenter.Y)), aItem.Animation.GetFrame(itemTexture), item.GetAlpha(aItem.GlowmaskTint??new Color(col.X, col.Y, col.Z, col.W)), drawPlayer.itemRotation, drawOrigin, item.scale, drawInfo2.spriteEffects, 0);
-                Main.playerDrawData.Add(value);
+                drawInfo.DrawDataCache.Add(value);
             }
         });
         public static PlayerLayer SlashWrenchLayer = new PlayerLayer("Origins", "FelnumBroadswordLayer", null, delegate (PlayerDrawInfo drawInfo2) {
@@ -755,14 +736,14 @@ namespace Origins {
             Color currentColor = Lighting.GetColor((int)(drawInfo2.position.X + drawPlayer.width * 0.5) / 16, (int)((drawInfo2.position.Y + drawPlayer.height * 0.5) / 16.0));
             SpriteEffects spriteEffects = (drawPlayer.direction==1 ? 0 : SpriteEffects.FlipHorizontally) | (drawPlayer.gravDir==1f ? 0 : SpriteEffects.FlipVertically);
             DrawData value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, drawPlayer.inventory[drawPlayer.selectedItem].GetAlpha(currentColor), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
-            Main.playerDrawData.Add(value);
+            drawInfo.DrawDataCache.Add(value);
             if(drawPlayer.inventory[drawPlayer.selectedItem].color != default) {
                 value = new DrawData(itemTexture, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, drawPlayer.inventory[drawPlayer.selectedItem].GetColor(currentColor), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
-                Main.playerDrawData.Add(value);
+                drawInfo.DrawDataCache.Add(value);
             }
             if(drawPlayer.inventory[drawPlayer.selectedItem].glowMask != -1) {
                 value = new DrawData(TextureAssets.GlowMask[drawPlayer.inventory[drawPlayer.selectedItem].glowMask].Value, new Vector2((int)(drawInfo2.itemLocation.X - Main.screenPosition.X), (int)(drawInfo2.itemLocation.Y - Main.screenPosition.Y)), frame, aItem.GlowmaskTint??new Color(250, 250, 250, item.alpha), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
-                Main.playerDrawData.Add(value);
+                drawInfo.DrawDataCache.Add(value);
             }
         });
         public static PlayerLayer FelnumGlow = new PlayerLayer("Origins", "FelnumGlow", null, delegate (PlayerDrawInfo drawInfo2) {
@@ -785,18 +766,18 @@ namespace Origins {
                 Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Head");
                 item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.headRotation, drawInfo2.headOrigin, 1f, spriteEffects, 0);
                 item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
-                Main.playerDrawData.Add(item);
+                drawInfo.DrawDataCache.Add(item);
                 Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Eye");
                 item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.headRotation, drawInfo2.headOrigin, 1f, spriteEffects, 0);
                 item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
-                Main.playerDrawData.Add(item);
+                drawInfo.DrawDataCache.Add(item);
             } else if(drawInfo2.drawHair||drawInfo2.drawAltHair||drawPlayer.head == ArmorIDs.Head.FamiliarWig) {
                 Position = new Vector2(drawInfo2.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f, drawInfo2.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + drawInfo2.headOrigin;
                 Frame = new Rectangle?(drawPlayer.bodyFrame);
                 Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Eye");
                 item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.headRotation, drawInfo2.headOrigin, 1f, spriteEffects, 0);
                 item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
-                Main.playerDrawData.Add(item);
+                drawInfo.DrawDataCache.Add(item);
             }
             if(drawPlayer.body == Origins.FelnumBodyArmorID) {
                 Position = new Vector2(((int)(drawInfo2.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f)), (int)(drawInfo2.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + drawInfo2.bodyOrigin;
@@ -804,14 +785,14 @@ namespace Origins {
                 Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Arms");
                 item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
                 item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
-                Main.playerDrawData.Add(item);
+                drawInfo.DrawDataCache.Add(item);
 
                 Position = new Vector2(((int)(drawInfo2.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f)), (int)(drawInfo2.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + drawInfo2.bodyOrigin;
                 Frame = new Rectangle?(drawPlayer.bodyFrame);
                 Texture = ModContent.GetTexture(drawPlayer.Male ? "Origins/Items/Armor/Felnum/Felnum_Glow_Body" : "Origins/Items/Armor/Felnum/Felnum_Glow_FemaleBody");
                 item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
                 item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
-                Main.playerDrawData.Add(item);
+                drawInfo.DrawDataCache.Add(item);
             }
             if(drawPlayer.legs == Origins.FelnumLegsArmorID) {
                 Position = new Vector2((int)(drawInfo2.position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f), (int)(drawInfo2.position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.legPosition + drawInfo2.legOrigin;
@@ -819,7 +800,7 @@ namespace Origins {
                 Texture = ModContent.GetTexture("Origins/Items/Armor/Felnum/Felnum_Glow_Legs");
                 item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.legRotation, drawInfo2.legOrigin, 1f, spriteEffects, 0);
                 item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[2].type);
-                Main.playerDrawData.Add(item);
+                drawInfo.DrawDataCache.Add(item);
             }
         });
         public static PlayerLayer CreateHeadGlowmask(Texture2D texture) => new PlayerLayer("Origins", "HeadGlowmask", null, delegate (PlayerDrawInfo drawInfo2) {
@@ -836,7 +817,7 @@ namespace Origins {
             Rectangle? Frame = new Rectangle?(drawPlayer.bodyFrame);
             DrawData item = new DrawData(texture, Position, Frame, Color.White, drawPlayer.headRotation, drawInfo2.headOrigin, 1f, spriteEffects, 0);
             item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
-            Main.playerDrawData.Add(item);
+            drawInfo.DrawDataCache.Add(item);
         }) {visible = true};
         public static PlayerLayer CreateBodyGlowmask(Texture2D texture) => new PlayerLayer("Origins", "BodyGlowmask", null, delegate (PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;
@@ -851,7 +832,7 @@ namespace Origins {
             Rectangle? Frame = new Rectangle?(drawPlayer.bodyFrame);
             DrawData item = new DrawData(texture, Position, Frame, Color.White, drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
             item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
-            Main.playerDrawData.Add(item);
+            drawInfo.DrawDataCache.Add(item);
         }) { visible = true };
         public static PlayerLayer CreateLegsGlowmask(Texture2D texture) => new PlayerLayer("Origins", "LegsGlowmask", null, delegate (PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;
@@ -866,7 +847,7 @@ namespace Origins {
             Rectangle? Frame = new Rectangle?(drawPlayer.legFrame);
             DrawData item = new DrawData(texture, Position, Frame, Color.White, drawPlayer.legRotation, drawInfo2.legOrigin, 1f, spriteEffects, 0);
             item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[2].type);
-            Main.playerDrawData.Add(item);
+            drawInfo.DrawDataCache.Add(item);
         }) { visible = true };
         public static PlayerLayer CreateEyndumCoreLayer(Color color) => new PlayerLayer("Origins", "EyndumCore", null, delegate (PlayerDrawInfo drawInfo2) {
             Player drawPlayer = drawInfo2.drawPlayer;
@@ -881,7 +862,7 @@ namespace Origins {
             Rectangle? Frame = new Rectangle?(drawPlayer.bodyFrame);
             DrawData item = new DrawData(Origins.eyndumCoreTexture, Position, Frame, color, drawPlayer.bodyRotation, drawInfo2.bodyOrigin, 1f, spriteEffects, 0);
             item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
-            Main.playerDrawData.Add(item);
+            drawInfo.DrawDataCache.Add(item);
         }) { visible = true };
     }
 }

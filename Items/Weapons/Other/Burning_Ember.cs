@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Other {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Flamelash);
             Item.damage = 25;
-            Item.useStyle = 5;
+            Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = 11;
             Item.useTime = 11;
             Item.width = 78;
@@ -90,7 +90,7 @@ namespace Origins.Items.Weapons.Other {
                     continue;
                 }
                 alpha = (20 - i) * 10;
-                spriteBatch.Draw(
+                Main.EntitySpriteDraw(
                     texture,
                     (positions[i] + halfSize) - Main.screenPosition,
                     null,
@@ -106,8 +106,8 @@ namespace Origins.Items.Weapons.Other {
             const int backset = 2;
             if(min+backset<positions.Length)for(int n = 0; n < 4; n++) {
                 offset += velocity;
-                if(Main.rand.NextBool(3))Dust.NewDust(positions[min+backset] + offset, Projectile.width, Projectile.height, DustID.Fire);
-                if(Main.rand.NextBool(3))Dust.NewDust(positions[min+backset] - offset, Projectile.width, Projectile.height, DustID.Fire);
+                if(Main.rand.NextBool(3))Dust.NewDust(positions[min+backset] + offset, Projectile.width, Projectile.height, DustID.Torch);
+                if(Main.rand.NextBool(3))Dust.NewDust(positions[min+backset] - offset, Projectile.width, Projectile.height, DustID.Torch);
             }
             //spriteBatch.Draw(mod.GetTexture("Projectiles/ClawFeather"), oldPositions[oldPositions.Count-1], null, lightColor, projectile.rotation, projectile.Center, 1, SpriteEffects.None, 0);
             return false;

@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.magic = true;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
 			Item.width = 28;
 			Item.height = 30;
 			Item.useTime = 24;
@@ -90,7 +90,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override void Kill(int timeLeft) {
             Projectile.ai[0] = 0;
             for(int i = 0; i < 9; i++) {
-                Dust dust = Dust.NewDustDirect(Projectile.position, 10, 10, 226, 0, 0, 100, i%2==0 ? Color.LightSeaGreen : Color.Coral, Projectile.scale);
+                Dust dust = Dust.NewDustDirect(Projectile.position, 10, 10, DustID.Electric, 0, 0, 100, i%2==0 ? Color.LightSeaGreen : Color.Coral, Projectile.scale);
                 dust.shader = GameShaders.Armor.GetSecondaryShader(i%2==0 ? 90 : 1, Main.LocalPlayer);
                 dust.velocity*=4;
                 dust.noGravity = true;
@@ -116,7 +116,7 @@ namespace Origins.Items.Weapons.Explosives {
             target.AddBuff(BuffID.CursedInferno, 480);
             target.AddBuff(BuffID.Venom, 480);
             for(int i = 5; 0<--i;) {
-                Dust dust = Dust.NewDustDirect(target.position,target.width,target.height, 226, 0, 0, 100, i%2==0 ? Color.LightSeaGreen : Color.Coral, Projectile.scale);
+                Dust dust = Dust.NewDustDirect(target.position,target.width,target.height, DustID.Electric, 0, 0, 100, i%2==0 ? Color.LightSeaGreen : Color.Coral, Projectile.scale);
                 dust.shader = GameShaders.Armor.GetSecondaryShader(i%2==0 ? 90 : 1, Main.LocalPlayer);
                 dust.noGravity = false;
                 dust.noLight = true;

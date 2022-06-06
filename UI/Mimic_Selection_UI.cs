@@ -65,10 +65,10 @@ namespace Origins.UI {
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 			int currentLevel = 3;//(int)((OriginWorld.totalDefiled * 3) / (float)WorldGen.totalSolid);
-			Texture2D[] textures = new Texture2D[] {
-				ModContent.GetTexture("Origins/UI/Defiled_Buff_Choice_Generic_1"),
-				ModContent.GetTexture("Origins/UI/Defiled_Buff_Choice_Generic_2"),
-				ModContent.GetTexture("Origins/UI/Defiled_Buff_Choice_Generic_3")
+			AutoCastingAsset<Texture2D>[] textures = new AutoCastingAsset<Texture2D>[] {
+				Origins.instance.Assets.Request<Texture2D>("UI/Defiled_Buff_Choice_Generic_1"),
+				Origins.instance.Assets.Request<Texture2D>("UI/Defiled_Buff_Choice_Generic_2"),
+				Origins.instance.Assets.Request<Texture2D>("UI/Defiled_Buff_Choice_Generic_3")
 			};
 			int boxSize = (int)(32 * Main.inventoryScale);
 			float posX = StartX;

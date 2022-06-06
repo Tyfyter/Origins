@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.height = 36;
 			Item.useTime = 30;
 			Item.useAnimation = 30;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
             Item.shoot = ModContent.ProjectileType<Low_Signal_P>();
             Item.shootSpeed = 14f;

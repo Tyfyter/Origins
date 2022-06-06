@@ -12,14 +12,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Bomboomstick : ModItem, ICustomDrawItem {
-        public static Texture2D UseTexture { get; private set; }
+        public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
         public override void Unload() {
             UseTexture = null;
         }
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomboomstick");
             if (!Main.dedServ) {
-                UseTexture = Mod.GetTexture("Items/Weapons/Explosives/Bomboomstick_Use");
+                UseTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Explosives/Bomboomstick_Use");
             }
         }
         public override void SetDefaults() {

@@ -104,13 +104,13 @@ namespace Origins.Items.Weapons.Explosives {
             int count = 14 - Main.rand.Next(3);
             float rot = TwoPi/count;
             for(int i = count; i > 0; i--) {
-                Projectile.NewProjectile(Projectile.Center, (Vec2FromPolar(rot*i, 6) + Main.rand.NextVector2Unit())+(Projectile.velocity/12), t, Projectile.damage/4, 6, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(rot*i, 6) + Main.rand.NextVector2Unit())+(Projectile.velocity/12), t, Projectile.damage/4, 6, Projectile.owner);
             }
         }
         public override void PostDraw(Color lightColor) {
             //SysDraw.Bitmap lightMap = new SysDraw.Bitmap(10, 10);
             //mod.Logger.Info("setting up variables");
-            Texture2D lightMap = new Texture2D(spriteBatch.GraphicsDevice, 10, 10);
+            Texture2D lightMap = new Texture2D(Main.spriteBatch.GraphicsDevice, 10, 10);
             Color[] lightData = new Color[100];
             Vector2 pos = Projectile.position;
             Vector3 col;
@@ -128,26 +128,24 @@ namespace Origins.Items.Weapons.Explosives {
             //mod.Logger.Info("setting data");
             lightMap.SetData(lightData);
             //mod.Logger.Info("set data");
-			spriteBatch.End();
-			spriteBatch.Begin(SpriteSortMode.Immediate, blendState, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
-            DrawData data2 = new DrawData(Mod.GetTexture("Items/Weapons/Explosives/Crystal_Grenade_Purple"), Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255,255,255,255), Projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
+            Main.spriteBatch.Restart(SpriteSortMode.Immediate);
+            DrawData data2 = new DrawData(Mod.Assets.Request<Texture2D>("Items/Weapons/Explosives/Crystal_Grenade_Purple").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255,255,255,255), Projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
             //Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(projectile.position);
             //Origins.perlinFade0.Shader.Parameters["uRotation"].SetValue(-projectile.rotation);
             Main.graphics.GraphicsDevice.Textures[1] = lightMap;
             Origins.perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0f);
             Origins.perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.25f);
             Origins.perlinFade0.Apply(data2);
-            DrawData data = new DrawData(Mod.GetTexture("Items/Weapons/Explosives/Crystal_Grenade_Pink"), Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255,255,255,255), Projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
+            DrawData data = new DrawData(Mod.Assets.Request<Texture2D>("Items/Weapons/Explosives/Crystal_Grenade_Pink").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255,255,255,255), Projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
             //Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(projectile.position);
             //Origins.perlinFade0.Shader.Parameters["uRotation"].SetValue(projectile.rotation);
             //Main.graphics.GraphicsDevice.Textures[1] = lightMap;
             Origins.perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.5f);
             Origins.perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.75f);
             Origins.perlinFade0.Apply(data);
-			data.Draw(spriteBatch);
-            spriteBatch.End();
-			spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, null, Main.Transform);
-        }
+            Main.EntitySpriteDraw(data);
+            Main.spriteBatch.Restart();
+		}
     }
     public class Crystal_Grenade_Shard : ModProjectile {
         public override string Texture => "Origins/Projectiles/Pixel";
@@ -158,11 +156,8 @@ namespace Origins.Items.Weapons.Explosives {
 			try{
 				Origins.ExplosiveProjectiles[Projectile.type] = true;
 				ProjectileID.Sets.TrailingMode[ID] = 0;
-                Mod.Logger.Info("loading crystal shard");
 				if(!Main.dedServ) {
-                    Mod.Logger.Info("not dedicated server");
-					TextureAssets.Projectile[94].Value = Main.instance.OurLoad<Texture2D>(string.Concat(new object[]{"Images",Path.DirectorySeparatorChar,"Projectile_94"}));
-					Main.projectileLoaded[94] = true;
+                    Main.instance.LoadProjectile(94);
 				}
 			}catch(Exception){
                 Origins.instance.Logger.Warn(Main.netMode+" "+Main.dedServ);

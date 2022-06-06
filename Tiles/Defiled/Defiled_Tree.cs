@@ -90,7 +90,7 @@ namespace Origins.Tiles.Defiled
 			//AddMapEntry(new Color(200, 200, 200), treeName);
             //ModContent.GetModTile(ModContent.TileType("Defiled_Tree"));
 
-			sapling = true;
+			//sapling = true;
 			AdjTiles = new int[] { TileID.Saplings };
 		}
 

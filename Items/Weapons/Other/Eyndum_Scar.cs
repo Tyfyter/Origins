@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Other {
             Item.noMelee = false;
             Item.width = 70;
             Item.height = 70;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.knockBack = 9.5f;

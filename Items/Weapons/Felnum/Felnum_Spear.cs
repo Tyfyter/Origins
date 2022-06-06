@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Felnum {
 			Item.height = 48;
 			Item.useTime = 24;
 			Item.useAnimation = 24;
-			Item.useStyle = 5;
+			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 6;
 			Item.value = 5000;
 			Item.autoReuse = true;

@@ -13,12 +13,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
     public class Riven_Flesh : RivenTile, IGlowingModTile {
-        public Texture2D GlowTexture { get; private set; }
+        public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
         public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
         public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-                GlowTexture = Mod.GetTexture("Tiles/Riven/Riven_Flesh_Glow");
+                GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Flesh_Glow");
             }
             Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -34,9 +34,9 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(200, 125, 100));
 			//SetModTree(Defiled_Tree.Instance);
             mergeID = TileID.Stone;
-            soundType = SoundID.NPCKilled;
-            minPick = 65;
-            mineResist = 1.5f;
+            //soundType = SoundID.NPCDeath1;
+            MinPick = 65;
+            MineResist = 1.5f;
         }
         bool recursion = false;
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {

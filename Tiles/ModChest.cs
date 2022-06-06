@@ -29,7 +29,7 @@ namespace Origins.Tiles {
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.Origin = new Point16(0, 1);
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
-			TileObjectData.newTile.HookCheck = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.FindEmptyChest), -1, 0, true);
+			TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.FindEmptyChest), -1, 0, true);
 			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(new Func<int, int, int, int, int, int>(Chest.AfterPlacement_Hook), -1, 0, false);
 			TileObjectData.newTile.AnchorInvalidTiles = new[] { 127 };
 			TileObjectData.newTile.StyleHorizontal = true;
@@ -46,7 +46,7 @@ namespace Origins.Tiles {
 
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual) {
             frameXAdjustment = 36;
-			dustType = this.dustType;
+			dustType = this.DustType;
 			return true;
 		}
 
@@ -75,7 +75,7 @@ namespace Origins.Tiles {
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(i * 16, j * 16, 32, 32, chestDrop);
+			Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
 			Chest.DestroyChest(i, j);
 		}
 
@@ -161,10 +161,10 @@ namespace Origins.Tiles {
 			if (chestIndex < 0) {
 				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
 			} else {
-                player.cursorItemIconText = Main.chest[chestIndex].name.Length > 0 ? Main.chest[chestIndex].name : chest;
-				if (player.cursorItemIconText.Equals(chest)) {
+                player.cursorItemIconText = Main.chest[chestIndex].name.Length > 0 ? Main.chest[chestIndex].name : ContainerName.GetDefault();
+				if (player.cursorItemIconText.Equals(ContainerName.GetDefault())) {
 					if (IsLockedChest(left,top))player.cursorItemIconID = keyItem;
-                    else player.cursorItemIconID = chestDrop;
+                    else player.cursorItemIconID = ChestDrop;
 					player.cursorItemIconText = "";
 				}
 			}

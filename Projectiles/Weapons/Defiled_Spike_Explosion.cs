@@ -24,7 +24,9 @@ namespace Origins.Projectiles.Weapons {
 			if (Projectile.ai[0] > 0) {
                 Projectile.ai[0]--;
                 int[] immune = Projectile.localNPCImmunity.ToArray();
-                Projectile proj = Projectile.NewProjectileDirect(Projectile.Center,
+                Projectile proj = Projectile.NewProjectileDirect(
+                    Projectile.GetSource_FromThis(),
+                    Projectile.Center,
                     (Vector2)new PolarVec2(Main.rand.NextFloat(8, 16), Projectile.ai[1]++),
                     Defiled_Spike_Explosion_Spike.ID,
                     Projectile.damage,
@@ -89,9 +91,9 @@ namespace Origins.Projectiles.Weapons {
 			}
 			return false;
         }
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI) {
-            drawCacheProjsBehindNPCsAndTiles.Add(index);
-        }
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+            behindNPCsAndTiles.Add(index);
+		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             Projectile.localNPCImmunity[target.whoAmI] = 35*7;
             target.immune[Projectile.owner] = 0;
@@ -100,17 +102,17 @@ namespace Origins.Projectiles.Weapons {
             float totalLength = Projectile.velocity.Length() * movementFactor;
             int avg = (lightColor.R + lightColor.G + lightColor.B) / 3;
             lightColor = Color.Lerp(lightColor, new Color(avg, avg, avg), 0.5f);
-            spriteBatch.Draw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 18, System.Math.Min(58, (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 18, System.Math.Min(58, (int)totalLength)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
             totalLength -= 58;
             Vector2 offset = Projectile.velocity.SafeNormalize(Vector2.Zero) * 58;
-            Texture2D texture = Mod.GetTexture("Projectiles/Weapons/Dismay_Mid");
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Dismay_Mid").Value;
             int c = 0;
             Vector2 pos;
             for (int i = (int)totalLength; i > 0; i -= 58) {
                 c++;
                 pos = (Projectile.Center - Main.screenPosition) - (offset * c);
                 //lightColor = new Color(Lighting.GetSubLight(pos));//projectile.GetAlpha(new Color(Lighting.GetSubLight(pos)));
-                spriteBatch.Draw(texture, pos, new Rectangle(0, 0, 18, System.Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(texture, pos, new Rectangle(0, 0, 18, System.Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
             }
             return false;
         }

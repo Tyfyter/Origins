@@ -13,12 +13,12 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
     public class Riven_Foliage : ModTile, IGlowingModTile {
-        public Texture2D GlowTexture { get; private set; }
+        public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
         public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
         public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
-                GlowTexture = Mod.GetTexture("Tiles/Riven/Riven_Foliage_Glow");
+                GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Foliage_Glow");
             }
             Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = true;
@@ -32,7 +32,7 @@ namespace Origins.Tiles.Riven {
 			};
 
 			TileObjectData.addTile(Type);
-            soundType = SoundID.NPCKilled;
+            //soundType = SoundID.NPCKilled;
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects){
@@ -51,11 +51,11 @@ namespace Origins.Tiles.Riven {
                         case TileID.CorruptGrass:
                         Main.tile[i, j].TileType = TileID.CorruptPlants;
                         return true;
-                        case TileID.FleshGrass:
-                        Main.tile[i, j].TileType = TileID.FleshWeeds;
+                        case TileID.CrimsonGrass:
+                        Main.tile[i, j].TileType = TileID.CrimsonPlants;
                         return true;
                         case TileID.HallowedGrass:
-                        Main.tile[i, j].TileType = TileID.HallowedGrass;
+                        Main.tile[i, j].TileType = TileID.HallowedPlants;
                         return true;
                     }
                 } else {

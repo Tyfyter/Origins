@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.height = 50;
 			Item.useTime = 28;
 			Item.useAnimation = 28;
-			Item.useStyle = 1;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 7.5f;
 			Item.value = 5000;
             Item.useTurn = true;

@@ -24,24 +24,23 @@ namespace Origins.Items.Weapons.Summon {
         }
         public override void SetDefaults() {
             Item.damage = 80;
+            Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
             Item.mana = 20;
             Item.width = 32;
             Item.height = 32;
             Item.useTime = 36;
             Item.useAnimation = 36;
-            Item.useStyle = 1;
+            Item.useStyle = ItemUseStyleID.Swing;
             Item.value = Item.buyPrice(0, 30, 0, 0);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item44;
             Item.buffType = buffID;
             Item.shoot = projectileID;
             Item.noMelee = true;
-            Item.summon = true;
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            player.AddBuff(Item.buffType, 2);
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+		    player.AddBuff(Item.buffType, 2);
             position = Main.MouseWorld;
-            return true;
         }
     }
 }
@@ -383,7 +382,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
         }
         public override bool PreDraw(ref Color lightColor) {
             Texture2D texture = TextureAssets.Projectile[Projectile.type].Value;
-            spriteBatch.Draw(
+            Main.EntitySpriteDraw(
                 texture,
                 Projectile.Center - Main.screenPosition,
                 new Rectangle(0, Projectile.frame*52, 56, 50),
@@ -393,8 +392,8 @@ namespace Origins.Items.Weapons.Summon.Minions {
                 Projectile.scale,
                 Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
                 0);
-            spriteBatch.Draw(
-                ModContent.GetTexture("Origins/Items/Weapons/Summon/Minions/Happy_Boi_Glow"),
+            Main.EntitySpriteDraw(
+                Mod.Assets.Request<Texture2D>("Items/Weapons/Summon/Minions/Happy_Boi_Glow").Value,
                 Projectile.Center - Main.screenPosition,
                 new Rectangle(0, Projectile.frame*52, 56, 50),
                 Color.White,
