@@ -1,8 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -13,8 +15,9 @@ namespace Origins.Tiles.Defiled
 		private Mod mod => Origins.instance;
 
         public static Defiled_Tree Instance { get; private set; }
+		public override TreePaintingSettings TreeShaderSettings { get; }
 
-        internal static void Load() {
+		internal static void Load() {
             Instance = new Defiled_Tree();
         }
 
@@ -34,17 +37,24 @@ namespace Origins.Tiles.Defiled
 			return ModContent.ItemType<Defiled_Stone_Item>();//temporary drop type
 		}
 
-		public override Texture2D GetTexture() {
-			return mod.GetTexture("Tiles/Defiled/Defiled_Tree");
+		public override Asset<Texture2D> GetTexture() {
+			return mod.Assets.Request<Texture2D>("Tiles/Defiled/Defiled_Tree");
+		}
+		public override Asset<Texture2D> GetTopTextures() {
+			return mod.Assets.Request<Texture2D>("Tiles/Defiled/Defiled_Tree_Tops");
 		}
 
-		public override Texture2D GetTopTextures(int i, int j, ref int frame, ref int frameWidth, ref int frameHeight, ref int xOffsetLeft, ref int yOffset) {
-			return mod.GetTexture("Tiles/Defiled/Defiled_Tree_Tops");
+		public override Asset<Texture2D> GetBranchTextures() {
+			return mod.Assets.Request<Texture2D>("Tiles/Defiled/Defiled_Tree_Branches");
+		}
+		public override void SetStaticDefaults() {
+			throw new System.NotImplementedException();
 		}
 
-		public override Texture2D GetBranchTextures(int i, int j, int trunkOffset, ref int frame) {
-			return mod.GetTexture("Tiles/Defiled/Defiled_Tree_Branches");
+		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
+			throw new System.NotImplementedException();
 		}
+
 	}
     public class Defiled_Tree_Sapling : ModTile {
 		public override void SetStaticDefaults() {
@@ -81,7 +91,7 @@ namespace Origins.Tiles.Defiled
             //ModContent.GetModTile(ModContent.TileType("Defiled_Tree"));
 
 			sapling = true;
-			adjTiles = new int[] { TileID.Saplings };
+			AdjTiles = new int[] { TileID.Saplings };
 		}
 
 		public override void NumDust(int i, int j, bool fail, ref int num) => num = fail ? 1 : 3;

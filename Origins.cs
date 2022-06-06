@@ -318,7 +318,7 @@ namespace Origins {
                     };
 				}
             }
-            SetBonusTriggerKey = RegisterHotKey("Trigger Set Bonus", Keys.Q.ToString());
+            SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
             Sounds.Krunch = AddSound("Sounds/Custom/BurstCannon", SoundType.Item);
             Sounds.HeavyCannon = AddSound("Sounds/Custom/HeavyCannon", SoundType.Item);
             Sounds.EnergyRipple = AddSound("Sounds/Custom/EnergyRipple", SoundType.Item);
@@ -347,7 +347,7 @@ namespace Origins {
             On.Terraria.NPC.GetMeleeCollisionData += NPC_GetMeleeCollisionData;
             On.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
             On.Terraria.WorldGen.Convert+=OriginWorld.ConvertHook;
-            On.Terraria.Item.NewItem_int_int_int_int_int_int_bool_int_bool_bool+=OriginGlobalItem.NewItemHook;
+            On.Terraria.Item.NewItem_IEntitySource_int_int_int_int_int_int_bool_int_bool_bool+=OriginGlobalItem.NewItemHook;
             Mod blockSwap = ModLoader.GetMod("BlockSwap");
             if(!(blockSwap is null || blockSwap.Version>new Version(1,0,1)))On.Terraria.TileObject.CanPlace+=(On.Terraria.TileObject.orig_CanPlace orig, int x, int y, int type, int style, int dir, out TileObject objectData, bool onlyCheck, bool checkStay) => {
 				if (type == 20){
@@ -649,17 +649,17 @@ namespace Origins {
         public static short AddGlowMask(ModItem item, string suffix = "_Glow") {
             if (Main.netMode != NetmodeID.Server) {
                 string name = item.Texture + suffix;
-                if (!ModContent.TextureExists(name)) {
-                    return 0;
+                if (ModContent.RequestIfExists<Texture2D>(name, out Asset<Texture2D> asset)) {
+                    Asset<Texture2D>[] glowMasks = new Asset<Texture2D>[TextureAssets.GlowMask.Length + 1];
+                    for (int i = 0; i < TextureAssets.GlowMask.Length; i++) {
+                        glowMasks[i] = TextureAssets.GlowMask[i];
+                    }
+                    glowMasks[glowMasks.Length - 1] = asset;
+                    TextureAssets.GlowMask = glowMasks;
+                    return (short)(glowMasks.Length - 1);
                 }
-                Texture2D[] glowMasks = new Texture2D[TextureAssets.GlowMask.Value.Length + 1];
-                for (int i = 0; i < TextureAssets.GlowMask.Value.Length; i++) {
-                    glowMasks[i] = TextureAssets.GlowMask[i].Value;
-                }
-                glowMasks[glowMasks.Length - 1] = ModContent.GetTexture(name);
-                TextureAssets.GlowMask.Value = glowMasks;
-                return (short)(glowMasks.Length - 1);
-            } else return 0;
+            }
+            return 0;
         }
         public static int AddSound(string path, SoundType type = SoundType.Custom, ModSound modSound = null) {
             instance.AddSound(type, "Origins/"+path, modSound);

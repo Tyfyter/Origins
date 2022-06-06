@@ -29,12 +29,11 @@ namespace Origins.Items.Weapons.Other {
         public override Vector2? HoldoutOffset() {
             return new Vector2(-16,2);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            if(type==ProjectileID.Bullet)type = Item.shoot;
-            SoundEngine.PlaySound(SoundID.Item, position, 40);
-            SoundEngine.PlaySound(SoundID.Item, (int)position.X, (int)position.Y, 36, 0.75f);
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+		    if(type==ProjectileID.Bullet)type = Item.shoot;
+            SoundEngine.PlaySound(SoundID.Item40, position);
+            SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
             OriginGlobalProj.extraUpdatesNext = 2;
-            return true;
         }
     }
     public class Dreikan_Shot : ModProjectile {
@@ -45,7 +44,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
-            aiType = ProjectileID.ExplosiveBullet;
+			AIType = ProjectileID.ExplosiveBullet;
             Projectile.light = 0;
         }
         public override void AI() {

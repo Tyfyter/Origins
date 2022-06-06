@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Other {
         public override Vector2? HoldoutOffset() {
             return new Vector2(-1,0);
         }
-        public override bool HoldItemFrame(Player player) {
+        public override void HoldItemFrame(Player player) {
             if(Item.holdStyle==4) {
                 float rot = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.Zero).Y;//player.itemRotation * player.direction;
 		        player.bodyFrame.Y = player.bodyFrame.Height * 3;
@@ -43,12 +43,10 @@ namespace Origins.Items.Weapons.Other {
 				        player.bodyFrame.Y = player.bodyFrame.Height * 2;
 			        }
 		        }
-                return true;
             }
-            return false;
         }
         public override void HoldStyle(Player player) {
-            Item.holdStyle = ItemHoldStyleID.Default;
+            Item.holdStyle = ItemHoldStyleID.HoldFront;
             if(player.scope&&(PlayerInput.UsingGamepad?(PlayerInput.GamepadThumbstickRight.Length() != 0f||!Main.SmartCursorIsUsed):Main.mouseRight)) {
                 Item.holdStyle = 4;
 				player.itemLocation.X = player.Center.X - 17f - (player.direction * 2);
@@ -58,12 +56,10 @@ namespace Origins.Items.Weapons.Other {
                 player.itemRotation = diff.ToRotation()+(diff.X>0?0:MathHelper.Pi);
             }
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            if(type==ProjectileID.Bullet)type = ProjectileID.BulletHighVelocity;
-            player.velocity.X-=speedX/5;
-            player.velocity.Y-=speedY/5;
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+		    if(type==ProjectileID.Bullet)type = ProjectileID.BulletHighVelocity;
+            player.velocity-=velocity*0.2f;
             SoundEngine.PlaySound(SoundID.Item,(int)position.X,(int)position.Y,36, 0.75f);
-            return true;
         }
     }
 }

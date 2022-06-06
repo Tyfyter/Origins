@@ -149,7 +149,7 @@ namespace Origins.Items {
             }
             return 0;
         }
-        public static int BlockNewItem(OnTerraria.Item.orig_NewItem_IEntitySource_Vector2_int_int_int_int_bool_int_bool_bool orig, IEntitySource source, Vector2 pos, int Width, int Height, int Type, int Stack = 1, bool noBroadcast = false, int pfix = 0, bool noGrabDelay = false, bool reverseLookup = false) {
+        public static int BlockNewItem(OnTerraria.Item.orig_NewItem_IEntitySource_int_int_int_int_int_int_bool_int_bool_bool orig, IEntitySource source, int X, int Y, int Width, int Height, int Type, int Stack = 1, bool noBroadcast = false, int pfix = 0, bool noGrabDelay = false, bool reverseLookup = false) {
             if((ModContent.GetInstance<OriginWorld>().worldEvil&4)!=0) {
                 switch(Type) {
                     case ItemID.CorruptSeeds:
@@ -160,14 +160,14 @@ namespace Origins.Items {
                     break;
                 }
             }
-            return orig(source, pos, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+            return orig(source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
         }
-        internal static int NewItemHook(OnTerraria.Item.orig_NewItem_IEntitySource_Vector2_int_int_int_int_bool_int_bool_bool orig, IEntitySource source, Vector2 pos, int Width, int Height, int Type, int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup) {
+        internal static int NewItemHook(OnTerraria.Item.orig_NewItem_IEntitySource_int_int_int_int_int_int_bool_int_bool_bool orig, IEntitySource source, int X, int Y, int Width, int Height, int Type, int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup) {
             int num = 400;
             if (NPCLoader.blockLoot.Contains(Type)){
-                num = BlockNewItem(orig, source, pos, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+                num = BlockNewItem(orig, source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
             } else {
-                num = orig(source, pos, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
+                num = orig(source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
             }
             return num;
         }

@@ -1,4 +1,5 @@
 using Origins.Items.Materials;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,7 +12,7 @@ namespace Origins.Items.Tools {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.NightmarePickaxe);
 			Item.damage = 16;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
             Item.pick = 80;
 			Item.width = 34;
 			Item.height = 32;
@@ -27,7 +28,6 @@ namespace Origins.Items.Tools {
 			recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 12);
 			//recipe.AddIngredient(ModContent.ItemType<Riven_Sample>(), 6);
 			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
 			recipe.Register();
 		}
 	}

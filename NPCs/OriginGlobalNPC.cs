@@ -106,38 +106,38 @@ namespace Origins.NPCs {
 			return true;
 		}
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
-			Player player = spawnInfo.player;
+			Player player = spawnInfo.Player;
 			if (player.GetModPlayer<OriginPlayer>().ZoneDefiled) {
 				pool[0] = 0;
 
 				pool.Add(ModContent.NPCType<Defiled_Cyclops>(), DefiledWastelands.SpawnRates.Cyclops);
 
-				if (spawnInfo.playerFloorY <= Main.worldSurface + 50 && spawnInfo.spawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
+				if (spawnInfo.PlayerFloorY <= Main.worldSurface + 50 && spawnInfo.SpawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
 				if (Main.hardMode) {
 					pool.Add(ModContent.NPCType<Defiled_Hunter_Head>(), DefiledWastelands.SpawnRates.Hunter);
-					if (TileID.Sets.Conversion.Sand[Main.tile[spawnInfo.spawnTileX, spawnInfo.spawnTileY].TileType]) {
+					if (TileID.Sets.Conversion.Sand[Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType]) {
 						pool.Add(ModContent.NPCType<Defiled_Cyclops>(), DefiledWastelands.SpawnRates.Cyclops);
 					}
-					if (!spawnInfo.playerSafe) {
+					if (!spawnInfo.PlayerSafe) {
 						pool.Add(ModContent.NPCType<Defiled_Tripod>(), DefiledWastelands.SpawnRates.Tripod);
 					}
 				}
 
-				if (spawnInfo.spawnTileY > Main.worldSurface) {
-					if (!spawnInfo.playerSafe) {
+				if (spawnInfo.SpawnTileY > Main.worldSurface) {
+					if (!spawnInfo.PlayerSafe) {
 						pool.Add(ModContent.NPCType<Defiled_Digger_Head>(), DefiledWastelands.SpawnRates.Worm);
 					}
-					int yPos = spawnInfo.spawnTileY;
+					int yPos = spawnInfo.SpawnTileY;
 					Tile tile;
 					for (int i = 0; i < Defiled_Mite.spawnCheckDistance; i++) {
-						tile = Main.tile[spawnInfo.spawnTileX, ++yPos];
+						tile = Main.tile[spawnInfo.SpawnTileX, ++yPos];
 						if (tile.HasTile) {
 							yPos--;
 							break;
 						}
 					}
 					bool? halfSlab = null;
-					for (int i = spawnInfo.spawnTileX - 1; i < spawnInfo.spawnTileX + 2; i++) {
+					for (int i = spawnInfo.SpawnTileX - 1; i < spawnInfo.SpawnTileX + 2; i++) {
 						tile = Main.tile[i, yPos + 1];
 						if (!tile.HasTile || !Main.tileSolid[tile.TileType] || tile.Slope != SlopeID.None || (halfSlab.HasValue && halfSlab.Value != tile.IsHalfBlock)) {
 							goto SkipMiteSpawn;
@@ -146,9 +146,9 @@ namespace Origins.NPCs {
 					}
 					pool.Add(ModContent.NPCType<Defiled_Mite>(), DefiledWastelands.SpawnRates.Mite);
 					SkipMiteSpawn:;
-					if (Main.hardMode && !spawnInfo.playerSafe) {
+					if (Main.hardMode && !spawnInfo.PlayerSafe) {
 						pool.Add(ModContent.NPCType<Defiled_Mimic>(), DefiledWastelands.SpawnRates.Mimic);
-						if (spawnInfo.spawnTileY > Main.rockLayer) {
+						if (spawnInfo.SpawnTileY > Main.rockLayer) {
 							pool.Add(ModContent.NPCType<Enchanted_Trident>(), DefiledWastelands.SpawnRates.Bident);
 						}
 					}
@@ -162,7 +162,7 @@ namespace Origins.NPCs {
 
 				pool.Add(ModContent.NPCType<Riven.Riven_Tank>(), RivenHive.SpawnRates.Tank);
 
-				if (spawnInfo.water) pool.Add(ModContent.NPCType<Riven.Pustule_Jelly>(), RivenHive.SpawnRates.Jelly);
+				if (spawnInfo.Water) pool.Add(ModContent.NPCType<Riven.Pustule_Jelly>(), RivenHive.SpawnRates.Jelly);
 
 				//if (spawnInfo.playerFloorY <= Main.worldSurface + 50 && spawnInfo.spawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
 				if (Main.hardMode) {

@@ -11,7 +11,7 @@ namespace Origins.Items.Tools {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.TitaniumPickaxe);
 			Item.damage = 28;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
             Item.pick = 195;
 			Item.width = 34;
 			Item.height = 32;

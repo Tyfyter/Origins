@@ -609,9 +609,9 @@ namespace Origins {
 			}
             if (zoneDefiled) {
                 if (flag7 && Main.hardMode && Main.rand.NextBool(2)) {
-                    caughtType = ModContent.ItemType<Knee_Slapper>();
+                    itemDrop = ModContent.ItemType<Knee_Slapper>();
                 } else if (flag4 && !flag5) {
-                    caughtType = ModContent.ItemType<Prikish>();
+                    itemDrop = ModContent.ItemType<Prikish>();
                 }
             }
 		}
@@ -655,25 +655,6 @@ namespace Origins {
             }
             if (Origins.LeggingGlowMasks.TryGetValue(Player.legs, out Texture2D leggingMask)) {
                 layers.Insert(layers.IndexOf(PlayerLayer.Legs) + 1, CreateLegsGlowmask(leggingMask));
-            }
-            if (Player.itemAnimation != 0 && Player.HeldItem.ModItem is ICustomDrawItem) {
-                switch(Player.HeldItem.useStyle) {
-                    case 1:
-                    case 2:
-                    case 3:
-                    case 4:
-                    break;
-
-                    default:
-                    case 5:
-                    layers[layers.IndexOf(PlayerLayer.HeldItem)] = CustomShootLayer;
-                    CustomShootLayer.visible = true;
-                    break;
-                    /*default:
-                    layers[layers.IndexOf(PlayerLayer.HeldItem)] = SlashWrenchLayer;
-                    SlashWrenchLayer.visible = true;
-                    break;*/
-                }
             }
             if(itemLayerWrench && !Player.HeldItem.noUseGraphic) {
                 switch(Player.HeldItem.useStyle) {

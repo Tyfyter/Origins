@@ -570,16 +570,16 @@ namespace Origins.World {
                 tile.IsHalfBlock = true;
                 break;
                 case t|l:
-                tile.Slope = SlopeID.TopLeft;
+                tile.Slope = SlopeType.SlopeUpLeft;
                 break;
                 case t|r:
-                tile.Slope = SlopeID.TopRight;
+                tile.Slope = SlopeType.SlopeUpRight;
                 break;
                 case b|l:
-                tile.Slope = SlopeID.BottomLeft;
+                tile.Slope = SlopeType.SlopeDownLeft;
                 break;
                 case b|r:
-                tile.Slope = SlopeID.BottomRight;
+                tile.Slope = SlopeType.SlopeDownRight;
                 break;
                 default:
                 if(sloped) {
@@ -610,40 +610,40 @@ namespace Origins.World {
                 tile.IsHalfBlock = true;
                 break;
                 case t|l:
-                tile.Slope = SlopeID.TopLeft;
+                tile.Slope = SlopeType.SlopeUpLeft;
                 break;
                 case t|r:
-                tile.Slope = SlopeID.TopRight;
+                tile.Slope = SlopeType.SlopeUpRight;
                 break;
                 case b|l:
-                tile.Slope = SlopeID.BottomLeft;
+                tile.Slope = SlopeType.SlopeDownLeft;
                 break;
                 case b|r:
-                tile.Slope = SlopeID.BottomRight;
+                tile.Slope = SlopeType.SlopeDownRight;
                 break;
                 case b|bl:
-                tile.Slope = SlopeID.BottomRight;
+                tile.Slope = SlopeType.SlopeDownRight;
                 break;
                 case b|br:
-                tile.Slope = SlopeID.BottomLeft;
+                tile.Slope = SlopeType.SlopeDownLeft;
                 break;
                 case t|tl:
-                tile.Slope = SlopeID.TopRight;
+                tile.Slope = SlopeType.SlopeUpRight;
                 break;
                 case t|tr:
-                tile.Slope = SlopeID.TopLeft;
+                tile.Slope = SlopeType.SlopeUpLeft;
                 break;
                 case l|tl:
-                tile.Slope = SlopeID.BottomLeft;
+                tile.Slope = SlopeType.SlopeDownLeft;
                 break;
                 case l|bl:
-                tile.Slope = SlopeID.TopLeft;
+                tile.Slope = SlopeType.SlopeUpLeft;
                 break;
                 case r|tr:
-                tile.Slope = SlopeID.BottomRight;
+                tile.Slope = SlopeType.SlopeDownRight;
                 break;
                 case r|br:
-                tile.Slope = SlopeID.BottomLeft;
+                tile.Slope = SlopeType.SlopeDownLeft;
                 break;
                 default:
                 if(sloped) {

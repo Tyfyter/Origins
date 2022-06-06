@@ -202,10 +202,8 @@ namespace Origins.Items.Weapons.Explosives {
             Projectile.width = Projectile.height = 5;
             Projectile.penetrate = -1;
             Projectile.tileCollide = false;
-            if(!Main.projectileLoaded[694]&&Main.netMode!=NetmodeID.Server) {
+            if(Main.netMode!=NetmodeID.Server && !TextureAssets.Projectile[694].IsLoaded) {
                 Main.instance.LoadProjectile(694);
-                TextureAssets.Projectile[694].Value = Main.instance.OurLoad<Texture2D>(string.Concat(new object[] { "Images", Path.DirectorySeparatorChar, "Projectile_694" }));
-                Main.projectileLoaded[694] = true;
             }
         }
         public override void AI() {

@@ -24,9 +24,8 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.rare = ItemRarityID.Blue;
 		}
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Mod.CreateRecipe(Type, 4);
             recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
-            recipe.SetResult(this, 4);
             recipe.Register();
             Origins.AddExplosive(Item, noAmmo:true);
         }

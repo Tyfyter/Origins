@@ -18,6 +18,7 @@ using Origins.Walls;
 using static Origins.OriginWorld.LootQueueAction;
 using Origins.Tiles.Riven;
 using Origins.Tiles.Brine;
+using Origins.World;
 
 namespace Origins {
     public partial class OriginWorld : ModSystem {
@@ -55,11 +56,12 @@ namespace Origins {
             defiledAltResurgenceTiles = new List<(int, int, ushort)>(){};
         }
         public override void SaveWorldData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */ {
-            TagCompound o = new TagCompound() { {"peatSold",  peatSold}, {"worldEvil",  worldEvil}, { "defiledHearts", Defiled_Hearts.Select(Utils.ToVector2).ToList() } };
+            tag.Add("peatSold", peatSold);
+            tag.Add("worldEvil", worldEvil);
+            tag.Add( "defiledHearts", Defiled_Hearts.Select(Utils.ToVector2).ToList());
             if(_worldSurfaceLow.HasValue) {
-                o.Add("worldSurfaceLow", _worldSurfaceLow);
+                tag.Add("worldSurfaceLow", _worldSurfaceLow);
             }
-            return o;
         }
         public override void ResetNearbyTileEffects() {
 			voidTiles = 0;

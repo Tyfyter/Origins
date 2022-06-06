@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Riven {
 
         public override void SetDefaults(){
             Item.damage = 42;
-            Item.magic = true;
+            Item.DamageType = DamageClass.Magic;
             Item.mana = 8;
             Item.shoot = ModContent.ProjectileType<Seam_Beam_Beam>();
             Item.shootSpeed = 0f;
@@ -39,7 +39,6 @@ namespace Origins.Items.Weapons.Riven {
         public override void AddRecipes() {
             Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddTile(TileID.DemonAltar);
-            recipe.SetResult(this);
             recipe.Register();
         }
         public override bool AltFunctionUse(Player player) {
@@ -66,7 +65,7 @@ namespace Origins.Items.Weapons.Riven {
             Projectile.friendly = true;     //this defines if the projectile is friendly
             Projectile.penetrate = -1;  //this defines the projectile penetration, -1 = infinity
             Projectile.tileCollide = true;   //this defines if the tile can collide with walls
-            Projectile.magic = true;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.timeLeft = 32;
             //projectile.hide = true;
         }

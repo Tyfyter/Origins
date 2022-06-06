@@ -1046,26 +1046,6 @@ namespace Origins {
                 }
             }
         }
-        public static int GetWeaponCrit(this Player player, Item item) {
-            int crit = 4+item.crit;
-            if(item.melee) {
-                crit+=player.meleeCrit-4;
-                if(player.HeldItem.melee)crit-=player.HeldItem.crit;
-            }
-            if(item.ranged) {
-                crit+=player.rangedCrit-4;
-                if(player.HeldItem.ranged)crit-=player.HeldItem.crit;
-            }
-            if(item.magic) {
-                crit+=player.magicCrit-4;
-                if(player.HeldItem.magic)crit-=player.HeldItem.crit;
-            }
-            /*if(IsExplosive(item)) {
-                crit+=player.GetModPlayer<OriginPlayer>().explosiveCrit-4;
-                if(IsExplosive(player.HeldItem))crit-=player.HeldItem.crit;
-            }*/
-            return crit;
-        }
         public static Vector2 TakeAverage(this List<Vector2> vectors) {
             Vector2 sum = default;
             int count = vectors.Count;
@@ -1271,7 +1251,7 @@ namespace Origins {
         }
         public static void DrawLightningArc(this SpriteBatch spriteBatch, Vector2[] positions, Texture2D texture = null, float scale = 1f, params (float scale, Color color)[] colors) {
             if(texture is null) {
-                texture = Main.extraTexture[33];
+                texture = TextureAssets.Extra[33].Value;
             }
             Vector2 size;
             int colorLength = colors.Length;

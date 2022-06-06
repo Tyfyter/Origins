@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Other {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Katana);
             Item.damage = 23;
-            Item.melee = true;
+            Item.DamageType = DamageClass.Melee;
             Item.noUseGraphic = false;
             Item.noMelee = false;
             Item.width = 46;

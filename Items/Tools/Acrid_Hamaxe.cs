@@ -11,7 +11,7 @@ namespace Origins.Items.Tools {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.TitaniumWaraxe);
 			Item.damage = 31;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
             Item.pick = 0;
             Item.hammer = 65;
             Item.axe = 22;

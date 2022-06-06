@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using Terraria.GameContent;
 
 namespace Origins.Items.Tools {
 	public class Lightning_Rod : ModItem {
@@ -28,7 +29,6 @@ namespace Origins.Items.Tools {
 			Recipe recipe = Mod.CreateRecipe(Type);
 			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 8);
 			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
 			recipe.Register();
 		}
 	}
@@ -40,7 +40,7 @@ namespace Origins.Items.Tools {
 
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BobberReinforced);
-			drawOriginOffsetY = -8;
+			DrawOriginOffsetY = -8;
 		}
 
 		public override bool PreDrawExtras() {
@@ -143,7 +143,8 @@ namespace Origins.Items.Tools {
 				//This color decides the color of the fishing line. The color is randomized as decided in the AI.
 				Color lineColor = Lighting.GetColor((int)lineOrigin.X / 16, (int)(lineOrigin.Y / 16f), fishingLineColor);
 				float rotation = playerToProjectile.ToRotation() - MathHelper.PiOver2;
-				Main.spriteBatch.Draw(Main.fishingLineTexture, new Vector2(lineOrigin.X - Main.screenPosition.X + Main.fishingLineTexture.Width * 0.5f, lineOrigin.Y - Main.screenPosition.Y + Main.fishingLineTexture.Height * 0.5f), new Rectangle(0, 0, Main.fishingLineTexture.Width, (int)height), lineColor, rotation, new Vector2(Main.fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
+				Texture2D fishingLineTexture = TextureAssets.FishingLine.Value;
+				Main.spriteBatch.Draw(fishingLineTexture, new Vector2(lineOrigin.X - Main.screenPosition.X + fishingLineTexture.Width * 0.5f, lineOrigin.Y - Main.screenPosition.Y + fishingLineTexture.Height * 0.5f), new Rectangle(0, 0, fishingLineTexture.Width, (int)height), lineColor, rotation, new Vector2(fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
 			}
 			return false;
 		}

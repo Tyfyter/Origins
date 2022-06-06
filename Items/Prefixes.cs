@@ -10,9 +10,6 @@ using Microsoft.Xna.Framework;
 namespace Origins.Items {
     public class Heavy_Cal_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Ranged;
-        public override bool Autoload(ref string name) {
-            return true;
-        }
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Heavy Caliber");
         }

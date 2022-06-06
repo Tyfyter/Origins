@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -14,7 +15,7 @@ namespace Origins.Items.Weapons.Felnum {
 		}
 		public override void SetDefaults() {
 			Item.damage = baseDamage;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
             Item.noMelee = true;
             Item.noUseGraphic = true;
 			Item.width = 48;
@@ -35,7 +36,6 @@ namespace Origins.Items.Weapons.Felnum {
             Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 8);
             recipe.AddTile(TileID.Anvils);
-            recipe.SetResult(this);
             recipe.Register();
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
@@ -97,7 +97,7 @@ namespace Origins.Items.Weapons.Felnum {
             }
         }
         public override bool PreDraw(ref Color lightColor){
-            Main.EntitySpriteDraw(Main., (Projectile.Center) - Main.screenPosition, new Rectangle(0, 0, 72, 72), lightColor, Projectile.rotation, new Vector2(62,8), Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, (Projectile.Center) - Main.screenPosition, new Rectangle(0, 0, 72, 72), lightColor, Projectile.rotation, new Vector2(62,8), Projectile.scale, SpriteEffects.None, 0);
             return false;
         }
     }

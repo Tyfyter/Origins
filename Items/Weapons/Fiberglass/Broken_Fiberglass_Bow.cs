@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Fiberglass {
 		}
 		public override void SetDefaults() {
 			Item.damage = 17;
-			Item.ranged = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.noMelee = true;
 			Item.noUseGraphic = false;
 			Item.width = 18;
@@ -51,7 +51,7 @@ namespace Origins.Items.Weapons.Fiberglass {
             strung = tag.GetInt("strung");
         }
         public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */ {
-            return new TagCompound() {{"strung", strung}};
+            tag.Add("strung", strung);
         }
         public override void HoldItem(Player player) {
             if(player.itemAnimation!=0)player.GetModPlayer<OriginPlayer>().itemLayerWrench = true;
@@ -89,7 +89,7 @@ namespace Origins.Items.Weapons.Fiberglass {
             }
             return base.CanUseItem(player);
         }
-        public override bool ConsumeAmmo(Player player) {
+		public override bool CanConsumeAmmo(Item ammo, Player player) {
             return player.altFunctionUse != 2;
         }
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
@@ -101,7 +101,7 @@ namespace Origins.Items.Weapons.Fiberglass {
             if(Main.playerInventory)return;
             float inventoryScale = Main.inventoryScale;
             string str = strung.ToString();
-			ChatManager.DrawColorCodedStringWithShadow(spriteBatch, Main.fontItemStack, str, position + new Vector2(16f+str.Length, -4f) * scale, Colors.RarityNormal, 0f, Vector2.Zero, new Vector2(scale * 0.8f), -1f, scale);
+			ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.ItemStack.Value, str, position + new Vector2(16f+str.Length, -4f) * scale, Colors.RarityNormal, 0f, Vector2.Zero, new Vector2(scale * 0.8f), -1f, scale);
         }
     }
 }

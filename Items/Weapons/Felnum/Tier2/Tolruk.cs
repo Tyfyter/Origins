@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         }
         public override void SetDefaults() {
             Item.damage = 37;
-            Item.ranged = true;
+            Item.DamageType = DamageClass.Ranged;
             Item.noMelee = true;
             Item.width = 18;
             Item.height = 36;

@@ -5,6 +5,7 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
 using Origins.Tiles.Riven;
 using Origins.Walls;
+using Origins.World;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,10 @@ using System.Reflection;
 using Terraria;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
+using Terraria.IO;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-using Terraria.World.Generation;
+using Terraria.WorldBuilding;
 using static Terraria.ModLoader.ModContent;
 using static Terraria.WorldGen;
 
@@ -46,11 +48,11 @@ namespace Origins {
             }));*/
             #endregion _
             ConvertableFieldInfo<int> _JungleX = new ConvertableFieldInfo<int>(typeof(WorldGen).GetField("JungleX", BindingFlags.NonPublic | BindingFlags.Static));
-            tasks.Insert(0, new PassLegacy("setting worldEvil type", (GenerationProgress progress)=>{worldEvil|=crimson?evil_crimson:evil_corruption;}));
+            tasks.Insert(0, new PassLegacy("setting worldEvil type", (GenerationProgress progress, GameConfiguration _) =>{worldEvil|=crimson?evil_crimson:evil_corruption;}));
             int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
             if(genIndex != -1) {
                 int duskStoneID = TileType<Dusk_Stone>();
-                tasks.Insert(genIndex + 1, new PassLegacy("Dusk Biome", delegate (GenerationProgress progress) {
+                tasks.Insert(genIndex + 1, new PassLegacy("Dusk Biome", delegate (GenerationProgress progress, GameConfiguration _) {
                     progress.Message = "Generating Dusk Biome";
                     //for(int i = 0; i < Main.maxTilesX / 900; i++) {       //900 is how many biomes. the bigger is the number = less biomes
                     int X = (int)(Main.maxTilesX*0.4);//WorldGen.genRand.Next(1, Main.maxTilesX - 300);
@@ -117,7 +119,7 @@ namespace Origins {
                     }
                     //}
                 }));
-                tasks.Insert(genIndex + 1, new PassLegacy("Brine Pool", delegate (GenerationProgress progress) {
+                tasks.Insert(genIndex + 1, new PassLegacy("Brine Pool", delegate (GenerationProgress progress, GameConfiguration _) {
                     Mod.Logger.Info("Pooling Brine");
                     progress.Message = "Pooling Brine";
                     //for (int i = 0; i < Main.maxTilesX / 5000; i++) {
@@ -153,7 +155,7 @@ namespace Origins {
                 ushort hardenedSandType = TileID.HardenedSand;
                 ushort iceType = TileID.IceBlock;
                 List<(Point, int)> EvilSpikes = new List<(Point, int)>() { };
-                tasks[genIndex] = new PassLegacy("Corruption", (GenerationProgress progress) => {
+                tasks[genIndex] = new PassLegacy("Corruption", (GenerationProgress progress, GameConfiguration _) => {
                     int JungleX = (int)_JungleX;
                     worldEvil = crimson ? evil_riven : evil_wastelands;
                     if(crimson) {
@@ -503,7 +505,7 @@ namespace Origins {
                 });
                 
                 genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Altars"));
-                tasks.Insert(genIndex+1, new PassLegacy("Alternate World Evil Altars", (GenerationProgress progress) => {
+                tasks.Insert(genIndex+1, new PassLegacy("Alternate World Evil Altars", (GenerationProgress progress, GameConfiguration _) => {
                     ushort oreType = crimson ? TileID.Crimtane : TileID.Demonite;
                     ushort altOreType = (ushort)(crimson ? TileType<Infested_Ore>() : TileType<Defiled_Ore>());
                     ushort altarType = (ushort)(crimson ? TileType<Riven_Altar>() : TileType<Defiled_Altar>());
@@ -519,7 +521,7 @@ namespace Origins {
                     }
                 }));
                 genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Weeds"));
-                tasks.Insert(genIndex+1, new PassLegacy("Evil Weeds and Sand", (GenerationProgress progress) => {
+                tasks.Insert(genIndex+1, new PassLegacy("Evil Weeds and Sand", (GenerationProgress progress, GameConfiguration _) => {
                     int tilesSinceSpike = 0;
                     for(int i = 0; i < Main.maxTilesX; i++) {
                         for(int j = 1; j < Main.maxTilesY; j++) {
@@ -549,7 +551,7 @@ namespace Origins {
                     crimson = true;
                 }));
                 genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
-                tasks.Insert(genIndex+1, new PassLegacy("Evil Biome Cleanup and Features", (GenerationProgress progress) => {
+                tasks.Insert(genIndex+1, new PassLegacy("Evil Biome Cleanup and Features", (GenerationProgress progress, GameConfiguration _) => {
                     while(EvilSpikes.Count>0) {
                         (Point pos, int size) i = EvilSpikes[0];
                         Point p = i.pos;
@@ -703,9 +705,9 @@ namespace Origins {
                 iceType = (ushort)TileType<Defiled_Ice>();
                 break;
                 case evil_riven:
-                stoneType = (ushort)TileType<Tiles.Riven.Riven_Flesh>();
+                stoneType = (ushort)TileType<Riven_Flesh>();
                 grassType = stoneType;
-                plantType = (ushort)TileType<Tiles.Riven.Riven_Foliage>();
+                plantType = (ushort)TileType<Riven_Foliage>();
                 sandType = stoneType;
                 sandstoneType = stoneType;
                 hardenedSandType = stoneType;
@@ -713,8 +715,8 @@ namespace Origins {
                 break;
                 case evil_crimson:
                 stoneType = TileID.Crimstone;
-                grassType = TileID.FleshGrass;
-                plantType = TileID.FleshWeeds;
+                grassType = TileID.CrimsonGrass;
+                plantType = TileID.CrimsonPlants;
                 sandType = TileID.Crimsand;
                 sandstoneType = TileID.CrimsonSandstone;
                 hardenedSandType = TileID.CrimsonHardenedSand;

@@ -68,7 +68,7 @@ namespace Origins.Projectiles {
                 break;
             }
             if(felnumEffect) {
-                if(projectile.melee) {
+                if(projectile.CountsAsClass(DamageClass.Melee)) {
                     if(Main.player[projectile.owner].GetModPlayer<OriginPlayer>().felnumShock>19)Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1)*0.5f, Scale:0.5f);
                 } else Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1)*0.5f, Scale:0.5f);
             }

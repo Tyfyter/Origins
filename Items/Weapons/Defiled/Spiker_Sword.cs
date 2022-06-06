@@ -1,4 +1,5 @@
 using Origins.Items.Materials;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,7 +11,7 @@ namespace Origins.Items.Weapons.Defiled {
 		}
 		public override void SetDefaults() {
 			Item.damage = 30;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 42;
 			Item.height = 50;
 			Item.useTime = 28;
@@ -26,15 +27,14 @@ namespace Origins.Items.Weapons.Defiled {
 			Recipe recipe = Mod.CreateRecipe(Type);
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10);
 			recipe.AddTile(TileID.Anvils);
-			recipe.SetResult(this);
 			recipe.Register();
-			recipe = Mod.CreateRecipe(Type);
+
+			recipe = Mod.CreateRecipe(ItemID.NightsEdge);
 			recipe.AddIngredient(this);
 			recipe.AddIngredient(ItemID.Muramasa);
 			recipe.AddIngredient(ItemID.BladeofGrass);
 			recipe.AddIngredient(ItemID.FieryGreatsword);
 			recipe.AddTile(TileID.DemonAltar);
-			recipe.SetResult(ItemID.NightsEdge);
 			recipe.Register();
 		}
 	}

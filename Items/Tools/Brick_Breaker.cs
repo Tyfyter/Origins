@@ -12,7 +12,7 @@ namespace Origins.Items.Tools {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.DeathbringerPickaxe);
 			Item.damage = 14;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
             Item.pick = 0;
             Item.hammer = 60;
 			Item.width = 34;
