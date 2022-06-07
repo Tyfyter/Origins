@@ -16,7 +16,8 @@ namespace Origins.Items.Weapons.Other {
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.SniperRifle);
-            Item.damage = 66;
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Item.damage = 66;
             Item.crit = 26;
             Item.useAnimation = 33;
             Item.useTime = 11;
@@ -40,10 +41,11 @@ namespace Origins.Items.Weapons.Other {
         public override string Texture => "Terraria/Images/Projectile_286";
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dreikan");
-            Origins.ExplosiveProjectiles[Projectile.type] = true;
+            //Origins.ExplosiveProjectiles[Projectile.type] = true;
         }
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			AIType = ProjectileID.ExplosiveBullet;
             Projectile.light = 0;
         }

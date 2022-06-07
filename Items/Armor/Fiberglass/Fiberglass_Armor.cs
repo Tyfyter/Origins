@@ -8,7 +8,7 @@ namespace Origins.Items.Armor.Fiberglass {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Helmet");
 			Tooltip.SetDefault("This doesn't seem very protective");
-			ArmorIDs.Head.Sets.DrawHatHair[Type] = true;
+			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
 		}
 		public override void SetDefaults() {
             Item.defense = 5;
@@ -28,8 +28,8 @@ namespace Origins.Items.Armor.Fiberglass {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Pauldrons");
 			Tooltip.SetDefault("These don't seem very protective");
-			ArmorIDs.Body.Sets.HidesTopSkin[Type] = false;
-			ArmorIDs.Body.Sets.HidesBottomSkin[Type] = false;
+			ArmorIDs.Body.Sets.HidesTopSkin[Item.bodySlot] = false;
+			ArmorIDs.Body.Sets.HidesBottomSkin[Item.bodySlot] = false;
 		}
 		public override void SetDefaults() {
             Item.defense = 6;

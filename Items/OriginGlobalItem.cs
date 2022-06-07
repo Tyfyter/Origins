@@ -20,16 +20,32 @@ namespace Origins.Items {
                 case ItemID.Grenade:
                 item.damage = (int)(item.damage*0.8);
                 item.ammo = ItemID.Grenade;
+                item.DamageType = DamageClasses.Explosive;
                 break;
                 case ItemID.BouncyGrenade:
                 case ItemID.StickyGrenade:
                 case ItemID.PartyGirlGrenade:
                 case ItemID.Beenade:
                 item.ammo = ItemID.Grenade;
+                item.DamageType = DamageClasses.Explosive;
                 break;
+
                 case ItemID.Fireblossom:
                 item.ammo = ItemID.Fireblossom;
                 item.consumable = true;
+                break;
+                case ItemID.Bomb:
+                case ItemID.BouncyBomb:
+                case ItemID.StickyBomb:
+                case ItemID.Dynamite:
+                case ItemID.BouncyDynamite:
+                case ItemID.StickyDynamite:
+                case ItemID.BombFish:
+                case ItemID.MolotovCocktail:
+                item.DamageType = DamageClasses.Explosive;
+                break;
+                case ItemID.HellfireArrow:
+                item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
                 break;
             }
             if(OriginConfig.Instance.WoodBuffs)switch(item.type) {
@@ -54,23 +70,13 @@ namespace Origins.Items {
                 break;
             }
 		}
-        public override void ModifyWeaponCrit(Item item, Player player, ref float crit) {
-            if(IsExplosive(item)) {
-                //int c = crit;
-                crit+=player.GetModPlayer<OriginPlayer>().explosiveCrit-4;
-                //int c2 = crit;
-                if(IsExplosive(player.HeldItem))crit-=player.HeldItem.crit;
-                //player.chatOverhead.NewMessage($"{c}->{c2}->{crit}",5);
-            }
-        }
         public override void UpdateEquip(Item item, Player player) {
-            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
             switch(item.type) {
                 case ItemID.MiningHelmet:
-                originPlayer.explosiveCrit+=3;
+                player.GetCritChance(DamageClasses.Explosive)+=3;
                 break;
                 case ItemID.MiningShirt:
-                originPlayer.explosiveDamage+=0.05f;
+                player.GetDamage(DamageClasses.Explosive) += 0.05f;
                 break;
             }
         }
@@ -104,7 +110,7 @@ namespace Origins.Items {
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
             try {
-                if(IsExplosive(item)) {
+                if(item.CountsAsClass(DamageClasses.Explosive)) {
                     if(NeedsDamageLine(item)&&Origins.ExplosiveBaseDamage.ContainsKey(item.type)) {
                         Main.HoverItem.damage = Origins.ExplosiveBaseDamage[item.type];
                         Player player = Main.player[item.playerIndexTheItemIsReservedFor];
@@ -132,10 +138,6 @@ namespace Origins.Items {
             } catch(Exception e) {
                 Mod.Logger.Error(e);
             }
-        }
-        [Obsolete]
-        public static bool IsExplosive(Item item) {
-            return Origins.ExplosiveItems[item.type]||Origins.ExplosiveAmmo[item.ammo]||Origins.ExplosiveAmmo[item.useAmmo]||Origins.ExplosiveProjectiles[item.shoot];
         }
         [Obsolete]
         public static bool NeedsDamageLine(Item item) {

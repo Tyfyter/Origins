@@ -13,6 +13,7 @@ namespace Origins.Items.Weapons.Explosives {
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Snowball);
+            Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
             //item.maxStack = 999;
             Item.damage*=3;
 			Item.value+=20;
@@ -27,7 +28,6 @@ namespace Origins.Items.Weapons.Explosives {
             Recipe recipe = Mod.CreateRecipe(Type, 4);
             recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
             recipe.Register();
-            Origins.AddExplosive(Item, noAmmo:true);
         }
     }
     public class Peatball_P : ModProjectile {

@@ -28,7 +28,7 @@ namespace Origins.Projectiles.Weapons {
             Projectile.aiStyle = 1;
             Projectile.extraUpdates++;
             Projectile.timeLeft = 300;
-            Projectile.DamageType = damageType;
+            Projectile.DamageType = damageType ?? DamageClass.Magic;
         }
         public override void AI() {
             Lighting.AddLight(Projectile.Center, 0.75f, 0.35f, 0f);

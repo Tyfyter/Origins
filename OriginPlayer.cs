@@ -67,8 +67,6 @@ namespace Origins {
         #endregion
 
         #region explosive stats
-        public float explosiveDamage = 1;
-        public int explosiveCrit = 4;
         public float explosiveThrowSpeed = 1;
         public float explosiveSelfDamage = 1;
         #endregion
@@ -173,13 +171,8 @@ namespace Origins {
             rasterize = false;
             decayingScale = false;
             toxicShock = false;
-            explosiveDamage = 1f;
-            explosiveCrit = 4;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;
-            if(IsExplosive(Player.HeldItem)) {
-                explosiveCrit += Player.HeldItem.crit;
-            }
             if(cryostenLifeRegenCount>0)
                 cryostenLifeRegenCount--;
             if(dimStarlightCooldown>0)
@@ -341,7 +334,7 @@ namespace Origins {
 		    if(advancedImaging) {
                 velocity*=1.3f;
             }
-            if(IsExplosive(item)) {
+            if(item.CountsAsClass(DamageClasses.Explosive)) {
                 if(item.useAmmo == 0) {
                     velocity *= explosiveThrowSpeed;
                 }
@@ -429,14 +422,16 @@ namespace Origins {
             }
         }
         public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
-            if(proj.owner == Player.whoAmI && proj.friendly && OriginGlobalProj.IsExplosiveProjectile(proj)) {
+            if(proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
+                float damageVal = damage;
                 if(minerSet) {
                     explosiveSelfDamage-=0.2f;
-                    explosiveSelfDamage*=1/explosiveDamage;
+                    float inverseDamage = Player.GetDamage(DamageClasses.Explosive).ApplyTo(damage);
+                    damageVal -= inverseDamage - damage;
                     //damage = (int)(damage/explosiveDamage);
                     //damage-=damage/5;
                 }
-                damage = (int)(damage*explosiveSelfDamage);
+                damage = (int)(damageVal * explosiveSelfDamage);
             }
         }
         public override void OnHitByNPC(NPC npc, int damage, bool crit) {

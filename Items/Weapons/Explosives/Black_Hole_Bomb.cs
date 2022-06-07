@@ -29,9 +29,6 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.rare = ItemRarityID.Green;
             Item.color = Color.Black;
 		}
-        public override void AddRecipes() {
-            Origins.AddExplosive(Item);
-        }
     }
     public class Black_Hole_Bomb_P : ModProjectile {
         const int initDur = 5;

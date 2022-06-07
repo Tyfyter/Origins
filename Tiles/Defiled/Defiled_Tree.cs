@@ -48,11 +48,13 @@ namespace Origins.Tiles.Defiled
 			return mod.Assets.Request<Texture2D>("Tiles/Defiled/Defiled_Tree_Branches");
 		}
 		public override void SetStaticDefaults() {
-			throw new System.NotImplementedException();
+			GrowsOnTileId = new int[] {
+
+			};
 		}
 
 		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
-			throw new System.NotImplementedException();
+			
 		}
 
 	}

@@ -19,7 +19,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Plague Texan's Surprisingly Affordable Style");
 			Tooltip.SetDefault("Great for impersonating Origins devs!'\n");
-            ArmorIDs.Body.Sets.HidesHands[Type] = false;
+            ArmorIDs.Body.Sets.HidesHands[Item.bodySlot] = false;
 		}
         public override void SetDefaults() {
             Item.vanity = true;

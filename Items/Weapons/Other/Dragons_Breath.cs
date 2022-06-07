@@ -18,6 +18,7 @@ namespace Origins.Items.Weapons.Other {
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.SniperRifle);
+            Item.DamageType = DamageClasses.Explosive;
             Item.damage = 25;
             Item.crit = 11;
             Item.useAnimation = 43;
@@ -39,10 +40,11 @@ namespace Origins.Items.Weapons.Other {
         List<Particle> particles;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dragon's Breath");
-            Origins.ExplosiveProjectiles[Projectile.type] = true;
+            //Origins.ExplosiveProjectiles[Projectile.type] = true;
         }
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
+            Projectile.DamageType = DamageClasses.Explosive;
             Projectile.aiStyle = 0;
             Projectile.ignoreWater = false;
             Projectile.extraUpdates = 0;

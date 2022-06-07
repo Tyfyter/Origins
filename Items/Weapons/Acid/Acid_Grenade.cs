@@ -27,9 +27,6 @@ namespace Origins.Items.Weapons.Acid {
 			Item.rare = ItemRarityID.Lime;
             Item.glowMask = glowmask;
         }
-        public override void AddRecipes() {
-            Origins.AddExplosive(Item);
-        }
     }
     public class Acid_Grenade_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Acid/Acid_Grenade";

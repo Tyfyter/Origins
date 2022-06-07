@@ -19,7 +19,6 @@ namespace Origins.Items.Weapons.Explosives {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Caustica");
 			Tooltip.SetDefault("");
-            Origins.ExplosiveItems[Item.type] = true;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);
@@ -50,11 +49,12 @@ namespace Origins.Items.Weapons.Explosives {
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Caustica");
-            Origins.ExplosiveProjectiles[Projectile.type] = true;
+            //Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override string Texture => "Origins/Projectiles/Pixel";
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Bullet);
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
             Projectile.aiStyle = 0;
             Projectile.penetrate = -1;
             Projectile.extraUpdates = 0;

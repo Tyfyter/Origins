@@ -8,7 +8,6 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Grenade");
 			Tooltip.SetDefault("Be careful, it's not book");
-            Origins.ExplosiveItems[Item.type] = true;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Grenade);
@@ -27,10 +26,11 @@ namespace Origins.Items.Weapons.Explosives {
         public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Grenade";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Grenade");
-            Origins.ExplosiveProjectiles[Projectile.type] = true;
+            //Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Grenade);
+            Projectile.DamageType = DamageClasses.Explosive;
             Projectile.timeLeft = 135;
         }
         public override bool OnTileCollide(Vector2 oldVelocity) {

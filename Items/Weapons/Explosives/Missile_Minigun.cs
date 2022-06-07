@@ -31,9 +31,6 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.rare = ItemRarityID.Lime;
             Item.autoReuse = true;
 		}
-        public override void AddRecipes() {
-            Origins.AddExplosive(Item);
-        }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			type = Item.shoot+(type-Item.shoot)/3;
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 8);

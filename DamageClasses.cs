@@ -46,13 +46,16 @@ namespace Origins {
 	}
 	[Autoload(false)]
 	public class ExplosivePlus : DamageClass {
+		private string name;
+		public override string Name => name;
 		DamageClass other;
-		public ExplosivePlus(DamageClass other) {
+		public ExplosivePlus(DamageClass other, string name) {
 			this.other = other;
+			this.name = name;
 		}
 		internal static ExplosivePlus CreateAndRegister(DamageClass other) {
-			ExplosivePlus newClass = new(other);
-			newClass.Register();
+			ExplosivePlus newClass = new(other, "ExplosivePlus"+other.ClassName.GetTranslation(Terraria.Localization.GameCulture.DefaultCulture));
+			typeof(ILoadable).GetMethod("Load").Invoke(newClass, new object[]{ Origins.instance });
 			return newClass;
 		}
 		public override void SetStaticDefaults() {
@@ -68,7 +71,7 @@ namespace Origins {
 			return other.GetModifierInheritance(damageClass);
 		}
 		public override void SetDefaultStats(Player player) {
-			//player.GetCritChance(this) += 4;
+			player.GetCritChance(this) -= 4;
 		}
 	}
 	public class Ranged_Magic : DamageClass {
@@ -82,10 +85,10 @@ namespace Origins {
 			return StatInheritanceData.None;
 		}
 		public override bool GetEffectInheritance(DamageClass damageClass) {
-			return damageClass == Ranged || damageClass == Magic;
+			return damageClass == Generic || damageClass == Ranged || damageClass == Magic;
 		}
 		public override void SetDefaultStats(Player player) {
-			player.GetCritChance(this) += 4;
+
 		}
 	}
 }

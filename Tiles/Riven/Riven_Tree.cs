@@ -41,10 +41,13 @@ namespace Origins.Tiles.Riven {
 		}
 
 		public override void SetStaticDefaults() {
+			GrowsOnTileId = new int[] {
+
+			};
 		}
 
 		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
-			throw new System.NotImplementedException();
+			//throw new System.NotImplementedException();
 		}
 
 		public override Asset<Texture2D> GetTopTextures() {

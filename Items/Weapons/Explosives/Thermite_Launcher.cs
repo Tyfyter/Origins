@@ -35,9 +35,6 @@ namespace Origins.Items.Weapons.Explosives {
             Item.shootSpeed = 12f;
 			Item.rare = ItemRarityID.Green;
 		}
-        public override void AddRecipes() {
-            Origins.AddExplosive(Item);
-        }
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
             type = Item.shoot;
         }
@@ -88,9 +85,10 @@ namespace Origins.Items.Weapons.Explosives {
         public override string Texture => "Origins/Projectiles/Ammo/Napalm_Pellet_P";
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Thermite Canister");
-            Origins.ExplosiveProjectiles[Projectile.type] = true;
+            //Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override void SetDefaults() {
+            Projectile.DamageType = DamageClasses.Explosive;
             Projectile.friendly = true;
             Projectile.width = 6;
             Projectile.height = 6;

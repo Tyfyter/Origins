@@ -32,9 +32,6 @@ namespace Origins.Items.Weapons.Explosives {
             Item.autoReuse = true;
             Item.glowMask = glowmask;
         }
-        public override void AddRecipes() {
-            Origins.AddExplosive(Item);
-        }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			//type = item.shoot+(type-item.shoot)/3;
             Projectile.NewProjectile(source, position, velocity, Item.shoot, damage, knockback, player.whoAmI, 0, type-Item.shoot+ProjectileID.RocketI);

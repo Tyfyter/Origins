@@ -33,7 +33,7 @@ namespace Origins.Items.Armor.Mimic {
 
 			originPlayer.explosiveThrowSpeed += 0.2f * defiledPercentage;
 			player.lifeRegenCount += (int)(4 * defiledPercentage);
-			originPlayer.explosiveDamage += 0.2f * defiledPercentage;
+			player.GetDamage(DamageClasses.Explosive) += 0.2f * defiledPercentage;
 
 			player.setBonus = string.Format("Not yet fully implemented\nSet bonus scales with the percentage of the world taken over by the defiled wastelands\nCurrent percentage: {0:P1}, ", defiledPercentage);
 			Origins.instance.SetMimicSetUI();
@@ -137,7 +137,7 @@ namespace Origins.Items.Armor.Mimic {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().explosiveDamage += 0.1f;
+			player.GetDamage(DamageClasses.Explosive) += 0.1f;
 		}
 		public override void AddRecipes() {
 			/*Recipe recipe = Mod.CreateRecipe(Type);

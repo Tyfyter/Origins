@@ -17,7 +17,6 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Grenade");
 			Tooltip.SetDefault("");
-            Origins.ExplosiveItems[Item.type] = true;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Grenade);
@@ -78,10 +77,11 @@ namespace Origins.Items.Weapons.Explosives {
         };
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Grenade");
-            Origins.ExplosiveProjectiles[Projectile.type] = true;
+            //Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Grenade);
+            Projectile.DamageType = DamageClasses.Explosive;
             Projectile.timeLeft = 135;
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
@@ -154,7 +154,7 @@ namespace Origins.Items.Weapons.Explosives {
 			DisplayName.SetDefault("Crystal Shard");
             ID = Projectile.type;
 			try{
-				Origins.ExplosiveProjectiles[Projectile.type] = true;
+				//Origins.ExplosiveProjectiles[Projectile.type] = true;
 				ProjectileID.Sets.TrailingMode[ID] = 0;
 				if(!Main.dedServ) {
                     Main.instance.LoadProjectile(94);
@@ -165,6 +165,7 @@ namespace Origins.Items.Weapons.Explosives {
 		}
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.CrystalStorm);
+            Projectile.DamageType = DamageClasses.Explosive;
             Projectile.aiStyle = 0;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 30+Main.rand.Next(-5,16);

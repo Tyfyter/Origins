@@ -83,9 +83,6 @@ namespace Origins.Projectiles {
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
             //this is actually how vanilla does projectile crits, which might explain why there are no vanilla multiclass weapons, since a 4% crit chance with a 4-class weapon would crit ~15% of the time
             OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-            if(IsExplosive(projectile) && Main.rand.Next(1, 101) <= originPlayer.explosiveCrit) {
-				crit = true;
-			}
             if(viperEffect) {
                 bool crt = crit;
                 for(int i = 0; i < target.buffType.Length; i++) {
@@ -121,7 +118,7 @@ namespace Origins.Projectiles {
             }
         }
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
-            if(IsExplosive(projectile)) {
+            if(projectile.CountsAsClass(DamageClasses.Explosive)) {
                 OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
                 if(originPlayer.madHand) {
                     target.AddBuff(BuffID.Oiled, 600);
@@ -130,18 +127,12 @@ namespace Origins.Projectiles {
             }
         }
         public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
-            if(IsExplosive(projectile)) {
+            if(projectile.CountsAsClass(DamageClasses.Explosive)) {
                 OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
                 if(originPlayer.madHand&&(projectile.timeLeft<=3||projectile.penetrate==0)) {
                     hitbox.Inflate(hitbox.Width/4,hitbox.Height/4);
                 }
             }
-        }
-        public bool IsExplosive(Projectile projectile) {
-            return explosiveOverride??Origins.ExplosiveProjectiles[projectile.type];
-        }
-        public static bool IsExplosiveProjectile(Projectile projectile) {
-            return projectile.GetGlobalProjectile<OriginGlobalProj>().explosiveOverride??Origins.ExplosiveProjectiles[projectile.type];
         }
         public static void ClentaminatorAI(Projectile projectile, int conversionType, int dustType, Color color) {
 	        if (projectile.owner == Main.myPlayer) {

@@ -104,17 +104,15 @@ namespace Origins.Items.Weapons.Explosives {
             }
             return true;
         }
-        public override void AddRecipes() {
-            Origins.AddExplosive(Item);
-        }
     }
     public class Awe_Grenade_P : ModProjectile {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Awe Grenade");
-            Origins.ExplosiveProjectiles[Projectile.type] = true;
+            //Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Grenade);
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
             Projectile.timeLeft = 45;
             Projectile.penetrate = 1;
         }
@@ -140,12 +138,13 @@ namespace Origins.Items.Weapons.Explosives {
     public class Awe_Grenade_Blast  : ModProjectile {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Awe Grenade");
-            Origins.ExplosiveProjectiles[Projectile.type] = true;
+            //Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override string Texture => "Origins/Projectiles/Pixel";
         const int duration = 15;
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Grenade);
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
             Projectile.hostile = true;
             Projectile.aiStyle = 0;
             Projectile.timeLeft = duration;

@@ -20,7 +20,6 @@ namespace Origins.Items.Weapons.Summon {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomb Artifact");
             Tooltip.SetDefault("Summons a friendly bomb to fight for you");
-            Origins.ExplosiveItems[Item.type] = true;
         }
         public override void SetDefaults() {
             Item.damage = 80;
@@ -86,7 +85,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
         public override void SetStaticDefaults() {
             Bomb_Artifact.projectileID = Projectile.type;
 			DisplayName.SetDefault("Friendly Bomb");
-            Origins.ExplosiveProjectiles[Projectile.type] = true;
+            //Origins.ExplosiveProjectiles[Projectile.type] = true;
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 11;
 			// This is necessary for right-click targeting
@@ -100,7 +99,8 @@ namespace Origins.Items.Weapons.Summon.Minions {
 		}
 
 		public sealed override void SetDefaults() {
-			Projectile.width = 30;
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
+            Projectile.width = 30;
 			Projectile.height = 48;
 			Projectile.tileCollide = true;
 			Projectile.friendly = false;

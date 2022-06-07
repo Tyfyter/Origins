@@ -26,7 +26,6 @@ namespace Origins.Items.Weapons.Felnum {
 			Item.rare = ItemRarityID.Green;
 		}
         public override void AddRecipes() {
-            Origins.AddExplosive(Item);
             Recipe recipe = Mod.CreateRecipe(Type, 70);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>());
             recipe.AddIngredient(ItemID.Grenade, 70);

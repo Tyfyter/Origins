@@ -22,7 +22,8 @@ namespace Origins.Items.Weapons.Explosives {
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ProximityMineLauncher);
-			Item.damage = 150;
+            Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+            Item.damage = 150;
 			Item.noMelee = true;
             Item.useStyle = ItemUseStyleID.Shoot;
 			Item.useTime = 20;
@@ -32,9 +33,6 @@ namespace Origins.Items.Weapons.Explosives {
             Item.shoot = ModContent.ProjectileType<Ace_Shrapnel_P>();
 			Item.rare = ItemRarityID.Lime;
 		}
-        public override void AddRecipes() {
-            Origins.AddExplosive(Item);
-        }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    type-=ModContent.ProjectileType<Ace_Shrapnel_P>();
             type/=3;
@@ -45,11 +43,11 @@ namespace Origins.Items.Weapons.Explosives {
     public class Ace_Shrapnel_P : ModProjectile {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Ace Shrapnel");
-            Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override string Texture => "Origins/Projectiles/Pixel";
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Bullet);
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
             Projectile.aiStyle = 0;
             Projectile.penetrate = -1;
             Projectile.extraUpdates = 0;
@@ -88,10 +86,11 @@ namespace Origins.Items.Weapons.Explosives {
         public override string Texture => "Terraria/Images/Projectile_"+ProjectileID.BoneGloveProj;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Shrapnel");
-            Origins.ExplosiveProjectiles[Projectile.type] = true;
+            //Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Bullet);
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
             Projectile.aiStyle = 0;
             Projectile.penetrate = 3;
             Projectile.extraUpdates = 0;

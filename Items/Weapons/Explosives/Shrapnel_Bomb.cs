@@ -8,7 +8,6 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Shrapnel Bomb");
 			Tooltip.SetDefault("Explodes into shrapnel");
-            Origins.ExplosiveItems[Item.type] = true;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Bomb);
@@ -26,10 +25,11 @@ namespace Origins.Items.Weapons.Explosives {
         public override string Texture => "Origins/Items/Weapons/Explosives/Shrapnel_Bomb";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Shrapnel Bomb");
-            Origins.ExplosiveProjectiles[Projectile.type] = true;
+            //Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Bomb);
+            Projectile.DamageType = DamageClasses.Explosive;
             Projectile.penetrate = 1;
             Projectile.timeLeft = 135;
         }

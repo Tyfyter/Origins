@@ -37,12 +37,6 @@ using MC = Terraria.ModLoader.ModContent;
 namespace Origins {
     public class Origins : Mod {
         public static Origins instance;
-        [Obsolete]
-        public static bool[] ExplosiveProjectiles;
-        [Obsolete]
-        public static bool[] ExplosiveItems;
-        [Obsolete]
-        public static bool[] ExplosiveAmmo;
 
         public static Dictionary<int, int> ExplosiveBaseDamage;
         public static bool[] DamageModOnHit;
@@ -138,18 +132,9 @@ namespace Origins {
         public override void Load() {
             ExplosiveBaseDamage = new Dictionary<int, int>();
             //Explosive item types
-            NonFishItem.ResizeItemArrays+=() => {
-                ExplosiveItems = ItemID.Sets.ItemsThatCountAsBombsForDemolitionistToSpawn.ToArray();
-                ExplosiveItems[ItemID.BouncyBomb] = true;
-                ExplosiveItems[ItemID.HellfireArrow] = true;
-                ExplosiveItems[ItemID.BombFish] = true;
-                ExplosiveItems[ItemID.PartyGirlGrenade] = true;
-                ExplosiveItems[ItemID.Beenade] = true;
-                ExplosiveItems[ItemID.MolotovCocktail] = true;
-            };
             //Explosive projectile & ammo types
             NonFishItem.ResizeOtherArrays+=() => {
-                ExplosiveProjectiles = new bool[ProjectileID.Sets.CanDistortWater.Length];
+                /*ExplosiveProjectiles = new bool[ProjectileID.Sets.CanDistortWater.Length];
                 ExplosiveProjectiles[ProjectileID.Grenade] = true;
                 ExplosiveProjectiles[ProjectileID.StickyGrenade] = true;
                 ExplosiveProjectiles[ProjectileID.BouncyGrenade] = true;
@@ -175,7 +160,7 @@ namespace Origins {
                 ExplosiveProjectiles[ProjectileID.ProximityMineI] = true;
                 ExplosiveProjectiles[ProjectileID.ProximityMineII] = true;
                 ExplosiveProjectiles[ProjectileID.ProximityMineIII] = true;
-                ExplosiveProjectiles[ProjectileID.ProximityMineIV] = true;
+                ExplosiveProjectiles[ProjectileID.ProximityMineIV] = true;*/
 
                 DamageModOnHit = new bool[ProjectileID.Sets.CanDistortWater.Length];
                 DamageModOnHit[ProjectileID.Bomb] = true;
@@ -185,10 +170,6 @@ namespace Origins {
                 DamageModOnHit[ProjectileID.Dynamite] = true;
                 DamageModOnHit[ProjectileID.StickyDynamite] = true;
                 DamageModOnHit[ProjectileID.BouncyDynamite] = true;
-
-                ExplosiveAmmo = ExplosiveItems.ToArray();
-                ExplosiveAmmo[AmmoID.Rocket] = true;
-                ExplosiveAmmo[AmmoID.StyngerBolt] = true;
             };
             #region vanilla weapon elements
             VanillaElements = ItemID.Sets.Factory.CreateUshortSet(0,
@@ -287,7 +268,7 @@ namespace Origins {
             BreastplateGlowMasks = new();
             LeggingGlowMasks = new();
 			if (!Main.dedServ) {
-                OriginExtensions.drawPlayerItemPos = (Func<float, int, Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float, int, Vector2>), Main.instance);
+                //OriginExtensions.drawPlayerItemPos = (Func<float, int, Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float, int, Vector2>), Main.instance);
                 perlinFade0 = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/PerlinFade", AssetRequestMode.ImmediateLoad).Value), "RedFade");
                 //perlinFade0.UseImage("Images/Misc/Perlin");
                 perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.6f);
@@ -350,16 +331,6 @@ namespace Origins {
             On.Terraria.WorldGen.GERunner+=OriginSystem.GERunnerHook;
             On.Terraria.WorldGen.Convert+=OriginSystem.ConvertHook;
             On.Terraria.Item.NewItem_IEntitySource_int_int_int_int_int_int_bool_int_bool_bool+=OriginGlobalItem.NewItemHook;
-            Mod blockSwap = ModLoader.GetMod("BlockSwap");
-            if(!(blockSwap is null || blockSwap.Version>new Version(1,0,1)))On.Terraria.TileObject.CanPlace+=(On.Terraria.TileObject.orig_CanPlace orig, int x, int y, int type, int style, int dir, out TileObject objectData, bool onlyCheck, bool checkStay) => {
-				if (type == 20){
-					Tile soil = Main.tile[x, y + 1];
-					if (soil.HasTile){
-                        TileLoader.SaplingGrowthType(soil.TileType, ref type, ref style);
-					}
-				}
-                return orig(x, y, type, style, dir, out objectData, onlyCheck, checkStay);
-            };
             Defiled_Tree.Load();
             OriginSystem worldInstance = ModContent.GetInstance<OriginSystem>();
             if(!(worldInstance is null)) {
@@ -529,9 +500,6 @@ namespace Origins {
         }
 
         public override void Unload() {
-            ExplosiveProjectiles = null;
-            ExplosiveItems = null;
-            ExplosiveAmmo = null;
             ExplosiveBaseDamage = null;
             DamageModOnHit = null;
             VanillaElements = null;
@@ -569,15 +537,6 @@ namespace Origins {
             if (setBonusUI.CurrentState is not Mimic_Selection_UI) {
                 setBonusUI.SetState(new Mimic_Selection_UI());
             }
-        }
-
-        public static void AddExplosive(Item item, bool noProj = false, bool noAmmo = false) {
-            ExplosiveItems[item.type] = true;
-            ExplosiveAmmo[item.type] = true;
-            if(!noAmmo&&item.ammo!=AmmoID.None)ExplosiveAmmo[item.ammo] = true;
-            if(!noAmmo&&item.useAmmo!=AmmoID.None)ExplosiveAmmo[item.useAmmo] = true;
-            if(!noProj&&item.shoot!=ProjectileID.None)ExplosiveProjectiles[item.shoot] = true;
-            instance.Logger.Info($"Registered {item.Name} as explosive: "+ExplosiveItems[item.type]);
         }
         internal static short AddGlowMask(string name){
             if (Main.netMode!=NetmodeID.Server){
@@ -667,12 +626,12 @@ namespace Origins {
         public static event Action ResizeItemArrays;
         public static event Action ResizeOtherArrays;
         public override bool IsQuestFish() {
-            ResizeItemArrays();
+            if(ResizeItemArrays is not null) ResizeItemArrays();
             ResizeItemArrays = null;
             return false;
         }
         public override void SetStaticDefaults() {
-            ResizeOtherArrays();
+            if (ResizeOtherArrays is not null) ResizeOtherArrays();
             ResizeOtherArrays = null;
             DisplayName.SetDefault("That Which Is Not a Fish");
         }
