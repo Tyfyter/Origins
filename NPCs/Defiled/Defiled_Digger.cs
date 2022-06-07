@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,69 +12,65 @@ namespace Origins.NPCs.Defiled {
             NPC.defense = 8;
             NPC.damage = 38;
         }
-        public override void AI() {
-            if(Main.netMode != NetmodeID.MultiplayerClient) {
-                if(NPC.ai[0] == 0f) {
-                    NPC.spriteDirection = Main.rand.NextBool() ?1:-1;
-                    NPC.ai[3] = NPC.whoAmI;
-                    NPC.realLife = NPC.whoAmI;
-                    int current = 0;
-                    int last = NPC.whoAmI;
-                    int type = ModContent.NPCType<Defiled_Digger_Body>();
-                    for(int k = 0; k < 17; k++) {
-                        current = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
-                        Main.npc[current].ai[3] = NPC.whoAmI;
-                        Main.npc[current].realLife = NPC.whoAmI;
-                        Main.npc[current].ai[1] = last;
-                        Main.npc[current].spriteDirection = Main.rand.NextBool() ?1:-1;
-                        Main.npc[last].ai[0] = current;
-                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
-                        last = current;
-                    }
-                    current = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Defiled_Digger_Tail>(), NPC.whoAmI);
-                    Main.npc[current].ai[3] = NPC.whoAmI;
-                    Main.npc[current].realLife = NPC.whoAmI;
-                    Main.npc[current].ai[1] = last;
-                    Main.npc[current].spriteDirection = Main.rand.NextBool() ?1:-1;
-                    Main.npc[last].ai[0] = current;
-                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
-                }
+        public override void OnSpawn(IEntitySource source) {
+            NPC.spriteDirection = Main.rand.NextBool() ? 1 : -1;
+            NPC.ai[3] = NPC.whoAmI;
+            NPC.realLife = NPC.whoAmI;
+            int current = 0;
+            int last = NPC.whoAmI;
+            int type = ModContent.NPCType<Defiled_Digger_Body>();
+            for (int k = 0; k < 17; k++) {
+                current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
+                Main.npc[current].ai[3] = NPC.whoAmI;
+                Main.npc[current].realLife = NPC.whoAmI;
+                Main.npc[current].ai[1] = last;
+                Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
+                Main.npc[last].ai[0] = current;
+                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
+                last = current;
             }
+            current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Defiled_Digger_Tail>(), NPC.whoAmI);
+            Main.npc[current].ai[3] = NPC.whoAmI;
+            Main.npc[current].realLife = NPC.whoAmI;
+            Main.npc[current].ai[1] = last;
+            Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
+            Main.npc[last].ai[0] = current;
+            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
         }
 
-        /*public override void Init() {
-			base.Init();
-			head = true;
-		}
+            /*public override void Init() {
+                base.Init();
+                head = true;
+            }
 
-		private int attackCounter;
-		public override void SendExtraAI(BinaryWriter writer) {
-			writer.Write(attackCounter);
-		}
+            private int attackCounter;
+            public override void SendExtraAI(BinaryWriter writer) {
+                writer.Write(attackCounter);
+            }
 
-		public override void ReceiveExtraAI(BinaryReader reader) {
-			attackCounter = reader.ReadInt32();
-		}
+            public override void ReceiveExtraAI(BinaryReader reader) {
+                attackCounter = reader.ReadInt32();
+            }
 
-		public override void CustomBehavior() {
-			if (Main.netMode != NetmodeID.MultiplayerClient) {
-				if (attackCounter > 0) {
-					attackCounter--;
-				}
+            public override void CustomBehavior() {
+                if (Main.netMode != NetmodeID.MultiplayerClient) {
+                    if (attackCounter > 0) {
+                        attackCounter--;
+                    }
 
-				Player target = Main.player[npc.target];
-				if (attackCounter <= 0 && Vector2.Distance(npc.Center, target.Center) < 200 && Collision.CanHit(npc.Center, 1, 1, target.Center, 1, 1)) {
-					Vector2 direction = (target.Center - npc.Center).SafeNormalize(Vector2.UnitX);
-					direction = direction.RotatedByRandom(MathHelper.ToRadians(10));
+                    Player target = Main.player[npc.target];
+                    if (attackCounter <= 0 && Vector2.Distance(npc.Center, target.Center) < 200 && Collision.CanHit(npc.Center, 1, 1, target.Center, 1, 1)) {
+                        Vector2 direction = (target.Center - npc.Center).SafeNormalize(Vector2.UnitX);
+                        direction = direction.RotatedByRandom(MathHelper.ToRadians(10));
 
-					int projectile = Projectile.NewProjectile(npc.Center, direction * 1, ProjectileID.ShadowBeamHostile, 5, 0, Main.myPlayer);
-					Main.projectile[projectile].timeLeft = 300;
-					attackCounter = 500;
-					npc.netUpdate = true;
-				}
-			}
-		}*/
-    }
+                        int projectile = Projectile.NewProjectile(npc.Center, direction * 1, ProjectileID.ShadowBeamHostile, 5, 0, Main.myPlayer);
+                        Main.projectile[projectile].timeLeft = 300;
+                        attackCounter = 500;
+                        npc.netUpdate = true;
+                    }
+                }
+            }*/
+        }
 
     internal class Defiled_Digger_Body : Defiled_Digger {
         public override void SetDefaults() {
@@ -107,7 +104,7 @@ namespace Origins.NPCs.Defiled {
                 }
             }
             Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
-            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
+            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
         }
         public override bool? CanBeHitByProjectile(Projectile projectile) {
             if(NPC.realLife==NPC.whoAmI)return null;
@@ -119,7 +116,7 @@ namespace Origins.NPCs.Defiled {
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
             int halfWidth = NPC.width / 2;
             int baseX = player.direction > 0 ? 0 : halfWidth;
-            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(NPC.position+new Vector2(baseX + Main.rand.Next(halfWidth),Main.rand.Next(NPC.height)), new Vector2(knockback*player.direction, -0.1f*knockback), Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
+            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(baseX + Main.rand.Next(halfWidth),Main.rand.Next(NPC.height)), new Vector2(knockback*player.direction, -0.1f*knockback), Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
         }
         public override void HitEffect(int hitDirection, double damage) {
             if(NPC.life<0) {
@@ -131,9 +128,9 @@ namespace Origins.NPCs.Defiled {
             }
         }
         protected static void deathEffect(NPC npc) {
-            Gore.NewGore(npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF3_Gore"));
-            //Gore.NewGore(npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
-            Gore.NewGore(npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
+            Gore.NewGore(npc.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF3_Gore"));
+            //Gore.NewGore(NPC.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
+            Gore.NewGore(npc.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
             //for(int i = 0; i < 3; i++)
         }
     }

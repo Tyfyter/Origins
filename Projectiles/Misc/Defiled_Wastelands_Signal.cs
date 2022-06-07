@@ -45,7 +45,7 @@ namespace Origins.Projectiles.Misc {
                 Projectile.Kill();
             }
             if (Target == default) {
-                List<Point> hearts = ModContent.GetInstance<World.OriginWorld>().Defiled_Hearts;
+                List<Point> hearts = ModContent.GetInstance<OriginSystem>().Defiled_Hearts;
                 Point current = default;
                 float dist = float.PositiveInfinity;
                 for (int i = hearts.Count - 1; i >= 0; i--) {

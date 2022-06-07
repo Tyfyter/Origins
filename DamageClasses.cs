@@ -11,8 +11,10 @@ using Terraria.ModLoader;
 namespace Origins {
 	public class DamageClasses : ILoadable {
 		private static DamageClass explosive;
+		private static DamageClass ranged_Magic;
 		public static DamageClass Explosive => explosive ??= ModContent.GetInstance<Explosive>();
 		public static Dictionary<DamageClass, DamageClass> ExplosiveVersion { get; private set; }
+		public static DamageClass Ranged_Magic => ranged_Magic ??= ModContent.GetInstance<Ranged_Magic>();
 		public void Load(Mod mod) {
 			List<DamageClass> damageClasses = (List<DamageClass>)(typeof(DamageClassLoader).GetField("DamageClasses", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null));
 			int len = damageClasses.Count;
@@ -26,6 +28,7 @@ namespace Origins {
 		public void Unload() {
 			explosive = null;
 			ExplosiveVersion = null;
+			ranged_Magic = null;
 		}
 	}
 	public class DamageClass_Equality_Comparer : IEqualityComparer<DamageClass> {
@@ -34,6 +37,9 @@ namespace Origins {
 		public int GetHashCode([DisallowNull] DamageClass obj) => obj.Type;
 	}
 	public class Explosive : DamageClass {
+		public override void SetStaticDefaults() {
+			ClassName.SetDefault("explosive damage");
+		}
 		public override void SetDefaultStats(Player player) {
 			player.GetCritChance(this) += 4;
 		}
@@ -49,6 +55,9 @@ namespace Origins {
 			newClass.Register();
 			return newClass;
 		}
+		public override void SetStaticDefaults() {
+			ClassName.SetDefault("explosive "+other.ClassName.GetDefault());
+		}
 		public override bool GetEffectInheritance(DamageClass damageClass) {
 			return damageClass == DamageClasses.Explosive || damageClass == other || other.GetEffectInheritance(damageClass);
 		}
@@ -60,6 +69,23 @@ namespace Origins {
 		}
 		public override void SetDefaultStats(Player player) {
 			//player.GetCritChance(this) += 4;
+		}
+	}
+	public class Ranged_Magic : DamageClass {
+		public override void SetStaticDefaults() {
+			ClassName.SetDefault("ranged/magic damage");
+		}
+		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
+			if (damageClass == Generic || damageClass == Ranged || damageClass == Magic) {
+				return StatInheritanceData.Full;
+			}
+			return StatInheritanceData.None;
+		}
+		public override bool GetEffectInheritance(DamageClass damageClass) {
+			return damageClass == Ranged || damageClass == Magic;
+		}
+		public override void SetDefaultStats(Player player) {
+			player.GetCritChance(this) += 4;
 		}
 	}
 }

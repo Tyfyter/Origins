@@ -26,7 +26,7 @@ namespace Origins.Tiles.Defiled {
 			};
 
 			TileObjectData.addTile(Type);
-            soundType = SoundID.Grass;
+            //soundType = SoundID.Grass;
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects){
@@ -45,11 +45,11 @@ namespace Origins.Tiles.Defiled {
                         case TileID.CorruptGrass:
                         Main.tile[i, j].TileType = TileID.CorruptPlants;
                         return true;
-                        case TileID.FleshGrass:
-                        Main.tile[i, j].TileType = TileID.FleshWeeds;
+                        case TileID.CrimsonGrass:
+                        Main.tile[i, j].TileType = TileID.CrimsonPlants;
                         return true;
                         case TileID.HallowedGrass:
-                        Main.tile[i, j].TileType = TileID.HallowedGrass;
+                        Main.tile[i, j].TileType = TileID.HallowedPlants;
                         return true;
                     }
                 } else {

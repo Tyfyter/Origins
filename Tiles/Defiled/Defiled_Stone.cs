@@ -25,10 +25,10 @@ namespace Origins.Tiles.Defiled {
             }*/
 			ItemDrop = ItemType<Defiled_Stone_Item>();
 			AddMapEntry(new Color(200, 200, 200));
-			SetModTree(Defiled_Tree.Instance);
+			//SetModTree(Defiled_Tree.Instance);
             mergeID = TileID.Stone;
-            minPick = 65;
-            mineResist = 2;
+            MinPick = 65;
+            MineResist = 2;
 		}
         public override bool CreateDust(int i, int j, ref int type) {
             type = DefiledWastelands.DefaultTileDust;

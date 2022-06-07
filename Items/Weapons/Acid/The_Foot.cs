@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Acid {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.TrueExcalibur);
 			Item.damage = 90;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.autoReuse = true;
             Item.useStyle = ItemUseStyleID.Swing;
 			Item.width = 28;

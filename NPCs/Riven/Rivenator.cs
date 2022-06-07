@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -11,34 +12,30 @@ namespace Origins.NPCs.Riven {
             NPC.defense = 8;
             NPC.damage = 38;
         }
-        public override void AI() {
-            if(Main.netMode != NetmodeID.MultiplayerClient) {
-                if(NPC.ai[0] == 0f) {
-                    NPC.spriteDirection = Main.rand.NextBool() ?1:-1;
-                    NPC.ai[3] = NPC.whoAmI;
-                    NPC.realLife = NPC.whoAmI;
-                    int current = 0;
-                    int last = NPC.whoAmI;
-                    int type = ModContent.NPCType<Rivenator_Body>();
-                    for(int k = 0; k < 17; k++) {
-                        current = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
-                        Main.npc[current].ai[3] = NPC.whoAmI;
-                        Main.npc[current].realLife = NPC.whoAmI;
-                        Main.npc[current].ai[1] = last;
-                        Main.npc[current].spriteDirection = Main.rand.NextBool() ?1:-1;
-                        Main.npc[last].ai[0] = current;
-                        NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
-                        last = current;
-                    }
-                    current = NPC.NewNPC((int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Rivenator_Tail>(), NPC.whoAmI);
-                    Main.npc[current].ai[3] = NPC.whoAmI;
-                    Main.npc[current].realLife = NPC.whoAmI;
-                    Main.npc[current].ai[1] = last;
-                    Main.npc[current].spriteDirection = Main.rand.NextBool() ?1:-1;
-                    Main.npc[last].ai[0] = current;
-                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
-                }
+		public override void OnSpawn(IEntitySource source) {
+            NPC.spriteDirection = Main.rand.NextBool() ? 1 : -1;
+            NPC.ai[3] = NPC.whoAmI;
+            NPC.realLife = NPC.whoAmI;
+            int current = 0;
+            int last = NPC.whoAmI;
+            int type = ModContent.NPCType<Rivenator_Body>();
+            for (int k = 0; k < 17; k++) {
+                current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
+                Main.npc[current].ai[3] = NPC.whoAmI;
+                Main.npc[current].realLife = NPC.whoAmI;
+                Main.npc[current].ai[1] = last;
+                Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
+                Main.npc[last].ai[0] = current;
+                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
+                last = current;
             }
+            current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Rivenator_Tail>(), NPC.whoAmI);
+            Main.npc[current].ai[3] = NPC.whoAmI;
+            Main.npc[current].realLife = NPC.whoAmI;
+            Main.npc[current].ai[1] = last;
+            Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
+            Main.npc[last].ai[0] = current;
+            NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
         }
     }
 
@@ -72,9 +69,9 @@ namespace Origins.NPCs.Riven {
             }
         }
         protected static void deathEffect(NPC npc) {
-            Gore.NewGore(npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF3_Gore"));
-            //Gore.NewGore(npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
-            Gore.NewGore(npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
+            Gore.NewGore(npc.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF3_Gore"));
+            //Gore.NewGore(NPC.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
+            Gore.NewGore(npc.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
             //for(int i = 0; i < 3; i++)
         }
     }

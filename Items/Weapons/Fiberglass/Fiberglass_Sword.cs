@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Fiberglass {
 		}
 		public override void SetDefaults() {
 			Item.damage = 18;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.width = 42;
 			Item.height = 42;
 			Item.useTime = 16;

@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Other {
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    if(player.itemAnimationMax-player.itemAnimation > 9)return false;
             SoundEngine.PlaySound(SoundID.Item20, position);
-            Lava_Shot.damageType = 3;
+            Lava_Shot.damageType = DamageClass.Magic;
             return true;
             //Projectile projectile = Projectile.NewProjectileDirect(, type, damage, knockBack, player.whoAmI);
         }

@@ -46,7 +46,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             DisplayName.SetDefault("Combat Core");
         }
         public override void UpdateEquip(Player player) {
-            player.allDamageMult *= 1.24f;
+            player.GetDamage(DamageClass.Generic) *= 1.24f;
             player.moveSpeed *= 1.5f;
             player.runAcceleration *= 1.5f;
             player.maxRunSpeed *= 1.5f;

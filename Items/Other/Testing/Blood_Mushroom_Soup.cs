@@ -225,7 +225,7 @@ namespace Origins.Items.Other.Testing {
                     World.BiomeData.DefiledWastelands.Gen.DefiledRibs((int)a.X, (int)a.Y);
                     for (int i = (int)a.X - 1; i < (int)a.X + 3; i++) {
                         for (int j = (int)a.Y - 2; j < (int)a.Y + 2; j++) {
-                            Main.tile[i, j].HasTile = false;
+                            Main.tile[i, j].SetActive(false);
                         }
                     }
                     TileObject.CanPlace((int)a.X, (int)a.Y, (ushort)ModContent.TileType<Tiles.Defiled.Defiled_Heart>(), 0, 1, out var data);

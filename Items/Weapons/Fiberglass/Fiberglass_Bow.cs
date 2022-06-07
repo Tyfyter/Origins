@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Fiberglass {
 		}
 		public override void SetDefaults() {
 			Item.damage = 17;
-			Item.ranged = true;
+			Item.DamageType = DamageClass.Ranged;
 			Item.width = 18;
 			Item.height = 36;
 			Item.useTime = 14;

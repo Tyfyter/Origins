@@ -30,8 +30,8 @@ namespace Origins.Tiles.Defiled {
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Defiled Fissure");
 			AddMapEntry(new Color(200, 200, 200), name);
-			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.ShadowOrbs };
+			//disableSmartCursor = true;
+			AdjTiles = new int[] { TileID.ShadowOrbs };
             ID = Type;
 		}
 
@@ -40,7 +40,7 @@ namespace Origins.Tiles.Defiled {
 			if (player.HeldItem.hammer >= 45) {
 				return true;
 			}
-			Projectile.NewProjectile(new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0:0, ai1:Main.myPlayer);
+			Projectile.NewProjectile(WorldGen.GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0:0, ai1:Main.myPlayer);
             return false;
         }
 

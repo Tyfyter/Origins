@@ -21,7 +21,7 @@ namespace Origins.Tiles.Dusk {
 			AddMapEntry(new Color(57, 10, 75));
 		}
 		public override bool Drop(int i, int j) {
-            Item.NewItem(i * 16, j * 16, 16, 16, ItemDrop, Main.rand.Next(4, 7));
+            Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, ItemDrop, Main.rand.Next(4, 7));
             return false;
 		}
 

@@ -13,7 +13,7 @@ namespace Origins.Items.Armor.Felnum {
             Item.defense = 5;
 		}
         public override void UpdateEquip(Player player) {
-            player.allDamage+=0.04f;
+            player.GetDamage(DamageClass.Generic) += 0.04f;
         }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
             return body.type == ModContent.ItemType<Felnum_Breastplate>() && legs.type == ModContent.ItemType<Felnum_Greaves>();
@@ -50,7 +50,7 @@ namespace Origins.Items.Armor.Felnum {
             Item.defense = 6;
 		}
         public override void UpdateEquip(Player player) {
-            player.allDamage+=0.02f;
+            player.GetDamage(DamageClass.Generic) += 0.02f;
             player.moveSpeed+=0.05f;
         }
 	}

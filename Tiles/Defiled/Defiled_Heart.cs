@@ -38,8 +38,8 @@ namespace Origins.Tiles.Defiled {
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Defiled Heart");
 			AddMapEntry(new Color(50, 50, 50), name);
-			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.ShadowOrbs };
+			//disableSmartCursor = true;
+			AdjTiles = new int[] { TileID.ShadowOrbs };
             ID = Type;
 		}
         public override bool CreateDust(int i, int j, ref int type) {

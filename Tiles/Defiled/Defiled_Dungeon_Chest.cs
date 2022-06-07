@@ -23,10 +23,10 @@ namespace Origins.Tiles.Defiled {
 			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
 			name.SetDefault("Locked Defiled Chest");
 			AddMapEntry(new Color(140, 140, 140), name, MapChestName);
-			disableSmartCursor = true;
-			adjTiles = new int[] { TileID.Containers };
-			chest = "Defiled Chest";
-			chestDrop = ModContent.ItemType<Defiled_Dungeon_Chest_Item>();
+			//disableSmartCursor = true;
+			AdjTiles = new int[] { TileID.Containers };
+			ContainerName.SetDefault("Defiled Chest");
+			ChestDrop = ModContent.ItemType<Defiled_Dungeon_Chest_Item>();
             keyItem = ModContent.ItemType<Defiled_Key>();
 		}
     }

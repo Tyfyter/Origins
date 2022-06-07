@@ -471,14 +471,14 @@ namespace Origins {
                                             if(num533 > 10 && num533 < Main.maxTilesX - 10) {
                                                 for(int num534 = num531; num534 < num532; num534++) {
                                                     if(Math.Abs(num533 - num527) + Math.Abs(num534 - num528) < 9 + genRand.Next(11) && !genRand.NextBool(3)&& Main.tile[num533, num534].TileType != 31) {
-                                                        Main.tile[num533, num534].HasTile = true;
+                                                        Main.tile[num533, num534].SetActive(true);
                                                         Main.tile[num533, num534].TileType = 25;
                                                         if(Math.Abs(num533 - num527) <= 1 && Math.Abs(num534 - num528) <= 1) {
-                                                            Main.tile[num533, num534].HasTile = false;
+                                                            Main.tile[num533, num534].SetActive(false);
                                                         }
                                                     }
                                                     if(Main.tile[num533, num534].TileType != 31 && Math.Abs(num533 - num527) <= 2 + genRand.Next(3) && Math.Abs(num534 - num528) <= 2 + genRand.Next(3)) {
-                                                        Main.tile[num533, num534].HasTile = false;
+                                                        Main.tile[num533, num534].SetActive(false);
                                                     }
                                                 }
                                             }
@@ -608,7 +608,7 @@ namespace Origins {
 				        DefiledWastelands.Gen.DefiledRibs(heart.X + genRand.NextFloat(-0.5f, 0.5f), heart.Y + genRand.NextFloat(-0.5f, 0.5f));
                         for (int i = heart.X - 1; i < heart.X + 3; i++) {
                             for (int j = heart.Y - 2; j < heart.Y + 2; j++) {
-                                Main.tile[i, j].HasTile = false;
+                                Main.tile[i, j].SetActive(false);
                             }
                         }
                         TileObject.CanPlace(heart.X, heart.Y, (ushort)TileType<Defiled_Heart>(), 0, 1, out var data);

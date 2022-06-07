@@ -53,7 +53,7 @@ namespace Origins.Projectiles.Weapons {
             float fade = (float)Math.Sqrt(Projectile.timeLeft / 300f);
             //projectile.frame^1: bitwise XOR with 1 to use the other frame's height
             //if (m) spriteBatch.Draw(texture, projectile.Center - Main.screenPosition, new Rectangle(0, (projectile.frame ^ 1) * 14, 34, 34), new Color(1f, 1f, 1f, 0.5f) * fade, projectile.rotation - MathHelper.PiOver2, new Vector2(26, 7), projectile.scale, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
-            spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, Projectile.frame * 14, 34, 14), new Color(1f, 1f, 1f, m ? 0.5f : 1f) * fade, Projectile.rotation - MathHelper.PiOver2, new Vector2(26, 7), Projectile.scale, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0f);
+            Main.EntitySpriteDraw(texture, Projectile.Center - Main.screenPosition, new Rectangle(0, Projectile.frame * 14, 34, 14), new Color(1f, 1f, 1f, m ? 0.5f : 1f) * fade, Projectile.rotation - MathHelper.PiOver2, new Vector2(26, 7), Projectile.scale, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
             return false;
         }
     }

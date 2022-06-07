@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Other {
             SoundEngine.PlaySound(SoundID.Item41, position+offset);
             position+=offset;
             Item.reuseDelay = 36;
-            Lava_Shot.damageType = 2;
+            Lava_Shot.damageType = DamageClass.Ranged;
         }
     }
 }

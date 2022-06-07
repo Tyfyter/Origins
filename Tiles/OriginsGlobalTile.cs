@@ -23,7 +23,7 @@ namespace Origins.Tiles {
             switch(type) {
                 case TileID.Plants:
                 case TileID.CorruptPlants:
-                case TileID.FleshWeeds:
+                case TileID.CrimsonPlants:
                 case TileID.HallowedPlants:
                 ConvertPlantsByAnchor(ref Main.tile[i, j].TileType, Main.tile[i, j+1].TileType);
                 return true;
@@ -41,8 +41,8 @@ namespace Origins.Tiles {
                 case TileID.CorruptGrass:
                 plant = TileID.CorruptPlants;
                 return;
-                case TileID.FleshGrass:
-                plant = TileID.FleshWeeds;
+                case TileID.CrimsonGrass:
+                plant = TileID.CrimsonPlants;
                 return;
                 case TileID.HallowedGrass:
                 plant = TileID.HallowedPlants;

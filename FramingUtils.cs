@@ -26,25 +26,25 @@ namespace Tyfyter.Utils {
 			int downRight = -1;
 			if (tileLeft != null && tileLeft.HasTile) {
 				left = (Main.tileStone[tileLeft.TileType] ? 1 : tileLeft.TileType);
-				if (tileLeft.Slope == 1 || tileLeft.Slope == 3) {
+				if (tileLeft.Slope == SlopeType.SlopeDownLeft || tileLeft.Slope == SlopeType.SlopeUpLeft) {
 					left = -1;
 				}
 			}
 			if (tileRight != null && tileRight.HasTile) {
 				right = (Main.tileStone[tileRight.TileType] ? 1 : tileRight.TileType);
-				if (tileRight.Slope == 2 || tileRight.Slope == 4) {
+				if (tileRight.Slope == SlopeType.SlopeDownRight || tileRight.Slope == SlopeType.SlopeUpRight) {
 					right = -1;
 				}
 			}
 			if (tileUp != null && tileUp.HasTile) {
 				up = (Main.tileStone[tileUp.TileType] ? 1 : tileUp.TileType);
-				if (tileUp.Slope == 3 || tileUp.Slope == 4) {
+				if (tileUp.Slope == SlopeType.SlopeUpLeft || tileUp.Slope == SlopeType.SlopeUpRight) {
 					up = -1;
 				}
 			}
 			if (tileDown != null && tileDown.HasTile) {
 				down = (Main.tileStone[tileDown.TileType] ? 1 : tileDown.TileType);
-				if (tileDown.Slope == 1 || tileDown.Slope == 2) {
+				if (tileDown.Slope == SlopeType.SlopeDownLeft || tileDown.Slope == SlopeType.SlopeDownRight) {
 					down = -1;
 				}
 			}
@@ -60,19 +60,19 @@ namespace Tyfyter.Utils {
 			if (tileDownRight != null && tileDownRight.HasTile) {
 				downRight = (Main.tileStone[tileDownRight.TileType] ? 1 : tileDownRight.TileType);
 			}
-			if (tile.Slope == 2) {
+			if (tile.Slope == SlopeType.SlopeDownRight) {
 				up = -1;
 				left = -1;
 			}
-			if (tile.Slope == 1) {
+			if (tile.Slope == SlopeType.SlopeDownLeft) {
 				up = -1;
 				right = -1;
 			}
-			if (tile.Slope == 4) {
+			if (tile.Slope == SlopeType.SlopeUpRight) {
 				down = -1;
 				left = -1;
 			}
-			if (tile.Slope == 3) {
+			if (tile.Slope == SlopeType.SlopeUpLeft) {
 				down = -1;
 				right = -1;
 			}

@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Origins.NPCs.Defiled {
     public class Enchanted_Trident : ModNPC {
@@ -29,11 +30,9 @@ namespace Origins.NPCs.Defiled {
 			if (NPC.ai[0] == 2) {
                 NPC.ai[1] += 0.25f;
 			}
-		}
-		public override void OnKill() {
-            if (Main.rand.NextBool(100)|| (Main.expertMode && Main.rand.NextBool(100))) {
-                Item.NewItem(NPC.Hitbox, ItemID.Nazar, prefixGiven:-1);
-            }
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Nazar, 100));
         }
 		public override void HitEffect(int hitDirection, double damage) {
 

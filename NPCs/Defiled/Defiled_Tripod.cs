@@ -114,23 +114,23 @@ namespace Origins.NPCs.Defiled {
 				NPC.frameCounter = 0;
 				if (NPC.collideY) {
                     Vector2 stepPos = new Vector2(NPC.spriteDirection * -45, 50).RotatedBy(NPC.rotation) + NPC.Center;
-                    SoundEngine.PlaySound(SoundID.MenuTick, (int)stepPos.X, (int)stepPos.Y, volumeScale: Main.rand.NextFloat(0.7f, 0.95f), pitchOffset: Main.rand.NextFloat(-0.2f, 0.2f));
+                    SoundEngine.PlaySound(SoundID.MenuTick.WithPitchRange(-0.2f, 0.2f).WithVolume(Main.rand.NextFloat(0.7f, 0.95f)), stepPos);
 				}
 			}
         }
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
             Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
-            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
+            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
         }
         public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
             int halfWidth = NPC.width / 2;
             int baseX = player.direction > 0 ? halfWidth : 0;
-            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(NPC.position+new Vector2(baseX + Main.rand.Next(halfWidth),Main.rand.Next(NPC.height)), new Vector2(knockback*player.direction, -0.1f*knockback), Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
+            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(baseX + Main.rand.Next(halfWidth),Main.rand.Next(NPC.height)), new Vector2(knockback*player.direction, -0.1f*knockback), Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
         }
         public override void HitEffect(int hitDirection, double damage) {
             if(NPC.life<0) {
-                for(int i = 0; i < 3; i++)Gore.NewGore(NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
-                for(int i = 0; i < 6; i++)Gore.NewGore(NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
+                for(int i = 0; i < 3; i++)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
+                for(int i = 0; i < 6; i++)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
             }
         }
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

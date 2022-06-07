@@ -15,8 +15,8 @@ namespace Origins.Items.Armor.Celestine {
             Item.defense = 8;
 		}
         public override void UpdateEquip(Player player) {
-            player.meleeCrit+=10;
-            player.magicCrit+=10;
+            player.GetCritChance(DamageClass.Melee) += 10;
+            player.GetCritChance(DamageClass.Magic) += 10;
         }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
             return body.type == ModContent.ItemType<Celestine_Breastplate>() && legs.type == ModContent.ItemType<Celestine_Greaves>();
@@ -36,8 +36,8 @@ namespace Origins.Items.Armor.Celestine {
             Item.defense = 24;
 		}
         public override void UpdateEquip(Player player) {
-            player.meleeDamage+=0.2f;
-            player.magicDamage+=0.2f;
+            player.GetDamage(DamageClass.Melee) += 0.2f;
+            player.GetDamage(DamageClass.Magic) += 0.2f;
         }
 	}
     [AutoloadEquip(EquipType.Legs)]
@@ -50,7 +50,7 @@ namespace Origins.Items.Armor.Celestine {
             Item.defense = 16;
 		}
         public override void UpdateEquip(Player player) {
-            player.meleeSpeed+=0.2f;
+            player.GetAttackSpeed(DamageClass.Melee) += 0.2f;
             player.manaRegenBuff = true;
             player.moveSpeed+=0.1f;
         }
@@ -130,7 +130,7 @@ namespace Origins.Items.Armor.Celestine {
             Description.SetDefault("25% increased damage");
         }
         public override void Update(Player player, ref int buffIndex) {
-            player.allDamageMult*=1.25f;
+            player.GetDamage(DamageClass.Generic) *= 1.25f;
         }
     }
 }

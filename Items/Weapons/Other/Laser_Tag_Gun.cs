@@ -25,8 +25,7 @@ namespace Origins.Items.Weapons.Other {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.SpaceGun);
 			Item.damage = 1;
-			Item.magic = true;
-			Item.ranged = true;
+			Item.DamageType = DamageClasses.Ranged_Magic;
 			Item.noMelee = true;
             Item.crit = 46;
 			Item.width = 42;
@@ -64,8 +63,8 @@ namespace Origins.Items.Weapons.Other {
                 player.GetModPlayer<OriginPlayer>().itemLayerWrench = true;
             }
             int critMod = GetCritMod(player);
-            player.rangedCrit+=critMod;
-            player.magicCrit+=critMod;
+            player.GetCritChance(DamageClass.Ranged) += critMod;
+            player.GetCritChance(DamageClass.Magic) += critMod;
         }
     }
     public class Laser_Tag_Laser : ModProjectile {
@@ -74,8 +73,7 @@ namespace Origins.Items.Weapons.Other {
             Projectile.light = 0;
             Projectile.aiStyle = 0;
             Projectile.extraUpdates++;
-			Projectile.magic = true;
-			Projectile.ranged = true;
+			Projectile.DamageType = DamageClasses.Ranged_Magic;
         }
         public override void AI() {
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -95,7 +93,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override bool PreDraw(ref Color lightColor) {
             Color color = Main.teamColor[Main.player[Projectile.owner].team];
-            spriteBatch.Draw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center-Main.screenPosition, null, color, Projectile.rotation, new Vector2(42,1), Projectile.scale, SpriteEffects.None, 1);
+            Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center-Main.screenPosition, null, color, Projectile.rotation, new Vector2(42,1), Projectile.scale, SpriteEffects.None, 1);
             return false;
         }
     }

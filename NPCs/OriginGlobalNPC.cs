@@ -85,59 +85,6 @@ namespace Origins.NPCs {
 			knockback*=MeleeCollisionNPCData.knockbackMult;
 			MeleeCollisionNPCData.knockbackMult = 1f;
 		}*/
-		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
-			List<IItemDropRule> dropRules = npcLoot.Get(false);
-			IItemDropRule entry;
-			int len = dropRules.Count;
-			var def = new LootConditions.IsWorldEvil(OriginSystem.evil_wastelands);
-			var riv = new LootConditions.IsWorldEvil(OriginSystem.evil_riven);
-			var defExp = new LootConditions.IsWorldEvilAndNotExpert(OriginSystem.evil_wastelands);
-			var rivExp = new LootConditions.IsWorldEvilAndNotExpert(OriginSystem.evil_riven);
-			for (int i = 0; i < len; i++) {
-				entry = dropRules[i];
-				if (entry is ItemDropWithConditionRule rule) {
-					if (rule.condition is Conditions.IsCorruption) {
-						rule.condition = new LootConditions.IsWorldEvil(OriginSystem.evil_corruption);
-					} else if (rule.condition is Conditions.IsCrimson) {
-						rule.condition = new LootConditions.IsWorldEvil(OriginSystem.evil_crimson);
-					} else if (rule.condition is Conditions.IsCorruptionAndNotExpert) {
-						rule.condition = new LootConditions.IsWorldEvilAndNotExpert(OriginSystem.evil_corruption);
-						switch (rule.itemId) {
-							case ItemID.DemoniteOre:
-							npcLoot.Add(ItemDropRule.ByCondition(
-								defExp,
-								ModContent.ItemType<Defiled_Ore_Item>(),
-								rule.chanceDenominator,
-								rule.amountDroppedMinimum,
-								rule.amountDroppedMaximum,
-								rule.chanceNumerator
-							));
-							npcLoot.Add(ItemDropRule.ByCondition(
-								rivExp,
-								ModContent.ItemType<Infested_Ore_Item>(),
-								rule.chanceDenominator,
-								rule.amountDroppedMinimum,
-								rule.amountDroppedMaximum,
-								rule.chanceNumerator
-							));
-							break;
-							case ItemID.CorruptSeeds:
-							npcLoot.Add(ItemDropRule.ByCondition(
-								defExp,
-								ModContent.ItemType<Defiled_Grass_Seeds>(),
-								rule.chanceDenominator,
-								rule.amountDroppedMinimum,
-								rule.amountDroppedMaximum,
-								rule.chanceNumerator
-							));
-							break;
-						}
-					} else if (rule.condition is Conditions.IsCrimsonAndNotExpert) {
-						rule.condition = new LootConditions.IsWorldEvilAndNotExpert(OriginSystem.evil_crimson);
-					}
-				}
-			}
-		}
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
 			Player player = spawnInfo.Player;
 			if (player.GetModPlayer<OriginPlayer>().ZoneDefiled) {

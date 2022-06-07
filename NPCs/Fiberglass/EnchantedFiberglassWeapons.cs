@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -40,7 +41,7 @@ namespace Origins.NPCs.Fiberglass {
             if(Collision.CanHit(pos, 1, 1, Main.player[NPC.target].Center, 1, 1) && Main.netMode != NetmodeID.MultiplayerClient) {
                 NPC.localAI[0] += 1f;
                 if(NPC.localAI[0] >= 75f) {
-                    Projectile.NewProjectile(pos.X, pos.Y, speed.X, speed.Y, ProjectileID.WoodenArrowHostile, 32, 0f);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), pos.X, pos.Y, speed.X, speed.Y, ProjectileID.WoodenArrowHostile, 32, 0f);
                     NPC.localAI[0] = 0f;
                     teleport();
                 }
@@ -55,20 +56,20 @@ namespace Origins.NPCs.Fiberglass {
             NPC.localAI[0] = 0f;
             teleport();
         }
-        public override void OnKill() {
-            if(Main.rand.NextBool(10))Item.NewItem(NPC.Center, ModContent.ItemType<Broken_Fiberglass_Bow>());
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Broken_Fiberglass_Bow>(), 10));
         }
         public override void HitEffect(int hitDirection, double damage) {
             NPC.velocity.X += hitDirection * 3;
             if(damage>NPC.life*2f){
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
             }
             if(NPC.life<0) {
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
             } else if(damage>NPC.lifeMax*0.5f){
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
             }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
@@ -144,7 +145,7 @@ namespace Origins.NPCs.Fiberglass {
                 if(NPC.rotation == NPC.oldRot[0])NPC.localAI[0] += 2f;
                 if(NPC.localAI[0] >= 180f) {
                     Vector2 speed = new Vector2(-8,0).RotatedBy(Main.rand.NextFloat(NPC.rotation-0.1f,NPC.rotation+0.1f));
-                    Projectile.NewProjectile(NPC.Center.X, NPC.Center.Y, speed.X, speed.Y, ProjectileID.BulletDeadeye, 32, 0f);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, speed.X, speed.Y, ProjectileID.BulletDeadeye, 32, 0f);
                     NPC.life = 0;
                     NPC.checkDead();
                 }
@@ -153,13 +154,13 @@ namespace Origins.NPCs.Fiberglass {
         }
         public override void OnKill() {
             if(NPC.localAI[0] < 180f) {
-                Item.NewItem(NPC.Center, ModContent.ItemType<Fiberglass_Shard>(), Main.rand.Next(4)+4);
+                Item.NewItem(NPC.GetSource_Death(), NPC.Center, ModContent.ItemType<Fiberglass_Shard>(), Main.rand.Next(4)+4);
             } else {
                 Vector2 speed = new Vector2(8,0).RotatedBy(NPC.rotation);
                 for(int i = Main.rand.Next(4,7); i >= 0; i--) {
                     speed = speed.RotatedByRandom(0.25f);
                     int proj =
-                    Projectile.NewProjectile(NPC.Center, speed, ModContent.ProjectileType<Fiberglass_Shard_Proj>(), 17, 3f, NPC.target);
+                    Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center, speed, ModContent.ProjectileType<Fiberglass_Shard_Proj>(), 17, 3f, NPC.target);
                     Main.projectile[proj].hostile = true;
                     Main.projectile[proj].friendly = false;
                     Main.projectile[proj].hide = false;
@@ -169,14 +170,14 @@ namespace Origins.NPCs.Fiberglass {
         public override void HitEffect(int hitDirection, double damage) {
             NPC.velocity.X += hitDirection * 3;
             if(damage>NPC.life*2f){
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
             }
             if(NPC.life<0) {
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
             } else if(damage>NPC.lifeMax*0.5f){
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
             }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
@@ -334,20 +335,20 @@ namespace Origins.NPCs.Fiberglass {
             NPC.rotation%=MathHelper.Pi;
             NPC.noTileCollide = true;
         }
-        public override void OnKill() {
-            if(Main.rand.NextBool(7))Item.NewItem(NPC.Center, ModContent.ItemType<Broken_Fiberglass_Sword>());
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Broken_Fiberglass_Sword>(), 10));
         }
         public override void HitEffect(int hitDirection, double damage) {
             NPC.velocity.X += hitDirection * 3;
             if(damage>NPC.life*2f){
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
             }
             if(NPC.life<0) {
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
             } else if(damage>NPC.lifeMax*0.5f){
-                Gore.NewGore(NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
             }
         }
         public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {

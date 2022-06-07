@@ -27,7 +27,7 @@ namespace Origins.Tiles.Riven {
             AddMapEntry(new Color(160, 100, 80));
 			//SetModTree(Defiled_Tree.Instance);
             mergeID = TileID.Stone;
-            soundType = SoundID.NPCKilled;
+            //soundType = SoundID.NPCKilled;
 		}
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
             fail = false;

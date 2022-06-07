@@ -28,6 +28,8 @@ namespace Origins.Items.Armor.Fiberglass {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Pauldrons");
 			Tooltip.SetDefault("These don't seem very protective");
+			ArmorIDs.Body.Sets.HidesTopSkin[Type] = false;
+			ArmorIDs.Body.Sets.HidesBottomSkin[Type] = false;
 		}
 		public override void SetDefaults() {
             Item.defense = 6;

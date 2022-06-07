@@ -83,9 +83,9 @@ namespace Origins.Items.Weapons.Fiberglass {
             SetDefaults();
             strung--;
             if(strung <= 0) {
-                SoundEngine.PlaySound(SoundID.Item, (int)player.Center.X, (int)player.Center.Y, 102, 0.75f, 1);
+                SoundEngine.PlaySound(SoundID.Item102.WithPitch(1).WithVolume(0.75f), player.Center);
                 Vector2 pos = player.Center + (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * (10 - player.direction * 2);
-                Gore.NewGoreDirect(pos, player.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore")).position = pos;
+                Gore.NewGoreDirect(player.GetSource_ItemUse(Item), pos, player.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore")).position = pos;
             }
             return base.CanUseItem(player);
         }

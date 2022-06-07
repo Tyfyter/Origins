@@ -54,30 +54,27 @@ namespace Origins.NPCs {
         }
         public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
             if(rasterizedTime > 0) {
-			    spriteBatch.End();
 	            Origins.rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
 	            Origins.rasterizeShader.Shader.Parameters["uOffset"].SetValue(npc.velocity.WithMaxLength(4) * 0.0625f * rasterizedTime);
 	            Origins.rasterizeShader.Shader.Parameters["uWorldPosition"].SetValue(npc.position);
                 Origins.rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(TextureAssets.Npc[npc.type].Value.Width, TextureAssets.Npc[npc.type].Value.Height, 0));
                 Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;
-			    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, Origins.rasterizeShader.Shader, Main.GameViewMatrix.ZoomMatrix);
+			    spriteBatch.Restart(SpriteSortMode.Immediate, effect: Origins.rasterizeShader.Shader);
                 return true;
             }
             if(npc.HasBuff(Solvent_Debuff.ID)) {
-			    spriteBatch.End();
 	            Origins.solventShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
                 Origins.solventShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(npc.frame.Y,npc.frame.Height,TextureAssets.Npc[npc.type].Value.Height));
                 Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;
-			    spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, Origins.solventShader.Shader, Main.GameViewMatrix.ZoomMatrix);
+			    spriteBatch.Restart(SpriteSortMode.Immediate, effect: Origins.solventShader.Shader);
                 return true;
             }
             return true;
         }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
             if(npc.HasBuff(Solvent_Debuff.ID) || rasterizedTime > 0) {
-			    spriteBatch.End();
-			    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, Main.instance.Rasterizer, null, Main.Transform);
-            }
+			    spriteBatch.Restart();
+			}
         }
     }
 }

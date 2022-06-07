@@ -12,11 +12,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins.Projectiles.Weapons {
     public class Lava_Shot : ModProjectile {
-        /// <summary>
-        /// melee: 1 ranged: 2 magic: 3 summon: 4
-        /// </summary>
-        public static byte damageType = 0;
-        public float frameCount = 15;
+        public static DamageClass damageType;
+		public override void Unload() {
+            damageType = null;
+        }
+		public float frameCount = 15;
         public override string Texture => "Origins/Projectiles/Weapons/Lava_Cast_P";
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Magma Shot");
@@ -28,20 +28,7 @@ namespace Origins.Projectiles.Weapons {
             Projectile.aiStyle = 1;
             Projectile.extraUpdates++;
             Projectile.timeLeft = 300;
-            switch (damageType) {
-                case 1:
-                Projectile.melee = true;
-                break;
-                case 2:
-                Projectile.ranged = true;
-                break;
-                case 3:
-                Projectile.magic = true;
-                break;
-                case 4:
-                Projectile.minion = true;
-                break;
-            }
+            Projectile.DamageType = damageType;
         }
         public override void AI() {
             Lighting.AddLight(Projectile.Center, 0.75f, 0.35f, 0f);
@@ -69,8 +56,8 @@ namespace Origins.Projectiles.Weapons {
             bool flip = Projectile.velocity.X < 0;
             float fade = (float)Math.Sqrt(Projectile.timeLeft / 300f);
             //projectile.frame^1: bitwise XOR with 1 to use the other frame's height
-            if (m)spriteBatch.Draw(texture, Projectile.Center-Main.screenPosition, new Rectangle(0, (Projectile.frame^1)*26, 56, 26), new Color(1f,1f,1f,0.5f) * fade, Projectile.rotation-MathHelper.PiOver2, new Vector2(44, flip ? 13 : 10), Projectile.scale, flip ? SpriteEffects.FlipVertically:SpriteEffects.None, 0f);
-            spriteBatch.Draw(texture, Projectile.Center-Main.screenPosition, new Rectangle(0, Projectile.frame*26, 56, 26), new Color(1f,1f,1f,m?0.5f:1f) * fade, Projectile.rotation-MathHelper.PiOver2, new Vector2(44, flip ? 13 : 10), Projectile.scale, flip ? SpriteEffects.FlipVertically:SpriteEffects.None, 0f);
+            if (m)Main.EntitySpriteDraw(texture, Projectile.Center-Main.screenPosition, new Rectangle(0, (Projectile.frame^1)*26, 56, 26), new Color(1f,1f,1f,0.5f) * fade, Projectile.rotation-MathHelper.PiOver2, new Vector2(44, flip ? 13 : 10), Projectile.scale, flip ? SpriteEffects.FlipVertically:SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(texture, Projectile.Center-Main.screenPosition, new Rectangle(0, Projectile.frame*26, 56, 26), new Color(1f,1f,1f,m?0.5f:1f) * fade, Projectile.rotation-MathHelper.PiOver2, new Vector2(44, flip ? 13 : 10), Projectile.scale, flip ? SpriteEffects.FlipVertically:SpriteEffects.None, 0);
             return false;
         }
     }

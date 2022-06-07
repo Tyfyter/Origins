@@ -58,7 +58,7 @@ namespace Origins.Items.Weapons.Explosives {
             SoundEngine.PlaySound(SoundID.Item14.WithVolume(0.66f), Projectile.Center);
             Gore.NewGoreDirect(Projectile.GetSource_FromThis(), new Vector2(Projectile.Center.X, Projectile.Center.Y), default, Main.rand.Next(61, 64)).velocity += Vector2.One;
             Gore.NewGoreDirect(Projectile.GetSource_FromThis(), new Vector2(Projectile.Center.X, Projectile.Center.Y), default, Main.rand.Next(61, 64)).velocity += Vector2.One;
-            //Main.gore[Gore.NewGore(new Vector2(projectile.Center.X, projectile.Center.Y), default, Main.rand.Next(61, 64))].velocity += Vector2.One;
+            //Main.gore[Gore.NewGore(NPC.GetSource_Death(), new Vector2(projectile.Center.X, projectile.Center.Y), default, Main.rand.Next(61, 64))].velocity += Vector2.One;
         }
     }
 }

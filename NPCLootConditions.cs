@@ -55,4 +55,17 @@ namespace Origins.LootConditions {
 			};
 		}
 	}
+	public class DesertKeyCondition : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.GetModPlayer<OriginPlayer>().ZoneDefiled;
+		}
+
+		public bool CanShowItemDropInUI() {
+			return true;
+		}
+
+		public string GetConditionDescription() {
+			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+		}
+	}
 }
