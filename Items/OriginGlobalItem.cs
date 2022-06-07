@@ -118,14 +118,6 @@ namespace Origins.Items {
                         int crit = player.GetWeaponCrit(item);
                         tooltips.Insert(2, new TooltipLine(Mod, "CritChance", $"{crit}{Language.GetText("LegacyTooltip.41")}"));
                         return;
-                    } else {
-                        for(int i = 1; i < tooltips.Count; i++) {
-                            TooltipLine tooltip = tooltips[i];
-                            if(tooltip.Name.Equals("Damage")) {
-                                tooltip.Text = tooltip.Text.Insert(tooltip.Text.IndexOf(' '), " "+Language.GetText("explosive"));
-                                return;
-                            }
-                        }
                     }
                 }else switch(item.type) {
                         case ItemID.MiningHelmet:

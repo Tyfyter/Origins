@@ -46,15 +46,16 @@ namespace Origins {
 	}
 	[Autoload(false)]
 	public class ExplosivePlus : DamageClass {
-		private string name;
+		private readonly string name;
 		public override string Name => name;
-		DamageClass other;
+
+		readonly DamageClass other;
 		public ExplosivePlus(DamageClass other, string name) {
 			this.other = other;
 			this.name = name;
 		}
 		internal static ExplosivePlus CreateAndRegister(DamageClass other) {
-			ExplosivePlus newClass = new(other, "ExplosivePlus"+other.ClassName.GetTranslation(Terraria.Localization.GameCulture.DefaultCulture));
+			ExplosivePlus newClass = new(other, "ExplosivePlus"+other.FullName);
 			typeof(ILoadable).GetMethod("Load").Invoke(newClass, new object[]{ Origins.instance });
 			return newClass;
 		}

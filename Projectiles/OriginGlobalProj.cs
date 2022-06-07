@@ -39,8 +39,6 @@ namespace Origins.Projectiles {
             }
             felnumEffect = felnumEffectNext;
             felnumEffectNext = false;
-            explosiveOverride = explosiveOverrideNext;
-            explosiveOverrideNext = null;
             if(killLinkNext!=-1) {
                 killLink = killLinkNext;
                 //sync killLink ids
