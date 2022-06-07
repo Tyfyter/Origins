@@ -74,19 +74,19 @@ namespace Origins {
         #endregion
 
         #region biomes
-        public bool ZoneVoid { get; private set; } = false;
+        public bool ZoneVoid { get; internal set; } = false;
         public float ZoneVoidProgress = 0;
         public float ZoneVoidProgressSmoothed = 0;
 
-        public bool ZoneDefiled { get; private set; } = false;
+        public bool ZoneDefiled { get; internal set; } = false;
         public float ZoneDefiledProgress = 0;
         public float ZoneDefiledProgressSmoothed = 0;
 
-        public bool ZoneRiven { get; private set; } = false;
+        public bool ZoneRiven { get; internal set; } = false;
         public float ZoneRivenProgress = 0;
         public float ZoneRivenProgressSmoothed = 0;
 
-        public bool ZoneBrine { get; private set; } = false;
+        public bool ZoneBrine { get; internal set; } = false;
         public float ZoneBrineProgress = 0;
         public float ZoneBrineProgressSmoothed = 0;
         #endregion
@@ -320,12 +320,11 @@ namespace Origins {
         }
         #region attacks
         public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
-            bool ammoBased = item.useAmmo != AmmoID.None || (item.ammo != AmmoID.None && Player.HeldItem.useAmmo == item.ammo);
             if(fiberglassSet) {
-                damage.Flat+=ammoBased?2:4;
+                damage.Flat+=4;
             }
             if(fiberglassDagger) {
-                damage.Flat += ammoBased?4:8;
+                damage.Flat += 8;
             }
             if(rivenSet&&item.CountsAsClass(DamageClass.Summon)&&!ItemChecking) {
                 damage *= rivenMult;
@@ -383,8 +382,8 @@ namespace Origins {
             return true;
         }
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            if(Origins.ExplosiveModOnHit[proj.type]) {
-                damage = (int)(damage*(Player.allDamage+explosiveDamage-1)*0.7f);
+            if(Origins.DamageModOnHit[proj.type]) {
+                damage = (int)Player.GetTotalDamage(proj.DamageType).ApplyTo(damage);
             }
             if(proj.CountsAsClass(DamageClass.Melee) && felnumShock > 29) {
                 damage+=(int)(felnumShock / 15);
@@ -478,7 +477,7 @@ namespace Origins {
         #endregion
         public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
             if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {
-                OriginWorld originWorld = ModContent.GetInstance<OriginWorld>();
+                OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
                 if (originWorld.peatSold < 20) {
                     if (item.stack >= 20 - originWorld.peatSold) {
                         item.stack -= 20 - originWorld.peatSold;
@@ -516,62 +515,6 @@ namespace Origins {
             }
             tag.Add("MimicSetSelection", mimicSetChoices);
         }
-        #region biomes
-        public override void UpdateBiomes() {
-            ZoneVoid = OriginWorld.voidTiles > 300;
-            ZoneVoidProgress = Math.Min(OriginWorld.voidTiles - 200, 200)/300f;
-
-            ZoneDefiled = OriginWorld.defiledTiles > DefiledWastelands.NeededTiles;
-            ZoneDefiledProgress = Math.Min(OriginWorld.defiledTiles - (DefiledWastelands.NeededTiles-DefiledWastelands.ShaderTileCount), DefiledWastelands.ShaderTileCount)/DefiledWastelands.ShaderTileCount;
-
-            ZoneRiven = OriginWorld.rivenTiles > RivenHive.NeededTiles;
-            ZoneRivenProgress = Math.Min(OriginWorld.rivenTiles - (RivenHive.NeededTiles-RivenHive.ShaderTileCount), RivenHive.ShaderTileCount)/RivenHive.ShaderTileCount;
-
-            ZoneBrine = OriginWorld.brineTiles > BrinePool.NeededTiles;
-
-            LinearSmoothing(ref ZoneVoidProgressSmoothed, ZoneVoidProgress, OriginWorld.biomeShaderSmoothing);
-            LinearSmoothing(ref ZoneDefiledProgressSmoothed, ZoneDefiledProgress, OriginWorld.biomeShaderSmoothing);
-            LinearSmoothing(ref ZoneRivenProgressSmoothed, ZoneRivenProgress, OriginWorld.biomeShaderSmoothing*0.1f);
-        }
-        public override bool CustomBiomesMatch(Player other) {
-            OriginPlayer modOther = other.GetModPlayer<OriginPlayer>();
-            return !((ZoneVoid^modOther.ZoneVoid) || (ZoneDefiled ^ modOther.ZoneDefiled) || (ZoneRiven ^ modOther.ZoneRiven) || (ZoneBrine ^ modOther.ZoneBrine));
-        }
-        public override void SendCustomBiomes(BinaryWriter writer) {
-            byte flags = 0;
-            if (ZoneVoid)
-                flags |= 1;
-            if (ZoneDefiled)
-                flags |= 2;
-            if (ZoneRiven)
-                flags |= 4;
-            if (ZoneBrine)
-                flags |= 8;
-            writer.Write(flags);
-        }
-        public override void ReceiveCustomBiomes(BinaryReader reader) {
-            byte flags = reader.ReadByte();
-            ZoneVoid = ((flags & 1) != 0);
-            ZoneDefiled = ((flags & 2) != 0);
-            ZoneRiven = ((flags & 4) != 0);
-            ZoneBrine = ((flags & 8) != 0);
-        }
-        public override void CopyCustomBiomesTo(Player other) {
-            OriginPlayer modOther = other.GetModPlayer<OriginPlayer>();
-            //modOther.ZoneVoidTime = ZoneVoidTime;
-            modOther.ZoneVoid = ZoneVoid;
-            modOther.ZoneDefiled = ZoneDefiled;
-            modOther.ZoneRiven = ZoneRiven;
-            modOther.ZoneBrine = ZoneBrine;
-        }
-        public override void UpdateBiomeVisuals() {
-            if(ZoneVoidProgressSmoothed > 0)Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(ZoneVoidProgressSmoothed);
-            if(ZoneDefiledProgressSmoothed > 0)Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(ZoneDefiledProgressSmoothed);
-            if(ZoneRivenProgressSmoothed > 0)Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(ZoneRivenProgressSmoothed);
-            Player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", ZoneVoidProgressSmoothed>0, Player.Center);
-            Player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", ZoneDefiledProgressSmoothed>0, Player.Center);
-            Player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", ZoneRivenProgressSmoothed>0, Player.Center);
-        }
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
             bool zoneDefiled = ZoneDefiled;
             bool zoneRiven = ZoneRiven;
@@ -596,7 +539,6 @@ namespace Origins {
                 }
             }
         }
-		#endregion
 		public override bool PreItemCheck() {
             ItemChecking = true;
             return true;
@@ -626,15 +568,15 @@ namespace Origins {
                     layers.Insert(layers.IndexOf(PlayerLayer.Body) + 1, CreateEyndumCoreLayer(equippedCore.CoreGlowColor));
                 }
             }
-            if (Origins.HelmetGlowMasks.TryGetValue(Player.head, out Texture2D helmetMask)) {
+            if (Origins.HelmetGlowMasks.TryGetValue(Player.head, out AutoCastingAsset<Texture2D> helmetMask)) {
                 layers.Insert(layers.IndexOf(PlayerLayer.Head) + 1, CreateHeadGlowmask(helmetMask));
             }
-            if (Origins.BreastplateGlowMasks.TryGetValue(Player.Male ? Player.body : -Player.body, out Texture2D breastplateMask)) {
+            if (Origins.BreastplateGlowMasks.TryGetValue(Player.Male ? Player.body : -Player.body, out AutoCastingAsset<Texture2D> breastplateMask)) {
                 layers.Insert(layers.IndexOf(PlayerLayer.Body) + 1, CreateBodyGlowmask(breastplateMask));
-            } else if (Origins.BreastplateGlowMasks.TryGetValue(Player.Male ? -Player.body : Player.body, out Texture2D fBreastplateMask)) {
+            } else if (Origins.BreastplateGlowMasks.TryGetValue(Player.Male ? -Player.body : Player.body, out AutoCastingAsset<Texture2D> fBreastplateMask)) {
                 layers.Insert(layers.IndexOf(PlayerLayer.Body) + 1, CreateBodyGlowmask(fBreastplateMask));
             }
-            if (Origins.LeggingGlowMasks.TryGetValue(Player.legs, out Texture2D leggingMask)) {
+            if (Origins.LeggingGlowMasks.TryGetValue(Player.legs, out AutoCastingAsset<Texture2D> leggingMask)) {
                 layers.Insert(layers.IndexOf(PlayerLayer.Legs) + 1, CreateLegsGlowmask(leggingMask));
             }
             if(itemLayerWrench && !Player.HeldItem.noUseGraphic) {

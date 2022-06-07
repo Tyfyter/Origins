@@ -21,7 +21,7 @@ using static Terraria.ModLoader.ModContent;
 using static Terraria.WorldGen;
 
 namespace Origins {
-    public partial class OriginWorld : ModSystem {
+    public partial class OriginSystem : ModSystem {
         internal static List<(Point, int)> HellSpikes = new List<(Point, int)>() { };
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight) {
             #region _
@@ -619,7 +619,7 @@ namespace Origins {
             }
         }
         public static void GERunnerHook(On.Terraria.WorldGen.orig_GERunner orig, int i, int j, float speedX = 0f, float speedY = 0f, bool good = true) {
-            byte worldEvil = GetInstance<OriginWorld>().worldEvil;
+            byte worldEvil = GetInstance<OriginSystem>().worldEvil;
             if(!good&&(worldEvil&4)!=0) {
                 ERunner(i, j, worldEvil, speedX, speedY);
                 return;

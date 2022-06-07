@@ -16,6 +16,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.World.BiomeData;
 using Origins.Buffs;
+using Terraria.GameContent.ItemDropRules;
+using Origins.Tiles.Riven;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
@@ -23,7 +25,7 @@ namespace Origins.NPCs {
 			if (Rasterized_Debuff.ID != -1) npc.buffImmune[Rasterized_Debuff.ID] = npc.buffImmune[BuffID.Confused];
 		}
 		public override void SetupShop(int type, Chest shop, ref int nextSlot) {
-			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginWorld>().peatSold >= 20) {
+			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 20) {
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
@@ -83,27 +85,58 @@ namespace Origins.NPCs {
 			knockback*=MeleeCollisionNPCData.knockbackMult;
 			MeleeCollisionNPCData.knockbackMult = 1f;
 		}*/
-		public override bool PreNPCLoot(NPC npc) {
-			byte worldEvil = ModContent.GetInstance<OriginWorld>().worldEvil;
-			if ((worldEvil & 4) != 0) {
-				switch (npc.type) {
-					case NPCID.EaterofWorldsHead:
-					case NPCID.EaterofWorldsBody:
-					case NPCID.EaterofWorldsTail:
-					case NPCID.BrainofCthulhu:
-					break;
-					default:
-					NPCLoader.blockLoot.Add(ItemID.CorruptSeeds);
-					NPCLoader.blockLoot.Add(ItemID.DemoniteOre);
-					break;
+		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
+			List<IItemDropRule> dropRules = npcLoot.Get(false);
+			IItemDropRule entry;
+			int len = dropRules.Count;
+			var def = new LootConditions.IsWorldEvil(OriginSystem.evil_wastelands);
+			var riv = new LootConditions.IsWorldEvil(OriginSystem.evil_riven);
+			var defExp = new LootConditions.IsWorldEvilAndNotExpert(OriginSystem.evil_wastelands);
+			var rivExp = new LootConditions.IsWorldEvilAndNotExpert(OriginSystem.evil_riven);
+			for (int i = 0; i < len; i++) {
+				entry = dropRules[i];
+				if (entry is ItemDropWithConditionRule rule) {
+					if (rule.condition is Conditions.IsCorruption) {
+						rule.condition = new LootConditions.IsWorldEvil(OriginSystem.evil_corruption);
+					} else if (rule.condition is Conditions.IsCrimson) {
+						rule.condition = new LootConditions.IsWorldEvil(OriginSystem.evil_crimson);
+					} else if (rule.condition is Conditions.IsCorruptionAndNotExpert) {
+						rule.condition = new LootConditions.IsWorldEvilAndNotExpert(OriginSystem.evil_corruption);
+						switch (rule.itemId) {
+							case ItemID.DemoniteOre:
+							npcLoot.Add(ItemDropRule.ByCondition(
+								defExp,
+								ModContent.ItemType<Defiled_Ore_Item>(),
+								rule.chanceDenominator,
+								rule.amountDroppedMinimum,
+								rule.amountDroppedMaximum,
+								rule.chanceNumerator
+							));
+							npcLoot.Add(ItemDropRule.ByCondition(
+								rivExp,
+								ModContent.ItemType<Infested_Ore_Item>(),
+								rule.chanceDenominator,
+								rule.amountDroppedMinimum,
+								rule.amountDroppedMaximum,
+								rule.chanceNumerator
+							));
+							break;
+							case ItemID.CorruptSeeds:
+							npcLoot.Add(ItemDropRule.ByCondition(
+								defExp,
+								ModContent.ItemType<Defiled_Grass_Seeds>(),
+								rule.chanceDenominator,
+								rule.amountDroppedMinimum,
+								rule.amountDroppedMaximum,
+								rule.chanceNumerator
+							));
+							break;
+						}
+					} else if (rule.condition is Conditions.IsCrimsonAndNotExpert) {
+						rule.condition = new LootConditions.IsWorldEvilAndNotExpert(OriginSystem.evil_crimson);
+					}
 				}
 			}
-			switch (npc.type) {
-				case NPCID.SkeletronHead:
-				downedSkeletron = NPC.downedBoss3;
-				break;
-			}
-			return true;
 		}
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
 			Player player = spawnInfo.Player;

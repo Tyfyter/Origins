@@ -37,13 +37,15 @@ using MC = Terraria.ModLoader.ModContent;
 namespace Origins {
     public class Origins : Mod {
         public static Origins instance;
-
+        [Obsolete]
         public static bool[] ExplosiveProjectiles;
+        [Obsolete]
         public static bool[] ExplosiveItems;
+        [Obsolete]
         public static bool[] ExplosiveAmmo;
 
         public static Dictionary<int, int> ExplosiveBaseDamage;
-        public static bool[] ExplosiveModOnHit;
+        public static bool[] DamageModOnHit;
         public static ushort[] VanillaElements;
 
         public static ModKeybind SetBonusTriggerKey { get; private set; }
@@ -72,7 +74,6 @@ namespace Origins {
         public static AutoCastingAsset<Texture2D> eyndumCoreUITexture;
         public static AutoCastingAsset<Texture2D> eyndumCoreTexture;
 
-        public UserInterface setBonusUI;
         public Origins() {
             instance = this;
             celestineBoosters = new int[3];
@@ -176,14 +177,14 @@ namespace Origins {
                 ExplosiveProjectiles[ProjectileID.ProximityMineIII] = true;
                 ExplosiveProjectiles[ProjectileID.ProximityMineIV] = true;
 
-                ExplosiveModOnHit = new bool[ProjectileID.Sets.CanDistortWater.Length];
-                ExplosiveModOnHit[ProjectileID.Bomb] = true;
-                ExplosiveModOnHit[ProjectileID.StickyBomb] = true;
-                ExplosiveModOnHit[ProjectileID.BouncyBomb] = true;
-                ExplosiveModOnHit[ProjectileID.BombFish] = true;
-                ExplosiveModOnHit[ProjectileID.Dynamite] = true;
-                ExplosiveModOnHit[ProjectileID.StickyDynamite] = true;
-                ExplosiveModOnHit[ProjectileID.BouncyDynamite] = true;
+                DamageModOnHit = new bool[ProjectileID.Sets.CanDistortWater.Length];
+                DamageModOnHit[ProjectileID.Bomb] = true;
+                DamageModOnHit[ProjectileID.StickyBomb] = true;
+                DamageModOnHit[ProjectileID.BouncyBomb] = true;
+                DamageModOnHit[ProjectileID.BombFish] = true;
+                DamageModOnHit[ProjectileID.Dynamite] = true;
+                DamageModOnHit[ProjectileID.StickyDynamite] = true;
+                DamageModOnHit[ProjectileID.BouncyDynamite] = true;
 
                 ExplosiveAmmo = ExplosiveItems.ToArray();
                 ExplosiveAmmo[AmmoID.Rocket] = true;
@@ -307,7 +308,6 @@ namespace Origins {
                 //Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.
                 //Filters.Scene["BlackHole"] = new Filter(new ScreenShaderData(screenRef, "BlackHole"), EffectPriority.VeryHigh);
                 //Filters.Scene["BlackHole"].Load();
-                setBonusUI = new UserInterface();
                 eyndumCoreUITexture = Assets.Request<Texture2D>("UI/CoreSlot");
                 eyndumCoreTexture = Assets.Request<Texture2D>("Items/Armor/Eyndum/Eyndum_Breastplate_Body_Core");
 				if (OriginClientConfig.Instance.SetBonusDoubleTap) {
@@ -347,8 +347,8 @@ namespace Origins {
                 self.type = realID;
             };
             On.Terraria.NPC.GetMeleeCollisionData += NPC_GetMeleeCollisionData;
-            On.Terraria.WorldGen.GERunner+=OriginWorld.GERunnerHook;
-            On.Terraria.WorldGen.Convert+=OriginWorld.ConvertHook;
+            On.Terraria.WorldGen.GERunner+=OriginSystem.GERunnerHook;
+            On.Terraria.WorldGen.Convert+=OriginSystem.ConvertHook;
             On.Terraria.Item.NewItem_IEntitySource_int_int_int_int_int_int_bool_int_bool_bool+=OriginGlobalItem.NewItemHook;
             Mod blockSwap = ModLoader.GetMod("BlockSwap");
             if(!(blockSwap is null || blockSwap.Version>new Version(1,0,1)))On.Terraria.TileObject.CanPlace+=(On.Terraria.TileObject.orig_CanPlace orig, int x, int y, int type, int style, int dir, out TileObject objectData, bool onlyCheck, bool checkStay) => {
@@ -361,7 +361,7 @@ namespace Origins {
                 return orig(x, y, type, style, dir, out objectData, onlyCheck, checkStay);
             };
             Defiled_Tree.Load();
-            OriginWorld worldInstance = ModContent.GetInstance<OriginWorld>();
+            OriginSystem worldInstance = ModContent.GetInstance<OriginSystem>();
             if(!(worldInstance is null)) {
                 worldInstance.defiledResurgenceTiles = new List<(int, int)> { };
                 worldInstance.defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
@@ -377,10 +377,10 @@ namespace Origins {
             };
             On.Terraria.Lang.GetDryadWorldStatusDialog += Lang_GetDryadWorldStatusDialog;
             HookEndpointManager.Add(typeof(TileLoader).GetMethod("MineDamage", BindingFlags.Public|BindingFlags.Static), (hook_MinePower)MineDamage);
-            On.Terraria.Main.DrawPlayer_DrawAllLayers += Main_DrawPlayer_DrawAllLayers;
+			On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.DrawPlayerInternal += LegacyPlayerRenderer_DrawPlayerInternal;
         }
 
-        private void Main_DrawPlayer_DrawAllLayers(On.Terraria.Main.orig_DrawPlayer_DrawAllLayers orig, Main self, Player drawPlayer, int projectileDrawPosition, int cHead) {
+		private void LegacyPlayerRenderer_DrawPlayerInternal(On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.orig_DrawPlayerInternal orig, Terraria.Graphics.Renderers.LegacyPlayerRenderer self, Camera camera, Player drawPlayer, Vector2 position, float rotation, Vector2 rotationOrigin, float shadow, float alpha, float scale, bool headOnly) {
             bool shaded = false;
             try {
                 int rasterizedTime = drawPlayer.GetModPlayer<OriginPlayer>().rasterizedTime;
@@ -393,7 +393,7 @@ namespace Origins {
                     Main.graphics.GraphicsDevice.Textures[1] = cellNoiseTexture;
                     Main.spriteBatch.Restart(SpriteSortMode.Immediate, effect: rasterizeShader.Shader);
                 }
-                orig(self, drawPlayer, projectileDrawPosition, cHead);
+                orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);
             } finally {
                 if (shaded) {
                     Main.spriteBatch.Restart();
@@ -411,8 +411,8 @@ namespace Origins {
 	        int tGood = WorldGen.tGood;
 	        int tEvil = WorldGen.tEvil;
 	        int tBlood = WorldGen.tBlood;
-            int tDefiled = OriginWorld.tDefiled;
-            int tRiven = OriginWorld.tRiven;
+            int tDefiled = OriginSystem.tDefiled;
+            int tRiven = OriginSystem.tRiven;
             int tBad = tEvil + tBlood + tDefiled + tRiven;
             if(tDefiled==0&&tRiven==0) {
                 return orig();
@@ -468,18 +468,18 @@ namespace Origins {
             }
         }
         private void WorldGen_CountTiles(On.Terraria.WorldGen.orig_CountTiles orig, int X) {
-            if(X == 0)OriginWorld.UpdateTotalEvilTiles();
+            if(X == 0)OriginSystem.UpdateTotalEvilTiles();
             orig(X);
         }
 
         private void WorldGen_AddUpAlignmentCounts(On.Terraria.WorldGen.orig_AddUpAlignmentCounts orig, bool clearCounts) {
             int[] tileCounts = WorldGen.tileCounts;
             if (clearCounts) {
-                OriginWorld.totalDefiled2 = 0;
-                OriginWorld.totalRiven2 = 0;
+                OriginSystem.totalDefiled2 = 0;
+                OriginSystem.totalRiven2 = 0;
             }
-            OriginWorld.totalDefiled2 += tileCounts[MC.TileType<Defiled_Stone>()] + tileCounts[MC.TileType<Defiled_Grass>()] + tileCounts[MC.TileType<Defiled_Sand>()]+tileCounts[MC.TileType<Defiled_Ice>()];
-            OriginWorld.totalRiven2 += tileCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
+            OriginSystem.totalDefiled2 += tileCounts[MC.TileType<Defiled_Stone>()] + tileCounts[MC.TileType<Defiled_Grass>()] + tileCounts[MC.TileType<Defiled_Sand>()]+tileCounts[MC.TileType<Defiled_Ice>()];
+            OriginSystem.totalRiven2 += tileCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
             orig(clearCounts);
         }
         public override void HandlePacket(BinaryReader reader, int whoAmI) {
@@ -487,7 +487,7 @@ namespace Origins {
             if(Main.netMode == NetmodeID.MultiplayerClient) {
                 switch(type) {
                     case MessageID.TileCounts:
-                    OriginWorld.tDefiled = reader.ReadByte();
+                    OriginSystem.tDefiled = reader.ReadByte();
                     break;
                     default:
                     Logger.Warn($"Invalid packet type ({type}) received on client");
@@ -496,7 +496,7 @@ namespace Origins {
             }else if(Main.netMode == NetmodeID.Server) {
                 switch(type) {
                     case MessageID.TileCounts:
-                    OriginWorld.tDefiled = reader.ReadByte();
+                    OriginSystem.tDefiled = reader.ReadByte();
                     break;
                     default:
                     Logger.Warn($"Invalid packet type ({type}) received on server");
@@ -533,7 +533,7 @@ namespace Origins {
             ExplosiveItems = null;
             ExplosiveAmmo = null;
             ExplosiveBaseDamage = null;
-            ExplosiveModOnHit = null;
+            DamageModOnHit = null;
             VanillaElements = null;
             celestineBoosters = null;
             perlinFade0 = null;
@@ -550,79 +550,25 @@ namespace Origins {
 			Defiled_Tree.Unload();
             OriginExtensions.unInitExt();
             OriginTile.IDs = null;
-            OriginWorld worldInstance = ModContent.GetInstance<OriginWorld>();
+            OriginSystem worldInstance = ModContent.GetInstance<OriginSystem>();
             if(!(worldInstance is null)) {
                 worldInstance.defiledResurgenceTiles = null;
                 worldInstance.defiledAltResurgenceTiles = null;
             }
-            setBonusUI = null;
             eyndumCoreUITexture = null;
             eyndumCoreTexture = null;
         }
-        public override void UpdateUI(GameTime gameTime) {
-            if (Main.playerInventory) {
-                if (setBonusUI?.CurrentState is Eyndum_Core_UI eyndumCoreUIState) {
-                    OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
-                    if (eyndumCoreUIState?.itemSlot?.item == originPlayer.eyndumCore) {
-                        if (!originPlayer.eyndumSet) {
-                            if (eyndumCoreUIState?.itemSlot?.item?.Value?.IsAir ?? true) {
-                                setBonusUI.SetState(null);
-                            } else {
-                                eyndumCoreUIState.hasSetBonus = false;
-                                setBonusUI.Update(gameTime);
-                            }
-                        } else {
-                            setBonusUI.Update(gameTime);
-                        }
-                    } else {
-                        setBonusUI.SetState(null);
-                    }
-                } else if (setBonusUI?.CurrentState is Mimic_Selection_UI) {
-                    OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
-                    if (originPlayer.mimicSet) {
-                        setBonusUI.Update(gameTime);
-                    } else {
-                        setBonusUI.SetState(null);
-                    }
-                }
-            }
-        }
         public void SetEyndumCoreUI() {
-            if (!(setBonusUI.CurrentState is Eyndum_Core_UI)) {
+            UserInterface setBonusUI = OriginSystem.instance.setBonusUI;
+            if (setBonusUI.CurrentState is not Eyndum_Core_UI) {
                 setBonusUI.SetState(new Eyndum_Core_UI());
             }
         }
         public void SetMimicSetUI() {
-            if (!(setBonusUI.CurrentState is Mimic_Selection_UI)) {
+            UserInterface setBonusUI = OriginSystem.instance.setBonusUI;
+            if (setBonusUI.CurrentState is not Mimic_Selection_UI) {
                 setBonusUI.SetState(new Mimic_Selection_UI());
             }
-        }
-        public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
-            int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
-            if (inventoryIndex != -1) {//error prevention & null check
-                layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-                    "Origins: Eyndum Core UI",
-                    delegate {
-                        setBonusUI?.Draw(Main.spriteBatch, new GameTime());
-                        return true;
-                    },
-                    InterfaceScaleType.UI) { Active = Main.playerInventory }
-                );
-            }
-        }
-        public override void UpdateMusic(ref int music, ref MusicPriority priority) {
-            if (Main.myPlayer == -1 || Main.gameMenu || !Main.LocalPlayer.active) {
-				return;
-			}
-            Vector2 position = Main.LocalPlayer.Bottom/16;
-            OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
-			if (originPlayer.ZoneVoid&&priority<MusicPriority.Event) {
-				music = Music.Dusk;
-				priority = MusicPriority.Event;
-			}else if (originPlayer.ZoneDefiled&&priority<MusicPriority.Event) {
-				music = (position.Y>=(Main.worldSurface+30))?Music.UndergroundDefiled:Music.Defiled;
-				priority = MusicPriority.Event;
-			}
         }
 
         public static void AddExplosive(Item item, bool noProj = false, bool noAmmo = false) {
@@ -706,6 +652,8 @@ namespace Origins {
             public static int Dusk = MusicID.Eerie;
             public static int Defiled = MusicID.Corruption;
             public static int UndergroundDefiled = MusicID.UndergroundCorruption;
+            public static int Riven = MusicID.Corruption;
+            public static int UndergroundRiven = MusicID.UndergroundCorruption;
         }
         public static class Sounds {
             public static SoundStyle Krunch = SoundID.Item36;

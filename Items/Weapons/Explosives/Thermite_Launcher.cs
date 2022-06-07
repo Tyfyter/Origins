@@ -38,11 +38,10 @@ namespace Origins.Items.Weapons.Explosives {
         public override void AddRecipes() {
             Origins.AddExplosive(Item);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
             type = Item.shoot;
-            return true;
         }
-    }
+	}
     public class Thermite_Canister_P  : ModProjectile {
         public override string Texture => "Origins/Projectiles/Ammo/Thermite_Canister_P";
         public override void SetStaticDefaults() {
@@ -70,7 +69,7 @@ namespace Origins.Items.Weapons.Explosives {
             return true;
         }
         public override void Kill(int timeLeft) {
-            Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, 0, 0, Projectile.owner, -1, 1);
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, 0, 0, Projectile.owner, -1, 1);
             Projectile.damage = (int)(Projectile.damage * 0.75f);
             Projectile.knockBack = 16f;
 		    Projectile.position = Projectile.Center;
@@ -78,7 +77,7 @@ namespace Origins.Items.Weapons.Explosives {
 		    Projectile.Center = Projectile.position;
             Projectile.Damage();
             for(int i = 0; i < 5; i++) {
-                Projectile.NewProjectile(Projectile.Center, (Projectile.velocity/2)+Vec2FromPolar((i/Main.rand.NextFloat(5,7))*MathHelper.TwoPi, Main.rand.NextFloat(2,4)), ModContent.ProjectileType<Thermite_P>(), (int)(Projectile.damage*0.75f), 0, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Projectile.velocity/2)+Vec2FromPolar((i/Main.rand.NextFloat(5,7))*MathHelper.TwoPi, Main.rand.NextFloat(2,4)), ModContent.ProjectileType<Thermite_P>(), (int)(Projectile.damage*0.75f), 0, Projectile.owner);
             }
         }
         public override void AI() {

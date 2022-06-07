@@ -83,7 +83,7 @@ namespace Origins.World {
 				        }
                         if(Main.tile[k, l].TileType == TileID.Pots) {
                             Main.tile[k, l].TileType = 0;
-                            Main.tile[k, l].HasTile = false;
+                            Main.tile[k, l].SetActive(false);
                             continue;
                         }
                         if(Main.tile[k, l].TileType == type) {
@@ -96,10 +96,10 @@ namespace Origins.World {
 					        tile.LiquidAmount = 0;
 							tile.LiquidType = 1;
                             //WorldGen.paintTile(k, l, 29);
-                            Main.tile[k+1, l].Slope = 0;
-                            Main.tile[k-1, l].Slope = 0;
-        if(l<Main.maxTilesY)Main.tile[k, l+1].Slope = 0;
-                            Main.tile[k, l-1].Slope = 0;
+                            Main.tile[k+1, l].SetSlope(SlopeType.Solid);
+                            Main.tile[k-1, l].SetSlope(SlopeType.Solid);
+        if(l<Main.maxTilesY)Main.tile[k, l+1].SetSlope(SlopeType.Solid);
+                            Main.tile[k, l-1].SetSlope(SlopeType.Solid);
                             if(Main.tile[k, l-1].LiquidAmount != 0)continue;
                             spike = new Point(k,l);
                             continue;
@@ -126,9 +126,9 @@ namespace Origins.World {
 			        }
                     if(spike.HasValue) {
                         int l = spike.Value.Y;
-                        if(WorldGen.genRand.Next(0, 10+OriginWorld.HellSpikes.Count)<=tilesSinceSpike/5) {
+                        if(WorldGen.genRand.Next(0, 10+OriginSystem.HellSpikes.Count)<=tilesSinceSpike/5) {
                             Origins.instance.Logger.Info("Adding spike @ "+k+", "+l);
-                            OriginWorld.HellSpikes.Add((new Point(k, l), WorldGen.genRand.Next(5,10)+tilesSinceSpike/5));
+                            OriginSystem.HellSpikes.Add((new Point(k, l), WorldGen.genRand.Next(5,10)+tilesSinceSpike/5));
                             //WorldGen.paintTile(k, l, 11);
                             tilesSinceSpike = -7;
                         } else {
@@ -284,9 +284,9 @@ namespace Origins.World {
 					    tile = Main.tile[l, k];
 					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
 							tile.TileType = (ushort)type;
-					        Main.tile[l, k].HasTile = true;
+					        Main.tile[l, k].SetActive(true);
 					        Main.tile[l, k].LiquidAmount = 0;
-					        Main.tile[l, k].LiquidType = 1;
+					        Main.tile[l, k].SetLiquidType(1);
                             WorldGen.SquareTileFrame(l,k);
                             if(l>X1) {
                                 X1 = l;
@@ -316,7 +316,7 @@ namespace Origins.World {
                     AutoSlopeForSpike(l, k);
                 }
             }
-            NetMessage.SendTileRange(Main.myPlayer, X0, Y0, X1-X0, Y1-Y1);
+            NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1-X0, Y1-Y1);
         }
         //take that, Heisenberg
         public static (Vector2 position, Vector2 velocity) VeinRunner(int i, int j, double strength, Vector2 speed, double length, float twist = 0, bool randomtwist = false){
@@ -357,7 +357,7 @@ namespace Origins.World {
 				        }
 					    tile = Main.tile[l, k];
 					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]){
-					        Main.tile[l, k].HasTile = false;
+					        Main.tile[l, k].SetActive(false);
                             //WorldGen.SquareTileFrame(l,k);
                             if(l>X1) {
                                 X1 = l;
@@ -381,7 +381,7 @@ namespace Origins.World {
 			//Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.EmeraldGemspark;
 #endif
 			WorldGen.RangeFrame(X0, Y0, X1, Y1);
-			NetMessage.SendTileRange(Main.myPlayer, X0, Y0, X1-X0, Y1-Y1);
+			NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1-X0, Y1-Y1);
             return (pos, speed);
         }
 		public static (Vector2 position, Vector2 velocity) WalledVeinRunner(int i, int j, double strength, Vector2 speed, double length, ushort wallBlockType, float wallThickness, float twist = 0, bool randomtwist = false, int wallType = -1) {
@@ -436,7 +436,7 @@ namespace Origins.World {
 							continue;
 						}
 						if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
-							Main.tile[l, k].HasTile = false;
+							Main.tile[l, k].SetActive(false);
 							//WorldGen.SquareTileFrame(l, k);
 							if (hasWall) {
 								tile.WallType = _wallType;
@@ -475,7 +475,7 @@ namespace Origins.World {
 				Y1 = Main.maxTilesY - 1;
 			}
 			WorldGen.RangeFrame(X0, Y0, X1, Y1);
-			NetMessage.SendTileRange(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
+			NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
 			return (pos, speed);
 		}
 		public static void FelnumRunner(int i, int j, double strength, int steps, int type, float speedX = 0f, float speedY = 0f) {
@@ -521,7 +521,7 @@ namespace Origins.World {
 						Tile tile = Main.tile[k, l];
 						if (tile.TileType==TileID.Cloud||tile.TileType==TileID.Dirt||tile.TileType==TileID.Grass||tile.TileType==TileID.Stone||tile.TileType==TileID.RainCloud||tile.TileType==TileID.Stone) {
 							tile.TileType = (ushort)type;
-                            if(!tile.HasTile&&OriginWorld.GetAdjTileCount(k,l)>3) {
+                            if(!tile.HasTile&&OriginSystem.GetAdjTileCount(k,l)>3) {
                                 tile.HasTile = true;
                             }
                             SquareTileFrame(k,l);

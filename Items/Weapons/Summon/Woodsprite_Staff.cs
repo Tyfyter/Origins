@@ -23,6 +23,7 @@ namespace Origins.Items.Weapons.Summon {
 		}
         public override void SetDefaults() {
             Item.damage = 7;
+			Item.DamageType = DamageClass.Summon;
             Item.mana = 10;
             Item.width = 32;
             Item.height = 32;
@@ -36,13 +37,11 @@ namespace Origins.Items.Weapons.Summon {
             Item.buffType = buffID;
             Item.shoot = projectileID;
             Item.noMelee = true;
-            Item.summon = true;
 			Item.glowMask = glowmask;
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            player.AddBuff(Item.buffType, 2);
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			player.AddBuff(Item.buffType, 2);
             position = Main.MouseWorld;
-            return true;
         }
     }
 }
@@ -250,7 +249,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 		}
 
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            Projectile.NewProjectile(Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Woodsprite_Lifesteal>(), damage/3, 0, Projectile.owner);
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Woodsprite_Lifesteal>(), damage/3, 0, Projectile.owner);
         }
     }
     public class Woodsprite_Lifesteal : ModProjectile {

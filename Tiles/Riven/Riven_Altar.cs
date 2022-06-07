@@ -71,47 +71,47 @@ namespace Origins.Tiles.Riven {
             int messageID = 12;
 	        switch (type) {
 	            case 0:
-		        if (WorldGen.oreTier1 == -1) {
-			        WorldGen.oreTier1 = TileID.Cobalt;
+		        if (WorldGen.SavedOreTiers.Cobalt == -1) {
+					WorldGen.SavedOreTiers.Cobalt = TileID.Cobalt;
 			        if (WorldGen.genRand.NextBool(2)) {
-				        WorldGen.oreTier1 = TileID.Palladium;
+						WorldGen.SavedOreTiers.Cobalt = TileID.Palladium;
 			        }
 		        }
 		        messageID = 12;
-		        if (WorldGen.oreTier1 == TileID.Palladium) {
+		        if (WorldGen.SavedOreTiers.Cobalt == TileID.Palladium) {
 			        messageID += 9;
 			        veinCount *= 0.9f;
 		        }
-		        type = WorldGen.oreTier1;
+		        type = WorldGen.SavedOreTiers.Cobalt;
 		        veinCount *= 1.05f;
 		        break;
 	            case 1:
-		        if (WorldGen.oreTier2 == -1) {
-			        WorldGen.oreTier2 = TileID.Mythril;
+		        if (WorldGen.SavedOreTiers.Mythril == -1) {
+					WorldGen.SavedOreTiers.Mythril = TileID.Mythril;
 			        if (WorldGen.genRand.NextBool(2)) {
-				        WorldGen.oreTier2 = TileID.Orichalcum;
+						WorldGen.SavedOreTiers.Mythril = TileID.Orichalcum;
 			        }
 		        }
 		        messageID = 13;
-		        if (WorldGen.oreTier2 == TileID.Orichalcum) {
+		        if (WorldGen.SavedOreTiers.Mythril == TileID.Orichalcum) {
 			        messageID += 9;
 			        veinCount *= 0.9f;
 		        }
-		        type = WorldGen.oreTier2;
+		        type = WorldGen.SavedOreTiers.Mythril;
 		        break;
 	            default:
-		        if (WorldGen.oreTier3 == -1) {
-			        WorldGen.oreTier3 = TileID.Adamantite;
+		        if (WorldGen.SavedOreTiers.Adamantite == -1) {
+			        WorldGen.SavedOreTiers.Adamantite = TileID.Adamantite;
 			        if (WorldGen.genRand.NextBool(2)) {
-				        WorldGen.oreTier3 = TileID.Titanium;
+				        WorldGen.SavedOreTiers.Adamantite = TileID.Titanium;
 			        }
 		        }
 		        messageID = 14;
-		        if (WorldGen.oreTier3 == TileID.Titanium) {
+		        if (WorldGen.SavedOreTiers.Adamantite == TileID.Titanium) {
 			        messageID += 9;
 			        veinCount *= 0.9f;
 		        }
-		        type = WorldGen.oreTier3;
+		        type = WorldGen.SavedOreTiers.Adamantite;
 		        break;
 	        }
 

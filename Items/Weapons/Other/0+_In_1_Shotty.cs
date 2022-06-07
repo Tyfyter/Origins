@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
+using Terraria.DataStructures;
 
 namespace Origins.Items.Weapons.Other {
     public class Shotty_x2 : ModItem {
@@ -17,12 +18,11 @@ namespace Origins.Items.Weapons.Other {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Boomstick);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            Vector2 speed = new Vector2(speedX, speedY);
-            for(int i = Main.rand.Next(5,8); i-->0;) {
-                Projectile.NewProjectile(position, speed.RotatedByRandom(0.5f), type, damage, knockBack, player.whoAmI);
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+		    for(int i = Main.rand.Next(5,8); i-->0;) {
+                Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.5f), type, damage, knockback, player.whoAmI);
             }
-            return true;
+            return false;
         }
     }
     public class Shotty_x3 : ModItem {
@@ -33,12 +33,11 @@ namespace Origins.Items.Weapons.Other {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Boomstick);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            Vector2 speed = new Vector2(speedX, speedY);
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             for(int i = Main.rand.Next(8,12); i-->0;) {
-                Projectile.NewProjectile(position, speed.RotatedByRandom(0.5f), type, damage, knockBack, player.whoAmI);
+                Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.5f), type, damage, knockback, player.whoAmI);
             }
-            return true;
+            return false;
         }
     }
 }

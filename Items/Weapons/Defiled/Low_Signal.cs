@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Defiled {
 		}
 		public override void SetDefaults() {
 			Item.damage = 60;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.mana = 7;
             Item.noMelee = true;
             Item.noUseGraphic = false;
@@ -41,9 +41,6 @@ namespace Origins.Items.Weapons.Defiled {
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(8, 0);
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			return true;
-		}
 	}
     public class Low_Signal_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Defiled/Infusion_P";
@@ -52,8 +49,7 @@ namespace Origins.Items.Weapons.Defiled {
 		}
 		public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
-			Projectile.ranged = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 40;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 60;
@@ -66,6 +62,7 @@ namespace Origins.Items.Weapons.Defiled {
 		public override void Kill(int timeLeft) {
 			int[] immune = Projectile.localNPCImmunity.ToArray();
 			Projectile.NewProjectileDirect(
+				Projectile.GetSource_FromThis(),
 				Projectile.Center,
 				Vector2.Zero,
 				ModContent.ProjectileType<Defiled_Spike_Explosion>(),

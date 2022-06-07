@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Other {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 16;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
 			Item.width = 28;
 			Item.height = 30;
@@ -27,12 +27,11 @@ namespace Origins.Items.Weapons.Other {
 			Item.rare = ItemRarityID.Green;
             Item.scale = 0.85f;
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            Vector2 offset = Vector2.Normalize(new Vector2(speedX,speedY))*50;
-            if(Collision.CanHitLine(position, 1, 1, position+offset, 1, 1))position+=offset;
-            return true;
-        }
-        public override Vector2? HoldoutOrigin() {
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			Vector2 offset = Vector2.Normalize(velocity) * 50;
+			if (Collision.CanHitLine(position, 1, 1, position + offset, 1, 1)) position += offset;
+		}
+		public override Vector2? HoldoutOrigin() {
             return new Vector2(6,6);
         }
     }

@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Origins.Items.Weapons.Defiled;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Mimic : ModNPC {
@@ -22,32 +23,16 @@ namespace Origins.NPCs.Defiled {
         public override void FindFrame(int frameHeight) {
             NPC.CloneFrame(NPCID.BigMimicCorruption, frameHeight);
         }
-		public override void OnKill() {
-			switch (Main.rand.Next(5)) {
-				case 0:
-				Item.NewItem(NPC.position, NPC.Size, ModContent.ItemType<Defiled_Dart_Burst>(), 1, prefixGiven: -1);
-				break;
-				case 1:
-				Item.NewItem(NPC.position, NPC.Size, ItemID.ClingerStaff, 1, prefixGiven: -1);
-				break;
-				case 2:
-				Item.NewItem(NPC.position, NPC.Size, ItemID.ChainGuillotines, 1, prefixGiven: -1);
-				break;
-				case 3:
-				Item.NewItem(NPC.position, NPC.Size, ItemID.PutridScent, 1, prefixGiven: -1);
-				break;
-				case 4:
-				Item.NewItem(NPC.position, NPC.Size, ItemID.WormHook, 1, prefixGiven:-1);
-				break;
-			}
-			Item.NewItem(NPC.position, NPC.Size, ItemID.GreaterHealingPotion, Main.rand.Next(5, 11));
-			Item.NewItem(NPC.position, NPC.Size, ItemID.GreaterManaPotion, Main.rand.Next(5, 16));
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Defiled_Dart_Burst>(), 3007, 3013, 3016, 3020));
+			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
+			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
 		}
 		public override void HitEffect(int hitDirection, double damage) {
             //spawn gore if npc is dead after being hit
             if(NPC.life<0) {
-                for(int i = 0; i < 3; i++)Gore.NewGore(NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
-                for(int i = 0; i < 6; i++)Gore.NewGore(NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
+                for(int i = 0; i < 3; i++)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
+                for(int i = 0; i < 6; i++)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
             }
         }
     }

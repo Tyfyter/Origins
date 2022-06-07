@@ -12,7 +12,14 @@ using Tyfyter.Utils;
 using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
-    public static class BrinePool {
+	public class Brine_Pool : ModBiome {
+		public override bool IsBiomeActive(Player player) {
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.ZoneBrine = OriginSystem.brineTiles > BrinePool.NeededTiles;
+			return originPlayer.ZoneBrine;
+		}
+	}
+	public static class BrinePool {
         public const int NeededTiles = 250;
         public const int ShaderTileCount = 75;
         public static class SpawnRates {
@@ -55,9 +62,9 @@ namespace Origins.World.BiomeData {
 								if (Main.tileContainer[Main.tile[x, y - 1].TileType]) {
 									break;
 								}
-								Main.tile[x, y].HasTile = false;
+								Main.tile[x, y].SetActive(false);
 								//if (y > j2 - (sizeMult * 32)) {
-									Main.tile[x, y].liquid = 255;
+									Main.tile[x, y].LiquidAmount = 255;
 								//}
 							}
 							break;
@@ -121,9 +128,9 @@ namespace Origins.World.BiomeData {
 									break;
 								}
 								if(Main.tile[x, y].HasTile)change = true;
-								Main.tile[x, y].HasTile = false;
+								Main.tile[x, y].SetActive(false);
 								if (y > worldSurfaceHigh) {
-									Main.tile[x, y].liquid = 255;
+									Main.tile[x, y].LiquidAmount = 255;
 								}
 							}
 							if (y < worldSurfaceHigh && Main.tile[x, y].HasTile && change) {

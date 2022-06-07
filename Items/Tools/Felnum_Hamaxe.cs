@@ -11,7 +11,7 @@ namespace Origins.Items.Tools {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.MoltenHamaxe);
 			Item.damage = 18;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
             Item.pick = 0;
             Item.hammer = 65;
             Item.axe = 22;
@@ -25,11 +25,9 @@ namespace Origins.Items.Tools {
 		}
         public override float UseTimeMultiplier(Player player) {
             return 1f / ((player.pickSpeed-1)*0.75f+1);
-        }
-#pragma warning disable CS0672 // Member overrides incorrectly obsolete member
-        public override void GetWeaponDamage(Player player, ref int damage) {
-            if(!OriginPlayer.ItemChecking)damage+=(damage-18)/2;
-        }
-#pragma warning restore CS0672 // Member overrides incorrectly obsolete member
+		}
+		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
+			damage = damage.MultiplyBonuses(1.5f);
+		}
 	}
 }

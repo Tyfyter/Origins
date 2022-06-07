@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Defiled {
 		}
 		public override void SetDefaults() {
 			Item.damage = 5;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.mana = 7;
             Item.noMelee = true;
             Item.noUseGraphic = false;
@@ -40,11 +40,8 @@ namespace Origins.Items.Weapons.Defiled {
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(8, 0);
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-			Vector2 vel = new Vector2(speedX, speedY).RotatedByRandom(0.075f);
-			speedX = vel.X;
-			speedY = vel.Y;
-			return true;
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			velocity = velocity.RotatedByRandom(0.075f);
 		}
 	}
     public class Infusion_P : ModProjectile {
@@ -59,8 +56,7 @@ namespace Origins.Items.Weapons.Defiled {
 		}
 		public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
-			Projectile.ranged = false;
-			Projectile.magic = true;
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 15;
 			Projectile.width = 8;
@@ -127,11 +123,11 @@ namespace Origins.Items.Weapons.Defiled {
 			}
 			return null;
 		}
-		public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI) {
-			drawCacheProjsBehindNPCsAndTiles.Add(index);
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+			behindNPCsAndTiles.Add(index);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			spriteBatch.Draw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, new Color(Lighting.GetSubLight(Projectile.Center)), Projectile.rotation, new Vector2(27, 7), Projectile.scale, SpriteEffects.None, 0);
+			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, new Color(Lighting.GetSubLight(Projectile.Center)), Projectile.rotation, new Vector2(27, 7), Projectile.scale, SpriteEffects.None, 0);
 			return false;
 		}
 		public override void SendExtraAI(BinaryWriter writer) {

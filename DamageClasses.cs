@@ -50,13 +50,13 @@ namespace Origins {
 			return newClass;
 		}
 		public override bool GetEffectInheritance(DamageClass damageClass) {
-			return damageClass == DamageClasses.Explosive || damageClass == other;
+			return damageClass == DamageClasses.Explosive || damageClass == other || other.GetEffectInheritance(damageClass);
 		}
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
 			if(damageClass == Generic || damageClass == DamageClasses.Explosive || damageClass == other) {
 				return StatInheritanceData.Full;
 			}
-			return StatInheritanceData.None;
+			return other.GetModifierInheritance(damageClass);
 		}
 		public override void SetDefaultStats(Player player) {
 			//player.GetCritChance(this) += 4;

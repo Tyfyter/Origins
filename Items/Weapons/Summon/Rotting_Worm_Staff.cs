@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
@@ -24,6 +25,7 @@ namespace Origins.Items.Weapons.Summon {
         }
         public override void SetDefaults() {
             Item.damage = 9;
+            Item.DamageType = DamageClass.Summon;
             Item.mana = 10;
             Item.width = 32;
             Item.height = 32;
@@ -36,13 +38,11 @@ namespace Origins.Items.Weapons.Summon {
             Item.buffType = buffID;
             Item.shoot = projectileID;
             Item.noMelee = true;
-            Item.summon = true;
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            if(buffID==0)buffID = ModContent.BuffType<Wormy_Buff>();
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+            if (buffID==0)buffID = ModContent.BuffType<Wormy_Buff>();
             player.AddBuff(Item.buffType, 2);
             position = Main.MouseWorld;
-            return true;
         }
     }
 }
@@ -74,11 +74,28 @@ namespace Origins.Items.Weapons.Summon.Minions {
             base.SetStaticDefaults();
         }
         public override void SetDefaults() {
-            drawOriginOffsetY = -29;
+            DrawOriginOffsetY = -29;
             base.SetDefaults();
             Projectile.minionSlots = 1f;
         }
-
+        public override void OnSpawn(IEntitySource source) {
+            Projectile.velocity.Y += 6;
+            Projectile.localAI[3] = Projectile.whoAmI;
+            int current = 0;
+            int last = Projectile.whoAmI;
+            int type = Rotting_Worm_Body.ID;
+            //body
+            current = Projectile.NewProjectile(source, Projectile.Center, Vector2.Zero, type, Projectile.damage, Projectile.knockBack, Projectile.owner);
+            Main.projectile[current].localAI[3] = Projectile.whoAmI;
+            Main.projectile[current].localAI[1] = last;
+            Main.projectile[last].localAI[0] = current;
+            last = current;
+            //tail
+            current = Projectile.NewProjectile(source, Projectile.Center, Vector2.Zero, Rotting_Worm_Tail.ID, Projectile.damage, Projectile.knockBack, Projectile.owner);
+            Main.projectile[current].localAI[3] = Projectile.whoAmI;
+            Main.projectile[current].localAI[1] = last;
+            Main.projectile[last].localAI[0] = current;
+        }
         public override void AI() {
             Player player = Main.player[Projectile.owner];
 
@@ -201,8 +218,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			direction.Normalize();
             Projectile.velocity = Vector2.Normalize(Projectile.velocity+direction*turnSpeed)*currentSpeed;
             if(Projectile.localAI[2]<=0&&(++Projectile.frameCounter)*currentSpeed>60) {
-                Microsoft.Xna.Framework.Audio.SoundEffectInstance se = SoundEngine.PlaySound(new Terraria.Audio.LegacySoundStyle(15, 1), Projectile.Center);
-                if(!(se is null))se.Pitch*=2f;
+                SoundEngine.PlaySound(SoundID.WormDig.WithPitch(2), Projectile.Center);
                 Projectile.frameCounter = 0;
             }
             #endregion
@@ -210,44 +226,6 @@ namespace Origins.Items.Weapons.Summon.Minions {
             #region Worminess
             Projectile.rotation = Projectile.velocity.ToRotation()+MathHelper.PiOver2;
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-            if(Projectile.localAI[0]==0f) {
-                //if(originPlayer.wormHeadIndex==-1) {
-                Projectile.velocity.Y+=6;
-                Projectile.localAI[3] = Projectile.whoAmI;
-                int current = 0;
-                int last = Projectile.whoAmI;
-                int type = Rotting_Worm_Body.ID;
-                //body
-                current = Projectile.NewProjectile(Projectile.Center, Vector2.Zero, type, Projectile.damage, Projectile.knockBack, Projectile.owner);
-                Main.projectile[current].localAI[3] = Projectile.whoAmI;
-                Main.projectile[current].localAI[1] = last;
-                Main.projectile[last].localAI[0] = current;
-                last = current;
-                //tail
-                current = Projectile.NewProjectile(Projectile.Center, Vector2.Zero, Rotting_Worm_Tail.ID, Projectile.damage, Projectile.knockBack, Projectile.owner);
-                Main.projectile[current].localAI[3] = Projectile.whoAmI;
-                Main.projectile[current].localAI[1] = last;
-                Main.projectile[last].localAI[0] = current;
-                /*} else {
-                    Projectile segment = Main.projectile[originPlayer.wormHeadIndex];
-                    int i = 0;
-                    while(segment.type==Rotting_Worm_Staff.projectileID||segment.type==Rotting_Worm_Body.ID) {
-                        segment.damage++;
-                        if(i++>4)break;
-                        segment.whoAmI+=0;
-                        segment = Main.projectile[(int)segment.localAI[0]];
-                    }
-                    if(segment.type==Rotting_Worm_Tail.ID) {
-                        float[] segmentAI = new float[4] { projectile.whoAmI, segment.localAI[1], segment.localAI[2], segment.localAI[3]  };
-                        segment.SetToType(Rotting_Worm_Body.ID);
-                        segment.localAI = segmentAI;
-                        projectile.SetToType(Rotting_Worm_Tail.ID);
-                        projectile.localAI = new float[4] { 0, segment.whoAmI, 0, segmentAI[3]  };
-                    }
-                }*/
-            }/* else {
-                originPlayer.wormHeadIndex = projectile.whoAmI;
-            }*/
             #endregion
         }
         public override void Kill(int timeLeft) {
@@ -267,7 +245,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
             //projectile.minionSlots = 1f;
         }
         public override void SetDefaults() {
-            drawOriginOffsetY = -23;
+            DrawOriginOffsetY = -23;
             base.SetDefaults();
         }
         public override bool PreKill(int timeLeft) {
@@ -282,7 +260,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
             base.SetStaticDefaults();
         }
         public override void SetDefaults() {
-            drawOriginOffsetY = -32;
+            DrawOriginOffsetY = -32;
             base.SetDefaults();
         }
         public override bool PreKill(int timeLeft) {
@@ -318,7 +296,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
             Projectile.localNPCHitCooldown = 12;
             Projectile.scale = 0.5f;
             Projectile.timeLeft = 2;
-            drawOriginOffsetX = 0.5f;
+            DrawOriginOffsetX = 0.5f;
             //next, last, digging cooldown, head
             if(Projectile.localAI.Length==Projectile.maxAI)Projectile.localAI = new float[4];
 		}

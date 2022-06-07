@@ -23,6 +23,7 @@ namespace Origins.Items.Weapons.Summon {
         }
         public override void SetDefaults() {
             Item.damage = 12;
+            Item.DamageType = DamageClass.Summon;
             Item.mana = 10;
             Item.width = 32;
             Item.height = 32;
@@ -35,13 +36,11 @@ namespace Origins.Items.Weapons.Summon {
             Item.buffType = buffID;
             Item.shoot = projectileID;
             Item.noMelee = true;
-            Item.summon = true;
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            if(buffID==0)buffID = ModContent.BuffType<Mini_EOC_Buff>();
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+		    if(buffID==0)buffID = ModContent.BuffType<Mini_EOC_Buff>();
             player.AddBuff(Item.buffType, 2);
             position = Main.MouseWorld;
-            return true;
         }
     }
 }

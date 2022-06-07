@@ -110,7 +110,7 @@ namespace Origins.Projectiles {
                 OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
                 Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<Shock_Grenade_Shock>(), (int)(originPlayer.felnumShock / 2.5f), projectile.knockBack, projectile.owner).timeLeft = 1;
                 originPlayer.felnumShock = 0;
-                SoundEngine.PlaySound(SoundID.Item122, projectile.Center, 122, 2f, 1f);
+                SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), projectile.Center);
             }
             return true;
         }

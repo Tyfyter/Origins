@@ -14,9 +14,35 @@ using Terraria.Localization;
 using Terraria.GameContent.Achievements;
 using Origins.Projectiles.Misc;
 using Origins.Items.Accessories;
+using ExampleMod.Backgrounds;
+using Terraria.Graphics.Effects;
+using static Origins.OriginExtensions;
 
 namespace Origins.World.BiomeData {
-    public static class DefiledWastelands {
+	public class Defiled_Wastelands_Biome : ModBiome {
+		public override int Music => Origins.Music.Defiled;
+		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
+		public override bool IsBiomeActive(Player player) {
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.ZoneDefiled = OriginSystem.defiledTiles > DefiledWastelands.NeededTiles;
+			originPlayer.ZoneDefiledProgress = Math.Min(OriginSystem.defiledTiles - (DefiledWastelands.NeededTiles - DefiledWastelands.ShaderTileCount), DefiledWastelands.ShaderTileCount) / DefiledWastelands.ShaderTileCount;
+			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
+
+			return originPlayer.ZoneDefiledProgressSmoothed > 0;
+		}
+		public override void SpecialVisuals(Player player) {
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			if (originPlayer.ZoneDefiledProgressSmoothed > 0) Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(originPlayer.ZoneDefiledProgressSmoothed);
+			player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", originPlayer.ZoneDefiledProgressSmoothed > 0, player.Center);
+		}
+	}
+	public class Underground_Defiled_Wastelands_Biome : ModBiome {
+		public override int Music => Origins.Music.UndergroundDefiled;
+		public override bool IsBiomeActive(Player player) {
+			return base.IsBiomeActive(player);
+		}
+	}
+	public static class DefiledWastelands {
         public const int NeededTiles = 200;
         public const int ShaderTileCount = 75;
 		public const short DefaultTileDust = DustID.Titanium;
@@ -321,7 +347,7 @@ namespace Origins.World.BiomeData {
 					Y1 = Main.maxTilesY - 1;
 				}
 				RangeFrame(X0, Y0, X1, Y1);
-				NetMessage.SendTileRange(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
+				NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
 				return (pos, speed);
 			}
 		}

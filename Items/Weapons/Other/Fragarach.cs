@@ -14,7 +14,7 @@ using Origins.Projectiles.Misc;
 
 namespace Origins.Items.Weapons.Other {
     public class Fragarach : ModItem {
-        public override bool OnlyShootOnSwing => true;
+        //public override bool OnlyShootOnSwing => true;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Fragarach");
             Tooltip.SetDefault("");
@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Other {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.TerraBlade);
             Item.damage = 62;
-            Item.melee = true;
+            Item.DamageType = DamageClass.Melee;
             Item.noUseGraphic = false;
             Item.noMelee = false;
             Item.width = 58;
@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Other {
             Item.scale = 1f;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips) {
-            tooltips[0].OverrideColor = new Color(50, 230, 230).MultiplyRGBA(Main.mouseTextColorReal);
+            tooltips[0].OverrideColor = new Color(50, 230, 230).MultiplyRGBA(Main.MouseTextColorReal);
         }
     }
     public class Fragarach_P : ModProjectile {
@@ -60,7 +60,7 @@ namespace Origins.Items.Weapons.Other {
         public override bool PreAI() {
             if(Projectile.ai[1] == 0f) {
                 Projectile.ai[1] = 1f;
-                SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 109, 1.5f, -0.25f);
+                SoundEngine.PlaySound(SoundID.Item109.WithPitch(-0.25f).WithVolume(1.5f), Projectile.Center);
                 Projectile.ai[0] = 21;
             }
             return true;
@@ -70,7 +70,7 @@ namespace Origins.Items.Weapons.Other {
                 Projectile.ai[0]--;
             }else if(Projectile.timeLeft%7==0) {
                 Vector2 pos = Projectile.position + new Vector2(Main.rand.Next(Projectile.width), Main.rand.Next(Projectile.height));
-                Projectile proj = Projectile.NewProjectileDirect(pos, Main.rand.NextVector2CircularEdge(3,3), Felnum_Shock_Leader.ID, Projectile.damage/6, 0, Projectile.owner, pos.X, pos.Y);
+                Projectile proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, Main.rand.NextVector2CircularEdge(3,3), Felnum_Shock_Leader.ID, Projectile.damage/6, 0, Projectile.owner, pos.X, pos.Y);
                 ModProjectile parent = this;
                 //Projectile parentProjectile = this.projectile;
                 if(proj.ModProjectile is Felnum_Shock_Leader shock) {
@@ -89,14 +89,14 @@ namespace Origins.Items.Weapons.Other {
             base.OnHitNPC(target, damage, knockback, crit);
         }
         public override void Kill(int timeLeft) {
-			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 10, volumeScale:2);
+			SoundEngine.PlaySound(SoundID.Item10.WithVolume(2), Projectile.Center);
             Vector2 shockVelocity = -Projectile.oldVelocity;
             shockVelocity.Normalize();
             shockVelocity *= 3;
 			for (int i = 4; i < 31; i++) {
                 if(i%2==0) {
                     Vector2 pos = Projectile.position + new Vector2(Main.rand.Next(Projectile.width), Main.rand.Next(Projectile.height));
-                    Projectile.NewProjectileDirect(pos, shockVelocity.RotatedByRandom(2.5), Felnum_Shock_Leader.ID, Projectile.damage/3, 0, Projectile.owner, pos.X, pos.Y).usesLocalNPCImmunity = false;
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), pos, shockVelocity.RotatedByRandom(2.5), Felnum_Shock_Leader.ID, Projectile.damage/3, 0, Projectile.owner, pos.X, pos.Y).usesLocalNPCImmunity = false;
                 }
 				float offsetX = Projectile.oldVelocity.X * (30f / i);
 				float offsetY = Projectile.oldVelocity.Y * (30f / i);

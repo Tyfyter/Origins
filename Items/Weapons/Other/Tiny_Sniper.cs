@@ -45,7 +45,7 @@ namespace Origins.Items.Weapons.Other {
 		        }
             }
         }
-        public override void HoldStyle(Player player) {
+        public override void HoldStyle(Player player, Rectangle heldItemFrame) {
             Item.holdStyle = ItemHoldStyleID.HoldFront;
             if(player.scope&&(PlayerInput.UsingGamepad?(PlayerInput.GamepadThumbstickRight.Length() != 0f||!Main.SmartCursorIsUsed):Main.mouseRight)) {
                 Item.holdStyle = 4;
@@ -59,7 +59,7 @@ namespace Origins.Items.Weapons.Other {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 		    if(type==ProjectileID.Bullet)type = ProjectileID.BulletHighVelocity;
             player.velocity-=velocity*0.2f;
-            SoundEngine.PlaySound(SoundID.Item,(int)position.X,(int)position.Y,36, 0.75f);
+            SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
         }
     }
 }

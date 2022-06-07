@@ -133,11 +133,11 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                     player.itemAnimation = 16;
                     player.itemAnimationMax = 16;
                     if(frame == 5) {
-                        SoundEngine.PlaySound(2, (int)position.X, (int)position.Y, 122, 0.75f, 1f);
+                        SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(0.75f), position);
                     }
                 }
             } else {
-                SoundEngine.PlaySound(2, (int)position.X, (int)position.Y, 122, 0.25f, 1f);
+                SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(0.25f), position);
                 int prev = -1;
                 int curr = -1;
                 Vector2 perp = velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(Vector2.Zero);
@@ -230,7 +230,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             }
 		}
         public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            Main.player[Projectile.owner].armorPenetration += (int)(target.defense*0.3f);
+            Projectile.ArmorPenetration += (int)(target.defense*0.3f);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if(target.CanBeChasedBy()) target.buffImmune[Mag_Debuff.ID] = false;

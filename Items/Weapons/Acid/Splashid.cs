@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,7 +25,7 @@ namespace Origins.Items.Weapons.Acid {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 52;
-			Item.magic = true;
+			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
             Item.useStyle = ItemUseStyleID.Swing;
@@ -39,13 +40,13 @@ namespace Origins.Items.Weapons.Acid {
 			Item.rare = ItemRarityID.Lime;
 			Item.glowMask = glowmask;
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            int a = Main.rand.Next(5,7);
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+		    int a = Main.rand.Next(5,7);
 			//++i < a: increments i and returns true if i < a/2
 			//a = Main.rand.Next(5,7): randomize a every loop so ((i-a/2f)/a) returns a random value but maintains a mostly constant spread
             for(int i = 0; ++i < a; a = Main.rand.Next(5,7)) {
 				//((i-a/2f)/a): returns a value based on i between -0.5 and 0.5
-                Projectile.NewProjectileDirect(position, new Vector2(speedX, speedY).RotatedBy(((i-a/2f)/a)*0.75), type, damage, knockBack, player.whoAmI, 0, 12f).timeLeft+=i;
+                Projectile.NewProjectileDirect(source, position, velocity.RotatedBy(((i-a/2f)/a)*0.75), type, damage, knockback, player.whoAmI, 0, 12f).timeLeft+=i;
             }
             return false;
         }

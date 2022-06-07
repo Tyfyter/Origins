@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,7 +24,7 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 270;
-			Item.magic = true;
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Item.noMelee = true;
 			Item.noUseGraphic = true;
             Item.useStyle = ItemUseStyleID.Swing;
@@ -37,10 +38,10 @@ namespace Origins.Items.Weapons.Explosives {
             Item.shoot = ModContent.ProjectileType<Caustica_P>();
 			Item.rare = ItemRarityID.Lime;
 		}
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            int a = Main.rand.Next(5,7);
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+		    int a = Main.rand.Next(5,7);
             for(int i = 0; ++i < a; a = Main.rand.Next(5,7)) {
-                Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedBy(((i-a/2f)/a)*0.35), type, damage/2, knockBack, player.whoAmI, 0, 12f);
+                Projectile.NewProjectile(source, position, velocity.RotatedBy(((i-a/2f)/a)*0.35), type, damage/2, knockback, player.whoAmI, 0, 12f);
             }
             return false;
         }

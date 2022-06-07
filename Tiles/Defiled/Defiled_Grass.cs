@@ -32,23 +32,23 @@ namespace Origins.Tiles.Defiled {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(200, 200, 200));
-			SetModTree(Defiled_Tree.Instance);
+			//SetModTree(Defiled_Tree.Instance);
             ItemDrop = ItemID.DirtBlock;
 		}
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
             fail = true;
             noItem = true;
-            OriginWorld originWorld = ModContent.GetInstance<OriginWorld>();
+            OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
             if(!(originWorld is null)) {
                 if(originWorld.defiledAltResurgenceTiles is null)originWorld.defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
                 originWorld.defiledAltResurgenceTiles.Add((i, j, Type));
             }
             bool half = Main.tile[i, j].IsHalfBlock;
-            byte slope = Main.tile[i, j].Slope;
+            SlopeType slope = Main.tile[i, j].Slope;
             Main.tile[i, j].ResetToType(TileID.Dirt);
             WorldGen.SquareTileFrame(i, j);
-            Main.tile[i, j].IsHalfBlock = half;
-            Main.tile[i, j].Slope = slope;
+            Main.tile[i, j].SetHalfBlock(half);
+            Main.tile[i, j].SetSlope(slope);
             NetMessage.SendTileSquare(-1, i, j, 1);
 
         }
@@ -74,8 +74,8 @@ namespace Origins.Tiles.Defiled {
                 }
                 if(rand.elements.Count>0) {
                     (int x, int y) pos = rand.Get();
-                    OriginWorld.ConvertTileWeak(ref Main.tile[pos.x, pos.y].TileType, OriginWorld.evil_wastelands);
-                    OriginWorld.ConvertWall(ref Main.tile[pos.x, pos.y].WallType, OriginWorld.evil_wastelands);
+                    OriginSystem.ConvertTileWeak(ref Main.tile[pos.x, pos.y].TileType, OriginSystem.evil_wastelands);
+                    OriginSystem.ConvertWall(ref Main.tile[pos.x, pos.y].WallType, OriginSystem.evil_wastelands);
 				    WorldGen.SquareTileFrame(pos.x, pos.y);
 				    NetMessage.SendTileSquare(-1, pos.x, pos.y, 1);
                 } else {
@@ -94,11 +94,11 @@ namespace Origins.Tiles.Defiled {
                 break;
             }
         }
-		public override int SaplingGrowthType(ref int style) {
+		/*public override int SaplingGrowthType(ref int style) {
 			style = 0;
 			return ModContent.TileType<Defiled_Tree_Sapling>();
 		}
-        /*public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
             Main.tile[i, i].type = TileID.CorruptGrass;
             WorldGen.TileFrame(i,j,true,noBreak);
             Main.tile[i, i].type = Type;

@@ -68,7 +68,7 @@ namespace Origins.NPCs {
                     type = TileID.BlueDungeonBrick;
                     while(type!=TileID.Cloud&&type!=TileID.Dirt&&type!=TileID.Grass&&type!=TileID.Stone&&type!=TileID.RainCloud) {
 				        x = WorldGen.genRand.Next(0, Main.maxTilesX);
-						y = WorldGen.genRand.Next(90, (int)OriginWorld.worldSurfaceLow - 5);
+						y = WorldGen.genRand.Next(90, (int)OriginSystem.worldSurfaceLow - 5);
                         tile = Framing.GetTileSafely(x, y);
                         type = tile.HasTile?tile.TileType:TileID.BlueDungeonBrick;
                         if(++tries >= 150) {

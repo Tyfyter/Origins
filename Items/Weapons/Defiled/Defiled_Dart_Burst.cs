@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -13,7 +14,7 @@ namespace Origins.Items.Weapons.Defiled {
         }
         public override void SetDefaults() {
             Item.damage = 25;
-            Item.ranged = true;
+            Item.DamageType = DamageClass.Ranged;
             Item.noMelee = true;
             Item.crit = -4;
             Item.width = 56;
@@ -31,8 +32,8 @@ namespace Origins.Items.Weapons.Defiled {
             Item.autoReuse = true;
             Item.UseSound = SoundID.Item99;//new LegacySoundStyle(SoundID.Item, Origins.Sounds.Krunch);
         }
-        public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
-            for(int i = 0; i<2; i++)Projectile.NewProjectile(position, new Vector2(speedX, speedY).RotatedByRandom(i/10f), type, damage, knockBack, player.whoAmI);
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+		    for(int i = 0; i<2; i++)Projectile.NewProjectile(source, position, velocity.RotatedByRandom(i/10f), type, damage, knockback, player.whoAmI);
             return false;
         }
 	}

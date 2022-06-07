@@ -15,13 +15,13 @@ using Microsoft.Xna.Framework;
 using Terraria.Utilities;
 using Origins.Items.Weapons.Other;
 using Origins.Walls;
-using static Origins.OriginWorld.LootQueueAction;
+using static Origins.OriginSystem.LootQueueAction;
 using Origins.Tiles.Riven;
 using Origins.Tiles.Brine;
 using Origins.World;
 
 namespace Origins {
-    public partial class OriginWorld : ModSystem {
+    public partial class OriginSystem : ModSystem {
 		public static int voidTiles;
 		public static int defiledTiles;
         public static int rivenTiles;
@@ -78,14 +78,12 @@ namespace Origins {
             rivenTiles = tileCounts[ModContent.TileType<Riven_Flesh>()];//+tileCounts[ModContent.TileType<Riven_Grass>()]+tileCounts[ModContent.TileType<Riven_Sand>()]+tileCounts[ModContent.TileType<Riven_Ice>()];
 
             brineTiles = tileCounts[ModContent.TileType<Sulphur_Stone>()];
-
-            Main.sandTiles+=tileCounts[ModContent.TileType<Defiled_Sand>()];
         }
         protected internal List<(int x, int y)> defiledResurgenceTiles;
         protected internal List<(int x, int y, ushort)> defiledAltResurgenceTiles;
         protected internal Queue<(int x, int y)> queuedKillTiles;
         protected internal HashSet<Point> anoxicAirTiles;
-        public override void PostUpdate() {
+		public override void PostUpdateWorld() {
             if(defiledResurgence) {
                 if(defiledResurgenceTiles.Count>0&&WorldGen.genRand.NextBool(5)) {
                     int index = WorldGen.genRand.Next(defiledResurgenceTiles.Count);
@@ -243,7 +241,7 @@ namespace Origins {
         public static void ConvertHook(On.Terraria.WorldGen.orig_Convert orig, int i, int j, int conversionType, int size = 4) {
             Tile current;
             int tileConvertBuffer = -1;
-            OriginWorld originWorld = ModContent.GetInstance<OriginWorld>();
+            OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
             switch(conversionType) {
                 case origin_conversion_type:
                 for(int k = i - size; k <= i + size; k++) {

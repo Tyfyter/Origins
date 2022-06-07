@@ -17,14 +17,13 @@ namespace Origins.Projectiles.Weapons {
         public override string Texture => "Origins/Projectiles/Weapons/Icicle_P";
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);//sets the projectile stat values to those of Ruby Bolts
-            Projectile.ranged = false;
-            Projectile.magic = true;
+            Projectile.DamageType = DamageClass.Magic;
             Projectile.penetrate = -1;//when projectile.penetrate reaches 0 the projectile is destroyed
             Projectile.extraUpdates = 1;
             Projectile.aiStyle = 1;
             Projectile.localNPCHitCooldown = 10;
             drawOffsetY = 0;//-34;
-            drawOriginOffsetX = -0.5f;
+            DrawOriginOffsetX = -0.5f;
             Projectile.hide = true;
         }
         public override void AI() {
@@ -36,12 +35,12 @@ namespace Origins.Projectiles.Weapons {
                 }
                 Projectile.velocity = Vector2.Zero;
             }
-            drawOriginOffsetY = (int)drawOffsetY;
+            DrawOriginOffsetY = (int)drawOffsetY;
         }
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI) {
-            drawCacheProjsBehindNPCsAndTiles.Add(index);
-        }
-        public override bool OnTileCollide(Vector2 oldVelocity) {
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+            behindNPCsAndTiles.Add(index);
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
             if(Projectile.aiStyle != 0) {
                 Projectile.aiStyle = 0;
                 Projectile.knockBack = 0.1f;

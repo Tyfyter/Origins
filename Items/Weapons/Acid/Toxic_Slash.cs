@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,7 +16,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Acid {
     public class Toxic_Slash : ModItem, IElementalItem {
         public ushort Element => Elements.Acid;
-		public override bool OnlyShootOnSwing => true;
+		//public override bool OnlyShootOnSwing => true;
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Toxic Slash");
@@ -25,7 +26,7 @@ namespace Origins.Items.Weapons.Acid {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.TrueExcalibur);
 			Item.damage = 45;
-			Item.melee = true;
+			Item.DamageType = DamageClass.Melee;
 			Item.autoReuse = true;
             Item.useStyle = ItemUseStyleID.Swing;
 			Item.width = 28;
@@ -40,9 +41,11 @@ namespace Origins.Items.Weapons.Acid {
 		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit) {
 			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
 		}
-		public override bool Shoot(Player player, ref Vector2 position, ref float speedX, ref float speedY, ref int type, ref int damage, ref float knockBack) {
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			damage -= damage / 3;
+		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			return Main.rand.NextBool();
-        }
+		}
     }
 }

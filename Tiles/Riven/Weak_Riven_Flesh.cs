@@ -34,10 +34,10 @@ namespace Origins.Tiles.Riven {
         }
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
             if (Main.tile[i, j].HasTile) {
-                int adj = OriginWorld.GetAdjTileCount(i, j);
+                int adj = OriginSystem.GetAdjTileCount(i, j);
                 if (adj < 4) {
                     //Main.tile[i, j].active(false);
-                    GetInstance<OriginWorld>().QueueKillTile(i, j);
+                    GetInstance<OriginSystem>().QueueKillTile(i, j);
                 } else if (adj > 7) {
                     Main.tile[i, j].ResetToType((ushort)TileType<Riven_Flesh>());
                 }

@@ -56,7 +56,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
-        public override void HoldStyle(Player player) {
+        public override void HoldStyle(Player player, Rectangle heldItemFrame) {
             if (charge > 0) {
                 charge--;
             }
@@ -132,7 +132,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             }
             Vector2 dir = Main.rand.NextVector2Unit();
             oldPos[0] = (Projectile.Center+dir*3, dir);
-            Texture2D texture = Mod.Assets.Request<Texture>("Projectiles/Pixel").Value;
+            Texture2D texture = Mod.Assets.Request<Texture2D>("Projectiles/Pixel").Value;
             Vector2 displ = Vector2.Zero;
             for(int i = l; --i>0;) {
                 if(oldPos[i].Item1.HasValue) {

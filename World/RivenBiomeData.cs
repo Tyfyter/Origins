@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Terraria.Graphics.Effects;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using System;
@@ -12,8 +13,31 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Terraria.WorldGen;
+using static Origins.OriginExtensions;
 
 namespace Origins.World.BiomeData {
+	public class Riven_Hive_Biome : ModBiome {
+		public override int Music => Origins.Music.Riven;
+		public override bool IsBiomeActive(Player player) {
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.ZoneRiven = OriginSystem.rivenTiles > RivenHive.NeededTiles;
+			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (RivenHive.NeededTiles - RivenHive.ShaderTileCount), RivenHive.ShaderTileCount) / RivenHive.ShaderTileCount;
+			LinearSmoothing(ref originPlayer.ZoneRivenProgressSmoothed, originPlayer.ZoneRivenProgress, OriginSystem.biomeShaderSmoothing * 0.1f);
+
+			return originPlayer.ZoneRivenProgressSmoothed > 0;
+		}
+		public override void SpecialVisuals(Player player) {
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			if (originPlayer.ZoneRivenProgressSmoothed > 0) Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(originPlayer.ZoneRivenProgressSmoothed);
+			player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", originPlayer.ZoneRivenProgressSmoothed > 0, player.Center);
+		}
+	}
+	public class Underground_Riven_Hive_Biome : ModBiome {
+		public override int Music => Origins.Music.UndergroundRiven;
+		public override bool IsBiomeActive(Player player) {
+			return base.IsBiomeActive(player);
+		}
+	}
 	public static class RivenHive {
 		public const int NeededTiles = 200;
 		public const int ShaderTileCount = 25;
@@ -129,7 +153,7 @@ namespace Origins.World.BiomeData {
 						}
 						Main.tile[x, y].WallType = fleshWallID;
 						if (diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult) {
-							Main.tile[x, y].HasTile = false;
+							Main.tile[x, y].SetActive(false);
 							if (diff > 34 * sizeMult - 5 && Main.tile[x, y+1].TileIsType(fleshID)) {
 								lesionPlacementSpots.Enqueue(new Point(x, y));
 							}
@@ -202,22 +226,22 @@ namespace Origins.World.BiomeData {
 				}
 				switch (num3) {
 					case 0: {
-						Item.NewItem(x * 16, y * 16, 32, 32, 800, 1, pfix:-1);
+						Item.NewItem(GetItemSource_FromTileBreak(i, j), x * 16, y * 16, 32, 32, 800, 1, pfix:-1);
 						int stack = genRand.Next(100, 101);
-						Item.NewItem(x * 16, y * 16, 32, 32, 97, stack);
+						Item.NewItem(GetItemSource_FromTileBreak(i, j), x * 16, y * 16, 32, 32, 97, stack);
 						break;
 					}
 					case 1:
-					Item.NewItem(x * 16, y * 16, 32, 32, 1256, 1, pfix: -1);
+					Item.NewItem(GetItemSource_FromTileBreak(i, j), x * 16, y * 16, 32, 32, 1256, 1, pfix: -1);
 					break;
 					case 2:
-					Item.NewItem(x * 16, y * 16, 32, 32, 802, 1, pfix: -1);
+					Item.NewItem(GetItemSource_FromTileBreak(i, j), x * 16, y * 16, 32, 32, 802, 1, pfix: -1);
 					break;
 					case 3:
-					Item.NewItem(x * 16, y * 16, 32, 32, 3062, 1, pfix: -1);
+					Item.NewItem(GetItemSource_FromTileBreak(i, j), x * 16, y * 16, 32, 32, 3062, 1, pfix: -1);
 					break;
 					case 4:
-					Item.NewItem(x * 16, y * 16, 32, 32, 1290, 1, pfix: -1);
+					Item.NewItem(GetItemSource_FromTileBreak(i, j), x * 16, y * 16, 32, 32, 1290, 1, pfix: -1);
 					break;
 				}
 				shadowOrbSmashed = true;
@@ -249,7 +273,7 @@ namespace Origins.World.BiomeData {
 					AchievementsHelper.NotifyProgressionEvent(7);
 				}
 			}
-			SoundEngine.PlaySound(SoundID.NPCKilled, i * 16, j * 16);
+			SoundEngine.PlaySound(SoundID.NPCDeath1, new Vector2(i * 16, j * 16));
 			destroyObject = false;
 		}
 	}

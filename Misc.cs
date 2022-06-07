@@ -870,6 +870,13 @@ namespace Origins {
             spriteBatch.End();
             spriteBatch.Begin(sortMode, blendState ?? BlendState.AlphaBlend, samplerState ?? SamplerState.LinearClamp, DepthStencilState.None, rasterizerState ?? Main.Rasterizer, effect, transformMatrix ?? Main.GameViewMatrix.TransformationMatrix);
         }
+        public static int GetGoreSlot(this Mod mod, string name) {
+			if (Main.netMode == NetmodeID.Server) {
+                mod.Logger.Error($"Tried to load gore {mod.Name}/{name} on server");
+                return -1;
+			}
+            return mod.Find<ModGore>(name).Type;
+		}
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {
             return drawPlayerItemPos(gravdir, itemtype);
@@ -1102,7 +1109,7 @@ namespace Origins {
         public static void CloneFrame(this NPC self, int type, int frameHeight) {
             int t = self.type;
             self.type = NPCID.BigMimicCrimson;
-            self.VanillaFindFrame(frameHeight);
+            self.VanillaFindFrame(frameHeight, false, type);
             self.type = t;
         }
         internal static MethodInfo memberwiseClone;
@@ -1297,6 +1304,18 @@ namespace Origins {
         }
         public static Vector2 NextVectorIn(this UnifiedRandom random, Rectangle area) {
             return area.TopLeft() + new Vector2(Main.rand.Next(area.Width), Main.rand.Next(area.Height));
+        }
+        public static void SetActive(this Tile tile, bool active) {
+            tile.HasTile = active;
+        }
+        public static void SetHalfBlock(this Tile tile, bool halfBlock) {
+            tile.IsHalfBlock = halfBlock;
+        }
+        public static void SetSlope(this Tile tile, SlopeType slope) {
+            tile.Slope = slope;
+        }
+        public static void SetLiquidType(this Tile tile, int liquidType) {
+            tile.LiquidType = liquidType;
         }
         public static T SafeGet<T>(this TagCompound self, string key) {
             try {

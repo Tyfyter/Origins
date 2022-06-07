@@ -19,12 +19,10 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Plague Texan's Surprisingly Affordable Style");
 			Tooltip.SetDefault("Great for impersonating Origins devs!'\n");
+            ArmorIDs.Body.Sets.HidesHands[Type] = false;
 		}
         public override void SetDefaults() {
             Item.vanity = true;
-        }
-        public override void DrawHands(ref bool drawHands, ref bool drawArms) {
-            drawHands = true;
         }
     }
     [AutoloadEquip(EquipType.Legs)]

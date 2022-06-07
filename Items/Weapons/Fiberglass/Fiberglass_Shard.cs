@@ -55,7 +55,7 @@ namespace Origins.Items.Weapons.Fiberglass {
 	            //Main.dust[Dust.NewDust(center+offset, 0, 0, 204, 0f, 0f, 0, new Color(255,255,255), 1f)].velocity*=0f;
                 if(Collision.CanHitLine(center-offset, 0, 0, center+offset, 0, 0)) {
 	                //Main.dust[Dust.NewDust(center, 0, 0, 27, 0f, 0f, 0, new Color(255,0,0), 1f)].velocity*=0.2f;
-                    Item.NewItem(Projectile.Center, ModContent.ItemType<Fiberglass_Shard>());
+                    Item.NewItem(Projectile.GetSource_FromThis(), Projectile.Center, ModContent.ItemType<Fiberglass_Shard>());
                     Projectile.Kill();
                 }
             }
@@ -92,7 +92,7 @@ namespace Origins.Items.Weapons.Fiberglass {
         }
         public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) {
             if(Projectile.damage == 1) {
-                Item.NewItem(Projectile.Center, ModContent.ItemType<Fiberglass_Shard>());
+                Item.NewItem(Projectile.GetSource_FromThis(), Projectile.Center, ModContent.ItemType<Fiberglass_Shard>());
                 damage = 0;
                 target.statLife--;
                 PlayerDeathReason reason = new PlayerDeathReason();
@@ -102,11 +102,11 @@ namespace Origins.Items.Weapons.Fiberglass {
                 Projectile.Kill();
             }
         }
-        public override void DrawBehind(int index, List<int> drawCacheProjsBehindNPCsAndTiles, List<int> drawCacheProjsBehindNPCs, List<int> drawCacheProjsBehindProjectiles, List<int> drawCacheProjsOverWiresUI){
-            if(Projectile.hide)drawCacheProjsBehindNPCsAndTiles.Add(index);
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+            if (Projectile.hide) behindNPCsAndTiles.Add(index);
         }
-        public override bool PreDraw(ref Color lightColor) {
-            spriteBatch.Draw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0,0,10,14), lightColor, Projectile.rotation, new Vector2(5, 14), 1f, SpriteEffects.None, 0f);
+		public override bool PreDraw(ref Color lightColor) {
+            Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, new Rectangle(0,0,10,14), lightColor, Projectile.rotation, new Vector2(5, 14), 1f, SpriteEffects.None, 0);
             return false;
         }
     }

@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Ammo {
             Projectile.aiStyle = 0;
         }
         public override void AI() {
-            OriginGlobalProj.ClentaminatorAI(Projectile, OriginWorld.origin_conversion_type, ModContent.DustType<Solution_D>(), Color.GhostWhite);
+            OriginGlobalProj.ClentaminatorAI(Projectile, OriginSystem.origin_conversion_type, ModContent.DustType<Solution_D>(), Color.GhostWhite);
         }
     }
 }

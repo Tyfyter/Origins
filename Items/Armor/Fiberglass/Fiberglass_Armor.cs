@@ -8,6 +8,7 @@ namespace Origins.Items.Armor.Fiberglass {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Helmet");
 			Tooltip.SetDefault("This doesn't seem very protective");
+			ArmorIDs.Head.Sets.DrawHatHair[Type] = true;
 		}
 		public override void SetDefaults() {
             Item.defense = 5;
@@ -21,7 +22,6 @@ namespace Origins.Items.Armor.Fiberglass {
             int inv = player.FindBuffIndex(BuffID.Invisibility);
             if(inv>-1)player.buffTime[inv]++;
         }
-        public override void DrawHair(ref bool drawHair, ref bool drawAltHair) { drawAltHair = true; }
 	}
     [AutoloadEquip(EquipType.Body)]
 	public class Fiberglass_Body : ModItem {
@@ -32,7 +32,7 @@ namespace Origins.Items.Armor.Fiberglass {
 		public override void SetDefaults() {
             Item.defense = 6;
 		}
-        public override void UpdateVanity(Player player, EquipType equipType) {
+        public override void UpdateVanity(Player player) {
             player.GetModPlayer<OriginPlayer>().drawShirt = true;
         }
 	}
@@ -45,7 +45,7 @@ namespace Origins.Items.Armor.Fiberglass {
 		public override void SetDefaults() {
             Item.defense = 5;
 		}
-        public override void UpdateVanity(Player player, EquipType equipType) {
+        public override void UpdateVanity(Player player) {
             player.GetModPlayer<OriginPlayer>().drawPants = true;
         }
 	}

@@ -53,7 +53,7 @@ namespace Origins.Tiles.Defiled {
             if (Main.netMode == NetmodeID.MultiplayerClient) {
 
             }
-            ModContent.GetInstance<OriginWorld>().Defiled_Hearts.Add(new Point(i, j));
+            ModContent.GetInstance<OriginSystem>().Defiled_Hearts.Add(new Point(i, j));
         }
     }
     public class Defiled_Heart_Item : ModItem {

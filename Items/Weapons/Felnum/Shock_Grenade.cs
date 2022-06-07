@@ -33,9 +33,9 @@ namespace Origins.Items.Weapons.Felnum {
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
         }
-        public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref int damage, ref float knockback) {
-            damage-=16;
-        }
+		public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback) {
+			
+		}
     }
     public class Shock_Grenade_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Felnum/Shock_Grenade";
@@ -56,7 +56,7 @@ namespace Origins.Items.Weapons.Felnum {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-			SoundEngine.PlaySound(SoundID.Item, (int)Projectile.Center.X, (int)Projectile.Center.Y, 122, 2f, 1f);
+			SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), Projectile.Center);
             int t = ModContent.ProjectileType<Shock_Grenade_Shock>();
             for(int i = Main.rand.Next(2); i < 3; i++)Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, t, (int)((Projectile.damage-32)*1.5f)+16, 6, Projectile.owner);
         }
