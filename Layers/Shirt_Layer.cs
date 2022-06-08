@@ -15,7 +15,8 @@ using Terraria.ModLoader;
 namespace Origins.Layers {
 	public class Shirt_Layer : PlayerDrawLayer {
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
-			return drawInfo.drawPlayer.GetModPlayer<OriginPlayer>().drawShirt;
+
+            return drawInfo.drawPlayer.GetModPlayer<OriginPlayer>().drawShirt;
 		}
 		public override Position GetDefaultPosition() => new BeforeParent(PlayerDrawLayers.Torso);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {

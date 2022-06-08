@@ -9,6 +9,7 @@ using Origins.Items.Other.Testing;
 using Origins.Items.Weapons.Defiled;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Summon;
+using Origins.Layers;
 using Origins.Projectiles;
 using Origins.Projectiles.Misc;
 using Origins.World;
@@ -154,7 +155,7 @@ namespace Origins {
             if (setAbilityCooldown > 0) {
                 setAbilityCooldown--;
                 if (setAbilityCooldown == 0) {
-                    SoundEngine.PlaySound(SoundID.MaxMana.WithPitch(-1));
+                    SoundEngine.PlaySound(SoundID.MaxMana.WithPitch(-1).WithVolume(0.5f));
                     for (int i = 0; i < 5; i++) {
                         int dust = Dust.NewDust(Player.position, Player.width, Player.height, DustID.PortalBoltTrail, 0f, 0f, 255, Color.Black, (float)Main.rand.Next(20, 26) * 0.1f);
                         Main.dust[dust].noLight = true;
@@ -376,7 +377,9 @@ namespace Origins {
         }
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
             if(Origins.DamageModOnHit[proj.type]) {
-                damage = (int)Player.GetTotalDamage(proj.DamageType).ApplyTo(damage);
+                bool shouldReplace = Origins.ExplosiveBaseDamage.TryGetValue(proj.type, out int dam);
+                float baseDamage = Player.GetTotalDamage(proj.DamageType).ApplyTo(shouldReplace ? dam : damage);
+                damage = shouldReplace ? Main.DamageVar(baseDamage) : (int)baseDamage;
             }
             if(proj.CountsAsClass(DamageClass.Melee) && felnumShock > 29) {
                 damage+=(int)(felnumShock / 15);
@@ -542,7 +545,10 @@ namespace Origins {
             ItemChecking = false;
         }
 		public override void HideDrawLayers(PlayerDrawSet drawInfo) {
-			
+            Item item = drawInfo.heldItem;
+            if (drawInfo.drawPlayer.ItemAnimationActive && 
+                ((item.useStyle == ItemUseStyleID.Shoot &&item.ModItem is ICustomDrawItem) || 
+                (item.useStyle == ItemUseStyleID.Swing && item.ModItem is AnimatedModItem))) PlayerDrawLayers.HeldItem.Hide();
 		}
 		/*public override void ModifyDrawLayers(List<PlayerLayer> layers) {
             if (Player.HeldItem.ModItem is Chocolate_Bar animator) {

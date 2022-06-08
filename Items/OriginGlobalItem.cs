@@ -44,10 +44,16 @@ namespace Origins.Items {
                 case ItemID.MolotovCocktail:
                 item.DamageType = DamageClasses.Explosive;
                 break;
+                case ItemID.RocketLauncher:
+                case ItemID.ProximityMineLauncher:
+                case ItemID.GrenadeLauncher:
                 case ItemID.HellfireArrow:
                 item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
                 break;
             }
+			if (Origins.ExplosiveBaseDamage.TryGetValue(item.shoot, out int damage)) {
+                item.damage = damage;
+			}
             if(OriginConfig.Instance.WoodBuffs)switch(item.type) {
                 case ItemID.ShadewoodHelmet:
                 case ItemID.EbonwoodHelmet:
@@ -142,28 +148,6 @@ namespace Origins.Items {
                 return elementalItem.Element;
             }
             return 0;
-        }
-        public static int BlockNewItem(OnTerraria.Item.orig_NewItem_IEntitySource_int_int_int_int_int_int_bool_int_bool_bool orig, IEntitySource source, int X, int Y, int Width, int Height, int Type, int Stack = 1, bool noBroadcast = false, int pfix = 0, bool noGrabDelay = false, bool reverseLookup = false) {
-            if((ModContent.GetInstance<OriginSystem>().worldEvil&4)!=0) {
-                switch(Type) {
-                    case ItemID.CorruptSeeds:
-                    Type = ModContent.ItemType<Defiled_Grass_Seeds>();
-                    break;
-                    case ItemID.DemoniteOre:
-                    Type = ModContent.ItemType<Defiled_Ore_Item>();
-                    break;
-                }
-            }
-            return orig(source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
-        }
-        internal static int NewItemHook(OnTerraria.Item.orig_NewItem_IEntitySource_int_int_int_int_int_int_bool_int_bool_bool orig, IEntitySource source, int X, int Y, int Width, int Height, int Type, int Stack, bool noBroadcast, int pfix, bool noGrabDelay, bool reverseLookup) {
-            int num = 400;
-            if (NPCLoader.blockLoot.Contains(Type)){
-                num = BlockNewItem(orig, source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
-            } else {
-                num = orig(source, X, Y, Width, Height, Type, Stack, noBroadcast, pfix, noGrabDelay, reverseLookup);
-            }
-            return num;
         }
     }
 }

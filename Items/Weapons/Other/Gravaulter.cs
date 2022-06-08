@@ -89,8 +89,8 @@ namespace Origins.Items.Weapons.Other {
             if (heldProjectile < 0 || heldProjectile > Main.maxProjectiles) {
                 shootSpeed = velocity.Length();
                 Projectile.NewProjectile(source, player.MountedCenter, Vector2.Zero, Gravaulter_P.ID, damage, knockback, player.whoAmI, player.itemAnimationMax * 2.5f);
-                player.itemTime = 2;
-                player.itemAnimation = 2;
+                player.itemTime = 1;
+                player.itemAnimation = 1;
             }
             return false;
         }

@@ -72,7 +72,7 @@ namespace Origins.Items.Weapons.Fiberglass {
 			    Item.noUseGraphic = true;
                 //item.useTime = 4;//20;
                 //item.useAnimation = 4;//20;
-			    Item.useStyle = ItemUseStyleID.Swing;
+			    Item.useStyle = ItemUseStyleID.Guitar;
                 Item.shoot = ProjectileID.None;
 			    Item.UseSound = null;
                 if(strung>strungMax)strung = strungMax;
@@ -85,7 +85,7 @@ namespace Origins.Items.Weapons.Fiberglass {
             if(strung <= 0) {
                 SoundEngine.PlaySound(SoundID.Item102.WithPitch(1).WithVolume(0.75f), player.Center);
                 Vector2 pos = player.Center + (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * (10 - player.direction * 2);
-                Gore.NewGoreDirect(player.GetSource_ItemUse(Item), pos, player.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore")).position = pos;
+                Gore.NewGoreDirect(player.GetSource_ItemUse(Item), pos, player.velocity, ModContent.GoreType<Gores.NPCs.FG2_Gore>()).position = pos;
             }
             return base.CanUseItem(player);
         }

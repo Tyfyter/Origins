@@ -14,16 +14,20 @@ float2 uImageSize0;
 float2 uImageSize1;
 float2 uOffset;
 float uScale;
+float uFrameCount;
 
 float4 Dissolve(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	float4 color = tex2D(uImage0, coords);
 	float fade = uTime%3;
-	float frameY = (coords.y*uSecondaryColor.b-uSecondaryColor.r)/uSecondaryColor.g;
+	float frameY = frac(coords.y * uSaturation); //((coords.y * uSecondaryColor.b) % uSecondaryColor.g) / uSecondaryColor.g;
 	float2 noiseCoords = float2(coords.x, frameY); ///uImageSize1;*uSecondaryColor.b
 	float2 offset = float2(0.5+sin(uTime), 0.5+cos(uTime))*0.1;
-	float4 color2 = tex2D(uImage1, noiseCoords+offset);
+	float2 coords2 = noiseCoords + offset;
+	coords2.x %= 1;
+	coords2.y %= 1;
+	float4 color2 = tex2D(uImage1, coords2);
 	float value;
-	float fade2 = fade%1;
+	float fade2 = frac(fade);
 	if(fade<1) {
 		value = (color2.r*fade2)+(color2.b*(1-fade2));
 	}else if(fade<2) {

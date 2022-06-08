@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.shootSpeed = 16f;
 			Item.value = 5000;
             Item.useTurn = true;
-			Item.rare = ItemRarityID.Purple + 2;
+			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
 		}

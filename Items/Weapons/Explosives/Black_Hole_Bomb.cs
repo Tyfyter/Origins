@@ -141,7 +141,7 @@ namespace Origins.Items.Weapons.Explosives {
             Origins.blackHoleShade.UseSaturation(3f+percent);
             Origins.blackHoleShade.UseColor(0,0,0);
             Origins.blackHoleShade.Shader.Parameters["uScale"].SetValue(0.5f);
-            Origins.blackHoleShade.Apply(data);
+            //Origins.blackHoleShade.Apply(data);
             Main.EntitySpriteDraw(data);
             Main.spriteBatch.Restart();
         }

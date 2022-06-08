@@ -35,7 +35,7 @@ namespace Origins.Items.Armor.Mimic {
 			player.lifeRegenCount += (int)(4 * defiledPercentage);
 			player.GetDamage(DamageClasses.Explosive) += 0.2f * defiledPercentage;
 
-			player.setBonus = string.Format("Not yet fully implemented\nSet bonus scales with the percentage of the world taken over by the defiled wastelands\nCurrent percentage: {0:P1}, ", defiledPercentage);
+			player.setBonus = string.Format("Not yet fully implemented\nSet bonus scales with the percentage of the world taken over by the defiled wastelands\nCurrent percentage: {0:P1}, ", defiledPercentage/3);
 			Origins.instance.SetMimicSetUI();
 
 			if (defiledPercentage >= 1) {

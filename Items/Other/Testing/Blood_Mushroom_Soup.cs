@@ -13,8 +13,8 @@ namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : ModItem {
         int mode;
         const int modeCount = 10;
-        long packedMode => (long)mode|((long)p.Count<<32);
-        LinkedQueue<object> p = new LinkedQueue<object>();
+        long packedMode => (long)mode|((long)parameters.Count<<32);
+        LinkedQueue<object> parameters = new LinkedQueue<object>();
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Worldgen Testing Item");
 			Tooltip.SetDefault("");
@@ -35,7 +35,7 @@ namespace Origins.Items.Other.Testing {
         public override bool? UseItem(Player player)/* Suggestion: Return null instead of false */ {
             if(Main.myPlayer == player.whoAmI){
                 if(player.altFunctionUse == 2) {
-                    p.Clear();
+                    parameters.Clear();
                     if(player.controlSmart) {
                         mode = (mode + modeCount - 1)%modeCount;
                     } else {
@@ -45,7 +45,7 @@ namespace Origins.Items.Other.Testing {
                     if(player.controlSmart) {
                         Apply();
                     } else if(player.controlDown) {
-                        if(p.Count>0)p.RemoveAt(p.Count-1);
+                        if(parameters.Count>0)parameters.RemoveAt(parameters.Count-1);
                     } else {
                         SetParameter();
                     }
@@ -73,49 +73,49 @@ namespace Origins.Items.Other.Testing {
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
                 case 6|p0:
-                p.Enqueue(Main.MouseWorld.X/16);
-                p.Enqueue(Main.MouseWorld.Y/16);
+                parameters.Enqueue(Main.MouseWorld.X/16);
+                parameters.Enqueue(Main.MouseWorld.Y/16);
                 Apply();
                 break;
                 case 2|p0:
                 case 3|p0:
                 case 4|p0:
                 case 5|p0:
-                p.Enqueue(Player.tileTargetX);
-                p.Enqueue(Player.tileTargetY);
+                parameters.Enqueue(Player.tileTargetX);
+                parameters.Enqueue(Player.tileTargetY);
                 Apply();
                 break;
                 case 1|p0:
                 case 0|p0:
-                p.Enqueue(Player.tileTargetX);
-                p.Enqueue(Player.tileTargetY);
+                parameters.Enqueue(Player.tileTargetX);
+                parameters.Enqueue(Player.tileTargetY);
                 break;
                 case 1|p1:
                 case 0|p1:
-                p.Enqueue(Player.tileTargetY);
+                parameters.Enqueue(Player.tileTargetY);
                 break;
                 case 1|p2:
                 case 0|p2:
-                p.Enqueue(Math.Sqrt(mousePackedDouble / 16));
+                parameters.Enqueue(Math.Sqrt(mousePackedDouble / 16));
                 break;
                 case 1|p3:
                 case 0|p3:
-                p.Enqueue(diffFromPlayer / 16);
+                parameters.Enqueue(diffFromPlayer / 16);
                 break;
                 case 1|p4:
                 case 0|p4:
-                p.Enqueue(mousePackedDouble);
+                parameters.Enqueue(mousePackedDouble);
                 break;
                 case 1|p5:
                 case 0|p5:
-                p.Enqueue(Main.LocalPlayer.controlUp?0:diffFromPlayer.ToRotation());
+                parameters.Enqueue(Main.LocalPlayer.controlUp?0:diffFromPlayer.ToRotation());
                 break;
                 case 1|p6:
                 case 0|p6:
-                p.Enqueue(Main.MouseScreen.Y > Main.screenHeight / 2f);
+                parameters.Enqueue(Main.MouseScreen.Y > Main.screenHeight / 2f);
                 break;
                 case 1|p7:
-                p.Enqueue((byte)((mousePacked/16)%256));
+                parameters.Enqueue((byte)((mousePacked/16)%256));
                 break;
             }
         }
@@ -166,25 +166,25 @@ namespace Origins.Items.Other.Testing {
             switch(mode) {
                 case 0: {
                     GenRunners.VeinRunner(
-                        i: (int)p.Dequeue(),
-                        j: (int)p.Dequeue(),
-                        strength: (double)p.Dequeue(),
-                        speed: (Vector2)p.Dequeue(),
-                        length: (double)p.Dequeue(),
-                        twist: (float)p.Dequeue(),
-                        randomtwist: (bool)p.Dequeue());
+                        i: (int)parameters.Dequeue(),
+                        j: (int)parameters.Dequeue(),
+                        strength: (double)parameters.Dequeue(),
+                        speed: (Vector2)parameters.Dequeue(),
+                        length: (double)parameters.Dequeue(),
+                        twist: (float)parameters.Dequeue(),
+                        randomtwist: (bool)parameters.Dequeue());
                     break;
                 }
                 case 1: {
-                    int i = (int)p.Dequeue();
-                    int j = (int)p.Dequeue();
-                    double strength = (double)p.Dequeue();
-                    Vector2 speed = (Vector2)p.Dequeue();
+                    int i = (int)parameters.Dequeue();
+                    int j = (int)parameters.Dequeue();
+                    double strength = (double)parameters.Dequeue();
+                    Vector2 speed = (Vector2)parameters.Dequeue();
                     Stack<((Vector2, Vector2), byte)> veins = new Stack<((Vector2, Vector2), byte)>();
-                    double length = (double)p.Dequeue();
-                    float twist = (float)p.Dequeue();
-                    bool twistRand = (bool)p.Dequeue();
-                    veins.Push(((new Vector2(i, j), speed), (p.Count > 0 ? (byte)p.Dequeue() : (byte)10)));
+                    double length = (double)parameters.Dequeue();
+                    float twist = (float)parameters.Dequeue();
+                    bool twistRand = (bool)parameters.Dequeue();
+                    veins.Push(((new Vector2(i, j), speed), (parameters.Count > 0 ? (byte)parameters.Dequeue() : (byte)10)));
                     ((Vector2 p, Vector2 v) v, byte count) curr;
                     (Vector2 p, Vector2 v) ret;
                     byte count;
@@ -209,19 +209,19 @@ namespace Origins.Items.Other.Testing {
                     break;
                 }
                 case 2:
-                World.BiomeData.RivenHive.Gen.StartHive((int)p.Dequeue(), (int)p.Dequeue());
+                World.BiomeData.RivenHive.Gen.StartHive((int)parameters.Dequeue(), (int)parameters.Dequeue());
                 break;
                 case 3:
-                World.BiomeData.RivenHive.Gen.HiveCave((int)p.Dequeue(), (int)p.Dequeue());
+                World.BiomeData.RivenHive.Gen.HiveCave((int)parameters.Dequeue(), (int)parameters.Dequeue());
                 break;
                 case 4:
-                World.BiomeData.BrinePool.Gen.BrineStart((int)p.Dequeue(), (int)p.Dequeue());
+                World.BiomeData.BrinePool.Gen.BrineStart((int)parameters.Dequeue(), (int)parameters.Dequeue());
                 break;
                 case 5:
-                World.BiomeData.DefiledWastelands.Gen.StartDefiled((int)p.Dequeue(), (int)p.Dequeue());
+                World.BiomeData.DefiledWastelands.Gen.StartDefiled((int)parameters.Dequeue(), (int)parameters.Dequeue());
                 break;
                 case 6: {
-                    Vector2 a = new Vector2((float)p.Dequeue(), (float)p.Dequeue());
+                    Vector2 a = new Vector2((float)parameters.Dequeue(), (float)parameters.Dequeue());
                     World.BiomeData.DefiledWastelands.Gen.DefiledRibs((int)a.X, (int)a.Y);
                     for (int i = (int)a.X - 1; i < (int)a.X + 3; i++) {
                         for (int j = (int)a.Y - 2; j < (int)a.Y + 2; j++) {

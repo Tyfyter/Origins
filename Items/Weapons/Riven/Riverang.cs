@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Riven {
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ThornChakram);
+            Item.DamageType = DamageClass.MeleeNoSpeed;
 			Item.damage = 28;
 			Item.width = 22;
 			Item.height = 28;

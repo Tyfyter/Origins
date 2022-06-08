@@ -20,7 +20,7 @@ namespace Origins.Layers {
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Torso);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
             Player drawPlayer = drawInfo.drawPlayer;
-            Texture2D texture = Origins.BreastplateGlowMasks[drawPlayer.legs];
+            Texture2D texture = Origins.LeggingGlowMasks[drawPlayer.legs];
 
             Vector2 Position = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.legPosition + drawInfo.legVect;
             Rectangle? Frame = new Rectangle?(drawPlayer.legFrame);

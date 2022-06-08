@@ -6,29 +6,29 @@ Description file detected: 5
 * Solvent.fx
 
 Start loading description file: BiomeShade.fx ..Done!
-Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\BiomeShade.fx
-Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx
+Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\BiomeShade.fx
-Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx
+Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\BiomeShade.fx
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx
 .Done!
 Start compiling font content file: BiomeShade.xnb ..Done!
 
 Start loading description file: BlackHole.fx ..Done!
-Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\BlackHole.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BlackHole.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\BlackHole.fx
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BlackHole.fx
 .Done!
 Start compiling font content file: BlackHole.xnb ..Done!
 
 Start loading description file: PerlinFade.fx ..Done!
-Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\PerlinFade.fx: warning X3081: potentially unintended use of a comma expression in a variable initializer
+Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\PerlinFade.fx: warning X3081: potentially unintended use of a comma expression in a variable initializer
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
-File: C:\Users\Tyfyter\Documents\My Games\Terraria\OriginTML\Mod Sources\Origins\Effects\PerlinFade.fx
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\PerlinFade.fx
 .Done!
 Start compiling font content file: PerlinFade.xnb ..Done!
 

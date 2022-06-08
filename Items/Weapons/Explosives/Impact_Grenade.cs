@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -28,12 +29,12 @@ namespace Origins.Items.Weapons.Explosives {
 			DisplayName.SetDefault("Impact Grenade");
             //Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
-        public override void SetDefaults() {
+		public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Grenade);
             Projectile.DamageType = DamageClasses.Explosive;
             Projectile.timeLeft = 135;
         }
-        public override bool OnTileCollide(Vector2 oldVelocity) {
+		public override bool OnTileCollide(Vector2 oldVelocity) {
             Projectile.Kill();
             return false;
         }

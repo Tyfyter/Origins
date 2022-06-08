@@ -112,6 +112,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    if(player.altFunctionUse == 2) {
+                Item.useStyle = ItemUseStyleID.Shoot;
                 if(player.controlUseTile && (charge >= 15 || frame == 0 || player.CheckMana(7, true))) {
                     player.itemTime = 0;
                     player.itemAnimation = 5;

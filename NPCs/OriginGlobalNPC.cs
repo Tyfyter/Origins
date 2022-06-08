@@ -48,8 +48,8 @@ namespace Origins.NPCs {
 				return false;
 			}
 			if (rasterizedTime > 0) {
-				npc.velocity = Vector2.Lerp(npc.velocity, npc.oldVelocity, rasterizedTime * 0.0625f);
-				npc.position = Vector2.Lerp(npc.position, npc.oldPosition, rasterizedTime * 0.0625f);
+				npc.velocity = Vector2.Lerp(npc.velocity, npc.oldVelocity, rasterizedTime * 0.0625f * 0.5f);
+				npc.position = Vector2.Lerp(npc.position, npc.oldPosition, rasterizedTime * 0.0625f * 0.5f);
 			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				if (toxicShockTime < Toxic_Shock_Debuff.stun_duration) {

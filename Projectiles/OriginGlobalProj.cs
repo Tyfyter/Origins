@@ -9,6 +9,7 @@ using Origins.Buffs;
 using Origins.Items.Weapons.Felnum;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -58,6 +59,12 @@ namespace Origins.Projectiles {
                 godHunterEffect = godHunterEffectNext;
                 godHunterEffectNext = 0;
             }
+        }
+        public override void OnSpawn(Projectile projectile, IEntitySource source) {
+            if(projectile.aiStyle is 16 or 61 or 149) projectile.originalDamage = projectile.damage;
+        }
+        public override void PostAI(Projectile projectile) {
+            if (projectile.aiStyle is 16 or 61 or 149) projectile.damage = projectile.originalDamage;
         }
         public override void AI(Projectile projectile) {
             switch(projectile.aiStyle) {

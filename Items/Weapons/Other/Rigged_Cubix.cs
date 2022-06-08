@@ -63,6 +63,7 @@ namespace Origins.Items.Weapons.Other {
 		}
         public override void AI() {
 			//projectile.rotation += 16f * projectile.direction;
+			Dust.NewDustPerfect(Projectile.Center, DustID.JungleTorch, Projectile.velocity).noGravity = true;
 			Projectile.extraUpdates = 0;
 			if (Projectile.ai[0] > 0) {
 				int targetID = (int)Projectile.ai[0];

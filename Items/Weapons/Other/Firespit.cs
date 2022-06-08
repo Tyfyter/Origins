@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Other {
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.crit = 1;
             Item.useAnimation = 35;
-            Item.useTime = 1;
+            Item.useTime = 2;
             Item.mana = 16;
             Item.width = 58;
             Item.height = 22;
@@ -38,6 +38,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+            if (player.itemAnimationMax - player.itemAnimation > 9) return;
             Vector2 offset = Vector2.Normalize(velocity);
             offset = offset * 24 + offset.RotatedBy(-MathHelper.PiOver2 * player.direction) * 8;
             position += offset;

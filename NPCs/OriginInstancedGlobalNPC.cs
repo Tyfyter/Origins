@@ -26,7 +26,9 @@ namespace Origins.NPCs {
             int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
             if (rasterized >= 0) {
                 rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 16), npc.buffTime[rasterized] - 1);
-            }
+			} else {
+                rasterizedTime = 0;
+			}
         }
         public override void AI(NPC npc) {
             if(shrapnelTime>0) {
@@ -64,7 +66,7 @@ namespace Origins.NPCs {
             }
             if(npc.HasBuff(Solvent_Debuff.ID)) {
 	            Origins.solventShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
-                Origins.solventShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(npc.frame.Y,npc.frame.Height,TextureAssets.Npc[npc.type].Value.Height));
+                Origins.solventShader.Shader.Parameters["uSaturation"].SetValue(Main.npcFrameCount[npc.type]);
                 Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;
 			    spriteBatch.Restart(SpriteSortMode.Immediate, effect: Origins.solventShader.Shader);
                 return true;

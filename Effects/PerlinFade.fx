@@ -15,6 +15,7 @@ float2 uImageSize1;
 float2 uOffset;
 float uThreshold0;
 float uThreshold1;
+float4 uShaderSpecificData;
 
 float4 RedFade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
 	float4 color = tex2D(uImage0, coords);

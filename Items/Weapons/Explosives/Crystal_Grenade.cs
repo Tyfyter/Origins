@@ -135,14 +135,14 @@ namespace Origins.Items.Weapons.Explosives {
             Main.graphics.GraphicsDevice.Textures[1] = lightMap;
             Origins.perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0f);
             Origins.perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.25f);
-            Origins.perlinFade0.Apply(data2);
+            //Origins.perlinFade0.Apply(data2);
             DrawData data = new DrawData(Mod.Assets.Request<Texture2D>("Items/Weapons/Explosives/Crystal_Grenade_Pink").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255,255,255,255), Projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
             //Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(projectile.position);
             //Origins.perlinFade0.Shader.Parameters["uRotation"].SetValue(projectile.rotation);
             //Main.graphics.GraphicsDevice.Textures[1] = lightMap;
             Origins.perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.5f);
             Origins.perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.75f);
-            Origins.perlinFade0.Apply(data);
+            //Origins.perlinFade0.Apply(data);
             Main.EntitySpriteDraw(data);
             Main.spriteBatch.Restart();
 		}

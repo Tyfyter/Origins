@@ -74,13 +74,13 @@ namespace Origins {
         }
         public override void AddRecipes() {
         #region vanilla explosive base damage registry
-            ExplosiveBaseDamage.Add(ItemID.Bomb, 70);
-            ExplosiveBaseDamage.Add(ItemID.StickyBomb, 70);
-            ExplosiveBaseDamage.Add(ItemID.BouncyBomb, 70);
-            ExplosiveBaseDamage.Add(ItemID.BombFish, 70);
-            ExplosiveBaseDamage.Add(ItemID.Dynamite, 175);
-            ExplosiveBaseDamage.Add(ItemID.StickyDynamite, 175);
-            ExplosiveBaseDamage.Add(ItemID.BouncyDynamite, 175);
+            ExplosiveBaseDamage.Add(ProjectileID.Bomb, 70);
+            ExplosiveBaseDamage.Add(ProjectileID.StickyBomb, 70);
+            ExplosiveBaseDamage.Add(ProjectileID.BouncyBomb, 70);
+            ExplosiveBaseDamage.Add(ProjectileID.BombFish, 70);
+            ExplosiveBaseDamage.Add(ProjectileID.Dynamite, 175);
+            ExplosiveBaseDamage.Add(ProjectileID.StickyDynamite, 175);
+            ExplosiveBaseDamage.Add(ProjectileID.BouncyDynamite, 175);
         #endregion vanilla explosive base damage registry
         #region armor slot ids
             FelnumHeadArmorID = ModContent.GetInstance<Felnum_Helmet>().Item.headSlot;
@@ -330,7 +330,6 @@ namespace Origins {
             On.Terraria.NPC.GetMeleeCollisionData += NPC_GetMeleeCollisionData;
             On.Terraria.WorldGen.GERunner+=OriginSystem.GERunnerHook;
             On.Terraria.WorldGen.Convert+=OriginSystem.ConvertHook;
-            On.Terraria.Item.NewItem_IEntitySource_int_int_int_int_int_int_bool_int_bool_bool+=OriginGlobalItem.NewItemHook;
             Defiled_Tree.Load();
             OriginSystem worldInstance = ModContent.GetInstance<OriginSystem>();
             if(!(worldInstance is null)) {

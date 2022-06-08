@@ -39,10 +39,13 @@ namespace Origins.Items.Weapons.Summon {
             Item.shoot = projectileID;
             Item.noMelee = true;
         }
-        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-            if (buffID==0)buffID = ModContent.BuffType<Wormy_Buff>();
-            player.AddBuff(Item.buffType, 2);
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+            if (buffID == 0) buffID = ModContent.BuffType<Wormy_Buff>();
+            player.AddBuff(buffID, 2);
             position = Main.MouseWorld;
+            var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
+            projectile.originalDamage = Item.damage;
+            return false;
         }
     }
 }

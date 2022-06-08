@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 namespace Origins.Layers {
 	public class Alt_Item_Layer : PlayerDrawLayer {
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
-			return drawInfo.drawPlayer.ItemAnimationActive && drawInfo.heldItem.ModItem is ICustomDrawItem;
+			return drawInfo.drawPlayer.ItemAnimationActive && drawInfo.heldItem.useStyle == Terraria.ID.ItemUseStyleID.Shoot && drawInfo.heldItem.ModItem is ICustomDrawItem;
 		}
 		public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.HeldItem, PlayerDrawLayers.ArmOverItem);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {

@@ -39,6 +39,11 @@ namespace Origins {
 	public class Explosive : DamageClass {
 		public override void SetStaticDefaults() {
 			ClassName.SetDefault("explosive damage");
+			foreach (var entry in DamageClasses.ExplosiveVersion) {
+				try {
+					entry.Value.SetStaticDefaults();
+				} catch (Exception) { }
+			}
 		}
 		public override void SetDefaultStats(Player player) {
 			player.GetCritChance(this) += 4;
@@ -60,7 +65,7 @@ namespace Origins {
 			return newClass;
 		}
 		public override void SetStaticDefaults() {
-			ClassName.SetDefault("explosive "+other.ClassName.GetDefault());
+			ClassName.SetDefault("explosive " + (other.ClassName?.GetDefault() ?? other.DisplayName));
 		}
 		public override bool GetEffectInheritance(DamageClass damageClass) {
 			return damageClass == DamageClasses.Explosive || damageClass == other || other.GetEffectInheritance(damageClass);

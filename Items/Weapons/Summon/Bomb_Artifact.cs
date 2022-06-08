@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,6 +21,8 @@ namespace Origins.Items.Weapons.Summon {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomb Artifact");
             Tooltip.SetDefault("Summons a friendly bomb to fight for you");
+            ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
+            ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
         }
         public override void SetDefaults() {
             Item.damage = 80;
@@ -37,9 +40,12 @@ namespace Origins.Items.Weapons.Summon {
             Item.shoot = projectileID;
             Item.noMelee = true;
         }
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    player.AddBuff(Item.buffType, 2);
             position = Main.MouseWorld;
+            var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
+            projectile.originalDamage = Item.damage;
+            return false;
         }
     }
 }

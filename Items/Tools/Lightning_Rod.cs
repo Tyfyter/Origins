@@ -18,13 +18,23 @@ namespace Origins.Items.Tools {
 
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
+			Item.damage = 0;
+			Item.DamageType = DamageClass.Generic;
+			Item.noMelee = true;
 			//Sets the poles fishing power
 			Item.fishingPole = 37;
 			//Wooden Fishing Pole is 9f and Golden Fishing Rod is 17f
 			Item.shootSpeed = 13.7f;
 			Item.shoot = ModContent.ProjectileType<Lightning_Rod_Bobber>();
 		}
-
+		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
+			damage = new StatModifier(
+				(damage.Additive - 1) * 1.5f + 1,
+				(damage.Multiplicative - 1) * 1.5f + 1,
+				0,
+				damage.Flat * 1.5f + damage.Base * 1.5f
+			);
+		}
 		public override void AddRecipes() {
 			Recipe recipe = Mod.CreateRecipe(Type);
 			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 8);
@@ -41,6 +51,7 @@ namespace Origins.Items.Tools {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BobberReinforced);
 			DrawOriginOffsetY = -8;
+			Projectile.friendly = true;
 		}
 
 		public override bool PreDrawExtras() {
