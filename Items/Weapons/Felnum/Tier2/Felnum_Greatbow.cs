@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Astoxo");
             Tooltip.SetDefault("Receives 50% higher damage bonuses");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Tsunami);

@@ -12,6 +12,7 @@ namespace Origins.Items.Weapons.Riven {
 			DisplayName.SetDefault("Riverang");
 			Tooltip.SetDefault("Not very aerodynamic");
             glowmask = Origins.AddGlowMask(this);
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ThornChakram);

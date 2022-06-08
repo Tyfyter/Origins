@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,7 +9,8 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Bomb");
 			Tooltip.SetDefault("Be careful, it's not book");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Bomb);
             Item.damage = 46;

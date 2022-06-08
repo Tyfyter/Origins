@@ -12,6 +12,7 @@ namespace Origins.Items.Armor.Eyndum {
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Eyndum/Eyndum_Helmet_Head_Glow");
             }
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.defense = 8;
@@ -43,6 +44,7 @@ namespace Origins.Items.Armor.Eyndum {
                 Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Eyndum/Eyndum_Breastplate_Body_Glow");
                 Origins.AddBreastplateGlowmask(-Item.bodySlot, "Items/Armor/Eyndum/Eyndum_Breastplate_FemaleBody_Glow");
             }
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.defense = 16;
@@ -68,6 +70,7 @@ namespace Origins.Items.Armor.Eyndum {
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Eyndum/Eyndum_Greaves_Legs_Glow");
             }
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.defense = 12;

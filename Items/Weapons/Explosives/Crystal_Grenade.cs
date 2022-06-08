@@ -11,13 +11,16 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
 using SysDraw = System.Drawing;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
 	public class Crystal_Grenade : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Grenade");
 			Tooltip.SetDefault("");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Grenade);
             //item.maxStack = 999;

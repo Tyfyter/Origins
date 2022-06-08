@@ -1,17 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dusk {
-    public class Bleeding_Obsidian : OriginTile {
+	public class Bleeding_Obsidian : OriginTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -35,6 +30,7 @@ namespace Origins.Tiles.Dusk {
     public class Bleeding_Obsidian_Item : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bleeding Obsidian");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.StoneBlock);

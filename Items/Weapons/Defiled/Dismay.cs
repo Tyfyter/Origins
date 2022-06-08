@@ -11,6 +11,7 @@ namespace Origins.Items.Weapons.Defiled {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Dismay");
             Tooltip.SetDefault("Very pointy for a book");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.CursedFlames);

@@ -19,7 +19,8 @@ namespace Origins.Items.Weapons.Explosives {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Ace Shrapnel");
 			Tooltip.SetDefault("Needs shard sprites?");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ProximityMineLauncher);
             Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];

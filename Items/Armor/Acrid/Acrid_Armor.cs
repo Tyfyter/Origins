@@ -10,7 +10,8 @@ namespace Origins.Items.Armor.Acrid{
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Helmet");
 			Tooltip.SetDefault("Emits light when worn");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
         public override void SetDefaults() {
             Item.defense = 10;
         }
@@ -37,7 +38,8 @@ namespace Origins.Items.Armor.Acrid{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Breastplate");
 			Tooltip.SetDefault("Increases life regeneration");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
         public override void SetDefaults() {
             Item.defense = 18;
         }
@@ -50,7 +52,8 @@ namespace Origins.Items.Armor.Acrid{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Greaves");
 			Tooltip.SetDefault("Grants the ability to swim");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
         public override void SetDefaults() {
             Item.defense = 14;
         }

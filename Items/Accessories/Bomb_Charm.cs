@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.ID;
+﻿using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Bomb_Charm : ModItem {
+	public class Bomb_Charm : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomb Charm");
             Tooltip.SetDefault("Reduces explosive self-damage by 20%");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.accessory = true;

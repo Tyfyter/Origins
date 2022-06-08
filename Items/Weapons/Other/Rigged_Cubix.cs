@@ -14,6 +14,7 @@ namespace Origins.Items.Weapons.Other {
 			Tooltip.SetDefault("");
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);

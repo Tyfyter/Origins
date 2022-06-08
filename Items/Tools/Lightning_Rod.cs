@@ -14,6 +14,7 @@ namespace Origins.Items.Tools {
 			DisplayName.SetDefault("Lightning Rod");
 			//Tooltip.SetDefault("Can fish in lava.");
 			//ItemID.Sets.CanFishInLava[item.type] = true;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 
 		public override void SetDefaults() {

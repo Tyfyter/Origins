@@ -13,6 +13,7 @@ namespace Origins.Items.Accessories {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Decaying Scale");
             Tooltip.SetDefault("Attacks inflict Toxic Shock and Solvent on enemies\nEffects are stronger while using Acrid Armor");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.accessory = true;

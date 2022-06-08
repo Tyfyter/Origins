@@ -12,7 +12,8 @@ namespace Origins.Items.Weapons.Other {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tiny Sniper");
 			Tooltip.SetDefault("Comically small, comically powerful");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.SniperRifle);
             Item.damage = 96;

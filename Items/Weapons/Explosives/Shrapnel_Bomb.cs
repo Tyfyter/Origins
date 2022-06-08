@@ -8,7 +8,8 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Shrapnel Bomb");
 			Tooltip.SetDefault("Explodes into shrapnel");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Bomb);
             Item.damage = 89;

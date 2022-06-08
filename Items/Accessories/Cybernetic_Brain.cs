@@ -16,6 +16,7 @@ namespace Origins.Items.Accessories {
             DisplayName.SetDefault("Cybernetic Brain");
             Tooltip.SetDefault("Increases mana regeneration speed\nGrants immunity to most debuffs");
             glowmask = Origins.AddGlowMask(this);
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.accessory = true;

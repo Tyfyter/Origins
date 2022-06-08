@@ -21,6 +21,7 @@ namespace Origins.Items.Weapons.Acid {
 			DisplayName.SetDefault("Acid Splash");
 			Tooltip.SetDefault("");
 			glowmask = Origins.AddGlowMask(this);
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);

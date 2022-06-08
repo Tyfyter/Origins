@@ -13,7 +13,8 @@ namespace Origins.Items.Weapons.Felnum {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Shock Grenade");
 			Tooltip.SetDefault("Quite shocking");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Grenade);
             //item.maxStack = 999;

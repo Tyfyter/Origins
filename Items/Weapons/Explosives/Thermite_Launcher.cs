@@ -19,7 +19,8 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Thermite Launcher");
 			Tooltip.SetDefault("Burn.\nUses Thermite Canisters for ammo");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.GrenadeLauncher);
             //item.maxStack = 999;

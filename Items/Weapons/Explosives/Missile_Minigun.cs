@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
 using Terraria.DataStructures;
+using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Missile_Minigun : ModItem {
@@ -20,7 +21,8 @@ namespace Origins.Items.Weapons.Explosives {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Missile Minigun");
 			Tooltip.SetDefault("Light 'em up");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ProximityMineLauncher);
 			Item.damage = 135;
@@ -64,7 +66,7 @@ namespace Origins.Items.Weapons.Explosives {
                 Vector2 toHit = (Projectile.Center.Clamp(target.Hitbox.Add(target.velocity)) - Projectile.Center);
                 if(!Collision.CanHitLine(Projectile.Center+Projectile.velocity, 1, 1, Projectile.Center+toHit, 1, 1))continue;
                 float tdist = toHit.Length();
-                float ta = (float)Math.Abs(AngleDif(toHit.ToRotation(), angle));
+                float ta = (float)Math.Abs(GeometryUtils.AngleDif(toHit.ToRotation(), angle, out _));
                 if(tdist<=dist && ta<=targetOffset) {
                     targetAngle = ((target.Center+target.velocity) - Projectile.Center).ToRotation();
                     targetOffset = ta;

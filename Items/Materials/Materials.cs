@@ -1,24 +1,24 @@
 ﻿using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
-    public class Angelium : ModItem {
+	public class Angelium : ModItem {
+        public override void SetStaticDefaults() {
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
         //add lore here
         public override void SetDefaults() {
             Item.maxStack = 999;
         }
     }
     public class Bark : ModItem {
+        public override void SetStaticDefaults() {
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
         public override void SetDefaults() {
             Item.maxStack = 999;
         }
@@ -26,6 +26,7 @@ namespace Origins.Items.Materials {
     public class Bat_Hide : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bat Hide");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
             //Tooltip.SetDefault();
         }
         public override void SetDefaults() {
@@ -42,9 +43,16 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Ember Onyx");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
         }
     }
     public class Rubber : ModItem {
+        public override void SetStaticDefaults() {
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
         public override void SetDefaults() {
             Item.maxStack = 999;
         }
@@ -52,6 +60,7 @@ namespace Origins.Items.Materials {
     public class Silicon_Wafer : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Silicon Packet");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
@@ -66,6 +75,7 @@ namespace Origins.Items.Materials {
     public class Tree_Sap : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Sap");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
@@ -75,6 +85,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Viridium Bar");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
@@ -99,6 +110,7 @@ namespace Origins.Items.Materials {
          */
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Felnum Bar");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
@@ -114,6 +126,7 @@ namespace Origins.Items.Materials {
         //Alloy of Felnum and Angelium
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Valkyrum Bar");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
@@ -131,6 +144,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Bar");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
@@ -146,6 +160,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Undead Chunk");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
@@ -155,6 +170,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Infested Bar");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
@@ -171,6 +187,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Sample");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
@@ -180,6 +197,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Wilting Rose");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
@@ -189,6 +207,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Key");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
 			Item.width = 14;
@@ -200,6 +219,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Key");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.width = 14;
@@ -211,6 +231,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Brine Sample");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ShadowScale);
@@ -229,6 +250,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bleeding Obsidian Shard");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ShadowScale);

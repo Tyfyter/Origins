@@ -7,9 +7,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Other {
 	public class Bled_Out_Staff : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bled_Out_Staff");
+			DisplayName.SetDefault("Bled Out Staff");
 			Tooltip.SetDefault("");
 			Item.staff[Item.type] = true;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);

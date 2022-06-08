@@ -21,6 +21,7 @@ namespace Origins.Items.Weapons.Summon {
             DisplayName.SetDefault("Eyeball Staff");
             Tooltip.SetDefault("Summons a mini Eye of Cthulhu to fight for you\nCan summon 2 minions per slot");
             ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.damage = 12;

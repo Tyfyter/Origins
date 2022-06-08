@@ -20,6 +20,7 @@ namespace Origins.Items.Weapons.Felnum {
             DisplayName.SetDefault("Magnus");
             Tooltip.SetDefault("Receives 50% higher damage bonuses");
 			Item.staff[Item.type] = true;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.CrystalVileShard);

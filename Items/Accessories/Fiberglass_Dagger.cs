@@ -13,6 +13,7 @@ namespace Origins.Items.Accessories {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Fiberglass Dagger");
             Tooltip.SetDefault("Increases weapon damage by 8, but reduces defense by 8");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.WormScarf);

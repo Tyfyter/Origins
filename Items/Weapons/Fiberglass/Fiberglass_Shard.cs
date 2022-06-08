@@ -13,7 +13,8 @@ namespace Origins.Items.Weapons.Fiberglass {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Shard");
 			Tooltip.SetDefault("Be careful, it's sharp");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ThrowingKnife);
 			//item.damage-=4;

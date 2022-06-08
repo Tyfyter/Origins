@@ -8,6 +8,7 @@ namespace Origins.Items.Weapons.Other {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Beginner's Tome");
 			Tooltip.SetDefault("Be careful, it's book");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);

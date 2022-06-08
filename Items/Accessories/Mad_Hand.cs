@@ -13,6 +13,7 @@ namespace Origins.Items.Accessories {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Madman’s Hand");
             Tooltip.SetDefault("‘Take my hand, and give them a slap in the face.’");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.accessory = true;

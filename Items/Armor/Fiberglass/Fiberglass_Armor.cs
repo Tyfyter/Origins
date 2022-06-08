@@ -9,6 +9,7 @@ namespace Origins.Items.Armor.Fiberglass {
 			DisplayName.SetDefault("Fiberglass Helmet");
 			Tooltip.SetDefault("This doesn't seem very protective");
 			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
             Item.defense = 5;
@@ -30,6 +31,7 @@ namespace Origins.Items.Armor.Fiberglass {
 			Tooltip.SetDefault("These don't seem very protective");
 			ArmorIDs.Body.Sets.HidesTopSkin[Item.bodySlot] = false;
 			ArmorIDs.Body.Sets.HidesBottomSkin[Item.bodySlot] = false;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
             Item.defense = 6;
@@ -43,6 +45,7 @@ namespace Origins.Items.Armor.Fiberglass {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Boots");
 			Tooltip.SetDefault("These don't seem very protective");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
             Item.defense = 5;

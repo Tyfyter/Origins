@@ -8,7 +8,8 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Dynamite");
 			Tooltip.SetDefault("Be careful, it's not book");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Dynamite);
             Item.damage = 78;

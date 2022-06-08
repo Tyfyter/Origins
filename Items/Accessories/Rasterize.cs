@@ -13,6 +13,7 @@ namespace Origins.Items.Accessories {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Rasterizer");
             Tooltip.SetDefault("Attacks may inflict \"Rasterize\"");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.accessory = true;

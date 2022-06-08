@@ -21,6 +21,7 @@ namespace Origins.Items.Weapons.Summon {
             DisplayName.SetDefault("Woodsprite Staff");
             Tooltip.SetDefault("Summons a woodsprite to fight for you");
 			glowmask = Origins.AddGlowMask(this);
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
         public override void SetDefaults() {
             Item.damage = 7;

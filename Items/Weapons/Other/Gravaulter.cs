@@ -23,6 +23,7 @@ namespace Origins.Items.Weapons.Other {
             DisplayName.SetDefault("Gravaulter");
             Tooltip.SetDefault("");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.MeteorStaff);

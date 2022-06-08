@@ -10,7 +10,8 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Peat Ball");
 			Tooltip.SetDefault("");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Snowball);
             Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];

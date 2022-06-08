@@ -13,7 +13,8 @@ namespace Origins.Items.Weapons.Other {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tones Of Agony");
 			Tooltip.SetDefault("A tome full of ancient spells used for harming another with malicious intent.");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 40;

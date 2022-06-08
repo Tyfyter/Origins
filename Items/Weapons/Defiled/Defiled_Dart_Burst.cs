@@ -11,6 +11,7 @@ namespace Origins.Items.Weapons.Defiled {
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("The Kruncher but it shoots darts");
             Tooltip.SetDefault("Very darty");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.damage = 25;

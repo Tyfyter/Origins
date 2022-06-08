@@ -1,7 +1,4 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,6 +7,7 @@ namespace Origins.Items.Tools {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Drill");
 			Tooltip.SetDefault("");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.TitaniumDrill);

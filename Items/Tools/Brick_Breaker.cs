@@ -8,6 +8,7 @@ namespace Origins.Items.Tools {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Brick Breaker");
 			Tooltip.SetDefault("Very pointy");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.DeathbringerPickaxe);

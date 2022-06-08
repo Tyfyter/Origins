@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
             DisplayName.SetDefault("Reshaping Chunk");
             Tooltip.SetDefault("Strengthens the set bonus of Defiled Armor\nReduces damage taken by 5% if Defiled Armor is not equipped");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(9, 3));
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.accessory = true;

@@ -19,7 +19,8 @@ namespace Origins.Items.Weapons.Explosives {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Caustica");
 			Tooltip.SetDefault("");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 270;

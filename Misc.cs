@@ -966,7 +966,8 @@ namespace Origins {
 
             spriteBatch.Draw(Origins.instance.Assets.Request<Texture2D>("Projectiles/Pixel").Value, drawRect, null, color, (end - start).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
         }
-        public static Bitmap ToBitmap(this Texture2D tex) {
+        [Obsolete]
+        private static Bitmap ToBitmap(this Texture2D tex) {
             int[] data = new int[tex.Width * tex.Height];
             tex.GetData(0, new Rectangle(0,0,tex.Width,tex.Height), data, 0, tex.Width * tex.Height);
             Bitmap bitmap = new Bitmap(tex.Width, tex.Height);

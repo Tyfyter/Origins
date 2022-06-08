@@ -9,7 +9,8 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Plague Texan's Visage");
 			Tooltip.SetDefault("Great for impersonating Origins devs!'\n");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
         public override void SetDefaults() {
             Item.vanity = true;
         }
@@ -20,7 +21,8 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 			DisplayName.SetDefault("Plague Texan's Surprisingly Affordable Style");
 			Tooltip.SetDefault("Great for impersonating Origins devs!'\n");
             ArmorIDs.Body.Sets.HidesHands[Item.bodySlot] = false;
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
         public override void SetDefaults() {
             Item.vanity = true;
         }
@@ -30,7 +32,8 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Plague Texan's Jeans");
 			Tooltip.SetDefault("Great for impersonating Origins devs!'\n");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
         public override void SetDefaults() {
             Item.vanity = true;
         }
@@ -40,6 +43,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Plague Texan's Gift");
 			Tooltip.SetDefault("Great for impersonating Origins devs!'\nForesight is '20/20'");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ID = Item.type;
 		}
         public override void SetDefaults() {

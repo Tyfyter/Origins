@@ -11,6 +11,7 @@ namespace Origins.Items.Weapons.Other {
 			DisplayName.SetDefault("Cryostrike");
 			Tooltip.SetDefault("Shoots a piercing icicle");
             Item.staff[Item.type] = true;
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RubyStaff);

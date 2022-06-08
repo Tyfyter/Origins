@@ -21,7 +21,8 @@ namespace Origins.Items.Weapons.Other {
             animation = new DrawAnimationManual(1);
 			Main.RegisterItemAnimation(Item.type, animation);
             glowmask = Origins.AddGlowMask("Weapons/Other/Laser_Tag_Gun_Glow");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.SpaceGun);
 			Item.damage = 1;

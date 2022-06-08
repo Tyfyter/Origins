@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Other {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("HNO-3 \"Viper\"");
             Tooltip.SetDefault("Has a chance to inflict \"Solvent\", increasing critical damage\nDeals critical damage on otherwise afflicted enemies");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Gatligator);

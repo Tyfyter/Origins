@@ -8,7 +8,8 @@ namespace Origins.Items.Armor.Felnum {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Helmet");
 			Tooltip.SetDefault("4% increased damage");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults() {
             Item.defense = 5;
 		}
@@ -45,7 +46,8 @@ namespace Origins.Items.Armor.Felnum {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Breastplate");
 			Tooltip.SetDefault("2% increased damage\n5% increased movement speed");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults() {
             Item.defense = 6;
 		}
@@ -59,7 +61,8 @@ namespace Origins.Items.Armor.Felnum {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Greaves");
 			Tooltip.SetDefault("5% increased movement speed");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults() {
             Item.defense = 5;
 		}

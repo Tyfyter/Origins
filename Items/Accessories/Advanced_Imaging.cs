@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Advanced_Imaging : ModItem {
+	public class Advanced_Imaging : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Advanced Imaging");
             Tooltip.SetDefault("Increased projectile speed\nImmunity to Confusion\n\"The future is now.\"");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.YoYoGlove);

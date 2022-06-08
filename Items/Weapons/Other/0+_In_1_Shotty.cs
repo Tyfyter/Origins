@@ -14,6 +14,7 @@ namespace Origins.Items.Weapons.Other {
         public override string Texture => "Origins/Items/Weapons/Other/2_In_1_Shotty";
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("2 in 1 Shotty");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Boomstick);
@@ -29,6 +30,7 @@ namespace Origins.Items.Weapons.Other {
         public override string Texture => "Origins/Items/Weapons/Other/3_In_1_Shotty";
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("3 in 1 Shotty");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Boomstick);

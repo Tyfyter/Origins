@@ -17,6 +17,7 @@ namespace Origins.Items.Weapons.Defiled {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Knee Slapper");
 			Tooltip.SetDefault("'How does the fish feel about this?'");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 45;

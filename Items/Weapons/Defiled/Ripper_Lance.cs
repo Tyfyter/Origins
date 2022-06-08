@@ -11,6 +11,7 @@ namespace Origins.Items.Weapons.Defiled {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Ripper Lance");
 			Tooltip.SetDefault("Very pointy");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 24;

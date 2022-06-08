@@ -31,7 +31,8 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             animation = new DrawAnimationManual(6);
             animation.Frame = 5;
 			Main.RegisterItemAnimation(Item.type, animation);
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+        }
 		public override void SetDefaults() {
 			Item.damage = 88;
 			Item.DamageType = DamageClass.Melee;

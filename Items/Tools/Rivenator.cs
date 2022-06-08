@@ -8,6 +8,7 @@ namespace Origins.Items.Tools {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Rivenator");
 			Tooltip.SetDefault("'Unsettlingly floppy'\nAble to mine Hellstone");
+			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.NightmarePickaxe);

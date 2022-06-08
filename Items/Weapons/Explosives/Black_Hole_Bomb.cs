@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using System;
 using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
+using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Explosives {
 	public class Black_Hole_Bomb : ModItem {
@@ -16,7 +17,8 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Black Hole Bomb");
 			Tooltip.SetDefault("Explode. Implode");
-		}
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+        }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Bomb);
             Item.damage = 2500;
@@ -78,7 +80,7 @@ namespace Origins.Items.Weapons.Explosives {
                     float force = strength/distSQ;
                     Vector2 dir = (Projectile.Center-target.Center).SafeNormalize(Vector2.Zero);
                     float point = (target.knockBackResist*kbrs+(1f-kbrs));
-                    point*=(float)Math.Min(AngleDif(dir.ToRotation(), target.velocity.ToRotation())+Clamp(force-target.velocity.Length(),0,1), 1);
+                    point*=(float)Math.Min(GeometryUtils.AngleDif(dir.ToRotation(), target.velocity.ToRotation(), out _)+Clamp(force-target.velocity.Length(),0,1), 1);
                     if(force>1)target.velocity = Vector2.Lerp(target.velocity, dir*Min(force, dist), point);
                     if(force>=(Projectile.Center.Clamp(target.Hitbox)-Projectile.Center).Length()) {
                         if(Projectile.timeLeft>totalDur&&Projectile.Hitbox.Intersects(target.Hitbox))OnHitNPC(target, 0, 0, false);
