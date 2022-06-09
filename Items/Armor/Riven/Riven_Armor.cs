@@ -34,7 +34,7 @@ namespace Origins.Items.Armor.Riven {
         }
         public override void UpdateArmorSet(Player player) {
             player.setBonus = "Increases minion damage by up to 30% when over half health";
-            player.GetModPlayer<OriginPlayer>().rivenSet = true;
+            player.GetDamage(DamageClass.Summon) *= player.GetModPlayer<OriginPlayer>().rivenMult;
         }
         public override void AddRecipes() {
             Recipe recipe = Mod.CreateRecipe(Type);

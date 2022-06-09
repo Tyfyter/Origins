@@ -873,9 +873,9 @@ namespace Origins {
         public static int GetGoreSlot(this Mod mod, string name) {
 			if (Main.netMode == NetmodeID.Server) {
                 mod.Logger.Error($"Tried to load gore {mod.Name}/{name} on server");
-                return -1;
+                return 0;
 			}
-            return mod.Find<ModGore>(name).Type;
+            return mod.TryFind(name, out ModGore modGore) ? modGore.Type : 0;
 		}
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {

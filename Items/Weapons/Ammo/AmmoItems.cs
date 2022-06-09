@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Ammo {
     public class White_Solution : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("White Solution");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.GreenSolution];
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
             //Tooltip.SetDefault();
         }
         public override void SetDefaults() {

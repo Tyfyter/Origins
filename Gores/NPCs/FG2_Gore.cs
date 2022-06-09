@@ -12,7 +12,7 @@ using Tyfyter.Utils;
 
 namespace Origins.Gores.NPCs {
     public class FG2_Gore : ModGore {
-        public override void OnSpawn(Gore gore, IEntitySource source) {
+		public override void OnSpawn(Gore gore, IEntitySource source) {
             gore.frame = 4;
         }
         public override bool Update(Gore gore) {

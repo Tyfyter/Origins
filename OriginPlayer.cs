@@ -314,7 +314,7 @@ namespace Origins {
         }
         #region attacks
         public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
-            if(fiberglassSet) {
+            /*if(fiberglassSet) {
                 damage.Flat+=4;
             }
             if(fiberglassDagger) {
@@ -322,7 +322,7 @@ namespace Origins {
             }
             if(rivenSet&&item.CountsAsClass(DamageClass.Summon)&&!ItemChecking) {
                 damage *= rivenMult;
-            }
+            }*/
         }
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
             if(felnumShock>29) {

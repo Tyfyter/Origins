@@ -30,11 +30,12 @@ namespace Origins.Items.Tools {
 			Item.shoot = ModContent.ProjectileType<Lightning_Rod_Bobber>();
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
+			const float factor = 1.5f;
 			damage = new StatModifier(
-				(damage.Additive - 1) * 1.5f + 1,
-				(damage.Multiplicative - 1) * 1.5f + 1,
+				(damage.Additive - 1) * factor + 1,
+				(damage.Multiplicative - 1) * factor + 1,
 				0,
-				damage.Flat * 1.5f + damage.Base * 1.5f
+				(damage.Flat  + damage.Base) * factor
 			);
 		}
 		public override void AddRecipes() {
@@ -55,10 +56,15 @@ namespace Origins.Items.Tools {
 			DrawOriginOffsetY = -8;
 			Projectile.friendly = true;
 		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			if (Projectile.ai[0] == 0) {
+
+			}
+		}
 
 		public override bool PreDrawExtras() {
 			Color fishingLineColor = new Color(176, 225, 255);
-			Lighting.AddLight(Projectile.Center, fishingLineColor.R / 255, fishingLineColor.G / 255, fishingLineColor.B / 255);
+			Lighting.AddLight(Projectile.Center, 0, fishingLineColor.G * 0.0015f, fishingLineColor.B * 0.005f);
 
 			//Change these two values in order to change the origin of where the line is being drawn
 			int xPositionAdditive = 45;
@@ -158,6 +164,7 @@ namespace Origins.Items.Tools {
 				float rotation = playerToProjectile.ToRotation() - MathHelper.PiOver2;
 				Texture2D fishingLineTexture = TextureAssets.FishingLine.Value;
 				Main.spriteBatch.Draw(fishingLineTexture, new Vector2(lineOrigin.X - Main.screenPosition.X + fishingLineTexture.Width * 0.5f, lineOrigin.Y - Main.screenPosition.Y + fishingLineTexture.Height * 0.5f), new Rectangle(0, 0, fishingLineTexture.Width, (int)height), lineColor, rotation, new Vector2(fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
+				Lighting.AddLight(new Vector2(lineOrigin.X + fishingLineTexture.Width * 0.5f, lineOrigin.Y + fishingLineTexture.Height * 0.5f), 0, fishingLineColor.G * 0.0003f, fishingLineColor.B * 0.001f);
 			}
 			return false;
 		}

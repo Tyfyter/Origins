@@ -20,7 +20,9 @@ namespace Origins.Items.Armor.Fiberglass {
         }
         public override void UpdateArmorSet(Player player) {
             player.setBonus = "Weapon damage increased by 4";
-            player.GetModPlayer<OriginPlayer>().fiberglassSet = true;
+			player.GetDamage(DamageClass.Default).Flat += 4;
+			player.GetDamage(DamageClass.Generic).Flat += 4;
+			//player.GetModPlayer<OriginPlayer>().fiberglassSet = true;
             int inv = player.FindBuffIndex(BuffID.Invisibility);
             if(inv>-1)player.buffTime[inv]++;
         }

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoMod.RuntimeDetour;
 using MonoMod.RuntimeDetour.HookGen;
+using Origins.Gores.NPCs;
 using Origins.Items;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Rift;
@@ -130,6 +131,7 @@ namespace Origins {
             }
         }
         public override void Load() {
+            
             ExplosiveBaseDamage = new Dictionary<int, int>();
             //Explosive item types
             //Explosive projectile & ammo types
@@ -299,6 +301,11 @@ namespace Origins {
                         }
                     };
 				}
+                IEnumerable<string> files = GetFileNames();
+                IEnumerable<string> goreFiles = files.Where(f => f.EndsWith(".rawimg") && f.Contains("Gores") && !files.Contains(f.Replace(".rawimg", ".cs")));
+                foreach (string gore in goreFiles) {
+                    AutoLoadGores.AddGore("Origins/" + gore.Replace(".rawimg", null), this);
+                }
             }
             SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
             Sounds.Krunch = new SoundStyle("Origins/Sounds/Custom/BurstCannon", SoundType.Sound);
