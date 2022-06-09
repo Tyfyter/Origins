@@ -55,13 +55,27 @@ namespace Origins.Items.Tools {
 			Projectile.CloneDefaults(ProjectileID.BobberReinforced);
 			DrawOriginOffsetY = -8;
 			Projectile.friendly = true;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-			if (Projectile.ai[0] == 0) {
-
+		public override void AI() {
+			if (Projectile.ai[0] == 1) {
+				Projectile.usesLocalNPCImmunity = false;
+				Rectangle biggerHitbox = Projectile.Hitbox;
+				biggerHitbox.Inflate(14, 14);
+				for (int i = 0; i < Main.maxItems; i++) {
+					Item item = Main.item[i];
+					if (item.active && biggerHitbox.Intersects(item.Hitbox)) {
+						item.velocity = Projectile.velocity;
+					}
+				}
 			}
 		}
-
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			if (Projectile.ai[0] == 1) {
+				target.velocity = Vector2.Lerp(target.velocity, Projectile.velocity, target.knockBackResist);
+			}
+		}
 		public override bool PreDrawExtras() {
 			Color fishingLineColor = new Color(176, 225, 255);
 			Lighting.AddLight(Projectile.Center, 0, fishingLineColor.G * 0.0015f, fishingLineColor.B * 0.005f);
