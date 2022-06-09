@@ -4,6 +4,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Defiled {
     public class Defiled_Dart_Burst : ModItem {

@@ -12,6 +12,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items {
     public class OriginGlobalItem : GlobalItem {

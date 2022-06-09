@@ -11,6 +11,7 @@ using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Acid {
     public class The_Foot : ModItem, IElementalItem {

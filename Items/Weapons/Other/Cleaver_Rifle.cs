@@ -7,6 +7,8 @@ using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
     //implemented in 10 minutes, so it might have an issue or two

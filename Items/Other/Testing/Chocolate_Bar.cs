@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Tyfyter.Utils.KinematicUtils;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Other.Testing {
 	public class Chocolate_Bar : ModItem {

@@ -3,6 +3,7 @@ using Terraria;
 using Origins.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Armor.Rift {
     [AutoloadEquip(EquipType.Head)]

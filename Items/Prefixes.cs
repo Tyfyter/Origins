@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items {
     public class Heavy_Cal_Prefix : ModPrefix {

@@ -2,9 +2,11 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
 	public class Rigged_Cubix : ModItem {

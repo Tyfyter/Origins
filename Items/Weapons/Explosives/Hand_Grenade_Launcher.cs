@@ -9,6 +9,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Creative;
 using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -16,6 +17,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Origins.OriginExtensions;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
 	public class Hand_Grenade_Launcher : ModItem {

@@ -12,6 +12,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Ace_Shrapnel : ModItem {

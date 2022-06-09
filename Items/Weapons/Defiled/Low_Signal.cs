@@ -11,6 +11,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Defiled {
 	public class Low_Signal : ModItem {

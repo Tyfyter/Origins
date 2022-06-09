@@ -4,6 +4,7 @@ using Origins.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Armor.Riven {
     [AutoloadEquip(EquipType.Head)]

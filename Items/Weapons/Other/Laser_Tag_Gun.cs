@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
 	public class Laser_Tag_Gun : AnimatedModItem, IElementalItem {
@@ -42,7 +44,8 @@ namespace Origins.Items.Weapons.Other {
 		}
         public override void UpdateInventory(Player player) {
         }
-        int GetCritMod(Player player) {
+
+		static int GetCritMod(Player player) {
             OriginPlayer modPlayer = player.GetModPlayer<OriginPlayer>();
             int critMod = 0;
             if((modPlayer.oldBonuses&1)!=0||modPlayer.fiberglassSet||modPlayer.fiberglassDagger) {
@@ -54,7 +57,7 @@ namespace Origins.Items.Weapons.Other {
             return critMod;
         }
         public override void ModifyWeaponCrit(Player player, ref float crit) {
-            if(player.HeldItem.type != Item.type)crit+=GetCritMod(player);
+            if(player.HeldItem.type != Item.type)crit+= GetCritMod(player);
         }
         public override Vector2? HoldoutOffset() {
             return new Vector2(3-(11*Main.player[Item.playerIndexTheItemIsReservedFor].direction),0);

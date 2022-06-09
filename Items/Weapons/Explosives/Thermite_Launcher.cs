@@ -13,6 +13,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
 	public class Thermite_Launcher : ModItem {

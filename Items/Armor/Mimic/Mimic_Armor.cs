@@ -1,9 +1,7 @@
-using Origins.Items.Materials;
 using Terraria;
-using Origins.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.World;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Armor.Mimic {
 	[AutoloadEquip(EquipType.Head)]
@@ -37,7 +35,7 @@ namespace Origins.Items.Armor.Mimic {
 			player.GetDamage(DamageClasses.Explosive) += 0.2f * defiledPercentage;
 
 			player.setBonus = string.Format("Not yet fully implemented\nSet bonus scales with the percentage of the world taken over by the defiled wastelands\nCurrent percentage: {0:P1}, ", defiledPercentage/3);
-			Origins.instance.SetMimicSetUI();
+			Origins.SetMimicSetUI();
 
 			if (defiledPercentage >= 1) {
 				switch (originPlayer.GetMimicSetChoice(0)) {

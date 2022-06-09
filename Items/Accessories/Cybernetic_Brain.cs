@@ -8,6 +8,7 @@ using Origins.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Accessories {
     public class Cybernetic_Brain : ModItem {

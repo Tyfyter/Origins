@@ -1,24 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Origins.Items.Weapons.Explosives;
-using Origins.World;
 using Origins.Projectiles;
 using Origins.Dusts;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Ammo {
-    public class Thermite_Canister : ModItem {
+	public class Thermite_Canister : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Thermite Canister");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
-            //Tooltip.SetDefault();
-        }
+			//Tooltip.SetDefault();
+		}
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RocketI);
             Item.damage = 30;

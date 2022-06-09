@@ -9,6 +9,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
     public class Eyndum_Scar : ModItem {

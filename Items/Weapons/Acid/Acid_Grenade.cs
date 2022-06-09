@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Acid {
 	public class Acid_Grenade : ModItem {

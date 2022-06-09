@@ -11,6 +11,7 @@ using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
 using Terraria.Graphics.Shaders;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Fallout : ModItem {

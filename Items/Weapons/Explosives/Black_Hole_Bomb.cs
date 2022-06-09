@@ -10,6 +10,8 @@ using System;
 using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
 using Tyfyter.Utils;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
 	public class Black_Hole_Bomb : ModItem {

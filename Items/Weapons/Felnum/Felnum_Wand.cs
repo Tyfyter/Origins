@@ -12,6 +12,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Projectiles.Misc;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Felnum {
     public class Felnum_Wand : ModItem {

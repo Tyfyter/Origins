@@ -22,7 +22,6 @@ namespace Origins.Projectiles {
         public bool felnumEffect = false;
         public bool viperEffect = false;
         public bool ownerSafe = false;
-        bool? explosiveOverride = null;
         public int killLink = -1;
         public float godHunterEffect = 0f;
         //ModProjectile.SetDefaults is run before GlobalProjectiles' SetDefaults, so these can be used from SetDefaults

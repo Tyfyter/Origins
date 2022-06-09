@@ -13,6 +13,8 @@ using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
 using Terraria.DataStructures;
 using Tyfyter.Utils;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Missile_Minigun : ModItem {

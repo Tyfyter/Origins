@@ -11,8 +11,10 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Summon {
     public class Bomb_Artifact : ModItem {
@@ -70,6 +72,7 @@ namespace Origins.Buffs {
         }
     }
 }
+
 namespace Origins.Items.Weapons.Summon.Minions {
     public class Friendly_Bomb : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Summon/Minions/Happy_Boi";

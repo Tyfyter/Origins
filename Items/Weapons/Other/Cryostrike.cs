@@ -1,9 +1,11 @@
 using Microsoft.Xna.Framework;
 using Origins.Projectiles.Weapons;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 //using static Origins.OriginExtensions;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
 	public class Cryostrike : ModItem {

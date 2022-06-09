@@ -86,7 +86,7 @@ namespace Origins {
             return _items.ToArray();
         }
         #region ICollection implementation
-        [Obsolete]
+        [Obsolete("Use Enqueue")]
         public void Add(T item) {
             Enqueue(item);
         }

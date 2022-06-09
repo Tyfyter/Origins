@@ -9,9 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Summon {
     public class Brainy_Staff : ModItem {
@@ -73,6 +75,7 @@ namespace Origins.Buffs {
         }
     }
 }
+
 namespace Origins.Items.Weapons.Summon.Minions {
     public class Mini_BOC : ModProjectile {
 		public const int frameSpeed = 5;

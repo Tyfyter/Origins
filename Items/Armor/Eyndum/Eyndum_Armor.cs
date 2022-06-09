@@ -1,11 +1,10 @@
-using Origins.Items.Materials;
 using Terraria;
-using Origins.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Armor.Eyndum {
-    [AutoloadEquip(EquipType.Head)]
+	[AutoloadEquip(EquipType.Head)]
     public class Eyndum_Helmet : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Eyndum Helmet");
@@ -25,7 +24,7 @@ namespace Origins.Items.Armor.Eyndum {
         }
         public override void UpdateArmorSet(Player player) {
             player.GetModPlayer<OriginPlayer>().eyndumSet = true;
-            Origins.instance.SetEyndumCoreUI();
+            Origins.SetEyndumCoreUI();
         }
         public override void AddRecipes() {
             /*Recipe recipe = Mod.CreateRecipe(Type);

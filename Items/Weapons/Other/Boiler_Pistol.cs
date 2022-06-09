@@ -9,6 +9,8 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Origins.Projectiles.Weapons;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
     public class Boiler_Pistol : ModItem {

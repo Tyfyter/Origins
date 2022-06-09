@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Terraria.GameContent.Creative;
+using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Weapons.Summon;
 using Origins.Items.Weapons.Summon.Minions;
@@ -12,6 +13,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Summon {
     public class Eyeball_Staff : ModItem {
@@ -74,6 +76,7 @@ namespace Origins.Buffs {
         }
     }
 }
+
 namespace Origins.Items.Weapons.Summon.Minions {
     public class Mini_EOC : ModProjectile {
 		public const int frameSpeed = 5;

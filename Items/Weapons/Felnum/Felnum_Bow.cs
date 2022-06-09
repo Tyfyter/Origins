@@ -8,6 +8,7 @@ using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Felnum {
     public class Felnum_Bow : ModItem {

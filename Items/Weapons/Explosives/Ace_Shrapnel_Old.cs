@@ -14,6 +14,7 @@ using static Microsoft.Xna.Framework.MathHelper;
 using Origins.NPCs;
 using GNPC = Origins.NPCs.OriginGlobalNPC;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Ace_Shrapnel_Old : ModItem {

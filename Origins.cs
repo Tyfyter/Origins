@@ -525,13 +525,13 @@ namespace Origins {
             eyndumCoreUITexture = null;
             eyndumCoreTexture = null;
         }
-        public void SetEyndumCoreUI() {
+        public static void SetEyndumCoreUI() {
             UserInterface setBonusUI = OriginSystem.instance.setBonusUI;
             if (setBonusUI.CurrentState is not Eyndum_Core_UI) {
                 setBonusUI.SetState(new Eyndum_Core_UI());
             }
         }
-        public void SetMimicSetUI() {
+        public static void SetMimicSetUI() {
             UserInterface setBonusUI = OriginSystem.instance.setBonusUI;
             if (setBonusUI.CurrentState is not Mimic_Selection_UI) {
                 setBonusUI.SetState(new Mimic_Selection_UI());
@@ -543,7 +543,7 @@ namespace Origins {
                 for (int i = 0; i < TextureAssets.GlowMask.Length; i++){
                     glowMasks[i] = TextureAssets.GlowMask[i];
                 }
-                glowMasks[glowMasks.Length - 1] = instance.Assets.Request<Texture2D>("Items/" + name);
+                glowMasks[^1] = instance.Assets.Request<Texture2D>("Items/" + name);
                 TextureAssets.GlowMask = glowMasks;
                 return (short)(glowMasks.Length - 1);
             }
@@ -557,7 +557,7 @@ namespace Origins {
                     for (int i = 0; i < TextureAssets.GlowMask.Length; i++) {
                         glowMasks[i] = TextureAssets.GlowMask[i];
                     }
-                    glowMasks[glowMasks.Length - 1] = asset;
+                    glowMasks[^1] = asset;
                     TextureAssets.GlowMask = glowMasks;
                     return (short)(glowMasks.Length - 1);
                 }

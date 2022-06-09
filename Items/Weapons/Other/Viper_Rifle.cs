@@ -10,6 +10,8 @@ using Terraria.ID;
 using Origins.Projectiles;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
     public class Viper_Rifle : ModItem {

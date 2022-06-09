@@ -13,6 +13,8 @@ using Origins.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using Tyfyter.Utils;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
     public class Void_Spectral : ModItem {

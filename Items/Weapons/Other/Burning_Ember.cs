@@ -11,6 +11,8 @@ using Terraria.ID;
 using Origins.Projectiles.Weapons;
 using Microsoft.Xna.Framework.Graphics;
 using Tyfyter.Utils;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
     public class Burning_Ember : ModItem {

@@ -11,6 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Tyfyter.Utils;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Defiled {
 	public class Knee_Slapper : ModItem {

@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Terraria.DataStructures;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Bomboomstick : ModItem, ICustomDrawItem {

@@ -2,6 +2,7 @@ using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Defiled {
 	public class Spiker_Sword : ModItem {

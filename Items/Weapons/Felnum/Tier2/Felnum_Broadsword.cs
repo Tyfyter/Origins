@@ -10,6 +10,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Felnum.Tier2 {
     //this took seven and a half hours to make

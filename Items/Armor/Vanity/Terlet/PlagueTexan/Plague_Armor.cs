@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
     [AutoloadEquip(EquipType.Head)]

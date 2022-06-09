@@ -5,10 +5,12 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Fiberglass {
 	public class Broken_Fiberglass_Bow : AnimatedModItem {

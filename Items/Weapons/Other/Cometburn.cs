@@ -12,6 +12,8 @@ using Terraria.DataStructures;
 using Origins.Projectiles.Misc;
 using Terraria.Graphics.Shaders;
 using Tyfyter.Utils;
+using Terraria.GameContent.Creative;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
     public class Cometburn : ModItem {

@@ -10,9 +10,11 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Summon {
     public class Rotting_Worm_Staff : ModItem {
@@ -70,6 +72,7 @@ namespace Origins.Buffs {
         }
     }
 }
+
 namespace Origins.Items.Weapons.Summon.Minions {
     public class Rotting_Worm_Head : Mini_EOW_Base {
         public override void SetStaticDefaults() {

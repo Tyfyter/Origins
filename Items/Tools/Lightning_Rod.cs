@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria.GameContent;
+using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Tools {
 	public class Lightning_Rod : ModItem {
