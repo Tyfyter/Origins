@@ -15,7 +15,6 @@ using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
 	public class Black_Hole_Bomb : ModItem {
-        public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Bomb";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Black Hole Bomb");
 			Tooltip.SetDefault("Explode. Implode");
@@ -31,7 +30,6 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.shootSpeed*=2;
             Item.knockBack = 13f;
 			Item.rare = ItemRarityID.Green;
-            Item.color = Color.Black;
 		}
     }
     public class Black_Hole_Bomb_P : ModProjectile {

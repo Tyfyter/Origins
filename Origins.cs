@@ -355,7 +355,16 @@ namespace Origins {
             On.Terraria.Lang.GetDryadWorldStatusDialog += Lang_GetDryadWorldStatusDialog;
             HookEndpointManager.Add(typeof(TileLoader).GetMethod("MineDamage", BindingFlags.Public|BindingFlags.Static), (hook_MinePower)MineDamage);
 			On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.DrawPlayerInternal += LegacyPlayerRenderer_DrawPlayerInternal;
+			On.Terraria.Projectile.GetWhipSettings += Projectile_GetWhipSettings;
         }
+
+		private void Projectile_GetWhipSettings(On.Terraria.Projectile.orig_GetWhipSettings orig, Projectile proj, out float timeToFlyOut, out int segments, out float rangeMultiplier) {
+			if (proj.ModProjectile is IWhipProjectile whip) {
+                whip.GetWhipSettings(out timeToFlyOut, out segments, out rangeMultiplier);
+			} else {
+                orig(proj, out timeToFlyOut, out segments, out rangeMultiplier);
+			}
+		}
 
 		private void LegacyPlayerRenderer_DrawPlayerInternal(On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.orig_DrawPlayerInternal orig, Terraria.Graphics.Renderers.LegacyPlayerRenderer self, Camera camera, Player drawPlayer, Vector2 position, float rotation, Vector2 rotationOrigin, float shadow, float alpha, float scale, bool headOnly) {
             bool shaded = false;

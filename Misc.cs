@@ -271,6 +271,9 @@ namespace Origins {
     interface IComplexMineDamageTile {
         void MinePower(int i, int j, int minePower, ref int damage);
     }
+    public interface IWhipProjectile {
+        void GetWhipSettings(out float timeToFlyOut, out int segments, out float rangeMultiplier);
+	}
     public static class MeleeCollisionNPCData {
         public static float knockbackMult = 1f;
     }
