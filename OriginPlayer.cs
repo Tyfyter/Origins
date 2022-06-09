@@ -331,14 +331,27 @@ namespace Origins {
                 SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), target.Center);
             }
         }
-		public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-		    if(advancedImaging) {
-                velocity*=1.3f;
+        public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+            if (advancedImaging) {
+                velocity *= 1.3f;
             }
-            if(item.CountsAsClass(DamageClasses.Explosive)) {
-                if(item.useAmmo == 0) {
+            if (item.CountsAsClass(DamageClasses.Explosive)) {
+                if (item.useAmmo == 0 && item.useStyle != ItemUseStyleID.Shoot) {
                     velocity *= explosiveThrowSpeed;
                 }
+            }
+            if (item.shoot > ProjectileID.None && felnumShock > 29) {
+                Projectile p = new Projectile();
+                p.SetDefaults(type);
+                OriginGlobalProj.felnumEffectNext = true;
+                if (p.CountsAsClass(DamageClass.Melee) || p.aiStyle == 60) return;
+                damage += (int)(felnumShock / 15);
+                felnumShock = 0;
+                SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
+            }
+        }
+		public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+            if(item.CountsAsClass(DamageClasses.Explosive)) {
                 if(riftSet) {
                     Fraction dmg = new Fraction(2, 2);
                     int c = (madHand ? 1 : 0) + (Main.rand.NextBool(2)? 1 : 0);
@@ -362,16 +375,6 @@ namespace Origins {
                         rot = -rot;
                     }
                 }
-            }
-            if(item.shoot>ProjectileID.None&&felnumShock>29) {
-                Projectile p = new Projectile();
-                p.SetDefaults(type);
-                OriginGlobalProj.felnumEffectNext = true;
-                if(p.CountsAsClass(DamageClass.Melee) || p.aiStyle == 60)
-                    return true;
-                damage+=(int)(felnumShock/15);
-                felnumShock = 0;
-                SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
             }
             return true;
         }
