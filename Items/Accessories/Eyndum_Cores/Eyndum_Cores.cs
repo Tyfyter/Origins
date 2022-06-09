@@ -1,18 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Accessories.Eyndum_Cores {
-    public abstract class Eyndum_Core : ModItem {
+	public abstract class Eyndum_Core : ModItem {
         public abstract Color CoreGlowColor { get; }
         public override bool CanRightClick() {
             if (Terraria.GameInput.PlayerInput.Triggers.Old.MouseRight) {

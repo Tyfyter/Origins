@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Other.Consumables {
 	public class Fervor_Potion : ModItem {
