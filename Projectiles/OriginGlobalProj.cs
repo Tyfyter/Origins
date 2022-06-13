@@ -58,6 +58,38 @@ namespace Origins.Projectiles {
                 godHunterEffect = godHunterEffectNext;
                 godHunterEffectNext = 0;
             }
+            switch (projectile.type) {
+                case ProjectileID.Grenade:
+                case ProjectileID.BouncyGrenade:
+                case ProjectileID.StickyGrenade:
+                case ProjectileID.PartyGirlGrenade:
+                case ProjectileID.Beenade:
+                case ProjectileID.Bomb:
+                case ProjectileID.BouncyBomb:
+                case ProjectileID.StickyBomb:
+                case ProjectileID.Dynamite:
+                case ProjectileID.BouncyDynamite:
+                case ProjectileID.StickyDynamite:
+                case ProjectileID.BombFish:
+                case ProjectileID.MolotovCocktail:
+                projectile.DamageType = DamageClasses.Explosive;
+                break;
+                case ProjectileID.RocketI:
+                case ProjectileID.RocketII:
+                case ProjectileID.RocketIII:
+                case ProjectileID.RocketIV:
+                case ProjectileID.ProximityMineI:
+                case ProjectileID.ProximityMineII:
+                case ProjectileID.ProximityMineIII:
+                case ProjectileID.ProximityMineIV:
+                case ProjectileID.GrenadeI:
+                case ProjectileID.GrenadeII:
+                case ProjectileID.GrenadeIII:
+                case ProjectileID.GrenadeIV:
+                case ProjectileID.HellfireArrow:
+                projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+                break;
+            }
         }
         public override void OnSpawn(Projectile projectile, IEntitySource source) {
             if(projectile.aiStyle is 16 or 61 or 149) projectile.originalDamage = projectile.damage;

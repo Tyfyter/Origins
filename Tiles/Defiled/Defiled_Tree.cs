@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
+using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
@@ -13,10 +14,15 @@ namespace Origins.Tiles.Defiled
 {
 	public class Defiled_Tree : ModTree {
 		private Mod mod => Origins.instance;
-
         public static Defiled_Tree Instance { get; private set; }
-		public override TreePaintingSettings TreeShaderSettings { get; }
-
+		public override TreePaintingSettings TreeShaderSettings => new TreePaintingSettings();
+		public override void SetStaticDefaults() {
+			GrowsOnTileId = new int[] {
+				ModContent.TileType<Defiled_Grass>(),
+				ModContent.TileType<Defiled_Sand>(),
+				ModContent.TileType<Defiled_Stone>()
+			};
+		}
 		internal static void Load() {
             Instance = new Defiled_Tree();
         }
@@ -33,8 +39,13 @@ namespace Origins.Tiles.Defiled
 			return mod.GetGoreSlot($"Gores/NPCs/DF_Effect_{(Main.rand.NextBool()?"Medium":"Small")}{Main.rand.Next(3)+1}");//adds one because sprites use 1-based indices
 		}
 
+		public override int SaplingGrowthType(ref int style) {
+			style = 0;
+			return ModContent.TileType<Defiled_Tree_Sapling>();
+		}
+
 		public override int DropWood() {
-			return ModContent.ItemType<Defiled_Stone_Item>();//temporary drop type
+			return ModContent.ItemType<Defiled_Stone_Item>();//temporary drop type?
 		}
 
 		public override Asset<Texture2D> GetTexture() {
@@ -46,11 +57,6 @@ namespace Origins.Tiles.Defiled
 
 		public override Asset<Texture2D> GetBranchTextures() {
 			return mod.Assets.Request<Texture2D>("Tiles/Defiled/Defiled_Tree_Branches");
-		}
-		public override void SetStaticDefaults() {
-			GrowsOnTileId = new int[] {
-
-			};
 		}
 
 		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
@@ -72,7 +78,7 @@ namespace Origins.Tiles.Defiled
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
-			TileObjectData.newTile.AnchorValidTiles = new[] { ModContent.TileType<Defiled_Grass>(), ModContent.TileType<Defiled_Sand>() };
+			TileObjectData.newTile.AnchorValidTiles = new[] { ModContent.TileType<Defiled_Grass>(), ModContent.TileType<Defiled_Sand>(), ModContent.TileType<Defiled_Stone>() };
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.DrawFlipHorizontal = true;
 			TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;
@@ -86,11 +92,12 @@ namespace Origins.Tiles.Defiled
 
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Defiled Sapling");
-			//AddMapEntry(new Color(200, 200, 200), name);
-			ModTranslation treeName = CreateMapEntryName();
-			//name.SetDefault("Defiled Tree");
-			//AddMapEntry(new Color(200, 200, 200), treeName);
-            //ModContent.GetModTile(ModContent.TileType("Defiled_Tree"));
+			AddMapEntry(new Color(200, 200, 200), name);
+
+			TileID.Sets.TreeSapling[Type] = true;
+			TileID.Sets.CommonSapling[Type] = true;
+			TileID.Sets.SwaysInWindBasic[Type] = true;
+			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]);
 
 			//sapling = true;
 			AdjTiles = new int[] { TileID.Saplings };

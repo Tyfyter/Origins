@@ -878,7 +878,10 @@ namespace Origins {
                 mod.Logger.Error($"Tried to load gore {mod.Name}/{name} on server");
                 return 0;
 			}
-            return mod.TryFind(name, out ModGore modGore) ? modGore.Type : 0;
+			if (mod.TryFind(name, out ModGore modGore)) {
+                return modGore.Type;
+            }
+            return mod.TryFind(name.Split('/', 3)[^1], out modGore) ? modGore.Type : 0;
 		}
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {

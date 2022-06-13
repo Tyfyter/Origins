@@ -37,6 +37,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override string Texture => "Origins/Items/Weapons/Explosives/Peatball";
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.SnowBallFriendly);
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
             Projectile.penetrate = 1;
             Projectile.width = 12;
             Projectile.height = 12;

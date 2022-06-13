@@ -313,17 +313,6 @@ namespace Origins {
             if(cryostenHelmet)Player.lifeRegenCount+=cryostenLifeRegenCount>0 ? 180 : 1;
         }
         #region attacks
-        public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
-            /*if(fiberglassSet) {
-                damage.Flat+=4;
-            }
-            if(fiberglassDagger) {
-                damage.Flat += 8;
-            }
-            if(rivenSet&&item.CountsAsClass(DamageClass.Summon)&&!ItemChecking) {
-                damage *= rivenMult;
-            }*/
-        }
         public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
             if(felnumShock>29) {
                 damage+=(int)(felnumShock/15);
