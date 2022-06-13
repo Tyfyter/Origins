@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Felnum {
 			damage = damage.MultiplyBonuses(1.5f);
 		}
 	}
-	public class Felnum_Golf_Ball_P : ModProjectile {
+	public class Felnum_Golf_Ball_P : Golf_Ball_Projectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GolfBallDyedBrown;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Golf Ball");
@@ -39,35 +39,8 @@ namespace Origins.Items.Weapons.Felnum {
 		public override void AI() {
 			Lighting.AddLight(Projectile.Center, new Vector3(0, 0.3375f, 1.275f) * (Projectile.velocity.Length() + 4) * 0.1f);
 		}
-		public override bool? CanDamage() {
-			if (Projectile.velocity.LengthSquared() > 4 * 4) {
-				return null;
-			}
-			return false;
-		}
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
 			damage = (int)(damage * Projectile.velocity.Length() * 0.1667f);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-			Vector2 hitbox = Projectile.Hitbox.Center.ToVector2();
-			Vector2 intersect = Rectangle.Intersect(Projectile.Hitbox, target.Hitbox).Center.ToVector2();
-			bool bounced = false;
-			if (hitbox.X != intersect.X) {
-				Projectile.velocity.X = -Projectile.velocity.X;
-				bounced = true;
-			}
-			if (hitbox.Y != intersect.Y) {
-				Projectile.velocity.Y = -Projectile.velocity.Y;
-				bounced = true;
-			}
-			if (!bounced) {
-				if (Math.Abs(Projectile.velocity.X) > Math.Abs(Projectile.velocity.Y)) {
-					Projectile.velocity.X = -Projectile.velocity.X;
-				} else if (Math.Abs(Projectile.velocity.Y) > Math.Abs(Projectile.velocity.X)) {
-					Projectile.velocity.Y = -Projectile.velocity.Y;
-				}
-			}
-		}
 	}
-
 }
