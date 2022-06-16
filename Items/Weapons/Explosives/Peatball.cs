@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Explosives {
 	public class Peatball : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Peat Ball");
+			DisplayName.SetDefault("Peatball");
 			Tooltip.SetDefault("");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
         }
@@ -18,8 +18,8 @@ namespace Origins.Items.Weapons.Explosives {
             Item.CloneDefaults(ItemID.Snowball);
             Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
             //item.maxStack = 999;
-            Item.damage*=3;
-			Item.value+=20;
+            Item.damage*=3;//Needs nerf in accordance to Peatball.html;
+			Item.value+=75;
 			Item.useTime = (int)(Item.useTime*0.75);
 			Item.useAnimation = (int)(Item.useAnimation*0.75);
             Item.shoot = ModContent.ProjectileType<Peatball_P>();

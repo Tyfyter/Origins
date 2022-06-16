@@ -75,7 +75,7 @@ namespace Origins.Items.Materials {
     }
     public class Tree_Sap : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Sap");
+            DisplayName.SetDefault("Tree Sap");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
@@ -95,12 +95,12 @@ namespace Origins.Items.Materials {
     public class Peat_Moss : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Peat Moss");
-            Tooltip.SetDefault("The demolitionist might find this interesting");
+            Tooltip.SetDefault("The Demolitionist might find this interesting...");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = 200;//2 silver
+            Item.value = 300;//3 silver
         }
     }
     public class Felnum_Bar : ModItem {
@@ -251,7 +251,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bleeding Obsidian Shard");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 48;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ShadowScale);

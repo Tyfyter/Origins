@@ -82,7 +82,7 @@ namespace Origins.Items.Weapons.Other {
 					Projectile.ai[0] = -1;
 				}
 			} else {
-				float distanceFromTarget = 480f;
+				float distanceFromTarget = 300f;
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					NPC npc = Main.npc[i];
 					if (npc.CanBeChasedBy() && Projectile.localNPCImmunity[i] <= 0) {

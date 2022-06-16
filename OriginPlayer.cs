@@ -455,7 +455,7 @@ namespace Origins {
                 Player.CheckMana((int)Math.Floor(manaDamage*costMult*costMult2), true);
                 damage = (int)(damage-manaDamage);
                 Player.magicCuffs = false;
-                Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Buff>(), 10);
+                Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Buff>(), 50);
             }else if (reshapingChunk) {
                 damage -= damage / 20;
             }
