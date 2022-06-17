@@ -2,6 +2,7 @@
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Origins.Tiles.Dusk;
+using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
@@ -141,8 +142,8 @@ namespace Origins.Items.Materials {
             );
             recipe.Register();
             recipe = Mod.CreateRecipe(Type);
-            recipe.AddIngredient(ItemID.WaterBottle);
-            recipe.AddIngredient(ModContent.ItemType<Planty_Mush_Item>());
+            recipe.AddIngredient(ItemID.BottledWater);
+            recipe.AddIngredient(ModContent.ItemType<Sulphur_Stone_Item>()); //Forgot to implement Decaying Mush...
             recipe.AddTile(TileID.AlchemyTable);
             recipe.Register();
         }
