@@ -36,5 +36,13 @@ namespace Origins.Items.Weapons.Defiled {
 		    for(int i = 0; i<5; i++)Projectile.NewProjectile(source, position, velocity.RotatedByRandom(i/10f), type, damage, knockback, player.whoAmI);
             return false;
         }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.IllegalGunParts, 3);
+            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 6);
+            recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 3);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
 	}
 }

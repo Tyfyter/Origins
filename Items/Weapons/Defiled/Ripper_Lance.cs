@@ -36,6 +36,13 @@ namespace Origins.Items.Weapons.Defiled {
 		    Projectile.NewProjectile(source, position, velocity.RotatedBy(-0.5f*player.direction), type, damage, knockback, player.whoAmI);
             return false;
         }
+		public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 9);
+            recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 5);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
 	}
     public class Ripper_Lance_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Defiled/Ripper_Lance_P";

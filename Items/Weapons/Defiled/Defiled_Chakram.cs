@@ -30,6 +30,13 @@ namespace Origins.Items.Weapons.Defiled {
         public override bool CanUseItem(Player player) {
             return player.ownedProjectileCounts[Item.shoot]<=0;
         }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 7);
+            recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 4);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
     }
     public class Defiled_Chakram_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Defiled/Defiled_Chakram";

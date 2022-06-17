@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using Origins.Items.Materials;
 
 namespace Origins.Items.Tools {
 	public class Acrid_Hamaxe : ModItem {
@@ -28,6 +29,12 @@ namespace Origins.Items.Tools {
 		}
         public override float UseTimeMultiplier(Player player) {
             return player.wet?1.5f:1;
+        }
+		public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 20);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
 	}
 }

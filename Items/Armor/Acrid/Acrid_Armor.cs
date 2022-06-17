@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using Origins.Items.Materials;
 
 namespace Origins.Items.Armor.Acrid{
     [AutoloadEquip(EquipType.Head)]
@@ -33,6 +34,13 @@ namespace Origins.Items.Armor.Acrid{
                 player.ignoreWater = true;
             }
         }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 15);
+            recipe.AddIngredient(ModContent.ItemType<Rubber>(), 10);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
     }
     [AutoloadEquip(EquipType.Body)]
 	public class Acrid_Breastplate : ModItem {
@@ -47,6 +55,13 @@ namespace Origins.Items.Armor.Acrid{
         public override void UpdateEquip(Player player) {
             player.lifeRegenCount+=2;
         }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 25);
+            recipe.AddIngredient(ModContent.ItemType<Rubber>(), 30);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
 	}
     [AutoloadEquip(EquipType.Legs)]
 	public class Acrid_Greaves : ModItem {
@@ -60,6 +75,13 @@ namespace Origins.Items.Armor.Acrid{
         }
         public override void UpdateEquip(Player player) {
             player.accFlipper = true;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 20);
+            recipe.AddIngredient(ModContent.ItemType<Rubber>(), 20);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
     }
 }
