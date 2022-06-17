@@ -16,6 +16,9 @@ namespace Origins.Items.Weapons {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.DirtGolfBall);
+			Projectile.friendly = true;
+			if (Projectile.damage <= 1) Projectile.damage = 1;
+			if (Projectile.originalDamage <= 1) Projectile.originalDamage = 1;
 		}
 		public override bool? CanDamage() {
 			if (Projectile.velocity.LengthSquared() > 4 * 4) {

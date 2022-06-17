@@ -15,6 +15,7 @@ namespace Origins.Tiles.Defiled {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+            TileID.Sets.Stone[Type] = true;
             TileID.Sets.Conversion.Stone[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			/*Main.tileMergeDirt[Type] = true;

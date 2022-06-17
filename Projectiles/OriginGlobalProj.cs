@@ -92,10 +92,12 @@ namespace Origins.Projectiles {
             }
         }
         public override void OnSpawn(Projectile projectile, IEntitySource source) {
-            if(projectile.aiStyle is 16 or 61 or 149) projectile.originalDamage = projectile.damage;
+            if(projectile.aiStyle is 16 or 61 or 149 && projectile.originalDamage < projectile.damage)
+                projectile.originalDamage = projectile.damage;
         }
         public override void PostAI(Projectile projectile) {
-            if (projectile.aiStyle is 16 or 61 or 149) projectile.damage = projectile.originalDamage;
+            if (projectile.aiStyle is 16 or 61 or 149)
+                projectile.damage = projectile.originalDamage;
         }
         public override void AI(Projectile projectile) {
             switch(projectile.aiStyle) {

@@ -131,47 +131,18 @@ namespace Origins {
             }
         }
         public override void Load() {
-            
-            ExplosiveBaseDamage = new Dictionary<int, int>();
-            //Explosive item types
-            //Explosive projectile & ammo types
-            NonFishItem.ResizeOtherArrays+=() => {
-                /*ExplosiveProjectiles = new bool[ProjectileID.Sets.CanDistortWater.Length];
-                ExplosiveProjectiles[ProjectileID.Grenade] = true;
-                ExplosiveProjectiles[ProjectileID.StickyGrenade] = true;
-                ExplosiveProjectiles[ProjectileID.BouncyGrenade] = true;
-                ExplosiveProjectiles[ProjectileID.Bomb] = true;
-                ExplosiveProjectiles[ProjectileID.StickyBomb] = true;
-                ExplosiveProjectiles[ProjectileID.BouncyBomb] = true;
-                ExplosiveProjectiles[ProjectileID.Dynamite] = true;
-                ExplosiveProjectiles[ProjectileID.StickyDynamite] = true;
-                ExplosiveProjectiles[ProjectileID.BouncyDynamite] = true;
-                ExplosiveProjectiles[ProjectileID.HellfireArrow] = true;
-                ExplosiveProjectiles[ProjectileID.BombFish] = true;
-                ExplosiveProjectiles[ProjectileID.PartyGirlGrenade] = true;
-                ExplosiveProjectiles[ProjectileID.Beenade] = true;
-                ExplosiveProjectiles[ProjectileID.MolotovCocktail] = true;
-                ExplosiveProjectiles[ProjectileID.RocketI] = true;
-                ExplosiveProjectiles[ProjectileID.RocketII] = true;
-                ExplosiveProjectiles[ProjectileID.RocketIII] = true;
-                ExplosiveProjectiles[ProjectileID.RocketIV] = true;
-                ExplosiveProjectiles[ProjectileID.GrenadeI] = true;
-                ExplosiveProjectiles[ProjectileID.GrenadeII] = true;
-                ExplosiveProjectiles[ProjectileID.GrenadeIII] = true;
-                ExplosiveProjectiles[ProjectileID.GrenadeIV] = true;
-                ExplosiveProjectiles[ProjectileID.ProximityMineI] = true;
-                ExplosiveProjectiles[ProjectileID.ProximityMineII] = true;
-                ExplosiveProjectiles[ProjectileID.ProximityMineIII] = true;
-                ExplosiveProjectiles[ProjectileID.ProximityMineIV] = true;*/
 
-                DamageModOnHit = new bool[ProjectileID.Sets.CanDistortWater.Length];
-                DamageModOnHit[ProjectileID.Bomb] = true;
-                DamageModOnHit[ProjectileID.StickyBomb] = true;
-                DamageModOnHit[ProjectileID.BouncyBomb] = true;
-                DamageModOnHit[ProjectileID.BombFish] = true;
-                DamageModOnHit[ProjectileID.Dynamite] = true;
-                DamageModOnHit[ProjectileID.StickyDynamite] = true;
-                DamageModOnHit[ProjectileID.BouncyDynamite] = true;
+            ExplosiveBaseDamage = new Dictionary<int, int>();
+            DamageModOnHit = new bool[ProjectileLoader.ProjectileCount];
+            DamageModOnHit[ProjectileID.Bomb] = true;
+            DamageModOnHit[ProjectileID.StickyBomb] = true;
+            DamageModOnHit[ProjectileID.BouncyBomb] = true;
+            DamageModOnHit[ProjectileID.BombFish] = true;
+            DamageModOnHit[ProjectileID.Dynamite] = true;
+            DamageModOnHit[ProjectileID.StickyDynamite] = true;
+            DamageModOnHit[ProjectileID.BouncyDynamite] = true;
+            NonFishItem.ResizeArrays += () => {
+                Array.Resize(ref DamageModOnHit, ProjectileLoader.ProjectileCount);
             };
             #region vanilla weapon elements
             VanillaElements = ItemID.Sets.Factory.CreateUshortSet(0,
@@ -635,20 +606,20 @@ namespace Origins {
             public static SoundStyle EnergyRipple = SoundID.Item8;
             public static SoundStyle DeepBoom = SoundID.Item14;
         }
-    }
+		public override object Call(params object[] args) {
+			return args[0] switch {
+				"get_explosive_classes_dict" => DamageClasses.ExplosiveVersion,
+				_ => base.Call(args),
+			};
+		}
+	}
     public sealed class NonFishItem : ModItem {
         public override string Texture => "Terraria/Images/Item_2290";
-        public static event Action ResizeItemArrays;
-        public static event Action ResizeOtherArrays;
+        public static event Action ResizeArrays;
         public override bool IsQuestFish() {
-            if(ResizeItemArrays is not null) ResizeItemArrays();
-            ResizeItemArrays = null;
+            if (ResizeArrays is not null) ResizeArrays();
+            ResizeArrays = null;
             return false;
-        }
-        public override void SetStaticDefaults() {
-            if (ResizeOtherArrays is not null) ResizeOtherArrays();
-            ResizeOtherArrays = null;
-            DisplayName.SetDefault("That Which Is Not a Fish");
         }
     }
 }
