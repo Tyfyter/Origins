@@ -9,6 +9,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Origins.Items.Materials;
 using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Riven {
@@ -39,16 +40,18 @@ namespace Origins.Items.Weapons.Riven {
             Item.UseSound = Origins.Sounds.EnergyRipple;
             Item.glowMask = glowmask;
         }
-        public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.Register();
-        }
         public override bool AltFunctionUse(Player player) {
             return true;
         }
         public override bool CanUseItem(Player player) {
             return true;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 5);
+            recipe.AddIngredient(ModContent.ItemType<Riven_Sample>(), 5);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
     }
     public class Seam_Beam_Beam : ModProjectile {

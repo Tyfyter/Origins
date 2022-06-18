@@ -10,7 +10,7 @@ namespace Origins.Items.Armor.Defiled {
     public class Defiled_Helmet : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Helmet");
-            Tooltip.SetDefault("Increases mana regeneration rate");
+            Tooltip.SetDefault("Increased mana regeneration rate");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
@@ -39,7 +39,7 @@ namespace Origins.Items.Armor.Defiled {
     public class Defiled_Breastplate : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Breastplate");
-            Tooltip.SetDefault("5% increased magic damage");
+            Tooltip.SetDefault("10% increased magic damage");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
@@ -48,7 +48,7 @@ namespace Origins.Items.Armor.Defiled {
             Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
-            player.GetAttackSpeed(DamageClass.Magic) += 0.05f;
+            player.GetAttackSpeed(DamageClass.Magic) += 0.1f;
         }
         public override void AddRecipes() {
             Recipe recipe = Mod.CreateRecipe(Type);
