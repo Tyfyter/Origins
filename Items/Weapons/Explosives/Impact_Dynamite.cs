@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Explosives {
 		}
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Dynamite);
-            Projectile.DamageType = DamageClasses.Explosive;
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
             Projectile.penetrate = 1;
             Projectile.timeLeft = 225;
         }

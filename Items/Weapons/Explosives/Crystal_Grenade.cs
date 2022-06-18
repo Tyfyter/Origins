@@ -72,7 +72,7 @@ namespace Origins.Items.Weapons.Explosives {
         #endregion
     }
     public class Crystal_Grenade_P : ModProjectile {
-        public override string Texture => "Origins/Items/Weapons/Explosives/Crystal_Grenade_Blue";
+        public override string Texture => "Origins/Items/Weapons/Explosives/Crystal_Grenade_Purple";
         public static BlendState blendState => new BlendState() {
             ColorSourceBlend = Blend.SourceAlpha,
             AlphaSourceBlend = Blend.One,
@@ -85,7 +85,7 @@ namespace Origins.Items.Weapons.Explosives {
 		}
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Grenade);
-            Projectile.DamageType = DamageClasses.Explosive;
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
             Projectile.timeLeft = 135;
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
@@ -133,20 +133,21 @@ namespace Origins.Items.Weapons.Explosives {
             lightMap.SetData(lightData);
             //mod.Logger.Info("set data");
             Main.spriteBatch.Restart(SpriteSortMode.Immediate);
-            DrawData data2 = new DrawData(Mod.Assets.Request<Texture2D>("Items/Weapons/Explosives/Crystal_Grenade_Purple").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255,255,255,255), Projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
-            //Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(projectile.position);
-            //Origins.perlinFade0.Shader.Parameters["uRotation"].SetValue(-projectile.rotation);
+            DrawData data2 = new DrawData(Mod.Assets.Request<Texture2D>("Items/Weapons/Explosives/Crystal_Grenade_Blue").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255,255,255,255), Projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
+            Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(Projectile.position);
+            Origins.perlinFade0.Shader.Parameters["uRotation"].SetValue(-Projectile.rotation);
             Main.graphics.GraphicsDevice.Textures[1] = lightMap;
             Origins.perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0f);
             Origins.perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.25f);
-            //Origins.perlinFade0.Apply(data2);
+            Origins.perlinFade0.Apply(data2);
+
             DrawData data = new DrawData(Mod.Assets.Request<Texture2D>("Items/Weapons/Explosives/Crystal_Grenade_Pink").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 14, 20), new Color(255,255,255,255), Projectile.rotation, new Vector2(7, 7), Vector2.One, SpriteEffects.None, 0);
-            //Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(projectile.position);
-            //Origins.perlinFade0.Shader.Parameters["uRotation"].SetValue(projectile.rotation);
-            //Main.graphics.GraphicsDevice.Textures[1] = lightMap;
+            Origins.perlinFade0.Shader.Parameters["uOffset"].SetValue(Projectile.position);
+            Origins.perlinFade0.Shader.Parameters["uRotation"].SetValue(Projectile.rotation);
+            Main.graphics.GraphicsDevice.Textures[1] = lightMap;
             Origins.perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.5f);
             Origins.perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.75f);
-            //Origins.perlinFade0.Apply(data);
+            Origins.perlinFade0.Apply(data);
             Main.EntitySpriteDraw(data);
             Main.spriteBatch.Restart();
 		}
@@ -169,7 +170,8 @@ namespace Origins.Items.Weapons.Explosives {
 		}
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.CrystalStorm);
-            Projectile.DamageType = DamageClasses.Explosive;
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
+            Projectile.ArmorPenetration += 4;
             Projectile.aiStyle = 0;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 30+Main.rand.Next(-5,16);

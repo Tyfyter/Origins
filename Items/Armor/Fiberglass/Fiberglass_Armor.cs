@@ -10,7 +10,7 @@ namespace Origins.Items.Armor.Fiberglass {
 			DisplayName.SetDefault("Fiberglass Helmet");
 			Tooltip.SetDefault("This doesn't seem very protective");
 			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
             Item.defense = 5;
@@ -29,34 +29,32 @@ namespace Origins.Items.Armor.Fiberglass {
 	}
     [AutoloadEquip(EquipType.Body)]
 	public class Fiberglass_Body : ModItem {
+		public static int SlotID { get; private set; }
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Pauldrons");
 			Tooltip.SetDefault("These don't seem very protective");
-			ArmorIDs.Body.Sets.HidesTopSkin[Item.bodySlot] = true;
-			ArmorIDs.Body.Sets.HidesBottomSkin[Item.bodySlot] = true;
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			//ArmorIDs.Body.Sets.HidesTopSkin[Item.bodySlot] = true;
+			//ArmorIDs.Body.Sets.HidesBottomSkin[Item.bodySlot] = true;
+			SacrificeTotal = 1;
+			SlotID = Item.bodySlot;
 		}
 		public override void SetDefaults() {
             Item.defense = 6;
 		}
-        public override void UpdateVanity(Player player) {
-            player.GetModPlayer<OriginPlayer>().drawShirt = true;
-        }
 	}
     [AutoloadEquip(EquipType.Legs)]
 	public class Fiberglass_Legs : ModItem {
+		public static int SlotID { get; private set; }
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Boots");
 			Tooltip.SetDefault("These don't seem very protective");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-			ArmorIDs.Legs.Sets.HidesTopSkin[Item.legSlot] = true;
-			ArmorIDs.Legs.Sets.HidesBottomSkin[Item.legSlot] = true;
+			SacrificeTotal = 1;
+			//ArmorIDs.Legs.Sets.HidesTopSkin[Item.legSlot] = true;
+			//ArmorIDs.Legs.Sets.HidesBottomSkin[Item.legSlot] = true;
+			SlotID = Item.legSlot;
 		}
 		public override void SetDefaults() {
             Item.defense = 5;
 		}
-        public override void UpdateVanity(Player player) {
-            player.GetModPlayer<OriginPlayer>().drawPants = true;
-        }
 	}
 }

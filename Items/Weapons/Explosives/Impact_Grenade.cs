@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Explosives {
 		}
 		public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Grenade);
-            Projectile.DamageType = DamageClasses.Explosive;
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
             Projectile.timeLeft = 135;
         }
 		public override bool OnTileCollide(Vector2 oldVelocity) {

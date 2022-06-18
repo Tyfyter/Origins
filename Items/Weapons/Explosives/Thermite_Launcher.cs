@@ -90,7 +90,7 @@ namespace Origins.Items.Weapons.Explosives {
             //Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override void SetDefaults() {
-            Projectile.DamageType = DamageClasses.Explosive;
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
             Projectile.friendly = true;
             Projectile.width = 6;
             Projectile.height = 6;

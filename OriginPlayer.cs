@@ -101,8 +101,6 @@ namespace Origins {
         public bool releaseTriggerSetBonus = false;
         #endregion
 
-        public bool drawShirt = false;
-        public bool drawPants = false;
         public bool itemLayerWrench = false;
         public bool plagueSight = false;
 
@@ -119,10 +117,6 @@ namespace Origins {
             oldBonuses = 0;
             if(fiberglassSet||fiberglassDagger)oldBonuses|=1;
             if(felnumSet)oldBonuses|=2;
-            if(!Player.frozen) {
-                drawShirt = false;
-                drawPants = false;
-            }
             fiberglassSet = false;
             cryostenSet = false;
             cryostenHelmet = false;
@@ -325,7 +319,7 @@ namespace Origins {
                 velocity *= 1.3f;
             }
             if (item.CountsAsClass(DamageClasses.Explosive)) {
-                if (item.useAmmo == 0 && item.useStyle != ItemUseStyleID.Shoot) {
+                if (item.useAmmo == 0 && item.CountsAsClass(DamageClass.Throwing)) {
                     velocity *= explosiveThrowSpeed;
                 }
             }

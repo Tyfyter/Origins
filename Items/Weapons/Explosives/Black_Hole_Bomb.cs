@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Explosives {
         const float dotDivisor = 10;
         const int collapseDur = 10;
         const int totalDur = growDur+collapseDur;
-        public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Bomb";
+        public override string Texture => "Origins/Items/Weapons/Explosives/Black_Hole_Bomb";
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Bomb);
             Projectile.aiStyle = 14;
@@ -51,6 +51,8 @@ namespace Origins.Items.Weapons.Explosives {
             Projectile.scale = 0;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 4;
+            Projectile.width = 26;
+            Projectile.height = 24;
         }
         public override void AI() {
             if(Main.netMode != NetmodeID.Server) {
@@ -143,7 +145,7 @@ namespace Origins.Items.Weapons.Explosives {
             Origins.blackHoleShade.UseSaturation(3f+percent);
             Origins.blackHoleShade.UseColor(0,0,0);
             Origins.blackHoleShade.Shader.Parameters["uScale"].SetValue(0.5f);
-            //Origins.blackHoleShade.Apply(data);
+            Origins.blackHoleShade.Apply(data);
             Main.EntitySpriteDraw(data);
             Main.spriteBatch.Restart();
         }

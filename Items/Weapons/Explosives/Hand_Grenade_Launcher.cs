@@ -109,6 +109,7 @@ namespace Origins.Items.Weapons.Explosives {
         }
     }
     public class Awe_Grenade_P : ModProjectile {
+        Vector2 oldVelocity;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Awe Grenade");
             //Origins.ExplosiveProjectiles[Projectile.type] = true;
@@ -119,11 +120,25 @@ namespace Origins.Items.Weapons.Explosives {
             Projectile.timeLeft = 45;
             Projectile.penetrate = 1;
         }
-        /*public override bool PreKill(int timeLeft) {
+		public override void OnSpawn(IEntitySource source) {
+			oldVelocity = Projectile.velocity;
+		}
+		/*public override bool PreKill(int timeLeft) {
             projectile.type = ProjectileID.Grenade;
             return true;
         }*/
-        public override void Kill(int timeLeft) {
+		public override void AI() {
+            float diff = (Projectile.velocity - oldVelocity).LengthSquared();
+            if (diff > 256) {
+                Projectile.timeLeft = 0;
+                //Projectile.Kill();
+            }
+            oldVelocity = Projectile.velocity;
+        }
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			return true;
+		}
+		public override void Kill(int timeLeft) {
 			/*
             projectile.position.X += projectile.width / 2;
 			projectile.position.Y += projectile.height / 2;
@@ -148,6 +163,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Grenade);
             Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+            Projectile.friendly = true;
             Projectile.hostile = true;
             Projectile.aiStyle = 0;
             Projectile.timeLeft = duration;

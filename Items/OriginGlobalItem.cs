@@ -21,14 +21,14 @@ namespace Origins.Items {
                 case ItemID.Grenade:
                 item.damage = (int)(item.damage*0.8);
                 item.ammo = ItemID.Grenade;
-                item.DamageType = DamageClasses.Explosive;
+                item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
                 break;
                 case ItemID.BouncyGrenade:
                 case ItemID.StickyGrenade:
                 case ItemID.PartyGirlGrenade:
                 case ItemID.Beenade:
                 item.ammo = ItemID.Grenade;
-                item.DamageType = DamageClasses.Explosive;
+                item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
                 break;
 
                 case ItemID.Fireblossom:
@@ -43,7 +43,7 @@ namespace Origins.Items {
                 case ItemID.StickyDynamite:
                 case ItemID.BombFish:
                 case ItemID.MolotovCocktail:
-                item.DamageType = DamageClasses.Explosive;
+                item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
                 break;
                 case ItemID.RocketLauncher:
                 case ItemID.ProximityMineLauncher:

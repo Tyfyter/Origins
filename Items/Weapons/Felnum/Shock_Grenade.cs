@@ -74,6 +74,7 @@ namespace Origins.Items.Weapons.Felnum {
         Vector2 closest;
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Bullet);
+            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
             Projectile.aiStyle = 0;
             Projectile.timeLeft = 3;
             Projectile.width = Projectile.height = 20;

@@ -15,6 +15,9 @@ float2 uImageSize1;
 float2 uOffset;
 float uScale;
 float4 uShaderSpecificData;
+float2 uTargetPosition;
+float4 uLegacyArmorSourceRect;
+float2 uLegacyArmorSheetSize;
 
 float4 BlackHole(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
 	coords-=float2(0.5,0.5);
