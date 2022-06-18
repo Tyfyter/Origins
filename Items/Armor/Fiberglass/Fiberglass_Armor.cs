@@ -32,8 +32,8 @@ namespace Origins.Items.Armor.Fiberglass {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Pauldrons");
 			Tooltip.SetDefault("These don't seem very protective");
-			ArmorIDs.Body.Sets.HidesTopSkin[Item.bodySlot] = false;
-			ArmorIDs.Body.Sets.HidesBottomSkin[Item.bodySlot] = false;
+			ArmorIDs.Body.Sets.HidesTopSkin[Item.bodySlot] = true;
+			ArmorIDs.Body.Sets.HidesBottomSkin[Item.bodySlot] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
@@ -49,6 +49,8 @@ namespace Origins.Items.Armor.Fiberglass {
 			DisplayName.SetDefault("Fiberglass Boots");
 			Tooltip.SetDefault("These don't seem very protective");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			ArmorIDs.Legs.Sets.HidesTopSkin[Item.legSlot] = true;
+			ArmorIDs.Legs.Sets.HidesBottomSkin[Item.legSlot] = true;
 		}
 		public override void SetDefaults() {
             Item.defense = 5;
