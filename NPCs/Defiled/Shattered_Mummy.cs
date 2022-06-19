@@ -19,12 +19,24 @@ namespace Origins.NPCs.Defiled {
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.Zombie);
             NPC.aiStyle = NPCAIStyleID.Fighter;
-            NPC.lifeMax = 110;
-            NPC.defense = 8;
-            NPC.damage = 42;
+            NPC.lifeMax = 180;
+            NPC.defense = 18;
+            NPC.knockBackResist = 0.5f;
+            NPC.damage = 60;
             NPC.width = 32;
             NPC.height = 48;
+            NPC.value = 700;
             NPC.friendly = false;
+            NPC.HitSound = Origins.Sounds.DefiledHurt1;
+            NPC.DeathSound = Origins.Sounds.DefiledKill;
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 10));
+            npcLoot.Add(ItemDropRule.Common(ItemID.Megaphone, 100));
+            npcLoot.Add(ItemDropRule.Common(ItemID.Blindfold, 100));
+            npcLoot.Add(ItemDropRule.Common(ItemID.MummyMask, 75));
+            npcLoot.Add(ItemDropRule.Common(ItemID.MummyShirt, 75));
+            npcLoot.Add(ItemDropRule.Common(ItemID.MummyPants, 75));
         }
         public override void AI() {
             NPC.TargetClosest();
@@ -39,9 +51,6 @@ namespace Origins.NPCs.Defiled {
                 //reset frameCounter so this doesn't trigger every frame after the first time
 				NPC.frameCounter = 0;
 			}
-        }
-        public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Blindfold, 100));
         }
         public override void HitEffect(int hitDirection, double damage) {
             //spawn gore if npc is dead after being hit

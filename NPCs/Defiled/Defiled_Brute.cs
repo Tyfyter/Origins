@@ -8,6 +8,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
+using Origins.Items.Materials;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Brute : ModNPC {
@@ -27,6 +29,13 @@ namespace Origins.NPCs.Defiled {
             NPC.width = 76;
             NPC.height = 66;
             NPC.friendly = false;
+            NPC.HitSound = Origins.Sounds.DefiledHurt1;
+            NPC.DeathSound = Origins.Sounds.DefiledKill;
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bombardment>(), 8));
         }
         public override bool PreAI() {
             //if(!attacking) {

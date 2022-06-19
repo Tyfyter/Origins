@@ -21,7 +21,7 @@ namespace Origins.Items.Tools {
 			Item.height = 34;
 			Item.useTime = 17;
 			Item.useAnimation = 27;
-			Item.knockBack = 4f;
+			Item.knockBack = 4.3f;
 			Item.value = 3600;
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;

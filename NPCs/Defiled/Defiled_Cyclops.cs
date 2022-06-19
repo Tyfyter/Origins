@@ -8,6 +8,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Terraria.Audio;
+using Origins.Items.Materials;
+using Terraria.GameContent.ItemDropRules;
+using Origins.Items.Weapons.Defiled;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Cyclops : ModNPC {
@@ -26,7 +30,13 @@ namespace Origins.NPCs.Defiled {
             NPC.width = 52;
             NPC.height = 66;
             NPC.friendly = false;
-            NPC.scale = 0.9f;
+            NPC.HitSound = Origins.Sounds.DefiledHurt1;
+            NPC.DeathSound = Origins.Sounds.DefiledKill;
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
+            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsExpert(), ModContent.ItemType<Bone_Latcher>(), 8));
         }
         public override void AI() {
             NPC.TargetClosest();

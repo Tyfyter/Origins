@@ -3,6 +3,8 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.GameContent.ItemDropRules;
+using Origins.Items.Materials;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Digger_Head : Defiled_Digger {
@@ -11,6 +13,12 @@ namespace Origins.NPCs.Defiled {
             NPC.lifeMax = 80;
             NPC.defense = 8;
             NPC.damage = 38;
+            NPC.HitSound = Origins.Sounds.DefiledHurt1;
+            NPC.DeathSound = Origins.Sounds.DefiledKill;
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
         }
         public override void OnSpawn(IEntitySource source) {
             NPC.spriteDirection = Main.rand.NextBool() ? 1 : -1;

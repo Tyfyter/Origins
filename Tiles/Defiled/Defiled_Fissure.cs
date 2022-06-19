@@ -33,6 +33,7 @@ namespace Origins.Tiles.Defiled {
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.ShadowOrbs };
             ID = Type;
+            Main.tileFrameCounter[Type] = 4;
 		}
 
         public override bool CanKillTile(int i, int j, ref bool blockDamaged) {

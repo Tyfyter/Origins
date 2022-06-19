@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Origins.Buffs;
+﻿using Origins.Buffs;
+using Origins.Items.Materials;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Accessories {
     public class Cybernetic_Brain : ModItem {
@@ -34,6 +29,14 @@ namespace Origins.Items.Accessories {
             player.buffImmune[BuffID.Weak] = true;
             player.buffImmune[Toxic_Shock_Debuff.ID] = true;
             player.buffImmune[Solvent_Debuff.ID] = true;
+            player.manaRegen += 5;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ModContent.ItemType<Strange_String>(), 8);
+            //recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 6); wheres da FORMIUM
+            recipe.AddTile(TileID.Anvils); //No Omni-Printer
+            recipe.Register();
         }
     }
 }

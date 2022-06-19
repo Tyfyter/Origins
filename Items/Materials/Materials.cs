@@ -589,7 +589,7 @@ namespace Origins.Items.Materials {
     public class Unpowered_Eyndum_Core : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Unpowered Eyndum Core");
-            Tooltip.SetDefault("Limitless potential");
+            Tooltip.SetDefault("'Limitless potential'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 2;
             
         }

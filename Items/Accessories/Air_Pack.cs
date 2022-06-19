@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Origins.Items.Materials;
 
 namespace Origins.Items.Accessories {
 	public class Air_Pack : ModItem {
@@ -18,6 +19,13 @@ namespace Origins.Items.Accessories {
         public override void UpdateEquip(Player player) {
             player.buffImmune[BuffID.Suffocation] = true;
             player.breathMax+=560;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ModContent.ItemType<Adhesive_Wrap>(), 30);
+            recipe.AddIngredient(ModContent.ItemType<Air_Tank>(), 2);
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.Register();
         }
     }
 }

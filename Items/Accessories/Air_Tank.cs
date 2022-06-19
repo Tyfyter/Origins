@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.Items.Materials;
+using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,6 +19,18 @@ namespace Origins.Items.Accessories {
         public override void UpdateEquip(Player player) {
             player.buffImmune[BuffID.Suffocation] = true;
             player.breathMax+=215;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.TitaniumBar, 20);
+            recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+            recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.AdamantiteBar, 20);
+            recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
     }
 }

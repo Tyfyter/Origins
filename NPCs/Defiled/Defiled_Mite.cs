@@ -27,6 +27,8 @@ namespace Origins.NPCs.Defiled {
             NPC.width = 34;
             NPC.height = 26;
             NPC.friendly = false;
+            NPC.HitSound = Origins.Sounds.DefiledHurt1;
+            NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
         public override bool PreAI() {
             NPC.TargetClosest();

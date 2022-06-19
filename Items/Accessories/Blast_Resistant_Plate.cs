@@ -1,5 +1,7 @@
-﻿using Terraria;
+﻿using Origins.Items.Materials;
+using Terraria;
 using Terraria.GameContent.Creative;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
@@ -14,6 +16,18 @@ namespace Origins.Items.Accessories {
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().explosiveSelfDamage-=0.2f;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.TitaniumBar, 10);
+            recipe.AddIngredient(ItemID.Obsidian, 20);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+            recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.AdamantiteBar, 10);
+            recipe.AddIngredient(ItemID.Obsidian, 20);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
     }
 }

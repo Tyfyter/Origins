@@ -283,6 +283,10 @@ namespace Origins {
             Sounds.HeavyCannon = new SoundStyle("Origins/Sounds/Custom/HeavyCannon", SoundType.Sound);
             Sounds.EnergyRipple = new SoundStyle("Origins/Sounds/Custom/EnergyRipple", SoundType.Sound);
             Sounds.DeepBoom = new SoundStyle("Origins/Sounds/Custom/DeepBoom", SoundType.Sound);
+            Sounds.DefiledIdle1 = new SoundStyle("Origins/Sounds/Custom/Defiled_Idle2", SoundType.Sound);
+            Sounds.DefiledIdle2 = new SoundStyle("Origins/Sounds/Custom/Defiled_Idle3", SoundType.Sound);
+            Sounds.DefiledHurt1 = new SoundStyle("Origins/Sounds/Custom/Defiled_Hurt", new int[] { 1, 2 }, SoundType.Sound);
+            Sounds.DefiledKill = new SoundStyle("Origins/Sounds/Custom/Defiled_Kill1", SoundType.Sound);
             //OriginExtensions.initClone();
             Music.Dusk = MusicID.Eerie;
             Music.Defiled = MusicID.Corruption;
@@ -597,14 +601,19 @@ namespace Origins {
             public static int Dusk = MusicID.Eerie;
             public static int Defiled = MusicID.Corruption;
             public static int UndergroundDefiled = MusicID.UndergroundCorruption;
-            public static int Riven = MusicID.Corruption;
-            public static int UndergroundRiven = MusicID.UndergroundCorruption;
+            public static int Riven = MusicID.Crimson;
+            public static int UndergroundRiven = MusicID.UndergroundCrimson;
         }
         public static class Sounds {
             public static SoundStyle Krunch = SoundID.Item36;
             public static SoundStyle HeavyCannon = SoundID.Item36;
             public static SoundStyle EnergyRipple = SoundID.Item8;
             public static SoundStyle DeepBoom = SoundID.Item14;
+            public static SoundStyle DefiledIdle1 = SoundID.Item36;
+            public static SoundStyle DefiledIdle2 = SoundID.Item36;
+            public static SoundStyle DefiledHurt1 = SoundID.Item36;
+            public static SoundStyle DefiledHurt2 = SoundID.Item36;
+            public static SoundStyle DefiledKill = SoundID.Item36;
         }
 		public override object Call(params object[] args) {
 			return args[0] switch {

@@ -18,6 +18,7 @@ using Origins.World.BiomeData;
 using Origins.Buffs;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Tiles.Riven;
+using Origins.Items.Accessories;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
@@ -25,10 +26,41 @@ namespace Origins.NPCs {
 			if (Rasterized_Debuff.ID != -1) npc.buffImmune[Rasterized_Debuff.ID] = npc.buffImmune[BuffID.Confused];
 		}
 		public override void SetupShop(int type, Chest shop, ref int nextSlot) {
-			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 20) {
+			//Demo-man
+			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 0) {
+				shop.item[nextSlot++].SetDefaults(ItemID.ExplosivePowder);
+			}
+			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 5) {
+				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Peatball>());
+			}
+			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 10) {
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
+			}
+			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 20) {
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
+			}
+			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 35) {
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
+			}
+			//if statment for Hardmode here
+			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 50) {
+				//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Mortar_Shell>());
+			}
+			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 75) {
+				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Acid_Grenade>());
+			}
+			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 100) {
+				//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Acid_Bomb>());
+			}
+			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 120) {
+				//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Nade_O_Plenty>());
+			}
+			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 999) {
+				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Caustica>());
+			}
+			//Cyborg
+			if (type == NPCID.Cyborg && ModContent.GetInstance<OriginSystem>().peatSold >= 0) {
+				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Advanced_Imaging>());
 			}
 		}
 		public override bool PreAI(NPC npc) {
