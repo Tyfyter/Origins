@@ -283,9 +283,9 @@ namespace Origins {
             Sounds.HeavyCannon = new SoundStyle("Origins/Sounds/Custom/HeavyCannon", SoundType.Sound);
             Sounds.EnergyRipple = new SoundStyle("Origins/Sounds/Custom/EnergyRipple", SoundType.Sound);
             Sounds.DeepBoom = new SoundStyle("Origins/Sounds/Custom/DeepBoom", SoundType.Sound);
-            Sounds.DefiledIdle = new SoundStyle("Origins/Sounds/Custom/Defiled_Idle", new int[] { 2, 3 }, SoundType.Sound).WithVolume(0.5f).WithPitchRange(0.9f, 1.1f);
-            Sounds.DefiledHurt = new SoundStyle("Origins/Sounds/Custom/Defiled_Hurt", new int[] { 1, 2 }, SoundType.Sound).WithVolume(0.5f).WithPitchRange(0.9f, 1.1f);
-            Sounds.DefiledKill = new SoundStyle("Origins/Sounds/Custom/Defiled_Kill1", SoundType.Sound).WithVolume(0.5f).WithPitchRange(0.9f, 1.1f);
+            Sounds.DefiledIdle = new SoundStyle("Origins/Sounds/Custom/Defiled_Idle", new int[] { 2, 3 }, SoundType.Sound).WithVolume(0.4f).WithPitchRange(0.9f, 1.1f);
+            Sounds.DefiledHurt = new SoundStyle("Origins/Sounds/Custom/Defiled_Hurt", new int[] { 1, 2 }, SoundType.Sound).WithVolume(0.4f).WithPitchRange(0.9f, 1.1f);
+            Sounds.DefiledKill = new SoundStyle("Origins/Sounds/Custom/Defiled_Kill1", SoundType.Sound).WithVolume(0.4f).WithPitchRange(0.9f, 1.1f);
             //OriginExtensions.initClone();
             Music.Dusk = MusicID.Eerie;
             Music.Defiled = MusicID.Corruption;
