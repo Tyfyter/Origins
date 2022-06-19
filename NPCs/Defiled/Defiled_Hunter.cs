@@ -3,6 +3,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -26,7 +27,7 @@ namespace Origins.NPCs.Defiled {
             NPC.width = 32;
             NPC.noGravity = false;
             NPC.noTileCollide = false;
-            NPC.HitSound = Origins.Sounds.DefiledHurt1;
+            NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
         public override bool PreAI() {
@@ -66,7 +67,8 @@ namespace Origins.NPCs.Defiled {
             if (Main.npc[last].ModNPC is Defiled_Hunter lastBody) lastBody.ai[0] = current;
         }
 		public override void AI() {
-            if(Main.netMode != NetmodeID.MultiplayerClient) {
+            if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);
+            if (Main.netMode != NetmodeID.MultiplayerClient) {
                 NPC.oldPosition = NPC.position;
                 if(NPC.collideY) {
                     NPC.rotation = NPC.velocity.ToRotation();
@@ -114,6 +116,8 @@ namespace Origins.NPCs.Defiled {
             NPC.width = 32;
             NPC.noGravity = false;
             NPC.noTileCollide = false;
+            NPC.HitSound = Origins.Sounds.DefiledHurt;
+            NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
         public override void FindFrame(int frameHeight) {
             if(++NPC.frameCounter>animationTime) {
@@ -131,6 +135,8 @@ namespace Origins.NPCs.Defiled {
             NPC.width = 32;
             NPC.noGravity = false;
             NPC.noTileCollide = false;
+            NPC.HitSound = Origins.Sounds.DefiledHurt;
+            NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
         public override void FindFrame(int frameHeight) {
             NPC.frame = new Rectangle(0, 0, 32, 30);

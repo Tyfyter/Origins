@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Materials;
+using Terraria.Audio;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Brute : ModNPC {
@@ -29,8 +30,8 @@ namespace Origins.NPCs.Defiled {
             NPC.width = 76;
             NPC.height = 66;
             NPC.friendly = false;
-            NPC.HitSound = Origins.Sounds.DefiledHurt1;
-            NPC.DeathSound = Origins.Sounds.DefiledKill;
+            NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
+            NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
@@ -38,6 +39,7 @@ namespace Origins.NPCs.Defiled {
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bombardment>(), 8));
         }
         public override bool PreAI() {
+            if (Main.rand.NextBool(1000)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(0.5f, 0.75f), NPC.Center);
             //if(!attacking) {
                 if(NPC.collideY&&Math.Sign(NPC.velocity.X)==NPC.direction)NPC.velocity.X/=speedMult;
                 //npc.Hitbox = new Rectangle((int)npc.position.X+(npc.oldDirection == 1 ? 70 : 52), (int)npc.position.Y, 56, npc.height);

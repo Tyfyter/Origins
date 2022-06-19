@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Materials;
+using Terraria.Audio;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Flyer : ModNPC {
@@ -26,7 +27,7 @@ namespace Origins.NPCs.Defiled {
             NPC.height = 38;
             NPC.friendly = false;
             NPC.lifeRegen = 4;
-            NPC.HitSound = Origins.Sounds.DefiledHurt1;
+            NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
@@ -35,6 +36,7 @@ namespace Origins.NPCs.Defiled {
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Krunch_Mix>(), 6));
         }
         public override void AI() {
+            if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.1f), NPC.Center);
             NPC.FaceTarget();
             if(!NPC.HasValidTarget)NPC.direction = Math.Sign(NPC.velocity.X);
             NPC.spriteDirection = NPC.direction;

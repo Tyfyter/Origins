@@ -462,10 +462,10 @@ namespace Origins {
         public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
             if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {
                 OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
-                if (originWorld.peatSold < 20) {
-                    if (item.stack >= 20 - originWorld.peatSold) {
-                        item.stack -= 20 - originWorld.peatSold;
-                        originWorld.peatSold = 20;
+                if (originWorld.peatSold < 999) {
+                    if (item.stack >= 999 - originWorld.peatSold) {
+                        item.stack -= 999 - originWorld.peatSold;
+                        originWorld.peatSold = 999;
                         int nextSlot = 0;
                         for (; ++nextSlot < shopInventory.Length && !shopInventory[nextSlot].IsAir;);
                         if (nextSlot < shopInventory.Length) shopInventory[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());

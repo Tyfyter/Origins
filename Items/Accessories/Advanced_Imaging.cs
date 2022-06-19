@@ -9,12 +9,12 @@ namespace Origins.Items.Accessories {
             DisplayName.SetDefault("Advanced Imaging");
             Tooltip.SetDefault("Increased projectile speed\nImmunity to Confusion\n\"The future is now\"");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
-            Item.value = 200000; //PPGGSSCC
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.YoYoGlove);
             Item.handOffSlot = -1;
             Item.handOnSlot = -1;
+            Item.value = 200000; //PPGGSSCC
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().advancedImaging = true;

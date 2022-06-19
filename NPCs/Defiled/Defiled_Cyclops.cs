@@ -30,7 +30,7 @@ namespace Origins.NPCs.Defiled {
             NPC.width = 52;
             NPC.height = 66;
             NPC.friendly = false;
-            NPC.HitSound = Origins.Sounds.DefiledHurt1;
+            NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
@@ -39,6 +39,7 @@ namespace Origins.NPCs.Defiled {
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsExpert(), ModContent.ItemType<Bone_Latcher>(), 8));
         }
         public override void AI() {
+            if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);
             NPC.TargetClosest();
             if (NPC.HasPlayerTarget) {
                 NPC.FaceTarget();

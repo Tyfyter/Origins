@@ -31,10 +31,11 @@ namespace Origins.NPCs.Defiled {
             NPC.height = 98;
             NPC.scale = 0.85f;
             NPC.friendly = false;
-            NPC.HitSound = Origins.Sounds.DefiledHurt1;
+            NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
         public override void AI() {
+            if (Main.rand.NextBool(400)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);
             NPC.TargetClosest();
             if (NPC.HasPlayerTarget) {
                 NPC.FaceTarget();

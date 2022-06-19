@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Audio;
 
 namespace Origins.NPCs.Defiled {
     public class Shattered_Mummy : ModNPC {
@@ -27,18 +28,19 @@ namespace Origins.NPCs.Defiled {
             NPC.height = 48;
             NPC.value = 700;
             NPC.friendly = false;
-            NPC.HitSound = Origins.Sounds.DefiledHurt1;
+            NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 10));
-            npcLoot.Add(ItemDropRule.Common(ItemID.Megaphone, 100));
-            npcLoot.Add(ItemDropRule.Common(ItemID.Blindfold, 100));
+            npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Megaphone, 100));
+            npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Blindfold, 100));
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyMask, 75));
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyShirt, 75));
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyPants, 75));
         }
         public override void AI() {
+            if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);
             NPC.TargetClosest();
             if (NPC.HasPlayerTarget) {
                 NPC.FaceTarget();

@@ -13,7 +13,7 @@ namespace Origins.NPCs.Defiled {
             NPC.lifeMax = 80;
             NPC.defense = 8;
             NPC.damage = 38;
-            NPC.HitSound = Origins.Sounds.DefiledHurt1;
+            NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {

@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Terraria.Audio;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Mite : ModNPC {
@@ -27,10 +28,11 @@ namespace Origins.NPCs.Defiled {
             NPC.width = 34;
             NPC.height = 26;
             NPC.friendly = false;
-            NPC.HitSound = Origins.Sounds.DefiledHurt1;
+            NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
         public override bool PreAI() {
+            if (NPC.HasPlayerTarget && Main.rand.NextBool(600)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1.1f, 1.5f), NPC.Center);
             NPC.TargetClosest();
             NPC.aiStyle = NPC.HasPlayerTarget ? NPCAIStyleID.Fighter : NPCAIStyleID.None;
             if(((NPC.Center-NPC.targetRect.Center.ToVector2())*new Vector2(1,2)).Length()>aggroRange) {
