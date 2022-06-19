@@ -30,7 +30,7 @@ namespace Origins.Items.Materials {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Acrid Bar");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
-            //Tooltip.SetDefault();
+            
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
@@ -54,7 +54,7 @@ namespace Origins.Items.Materials {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Adhesive Wrap");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
-            //Tooltip.SetDefault();
+            
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
@@ -94,7 +94,7 @@ namespace Origins.Items.Materials {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bat Hide");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
-            //Tooltip.SetDefault();
+            
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
@@ -148,6 +148,50 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
+    public class Busted_Servo : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Busted Servo");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+    }
+    public class Conductor_Rod : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Conductor Rod");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.CopperBar, 3);
+            recipe.AddTile(TileID.Anvils); //Fabricator not implemented yet
+            recipe.Register();
+        }
+    }
+    public class Chromtain_Bar : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Chromtain Bar");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.SoulofMight, 10);
+            recipe.AddIngredient(ItemID.FragmentSolar, 4);
+            recipe.AddIngredient(ItemID.LunarBar, 4); //Formium not implemented
+            recipe.AddTile(TileID.Anvils); //Omni-Printer also not implemented
+            recipe.Register();
+        }
+    }
     public class Defiled_Bar : ModItem {
         //add lore here
         public override void SetStaticDefaults() {
@@ -176,6 +220,25 @@ namespace Origins.Items.Materials {
 			Item.maxStack = 99;
         }
     }
+    public class Element36_Bundle : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Element-36 Bundle");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.FragmentNebula, 2);
+            recipe.AddIngredient(ItemID.FragmentStardust, 2);
+            recipe.AddIngredient(ItemID.LunarBar, 4); //Formium not implemented
+            recipe.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 4);
+            recipe.AddTile(TileID.Anvils); //Omni-Printer also not implemented
+            recipe.Register();
+        }
+    }
     public class Ember_Onyx : ModItem {
         //add lore here
         public override void SetStaticDefaults() {
@@ -184,6 +247,25 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+        }
+    }
+    public class Eyndum_Bar : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Eyndum Bar");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.GoldBar, 2);
+            recipe.AddIngredient(ItemID.FragmentVortex, 4);
+            recipe.AddIngredient(ModContent.ItemType<Void_Spark>(), 6);
+            recipe.AddIngredient(ItemID.LunarBar, 4); //Formium not implemented
+            recipe.AddTile(TileID.Anvils); //Omni-Printer also not implemented, still maybe a unique forge and dimension
+            recipe.Register();
         }
     }
     public class Felnum_Bar : ModItem {
@@ -206,6 +288,16 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
+    public class Fibron_Plating : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Fibron Plating");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+    }
     public class Infested_Bar : ModItem {
         //add lore here
         public override void SetStaticDefaults() {
@@ -222,14 +314,41 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
+    public class Lunar_Token : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Lunar Token");
+            Tooltip.SetDefault("Valuable to the demented.");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+    }
     public class Shaping_Matter : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Meta Gel");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
-            //Tooltip.SetDefault();
+            
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
+        }
+    }
+    public class Modular_Plating : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Modular Plating");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+            
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.HallowedBar, 6);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
     }
     public class Peat_Moss : ModItem {
@@ -249,11 +368,28 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
+    public class Power_Core : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Power Core");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 99;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.HallowedBar, 4);
+            recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 8);
+            recipe.AddIngredient(ModContent.ItemType<Conductor_Rod>(), 2);
+            recipe.AddTile(TileID.Anvils); //Fabricator not implemented yet
+            recipe.Register();
+        }
+    }
     public class Rivenform : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Rivenform");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
-            //Tooltip.SetDefault();
+            
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
@@ -281,6 +417,23 @@ namespace Origins.Items.Materials {
             Item.maxStack = 99;
         }
     }
+    public class Rotor : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type, 5);
+            recipe.AddIngredient(ModContent.ItemType<Silicon_Wafer>(), 2);
+            recipe.AddIngredient(ModContent.ItemType<Conductor_Rod>(), 2);
+            recipe.AddIngredient(ItemID.HallowedBar, 2);
+            recipe.AddTile(TileID.Anvils); //Fabricator not implemented yet
+            recipe.Register();
+        }
+    }
     public class Rubber : ModItem {
         public override void SetStaticDefaults() {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
@@ -304,6 +457,45 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
+    public class Space_Goo : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Space Goo");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+            
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+    }
+    public class Space_Rock : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Space Rock");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+            
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+    }
+    public class Stellar_Spark : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Stellar Spark");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.FallenStar, 12);
+            recipe.AddIngredient(ItemID.FragmentSolar, 2);
+            recipe.AddIngredient(ItemID.FragmentStardust, 2);
+            recipe.AddIngredient(ModContent.ItemType<Lunar_Token>());
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
+    }
     public class Strange_String : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Strange String");
@@ -312,6 +504,41 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetDefaults() {
             Item.maxStack = 99;
+        }
+    }
+    public class Superconductor : ModItem {
+        public override void SetStaticDefaults() {
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+            
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 99;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type, 3);
+            recipe.AddIngredient(ItemID.GoldBar, 7);
+            recipe.AddIngredient(ItemID.LunarBar, 3); //No Formium Bar
+            recipe.AddIngredient(ModContent.ItemType<Conductor_Rod>(), 5);
+            recipe.AddIngredient(ModContent.ItemType<Rubber>(), 20);
+            recipe.AddTile(TileID.Anvils); //No Omni-Printer
+            recipe.Register();
+        }
+    }
+    public class Thruster_Component : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Thruster Component");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+            
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type, 2);
+            recipe.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 8);
+            recipe.AddIngredient(ModContent.ItemType<Space_Goo>(), 4);
+            recipe.AddTile(TileID.Anvils); //No Omni-Printer
+            recipe.Register();
         }
     }
     public class Tree_Sap : ModItem {
@@ -359,6 +586,25 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
+    public class Unpowered_Eyndum_Core : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Unpowered Eyndum Core");
+            Tooltip.SetDefault("Limitless potential");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 2;
+            
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 8;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ModContent.ItemType<Superconductor>(), 10);
+            recipe.AddIngredient(ModContent.ItemType<Eyndum_Bar>(), 8);
+            recipe.AddIngredient(ItemID.LunarBar, 4); //Formium Bar
+            recipe.AddTile(TileID.Anvils); //No Omni-Printer
+            recipe.Register();
+        }
+    }
     public class Valkyrum_Bar : ModItem {
         //Alloy of Felnum and Angelium
         public override void SetStaticDefaults() {
@@ -385,6 +631,30 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.ChlorophyteOre, 3); //Need Taranum
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
+    }
+    public class Void_Spark : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Void Spark");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.FragmentVortex, 4);
+            recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 12);
+            recipe.AddIngredient(ModContent.ItemType<Lunar_Token>());
+            recipe.AddTile(TileID.Anvils); //You guessed it, no Omni-Printer
+            recipe.Register();
         }
     }
     public class Wilting_Rose_Item : ModItem {

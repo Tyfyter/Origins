@@ -32,15 +32,15 @@ namespace Origins.Items.Armor.Celestine {
 	public class Celestine_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Celestine Breastplate");
-			Tooltip.SetDefault("20% increased melee and magic damage");
+			Tooltip.SetDefault("15% increased melee and magic damage");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 		public override void SetDefaults() {
             Item.defense = 24;
 		}
         public override void UpdateEquip(Player player) {
-            player.GetDamage(DamageClass.Melee) += 0.2f;
-            player.GetDamage(DamageClass.Magic) += 0.2f;
+            player.GetDamage(DamageClass.Melee) += 0.15f;
+            player.GetDamage(DamageClass.Magic) += 0.15f;
         }
 	}
     [AutoloadEquip(EquipType.Legs)]
@@ -131,10 +131,10 @@ namespace Origins.Items.Armor.Celestine {
     public class Celestine_Damage_Boost_Buff : ModBuff {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Celestine Damage Boost");
-            Description.SetDefault("25% increased damage");
+            Description.SetDefault("15% increased damage");
         }
         public override void Update(Player player, ref int buffIndex) {
-            player.GetDamage(DamageClass.Generic) *= 1.25f;
+            player.GetDamage(DamageClass.Generic) *= 1.15f;
         }
     }
 }

@@ -11,6 +11,7 @@ using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
 using Terraria.Graphics.Shaders;
 using Terraria.DataStructures;
+using Origins.Items.Materials;
 using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
@@ -38,6 +39,14 @@ namespace Origins.Items.Weapons.Explosives {
 			//type = item.shoot+(type-item.shoot)/3;
             Projectile.NewProjectile(source, position, velocity, Item.shoot, damage, knockback, player.whoAmI, 0, type-Item.shoot+ProjectileID.RocketI);
             return false;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ItemID.ExplosivePowder, 10);
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 25);
+            recipe.AddIngredient(ModContent.ItemType<Space_Goo>(), 15);
+            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.Register();
         }
     }
     public class Fallout_P1 : ModProjectile {
