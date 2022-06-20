@@ -187,7 +187,7 @@ namespace Origins.Items.Materials {
             Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ItemID.SoulofMight, 10);
             recipe.AddIngredient(ItemID.FragmentSolar, 4);
-            recipe.AddIngredient(ItemID.LunarBar, 4); //Formium not implemented
+            recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
             recipe.AddTile(TileID.Anvils); //Omni-Printer also not implemented
             recipe.Register();
         }
@@ -233,7 +233,7 @@ namespace Origins.Items.Materials {
             Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ItemID.FragmentNebula, 2);
             recipe.AddIngredient(ItemID.FragmentStardust, 2);
-            recipe.AddIngredient(ItemID.LunarBar, 4); //Formium not implemented
+            recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
             recipe.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 4);
             recipe.AddTile(TileID.Anvils); //Omni-Printer also not implemented
             recipe.Register();
@@ -263,7 +263,7 @@ namespace Origins.Items.Materials {
             recipe.AddIngredient(ItemID.GoldBar, 2);
             recipe.AddIngredient(ItemID.FragmentVortex, 4);
             recipe.AddIngredient(ModContent.ItemType<Void_Spark>(), 6);
-            recipe.AddIngredient(ItemID.LunarBar, 4); //Formium not implemented
+            recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
             recipe.AddTile(TileID.Anvils); //Omni-Printer also not implemented, still maybe a unique forge and dimension
             recipe.Register();
         }
@@ -292,6 +292,31 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Fibron Plating");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+    }
+    public class Formium_Bar : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Formium Bar");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Mod.CreateRecipe(Type);
+            recipe.AddIngredient(ModContent.ItemType<Formium_Scrap>(), 6);
+            recipe.Register();
+        }
+    }
+    public class Formium_Scrap : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Formium Scrap");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
@@ -517,7 +542,7 @@ namespace Origins.Items.Materials {
         public override void AddRecipes() {
             Recipe recipe = Mod.CreateRecipe(Type, 3);
             recipe.AddIngredient(ItemID.GoldBar, 7);
-            recipe.AddIngredient(ItemID.LunarBar, 3); //No Formium Bar
+            recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 3);
             recipe.AddIngredient(ModContent.ItemType<Conductor_Rod>(), 5);
             recipe.AddIngredient(ModContent.ItemType<Rubber>(), 20);
             recipe.AddTile(TileID.Anvils); //No Omni-Printer
@@ -600,7 +625,7 @@ namespace Origins.Items.Materials {
             Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Superconductor>(), 10);
             recipe.AddIngredient(ModContent.ItemType<Eyndum_Bar>(), 8);
-            recipe.AddIngredient(ItemID.LunarBar, 4); //Formium Bar
+            recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
             recipe.AddTile(TileID.Anvils); //No Omni-Printer
             recipe.Register();
         }

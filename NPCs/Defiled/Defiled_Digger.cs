@@ -98,9 +98,11 @@ namespace Origins.NPCs.Defiled {
         }
 
         public override void AI() {
-            NPC head = Main.npc[NPC.realLife];
-            NPC.life = head.active ? NPC.lifeMax : 0;
-            NPC.immune = head.immune;
+            if (NPC.realLife != NPC.whoAmI) {
+                NPC head = Main.npc[NPC.realLife];
+                NPC.life = head.active ? NPC.lifeMax : 0;
+                NPC.immune = head.immune;
+            }
         }
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
             if(NPC.realLife!=NPC.whoAmI) {
