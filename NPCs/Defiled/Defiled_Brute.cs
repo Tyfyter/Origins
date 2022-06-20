@@ -11,6 +11,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Materials;
 using Terraria.Audio;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Brute : ModNPC {
@@ -33,7 +34,10 @@ namespace Origins.NPCs.Defiled {
             NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
             NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
         }
-        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			//bestiaryEntry.AddTags();
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bombardment>(), 8));
