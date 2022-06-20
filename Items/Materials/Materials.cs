@@ -112,9 +112,6 @@ namespace Origins.Items.Materials {
             DisplayName.SetDefault("Bleeding Obsidian Shard");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 48;
         }
-        public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.ShadowScale);
-        }
         public override void AddRecipes() {
             Recipe recipe = Mod.CreateRecipe(ModContent.ItemType<Bleeding_Obsidian_Item>());
             recipe.AddIngredient(this, 6);
@@ -129,9 +126,6 @@ namespace Origins.Items.Materials {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Brine Sample");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
-        }
-        public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.ShadowScale);
         }
         public override void AddRecipes() {
             Recipe recipe = Mod.CreateRecipe(Type);
@@ -524,6 +518,7 @@ namespace Origins.Items.Materials {
     public class Strange_String : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Strange String");
+            Tooltip.SetDefault("'Involuntary neurectomy'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         //add lore here
