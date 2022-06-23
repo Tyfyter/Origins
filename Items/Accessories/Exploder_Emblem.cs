@@ -23,7 +23,23 @@ namespace Origins.Items.Accessories {
             Item.height = 28;
         }
         public override void UpdateEquip(Player player) {
-            //player.GetModPlayer<OriginPlayer>().explosiveDamage -= 0.2f;
+            //GetDamage returns a reference, so you can do this despite it not normally being possible to assign to a method's return value
+            player.GetDamage(DamageClasses.Explosive) += 0.15f;
+            //that reference is to a StatModifier, which is basically just:
+            //Additive percent bonuses (use +=),
+            //Multiplicative percent bonuses (use *=),
+            //Base damage bonuses (assign to .Base, generally stick to addition/subtraction, applied before percent bonuses), and
+            //Flat damage bonuses (assign to .Flat, generally stick to addition/subtraction, applied after percent bonuses)
+            //all combined into one
         }
-    }
+		public override void AddRecipes() {
+			Recipe recipe = Mod.CreateRecipe(ItemID.AvengerEmblem);
+            recipe.AddIngredient(Type);
+            recipe.AddIngredient(ItemID.SoulofMight, 5);
+            recipe.AddIngredient(ItemID.SoulofSight, 5);
+            recipe.AddIngredient(ItemID.SoulofFright, 5);
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.Register();
+		}
+	}
 }

@@ -13,6 +13,9 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
+using Origins.NPCs;
+using Origins.Items.Accessories;
+using Origins.Tiles.Riven;
 
 namespace Origins.Items {
     public class OriginGlobalItem : GlobalItem {
@@ -138,7 +141,55 @@ namespace Origins.Items {
                 Mod.Logger.Error(e);
             }
         }
-        [Obsolete]
+		public override void OnSpawn(Item item, IEntitySource source) {
+            if (source is EntitySource_ItemOpen) {
+				switch (item.type) {
+                    case ItemID.WarriorEmblem:
+                    case ItemID.RangerEmblem:
+                    case ItemID.SorcererEmblem:
+                    case ItemID.SummonerEmblem:
+					if (Main.rand.NextBool(OriginGlobalNPC.woFEmblemsCount)) {
+                        int prefix = item.prefix;
+                        item.SetDefaults(ModContent.ItemType<Exploder_Emblem>());
+                        item.Prefix(prefix);
+                    }
+                    break;
+
+                    case ItemID.DemoniteOre:
+                    case ItemID.CrimtaneOre: {
+                        int stack = item.stack;
+                        switch (OriginSystem.WorldEvil) {
+                            case OriginSystem.evil_wastelands:
+                            item.SetDefaults(ModContent.ItemType<Defiled_Ore_Item>());
+                            break;
+
+                            case OriginSystem.evil_riven:
+                            item.SetDefaults(ModContent.ItemType<Infested_Ore_Item>());
+                            break;
+                        }
+                        item.stack = stack;
+                    }
+                    break;
+
+                    case ItemID.CorruptSeeds:
+                    case ItemID.CrimsonSeeds: {
+                        int stack = item.stack;
+                        switch (OriginSystem.WorldEvil) {
+                            case OriginSystem.evil_wastelands:
+                            item.SetDefaults(ModContent.ItemType<Defiled_Grass_Seeds>());
+                            break;
+
+                            case OriginSystem.evil_riven:
+                            //item.type = ModContent.ItemType<Defiled_Grass_Seeds>();
+                            break;
+                        }
+                        item.stack = stack;
+                    }
+                break;
+                }
+            }
+		}
+		[Obsolete]
         public static bool NeedsDamageLine(Item item) {
             return false;//!(item.melee||item.ranged||item.magic||item.summon||item.thrown);
         }

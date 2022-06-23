@@ -74,6 +74,23 @@ namespace Origins {
             celestineBoosters = new int[3];
         }
         public override void AddRecipes() {
+            Recipe recipe = CreateRecipe(ItemID.MiningHelmet);
+            recipe.AddIngredient(ItemID.Glowstick, 4);
+            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 7);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+
+            recipe = CreateRecipe(ItemID.MiningShirt);
+            recipe.AddIngredient(ItemID.Leather, 15);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+
+            recipe = CreateRecipe(ItemID.MiningPants);
+            recipe.AddIngredient(ItemID.Leather, 15);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+            //this hook is supposed to be used for adding recipes,
+            //but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
         #region vanilla explosive base damage registry
             ExplosiveBaseDamage.Add(ProjectileID.Bomb, 70);
             ExplosiveBaseDamage.Add(ProjectileID.StickyBomb, 70);

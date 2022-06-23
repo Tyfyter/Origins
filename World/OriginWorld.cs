@@ -31,6 +31,7 @@ namespace Origins {
         public byte worldEvil = 0;
         private static double? _worldSurfaceLow;
         public static double worldSurfaceLow => _worldSurfaceLow??Main.worldSurface-165;
+        public static double WorldEvil => instance.worldEvil;
         public bool defiledResurgence => Main.hardMode;//true;
         public const byte evil_corruption = 0b0001;//1
         public const byte evil_crimson = 0b0010;//2

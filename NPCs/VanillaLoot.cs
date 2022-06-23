@@ -1,4 +1,5 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Items.Accessories;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Other;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
@@ -19,6 +20,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs {
     public partial class OriginGlobalNPC : GlobalNPC {
         bool downedSkeletron = false;
+		internal static int woFEmblemsCount = 4;
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
 			List<IItemDropRule> dropRules = npcLoot.Get(false);
 			IItemDropRule entry;
@@ -91,7 +93,27 @@ namespace Origins.NPCs {
                 case NPCID.TinyMossHornet:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Peat_Moss>(), 1, 1, 4));
                 break;
-                default:
+				case NPCID.WallofFlesh:
+				IEnumerable<IItemDropRule> rules = npcLoot.Get(false);
+				rules = rules.Where((r) => 
+				r is LeadingConditionRule conditionRule &&
+				conditionRule.ChainedRules.Any() &&
+				conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
+				dropRule.dropIds.Contains(ItemID.WarriorEmblem));
+				if (rules.Any()) {
+					OneFromOptionsNotScaledWithLuckDropRule rule = rules.First().ChainedRules[0].RuleToChain as OneFromOptionsNotScaledWithLuckDropRule;
+					if (rule is not null) {
+						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
+						rule.dropIds[^1] = ModContent.ItemType<Exploder_Emblem>();
+						woFEmblemsCount = rule.dropIds.Length;
+					} else {
+						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+					}
+				} else {
+					Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+				}
+				break;
+				default:
                 break;
             }
         }
