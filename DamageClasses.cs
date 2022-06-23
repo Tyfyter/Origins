@@ -11,8 +11,10 @@ using Terraria.ModLoader;
 namespace Origins {
 	public class DamageClasses : ILoadable {
 		private static DamageClass explosive;
+		private static DamageClass thrownExplosive;
 		private static DamageClass ranged_Magic;
 		public static DamageClass Explosive => explosive ??= ModContent.GetInstance<Explosive>();
+		public static DamageClass ThrownExplosive => thrownExplosive ??= ModContent.GetInstance<ThrownExplosive>();
 		public static Dictionary<DamageClass, DamageClass> ExplosiveVersion { get; private set; }
 		public static DamageClass Ranged_Magic => ranged_Magic ??= ModContent.GetInstance<Ranged_Magic>();
 		public void Load(Mod mod) {
@@ -49,6 +51,26 @@ namespace Origins {
 			player.GetCritChance(this) += 4;
 		}
 	}
+	public class ThrownExplosive : DamageClass {
+		public override void SetStaticDefaults() {
+			ClassName.SetDefault("explosive damage (thrown)");
+		}
+		public override bool GetEffectInheritance(DamageClass damageClass) {
+			return damageClass == DamageClasses.Explosive || damageClass == Throwing;
+		}
+		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
+			if (damageClass == Generic || damageClass == DamageClasses.Explosive) {
+				return StatInheritanceData.Full;
+			}
+			if (damageClass == Throwing) {
+				return new StatInheritanceData(attackSpeedInheritance: 1);
+			}
+			return StatInheritanceData.None;
+		}
+		public override void SetDefaultStats(Player player) {
+			player.GetCritChance(this) += 4;
+		}
+	}
 	[Autoload(false)]
 	public class ExplosivePlus : DamageClass {
 		private readonly string name;
@@ -68,7 +90,11 @@ namespace Origins {
 			return newClass;
 		}
 		public override void SetStaticDefaults() {
-			ClassName.SetDefault("explosive " + (other.ClassName?.GetDefault() ?? other.DisplayName));
+			if (other is ThrowingDamageClass) {
+				ClassName.SetDefault("explosive damage (thrown)");
+			} else {
+				ClassName.SetDefault("explosive " + (other.ClassName?.GetDefault() ?? other.DisplayName));
+			}
 		}
 		public override bool GetEffectInheritance(DamageClass damageClass) {
 			return damageClass == DamageClasses.Explosive || damageClass == other || other.GetEffectInheritance(damageClass);

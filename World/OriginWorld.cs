@@ -48,8 +48,15 @@ namespace Origins {
         public List<Point> Defiled_Hearts { get; set; } = new List<Point>();
 
         public override void LoadWorldData(TagCompound tag) {
-            peatSold = tag.GetAsInt("peatSold");
-            worldEvil = tag.GetByte("worldEvil");
+            if (tag.ContainsKey("peatSold")) {
+                peatSold = tag.GetAsInt("peatSold");
+            }
+            if (tag.ContainsKey("worldEvil")) {
+                worldEvil = tag.GetByte("worldEvil");
+            }
+			if (worldEvil == 0) {
+                worldEvil = WorldGen.crimson ? evil_crimson : evil_corruption;
+            }
             if(tag.ContainsKey("worldSurfaceLow"))_worldSurfaceLow = tag.GetDouble("worldSurfaceLow");
             if(tag.ContainsKey("defiledHearts"))Defiled_Hearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint).ToList();
 
@@ -155,7 +162,7 @@ namespace Origins {
             if(actions[0].action==CHANGE_QUEUE) {
                 cache = lootCache[actions[0].param];
             } else {
-                throw new ArgumentException("the first action in ApplyLootQueue must be CHANGE_QUEUE", "actions");
+                throw new ArgumentException("the first action in ApplyLootQueue must be CHANGE_QUEUE", nameof(actions));
             }
             int actionIndex = 1;
             cont:

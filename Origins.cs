@@ -99,8 +99,13 @@ namespace Origins {
             ExplosiveBaseDamage.Add(ProjectileID.Dynamite, 175);
             ExplosiveBaseDamage.Add(ProjectileID.StickyDynamite, 175);
             ExplosiveBaseDamage.Add(ProjectileID.BouncyDynamite, 175);
-        #endregion vanilla explosive base damage registry
-        #region armor slot ids
+            ExplosiveBaseDamage.Add(ProjectileID.DryBomb, 70);
+            ExplosiveBaseDamage.Add(ProjectileID.WetBomb, 70);
+            ExplosiveBaseDamage.Add(ProjectileID.LavaBomb, 70);
+            ExplosiveBaseDamage.Add(ProjectileID.HoneyBomb, 70);
+            ExplosiveBaseDamage.Add(ProjectileID.ScarabBomb, 100);
+            #endregion vanilla explosive base damage registry
+            #region armor slot ids
             FelnumHeadArmorID = ModContent.GetInstance<Felnum_Helmet>().Item.headSlot;
             FelnumBodyArmorID = ModContent.GetInstance<Felnum_Breastplate>().Item.bodySlot;
             FelnumLegsArmorID = ModContent.GetInstance<Felnum_Greaves>().Item.legSlot;
@@ -158,6 +163,11 @@ namespace Origins {
             DamageModOnHit[ProjectileID.Dynamite] = true;
             DamageModOnHit[ProjectileID.StickyDynamite] = true;
             DamageModOnHit[ProjectileID.BouncyDynamite] = true;
+            DamageModOnHit[ProjectileID.DryBomb] = true;
+            DamageModOnHit[ProjectileID.WetBomb] = true;
+            DamageModOnHit[ProjectileID.LavaBomb] = true;
+            DamageModOnHit[ProjectileID.HoneyBomb] = true;
+            DamageModOnHit[ProjectileID.ScarabBomb] = true;
             NonFishItem.ResizeArrays += () => {
                 Array.Resize(ref DamageModOnHit, ProjectileLoader.ProjectileCount);
             };

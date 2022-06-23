@@ -85,7 +85,6 @@ namespace Origins.Items.Weapons.Explosives {
 		}
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Grenade);
-            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
             Projectile.timeLeft = 135;
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
@@ -170,7 +169,7 @@ namespace Origins.Items.Weapons.Explosives {
 		}
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.CrystalStorm);
-            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
+            Projectile.DamageType = DamageClasses.ThrownExplosive;
             Projectile.ArmorPenetration += 4;
             Projectile.aiStyle = 0;
             Projectile.penetrate = -1;

@@ -24,14 +24,14 @@ namespace Origins.Items {
                 case ItemID.Grenade:
                 item.damage = (int)(item.damage*0.8);
                 item.ammo = ItemID.Grenade;
-                item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
+                item.DamageType = DamageClasses.ThrownExplosive;
                 break;
                 case ItemID.BouncyGrenade:
                 case ItemID.StickyGrenade:
                 case ItemID.PartyGirlGrenade:
                 case ItemID.Beenade:
                 item.ammo = ItemID.Grenade;
-                item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
+                item.DamageType = DamageClasses.ThrownExplosive;
                 break;
 
                 case ItemID.Fireblossom:
@@ -46,7 +46,12 @@ namespace Origins.Items {
                 case ItemID.StickyDynamite:
                 case ItemID.BombFish:
                 case ItemID.MolotovCocktail:
-                item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
+                case ItemID.DryBomb:
+                case ItemID.WetBomb:
+                case ItemID.LavaBomb:
+                case ItemID.HoneyBomb:
+                case ItemID.ScarabBomb:
+                item.DamageType = DamageClasses.ThrownExplosive;
                 break;
                 case ItemID.RocketLauncher:
                 case ItemID.ProximityMineLauncher:
@@ -120,17 +125,8 @@ namespace Origins.Items {
         }
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
             try {
-                if(item.CountsAsClass(DamageClasses.Explosive)) {
-                    if(NeedsDamageLine(item)&&Origins.ExplosiveBaseDamage.ContainsKey(item.type)) {
-                        Main.HoverItem.damage = Origins.ExplosiveBaseDamage[item.type];
-                        Player player = Main.player[item.playerIndexTheItemIsReservedFor];
-                        tooltips.Insert(1, new TooltipLine(Mod, "Damage", $"{player.GetWeaponDamage(Main.HoverItem)} {Language.GetText("explosive")}{Language.GetText("LegacyTooltip.55")}"));
-                        int crit = player.GetWeaponCrit(item);
-                        tooltips.Insert(2, new TooltipLine(Mod, "CritChance", $"{crit}{Language.GetText("LegacyTooltip.41")}"));
-                        return;
-                    }
-                }else switch(item.type) {
-                        case ItemID.MiningHelmet:
+                switch(item.type) {
+                    case ItemID.MiningHelmet:
                     tooltips.Insert(3, new TooltipLine(Mod, "Tooltip0", "3% increased explosive critical strike chance"));
                     break;
                     case ItemID.MiningShirt:
@@ -189,10 +185,6 @@ namespace Origins.Items {
                 }
             }
 		}
-		[Obsolete]
-        public static bool NeedsDamageLine(Item item) {
-            return false;//!(item.melee||item.ranged||item.magic||item.summon||item.thrown);
-        }
         public static ushort GetItemElement(Item item) {
             if(item.ModItem is null) {
                 return Origins.VanillaElements[item.type];

@@ -2,3 +2,6 @@
 
 # IDE0060: Remove unused parameter
 dotnet_diagnostic.IDE0060.severity = none
+
+# CA2211: Non-constant fields should not be visible
+dotnet_diagnostic.CA2211.severity = silent

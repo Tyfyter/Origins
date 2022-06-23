@@ -121,13 +121,11 @@ namespace Origins {
         internal static FieldInfo LLVersion;
         private LinkedList<T> list;
         private LinkedListNode<T> current;
-        private int version;
-        private int index;
+        private readonly int version;
         public LLNodeEnumerator(LinkedList<T> list) {
             this.list = list;
             version = list.GetVersion();
             current = list.First;
-            index = 0;
         }
 
         public LinkedListNode<T> Current => current;
@@ -971,19 +969,6 @@ namespace Origins {
                 thickness);
 
             spriteBatch.Draw(Origins.instance.Assets.Request<Texture2D>("Projectiles/Pixel").Value, drawRect, null, color, (end - start).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
-        }
-        [Obsolete]
-        private static Bitmap ToBitmap(this Texture2D tex) {
-            int[] data = new int[tex.Width * tex.Height];
-            tex.GetData(0, new Rectangle(0,0,tex.Width,tex.Height), data, 0, tex.Width * tex.Height);
-            Bitmap bitmap = new Bitmap(tex.Width, tex.Height);
-            for (int x = 0; x < tex.Width; x++){
-                for (int y = 0; y < tex.Height; y++){
-                    SysDraw.Color bitmapColor = SysDraw.Color.FromArgb(data[y * tex.Width + x]);
-                    bitmap.SetPixel(x, y, bitmapColor);
-                }
-            }
-            return bitmap;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void LinearSmoothing(ref float smoothed, float target, float rate) {

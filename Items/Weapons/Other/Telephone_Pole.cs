@@ -37,14 +37,25 @@ namespace Origins.Items.Weapons.Other {
             Item.shoot = ProjectileID.None;
             Item.rare = ItemRarityID.Purple;
         }
-    }
+		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit) {
+			Projectile.NewProjectileDirect(
+                player.GetSource_OnHit(target),
+                target.Center,
+                default,
+                ModContent.ProjectileType<Telephone_Pole_Shock>(),
+                damage,
+                0,
+                player.whoAmI
+            ).localNPCImmunity[target.whoAmI] = 30;
+		}
+	}
     public class Telephone_Pole_Shock : ModProjectile {
         public override string Texture => "Origins/Projectiles/Pixel";
         protected override bool CloneNewInstances => true;
         Vector2 closest;
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Bullet);
-            Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
+            Projectile.DamageType = DamageClass.Melee;
             Projectile.aiStyle = 0;
             Projectile.timeLeft = 3;
             Projectile.width = Projectile.height = 20;
@@ -59,7 +70,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
             closest = Projectile.Center.Clamp(targetHitbox.TopLeft(), targetHitbox.BottomRight());
-            return (Projectile.Center - closest).Length() <= 96;
+            return (Projectile.Center - closest).LengthSquared() <= 240 * 240;
         }
         public override bool? CanHitNPC(NPC target) {
             return Projectile.penetrate > 1 ? base.CanHitNPC(target) : false;
