@@ -14,9 +14,10 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WrathPotion);
-			//Item.buffType = Absroption_Buff.ID;
+			//Item.buffType = Absorption_Buff.ID;
 		}
-        public override bool CanUseItem(Player player) {
+		public override bool CanUseItem(Player player) {
+			//↓this will only have an effect for a single tick↓, so it needs to be done in a buff's Update hook or an accessory's UpdateEquip hook
 			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage = 0;
 			return true;
 		}

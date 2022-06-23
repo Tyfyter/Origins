@@ -17,6 +17,7 @@ using Origins.Items.Accessories;
 using ExampleMod.Backgrounds;
 using Terraria.Graphics.Effects;
 using static Origins.OriginExtensions;
+using Terraria.Chat;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands_Biome : ModBiome {
@@ -415,45 +416,33 @@ namespace Origins.World.BiomeData {
 				shadowOrbSmashed = true;
 				float fx = x * 16;
 				float fy = y * 16;
-				float dist = -1f;
+
+				float distance = -1f;
 				int player = 0;
-				for (int index = 0; index < 255; index++) {
-					float curDist = Math.Abs(Main.player[index].position.X - fx) + Math.Abs(Main.player[index].position.Y - fy);
-					if (curDist < dist || dist == -1f) {
-						player = index;
-						dist = curDist;
+				for (int playerIndex = 0; playerIndex < 255; playerIndex++) {
+					float currentDist = Math.Abs(Main.player[playerIndex].position.X - fx) + Math.Abs(Main.player[playerIndex].position.Y - fy);
+					if (currentDist < distance || distance == -1f) {
+						player = playerIndex;
+						distance = currentDist;
 					}
 				}
-				Projectile.NewProjectile(GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, ai0:1, ai1:player);
-				/*
-				shadowOrbCount++;
-				if (shadowOrbCount >= 3) {
-					shadowOrbCount = 0;
-					float fx = x * 16;
-					float fy = y * 16;
-					float distance = -1f;
-					int plr = 0;
-					for (int pindex = 0; pindex < 255; pindex++) {
-						float currentDist = Math.Abs(Main.player[pindex].position.X - fx) + Math.Abs(Main.player[pindex].position.Y - fy);
-						if (currentDist < distance || distance == -1f) {
-							plr = pindex;
-							distance = currentDist;
-						}
-					}
-					NPC.SpawnOnPlayer(plr, 1);
+				
+				WorldGen.shadowOrbCount++;
+				if (WorldGen.shadowOrbCount >= 3) {
+					WorldGen.shadowOrbCount = 0;
+					NPC.SpawnOnPlayer(player, NPCID.Frog);
 				} else {
-					LocalizedText localizedText = Lang.misc[10];
-					if (shadowOrbCount == 2) {
-						localizedText = Lang.misc[11];
-					}
+					Projectile.NewProjectile(GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, ai0: 1, ai1: player);
+					
+					string textKey = "Mods.Origins.Status_Messages.Defiled_Fissure_" + WorldGen.shadowOrbCount;
 					if (Main.netMode == NetmodeID.SinglePlayer) {
-						Main.NewText(localizedText.ToString(), 50, byte.MaxValue, 130);
+						Main.NewText(NetworkText.FromKey(textKey).ToString(), 50, byte.MaxValue, 130);
 					}else if (Main.netMode == NetmodeID.Server) {
-						NetMessage.BroadcastChatMessage(NetworkText.FromKey(localizedText.Key), new Color(50, 255, 130));
+						ChatHelper.BroadcastChatMessage(NetworkText.FromKey(textKey), new Color(50, 255, 130));
 					}
+
 					AchievementsHelper.NotifyProgressionEvent(7);
 				}
-				 */
 			}
 			SoundEngine.PlaySound(SoundID.NPCDeath1, new Vector2(i * 16, j * 16));
 			destroyObject = false;
