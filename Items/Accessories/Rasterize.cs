@@ -12,7 +12,7 @@ using Terraria.GameContent.Creative;
 namespace Origins.Items.Accessories {
     public class Rasterize : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Still Image");
+            DisplayName.SetDefault("Freeze Frame");
             Tooltip.SetDefault("Attacks may inflict \"Rasterize\"");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

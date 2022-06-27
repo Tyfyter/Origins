@@ -33,8 +33,8 @@ namespace Origins.Items.Accessories {
         }
         public override void AddRecipes() {
             Recipe recipe = Mod.CreateRecipe(Type);
-            recipe.AddIngredient(ModContent.ItemType<Strange_String>(), 8);
-            //recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 6); wheres da FORMIUM
+            recipe.AddIngredient(ModContent.ItemType<Strange_String>(), 8); //Could use vertebra, rotten chunks, or riven item
+            recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 6);
             recipe.AddTile(TileID.Anvils); //No Omni-Printer
             recipe.Register();
         }
