@@ -18,13 +18,14 @@ using static Origins.OriginExtensions;
 namespace Origins.World.BiomeData {
 	public class Riven_Hive_Biome : ModBiome {
 		public override int Music => Origins.Music.Riven;
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ZoneRiven = OriginSystem.rivenTiles > RivenHive.NeededTiles;
 			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (RivenHive.NeededTiles - RivenHive.ShaderTileCount), RivenHive.ShaderTileCount) / RivenHive.ShaderTileCount;
 			LinearSmoothing(ref originPlayer.ZoneRivenProgressSmoothed, originPlayer.ZoneRivenProgress, OriginSystem.biomeShaderSmoothing * 0.1f);
 
-			return originPlayer.ZoneRivenProgressSmoothed > 0;
+			return originPlayer.ZoneRivenProgressSmoothed > 0 || Filters.Scene["Origins:ZoneRiven"].Active;
 		}
 		public override void SpecialVisuals(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

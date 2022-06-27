@@ -22,6 +22,7 @@ using Terraria.Chat;
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands_Biome : ModBiome {
 		public override int Music => Origins.Music.Defiled;
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
@@ -29,7 +30,7 @@ namespace Origins.World.BiomeData {
 			originPlayer.ZoneDefiledProgress = Math.Min(OriginSystem.defiledTiles - (DefiledWastelands.NeededTiles - DefiledWastelands.ShaderTileCount), DefiledWastelands.ShaderTileCount) / DefiledWastelands.ShaderTileCount;
 			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
 
-			return originPlayer.ZoneDefiledProgressSmoothed > 0;
+			return originPlayer.ZoneDefiledProgressSmoothed > 0 || Filters.Scene["Origins:ZoneDefiled"].Active;
 		}
 		public override void SpecialVisuals(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

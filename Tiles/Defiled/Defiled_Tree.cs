@@ -15,7 +15,7 @@ namespace Origins.Tiles.Defiled
 	public class Defiled_Tree : ModTree {
 		private Mod mod => Origins.instance;
         public static Defiled_Tree Instance { get; private set; }
-		public override TreePaintingSettings TreeShaderSettings => new TreePaintingSettings();
+		public override TreePaintingSettings TreeShaderSettings => new();
 		public override void SetStaticDefaults() {
 			GrowsOnTileId = new int[] {
 				ModContent.TileType<Defiled_Grass>(),

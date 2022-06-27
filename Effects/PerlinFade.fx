@@ -22,7 +22,7 @@ float4 RedFade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
 	float2 center = (coords.x-0.5,coords.y-0.5);
 	float sinr = sin(uRotation);
 	float cosr = cos(uRotation);
-	float2 rotCoords = ((center.x*cosr-center.y*sinr), (center.x*sinr+center.y*cosr))+(0.5,0.5);
+	float2 rotCoords = float2((center.x*cosr-center.y*sinr), (center.x*sinr+center.y*cosr))+(0.5,0.5);
 	float4 color2 = tex2D(uImage1, rotCoords);//tex2D(uImage1, float2((round((coords.x*100+uOffset.x)/3)/300)%1, (round((coords.y*100+uOffset.y)/3)/300)%1));
 	/*if(color2.x>uThreshold0){
 		color.w*=1;
