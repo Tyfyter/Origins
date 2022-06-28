@@ -148,7 +148,8 @@ namespace Origins {
                 (ENQUEUE, ModContent.ItemType<Boiler_Pistol>()),
                 (ENQUEUE, ModContent.ItemType<Firespit>()),
                 (CHANGE_QUEUE, ChestID.Ice),
-                (ENQUEUE, ModContent.ItemType<Cryostrike>()));
+                (ENQUEUE, ModContent.ItemType<Cryostrike>())
+            );
             _worldSurfaceLow = WorldGen.worldSurfaceLow;
         }
         public static void ApplyLootQueue(ChestLootCache[] lootCache, params (LootQueueAction action, int param)[] actions) {
