@@ -19,6 +19,7 @@ using static Origins.OriginSystem.LootQueueAction;
 using Origins.Tiles.Riven;
 using Origins.Tiles.Brine;
 using Origins.World;
+using Origins.Items.Accessories;
 
 namespace Origins {
     public partial class OriginSystem : ModSystem {
@@ -148,8 +149,9 @@ namespace Origins {
                 (ENQUEUE, ModContent.ItemType<Boiler_Pistol>()),
                 (ENQUEUE, ModContent.ItemType<Firespit>()),
                 (CHANGE_QUEUE, ChestID.Ice),
-                (ENQUEUE, ModContent.ItemType<Cryostrike>())
-            );
+                (ENQUEUE, ModContent.ItemType<Cryostrike>()),
+                (CHANGE_QUEUE, ChestID.LockedGold),
+                (ENQUEUE, ModContent.ItemType<Bomb_Yeeter>()));
             _worldSurfaceLow = WorldGen.worldSurfaceLow;
         }
         public static void ApplyLootQueue(ChestLootCache[] lootCache, params (LootQueueAction action, int param)[] actions) {

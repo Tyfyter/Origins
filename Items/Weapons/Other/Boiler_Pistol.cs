@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Other {
     public class Boiler_Pistol : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Boiler Pistol");
+            DisplayName.SetDefault("Boiler");
             Tooltip.SetDefault("Uses fireblossoms as ammo");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             glowmask = Origins.AddGlowMask(this);

@@ -8,7 +8,7 @@ namespace Origins.Items.Accessories {
 	public class Air_Tank : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Air Tank");
-            Tooltip.SetDefault("Greatly extends underwater breathing\nImmunity to ‘Suffocation’");
+            Tooltip.SetDefault("Extends underwater breathing\nImmunity to ‘Suffocation’");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
@@ -18,7 +18,7 @@ namespace Origins.Items.Accessories {
         }
         public override void UpdateEquip(Player player) {
             player.buffImmune[BuffID.Suffocation] = true;
-            player.breathMax+=215;
+            player.breathMax+=257;
         }
         public override void AddRecipes() {
             Recipe recipe = Mod.CreateRecipe(Type);
