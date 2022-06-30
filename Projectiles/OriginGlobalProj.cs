@@ -140,6 +140,9 @@ namespace Origins.Projectiles {
         public override bool CanHitPlayer(Projectile projectile, Player target) {
             return ownerSafe?target.whoAmI!=projectile.owner:true;
         }
+        public override void OnHitPlayer(Projectile projectile, Player target, int damage, bool crit) {
+
+        }
         public override bool PreKill(Projectile projectile, int timeLeft) {
             if(felnumEffect&&projectile.type==ProjectileID.WaterGun) {//projectile.aiStyle==60
                 OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();

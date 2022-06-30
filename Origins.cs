@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MonoMod.RuntimeDetour;
 using MonoMod.RuntimeDetour.HookGen;
+using Origins.Buffs;
 using Origins.Gores.NPCs;
 using Origins.Items;
 using Origins.Items.Armor.Felnum;
@@ -24,6 +25,7 @@ using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Effects;
@@ -310,9 +312,21 @@ namespace Origins {
             Sounds.HeavyCannon = new SoundStyle("Origins/Sounds/Custom/HeavyCannon", SoundType.Sound);
             Sounds.EnergyRipple = new SoundStyle("Origins/Sounds/Custom/EnergyRipple", SoundType.Sound);
             Sounds.DeepBoom = new SoundStyle("Origins/Sounds/Custom/DeepBoom", SoundType.Sound);
-            Sounds.DefiledIdle = new SoundStyle("Origins/Sounds/Custom/Defiled_Idle", new int[] { 2, 3 }, SoundType.Sound).WithVolume(0.4f).WithPitchRange(0.9f, 1.1f);
-            Sounds.DefiledHurt = new SoundStyle("Origins/Sounds/Custom/Defiled_Hurt", new int[] { 1, 2 }, SoundType.Sound).WithVolume(0.4f).WithPitchRange(0.9f, 1.1f);
-            Sounds.DefiledKill = new SoundStyle("Origins/Sounds/Custom/Defiled_Kill1", SoundType.Sound).WithVolume(0.4f).WithPitchRange(0.9f, 1.1f);
+            Sounds.DefiledIdle = new SoundStyle("Origins/Sounds/Custom/Defiled_Idle", new int[] { 2, 3 }, SoundType.Sound) {
+                MaxInstances = 0,
+                Volume = 0.4f,
+                PitchRange = (0.9f, 1.1f)
+            };
+            Sounds.DefiledHurt = new SoundStyle("Origins/Sounds/Custom/Defiled_Hurt", new int[] { 1, 2 }, SoundType.Sound) {
+                MaxInstances = 0,
+                Volume = 0.4f,
+                PitchRange = (0.9f, 1.1f)
+            };
+            Sounds.DefiledKill = new SoundStyle("Origins/Sounds/Custom/Defiled_Kill1", SoundType.Sound) {
+                MaxInstances = 0,
+                Volume = 0.4f,
+                PitchRange = (0.9f, 1.1f)
+            };
             //OriginExtensions.initClone();
             Music.Dusk = MusicID.Eerie;
             Music.Defiled = MusicID.Corruption;
@@ -469,7 +483,18 @@ namespace Origins {
             OriginSystem.totalRiven2 += tileCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
             orig(clearCounts);
         }
-        public override void HandlePacket(BinaryReader reader, int whoAmI) {
+		public override void PostSetupContent() {
+            foreach (KeyValuePair<int, NPCDebuffImmunityData> item in NPCID.Sets.DebuffImmunitySets) {
+                    NPCDebuffImmunityData immunityData = item.Value;
+                    if (immunityData is not null && immunityData.SpecificallyImmuneTo is not null && immunityData.SpecificallyImmuneTo.Contains(BuffID.Confused)) {
+                        Array.Resize(ref immunityData.SpecificallyImmuneTo, immunityData.SpecificallyImmuneTo.Length + 3);
+                        immunityData.SpecificallyImmuneTo[^3] = Stunned_Debuff.ID;
+                        immunityData.SpecificallyImmuneTo[^2] = Toxic_Shock_Debuff.ID;
+                        immunityData.SpecificallyImmuneTo[^1] = Rasterized_Debuff.ID;
+                    }
+                }
+        }
+		public override void HandlePacket(BinaryReader reader, int whoAmI) {
             byte type = reader.ReadByte();
             if(Main.netMode == NetmodeID.MultiplayerClient) {
                 switch(type) {
@@ -626,8 +651,10 @@ namespace Origins {
         public static class Music {
             public static int Dusk = MusicID.Eerie;
             public static int Defiled = MusicID.Corruption;
+            public static int DefiledBoss = MusicID.OtherworldlyBoss1;
             public static int UndergroundDefiled = MusicID.UndergroundCorruption;
             public static int Riven = MusicID.Crimson;
+            public static int RivenBoss = MusicID.OtherworldlyBoss1;
             public static int UndergroundRiven = MusicID.UndergroundCrimson;
         }
         public static class Sounds {

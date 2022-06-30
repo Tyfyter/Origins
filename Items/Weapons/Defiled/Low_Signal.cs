@@ -12,12 +12,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 using Terraria.GameContent.Creative;
+using Terraria.DataStructures;
 
 namespace Origins.Items.Weapons.Defiled {
 	public class Low_Signal : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Low Signal");
 			Tooltip.SetDefault("");
+			Item.staff[Type] = true;
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
@@ -37,17 +39,25 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.value = 5000;
             Item.useTurn = false;
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item1;
+			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f);
 			Item.autoReuse = true;
-		}
-		public override Vector2? HoldoutOffset() {
-			return new Vector2(8, 0);
 		}
 	}
     public class Low_Signal_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Defiled/Infusion_P";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Low Signal");
+		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_Parent parentSource && parentSource.Entity is NPC npc) {
+				Projectile.npcProj = true;
+				Projectile.hostile = false;//!npc.friendly;
+				Projectile.friendly = npc.friendly;
+				if ((Main.masterMode || Main.expertMode) && !npc.friendly) {
+					Projectile.hostile = true;
+				}
+				Projectile.DamageType = DamageClass.Default;
+			}
 		}
 		public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
@@ -61,6 +71,9 @@ namespace Origins.Items.Weapons.Defiled {
 			Projectile.penetrate = 1;
 			Projectile.hide = true;
 		}
+		public override void AI() {
+			Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, default, newColor: Color.White, Scale: 0.5f + (float)Math.Sin(Projectile.timeLeft * 0.1f) * 0.15f);
+		}
 		public override void Kill(int timeLeft) {
 			int[] immune = Projectile.localNPCImmunity.ToArray();
 			Projectile.NewProjectileDirect(
@@ -71,7 +84,7 @@ namespace Origins.Items.Weapons.Defiled {
 				Projectile.damage,
 				0,
 				Projectile.owner,
-				7).localNPCImmunity = immune;
+			7).localNPCImmunity = immune;
 		}
 	}
 }

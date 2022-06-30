@@ -428,24 +428,12 @@ namespace Origins.World.BiomeData {
 					}
 				}
 				
-				WorldGen.shadowOrbCount++;
-				if (WorldGen.shadowOrbCount >= 3) {
-					WorldGen.shadowOrbCount = 0;
-					NPC.SpawnOnPlayer(player, NPCID.Frog);
-				} else {
-					Projectile.NewProjectile(GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, ai0: 1, ai1: player);
-					
-					string textKey = "Mods.Origins.Status_Messages.Defiled_Fissure_" + WorldGen.shadowOrbCount;
-					if (Main.netMode == NetmodeID.SinglePlayer) {
-						Main.NewText(NetworkText.FromKey(textKey).ToString(), 50, byte.MaxValue, 130);
-					}else if (Main.netMode == NetmodeID.Server) {
-						ChatHelper.BroadcastChatMessage(NetworkText.FromKey(textKey), new Color(50, 255, 130));
-					}
+				//this projectile handles the rest
+				Projectile.NewProjectile(GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, ai0: 1, ai1: player);
 
-					AchievementsHelper.NotifyProgressionEvent(7);
-				}
+				AchievementsHelper.NotifyProgressionEvent(7);
 			}
-			SoundEngine.PlaySound(SoundID.NPCDeath1, new Vector2(i * 16, j * 16));
+			SoundEngine.PlaySound(Origins.Sounds.DefiledKill, new Vector2(i * 16, j * 16));
 			destroyObject = false;
 		}
 	}

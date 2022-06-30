@@ -41,7 +41,7 @@ namespace Origins.NPCs.Fiberglass {
             if(Collision.CanHit(pos, 1, 1, Main.player[NPC.target].Center, 1, 1) && Main.netMode != NetmodeID.MultiplayerClient) {
                 NPC.localAI[0] += 1f;
                 if(NPC.localAI[0] >= 75f) {
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), pos.X, pos.Y, speed.X, speed.Y, ProjectileID.WoodenArrowHostile, 32, 0f);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), pos.X, pos.Y, speed.X, speed.Y, ProjectileID.WoodenArrowHostile, 16, 0f);
                     NPC.localAI[0] = 0f;
                     teleport();
                 }
@@ -145,7 +145,7 @@ namespace Origins.NPCs.Fiberglass {
                 if(NPC.rotation == NPC.oldRot[0])NPC.localAI[0] += 2f;
                 if(NPC.localAI[0] >= 180f) {
                     Vector2 speed = new Vector2(-8,0).RotatedBy(Main.rand.NextFloat(NPC.rotation-0.1f,NPC.rotation+0.1f));
-                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, speed.X, speed.Y, ProjectileID.BulletDeadeye, 32, 0f);
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center.X, NPC.Center.Y, speed.X, speed.Y, ProjectileID.BulletDeadeye, 18, 0f);
                     NPC.life = 0;
                     NPC.checkDead();
                 }
@@ -160,7 +160,7 @@ namespace Origins.NPCs.Fiberglass {
                 for(int i = Main.rand.Next(4,7); i >= 0; i--) {
                     speed = speed.RotatedByRandom(0.25f);
                     int proj =
-                    Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center, speed, ModContent.ProjectileType<Fiberglass_Shard_Proj>(), 17, 3f, NPC.target);
+                    Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center, speed, ModContent.ProjectileType<Fiberglass_Shard_Proj>(), 9, 3f, NPC.target);
                     Main.projectile[proj].hostile = true;
                     Main.projectile[proj].friendly = false;
                     Main.projectile[proj].hide = false;

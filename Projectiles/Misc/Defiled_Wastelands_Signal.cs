@@ -12,6 +12,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.NPCs;
 using Terraria.Localization;
 using Terraria.GameContent.Achievements;
+using Terraria.Audio;
+using Origins.NPCs.Defiled;
 
 namespace Origins.Projectiles.Misc {
     public class Defiled_Wastelands_Signal : ModProjectile {
@@ -62,22 +64,23 @@ namespace Origins.Projectiles.Misc {
         }
         public override void Kill(int timeLeft) {
             if ((int)Projectile.ai[0] == 1) {
-				WorldGen.shadowOrbCount++;
+                Color color = Color.Lerp(new Color(50, 255, 130), new Color(222, 222, 222), WorldGen.shadowOrbCount / 2);
+
+                WorldGen.shadowOrbCount++;
+                string textKey = "Mods.Origins.Status_Messages.Defiled_Fissure_" + WorldGen.shadowOrbCount;
+
+                if (Main.netMode == NetmodeID.SinglePlayer) {
+                    Main.NewText(NetworkText.FromKey(textKey).ToString(), color);
+                } else if (Main.netMode == NetmodeID.Server) {
+                    ChatHelper.BroadcastChatMessage(NetworkText.FromKey(textKey), color);
+                }
 				if (WorldGen.shadowOrbCount >= 3) {
-					WorldGen.shadowOrbCount = 0;
-					NPC.SpawnOnPlayer((int)Projectile.ai[1], NPCID.Frog);
-				} else {
-					LocalizedText localizedText = Lang.misc[10];
-					if (WorldGen.shadowOrbCount == 2) {
-						localizedText = Lang.misc[11];
-					}
-					if (Main.netMode == NetmodeID.SinglePlayer) {
-						Main.NewText(localizedText.ToString(), 50, byte.MaxValue, 130);
-					} else if (Main.netMode == NetmodeID.Server) {
-						ChatHelper.BroadcastChatMessage(NetworkText.FromKey(localizedText.Key), new Color(50, 255, 130));
-					}
-				}
-				AchievementsHelper.NotifyProgressionEvent(7);
+                    WorldGen.shadowOrbCount = 0;
+                    SoundEngine.PlaySound(Origins.Sounds.DefiledKill.WithPitch(0f).WithVolume(1f), Projectile.Center);
+                    Defiled_Amalgamation.spawnDA = true;
+                }
+
+                AchievementsHelper.NotifyProgressionEvent(7);
             } else {
 				Main.player[(int)Projectile.ai[1]].GetModPlayer<OriginPlayer>().rapidSpawnFrames = 5;
             }

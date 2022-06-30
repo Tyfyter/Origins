@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,7 +21,15 @@ namespace Origins.Projectiles.Weapons {
             Projectile.hide = true;
             Projectile.rotation = Main.rand.NextFloatDirection();
         }
-        public override void AI() {
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_Parent parentSource && parentSource.Entity is Projectile parentProj) {
+                Projectile.npcProj = parentProj.npcProj;
+                Projectile.hostile = false;
+                Projectile.friendly = parentProj.friendly;
+                Projectile.DamageType = parentProj.DamageType;
+            }
+		}
+		public override void AI() {
 			if (Projectile.ai[0] > 0) {
                 Projectile.ai[0]--;
                 int[] immune = Projectile.localNPCImmunity.ToArray();
@@ -61,6 +70,14 @@ namespace Origins.Projectiles.Weapons {
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = false;
             Projectile.hide = true;
+        }
+        public override void OnSpawn(IEntitySource source) {
+            if (source is EntitySource_Parent parentSource && parentSource.Entity is Projectile parentProj) {
+                Projectile.npcProj = parentProj.npcProj;
+                Projectile.hostile = parentProj.npcProj && !parentProj.friendly;
+                Projectile.friendly = parentProj.friendly;
+                Projectile.DamageType = parentProj.DamageType;
+            }
         }
         public float movementFactor {
             get => Projectile.ai[0];

@@ -19,12 +19,10 @@ using Origins.Buffs;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Tiles.Riven;
 using Origins.Items.Accessories;
+using Terraria.DataStructures;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
-		public override void SetDefaults(NPC npc) {
-			if (Rasterized_Debuff.ID != -1) npc.buffImmune[Rasterized_Debuff.ID] = npc.buffImmune[BuffID.Confused];
-		}
 		public override void SetupShop(int type, Chest shop, ref int nextSlot) {
 			//Demo-man
 			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 0) {
