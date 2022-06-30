@@ -9,7 +9,7 @@ using Origins.NPCs;
 
 namespace Origins.Buffs {
     public class Rasterized_Debuff : ModBuff {
-        public const int duration = 24;
+        public const int duration = 48;
         public static int ID { get; private set; } = -1;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Rasterized");

@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Origins.Items.Materials;
+using Origins.Items.Accessories;
 
 namespace Origins.Items.Armor.Acrid{
     [AutoloadEquip(EquipType.Head)]
@@ -38,7 +39,7 @@ namespace Origins.Items.Armor.Acrid{
             Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 15);
             recipe.AddIngredient(ModContent.ItemType<Rubber>(), 10);
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }
@@ -59,7 +60,8 @@ namespace Origins.Items.Armor.Acrid{
             Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 25);
             recipe.AddIngredient(ModContent.ItemType<Rubber>(), 30);
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddIngredient(ModContent.ItemType<Air_Pack>());
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
 	}
@@ -80,7 +82,7 @@ namespace Origins.Items.Armor.Acrid{
             Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 20);
             recipe.AddIngredient(ModContent.ItemType<Rubber>(), 20);
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }

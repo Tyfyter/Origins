@@ -150,6 +150,8 @@ namespace Origins {
                 (ENQUEUE, ModContent.ItemType<Firespit>()),
                 (CHANGE_QUEUE, ChestID.Ice),
                 (ENQUEUE, ModContent.ItemType<Cryostrike>()),
+                (CHANGE_QUEUE, ChestID.Gold),
+                (ENQUEUE, ModContent.ItemType<Bomb_Charm>()),
                 (CHANGE_QUEUE, ChestID.LockedGold),
                 (ENQUEUE, ModContent.ItemType<Bomb_Yeeter>()));
             _worldSurfaceLow = WorldGen.worldSurfaceLow;

@@ -365,7 +365,7 @@ namespace Origins.Items.Materials {
         public override void AddRecipes() {
             Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ItemID.HallowedBar, 6);
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }
@@ -510,7 +510,7 @@ namespace Origins.Items.Materials {
             recipe.AddIngredient(ItemID.FragmentSolar, 2);
             recipe.AddIngredient(ItemID.FragmentStardust, 2);
             recipe.AddIngredient(ModContent.ItemType<Lunar_Token>());
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }
@@ -669,7 +669,7 @@ namespace Origins.Items.Materials {
         public override void AddRecipes() {
             Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ItemID.ChlorophyteOre, 3); //Need Taranum
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }

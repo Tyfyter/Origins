@@ -24,12 +24,12 @@ namespace Origins.Items.Accessories {
             Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ItemID.TitaniumBar, 20);
             recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
             recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ItemID.AdamantiteBar, 20);
             recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }

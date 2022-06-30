@@ -21,12 +21,12 @@ namespace Origins.Items.Accessories {
             Recipe recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ItemID.TitaniumBar, 10);
             recipe.AddIngredient(ItemID.Obsidian, 20);
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
             recipe = Mod.CreateRecipe(Type);
             recipe.AddIngredient(ItemID.AdamantiteBar, 10);
             recipe.AddIngredient(ItemID.Obsidian, 20);
-            recipe.AddTile(TileID.Anvils);
+            recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }
     }
