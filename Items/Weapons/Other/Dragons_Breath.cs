@@ -1,37 +1,34 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Projectiles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Creative;
-using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
-	public class Dragons_Breath : ModItem {
+    public class Dragons_Breath : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dragon's Breath");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Uses fireblossoms as ammo");
             glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.SniperRifle);
-            Item.DamageType = DamageClasses.Explosive;
-            Item.damage = 25;
+            Item.damage = 40;
             Item.crit = 11;
             Item.useAnimation = 43;
             Item.useTime = 43;
-            Item.width = 78;
+            Item.width = 68;
             Item.height = 34;
+            Item.useAmmo = ItemID.Fireblossom;
             Item.shoot = ModContent.ProjectileType<Dragons_Breath_P>();
-            Item.shootSpeed = 2.5f;
+            Item.shootSpeed = 30f;
             Item.knockBack = 2.5f;
             Item.useAmmo = AmmoID.None;
+            Item.rare = ItemRarityID.Orange;
             Item.glowMask = glowmask;
         }
         public override Vector2? HoldoutOffset() {
@@ -47,7 +44,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
-            Projectile.DamageType = DamageClasses.Explosive;
+            Projectile.DamageType = DamageClasses.Ranged_Magic;
             Projectile.aiStyle = 0;
             Projectile.ignoreWater = false;
             Projectile.extraUpdates = 0;
