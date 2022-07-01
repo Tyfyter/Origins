@@ -19,9 +19,11 @@ using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.Utilities;
 
 namespace Origins.NPCs.Defiled {
+    [AutoloadBossHead]
     public class Defiled_Amalgamation : ModNPC {
 		public override string Texture => "Origins/NPCs/Defiled/Defiled_Amalgamation_Body";
-		public static bool spawnDA = false;
+		public override string BossHeadTexture => "Origins/UI/BossMap/Map_Icon_DA";
+        public static bool spawnDA = false;
         float rightArmRot = 0;
         float leftArmRot = 0;
         float time = 0;
@@ -105,8 +107,8 @@ namespace Origins.NPCs.Defiled {
 						if (NPC.DistanceSQ(target.MountedCenter) > 640 * 640) {
                             speed *= 5;
 						}
-                        OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), 0.4f);
-                        OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), 0.4f);
+                        OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), (Math.Abs(NPC.velocity.Y) > 16 ? 4 : 0.4f));
+                        OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), (Math.Abs(NPC.velocity.X) > 16 ? 4 : 0.4f));
 
                         if (NPC.ai[0] <= 0) {
                             NPC.ai[1] += 0.75f + (0.25f * difficultyMult);

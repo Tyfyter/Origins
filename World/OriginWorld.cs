@@ -164,7 +164,7 @@ namespace Origins {
                 (ENQUEUE, ModContent.ItemType<Firespit>(), 1f),
                 (CHANGE_QUEUE, ChestID.Ice, 0f),
                 (ENQUEUE, ModContent.ItemType<Cryostrike>(), 1f),
-                (CHANGE_QUEUE, ChestID.Gold, 5f),//1 for all underground gold chests, 5 for "underground" layer, 7 for "cavern" layer
+                (CHANGE_QUEUE, ChestID.Gold, 1f),//1 for all underground gold chests, 5 for "underground" layer, 7 for "cavern" layer
                 (ENQUEUE, ModContent.ItemType<Bomb_Charm>(), 1f),
                 (CHANGE_QUEUE, ChestID.LockedGold, 0f),
                 (ENQUEUE, ModContent.ItemType<Bomb_Yeeter>(), 1f));
