@@ -162,6 +162,7 @@ namespace Origins {
                 (CHANGE_QUEUE, ChestID.LockedShadow, 0f),
                 (ENQUEUE, ModContent.ItemType<Boiler_Pistol>(), 1f),
                 (ENQUEUE, ModContent.ItemType<Firespit>(), 1f),
+                (ENQUEUE, ModContent.ItemType<Dragons_Breath>(), 1f),
                 (CHANGE_QUEUE, ChestID.Ice, 0f),
                 (ENQUEUE, ModContent.ItemType<Cryostrike>(), 1f),
                 (CHANGE_QUEUE, ChestID.Gold, 1f),//1 for all underground gold chests, 5 for "underground" layer, 7 for "cavern" layer

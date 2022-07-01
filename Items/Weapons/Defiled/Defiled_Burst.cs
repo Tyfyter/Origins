@@ -15,17 +15,17 @@ namespace Origins.Items.Weapons.Defiled {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
-            Item.damage = 15;
+            Item.damage = 6;
             Item.DamageType = DamageClass.Ranged;
             Item.noMelee = true;
             Item.crit = -1;
             Item.width = 56;
             Item.height = 18;
-            Item.useTime = 36;
-            Item.useAnimation = 36;
+            Item.useTime = 18;
+            Item.useAnimation = 18;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 5;
-            Item.shootSpeed = 20f;
+            Item.shootSpeed = 15f;
             Item.shoot = ProjectileID.Bullet;
             Item.useAmmo = AmmoID.Bullet;
             Item.value = 15000;

@@ -18,25 +18,25 @@ namespace Origins.Items.Weapons.Other {
         static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Firespit");
-            Tooltip.SetDefault("");
+            Tooltip.SetDefault("Uses fireblossoms as ammo");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
             glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.damage = 30;
-            Item.DamageType = DamageClass.Magic;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.crit = 1;
-            Item.useAnimation = 35;
-            Item.useTime = 2;
-            Item.mana = 16;
+            Item.useAnimation = 2;
+            Item.useTime = 38;
             Item.width = 58;
             Item.height = 22;
+            Item.useAmmo = ItemID.Fireblossom;
             Item.shoot = ModContent.ProjectileType<Lava_Shot>();
-            Item.shootSpeed = 6.75f;
+            Item.shootSpeed = 8.75f;
             Item.UseSound = SoundID.Item20;
-            //item.reuseDelay = 9;
+            Item.reuseDelay = 9;
+            Item.rare = ItemRarityID.Orange;
             Item.glowMask = glowmask;
         }
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
@@ -50,7 +50,7 @@ namespace Origins.Items.Weapons.Other {
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    if(player.itemAnimationMax-player.itemAnimation > 9)return false;
             SoundEngine.PlaySound(SoundID.Item20, position);
-            Lava_Shot.damageType = DamageClass.Magic;
+            Lava_Shot.damageType = DamageClass.Ranged;
             return true;
             //Projectile projectile = Projectile.NewProjectileDirect(, type, damage, knockBack, player.whoAmI);
         }

@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
 using Origins.Projectiles.Weapons;
 using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
     public class Boiler_Pistol : ModItem {
@@ -27,13 +21,13 @@ namespace Origins.Items.Weapons.Other {
             Item.damage = 53;
             Item.useAnimation = 18;
             Item.useTime = 12;
-            Item.width = 48;
-            Item.height = 26;
+            Item.width = 38;
+            Item.height = 22;
             Item.useAmmo = ItemID.Fireblossom;
             Item.shoot = ModContent.ProjectileType<Lava_Shot>();
             Item.shootSpeed*=1.75f;
             Item.UseSound = SoundID.Item41;
-            Item.scale = 0.8f;
+            Item.rare = ItemRarityID.Orange;
             Item.glowMask = glowmask;
         }
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
