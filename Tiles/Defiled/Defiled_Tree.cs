@@ -35,7 +35,7 @@ namespace Origins.Tiles.Defiled
 			return ModContent.DustType<>();
 		}*/
 
-		public override int GrowthFXGore() {
+		public override int TreeLeaf() {
 			return mod.GetGoreSlot($"Gores/NPCs/DF_Effect_{(Main.rand.NextBool()?"Medium":"Small")}{Main.rand.Next(3)+1}");//adds one because sprites use 1-based indices
 		}
 
@@ -59,10 +59,9 @@ namespace Origins.Tiles.Defiled
 			return mod.Assets.Request<Texture2D>("Tiles/Defiled/Defiled_Tree_Branches");
 		}
 
-		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
+		public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
 			
 		}
-
 	}
     public class Defiled_Tree_Sapling : ModTile {
 		public override void SetStaticDefaults() {

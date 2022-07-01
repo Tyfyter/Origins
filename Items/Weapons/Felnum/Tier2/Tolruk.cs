@@ -52,7 +52,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             Item.UseSound = SoundID.Item11;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15);
             recipe.AddIngredient(ItemID.Uzi, 1);
             recipe.AddTile(TileID.MythrilAnvil);

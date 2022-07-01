@@ -29,7 +29,7 @@ namespace Origins.Items.Tools {
             return player.wet?1.5f:1;
         }
 		public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 15);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();

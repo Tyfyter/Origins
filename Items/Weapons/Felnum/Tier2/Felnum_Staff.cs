@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 			Item.rare = ItemRarityID.Lime;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15);
             recipe.AddIngredient(ItemID.SkyFracture, 1);
             recipe.AddTile(TileID.MythrilAnvil);

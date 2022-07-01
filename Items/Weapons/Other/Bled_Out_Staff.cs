@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Other {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Mod.CreateRecipe(Type);
+			Recipe recipe = Recipe.Create(Type);
 			recipe.AddRecipeGroup("Origins:Gem Staves", 1);
 			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 45);
 			recipe.Register();

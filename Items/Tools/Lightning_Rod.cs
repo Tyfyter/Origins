@@ -39,7 +39,7 @@ namespace Origins.Items.Tools {
 			);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Mod.CreateRecipe(Type);
+			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 8);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();

@@ -27,7 +27,7 @@ namespace Origins.Items.Armor.Eyndum {
             Origins.SetEyndumCoreUI();
         }
         public override void AddRecipes() {
-            /*Recipe recipe = Mod.CreateRecipe(Type);
+            /*Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
             //recipe.AddIngredient(ModContent.ItemType<>(), 10);
             recipe.SetResult(this);
@@ -54,7 +54,7 @@ namespace Origins.Items.Armor.Eyndum {
 
         }
         public override void AddRecipes() {
-            /*Recipe recipe = Mod.CreateRecipe(Type);
+            /*Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
             //recipe.AddIngredient(ModContent.ItemType<>(), 20);
             recipe.SetResult(this);
@@ -79,7 +79,7 @@ namespace Origins.Items.Armor.Eyndum {
 
         }
         public override void AddRecipes() {
-            /*Recipe recipe = Mod.CreateRecipe(Type);
+            /*Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
             //recipe.AddIngredient(ModContent.ItemType<>(), 15);
             recipe.SetResult(this);

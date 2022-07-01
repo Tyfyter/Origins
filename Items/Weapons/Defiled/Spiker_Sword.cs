@@ -27,13 +27,13 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.UseSound = SoundID.Item1;
 		}
 		public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 6);
             recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 3);
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
 
-			recipe = Mod.CreateRecipe(ItemID.NightsEdge);
+			recipe = Recipe.Create(ItemID.NightsEdge);
 			recipe.AddIngredient(this);
 			recipe.AddIngredient(ItemID.Muramasa);
 			recipe.AddIngredient(ItemID.BladeofGrass);

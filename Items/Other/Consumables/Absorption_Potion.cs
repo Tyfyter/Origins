@@ -22,7 +22,7 @@ namespace Origins.Items.Other.Consumables {
 			return true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Mod.CreateRecipe(Type);
+			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.BottledWater);
 			//recipe.AddIngredient(ModContent.ItemType<???>());
 			//recipe.AddIngredient(ItemID.???);

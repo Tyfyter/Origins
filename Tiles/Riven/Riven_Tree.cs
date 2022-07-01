@@ -28,7 +28,7 @@ namespace Origins.Tiles.Riven {
 			return ModContent.DustType<>();
 		}*/
 
-		public override int GrowthFXGore() {
+		public override int TreeLeaf() {
 			return mod.GetGoreSlot($"Gores/NPCs/DF_Effect_{(Main.rand.NextBool()?"Medium":"Small")}{Main.rand.Next(3)+1}");//adds one because sprites use 1-based indices
 		}
 
@@ -42,12 +42,8 @@ namespace Origins.Tiles.Riven {
 
 		public override void SetStaticDefaults() {
 			GrowsOnTileId = new int[] {
-
+				ModContent.TileType<Riven_Flesh>()
 			};
-		}
-
-		public override void SetTreeFoliageSettings(Tile tile, int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
-			//throw new System.NotImplementedException();
 		}
 
 		public override Asset<Texture2D> GetTopTextures() {
@@ -56,6 +52,10 @@ namespace Origins.Tiles.Riven {
 
 		public override Asset<Texture2D> GetBranchTextures() {
 			return mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Tree_Branches");
+		}
+
+		public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
+			
 		}
 	}
     public class Riven_Tree_Sapling : ModTile {

@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Defiled {
             return false;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.IllegalGunParts, 3);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 6);
             recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 3);

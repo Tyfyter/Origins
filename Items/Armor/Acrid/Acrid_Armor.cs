@@ -36,7 +36,7 @@ namespace Origins.Items.Armor.Acrid{
             }
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 15);
             recipe.AddIngredient(ModContent.ItemType<Rubber>(), 10);
             recipe.AddTile(TileID.MythrilAnvil);
@@ -57,7 +57,7 @@ namespace Origins.Items.Armor.Acrid{
             player.lifeRegenCount+=2;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 25);
             recipe.AddIngredient(ModContent.ItemType<Rubber>(), 30);
             recipe.AddIngredient(ModContent.ItemType<Air_Pack>());
@@ -79,7 +79,7 @@ namespace Origins.Items.Armor.Acrid{
             player.accFlipper = true;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 20);
             recipe.AddIngredient(ModContent.ItemType<Rubber>(), 20);
             recipe.AddTile(TileID.MythrilAnvil);

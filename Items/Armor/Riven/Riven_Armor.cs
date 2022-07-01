@@ -37,7 +37,7 @@ namespace Origins.Items.Armor.Riven {
             player.GetDamage(DamageClass.Summon) *= player.GetModPlayer<OriginPlayer>().rivenMult;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 15);
             recipe.AddIngredient(ModContent.ItemType<Riven_Sample>(), 10);
             recipe.AddTile(TileID.Anvils);
@@ -74,7 +74,7 @@ namespace Origins.Items.Armor.Riven {
             color = Color.White;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 25);
             recipe.AddIngredient(ModContent.ItemType<Riven_Sample>(), 20);
             recipe.AddTile(TileID.Anvils);
@@ -103,7 +103,7 @@ namespace Origins.Items.Armor.Riven {
             glowMaskColor = Color.White;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 20);
             recipe.AddIngredient(ModContent.ItemType<Riven_Sample>(), 15);
             recipe.AddTile(TileID.Anvils);

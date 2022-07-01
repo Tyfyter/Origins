@@ -16,11 +16,11 @@ namespace Origins.World {
 			originPlayer.ZoneVoid = OriginSystem.voidTiles > 300;
 			originPlayer.ZoneVoidProgress = Math.Min(OriginSystem.voidTiles - 200, 200) / 300f;
 			LinearSmoothing(ref originPlayer.ZoneVoidProgressSmoothed, originPlayer.ZoneVoidProgress, OriginSystem.biomeShaderSmoothing);
-			return originPlayer.ZoneVoidProgressSmoothed > 0;
+			return originPlayer.ZoneVoid;
 		}
-		public override void SpecialVisuals(Player player) {
+		public override void SpecialVisuals(Player player, bool isActive) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			if (originPlayer.ZoneVoidProgressSmoothed > 0) Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(originPlayer.ZoneVoidProgressSmoothed);
+			Filters.Scene["Origins:ZoneDusk"].GetShader().UseProgress(originPlayer.ZoneVoidProgressSmoothed);
 			player.ManageSpecialBiomeVisuals("Origins:ZoneDusk", originPlayer.ZoneVoidProgressSmoothed > 0, player.Center);
 		}
 	}

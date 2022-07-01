@@ -21,12 +21,12 @@ namespace Origins.Items.Accessories {
             player.breathMax+=257;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.TitaniumBar, 20);
             recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
-            recipe = Mod.CreateRecipe(Type);
+            recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.AdamantiteBar, 20);
             recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
             recipe.AddTile(TileID.MythrilAnvil);

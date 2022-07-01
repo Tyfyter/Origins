@@ -27,7 +27,7 @@ namespace Origins.Items.Tools {
 			Item.UseSound = SoundID.Item1;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Mod.CreateRecipe(Type);
+			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10);
 			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 5);
 			recipe.AddTile(TileID.Anvils);

@@ -87,7 +87,7 @@ namespace Origins.Items.Armor.Mimic {
 			}
 		}
 		public override void AddRecipes() {
-			/*Recipe recipe = Mod.CreateRecipe(Type);
+			/*Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
 			//recipe.AddIngredient(ModContent.ItemType<>(), 10);
 			recipe.SetResult(this);
@@ -115,7 +115,7 @@ namespace Origins.Items.Armor.Mimic {
 			player.lifeRegenCount += 2;
 		}
 		public override void AddRecipes() {
-			/*Recipe recipe = Mod.CreateRecipe(Type);
+			/*Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
 			//recipe.AddIngredient(ModContent.ItemType<>(), 20);
 			recipe.SetResult(this);
@@ -141,7 +141,7 @@ namespace Origins.Items.Armor.Mimic {
 			player.GetDamage(DamageClasses.Explosive) += 0.1f;
 		}
 		public override void AddRecipes() {
-			/*Recipe recipe = Mod.CreateRecipe(Type);
+			/*Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
 			//recipe.AddIngredient(ModContent.ItemType<>(), 15);
 			recipe.SetResult(this);

@@ -17,7 +17,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.buffType = Fervor_Buff.ID;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Mod.CreateRecipe(Type);
+			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.BottledWater);
 			recipe.AddIngredient(ModContent.ItemType<Prikish>());
 			recipe.AddIngredient(ItemID.Deathweed);

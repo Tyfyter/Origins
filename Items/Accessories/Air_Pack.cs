@@ -21,7 +21,7 @@ namespace Origins.Items.Accessories {
             player.breathMax+=514;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Adhesive_Wrap>(), 30);
             recipe.AddIngredient(ModContent.ItemType<Air_Tank>(), 2);
             recipe.AddTile(TileID.TinkerersWorkbench);

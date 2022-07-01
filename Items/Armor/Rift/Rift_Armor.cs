@@ -31,7 +31,7 @@ namespace Origins.Items.Armor.Rift {
             player.GetModPlayer<OriginPlayer>().riftSet = true;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.ObsidianHelm);
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 12);
             recipe.AddTile(TileID.TinkerersWorkbench);
@@ -58,7 +58,7 @@ namespace Origins.Items.Armor.Rift {
             player.GetModPlayer<OriginPlayer>().explosiveSelfDamage-=0.25f;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.ObsidianShirt);
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 36);
             recipe.AddTile(TileID.TinkerersWorkbench);
@@ -84,7 +84,7 @@ namespace Origins.Items.Armor.Rift {
             player.runAcceleration += 0.02f;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.ObsidianPants);
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 24);
             recipe.AddTile(TileID.TinkerersWorkbench);

@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Felnum {
 			Item.rare = ItemRarityID.Green;
 		}
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type, 70);
+            Recipe recipe = Recipe.Create(Type, 70);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>());
             recipe.AddIngredient(ItemID.Grenade, 70);
             recipe.AddTile(TileID.Anvils);

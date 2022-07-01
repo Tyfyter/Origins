@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             Item.autoReuse = true;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 14);
             recipe.AddIngredient(ItemID.DaedalusStormbow, 1);
             recipe.AddTile(TileID.MythrilAnvil);

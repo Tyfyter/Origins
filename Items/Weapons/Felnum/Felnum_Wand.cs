@@ -34,7 +34,7 @@ namespace Origins.Items.Weapons.Felnum {
             //item.useAnimation = 10;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 7);
             recipe.AddIngredient(ItemID.FallenStar);
             recipe.AddTile(TileID.Anvils);

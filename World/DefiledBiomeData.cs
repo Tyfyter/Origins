@@ -30,11 +30,11 @@ namespace Origins.World.BiomeData {
 			originPlayer.ZoneDefiledProgress = Math.Min(OriginSystem.defiledTiles - (DefiledWastelands.NeededTiles - DefiledWastelands.ShaderTileCount), DefiledWastelands.ShaderTileCount) / DefiledWastelands.ShaderTileCount;
 			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
 
-			return originPlayer.ZoneDefiledProgressSmoothed > 0 || Filters.Scene["Origins:ZoneDefiled"].Active;
+			return originPlayer.ZoneDefiled;
 		}
-		public override void SpecialVisuals(Player player) {
+		public override void SpecialVisuals(Player player, bool isActive) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			if (originPlayer.ZoneDefiledProgressSmoothed > 0) Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(originPlayer.ZoneDefiledProgressSmoothed);
+			Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(originPlayer.ZoneDefiledProgressSmoothed);
 			player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", originPlayer.ZoneDefiledProgressSmoothed > 0, player.Center);
 		}
 	}

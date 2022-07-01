@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Explosives {
             return false;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.ExplosivePowder, 10);
             recipe.AddIngredient(ItemID.ChlorophyteBar, 25);
             recipe.AddIngredient(ModContent.ItemType<Space_Goo>(), 15);

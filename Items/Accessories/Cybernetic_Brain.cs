@@ -32,7 +32,7 @@ namespace Origins.Items.Accessories {
             player.manaRegen += 5;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Strange_String>(), 8); //Could use vertebra, rotten chunks, or riven item
             recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 6);
             recipe.AddTile(TileID.Anvils); //No Omni-Printer

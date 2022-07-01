@@ -33,7 +33,7 @@ namespace Origins.Items.Accessories {
             //all combined into one
         }
 		public override void AddRecipes() {
-			Recipe recipe = Mod.CreateRecipe(ItemID.AvengerEmblem);
+			Recipe recipe = Recipe.Create(ItemID.AvengerEmblem);
             recipe.AddIngredient(Type);
             recipe.AddIngredient(ItemID.SoulofMight, 5);
             recipe.AddIngredient(ItemID.SoulofSight, 5);

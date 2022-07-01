@@ -28,7 +28,7 @@ namespace Origins.Items.Armor.Defiled {
             player.GetModPlayer<OriginPlayer>().defiledSet = true;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
             recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 10);
             recipe.AddTile(TileID.Anvils);
@@ -51,7 +51,7 @@ namespace Origins.Items.Armor.Defiled {
             player.GetAttackSpeed(DamageClass.Magic) += 0.1f;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
             recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 20);
             recipe.AddTile(TileID.Anvils);
@@ -73,7 +73,7 @@ namespace Origins.Items.Armor.Defiled {
             player.moveSpeed+=0.05f;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
             recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 15);
             recipe.AddTile(TileID.Anvils);

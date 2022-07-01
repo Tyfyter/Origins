@@ -76,18 +76,18 @@ namespace Origins {
             celestineBoosters = new int[3];
         }
         public override void AddRecipes() {
-            Recipe recipe = CreateRecipe(ItemID.MiningHelmet);
+            Recipe recipe = Recipe.Create(ItemID.MiningHelmet);
             recipe.AddIngredient(ItemID.Glowstick, 4);
             recipe.AddRecipeGroup(RecipeGroupID.IronBar, 7);
             recipe.AddTile(TileID.WorkBenches);
             recipe.Register();
 
-            recipe = CreateRecipe(ItemID.MiningShirt);
+            recipe = Recipe.Create(ItemID.MiningShirt);
             recipe.AddIngredient(ItemID.Leather, 15);
             recipe.AddTile(TileID.WorkBenches);
             recipe.Register();
 
-            recipe = CreateRecipe(ItemID.MiningPants);
+            recipe = Recipe.Create(ItemID.MiningPants);
             recipe.AddIngredient(ItemID.Leather, 15);
             recipe.AddTile(TileID.WorkBenches);
             recipe.Register();
@@ -627,7 +627,7 @@ namespace Origins {
                 if(!r.requiredItem.ToList().Exists((ing)=>ing.type==ItemID.Deathweed)) {
                     continue;
                 }
-                recipe = CloneRecipe(r);
+                recipe = r.Clone();
                 recipe.requiredItem = recipe.requiredItem.Select((it)=>it.type==ItemID.Deathweed?ItemFromType(roseID):it.CloneByID()).ToList();
                 Logger.Info("adding procedural recipe: "+recipe.Stringify());
                 recipe.Create();

@@ -18,7 +18,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 1;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.Bottle);
             recipe.AddIngredient(ItemID.Stinger, 2);
             recipe.AddIngredient(ModContent.ItemType<Brine_Sample>(), 1);
@@ -35,13 +35,13 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.TitaniumBar, 1);
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 10);
             recipe.AddIngredient(ModContent.ItemType<Acid_Bottle>(), 3);
             recipe.AddTile(TileID.DemonAltar);
             recipe.Register();
-            recipe = Mod.CreateRecipe(Type);
+            recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.AdamantiteBar, 1);
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 10);
             recipe.AddIngredient(ModContent.ItemType<Acid_Bottle>(), 3);
@@ -59,7 +59,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Tree_Sap>(), 3);
             recipe.AddIngredient(ModContent.ItemType<Silicon_Wafer>(), 1);
             recipe.AddTile(TileID.WorkBenches);
@@ -83,7 +83,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(ModContent.ItemType<Rubber>());
+            Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>());
             recipe.AddIngredient(this, 3);
             recipe.AddTile(TileID.GlassKiln);
             recipe.Register();
@@ -99,7 +99,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(ItemID.Leather);
+            Recipe recipe = Recipe.Create(ItemID.Leather);
             recipe.AddIngredient(this, 4);
             recipe.AddTile(TileID.HeavyWorkBench);
             recipe.Register();
@@ -112,10 +112,10 @@ namespace Origins.Items.Materials {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 48;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(ModContent.ItemType<Bleeding_Obsidian_Item>());
+            Recipe recipe = Recipe.Create(ModContent.ItemType<Bleeding_Obsidian_Item>());
             recipe.AddIngredient(this, 6);
             recipe.Register();
-            recipe = Mod.CreateRecipe(Type, 6);
+            recipe = Recipe.Create(Type, 6);
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>());
             recipe.Register();
         }
@@ -127,14 +127,14 @@ namespace Origins.Items.Materials {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.Bottle);
             recipe.AddCondition(
                 Terraria.Localization.NetworkText.FromLiteral("Brine"),
                 (_) => Main.LocalPlayer.adjWater && Main.LocalPlayer.GetModPlayer<OriginPlayer>().ZoneBrine
             );
             recipe.Register();
-            recipe = Mod.CreateRecipe(Type);
+            recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.BottledWater);
             recipe.AddIngredient(ModContent.ItemType<Sulphur_Stone_Item>()); //Forgot to implement Decaying Mush...
             recipe.AddTile(TileID.AlchemyTable);
@@ -161,7 +161,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.CopperBar, 3);
             recipe.AddTile(TileID.Anvils); //Fabricator not implemented yet
             recipe.Register();
@@ -177,7 +177,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.SoulofMight, 10);
             recipe.AddIngredient(ItemID.FragmentSolar, 4);
             recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
@@ -195,7 +195,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 3);
             recipe.AddTile(TileID.Furnaces);
             recipe.Register();
@@ -223,7 +223,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.FragmentNebula, 2);
             recipe.AddIngredient(ItemID.FragmentStardust, 2);
             recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
@@ -252,7 +252,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.GoldBar, 2);
             recipe.AddIngredient(ItemID.FragmentVortex, 4);
             recipe.AddIngredient(ModContent.ItemType<Void_Spark>(), 6);
@@ -275,7 +275,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Ore_Item>(), 3);
             recipe.AddTile(TileID.Furnaces);
             recipe.Register();
@@ -301,7 +301,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Formium_Scrap>(), 6);
             recipe.Register();
         }
@@ -326,7 +326,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Infested_Ore_Item>(), 3);
             recipe.AddTile(TileID.Furnaces);
             recipe.Register();
@@ -363,7 +363,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.HallowedBar, 6);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
@@ -380,7 +380,7 @@ namespace Origins.Items.Materials {
             Item.value = 300;//3 silver
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(ItemID.ExplosivePowder);
+            Recipe recipe = Recipe.Create(ItemID.ExplosivePowder);
             recipe.AddIngredient(this, 3);
             recipe.AddTile(TileID.GlassKiln);
             recipe.Register();
@@ -396,7 +396,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 99;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.HallowedBar, 4);
             recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 8);
             recipe.AddIngredient(ModContent.ItemType<Conductor_Rod>(), 2);
@@ -444,7 +444,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type, 5);
+            Recipe recipe = Recipe.Create(Type, 5);
             recipe.AddIngredient(ModContent.ItemType<Silicon_Wafer>(), 2);
             recipe.AddIngredient(ModContent.ItemType<Conductor_Rod>(), 2);
             recipe.AddIngredient(ItemID.HallowedBar, 2);
@@ -469,7 +469,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.SandBlock, 3);
             recipe.AddTile(TileID.GlassKiln);
             recipe.Register();
@@ -505,7 +505,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.FallenStar, 12);
             recipe.AddIngredient(ItemID.FragmentSolar, 2);
             recipe.AddIngredient(ItemID.FragmentStardust, 2);
@@ -525,14 +525,14 @@ namespace Origins.Items.Materials {
             Item.maxStack = 99;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(ItemID.BattlePotion);
+            Recipe recipe = Recipe.Create(ItemID.BattlePotion);
             recipe.AddIngredient(ItemID.BottledWater, 1);
             recipe.AddIngredient(ItemID.Deathweed, 1);
             recipe.AddIngredient(Type, 1);
             recipe.AddTile(TileID.Bottles);
             recipe.Register();
 
-            recipe = Mod.CreateRecipe(ItemID.MechanicalWorm);
+            recipe = Recipe.Create(ItemID.MechanicalWorm);
             recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
             recipe.AddIngredient(ItemID.SoulofNight, 6);
             recipe.AddIngredient(Type, 6);
@@ -549,7 +549,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 99;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type, 3);
+            Recipe recipe = Recipe.Create(Type, 3);
             recipe.AddIngredient(ItemID.GoldBar, 7);
             recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 3);
             recipe.AddIngredient(ModContent.ItemType<Conductor_Rod>(), 5);
@@ -568,7 +568,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type, 2);
+            Recipe recipe = Recipe.Create(Type, 2);
             recipe.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 8);
             recipe.AddIngredient(ModContent.ItemType<Space_Goo>(), 4);
             recipe.AddTile(TileID.Anvils); //No Omni-Printer
@@ -584,7 +584,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(ModContent.ItemType<Rubber>());
+            Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>());
             recipe.AddIngredient(this, 3);
             recipe.AddTile(TileID.GlassKiln);
             recipe.Register();
@@ -600,19 +600,19 @@ namespace Origins.Items.Materials {
             Item.maxStack = 99;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(ItemID.ObsidianHelm);
+            Recipe recipe = Recipe.Create(ItemID.ObsidianHelm);
             recipe.AddIngredient(ItemID.Silk, 10);
             recipe.AddIngredient(ItemID.Obsidian, 20);
             recipe.AddIngredient(this, 5);
             recipe.AddTile(TileID.Hellforge);
             recipe.Register();
-            recipe = Mod.CreateRecipe(ItemID.ObsidianShirt);
+            recipe = Recipe.Create(ItemID.ObsidianShirt);
             recipe.AddIngredient(ItemID.Silk, 10);
             recipe.AddIngredient(ItemID.Obsidian, 20);
             recipe.AddIngredient(this, 10);
             recipe.AddTile(TileID.Hellforge);
             recipe.Register();
-            recipe = Mod.CreateRecipe(ItemID.ObsidianPants);
+            recipe = Recipe.Create(ItemID.ObsidianPants);
             recipe.AddIngredient(ItemID.Silk, 10);
             recipe.AddIngredient(ItemID.Obsidian, 20);
             recipe.AddIngredient(this, 5);
@@ -631,7 +631,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 8;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Superconductor>(), 10);
             recipe.AddIngredient(ModContent.ItemType<Eyndum_Bar>(), 8);
             recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
@@ -649,7 +649,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 1);
             //recipe.AddIngredient(ModContent.ItemType<_Bar>(), 1);
             recipe.AddIngredient(ItemID.Ectoplasm, 1);
@@ -667,7 +667,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.ChlorophyteOre, 3); //Need Taranum
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
@@ -683,7 +683,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.FragmentVortex, 4);
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 12);
             recipe.AddIngredient(ModContent.ItemType<Lunar_Token>());

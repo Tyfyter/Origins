@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Defiled {
             return false;
         }
 		public override void AddRecipes() {
-            Recipe recipe = Mod.CreateRecipe(Type);
+            Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 9);
             recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 5);
             recipe.AddTile(TileID.Anvils);
