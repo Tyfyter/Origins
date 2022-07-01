@@ -20,6 +20,7 @@ using Origins.Tiles.Riven;
 using Origins.Tiles.Brine;
 using Origins.World;
 using Origins.Items.Accessories;
+using System.Collections;
 
 namespace Origins {
     public partial class OriginSystem : ModSystem {
@@ -128,7 +129,20 @@ namespace Origins {
             queuedKillTiles.Enqueue((i, j));
         }
         public override void PostWorldGen() {
-            ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(56,0,1,2,4,11,12,13,15,16,17,50,51);
+            ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(56,
+                ChestID.Normal,
+                ChestID.Gold,
+                ChestID.LockedGold,
+                ChestID.LockedShadow,
+                ChestID.Ice,
+                ChestID.LivingWood,
+                ChestID.Skyware,
+                ChestID.Web,
+                ChestID.Lihzahrd,
+                ChestID.Water,
+                ChestID.Granite,
+                ChestID.Marble
+            );
             Chest chest;
             int lootType;
             ChestLootCache cache;
@@ -144,16 +158,16 @@ namespace Origins {
 				}
             }
             if(noLoot)return;
-            ApplyLootQueue(chestLoots,
-                (CHANGE_QUEUE, ChestID.LockedShadow),
-                (ENQUEUE, ModContent.ItemType<Boiler_Pistol>()),
-                (ENQUEUE, ModContent.ItemType<Firespit>()),
-                (CHANGE_QUEUE, ChestID.Ice),
-                (ENQUEUE, ModContent.ItemType<Cryostrike>()),
-                (CHANGE_QUEUE, ChestID.Gold),
-                (ENQUEUE, ModContent.ItemType<Bomb_Charm>()),
-                (CHANGE_QUEUE, ChestID.LockedGold),
-                (ENQUEUE, ModContent.ItemType<Bomb_Yeeter>()));
+            ApplyWeightedLootQueue(chestLoots,
+                (CHANGE_QUEUE, ChestID.LockedShadow, 0f),
+                (ENQUEUE, ModContent.ItemType<Boiler_Pistol>(), 1f),
+                (ENQUEUE, ModContent.ItemType<Firespit>(), 1f),
+                (CHANGE_QUEUE, ChestID.Ice, 0f),
+                (ENQUEUE, ModContent.ItemType<Cryostrike>(), 1f),
+                (CHANGE_QUEUE, ChestID.Gold, 5f),//1 for all underground gold chests, 5 for "underground" layer, 7 for "cavern" layer
+                (ENQUEUE, ModContent.ItemType<Bomb_Charm>(), 1f),
+                (CHANGE_QUEUE, ChestID.LockedGold, 0f),
+                (ENQUEUE, ModContent.ItemType<Bomb_Yeeter>(), 1f));
             _worldSurfaceLow = WorldGen.worldSurfaceLow;
         }
         public static void ApplyLootQueue(ChestLootCache[] lootCache, params (LootQueueAction action, int param)[] actions) {
@@ -184,7 +198,7 @@ namespace Origins {
                 chest = Main.chest[chestIndex];
                 newLootType = items.Dequeue();
                 chest.item[0].SetDefaults(newLootType);
-                chest.item[0].Prefix(-2);
+                chest.item[0].Prefix(-1);
                 cache[lootType].Remove(chestIndex);
             }
             if(actionIndex<actions.Length&&actions[actionIndex].action==CHANGE_QUEUE) {
@@ -193,12 +207,119 @@ namespace Origins {
                 goto cont;
             }
         }
+        public static void ApplyWeightedLootQueue(ChestLootCache[] lootCache, params (LootQueueAction action, int param, float weight)[] actions) {
+            int lootType;
+            ChestLootCache cache = null;
+            Chest chest;
+            int chestIndex = -1;
+            Queue<(int, float)> items = new Queue<(int, float)>();
+            WeightedRandom<int> random;
+            (int param, float weight) newLootType;
+
+            int actionIndex = 0;
+            void filterCache() {
+                switch (actions[actionIndex].param) {
+                    case ChestID.Gold: {
+                        int typeVar = (int)actions[actionIndex].weight;
+                        if ((typeVar & 1) != 0) {
+                            if ((typeVar & 2) == 0) {
+                                cache = new ChestLootCache(cache.Where((c) => {
+                                    Chest selChest = Main.chest[c.Value[0]];
+                                    return Main.tile[selChest.x, selChest.y + 2].TileType != TileID.SandstoneBrick;
+                                }));
+                            } else {
+                                cache = new ChestLootCache(cache.Where((c) => {
+                                    Chest selChest = Main.chest[c.Value[0]];
+                                    return Main.tile[selChest.x, selChest.y + 2].TileType == TileID.SandstoneBrick;
+                                }));
+                            }
+                        }
+                        if ((typeVar & 4) != 0) {
+                            if ((typeVar & 8) == 0) {
+                                cache = new ChestLootCache(
+                                    cache.Select(
+                                        (c) => new KeyValuePair<int, List<int>>(
+                                            c.Key,
+                                            c.Value.Where(
+                                                (c2) => {
+                                                    return Main.chest[c2].y < Main.rockLayer;
+                                                }
+                                            ).ToList()
+                                        )
+                                    )
+                                );
+                            } else {
+                                cache = new ChestLootCache(
+                                    cache.Select(
+                                        (c) => new KeyValuePair<int, List<int>>(
+                                            c.Key,
+                                            c.Value.Where(
+                                                (c2) => {
+                                                    return Main.chest[c2].y >= Main.rockLayer;
+                                                }
+                                            ).ToList()
+                                        )
+                                    )
+                                );
+                            }
+                        }
+                    }
+                    break;
+                }
+                cache = new ChestLootCache(cache.Where((c) => c.Value.Count > 0));
+                Origins.instance.Logger.Info($"using chest cache #{actions[0].param} with mode {(int)actions[0].weight}: {string.Join(", ", cache.Select(v => $"{v.Value.Count} {new Item(v.Key).Name} (s)"))}");
+            }
+
+            if (actions[0].action == CHANGE_QUEUE) {
+                cache = lootCache[actions[0].param];
+                filterCache();
+            } else {
+                throw new ArgumentException("the first action in ApplyLootQueue must be CHANGE_QUEUE", nameof(actions));
+            }
+            actionIndex = 1;
+            cont:
+            if (actionIndex < actions.Length && actions[actionIndex].action == ENQUEUE) {
+                items.Enqueue((actions[actionIndex].param, actions[actionIndex].weight));
+                actionIndex++;
+                goto cont;
+            }
+            int neutralWeight = cache.ChestLoots
+                .GroupBy((n) => n.Value.Count)
+                .OrderByDescending((g) => g.Count())
+                .Select((g) => g.Key).FirstOrDefault();
+            while (items.Count > 0) {
+                random = cache.GetWeightedRandom();
+                newLootType = items.Dequeue();
+                int i = WorldGen.genRand.RandomRound(neutralWeight * newLootType.weight);
+                Origins.instance.Logger.Info($"adding {i} {new Item(newLootType.param).Name}(s) to chests (weight {newLootType.weight})");
+                for (; i-- > 0;) {
+                    lootType = random.Get();
+                    chestIndex = WorldGen.genRand.Next(cache[lootType]);
+                    chest = Main.chest[chestIndex];
+                    chest.item[0].SetDefaults(newLootType.param);
+                    chest.item[0].Prefix(-1);
+                    cache[lootType].Remove(chestIndex);
+                }
+            }
+            if (actionIndex < actions.Length && actions[actionIndex].action == CHANGE_QUEUE) {
+                cache = lootCache[actions[actionIndex].param];
+                filterCache();
+                actionIndex++;
+                goto cont;
+            }
+        }
         public enum LootQueueAction {
             ENQUEUE,
             CHANGE_QUEUE
         }
-        public class ChestLootCache {
-            Dictionary<int, List<int>> ChestLoots = new Dictionary<int, List<int>>();
+        public class ChestLootCache : IEnumerable<KeyValuePair<int, List<int>>> {
+            internal Dictionary<int, List<int>> ChestLoots;
+			public ChestLootCache() {
+                ChestLoots = new Dictionary<int, List<int>>();
+            }
+            public ChestLootCache(IEnumerable<KeyValuePair<int, List<int>>> enumerable) {
+                ChestLoots = new Dictionary<int, List<int>>(enumerable);
+            }
             public List<int> this[int lootType] {
                 get {
                     if(ChestLoots.ContainsKey(lootType)) {
@@ -222,7 +343,8 @@ namespace Origins {
                     return 0;
                 }
             }
-            public WeightedRandom<int> GetWeightedRandom(bool cullUnique = true, UnifiedRandom random = null) {
+
+			public WeightedRandom<int> GetWeightedRandom(bool cullUnique = true, UnifiedRandom random = null) {
                 bool cull = false;
                 WeightedRandom<int> rand = new WeightedRandom<int>(random??WorldGen.genRand);
                 foreach(KeyValuePair<int,List<int>> kvp in ChestLoots) {
@@ -234,7 +356,14 @@ namespace Origins {
                 if(cull)rand.elements.RemoveAll((e)=>e.Item2<=1);
                 return rand;
             }
-        }
+
+            public IEnumerator<KeyValuePair<int, List<int>>> GetEnumerator() {
+                return ChestLoots.GetEnumerator();
+            }
+            IEnumerator IEnumerable.GetEnumerator() {
+				return ChestLoots.GetEnumerator();
+			}
+		}
         public static byte GetAdjTileCount(int i, int j) {
             byte count = 0;
             if(Main.tile[i-1,j-1].HasTile) count++;

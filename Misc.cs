@@ -871,6 +871,14 @@ namespace Origins {
             spriteBatch.End();
             spriteBatch.Begin(sortMode, blendState ?? BlendState.AlphaBlend, samplerState ?? SamplerState.LinearClamp, DepthStencilState.None, rasterizerState ?? Main.Rasterizer, effect, transformMatrix ?? Main.GameViewMatrix.TransformationMatrix);
         }
+        public static int RandomRound(this UnifiedRandom random, float value) {
+            float amount = value % 1;
+            value -= amount;
+            if (random.NextFloat() < amount) {
+                value++;
+            }
+            return (int)value;
+        }
         public static int GetGoreSlot(this Mod mod, string name) {
 			if (Main.netMode == NetmodeID.Server) {
                 mod.Logger.Error($"Tried to load gore {mod.Name}/{name} on server");

@@ -85,7 +85,9 @@ namespace Origins.NPCs.Defiled {
                 float rightArmTarget = 0.25f;
                 float armSpeed = 0.03f;
 
-                int tickCount = 10 - DifficultyMult * 2;
+                int difficultyMult = DifficultyMult;// just saving the value as a slight optimization 
+
+                int tickCount = 10 - difficultyMult * 2;
                 int tickSize = NPC.lifeMax / tickCount;
                 float currentTick = (NPC.life / tickSize);
 
@@ -93,19 +95,22 @@ namespace Origins.NPCs.Defiled {
                     //default state, uses default case so that negative values can be used for which action was taken last
                     default: {
                         CheckTrappedCollision();
-                        float targetHeight = 96 + (float)(Math.Sin(++time * (0.04f + (0.01f * DifficultyMult))) + 0.5f) * 32 * DifficultyMult;
-                        float targetX = 256 + (float)Math.Sin(++time * (0.02f + (0.01f * DifficultyMult))) * 48 * DifficultyMult;
+                        float targetHeight = 96 + (float)(Math.Sin(++time * (0.04f + (0.01f * difficultyMult))) + 0.5f) * 32 * difficultyMult;
+                        float targetX = 256 + (float)Math.Sin(++time * (0.02f + (0.01f * difficultyMult))) * 48 * difficultyMult;
                         float speed = 5;
 
                         float diffY = NPC.Bottom.Y - (target.MountedCenter.Y - targetHeight);
                         float diffX = NPC.Center.X - target.MountedCenter.X;
                         diffX -= Math.Sign(diffX) * targetX;
+						if (NPC.DistanceSQ(target.MountedCenter) > 640 * 640) {
+                            speed *= 5;
+						}
                         OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), 0.4f);
                         OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), 0.4f);
 
                         if (NPC.ai[0] <= 0) {
-                            NPC.ai[1] += 0.75f + (0.25f * DifficultyMult);
-                            NPC.ai[1] += 0.5f * (DifficultyMult - 1) * (1f - (currentTick / tickCount));
+                            NPC.ai[1] += 0.75f + (0.25f * difficultyMult);
+                            NPC.ai[1] += 0.5f * (difficultyMult - 1) * (1f - (currentTick / tickCount));
                             if (NPC.ai[1] > 300) {
                                 WeightedRandom<int> rand = new(
                                     Main.rand,
@@ -113,7 +118,7 @@ namespace Origins.NPCs.Defiled {
                                     new(1, 1f),
                                     new(2, 0.9f),
                                     new(3, 0.35f),
-                                    new(4, 0.5f)
+                                    new(4, 0.45f + (0.05f * difficultyMult))
                                     }
                                 );
                                 int lastUsedAttack = (-1) - (int)NPC.ai[0];
@@ -152,7 +157,7 @@ namespace Origins.NPCs.Defiled {
                             OriginExtensions.LinearSmoothing(ref NPC.velocity, (NPC.Center - new Vector2(NPC.ai[2], NPC.ai[3])).WithMaxLength(speed), 1.8f);
                             NPC.oldVelocity = NPC.velocity;
                         } else if (NPC.ai[1] < 30) {
-                            float speed = 11 + DifficultyMult;
+                            float speed = 11 + difficultyMult;
                             OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3F);
                             NPC.oldVelocity = NPC.velocity;
                         } else if ((NPC.collideX || NPC.collideY) && NPC.ai[1] <= 80) {
@@ -193,7 +198,7 @@ namespace Origins.NPCs.Defiled {
                             Projectile.NewProjectileDirect(
                                 NPC.GetSource_FromAI(),
                                 NPC.Center,
-                                Vector2.Normalize(target.MountedCenter - NPC.Center).RotatedByRandom(0.15f) * (10 + DifficultyMult * 2) * Main.rand.NextFloat(0.9f, 1.1f),
+                                Vector2.Normalize(target.MountedCenter - NPC.Center).RotatedByRandom(0.15f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.9f, 1.1f),
                                 ModContent.ProjectileType<Items.Weapons.Defiled.Low_Signal_P>(),
                                 19, // for some reason NPC projectile damage is just arbitrarily doubled
                                 0f,
@@ -203,7 +208,7 @@ namespace Origins.NPCs.Defiled {
                             case 12:
                             case 17:
                             case 65:
-							if (DifficultyMult > 1) {
+							if (difficultyMult > 1) {
                                 goto case 10;
                             }
                             break;
@@ -220,20 +225,20 @@ namespace Origins.NPCs.Defiled {
                     //triple dash and downtime after
                     case 3: {
                         NPC.ai[1]++;
-                        int cycleLength = 100 - (DifficultyMult * 4);
-                        int dashLength = 60 - (DifficultyMult * 2);
+                        int cycleLength = 100 - (difficultyMult * 4);
+                        int dashLength = 60 - (difficultyMult * 2);
                         int activeLength = cycleLength * 2 + dashLength;
                         if (NPC.ai[1] < activeLength) {
 							if (NPC.ai[1] % cycleLength is < 2 and >= 1) {
                                 SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-1), NPC.Center);
                             }
                             NPC.velocity = NPC.oldVelocity;
-                            if (NPC.ai[1] % cycleLength < 18 - (DifficultyMult * 3)) {
-                                float speed = 6 - (2 * DifficultyMult);
+                            if (NPC.ai[1] % cycleLength < 18 - (difficultyMult * 3)) {
+                                float speed = 6 - (2 * difficultyMult);
                                 OriginExtensions.LinearSmoothing(ref NPC.velocity, (NPC.Center - new Vector2(NPC.ai[2], NPC.ai[3])).WithMaxLength(speed), 1.8f);
                                 NPC.oldVelocity = NPC.velocity;
-                            } else if (NPC.ai[1] % cycleLength < 26 - (DifficultyMult * 2)) {
-                                float speed = 14 + (2 * DifficultyMult);
+                            } else if (NPC.ai[1] % cycleLength < 26 - (difficultyMult * 2)) {
+                                float speed = 14 + (2 * difficultyMult);
                                 OriginExtensions.LinearSmoothing(ref NPC.velocity, (new Vector2(NPC.ai[2], NPC.ai[3]) - NPC.Center).WithMaxLength(speed), 3F);
                                 NPC.oldVelocity = NPC.velocity;
                             } else if (NPC.ai[1] % cycleLength > dashLength || NPC.collideX || NPC.collideY) {
@@ -262,7 +267,7 @@ namespace Origins.NPCs.Defiled {
                         NPC.ai[1]++;
                         float targetHeight = 128 + (float)(Math.Sin(++time * 0.05f) + 0.5f) * 32;
                         float targetX = 288 + (float)Math.Sin(++time * 0.03f) * 48;
-                        float speed = 5 * DifficultyMult;
+                        float speed = 5 * difficultyMult;
 
                         float diffY = NPC.Bottom.Y - (target.MountedCenter.Y - targetHeight);
                         float diffX = NPC.Center.X - target.MountedCenter.X;
@@ -271,7 +276,7 @@ namespace Origins.NPCs.Defiled {
                         OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed * 4, speed * 4), 2.4f);
 						if (Math.Abs(diffX) < 64 || NPC.ai[1] > 25) {
                             NPC.ai[0] = -4;
-                            NPC.ai[1] = 160 + (DifficultyMult * 40);
+                            NPC.ai[1] = 160 + (difficultyMult * 40);
                         }
                         NPC.noTileCollide = true;
                     }
