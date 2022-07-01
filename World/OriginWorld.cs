@@ -128,7 +128,7 @@ namespace Origins {
             queuedKillTiles.Enqueue((i, j));
         }
         public override void PostWorldGen() {
-            ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(56,0,2,4,11,12,13,15,16,17,50,51);
+            ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(56,0,1,2,4,11,12,13,15,16,17,50,51);
             Chest chest;
             int lootType;
             ChestLootCache cache;
