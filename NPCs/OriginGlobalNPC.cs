@@ -165,6 +165,10 @@ namespace Origins.NPCs {
 				} else {
 					pool.Add(ModContent.NPCType<Defiled_Brute>(), DefiledWastelands.SpawnRates.Brute);
 				}
+				if (Defiled_Amalgamation.spawnDA) {
+					pool.Clear();
+					pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 999);
+				}
 			} else if (player.GetModPlayer<OriginPlayer>().ZoneRiven) {
 				pool[0] = 0;
 

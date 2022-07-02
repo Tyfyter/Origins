@@ -17,6 +17,9 @@ using ReLogic.Content;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.Utilities;
+using Origins.Items.Weapons.Defiled;
+using Tyfyter.Utils;
+using Origins.Projectiles.Enemies;
 
 namespace Origins.NPCs.Defiled {
     [AutoloadBossHead]
@@ -28,6 +31,7 @@ namespace Origins.NPCs.Defiled {
         float leftArmRot = 0;
         float time = 0;
         int trappedTime = 0;
+        int roars = 0;
         public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
         public static int TripleDashCD {
             get {
@@ -38,9 +42,9 @@ namespace Origins.NPCs.Defiled {
                 return inactiveTime;
             }
         }
-        //public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
-        //bool attacking = false;
-        public override void SetStaticDefaults() {
+		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
+		//bool attacking = false;
+		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Amalgamation");
             Main.npcFrameCount[NPC.type] = 8;
             NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
@@ -49,6 +53,7 @@ namespace Origins.NPCs.Defiled {
 	            }
             };
             NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
+            NPCID.Sets.CantTakeLunchMoney[Type] = true;
         }
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.Zombie);
@@ -66,10 +71,33 @@ namespace Origins.NPCs.Defiled {
             NPC.noGravity = true;
             NPC.npcSlots = 200;
             Music = Origins.Music.DefiledBoss;
+            NPC.knockBackResist = 0;// actually a multiplier
         }
-		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			return spawnDA ? 10 : 0;
+		public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
+			switch (DifficultyMult) {
+                case 1:
+                NPC.lifeMax = 2400;
+                NPC.defense = 14;
+                NPC.damage = 36;
+                break;
+
+                case 2:
+                NPC.lifeMax = 3840 / 2;
+                NPC.defense = 15;
+                NPC.damage = 36;
+                break;
+
+                case 3:
+                NPC.lifeMax = 6144 / 3;
+                NPC.defense = 16;
+                NPC.damage = 36;
+                break;
+            }
 		}
+
+        public override void OnSpawn(IEntitySource source) {
+            spawnDA = false;
+        }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			//bestiaryEntry.AddTags();
 		}
@@ -139,6 +167,15 @@ namespace Origins.NPCs.Defiled {
                                 NPC.ai[2] = target.MountedCenter.X;
                                 NPC.ai[3] = target.MountedCenter.Y;
                                 NPC.ai[1] = 0;
+
+                                int roarCount = difficultyMult;
+                                int roarHP = NPC.lifeMax / (roarCount + 1);
+
+                                if (roarCount - roars > NPC.life / roarHP) {
+                                    NPC.ai[0] = 5;
+                                    roars++;
+                                }
+
                                 if (NPC.ai[0] == 1) {
                                     SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-0.9f), NPC.Center);
                                 }
@@ -201,8 +238,8 @@ namespace Origins.NPCs.Defiled {
                                 NPC.GetSource_FromAI(),
                                 NPC.Center,
                                 Vector2.Normalize(target.MountedCenter - NPC.Center).RotatedByRandom(0.15f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.9f, 1.1f),
-                                ModContent.ProjectileType<Items.Weapons.Defiled.Low_Signal_P>(),
-                                19, // for some reason NPC projectile damage is just arbitrarily doubled
+                                ModContent.ProjectileType<Low_Signal_P>(),
+                                22 - (difficultyMult * 3), // for some reason NPC projectile damage is just arbitrarily doubled
                                 0f,
                                 Main.myPlayer
                             ).tileCollide = Collision.CanHitLine(target.position, target.width, target.height, NPC.Center, 8, 8);
@@ -266,14 +303,17 @@ namespace Origins.NPCs.Defiled {
 
                     //"sidestep" dash
                     case 4: {
+						if ((int)NPC.ai[1] == 0) {
+                            NPC.ai[2] = target.MountedCenter.X + Math.Sign(NPC.Center.X - target.MountedCenter.X) * 288;
+                            NPC.ai[3] = target.MountedCenter.Y - 128;
+                        }
                         NPC.ai[1]++;
-                        float targetHeight = 128 + (float)(Math.Sin(++time * 0.05f) + 0.5f) * 32;
-                        float targetX = 288 + (float)Math.Sin(++time * 0.03f) * 48;
+                        float targetHeight = (float)(Math.Sin(++time * 0.05f) + 0.5f) * 32;
+                        float targetX = (float)Math.Sin(++time * 0.03f) * 48;
                         float speed = 5 * difficultyMult;
 
-                        float diffY = NPC.Bottom.Y - (target.MountedCenter.Y - targetHeight);
-                        float diffX = NPC.Center.X - target.MountedCenter.X;
-                        diffX += Math.Sign(diffX) * targetX;
+                        float diffY = NPC.Bottom.Y - (NPC.ai[2] - targetHeight);
+                        float diffX = NPC.Center.X - NPC.ai[3];
                         OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), 0.4f);
                         OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed * 4, speed * 4), 2.4f);
 						if (Math.Abs(diffX) < 64 || NPC.ai[1] > 25) {
@@ -281,6 +321,40 @@ namespace Origins.NPCs.Defiled {
                             NPC.ai[1] = 160 + (difficultyMult * 40);
                         }
                         NPC.noTileCollide = true;
+                    }
+                    break;
+
+                    //"beckoning roar"
+                    case 5: {
+                        NPC.ai[1]++;
+                        NPC.velocity *= 0.9f;
+                        if (NPC.ai[1] < 40) {
+                            leftArmTarget = 0;
+                            rightArmTarget = 0;
+                            armSpeed *= 0.5f;
+                        } else if (NPC.ai[1] > 60) {
+                            NPC.ai[0] = 0;
+                            NPC.ai[1] = -40 + (difficultyMult * 20);
+                        } else if (NPC.ai[1] >= 45) {
+                            NPC.velocity = new Vector2(0, -4);
+                            if ((int)NPC.ai[1] == 45) {
+                                SoundEngine.PlaySound(SoundID.ForceRoar.WithPitchRange(0.1f, 0.2f));
+                                for (int i = 3 + difficultyMult; i-- > 0;) {
+                                    Projectile.NewProjectileDirect(
+                                        NPC.GetSource_FromAI(),
+                                        target.Center - new Vector2(Main.rand.Next(80, 640) * (Main.rand.Next(2) * 2 - 1), 640),
+                                        new Vector2(0, 8),
+                                        ModContent.ProjectileType<Defiled_Enemy_Summon>(),
+                                        0,
+                                        0f,
+                                        Main.myPlayer
+                                    );
+                                }
+                            }
+                            leftArmTarget = -1.25f;
+                            rightArmTarget = -1.25f;
+                            armSpeed *= 5f;
+                        }
                     }
                     break;
                 }

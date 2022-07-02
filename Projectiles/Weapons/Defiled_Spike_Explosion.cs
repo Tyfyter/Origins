@@ -29,7 +29,10 @@ namespace Origins.Projectiles.Weapons {
                 Projectile.DamageType = parentProj.DamageType;
             }
 		}
-		public override void AI() {
+		public override bool? CanHitNPC(NPC target) => false;
+        public override bool CanHitPlayer(Player target) => false;
+        public override bool CanHitPvp(Player target) => false;
+        public override void AI() {
 			if (Projectile.ai[0] > 0) {
                 Projectile.ai[0]--;
                 int[] immune = Projectile.localNPCImmunity.ToArray();
@@ -56,6 +59,7 @@ namespace Origins.Projectiles.Weapons {
 	public class Defiled_Spike_Explosion_Spike : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
         public static int ID { get; private set; } = -1;
+        Vector2 realPosition;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Spike Eruption");
             ID = Projectile.type;
@@ -78,14 +82,14 @@ namespace Origins.Projectiles.Weapons {
                 Projectile.friendly = parentProj.friendly;
                 Projectile.DamageType = parentProj.DamageType;
             }
+            realPosition = Projectile.Center;
         }
         public float movementFactor {
             get => Projectile.ai[0];
             set => Projectile.ai[0] = value;
         }
         public override void AI() {
-            Projectile projOwner = Main.projectile[(int)Projectile.ai[1]];
-            Projectile.Center = projOwner.Center - Projectile.velocity;
+            Projectile.Center = realPosition - Projectile.velocity;
             if (movementFactor == 0f) {
                 movementFactor = 1f;
                 //if(projectile.timeLeft == 25)projectile.timeLeft = projOwner.itemAnimationMax-1;
@@ -97,7 +101,7 @@ namespace Origins.Projectiles.Weapons {
             Projectile.position += Projectile.velocity * movementFactor;
             Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.rotation += MathHelper.PiOver2;
-            projOwner.timeLeft = 7;
+            Main.projectile[(int)Projectile.ai[1]].timeLeft = 7;
         }
 		public override bool? CanHitNPC(NPC target) {
 			if (target.Hitbox.Intersects(Projectile.Hitbox)) {
@@ -128,8 +132,8 @@ namespace Origins.Projectiles.Weapons {
             for (int i = (int)totalLength; i > 0; i -= 58) {
                 c++;
                 pos = (Projectile.Center - Main.screenPosition) - (offset * c);
-                //lightColor = new Color(Lighting.GetSubLight(pos));//projectile.GetAlpha(new Color(Lighting.GetSubLight(pos)));
-                Main.EntitySpriteDraw(texture, pos, new Rectangle(0, 0, 18, System.Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
+                //lightColor = Projectile.GetAlpha(new Color(Lighting.GetColor((pos + Projectile.velocity * 2).ToTileCoordinates()).ToVector4()));
+                Main.EntitySpriteDraw(texture, pos, new Rectangle(0, 0, 18, Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
             }
             return false;
         }

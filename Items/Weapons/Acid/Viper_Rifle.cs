@@ -6,7 +6,7 @@ using Origins.Projectiles;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 
-namespace Origins.Items.Weapons.Other {
+namespace Origins.Items.Weapons.Acid {
     public class Viper_Rifle : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("HNO-3 \"Viper\"");

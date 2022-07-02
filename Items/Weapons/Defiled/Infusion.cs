@@ -20,15 +20,15 @@ namespace Origins.Items.Weapons.Defiled {
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 5;
-			Item.DamageType = DamageClass.Magic;
-			Item.mana = 7;
+			Item.damage = 6;
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
+			Item.mana = 5;
             Item.noMelee = true;
             Item.noUseGraphic = false;
 			Item.width = 30;
 			Item.height = 36;
-			Item.useTime = 7;
-			Item.useAnimation = 20;
+			Item.useTime = 9;
+			Item.useAnimation = 9;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
             Item.shoot = ModContent.ProjectileType<Infusion_P>();
@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.value = 5000;
             Item.useTurn = false;
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item1;
+			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitchRange(0.9f, 1f);
 			Item.autoReuse = true;
 		}
 		public override Vector2? HoldoutOffset() {
@@ -129,7 +129,7 @@ namespace Origins.Items.Weapons.Defiled {
 			behindNPCsAndTiles.Add(index);
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, new Color(Lighting.GetSubLight(Projectile.Center)), Projectile.rotation, new Vector2(27, 7), Projectile.scale, SpriteEffects.None, 0);
+			Main.EntitySpriteDraw(TextureAssets.Projectile[Projectile.type].Value, Projectile.Center - Main.screenPosition, null, new Color(Lighting.GetSubLight(Projectile.Center)), Projectile.rotation, new Vector2(13, 3), Projectile.scale, SpriteEffects.None, 0);
 			return false;
 		}
 		public override void SendExtraAI(BinaryWriter writer) {
