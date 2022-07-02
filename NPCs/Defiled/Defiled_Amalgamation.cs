@@ -107,13 +107,11 @@ namespace Origins.NPCs.Defiled {
             IItemDropRuleCondition notExpert = new Conditions.NotExpert();
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Defiled_Ore_Item>(), 1, 140, 330));
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1, 40, 100));
-            //low signal was in a position where it'd basically just be a weird version of infusion if it was dropped as listed in the doc
-            //so I put it here where it's a "hey, I get to use that one attack the boss uses!" drop instead
-            //add Fiend Staff & Return To Sender to the below rule once they're added, there were 2 items listed with 33% chance, perfect for fitting in a third
-            npcLoot.Add(new LeadingConditionRule(notExpert).OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>())));
+            npcLoot.Add(new LeadingConditionRule(notExpert).OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>()))); //I am in agreement with this change.
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1));
+            //add Fiend Staff & Return To Sender to the below rule once they're added, there were 2 items listed with 33% chance, perfect for fitting in a third
         }
-		public override void AI() {
+        public override void AI() {
             NPC.TargetClosest();
             if (NPC.HasPlayerTarget) {
 

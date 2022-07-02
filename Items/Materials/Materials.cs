@@ -323,7 +323,7 @@ namespace Origins.Items.Materials {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
-            Item.maxStack = 999;
+            Item.maxStack = 99;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
