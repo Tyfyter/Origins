@@ -14,6 +14,7 @@ using Terraria.Localization;
 using Terraria.GameContent.Achievements;
 using Terraria.Audio;
 using Origins.NPCs.Defiled;
+using Terraria.DataStructures;
 
 namespace Origins.Projectiles.Misc {
     public class Defiled_Wastelands_Signal : ModProjectile {
@@ -37,7 +38,10 @@ namespace Origins.Projectiles.Misc {
             Projectile.light = 0;
             Projectile.tileCollide = false;
         }
-        public override void AI() {
+		public override void OnSpawn(IEntitySource source) {
+			base.OnSpawn(source);
+		}
+		public override void AI() {
             int x = (int)(Projectile.position.X / 16);
             int y = (int)(Projectile.position.Y / 16);
             WorldGen.TileFrame(x, y, true);
@@ -64,7 +68,7 @@ namespace Origins.Projectiles.Misc {
         }
         public override void Kill(int timeLeft) {
             if ((int)Projectile.ai[0] == 1) {
-                Color color = Color.Lerp(new Color(50, 255, 130), new Color(222, 222, 222), WorldGen.shadowOrbCount / 2);
+                Color color = Color.Lerp(new Color(50, 255, 130), new Color(222, 222, 222), WorldGen.shadowOrbCount / 2f);
 
                 WorldGen.shadowOrbCount++;
                 string textKey = "Mods.Origins.Status_Messages.Defiled_Fissure_" + WorldGen.shadowOrbCount;

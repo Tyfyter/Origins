@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Defiled {
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 60;
+			Item.damage = 40;
 			Item.DamageType = DamageClass.Magic;
 			Item.mana = 7;
             Item.noMelee = true;

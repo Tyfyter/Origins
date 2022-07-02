@@ -20,6 +20,7 @@ using Terraria.Utilities;
 using Origins.Items.Weapons.Defiled;
 using Tyfyter.Utils;
 using Origins.Projectiles.Enemies;
+using Origins.Tiles.Defiled;
 
 namespace Origins.NPCs.Defiled {
     [AutoloadBossHead]
@@ -70,6 +71,7 @@ namespace Origins.NPCs.Defiled {
             NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(-1f, -0.75f);
             NPC.noGravity = true;
             NPC.npcSlots = 200;
+            NPC.value = 10000;
             Music = Origins.Music.DefiledBoss;
             NPC.knockBackResist = 0;// actually a multiplier
         }
@@ -102,9 +104,14 @@ namespace Origins.NPCs.Defiled {
 			//bestiaryEntry.AddTags();
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bombardment>(), 8));
+            IItemDropRuleCondition notExpert = new Conditions.NotExpert();
+            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Defiled_Ore_Item>(), 1, 140, 330));
+            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1, 40, 100));
+            //low signal was in a position where it'd basically just be a weird version of infusion if it was dropped as listed in the doc
+            //so I put it here where it's a "hey, I get to use that one attack the boss uses!" drop instead
+            //add Fiend Staff & Return To Sender to the below rule once they're added, there were 2 items listed with 33% chance, perfect for fitting in a third
+            npcLoot.Add(new LeadingConditionRule(notExpert).OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>())));
+            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1));
         }
 		public override void AI() {
             NPC.TargetClosest();

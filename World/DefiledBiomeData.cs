@@ -383,7 +383,7 @@ namespace Origins.World.BiomeData {
 					}
 				}
 			}
-			if (Main.netMode != NetmodeID.MultiplayerClient && !noTileActions) {
+			if (Main.netMode != NetmodeID.MultiplayerClient && !WorldGen.noTileActions) {
 				if (genRand.NextBool(2)) {
 					spawnMeteor = true;
 				}
@@ -429,7 +429,7 @@ namespace Origins.World.BiomeData {
 				}
 				
 				//this projectile handles the rest
-				Projectile.NewProjectile(GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, ai0: 1, ai1: player);
+				Projectile.NewProjectile(GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, Main.myPlayer, ai0: 1, ai1: player);
 
 				AchievementsHelper.NotifyProgressionEvent(7);
 			}

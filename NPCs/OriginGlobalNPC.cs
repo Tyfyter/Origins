@@ -166,8 +166,12 @@ namespace Origins.NPCs {
 					pool.Add(ModContent.NPCType<Defiled_Brute>(), DefiledWastelands.SpawnRates.Brute);
 				}
 				if (Defiled_Amalgamation.spawnDA) {
-					pool.Clear();
-					pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 999);
+					foreach (var entry in pool) {
+						pool[entry.Key] = 0;
+					}
+					if (spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Walls.Defiled_Stone_Wall>()) {
+						pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 999);
+					}
 				}
 			} else if (player.GetModPlayer<OriginPlayer>().ZoneRiven) {
 				pool[0] = 0;

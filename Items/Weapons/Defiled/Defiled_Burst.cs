@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Defiled {
             Item.value = 15000;
             Item.useTurn = false;
             Item.rare = ItemRarityID.Blue;
-            Item.UseSound = Origins.Sounds.Krunch;
+            Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.05f);
         }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    for(int i = 0; i<5; i++)Projectile.NewProjectile(source, position, velocity.RotatedByRandom(i/10f), type, damage, knockback, player.whoAmI);
