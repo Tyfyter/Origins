@@ -47,7 +47,7 @@ namespace Origins.Items.Armor.Acrid{
 	public class Acrid_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Breastplate");
-			Tooltip.SetDefault("Increases life regeneration");
+			Tooltip.SetDefault("Increased life regeneration");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
