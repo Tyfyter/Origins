@@ -10,6 +10,7 @@ using static Origins.OriginExtensions;
 
 namespace Origins.World {
 	public class Dusk : ModBiome {
+		public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 		public override int Music => Origins.Music.Dusk;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

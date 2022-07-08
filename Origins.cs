@@ -649,7 +649,7 @@ namespace Origins {
             }
         }
         public static class Music {
-            public static int Dusk = MusicID.Eerie;
+            public static int Dusk = MusicID.PumpkinMoon;
             public static int Defiled = MusicID.Corruption;
             public static int DefiledBoss = MusicID.OtherworldlyBoss1;
             public static int UndergroundDefiled = MusicID.UndergroundCorruption;
