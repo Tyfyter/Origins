@@ -369,6 +369,16 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
+    public class Nova_Fragment : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Nova Fragment");
+            Tooltip.SetDefault("The essence of a dying star in its last moment...");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+    }
     public class Peat_Moss : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Peat Moss");
