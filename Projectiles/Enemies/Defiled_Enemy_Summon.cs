@@ -33,7 +33,7 @@ namespace Origins.Projectiles.Enemies {
 				source = amalgam.GetSource_FromAI();
 			}
 			Point point = Projectile.position.ToPoint();
-			NPC.NewNPC(source, point.X, point.Y, ModContent.NPCType<Defiled_Cyclops>());
+			NPC.NewNPC(source, point.X, point.Y, ModContent.NPCType<Defiled_Swarmer>());
 		}
 	}
 }
