@@ -31,6 +31,11 @@ namespace Origins.NPCs.Defiled {
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
+        public override void UpdateLifeRegen(ref int damage) {
+            if (NPC.life > 10) {
+                NPC.lifeRegen += 60 / (NPC.life / 10);
+            }
+        }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 10));
             npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Megaphone, 100));

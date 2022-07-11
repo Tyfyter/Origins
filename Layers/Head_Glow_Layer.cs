@@ -17,7 +17,7 @@ namespace Origins.Layers {
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
 			return Origins.HelmetGlowMasks.ContainsKey(drawInfo.drawPlayer.head);
 		}
-		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Torso);
+		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Head);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
             Player drawPlayer = drawInfo.drawPlayer;
             Texture2D texture = Origins.HelmetGlowMasks[drawPlayer.head];

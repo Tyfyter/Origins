@@ -102,7 +102,6 @@ namespace Origins.Items.Armor.Mimic {
 			Tooltip.SetDefault("Increased life regeneration");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Mimic/Mimic_Breastplate_Body_Glow");
-				Origins.AddBreastplateGlowmask(-Item.bodySlot, "Items/Armor/Mimic/Mimic_Breastplate_FemaleBody_Glow");
 			}
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}

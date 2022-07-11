@@ -33,6 +33,11 @@ namespace Origins.NPCs.Defiled {
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
+        public override void UpdateLifeRegen(ref int damage) {
+            if (NPC.life > 10) {
+                NPC.lifeRegen += 60 / (NPC.life / 10);
+            }
+        }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));

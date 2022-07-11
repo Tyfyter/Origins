@@ -13,6 +13,9 @@ namespace Origins.Items.Armor.Acrid{
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Helmet");
 			Tooltip.SetDefault("Emits light when worn");
+            if (Main.netMode != NetmodeID.Server) {
+                Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Helmet_Head_Glow");
+            }
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {

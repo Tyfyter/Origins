@@ -11,6 +11,9 @@ namespace Origins.Items.Armor.Defiled {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Helmet");
             Tooltip.SetDefault("Increased mana regeneration rate");
+            if (Main.netMode != NetmodeID.Server) {
+                Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Defiled/Defiled_Helmet_Head_Glow");
+            }
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {

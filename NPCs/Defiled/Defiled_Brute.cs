@@ -34,7 +34,12 @@ namespace Origins.NPCs.Defiled {
             NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
             NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
         }
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+        public override void UpdateLifeRegen(ref int damage) {
+            if (NPC.life > 10) {
+                NPC.lifeRegen += 60 / (NPC.life / 10);
+            }
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			//bestiaryEntry.AddTags();
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
@@ -42,6 +47,7 @@ namespace Origins.NPCs.Defiled {
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bombardment>(), 8));
         }
+
         public override bool PreAI() {
             if (Main.rand.NextBool(1000)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(0.5f, 0.75f), NPC.Center);
             //if(!attacking) {
