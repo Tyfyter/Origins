@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
@@ -34,6 +35,11 @@ namespace Origins.NPCs.Defiled {
             if (NPC.life > 10) {
                 NPC.lifeRegen += 60 / (NPC.life / 10);
             }
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("Acrobatic despite its centi-pedal appearance. Moves slowly at first and then rapidly when nearby the threat."),
+            });
         }
         public override bool PreAI() {
             NPC.TargetClosest();

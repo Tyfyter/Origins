@@ -16,8 +16,10 @@ using Terraria.Utilities;
 
 namespace Origins.Items.Weapons.Defiled {
 	public class Bone_Latcher : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bone Latcher");
+			glowmask = Origins.AddGlowMask(this);
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
@@ -27,6 +29,7 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.DamageType = DamageClass.Melee;
 			Item.damage = 20;
 			Item.rare = ItemRarityID.Green;
+			Item.glowMask = glowmask;
 		}
 		public override int ChoosePrefix(UnifiedRandom rand) {
 			if (Item.noUseGraphic) {

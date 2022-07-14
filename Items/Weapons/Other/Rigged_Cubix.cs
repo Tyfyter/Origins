@@ -6,10 +6,9 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
-	public class Rigged_Cubix : ModItem {
+    public class Rigged_Cubix : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Rigged Cubix");

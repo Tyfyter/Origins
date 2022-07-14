@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Materials;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Digger_Head : Defiled_Digger {
@@ -20,6 +21,11 @@ namespace Origins.NPCs.Defiled {
             if (NPC.life > 10) {
                 NPC.lifeRegen += 60 / (NPC.life / 10);
             }
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("Effective deterrent for any sub-terranean threat."),
+            });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));

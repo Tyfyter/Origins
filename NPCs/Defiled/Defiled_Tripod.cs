@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using static Origins.OriginExtensions;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Tripod : ModNPC {
@@ -38,6 +39,11 @@ namespace Origins.NPCs.Defiled {
             if (NPC.life > 10) {
                 NPC.lifeRegen += 60 / (NPC.life / 10);
             }
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("Fast and hard-hitting, the Tripod is the last defense of the Defiled. It is the last thing any traveler would want to encounter."),
+            });
         }
         public override void AI() {
             if (Main.rand.NextBool(400)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);

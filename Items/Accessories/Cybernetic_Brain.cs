@@ -16,6 +16,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             Item.accessory = true;
+            Item.rare = ItemRarityID.Purple;
             Item.glowMask = glowmask;
         }
         public override void UpdateEquip(Player player) {

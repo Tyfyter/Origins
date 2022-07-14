@@ -1,25 +1,20 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Origins.Projectiles.Misc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.ID;
-using Terraria.DataStructures;
-using Origins.Projectiles.Misc;
 using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Other {
     public class Fragarach : ModItem {
+        static short glowmask;
         //public override bool OnlyShootOnSwing => true;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Fragarach");
             Tooltip.SetDefault("");
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
@@ -41,6 +36,7 @@ namespace Origins.Items.Weapons.Other {
             Item.shootSpeed = 8f;
             Item.autoReuse = true;
             Item.scale = 1f;
+            Item.glowMask = glowmask;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips) {
             tooltips[0].OverrideColor = new Color(50, 230, 230).MultiplyRGBA(Main.MouseTextColorReal);

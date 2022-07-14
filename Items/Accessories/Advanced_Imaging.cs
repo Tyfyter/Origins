@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
             Item.handOffSlot = -1;
             Item.handOnSlot = -1;
             Item.value = 200000; //PPGGSSCC
+            Item.rare = ItemRarityID.Yellow;
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().advancedImaging = true;

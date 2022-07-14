@@ -18,6 +18,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.scale = 0.85f;
 			Item.buffType = BuffID.WellFed;
 			Item.buffTime = 60 * 60 * 10;
+			Item.rare = ItemRarityID.Orange;
 		}
 		public override bool? UseItem(Player player) {
 			player.AddBuff(BuffID.Regeneration, Item.buffTime);

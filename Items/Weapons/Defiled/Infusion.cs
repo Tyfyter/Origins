@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Defiled {
 		public override void SetDefaults() {
 			Item.damage = 4;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
-			Item.mana = 5;
+			Item.mana = 3;
             Item.noMelee = true;
             Item.noUseGraphic = false;
 			Item.width = 30;

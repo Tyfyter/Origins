@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Audio;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.Defiled {
     public class Shattered_Mummy : ModNPC {
@@ -35,6 +36,11 @@ namespace Origins.NPCs.Defiled {
             if (NPC.life > 10) {
                 NPC.lifeRegen += 60 / (NPC.life / 10);
             }
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("The Defiled did not struggle to rapidly break down this fiend. It clunks around the Defiled sands in search of any trespassers."),
+            });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 10));

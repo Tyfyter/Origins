@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.Audio;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Mite : ModNPC {
@@ -35,6 +36,11 @@ namespace Origins.NPCs.Defiled {
             if (NPC.life > 10) {
                 NPC.lifeRegen += 60 / (NPC.life / 10);
             }
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("Dweller of the Defiled Caverns. Hard to spot as it does not move until prey draws near."),
+            });
         }
         public override bool PreAI() {
             if (NPC.HasPlayerTarget && Main.rand.NextBool(600)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1.1f, 1.5f), NPC.Center);

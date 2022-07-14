@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Defiled {
 	public class Knee_Slapper : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Knee Slapper");
-			Tooltip.SetDefault("'How does the fish feel about this?'");
+			Tooltip.SetDefault("'Fish have feelings too'");
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {

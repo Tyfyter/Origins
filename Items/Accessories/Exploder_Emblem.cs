@@ -21,6 +21,7 @@ namespace Origins.Items.Accessories {
             Item.accessory = true;
             Item.width = 28;
             Item.height = 28;
+            Item.rare = ItemRarityID.LightRed;
         }
         public override void UpdateEquip(Player player) {
             //GetDamage returns a reference, so you can do this despite it not normally being possible to assign to a method's return value

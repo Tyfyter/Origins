@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
-using Origins.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
 using Tyfyter.Utils;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
     public class Void_Spectral : ModItem {
@@ -22,7 +16,7 @@ namespace Origins.Items.Weapons.Other {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Void Spectral");
             Tooltip.SetDefault("");
-            glowmask = Origins.AddGlowMask("Weapons/Other/Void_Spectral_Glow");
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {

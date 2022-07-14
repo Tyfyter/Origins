@@ -12,6 +12,7 @@ using Terraria.Audio;
 using Origins.Items.Materials;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Weapons.Defiled;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Cyclops : ModNPC {
@@ -37,6 +38,11 @@ namespace Origins.NPCs.Defiled {
             if (NPC.life > 10) {
                 NPC.lifeRegen += 60 / (NPC.life / 10);
             }
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("The face of the Defiled. A deadly unit that handles the smallest threats."),
+            });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));

@@ -10,11 +10,14 @@ using Microsoft.Xna.Framework;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Materials;
 using Terraria.Audio;
+using Terraria.GameContent.Bestiary;
+using Origins.Items.Other.Consumables;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Flyer : ModNPC {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Phantom");
+            //Origins.AddGlowMask(NPC. "NPCs/Defiled/Defiled_Flyer_Glow");
             Main.npcFrameCount[NPC.type] = 4;
         }
         public override void SetDefaults() {
@@ -34,10 +37,15 @@ namespace Origins.NPCs.Defiled {
                 NPC.lifeRegen += 60 / (NPC.life / 10);
             }
         }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("A great antibody for reaching airborne or hard-to-reach threats. This may have once been a flying creature like a bird."),
+            });
+        }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Krunch_Mix>(), 6));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Krunch_Mix>(), 6));
         }
         public override void AI() {
             if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.1f), NPC.Center);

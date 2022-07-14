@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -11,20 +9,20 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.ID;
 using Terraria.DataStructures;
-using Origins.Projectiles.Misc;
 using Terraria.Graphics.Shaders;
 using Tyfyter.Utils;
 using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
     public class Gravaulter : ModItem {
+        static short glowmask;
         protected override bool CloneNewInstances => true;
         float shootSpeed;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Gravaulter");
             Tooltip.SetDefault("");
             ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
@@ -36,7 +34,7 @@ namespace Origins.Items.Weapons.Other {
             Item.width = 58;
             Item.height = 58;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.useTime = 12;
+            Item.useTime = 4;
             Item.useAnimation = 12;
             Item.knockBack = 9.5f;
             Item.value = 500000;
@@ -47,6 +45,7 @@ namespace Origins.Items.Weapons.Other {
             Item.scale = 1f;
             Item.mana = 6;
             Item.UseSound = null;
+            Item.glowMask = glowmask;
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips) {
             tooltips[0].OverrideColor = new Color(0, Main.mouseTextColor, 0, Main.mouseTextColor);
@@ -156,7 +155,7 @@ namespace Origins.Items.Weapons.Other {
                         spawnPosition.R = dist;
                         rocks.Add(new Rock(spawnPosition));
                         Vector2 soundPosition = Projectile.Center + (Vector2)spawnPosition;
-                        SoundEngine.PlaySound(SoundID.Item28.WithPitch(-0.3f), soundPosition);
+                        SoundEngine.PlaySound(SoundID.Item9.WithPitch(1f), soundPosition);
                     }
                 }
                 Rock rock;

@@ -18,6 +18,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             Item.accessory = true;
+            Item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

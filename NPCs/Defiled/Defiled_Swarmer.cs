@@ -11,6 +11,7 @@ using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Materials;
 using Terraria.Audio;
 using Origins.Tiles.Defiled;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Swarmer : ModNPC {
@@ -34,6 +35,11 @@ namespace Origins.NPCs.Defiled {
             if (NPC.life > 10) {
                 NPC.lifeRegen += 60 / (NPC.life / 10);
             }
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("Not commonly found in the Wastelands. They appear when a massive Defiled being is in distress."),
+            });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Undead_Chunk>(), 2, 2, 4));

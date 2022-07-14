@@ -20,6 +20,7 @@ namespace Origins.Items.Accessories {
             Item.accessory = true;
             Item.width = 21;
             Item.height = 20;
+            Item.rare = ItemRarityID.Expert;
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().madHand = true;

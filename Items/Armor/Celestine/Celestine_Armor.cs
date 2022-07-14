@@ -15,7 +15,8 @@ namespace Origins.Items.Armor.Celestine {
         }
 		public override void SetDefaults() {
             Item.defense = 8;
-		}
+            Item.rare = ItemRarityID.Red;
+        }
         public override void UpdateEquip(Player player) {
             player.GetCritChance(DamageClass.Melee) += 10;
             player.GetCritChance(DamageClass.Magic) += 10;
@@ -37,7 +38,8 @@ namespace Origins.Items.Armor.Celestine {
         }
 		public override void SetDefaults() {
             Item.defense = 24;
-		}
+            Item.rare = ItemRarityID.Red;
+        }
         public override void UpdateEquip(Player player) {
             player.GetDamage(DamageClass.Melee) += 0.15f;
             player.GetDamage(DamageClass.Magic) += 0.15f;
@@ -52,7 +54,8 @@ namespace Origins.Items.Armor.Celestine {
         }
 		public override void SetDefaults() {
             Item.defense = 16;
-		}
+            Item.rare = ItemRarityID.Red;
+        }
         public override void UpdateEquip(Player player) {
             player.GetAttackSpeed(DamageClass.Melee) += 0.2f;
             player.manaRegenBuff = true;

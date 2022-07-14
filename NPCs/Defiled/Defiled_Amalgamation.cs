@@ -101,9 +101,11 @@ namespace Origins.NPCs.Defiled {
             spawnDA = false;
         }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			//bestiaryEntry.AddTags();
-		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("A murderous super-organism just trying to protect its home."),
+            });
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
             IItemDropRuleCondition notExpert = new Conditions.NotExpert();
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Defiled_Ore_Item>(), 1, 140, 330));
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1, 40, 100));

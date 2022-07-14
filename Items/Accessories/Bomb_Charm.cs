@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.GameContent.Creative;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
@@ -11,6 +12,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             Item.accessory = true;
+            Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().explosiveSelfDamage-=0.2f;

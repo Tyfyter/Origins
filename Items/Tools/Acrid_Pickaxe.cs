@@ -6,9 +6,11 @@ using Origins.Items.Materials;
 
 namespace Origins.Items.Tools {
 	public class Acrid_Pickaxe : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Pickaxe");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Non-corrosive");
+			glowmask = Origins.AddGlowMask(this);
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
@@ -24,6 +26,7 @@ namespace Origins.Items.Tools {
 			Item.value = 3600;
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item1;
+			Item.glowMask = glowmask;
 		}
         public override float UseTimeMultiplier(Player player) {
             return player.wet?1.5f:1;

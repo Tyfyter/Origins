@@ -34,15 +34,24 @@ namespace Origins.NPCs.Defiled {
             NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
             NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
         }
+        float Mana { get; set; }
+        int manaDrain { get; set; }
+
+        public override void OnHitPlayer(Player target, int damage, bool crit) {
+            Mana = Math.Min(Mana + 20, 200);
+            manaDrain = Math.Min(14, target.statMana);
+        }
         public override void UpdateLifeRegen(ref int damage) {
-            if (NPC.life > 10) {
-                NPC.lifeRegen += 60 / (NPC.life / 10);
+            if (NPC.life > 20) {
+                NPC.lifeRegen += 18 / (NPC.life / 20);
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			//bestiaryEntry.AddTags();
-		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("A stumbling defender of the Wastelands. It will be summoned if other Defiled antibodies struggle."),
+            });
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bombardment>(), 8));

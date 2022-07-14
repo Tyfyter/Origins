@@ -19,6 +19,7 @@ namespace Origins.Items.Accessories {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.WormScarf);
             Item.neckSlot = -1;
+            Item.rare = ItemRarityID.Expert;
         }
         public override void UpdateEquip(Player player) {
             player.statDefense -= 8;

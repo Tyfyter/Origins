@@ -9,6 +9,7 @@ namespace Origins.Items.Other.Fish {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Ebonkoi);
+			Item.rare = ItemRarityID.Quest;
 		}
 	}
 }

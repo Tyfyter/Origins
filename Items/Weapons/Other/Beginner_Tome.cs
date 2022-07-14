@@ -3,10 +3,9 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
-	public class Beginner_Tome : ModItem {
+    public class Beginner_Tome : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Beginner's Tome");
 			Tooltip.SetDefault("Be careful, it's book");

@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Origins.NPCs.Riven {
     public class Riven_Mummy : ModNPC {
@@ -38,6 +39,14 @@ namespace Origins.NPCs.Riven {
                 //reset frameCounter so this doesn't trigger every frame after the first time
 				NPC.frameCounter = 0;
 			}
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 10));
+            npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Megaphone, 100));
+            npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Blindfold, 100));
+            npcLoot.Add(ItemDropRule.Common(ItemID.MummyMask, 75));
+            npcLoot.Add(ItemDropRule.Common(ItemID.MummyShirt, 75));
+            npcLoot.Add(ItemDropRule.Common(ItemID.MummyPants, 75));
         }
         public override void HitEffect(int hitDirection, double damage) {
             //spawn gore if npc is dead after being hit

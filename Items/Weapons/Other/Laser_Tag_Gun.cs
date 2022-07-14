@@ -1,28 +1,26 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
-	public class Laser_Tag_Gun : AnimatedModItem, IElementalItem {
+    public class Laser_Tag_Gun : AnimatedModItem, IElementalItem {
+        static short glowmask;
         public ushort Element => Elements.Earth;
         static DrawAnimationManual animation;
         public override DrawAnimation Animation => animation;
         public override Color? GlowmaskTint => Main.teamColor[Main.player[Item.playerIndexTheItemIsReservedFor].team];
-        static short glowmask;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Laser Tag Gun");
-			Tooltip.SetDefault("‘Once you're tagged follow through the safety guidelines and walk out of the chamber.’");
+			Tooltip.SetDefault("‘Pew. Pew. Muddathrucker...’");
             animation = new DrawAnimationManual(1);
 			Main.RegisterItemAnimation(Item.type, animation);
-            glowmask = Origins.AddGlowMask("Weapons/Other/Laser_Tag_Gun_Glow");
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 		public override void SetDefaults() {

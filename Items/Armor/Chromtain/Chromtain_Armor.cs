@@ -16,7 +16,8 @@ namespace Origins.Items.Armor.Chromtain {
         }
 		public override void SetDefaults() {
             Item.defense = 21;
-		}
+            Item.rare = ItemRarityID.Purple;
+        }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Chromtain_Bar>(), 15);
@@ -45,7 +46,8 @@ namespace Origins.Items.Armor.Chromtain {
         }
 		public override void SetDefaults() {
             Item.defense = 54;
-		}
+            Item.rare = ItemRarityID.Purple;
+        }
         public override void UpdateEquip(Player player) {
             player.statLifeMax2 += 20;
         }
@@ -67,7 +69,8 @@ namespace Origins.Items.Armor.Chromtain {
         }
 		public override void SetDefaults() {
             Item.defense = 33;
-		}
+            Item.rare = ItemRarityID.Purple;
+        }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Chromtain_Bar>(), 20);

@@ -17,6 +17,7 @@ namespace Origins.Items.Accessories {
             Item.CloneDefaults(ItemID.YoYoGlove);
             Item.handOffSlot = handOffSlot;
             Item.handOnSlot = handOnSlot;
+            Item.rare = ItemRarityID.Green;
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().bombHandlingDevice = true;

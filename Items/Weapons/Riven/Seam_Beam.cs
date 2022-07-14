@@ -1,19 +1,16 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using System;
-using System.Runtime.CompilerServices;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Items.Materials;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Riven {
-	public class Seam_Beam : ModItem {
+    public class Seam_Beam : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Seam Beam");

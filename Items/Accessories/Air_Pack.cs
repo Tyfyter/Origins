@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
             Item.CloneDefaults(ItemID.YoYoGlove);
             Item.handOffSlot = -1;
             Item.handOnSlot = -1;
+            Item.rare = ItemRarityID.LightRed;
         }
         public override void UpdateEquip(Player player) {
             player.buffImmune[BuffID.Suffocation] = true;

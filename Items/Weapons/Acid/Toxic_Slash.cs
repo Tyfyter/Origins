@@ -16,13 +16,13 @@ using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Acid {
     public class Toxic_Slash : ModItem, IElementalItem {
+		static short glowmask;
         public ushort Element => Elements.Acid;
 		//public override bool OnlyShootOnSwing => true;
-		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Toxic Slash");
 			Tooltip.SetDefault("");
-			glowmask = Origins.AddGlowMask("Weapons/Acid/Toxic_Slash_Glow");
+			glowmask = Origins.AddGlowMask(this);
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {

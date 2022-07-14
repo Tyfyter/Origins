@@ -20,6 +20,7 @@ namespace Origins.Items.Accessories {
             Item.accessory = true;
             Item.width = 22;
             Item.height = 20;
+            Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().rasterize = true;

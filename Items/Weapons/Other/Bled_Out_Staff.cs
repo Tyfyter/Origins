@@ -4,14 +4,15 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
-	public class Bled_Out_Staff : ModItem {
+    public class Bled_Out_Staff : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bled Out Staff");
 			Tooltip.SetDefault("");
 			Item.staff[Item.type] = true;
+			glowmask = Origins.AddGlowMask(this);
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
@@ -27,6 +28,7 @@ namespace Origins.Items.Weapons.Other {
 			Item.value = 5000;
             Item.shoot = ModContent.ProjectileType<Bled_Out_Staff_P>();
 			Item.rare = ItemRarityID.LightRed;
+			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

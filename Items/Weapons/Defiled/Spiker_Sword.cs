@@ -1,15 +1,16 @@
 using Origins.Items.Materials;
 using Terraria;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Defiled {
-	public class Spiker_Sword : ModItem {
+    public class Spiker_Sword : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Spiker Sword");
 			Tooltip.SetDefault("Very pointy");
+			glowmask = Origins.AddGlowMask(this);
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
@@ -25,6 +26,7 @@ namespace Origins.Items.Weapons.Defiled {
             Item.useTurn = true;
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
+			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

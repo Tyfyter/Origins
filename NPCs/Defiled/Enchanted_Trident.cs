@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.Defiled {
     public class Enchanted_Trident : ModNPC {
@@ -30,6 +31,11 @@ namespace Origins.NPCs.Defiled {
 			if (NPC.ai[0] == 2) {
                 NPC.ai[1] += 0.25f;
 			}
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("Forged by the Defiled. This weapon is a machination of its curiosity."),
+            });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Nazar, 100));

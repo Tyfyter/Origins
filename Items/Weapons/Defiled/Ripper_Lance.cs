@@ -10,9 +10,11 @@ using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Defiled {
 	public class Ripper_Lance : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Ripper Lance");
 			Tooltip.SetDefault("Very pointy");
+			glowmask = Origins.AddGlowMask(this);
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
@@ -32,6 +34,7 @@ namespace Origins.Items.Weapons.Defiled {
             Item.useTurn = false;
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
+			Item.glowMask = glowmask;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    Projectile.NewProjectile(source, position, velocity.RotatedBy(-0.5f*player.direction), type, damage, knockback, player.whoAmI);

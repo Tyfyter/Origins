@@ -16,16 +16,18 @@ using Terraria.DataStructures;
 
 namespace Origins.Items.Weapons.Defiled {
 	public class Low_Signal : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Low Signal");
 			Tooltip.SetDefault("");
 			Item.staff[Type] = true;
+			glowmask = Origins.AddGlowMask(this);
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 40;
 			Item.DamageType = DamageClass.Magic;
-			Item.mana = 7;
+			Item.mana = 9;
             Item.noMelee = true;
             Item.noUseGraphic = false;
 			Item.width = 30;
@@ -41,6 +43,7 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f);
 			Item.autoReuse = true;
+			Item.glowMask = glowmask;
 		}
 	}
     public class Low_Signal_P : ModProjectile {

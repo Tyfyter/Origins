@@ -14,6 +14,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
         }
         public override void SetDefaults() {
             Item.vanity = true;
+            Item.rare = ItemRarityID.Expert;
         }
 	}
     [AutoloadEquip(EquipType.Body)]
@@ -26,6 +27,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
         }
         public override void SetDefaults() {
             Item.vanity = true;
+            Item.rare = ItemRarityID.Expert;
         }
     }
     [AutoloadEquip(EquipType.Legs)]
@@ -37,6 +39,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
         }
         public override void SetDefaults() {
             Item.vanity = true;
+            Item.rare = ItemRarityID.Expert;
         }
     }
 	public class Plague_Texan_Sight : ModItem {
@@ -49,6 +52,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 		}
         public override void SetDefaults() {
             Item.accessory = true;
+            Item.rare = ItemRarityID.Expert;
         }
         public override void UpdateAccessory(Player player, bool hideVisual) {
             player.dangerSense = true;

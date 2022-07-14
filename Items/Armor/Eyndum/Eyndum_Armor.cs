@@ -15,7 +15,7 @@ namespace Origins.Items.Armor.Eyndum {
         }
         public override void SetDefaults() {
             Item.defense = 8;
-            Item.rare = ItemRarityID.Pink;
+            Item.rare = ItemRarityID.Purple;
         }
         public override void UpdateEquip(Player player) {
         }
@@ -48,7 +48,7 @@ namespace Origins.Items.Armor.Eyndum {
         public override void SetDefaults() {
             Item.defense = 16;
             Item.wornArmor = true;
-            Item.rare = ItemRarityID.Pink;
+            Item.rare = ItemRarityID.Purple;
         }
         public override void UpdateEquip(Player player) {
 
@@ -73,7 +73,7 @@ namespace Origins.Items.Armor.Eyndum {
         }
         public override void SetDefaults() {
             Item.defense = 12;
-            Item.rare = ItemRarityID.Pink;
+            Item.rare = ItemRarityID.Purple;
         }
         public override void UpdateEquip(Player player) {
 

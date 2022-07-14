@@ -7,6 +7,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
 
 namespace Origins.Items.Materials {
     public class Acid_Bottle : ModItem {
@@ -32,6 +33,7 @@ namespace Origins.Items.Materials {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
+            Item.rare = ItemRarityID.LightRed;
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
@@ -106,10 +108,16 @@ namespace Origins.Items.Materials {
         }
     }
     public class Bleeding_Obsidian_Shard : ModItem {
-        //add lore here
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bleeding Obsidian Shard");
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 48;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+            Item.rare = ItemRarityID.Pink;
+            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ModContent.ItemType<Bleeding_Obsidian_Item>());
@@ -149,6 +157,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Pink;
         }
     }
     public class Conductor_Rod : ModItem {
@@ -159,6 +168,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Pink;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -175,6 +185,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Purple;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -193,6 +204,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Blue;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -211,6 +223,7 @@ namespace Origins.Items.Materials {
 			Item.width = 14;
 			Item.height = 20;
 			Item.maxStack = 99;
+            Item.rare = ItemRarityID.Yellow;
         }
     }
     public class Element36_Bundle : ModItem {
@@ -221,6 +234,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Purple;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -250,6 +264,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Purple;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -273,6 +288,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Green;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -289,6 +305,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Purple;
         }
     }
     public class Formium_Bar : ModItem {
@@ -299,6 +316,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Purple;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -314,16 +332,20 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Red;
         }
     }
     public class Infested_Bar : ModItem {
-        //add lore here
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Infested Bar");
+            Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
+            Item.rare = ItemRarityID.Blue;
+            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -333,14 +355,19 @@ namespace Origins.Items.Materials {
         }
     }
     public class Lunar_Token : ModItem {
-        //add lore here
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Lunar Token");
             Tooltip.SetDefault("Valuable to the demented.");
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Cyan;
+            //Item.IsCurrency = true;
+            Item.glowMask = glowmask;
         }
     }
     public class Shaping_Matter : ModItem {
@@ -351,6 +378,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
+            Item.rare = ItemRarityID.Orange;
         }
     }
     public class Modular_Plating : ModItem {
@@ -361,6 +389,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Pink;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -370,13 +399,18 @@ namespace Origins.Items.Materials {
         }
     }
     public class Nova_Fragment : ModItem {
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Nova Fragment");
             Tooltip.SetDefault("The essence of a dying star in its last moment...");
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
+            Item.CloneDefaults(ItemID.FragmentSolar); //I thought this would make it float like souls and other fragments
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Cyan;
+            Item.glowMask = glowmask;
         }
     }
     public class Peat_Moss : ModItem {
@@ -397,13 +431,16 @@ namespace Origins.Items.Materials {
         }
     }
     public class Power_Core : ModItem {
-        //add lore here
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Power Core");
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
+            Item.rare = ItemRarityID.Pink;
+            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -414,44 +451,65 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-    public class Rivenform : ModItem {
+    public class Quantium : ModItem {
+        static short glowmask;
         public override void SetStaticDefaults() {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
-            
+            DisplayName.SetDefault("Qube");
+            glowmask = Origins.AddGlowMask(this);
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
         }
         public override void SetDefaults() {
-            Item.maxStack = 99;
+            Item.maxStack = 999;
+            Item.rare = ItemRarityID.Purple;
+            Item.glowMask = glowmask;
         }
     }
     public class Riven_Key : ModItem {
-        //add lore here
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Key");
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.width = 14;
             Item.height = 20;
             Item.maxStack = 99;
+            Item.rare = ItemRarityID.Yellow;
+            Item.glowMask = glowmask;
         }
     }
     public class Riven_Sample : ModItem {
-        //add lore here
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Sample");
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
+            Item.rare = ItemRarityID.Blue;
+            Item.glowMask= glowmask;
         }
     }
-    public class Rotor : ModItem {
+    public class Rivenform : ModItem {
+        public override void SetStaticDefaults() {
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 99;
+            Item.rare = ItemRarityID.Orange;
+        }
+    }
+        public class Rotor : ModItem {
         //add lore here
         public override void SetStaticDefaults() {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Pink;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 5);
@@ -486,13 +544,17 @@ namespace Origins.Items.Materials {
         }
     }
     public class Space_Goo : ModItem {
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Space Goo");
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
             
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Yellow;
+            Item.glowMask = glowmask;
         }
     }
     public class Space_Rock : ModItem {
@@ -506,13 +568,17 @@ namespace Origins.Items.Materials {
         }
     }
     public class Stellar_Spark : ModItem {
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Stellar Spark");
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
             
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Purple;
+            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -530,7 +596,6 @@ namespace Origins.Items.Materials {
             Tooltip.SetDefault("'Involuntary neurectomy'");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
-        //add lore here
         public override void SetDefaults() {
             Item.maxStack = 99;
         }
@@ -557,6 +622,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
+            Item.rare = ItemRarityID.Purple;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 3);
@@ -576,6 +642,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Purple;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 2);
@@ -601,13 +668,16 @@ namespace Origins.Items.Materials {
         }
     }
     public class Undead_Chunk : ModItem {
-        //add lore here
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Undead Chunk");
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
+            Item.rare = ItemRarityID.Blue;
+            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ItemID.ObsidianHelm);
@@ -634,6 +704,7 @@ namespace Origins.Items.Materials {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Unpowered Eyndum Core");
             Tooltip.SetDefault("'Limitless potential'");
+            Item.rare = ItemRarityID.Red;
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 2;
             
         }
@@ -657,6 +728,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Yellow;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -675,6 +747,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Lime;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -684,13 +757,17 @@ namespace Origins.Items.Materials {
         }
     }
     public class Void_Spark : ModItem {
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Void Spark");
+            glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
             
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+            Item.rare = ItemRarityID.Purple;
+            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

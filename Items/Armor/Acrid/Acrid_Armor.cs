@@ -20,6 +20,7 @@ namespace Origins.Items.Armor.Acrid{
         }
         public override void SetDefaults() {
             Item.defense = 10;
+            Item.rare = ItemRarityID.LightRed;
         }
         public override void UpdateEquip(Player player) {
             if(player.wet){
@@ -55,6 +56,7 @@ namespace Origins.Items.Armor.Acrid{
         }
         public override void SetDefaults() {
             Item.defense = 18;
+            Item.rare = ItemRarityID.LightRed;
         }
         public override void UpdateEquip(Player player) {
             player.lifeRegenCount+=2;
@@ -77,6 +79,7 @@ namespace Origins.Items.Armor.Acrid{
         }
         public override void SetDefaults() {
             Item.defense = 14;
+            Item.rare = ItemRarityID.LightRed;
         }
         public override void UpdateEquip(Player player) {
             player.accFlipper = true;

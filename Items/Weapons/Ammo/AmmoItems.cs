@@ -9,9 +9,11 @@ using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Ammo {
 	public class Thermite_Canister : ModItem {
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Thermite Canister");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+            glowmask = Origins.AddGlowMask(this);
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 199;
 			//Tooltip.SetDefault();
 		}
         public override void SetDefaults() {
@@ -19,6 +21,7 @@ namespace Origins.Items.Weapons.Ammo {
             Item.damage = 30;
             Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
             Item.ammo = Item.type;
+            Item.glowMask = glowmask;
         }
     }
     public class White_Solution : ModItem {

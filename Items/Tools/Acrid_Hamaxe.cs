@@ -6,9 +6,11 @@ using Origins.Items.Materials;
 
 namespace Origins.Items.Tools {
 	public class Acrid_Hamaxe : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Hamaxe");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Non-corrosive");
+			glowmask = Origins.AddGlowMask(this);
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
