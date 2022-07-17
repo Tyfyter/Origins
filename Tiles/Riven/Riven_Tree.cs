@@ -14,7 +14,7 @@ namespace Origins.Tiles.Riven {
 		private Mod mod => Origins.instance;
 
         public static Riven_Tree Instance { get; private set; }
-		public override TreePaintingSettings TreeShaderSettings { get; }
+		public override TreePaintingSettings TreeShaderSettings => new();
 
 		internal static void Load() {
             Instance = new Riven_Tree();

@@ -21,7 +21,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.Bunny);
-            NPC.aiStyle = 14;
+            NPC.aiStyle = NPCAIStyleID.Demon_Eye;
             NPC.lifeMax = 20;
             NPC.defense = 0;
             NPC.damage = 10;

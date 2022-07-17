@@ -852,8 +852,8 @@ namespace Origins {
             return soundStyle;
         }
         public static SoundStyle WithPitchRange(this SoundStyle soundStyle, float min, float max) {
-            soundStyle.PitchRange = (min, max);
-            return soundStyle;
+            //soundStyle.PitchRange = (min, max);
+            return soundStyle with { PitchRange = (min, max) };
         }
         public static SoundStyle WithVolume(this SoundStyle soundStyle, float volume) {
             soundStyle.Volume = volume;
