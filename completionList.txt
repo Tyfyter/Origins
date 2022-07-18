@@ -1,0 +1,183 @@
+SYMBOL KEY:
+---
+@: Needs resource (missing base sprite. Includes gun sprite for weapons, the actual entity for NPCs, or the appearance of a tile)
+@2: Needs resource (missing projectile/use sprite. Includes NPC attack animations)
+@3: Needs resource (missing glowmask sprite)
+
+#: Needs code (not implemented at all)
+#2: Needs code (partial implementation. Includes code of a re-used mechanic)
+#3: Needs code (needs changing to pre-existing code and/or needs to be finalized)
+
+$: Needs sound (music not composed)
+$2: Needs sound (SFX not yet composed/implemented)
+$3: Needs sound (SFX/music is composed but not implemented)
+
+%: Insufficient planning (item-functionality/NPC-behavior misunderstood)
+%2: Insufficient planning (item-functionality/NPC-behavior absent from planner or wiki)
+%3: Insufficient planning (entirely unplanned and needing concept)
+
+^: Completed (entirely completed)
+^2: Partial completion (sprites completed)
+^3: Partial completion (code completed)
+^4: Partial completion (sound completed)
+
+X: No progress
+
+[NOTE: Entries will often have ","'s and "/"'s to signify multiple elements at once]
+---
+
+
+BOSSES AND MINI-BOSSES:
+---
+(X) Defiled Spawnswarmer
+(X) Discombobulator
+(#, ^2) Grand Corruptor
+(#, ^2) Ichor Storm
+(@3, #, ^4) Seer
+
+(^) Defiled Amalgmation
+(#, $, ^2) Fiberglass Threader
+(@2/3, #, $) Riven Abomination
+
+(X) Mad Maniac
+(%2, X) Mildew Carrion
+(%2, X) Restless
+(X) Severus, the Dark One
+
+(X) Alien Queen
+(X) Duskord
+
+(%3) Origins final boss
+(#, $, ^2) I.C.A.R.U.S
+(#, $, ^2) Quantux
+(%2, X) Rakar
+(X) Shade Leviathan
+(%2, X) Tartarus
+---
+
+
+TOWN NPCs:
+---
+(@, #, %2) Acid Freak
+(%2, X) Darkathian Miner
+(X) Defiled Envoy
+
+(%2, X) Dusk Trader
+
+(%2, X) Cubekon Tinkerer
+---
+
+
+VANILLA MODIFICATIONS:
+---
+(#) Avenger Emblem (craftable from Exploder Emblem)
+(^) Glass Kiln (craft some Origins materials)
+(^) Miner Set (file:///C:/Users/atomb/Documents/GitHub/OriginsWiki/Recipe_Changes.html)
+(^) Obsidian Set (craftable from Undead Chunk AND Riven Sample)
+(#3, %3) Strange String/Riven-equivalent (to craft Mechanical Worm and Battle Potion)
+
+(^) Bats (drop Bat Hide)
+(#3) Boss Immunities (make every boss immune to anything with Stun)
+(#3) Demolitionist (to sell different items based on peat sold)
+(X) Dryad Selling Evil Items on Blood Moon
+(#2/3) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)
+(%2, X) Harpoon (new weapon to introduce sub-class)
+(#2) Trees (add Bark and Tree Sap as drops when chopping down trees)
+(#2) Wall of Flesh (to drop Exploder Emblem)
+
+(%3, X) Nova Pillar in Lunar Invasion
+---
+
+
+ENEMY NPCS:
+---
+(#, %2) Crimbrain
+(#3, ^2/4) Pre-H Defiled Enemies
+(^) Fiberglass Enemies
+(#3, ^2) Riven Acolyte
+(#, ^2) Riven Crawler
+(@, #3) Riven Tank
+(#, ^2) Scanner Scout
+
+(#, ^2) Carpalfish
+(%, X) Defiled Clipper (don't know what to do with it)
+(#3, ^2/4) Defiled Hunter
+(@, #3, %2) Defiled Mimic
+(%3) Defiled Reaper (currently just a namespace. Could be removed)
+(%3) Defiled Shark (feel like a more unique aquatic enemy could be made)
+(#3, %, ^2) Flagellant
+(#, ^2) Mildew Creeper
+(#3, ^2) Rivenator
+(@, #3, %2) Riven Mimic
+(#3, ^2) Riven Mummy
+(#, ^2) Scalron
+(#3, ^2/4) Splitooth
+(#3, ^2) Splotcher
+(%, X) Unriven Beast
+(#, ^2) Vent Hopper
+
+(X) Annihilator
+(X) Clockwork
+(X) Clustroid
+(X) Duskoo
+(X) Dynaray
+(@2/3, #) Electromancer
+(@2/3, #) Etherealizer
+(@2, #) Illusionary
+(%3) Impact Enemies
+(X) Soulpine
+(X) Sploder
+(X) Volstroy
+
+(#, ^2) Blox
+(#, ^2) Cubix
+(#3, ^2) I.C.A.R.U.S Swarm Drone
+(#, ^2) Tetrix
+---
+
+
+EVENTS:
+---
+(#, %2) Corruption Invasion
+(#, %2) Crimson Invasion
+(#, %2) Defiled Invasion
+(#, %2) Riven Invasion
+
+(#, %2) Seer Patrol
+---
+
+STATUS EFFECTS:
+---
+(#, ^2) Assimilation
+(X) Celestial Flames
+(#3, ^2) Defiled Exhaustion
+(X) Ionizing Radiation
+(^) Impeding Shrapnel
+(X) Levitation
+(#, ^2) Malice
+(#3, ^2) Rasterize
+(^) Solvent
+(#, ^2) Totally Safe
+(#, ^2) Toxic Shock
+(X) Whiplash
+(X) Workout
+
+(^) Brainy Buff
+(^) Friendly Bomb Buff
+(^) Mini-EOC Buff
+(^) Mini-EOW Buff
+(#, ^2) Nano Buff
+(^) Woodsprite Buff
+
+(#, ^2) Defiled Blight Buff
+(#, ^2) Meatroid Buff
+(#, ^2) Platformer Mech Buff
+---
+
+
+NPC DIALOGUE:
+---
+(%3) Cyborg
+(X) Demolitionist
+(X) Dryad
+---

@@ -491,6 +491,26 @@ namespace Origins.Items.Materials {
             Item.rare = ItemRarityID.Blue;
             Item.glowMask= glowmask;
         }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(ItemID.ObsidianHelm);
+            recipe.AddIngredient(ItemID.Silk, 10);
+            recipe.AddIngredient(ItemID.Obsidian, 20);
+            recipe.AddIngredient(this, 5);
+            recipe.AddTile(TileID.Hellforge);
+            recipe.Register();
+            recipe = Recipe.Create(ItemID.ObsidianShirt);
+            recipe.AddIngredient(ItemID.Silk, 10);
+            recipe.AddIngredient(ItemID.Obsidian, 20);
+            recipe.AddIngredient(this, 10);
+            recipe.AddTile(TileID.Hellforge);
+            recipe.Register();
+            recipe = Recipe.Create(ItemID.ObsidianPants);
+            recipe.AddIngredient(ItemID.Silk, 10);
+            recipe.AddIngredient(ItemID.Obsidian, 20);
+            recipe.AddIngredient(this, 5);
+            recipe.AddTile(TileID.Hellforge);
+            recipe.Register();
+        }
     }
     public class Rivenform : ModItem {
         public override void SetStaticDefaults() {
@@ -526,6 +546,16 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Bark>(), 3);
+            recipe.AddTile(TileID.GlassKiln);
+            recipe.Register();
+            recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Tree_Sap>(), 3);
+            recipe.AddTile(TileID.GlassKiln);
+            recipe.Register();
         }
     }
     public class Silicon_Wafer : ModItem {
