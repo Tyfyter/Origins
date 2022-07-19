@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Origins.World.BiomeData;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -55,7 +56,7 @@ namespace Origins.LootConditions {
 			};
 		}
 	}
-	public class DesertKeyCondition : IItemDropRuleCondition {
+	public class DefiledKeyCondition : IItemDropRuleCondition {
 		public bool CanDrop(DropAttemptInfo info) {
 			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.GetModPlayer<OriginPlayer>().ZoneDefiled;
 		}
@@ -66,6 +67,22 @@ namespace Origins.LootConditions {
 
 		public string GetConditionDescription() {
 			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+		}
+	}
+	public class SoulOfNight : IItemDropRuleCondition, IProvideItemConditionDescription {
+		public bool CanDrop(DropAttemptInfo info) {
+			if (Conditions.SoulOfWhateverConditionCanDrop(info)) {
+				return info.player.ZoneCorrupt || info.player.ZoneCrimson || info.player.InModBiome<Defiled_Wastelands_Biome>() || info.player.InModBiome<Riven_Hive_Biome>();
+			}
+			return false;
+		}
+
+		public bool CanShowItemDropInUI() {
+			return true;
+		}
+
+		public string GetConditionDescription() {
+			return Language.GetTextValue("Mods.Origins.ItemDropConditions.SoulOfNight");
 		}
 	}
 }

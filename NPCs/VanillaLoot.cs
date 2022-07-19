@@ -127,7 +127,12 @@ namespace Origins.NPCs {
             }
         }
 		public override void ModifyGlobalLoot(GlobalLoot globalLoot) {
-			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Defiled_Key>(), 2500, 1, 1, new Conditions.DesertKeyCondition()));
+			foreach (var rule in globalLoot.Get()) {
+				if ((rule is ItemDropWithConditionRule conditionalRule) && conditionalRule.condition is Conditions.SoulOfNight) {
+					conditionalRule.condition = new LootConditions.SoulOfNight();
+				}
+			}
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Defiled_Key>(), 2500, 1, 1, new LootConditions.DefiledKeyCondition()));
 		}
 		void GenFelnumOre() {
             string text = "The clouds have been blessed with Felnum.";

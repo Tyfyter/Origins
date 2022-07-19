@@ -5,5 +5,8 @@
 			Defiled_Fissure_2:Rattling emanates from the walls...
 			Defiled_Fissure_3:The skies echo a threatening call...
 		}
+		ItemDropConditions: {
+			SoulOfNight: Drops in Underground evil biomes
+		}
 	}
 }
