@@ -25,7 +25,15 @@ namespace Origins.Items.Weapons.Other {
             Item.shoot = ModContent.ProjectileType<Beginner_Spell>();
 			Item.rare = ItemRarityID.Green;
 		}
-    }
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.Book);
+			recipe.AddIngredient(ItemID.FallenStar);
+			recipe.AddIngredient(ItemID.WandofSparking);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.Register();
+		}
+	}
     public class Beginner_Spell : ModProjectile {
         public override string Texture => "Terraria/Images/Projectile_125";
         public override void SetDefaults() {

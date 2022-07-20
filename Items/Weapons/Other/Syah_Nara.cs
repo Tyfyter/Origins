@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.ID;
-using Terraria.DataStructures;
+﻿using Terraria;
 using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Other {
     public class Syah_Nara : ModItem {
@@ -21,7 +12,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Katana);
-            Item.damage = 23;
+            Item.damage = 16;
             Item.DamageType = DamageClass.Melee;
             Item.noUseGraphic = false;
             Item.noMelee = false;
@@ -30,7 +21,7 @@ namespace Origins.Items.Weapons.Other {
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = 19;
             Item.useAnimation = 19;
-            Item.knockBack = 9.5f;
+            Item.knockBack = 2f;
             Item.value = 50000;
             Item.shoot = ProjectileID.None;
             Item.rare = ItemRarityID.Blue;

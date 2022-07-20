@@ -6,15 +6,14 @@ using Terraria.Audio;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
-	public class Tones_Of_Agony : ModItem, IElementalItem {
+    public class Tones_Of_Agony : ModItem, IElementalItem {
         public ushort Element => Elements.Earth;
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tones Of Agony");
-			Tooltip.SetDefault("A tome full of ancient spells used for harming another with malicious intent.");
+			Tooltip.SetDefault("A tome full of ancient spells used for malicious intent.");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 		public override void SetDefaults() {

@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
-	public class Impact_Grenade : ModItem {
+    public class Impact_Grenade : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Grenade");
 			Tooltip.SetDefault("Be careful, it's not book");
@@ -24,6 +24,13 @@ namespace Origins.Items.Weapons.Explosives {
             Item.ammo = ItemID.Grenade;
 			Item.rare = ItemRarityID.Green;
 		}
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Grenade, 3);
+            recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
     }
     public class Impact_Grenade_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Grenade";

@@ -2,6 +2,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using Origins.Items.Materials;
 
 namespace Origins.Items.Armor.Felnum {
     [AutoloadEquip(EquipType.Head)]
@@ -41,7 +42,13 @@ namespace Origins.Items.Armor.Felnum {
                 player.buffType[player.FindBuffIndex(BuffID.Electrified)] = id;
             }
         }
-	}
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 15);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
+    }
     [AutoloadEquip(EquipType.Body)]
 	public class Felnum_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
@@ -56,7 +63,13 @@ namespace Origins.Items.Armor.Felnum {
             player.GetDamage(DamageClass.Generic) += 0.02f;
             player.moveSpeed+=0.05f;
         }
-	}
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 25);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
+    }
     [AutoloadEquip(EquipType.Legs)]
 	public class Felnum_Greaves : ModItem {
 		public override void SetStaticDefaults() {
@@ -69,6 +82,12 @@ namespace Origins.Items.Armor.Felnum {
 		}
         public override void UpdateEquip(Player player) {
             player.moveSpeed+=0.05f;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 20);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
     }
 }

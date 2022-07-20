@@ -1,6 +1,8 @@
 ﻿using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Dungeon;
 using Origins.Items.Weapons.Other;
+using Origins.Items.Weapons.Summon;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
@@ -80,19 +82,41 @@ namespace Origins.NPCs {
                 case NPCID.IlluminantBat:
                 case NPCID.JungleBat:
                 case NPCID.VampireBat:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bat_Hide>(), 1, 1, 3));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bat_Hide>(), 3, 1, 3));
                 break;
                 case NPCID.ArmoredSkeleton:
                 case NPCID.SkeletonArcher:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tiny_Sniper>(), 50));
                 break;
-                case NPCID.MossHornet:
+				case NPCID.Snatcher:
+				case NPCID.JungleSlime:
+				case NPCID.SpikedJungleSlime:
+				case NPCID.MossHornet:
                 case NPCID.BigMossHornet:
                 case NPCID.GiantMossHornet:
                 case NPCID.LittleMossHornet:
                 case NPCID.TinyMossHornet:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Peat_Moss>(), 1, 1, 4));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Peat_Moss>(), 2, 1, 3));
                 break;
+				case NPCID.AngryBones:
+				case NPCID.AngryBonesBig:
+				case NPCID.AngryBonesBigMuscle:
+				case NPCID.AngryBonesBigHelmet:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolter>(), 9));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 8));
+				break;
+				case NPCID.RedDevil:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Burning_Ember>(), 15));
+				break;
+				case NPCID.EaterofWorldsHead:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotting_Worm_Staff>(), 43));
+				break;
+				case NPCID.BrainofCthulhu:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brainy_Staff>(), 20));
+				break;
+				case NPCID.DemonEye:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Eyeball_Staff>(), 50));
+				break;
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = npcLoot.Get(false);
 				rules = rules.Where((r) => 

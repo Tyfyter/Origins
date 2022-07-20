@@ -37,5 +37,12 @@ namespace Origins.Tiles.Dusk {
             Item.CloneDefaults(ItemID.StoneBlock);
             Item.createTile = TileType<Bleeding_Obsidian>();
 		}
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Obsidian, 8);
+            recipe.AddIngredient(ItemID.SoulofNight);
+            recipe.AddTile(TileID.DemonAltar);
+            recipe.Register();
+        }
     }
 }

@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
+using Origins.Items.Weapons.Defiled;
+using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Terraria.Audio;
-using Origins.Items.Materials;
-using Terraria.GameContent.ItemDropRules;
-using Origins.Items.Weapons.Defiled;
-using Terraria.GameContent.Bestiary;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Cyclops : ModNPC {
@@ -35,8 +30,8 @@ namespace Origins.NPCs.Defiled {
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
         public override void UpdateLifeRegen(ref int damage) {
-            if (NPC.life > 10) {
-                NPC.lifeRegen += 60 / (NPC.life / 10);
+            if (NPC.life > 20) {
+                NPC.lifeRegen += 18 / (NPC.life / 20);
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

@@ -5,10 +5,9 @@ using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 //using static Origins.OriginExtensions;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
-	public class Cryostrike : ModItem {
+    public class Cryostrike : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Cryostrike");
 			Tooltip.SetDefault("Shoots a piercing icicle");

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
 using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Other {
     //implemented in 10 minutes, so it might have an issue or two
@@ -29,4 +23,5 @@ namespace Origins.Items.Weapons.Other {
         }
         public override Vector2? HoldoutOffset() => new Vector2(-18, 0);
     }
+    //Undecided obtain method...
 }

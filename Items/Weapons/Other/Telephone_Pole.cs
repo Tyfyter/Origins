@@ -12,6 +12,7 @@ using Terraria.ID;
 using Terraria.DataStructures;
 using Origins.Projectiles.Misc;
 using Terraria.GameContent.Creative;
+using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Other {
     public class Telephone_Pole : ModItem {
@@ -35,9 +36,16 @@ namespace Origins.Items.Weapons.Other {
             Item.knockBack = 14f;
             Item.value = 100000;
             Item.shoot = ProjectileID.None;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = ItemRarityID.LightRed;
         }
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit) {
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Wood, 50);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 7);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
+        }
+        public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit) {
 			Projectile.NewProjectileDirect(
                 player.GetSource_OnHit(target),
                 target.Center,

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -17,7 +18,7 @@ namespace Origins.Items.Weapons.Other {
         public override Color? GlowmaskTint => Main.teamColor[Main.player[Item.playerIndexTheItemIsReservedFor].team];
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Laser Tag Gun");
-			Tooltip.SetDefault("‘Pew. Pew. Muddathrucker...’");
+			Tooltip.SetDefault("‘Pew. Pew. Muddathrucka...’");
             animation = new DrawAnimationManual(1);
 			Main.RegisterItemAnimation(Item.type, animation);
             glowmask = Origins.AddGlowMask(this);
@@ -40,6 +41,13 @@ namespace Origins.Items.Weapons.Other {
             Item.glowMask = glowmask;
             Item.scale = 1;
 		}
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Space_Goo>(), 10);
+            recipe.AddIngredient(ModContent.ItemType<Space_Rock>(), 20);
+            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.Register();
+        }
         public override void UpdateInventory(Player player) {
         }
 

@@ -3,10 +3,10 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
+using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Explosives {
-	public class Impact_Dynamite : ModItem {
+    public class Impact_Dynamite : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Dynamite");
 			Tooltip.SetDefault("Be careful, it's not book");
@@ -23,6 +23,13 @@ namespace Origins.Items.Weapons.Explosives {
             Item.knockBack = 16f;
 			Item.rare = ItemRarityID.Green;
 		}
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Dynamite);
+            recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
     }
     public class Impact_Dynamite_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Explosives/Impact_Dynamite";

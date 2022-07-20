@@ -14,6 +14,7 @@ using Terraria.Graphics.Shaders;
 using Tyfyter.Utils;
 using Terraria.GameContent.Creative;
 using Terraria.GameContent.Creative;
+using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Other {
     public class Cometburn : ModItem {
@@ -42,6 +43,14 @@ namespace Origins.Items.Weapons.Other {
             Item.shootSpeed = 10f;
             Item.autoReuse = true;
             Item.mana = 15;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Boulder);
+            recipe.AddIngredient(ModContent.ItemType<Space_Goo>(), 20);
+            recipe.AddIngredient(ModContent.ItemType<Space_Rock>(), 15);
+            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.Register();
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips) {
             tooltips[0].OverrideColor = new Color(0, Main.mouseTextColor, 0, Main.mouseTextColor);

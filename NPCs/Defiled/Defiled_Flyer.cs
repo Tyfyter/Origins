@@ -31,10 +31,11 @@ namespace Origins.NPCs.Defiled {
             NPC.friendly = false;
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
+            NPC.knockBackResist = 0.5f;
         }
         public override void UpdateLifeRegen(ref int damage) {
-            if (NPC.life > 10) {
-                NPC.lifeRegen += 60 / (NPC.life / 10);
+            if (NPC.life > 20) {
+                NPC.lifeRegen += 18 / (NPC.life / 20);
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

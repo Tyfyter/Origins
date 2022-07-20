@@ -27,7 +27,15 @@ namespace Origins.Items.Armor.Cryosten {
             if(player.HasBuff(BuffID.Frozen))player.buffTime[player.FindBuffIndex(BuffID.Frozen)]--;
             if(player.HasBuff(BuffID.Frostburn))player.buffTime[player.FindBuffIndex(BuffID.Frostburn)]--;
         }
-	}
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.IceBlock, 45);
+            recipe.AddIngredient(ItemID.Shiverthorn, 8);
+            recipe.AddIngredient(ItemID.LifeCrystal);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
+    }
     [AutoloadEquip(EquipType.Body)]
 	public class Cryosten_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
@@ -41,7 +49,15 @@ namespace Origins.Items.Armor.Cryosten {
         public override void UpdateEquip(Player player) {
             player.statLifeMax2+=player.statLifeMax2/5;
         }
-	}
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.IceBlock, 60);
+            recipe.AddIngredient(ItemID.Shiverthorn, 12);
+            recipe.AddIngredient(ItemID.LifeCrystal);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
+    }
     [AutoloadEquip(EquipType.Legs)]
 	public class Cryosten_Greaves : ModItem {
 		public override void SetStaticDefaults() {
@@ -55,6 +71,14 @@ namespace Origins.Items.Armor.Cryosten {
         public override void UpdateEquip(Player player) {
             player.moveSpeed+=0.05f;
             player.iceSkate = true;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.IceBlock, 30);
+            recipe.AddIngredient(ItemID.Shiverthorn, 4);
+            recipe.AddIngredient(ItemID.LifeCrystal);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
     }
 }

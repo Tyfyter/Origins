@@ -1,19 +1,13 @@
-﻿using Terraria.GameContent.Creative;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Weapons.Summon;
-using Origins.Items.Weapons.Summon.Minions;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Summon {
     public class Eyeball_Staff : ModItem {
@@ -26,7 +20,7 @@ namespace Origins.Items.Weapons.Summon {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
-            Item.damage = 12;
+            Item.damage = 8;
             Item.DamageType = DamageClass.Summon;
             Item.mana = 10;
             Item.width = 32;

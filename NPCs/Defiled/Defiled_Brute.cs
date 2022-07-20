@@ -34,13 +34,13 @@ namespace Origins.NPCs.Defiled {
             NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
             NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
         }
-        float Mana { get; set; }
-        int manaDrain { get; set; }
+        //float Mana { get; set; }
+        //int manaDrain { get; set; }
 
-        public override void OnHitPlayer(Player target, int damage, bool crit) {
-            Mana = Math.Min(Mana + 20, 200);
-            manaDrain = Math.Min(14, target.statMana);
-        }
+        //public override void OnHitPlayer(Player target, int damage, bool crit) {
+            //Mana = Math.Min(Mana + 20, 200);
+            //manaDrain = Math.Min(14, target.statMana);
+        //}
         public override void UpdateLifeRegen(ref int damage) {
             if (NPC.life > 20) {
                 NPC.lifeRegen += 18 / (NPC.life / 20);

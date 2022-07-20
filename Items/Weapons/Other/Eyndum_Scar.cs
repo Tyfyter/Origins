@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Origins.Items.Materials;
+using System;
 using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.ID;
-using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Other {
     public class Eyndum_Scar : ModItem {
@@ -36,6 +29,13 @@ namespace Origins.Items.Weapons.Other {
             Item.rare = ItemRarityID.Purple;
             Item.autoReuse = true;
             Item.scale = 1f;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Eyndum_Bar>(), 30);
+            //recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 20); Undecided material
+            //recipe.AddTile(TileID.Anvils); Omni-printer
+            recipe.Register();
         }
         public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit) {
             if(!(target.boss || NPCID.Sets.ShouldBeCountedAsBoss[target.type])) {

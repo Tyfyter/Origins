@@ -12,6 +12,7 @@ using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Tyfyter.Utils;
 using Terraria.GameContent.Creative;
+using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Other {
     public class Gravaulter : ModItem {
@@ -46,6 +47,13 @@ namespace Origins.Items.Weapons.Other {
             Item.mana = 6;
             Item.UseSound = null;
             Item.glowMask = glowmask;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Space_Goo>(), 15);
+            recipe.AddIngredient(ModContent.ItemType<Space_Rock>(), 25);
+            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.Register();
         }
         public override void ModifyTooltips(List<TooltipLine> tooltips) {
             tooltips[0].OverrideColor = new Color(0, Main.mouseTextColor, 0, Main.mouseTextColor);

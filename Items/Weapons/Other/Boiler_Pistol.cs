@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Gatligator);
-            Item.damage = 53;
+            Item.damage = 38;
             Item.useAnimation = 18;
             Item.useTime = 12;
             Item.width = 38;

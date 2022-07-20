@@ -21,6 +21,8 @@ using Origins.Tiles.Brine;
 using Origins.World;
 using Origins.Items.Accessories;
 using System.Collections;
+using Origins.Items.Weapons.Explosives;
+using Origins.Items.Weapons.Summon;
 
 namespace Origins {
     public partial class OriginSystem : ModSystem {
@@ -159,15 +161,22 @@ namespace Origins {
             }
             if(noLoot)return;
             ApplyWeightedLootQueue(chestLoots,
+                (CHANGE_QUEUE, ChestID.Normal, 0f),
+                (ENQUEUE, ModContent.ItemType<Syah_Nara>(), 1f),
+                (CHANGE_QUEUE, ChestID.LivingWood, 0f),
+                (ENQUEUE, ModContent.ItemType<Woodsprite_Staff>(), 1f),
                 (CHANGE_QUEUE, ChestID.LockedShadow, 0f),
                 (ENQUEUE, ModContent.ItemType<Boiler_Pistol>(), 1f),
                 (ENQUEUE, ModContent.ItemType<Firespit>(), 1f),
                 (ENQUEUE, ModContent.ItemType<Dragons_Breath>(), 1f),
+                (ENQUEUE, ModContent.ItemType<Hand_Grenade_Launcher>(), 1f),
                 (CHANGE_QUEUE, ChestID.Ice, 0f),
                 (ENQUEUE, ModContent.ItemType<Cryostrike>(), 1f),
                 (CHANGE_QUEUE, ChestID.Gold, 1f),//1 for all underground gold chests, 5 for "underground" layer, 7 for "cavern" layer
                 (ENQUEUE, ModContent.ItemType<Bomb_Charm>(), 1f),
+                (ENQUEUE, ModContent.ItemType<Beginner_Tome>(), 1f),
                 (CHANGE_QUEUE, ChestID.LockedGold, 0f),
+                (ENQUEUE, ModContent.ItemType<Tones_Of_Agony>(), 1f),
                 (ENQUEUE, ModContent.ItemType<Bomb_Yeeter>(), 1f));
             _worldSurfaceLow = WorldGen.worldSurfaceLow;
         }

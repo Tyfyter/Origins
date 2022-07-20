@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Origins.Projectiles.Weapons;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
-using Origins.Projectiles.Weapons;
 using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Other {
     public class Firespit : ModItem {
@@ -24,7 +18,7 @@ namespace Origins.Items.Weapons.Other {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
-            Item.damage = 30;
+            Item.damage = 38;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.crit = 1;
             Item.useAnimation = 2;

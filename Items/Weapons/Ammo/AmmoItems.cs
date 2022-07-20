@@ -6,6 +6,7 @@ using Origins.Items.Weapons.Explosives;
 using Origins.Projectiles;
 using Origins.Dusts;
 using Terraria.GameContent.Creative;
+using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Ammo {
 	public class Thermite_Canister : ModItem {
@@ -22,6 +23,18 @@ namespace Origins.Items.Weapons.Ammo {
             Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
             Item.ammo = Item.type;
             Item.glowMask = glowmask;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Fireblossom, 3);
+            recipe.AddIngredient(ItemID.IronBar);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
+            recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Fireblossom, 3);
+            recipe.AddIngredient(ItemID.LeadBar);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
         }
     }
     public class White_Solution : ModItem {
