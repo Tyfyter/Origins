@@ -29,6 +29,13 @@ namespace Origins.Items.Weapons.Acid {
 			Item.rare = ItemRarityID.Lime;
             Item.glowMask = glowmask;
         }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Grenade, 2);
+            //recipe.AddIngredient(ModContent.ItemType<Absorber_Culture_Item>());
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
+        }
     }
     public class Acid_Grenade_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Acid/Acid_Grenade";

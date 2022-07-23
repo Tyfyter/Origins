@@ -96,7 +96,7 @@ namespace Origins.NPCs {
                 case NPCID.GiantMossHornet:
                 case NPCID.LittleMossHornet:
                 case NPCID.TinyMossHornet:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Peat_Moss>(), 2, 1, 3));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Peat_Moss>(), 3));
                 break;
 				case NPCID.AngryBones:
 				case NPCID.AngryBonesBig:

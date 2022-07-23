@@ -1,18 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
 using Origins.Projectiles.Weapons;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Shaders;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Acid {
     public class Splashid : ModItem, IElementalItem {
@@ -41,6 +34,13 @@ namespace Origins.Items.Weapons.Acid {
             Item.shoot = ModContent.ProjectileType<Acid_Shot>();
 			Item.rare = ItemRarityID.Lime;
 			Item.glowMask = glowmask;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ModContent.ItemType<Sulphur_Stone_Item>(), 15);
+			//recipe.AddIngredient(ModContent.ItemType<Absorber_Culture_Item>(), 8);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    int a = Main.rand.Next(5,7);

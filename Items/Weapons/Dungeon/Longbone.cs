@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Dungeon {
     public class Longbone : ModItem {
         internal static int t = ProjectileID.WoodenArrowFriendly;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Bolterbow");
+            DisplayName.SetDefault("Longbone");
             Tooltip.SetDefault("Turns most arrows into fragile bone arrows");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }

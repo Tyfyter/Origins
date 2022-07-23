@@ -38,7 +38,7 @@ namespace Origins.Tiles.Dusk {
             Item.createTile = TileType<Bleeding_Obsidian>();
 		}
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
+            Recipe recipe = Recipe.Create(Type, 8);
             recipe.AddIngredient(ItemID.Obsidian, 8);
             recipe.AddIngredient(ItemID.SoulofNight);
             recipe.AddTile(TileID.DemonAltar);

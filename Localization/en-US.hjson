@@ -8,5 +8,9 @@
 		ItemDropConditions: {
 			SoulOfNight: Drops in Underground evil biomes
 		}
+		FishQuest: {
+			Prikish:It's more pokey than your average puffer and more deadly! It's not toxic so don't worry, but it can get through your head!
+			It's the Defiled were talking about here! I want you to go and find that fish bubbling around in the Wastelands and bring it back to me!
+		}
 	}
 }
