@@ -12,7 +12,8 @@ namespace Origins.NPCs.Riven {
             NPC.defense = 8;
             NPC.damage = 38;
         }
-		public override void OnSpawn(IEntitySource source) {
+        public override void AI() { }
+        public override void OnSpawn(IEntitySource source) {
             NPC.spriteDirection = Main.rand.NextBool() ? 1 : -1;
             NPC.ai[3] = NPC.whoAmI;
             NPC.realLife = NPC.whoAmI;
@@ -37,7 +38,7 @@ namespace Origins.NPCs.Riven {
             Main.npc[last].ai[0] = current;
             NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
         }
-    }
+	}
 
     internal class Rivenator_Body : Rivenator {
         public override void SetDefaults() {
