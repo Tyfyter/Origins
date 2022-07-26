@@ -36,7 +36,7 @@ BOSSES AND MINI-BOSSES:
 (@3, #, ^4) Seer
 
 (^) Defiled Amalgmation
-(#, $, ^2) Fiberglass Threader
+(@, #, $) Fiberglass Weaver
 (@2/3, #, $) Riven Abomination
 
 (X) Mad Maniac
