@@ -21,7 +21,6 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs {
     public partial class OriginGlobalNPC : GlobalNPC {
-        bool downedSkeletron = false;
 		internal static int woFEmblemsCount = 4;
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
 			List<IItemDropRule> dropRules = npcLoot.Get(false);
@@ -144,7 +143,7 @@ namespace Origins.NPCs {
 		public override void OnKill(NPC npc) {
             switch(npc.type) {
                 case NPCID.SkeletronHead:
-                if(!NPC.downedBoss3)GenFelnumOre();
+                if(!NPC.downedBoss3) GenFelnumOre();
                 break;
                 default:
                 break;
@@ -158,7 +157,8 @@ namespace Origins.NPCs {
 			}
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Defiled_Key>(), 2500, 1, 1, new LootConditions.DefiledKeyCondition()));
 		}
-		void GenFelnumOre() {
+
+		static void GenFelnumOre() {
             string text = "The clouds have been blessed with Felnum.";
 			if (Main.netMode == NetmodeID.SinglePlayer) {
                 Main.NewText(text, Colors.RarityPurple);

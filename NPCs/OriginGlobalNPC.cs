@@ -57,7 +57,7 @@ namespace Origins.NPCs {
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Caustica>());
 			}
 			//Cyborg
-			if (type == NPCID.Cyborg && ModContent.GetInstance<OriginSystem>().peatSold >= 0) {
+			if (type == NPCID.Cyborg) {
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Advanced_Imaging>());
 			}
 		}

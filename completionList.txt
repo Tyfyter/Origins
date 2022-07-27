@@ -70,7 +70,7 @@ TOWN NPCs:
 
 VANILLA MODIFICATIONS:
 ---
-(#) Avenger Emblem (craftable from Exploder Emblem)
+(^) Avenger Emblem (craftable from Exploder Emblem)
 (^) Glass Kiln (craft some Origins materials)
 (^) Miner Set (file:///C:/Users/atomb/Documents/GitHub/OriginsWiki/Recipe_Changes.html)
 (^) Obsidian Set (craftable from Undead Chunk AND Riven Sample)
@@ -83,7 +83,7 @@ VANILLA MODIFICATIONS:
 (#2/3) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)
 (%2, X) Harpoon (new weapon to introduce sub-class)
 (#2) Trees (add Bark and Tree Sap as drops when chopping down trees)
-(#2) Wall of Flesh (to drop Exploder Emblem)
+(^) Wall of Flesh (to drop Exploder Emblem)
 
 (%3, X) Nova Pillar in Lunar Invasion
 ---

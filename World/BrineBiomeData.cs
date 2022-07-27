@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.Achievements;
+using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -13,6 +14,13 @@ using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
 	public class Brine_Pool : ModBiome {
+		public static SpawnConditionBestiaryInfoElement BestiaryBackground { get; private set; }
+		public override void Load() {
+			BestiaryBackground = new SpawnConditionBestiaryInfoElement("Mods.Origins.Bestiary_Biomes.Brine_Pool", 0, "Images/MapBG1");
+		}
+		public override void Unload() {
+			BestiaryBackground = null;
+		}
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ZoneBrine = OriginSystem.brineTiles > BrinePool.NeededTiles;

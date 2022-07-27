@@ -137,6 +137,7 @@ namespace Origins.Items {
                 Mod.Logger.Error(e);
             }
         }
+        [Obsolete("replace with ModifyItemLoot when that exists")]
 		public override void OnSpawn(Item item, IEntitySource source) {
             if (source is EntitySource_ItemOpen) {
 				switch (item.type) {
@@ -185,6 +186,7 @@ namespace Origins.Items {
                 }
             }
 		}
+
         public static ushort GetItemElement(Item item) {
             if(item.ModItem is null) {
                 return Origins.VanillaElements[item.type];
