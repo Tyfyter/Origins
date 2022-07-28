@@ -71,9 +71,8 @@ namespace Origins.Items.Materials {
     public class Amebic_Gel : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
-            Origins.AddGlowMask(this);
+            glowmask = Origins.AddGlowMask(this, "");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
-
         }
         public override void SetDefaults() {
             Item.maxStack = 99;

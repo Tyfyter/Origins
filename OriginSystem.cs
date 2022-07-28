@@ -21,7 +21,12 @@ namespace Origins {
         public override void Unload() {
             instance = null;
         }
-        public override void UpdateUI(GameTime gameTime) {
+		public override void ModifyLightingBrightness(ref float scale) {
+            if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().plagueSightLight) {
+                scale *= 1.03f;
+            }
+		}
+		public override void UpdateUI(GameTime gameTime) {
             if (Main.playerInventory) {
                 if (setBonusUI?.CurrentState is Eyndum_Core_UI eyndumCoreUIState) {
                     OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();

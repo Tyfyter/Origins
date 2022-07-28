@@ -1091,6 +1091,14 @@ namespace Origins {
         public static float OldRot(this NPC self, int index) {
             return index==-1 ?self.rotation:self.oldRot[index];
         }
+        public static bool IsDevName(string name, int dev = 0) {
+            if (dev is 0 or 1) {//Tyfyter
+                return name is "Jennifer" or "Asher";
+            } else if (dev is 0 or 2) {//Chee
+
+            }//add more here
+            return false;
+        }
         public static void SetToType(this Projectile self, int type) {
             float[] ai = self.ai;
             Vector2 pos = self.Center;

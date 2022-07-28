@@ -143,7 +143,7 @@ namespace Origins.Items.Weapons.Riven {
                 //dust.noGravity = true;
                 Lighting.AddLight(origin, 0.1f*s, 0.35f*s, 1f*s);
                 if(Main.rand.Next(++dustTimer)>48) {
-                    Dust.NewDustPerfect(origin+(perpUnit*Main.rand.NextFloat(-2, 2)), 6, unit*5).noGravity = true;
+                    Dust.NewDustPerfect(origin+(perpUnit*Main.rand.NextFloat(-2, 2)), DustID.BlueTorch, unit*5).noGravity = true;
                     dustTimer = Main.rand.NextBool()?16:0;
                 }
             }
@@ -157,7 +157,8 @@ namespace Origins.Items.Weapons.Riven {
                 }
                 drawData.Draw(spriteBatch);
             }
-            Dust.NewDustPerfect(origin+(perpUnit*Main.rand.NextFloat(-4,4)), 59, unit*5).noGravity = true;
+            //IceTorch and Maybe CoralTorch could also be good
+            Dust.NewDustPerfect(origin+(perpUnit*Main.rand.NextFloat(-4,4)), DustID.BlueTorch, unit*5).noGravity = true;
         }
 
         /// <summary>

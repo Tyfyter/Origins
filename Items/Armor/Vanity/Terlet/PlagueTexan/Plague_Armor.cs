@@ -57,13 +57,18 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
         public override void UpdateAccessory(Player player, bool hideVisual) {
             player.dangerSense = true;
             player.detectCreature = true;
-            if(!hideVisual) {
+            player.GetModPlayer<OriginPlayer>().plagueSightLight = true;
+            if (!hideVisual) {
                 ApplyVisuals(player);
             }
         }
         public static void ApplyVisuals(Player player) {
             player.GetModPlayer<OriginPlayer>().plagueSight = true;
-            Lighting.AddLight(player.Center+new Vector2(3*player.direction,-6), Color.Gold.ToVector3()/3f);
+            Color color = Color.Gold;
+			if (OriginExtensions.IsDevName(player.name, 1)) {
+                color = new Color(43, 185, 255);
+			}
+            Lighting.AddLight(player.Center+new Vector2(3*player.direction,-6), color.ToVector3()/3f);
         }
     }
 }

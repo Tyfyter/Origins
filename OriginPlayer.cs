@@ -103,6 +103,7 @@ namespace Origins {
 
         public bool itemLayerWrench = false;
         public bool plagueSight = false;
+        public bool plagueSightLight = false;
 
         public Ref<Item> eyndumCore = null;
 
@@ -180,6 +181,7 @@ namespace Origins {
             }
             Player.breathMax = 200;
             plagueSight = false;
+            plagueSightLight = false;
             minionSubSlots = new float[minionSubSlotValues];
         }
         public override void PostUpdate() {
@@ -516,7 +518,11 @@ namespace Origins {
                     itemDrop = ModContent.ItemType<Prikish>();
                 }
             }else if (zoneRiven) {
-                if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
+                if (attempt.crate) {
+					if (attempt.rare && !(attempt.veryrare || attempt.legendary)) {
+                        itemDrop = ModContent.ItemType<Crusty_Crate>();
+                    }
+                }else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
                     itemDrop = ModContent.ItemType<Knee_Slapper>();
                 } else if (attempt.uncommon && !attempt.rare) {
                     itemDrop = ModContent.ItemType<Prikish>();
@@ -542,7 +548,7 @@ namespace Origins {
             }
         }*/
 		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
-            if(plagueSight) drawInfo.colorEyes = new Color(255,215,0);
+            if(plagueSight) drawInfo.colorEyes = IsDevName(Player.name, 1) ? new Color(43, 185, 255) : Color.Gold;
             //if(drawInfo.drawPlayer.body==Origins.PlagueTexanJacketID) drawInfo.drawHands = true;
         }
         public override void FrameEffects() {
