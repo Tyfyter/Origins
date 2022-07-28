@@ -57,7 +57,7 @@ namespace Origins.Tiles.Riven {
     }
     public class Riven_Flesh_Item : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Riven Flesh");
+            DisplayName.SetDefault("Spug Flesh");
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.FleshBlock);

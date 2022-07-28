@@ -141,7 +141,7 @@ namespace Origins.Items.Weapons.Riven {
                 //dust = Dust.NewDustPerfect(origin, 6, null, Scale:2);
                 //dust.shader = EpikV2.fireDyeShader;
                 //dust.noGravity = true;
-                Lighting.AddLight(origin, 1*s, 0.45f*s, 0.1f*s);
+                Lighting.AddLight(origin, 0.1f*s, 0.35f*s, 1f*s);
                 if(Main.rand.Next(++dustTimer)>48) {
                     Dust.NewDustPerfect(origin+(perpUnit*Main.rand.NextFloat(-2, 2)), 6, unit*5).noGravity = true;
                     dustTimer = Main.rand.NextBool()?16:0;
@@ -157,7 +157,7 @@ namespace Origins.Items.Weapons.Riven {
                 }
                 drawData.Draw(spriteBatch);
             }
-            Dust.NewDustPerfect(origin+(perpUnit*Main.rand.NextFloat(-4,4)), 6, unit*5).noGravity = true;
+            Dust.NewDustPerfect(origin+(perpUnit*Main.rand.NextFloat(-4,4)), 59, unit*5).noGravity = true;
         }
 
         /// <summary>

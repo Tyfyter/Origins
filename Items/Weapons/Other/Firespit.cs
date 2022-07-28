@@ -18,11 +18,11 @@ namespace Origins.Items.Weapons.Other {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
-            Item.damage = 38;
+            Item.damage = 36;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.crit = 1;
-            Item.useAnimation = 2;
-            Item.useTime = 38;
+            Item.useAnimation = 35;
+            Item.useTime = 2;
             Item.width = 58;
             Item.height = 22;
             Item.useAmmo = ItemID.Fireblossom;
@@ -33,13 +33,16 @@ namespace Origins.Items.Weapons.Other {
             Item.rare = ItemRarityID.Orange;
             Item.glowMask = glowmask;
         }
+        public override bool CanConsumeAmmo(Item ammo, Player player) {
+            return player.ItemAnimationJustStarted;
+        }
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
             if (player.itemAnimationMax - player.itemAnimation > 9) return;
             Vector2 offset = Vector2.Normalize(velocity);
             offset = offset * 24 + offset.RotatedBy(-MathHelper.PiOver2 * player.direction) * 8;
             position += offset;
-            velocity = velocity.RotatedByRandom(0.5);
+            velocity = velocity.RotatedByRandom(0.65);
         }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    if(player.itemAnimationMax-player.itemAnimation > 9)return false;

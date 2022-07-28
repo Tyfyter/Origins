@@ -1,21 +1,15 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.NPCs;
 using Origins.Projectiles.Weapons;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-using Terraria.GameContent.Creative;
-using Terraria.DataStructures;
 
 namespace Origins.Items.Weapons.Defiled {
-	public class Low_Signal : ModItem {
+    public class Low_Signal : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Low Signal");
@@ -32,8 +26,8 @@ namespace Origins.Items.Weapons.Defiled {
             Item.noUseGraphic = false;
 			Item.width = 30;
 			Item.height = 36;
-			Item.useTime = 30;
-			Item.useAnimation = 30;
+			Item.useTime = 46;
+			Item.useAnimation = 46;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
             Item.shoot = ModContent.ProjectileType<Low_Signal_P>();

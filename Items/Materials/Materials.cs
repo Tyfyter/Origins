@@ -68,7 +68,20 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-	public class Angelium : ModItem {
+    public class Amebic_Gel : ModItem {
+        static short glowmask;
+        public override void SetStaticDefaults() {
+            Origins.AddGlowMask(this);
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
+
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 99;
+            Item.rare = ItemRarityID.Blue;
+            Item.glowMask = glowmask;
+        }
+    }
+    public class Angelium : ModItem {
         public override void SetStaticDefaults() {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
@@ -147,6 +160,15 @@ namespace Origins.Items.Materials {
             recipe.AddIngredient(ModContent.ItemType<Sulphur_Stone_Item>()); //Forgot to implement Decaying Mush...
             recipe.AddTile(TileID.AlchemyTable);
             recipe.Register();
+        }
+    }
+    public class Bud_Barnacle : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Bud Barnacle");
+            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 30;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 1;
         }
     }
     public class Busted_Servo : ModItem {
@@ -336,16 +358,13 @@ namespace Origins.Items.Materials {
         }
     }
     public class Infested_Bar : ModItem {
-        static short glowmask;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Infested Bar");
-            Origins.AddGlowMask(this);
+            DisplayName.SetDefault("Encrusted Bar");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
             Item.rare = ItemRarityID.Blue;
-            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -472,8 +491,8 @@ namespace Origins.Items.Materials {
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
-            Item.width = 14;
-            Item.height = 20;
+            Item.width = 18;
+            Item.height = 30;
             Item.maxStack = 99;
             Item.rare = ItemRarityID.Yellow;
             Item.glowMask = glowmask;
@@ -482,7 +501,7 @@ namespace Origins.Items.Materials {
     public class Riven_Sample : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Riven Sample");
+            DisplayName.SetDefault("Riven Carapace");
             glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
         }
@@ -510,16 +529,6 @@ namespace Origins.Items.Materials {
             recipe.AddIngredient(this, 5);
             recipe.AddTile(TileID.Hellforge);
             recipe.Register();
-        }
-    }
-    public class Rivenform : ModItem {
-        public override void SetStaticDefaults() {
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 25;
-
-        }
-        public override void SetDefaults() {
-            Item.maxStack = 99;
-            Item.rare = ItemRarityID.Orange;
         }
     }
         public class Rotor : ModItem {

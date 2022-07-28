@@ -6,9 +6,11 @@ using Origins.Items.Materials;
 
 namespace Origins.Items.Tools {
 	public class Pullinsmash : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Pullinsmash");
-			Tooltip.SetDefault("'Brings the nails to you'");
+			DisplayName.SetDefault("Stabsmash");
+			Tooltip.SetDefault("'Hammer and nail in one package'");
+			glowmask = Origins.AddGlowMask(this);
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
@@ -16,14 +18,15 @@ namespace Origins.Items.Tools {
 			Item.damage = 16;
 			Item.DamageType = DamageClass.Melee;
             Item.hammer = 55;
-			Item.width = 60;
-			Item.height = 52;
+			Item.width = 46;
+			Item.height = 38;
 			Item.useTime = 17;
 			Item.useAnimation = 27;
 			Item.knockBack = 4f;
 			Item.value = 3600;
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
+			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

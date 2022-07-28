@@ -1,27 +1,24 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Riven {
-	public class Riverang : ModItem {
+    public class Riverang : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Riverang");
-			Tooltip.SetDefault("Not very aerodynamic");
+			Tooltip.SetDefault("Somehow aerodynamic");
             glowmask = Origins.AddGlowMask(this);
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ThornChakram);
             Item.DamageType = DamageClass.MeleeNoSpeed;
-			Item.damage = 28;
-			Item.width = 22;
-			Item.height = 28;
+			Item.damage = 14;
+			Item.width = 20;
+			Item.height = 22;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
 			//item.knockBack = 5;
@@ -44,8 +41,8 @@ namespace Origins.Items.Weapons.Riven {
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.ThornChakram);
             Projectile.penetrate = -1;
-			Projectile.width = 28;
-			Projectile.height = 28;
+			Projectile.width = 22;
+			Projectile.height = 22;
             //projectile.scale*=1.25f;
         }
         public override bool PreAI() {

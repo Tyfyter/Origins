@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Defiled {
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ThornChakram);
-			Item.damage = 25;
+			Item.damage = 14;
 			Item.width = 34;
 			Item.height = 34;
 			Item.useTime = 18;

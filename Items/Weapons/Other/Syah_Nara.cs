@@ -6,13 +6,13 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Other {
     public class Syah_Nara : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Syah Nara");
+            DisplayName.SetDefault("Cyah Nara");
             Tooltip.SetDefault("");
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Katana);
-            Item.damage = 16;
+            Item.damage = 12;
             Item.DamageType = DamageClass.Melee;
             Item.noUseGraphic = false;
             Item.noMelee = false;

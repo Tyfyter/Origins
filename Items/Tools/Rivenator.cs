@@ -6,9 +6,11 @@ using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Tools {
 	public class Rivenator : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Rivenator");
 			Tooltip.SetDefault("'Unsettlingly floppy'\nAble to mine Hellstone");
+			glowmask = Origins.AddGlowMask(this);
 			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
 		}
 		public override void SetDefaults() {
@@ -24,6 +26,7 @@ namespace Origins.Items.Tools {
 			Item.value = 3600;
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
+			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
