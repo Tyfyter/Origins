@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Defiled {
 			DisplayName.SetDefault("Ripper Lance");
 			Tooltip.SetDefault("Very pointy");
 			glowmask = Origins.AddGlowMask(this);
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 24;

@@ -12,7 +12,7 @@ namespace Origins.Items.Armor.Chromtain {
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Chromtain/Chromtain_Helmet_Head_Glow");
             }
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.defense = 21;
@@ -42,7 +42,7 @@ namespace Origins.Items.Armor.Chromtain {
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Chromtain/Chromtain_Breastplate_Body_Glow");
             }
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.defense = 54;
@@ -65,7 +65,7 @@ namespace Origins.Items.Armor.Chromtain {
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Chromtain/Chromtain_Greaves_Legs_Glow");
             }
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.defense = 33;

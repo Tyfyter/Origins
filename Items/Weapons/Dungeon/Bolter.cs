@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Dungeon {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bolt Gun");
             Tooltip.SetDefault("Get boned");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Handgun);

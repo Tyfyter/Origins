@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Explosives {
             if (!Main.dedServ) {
                 UseTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Explosives/Bomboomstick_Use");
             }
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Boomstick);

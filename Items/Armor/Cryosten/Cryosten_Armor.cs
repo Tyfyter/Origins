@@ -9,7 +9,7 @@ namespace Origins.Items.Armor.Cryosten {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Cryosten Helmet");
 			Tooltip.SetDefault("Increased life regeneration");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.defense = 2;
@@ -41,7 +41,7 @@ namespace Origins.Items.Armor.Cryosten {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Cryosten Breastplate");
 			Tooltip.SetDefault("20% increased maximum health");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.defense = 3;
@@ -63,7 +63,7 @@ namespace Origins.Items.Armor.Cryosten {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Cryosten Greaves");
 			Tooltip.SetDefault("5% increased movement speed\nincreased movement speed on ice");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.defense = 2;

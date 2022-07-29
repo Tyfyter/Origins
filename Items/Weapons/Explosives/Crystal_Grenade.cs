@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Grenade");
 			Tooltip.SetDefault("");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+            SacrificeTotal = 99;
 
         }
 		public override void SetDefaults() {

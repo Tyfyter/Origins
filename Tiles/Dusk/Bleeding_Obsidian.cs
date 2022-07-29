@@ -31,7 +31,7 @@ namespace Origins.Tiles.Dusk {
     public class Bleeding_Obsidian_Item : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bleeding Obsidian");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 100;
+            SacrificeTotal = 100;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.StoneBlock);

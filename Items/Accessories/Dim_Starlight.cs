@@ -16,7 +16,7 @@ namespace Origins.Items.Accessories {
             DisplayName.SetDefault("Dim Starlight");
             Tooltip.SetDefault("Mana stars fall from critical hits");
             glowmask = Origins.AddGlowMask(this);
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.accessory = true;

@@ -10,7 +10,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Absorption Potion");
 			Tooltip.SetDefault("Fully protected from explosive self-damage");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 20;
+			SacrificeTotal = 20;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WrathPotion);

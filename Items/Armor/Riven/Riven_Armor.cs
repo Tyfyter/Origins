@@ -15,7 +15,7 @@ namespace Origins.Items.Armor.Riven {
             DisplayName.SetDefault("Riven Mask");
             Tooltip.SetDefault("Increases minion damage by 10%");
             GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Mask_Head_Glow");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.defense = 6;
@@ -55,7 +55,7 @@ namespace Origins.Items.Armor.Riven {
             GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Coat_Body_Glow");
             femaleGlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Coat_Female_Glow");
             armGlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Coat_Arms_Glow");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.defense = 7;
@@ -88,7 +88,7 @@ namespace Origins.Items.Armor.Riven {
             DisplayName.SetDefault("Riven Pants");
             Tooltip.SetDefault("Increases jump height");
             GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Pants_Legs_Glow");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.defense = 6;

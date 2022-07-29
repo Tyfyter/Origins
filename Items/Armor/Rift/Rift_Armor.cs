@@ -14,7 +14,7 @@ namespace Origins.Items.Armor.Rift {
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Rift/Rift_Helmet_Head_Glow");
             }
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.defense = 9;
@@ -47,7 +47,7 @@ namespace Origins.Items.Armor.Rift {
                 Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Rift/Rift_Breastplate_Body_Glow");
                 Origins.AddBreastplateGlowmask(-Item.bodySlot, "Items/Armor/Rift/Rift_Breastplate_FemaleBody_Glow");
             }
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.defense = 13;
@@ -73,7 +73,7 @@ namespace Origins.Items.Armor.Rift {
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Rift/Rift_Greaves_Legs_Glow");
             }
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.defense = 11;

@@ -8,7 +8,7 @@ namespace Origins.Items.Weapons.Fiberglass {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Sword");
 			Tooltip.SetDefault("Be careful, it's sharp");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 18;

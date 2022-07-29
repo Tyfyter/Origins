@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Dungeon {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Longbone");
             Tooltip.SetDefault("Turns most arrows into fragile bone arrows");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.GoldBow);

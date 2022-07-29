@@ -111,6 +111,21 @@ namespace Origins.NPCs {
 			}
 			return true;
 		}
+		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+			if (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]) {
+				float damageBoost = 0;
+				if (npc.HasBuff(Flagellash_Buff_0.ID)) {
+					damageBoost += 3.4f;
+				}
+				if (npc.HasBuff(Flagellash_Buff_1.ID)) {
+					damageBoost += 3.3f;
+				}
+				if (npc.HasBuff(Flagellash_Buff_2.ID)) {
+					damageBoost += 3.3f;
+				}
+				damage += Main.rand.RandomRound(damageBoost);
+			}
+		}
 		/*public override void OnHitNPC(NPC npc, NPC target, int damage, float knockback, bool crit) {
 			knockback*=MeleeCollisionNPCData.knockbackMult;
 			MeleeCollisionNPCData.knockbackMult = 1f;

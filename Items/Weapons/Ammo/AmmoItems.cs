@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Ammo {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Thermite Canister");
             glowmask = Origins.AddGlowMask(this);
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 199;
+            SacrificeTotal = 199;
 			//Tooltip.SetDefault();
 		}
         public override void SetDefaults() {
@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Ammo {
     public class White_Solution : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("White Solution");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+            SacrificeTotal = 99;
             //Tooltip.SetDefault();
         }
         public override void SetDefaults() {

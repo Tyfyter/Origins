@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Other {
 			DisplayName.SetDefault("Dragon's Breath");
 			Tooltip.SetDefault("Uses fireblossoms as ammo");
             glowmask = Origins.AddGlowMask(this);
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.SniperRifle);

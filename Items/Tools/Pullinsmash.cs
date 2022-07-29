@@ -11,7 +11,7 @@ namespace Origins.Items.Tools {
 			DisplayName.SetDefault("Stabsmash");
 			Tooltip.SetDefault("'Hammer and nail in one package'");
 			glowmask = Origins.AddGlowMask(this);
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.TitaniumWaraxe);

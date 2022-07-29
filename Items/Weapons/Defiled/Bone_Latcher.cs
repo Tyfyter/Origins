@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Defiled {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bone Latcher");
 			glowmask = Origins.AddGlowMask(this);
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			// Call this method to quickly set some of the properties below.

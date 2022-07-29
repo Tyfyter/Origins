@@ -16,7 +16,7 @@ namespace Origins.Items.Armor.Acrid{
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Helmet_Head_Glow");
             }
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.defense = 10;
@@ -52,7 +52,7 @@ namespace Origins.Items.Armor.Acrid{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Breastplate");
 			Tooltip.SetDefault("Increased life regeneration");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.defense = 18;
@@ -75,7 +75,7 @@ namespace Origins.Items.Armor.Acrid{
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Greaves");
 			Tooltip.SetDefault("Grants the ability to swim");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.defense = 14;

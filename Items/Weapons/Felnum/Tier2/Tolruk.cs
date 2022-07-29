@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
                 Origins.AddGlowMask("Weapons/Felnum/Tier2/Tolruk_Glow_9"),
                 Origins.AddGlowMask("Weapons/Felnum/Tier2/Tolruk_Glow_10")
             };
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.damage = 37;

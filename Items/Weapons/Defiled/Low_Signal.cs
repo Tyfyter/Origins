@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Defiled {
 			Tooltip.SetDefault("");
 			Item.staff[Type] = true;
 			glowmask = Origins.AddGlowMask(this);
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 40;

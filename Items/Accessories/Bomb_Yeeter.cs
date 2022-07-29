@@ -9,7 +9,7 @@ namespace Origins.Items.Accessories {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomb Handling Device");
             Tooltip.SetDefault("Also commonly referred to as the 'Bomb Yeeter'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             sbyte handOnSlot = Item.handOnSlot;

@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             DisplayName.SetDefault("Hævateinn");
             Tooltip.SetDefault("Receives 50% higher damage bonuses\nsprite needs recoloring.");
 			Item.staff[Item.type] = true;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.CrystalVileShard);

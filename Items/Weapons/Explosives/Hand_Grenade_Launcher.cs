@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Hand Grenade Launcher");
 			Tooltip.SetDefault("'Doesn't this defeat the purpose of a hand grenade?'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.GrenadeLauncher);

@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Other {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dreikan");
 			Tooltip.SetDefault("Like \"Drakin\" with a heavy Aussie accent");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.SniperRifle);

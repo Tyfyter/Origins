@@ -8,7 +8,7 @@ namespace Origins.Items.Accessories {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Pneumatic Bomb Thrower");
             Tooltip.SetDefault("Also commonly referred to as the 'True Bomb Yeeter'");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.accessory = true;

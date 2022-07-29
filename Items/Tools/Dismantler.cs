@@ -9,7 +9,7 @@ namespace Origins.Items.Tools {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dismantler");
 			Tooltip.SetDefault("Very pointy\nAble to mine Hellstone");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.DeathbringerPickaxe);

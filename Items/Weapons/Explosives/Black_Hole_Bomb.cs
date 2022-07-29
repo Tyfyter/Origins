@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Black Hole Bomb");
 			Tooltip.SetDefault("Explode. Implode");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+            SacrificeTotal = 99;
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Bomb);

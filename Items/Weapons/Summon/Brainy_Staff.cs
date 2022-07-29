@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Summon {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Brainy Staff");
             Tooltip.SetDefault("Summons a mini Brain of Cthulhu to fight for you");
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
         public override void SetDefaults() {
             Item.damage = 10;

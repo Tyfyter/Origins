@@ -14,7 +14,7 @@ namespace Origins.Items.Armor.Defiled {
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Defiled/Defiled_Helmet_Head_Glow");
             }
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.defense = 6;
@@ -43,7 +43,7 @@ namespace Origins.Items.Armor.Defiled {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Breastplate");
             Tooltip.SetDefault("10% increased magic damage");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.defense = 7;
@@ -66,7 +66,7 @@ namespace Origins.Items.Armor.Defiled {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Greaves");
             Tooltip.SetDefault("5% increased movement speed");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.defense = 6;

@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Felnum {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Felnum Longbow");
             Tooltip.SetDefault("Receives 50% higher damage bonuses");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.GoldBow);

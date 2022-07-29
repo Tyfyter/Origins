@@ -10,7 +10,7 @@ namespace Origins.Items.Weapons.Other {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Cleaver Rifle");
             Tooltip.SetDefault("Crude and dangerous");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Gatligator);

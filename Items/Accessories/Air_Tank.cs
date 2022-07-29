@@ -9,7 +9,7 @@ namespace Origins.Items.Accessories {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Air Tank");
             Tooltip.SetDefault("Extends underwater breathing\nImmunity to ‘Suffocation’");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.YoYoGlove);

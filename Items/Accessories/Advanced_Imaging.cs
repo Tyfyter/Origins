@@ -8,7 +8,7 @@ namespace Origins.Items.Accessories {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Advanced Imaging");
             Tooltip.SetDefault("Increased projectile speed\nImmunity to Confusion\n\"The future is now\"");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.YoYoGlove);

@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Defiled {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("The Kruncher");
             Tooltip.SetDefault("Very pointy");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.damage = 6;

@@ -44,24 +44,24 @@ float4 DefiledShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : CO
 
 float4 RivenShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
 	const float pi = 3.1415926535897932384626433832795;
+	const float halfpi = 1.5707963267948966192313216916398;
 	const float pisquared = 10;//9.8696044010893586188344909998761;
 	const float mult = 1.85;
 	float4 color = tex2D(uImage0, coords);
-	float progress = uProgress;
 	//float time = uTime/3;
 	float xval = (coords.x - 0.5) * mult;
 	float yval = (coords.y - 0.5) * mult;
-	float r = sqrt((xval * xval) + (yval * yval)) * progress;
+	float r = sqrt((xval * xval) + (yval * yval)) * uProgress;
 	float tpi = (atan(yval / xval) + (sin(uTime / pisquared) / pi)) * pisquared;
-	//float tCos = cos(uTime) + 0.5;
-	//if (isnan(tCos) || isinf(tCos)) {
-	//	tCos = 0;
-	//}
+	float tCos = sin(uTime + halfpi) + 0.5;
 	//the 1 was supposed to be tCos, but for some reason that makes it disappear about half the time now
-	float aval = r + (lerp(1, cos(tpi), sin(tpi) + 0.5) * 0.05) * r;
-	aval = clamp(aval, 0, 1) * progress;
+	float aval = r + (lerp(tCos, sin(tpi + halfpi), sin(tpi) + 0.5) * 0.05) * r;
+	
+	aval = clamp(aval, 0, 1) * uProgress;
+	bool high = aval > 0.75;
 	color.rgb = lerp(color.rgb, color.rgb * float3(1, 0.45, 0.15), aval);
-	if (aval > 0.75) color.rgb = lerp(color.rgb, 0, (aval - 0.75) * 3);
+	//if (aval > 0.75) color.rgb = lerp(color.rgb, 0, (aval - 0.75) * 3);
+	
 	return color;
 }
 

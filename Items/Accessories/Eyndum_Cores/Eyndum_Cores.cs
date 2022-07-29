@@ -27,7 +27,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
         public override Color CoreGlowColor => new Color(255, 220, 0, 160);
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Agility Core");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void UpdateEquip(Player player) {
             player.wingTimeMax *= 2;
@@ -41,7 +41,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
         public override Color CoreGlowColor => new Color(160, 0, 255, 160);
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Combat Core");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void UpdateEquip(Player player) {
             player.GetDamage(DamageClass.Generic) *= 1.24f;
@@ -55,7 +55,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
         public override Color CoreGlowColor => new Color(255, 160, 0, 160);
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Construction Core");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void UpdateEquip(Player player) {
             player.tileSpeed *= 2f;
@@ -70,7 +70,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
         public override Color CoreGlowColor => new Color(255, 0, 75, 160);
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Lifeforce Core");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void UpdateEquip(Player player) {
             player.statLifeMax2 += player.statLifeMax2 / 2;

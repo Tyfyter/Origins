@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Ancient Fragthrower");
 			Tooltip.SetDefault("");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ProximityMineLauncher);

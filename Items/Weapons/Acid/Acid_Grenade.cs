@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Acid {
 			DisplayName.SetDefault("Acid Grenade");
 			Tooltip.SetDefault("");
             glowmask = Origins.AddGlowMask(this);
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 99;
+            SacrificeTotal = 99;
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Grenade);

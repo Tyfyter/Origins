@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Other {
             animation = new DrawAnimationManual(1);
 			Main.RegisterItemAnimation(Item.type, animation);
             glowmask = Origins.AddGlowMask(this);
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.SpaceGun);

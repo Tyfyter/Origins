@@ -512,7 +512,11 @@ namespace Origins {
 				}
 			}
             if (zoneDefiled) {
-                if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
+                if (attempt.crate) {
+                    if (attempt.rare && !(attempt.veryrare || attempt.legendary)) {
+                        itemDrop = ModContent.ItemType<Crusty_Crate>();
+                    }
+                } else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
                     itemDrop = ModContent.ItemType<Knee_Slapper>();
                 } else if (attempt.uncommon && !attempt.rare) {
                     itemDrop = ModContent.ItemType<Prikish>();
@@ -522,7 +526,7 @@ namespace Origins {
 					if (attempt.rare && !(attempt.veryrare || attempt.legendary)) {
                         itemDrop = ModContent.ItemType<Crusty_Crate>();
                     }
-                }else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
+                } else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
                     itemDrop = ModContent.ItemType<Knee_Slapper>();
                 } else if (attempt.uncommon && !attempt.rare) {
                     itemDrop = ModContent.ItemType<Prikish>();

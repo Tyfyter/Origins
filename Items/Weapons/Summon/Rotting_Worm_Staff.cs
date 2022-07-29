@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Summon {
             DisplayName.SetDefault("Rotting Worm Staff");
             Tooltip.SetDefault("Summons a mini Eater of Worlds to fight for you");
             ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.damage = 4;

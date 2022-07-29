@@ -11,7 +11,7 @@ namespace Origins.Items.Armor.Celestine {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Celestine Helmet");
 			Tooltip.SetDefault("10% increased melee and magic critical strike chance");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.defense = 8;
@@ -34,7 +34,7 @@ namespace Origins.Items.Armor.Celestine {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Celestine Breastplate");
 			Tooltip.SetDefault("15% increased melee and magic damage");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.defense = 24;
@@ -50,7 +50,7 @@ namespace Origins.Items.Armor.Celestine {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Celestine Greaves");
 			Tooltip.SetDefault("20% increased melee speed\nIncreased mana regeneration\n10% increased movement speed");
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.defense = 16;

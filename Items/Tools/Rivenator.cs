@@ -11,7 +11,7 @@ namespace Origins.Items.Tools {
 			DisplayName.SetDefault("Rivenator");
 			Tooltip.SetDefault("Rpbobably not 'Unsettlingly floppy' anymore, so we'll need a new tooltip\nAble to mine Hellstone");
 			glowmask = Origins.AddGlowMask(this);
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.NightmarePickaxe);

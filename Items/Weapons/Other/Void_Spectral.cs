@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Other {
             DisplayName.SetDefault("Void Spectral");
             Tooltip.SetDefault("");
             glowmask = Origins.AddGlowMask(this);
-            CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ToxicFlask);

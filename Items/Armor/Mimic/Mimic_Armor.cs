@@ -12,7 +12,7 @@ namespace Origins.Items.Armor.Mimic {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Mimic/Mimic_Helmet_Head_Glow");
 			}
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 11;
@@ -103,7 +103,7 @@ namespace Origins.Items.Armor.Mimic {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Mimic/Mimic_Breastplate_Body_Glow");
 			}
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 15;
@@ -130,7 +130,7 @@ namespace Origins.Items.Armor.Mimic {
 			if (Main.netMode != NetmodeID.Server) {
 				//Origins.AddLeggingGlowMask(item.legSlot, "Items/Armor/Mimic/Mimic_Greaves_Legs_Glow");
 			}
-			CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 12;
