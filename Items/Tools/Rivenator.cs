@@ -9,7 +9,7 @@ namespace Origins.Items.Tools {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Rivenator");
-			Tooltip.SetDefault("Rpbobably not 'Unsettlingly floppy' anymore, so we'll need a new tooltip\nAble to mine Hellstone");
+			Tooltip.SetDefault("Able to mine Hellstone");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}
