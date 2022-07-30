@@ -35,7 +35,6 @@ namespace Origins.Items.Weapons.Riven {
         }
     }
     public class Riverang_P : ModProjectile {
-        int lastHitNPC = -1;
         public override string Texture => "Origins/Items/Weapons/Riven/Riverang";
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Riverang");
@@ -96,7 +95,6 @@ namespace Origins.Items.Weapons.Riven {
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             if(Projectile.localAI[1]>0)Projectile.localAI[0] = 20;
-            lastHitNPC = target.whoAmI;
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
             width = 27;
