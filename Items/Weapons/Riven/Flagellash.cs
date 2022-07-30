@@ -64,6 +64,7 @@ namespace Origins.Items.Weapons.Riven {
 			Projectile.tileCollide = false;
 			Projectile.ownerHitCheck = true; // This prevents the projectile from hitting through solid tiles.
 			Projectile.extraUpdates = 1;
+			//Projectile.extraUpdates = 0;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
 		}
@@ -124,20 +125,29 @@ namespace Origins.Items.Weapons.Riven {
 
 		// This method draws a line between all points of the whip, in case there's empty space between the sprites.
 		private void DrawLine(List<Vector2> list) {
-			Texture2D texture = TextureAssets.FishingLine.Value;
-			Rectangle frame = texture.Frame();
-			Vector2 origin = new Vector2(frame.Width / 2, 2);
-
+			//Texture2D texture = TextureAssets.FishingLine.Value;
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Vector2 origin = new Vector2(texture.Width / 2, 3);
+			int progress = -2;
 			Vector2 pos = list[0];
 			for (int i = 0; i < list.Count - 1; i++) {
 				Vector2 element = list[i];
 				Vector2 diff = list[i + 1] - element;
 
+				float dist = (diff.Length() + 2);
+				if (progress + dist >= texture.Width - 2) {
+					progress = 0;
+				}
+				if (i == list.Count - 2) {
+					progress = texture.Width - (int)dist;
+				}
+				Rectangle frame = new Rectangle(0, progress + 2, 6, (int)dist);
+				progress += (int)dist;
 				float rotation = diff.ToRotation() - MathHelper.PiOver2;
 				Color color = Lighting.GetColor(element.ToTileCoordinates(), Color.White);
-				Vector2 scale = new Vector2(1, (diff.Length() + 2) / frame.Height);
+				Vector2 scale = Vector2.One;//new Vector2(1, dist / frame.Height);
 
-				Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation, origin, scale, SpriteEffects.None, 0);
+				Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation + MathHelper.Pi, origin, scale, SpriteEffects.None, 0);
 
 				pos += diff;
 			}
