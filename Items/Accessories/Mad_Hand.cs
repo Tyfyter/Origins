@@ -12,8 +12,8 @@ using Terraria.GameContent.Creative;
 namespace Origins.Items.Accessories {
     public class Mad_Hand : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Madman’s Hand");
-            Tooltip.SetDefault("Twice the explosives, twice the fun.");
+            DisplayName.SetDefault("Temptation Spell");
+            Tooltip.SetDefault("Double the gunpowder, double the fun.");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {

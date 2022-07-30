@@ -116,6 +116,14 @@ namespace Origins.NPCs {
 				case NPCID.DemonEye:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Eyeball_Staff>(), 50));
 				break;
+				case NPCID.SkeletronPrime:
+				case NPCID.TheDestroyer:
+				case NPCID.Retinazer:
+				case NPCID.Spazmatism:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Busted_Servo>(), 1, 8, 37));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Power_Core>(), 4, 1, 2));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotor>(), 2, 5, 22));
+				break;
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = npcLoot.Get(false);
 				rules = rules.Where((r) => 

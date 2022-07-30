@@ -382,7 +382,7 @@ namespace Origins {
             if(crit) {
                 if(celestineSet)
                     Item.NewItem(item.GetSource_OnHit(target, "SetBonus_Celestine"), target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
-                if(dimStarlight&&dimStarlightCooldown<1) {
+                if(dimStarlight&&dimStarlightCooldown<1 && Main.rand.NextBool(5)) {
                     Item.NewItem(item.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
                     dimStarlightCooldown = 90;
                 }

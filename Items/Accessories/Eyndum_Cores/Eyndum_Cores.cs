@@ -1,12 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories.Eyndum_Cores {
-	public abstract class Eyndum_Core : ModItem {
+    public abstract class Eyndum_Core : ModItem {
         public abstract Color CoreGlowColor { get; }
         public override bool CanRightClick() {
             if (Terraria.GameInput.PlayerInput.Triggers.Old.MouseRight) {
@@ -69,7 +68,8 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
     public class Lifeforce_Core : Eyndum_Core {
         public override Color CoreGlowColor => new Color(255, 0, 75, 160);
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Lifeforce Core");
+            DisplayName.SetDefault("Vitality Core");
+            Tooltip.SetDefault("Get a life.");
             SacrificeTotal = 1;
         }
         public override void UpdateEquip(Player player) {

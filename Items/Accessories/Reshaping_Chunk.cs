@@ -13,7 +13,7 @@ using Terraria.GameContent.Creative;
 namespace Origins.Items.Accessories {
     public class Reshaping_Chunk : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Reshaping Chunk");
+            DisplayName.SetDefault("Refactoring Pieces");
             Tooltip.SetDefault("Strengthens the set bonus of Defiled Armor\nReduces damage taken by 5% if Defiled Armor is not equipped");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(9, 3));
             SacrificeTotal = 1;

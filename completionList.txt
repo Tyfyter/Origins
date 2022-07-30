@@ -3,10 +3,12 @@ SYMBOL KEY:
 @: Needs resource (missing base sprite. Includes gun sprite for weapons, the actual entity for NPCs, or the appearance of a tile)
 @2: Needs resource (missing projectile/use sprite. Includes NPC attack animations)
 @3: Needs resource (missing glowmask sprite)
+@4: Resource needs modification (changing of the sprite format)
 
 #: Needs code (not implemented at all)
 #2: Needs code (partial implementation. Includes code of a re-used mechanic)
-#3: Needs code (needs changing to pre-existing code and/or needs to be finalized)
+#3: Needs code (needs changing to pre-existing code and/or needs to be finalized | Undecided plans)
+#4: Has bug
 
 $: Needs sound (music not composed)
 $2: Needs sound (SFX not yet composed/implemented)
@@ -23,7 +25,9 @@ $3: Needs sound (SFX/music is composed but not implemented)
 
 X: No progress
 
-[NOTE: Entries will often have ","'s and "/"'s to signify multiple elements at once]
+*: Wiki entry available for entry
+
+[NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
 
 
@@ -35,7 +39,7 @@ BOSSES AND MINI-BOSSES:
 (#, ^2) Ichor Storm
 (@3, #, ^4) Seer
 
-(^) Defiled Amalgmation
+(^) Defiled Amalgmation*
 (@, #, $) Fiberglass Weaver
 (@2/3, #, $) Riven Crest
 
@@ -70,20 +74,20 @@ TOWN NPCs:
 
 VANILLA MODIFICATIONS:
 ---
-(^) Avenger Emblem (craftable from Exploder Emblem)
-(^) Glass Kiln (craft some Origins materials)
-(^) Miner Set (file:///C:/Users/atomb/Documents/GitHub/OriginsWiki/Recipe_Changes.html)
-(^) Obsidian Set (craftable from Undead Chunk AND Riven Sample)
-(#3, %3) Strange String/Riven-equivalent (to craft Mechanical Worm and Battle Potion)
+(^) Avenger Emblem (craftable from Exploder Emblem)*
+(^) Glass Kiln (craft some Origins materials)*
+(^) Miner Set (file:///C:/Users/atomb/Documents/GitHub/OriginsWiki/Recipe_Changes.html)*
+(^) Obsidian Set (craftable from Undead Chunk AND Riven Sample)*
+(#3) Strange String/Bud Barnacle (to craft Mechanical Worm and Battle Potion)*
 
-(^) Bats (drop Bat Hide)
-(#3) Boss Immunities (make every boss immune to anything with Stun)
-(#3) Demolitionist (to sell different items based on peat sold)
-(X) Dryad Selling Evil Items on Blood Moon
-(#2/3) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)
-(%2, X) Harpoon (new weapon to introduce sub-class)
-(#2) Trees (add Bark and Tree Sap as drops when chopping down trees)
-(^) Wall of Flesh (to drop Exploder Emblem)
+(^) Bats (drop Bat Hide)*
+(#3) Boss Immunities (make every boss immune to anything with Stun)*
+(#3) Demolitionist (to sell different items based on peat sold)*
+(X) Dryad Selling Evil Items on Blood Moon*
+(#2/3) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
+(%2) Harpoon (new weapon to introduce sub-class)*
+(#2) Trees (add Bark and Tree Sap as drops when chopping down trees)*
+(^) Wall of Flesh (to drop Exploder Emblem)*
 
 (%3, X) Nova Pillar in Lunar Invasion
 ---
@@ -99,7 +103,7 @@ ENEMY NPCS:
 (@, #3) Riven Tank
 (#, ^2) Scanner Scout
 
-(#, ^2) Carpalfish
+(#, ^2) Carpalfish*
 (%, X) Defiled Clipper (don't know what to do with it)
 (#3, ^2/4) Defiled Hunter
 (@, #3, %2) Defiled Mimic
@@ -154,8 +158,8 @@ STATUS EFFECTS:
 (X) Ionizing Radiation
 (^) Impeding Shrapnel
 (X) Levitation
-(#, ^2) Malice
 (#3, ^2) Rasterize
+(%3) Riven Debuff
 (^) Solvent
 (#, ^2) Totally Safe
 (#, ^2) Toxic Shock
@@ -170,7 +174,7 @@ STATUS EFFECTS:
 (^) Woodsprite Buff
 
 (#, ^2) Defiled Blight Buff
-(#, ^2) Meatroid Buff
+(#, ^2) Meberoid Buff
 (#, ^2) Platformer Mech Buff
 ---
 
@@ -180,4 +184,544 @@ NPC DIALOGUE:
 (%3) Cyborg
 (X) Demolitionist
 (X) Dryad
+---
+
+
+ARMOR:
+---
+(%, X) Bony Carapace Armor
+(^) Cryosten Armor (Wiki needs work)*
+(^) Defiled Armor*
+(@4, ^3) Felnum Armor
+(^) Fiberglass Armor
+(@, ^3) Riven Armor
+
+(^) Acrid Armor
+(@, ^3) Bleeding Obsidian Armor
+(@, ^3) Mimic Armor
+
+(X) Anti-Gravity Armor
+(X) Mutant Armor
+(X) Necromancer Armor
+(X) Viridium Armor
+
+(X) Ascendant Armor
+(@, ^3) Celestine Armor
+(^) Chromtain Armor
+(#2, ^2) Eyndum Armor
+(X) Fibron Armor
+(X) Nanite Armor
+(#, ^2) Nova Armor
+(X) Locus Armor
+---
+
+
+ACCESSORIES:
+---
+(^) Advanced Imaging*
+(^) Air Pack*
+(^) Air Tank*
+(X) All-Knowing Mind*
+(^) Blast-Resistant Plate*
+(^) Bomb Charm*
+(^) Bomb Handling Device*
+(^) Cybernetic Brain*
+(^) Decaying Scale*
+(^) Dim Starlight*
+(#, ^2) Energy Shield*
+(^) Exploder Emblem*
+(X) Gun Glove
+(X) Locus Control Tuner
+(#, ^2) Olid Organ*
+(X) Parasitic Influence*
+(^) Pneumatic Bomb Thrower*
+(X) Return To Sender*
+(#, ^2) Sonar Visor*
+(^) Freeze Frame*
+(%3, X) Sun Medallion
+(#, ^2) Symbiote Skull
+
+(X) Sonic Radar
+
+(X) Amebic Vial
+(#, ^2) Extremophile Charm
+(^) Fiberglass Dagger
+(X) Forbidden Salt
+(X) Legging Motorizer
+(#, ^2) Queen of Hearts
+(X) Refactoring Pieces
+(%3, ^2) Runed Insignia
+(#3, ^2) Temptation Spell
+(X) Void Arcanum
+(x) Warp Drive
+(#, ^2) Worm Teeth
+
+(%3, X) Armored Core
+(%3, X) Atomic Clock
+(X) Backtack
+(X) Entangled Energy
+(%3, X) Immortal Core
+(#, ^2) Lazy Cloak
+(X) Magnetic Brain
+(X) Mildew Urchin
+(X) Mysterious Spray
+(%3, X) Parallax
+(X) Protozoa Food
+(X) Stomach of Craving
+
+(#2, ^2) Agility Core
+(#2, ^2) Combat Core
+(#2, ^2) Construction Core
+(#2, ^2) Vitality Core
+---
+
+
+VANITY:
+---
+(X) Alien Queen Head
+(X) Defiled Amalgamation Mask
+(X) Duskord Mask
+(X) Fiberglass Weaver Head
+(X) I.C.A.R.U.S. Mask
+(X) Mad Maniac Wig
+(X) Mildew Carrion Mask
+(X) Quantux Mask
+(X) Restless Flame Mask
+(X) Riven Crest Mask
+(X) Severus' Hat
+
+(^) Tyfyter's Fit
+(X) The First Dream
+---
+
+
+UTILITIES:
+---
+(X) Amoeba Hook
+(#, ^2) Nano Hook
+(#, ^2) Quantum Hook
+
+(X) Rocket-Boosted Minecart
+---
+
+
+WINGS:
+---
+(X) Acid Wings
+(X) Blighted Wings
+(X) Mutant Wings
+
+(X) Anti-Gravity Booster
+(X) Futuristic Jetpack
+
+(X) Ascendent Wings
+(x) Booster Pack
+(X) Celestine Wings
+(X) Fibron Thruster Array
+---
+
+
+TOOLS:
+---
+(^) Brick Breaker
+(^) Dismantler
+(???) Felnum Axe
+(???) Felnum Hammer
+(???) Felnum Pickaxe
+(^) Rivenator
+(^) Stabsmash
+
+(^) Acrid Drill
+(^) Acrid Hamaxe
+(^) Acrid Pickaxe
+(X) Bleeding Obsidian Dramaxe
+
+(X) Terraformer
+(X) Ahe
+---
+
+
+MELEE WEAPONS:
+---
+(^) Cyah Nara
+(#, ^2) Decimator
+(^) Felnum Spear
+(^) Fiberglass Broadsword
+(^) Krakram*
+(^) Ripper Lance
+(^) Riverang
+(^) Spiker Sword
+(^) Tyrfing
+
+(X) Envenomed Frenzy*
+(^) Fragarach
+(^) Knee Slapper
+(X) Nematoclaw*
+(X) Scale Saw
+(^) Telephone Pole*
+
+(X) Mass Blade*
+(#, ^2) Personal Laser Blade*
+(#, ^2) Rive Knife*
+(%3, X) The Spoon
+
+(%3, X) Celestial Point
+(X) Chromtain Smasher
+(%3, ^) Eyndum Scar
+(%3, X) Gigastar
+(%3, X) Singulus
+---
+
+
+RANGED WEAPONS:
+---
+(^) Bolt Gun
+(^) Fiberglass Bow
+(^) Fiberglass Pistol
+(X) Harpoon Gun
+(^) Longbone
+(#, ^2) Riven Splitter
+(^) The Kruncher
+(^) 2-in-1 Shotty
+(^) 3-in-1 Shotty
+
+(#, ^2) Acrid Impaler
+(X) Adamantite Harpoon Gun
+(^) Boiler
+(@, ^3) Cleaver Rifle
+(X) Cobalt Harpoon Gun
+(^) Dragon's Breath
+(^) Firespit
+(X) Mythril Harpoon Gun
+(X) Orichalcum Harpoon Gun
+(X) Palladium Harpoon Gun
+(X) Spray 'N Pray
+(#4, ^) Tiny Sniper
+(X) Titanium Harpoon Gun
+(@, ^3) Vipershot
+
+(%3, X) Barrel Blaster
+(^) Laser Tag Gun
+(X) Serpentine
+(X) Skewr
+
+(X) Fulcrum
+(X) Journey's Edge
+(X) L.W.M.U.G.
+(X) Pinpoint
+(X) Synergy
+(%3, X) The Deviant
+---
+
+
+MAGIC WEAPONS:
+---
+(^) Beginner's Tome
+(#4, ^) Cryostike
+(^) Infusion
+(#4, ^) Low Signal
+(^) Magnus
+(^) Tones of Agony
+
+(@, ^3) Bled Out Staff
+(X) Boulder Blender
+(@, ^3) Burning Ember
+(^) Dismay
+(X) Meltdown
+(^) Seam Beam
+(^) Splashid
+
+(^) Cometburn
+(X) Fistfury
+(#4, ^) Gravaulter
+(X) Lunarfire
+(#, ^2) Phantom Fury
+(X) Shocktrain
+(X) Spectra
+(^) Void Spectral
+
+(X) Ion Minigun
+(^) Rigged Cubix
+(X) Undying Energy
+---
+
+
+SUMMONER WEAPONS:
+---
+(#, ^2) Amebolize Incantation
+(^) Bone Latcher
+(@3, ^2) Brainy Staff
+(#, ^2) Desert Crown
+(@2, ^3) Eyeball Staff
+(%3, X) Fiend Staff
+(^) Flagellash
+(#, ^2) Forest Staff
+(#, ^2) Ocean Amulet
+(^) Rotted Worm Staff
+(#, ^2) Teardown
+(^) Woodsprite Staff
+
+(^) Bomb Artifact
+(X) Enkindled Rose
+(X) Mildew Whip
+(X) Stubborn Leaf
+
+(X) Doom Incantation
+(X) Ego
+(X) Obsidian Bone
+(X) Queen's Call
+(X) Ribatar
+(X) SMART Wrench
+(#, ^2) The Project
+
+(X) Flame of the Phoenix
+(#, ^2) Nanoswarmer
+(X) Stardust Crown
+---
+
+
+EXPLOSIVE WEAPONS:
+---
+(#, ^2) Ameballoon
+(#, ^2) Bombardment
+(#, ^2) Bomb Launcher
+(#, ^2) Defiled Spirit
+(^) Hand Grenade Launcher
+(^) Impact Explosives
+(^) Lightning Grenade
+(^) Peatball*
+
+(^) Bomboomstick
+(#, ^2) Klangjet
+(#, ^2) Mortar Shell
+(X) Napalm Bomb
+(X) RPG
+(^) Shrapnel Bomb
+(^) Thermite Launcher
+
+(%3, ^) Ace Shrapnel
+(X) Acid Bomb
+(^) Acid Grenade
+(^) Black Hole Bomb
+(X) Crystal Bomb
+(^) Crystal Grenade
+(@, ^3) Fallout
+(X) Grenade Lawnchair
+(X) Grenado
+(#, ^2) Nade O' Plenty
+(#, ^2) Nuclear Arm*
+
+(%3, X) Big Bang
+(%3, X) Big Bomba
+(X) Black Hole Bomb Launcher
+(%3, X) Catalyst
+(@, ^3) Caustica
+(X) Flakjack
+(@, ^3) Missile Minigun
+(@2, #) Starburst
+---
+
+
+TILES:
+---
+(X) Absorber Culture
+(X) Amoeba Fluid
+(X) Ancient Stone Brick
+(#, ^2) Batholith*
+(^) Bleeding Obsidian
+(X) Cubekon Altar
+(#, ^2) Decaying Mush
+(^) Defiled Grass*
+(^) Defiled Sand
+(^) Defiled Sandstone
+(^) Defiled Stone*
+(@, ^3) Dusk Stone
+(^) Dusklight
+(@, ^3) Encrusted Ore
+(^) Felnum Ore
+(#, ^2) Fiberglass
+(#, ^2) Geyser Core
+(^) Hardened Defiled Sand
+(^) Lost Ore
+(X) Mildew
+(#2, ^2) Peat Moss*
+(X) Space Rock
+(#2, ^2) Space Goo
+(@, #3) Spug Flesh
+(@, ^3) Sulphur Stone
+(X) Taranum
+(^) White Ice
+
+(X) Batholith Wall
+(^) Defiled Sandstone Wall
+(^) Defiled Stone Wall
+(@, ^3) Spug Flesh Wall
+(X) Sulphur Stone Wall
+
+(X) Acid Chest
+(X) Brine Water Fountain
+(X) Cubekon Chest
+(X) Cubekon Node
+(X) Defiled Dungeon Chest
+(X) Defiled Water Fountain
+(X) Riven Dungeon Chest
+(X) Riven Water Fountain
+(X) Ruins Chest
+
+(X) Fabricator
+(X) Omni-Printer
+
+(X) Brineglow Vine
+(^) Defiled Misc Tiles* (please implement Defiled Pots and Large foliage)
+(@, ^3) Riven Foliage
+(@, #3) Riven Lesion (I have a cool idea)
+(X) Riven Pot
+(X) Riven Tree
+(#2, ^2) Wilting Rose
+(X) Wrycoral
+
+(X) Music Box (Brine Pool)
+(X) Music Box (Cubekon Temple)
+(@, #2-4) Music Box (Defiled Caverns)
+(@, #2-4) Music Box (Defiled Wastelands)
+(X) Music Box (Dusk)
+(X) Music Box (Riven Hive)
+(X) Music Box (Ruins)
+
+(X) Defiled Amalgamation Trophy
+(X) Defiled Amalgamation Relic
+(X) Quantux Trophy
+(X) Quantux Relic
+(X) Riven Crest Trophy
+(X) Riven Crest Relic
+---
+
+
+MATERIALS:
+---
+(^) Adhesive Wrap
+(^) Angelium
+(^) Bark
+(^) Bat Hide
+(X) Brineglow
+(X) Bud Barnacle
+(^) Defiled Bar*
+(#, ^2) Defiled Powder
+(@, ^3) Encrusted Bar
+(^) Felnum Bar
+(^) Fiberglass Shard
+(^) Riven Carapace
+(^) Rubber
+(X) Sentient Powder
+(^) Silicon Packet
+(^) Strange String*
+(^) Tree Sap
+(^) Undead Chunk*
+(^) Wilting Rose
+(X) Wrycoral
+
+(^) Acid Bottle
+(^) Acrid Bar
+(^) Amebic Gel
+(^) Bleeding Obsidian Shard
+(^) Brine Sample
+(^) Defiled Key
+(^) Meta Gel
+(^) Riven Key
+
+(^) Busted Servo
+(^) Conductor Rod
+(^) Modular Plating
+(^) Power Core
+(^) Rotor
+(^) Space Goo
+(^) Space Rock
+(@, ^3) Viridium Bar
+
+(^) Chromtain Bar
+(^) Element-36 Bundle
+(X) Ethereal Ash
+(^) Eyndum Bar
+(^) Fibron Plating
+(^) Formium Bar
+(^) Formium Scrap
+(#3, ^2) Lunar Token
+(#3, ^2) Nova Fragment
+(@, ^3) Stellar Spark
+(^) Super Conductor
+(@, %3, ^3) Thruster Component
+(^) Unpowered Eyndum Core
+(@, ^3) Void Spark
+---
+
+
+CONSUMABLES:
+---
+(#, ^2) Quantum Injector
+
+(#3, ^2) Absorption Potion
+(@2, #) Extreme O' Potion
+(@2, #) Focus Potion
+(@2, #) Nullification Potion
+(X) Purification Potion
+(@2, #) Regen Burst Potion
+(X) Tuned Greater Healing Potion
+(X) Tuned Greater Mana Potion
+(@2, #) Voidsight Potion
+
+(X) Blue Bovine
+(#, ^2) Jam Sandwich
+(^) Krunch Mix*
+(X) One of a Kind Cookie
+(X) Potato
+(#, ^2) Soul Spaghetti
+(X) Strange Soda
+(X) Tasty Vanilla Shake
+
+(X) Nerve Impulse Manipulator*
+(X) Quantum Cell
+(X) Suspicious Looking Ice Cream
+(X) The Button
+
+(X) Crusty Crate
+(X) Pointy Crate
+
+(X) Gooey Water
+(X) White Water
+---
+
+MOUNTS & PETS:
+---
+(X) Ever-Watchful Eye (Juvenile Amalgamation)
+(#, ^2) Strange Power-Up (Platformer Mech, please consider implementing soon)
+
+(X) Amoeba Toy (Meberoid)
+(#, ^2) Suspicious Looking Pebble (Defiled Blight)
+(@, #, %3) Unknown summoning item (Dwarf Dwarf)
+
+(#, ^2) Chew Toy (Chee Toy, also consider implementing soon)
+(X) Familiar Dog Bone (Rufus)
+---
+
+
+AMMO:
+---
+(#, ^2) Bouncy Harpoon
+(#, ^2) Explosive Harpoon
+(#, ^2) Flammable Harpoon
+(#, ^2) Glittershot
+(#, ^2) Harpoon
+(^) Peatball*
+
+(#, ^2) Acid Harpoon
+(#, ^2) Teal Solution
+(^) Thermite Canister
+(^) White Solution
+
+(#, ^2) Odd Rocket
+(X) Scrap
+(#, ^2) Small Missile
+(%3, X) 1:571 Nuke
+
+(#, ^2) Starfuze
 ---

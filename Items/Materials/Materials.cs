@@ -71,6 +71,7 @@ namespace Origins.Items.Materials {
     public class Amebic_Gel : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Amebic Gel");
             glowmask = Origins.AddGlowMask(this, "");
             SacrificeTotal = 25;
         }
