@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Accessories {
     public class Mad_Hand : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Temptation Spell");
-            Tooltip.SetDefault("Double the gunpowder, double the fun.");
+            Tooltip.SetDefault("Double the gunpowder, double the fun.\nExpert");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
