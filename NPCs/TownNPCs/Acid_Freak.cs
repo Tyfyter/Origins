@@ -14,6 +14,9 @@ using Terraria.GameContent.Bestiary;
 using Origins.Items.Materials;
 using Origins.Projectiles.Weapons;
 using Terraria.GameContent.UI;
+using Terraria.Utilities;
+using Terraria.Localization;
+using Terraria.GameContent.Events;
 
 namespace Origins.NPCs.TownNPCs {
 	//[AutoloadHead]
@@ -40,9 +43,15 @@ namespace Origins.NPCs.TownNPCs {
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
 
 			NPC.Happiness
-				//.SetBiomeAffection<>(AffectionLevel.Like)
-				//.SetBiomeAffection<>(AffectionLevel.Dislike)
-				.SetBiomeAffection<Brine_Pool>((AffectionLevel)0)
+				.SetBiomeAffection<JungleBiome>(AffectionLevel.Like)
+				.SetBiomeAffection<JungleBiome>(AffectionLevel.Like)//TODO: make be temple
+				.SetBiomeAffection<Brine_Pool>(AffectionLevel.Like)
+				.SetBiomeAffection<MushroomBiome>(AffectionLevel.Hate)
+				.SetNPCAffection(NPCID.WitchDoctor, AffectionLevel.Love)
+				.SetNPCAffection(NPCID.Dryad, AffectionLevel.Like)
+				.SetNPCAffection(NPCID.BestiaryGirl, AffectionLevel.Dislike)
+				.SetNPCAffection(NPCID.Truffle, AffectionLevel.Hate)
+				//.SetNPCAffection(NPCID.Dryad, AffectionLevel.Hate)// Defiled Envoy
 			; // < Mind the semicolon!
 		}
         public override void SetDefaults() {
@@ -70,6 +79,44 @@ namespace Origins.NPCs.TownNPCs {
 				new FlavorTextBestiaryInfoElement("Mods.NPCs.Bestiary.Acid_Freak")
 			});
 		}
+		public override string GetChat() {
+			WeightedRandom<string> chat = new();
+
+			int otherNPC = NPC.FindFirstNPC(NPCID.WitchDoctor);
+			if (otherNPC >= 0) {
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWitchDoctor1", Main.npc[otherNPC].GivenName));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWitchDoctor2", Main.npc[otherNPC].GivenName));
+			}
+			if (BirthdayParty.PartyIsUp) {
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionParty", Main.npc[otherNPC].GivenName));
+				
+				otherNPC = NPC.FindFirstNPC(NPCID.Demolitionist);
+				if (otherNPC >= 0) {
+					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionPartyDemolitionist", Main.npc[otherNPC].GivenName));
+				}
+			}
+			if (Main.WindyEnoughForKiteDrops) {
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWind"));
+			}
+			if (Main.IsItStorming) {
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionStorm1"));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionStorm2"));
+			}
+			if (Main.bloodMoon) {
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.BloodMoon1"));
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.BloodMoon2"));
+			}
+			if (Main.SceneMetrics.EnoughTilesForGraveyard) {
+				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionGraveYard"));
+			}
+			// These are things that the NPC has a chance of telling you when you talk to it.
+			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue1"));
+			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue2"));
+			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue3"));
+			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue4"));
+
+			return chat; // chat is implicitly cast to a string.
+		}
 
 		public override List<string> SetNPCNameList() {
 			return new List<string>() {
@@ -78,6 +125,10 @@ namespace Origins.NPCs.TownNPCs {
 				"E",
 				"Vide Octavius James"
 			};
+		}
+		public override bool CheckConditions(int left, int right, int top, int bottom) {
+			//Terraria.WorldGen.ScoreRoom();
+			return base.CheckConditions(left, right, top, bottom);
 		}
 		public override bool CanGoToStatue(bool toKingStatue) => toKingStatue;
 		public override bool CanTownNPCSpawn(int numTownNPCs, int money) { // Requirements for the town NPC to spawn.

@@ -301,7 +301,7 @@ namespace Origins.Items.Materials {
     public class Felnum_Bar : ModItem {
         /*
          * brown color in its natural form
-         * tinted silver color when hardened
+         * tinted a lighter gold-brown when hardened
          * exhibits a property named "electrical greed" where it grows hard blue crystals from anywhere it would lose electrons, to effectively "reclaim" them, even if it already has a strong negative charge
          */
         public override void SetStaticDefaults() {
