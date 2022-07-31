@@ -65,6 +65,7 @@ namespace Origins {
         public bool advancedImaging = false;
         public bool rasterize = false;
         public bool decayingScale = false;
+        public bool lazyCloakVisible = false;
         #endregion
 
         #region explosive stats
@@ -166,6 +167,7 @@ namespace Origins {
             advancedImaging = false;
             rasterize = false;
             decayingScale = false;
+            lazyCloakVisible = false;
             toxicShock = false;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;
@@ -217,7 +219,9 @@ namespace Origins {
             }
             Player.buffImmune[Rasterized_Debuff.ID] = Player.buffImmune[BuffID.Cursed];
         }
-        public override void ProcessTriggers(TriggersSet triggersSet) {
+		public override void UpdateVisibleVanityAccessories() {
+		}
+		public override void ProcessTriggers(TriggersSet triggersSet) {
             releaseTriggerSetBonus = !controlTriggerSetBonus;
             controlTriggerSetBonus = triggersSet.KeyStatus["Origins: Trigger Set Bonus"];
 			if (controlTriggerSetBonus && releaseTriggerSetBonus) {
@@ -326,10 +330,16 @@ namespace Origins {
                 }
             }
             if (item.shoot > ProjectileID.None && felnumShock > 29) {
-                Projectile p = new Projectile();
+                Projectile p = new();
                 p.SetDefaults(type);
                 OriginGlobalProj.felnumEffectNext = true;
-                if (p.CountsAsClass(DamageClass.Melee) || p.aiStyle == 60) return;
+                if (
+                    (p.CountsAsClass(DamageClass.Melee) || 
+                    p.CountsAsClass(DamageClass.Summon) ||
+                    ProjectileID.Sets.IsAWhip[type] ||
+                    Origins.DamageModOnHit[type] ||
+                    p.aiStyle == ProjAIStyleID.WaterJet) &&
+                    !Origins.ForceFelnumShockOnShoot[type]) return;
                 damage += (int)(felnumShock / 15);
                 felnumShock = 0;
                 SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
@@ -369,7 +379,7 @@ namespace Origins {
                 float baseDamage = Player.GetTotalDamage(proj.DamageType).ApplyTo(shouldReplace ? dam : damage);
                 damage = shouldReplace ? Main.DamageVar(baseDamage) : (int)baseDamage;
             }
-            if(proj.CountsAsClass(DamageClass.Melee) && felnumShock > 29) {
+            if((proj.CountsAsClass(DamageClass.Melee) || proj.CountsAsClass(DamageClass.Summon) || ProjectileID.Sets.IsAWhip[proj.type]) && felnumShock > 29) {
                 damage+=(int)(felnumShock / 15);
                 felnumShock = 0;
                 SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), proj.Center);

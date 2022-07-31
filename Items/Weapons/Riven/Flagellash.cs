@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Riven {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Flagellash");
-			Tooltip.SetDefault("3⅓ summon tag damage\nYour summons will focus struck enemies\n'3 is better than 1'");
+			Tooltip.SetDefault("2⅔ summon tag damage\nYour summons will focus struck enemies\n'3 is better than 1'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -41,13 +41,17 @@ namespace Origins.Items.Weapons.Riven {
 			return -1;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI).scale *= Item.scale;
-			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: 1).scale *= Item.scale;
-			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: 2).scale *= Item.scale;
+			Flagellash_P.pitch = Main.rand.NextFloat(0.1f, 0.5f);
+			float scale = player.GetAdjustedItemScale(Item);
+			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI).scale *= scale;
+			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: 1).scale *= scale;
+			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: 2).scale *= scale;
 			return false;
 		}
 	}
 	public class Flagellash_P : ModProjectile, IWhipProjectile {
+		internal static float pitch = 0;
+		float _pitch = 0;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Flagellash");
 			// This makes the projectile use whip collision detection and allows flasks to be applied to it.
@@ -69,7 +73,8 @@ namespace Origins.Items.Weapons.Riven {
 			Projectile.localNPCHitCooldown = -1;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			Projectile.timeLeft += (int)Projectile.ai[1] * 6;
+			Projectile.timeLeft += (int)Projectile.ai[1] * 7;
+			_pitch = pitch;
 		}
 
 		private float Timer {
@@ -109,7 +114,7 @@ namespace Origins.Items.Weapons.Riven {
 				// Plays a whipcrack sound at the tip of the whip.
 				List<Vector2> points = Projectile.WhipPointsForCollision;
 				Projectile.FillWhipControlPoints(Projectile, points);
-				SoundEngine.PlaySound(SoundID.Item153, points[points.Count - 1]);
+				SoundEngine.PlaySound(Origins.Sounds.MultiWhip.WithPitchOffset(_pitch), points[^1]);
 			}
 		}
 
@@ -144,7 +149,7 @@ namespace Origins.Items.Weapons.Riven {
 				Rectangle frame = new Rectangle(0, progress + 2, 6, (int)dist);
 				progress += (int)dist;
 				float rotation = diff.ToRotation() - MathHelper.PiOver2;
-				Color color = Lighting.GetColor(element.ToTileCoordinates(), Color.White);
+				Color color = Color.Lerp(Lighting.GetColor(element.ToTileCoordinates(), Color.White), Color.White, 0.85f);
 				Vector2 scale = Vector2.One;//new Vector2(1, dist / frame.Height);
 
 				Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation + MathHelper.Pi, origin, scale, SpriteEffects.None, 0);

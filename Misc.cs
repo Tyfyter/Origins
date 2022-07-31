@@ -1205,6 +1205,9 @@ namespace Origins {
             }
             return true;
         }
+        public static StatModifier GetInverse(this StatModifier statModifier) {
+            return new StatModifier(1f / statModifier.Multiplicative, 1f / statModifier.Additive, -statModifier.Base, -statModifier.Flat);
+        }
         public static int GetVersion<T>(this LinkedList<T> ll) {
             if(LLNodeEnumerator<T>.LLVersion is null)LLNodeEnumerator<T>.LLVersion = typeof(LinkedList<T>).GetField("version", BindingFlags.NonPublic|BindingFlags.Instance);
             return (int)LLNodeEnumerator<T>.LLVersion.GetValue(ll);

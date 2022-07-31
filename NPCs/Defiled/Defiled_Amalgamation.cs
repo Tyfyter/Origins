@@ -311,7 +311,7 @@ namespace Origins.NPCs.Defiled {
                     //"sidestep" dash
                     case 4: {
 						if ((int)NPC.ai[1] == 0) {
-                            NPC.ai[2] = target.MountedCenter.X + Math.Sign(NPC.Center.X - target.MountedCenter.X) * 288;
+                            NPC.ai[2] = target.MountedCenter.X - Math.Sign(NPC.Center.X - target.MountedCenter.X) * 288;
                             NPC.ai[3] = target.MountedCenter.Y - 128;
                         }
                         NPC.ai[1]++;
@@ -319,8 +319,8 @@ namespace Origins.NPCs.Defiled {
                         float targetX = (float)Math.Sin(++time * 0.03f) * 48;
                         float speed = 5 * difficultyMult;
 
-                        float diffY = NPC.Bottom.Y - (NPC.ai[2] - targetHeight);
-                        float diffX = NPC.Center.X - NPC.ai[3];
+                        float diffX = NPC.Center.X - NPC.ai[2];
+                        float diffY = NPC.Bottom.Y - (NPC.ai[3] - targetHeight);
                         OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), 0.4f);
                         OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed * 4, speed * 4), 2.4f);
 						if (Math.Abs(diffX) < 64 || NPC.ai[1] > 25) {

@@ -1,9 +1,10 @@
-SYMBOL KEY:
+﻿SYMBOL KEY:
 ---
 @: Needs resource (missing base sprite. Includes gun sprite for weapons, the actual entity for NPCs, or the appearance of a tile)
 @2: Needs resource (missing projectile/use sprite. Includes NPC attack animations)
 @3: Needs resource (missing glowmask sprite)
 @4: Resource needs modification (changing of the sprite format)
+@5: Resource needs modification (resprite)
 
 #: Needs code (not implemented at all)
 #2: Needs code (partial implementation. Includes code of a re-used mechanic)
@@ -27,6 +28,8 @@ X: No progress
 
 *: Wiki entry available for entry
 
+☻: Pending review
+
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
 
@@ -40,7 +43,7 @@ BOSSES AND MINI-BOSSES:
 (@3, #, ^4) Seer
 
 (^) Defiled Amalgmation*
-(@, #, $) Fiberglass Weaver
+(@5, #, $) Fiberglass Weaver
 (@2/3, #, $) Riven Crest
 
 (X) Mad Maniac
@@ -81,7 +84,7 @@ VANILLA MODIFICATIONS:
 (#3) Strange String/Bud Barnacle (to craft Mechanical Worm and Battle Potion)*
 
 (^) Bats (drop Bat Hide)*
-(#3) Boss Immunities (make every boss immune to anything with Stun)*
+(#3) Boss Immunities (make every boss immune to anything with Stun)* (this is already implemented for all confusion-immune enemies, does it need some manner of change?)
 (#3) Demolitionist (to sell different items based on peat sold)*
 (X) Dryad Selling Evil Items on Blood Moon*
 (#2/3) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
@@ -89,7 +92,7 @@ VANILLA MODIFICATIONS:
 (#2) Trees (add Bark and Tree Sap as drops when chopping down trees)*
 (^) Wall of Flesh (to drop Exploder Emblem)*
 
-(%3, X) Nova Pillar in Lunar Invasion
+(@, %3, X) Nova Pillar in Lunar Invasion
 ---
 
 
@@ -192,7 +195,7 @@ ARMOR:
 (%, X) Bony Carapace Armor
 (^) Cryosten Armor (Wiki needs work)*
 (^) Defiled Armor*
-(@4, ^3) Felnum Armor
+(@4, ^3) Felnum Armor (also missing breastplate and leggings item sprites)
 (^) Fiberglass Armor
 (@, ^3) Riven Armor
 
@@ -239,7 +242,7 @@ ACCESSORIES:
 (#, ^2) Sonar Visor*
 (^) Freeze Frame*
 (%3, X) Sun Medallion
-(#, ^2) Symbiote Skull
+(#, @2) Symbiote Skull
 
 (X) Sonic Radar
 
@@ -248,7 +251,7 @@ ACCESSORIES:
 (^) Fiberglass Dagger
 (X) Forbidden Salt
 (X) Legging Motorizer
-(#, ^2) Queen of Hearts
+(^) Queen of Hearts
 (X) Refactoring Pieces
 (%3, ^2) Runed Insignia
 (#3, ^2) Temptation Spell
@@ -261,7 +264,7 @@ ACCESSORIES:
 (X) Backtack
 (X) Entangled Energy
 (%3, X) Immortal Core
-(#, ^2) Lazy Cloak
+(#, @2 (back sprite)) Lazy Cloak
 (X) Magnetic Brain
 (X) Mildew Urchin
 (X) Mysterious Spray
@@ -269,10 +272,10 @@ ACCESSORIES:
 (X) Protozoa Food
 (X) Stomach of Craving
 
-(#2, ^2) Agility Core
-(#2, ^2) Combat Core
-(#2, ^2) Construction Core
-(#2, ^2) Vitality Core
+(^) Agility Core
+(^) Combat Core
+(^) Construction Core
+(^) Vitality Core
 ---
 
 
@@ -290,7 +293,7 @@ VANITY:
 (X) Riven Crest Mask
 (X) Severus' Hat
 
-(^) Tyfyter's Fit
+(^) Tyfyter's Set
 (X) The First Dream
 ---
 
@@ -298,8 +301,8 @@ VANITY:
 UTILITIES:
 ---
 (X) Amoeba Hook
-(#, ^2) Nano Hook
-(#, ^2) Quantum Hook
+(#, @) Nano Hook
+(#, @) Quantum Hook
 
 (X) Rocket-Boosted Minecart
 ---
@@ -325,9 +328,8 @@ TOOLS:
 ---
 (^) Brick Breaker
 (^) Dismantler
-(???) Felnum Axe
-(???) Felnum Hammer
-(???) Felnum Pickaxe
+(@5) Felnum Hamaxe
+(@5) Felnum Pickaxe
 (^) Rivenator
 (^) Stabsmash
 
@@ -448,9 +450,9 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 ---
-(#, ^2) Amebolize Incantation
+(@2, #) Amebolize Incantation
 (^) Bone Latcher
-(@3, ^2) Brainy Staff
+(@3) Brainy Staff
 (#, ^2) Desert Crown
 (@2, ^3) Eyeball Staff
 (%3, X) Fiend Staff
@@ -482,7 +484,7 @@ SUMMONER WEAPONS:
 
 EXPLOSIVE WEAPONS:
 ---
-(#, ^2) Ameballoon
+(☻) Ameballoon
 (#, ^2) Bombardment
 (#, ^2) Bomb Launcher
 (#, ^2) Defiled Spirit
@@ -670,7 +672,7 @@ CONSUMABLES:
 (@2, #) Voidsight Potion
 
 (X) Blue Bovine
-(#, ^2) Jam Sandwich
+(☻) Jam Sandwich
 (^) Krunch Mix*
 (X) One of a Kind Cookie
 (X) Potato
@@ -693,7 +695,8 @@ CONSUMABLES:
 MOUNTS & PETS:
 ---
 (X) Ever-Watchful Eye (Juvenile Amalgamation)
-(#, ^2) Strange Power-Up (Platformer Mech, please consider implementing soon)
+(☻) Strange Power-Up (Platformer Mech, please consider implementing soon)
+(@, #) Chromatic Scale (Rainbow Pangolin)
 
 (X) Amoeba Toy (Meberoid)
 (#, ^2) Suspicious Looking Pebble (Defiled Blight)

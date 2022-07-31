@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Riven {
 		}
 		public override void Kill(int timeLeft) {
             SoundEngine.PlaySound(SoundID.NPCDeath1.WithPitch(0.15f));
-            PolarVec2 vel = new PolarVec2(4,0);
+            PolarVec2 vel = new PolarVec2(4, Main.rand.NextFloat(MathHelper.TwoPi));
 			for (int i = Main.rand.Next(12, 16); i-->0;) {
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vector2)vel, ModContent.ProjectileType<Ameballoon_Shrapnel>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 vel.Theta += Main.rand.NextFloat(0.5f) + 1.618033988749894848204586834f;

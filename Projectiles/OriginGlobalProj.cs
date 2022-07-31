@@ -106,9 +106,16 @@ namespace Origins.Projectiles {
                 break;
             }
             if(felnumEffect) {
-                if(projectile.CountsAsClass(DamageClass.Melee)) {
-                    if(Main.player[projectile.owner].GetModPlayer<OriginPlayer>().felnumShock>19)Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1)*0.5f, Scale:0.5f);
-                } else Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1)*0.5f, Scale:0.5f);
+                if (!ProjectileID.Sets.IsAWhip[projectile.type]) {
+                    if (projectile.CountsAsClass(DamageClass.Melee) || projectile.CountsAsClass(DamageClass.Summon)) {
+                        if (Main.player[projectile.owner].GetModPlayer<OriginPlayer>().felnumShock > 19)
+                            Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1) * 0.5f, Scale: 0.5f);
+                    } else {
+                        Dust.NewDustPerfect(projectile.Center, 226, projectile.velocity.RotatedByRandom(0.1) * 0.5f, Scale: 0.5f);
+                    }
+				} else {
+
+				}
             }
             if(viperEffect&&projectile.extraUpdates != 19) {
                 Lighting.AddLight(projectile.Center, 0, 0.75f*projectile.scale, 0.3f*projectile.scale);

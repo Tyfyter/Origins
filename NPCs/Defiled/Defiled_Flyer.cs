@@ -46,7 +46,7 @@ namespace Origins.NPCs.Defiled {
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Krunch_Mix>(), 6));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Krunch_Mix>(), 17));
         }
         public override void AI() {
             if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.1f), NPC.Center);

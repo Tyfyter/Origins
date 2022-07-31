@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
             Item.accessory = true;
             Item.rare = ItemRarityID.LightRed;
         }
-        public override void UpdateEquip(Player player) {
+		public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().bombHandlingDevice = true;
             player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed+=0.81f;
         }

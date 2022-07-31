@@ -16,11 +16,11 @@ namespace Origins.Items.Weapons.Riven {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ThornChakram);
             Item.DamageType = DamageClass.MeleeNoSpeed;
-			Item.damage = 14;
+			Item.damage = 21;
 			Item.width = 20;
 			Item.height = 22;
-			Item.useTime = 18;
-			Item.useAnimation = 18;
+			Item.useTime = 13;
+			Item.useAnimation = 13;
 			//item.knockBack = 5;
             Item.shoot = ModContent.ProjectileType<Riverang_P>();
             Item.shootSpeed = 10.75f;
@@ -46,6 +46,7 @@ namespace Origins.Items.Weapons.Riven {
 			Projectile.height = 22;
             //projectile.scale*=1.25f;
             Projectile.ignoreWater = true;
+            AIType = ProjectileID.FruitcakeChakram;
         }
         public override bool PreAI() {
             Projectile.aiStyle = 3;

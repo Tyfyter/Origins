@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summon;
 using System;
 using Terraria;
@@ -7,72 +8,53 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.OriginExtensions;
 
-namespace Origins.Items.Weapons.Summon {
-    public class Woodsprite_Staff : ModItem {
-		static short glowmask;
-		internal static int projectileID = 0;
-        internal static int buffID = 0;
+namespace Origins.Items.Accessories {
+    public class Lazy_Cloak : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Woodsprite Staff");
-            Tooltip.SetDefault("Summons a woodsprite to fight for you");
-			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
-		}
+            DisplayName.SetDefault("Lazy Cloak");
+            Tooltip.SetDefault("Not very lazy");
+            SacrificeTotal = 1;
+        }
         public override void SetDefaults() {
-            Item.damage = 3;
-			Item.DamageType = DamageClass.Summon;
-            Item.mana = 10;
+            Item.damage = 30;
+            Item.DamageType = DamageClass.Summon;
             Item.width = 32;
             Item.height = 32;
             Item.useTime = 36;
             Item.useAnimation = 36;
-            Item.useStyle = ItemUseStyleID.Swing;
+			Item.shoot = ModContent.ProjectileType<Lazy_Cloak_P>();
             Item.value = Item.buyPrice(0, 30, 0, 0);
             Item.rare = ItemRarityID.Blue;
-            Item.UseSound = SoundID.Item44;
-            buffID = ModContent.BuffType<Woodsprite_Buff>();
-            Item.buffType = buffID;
-            Item.shoot = projectileID;
-            Item.noMelee = true;
-			Item.glowMask = glowmask;
-		}
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			player.AddBuff(Item.buffType, 2);
-			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
-			return false;
-		}
-	}
-}
-namespace Origins.Buffs {
-    public class Woodsprite_Buff : ModBuff {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Woodsprite");
-            Description.SetDefault("The woodsprite will fight for you");
-            Main.buffNoSave[Type] = true;
-            Main.buffNoTimeDisplay[Type] = true;
+			Item.backSlot = 5;
+			Item.frontSlot = 3;
+			Item.accessory = true;
         }
-
-        public override void Update(Player player, ref int buffIndex) {
-            if(player.ownedProjectileCounts[Woodsprite_Staff.projectileID] > 0) {
-                player.buffTime[buffIndex] = 18000;
-            } else {
-                player.DelBuff(buffIndex);
-                buffIndex--;
-            }
-        }
+		public override void UpdateAccessory(Player player, bool hideVisual) {
+			Item.backSlot = -1;
+			Item.frontSlot = -1;
+			if (!hideVisual) {
+				player.GetModPlayer<OriginPlayer>().lazyCloakVisible = true;
+			}
+			if (player.ownedProjectileCounts[Item.shoot] < 1) {
+				player.SpawnMinionOnCursor(player.GetSource_Accessory(Item), player.whoAmI, Item.shoot, Item.damage, Item.knockBack, player.MountedCenter - Main.MouseWorld);
+			}
+			player.AddBuff(Lazy_Cloak_Buff.ID, 5);
+		}
+		public override void UpdateVanity(Player player) {
+			Item.backSlot = 5;
+			Item.frontSlot = 3;
+		}
     }
-}
-
-namespace Origins.Items.Weapons.Summon.Minions {
-    public class Woodsprite : ModProjectile {
+    public class Lazy_Cloak_P : ModProjectile {
+		public const int frameSpeed = 5;
+		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-            Woodsprite_Staff.projectileID = Projectile.type;
-			DisplayName.SetDefault("Woodsprite");
+            Eyeball_Staff.projectileID = Projectile.type;
+			DisplayName.SetDefault("Lazy Cloak");
 			// Sets the amount of frames this minion has on its spritesheet
-			Main.projFrames[Projectile.type] = 4;
-			// This is necessary for right-click targeting
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			Main.projFrames[Projectile.type] = 2;
 
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
@@ -80,18 +62,19 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+			ID = Type;
 		}
 
 		public sealed override void SetDefaults() {
-			Projectile.width = 18;
+			Projectile.width = 40;
 			Projectile.height = 28;
 			Projectile.tileCollide = true;
 			Projectile.friendly = true;
 			Projectile.minion = true;
-			Projectile.minionSlots = 1f;
+			Projectile.minionSlots = 0f;
 			Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 18;
+            Projectile.localNPCHitCooldown = 12;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -104,22 +87,22 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			return true;
 		}
 
+
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Woodsprite_Staff.buffID);
+				player.ClearBuff(Lazy_Cloak_Buff.ID);
 			}
-			if (player.HasBuff(Woodsprite_Staff.buffID)) {
+			if (player.HasBuff(Lazy_Cloak_Buff.ID)) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
 
 			#region General behavior
-			Vector2 idlePosition = player.Top;
-            idlePosition.X -= 48f*player.direction;
+			Vector2 idlePosition = player.MountedCenter;
 
 			// Teleport to player if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
@@ -151,7 +134,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			// Starting search distance
 			float distanceFromTarget = 700f;
 			Vector2 targetCenter = Projectile.position;
-            int target = -1;
+			int target = -1;
 			bool foundTarget = false;
 
 			if (player.HasMinionAttackTargetNPC) {
@@ -160,11 +143,11 @@ namespace Origins.Items.Weapons.Summon.Minions {
 				if (between < 2000f) {
 					distanceFromTarget = between;
 					targetCenter = npc.Center;
-                    target = player.MinionAttackTargetNPC;
+					target = player.MinionAttackTargetNPC;
 					foundTarget = true;
 				}
 			}
-			if (!foundTarget) {
+			/*if (!foundTarget) {
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					NPC npc = Main.npc[i];
 					if (npc.CanBeChasedBy()) {
@@ -177,13 +160,13 @@ namespace Origins.Items.Weapons.Summon.Minions {
 						bool closeThroughWall = between < 100f;
 						if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall)) {
 							distanceFromTarget = between;
-							targetCenter = npc.Center;
-                            target = npc.whoAmI;
+							targetCenter = npc.height / (float)npc.width > 1 ? npc.Top + new Vector2(0, 8) : npc.Center;
+							target = npc.whoAmI;
 							foundTarget = true;
 						}
 					}
 				}
-			}
+			}*/
 
 			Projectile.friendly = foundTarget;
 			#endregion
@@ -191,27 +174,29 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			#region Movement
 
 			// Default movement parameters (here for attacking)
-			float speed = 8f;
-			float inertia = 12f;
+			float speed = 12f;
+			float inertia = 16f;
 
 			if (foundTarget) {
-                Projectile.tileCollide = true;
+				Projectile.hide = false;
+				Projectile.ai[0] = 1;
+				Projectile.tileCollide = true;
 				// Minion has a target: attack (here, fly towards the enemy)
-				if (distanceFromTarget > 40f || !Projectile.Hitbox.Intersects(Main.npc[target].Hitbox)) {
-					// The immediate range around the target (so it doesn't latch onto it when close)
-					Vector2 direction = targetCenter - Projectile.Center;
-					direction.Normalize();
-					direction *= speed;
-					Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
-				}
+				//if (distanceFromTarget > 40f || !projectile.Hitbox.Intersects(Main.npc[target].Hitbox)) {
+				// The immediate range around the target (so it doesn't latch onto it when close)
+				Vector2 direction = targetCenter - Projectile.Center;
+				direction.Normalize();
+				direction *= speed;
+				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
+				//}
 			} else {
-                Projectile.tileCollide = false;
+				Projectile.tileCollide = false;
 				if (distanceToIdlePosition > 600f) {
-					speed = 16f;
-					inertia = 36f;
+					speed = 24f;
+					inertia = 12f;
 				} else {
-					speed = 6f;
-					inertia = 48f;
+					speed = 12f;
+					inertia = 12f;
 				}
 				if (distanceToIdlePosition > 12f) {
 					// The immediate range around the player (when it passively floats about)
@@ -220,10 +205,16 @@ namespace Origins.Items.Weapons.Summon.Minions {
 					vectorToIdlePosition.Normalize();
 					vectorToIdlePosition *= speed;
 					Projectile.velocity = (Projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
-				} else if (Projectile.velocity == Vector2.Zero) {
-					// If there is a case where it's not moving at all, give it a little "poke"
-					Projectile.velocity.X = -0.15f;
-					Projectile.velocity.Y = -0.05f;
+				} else {
+					Projectile.ai[0] = 0;
+				}
+				if (Projectile.ai[0] == 0) {
+					Projectile.hide = true;
+					Projectile.position = idlePosition;
+					if (player.GetModPlayer<OriginPlayer>().lazyCloakVisible) {
+						player.back = 5;
+						player.front = 3;
+					}
 				}
 			}
 			#endregion
@@ -242,33 +233,34 @@ namespace Origins.Items.Weapons.Summon.Minions {
 					Projectile.frame = 0;
 				}
 			}
-
-			// Some visuals here
-			Lighting.AddLight(Projectile.Center, Color.LawnGreen.ToVector3() * 0.18f);
 			#endregion
 		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			target.AddBuff(BuffID.Ichor, 60);
+			if (crit && target.life < damage * 3) {
+				target.life = 0;
+				//target.checkDead();
+			}
+		}
+	}
+}
+namespace Origins.Buffs {
+	public class Lazy_Cloak_Buff : ModBuff {
+		public override string Texture => "Terraria/Images/Item_"+ItemID.RedCape;
+		public static int ID { get; private set; } = -1;
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Lazy Cloak");
+			Description.SetDefault("Your cloak will fight for you");
+			Main.buffNoSave[Type] = true;
+			Main.buffNoTimeDisplay[Type] = true;
+			ID = Type;
+		}
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Woodsprite_Lifesteal>(), damage/3, 0, Projectile.owner);
-        }
-    }
-    public class Woodsprite_Lifesteal : ModProjectile {
-        public override string Texture => "Origins/Projectiles/Pixel";
-        public override void SetDefaults() {
-            Projectile.timeLeft = 300;
-        }
-        public override void AI() {
-            Player player = Main.player[Projectile.owner];
-            if(player.dead||!player.active)Projectile.Kill();
-            if(player.Hitbox.Contains(Projectile.Center.ToPoint())) {
-                player.statLife+=Projectile.damage;
-                player.HealEffect(Projectile.damage);
-                Projectile.Kill();
-                return;
-            }
-            Vector2 unit = (player.Center - Projectile.Center).SafeNormalize(Projectile.velocity);
-            Projectile.velocity = Vector2.Lerp(Projectile.velocity, unit*8, 0.1f);
-            Dust.NewDustPerfect(Projectile.Center, 110, Vector2.Zero);
-        }
-    }
+		public override void Update(Player player, ref int buffIndex) {
+			if (player.ownedProjectileCounts[Lazy_Cloak_P.ID] <= 0) {
+				player.DelBuff(buffIndex);
+				buffIndex--;
+			}
+		}
+	}
 }

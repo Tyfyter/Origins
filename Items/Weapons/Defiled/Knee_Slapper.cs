@@ -50,7 +50,7 @@ namespace Origins.Items.Weapons.Defiled {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			Projectile proj = Projectile.NewProjectileDirect(source, position, Vector2.Zero, type, damage, knockback, player.whoAmI, player.itemAnimationMax, velocity.ToRotation());
-			proj.scale = Item.scale;
+			proj.scale = player.GetAdjustedItemScale(Item);
 			return false;
 		}
 	}

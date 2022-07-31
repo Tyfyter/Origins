@@ -8,6 +8,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
+using Origins.Items.Other.Consumables;
 
 namespace Origins.NPCs.Riven {
     public class Flagellant : ModNPC {
@@ -31,6 +33,9 @@ namespace Origins.NPCs.Riven {
 			    NPC.frameCounter = 0.0;
 		    }
 		    NPC.frame.Y = 60 * (int)(NPC.frameCounter / 6.0);
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 17));
         }
     }
 }

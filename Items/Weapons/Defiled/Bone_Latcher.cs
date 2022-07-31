@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Defiled {
 			return -1;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI).scale *= Item.scale;
+			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI).scale *= player.GetAdjustedItemScale(Item);
 			return false;
 		}
 		public class Bone_Latcher_P : ModProjectile, IWhipProjectile {

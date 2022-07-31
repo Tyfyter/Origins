@@ -115,13 +115,13 @@ namespace Origins.NPCs {
 			if (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]) {
 				float damageBoost = 0;
 				if (npc.HasBuff(Flagellash_Buff_0.ID)) {
-					damageBoost += 3.4f;
+					damageBoost += 2.7f;
 				}
 				if (npc.HasBuff(Flagellash_Buff_1.ID)) {
-					damageBoost += 3.3f;
+					damageBoost += 2.65f;
 				}
 				if (npc.HasBuff(Flagellash_Buff_2.ID)) {
-					damageBoost += 3.3f;
+					damageBoost += 2.65f;
 				}
 				damage += Main.rand.RandomRound(damageBoost);
 			}

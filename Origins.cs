@@ -41,10 +41,11 @@ namespace Origins {
     public class Origins : Mod {
         public static Origins instance;
 
-        public static Dictionary<int, int> ExplosiveBaseDamage;
+        public static Dictionary<int, int> ExplosiveBaseDamage { get; private set; }
         public static bool[] DamageModOnHit;
-        public static ushort[] VanillaElements;
-
+        public static ushort[] VanillaElements { get; private set; }
+        static bool[] forceFelnumShockOnShoot;
+        public static bool[] ForceFelnumShockOnShoot { get => forceFelnumShockOnShoot; }
         public static ModKeybind SetBonusTriggerKey { get; private set; }
         #region Armor IDs
         public static int FelnumHeadArmorID { get; private set; }
@@ -170,8 +171,10 @@ namespace Origins {
             DamageModOnHit[ProjectileID.LavaBomb] = true;
             DamageModOnHit[ProjectileID.HoneyBomb] = true;
             DamageModOnHit[ProjectileID.ScarabBomb] = true;
+            forceFelnumShockOnShoot = new bool[ProjectileLoader.ProjectileCount];
             NonFishItem.ResizeArrays += () => {
                 Array.Resize(ref DamageModOnHit, ProjectileLoader.ProjectileCount);
+                Array.Resize(ref forceFelnumShockOnShoot, ProjectileLoader.ProjectileCount);
             };
             #region vanilla weapon elements
             VanillaElements = ItemID.Sets.Factory.CreateUshortSet(0,
@@ -308,6 +311,11 @@ namespace Origins {
                 }
             }
             SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
+            Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
+                MaxInstances = 0,
+                SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,
+                PitchVariance = 0f
+            };
             Sounds.Krunch = new SoundStyle("Origins/Sounds/Custom/BurstCannon", SoundType.Sound);
             Sounds.HeavyCannon = new SoundStyle("Origins/Sounds/Custom/HeavyCannon", SoundType.Sound);
             Sounds.EnergyRipple = new SoundStyle("Origins/Sounds/Custom/EnergyRipple", SoundType.Sound);
@@ -544,6 +552,7 @@ namespace Origins {
             ExplosiveBaseDamage = null;
             DamageModOnHit = null;
             VanillaElements = null;
+            forceFelnumShockOnShoot = null;
             celestineBoosters = null;
             perlinFade0 = null;
             blackHoleShade = null;
@@ -658,6 +667,7 @@ namespace Origins {
             public static int UndergroundRiven = MusicID.UndergroundCrimson;
         }
         public static class Sounds {
+            public static SoundStyle MultiWhip = SoundID.Item153;
             public static SoundStyle Krunch = SoundID.Item36;
             public static SoundStyle HeavyCannon = SoundID.Item36;
             public static SoundStyle EnergyRipple = SoundID.Item8;

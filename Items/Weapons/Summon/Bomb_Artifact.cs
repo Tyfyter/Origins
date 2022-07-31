@@ -38,9 +38,9 @@ namespace Origins.Items.Weapons.Summon {
         }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    player.AddBuff(Item.buffType, 2);
-            position = Main.MouseWorld;
-            var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
-            projectile.originalDamage = Item.damage;
+            player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage + (int)(damage - player.GetTotalDamage(Item.DamageType).ApplyTo(Item.damage)), knockback);
+            //var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, Main.myPlayer);
+            //projectile.originalDamage = Item.damage;
             return false;
         }
     }
@@ -86,19 +86,20 @@ namespace Origins.Items.Weapons.Summon.Minions {
             }
         }
         public override void SetStaticDefaults() {
-            Bomb_Artifact.projectileID = Projectile.type;
+            Bomb_Artifact.projectileID = Type;
 			DisplayName.SetDefault("Friendly Bomb");
             //Origins.ExplosiveProjectiles[Projectile.type] = true;
 			// Sets the amount of frames this minion has on its spritesheet
-			Main.projFrames[Projectile.type] = 11;
+			Main.projFrames[Type] = 11;
 			// This is necessary for right-click targeting
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			ProjectileID.Sets.MinionTargettingFeature[Type] = true;
 
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
-			Main.projPet[Projectile.type] = true;
+			Main.projPet[Type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
-			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
+			ProjectileID.Sets.MinionSacrificable[Type] = true;
+            Origins.ForceFelnumShockOnShoot[Type] = true;
 		}
 
 		public sealed override void SetDefaults() {
