@@ -563,7 +563,6 @@ namespace Origins {
         }*/
 		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
             if(plagueSight) drawInfo.colorEyes = IsDevName(Player.name, 1) ? new Color(43, 185, 255) : Color.Gold;
-            //if(drawInfo.drawPlayer.body==Origins.PlagueTexanJacketID) drawInfo.drawHands = true;
         }
         public override void FrameEffects() {
             for(int i = 13; i < 18+Player.extraAccessorySlots; i++) {

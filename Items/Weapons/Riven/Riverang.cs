@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Riven {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ThornChakram);
             Item.DamageType = DamageClass.MeleeNoSpeed;
-			Item.damage = 21;
+			Item.damage = 23;
 			Item.width = 20;
 			Item.height = 22;
 			Item.useTime = 13;
@@ -50,45 +50,47 @@ namespace Origins.Items.Weapons.Riven {
         }
         public override bool PreAI() {
             Projectile.aiStyle = 3;
+            return true;
+        }
+		public override void PostAI() {
             bool wet = false;
             if (Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height) && !Collision.honey) {
-                 wet = true;
+                wet = true;
             }
-			Vector2 targetPos = Projectile.Center;
-			bool foundTarget = false;
+            Vector2 targetPos = Projectile.Center;
+            bool foundTarget = false;
             Vector2 testPos;
             float targetDist = wet ? 80 : 40;
-            if (Projectile.localAI[1]>0) {
+            if (Projectile.localAI[1] > 0) {
                 Projectile.localAI[1]--;
                 if (!wet) goto skip;
             }
-            if(Projectile.localAI[0]>0) {
+            if (Projectile.localAI[0] > 0) {
                 Projectile.localAI[0]--;
                 goto skip;
             }
             for (int i = 0; i < Main.maxNPCs; i++) {
-				NPC target = Main.npc[i];
-				if (target.CanBeChasedBy()) {
+                NPC target = Main.npc[i];
+                if (target.CanBeChasedBy()) {
                     testPos = Projectile.Center.Clamp(target.Hitbox);
-					Vector2 difference = testPos-Projectile.Center;
+                    Vector2 difference = testPos - Projectile.Center;
                     float distance = difference.Length();
-					bool closest = Vector2.Distance(Projectile.Center, targetPos) > distance;
-                    bool inRange = distance < targetDist && Vector2.Dot(difference.SafeNormalize(Vector2.Zero), Projectile.velocity.SafeNormalize(Vector2.Zero))>0.2f;
-					if ((!foundTarget || closest) && inRange) {
-						targetPos = testPos;
-						foundTarget = true;
+                    bool closest = Vector2.Distance(Projectile.Center, targetPos) > distance;
+                    bool inRange = distance < targetDist && Vector2.Dot(difference.SafeNormalize(Vector2.Zero), Projectile.velocity.SafeNormalize(Vector2.Zero)) > 0.2f;
+                    if ((!foundTarget || closest) && inRange) {
+                        targetPos = testPos;
+                        foundTarget = true;
                         targetDist = distance;
-					}
-				}
-			}
+                    }
+                }
+            }
             skip:
-            if(foundTarget) {
-                Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(Vector2.UnitX)*Projectile.velocity.Length();
+            if (foundTarget) {
+                Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(Vector2.UnitX) * Projectile.velocity.Length();
                 Projectile.localAI[1] = 10;
             }
-            return true;
         }
-        public override bool? CanHitNPC(NPC target) {
+		public override bool? CanHitNPC(NPC target) {
             if (Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height) && !Collision.honey) {
                 Projectile.aiStyle = 0;
             }
@@ -102,5 +104,41 @@ namespace Origins.Items.Weapons.Riven {
             height = 27;
             return true;
         }
-    }
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+            if (Collision.WetCollision(Projectile.position, Projectile.width, Projectile.height) && !Collision.honey) {
+				if (Projectile.velocity.X != oldVelocity.X) {
+                    Projectile.velocity.X = -oldVelocity.X;
+                }
+                if (Projectile.velocity.Y != oldVelocity.Y) {
+                    Projectile.velocity.Y = -oldVelocity.Y;
+                }
+                Vector2 targetPos = Projectile.Center;
+                bool foundTarget = false;
+                Vector2 testPos;
+                float targetDist = 120;
+                for (int i = 0; i < Main.maxNPCs; i++) {
+                    NPC target = Main.npc[i];
+                    if (target.CanBeChasedBy()) {
+                        testPos = Projectile.Center.Clamp(target.Hitbox);
+                        Vector2 difference = testPos - Projectile.Center;
+                        float distance = difference.Length();
+                        bool closest = Vector2.Distance(Projectile.Center, targetPos) > distance;
+                        bool inRange = distance < targetDist && Vector2.Dot(difference.SafeNormalize(Vector2.Zero), Projectile.velocity.SafeNormalize(Vector2.Zero)) > -0.1f;
+                        if ((!foundTarget || closest) && inRange) {
+                            targetPos = testPos;
+                            foundTarget = true;
+                            targetDist = distance;
+                        }
+                    }
+                }
+                if (foundTarget) {
+                    Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(Vector2.UnitX) * Projectile.velocity.Length();
+                    Projectile.localAI[1] = 10;
+                }
+                Terraria.Audio.SoundEngine.PlaySound(SoundID.Dig);
+				return false;
+            }
+            return true;
+		}
+	}
 }
