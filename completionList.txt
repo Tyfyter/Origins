@@ -65,7 +65,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(@, #, %2) Acid Freak
+(@, #2, %2) Acid Freak
 (%2, X) Darkathian Miner
 (X) Defiled Envoy
 
@@ -84,7 +84,7 @@ VANILLA MODIFICATIONS:
 (#3) Strange String/Bud Barnacle (to craft Mechanical Worm and Battle Potion)*
 
 (^) Bats (drop Bat Hide)*
-(#3) Boss Immunities (make every boss immune to anything with Stun)* (this is already implemented for all confusion-immune enemies, does it need some manner of change?)
+(^) Boss Immunities (make every boss immune to anything with Stun)*
 (#3) Demolitionist (to sell different items based on peat sold)*
 (X) Dryad Selling Evil Items on Blood Moon*
 (#2/3) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
@@ -178,7 +178,7 @@ STATUS EFFECTS:
 
 (#, ^2) Defiled Blight Buff
 (#, ^2) Meberoid Buff
-(#, ^2) Platformer Mech Buff
+(^) Platformer Mech Buff
 ---
 
 
@@ -187,6 +187,8 @@ NPC DIALOGUE:
 (%3) Cyborg
 (X) Demolitionist
 (X) Dryad
+
+(^) Acid Freak
 ---
 
 
@@ -195,7 +197,7 @@ ARMOR:
 (%, X) Bony Carapace Armor
 (^) Cryosten Armor (Wiki needs work)*
 (^) Defiled Armor*
-(@4, ^3) Felnum Armor (also missing breastplate and leggings item sprites)
+(#3, ^2) Felnum Armor
 (^) Fiberglass Armor
 (#3, ^2) Riven Armor
 
@@ -264,7 +266,7 @@ ACCESSORIES:
 (X) Backtack
 (X) Entangled Energy
 (%3, X) Immortal Core
-(#, @2 (back sprite)) Lazy Cloak
+(#3, ^2) Lazy Cloak
 (X) Magnetic Brain
 (X) Mildew Urchin
 (#, ^2) Mysterious Spray
@@ -301,8 +303,8 @@ VANITY:
 UTILITIES:
 ---
 (X) Amoeba Hook
-(#, @) Nano Hook
-(#, @) Quantum Hook
+(@2, #) Nano Hook
+(@2, #) Quantum Hook
 
 (X) Rocket-Boosted Minecart
 ---
@@ -328,8 +330,8 @@ TOOLS:
 ---
 (^) Brick Breaker
 (^) Dismantler
-(@5) Felnum Hamaxe
-(@5) Felnum Pickaxe
+(^) Felnum Hamaxe
+(^) Felnum Pickaxe
 (^) Rivenator
 (^) Stabsmash
 
@@ -450,9 +452,9 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 ---
-(@2, #) Amebolize Incantation
+(#, ^2) Amebolize Incantation
 (^) Bone Latcher
-(@3) Brainy Staff
+(^) Brainy Staff
 (#, ^2) Desert Crown
 (@2, ^3) Eyeball Staff
 (%3, X) Fiend Staff
@@ -484,7 +486,7 @@ SUMMONER WEAPONS:
 
 EXPLOSIVE WEAPONS:
 ---
-(#3, ^2, ☻) Ameballoon
+(^) Ameballoon
 (#, ^2) Bombardment
 (#, ^2) Bomb Launcher
 (#, ^2) Defiled Spirit
@@ -672,7 +674,7 @@ CONSUMABLES:
 (@2, #) Voidsight Potion
 
 (X) Blue Bovine
-(☻) Jam Sandwich
+(^) Jam Sandwich
 (^) Krunch Mix*
 (X) One of a Kind Cookie
 (X) Potato
@@ -695,8 +697,8 @@ CONSUMABLES:
 MOUNTS & PETS:
 ---
 (X) Ever-Watchful Eye (Juvenile Amalgamation)
-(☻) Strange Power-Up (Platformer Mech, please consider implementing soon)
-(@, #) Chromatic Scale (Rainbow Pangolin)
+(#3, ^2) Strange Power-Up (Platformer Mech, yay :) )
+(X) Chromatic Scale (Rainbow Pangolin)
 
 (X) Amoeba Toy (Meberoid)
 (#, ^2) Suspicious Looking Pebble (Defiled Blight)

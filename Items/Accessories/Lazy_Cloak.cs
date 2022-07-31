@@ -4,17 +4,14 @@ using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summon;
 using System;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginExtensions;
 
 namespace Origins.Items.Accessories {
     public class Lazy_Cloak : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Lazy Cloak");
-            Tooltip.SetDefault("Not very lazy");
+            Tooltip.SetDefault("It just doesn't want to do all the work\nMaster");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -26,7 +23,7 @@ namespace Origins.Items.Accessories {
             Item.useAnimation = 36;
 			Item.shoot = ModContent.ProjectileType<Lazy_Cloak_P>();
             Item.value = Item.buyPrice(0, 30, 0, 0);
-            Item.rare = ItemRarityID.Blue;
+            Item.rare = ItemRarityID.Master;
 			Item.backSlot = 5;
 			Item.frontSlot = 3;
 			Item.accessory = true;
@@ -245,7 +242,7 @@ namespace Origins.Items.Accessories {
 	}
 }
 namespace Origins.Buffs {
-	public class Lazy_Cloak_Buff : ModBuff {
+    public class Lazy_Cloak_Buff : ModBuff {
 		public override string Texture => "Terraria/Images/Item_"+ItemID.RedCape;
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {

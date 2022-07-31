@@ -5,7 +5,6 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,7 +14,7 @@ namespace Origins.Items.Pets {
         internal static int buffID = 0;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Strange Power Up");
-            Tooltip.SetDefault("'Beep boop'");
+            Tooltip.SetDefault("The very first sprite.");
 
             SacrificeTotal = 1;
         }
@@ -24,7 +23,7 @@ namespace Origins.Items.Pets {
             Item.width = 32;
             Item.height = 32;
             Item.value = Item.buyPrice(0, 30, 0, 0);
-            Item.rare = ItemRarityID.Blue;
+            Item.rare = ItemRarityID.Expert;
             Item.buffType = buffID;
             Item.shoot = projectileID;
         }
@@ -71,8 +70,8 @@ namespace Origins.Items.Pets {
 
 		public sealed override void SetDefaults() {
             Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
-            Projectile.width = 32;
-			Projectile.height = 32;
+            Projectile.width = 20;
+			Projectile.height = 28;
 			Projectile.tileCollide = true;
 			Projectile.friendly = false;
 			Projectile.minion = true;
@@ -81,6 +80,7 @@ namespace Origins.Items.Pets {
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 1;
             Projectile.ignoreWater = false;
+            //Projectile.scale = 1.5f;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -246,7 +246,7 @@ namespace Origins.Buffs {
     public class Platformer_Mech_Buff : ModBuff {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Platformer Mech");
-            Description.SetDefault("");
+            Description.SetDefault("It stomps along the ground.");
             Main.buffNoTimeDisplay[Type] = true;
             Main.vanityPet[Type] = true;
             Strange_Power_Up.buffID = Type;
