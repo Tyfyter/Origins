@@ -1,22 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.Items.Weapons.Riven {
-	public class Flagellash : ModItem {
+    public class Flagellash : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Flagellash");
@@ -27,7 +22,7 @@ namespace Origins.Items.Weapons.Riven {
 			// Call this method to quickly set some of the properties below.
 			Item.DefaultToWhip(ModContent.ProjectileType<Flagellash_P>(), 13, 2, 4, 42);
 
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override int ChoosePrefix(UnifiedRandom rand) {
 			if (Item.noUseGraphic) {

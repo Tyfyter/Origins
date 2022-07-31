@@ -197,7 +197,7 @@ ARMOR:
 (^) Defiled Armor*
 (@4, ^3) Felnum Armor (also missing breastplate and leggings item sprites)
 (^) Fiberglass Armor
-(@, ^3) Riven Armor
+(#3, ^2) Riven Armor
 
 (^) Acrid Armor
 (@, ^3) Bleeding Obsidian Armor
@@ -236,23 +236,23 @@ ACCESSORIES:
 (X) Gun Glove
 (X) Locus Control Tuner
 (#, ^2) Olid Organ*
-(X) Parasitic Influence*
+(#, ^2) Parasitic Influence*
 (^) Pneumatic Bomb Thrower*
 (X) Return To Sender*
 (#, ^2) Sonar Visor*
 (^) Freeze Frame*
 (%3, X) Sun Medallion
-(#, @2) Symbiote Skull
+(@2, #) Symbiote Skull
 
 (X) Sonic Radar
 
-(X) Amebic Vial
+(#, ^2) Amebic Vial
 (#, ^2) Extremophile Charm
 (^) Fiberglass Dagger
 (X) Forbidden Salt
 (X) Legging Motorizer
 (^) Queen of Hearts
-(X) Refactoring Pieces
+(^) Refactoring Pieces
 (%3, ^2) Runed Insignia
 (#3, ^2) Temptation Spell
 (X) Void Arcanum
@@ -267,9 +267,9 @@ ACCESSORIES:
 (#, @2 (back sprite)) Lazy Cloak
 (X) Magnetic Brain
 (X) Mildew Urchin
-(X) Mysterious Spray
+(#, ^2) Mysterious Spray
 (%3, X) Parallax
-(X) Protozoa Food
+(#, ^2) Protozoa Food
 (X) Stomach of Craving
 
 (^) Agility Core
@@ -484,7 +484,7 @@ SUMMONER WEAPONS:
 
 EXPLOSIVE WEAPONS:
 ---
-(☻) Ameballoon
+(#3, ^2, ☻) Ameballoon
 (#, ^2) Bombardment
 (#, ^2) Bomb Launcher
 (#, ^2) Defiled Spirit

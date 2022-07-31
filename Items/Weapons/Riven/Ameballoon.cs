@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Riven {
             Projectile.penetrate = 1;
 			Projectile.width = 22;
 			Projectile.height = 22;
-            //projectile.scale*=1.25f;
+            Projectile.scale*=0.6f;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 60;
         }

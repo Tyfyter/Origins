@@ -69,7 +69,7 @@ namespace Origins.Buffs {
 
 namespace Origins.Items.Weapons.Summon.Minions {
     public class Mini_BOC : ModProjectile {
-		public const int frameSpeed = 5;
+		public const int frameSpeed = 4;
 		public override void SetStaticDefaults() {
             Brainy_Staff.projectileID = Projectile.type;
 			DisplayName.SetDefault("Brainy");
@@ -88,14 +88,14 @@ namespace Origins.Items.Weapons.Summon.Minions {
 
 		public sealed override void SetDefaults() {
 			Projectile.width = 46;
-			Projectile.height = 30;
+			Projectile.height = 34;
 			Projectile.tileCollide = true;
 			Projectile.friendly = true;
 			Projectile.minion = true;
-			Projectile.minionSlots = 1f;
+			Projectile.minionSlots = 2f;
 			Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 12;
+            Projectile.localNPCHitCooldown = 14;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
