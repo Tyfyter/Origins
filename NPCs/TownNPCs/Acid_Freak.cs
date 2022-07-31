@@ -1,23 +1,18 @@
-﻿using System;
+﻿using Origins.Items.Materials;
+using Origins.Projectiles.Weapons;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Terraria.GameContent.Personalities;
-using Origins.World.BiomeData;
-using Terraria.GameContent.Bestiary;
-using Origins.Items.Materials;
-using Origins.Projectiles.Weapons;
-using Terraria.GameContent.UI;
+using Terraria.Utilities;
 
 namespace Origins.NPCs.TownNPCs {
-	//[AutoloadHead]
-	public class Acid_Freak : ModNPC {
+    //[AutoloadHead]
+    public class Acid_Freak : ModNPC {
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Acid Freak");
 			Main.npcFrameCount[Type] = 25; // The amount of frames the NPC has
@@ -62,9 +57,8 @@ namespace Origins.NPCs.TownNPCs {
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			// We can use AddRange instead of calling Add multiple times in order to add multiple items at once
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				// Sets the preferred biomes of this town NPC listed in the bestiary.
-				// With Town NPCs, you usually set this to what biome it likes the most in regards to NPC happiness.
 				Brine_Pool.BestiaryBackground,
+				new FlavorTextBestiaryInfoElement("Secluded from the Temple, she took her ventures to live near the Brine Pool and grew a likeness to its contents."),
 
 				// Sets your NPC's flavor text in the bestiary.
 				new FlavorTextBestiaryInfoElement("Mods.NPCs.Bestiary.Acid_Freak")
@@ -73,10 +67,14 @@ namespace Origins.NPCs.TownNPCs {
 
 		public override List<string> SetNPCNameList() {
 			return new List<string>() {
-				"Jeevus",
-				"Blumbo",
-				"E",
-				"Vide Octavius James"
+				"Aini",
+				"Citaya",
+				"So-ru",
+				"Vid-ka",
+				"Akvavit'a",
+				"Rems'a",
+				"Miyt'ah",
+				"Genni"
 			};
 		}
 		public override bool CanGoToStatue(bool toKingStatue) => toKingStatue;
@@ -87,7 +85,6 @@ namespace Origins.NPCs.TownNPCs {
 					continue;
 				}
 
-				// Player has to have either an ExampleItem or an ExampleBlock in order for the NPC to spawn
 				if (player.inventory.Any(item => item.type == ModContent.ItemType<Brine_Sample>())) {
 					return true;
 				}

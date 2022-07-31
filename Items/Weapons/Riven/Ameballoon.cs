@@ -61,6 +61,10 @@ namespace Origins.Items.Weapons.Riven {
 
             }
 		}
+        public override bool OnTileCollide(Vector2 oldVelocity) {
+            Projectile.Kill();
+            return false;
+        }
     }
     public class Ameballoon_Shrapnel : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Riven/Ameballoon_P";

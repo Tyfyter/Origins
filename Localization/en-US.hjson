@@ -15,5 +15,119 @@
 			It's the Defiled were talking about here! I want you to go and find that fish bubbling around in the Wastelands and bring it back to me!
 			'''
 		}
+		Acid_Freak: {
+			Interaction:
+			'''
+			My wares are usually of high salinity. Watch yourself <name of player>.
+			No, I don't offer refunds for the dissolving of possessions.
+			There's nothing really freaky about me, nothing at all...
+			For my next experiment, I want to try my mixtures on living organisms.
+			'''
+
+			InteractionWitchDoctor:
+			'''
+			Ah, the Witch Doctor. Wait, which doctor?
+			Yeah, I know <Name of Witch Doctor>. He's kinda from the same tribe.
+			'''
+
+			InteractionParty:
+			'''
+			I should probably tell <Name of Demolitionist> that we can use peat as snappers.
+			I never thought there was this side of me.
+			'''
+
+			InteractionWind:
+			'''
+			Good thing acid is too heavy to be mist. Right?
+			'''
+
+			InteractionStorm:
+			'''
+			I guess I will not be swimming today.
+			Lightning is not my taste. Now acid is where its at.
+			'''
+
+			InteractionGraveYard:
+			'''
+			All that is dead will decay. All that decays is dead.
+			'''
+
+			BloodMoon:
+			'''
+			Oh. Do my toxins bother you, Terrarian?
+			I've had enough. Acid will be poured today.
+			'''
+
+			HappinessHomeless:
+			'''
+			Some shelter would be nice, but I am used to hostile environments.
+			'''
+
+			HappinessFar:
+			'''
+			I must return home. I need to check on my trophies!
+			'''
+
+			HappinessSparse:
+			'''
+			The sparsity is very different from the crowded Jungles. Very different.
+			'''
+
+			HappinessOvercrowded:
+			'''
+			This is way worse than my ventures into the Brine.
+			My brews are worsening with the high prescense of others...
+			'''
+
+			HappinessJungle:
+			'''
+			The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
+			'''
+
+			HappinessTemple:
+			'''
+			Screw the Ilkamin! I stand here proudly in the Temple!
+			'''
+
+			HappinessMushroom:
+			'''
+			The smell of mushrooms makes me sick, and I've smelled much worse.
+			'''
+
+			HappinessEvil:
+			'''
+			The perfect place to melt everything down with my mega-acid brew!
+			'''
+
+			HappinessWitchDoctor:
+			'''
+			[Name of Witch Doctor]'s arts are so impressive. I wonder what kind of brew we can make together?
+			'''
+
+			HappinessDryad:
+			'''
+			[Name of Dryad] enjoys nature as much as I do. I consider her with high regard.
+			'''
+
+			HappinessZoologist:
+			'''
+			[Name of Zoologist] just lets her animals run around disturbing my peace. She ruins my work.
+			'''
+
+			HappinessTruffle:
+			'''
+			[Name of Truffle] should keep away from me. He wouldn't want to know what I'd do to him.
+			'''
+
+			HappinessDefiledEnvoy:
+			'''
+			Why don't you understand? [Name of Defiled Envoy] is manipulating you!
+			'''
+
+			HappinessNeutral:
+			'''
+			I feel like swimming in the Brine Pool today.
+			'''
+		}
 	}
 }

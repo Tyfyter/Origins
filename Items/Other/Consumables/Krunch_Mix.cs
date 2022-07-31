@@ -15,7 +15,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.PotatoChips);
 			Item.holdStyle = ItemHoldStyleID.None;
-			Item.scale = 0.85f;
+			Item.scale = 0.4f;
 			Item.buffType = BuffID.WellFed;
 			Item.buffTime = 60 * 60 * 10;
 			Item.rare = ItemRarityID.Orange;

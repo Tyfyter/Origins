@@ -1,13 +1,12 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Tools {
-	public class Felnum_Pickaxe : ModItem {
+    public class Felnum_Pickaxe : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Pickaxe");
-			Tooltip.SetDefault("Able to mine Hellstone");
+			Tooltip.SetDefault("Its strikes sound like thunder\nAble to mine Hellstone");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -15,13 +14,14 @@ namespace Origins.Items.Tools {
 			Item.damage = 13;
 			Item.DamageType = DamageClass.Melee;
             Item.pick = 75;
-			Item.width = 34;
-			Item.height = 32;
+			Item.width = 36;
+			Item.height = 24;
             Item.useTime = 13;
 			Item.useAnimation = 22;
 			Item.knockBack = 4f;
 			Item.value = 3600;
 			Item.UseSound = SoundID.Item1;
+			Item.rare = ItemRarityID.Green;
 		}
         public override float UseTimeMultiplier(Player player) {
             return 1f / ((player.pickSpeed-1)*0.75f+1);
