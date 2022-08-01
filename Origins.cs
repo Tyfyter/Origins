@@ -19,6 +19,7 @@ using Origins.World;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -94,7 +95,7 @@ namespace Origins {
             recipe.Register();
             //this hook is supposed to be used for adding recipes,
             //but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
-        #region vanilla explosive base damage registry
+            #region vanilla explosive base damage registry
             ExplosiveBaseDamage.Add(ProjectileID.Bomb, 70);
             ExplosiveBaseDamage.Add(ProjectileID.StickyBomb, 70);
             ExplosiveBaseDamage.Add(ProjectileID.BouncyBomb, 70);
@@ -379,6 +380,12 @@ namespace Origins {
             HookEndpointManager.Add(typeof(TileLoader).GetMethod("MineDamage", BindingFlags.Public|BindingFlags.Static), (hook_MinePower)MineDamage);
 			On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.DrawPlayerInternal += LegacyPlayerRenderer_DrawPlayerInternal;
 			On.Terraria.Projectile.GetWhipSettings += Projectile_GetWhipSettings;
+            On.Terraria.Recipe.Condition.RecipeAvailable += (On.Terraria.Recipe.Condition.orig_RecipeAvailable orig, Recipe.Condition self, Recipe recipe) => {
+				if (self == Recipe.Condition.NearWater && Main.LocalPlayer.GetModPlayer<OriginPlayer>().ZoneBrine) {
+                    return false;
+				}
+                return orig(self, recipe);
+            };
         }
 
 		private void Projectile_GetWhipSettings(On.Terraria.Projectile.orig_GetWhipSettings orig, Projectile proj, out float timeToFlyOut, out int segments, out float rangeMultiplier) {

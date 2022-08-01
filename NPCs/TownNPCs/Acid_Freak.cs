@@ -10,18 +10,17 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
-using Terraria.GameContent.Personalities;
-using Origins.World.BiomeData;
-using Terraria.GameContent.Bestiary;
-using Origins.Items.Materials;
-using Origins.Projectiles.Weapons;
 using Terraria.GameContent.UI;
 using Terraria.Utilities;
 using Terraria.Localization;
 using Terraria.GameContent.Events;
+using Terraria.ModLoader.Default;
+using Terraria.GameContent;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 
 namespace Origins.NPCs.TownNPCs {
-    //[AutoloadHead]
+    [AutoloadHead]
     public class Acid_Freak : ModNPC {
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Acid Freak");
@@ -46,7 +45,7 @@ namespace Origins.NPCs.TownNPCs {
 
 			NPC.Happiness
 				.SetBiomeAffection<JungleBiome>(AffectionLevel.Like)
-				.SetBiomeAffection<JungleBiome>(AffectionLevel.Like)//TODO: make be temple
+				.SetBiomeAffection<TempleBiome>(AffectionLevel.Love)
 				.SetBiomeAffection<Brine_Pool>(AffectionLevel.Like)
 				.SetBiomeAffection<MushroomBiome>(AffectionLevel.Hate)
 				.SetNPCAffection(NPCID.WitchDoctor, AffectionLevel.Love)
@@ -58,6 +57,8 @@ namespace Origins.NPCs.TownNPCs {
 		}
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.WitchDoctor);
+			NPC.townNPC = true;
+			NPC.friendly = true;
 			AnimationType = NPCID.Merchant;
 		}
 		public override bool PreAI() {
@@ -97,7 +98,11 @@ namespace Origins.NPCs.TownNPCs {
 				}
 			}
 			if (Main.WindyEnoughForKiteDrops) {
-				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWind"));
+				if (ChildSafety.Disabled && AprilFools.CheckAprilFools()) {
+					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.April_Fools.Acid_Freak.InteractionWimd"));
+				} else {
+					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWind"));
+				}
 			}
 			if (Main.IsItStorming) {
 				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionStorm1"));
@@ -110,16 +115,21 @@ namespace Origins.NPCs.TownNPCs {
 			if (Main.SceneMetrics.EnoughTilesForGraveyard) {
 				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionGraveYard"));
 			}
-			// These are things that the NPC has a chance of telling you when you talk to it.
-			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue1"));
+
+			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue1", Main.LocalPlayer.name));
 			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue2"));
 			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue3"));
 			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue4"));
+
+			var b = NPC.Happiness;
 
 			return chat; // chat is implicitly cast to a string.
 		}
 
 		public override List<string> SetNPCNameList() {
+			/*if (AprilFools.CheckAprilFools()) {
+				return "Vide Octavius James";
+			}*/
 			return new List<string>() {
 				"Aini",
 				"Citaya",
@@ -151,6 +161,16 @@ namespace Origins.NPCs.TownNPCs {
 			return false;
 		}
 
+		public override void SetChatButtons(ref string button, ref string button2) { // What the chat buttons are when you open up the chat UI
+			button = Language.GetTextValue("LegacyInterface.28");
+		}
+
+		public override void OnChatButtonClicked(bool firstButton, ref bool shop) {
+			if (firstButton) {
+				shop = true;
+			}
+		}
+
 		public override void TownNPCAttackStrength(ref int damage, ref float knockback) {
 			damage = 30;
 			knockback = 4f;
@@ -171,5 +191,24 @@ namespace Origins.NPCs.TownNPCs {
 			randomOffset = 2f;
 			gravityCorrection = 30;
 		}
+
+		public override ITownNPCProfile TownNPCProfile() {
+			return new Acid_Freak_Profile();
+		}
+	}
+	public class Acid_Freak_Profile : ITownNPCProfile {
+		public int RollVariation() => 0;
+		public string GetNameForVariant(NPC npc) => npc.getNewNPCName();
+		public Asset<Texture2D> GetTextureNPCShouldUse(NPC npc) {
+			if (npc.IsABestiaryIconDummy && !npc.ForcePartyHatOn)
+				return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Acid_Freak");
+
+			//if (npc.altTexture == 1)
+				//return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Acid_Freak_Party");
+
+			return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Acid_Freak");
+		}
+
+		public int GetHeadTextureIndex(NPC npc) => ModContent.GetModHeadSlot("Origins/NPCs/TownNPCs/Acid_Freak_Head");
 	}
 }

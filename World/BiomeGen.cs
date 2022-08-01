@@ -47,7 +47,6 @@ namespace Origins {
             }
             }));*/
             #endregion _
-            ConvertableFieldInfo<int> _JungleX = new ConvertableFieldInfo<int>(typeof(WorldGen).GetField("JungleX", BindingFlags.NonPublic | BindingFlags.Static));
             tasks.Insert(0, new PassLegacy("setting worldEvil type", (GenerationProgress progress, GameConfiguration _) =>{worldEvil|=crimson?evil_crimson:evil_corruption;}));
             int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
             if(genIndex != -1) {
@@ -123,7 +122,6 @@ namespace Origins {
                     Mod.Logger.Info("Pooling Brine");
                     progress.Message = "Pooling Brine";
                     //for (int i = 0; i < Main.maxTilesX / 5000; i++) {
-                    int JungleX = (int)_JungleX;
                     int X = WorldGen.genRand.Next(JungleX - 100, JungleX + 100);
                     int Y;
                     for (Y = (int)WorldGen.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++);
@@ -143,7 +141,6 @@ namespace Origins {
             if(genIndex != -1&&(WorldGen.genRand.Next(0, 2)+OriginConfig.Instance.worldTypeSkew)>0) {
                 bool dungeonLeft = dungeonX < Main.maxTilesX / 2;
                 int i2;
-                FieldInfo grassSpread = typeof(WorldGen).GetField("grassSpread", BindingFlags.NonPublic|BindingFlags.Static);
                 ushort grassType = TileID.Grass;
                 ushort plantType = TileID.Plants;
                 ushort stoneType = TileID.Stone;
@@ -156,7 +153,6 @@ namespace Origins {
                 ushort iceType = TileID.IceBlock;
                 List<(Point, int)> EvilSpikes = new List<(Point, int)>() { };
                 tasks[genIndex] = new PassLegacy("Corruption", (GenerationProgress progress, GameConfiguration _) => {
-                    int JungleX = (int)_JungleX;
                     worldEvil = crimson ? evil_riven : evil_wastelands;
                     if(crimson) {
                         getEvilTileConversionTypes(evil_riven, out stoneType, out grassType, out plantType, out sandType, out sandstoneType, out hardenedSandType, out iceType);
@@ -264,7 +260,7 @@ namespace Origins {
                                             Main.tile[i2, convertY].TileType = sandType;
                                         }
                                         if(Main.tile[i2, convertY].TileType == 0 && convertY < Main.worldSurface - 1.0 && !planted) {
-                                            grassSpread.SetValue(null, 0);
+                                            grassSpread = 0;
                                             SpreadGrass(i2, convertY, grassType, grassType, repeat: true, 0);
                                         }
                                         planted = true;
@@ -443,7 +439,7 @@ namespace Origins {
                                             ConvertTile(ref tile.TileType, evil_wastelands);
                                         }
                                         if(tile.TileType == 0 && num526 < Main.worldSurface - 1.0 && !flag42) {
-                                            grassSpread.SetValue(null, 0);
+                                            grassSpread = 0;
                                             SpreadGrass(i2, num526, TileID.Dirt, grassType, repeat: true);
                                         }
                                         flag42 = true;

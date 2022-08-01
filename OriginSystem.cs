@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.GameContent.Personalities;
 using Terraria.ModLoader;
 using Terraria.UI;
 using static Origins.Origins;
@@ -68,5 +69,11 @@ namespace Origins {
             }
         }
 
+    }
+    public class TempleBiome : ModBiome {
+		public override string Name => "Bestiary_Biomes.TheTemple";
+		public override bool IsBiomeActive(Player player) {
+            return player.ZoneLihzhardTemple;
+        }
     }
 }
