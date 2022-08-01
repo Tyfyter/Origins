@@ -72,7 +72,7 @@ namespace Origins.LootConditions {
 	public class SoulOfNight : IItemDropRuleCondition, IProvideItemConditionDescription {
 		public bool CanDrop(DropAttemptInfo info) {
 			if (Conditions.SoulOfWhateverConditionCanDrop(info)) {
-				return info.player.ZoneCorrupt || info.player.ZoneCrimson || info.player.InModBiome<Defiled_Wastelands_Biome>() || info.player.InModBiome<Riven_Hive_Biome>();
+				return info.player.ZoneCorrupt || info.player.ZoneCrimson || info.player.InModBiome<Defiled_Wastelands>() || info.player.InModBiome<Riven_Hive>();
 			}
 			return false;
 		}

@@ -48,7 +48,7 @@ namespace Origins.Tiles.Riven {
             if (noBreak) {
                 return true;
             }
-            World.BiomeData.RivenHive.CheckLesion(i, j, Type);
+            World.BiomeData.Riven_Hive.CheckLesion(i, j, Type);
             return true;
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {

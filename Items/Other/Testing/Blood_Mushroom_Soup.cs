@@ -210,20 +210,20 @@ namespace Origins.Items.Other.Testing {
                     break;
                 }
                 case 2:
-                World.BiomeData.RivenHive.Gen.StartHive((int)parameters.Dequeue(), (int)parameters.Dequeue());
+                World.BiomeData.Riven_Hive.Gen.StartHive((int)parameters.Dequeue(), (int)parameters.Dequeue());
                 break;
                 case 3:
-                World.BiomeData.RivenHive.Gen.HiveCave((int)parameters.Dequeue(), (int)parameters.Dequeue());
+                World.BiomeData.Riven_Hive.Gen.HiveCave((int)parameters.Dequeue(), (int)parameters.Dequeue());
                 break;
                 case 4:
-                World.BiomeData.BrinePool.Gen.BrineStart((int)parameters.Dequeue(), (int)parameters.Dequeue());
+                World.BiomeData.Brine_Pool.Gen.BrineStart((int)parameters.Dequeue(), (int)parameters.Dequeue());
                 break;
                 case 5:
-                World.BiomeData.DefiledWastelands.Gen.StartDefiled((int)parameters.Dequeue(), (int)parameters.Dequeue());
+                World.BiomeData.Defiled_Wastelands.Gen.StartDefiled((int)parameters.Dequeue(), (int)parameters.Dequeue());
                 break;
                 case 6: {
                     Vector2 a = new Vector2((float)parameters.Dequeue(), (float)parameters.Dequeue());
-                    World.BiomeData.DefiledWastelands.Gen.DefiledRibs((int)a.X, (int)a.Y);
+                    World.BiomeData.Defiled_Wastelands.Gen.DefiledRibs((int)a.X, (int)a.Y);
                     for (int i = (int)a.X - 1; i < (int)a.X + 3; i++) {
                         for (int j = (int)a.Y - 2; j < (int)a.Y + 2; j++) {
                             Main.tile[i, j].SetActive(false);

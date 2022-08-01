@@ -28,6 +28,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -386,9 +387,21 @@ namespace Origins {
 				}
                 return orig(self, recipe);
             };
+            HookEndpointManager.Add(typeof(CommonCode).GetMethod("DropItem", BindingFlags.Public | BindingFlags.Static, new Type[] { typeof(DropAttemptInfo), typeof(int), typeof(int), typeof(bool) }), (hook_DropItem)CommonCode_DropItem);
         }
-
-		private void Projectile_GetWhipSettings(On.Terraria.Projectile.orig_GetWhipSettings orig, Projectile proj, out float timeToFlyOut, out int segments, out float rangeMultiplier) {
+        private static void CommonCode_DropItem(ItemDropper orig, DropAttemptInfo info, int item, int stack, bool scattered = false) {
+            (itemDropper ?? orig)(info, item, stack, scattered);
+		}
+        public static void ResolveRuleWithHandler(IItemDropRule rule, DropAttemptInfo dropInfo, ItemDropper handler) {
+			try {
+                itemDropper += handler;
+                OriginExtensions.ResolveRule(rule, dropInfo);
+            } finally {
+                itemDropper = null;
+			}
+		}
+        static event ItemDropper itemDropper;
+        private void Projectile_GetWhipSettings(On.Terraria.Projectile.orig_GetWhipSettings orig, Projectile proj, out float timeToFlyOut, out int segments, out float rangeMultiplier) {
 			if (proj.ModProjectile is IWhipProjectile whip) {
                 whip.GetWhipSettings(out timeToFlyOut, out segments, out rangeMultiplier);
 			} else {

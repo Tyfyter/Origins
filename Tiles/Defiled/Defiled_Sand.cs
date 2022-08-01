@@ -91,7 +91,7 @@ namespace Origins.Tiles.Defiled {
 			return ModContent.TileType<Defiled_Tree_Sapling>();
 		}*/
         public override bool CreateDust(int i, int j, ref int type) {
-            type = DefiledWastelands.DefaultTileDust;
+            type = Defiled_Wastelands.DefaultTileDust;
             return true;
         }
     }

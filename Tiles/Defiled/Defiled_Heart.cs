@@ -43,7 +43,7 @@ namespace Origins.Tiles.Defiled {
             ID = Type;
 		}
         public override bool CreateDust(int i, int j, ref int type) {
-            type = DefiledWastelands.DefaultTileDust;
+            type = Defiled_Wastelands.DefaultTileDust;
             return true;
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {

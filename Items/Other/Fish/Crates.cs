@@ -8,8 +8,9 @@ namespace Origins.Items.Other.Fish {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crusty Crate");
-			Tooltip.SetDefault("'No, this is Patrick.'");
+			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}\n'No, this is Patrick.'");
 			glowmask = Origins.AddGlowMask(this);
+			ItemID.Sets.IsFishingCrate[Type] = true;
 			SacrificeTotal = 5;
 		}
 		public override void SetDefaults() {

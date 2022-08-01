@@ -28,7 +28,7 @@ namespace Origins.Tiles.Defiled {
             mergeID = TileID.IceBlock;
 		}
         public override bool CreateDust(int i, int j, ref int type) {
-            type = DefiledWastelands.DefaultTileDust;
+            type = Defiled_Wastelands.DefaultTileDust;
             return true;
         }
         public override void FloorVisuals(Player player) {

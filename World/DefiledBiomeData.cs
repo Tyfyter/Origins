@@ -20,14 +20,14 @@ using static Origins.OriginExtensions;
 using Terraria.Chat;
 
 namespace Origins.World.BiomeData {
-	public class Defiled_Wastelands_Biome : ModBiome {
+	public class Defiled_Wastelands : ModBiome {
 		public override int Music => Origins.Music.Defiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.ZoneDefiled = OriginSystem.defiledTiles > DefiledWastelands.NeededTiles;
-			originPlayer.ZoneDefiledProgress = Math.Min(OriginSystem.defiledTiles - (DefiledWastelands.NeededTiles - DefiledWastelands.ShaderTileCount), DefiledWastelands.ShaderTileCount) / DefiledWastelands.ShaderTileCount;
+			originPlayer.ZoneDefiled = OriginSystem.defiledTiles > Defiled_Wastelands.NeededTiles;
+			originPlayer.ZoneDefiledProgress = Math.Min(OriginSystem.defiledTiles - (Defiled_Wastelands.NeededTiles - Defiled_Wastelands.ShaderTileCount), Defiled_Wastelands.ShaderTileCount) / Defiled_Wastelands.ShaderTileCount;
 			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
 
 			return originPlayer.ZoneDefiled;
@@ -37,14 +37,6 @@ namespace Origins.World.BiomeData {
 			Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(originPlayer.ZoneDefiledProgressSmoothed);
 			player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", originPlayer.ZoneDefiledProgressSmoothed > 0, player.Center);
 		}
-	}
-	public class Underground_Defiled_Wastelands_Biome : ModBiome {
-		public override int Music => Origins.Music.UndergroundDefiled;
-		public override bool IsBiomeActive(Player player) {
-			return base.IsBiomeActive(player);
-		}
-	}
-	public static class DefiledWastelands {
         public const int NeededTiles = 200;
         public const int ShaderTileCount = 75;
 		public const short DefaultTileDust = DustID.Titanium;
@@ -435,6 +427,12 @@ namespace Origins.World.BiomeData {
 			}
 			SoundEngine.PlaySound(Origins.Sounds.DefiledKill, new Vector2(i * 16, j * 16));
 			destroyObject = false;
+		}
+	}
+	public class Underground_Defiled_Wastelands_Biome : ModBiome {
+		public override int Music => Origins.Music.UndergroundDefiled;
+		public override bool IsBiomeActive(Player player) {
+			return base.IsBiomeActive(player);
 		}
 	}
 }

@@ -16,13 +16,13 @@ using static Terraria.WorldGen;
 using static Origins.OriginExtensions;
 
 namespace Origins.World.BiomeData {
-	public class Riven_Hive_Biome : ModBiome {
+	public class Riven_Hive : ModBiome {
 		public override int Music => Origins.Music.Riven;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.ZoneRiven = OriginSystem.rivenTiles > RivenHive.NeededTiles;
-			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (RivenHive.NeededTiles - RivenHive.ShaderTileCount), RivenHive.ShaderTileCount) / RivenHive.ShaderTileCount;
+			originPlayer.ZoneRiven = OriginSystem.rivenTiles > Riven_Hive.NeededTiles;
+			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (Riven_Hive.NeededTiles - Riven_Hive.ShaderTileCount), Riven_Hive.ShaderTileCount) / Riven_Hive.ShaderTileCount;
 			LinearSmoothing(ref originPlayer.ZoneRivenProgressSmoothed, originPlayer.ZoneRivenProgress, OriginSystem.biomeShaderSmoothing * 0.1f);
 
 			return originPlayer.ZoneRiven;
@@ -32,14 +32,6 @@ namespace Origins.World.BiomeData {
 			Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(originPlayer.ZoneRivenProgressSmoothed);
 			player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", originPlayer.ZoneRivenProgressSmoothed > 0, player.Center);
 		}
-	}
-	public class Underground_Riven_Hive_Biome : ModBiome {
-		public override int Music => Origins.Music.UndergroundRiven;
-		public override bool IsBiomeActive(Player player) {
-			return base.IsBiomeActive(player);
-		}
-	}
-	public static class RivenHive {
 		public const int NeededTiles = 200;
 		public const int ShaderTileCount = 25;
 		public static class SpawnRates {
@@ -276,6 +268,12 @@ namespace Origins.World.BiomeData {
 			}
 			SoundEngine.PlaySound(SoundID.NPCDeath1, new Vector2(i * 16, j * 16));
 			destroyObject = false;
+		}
+	}
+	public class Underground_Riven_Hive_Biome : ModBiome {
+		public override int Music => Origins.Music.UndergroundRiven;
+		public override bool IsBiomeActive(Player player) {
+			return base.IsBiomeActive(player);
 		}
 	}
 }

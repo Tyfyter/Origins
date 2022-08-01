@@ -132,7 +132,7 @@ namespace Origins {
                     //WorldGen.digTunnel(X, 500, 5, 5, 10, 10, true);
                     //WorldGen.digTunnel(X, Y, 3, 0, 30, 6, true);
                     //WorldGen.digTunnel(X, Y, 0, 90, 25, 50, true);
-                    BrinePool.Gen.BrineStart(X, Y);
+                    Brine_Pool.Gen.BrineStart(X, Y);
                     //}
                 }));
             }
@@ -224,7 +224,7 @@ namespace Origins {
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = true;
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = true;
 
-                            RivenHive.Gen.StartHive(startPos, (int)worldSurfaceLow - 10);
+                            Riven_Hive.Gen.StartHive(startPos, (int)worldSurfaceLow - 10);
 
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = gr;
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = mb;
@@ -491,7 +491,7 @@ namespace Origins {
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = true;
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = true;
 
-                            DefiledWastelands.Gen.StartDefiled(start.X, start.Y);
+                            Defiled_Wastelands.Gen.StartDefiled(start.X, start.Y);
                             DefiledHearts.Push(start);
 
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = gr;
@@ -601,7 +601,7 @@ namespace Origins {
                     Point heart;
                     while(DefiledHearts.Count>0) {
                         heart = DefiledHearts.Pop();
-				        DefiledWastelands.Gen.DefiledRibs(heart.X + genRand.NextFloat(-0.5f, 0.5f), heart.Y + genRand.NextFloat(-0.5f, 0.5f));
+				        Defiled_Wastelands.Gen.DefiledRibs(heart.X + genRand.NextFloat(-0.5f, 0.5f), heart.Y + genRand.NextFloat(-0.5f, 0.5f));
                         for (int i = heart.X - 1; i < heart.X + 3; i++) {
                             for (int j = heart.Y - 2; j < heart.Y + 2; j++) {
                                 Main.tile[i, j].SetActive(false);

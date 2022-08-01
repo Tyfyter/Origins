@@ -26,6 +26,7 @@ using Terraria.ModLoader.IO;
 using Tyfyter.Utils;
 using Origins.Tiles;
 using ReLogic.Content;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Origins {
     public class LinkedQueue<T> : ICollection<T> {
@@ -841,6 +842,8 @@ namespace Origins {
         public const int Crystal = 52;
         public const int Golden = 53;
     }
+    public delegate void hook_DropItem(ItemDropper orig, DropAttemptInfo info, int item, int stack, bool scattered = false);
+    public delegate void ItemDropper(DropAttemptInfo info, int item, int stack, bool scattered = false);
     public static class OriginExtensions {
         public static Func<float, int, Vector2> drawPlayerItemPos;
         public static SoundStyle WithPitch(this SoundStyle soundStyle, float pitch) {
@@ -1204,6 +1207,33 @@ namespace Origins {
                 }
             }
             return true;
+        }
+
+        public static ItemDropAttemptResult ResolveRule(IItemDropRule rule, DropAttemptInfo info) {
+            if (!rule.CanDrop(info)) {
+                ItemDropAttemptResult itemDropAttemptResult = default(ItemDropAttemptResult);
+                itemDropAttemptResult.State = ItemDropAttemptResultState.DoesntFillConditions;
+                ItemDropAttemptResult itemDropAttemptResult2 = itemDropAttemptResult;
+                ResolveRuleChains(rule, info, itemDropAttemptResult2);
+                return itemDropAttemptResult2;
+            }
+            ItemDropAttemptResult itemDropAttemptResult3 = (rule as INestedItemDropRule)?.TryDroppingItem(info, ResolveRule) ?? rule.TryDroppingItem(info);
+            ResolveRuleChains(rule, info, itemDropAttemptResult3);
+            return itemDropAttemptResult3;
+        }
+        private static void ResolveRuleChains(IItemDropRule rule, DropAttemptInfo info, ItemDropAttemptResult parentResult) {
+            ResolveRuleChains(ref info, ref parentResult, rule.ChainedRules);
+        }
+        private static void ResolveRuleChains(ref DropAttemptInfo info, ref ItemDropAttemptResult parentResult, List<IItemDropRuleChainAttempt> ruleChains) {
+            if (ruleChains == null) {
+                return;
+            }
+            for (int i = 0; i < ruleChains.Count; i++) {
+                IItemDropRuleChainAttempt itemDropRuleChainAttempt = ruleChains[i];
+                if (itemDropRuleChainAttempt.CanChainIntoRule(parentResult)) {
+                    ResolveRule(itemDropRuleChainAttempt.RuleToChain, info);
+                }
+            }
         }
         public static StatModifier GetInverse(this StatModifier statModifier) {
             return new StatModifier(1f / statModifier.Multiplicative, 1f / statModifier.Additive, -statModifier.Base, -statModifier.Flat);

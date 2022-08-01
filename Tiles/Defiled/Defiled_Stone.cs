@@ -32,7 +32,7 @@ namespace Origins.Tiles.Defiled {
             MineResist = 2;
 		}
         public override bool CreateDust(int i, int j, ref int type) {
-            type = DefiledWastelands.DefaultTileDust;
+            type = Defiled_Wastelands.DefaultTileDust;
             return true;
         }
     }

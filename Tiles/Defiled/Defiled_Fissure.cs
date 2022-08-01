@@ -71,7 +71,7 @@ namespace Origins.Tiles.Defiled {
             if (noBreak) {
                 return true;
             }
-            World.BiomeData.DefiledWastelands.CheckFissure(i, j, Type);
+            World.BiomeData.Defiled_Wastelands.CheckFissure(i, j, Type);
             return true;
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {

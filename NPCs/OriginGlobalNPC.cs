@@ -135,22 +135,22 @@ namespace Origins.NPCs {
 			if (player.GetModPlayer<OriginPlayer>().ZoneDefiled) {
 				pool[0] = 0;
 
-				pool.Add(ModContent.NPCType<Defiled_Cyclops>(), DefiledWastelands.SpawnRates.Cyclops);
+				pool.Add(ModContent.NPCType<Defiled_Cyclops>(), Defiled_Wastelands.SpawnRates.Cyclops);
 
-				if (spawnInfo.PlayerFloorY <= Main.worldSurface + 50 && spawnInfo.SpawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
+				if (spawnInfo.PlayerFloorY <= Main.worldSurface + 50 && spawnInfo.SpawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), Defiled_Wastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
 				if (Main.hardMode) {
-					pool.Add(ModContent.NPCType<Defiled_Hunter_Head>(), DefiledWastelands.SpawnRates.Hunter);
+					pool.Add(ModContent.NPCType<Defiled_Hunter_Head>(), Defiled_Wastelands.SpawnRates.Hunter);
 					if (TileID.Sets.Conversion.Sand[Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType]) {
-						pool.Add(ModContent.NPCType<Defiled_Cyclops>(), DefiledWastelands.SpawnRates.Cyclops);
+						pool.Add(ModContent.NPCType<Defiled_Cyclops>(), Defiled_Wastelands.SpawnRates.Cyclops);
 					}
 					if (!spawnInfo.PlayerSafe) {
-						pool.Add(ModContent.NPCType<Defiled_Tripod>(), DefiledWastelands.SpawnRates.Tripod);
+						pool.Add(ModContent.NPCType<Defiled_Tripod>(), Defiled_Wastelands.SpawnRates.Tripod);
 					}
 				}
 
 				if (spawnInfo.SpawnTileY > Main.worldSurface) {
 					if (!spawnInfo.PlayerSafe) {
-						pool.Add(ModContent.NPCType<Defiled_Digger_Head>(), DefiledWastelands.SpawnRates.Worm);
+						pool.Add(ModContent.NPCType<Defiled_Digger_Head>(), Defiled_Wastelands.SpawnRates.Worm);
 					}
 					int yPos = spawnInfo.SpawnTileY;
 					Tile tile;
@@ -169,16 +169,16 @@ namespace Origins.NPCs {
 						}
 						halfSlab = tile.IsHalfBlock;
 					}
-					pool.Add(ModContent.NPCType<Defiled_Mite>(), DefiledWastelands.SpawnRates.Mite);
+					pool.Add(ModContent.NPCType<Defiled_Mite>(), Defiled_Wastelands.SpawnRates.Mite);
 					SkipMiteSpawn:;
 					if (Main.hardMode && !spawnInfo.PlayerSafe) {
-						pool.Add(ModContent.NPCType<Defiled_Mimic>(), DefiledWastelands.SpawnRates.Mimic);
+						pool.Add(ModContent.NPCType<Defiled_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
 						if (spawnInfo.SpawnTileY > Main.rockLayer) {
-							pool.Add(ModContent.NPCType<Enchanted_Trident>(), DefiledWastelands.SpawnRates.Bident);
+							pool.Add(ModContent.NPCType<Enchanted_Trident>(), Defiled_Wastelands.SpawnRates.Bident);
 						}
 					}
 				} else {
-					pool.Add(ModContent.NPCType<Defiled_Brute>(), DefiledWastelands.SpawnRates.Brute);
+					pool.Add(ModContent.NPCType<Defiled_Brute>(), Defiled_Wastelands.SpawnRates.Brute);
 				}
 				if (Defiled_Amalgamation.spawnDA) {
 					foreach (var entry in pool) {
@@ -191,20 +191,20 @@ namespace Origins.NPCs {
 			} else if (player.GetModPlayer<OriginPlayer>().ZoneRiven) {
 				pool[0] = 0;
 
-				pool.Add(ModContent.NPCType<Riven.Riven_Fighter>(), RivenHive.SpawnRates.Fighter);
+				pool.Add(ModContent.NPCType<Riven.Riven_Fighter>(), Riven_Hive.SpawnRates.Fighter);
 
-				pool.Add(ModContent.NPCType<Riven.Riven_Tank>(), RivenHive.SpawnRates.Tank);
+				pool.Add(ModContent.NPCType<Riven.Riven_Tank>(), Riven_Hive.SpawnRates.Tank);
 
-				if (spawnInfo.Water) pool.Add(ModContent.NPCType<Riven.Pustule_Jelly>(), RivenHive.SpawnRates.Jelly);
+				if (spawnInfo.Water) pool.Add(ModContent.NPCType<Riven.Pustule_Jelly>(), Riven_Hive.SpawnRates.Jelly);
 
 				//if (spawnInfo.playerFloorY <= Main.worldSurface + 50 && spawnInfo.spawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
 				if (Main.hardMode) {
-					pool.Add(ModContent.NPCType<Riven.Rivenator_Head>(), RivenHive.SpawnRates.Worm);
+					pool.Add(ModContent.NPCType<Riven.Rivenator_Head>(), Riven_Hive.SpawnRates.Worm);
 					if (player.ZoneDesert) {
-						pool.Add(ModContent.NPCType<Riven.Riven_Mummy>(), RivenHive.SpawnRates.Mummy);
+						pool.Add(ModContent.NPCType<Riven.Riven_Mummy>(), Riven_Hive.SpawnRates.Mummy);
 					}
 					if (Terraria.GameContent.Events.Sandstorm.Happening && player.ZoneSandstorm) {
-						pool.Add(ModContent.NPCType<Riven.Splitooth>(), RivenHive.SpawnRates.Shark1);
+						pool.Add(ModContent.NPCType<Riven.Splitooth>(), Riven_Hive.SpawnRates.Shark1);
 					}
 				}
 

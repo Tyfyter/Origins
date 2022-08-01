@@ -29,7 +29,7 @@ namespace Origins.Tiles.Defiled {
             mergeID = TileID.Sandstone;
 		}
         public override bool CreateDust(int i, int j, ref int type) {
-            type = DefiledWastelands.DefaultTileDust;
+            type = Defiled_Wastelands.DefaultTileDust;
             return true;
         }
     }

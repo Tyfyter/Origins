@@ -23,11 +23,9 @@ namespace Origins.World.BiomeData {
 		}
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.ZoneBrine = OriginSystem.brineTiles > BrinePool.NeededTiles;
+			originPlayer.ZoneBrine = OriginSystem.brineTiles > Brine_Pool.NeededTiles;
 			return originPlayer.ZoneBrine;
 		}
-	}
-	public static class BrinePool {
         public const int NeededTiles = 250;
         public const int ShaderTileCount = 75;
         public static class SpawnRates {
