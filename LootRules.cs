@@ -10,6 +10,39 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.LootConditions {
+	public class OneOfEachRule : IItemDropRule {
+		public List<IItemDropRuleChainAttempt> ChainedRules { get; }
+		IItemDropRule[] rules;
+		public bool CanDrop(DropAttemptInfo info) => true;
+		public void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
+			for (int i = 0; i < rules.Length; i++) {
+				rules[i].ReportDroprates(drops, ratesInfo);
+			}
+		}
+		public ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
+			ItemDropAttemptResult result = new ItemDropAttemptResult() {
+				State = ItemDropAttemptResultState.DidNotRunCode
+			};
+			for (int i = 0; i < rules.Length; i++) {
+				switch (rules[i].TryDroppingItem(info).State) {
+					case ItemDropAttemptResultState.Success:
+					result.State = ItemDropAttemptResultState.Success;
+					break;
+					case ItemDropAttemptResultState.DoesntFillConditions:
+					if (result.State is ItemDropAttemptResultState.DidNotRunCode or ItemDropAttemptResultState.FailedRandomRoll) {
+						result.State = ItemDropAttemptResultState.DoesntFillConditions;
+					}
+					break;
+					case ItemDropAttemptResultState.FailedRandomRoll:
+					if (result.State is ItemDropAttemptResultState.DidNotRunCode) {
+						result.State = ItemDropAttemptResultState.FailedRandomRoll;
+					}
+					break;
+				}
+			}
+			return result;
+		}
+	}
 	public class IsWorldEvil : IItemDropRuleCondition {
 		int worldEvil;
 		public IsWorldEvil(int worldEvil) {

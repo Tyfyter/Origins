@@ -1,4 +1,5 @@
-﻿using Terraria.GameContent.Creative;
+﻿using Origins.World.BiomeData;
+using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -53,7 +54,7 @@ namespace Origins.Items.Other.Fish {
 			};
 
 			IItemDropRule[] riven = new IItemDropRule[4] {
-				ItemDropRule.OneFromOptionsNotScalingWithLuck(1, 800, 802, 1256, 1290, 3062), // bc_crimson change to match riven lesions
+				Riven_Hive.LesionDropRule, // bc_crimson change to match riven lesions
 				ItemDropRule.Common(73, 4, 5, 13), //bc_goldCoin, normally NotScalingWithLuck
 				ItemDropRule.SequentialRulesNotScalingWithLuck(1,
 					new OneFromRulesRule(5, oresTier1),

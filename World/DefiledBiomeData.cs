@@ -18,9 +18,12 @@ using ExampleMod.Backgrounds;
 using Terraria.Graphics.Effects;
 using static Origins.OriginExtensions;
 using Terraria.Chat;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
+		public static IItemDropRule FirstFissureDropRule;
+		public static IItemDropRule FissureDropRule;
 		public override int Music => Origins.Music.Defiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
@@ -37,7 +40,23 @@ namespace Origins.World.BiomeData {
 			Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(originPlayer.ZoneDefiledProgressSmoothed);
 			player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", originPlayer.ZoneDefiledProgressSmoothed > 0, player.Center);
 		}
-        public const int NeededTiles = 200;
+		public override void Load() {
+			FirstFissureDropRule = ItemDropRule.Common(ModContent.ItemType<Defiled_Burst>());
+			FirstFissureDropRule.OnSuccess(ItemDropRule.Common(ItemID.MusketBall, 1, 100, 100));
+
+			FissureDropRule = new OneFromRulesRule(1,
+				FirstFissureDropRule,
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Infusion>()),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Defiled_Chakram>()),
+				ItemDropRule.NotScalingWithLuck(ItemID.ShadowOrb),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dim_Starlight>())
+			);
+		}
+		public override void Unload() {
+			FirstFissureDropRule = null;
+			FissureDropRule = null;
+		}
+		public const int NeededTiles = 200;
         public const int ShaderTileCount = 75;
 		public const short DefaultTileDust = DustID.Titanium;
 		//public static SpawnConditionBestiaryInfoElement BestiaryIcon = new SpawnConditionBestiaryInfoElement("Bestiary_Biomes.Ocean", 28, "Images/MapBG11");
@@ -379,7 +398,29 @@ namespace Origins.World.BiomeData {
 				if (genRand.NextBool(2)) {
 					spawnMeteor = true;
 				}
-				int selection = Main.rand.Next(5);
+				float fx = x * 16;
+				float fy = y * 16;
+
+				float distance = -1f;
+				int player = 0;
+				for (int playerIndex = 0; playerIndex < 255; playerIndex++) {
+					float currentDist = Math.Abs(Main.player[playerIndex].position.X - fx) + Math.Abs(Main.player[playerIndex].position.Y - fy);
+					if (currentDist < distance || distance == -1f) {
+						player = playerIndex;
+						distance = currentDist;
+					}
+				}
+
+				DropAttemptInfo dropInfo = default(DropAttemptInfo);
+				dropInfo.player = Main.player[player];
+				dropInfo.IsExpertMode = Main.expertMode;
+				dropInfo.IsMasterMode = Main.masterMode;
+				dropInfo.IsInSimulation = false;
+				dropInfo.rng = Main.rand;
+				Origins.ResolveRuleWithHandler(shadowOrbSmashed ? FissureDropRule : FirstFissureDropRule, dropInfo, (DropAttemptInfo info, int item, int stack, bool _) => {
+					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, item, stack, pfix: -1);
+				});
+				/*int selection = Main.rand.Next(5);
 				if (!shadowOrbSmashed) {
 					selection = 0;
 				}
@@ -405,20 +446,8 @@ namespace Origins.World.BiomeData {
 					case 4:
 					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Dim_Starlight>(), 1, noBroadcast: false, -1);
 					break;
-				}
+				}*/
 				shadowOrbSmashed = true;
-				float fx = x * 16;
-				float fy = y * 16;
-
-				float distance = -1f;
-				int player = 0;
-				for (int playerIndex = 0; playerIndex < 255; playerIndex++) {
-					float currentDist = Math.Abs(Main.player[playerIndex].position.X - fx) + Math.Abs(Main.player[playerIndex].position.Y - fy);
-					if (currentDist < distance || distance == -1f) {
-						player = playerIndex;
-						distance = currentDist;
-					}
-				}
 				
 				//this projectile handles the rest
 				Projectile.NewProjectile(GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, Main.myPlayer, ai0: 1, ai1: player);

@@ -14,9 +14,12 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Terraria.WorldGen;
 using static Origins.OriginExtensions;
+using Terraria.GameContent.ItemDropRules;
 
 namespace Origins.World.BiomeData {
 	public class Riven_Hive : ModBiome {
+		public static IItemDropRule FirstLesionDropRule;
+		public static IItemDropRule LesionDropRule;
 		public override int Music => Origins.Music.Riven;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override bool IsBiomeActive(Player player) {
@@ -31,6 +34,22 @@ namespace Origins.World.BiomeData {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(originPlayer.ZoneRivenProgressSmoothed);
 			player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", originPlayer.ZoneRivenProgressSmoothed > 0, player.Center);
+		}
+		public override void Load() {
+			FirstLesionDropRule = ItemDropRule.NotScalingWithLuck(ItemID.TheUndertaker);
+			FirstLesionDropRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.MusketBall, 1, 100, 100));
+
+			LesionDropRule = new OneFromRulesRule(1,
+				FirstLesionDropRule,
+				ItemDropRule.NotScalingWithLuck(ItemID.CrimsonRod),
+				ItemDropRule.NotScalingWithLuck(ItemID.TheRottedFork),
+				ItemDropRule.NotScalingWithLuck(ItemID.ShadowOrb),
+				ItemDropRule.NotScalingWithLuck(ItemID.PanicNecklace)
+			);
+		}
+		public override void Unload() {
+			FirstLesionDropRule = null;
+			LesionDropRule = null;
 		}
 		public const int NeededTiles = 200;
 		public const int ShaderTileCount = 25;
@@ -213,7 +232,7 @@ namespace Origins.World.BiomeData {
 				if (genRand.NextBool(2)) {
 					spawnMeteor = true;
 				}
-				int num3 = Main.rand.Next(5);
+				/*int num3 = Main.rand.Next(5);
 				if (!shadowOrbSmashed) {
 					num3 = 0;
 				}
@@ -236,22 +255,33 @@ namespace Origins.World.BiomeData {
 					case 4:
 					Item.NewItem(GetItemSource_FromTileBreak(i, j), x * 16, y * 16, 32, 32, 1290, 1, pfix: -1);
 					break;
+				}*/
+
+				float fx = x * 16;
+				float fy = y * 16;
+				float distance = -1f;
+				int plr = 0;
+				for (int pindex = 0; pindex < 255; pindex++) {
+					float currentDist = Math.Abs(Main.player[pindex].position.X - fx) + Math.Abs(Main.player[pindex].position.Y - fy);
+					if (currentDist < distance || distance == -1f) {
+						plr = pindex;
+						distance = currentDist;
+					}
 				}
+
+				DropAttemptInfo dropInfo = default(DropAttemptInfo);
+				dropInfo.player = Main.player[plr];
+				dropInfo.IsExpertMode = Main.expertMode;
+				dropInfo.IsMasterMode = Main.masterMode;
+				dropInfo.IsInSimulation = false;
+				dropInfo.rng = Main.rand;
+				Origins.ResolveRuleWithHandler(shadowOrbSmashed ? LesionDropRule : FirstLesionDropRule, dropInfo, (DropAttemptInfo info, int item, int stack, bool _) => {
+					Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, item, stack, pfix: -1);
+				});
 				shadowOrbSmashed = true;
 				shadowOrbCount++;
 				if (shadowOrbCount >= 3) {
 					shadowOrbCount = 0;
-					float fx = x * 16;
-					float fy = y * 16;
-					float distance = -1f;
-					int plr = 0;
-					for (int pindex = 0; pindex < 255; pindex++) {
-						float currentDist = Math.Abs(Main.player[pindex].position.X - fx) + Math.Abs(Main.player[pindex].position.Y - fy);
-						if (currentDist < distance || distance == -1f) {
-							plr = pindex;
-							distance = currentDist;
-						}
-					}
 					NPC.SpawnOnPlayer(plr, 1);
 				} else {
 					LocalizedText localizedText = Lang.misc[10];

@@ -21,6 +21,7 @@ using Origins.Items.Weapons.Defiled;
 using Tyfyter.Utils;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.Defiled;
+using Origins.World.BiomeData;
 
 namespace Origins.NPCs.Defiled {
     [AutoloadBossHead]
