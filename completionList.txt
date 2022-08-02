@@ -40,15 +40,15 @@ BOSSES AND MINI-BOSSES:
 (X) Discombobulator
 (#, ^2) Grand Corruptor
 (#, ^2) Ichor Storm
-(@3, #, ^4) Seer
+(#, $, ^2) Seer
 
 (^) Defiled Amalgmation*
-(@5, #, $) Fiberglass Weaver
-(@2/3, #, $) Riven Crest
+(#2, $, ^2) Fiberglass Weaver
+(X) Riven Crest
 
 (X) Mad Maniac
 (%2, X) Mildew Carrion
-(%2, X) Restless
+(%2, X) Restless Flame
 (X) Severus, the Dark One
 
 (X) Alien Queen
