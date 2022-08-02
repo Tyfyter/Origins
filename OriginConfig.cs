@@ -59,7 +59,6 @@ namespace Origins {
 
 		[Label("Use Double Tap For Set Bonus Abilities")]
 		[DefaultValue(false)]
-		[ReloadRequired]
 		public bool SetBonusDoubleTap = false;
 	}
 }

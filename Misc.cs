@@ -1128,17 +1128,21 @@ namespace Origins {
         internal static FieldInfo inext;
         internal static FieldInfo inextp;
         internal static FieldInfo SeedArray;
-        internal static void initExt() {
+        private static FieldInfo _dangerousBiomes;
+        internal static FieldInfo dangerousBiomes => _dangerousBiomes ??= typeof(ShopHelper).GetField("_dangerousBiomes", BindingFlags.NonPublic | BindingFlags.Instance);
+        /*internal static void initExt() {
             memberwiseClone = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic|BindingFlags.Instance);
             inext = typeof(UnifiedRandom).GetField("inext", BindingFlags.NonPublic|BindingFlags.Instance);
             inextp = typeof(UnifiedRandom).GetField("inextp", BindingFlags.NonPublic|BindingFlags.Instance);
             SeedArray = typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic|BindingFlags.Instance);
-        }
+            dangerousBiomes = typeof(ShopHelper).GetField("_dangerousBiomes", BindingFlags.NonPublic | BindingFlags.Instance);
+        }*/
         internal static void unInitExt() {
             memberwiseClone = null;
             inext = null;
             inextp = null;
             SeedArray = null;
+            _dangerousBiomes = null;
         }
         public static UnifiedRandom Clone(this UnifiedRandom r) {
             UnifiedRandom o = (UnifiedRandom)memberwiseClone.Invoke(r, BindingFlags.NonPublic, null, null, null);

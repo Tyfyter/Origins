@@ -33,7 +33,6 @@ namespace Origins.NPCs.TownNPCs {
 			NPCID.Sets.AttackTime[Type] = 90; // The amount of time it takes for the NPC's attack animation to be over once it starts.
 			NPCID.Sets.AttackAverageChance[Type] = 30;
 			NPCID.Sets.HatOffsetY[Type] = 4; // For when a party is active, the party hat spawns at a Y offset.
-			NPCID.Sets.ActsLikeTownNPC[Type] = true;
 
 			// Influences how the NPC looks in the Bestiary
 			NPCID.Sets.NPCBestiaryDrawModifiers drawModifiers = new NPCID.Sets.NPCBestiaryDrawModifiers(0) {
@@ -42,12 +41,15 @@ namespace Origins.NPCs.TownNPCs {
 			};
 
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, drawModifiers);
-
 			NPC.Happiness
 				.SetBiomeAffection<JungleBiome>(AffectionLevel.Like)
 				.SetBiomeAffection<TempleBiome>(AffectionLevel.Love)
 				.SetBiomeAffection<Brine_Pool>(AffectionLevel.Like)
 				.SetBiomeAffection<MushroomBiome>(AffectionLevel.Hate)
+				.SetBiomeAffection<CorruptionBiome>(AffectionLevel.Like)
+				.SetBiomeAffection<CrimsonBiome>(AffectionLevel.Like)
+				.SetBiomeAffection<Defiled_Wastelands>(AffectionLevel.Like)
+				.SetBiomeAffection<Riven_Hive>(AffectionLevel.Like)
 				.SetNPCAffection(NPCID.WitchDoctor, AffectionLevel.Love)
 				.SetNPCAffection(NPCID.Dryad, AffectionLevel.Like)
 				.SetNPCAffection(NPCID.BestiaryGirl, AffectionLevel.Dislike)
@@ -121,7 +123,7 @@ namespace Origins.NPCs.TownNPCs {
 			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue3"));
 			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue4"));
 
-			var b = NPC.Happiness;
+			var b = Main.ShopHelper;
 
 			return chat; // chat is implicitly cast to a string.
 		}

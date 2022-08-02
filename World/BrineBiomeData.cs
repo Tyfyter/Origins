@@ -47,7 +47,7 @@ namespace Origins.World.BiomeData {
 							continue;
 						}
 
-						switch (Main.tile[x, y].TileType) {
+						switch (Main.tile[x, y].HasTile ? Main.tile[x, y].TileType : -1) {
 							case TileID.IridescentBrick:
 							case TileID.TinBrick:
 							case TileID.GoldBrick:
@@ -62,7 +62,8 @@ namespace Origins.World.BiomeData {
 							default:
                             if (Main.tileContainer[Main.tile[x, y].TileType]) {
 								break;
-                            }
+							}
+							OriginSystem.RemoveTree(x, y - 1);
 							Main.tile[x, y].ResetToType(stoneID);
 							if (diff < 70 * sizeMult - 10 || ((y - j) * (y - j)) + ((x - i) * (x - i) * 0.5f) < 700 * sizeMult * sizeMult) {//(x - i) * 
 								if (Main.tileContainer[Main.tile[x, y - 1].TileType]) {
@@ -135,6 +136,7 @@ namespace Origins.World.BiomeData {
 								}
 								if(Main.tile[x, y].HasTile)change = true;
 								Main.tile[x, y].SetActive(false);
+								OriginSystem.RemoveTree(x, y - 1);
 								if (y > worldSurfaceHigh) {
 									Main.tile[x, y].LiquidAmount = 255;
 								}

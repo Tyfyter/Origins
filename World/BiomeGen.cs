@@ -689,6 +689,20 @@ namespace Origins {
             }
             Origins.instance.Logger.Info("hardmode evil stripe generation complete in "+loopCount+" loops with "+conversionCount+" tile conversions");
         }
+        public static void RemoveTree(int i, int j) {
+            Tile tile = Main.tile[i, j];
+
+            while (tile.TileIsType(TileID.Trees)) {
+				if (Main.tile[i - 1, j].TileIsType(TileID.Trees)) {
+                    Main.tile[i - 1, j].ClearTile();
+                }
+                if (Main.tile[i + 1, j].TileIsType(TileID.Trees)) {
+                    Main.tile[i + 1, j].ClearTile();
+                }
+                tile.HasTile = false;
+                tile = Main.tile[i, --j];
+            }
+		}
         public static void getEvilTileConversionTypes(byte evilType, out ushort stoneType, out ushort grassType, out ushort plantType, out ushort sandType, out ushort sandstoneType, out ushort hardenedSandType, out ushort iceType) {
             switch(evilType) {
                 case evil_wastelands:

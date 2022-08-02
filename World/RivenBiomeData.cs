@@ -15,6 +15,7 @@ using Tyfyter.Utils;
 using static Terraria.WorldGen;
 using static Origins.OriginExtensions;
 using Terraria.GameContent.ItemDropRules;
+using Origins.Items.Weapons.Riven;
 
 namespace Origins.World.BiomeData {
 	public class Riven_Hive : ModBiome {
@@ -36,13 +37,13 @@ namespace Origins.World.BiomeData {
 			player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", originPlayer.ZoneRivenProgressSmoothed > 0, player.Center);
 		}
 		public override void Load() {
-			FirstLesionDropRule = ItemDropRule.NotScalingWithLuck(ItemID.TheUndertaker);
-			FirstLesionDropRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.MusketBall, 1, 100, 100));
+			FirstLesionDropRule = ItemDropRule.NotScalingWithLuck(ItemID.TheUndertaker);// presumably Riven Splitter?
+			FirstLesionDropRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.MusketBall, 1, 100, 100));// presumably harpoons?
 
 			LesionDropRule = new OneFromRulesRule(1,
 				FirstLesionDropRule,
-				ItemDropRule.NotScalingWithLuck(ItemID.CrimsonRod),
-				ItemDropRule.NotScalingWithLuck(ItemID.TheRottedFork),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Seam_Beam>()),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Riverang>()),
 				ItemDropRule.NotScalingWithLuck(ItemID.ShadowOrb),
 				ItemDropRule.NotScalingWithLuck(ItemID.PanicNecklace)
 			);

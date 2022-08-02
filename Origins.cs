@@ -1,3 +1,4 @@
+using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -12,10 +13,12 @@ using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
+using Origins.NPCs.TownNPCs;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.UI;
 using Origins.World;
+using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -27,8 +30,10 @@ using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Personalities;
 using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -78,24 +83,7 @@ namespace Origins {
             instance = this;
             celestineBoosters = new int[3];
         }
-        public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(ItemID.MiningHelmet);
-            recipe.AddIngredient(ItemID.Glowstick, 4);
-            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 7);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.Register();
-
-            recipe = Recipe.Create(ItemID.MiningShirt);
-            recipe.AddIngredient(ItemID.Leather, 15);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.Register();
-
-            recipe = Recipe.Create(ItemID.MiningPants);
-            recipe.AddIngredient(ItemID.Leather, 15);
-            recipe.AddTile(TileID.WorkBenches);
-            recipe.Register();
-            //this hook is supposed to be used for adding recipes,
-            //but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
+        internal void LateLoad() {
             #region vanilla explosive base damage registry
             ExplosiveBaseDamage.Add(ProjectileID.Bomb, 70);
             ExplosiveBaseDamage.Add(ProjectileID.StickyBomb, 70);
@@ -298,14 +286,14 @@ namespace Origins {
                 //Filters.Scene["BlackHole"].Load();
                 eyndumCoreUITexture = Assets.Request<Texture2D>("UI/CoreSlot");
                 eyndumCoreTexture = Assets.Request<Texture2D>("Items/Armor/Eyndum/Eyndum_Breastplate_Body_Core");
-				if (OriginClientConfig.Instance.SetBonusDoubleTap) {
-                    On.Terraria.Player.KeyDoubleTap += (On.Terraria.Player.orig_KeyDoubleTap orig, Player self, int keyDir) => {
-                        orig(self, keyDir);
-						if (keyDir == (Main.ReversedUpDownArmorSetBonuses ? 1 : 0)) {
+                On.Terraria.Player.KeyDoubleTap += (On.Terraria.Player.orig_KeyDoubleTap orig, Player self, int keyDir) => {
+                    orig(self, keyDir);
+                    if (OriginClientConfig.Instance.SetBonusDoubleTap) {
+                        if (keyDir == (Main.ReversedUpDownArmorSetBonuses ? 1 : 0)) {
                             self.GetModPlayer<OriginPlayer>().TriggerSetBonus();
                         }
-                    };
-				}
+                    }
+                };
                 IEnumerable<string> files = GetFileNames();
                 IEnumerable<string> goreFiles = files.Where(f => f.EndsWith(".rawimg") && f.Contains("Gores") && !files.Contains(f.Replace(".rawimg", ".cs")));
                 foreach (string gore in goreFiles) {
@@ -388,7 +376,69 @@ namespace Origins {
                 return orig(self, recipe);
             };
             HookEndpointManager.Add(typeof(CommonCode).GetMethod("DropItem", BindingFlags.Public | BindingFlags.Static, new Type[] { typeof(DropAttemptInfo), typeof(int), typeof(int), typeof(bool) }), (hook_DropItem)CommonCode_DropItem);
+			On.Terraria.WorldGen.ScoreRoom += (On.Terraria.WorldGen.orig_ScoreRoom orig, int ignoreNPC, int npcTypeAskingToScoreRoom) => {
+                npcScoringRoom = npcTypeAskingToScoreRoom;
+                orig(ignoreNPC, npcTypeAskingToScoreRoom);
+            };
+            On.Terraria.WorldGen.GetTileTypeCountByCategory += (On.Terraria.WorldGen.orig_GetTileTypeCountByCategory orig, int[] tileTypeCounts, TileScanGroup group) => {
+				if (group == TileScanGroup.TotalGoodEvil) {
+                    int defiledTiles = tileTypeCounts[MC.TileType<Defiled_Stone>()] + tileTypeCounts[MC.TileType<Defiled_Grass>()] + tileTypeCounts[MC.TileType<Defiled_Sand>()] + tileTypeCounts[MC.TileType<Defiled_Ice>()];
+                    int rivenTiles = tileTypeCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
+
+                    if (npcScoringRoom == MC.NPCType<Acid_Freak>()) {
+                        return orig(tileTypeCounts, TileScanGroup.Hallow);
+                    }
+
+                    return orig(tileTypeCounts, group) - (defiledTiles + rivenTiles);
+                }
+                return orig(tileTypeCounts, group);
+            };
+			On.Terraria.GameContent.ShopHelper.BiomeNameByKey += (On.Terraria.GameContent.ShopHelper.orig_BiomeNameByKey orig, string biomeNameKey) => {
+                lastBiomeNameKey = biomeNameKey;
+                return orig(biomeNameKey);
+            };
+
+            On.Terraria.Localization.Language.GetTextValueWith += (On.Terraria.Localization.Language.orig_GetTextValueWith orig, string key, object obj) => {
+				if (key.EndsWith("Biome")) {
+                    try {
+                        string betterKey = key + "_" + lastBiomeNameKey.Split('.')[^1];
+                        if (Language.Exists(betterKey)) {
+                            key = betterKey;
+						} else if(!Language.Exists(lastBiomeNameKey)) {
+                            obj = new {
+                                BiomeName = "the "+lastBiomeNameKey.Split('.')[^1].Replace('_',' ')
+                            };
+						}
+                    } catch (RuntimeBinderException) { }
+				}
+                return orig(key, obj);
+            };
+
+            On.Terraria.GameContent.ShopHelper.IsPlayerInEvilBiomes += (On.Terraria.GameContent.ShopHelper.orig_IsPlayerInEvilBiomes orig, ShopHelper self, Player player) => {
+                bool retValue = false;
+                IShoppingBiome[] orig_dangerousBiomes = (IShoppingBiome[])dangerousBiomes.GetValue(self);
+                try {
+                    IShoppingBiome[] _dangerousBiomes;
+                    if (Main.npc[player.talkNPC].type == MC.NPCType<Acid_Freak>()) {
+                        _dangerousBiomes = new IShoppingBiome[] { orig_dangerousBiomes[2] };
+                    } else {
+                        _dangerousBiomes = orig_dangerousBiomes.WithLength(orig_dangerousBiomes.Length + 2);
+                        _dangerousBiomes[^2] = new Defiled_Wastelands();
+                        _dangerousBiomes[^1] = new Riven_Hive();
+                    }
+                    dangerousBiomes.SetValue(self, _dangerousBiomes);
+                    retValue = orig(self, player);
+                } finally {
+                    dangerousBiomes.SetValue(self, orig_dangerousBiomes);
+
+                }
+                return retValue;
+            };
         }
+
+		static int npcScoringRoom = -1;
+        static string lastBiomeNameKey;
+        #region drop rules
         private static void CommonCode_DropItem(ItemDropper orig, DropAttemptInfo info, int item, int stack, bool scattered = false) {
             (itemDropper ?? orig)(info, item, stack, scattered);
 		}
@@ -401,7 +451,8 @@ namespace Origins {
 			}
 		}
         static event ItemDropper itemDropper;
-        private void Projectile_GetWhipSettings(On.Terraria.Projectile.orig_GetWhipSettings orig, Projectile proj, out float timeToFlyOut, out int segments, out float rangeMultiplier) {
+		#endregion
+		private void Projectile_GetWhipSettings(On.Terraria.Projectile.orig_GetWhipSettings orig, Projectile proj, out float timeToFlyOut, out int segments, out float rangeMultiplier) {
 			if (proj.ModProjectile is IWhipProjectile whip) {
                 whip.GetWhipSettings(out timeToFlyOut, out segments, out rangeMultiplier);
 			} else {
@@ -484,7 +535,8 @@ namespace Origins {
                 Language.GetTextValue("DryadSpecialText.WorldDescriptionWork"))));
 	        return text + " " + str;
         }
-        private delegate void orig_MinePower(int minePower, ref int damage);
+		#region mining power
+		private delegate void orig_MinePower(int minePower, ref int damage);
         private delegate void hook_MinePower(orig_MinePower orig, int minePower, ref int damage);
         private void MineDamage(orig_MinePower orig, int minePower, ref int damage) {
 	        ModTile modTile = MC.GetModTile(Main.tile[Player.tileTargetX, Player.tileTargetY].TileType);
@@ -496,7 +548,9 @@ namespace Origins {
                 damage += ((int)(minePower / modTile.MineResist));
             }
         }
-        private void WorldGen_CountTiles(On.Terraria.WorldGen.orig_CountTiles orig, int X) {
+		#endregion
+		#region tile counts
+		private void WorldGen_CountTiles(On.Terraria.WorldGen.orig_CountTiles orig, int X) {
             if(X == 0)OriginSystem.UpdateTotalEvilTiles();
             orig(X);
         }
@@ -511,6 +565,7 @@ namespace Origins {
             OriginSystem.totalRiven2 += tileCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
             orig(clearCounts);
         }
+        #endregion
 		public override void PostSetupContent() {
             foreach (KeyValuePair<int, NPCDebuffImmunityData> item in NPCID.Sets.DebuffImmunitySets) {
                     NPCDebuffImmunityData immunityData = item.Value;
@@ -634,33 +689,6 @@ namespace Origins {
                 }
             }
             return 0;
-        }
-        public override void AddRecipeGroups() {
-            RecipeGroup group = new RecipeGroup(() => "Gem Staves", new int[] {
-                ItemID.AmethystStaff,
-                ItemID.TopazStaff,
-                ItemID.SapphireStaff,
-                ItemID.EmeraldStaff,
-                ItemID.RubyStaff,
-                ItemID.DiamondStaff
-            });
-            RecipeGroup.RegisterGroup("Origins:Gem Staves", group);
-        }
-        public override void PostAddRecipes() {
-            int l = Main.recipe.Length;
-            Recipe r;
-            Recipe recipe;
-            int roseID = ModContent.ItemType<Wilting_Rose_Item>();
-            for(int i = 0; i < l; i++) {
-                r = Main.recipe[i];
-                if(!r.requiredItem.ToList().Exists((ing)=>ing.type==ItemID.Deathweed)) {
-                    continue;
-                }
-                recipe = r.Clone();
-                recipe.requiredItem = recipe.requiredItem.Select((it)=>it.type==ItemID.Deathweed?ItemFromType(roseID):it.CloneByID()).ToList();
-                Logger.Info("adding procedural recipe: "+recipe.Stringify());
-                recipe.Create();
-            }
         }
         internal static void AddHelmetGlowmask(int armorID, string texture) {
             if (instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {

@@ -524,7 +524,7 @@ namespace Origins {
             if (zoneDefiled) {
                 if (attempt.crate) {
                     if (attempt.rare && !(attempt.veryrare || attempt.legendary)) {
-                        itemDrop = ModContent.ItemType<Crusty_Crate>();
+                        itemDrop = ModContent.ItemType<Chunky_Crate>();
                     }
                 } else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
                     itemDrop = ModContent.ItemType<Knee_Slapper>();

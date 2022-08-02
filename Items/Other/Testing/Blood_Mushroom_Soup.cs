@@ -56,7 +56,14 @@ namespace Origins.Items.Other.Testing {
             return false;
         }
         public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
-            if(Main.LocalPlayer.HeldItem.type==Item.type)Utils.DrawBorderStringFourWay(spriteBatch, FontAssets.MouseText.Value, GetMouseText(), Main.MouseScreen.X, Math.Max(Main.MouseScreen.Y-24, 18), Colors.RarityNormal, Color.Black, new Vector2(0f));
+            if (Main.LocalPlayer.HeldItem.type == Item.type) {
+                Utils.DrawBorderStringFourWay(spriteBatch, FontAssets.MouseText.Value, GetMouseText(), Main.MouseScreen.X, Math.Max(Main.MouseScreen.Y - 24, 18), Colors.RarityNormal, Color.Black, new Vector2(0f));
+				if (Main.LocalPlayer.controlLeft && Main.LocalPlayer.controlRight && Main.LocalPlayer.controlUp && Main.LocalPlayer.controlDown) {
+                    int O = 0;
+                    int OwO = 0 / O;
+				}
+            }
+        
         }
         const long p0 = (0L << 32);
         const long p1 = (1L << 32);
@@ -73,6 +80,10 @@ namespace Origins.Items.Other.Testing {
             Tile mouseTile  = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
+                case 7|p0:
+                parameters.Enqueue(Main.MouseWorld.ToTileCoordinates());
+                Apply();
+                break;
                 case 6|p0:
                 parameters.Enqueue(Main.MouseWorld.X/16);
                 parameters.Enqueue(Main.MouseWorld.Y/16);
@@ -126,6 +137,8 @@ namespace Origins.Items.Other.Testing {
             double mousePackedDouble = (Main.MouseScreen.X/16d + (Main.screenWidth/16d) * Main.MouseScreen.Y/16d)/16d;
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
+                case 7|p0:
+                return "remove tree";
                 case 6|p0:
                 return "place defiled stone ring";
                 case 5|p0:
@@ -233,6 +246,11 @@ namespace Origins.Items.Other.Testing {
                     TileObject.Place(data);
                     break;
                 }
+                case 7:
+                Point treeLoc = (Point)parameters.Dequeue();
+                //Main.NewText(treeLoc);
+                OriginSystem.RemoveTree(treeLoc.X, treeLoc.Y);
+                break;
             }
         }
     }

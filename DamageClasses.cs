@@ -23,7 +23,9 @@ namespace Origins {
 			ExplosiveVersion = new Dictionary<DamageClass, DamageClass>(new DamageClass_Equality_Comparer());
 			for (int i = 0; i < len; i++) {
 				DamageClass other = damageClasses[i];
-				ExplosiveVersion.Add(other, ExplosivePlus.CreateAndRegister(other));
+				if (other is not ExplosivePlus) {
+					ExplosiveVersion.Add(other, ExplosivePlus.CreateAndRegister(other));
+				}
 			}
 		}
 
