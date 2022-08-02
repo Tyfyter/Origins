@@ -35,7 +35,8 @@ namespace Origins.Items.Weapons.Riven {
     }
     public class Ameballoon_P : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Riven/Ameballoon";
-        public override void SetStaticDefaults() {
+		public override string GlowTexture => Texture;
+		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Ameballoon");
 		}
         public override void SetDefaults() {
@@ -68,6 +69,7 @@ namespace Origins.Items.Weapons.Riven {
     }
     public class Ameballoon_Shrapnel : ModProjectile {
         public override string Texture => "Origins/Items/Weapons/Riven/Ameballoon_P";
+        public override string GlowTexture => Texture;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Ameballoon");
         }
