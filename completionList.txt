@@ -101,26 +101,26 @@ ENEMY NPCS:
 (#, %2) Crimbrain
 (#3, ^2/4) Pre-H Defiled Enemies
 (^) Fiberglass Enemies
-(#3, ^2) Riven Acolyte
-(#, ^2) Riven Crawler
-(@, #3) Riven Tank
+(X) Riven Protoform
+(X) Spider Amoeba
+(X) Single-Cellular Nautilus
+(X) Barnacleback
 (#, ^2) Scanner Scout
 
+(X) Amebic Mummy
+(X) Amoeba Bugger
+(X) Barnacle Mound
 (#, ^2) Carpalfish*
 (%, X) Defiled Clipper (don't know what to do with it)
 (#3, ^2/4) Defiled Hunter
 (@, #3, %2) Defiled Mimic
 (%3) Defiled Reaper (currently just a namespace. Could be removed)
 (%3) Defiled Shark (feel like a more unique aquatic enemy could be made)
-(#3, %, ^2) Flagellant
+(X) Flagellant
 (#, ^2) Mildew Creeper
-(#3, ^2) Rivenator
+(X) Mitoworm
 (@, #3, %2) Riven Mimic
-(#3, ^2) Riven Mummy
 (#, ^2) Scalron
-(#3, ^2/4) Splitooth
-(#3, ^2) Splotcher
-(%, X) Unriven Beast
 (#, ^2) Vent Hopper
 
 (X) Annihilator
@@ -227,6 +227,7 @@ ACCESSORIES:
 (^) Air Pack*
 (^) Air Tank*
 (X) All-Knowing Mind*
+(X) Asylum Whistle
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
@@ -462,7 +463,7 @@ SUMMONER WEAPONS:
 (#, ^2) Forest Staff
 (#, ^2) Ocean Amulet
 (^) Rotted Worm Staff
-(#, ^2) Teardown
+(^) Teardown
 (^) Woodsprite Staff
 
 (^) Bomb Artifact

@@ -64,8 +64,7 @@ namespace Origins.Items.Pets {
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[Type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
-			ProjectileID.Sets.MinionSacrificable[Type] = true;
-            Origins.ForceFelnumShockOnShoot[Type] = true;
+			ProjectileID.Sets.MinionSacrificable[Type] = false;
 		}
 
 		public sealed override void SetDefaults() {
@@ -74,8 +73,7 @@ namespace Origins.Items.Pets {
 			Projectile.height = 28;
 			Projectile.tileCollide = true;
 			Projectile.friendly = false;
-			Projectile.minion = true;
-			Projectile.minionSlots = 1f;
+			Projectile.minionSlots = 0f;
 			Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 1;
