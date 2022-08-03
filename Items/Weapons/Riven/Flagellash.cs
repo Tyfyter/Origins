@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Riven {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Flagellash");
-			Tooltip.SetDefault("2⅔ summon tag damage\nYour summons will focus struck enemies\n'3 is better than 1'");
+			Tooltip.SetDefault("2⅔ summon tag damage\nYour summons will focus struck enemies\n'Three tails are better than one'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

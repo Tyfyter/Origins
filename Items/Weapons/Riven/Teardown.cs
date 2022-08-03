@@ -207,7 +207,7 @@ namespace Origins.Items.Weapons.Riven {
             #endregion
 
             #region Animation and visuals
-            // So it will lean slightly towards the direction it's moving
+
             Projectile.rotation = (float)Math.Atan(Projectile.velocity.Y/Projectile.velocity.X);
             Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
 

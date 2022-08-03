@@ -55,7 +55,7 @@ namespace Origins.Items.Weapons.Explosives {
                 Item.GetAlpha(lightColor),
                 itemRotation,
                 drawOrigin,
-                Item.scale,
+                drawPlayer.GetAdjustedItemScale(Item),
                 drawInfo.itemEffect,
                 0));
         }

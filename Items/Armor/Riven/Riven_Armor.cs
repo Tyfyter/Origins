@@ -47,12 +47,11 @@ namespace Origins.Items.Armor.Riven {
     [AutoloadEquip(EquipType.Body)]
     public class Riven_Coat : ModItem {
         public static short GlowMask = -1;
-        public static short femaleGlowMask = -1;
-        public static short armGlowMask = -1;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Coat");
             Tooltip.SetDefault("Increases your max number of minions by 1");
             GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Coat_Body_Glow");
+            Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Riven/Riven_Coat_Body_Glow");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -64,7 +63,7 @@ namespace Origins.Items.Armor.Riven {
             Lighting.AddLight(player.Center, 0.666f*Riven_Mask.lightMagnitude, 0.414f*Riven_Mask.lightMagnitude, 0.132f*Riven_Mask.lightMagnitude);
         }
         public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
-            glowMask = drawPlayer.Male?GlowMask:femaleGlowMask;
+            glowMask = GlowMask;
             glowMaskColor = Color.White;
         }
         public override void AddRecipes() {

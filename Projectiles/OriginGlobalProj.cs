@@ -181,6 +181,22 @@ namespace Origins.Projectiles {
                     hitbox.Inflate(hitbox.Width/4,hitbox.Height/4);
                 }
             }
+			switch (projectile.type) {
+                case ProjectileID.Bomb:
+                case ProjectileID.StickyBomb:
+                case ProjectileID.Dynamite:
+                case ProjectileID.StickyDynamite:
+                case ProjectileID.BombFish:
+                case ProjectileID.DryBomb:
+                case ProjectileID.WetBomb:
+                case ProjectileID.LavaBomb:
+                case ProjectileID.HoneyBomb:
+                case ProjectileID.ScarabBomb:
+				if (hitbox.Width < 32) {
+                    hitbox = default;
+				}
+                break;
+            }
         }
         public static void ClentaminatorAI(Projectile projectile, int conversionType, int dustType, Color color) {
 	        if (projectile.owner == Main.myPlayer) {

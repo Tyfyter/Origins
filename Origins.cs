@@ -691,17 +691,17 @@ namespace Origins {
             return 0;
         }
         internal static void AddHelmetGlowmask(int armorID, string texture) {
-            if (instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
+            if (Main.netMode != NetmodeID.Server && instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
                 HelmetGlowMasks.Add(armorID, asset);
             }
         }
         internal static void AddBreastplateGlowmask(int armorID, string texture) {
-            if (instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
+            if (Main.netMode != NetmodeID.Server && instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
                 BreastplateGlowMasks.Add(armorID, asset);
             }
         }
         internal static void AddLeggingGlowMask(int armorID, string texture) {
-            if (instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
+            if (Main.netMode != NetmodeID.Server && instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
                 LeggingGlowMasks.Add(armorID, asset);
             }
         }
