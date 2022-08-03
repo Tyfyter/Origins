@@ -16,6 +16,7 @@ using static Terraria.WorldGen;
 using static Origins.OriginExtensions;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Weapons.Riven;
+using Origins.Items.Other.Testing;
 
 namespace Origins.World.BiomeData {
 	public class Riven_Hive : ModBiome {
@@ -42,7 +43,7 @@ namespace Origins.World.BiomeData {
 
 			LesionDropRule = new OneFromRulesRule(1,
 				FirstLesionDropRule,
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Seam_Beam>()),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<NPC_Spawner>(), 1, NPCID.Bee, NPCID.Bee),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Riverang>()),
 				ItemDropRule.NotScalingWithLuck(ItemID.ShadowOrb),
 				ItemDropRule.NotScalingWithLuck(ItemID.PanicNecklace)
