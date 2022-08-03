@@ -236,7 +236,7 @@ namespace Origins.Items.Weapons.Riven {
 }
 namespace Origins.Buffs {
     public class Teardown_Buff : ModBuff {
-        public override string Texture => "Origins/Items/Weapons/Riven/Minions/Flying_Exoskeleton";
+        public override string Texture => "Origins/Buffs/Exoskeleton_Buff";
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Teardown");
             Description.SetDefault("The Flying Exoskeleton will fight for you");
