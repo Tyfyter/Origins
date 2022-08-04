@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Riven {
         public override void SetDefaults(){
             Item.damage = 42;
             Item.DamageType = DamageClass.Magic;
-            Item.mana = 8;
+            Item.mana = 12;
             Item.shoot = ModContent.ProjectileType<Seam_Beam_Beam>();
             Item.shootSpeed = 0f;
             Item.useTime = Item.useAnimation = 20;
@@ -43,13 +43,13 @@ namespace Origins.Items.Weapons.Riven {
         public override bool CanUseItem(Player player) {
             return true;
         }
-        public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 5);
-            recipe.AddIngredient(ModContent.ItemType<Riven_Sample>(), 5);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
-        }
+        //public override void AddRecipes() {
+            //Recipe recipe = Recipe.Create(Type);
+            //recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 5);
+            //recipe.AddIngredient(ModContent.ItemType<Riven_Sample>(), 5);
+            //recipe.AddTile(TileID.Anvils);
+            //recipe.Register();
+        //}
     }
     public class Seam_Beam_Beam : ModProjectile {
         public override string Texture => "Origins/Projectiles/Weapons/Seam_Beam_Mid";

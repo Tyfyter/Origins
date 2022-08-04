@@ -245,7 +245,7 @@ namespace Origins.Items.Accessories {
 }
 namespace Origins.Buffs {
     public class Lazy_Cloak_Buff : ModBuff {
-		public override string Texture => "Terraria/Images/Item_"+ItemID.RedCape;
+		public override string Texture => "Origins/Buffs/Lazy_Cloak_Buff";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Lazy Cloak");

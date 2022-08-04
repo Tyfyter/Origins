@@ -102,7 +102,7 @@ ENEMY NPCS:
 (#3, ^2/4) Pre-H Defiled Enemies
 (^) Fiberglass Enemies
 (X) Riven Protoform
-(X) Spider Amoeba
+(#, ^2) Spider Amoeba
 (X) Single-Cellular Nautilus
 (X) Barnacleback
 (#, ^2) Scanner Scout
@@ -170,13 +170,15 @@ STATUS EFFECTS:
 (X) Workout
 
 (^) Brainy Buff
+(^) Flying Exoskeleton
 (^) Friendly Bomb Buff
+(^) Lazy Cloak Buff
 (^) Mini-EOC Buff
 (^) Mini-EOW Buff
 (#, ^2) Nano Buff
 (^) Woodsprite Buff
 
-(#, ^2) Defiled Blight Buff
+(^) Defiled Blight Buff
 (#, ^2) Meberoid Buff
 (^) Platformer Mech Buff
 ---
@@ -227,7 +229,6 @@ ACCESSORIES:
 (^) Air Pack*
 (^) Air Tank*
 (X) All-Knowing Mind*
-(X) Asylum Whistle
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
@@ -241,11 +242,15 @@ ACCESSORIES:
 (#, ^2) Olid Organ*
 (#, ^2) Parasitic Influence*
 (^) Pneumatic Bomb Thrower*
-(X) Return To Sender*
+(#, ^2) Return To Sender*
 (#, ^2) Sonar Visor*
 (^) Freeze Frame*
 (%3, X) Sun Medallion
 (@2, #) Symbiote Skull
+
+(X) Asylum Whistle
+(X) Timbre of Hell
+(X) Tinkerer's Handy Guide
 
 (X) Sonic Radar
 
@@ -426,6 +431,7 @@ MAGIC WEAPONS:
 (^) Infusion
 (#4, ^) Low Signal
 (^) Magnus
+(X) Mitosis
 (^) Tones of Agony
 
 (@, ^3) Bled Out Staff
@@ -578,8 +584,8 @@ TILES:
 
 (X) Brineglow Vine
 (^) Defiled Misc Tiles* (please implement Defiled Pots and Large foliage)
-(@, ^3) Riven Foliage
-(@, #3) Riven Lesion (I have a cool idea)
+(X) Riven Foliage
+(X) Riven Lesion (I have a cool idea)
 (X) Riven Pot
 (X) Riven Tree
 (#2, ^2) Wilting Rose
@@ -688,8 +694,8 @@ CONSUMABLES:
 (X) Suspicious Looking Ice Cream
 (X) The Button
 
-(X) Crusty Crate
-(X) Pointy Crate
+(^) Crusty Crate
+(^) Pointy Crate
 
 (X) Gooey Water
 (X) White Water
@@ -698,11 +704,11 @@ CONSUMABLES:
 MOUNTS & PETS:
 ---
 (X) Ever-Watchful Eye (Juvenile Amalgamation)
-(#3, ^2) Strange Power-Up (Platformer Mech, yay :) )
+(^) Strange Power-Up (Platformer Mech, yay :) )
 (X) Chromatic Scale (Rainbow Pangolin)
 
 (X) Amoeba Toy (Meberoid)
-(#, ^2) Suspicious Looking Pebble (Defiled Blight)
+(^) Suspicious Looking Pebble (Defiled Blight)
 (@, #, %3) Unknown summoning item (Dwarf Dwarf)
 
 (#, ^2) Chew Toy (Chee Toy, also consider implementing soon)
@@ -730,4 +736,37 @@ AMMO:
 (%3, X) 1:571 Nuke
 
 (#, ^2) Starfuze
+---
+
+
+MUSIC:
+---
+(X) Alien Colony
+(O) Brine Pool
+(^) Cubekon Temple
+(X) Defiled Caverns
+(^) Defiled Wastelands
+(^) Defiled Wastelands - Mimic Route
+(O) Riven Hive
+(O) Ruins
+(^) The Dusk
+
+(X) Alien Queen
+(^) Defiled Amalgamation
+(X) Duskord
+(X) Fiberglass Weaver
+(X) I.C.A.R.U.S
+(X) Mad Maniac
+(X) Mildew Carrion
+(X) Quantux
+(X) Restless Flame
+(X) Riven Crest
+(X) Severus
+(X) Void Wyrm
+
+(X) Corruption Invasion
+(X) Crimson Invasion
+(X) Defiled Invasion
+(X) Riven Invasion
+(X) Seer Chase
 ---

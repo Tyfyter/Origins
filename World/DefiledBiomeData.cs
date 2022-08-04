@@ -19,6 +19,7 @@ using Terraria.Graphics.Effects;
 using static Origins.OriginExtensions;
 using Terraria.Chat;
 using Terraria.GameContent.ItemDropRules;
+using Origins.Items.Pets;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -48,7 +49,7 @@ namespace Origins.World.BiomeData {
 				FirstFissureDropRule,
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Infusion>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Defiled_Chakram>()),
-				ItemDropRule.NotScalingWithLuck(ItemID.ShadowOrb),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Suspicious_Looking_Pebble>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dim_Starlight>())
 			);
 		}

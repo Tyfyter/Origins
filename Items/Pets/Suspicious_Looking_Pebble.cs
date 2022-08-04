@@ -9,21 +9,18 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-    public class Defiled_Blight : ModItem {
+    public class Suspicious_Looking_Pebble : ModItem {
 		internal static int projectileID = 0;
         internal static int buffID = 0;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Blight");
-            Tooltip.SetDefault("Summons a defiled blight to light your way");
+            DisplayName.SetDefault("Suspicious Looking Pebble");
+            Tooltip.SetDefault("Summons a Defiled blight to light your way");
 			SacrificeTotal = 1;
-			Main.RegisterItemAnimation(Type, new DrawAnimationVertical(3600, 4));
 		}
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
-			Item.width = 32;
-			Item.height = 32;
 			Item.value = Item.buyPrice(0, 30, 0, 0);
-			Item.rare = ItemRarityID.Expert;
+			Item.rare = ItemRarityID.Blue;
 		}
 
 		public override void UseStyle(Player player, Rectangle heldItemFrame) {
@@ -35,7 +32,7 @@ namespace Origins.Items.Pets {
     public class Defiled_Blight_P : ModProjectile {
 		public override string Texture => "Origins/Items/Pets/Defiled_Blight";
 		public override void SetStaticDefaults() {
-			Defiled_Blight.projectileID = Projectile.type;
+			Suspicious_Looking_Pebble.projectileID = Projectile.type;
 			DisplayName.SetDefault("Defiled Blight");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;
@@ -51,6 +48,7 @@ namespace Origins.Items.Pets {
 			Projectile.height = 34;
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
+			Projectile.light = 1f;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -64,9 +62,9 @@ namespace Origins.Items.Pets {
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
 			if (player.dead || !player.active) {
-				player.ClearBuff(Defiled_Blight.buffID);
+				player.ClearBuff(Suspicious_Looking_Pebble.buffID);
 			}
-			if (player.HasBuff(Defiled_Blight.buffID)) {
+			if (player.HasBuff(Suspicious_Looking_Pebble.buffID)) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
@@ -153,17 +151,17 @@ namespace Origins.Buffs {
 	public class Defiled_Blight_Buff : ModBuff {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Defiled Blight");
-			Description.SetDefault("The defiled blight will light your way");
+			Description.SetDefault("The Defiled Blight will light your way");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.lightPet[Type] = true;
-			Defiled_Blight.buffID = Type;
+			Suspicious_Looking_Pebble.buffID = Type;
 		}
 
 		public override void Update(Player player, ref int buffIndex) {
 			player.buffTime[buffIndex] = 18000;
 
-			int projType = Defiled_Blight.projectileID;
+			int projType = Suspicious_Looking_Pebble.projectileID;
 
 			// If the player is local, and there hasn't been a pet projectile spawned yet - spawn it.
 			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[projType] <= 0) {

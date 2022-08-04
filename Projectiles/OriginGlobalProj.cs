@@ -99,7 +99,7 @@ namespace Origins.Projectiles {
             if(projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall && projectile.originalDamage < projectile.damage)
                 projectile.originalDamage = projectile.damage;
 			if (source is EntitySource_Parent source_Parent && source_Parent.Entity is Projectile parentProjectile) {
-				if (parentProjectile.type == ModContent.ProjectileType<Mitosis_P>()) {
+				if (parentProjectile.type == ModContent.ProjectileType<Amoeba_Bubble>()) {
                     isFromMitosis = true;
                     projectile.alpha = 100;
 					if (projectile.minion) {
