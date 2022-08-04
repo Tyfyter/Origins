@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.Projectiles;
 using Origins.UI;
 using System;
 using System.Collections.Generic;
@@ -134,8 +135,14 @@ namespace Origins {
                 );
             }
         }
-
-    }
+        public override void PreUpdateProjectiles() {
+            for (int i = 0; i < Main.maxProjectiles; i++) {
+				if (Main.projectile[i].TryGetGlobalProjectile<OriginGlobalProj>(out OriginGlobalProj global) && global.isFromMitosis) {
+                    Main.player[Main.projectile[i].owner].ownedProjectileCounts[Main.projectile[i].type]--;
+				}
+            }
+        }
+	}
     public class TempleBiome : ModBiome {
 		public override string Name => "Bestiary_Biomes.TheTemple";
 		public override bool IsBiomeActive(Player player) {

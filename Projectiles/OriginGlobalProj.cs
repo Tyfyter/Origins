@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Weapons.Felnum;
+using Origins.Items.Weapons.Riven;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -17,7 +18,7 @@ using Terraria.ModLoader;
 namespace Origins.Projectiles {
     public class OriginGlobalProj : GlobalProjectile {
         public override bool InstancePerEntity => true;
-        protected override bool CloneNewInstances => true;
+        protected override bool CloneNewInstances => false;
         //bool init = true;
         public bool felnumEffect = false;
         public bool viperEffect = false;
@@ -32,6 +33,9 @@ namespace Origins.Projectiles {
         public static int killLinkNext = -1;
         public static int extraUpdatesNext = -1;
         public static float godHunterEffectNext = 0f;
+        public bool isFromMitosis = false;
+        public bool hasUsedMitosis = false;
+        public int mitosisTimeLeft = 3600;
         public override void SetDefaults(Projectile projectile) {
             if(hostileNext) {
                 projectile.hostile = true;
@@ -94,6 +98,16 @@ namespace Origins.Projectiles {
         public override void OnSpawn(Projectile projectile, IEntitySource source) {
             if(projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall && projectile.originalDamage < projectile.damage)
                 projectile.originalDamage = projectile.damage;
+			if (source is EntitySource_Parent source_Parent && source_Parent.Entity is Projectile parentProjectile) {
+				if (parentProjectile.type == ModContent.ProjectileType<Mitosis_P>()) {
+                    isFromMitosis = true;
+                    projectile.alpha = 100;
+					if (projectile.minion) {
+                        mitosisTimeLeft = 300;
+                        projectile.minionSlots = 0;
+					}
+				}
+			}
         }
         public override void PostAI(Projectile projectile) {
             if (projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall)
@@ -104,6 +118,13 @@ namespace Origins.Projectiles {
                 case -1:
                 projectile.rotation = projectile.velocity.ToRotation();
                 break;
+            }
+			if (isFromMitosis) {
+                Main.player[projectile.owner].ownedProjectileCounts[projectile.type]--;
+                if (--mitosisTimeLeft <= 0) projectile.active = false;
+			}
+			if (hasUsedMitosis && projectile.minion && --mitosisTimeLeft <= 0) {
+                hasUsedMitosis = false;
             }
             if(felnumEffect) {
                 if (!ProjectileID.Sets.IsAWhip[projectile.type]) {
@@ -198,7 +219,7 @@ namespace Origins.Projectiles {
                 break;
             }
         }
-        public static void ClentaminatorAI(Projectile projectile, int conversionType, int dustType, Color color) {
+		public static void ClentaminatorAI(Projectile projectile, int conversionType, int dustType, Color color) {
 	        if (projectile.owner == Main.myPlayer) {
 		        WorldGen.Convert((int)(projectile.Center.X) / 16, (int)(projectile.Center.Y) / 16, conversionType, 2);
 	        }

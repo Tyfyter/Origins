@@ -67,7 +67,7 @@ namespace Origins {
             defiledResurgenceTiles = new List<(int, int)>(){};
             defiledAltResurgenceTiles = new List<(int, int, ushort)>(){};
         }
-        public override void SaveWorldData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */ {
+        public override void SaveWorldData(TagCompound tag) {
             tag.Add("peatSold", peatSold);
             tag.Add("worldEvil", worldEvil);
             tag.Add( "defiledHearts", Defiled_Hearts.Select(Utils.ToVector2).ToList());

@@ -85,6 +85,7 @@ namespace Origins.Items.Weapons.Other {
                     }
                     proj.netUpdate = true;
                     player.itemAnimation = player.itemAnimationMax;
+                    player.GetModPlayer<OriginPlayer>().heldProjectile = -1;
                 }
             }
         }
@@ -92,7 +93,7 @@ namespace Origins.Items.Weapons.Other {
             return !player.controlUseTile;
         }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-		    if (player.controlUseTile) {
+		    if (player.controlUseTile || !player.controlUseItem) {
                 return false;
             }
             int heldProjectile = player.GetModPlayer<OriginPlayer>().heldProjectile;
@@ -163,7 +164,7 @@ namespace Origins.Items.Weapons.Other {
                         spawnPosition.R = dist;
                         rocks.Add(new Rock(spawnPosition));
                         Vector2 soundPosition = Projectile.Center + (Vector2)spawnPosition;
-                        SoundEngine.PlaySound(SoundID.Item9.WithPitch(1f), soundPosition);
+                        SoundEngine.PlaySound(SoundID.Item9.WithPitchOffset(0.5f), soundPosition);
                     }
                 }
                 Rock rock;

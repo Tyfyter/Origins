@@ -27,6 +27,7 @@ namespace Origins.Items.Accessories {
 			Item.backSlot = 5;
 			Item.frontSlot = 3;
 			Item.accessory = true;
+			Item.canBePlacedInVanityRegardlessOfConditions = true;
         }
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			Item.backSlot = -1;
@@ -177,7 +178,7 @@ namespace Origins.Items.Accessories {
 			if (foundTarget) {
 				Projectile.hide = false;
 				Projectile.ai[0] = 1;
-				Projectile.tileCollide = true;
+				//Projectile.tileCollide = true;
 				// Minion has a target: attack (here, fly towards the enemy)
 				//if (distanceFromTarget > 40f || !projectile.Hitbox.Intersects(Main.npc[target].Hitbox)) {
 				// The immediate range around the target (so it doesn't latch onto it when close)
@@ -219,6 +220,7 @@ namespace Origins.Items.Accessories {
 			#region Animation and visuals
 			// So it will lean slightly towards the direction it's moving
 			Projectile.rotation = Projectile.velocity.X * 0.05f;
+			Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
 
 			// This is a simple "loop through all frames from top to bottom" animation
 			int frameSpeed = 5;

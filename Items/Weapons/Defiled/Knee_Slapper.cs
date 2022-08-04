@@ -124,6 +124,7 @@ namespace Origins.Items.Weapons.Defiled {
 			}*/
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			if (nodes is null) return false;
 			Projectile.direction = (int)Projectile.ai[0];
 			Player owner = Main.player[Projectile.owner];
 			Vector2 basePosition = owner.MountedCenter;

@@ -14,6 +14,7 @@ using Origins.Items.Materials;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
 using Origins.NPCs.TownNPCs;
+using Origins.Projectiles;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.UI;
@@ -433,6 +434,12 @@ namespace Origins {
 
                 }
                 return retValue;
+            };
+            On.Terraria.Main.GetProjectileDesiredShader += (orig, index) => {
+                if (Main.projectile[index].GetGlobalProjectile<OriginGlobalProj>().isFromMitosis) {
+                    return GameShaders.Armor.GetShaderIdFromItemId(ItemID.StardustDye);
+                }
+                return orig(index);
             };
         }
 

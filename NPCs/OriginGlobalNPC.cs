@@ -20,6 +20,7 @@ using Terraria.GameContent.ItemDropRules;
 using Origins.Tiles.Riven;
 using Origins.Items.Accessories;
 using Terraria.DataStructures;
+using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
