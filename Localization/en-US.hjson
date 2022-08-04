@@ -85,7 +85,13 @@
 				# HateNPC_Defiled_Envoy: Why don't you understand? {NPCName} is manipulating you!
 			}
 		}
+		Interface: {
+			Journal: Journal
+		}
 		April_Fools: {
+			Generic: {
+				Riven: Blue Lobster
+			}
 			Dialogue: {
 				Acid_Freak: {
 					InteractionWimd: It fucken WIMDY!

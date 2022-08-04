@@ -129,5 +129,14 @@ namespace Tyfyter.Utils {
                 Main.inventoryScale = oldScale;
             }
         }
+        public class UserInterfaceWithDefaultState : UserInterface {
+            public UIState DefaultUIState { get; init; }
+            public new void Draw(SpriteBatch spriteBatch, GameTime time) {
+				if (CurrentState is null) {
+                    SetState(DefaultUIState);
+				}
+                base.Draw(spriteBatch, time);
+			}
+		}
     }
 }

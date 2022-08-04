@@ -13,14 +13,19 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 using static Origins.Origins;
+using static Tyfyter.Utils.UITools;
 
 namespace Origins {
     public partial class OriginSystem : ModSystem {
         public static OriginSystem instance { get; private set;}
         public UserInterface setBonusUI;
+        public UserInterfaceWithDefaultState journalUI;
         public override void Load() {
             instance = this;
             setBonusUI = new UserInterface();
+            journalUI = new UserInterfaceWithDefaultState() {
+                DefaultUIState = new Journal_UI_Button()
+            };
         }
         public override void Unload() {
             instance = null;
@@ -103,15 +108,26 @@ namespace Origins {
                         setBonusUI.SetState(null);
                     }
                 }
+                if (journalUI?.CurrentState is not null) {
+
+                }
             }
         }
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
             int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
             if (inventoryIndex != -1) {//error prevention & null check
                 layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-                    "Origins: Eyndum Core UI",
+                    "Origins: Set Bonus UI",
                     delegate {
                         setBonusUI?.Draw(Main.spriteBatch, new GameTime());
+                        return true;
+                    },
+                    InterfaceScaleType.UI) { Active = Main.playerInventory }
+                );
+                layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
+                    "Origins: Journal UI",
+                    delegate {
+                        journalUI?.Draw(Main.spriteBatch, new GameTime());
                         return true;
                     },
                     InterfaceScaleType.UI) { Active = Main.playerInventory }
