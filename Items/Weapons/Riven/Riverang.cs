@@ -3,12 +3,13 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Default;
 
 namespace Origins.Items.Weapons.Riven {
     public class Riverang : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Riverang");
+			DisplayName.SetDefault(AprilFools.CheckAprilFools() ? "Lobsterang" : "Riverang");
 			Tooltip.SetDefault("Very hydrodynamic");
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 1;
