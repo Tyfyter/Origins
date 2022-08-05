@@ -65,7 +65,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(@, #2, %2) Acid Freak
+(@5, #2, %2) Acid Freak
 (%2, X) Darkathian Miner
 (X) Defiled Envoy
 
@@ -98,14 +98,15 @@ VANILLA MODIFICATIONS:
 
 ENEMY NPCS:
 ---
+(#, ^2) Barnacleback
 (#, %2) Crimbrain
-(#3, ^2/4) Pre-H Defiled Enemies
 (^) Fiberglass Enemies
+(#3, ^2/4) Pre-H Defiled Enemies
+(@5, ^3) Pustule Jelly
 (X) Riven Protoform
-(#, ^2) Spider Amoeba
-(X) Single-Cellular Nautilus
-(X) Barnacleback
 (#, ^2) Scanner Scout
+(#, ^2) Single-Cellular Nautilus
+(#, ^2) Spider Amoeba
 
 (X) Amebic Mummy
 (X) Amoeba Bugger
@@ -113,13 +114,13 @@ ENEMY NPCS:
 (#, ^2) Carpalfish*
 (%, X) Defiled Clipper (don't know what to do with it)
 (#3, ^2/4) Defiled Hunter
-(@, #3, %2) Defiled Mimic
+(@5, #3, %2) Defiled Mimic
 (%3) Defiled Reaper (currently just a namespace. Could be removed)
 (%3) Defiled Shark (feel like a more unique aquatic enemy could be made)
-(X) Flagellant
+(@5, ^3) Flagellant
 (#, ^2) Mildew Creeper
-(X) Mitoworm
-(@, #3, %2) Riven Mimic
+(#, ^2) Mitoworm
+(@5, #3, %2) Riven Mimic
 (#, ^2) Scalron
 (#, ^2) Vent Hopper
 
@@ -228,7 +229,8 @@ ACCESSORIES:
 (^) Advanced Imaging*
 (^) Air Pack*
 (^) Air Tank*
-(X) All-Knowing Mind*
+(@5, #) All-Knowing Mind*
+(X) Back-Up Mag
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
@@ -239,6 +241,7 @@ ACCESSORIES:
 (^) Exploder Emblem*
 (X) Gun Glove
 (X) Locus Control Tuner
+(@, #3) Mitosis
 (#, ^2) Olid Organ*
 (#, ^2) Parasitic Influence*
 (^) Pneumatic Bomb Thrower*
@@ -300,6 +303,13 @@ VANITY:
 (X) Restless Flame Mask
 (X) Riven Crest Mask
 (X) Severus' Hat
+
+(X) Amebic Protector Set
+(X) Chunk Protector Set
+(X) Decay Protector Set
+(X) Gore Protector Set
+(X) Trimmed Demon Horns
+(X) T1-T4N Set
 
 (^) Tyfyter's Set
 (X) The First Dream
@@ -431,7 +441,6 @@ MAGIC WEAPONS:
 (^) Infusion
 (#4, ^) Low Signal
 (^) Magnus
-(X) Mitosis
 (^) Tones of Agony
 
 (@, ^3) Bled Out Staff
@@ -444,7 +453,7 @@ MAGIC WEAPONS:
 
 (^) Cometburn
 (X) Fistfury
-(#4, ^) Gravaulter
+(^) Gravaulter
 (X) Lunarfire
 (#, ^2) Phantom Fury
 (X) Shocktrain
@@ -573,9 +582,9 @@ TILES:
 (X) Brine Water Fountain
 (X) Cubekon Chest
 (X) Cubekon Node
-(X) Defiled Dungeon Chest
+(#3, ^2) Defiled Dungeon Chest
 (X) Defiled Water Fountain
-(X) Riven Dungeon Chest
+(@,#3) Riven Dungeon Chest
 (X) Riven Water Fountain
 (X) Ruins Chest
 
@@ -713,6 +722,7 @@ MOUNTS & PETS:
 
 (#, ^2) Chew Toy (Chee Toy, also consider implementing soon)
 (X) Familiar Dog Bone (Rufus)
+(X, ☻) Fertilizer (Peashooter, Sunflower, Plantern, and Cattail)
 ---
 
 

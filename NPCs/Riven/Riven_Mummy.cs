@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
 
 namespace Origins.NPCs.Riven {
     public class Riven_Mummy : ModNPC {
@@ -25,6 +20,11 @@ namespace Origins.NPCs.Riven {
             NPC.width = 40;
             NPC.height = 62;
             NPC.friendly = false;
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("It was only a matter of time before the Riven got to the body. It now wanders aimlessly in the Rivenated deserts in search of new hosts."),
+            });
         }
         public override void AI() {
             NPC.TargetClosest();

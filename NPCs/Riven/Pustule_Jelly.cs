@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Origins.Items.Other.Consumables;
-using Terraria.GameContent.ItemDropRules;
 
 namespace Origins.NPCs.Riven {
     public class Pustule_Jelly : ModNPC {
@@ -26,6 +21,11 @@ namespace Origins.NPCs.Riven {
             NPC.height = 42;
             NPC.frame.Height = 40;
         }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("A Riven-infected jellyfish living in its new parasite-prevalent environment."),
+            });
+        }
         public override void FindFrame(int frameHeight) {
 		    NPC.spriteDirection = NPC.direction;
 		    NPC.frameCounter += 1.0;
@@ -35,6 +35,7 @@ namespace Origins.NPCs.Riven {
 		    NPC.frame.Y = 42 * (int)(NPC.frameCounter / 6.0);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 17));
         }
     }

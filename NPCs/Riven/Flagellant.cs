@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
+using Origins.Items.Weapons.Riven;
 using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
-using Origins.Items.Other.Consumables;
 
 namespace Origins.NPCs.Riven {
     public class Flagellant : ModNPC {
@@ -26,6 +22,11 @@ namespace Origins.NPCs.Riven {
             NPC.height = 60;
             NPC.frame.Height = 58;
         }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("A gentle swimmer in the amoeba-infested waters. It is flimsy and fragile, so travelers should be weary when approaching it."),
+            });
+        }
         public override void FindFrame(int frameHeight) {
 		    NPC.spriteDirection = NPC.direction;
 		    NPC.frameCounter += 1.0;
@@ -35,7 +36,9 @@ namespace Origins.NPCs.Riven {
 		    NPC.frame.Y = 60 * (int)(NPC.frameCounter / 6.0);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Amebic_Gel>(), 1, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 17));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Flagellash>(), 25));
         }
     }
 }

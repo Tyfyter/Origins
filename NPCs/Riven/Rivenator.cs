@@ -1,6 +1,8 @@
-using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,9 +10,17 @@ namespace Origins.NPCs.Riven {
     public class Rivenator_Head : Rivenator {
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.DiggerHead);
-            NPC.lifeMax = 80;
-            NPC.defense = 8;
-            NPC.damage = 38;
+            NPC.lifeMax = 634;
+            NPC.defense = 18;
+            NPC.damage = 52;
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("A common spreading agent of the Riven parasite. The Mitoworm can reproduce very rapidly if a threat is being persistent."),
+            });
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Amebic_Gel>(), 1, 1, 3));
         }
         public override void AI() { }
         public override void OnSpawn(IEntitySource source) {
@@ -54,7 +64,7 @@ namespace Origins.NPCs.Riven {
 
     public abstract class Rivenator : ModNPC {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Rivenator");
+            DisplayName.SetDefault("Mitoworm");
         }
 
         public override void AI() {

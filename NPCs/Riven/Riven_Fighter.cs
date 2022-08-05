@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
 
 namespace Origins.NPCs.Riven {
     public class Riven_Fighter : ModNPC {
@@ -18,12 +15,20 @@ namespace Origins.NPCs.Riven {
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.Zombie);
             NPC.aiStyle = NPCAIStyleID.Fighter;
-            NPC.lifeMax = 110;
-            NPC.defense = 8;
-            NPC.damage = 42;
+            NPC.lifeMax = 81;
+            NPC.defense = 10;
+            NPC.damage = 33;
             NPC.width = 36;
             NPC.height = 40;
             NPC.friendly = false;
+        }
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+                new FlavorTextBestiaryInfoElement("The first creature born in the abominable Riven Hive. It is a very agile protector of its home."),
+            });
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
         }
         public override void AI() {
             NPC.TargetClosest();
