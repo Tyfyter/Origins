@@ -137,7 +137,7 @@ namespace Origins {
         }
         public override void PreUpdateProjectiles() {
             for (int i = 0; i < Main.maxProjectiles; i++) {
-				if (Main.projectile[i].TryGetGlobalProjectile<OriginGlobalProj>(out OriginGlobalProj global) && global.isFromMitosis) {
+				if (Main.projectile[i].TryGetGlobalProjectile(out OriginGlobalProj global) && global.isFromMitosis) {
                     Main.player[Main.projectile[i].owner].ownedProjectileCounts[Main.projectile[i].type]--;
 				}
             }

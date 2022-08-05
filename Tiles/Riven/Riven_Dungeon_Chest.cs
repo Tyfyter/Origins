@@ -46,7 +46,7 @@ namespace Origins.Tiles.Riven {
     }
     public class Riven_Dungeon_Chest_Item : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Riven Chest");
+            DisplayName.SetDefault("{$Riven} Chest");
         }
         public override void SetDefaults() {
             Item.width = 26;

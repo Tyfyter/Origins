@@ -20,6 +20,7 @@ namespace Origins.Tiles {
         public override void SetStaticDefaults() {
 			Main.tileSpelunker[Type] = true;
 			Main.tileContainer[Type] = true;
+			TileID.Sets.BasicChest[Type] = true;
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 1200;
 			Main.tileFrameImportant[Type] = true;
@@ -45,7 +46,7 @@ namespace Origins.Tiles {
         public override bool IsLockedChest(int i, int j) => Main.tile[i, j].TileFrameX >= 36;
 
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual) {
-            frameXAdjustment = 36;
+            //frameXAdjustment = 36;
 			dustType = this.DustType;
 			return true;
 		}
@@ -126,7 +127,8 @@ namespace Origins.Tiles {
 				} else {
 					int chest = Chest.FindChest(left, top);
 					if (chest >= 0) {
-						Main.stackSplit = 600;
+						player.OpenChest(i, j, chest);
+						/*Main.stackSplit = 600;
 						if (chest == player.chest) {
 							player.chest = -1;
 							SoundEngine.PlaySound(SoundID.MenuClose);
@@ -137,7 +139,7 @@ namespace Origins.Tiles {
 							player.chestX = left;
 							player.chestY = top;
 							SoundEngine.PlaySound(player.chest < 0 ? SoundID.MenuOpen : SoundID.MenuTick);
-						}
+						}*/
 						Recipe.FindRecipes();
 					}
 				}

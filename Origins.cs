@@ -41,6 +41,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Default;
 using Terraria.UI;
 using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
@@ -147,6 +148,9 @@ namespace Origins {
             }
         }
         public override void Load() {
+            ModTranslation rivenTranslation = LocalizationLoader.CreateTranslation("Riven");
+            rivenTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Riven}" : "{$Mods.Origins.Generic.Riven}");
+            LocalizationLoader.AddTranslation(rivenTranslation);
 
             ExplosiveBaseDamage = new Dictionary<int, int>();
             DamageModOnHit = new bool[ProjectileLoader.ProjectileCount];

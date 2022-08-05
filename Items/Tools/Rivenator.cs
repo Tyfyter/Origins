@@ -8,7 +8,7 @@ namespace Origins.Items.Tools {
 	public class Rivenator : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Rivenator");
+			DisplayName.SetDefault("{$Riven}ator");
 			Tooltip.SetDefault("Able to mine Hellstone");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;

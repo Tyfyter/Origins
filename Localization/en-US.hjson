@@ -88,6 +88,9 @@
 		Interface: {
 			Journal: Journal
 		}
+		Generic: {
+			Riven: Riven
+		}
 		April_Fools: {
 			Generic: {
 				Riven: Blue Lobster

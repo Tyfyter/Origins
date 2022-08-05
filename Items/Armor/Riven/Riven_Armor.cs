@@ -12,7 +12,7 @@ namespace Origins.Items.Armor.Riven {
         public const float lightMagnitude = 0.3f;
         public static short GlowMask = -1;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Riven Mask");
+            DisplayName.SetDefault("{$Riven} Mask");
             Tooltip.SetDefault("Increases minion damage by 10%");
             GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Mask_Head_Glow");
             SacrificeTotal = 1;
@@ -48,7 +48,7 @@ namespace Origins.Items.Armor.Riven {
     public class Riven_Coat : ModItem {
         public static short GlowMask = -1;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Riven Coat");
+            DisplayName.SetDefault("{$Riven} Coat");
             Tooltip.SetDefault("Increases your max number of minions by 1");
             GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Coat_Body_Glow");
             Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Riven/Riven_Coat_Body_Glow");
@@ -78,7 +78,7 @@ namespace Origins.Items.Armor.Riven {
     public class Riven_Pants : ModItem {
         public static short GlowMask = -1;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Riven Pants");
+            DisplayName.SetDefault("{$Riven} Pants");
             Tooltip.SetDefault("Increases jump height");
             SacrificeTotal = 1;
         }

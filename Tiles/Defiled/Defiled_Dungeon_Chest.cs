@@ -49,4 +49,15 @@ namespace Origins.Tiles.Defiled {
             Item.createTile = ModContent.TileType<Defiled_Dungeon_Chest>();
         }
     }
+    public class Locked_Defiled_Dungeon_Chest_Item : Defiled_Dungeon_Chest_Item {
+        public override string Texture => "Origins/Tiles/Defiled/Defiled_Dungeon_Chest_Item";
+		public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Defiled Chest (locked)");
+        }
+
+        public override void SetDefaults() {
+            base.SetDefaults();
+            Item.placeStyle = 1;
+        }
+    }
 }

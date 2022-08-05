@@ -486,7 +486,7 @@ namespace Origins.Items.Materials {
     public class Riven_Key : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Riven Key");
+            DisplayName.SetDefault("{$Riven} Key");
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 1;
         }
@@ -501,7 +501,7 @@ namespace Origins.Items.Materials {
     public class Riven_Sample : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Riven Carapace");
+            DisplayName.SetDefault("{$Riven} Carapace");
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 25;
         }
