@@ -194,8 +194,6 @@ namespace Origins.NPCs {
 
 				pool.Add(ModContent.NPCType<Riven.Riven_Fighter>(), Riven_Hive.SpawnRates.Fighter);
 
-				pool.Add(ModContent.NPCType<Riven.Riven_Tank>(), Riven_Hive.SpawnRates.Tank);
-
 				if (spawnInfo.Water) pool.Add(ModContent.NPCType<Riven.Pustule_Jelly>(), Riven_Hive.SpawnRates.Jelly);
 
 				//if (spawnInfo.playerFloorY <= Main.worldSurface + 50 && spawnInfo.spawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
@@ -205,7 +203,6 @@ namespace Origins.NPCs {
 						pool.Add(ModContent.NPCType<Riven.Riven_Mummy>(), Riven_Hive.SpawnRates.Mummy);
 					}
 					if (Terraria.GameContent.Events.Sandstorm.Happening && player.ZoneSandstorm) {
-						pool.Add(ModContent.NPCType<Riven.Splitooth>(), Riven_Hive.SpawnRates.Shark1);
 					}
 				}
 

@@ -112,11 +112,10 @@ ENEMY NPCS:
 (X) Amoeba Bugger
 (X) Barnacle Mound
 (#, ^2) Carpalfish*
-(%, X) Defiled Clipper (don't know what to do with it)
+(%3) Defiled Clipper (feel like a more unique aquatic enemy could be made)
 (#3, ^2/4) Defiled Hunter
 (@5, #3, %2) Defiled Mimic
 (%3) Defiled Reaper (currently just a namespace. Could be removed)
-(%3) Defiled Shark (feel like a more unique aquatic enemy could be made)
 (@5, ^3) Flagellant
 (#, ^2) Mildew Creeper
 (#, ^2) Mitoworm

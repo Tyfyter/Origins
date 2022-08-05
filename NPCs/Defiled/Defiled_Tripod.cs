@@ -42,6 +42,7 @@ namespace Origins.NPCs.Defiled {
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Vitamins, 100));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shaping_Matter>(), 1, 1, 3));
         }
         public override void AI() {
@@ -146,8 +147,5 @@ namespace Origins.NPCs.Defiled {
                 for(int i = 0; i < 6; i++)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
             }
         }
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Vitamins, 100));
-		}
 	}
 }
