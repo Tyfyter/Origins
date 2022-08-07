@@ -25,8 +25,8 @@ $3: Needs sound (SFX/music is composed but not implemented)
 ^4: Partial completion (sound completed)
 
 X: No progress
-
 *: Wiki entry available for entry
+!!!: Priority
 
 ☻: Pending review
 
@@ -43,8 +43,8 @@ BOSSES AND MINI-BOSSES:
 (#, $, ^2) Seer
 
 (^) Defiled Amalgmation*
-(#2, $, ^2) Fiberglass Weaver
-(X) Riven Crest
+(#2, $, ^2) Fiberglass Weaver !!!
+(X) Riven Crest !!!
 
 (X) Mad Maniac
 (%2, X) Mildew Carrion
@@ -87,9 +87,9 @@ VANILLA MODIFICATIONS:
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (#3) Demolitionist (to sell different items based on peat sold)*
 (X) Dryad Selling Evil Items on Blood Moon*
-(#2/3) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
+(#2/3) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)* !!!
 (%2) Harpoon (new weapon to introduce sub-class)*
-(#2) Trees (add Bark and Tree Sap as drops when chopping down trees)*
+(#2) Trees (add Bark and Tree Sap as drops when chopping down trees)* !!!
 (^) Wall of Flesh (to drop Exploder Emblem)*
 
 (@, %3, X) Nova Pillar in Lunar Invasion
@@ -98,28 +98,28 @@ VANILLA MODIFICATIONS:
 
 ENEMY NPCS:
 ---
-(#, ^2) Barnacleback
+(#, ^2) Barnacleback !!!
 (#, %2) Crimbrain
 (^) Fiberglass Enemies
-(#3, ^2/4) Pre-H Defiled Enemies
-(@5, ^3) Pustule Jelly
-(X) Riven Protoform
+(#, ^2) Measely Moeba !!!
+(#3, ^2/4) Pre-H Defiled Enemies !!!
+(#2, ^2) Riven Protoform !!!
 (#, ^2) Scanner Scout
-(#, ^2) Single-Cellular Nautilus
-(#, ^2) Spider Amoeba
+(#, ^2) Single-Cellular Nautilus !!!
+(#, ^2) Spider Amoeba !!!
 
-(X) Amebic Mummy
-(X) Amoeba Bugger
-(X) Barnacle Mound
+(#3, ^2) Amebic Mummy !!!
+(#, ^2) Amoeba Bugger !!!
+(#, ^2) Barnacle Mound !!!
 (#, ^2) Carpalfish*
 (%3) Defiled Clipper (feel like a more unique aquatic enemy could be made)
 (#3, ^2/4) Defiled Hunter
 (@5, #3, %2) Defiled Mimic
 (%3) Defiled Reaper (currently just a namespace. Could be removed)
-(@5, ^3) Flagellant
+(^) Flagellant
 (#, ^2) Mildew Creeper
-(#, ^2) Mitoworm
-(@5, #3, %2) Riven Mimic
+(#2, ^2) Mitoworm !!!
+(@5, #3, %2) Riven Mimic !!!
 (#, ^2) Scalron
 (#, ^2) Vent Hopper
 
@@ -162,7 +162,7 @@ STATUS EFFECTS:
 (^) Impeding Shrapnel
 (X) Levitation
 (#3, ^2) Rasterize
-(%3) Riven Debuff
+(%3) Riven Debuff !!!
 (^) Solvent
 (#, ^2) Totally Safe
 (#, ^2) Toxic Shock
@@ -240,15 +240,15 @@ ACCESSORIES:
 (^) Exploder Emblem*
 (X) Gun Glove
 (X) Locus Control Tuner
-(@, #3) Mitosis
+(@, #3) Mitosis !!!
 (#, ^2) Olid Organ*
-(#, ^2) Parasitic Influence*
+(#, ^2) Parasitic Influence* !!!
 (^) Pneumatic Bomb Thrower*
-(#, ^2) Return To Sender*
+(#, ^2) Return To Sender* !!!
 (#, ^2) Sonar Visor*
 (^) Freeze Frame*
 (%3, X) Sun Medallion
-(@2, #) Symbiote Skull
+(@2, #) Symbiote Skull !!!
 
 (X) Asylum Whistle
 (X) Timbre of Hell
@@ -256,7 +256,7 @@ ACCESSORIES:
 
 (X) Sonic Radar
 
-(#, ^2) Amebic Vial
+(#, ^2) Amebic Vial !!!
 (#, ^2) Extremophile Charm
 (^) Fiberglass Dagger
 (X) Forbidden Salt
@@ -272,14 +272,14 @@ ACCESSORIES:
 (%3, X) Armored Core
 (%3, X) Atomic Clock
 (X) Backtack
-(X) Entangled Energy
+(X) Entangled Energy !!!
 (%3, X) Immortal Core
 (#3, ^2) Lazy Cloak
 (X) Magnetic Brain
 (X) Mildew Urchin
-(#, ^2) Mysterious Spray
+(#, ^2) Mysterious Spray !!!
 (%3, X) Parallax
-(#, ^2) Protozoa Food
+(#, ^2) Protozoa Food !!!
 (X) Stomach of Craving
 
 (^) Agility Core
@@ -292,15 +292,15 @@ ACCESSORIES:
 VANITY:
 ---
 (X) Alien Queen Head
-(X) Defiled Amalgamation Mask
+(X) Defiled Amalgamation Mask !!!
 (X) Duskord Mask
-(X) Fiberglass Weaver Head
+(X) Fiberglass Weaver Head !!!
 (X) I.C.A.R.U.S. Mask
 (X) Mad Maniac Wig
 (X) Mildew Carrion Mask
 (X) Quantux Mask
 (X) Restless Flame Mask
-(X) Riven Crest Mask
+(X) Riven Crest Mask !!!
 (X) Severus' Hat
 
 (X) Amebic Protector Set
@@ -317,7 +317,7 @@ VANITY:
 
 UTILITIES:
 ---
-(X) Amoeba Hook
+(X) Amoeba Hook !!!
 (@2, #) Nano Hook
 (@2, #) Quantum Hook
 
@@ -363,7 +363,7 @@ TOOLS:
 MELEE WEAPONS:
 ---
 (^) Cyah Nara
-(#, ^2) Decimator
+(#, ^2) Decimator !!!
 (^) Felnum Spear
 (^) Fiberglass Broadsword
 (^) Krakram*
@@ -399,7 +399,7 @@ RANGED WEAPONS:
 (^) Fiberglass Pistol
 (X) Harpoon Gun
 (^) Longbone
-(#, ^2) Riven Splitter
+(#, ^2) Riven Splitter !!!
 (^) The Kruncher
 (^) 2-in-1 Shotty
 (^) 3-in-1 Shotty
@@ -438,9 +438,10 @@ MAGIC WEAPONS:
 (^) Beginner's Tome
 (#4, ^) Cryostike
 (^) Infusion
-(#4, ^) Low Signal
+(#4, ^) Low Signal !!!
 (^) Magnus
 (^) Tones of Agony
+(%3) Unplanned Riven Magic Weapon !!!
 
 (@, ^3) Bled Out Staff
 (X) Boulder Blender
@@ -467,15 +468,15 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 ---
-(#, ^2) Amebolize Incantation
+(#, ^2) Amebolize Incantation !!!
 (^) Bone Latcher
 (^) Brainy Staff
-(#, ^2) Desert Crown
-(@2, ^3) Eyeball Staff
-(%3, X) Fiend Staff
+(#, ^2) Desert Crown !!!
+(@2, ^3) Eyeball Staff !!!
+(%3, X) Fiend Staff !!!
 (^) Flagellash
-(#, ^2) Forest Staff
-(#, ^2) Ocean Amulet
+(#, ^2) Forest Staff !!!
+(#, ^2) Ocean Amulet !!!
 (^) Rotted Worm Staff
 (^) Teardown
 (^) Woodsprite Staff
@@ -502,9 +503,9 @@ SUMMONER WEAPONS:
 EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
-(#, ^2) Bombardment
-(#, ^2) Bomb Launcher
-(#, ^2) Defiled Spirit
+(#, ^2) Bombardment !!!
+(#, ^2) Bomb Launcher !!!
+(#, ^2) Defiled Spirit !!!
 (^) Hand Grenade Launcher
 (^) Impact Explosives
 (^) Lightning Grenade
@@ -544,7 +545,7 @@ EXPLOSIVE WEAPONS:
 TILES:
 ---
 (X) Absorber Culture
-(X) Amoeba Fluid
+(X) Amoeba Fluid !!!
 (X) Ancient Stone Brick
 (#, ^2) Batholith*
 (^) Bleeding Obsidian
@@ -556,17 +557,17 @@ TILES:
 (^) Defiled Stone*
 (@, ^3) Dusk Stone
 (^) Dusklight
-(@, ^3) Encrusted Ore
+(@, ^3) Encrusted Ore !!!
 (^) Felnum Ore
-(#, ^2) Fiberglass
+(#, ^2) Fiberglass !!!
 (#, ^2) Geyser Core
 (^) Hardened Defiled Sand
 (^) Lost Ore
 (X) Mildew
-(#2, ^2) Peat Moss*
+(#2, ^2) Peat Moss* !!!
 (X) Space Rock
 (#2, ^2) Space Goo
-(@, #3) Spug Flesh
+(@, #3) Spug Flesh !!!
 (@, ^3) Sulphur Stone
 (X) Taranum
 (^) White Ice
@@ -574,16 +575,16 @@ TILES:
 (X) Batholith Wall
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
-(@, ^3) Spug Flesh Wall
+(@, ^3) Spug Flesh Wall !!!
 (X) Sulphur Stone Wall
 
 (X) Acid Chest
 (X) Brine Water Fountain
 (X) Cubekon Chest
 (X) Cubekon Node
-(#3, ^2) Defiled Dungeon Chest
+(#3, ^2) Defiled Dungeon Chest !!!
 (X) Defiled Water Fountain
-(@,#3) Riven Dungeon Chest
+(@, #3) Riven Dungeon Chest !!!
 (X) Riven Water Fountain
 (X) Ruins Chest
 
@@ -591,28 +592,28 @@ TILES:
 (X) Omni-Printer
 
 (X) Brineglow Vine
-(^) Defiled Misc Tiles* (please implement Defiled Pots and Large foliage)
-(X) Riven Foliage
-(X) Riven Lesion (I have a cool idea)
-(X) Riven Pot
-(X) Riven Tree
-(#2, ^2) Wilting Rose
-(X) Wrycoral
+(^) Defiled Misc Tiles* (please implement Defiled Pots and Large foliage) !!!
+(X) Riven Foliage !!!
+(X) Riven Lesion (I have a cool idea) !!!
+(X) Riven Pot !!!
+(X) Riven Tree !!!
+(#2, ^2) Wilting Rose !!!
+(X) Wrycoral !!!
 
 (X) Music Box (Brine Pool)
 (X) Music Box (Cubekon Temple)
-(@, #2-4) Music Box (Defiled Caverns)
-(@, #2-4) Music Box (Defiled Wastelands)
+(@, #2-4) Music Box (Defiled Caverns) !!!
+(@, #2-4) Music Box (Defiled Wastelands) !!!
 (X) Music Box (Dusk)
-(X) Music Box (Riven Hive)
+(X) Music Box (Riven Hive) !!!
 (X) Music Box (Ruins)
 
-(X) Defiled Amalgamation Trophy
-(X) Defiled Amalgamation Relic
+(X) Defiled Amalgamation Trophy !!!
+(X) Defiled Amalgamation Relic !!!
 (X) Quantux Trophy
 (X) Quantux Relic
-(X) Riven Crest Trophy
-(X) Riven Crest Relic
+(X) Riven Crest Trophy !!!
+(X) Riven Crest Relic !!!
 ---
 
 
@@ -623,21 +624,21 @@ MATERIALS:
 (^) Bark
 (^) Bat Hide
 (X) Brineglow
-(X) Bud Barnacle
+(^) Bud Barnacle
 (^) Defiled Bar*
-(#, ^2) Defiled Powder
-(@, ^3) Encrusted Bar
+(#, ^2) Defiled Powder !!!
+(^) Encrusted Bar
 (^) Felnum Bar
 (^) Fiberglass Shard
 (^) Riven Carapace
 (^) Rubber
-(X) Sentient Powder
+(#, ^2) Sentient Powder !!!
 (^) Silicon Packet
 (^) Strange String*
 (^) Tree Sap
 (^) Undead Chunk*
 (^) Wilting Rose
-(X) Wrycoral
+(X) Wrycoral !!!
 
 (^) Acid Bottle
 (^) Acrid Bar
@@ -693,29 +694,29 @@ CONSUMABLES:
 (^) Krunch Mix*
 (X) One of a Kind Cookie
 (X) Potato
-(#, ^2) Soul Spaghetti
+(#, ^2) Soul Spaghetti !!!
 (X) Strange Soda
 (X) Tasty Vanilla Shake
 
-(X) Nerve Impulse Manipulator*
+(#, ^2) Nerve Impulse Manipulator* !!!
 (X) Quantum Cell
-(X) Suspicious Looking Ice Cream
+(#, ^2) Suspicious Looking Ice Cream !!!
 (X) The Button
 
 (^) Crusty Crate
 (^) Pointy Crate
 
-(X) Gooey Water
-(X) White Water
+(X) Gooey Water !!!
+(X) White Water !!!
 ---
 
 MOUNTS & PETS:
 ---
-(X) Ever-Watchful Eye (Juvenile Amalgamation)
-(^) Strange Power-Up (Platformer Mech, yay :) )
+(X) Ever-Watchful Eye (Juvenile Amalgamation) !!!
+(^) Strange Power-Up (Platformer Mech)
 (X) Chromatic Scale (Rainbow Pangolin)
 
-(X) Amoeba Toy (Meberoid)
+(#3, ^2) Amoeba Toy (Meberoid) !!!
 (^) Suspicious Looking Pebble (Defiled Blight)
 (@, #, %3) Unknown summoning item (Dwarf Dwarf)
 
@@ -735,7 +736,7 @@ AMMO:
 (^) Peatball*
 
 (#, ^2) Acid Harpoon
-(#, ^2) Teal Solution
+(#, ^2) Teal Solution !!!
 (^) Thermite Canister
 (^) White Solution
 
@@ -751,13 +752,14 @@ AMMO:
 MUSIC:
 ---
 (X) Alien Colony
-(O) Brine Pool
+(O) Brine Pool !!!
 (^) Cubekon Temple
-(X) Defiled Caverns
+(X) Defiled Caverns !!!
 (^) Defiled Wastelands
 (^) Defiled Wastelands - Mimic Route
-(O) Riven Hive
-(O) Ruins
+(O) Fiberglass Caves !!!
+(^) Riven Hive
+(O) Ruins !!!
 (^) The Dusk
 
 (X) Alien Queen
@@ -769,7 +771,7 @@ MUSIC:
 (X) Mildew Carrion
 (X) Quantux
 (X) Restless Flame
-(X) Riven Crest
+(X) Riven Crest !!!
 (X) Severus
 (X) Void Wyrm
 

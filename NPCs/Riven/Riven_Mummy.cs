@@ -8,8 +8,8 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
     public class Riven_Mummy : ModNPC {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Riven Mummy");
-            Main.npcFrameCount[NPC.type] = 4;
+            DisplayName.SetDefault("Amebic Mummy");
+            Main.npcFrameCount[NPC.type] = 16;
         }
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.Zombie);
@@ -18,7 +18,7 @@ namespace Origins.NPCs.Riven {
             NPC.defense = 8;
             NPC.damage = 42;
             NPC.width = 40;
-            NPC.height = 62;
+            NPC.height = 54;
             NPC.friendly = false;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

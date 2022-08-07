@@ -77,7 +77,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
-            Item.rare = ItemRarityID.Blue;
+            Item.rare = ItemRarityID.Orange;
             Item.glowMask = glowmask;
         }
     }
@@ -168,7 +168,7 @@ namespace Origins.Items.Materials {
             SacrificeTotal = 30;
         }
         public override void SetDefaults() {
-            Item.maxStack = 1;
+            Item.maxStack = 99;
         }
     }
     public class Busted_Servo : ModItem {
