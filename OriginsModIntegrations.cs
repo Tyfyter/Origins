@@ -8,15 +8,19 @@ using Terraria.ModLoader;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
+		private static OriginsModIntegrations instance;
 		Mod wikiThis;
+		public static Mod WikiThis { get => instance.wikiThis; set => instance.wikiThis = value; }
 		public void Load(Mod mod) {
+			instance = this;
 			if (!Main.dedServ && ModLoader.TryGetMod("Wikithis", out wikiThis)) {
-				wikiThis.Call("AddModURL", Origins.instance, "tyfyter.github.io/OriginsWiki");
+				WikiThis.Call("AddModURL", Origins.instance, "tyfyter.github.io/OriginsWiki");
 				Origins.instance.Logger.Info("Added Wikithis integration");
 			}
 		}
 
 		public void Unload() {
+			instance = null;
 		}
 	}
 }

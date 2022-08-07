@@ -17,12 +17,14 @@ using static Origins.OriginExtensions;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Weapons.Riven;
 using Origins.Items.Other.Testing;
+using Origins.Water;
 
 namespace Origins.World.BiomeData {
 	public class Riven_Hive : ModBiome {
 		public static IItemDropRule FirstLesionDropRule;
 		public static IItemDropRule LesionDropRule;
 		public override int Music => Origins.Music.Riven;
+		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Riven_Water_Style>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

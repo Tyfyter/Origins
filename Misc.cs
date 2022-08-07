@@ -282,6 +282,9 @@ namespace Origins {
     public interface IElementalProjectile {
         ushort Element { get; }
     }
+    public interface IGlowingWaterStyle {
+        public void AddLight(ref Vector3 color, byte liquidAmount);
+    }
     public static class Elements {
         public const ushort Fire = 1;
         public const ushort Earth = 2;

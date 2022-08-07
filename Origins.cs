@@ -445,7 +445,17 @@ namespace Origins {
                 }
                 return orig(index);
             };
+			On.Terraria.Graphics.Light.TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
         }
+
+		private void TileLightScanner_GetTileLight(On.Terraria.Graphics.Light.TileLightScanner.orig_GetTileLight orig, Terraria.Graphics.Light.TileLightScanner self, int x, int y, out Vector3 outputColor) {
+            orig(self, x, y, out outputColor);
+            Tile tile = Main.tile[x, y];
+
+            if (tile.LiquidType == LiquidID.Water && LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle) is IGlowingWaterStyle glowingWaterStyle) {
+                glowingWaterStyle.AddLight(ref outputColor, tile.LiquidAmount);
+			}
+		}
 
 		static int npcScoringRoom = -1;
         static string lastBiomeNameKey;

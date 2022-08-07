@@ -53,6 +53,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
         public override void SetDefaults() {
             Item.accessory = true;
             Item.rare = ItemRarityID.Expert;
+            Item.canBePlacedInVanityRegardlessOfConditions = true;
         }
         public override void UpdateAccessory(Player player, bool hideVisual) {
             player.dangerSense = true;
