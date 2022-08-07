@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Flagellant : ModNPC {
+    public class Flagellant : Glowing_Mod_NPC {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Flagellant");
             Main.npcFrameCount[NPC.type] = 4;

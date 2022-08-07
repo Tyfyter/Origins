@@ -21,6 +21,7 @@ using Origins.Tiles.Riven;
 using Origins.Items.Accessories;
 using Terraria.DataStructures;
 using Terraria.ModLoader.Utilities;
+using Origins.NPCs.Riven;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
@@ -192,17 +193,18 @@ namespace Origins.NPCs {
 			} else if (player.GetModPlayer<OriginPlayer>().ZoneRiven) {
 				pool[0] = 0;
 
-				pool.Add(ModContent.NPCType<Riven.Riven_Fighter>(), Riven_Hive.SpawnRates.Fighter);
+				pool.Add(ModContent.NPCType<Riven_Fighter>(), Riven_Hive.SpawnRates.Fighter);
 
-				if (spawnInfo.Water) pool.Add(ModContent.NPCType<Riven.Pustule_Jelly>(), Riven_Hive.SpawnRates.Jelly);
+				if (spawnInfo.Water) pool.Add(ModContent.NPCType<Pustule_Jelly>(), Riven_Hive.SpawnRates.Jelly);
 
 				//if (spawnInfo.playerFloorY <= Main.worldSurface + 50 && spawnInfo.spawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
 				if (Main.hardMode) {
-					pool.Add(ModContent.NPCType<Riven.Rivenator_Head>(), Riven_Hive.SpawnRates.Worm);
+					pool.Add(ModContent.NPCType<Rivenator_Head>(), Riven_Hive.SpawnRates.Worm);
 					if (player.ZoneDesert) {
-						pool.Add(ModContent.NPCType<Riven.Riven_Mummy>(), Riven_Hive.SpawnRates.Mummy);
+						pool.Add(ModContent.NPCType<Riven_Mummy>(), Riven_Hive.SpawnRates.Mummy);
 					}
 					if (Terraria.GameContent.Events.Sandstorm.Happening && player.ZoneSandstorm) {
+						//sandshark here
 					}
 				}
 

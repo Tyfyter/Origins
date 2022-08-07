@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Pustule_Jelly : ModNPC {
+    public class Pustule_Jelly : Glowing_Mod_NPC {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Pustule Jelly");
             Main.npcFrameCount[NPC.type] = 4;

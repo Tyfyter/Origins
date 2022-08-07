@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
 
 namespace Origins.NPCs.Riven {
-    public class Riven_Mimic : ModNPC {
+    public class Riven_Mimic : Glowing_Mod_NPC {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Mimic");
             Main.npcFrameCount[NPC.type] = 14;

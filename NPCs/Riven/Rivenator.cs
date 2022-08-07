@@ -62,17 +62,18 @@ namespace Origins.NPCs.Riven {
         }
     }
 
-    public abstract class Rivenator : ModNPC {
-        public override void SetStaticDefaults() {
+    public abstract class Rivenator : Glowing_Mod_NPC {
+		public override string GlowTexturePath => Texture;
+		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Mitoworm");
         }
 
         public override void AI() {
-            NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;
+            if(NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;
         }
         public override void HitEffect(int hitDirection, double damage) {
             if(NPC.life<0) {
-                NPC current = Main.npc[NPC.realLife];
+                NPC current = Main.npc[NPC.realLife > -1 ? NPC.realLife : NPC.whoAmI];
                 while(current.ai[0]!=0) {
                     deathEffect(current);
                     current = Main.npc[(int)current.ai[0]];
