@@ -23,8 +23,8 @@ namespace Origins.Water {
 		public void AddLight(ref Vector3 color, byte liquidAmount) {
             float mult = liquidAmount > 200 ? 1 : liquidAmount / 200;
 
-            color.Y += 0.45f * mult;
-            color.Z += 0.5f * mult;
+            color.Y += 0.9f * mult;
+            color.Z += 1f * mult;
         }
 	}
     public class Riven_Waterfall_Style : ModWaterfallStyle {

@@ -31,13 +31,16 @@ namespace Origins.World.BiomeData {
 			originPlayer.ZoneRiven = OriginSystem.rivenTiles > Riven_Hive.NeededTiles;
 			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (Riven_Hive.NeededTiles - Riven_Hive.ShaderTileCount), Riven_Hive.ShaderTileCount) / Riven_Hive.ShaderTileCount;
 			LinearSmoothing(ref originPlayer.ZoneRivenProgressSmoothed, originPlayer.ZoneRivenProgress, OriginSystem.biomeShaderSmoothing * 0.1f);
-
+			
 			return originPlayer.ZoneRiven;
 		}
 		public override void SpecialVisuals(Player player, bool isActive) {
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(originPlayer.ZoneRivenProgressSmoothed);
-			player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", originPlayer.ZoneRivenProgressSmoothed > 0, player.Center);
+			//OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			//Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(originPlayer.ZoneRivenProgressSmoothed);
+			//player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", originPlayer.ZoneRivenProgressSmoothed > 0, player.Center);
+			if (isActive) {
+				Main.waterStyle = WaterStyle.Slot;
+			}
 		}
 		public override void Load() {
 			FirstLesionDropRule = ItemDropRule.NotScalingWithLuck(ItemID.TheUndertaker);// presumably Riven Splitter?
