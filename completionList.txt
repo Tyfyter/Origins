@@ -196,7 +196,7 @@ NPC DIALOGUE:
 
 ARMOR:
 ---
-(%, X) Bony Carapace Armor
+(%3, X) Bony Carapace Armor
 (^) Cryosten Armor (Wiki needs work)*
 (^) Defiled Armor*
 (#3, ^2) Felnum Armor
@@ -272,7 +272,7 @@ ACCESSORIES:
 (%3, X) Armored Core
 (%3, X) Atomic Clock
 (X) Backtack
-(X) Entangled Energy !!!
+(#, ^2) Entangled Energy !!!
 (%3, X) Immortal Core
 (#3, ^2) Lazy Cloak
 (X) Magnetic Brain
@@ -317,9 +317,9 @@ VANITY:
 
 UTILITIES:
 ---
-(X) Amoeba Hook !!!
-(@2, #) Nano Hook
-(@2, #) Quantum Hook
+(#, ^2) Amoeba Hook !!!
+(#, ^2) Nano Hook
+(#, ^2) Quantum Hook
 
 (X) Rocket-Boosted Minecart
 ---
@@ -440,8 +440,8 @@ MAGIC WEAPONS:
 (^) Infusion
 (#4, ^) Low Signal !!!
 (^) Magnus
+(#, ^2) Slashswarm !!!
 (^) Tones of Agony
-(%3) Unplanned Riven Magic Weapon !!!
 
 (@, ^3) Bled Out Staff
 (X) Boulder Blender
@@ -472,7 +472,7 @@ SUMMONER WEAPONS:
 (^) Bone Latcher
 (^) Brainy Staff
 (#, ^2) Desert Crown !!!
-(@2, ^3) Eyeball Staff !!!
+(^) Eyeball Staff
 (%3, X) Fiend Staff !!!
 (^) Flagellash
 (#, ^2) Forest Staff !!!
@@ -557,7 +557,7 @@ TILES:
 (^) Defiled Stone*
 (@, ^3) Dusk Stone
 (^) Dusklight
-(@, ^3) Encrusted Ore !!!
+(@5, ^3) Encrusted Ore !!!
 (^) Felnum Ore
 (#, ^2) Fiberglass !!!
 (#, ^2) Geyser Core
@@ -567,7 +567,7 @@ TILES:
 (#2, ^2) Peat Moss* !!!
 (X) Space Rock
 (#2, ^2) Space Goo
-(@, #3) Spug Flesh !!!
+(#3, ^2) Spug Flesh !!!
 (@, ^3) Sulphur Stone
 (X) Taranum
 (^) White Ice
@@ -575,7 +575,7 @@ TILES:
 (X) Batholith Wall
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
-(@, ^3) Spug Flesh Wall !!!
+(^) Spug Flesh Wall
 (X) Sulphur Stone Wall
 
 (X) Acid Chest
@@ -584,7 +584,7 @@ TILES:
 (X) Cubekon Node
 (#3, ^2) Defiled Dungeon Chest !!!
 (X) Defiled Water Fountain
-(@, #3) Riven Dungeon Chest !!!
+(#3, ^2) Riven Dungeon Chest !!!
 (X) Riven Water Fountain
 (X) Ruins Chest
 
@@ -592,10 +592,10 @@ TILES:
 (X) Omni-Printer
 
 (X) Brineglow Vine
-(^) Defiled Misc Tiles* (please implement Defiled Pots and Large foliage) !!!
-(X) Riven Foliage !!!
-(X) Riven Lesion (I have a cool idea) !!!
-(X) Riven Pot !!!
+(#2, ^2) Defiled Misc Tiles* (please implement Defiled Pots and Large foliage) !!!
+(#2, ^2) Riven Foliage !!!
+(#2, ^2) Riven Lesion !!!
+(#, ^2) Riven Pot !!!
 (X) Riven Tree !!!
 (#2, ^2) Wilting Rose !!!
 (X) Wrycoral !!!

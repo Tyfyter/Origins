@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,23 +12,20 @@ namespace Origins.Tiles.Riven {
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
         public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly)+2)*0.5f;
         public override void SetStaticDefaults() {
-			if (!Main.dedServ) {
-                GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Infested_Ore_Glow");
-            }
             Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             TileID.Sets.Ore[Type] = true;
 			ItemDrop = ItemType<Infested_Ore_Item>();
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Infested Ore");
-			AddMapEntry(new Color(207, 148, 58), name);
+			name.SetDefault("Encrusted Ore");
+			AddMapEntry(new Color(40, 148, 207), name);
             mergeID = TileID.Crimtane;
 		}
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-            r = 0.2f * GlowValue;
+            r = 0.02f * GlowValue;
             g = 0.15f * GlowValue;
-            b = 0.06f * GlowValue;
+            b = 0.2f * GlowValue;
         }
         public void MinePower(int i, int j, int minePower, ref int damage) {
             if (minePower >= 55 || j <= Main.worldSurface) {

@@ -1,10 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Chat;
 using Terraria.DataStructures;
@@ -13,8 +9,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.Utilities;
-using static Origins.OriginExtensions;
 
 namespace Origins.Tiles.Riven {
     public class Riven_Altar : ModTile, IGlowingModTile {
@@ -35,7 +29,7 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Riven Altar");
-			AddMapEntry(new Color(182, 136, 69), name);
+			AddMapEntry(new Color(20, 136, 182), name);
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.DemonAltar };
             ID = Type;
@@ -52,9 +46,9 @@ namespace Origins.Tiles.Riven {
 			num = fail ? 1 : 3;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-			r = 0.2f * GlowValue;
-			g = 0.15f * GlowValue;
-			b = 0.06f * GlowValue;
+			r = 0.02f * GlowValue;
+			g = 0.1f * GlowValue;
+			b = 0.2f * GlowValue;
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
