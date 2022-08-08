@@ -17,13 +17,10 @@ namespace Origins.Tiles.Riven {
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
         public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
         public override void SetStaticDefaults() {
-			if (!Main.dedServ) {
-                GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Foliage_Glow");
-            }
             Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = true;
 			Main.tileNoFail[Type] = true;
-            AddMapEntry(new Color(220, 138, 110));
+            AddMapEntry(new Color(20, 138, 220));
 
             TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 

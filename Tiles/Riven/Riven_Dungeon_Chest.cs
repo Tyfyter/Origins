@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
-using Terraria.DataStructures;
-using Terraria.ObjectData;
-using Terraria.Enums;
-using Terraria.Localization;
-using Origins.Items.Materials;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Tiles.Riven {
     public class Riven_Dungeon_Chest : ModChest, IGlowingModTile {
@@ -49,8 +40,8 @@ namespace Origins.Tiles.Riven {
             DisplayName.SetDefault("{$Riven} Chest");
         }
         public override void SetDefaults() {
-            Item.width = 26;
-            Item.height = 22;
+            Item.width = 32;
+            Item.height = 32;
             Item.maxStack = 99;
             Item.useTurn = true;
             Item.autoReuse = true;

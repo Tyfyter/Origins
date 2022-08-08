@@ -1,14 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
@@ -31,7 +26,7 @@ namespace Origins.Tiles.Riven {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
             }*/
 			ItemDrop = ItemType<Riven_Flesh_Item>();
-			AddMapEntry(new Color(200, 125, 100));
+			AddMapEntry(new Color(0, 125, 200));
 			//SetModTree(Defiled_Tree.Instance);
             mergeID = TileID.Stone;
             //soundType = SoundID.NPCDeath1;
