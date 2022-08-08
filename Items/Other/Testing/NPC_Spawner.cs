@@ -27,16 +27,18 @@ namespace Origins.Items.Other.Testing {
 			Item.height = 26;
 			Item.value = 25000;
 			Item.rare = ItemRarityID.Master;
-			Item.maxStack = NPCLoader.NPCCount;
+			Item.maxStack = NPCLoader.NPCCount - 1;
 		}
 		public override void OnSpawn(IEntitySource source) {
-			NPC.NewNPC(new EntitySource_Misc("PlayerDropItemCheck"), (int)Item.position.X, (int)Item.position.Y, Item.stack);
-			Item.active = false;
+			if (source is not EntitySource_Misc miscSource || miscSource.Context != "PlayerDropItemCheck") {
+				NPC.NewNPC(source, (int)Item.position.X, (int)Item.position.Y, Item.stack);
+				Item.active = false;
+			}
 		}
 		public override bool CanPickup(Player player) => false;
 		public override void Update(ref float gravity, ref float maxFallSpeed) {
 			if (Item.timeSinceItemSpawned > 15) {
-				NPC.NewNPC(new EntitySource_Misc("PlayerDropItemCheck"), (int)Item.position.X, (int)Item.position.Y, Item.stack);
+				if(Item.stack < NPCLoader.NPCCount) NPC.NewNPC(new EntitySource_Misc("PlayerDropItemCheck"), (int)Item.position.X, (int)Item.position.Y, Item.stack);
 				Item.active = false;
 			}
 		}
