@@ -235,8 +235,8 @@ namespace Origins {
 	    }
     }
     public struct AutoCastingAsset<T> where T : class {
-        public bool IsLoaded => asset.IsLoaded;
-        public T Value => asset.Value;
+        public bool IsLoaded => asset?.IsLoaded??false;
+        public T Value => asset?.Value;
 
         readonly Asset<T> asset;
         AutoCastingAsset(Asset<T> asset) {
@@ -1127,10 +1127,12 @@ namespace Origins {
             self.VanillaFindFrame(frameHeight, false, type);
             self.type = t;
         }
-        internal static MethodInfo memberwiseClone;
-        internal static FieldInfo inext;
-        internal static FieldInfo inextp;
-        internal static FieldInfo SeedArray;
+        private static FieldInfo _inext;
+        internal static FieldInfo Inext => _dangerousBiomes ??= typeof(UnifiedRandom).GetField("_inext", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static FieldInfo _inextp;
+        internal static FieldInfo Inextp => _dangerousBiomes ??= typeof(UnifiedRandom).GetField("_inextp", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static FieldInfo _seedArray;
+        internal static FieldInfo SeedArray => _dangerousBiomes ??= typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic | BindingFlags.Instance);
         private static FieldInfo _dangerousBiomes;
         internal static FieldInfo dangerousBiomes => _dangerousBiomes ??= typeof(ShopHelper).GetField("_dangerousBiomes", BindingFlags.NonPublic | BindingFlags.Instance);
         /*internal static void initExt() {
@@ -1138,18 +1140,18 @@ namespace Origins {
             inext = typeof(UnifiedRandom).GetField("inext", BindingFlags.NonPublic|BindingFlags.Instance);
             inextp = typeof(UnifiedRandom).GetField("inextp", BindingFlags.NonPublic|BindingFlags.Instance);
             SeedArray = typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic|BindingFlags.Instance);
-            dangerousBiomes = typeof(ShopHelper).GetField("_dangerousBiomes", BindingFlags.NonPublic | BindingFlags.Instance);
         }*/
         internal static void unInitExt() {
-            memberwiseClone = null;
-            inext = null;
-            inextp = null;
-            SeedArray = null;
+            _inext = null;
+            _inextp = null;
+            _seedArray = null;
             _dangerousBiomes = null;
         }
         public static UnifiedRandom Clone(this UnifiedRandom r) {
-            UnifiedRandom o = (UnifiedRandom)memberwiseClone.Invoke(r, BindingFlags.NonPublic, null, null, null);
-            SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).Clone(), BindingFlags.NonPublic, null, null);
+            UnifiedRandom o = new UnifiedRandom();
+            Inext.SetValue(o, (int)Inext.GetValue(r));
+            Inextp.SetValue(o, (int)Inextp.GetValue(r));
+            SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).ToArray());
             return o;
         }
         public static string Stringify(this Recipe r) {

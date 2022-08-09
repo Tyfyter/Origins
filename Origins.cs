@@ -43,6 +43,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Default;
 using Terraria.UI;
+using Terraria.Utilities;
 using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
 
@@ -447,8 +448,57 @@ namespace Origins {
             };
 			On.Terraria.Graphics.Light.TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
         }
-
-		private void TileLightScanner_GetTileLight(On.Terraria.Graphics.Light.TileLightScanner.orig_GetTileLight orig, Terraria.Graphics.Light.TileLightScanner self, int x, int y, out Vector3 outputColor) {
+        [Obsolete("can't be implemented without more knowledge of MonoMod")]
+        static bool PlantLoader_ShakeTree(int x, int y, int type, ref bool createLeaves) {
+            UnifiedRandom genRand = WorldGen.genRand.Clone();
+            TreeTypes treeType = WorldGen.GetTreeType(type);
+            if (!(
+                (Main.getGoodWorld && genRand.NextBool(15)) ||
+                (genRand.NextBool(300)&& treeType == TreeTypes.Forest) ||
+                (genRand.NextBool(300)&& treeType == TreeTypes.Forest) ||
+                (genRand.NextBool(200)&& treeType == TreeTypes.Jungle) ||
+                (genRand.NextBool(200)&& treeType == TreeTypes.Jungle) ||
+                (genRand.NextBool(1000)&& treeType == TreeTypes.Forest) ||
+                (genRand.NextBool(7)&& (treeType == TreeTypes.Forest || treeType == TreeTypes.Snow || treeType == TreeTypes.Hallowed)) ||
+                (genRand.NextBool(8)&& treeType == TreeTypes.Mushroom) ||
+                (genRand.NextBool(35)&& Main.halloween) ||
+                (genRand.NextBool(12)) ||
+                (genRand.NextBool(20)) ||
+                (genRand.NextBool(15)&& (treeType == TreeTypes.Forest || treeType == TreeTypes.Hallowed)) ||
+                (genRand.NextBool(50)&& treeType == TreeTypes.Hallowed && !Main.dayTime) ||
+                (genRand.NextBool(50)&& treeType == TreeTypes.Forest && !Main.dayTime) ||
+                (genRand.NextBool(40)&& treeType == TreeTypes.Forest && !Main.dayTime && Main.halloween) ||
+                (genRand.NextBool(50)&& (treeType == TreeTypes.Forest || treeType == TreeTypes.Hallowed)) ||
+                (genRand.NextBool(40)&& treeType == TreeTypes.Jungle) ||
+                (genRand.NextBool(20)&& (treeType == TreeTypes.Palm || treeType == TreeTypes.PalmCorrupt || treeType == TreeTypes.PalmCrimson || treeType == TreeTypes.PalmHallowed) && !WorldGen.IsPalmOasisTree(x)) ||
+                (genRand.NextBool(30)&& (treeType == TreeTypes.Crimson || treeType == TreeTypes.PalmCrimson)) ||
+                (genRand.NextBool(30)&& (treeType == TreeTypes.Corrupt || treeType == TreeTypes.PalmCorrupt)) ||
+                (genRand.NextBool(30)&& treeType == TreeTypes.Jungle && !Main.dayTime) ||
+                (genRand.NextBool(40)&& treeType == TreeTypes.Jungle) ||
+                (genRand.NextBool(20)&& (treeType == TreeTypes.Forest || treeType == TreeTypes.Hallowed) && !Main.raining && !NPC.TooWindyForButterflies && Main.dayTime) ||
+                (genRand.NextBool(15)&& treeType == TreeTypes.Forest) ||
+                (genRand.NextBool(15)&& treeType == TreeTypes.Snow) ||
+                (genRand.NextBool(15)&& treeType == TreeTypes.Jungle) ||
+                (genRand.NextBool(15)&& (treeType == TreeTypes.Palm || treeType == TreeTypes.PalmCorrupt || treeType == TreeTypes.PalmCrimson || treeType == TreeTypes.PalmHallowed) && !WorldGen.IsPalmOasisTree(x)) ||
+                (genRand.NextBool(15)&& (treeType == TreeTypes.Corrupt || treeType == TreeTypes.PalmCorrupt)) ||
+                (genRand.NextBool(15)&& (treeType == TreeTypes.Hallowed || treeType == TreeTypes.PalmHallowed)) ||
+                (genRand.NextBool(15)&& (treeType == TreeTypes.Crimson || treeType == TreeTypes.PalmCrimson))
+                )) {
+                if (WorldGen.genRand.NextBool(20)) {
+                    switch (WorldGen.genRand.Next(2)) {
+                        case 0:
+                        Item.NewItem(new EntitySource_ShakeTree(x, y), x* 16, y* 16, 16, 16, MC.ItemType<Tree_Sap>(), WorldGen.genRand.Next(1, 3));
+                        break;
+                        case 1:
+                        Item.NewItem(new EntitySource_ShakeTree(x, y), x* 16, y* 16, 16, 16, MC.ItemType<Bark>(), WorldGen.genRand.Next(1, 3));
+                        break;
+                    }
+                    return false;
+                }
+            }
+            return true;
+        }
+        private void TileLightScanner_GetTileLight(On.Terraria.Graphics.Light.TileLightScanner.orig_GetTileLight orig, Terraria.Graphics.Light.TileLightScanner self, int x, int y, out Vector3 outputColor) {
             orig(self, x, y, out outputColor);
             Tile tile = Main.tile[x, y];
 

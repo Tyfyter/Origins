@@ -79,7 +79,7 @@ VANILLA MODIFICATIONS:
 ---
 (^) Avenger Emblem (craftable from Exploder Emblem)*
 (^) Glass Kiln (craft some Origins materials)*
-(^) Miner Set (file:///C:/Users/atomb/Documents/GitHub/OriginsWiki/Recipe_Changes.html)*
+(^) Miner Set (https://tyfyter.github.io/OriginsWiki/Recipe_Changes)*
 (^) Obsidian Set (craftable from Undead Chunk AND Riven Sample)*
 (#3) Strange String/Bud Barnacle (to craft Mechanical Worm and Battle Potion)*
 
