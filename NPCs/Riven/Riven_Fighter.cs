@@ -30,7 +30,40 @@ namespace Origins.NPCs.Riven {
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
         }
-        public override void AI() {
+		public override bool PreAI() {
+            NPC.ai[0] += Main.rand.NextFloat(0, 1);
+            if (NPC.ai[0] > 210 && NPC.collideY) {
+                switch (NPC.aiAction) {
+                    case 0:
+                    NPC.aiAction = (int)(Main.GlobalTimeWrappedHourly % 2 + 1);
+                    if (NPC.aiAction == 2) {
+                        NPC.velocity = ((NPC.GetTargetData().Center - new Vector2(0, 16) - NPC.Center) * new Vector2(1, 4)).WithMaxLength(12);
+                        NPC.collideX = false;
+                        NPC.collideY = false;
+                    }
+                    break;
+                    case 1:
+                    case 2:
+                    NPC.aiAction = 0;
+                    break;
+                }
+                NPC.ai[0] = 0;
+            }
+            if (NPC.aiAction != 0) {
+                NPC.frame = new Rectangle(0, (NPC.frame.Y + 40) % 160, 36, 40);
+                NPC.frameCounter = 0;
+                if (NPC.aiAction == 1) {
+                    NPC.velocity.X = MathHelper.Clamp(NPC.velocity.X + NPC.direction * 0.15f, -6, 6);
+                    NPC.ai[0] += NPC.collideX? 9 : 3;
+                }else if (NPC.collideX || NPC.collideY) {
+                    NPC.ai[0] = 300;
+                }
+                return false;
+
+			}
+            return true;
+		}
+		public override void AI() {
             NPC.TargetClosest();
             if (NPC.HasPlayerTarget) {
                 NPC.FaceTarget();
@@ -42,7 +75,7 @@ namespace Origins.NPCs.Riven {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y+40)%160, 36, 40);
                 //reset frameCounter so this doesn't trigger every frame after the first time
 				NPC.frameCounter = 0;
-			}
+            }
         }
         public override void HitEffect(int hitDirection, double damage) {
             //spawn gore if npc is dead after being hit
