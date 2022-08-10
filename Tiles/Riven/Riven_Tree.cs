@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
@@ -10,7 +9,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
-	public class Riven_Tree : ModTree {
+    public class Riven_Tree : ModTree {
 		private Mod mod => Origins.instance;
 
         public static Riven_Tree Instance { get; private set; }
@@ -27,10 +26,6 @@ namespace Origins.Tiles.Riven {
 		/*public override int CreateDust() {
 			return ModContent.DustType<>();
 		}*/
-
-		public override int TreeLeaf() {
-			return mod.GetGoreSlot($"Gores/NPCs/DF_Effect_{(Main.rand.NextBool()?"Medium":"Small")}{Main.rand.Next(3)+1}");//adds one because sprites use 1-based indices
-		}
 
 		public override int DropWood() {
 			return ModContent.ItemType<Riven_Flesh_Item>();//temporary drop type

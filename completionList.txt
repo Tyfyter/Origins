@@ -179,7 +179,7 @@ STATUS EFFECTS:
 (^) Woodsprite Buff
 
 (^) Defiled Blight Buff
-(#, ^2) Meberoid Buff
+(^) Meberoid Buff
 (^) Platformer Mech Buff
 ---
 
@@ -250,8 +250,8 @@ ACCESSORIES:
 (%3, X) Sun Medallion
 (@2, #) Symbiote Skull !!!
 
-(X) Asylum Whistle
-(X) Timbre of Hell
+(X) Asylum Whistle !!!
+(X) Timbre of Hell !!!
 (X) Tinkerer's Handy Guide
 
 (X) Sonic Radar
@@ -292,9 +292,9 @@ ACCESSORIES:
 VANITY:
 ---
 (X) Alien Queen Head
-(X) Defiled Amalgamation Mask !!!
+(#, ^2) Defiled Amalgamation Mask !!!
 (X) Duskord Mask
-(X) Fiberglass Weaver Head !!!
+(#, ^2) Fiberglass Weaver Head !!!
 (X) I.C.A.R.U.S. Mask
 (X) Mad Maniac Wig
 (X) Mildew Carrion Mask
@@ -307,7 +307,7 @@ VANITY:
 (X) Chunk Protector Set
 (X) Decay Protector Set
 (X) Gore Protector Set
-(X) Trimmed Demon Horns
+(#, ^2) Trimmed Demon Horns
 (X) T1-T4N Set
 
 (^) Tyfyter's Set
@@ -545,7 +545,7 @@ EXPLOSIVE WEAPONS:
 TILES:
 ---
 (X) Absorber Culture
-(X) Amoeba Fluid !!!
+(#, ^2) Amoeba Fluid !!!
 (X) Ancient Stone Brick
 (#, ^2) Batholith*
 (^) Bleeding Obsidian
@@ -596,7 +596,7 @@ TILES:
 (#2, ^2) Riven Foliage !!!
 (#2, ^2) Riven Lesion !!!
 (#, ^2) Riven Pot !!!
-(X) Riven Tree !!!
+(@5, #3) Riven Tree !!!
 (#2, ^2) Wilting Rose !!!
 (X) Wrycoral !!!
 
@@ -638,7 +638,7 @@ MATERIALS:
 (^) Tree Sap
 (^) Undead Chunk*
 (^) Wilting Rose
-(X) Wrycoral !!!
+(#, ^2) Wrycoral !!!
 
 (^) Acid Bottle
 (^) Acrid Bar
