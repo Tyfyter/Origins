@@ -256,7 +256,7 @@ ACCESSORIES:
 
 (X) Sonic Radar
 
-(#, ^2) Amebic Vial !!!
+(^) Amebic Vial
 (#, ^2) Extremophile Charm
 (^) Fiberglass Dagger
 (X) Forbidden Salt
