@@ -27,6 +27,7 @@ using Tyfyter.Utils;
 using Origins.Tiles;
 using ReLogic.Content;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ModLoader.Exceptions;
 
 namespace Origins {
     public class LinkedQueue<T> : ICollection<T> {
@@ -1242,6 +1243,18 @@ namespace Origins {
         }
         public static float OldRot(this NPC self, int index) {
             return index==-1 ?self.rotation:self.oldRot[index];
+        }
+        public static Recipe AddRecipeGroupWithItem(this Recipe recipe, int recipeGroupId, int showItem, int stack = 1) {
+            if (!RecipeGroup.recipeGroups.ContainsKey(recipeGroupId)) {
+                DefaultInterpolatedStringHandler defaultInterpolatedStringHandler = new DefaultInterpolatedStringHandler(43, 1);
+                defaultInterpolatedStringHandler.AppendLiteral("A recipe group with the ID ");
+                defaultInterpolatedStringHandler.AppendFormatted(recipeGroupId);
+                defaultInterpolatedStringHandler.AppendLiteral(" does not exist.");
+                throw new RecipeException(defaultInterpolatedStringHandler.ToStringAndClear());
+            }
+            recipe.AddIngredient(showItem, stack);
+            recipe.acceptedGroups.Add(recipeGroupId);
+            return recipe;
         }
         public static bool IsDevName(string name, int dev = 0) {
             if (dev is 0 or 1) {//Tyfyter

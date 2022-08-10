@@ -21,7 +21,8 @@ namespace Origins.Items.Other.Consumables {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.BottledWater);
 			recipe.AddIngredient(ModContent.ItemType<Prikish>());
-			recipe.AddRecipeGroup(OriginSystem.DeathweedRecipeGroupID);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
+			//recipe.AddRecipeGroup(OriginSystem.DeathweedRecipeGroupID);
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}
