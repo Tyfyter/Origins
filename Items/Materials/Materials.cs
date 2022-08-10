@@ -170,6 +170,21 @@ namespace Origins.Items.Materials {
         public override void SetDefaults() {
             Item.maxStack = 99;
         }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(ItemID.BattlePotion);
+            recipe.AddIngredient(ItemID.BottledWater, 1);
+            //recipe.AddIngredient(ModContent.ItemType<Wrycoral_Item>(), 1);
+            recipe.AddIngredient(Type, 1);
+            recipe.AddTile(TileID.Bottles);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.MechanicalWorm);
+            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
+            recipe.AddIngredient(ItemID.SoulofNight, 6);
+            recipe.AddIngredient(Type, 6);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
+        }
     }
     public class Busted_Servo : ModItem {
         //add lore here
@@ -641,7 +656,7 @@ namespace Origins.Items.Materials {
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ItemID.BattlePotion);
             recipe.AddIngredient(ItemID.BottledWater, 1);
-            recipe.AddIngredient(ItemID.Deathweed, 1);
+            recipe.AddIngredient(ModContent.ItemType<Wilting_Rose_Item>(), 1);
             recipe.AddIngredient(Type, 1);
             recipe.AddTile(TileID.Bottles);
             recipe.Register();
@@ -818,9 +833,18 @@ namespace Origins.Items.Materials {
         }
     }
     public class Wilting_Rose_Item : ModItem {
-        //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Wilting Rose");
+            SacrificeTotal = 25;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+        }
+    }
+    public class Wrycoral_Item : ModItem {
+        //add lore here
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Wrycoral");
             SacrificeTotal = 25;
         }
         public override void SetDefaults() {

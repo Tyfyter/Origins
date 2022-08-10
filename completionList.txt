@@ -44,11 +44,16 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgmation*
 (#2, $, ^2) Fiberglass Weaver !!!
-(X) Riven Crest !!!
+(X) Primordial Amoeba !!!
 
+(X) Aurelian Bouncer
+(X) Aurelian Clinger
+(X) Aurelian Golem
+(X) Aurelian Merger
+(X) Aurelian Puppet
+(X) Aurelian Worm
 (X) Mad Maniac
 (%2, X) Mildew Carrion
-(%2, X) Restless Flame
 (X) Severus, the Dark One
 
 (X) Alien Queen
@@ -81,7 +86,7 @@ VANILLA MODIFICATIONS:
 (^) Glass Kiln (craft some Origins materials)*
 (^) Miner Set (https://tyfyter.github.io/OriginsWiki/Recipe_Changes)*
 (^) Obsidian Set (craftable from Undead Chunk AND Riven Sample)*
-(#3) Strange String/Bud Barnacle (to craft Mechanical Worm and Battle Potion)*
+(^) Strange String/Bud Barnacle (to craft Mechanical Worm and Battle Potion)*
 
 (^) Bats (drop Bat Hide)*
 (^) Boss Immunities (make every boss immune to anything with Stun)*
@@ -238,9 +243,9 @@ ACCESSORIES:
 (^) Dim Starlight*
 (#, ^2) Energy Shield*
 (^) Exploder Emblem*
-(X) Gun Glove
+(#, ^2) Gun Glove
 (X) Locus Control Tuner
-(@, #3) Mitosis !!!
+(#3, ^2) Mitosis !!!
 (#, ^2) Olid Organ*
 (#, ^2) Parasitic Influence* !!!
 (^) Pneumatic Bomb Thrower*
@@ -250,7 +255,9 @@ ACCESSORIES:
 (%3, X) Sun Medallion
 (@2, #) Symbiote Skull !!!
 
-(X) Asylum Whistle !!!
+(#, ^2) Asylum Whistle !!!
+(X) Lost Page
+(#3, ^2) Stone Mask !!!
 (X) Timbre of Hell !!!
 (X) Tinkerer's Handy Guide
 
@@ -300,7 +307,7 @@ VANITY:
 (X) Mildew Carrion Mask
 (X) Quantux Mask
 (X) Restless Flame Mask
-(X) Riven Crest Mask !!!
+(X) Primordial Amoeba Mask !!!
 (X) Severus' Hat
 
 (X) Amebic Protector Set
@@ -598,7 +605,7 @@ TILES:
 (#, ^2) Riven Pot !!!
 (@5, #3) Riven Tree !!!
 (#2, ^2) Wilting Rose !!!
-(X) Wrycoral !!!
+(#, ^2) Wrycoral !!!
 
 (X) Music Box (Brine Pool)
 (X) Music Box (Cubekon Temple)
@@ -638,7 +645,7 @@ MATERIALS:
 (^) Tree Sap
 (^) Undead Chunk*
 (^) Wilting Rose
-(#, ^2) Wrycoral !!!
+(^) Wrycoral !!!
 
 (^) Acid Bottle
 (^) Acrid Bar

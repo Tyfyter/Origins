@@ -1,10 +1,9 @@
 ﻿using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	[AutoloadEquip(EquipType.HandsOn)]
+    [AutoloadEquip(EquipType.HandsOn)]
     public class Bomb_Yeeter : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomb Handling Device");
