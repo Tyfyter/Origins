@@ -27,7 +27,7 @@ namespace Origins.Tiles.Riven {
             keyItem = ModContent.ItemType<Riven_Key>();
         }
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-            this.DrawTileGlow(i, j, spriteBatch);
+            this.DrawChestGlow(i, j, spriteBatch);
         }
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
             r = 0.2f;

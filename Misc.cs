@@ -1531,6 +1531,25 @@ namespace Origins {
             }
             spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
         }
+        public static void DrawChestGlow(this IGlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
+            if (self.GlowTexture.Value is null) {
+                return;
+            }
+            Tile tile = Main.tile[i, j];
+            Vector2 vector = new Vector2(Main.offScreenRange, Main.offScreenRange);
+            if (Main.drawToScreen) {
+                vector = Vector2.Zero;
+            }
+            Point key = new Point(i, j);
+            if (tile.TileFrameX % 36 != 0) {
+                key.X--;
+            }
+            if (tile.TileFrameY % 36 != 0) {
+                key.Y--;
+            }
+            int frameOffset = Main.chest[Chest.FindChest(key.X, key.Y)].frame * 38;
+            spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY + frameOffset, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+        }
         /// <summary>
         /// checks if a tile is active and is the provided type
         /// </summary>
