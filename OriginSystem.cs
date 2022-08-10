@@ -51,6 +51,8 @@ namespace Origins {
             //but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
             Origins.instance.LateLoad();
         }
+        public static int GemStaffRecipeGroupID { get; private set; }
+        public static int DeathweedRecipeGroupID { get; private set; }
         public override void AddRecipeGroups() {
             RecipeGroup group = new RecipeGroup(() => "Gem Staves", new int[] {
                 ItemID.AmethystStaff,
@@ -60,22 +62,27 @@ namespace Origins {
                 ItemID.RubyStaff,
                 ItemID.DiamondStaff
             });
-            RecipeGroup.RegisterGroup("Origins:Gem Staves", group);
+            GemStaffRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Staves", group);
+            group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.Deathweed), new int[] {
+                ItemID.Deathweed,
+                ModContent.ItemType<Wilting_Rose_Item>(),
+                ModContent.ItemType<Wrycoral_Item>()
+            });
+            DeathweedRecipeGroupID = RecipeGroup.RegisterGroup("Deathweed", group);
         }
         public override void PostAddRecipes() {
             int l = Main.recipe.Length;
             Recipe r;
-            Recipe recipe;
-            int roseID = ModContent.ItemType<Wilting_Rose_Item>();
+            //Recipe recipe;
             for (int i = 0; i < l; i++) {
                 r = Main.recipe[i];
-                if (!r.requiredItem.ToList().Exists((ing) => ing.type == ItemID.Deathweed)) {
-                    continue;
+                if (r.requiredItem.ToList().Exists((ing) => ing.type == ItemID.Deathweed)) {
+                    r.acceptedGroups.Add(DeathweedRecipeGroupID);
                 }
-                recipe = r.Clone();
-                recipe.requiredItem = recipe.requiredItem.Select((it) => it.type == ItemID.Deathweed ? new Item(roseID) : it.CloneByID()).ToList();
-                Mod.Logger.Info("adding procedural recipe: " + recipe.Stringify());
-                recipe.Create();
+                //recipe = r.Clone();
+                //recipe.requiredItem = recipe.requiredItem.Select((it) => it.type == ItemID.Deathweed ? new Item(roseID) : it.CloneByID()).ToList();
+                //Mod.Logger.Info("adding procedural recipe: " + recipe.Stringify());
+                //recipe.Create();
             }
         }
         public override void ModifyLightingBrightness(ref float scale) {

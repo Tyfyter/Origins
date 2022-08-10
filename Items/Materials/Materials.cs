@@ -656,7 +656,7 @@ namespace Origins.Items.Materials {
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ItemID.BattlePotion);
             recipe.AddIngredient(ItemID.BottledWater, 1);
-            recipe.AddIngredient(ModContent.ItemType<Wilting_Rose_Item>(), 1);
+            recipe.AddRecipeGroup(OriginSystem.DeathweedRecipeGroupID, 1);
             recipe.AddIngredient(Type, 1);
             recipe.AddTile(TileID.Bottles);
             recipe.Register();
