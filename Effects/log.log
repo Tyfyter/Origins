@@ -1,9 +1,14 @@
-Description file detected: 5
+Description file detected: 6
+* AmebicProtection.fx
 * BiomeShade.fx
 * BlackHole.fx
 * PerlinFade.fx
 * Rasterize.fx
 * Solvent.fx
+
+Start loading description file: AmebicProtection.fx ..Done!
+Start compiling font..Done!
+Start compiling font content file: AmebicProtection.xnb ..Done!
 
 Start loading description file: BiomeShade.fx ..Done!
 Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them

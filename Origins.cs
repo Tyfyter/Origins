@@ -7,6 +7,7 @@ using MonoMod.RuntimeDetour.HookGen;
 using Origins.Buffs;
 using Origins.Gores.NPCs;
 using Origins.Items;
+using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Rift;
 using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
@@ -78,6 +79,10 @@ namespace Origins {
         public static MiscShaderData blackHoleShade;
         public static MiscShaderData solventShader;
         public static MiscShaderData rasterizeShader;
+        public static ArmorShaderData amebicProtectionShader;
+        public static HairShaderData amebicProtectionHairShader;
+        public static int amebicProtectionShaderID;
+        public static int amebicProtectionHairShaderID;
         public static AutoCastingAsset<Texture2D> cellNoiseTexture;
         public static AutoCastingAsset<Texture2D> eyndumCoreUITexture;
         public static AutoCastingAsset<Texture2D> eyndumCoreTexture;
@@ -286,6 +291,14 @@ namespace Origins {
 
                 rasterizeShader = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/Rasterize", AssetRequestMode.ImmediateLoad).Value), "Rasterize");
                 GameShaders.Misc["Origins:Rasterize"] = rasterizeShader;
+
+                amebicProtectionShader = new ArmorShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/AmebicProtection", AssetRequestMode.ImmediateLoad).Value), "AmebicProtection");
+                GameShaders.Armor.BindShader(MC.ItemType<Amebic_Vial>(), amebicProtectionShader);
+                amebicProtectionShaderID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
+
+                amebicProtectionHairShader = new HairShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/AmebicProtection", AssetRequestMode.ImmediateLoad).Value), "AmebicProtection");
+                GameShaders.Hair.BindShader(MC.ItemType<Amebic_Vial>(), amebicProtectionHairShader);
+                amebicProtectionHairShaderID = GameShaders.Hair.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
                 //Filters.Scene["Origins:ZoneDusk"].GetShader().UseOpacity(0.35f);
                 //Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.
                 //Filters.Scene["BlackHole"] = new Filter(new ScreenShaderData(screenRef, "BlackHole"), EffectPriority.VeryHigh);
@@ -357,7 +370,7 @@ namespace Origins {
             On.Terraria.WorldGen.GERunner+=OriginSystem.GERunnerHook;
             On.Terraria.WorldGen.Convert+=OriginSystem.ConvertHook;
             Defiled_Tree.Load();
-            OriginSystem worldInstance = ModContent.GetInstance<OriginSystem>();
+            OriginSystem worldInstance = MC.GetInstance<OriginSystem>();
             if(!(worldInstance is null)) {
                 worldInstance.defiledResurgenceTiles = new List<(int, int)> { };
                 worldInstance.defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
@@ -373,7 +386,8 @@ namespace Origins {
             };
             On.Terraria.Lang.GetDryadWorldStatusDialog += Lang_GetDryadWorldStatusDialog;
             HookEndpointManager.Add(typeof(TileLoader).GetMethod("MineDamage", BindingFlags.Public|BindingFlags.Static), (hook_MinePower)MineDamage);
-			On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.DrawPlayerInternal += LegacyPlayerRenderer_DrawPlayerInternal;
+            
+            On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.DrawPlayerInternal += LegacyPlayerRenderer_DrawPlayerInternal;
 			On.Terraria.Projectile.GetWhipSettings += Projectile_GetWhipSettings;
             On.Terraria.Recipe.Condition.RecipeAvailable += (On.Terraria.Recipe.Condition.orig_RecipeAvailable orig, Recipe.Condition self, Recipe recipe) => {
 				if (self == Recipe.Condition.NearWater && Main.LocalPlayer.GetModPlayer<OriginPlayer>().ZoneBrine) {
@@ -534,7 +548,32 @@ namespace Origins {
 		private void LegacyPlayerRenderer_DrawPlayerInternal(On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.orig_DrawPlayerInternal orig, Terraria.Graphics.Renderers.LegacyPlayerRenderer self, Camera camera, Player drawPlayer, Vector2 position, float rotation, Vector2 rotationOrigin, float shadow, float alpha, float scale, bool headOnly) {
             bool shaded = false;
             try {
-                int rasterizedTime = drawPlayer.GetModPlayer<OriginPlayer>().rasterizedTime;
+                OriginPlayer originPlayer = drawPlayer.GetModPlayer<OriginPlayer>();
+				if (originPlayer.amebicVial && originPlayer.amebicVialCooldown <= 0) {
+                    PlayerShaderSet shaderSet = new PlayerShaderSet(drawPlayer);
+                    new PlayerShaderSet(amebicProtectionShaderID).Apply(drawPlayer);
+                    int playerHairDye = drawPlayer.hairDye;
+                    drawPlayer.hairDye = amebicProtectionHairShaderID;
+
+                    const float offset = 2;
+                    int itemAnimation = drawPlayer.itemAnimation;
+                    drawPlayer.itemAnimation = 0;
+                    amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(offset, 0));
+                    orig(self, camera, drawPlayer, position + new Vector2(offset, 0), rotation, rotationOrigin, shadow, alpha, scale, headOnly);
+
+                    amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(-offset, 0));
+                    orig(self, camera, drawPlayer, position + new Vector2(-offset, 0), rotation, rotationOrigin, shadow, alpha, scale, headOnly);
+
+                    amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(0, offset));
+                    orig(self, camera, drawPlayer, position + new Vector2(0, offset), rotation, rotationOrigin, shadow, alpha, scale, headOnly);
+
+                    amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(0, -offset));
+                    orig(self, camera, drawPlayer, position + new Vector2(0, -offset), rotation, rotationOrigin, shadow, alpha, scale, headOnly);
+                    shaderSet.Apply(drawPlayer);
+                    drawPlayer.hairDye = playerHairDye;
+                    drawPlayer.itemAnimation = itemAnimation;
+                }
+                int rasterizedTime = originPlayer.rasterizedTime;
                 if (rasterizedTime > 0) {
                     shaded = true;
                     rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
@@ -704,6 +743,7 @@ namespace Origins {
             blackHoleShade = null;
             solventShader = null;
             rasterizeShader = null;
+            amebicProtectionShader = null;
             cellNoiseTexture = null;
             OriginExtensions.drawPlayerItemPos = null;
             Tolruk.glowmasks = null;

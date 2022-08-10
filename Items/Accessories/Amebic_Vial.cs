@@ -23,8 +23,9 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Expert;
 			Item.expert = true;
 		}
-		public override void UpdateEquip(Player player) {
+		public override void UpdateAccessory(Player player, bool isVisible) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.amebicVial = isVisible;
 			if (originPlayer.amebicVialCooldown > 0) return;
 			const float maxDist = 64 * 64;
 			Vector2 target = default;

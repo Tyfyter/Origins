@@ -66,6 +66,7 @@ namespace Origins {
         public bool rasterize = false;
         public bool decayingScale = false;
         public bool lazyCloakVisible = false;
+        public bool amebicVial = false;
         public byte amebicVialCooldown = 0;
         #endregion
 
@@ -169,6 +170,7 @@ namespace Origins {
             rasterize = false;
             decayingScale = false;
             lazyCloakVisible = false;
+            amebicVial = false;
             toxicShock = false;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;
