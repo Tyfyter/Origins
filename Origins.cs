@@ -455,7 +455,7 @@ namespace Origins {
                 return retValue;
             };
             On.Terraria.Main.GetProjectileDesiredShader += (orig, index) => {
-                if (Main.projectile[index].GetGlobalProjectile<OriginGlobalProj>().isFromMitosis) {
+                if (Main.projectile[index].TryGetGlobalProjectile(out OriginGlobalProj originGlobalProj) && originGlobalProj.isFromMitosis) {
                     return GameShaders.Armor.GetShaderIdFromItemId(ItemID.StardustDye);
                 }
                 return orig(index);

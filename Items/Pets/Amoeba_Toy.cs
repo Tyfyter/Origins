@@ -45,7 +45,7 @@ namespace Origins.Items.Pets {
 			Projectile.height = 22;
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
-			Projectile.light = 1f;
+			Projectile.light = 0f;// Porjectile.light doesn't let you change the color
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -138,7 +138,7 @@ namespace Origins.Items.Pets {
 			}
 
 			// Some visuals here
-			Lighting.AddLight(Projectile.Center, Color.Cyan.ToVector3() * 0.25f);
+			Lighting.AddLight(Projectile.Center, Color.Cyan.ToVector3() * 0.5f);// but Lighting.AddLight does
 			#endregion
 		}
     }

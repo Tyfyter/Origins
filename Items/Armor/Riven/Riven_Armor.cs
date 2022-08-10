@@ -23,7 +23,6 @@ namespace Origins.Items.Armor.Riven {
         }
         public override void UpdateEquip(Player player) {
             player.GetDamage(DamageClass.Summon) += 0.1f;
-            Lighting.AddLight(player.Top+new Vector2(0,8), 0.666f*lightMagnitude, 0.414f*lightMagnitude, 0.132f*lightMagnitude);
         }
         public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
             glowMask = GlowMask;
@@ -60,7 +59,6 @@ namespace Origins.Items.Armor.Riven {
         }
         public override void UpdateEquip(Player player) {
             player.maxMinions++;
-            Lighting.AddLight(player.Center, 0.666f*Riven_Mask.lightMagnitude, 0.414f*Riven_Mask.lightMagnitude, 0.132f*Riven_Mask.lightMagnitude);
         }
         public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
             glowMask = GlowMask;
@@ -88,7 +86,6 @@ namespace Origins.Items.Armor.Riven {
         }
         public override void UpdateEquip(Player player) {
             player.jumpSpeedBoost+=1f;
-            Lighting.AddLight(player.Center+new Vector2(0,16), 0.666f*Riven_Mask.lightMagnitude, 0.414f*Riven_Mask.lightMagnitude, 0.132f*Riven_Mask.lightMagnitude);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
