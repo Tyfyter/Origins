@@ -66,6 +66,7 @@ namespace Origins {
         public bool rasterize = false;
         public bool decayingScale = false;
         public bool lazyCloakVisible = false;
+        public byte amebicVialCooldown = 0;
         #endregion
 
         #region explosive stats
@@ -175,7 +176,9 @@ namespace Origins {
                 cryostenLifeRegenCount--;
             if(dimStarlightCooldown>0)
                 dimStarlightCooldown--;
-            if(rapidSpawnFrames>0)
+            if (amebicVialCooldown > 0)
+                amebicVialCooldown--;
+            if (rapidSpawnFrames>0)
                 rapidSpawnFrames--;
             int rasterized = Player.FindBuffIndex(Rasterized_Debuff.ID);
             if (rasterized >= 0) {

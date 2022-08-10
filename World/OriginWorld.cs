@@ -50,6 +50,8 @@ namespace Origins {
         public static int totalRiven2;
         public static byte tRiven;
         public List<Point> Defiled_Hearts { get; set; } = new List<Point>();
+        private List<Point> _abandonedBombs;
+        public List<Point> AbandonedBombs => _abandonedBombs ??= new List<Point>();
 
         public override void LoadWorldData(TagCompound tag) {
             if (tag.ContainsKey("peatSold")) {

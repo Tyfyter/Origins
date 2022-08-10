@@ -7,6 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Origins.Items.Materials;
+using Terraria.GameContent;
 
 namespace Origins.Items.Weapons.Defiled {
 	public class Ripper_Lance : ModItem {
@@ -110,7 +111,7 @@ namespace Origins.Items.Weapons.Defiled {
             }
         }
         public override bool PreDraw(ref Color lightColor){
-            Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Items/Weapons/Defiled/Ripper_Lance_P").Value, Projectile.Center - Main.screenPosition + Projectile.velocity*3, new Rectangle(0, 0, 80, 84), lightColor, Projectile.rotation, new Vector2(40+40*Projectile.spriteDirection,0), Projectile.scale, Projectile.spriteDirection>0?SpriteEffects.None:SpriteEffects.FlipHorizontally, 0);
+            Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, Projectile.Center - Main.screenPosition + Projectile.velocity*3, new Rectangle(0, 0, 80, 84), lightColor, Projectile.rotation, new Vector2(40+40*Projectile.spriteDirection,0), Projectile.scale, Projectile.spriteDirection>0?SpriteEffects.None:SpriteEffects.FlipHorizontally, 0);
             return false;
         }
     }

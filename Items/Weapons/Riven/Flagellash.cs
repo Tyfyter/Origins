@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Riven {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Flagellash");
 			Tooltip.SetDefault("2⅔ summon tag damage\nYour summons will focus struck enemies\n'Three tails are better than one'");
+			glowmask = Origins.AddGlowMask(this, "");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -23,6 +24,7 @@ namespace Origins.Items.Weapons.Riven {
 			Item.DefaultToWhip(ModContent.ProjectileType<Flagellash_P>(), 13, 2, 4, 42);
 
 			Item.rare = ItemRarityID.Blue;
+			Item.glowMask = glowmask;
 		}
 		public override int ChoosePrefix(UnifiedRandom rand) {
 			if (Item.noUseGraphic) {

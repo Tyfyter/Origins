@@ -150,7 +150,8 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			if (distanceToIdlePosition > 1000f) {
                 Projectile.ai[1]++;
                 if(Projectile.ai[1] > 3600f) {
-                    //TODO:if abandoned, bombs get angry at their owner and become a persistent enemy that will spawn around abandoned location and target their previous owner
+                    OriginSystem.instance.AbandonedBombs.Add(Projectile.Center.ToTileCoordinates());
+                    Projectile.active = false;
                 }
 			    if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 2000f) {
 				    // Whenever you deal with non-regular events that change the behavior or position drastically, make sure to only run the code on the owner of the projectile,
