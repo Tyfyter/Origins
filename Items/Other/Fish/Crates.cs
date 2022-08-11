@@ -20,6 +20,7 @@ namespace Origins.Items.Other.Fish {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrimsonFishingCrate);
 			Item.createTile = ModContent.TileType<Chunky_Crate_Tile>();
+			Item.placeStyle = 0;
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			var oresTier1 = new IItemDropRule[8] {
@@ -85,6 +86,7 @@ namespace Origins.Items.Other.Fish {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrimsonFishingCrate);
 			Item.createTile = ModContent.TileType<Crusty_Crate_Tile>();
+			Item.placeStyle = 0;
 			Item.glowMask = glowmask;
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
@@ -155,12 +157,16 @@ namespace Origins.Items.Other.Fish {
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
-			TileObjectData.newTile.CoordinateHeights = new int[2] { 16, 18 };
-			TileObjectData.newTile.StyleHorizontal = true; // Optional, if you add more placeStyles for the item
-			TileObjectData.newTile.CoordinatePadding = 0;
+			SetTileObjectData(TileObjectData.newTile);
 			TileObjectData.addTile(Type);
 
 			SetMapEntry();
+		}
+		protected virtual void SetTileObjectData(TileObjectData data) {
+			data.CoordinateHeights = new int[2] { 16, 18 };
+			data.StyleHorizontal = true; // Optional, if you add more placeStyles for the item
+			data.CoordinatePadding = 0;
+			data.CoordinateWidth = 16;
 		}
 		public abstract void SetMapEntry();
 		public override bool CreateDust(int i, int j, ref int type) {
