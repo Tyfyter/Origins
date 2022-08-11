@@ -20,13 +20,17 @@ using static Origins.OriginExtensions;
 using static Tyfyter.Utils.KinematicUtils;
 
 namespace Origins.NPCs.Fiberglass {
-    public class Fiberglass_Weaver : ModNPC {
+    public class Fiberglass_Weaver : ModNPC, IMeleeCollisionDataNPC {
 		public override string Texture => "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Body";
         public static AutoCastingAsset<Texture2D> UpperLegTexture { get; private set; }
         public static AutoCastingAsset<Texture2D> LowerLegTexture { get; private set; }
         Arm[] legs;
-        const float upperLegLength = 34.2f;
-        const float lowerLegLength = 33.4f;
+        Vector2[] legTargets;
+        static IItemDropRule normalDropRule;
+        const float upperLegLength = 70.1f;
+        const float lowerLegLength = 76f;
+        const float totalLegLength = upperLegLength + lowerLegLength;
+        public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Fiberglass Weaver");
             if (!Main.dedServ) {
@@ -35,38 +39,47 @@ namespace Origins.NPCs.Fiberglass {
             }
         }
 		public override void Unload() {
-			base.Unload();
-		}
+            UpperLegTexture = null;
+            LowerLegTexture = null;
+        }
 		public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.PossessedArmor);
             NPC.boss = true;
             NPC.noGravity = true;
-            NPC.damage = 10;
-            NPC.life = NPC.lifeMax = 950;
-            NPC.defense = 20;
+            NPC.noTileCollide = true;
+            NPC.damage = 14;
+            NPC.lifeMax = 1400;
+            NPC.defense = 26;
             NPC.aiStyle = 0;
             NPC.width = NPC.height = 68;
-			if (legs is null) {
+            NPC.knockBackResist = 0.1f;
+        }
+		public override void OnSpawn(IEntitySource source) {
+            if (legs is null) {
                 legs = new Arm[8];
+                legTargets = new Vector2[8];
+                NPCAimedTarget target = NPC.GetTargetData();
+                NPC.rotation = NPC.AngleTo(target.Center) + MathHelper.PiOver2;
                 for (int i = 0; i < 8; i++) {
                     legs[i] = new Arm() {
                         bone0 = new PolarVec2(upperLegLength, 0),
                         bone1 = new PolarVec2(lowerLegLength, 0)
                     };
-					switch (i / 2) {
+                    switch (i / 2) {
                         case 0:
-                        legs[i].start = new Vector2(i % 2 == 0 ? -15 : 15, -33);
+                        legs[i].start = new Vector2(i % 2 == 0 ? -15 : 15, -38);
                         break;
                         case 1:
-                        legs[i].start = new Vector2(i % 2 == 0? -15 : 15, -27);
+                        legs[i].start = new Vector2(i % 2 == 0 ? -15 : 15, -30);
                         break;
                         case 2:
-                        legs[i].start = new Vector2(i % 2 == 0 ? -17 : 17, -15);
+                        legs[i].start = new Vector2(i % 2 == 0 ? -17 : 17, -16);
                         break;
                         case 3:
                         legs[i].start = new Vector2(i % 2 == 0 ? -15 : 15, -7);
                         break;
                     }
+                    legTargets[i] = ((legs[i].start + new Vector2(0, 20)) * new Vector2(1, 1.5f)).RotatedBy(NPC.rotation) * 4 + NPC.Center + new Vector2(0, (((i / 2) % 2) == i % 2 ? 12f : -12f));
                 }
             }
         }
@@ -74,27 +87,112 @@ namespace Origins.NPCs.Fiberglass {
             //bestiaryEntry.
 
         }
-		public override void AI() {
+        public override void AI() {
             NPCAimedTarget target = NPC.GetTargetData();
-            NPC.rotation = NPC.AngleTo(target.Center) + MathHelper.PiOver2;
+            float jumpSpeed = 10 + DifficultyMult * 2;
+            switch ((int)NPC.ai[0]) {
+                case 0: {
+                    AngularSmoothing(ref NPC.rotation, NPC.AngleTo(target.Center) + MathHelper.PiOver2, 0.05f);
+                    for (int i = 0; i < 8; i++) {
+                        Vector2 legStart = legs[i].start.RotatedBy(NPC.rotation) + NPC.Center;
+						if (NPC.ai[0] != 0 && i == NPC.ai[2]) {
+                            continue;
+						}
+						if (i <= 1 && legStart.DistanceSQ(target.Center) < (totalLegLength * totalLegLength)) {
+                            NPC.ai[1] = 0;
+                            NPC.ai[0] = 2;
+                            NPC.ai[2] = i;
+                        } else if (legStart.DistanceSQ(legTargets[i]) > (totalLegLength * totalLegLength)) {
+                            legTargets[i] = ((legs[i].start + new Vector2(0, 15.75f + (i/2) * 0.0625f)) * new Vector2(0.85f, 2.04f)).RotatedBy(NPC.rotation) * 4 + NPC.Center;
+                        }
+                    }
+                    NPC.velocity = Vector2.Lerp(NPC.velocity, (Vector2)new PolarVec2(3 + DifficultyMult, NPC.rotation - MathHelper.PiOver2), 0.1f);
+					if (++NPC.ai[1] > 300) {
+                        NPC.ai[1] = 0;
+                        NPC.ai[0] = 1;
+					}
+                    break;
+                }
+                case 1: {
+					if (NPC.ai[1] == 0) {
+                        AngularSmoothing(ref NPC.rotation, NPC.AngleTo(target.Center) + MathHelper.PiOver2, 0.05f);
+                        for (int i = 0; i < 8; i++) {
+                            Vector2 legStart = legs[i].start.RotatedBy(NPC.rotation) + NPC.Center;
+                            if (legStart.Distance(legTargets[i]) > totalLegLength - 8) {
+                                NPC.ai[1] = -1;
+                                break;
+                            }
+                        }
+                        NPC.velocity = Vector2.Lerp(NPC.velocity, (Vector2)new PolarVec2(1.5f, NPC.rotation + MathHelper.PiOver2), 0.5f);
+					}else if (NPC.ai[1] < 0) {
+                        NPC.velocity = Vector2.Lerp(NPC.velocity, (Vector2)new PolarVec2(0.5f, NPC.rotation + MathHelper.PiOver2), 0.5f);
+						if (--NPC.ai[1] < -30) {
+                            NPC.ai[1] = 1;
+                        }
+                    } else if (NPC.ai[1] == 1) {
+                        float targetDist = NPC.Distance(target.Center);
+                        NPC.ai[1] = 300 - (targetDist / jumpSpeed);
+                        NPC.velocity = Vec2FromPolar(jumpSpeed, NPC.rotation - MathHelper.PiOver2);
+                        legTargets[0] = legTargets[1] = Vec2FromPolar(NPC.rotation - MathHelper.PiOver2, targetDist);
+
+					} else if (++NPC.ai[1] >= 300) {
+                        NPC.ai[1] = 0;
+                        NPC.ai[0] = 0;
+					} else {
+                        NPC.velocity = (Vector2)new PolarVec2(jumpSpeed, NPC.rotation - MathHelper.PiOver2);
+                    }
+                    break;
+				}
+                case 2: {
+					if (++NPC.ai[1] > 16 - DifficultyMult) {
+                        legTargets[(int)NPC.ai[2]] = target.Center;
+                        if (NPC.ai[1] > 48 - DifficultyMult * 6) {
+                            NPC.ai[1] = 0;
+                            NPC.ai[0] = 0;
+                        }
+                    }
+                    goto case 0;
+                }
+            }
+        }
+        public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
+            Rectangle legHitbox = new Rectangle(-4, -4, 8, 8);
+            for (int i = 0; i < 8; i++) {
+                Rectangle hitbox = legHitbox;
+                Vector2 legStart = legs[i].start.RotatedBy(NPC.rotation) + NPC.Center;
+                Vector2 offset = legStart + (Vector2)legs[i].bone0 + (Vector2)legs[i].bone1;
+                hitbox.Offset((int)offset.X, (int)offset.Y);
+				if (hitbox.Intersects(victimHitbox)) {
+                    npcRect = hitbox;
+                    damageMultiplier = NPC.ai[0] == 2 ? 3 : 1.5f;
+                    return;
+				}
+            }
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>(), 1));
-            npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>(), 1));
+            normalDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>());
+            normalDropRule.OnSuccess(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>()));
+            npcLoot.Add(new DropBasedOnExpertMode(
+                normalDropRule,
+                new DropLocalPerClientAndResetsNPCMoneyTo0(ItemID.BossBagDarkMage, 1, 1, 1, null)
+            ));
+            //npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>(), 1));
+            //npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>(), 1));
         }
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
             Main.CurrentDrawnEntityShader = Terraria.Graphics.Shaders.GameShaders.Armor.GetShaderIdFromItemId(ItemID.ReflectiveDye);
+            if (legs is null) return false;
             for (int i = 0; i < 8; i++) {
                 bool flip = (i % 2 != 0) == i < 4;
                 Vector2 baseStart = legs[i].start;
                 legs[i].start = legs[i].start.RotatedBy(NPC.rotation) + NPC.Center;
-                float[] targets = (i / 2 == 0) ? legs[i].GetTargetAngles(NPC.GetTargetData().Center, flip)  : legs[i].GetTargetAngles(((baseStart + new Vector2(0, 16)) * new Vector2(1, 2f)).RotatedBy(NPC.rotation) * 4 + NPC.Center, flip);
-                AngularSmoothing(ref legs[i].bone0.Theta, targets[0], 0.2f);
-                AngularSmoothing(ref legs[i].bone1.Theta, targets[1], 0.2f);
+                float[] targets = legs[i].GetTargetAngles(legTargets[i], flip);
+                AngularSmoothing(ref legs[i].bone0.Theta, targets[0], 0.3f);
+                AngularSmoothing(ref legs[i].bone1.Theta, targets[1], NPC.ai[0] == 2 && NPC.ai[2] == i? 1f : 0.3f);
 
                 Vector2 screenStart = legs[i].start - Main.screenPosition;
-                Main.EntitySpriteDraw(UpperLegTexture, screenStart, null, drawColor, legs[i].bone0.Theta, new Vector2(3, flip ? 3 : 9), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
-                Main.EntitySpriteDraw(LowerLegTexture, screenStart + (Vector2)legs[i].bone0, null, drawColor, legs[i].bone0.Theta + legs[i].bone1.Theta, new Vector2(4, flip ? 0 : 8), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(UpperLegTexture, screenStart, null, drawColor, legs[i].bone0.Theta, new Vector2(5, flip ? 3 : 9), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(LowerLegTexture, screenStart + (Vector2)legs[i].bone0, null, drawColor, legs[i].bone0.Theta + legs[i].bone1.Theta, new Vector2(6, flip ? 2 : 6), 1f, flip ? SpriteEffects.FlipVertically : SpriteEffects.None, 0);
                 legs[i].start = baseStart;
             }
             Main.EntitySpriteDraw(TextureAssets.Npc[Type].Value, NPC.Center - screenPos, null, drawColor, NPC.rotation, new Vector2(34, 70), 1f, SpriteEffects.None, 0);
@@ -110,5 +208,5 @@ namespace Origins.NPCs.Fiberglass {
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
             }
         }
-    }
+	}
 }
