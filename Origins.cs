@@ -458,6 +458,9 @@ namespace Origins {
                 if (Main.projectile[index].TryGetGlobalProjectile(out OriginGlobalProj originGlobalProj) && originGlobalProj.isFromMitosis) {
                     return GameShaders.Armor.GetShaderIdFromItemId(ItemID.StardustDye);
                 }
+				if (Main.projectile[index].ModProjectile is IShadedProjectile shadedProjectile) {
+                    return shadedProjectile.Shader;
+				}
                 return orig(index);
             };
 			On.Terraria.Graphics.Light.TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;

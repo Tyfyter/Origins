@@ -12,6 +12,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -98,18 +99,21 @@ namespace Origins.NPCs.Fiberglass {
 						if (NPC.ai[0] != 0 && i == NPC.ai[2]) {
                             continue;
 						}
-						if (i <= 1 && legStart.DistanceSQ(target.Center) < (totalLegLength * totalLegLength)) {
+						if (i <= 1 && legStart.DistanceSQ(target.Center) < (totalLegLength * totalLegLength * 0.75f)) {
                             NPC.ai[1] = 0;
-                            NPC.ai[0] = 2;
+                            NPC.ai[0] = 3;
                             NPC.ai[2] = i;
                         } else if (legStart.DistanceSQ(legTargets[i]) > (totalLegLength * totalLegLength)) {
-                            legTargets[i] = ((legs[i].start + new Vector2(0, 15.75f + (i/2) * 0.0625f)) * new Vector2(0.85f, 2.04f)).RotatedBy(NPC.rotation) * 4 + NPC.Center;
+                            legTargets[i] = GetStandPosition(
+                                ((legs[i].start + new Vector2(0, 15.75f + (i / 2) * 0.0625f)) * new Vector2(0.85f, 2.04f)).RotatedBy(NPC.rotation) * 4 + NPC.Center,
+                                legStart
+                            );
                         }
                     }
                     NPC.velocity = Vector2.Lerp(NPC.velocity, (Vector2)new PolarVec2(3 + DifficultyMult, NPC.rotation - MathHelper.PiOver2), 0.1f);
-					if (++NPC.ai[1] > 300) {
+					if (++NPC.ai[1] > 240) {
                         NPC.ai[1] = 0;
-                        NPC.ai[0] = 1;
+                        NPC.ai[0] = Main.rand.Next(1, 3);
 					}
                     break;
                 }
@@ -142,8 +146,39 @@ namespace Origins.NPCs.Fiberglass {
                         NPC.velocity = (Vector2)new PolarVec2(jumpSpeed, NPC.rotation - MathHelper.PiOver2);
                     }
                     break;
-				}
+                }
                 case 2: {
+                    NPC.velocity = Vector2.Lerp(NPC.velocity, default, 0.1f);
+                    NPC.ai[1]+=1f;
+                    float leg0Factor = (float)Math.Sin(NPC.ai[1] / 3);
+                    float leg0Factor2 = (float)Math.Cos(NPC.ai[1] / 3);
+                    float leg1Factor = (float)Math.Sin(NPC.ai[1] / 3 + Math.PI);
+                    float leg1Factor2 = (float)Math.Cos(NPC.ai[1] / 3 + 0.1);
+                    legTargets[0] = NPC.Center + (Vector2)new PolarVec2(84 + (8 * leg0Factor), NPC.rotation - MathHelper.PiOver2 + 0.09f + leg0Factor2 * 0.10f);
+                    legTargets[1] = NPC.Center + (Vector2)new PolarVec2(86 + (8 * leg1Factor), NPC.rotation - MathHelper.PiOver2 - 0.09f - leg1Factor2 * 0.10f);
+                    if (NPC.ai[1] > 180 - DifficultyMult * 30) {
+                        Vector2 position;
+                        int projectileType = ModContent.ProjectileType<Fiberglass_Thread>();
+                        for (int i = 5 + DifficultyMult; i-->0;) {
+                            PolarVec2 vec = new PolarVec2(Main.rand.Next(8 - DifficultyMult, 12 - DifficultyMult) * 64, Main.rand.NextFloat(0, MathHelper.TwoPi));
+                            Collision.AimingLaserScan(target.Center, target.Center + (Vector2)vec, 2, 3, out position, out float[] samples);
+                            position = position.SafeNormalize(Vector2.One) * samples.Average() + target.Center;
+                            Vector2 velocity = (Vector2)vec.RotatedBy(MathHelper.PiOver2 + Main.rand.NextFloat(0.1f, 0.1f)).WithLength(12);
+                            int firstEnd = Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, projectileType, 10, 1, Main.myPlayer, ai1:i + 1);
+                            int secondEnd = Projectile.NewProjectile(NPC.GetSource_FromAI(), position, -velocity, projectileType, 10, 1, Main.myPlayer, firstEnd, ai1: i + 1);
+
+                            int durBoost = Main.rand.Next(60, 120) * DifficultyMult;
+                            Main.projectile[firstEnd].timeLeft += durBoost;
+                            Main.projectile[firstEnd].netUpdate = true;
+                            Main.projectile[secondEnd].timeLeft += durBoost;
+                            Main.projectile[secondEnd].netUpdate = true;
+                        }
+                        NPC.ai[1] = 0;
+                        NPC.ai[0] = 0;
+                    }
+                    break;
+                }
+                case 3: {
 					if (++NPC.ai[1] > 16 - DifficultyMult) {
                         legTargets[(int)NPC.ai[2]] = target.Center;
                         if (NPC.ai[1] > 48 - DifficultyMult * 6) {
@@ -155,6 +190,29 @@ namespace Origins.NPCs.Fiberglass {
                 }
             }
         }
+        public static Vector2 GetStandPosition(Vector2 target, Vector2 legStart) {//candidate
+            HashSet<Point> checkedPoints = new HashSet<Point>();
+            Queue<Point> candidates = new Queue<Point>();
+            candidates.Enqueue(target.ToWorldCoordinates().ToPoint());
+            Tile tile;
+            Point current;
+			while (candidates.Count > 0) {
+                current = candidates.Dequeue();
+                checkedPoints.Add(current);
+				if (legStart.DistanceSQ(current.ToWorldCoordinates()) > (totalLegLength * totalLegLength)) {
+                    continue;
+				}
+                tile = Main.tile[current];
+                if ((tile.HasTile && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType])) || tile.WallType != WallID.None) {
+                    return current.ToWorldCoordinates();
+                }
+                if (!checkedPoints.Contains(current + new Point(1, 0))) candidates.Enqueue(current + new Point(1, 0));
+                if (!checkedPoints.Contains(current + new Point(-1, 0))) candidates.Enqueue(current + new Point(-1, 0));
+                if (!checkedPoints.Contains(current + new Point(0, 1))) candidates.Enqueue(current + new Point(0, 1));
+                if (!checkedPoints.Contains(current + new Point(0, -1))) candidates.Enqueue(current + new Point(0, -1));
+            }
+            return target;
+        }
         public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
             Rectangle legHitbox = new Rectangle(-4, -4, 8, 8);
             for (int i = 0; i < 8; i++) {
@@ -164,7 +222,7 @@ namespace Origins.NPCs.Fiberglass {
                 hitbox.Offset((int)offset.X, (int)offset.Y);
 				if (hitbox.Intersects(victimHitbox)) {
                     npcRect = hitbox;
-                    damageMultiplier = NPC.ai[0] == 2 ? 3 : 1.5f;
+                    damageMultiplier = NPC.ai[0] == 3 ? 3 : 1.5f;
                     return;
 				}
             }
@@ -204,9 +262,63 @@ namespace Origins.NPCs.Fiberglass {
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
-            } else if(damage>NPC.lifeMax*0.1f){
+            } else if(damage>NPC.lifeMax*0.1f) {
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3)+1}_Gore"));
             }
         }
+	}
+    public class Fiberglass_Thread : ModProjectile {
+		public override string Texture => "Origins/Projectiles/Pixel";
+		public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Fiberglass Thread");
+		}
+		public override void SetDefaults() {
+            Projectile.hostile = true;
+            Projectile.timeLeft = 600;
+            Projectile.width = Projectile.height = 8;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			//if (source.Context is string s) {
+                //Projectile.ai[0] = s[0];
+            Projectile other;
+			for (int i = 0; i < Main.maxProjectiles; i++) {
+                if (i == Projectile.whoAmI) continue;
+                other = Main.projectile[i];
+				if (i == Projectile.ai[0]) {
+                    other.ai[0] = Projectile.whoAmI;
+                    continue;
+				}
+				if (other.type == Type && other.ai[1] == Projectile.ai[1]) {
+                    other.Kill();
+				}
+			}
+			//}
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+            if (Projectile.ai[0] > -1) {
+                Projectile other = Main.projectile[(int)Projectile.ai[0]];
+                return Collision.CheckAABBvLineCollision2(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, other.Center);
+            }
+            return false;
+		}
+		public override void OnHitPlayer(Player target, int damage, bool crit) {
+			if (Main.masterMode && Main.rand.NextBool(4)) {
+                target.AddBuff(BuffID.Webbed, 30);
+			}
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+            Projectile.velocity = default;
+			return false;
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			if (Projectile.ai[0] > -1) {
+                Projectile other = Main.projectile[(int)Projectile.ai[0]];
+                Vector2 pos = new Vector2(Projectile.Center.X - Main.screenPosition.X, Projectile.Center.Y - Main.screenPosition.Y);
+                Vector2 scale = new Vector2((other.Center - Projectile.Center).Length(), 2);
+
+                Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, pos, null, lightColor, (other.Center - Projectile.Center).ToRotation(), new Vector2(0.5f, 0), scale, SpriteEffects.None, 0);
+            }
+			return false;
+		}
 	}
 }

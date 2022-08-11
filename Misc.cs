@@ -431,6 +431,9 @@ namespace Origins {
     public interface IGlowingWaterStyle {
         public void AddLight(ref Vector3 color, byte liquidAmount);
     }
+    public interface IShadedProjectile {
+        public int Shader { get; }
+    }
     public static class Elements {
         public const ushort Fire = 1;
         public const ushort Earth = 2;
@@ -1122,7 +1125,6 @@ namespace Origins {
             }
         }
         public static void DrawLine(this SpriteBatch spriteBatch, Color color, Vector2 start, Vector2 end, int thickness = 2) {
-            Vector2 drawOrigin = new Vector2(1, 1);
             Rectangle drawRect = new Rectangle(
                 (int)Math.Round(start.X - Main.screenPosition.X),
                 (int)Math.Round(start.Y - Main.screenPosition.Y),
