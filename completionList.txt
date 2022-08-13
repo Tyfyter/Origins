@@ -167,7 +167,7 @@ STATUS EFFECTS:
 (^) Impeding Shrapnel
 (X) Levitation
 (#3, ^2) Rasterize
-(%3) Riven Debuff !!!
+(%3) Riven Debuff (see proposal) !!!
 (^) Solvent
 (#, ^2) Totally Safe
 (#, ^2) Toxic Shock
@@ -234,7 +234,6 @@ ACCESSORIES:
 (^) Air Pack*
 (^) Air Tank*
 (@5, #) All-Knowing Mind*
-(X) Back-Up Mag
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
@@ -253,7 +252,7 @@ ACCESSORIES:
 (#, ^2) Sonar Visor*
 (^) Freeze Frame*
 (%3, X) Sun Medallion
-(@2, #) Symbiote Skull !!!
+(#, ^2) Symbiote Skull !!!
 
 (#, ^2) Asylum Whistle !!!
 (X) Lost Page
@@ -281,7 +280,7 @@ ACCESSORIES:
 (X) Backtack
 (#, ^2) Entangled Energy !!!
 (%3, X) Immortal Core
-(#3, ^2) Lazy Cloak
+(^) Lazy Cloak
 (X) Magnetic Brain
 (X) Mildew Urchin
 (#, ^2) Mysterious Spray !!!
@@ -378,6 +377,7 @@ MELEE WEAPONS:
 (^) Riverang
 (^) Spiker Sword
 (^) Tyrfing
+(#, ^2) Vorpal Sword
 
 (X) Envenomed Frenzy*
 (^) Fragarach
@@ -410,6 +410,7 @@ RANGED WEAPONS:
 (^) The Kruncher
 (^) 2-in-1 Shotty
 (^) 3-in-1 Shotty
+(#, ^2) Threemoepeater
 
 (#, ^2) Acrid Impaler
 (X) Adamantite Harpoon Gun
@@ -488,6 +489,7 @@ SUMMONER WEAPONS:
 (^) Teardown
 (^) Woodsprite Staff
 
+(@2, #) Back-Up Mag
 (^) Bomb Artifact
 (X) Enkindled Rose
 (X) Mildew Whip
@@ -778,7 +780,7 @@ MUSIC:
 (X) Mildew Carrion
 (X) Quantux
 (X) Restless Flame
-(X) Riven Crest !!!
+(X) Primordial Amoeba !!!
 (X) Severus
 (X) Void Wyrm
 

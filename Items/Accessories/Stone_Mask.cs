@@ -12,7 +12,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             sbyte slot = Item.faceSlot;
-            Item.CloneDefaults(ItemID.WormScarf);
+            Item.CloneDefaults(ItemID.Aglet);
             Item.neckSlot = -1;
             Item.faceSlot = slot;
             Item.rare = ItemRarityID.White;
