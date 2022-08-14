@@ -1,20 +1,27 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria.Graphics.Effects;
 using Origins.Items.Materials;
 using Origins.Projectiles;
 using Origins.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Personalities;
+using Terraria.Graphics.Light;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI;
 using static Origins.Origins;
 using static Tyfyter.Utils.UITools;
+using System.Diagnostics;
+using System.IO;
+using SysDraw = System.Drawing;
 
 namespace Origins {
     public partial class OriginSystem : ModSystem {
@@ -89,7 +96,7 @@ namespace Origins {
             if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().plagueSightLight) {
                 scale *= 1.03f;
             }
-		}
+        }
 		public override void UpdateUI(GameTime gameTime) {
             if (Main.playerInventory) {
                 if (setBonusUI?.CurrentState is Eyndum_Core_UI eyndumCoreUIState) {

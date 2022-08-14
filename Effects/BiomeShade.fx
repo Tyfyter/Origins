@@ -42,7 +42,7 @@ float4 DefiledShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : CO
 	return color*(sampleColor+(1,1,1,1))/2;
 }
 
-float4 RivenShade(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
+float4 RivenShade_Old(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
 	const float pi = 3.1415926535897932384626433832795;
 	const float halfpi = 1.5707963267948966192313216916398;
 	const float pisquared = 10;//9.8696044010893586188344909998761;
@@ -71,8 +71,5 @@ technique Technique1{
 	}
 	pass DefiledShade{
 		PixelShader = compile ps_2_0 DefiledShade();
-	}
-	pass RivenShade{
-		PixelShader = compile ps_2_0 RivenShade();
 	}
 }

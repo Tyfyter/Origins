@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ModLoader;
 
-namespace ExampleMod.Backgrounds {
+namespace Origins.Backgrounds {
 	public class Void_Background : ModUndergroundBackgroundStyle {
 		public override void FillTextureArray(int[] textureSlots) {
 			textureSlots[0] = BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Void_Background");

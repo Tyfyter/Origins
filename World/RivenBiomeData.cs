@@ -18,6 +18,7 @@ using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Weapons.Riven;
 using Origins.Items.Other.Testing;
 using Origins.Water;
+using Origins.Backgrounds;
 
 namespace Origins.World.BiomeData {
 	public class Riven_Hive : ModBiome {
@@ -25,6 +26,8 @@ namespace Origins.World.BiomeData {
 		public static IItemDropRule LesionDropRule;
 		public override int Music => Origins.Music.Riven;
 		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Riven_Water_Style>();
+		// turns out if a biome doesn't have a background it's treated as if its water style has no priority
+		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Riven_Surface_Background>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
@@ -38,9 +41,6 @@ namespace Origins.World.BiomeData {
 			//OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			//Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(originPlayer.ZoneRivenProgressSmoothed);
 			//player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", originPlayer.ZoneRivenProgressSmoothed > 0, player.Center);
-			if (isActive) {
-				Main.waterStyle = WaterStyle.Slot;
-			}
 		}
 		public override void Load() {
 			FirstLesionDropRule = ItemDropRule.NotScalingWithLuck(ItemID.TheUndertaker);// presumably Riven Splitter?

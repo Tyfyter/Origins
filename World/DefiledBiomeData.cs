@@ -14,7 +14,7 @@ using Terraria.Localization;
 using Terraria.GameContent.Achievements;
 using Origins.Projectiles.Misc;
 using Origins.Items.Accessories;
-using ExampleMod.Backgrounds;
+using Origins.Backgrounds;
 using Terraria.Graphics.Effects;
 using static Origins.OriginExtensions;
 using Terraria.Chat;

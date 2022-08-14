@@ -41,11 +41,26 @@ namespace Origins.Tiles.Riven {
             recursion = true;
             WorldGen.TileFrame(i, j, resetFrame, noBreak);
             recursion = false;
-            if (Main.tile[i, j].TileFrameX == 54 && Main.tile[i, j].TileFrameY == 18 && !WorldGen.genRand.NextBool(4)) {
-                Main.tile[i, j].TileFrameX = (short)(18 * (WorldGen.genRand.Next(1, 3)));
+            if ((!WorldGen.genRand.NextBool(Main.tile[i, j].TileFrameX == 54 ? 12 : 8)) || CheckOtherTilesGlow(i, j)) {
+                Main.tile[i, j].TileFrameY += 90;
             }
             return false;
         }
+        bool CheckOtherTilesGlow(int i, int j) {
+			if (Main.tile[i + 1, j].TileIsType(Type) && Main.tile[i + 1, j].TileFrameY > 90) {
+                return true;
+            }
+            if (Main.tile[i - 1, j].TileIsType(Type) && Main.tile[i + 1, j].TileFrameY > 90) {
+                return true;
+            }
+            if (Main.tile[i, j + 1].TileIsType(Type) && Main.tile[i + 1, j].TileFrameY > 90) {
+                return true;
+            }
+            if (Main.tile[i, j - 1].TileIsType(Type) && Main.tile[i + 1, j].TileFrameY > 90) {
+                return true;
+            }
+            return false;
+		}
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
             this.DrawTileGlow(i, j, spriteBatch);
         }
