@@ -1,7 +1,5 @@
-using Origins.Items.Materials;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -10,7 +8,7 @@ namespace Origins.Items.Weapons.Riven {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Vorpal Sword");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("You hear whispers nearby...");
 			//glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}
@@ -22,7 +20,7 @@ namespace Origins.Items.Weapons.Riven {
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.knockBack = 7.5f;
+			Item.knockBack = 0f;
 			Item.value = 5000;
             Item.useTurn = true;
 			Item.rare = ItemRarityID.Blue;

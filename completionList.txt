@@ -205,7 +205,7 @@ ARMOR:
 (^) Defiled Armor*
 (#3, ^2) Felnum Armor
 (^) Fiberglass Armor
-(#, ^2) Myth Armor !!!
+(#2, ^2) Myth Armor !!!
 (#3, ^2) Riven Armor
 
 (^) Acrid Armor
@@ -235,6 +235,7 @@ ACCESSORIES:
 (^) Air Tank*
 (@5, #) All-Knowing Mind*
 (^) Blast-Resistant Plate*
+(X) Bluelight Glasses
 (^) Bomb Charm*
 (^) Bomb Handling Device*
 (^) Cybernetic Brain*
@@ -245,12 +246,14 @@ ACCESSORIES:
 (#, ^2) Gun Glove
 (X) Locus Control Tuner
 (#3, ^2) Mitosis !!!
+(X) Moon Shoes
 (#, ^2) Olid Organ*
 (#, ^2) Parasitic Influence* !!!
 (^) Pneumatic Bomb Thrower*
 (#, ^2) Return To Sender* !!!
 (#, ^2) Sonar Visor*
 (^) Freeze Frame*
+(X) Stasis Field
 (%3, X) Sun Medallion
 (#, ^2) Symbiote Skull !!!
 
@@ -377,7 +380,7 @@ MELEE WEAPONS:
 (^) Riverang
 (^) Spiker Sword
 (^) Tyrfing
-(#, ^2) Vorpal Sword !!!
+(#2, ^2) Vorpal Sword !!!
 
 (X) Envenomed Frenzy*
 (^) Fragarach
@@ -418,6 +421,7 @@ RANGED WEAPONS:
 (^) Boiler
 (@, ^3) Cleaver Rifle
 (X) Cobalt Harpoon Gun
+(X) Cursed Flute
 (^) Dragon's Breath
 (^) Firespit
 (X) Mythril Harpoon Gun
