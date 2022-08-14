@@ -80,6 +80,7 @@ namespace Origins.Items.Accessories {
 			Projectile.width = 16;
 			Projectile.height = 16;
 			Projectile.aiStyle = 0;
+			Projectile.tileCollide = false;
 		}
 		public float movementFactor {
 			get => Projectile.ai[0];

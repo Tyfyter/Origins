@@ -15,18 +15,19 @@ namespace Origins.Items.Weapons.Riven {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 30;
+			Item.damage = 17;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 42;
 			Item.height = 50;
-			Item.useTime = 28;
-			Item.useAnimation = 28;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 7.5f;
 			Item.value = 5000;
             Item.useTurn = true;
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
+			Item.ArmorPenetration = 9999;
 			//Item.glowMask = glowmask;
 		}
 		static int textIndex = -1;
