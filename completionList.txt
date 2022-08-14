@@ -201,11 +201,11 @@ NPC DIALOGUE:
 
 ARMOR:
 ---
-(%3, X) Bony Carapace Armor
 (^) Cryosten Armor (Wiki needs work)*
 (^) Defiled Armor*
 (#3, ^2) Felnum Armor
 (^) Fiberglass Armor
+(#, ^2) Myth Armor !!!
 (#3, ^2) Riven Armor
 
 (^) Acrid Armor
@@ -377,7 +377,7 @@ MELEE WEAPONS:
 (^) Riverang
 (^) Spiker Sword
 (^) Tyrfing
-(#, ^2) Vorpal Sword
+(#, ^2) Vorpal Sword !!!
 
 (X) Envenomed Frenzy*
 (^) Fragarach
@@ -404,13 +404,14 @@ RANGED WEAPONS:
 (^) Bolt Gun
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
-(X) Harpoon Gun
+(X) Harpoon Gun !!!
 (^) Longbone
 (#, ^2) Riven Splitter !!!
+(#, ^2) Tendon Tear !!!
 (^) The Kruncher
+(#, ^2) Threemoepeater !!!
 (^) 2-in-1 Shotty
 (^) 3-in-1 Shotty
-(#, ^2) Threemoepeater
 
 (#, ^2) Acrid Impaler
 (X) Adamantite Harpoon Gun
@@ -556,7 +557,7 @@ TILES:
 (X) Absorber Culture
 (#, ^2) Amoeba Fluid !!!
 (X) Ancient Stone Brick
-(#, ^2) Batholith*
+(#3, ^2) Batholith*
 (^) Bleeding Obsidian
 (X) Cubekon Altar
 (#, ^2) Decaying Mush
@@ -584,6 +585,7 @@ TILES:
 (X) Batholith Wall
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
+(#, ^2) Fiberglass Wall
 (^) Spug Flesh Wall
 (X) Sulphur Stone Wall
 

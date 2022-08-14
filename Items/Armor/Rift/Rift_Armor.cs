@@ -17,7 +17,7 @@ namespace Origins.Items.Armor.Rift {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.defense = 9;
+            Item.defense = 7;
             Item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
@@ -50,7 +50,7 @@ namespace Origins.Items.Armor.Rift {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.defense = 13;
+            Item.defense = 10;
             Item.wornArmor = true;
             Item.rare = ItemRarityID.Pink;
         }
@@ -76,7 +76,7 @@ namespace Origins.Items.Armor.Rift {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.defense = 11;
+            Item.defense = 9;
             Item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {

@@ -15,8 +15,8 @@ namespace Origins.Items.Armor.Mimic {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 11;
-			Item.rare = ItemRarityID.Pink;
+			Item.defense = 5;
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed += 0.1f;
@@ -106,9 +106,9 @@ namespace Origins.Items.Armor.Mimic {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 15;
+			Item.defense = 11;
 			Item.wornArmor = true;
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
 			player.lifeRegenCount += 2;
@@ -133,8 +133,8 @@ namespace Origins.Items.Armor.Mimic {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 12;
-			Item.rare = ItemRarityID.Pink;
+			Item.defense = 8;
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClasses.Explosive) += 0.1f;
