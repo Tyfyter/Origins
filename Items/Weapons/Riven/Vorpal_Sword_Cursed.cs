@@ -34,7 +34,7 @@ namespace Origins.Items.Weapons.Riven {
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 0f;
 			Item.value = 5000;
-            Item.useTurn = true;
+            Item.useTurn = false;
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.ArmorPenetration = 9999;
@@ -157,10 +157,39 @@ namespace Origins.Items.Weapons.Riven {
 			}
 			return true;
 		}
+		int times = 0;
+		float dir = 0;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			SoundEngine.PlaySound(SoundID.Item1, position);
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, ai1: player.itemAnimation == player.itemTime ? -1 : 1);
+			if (times > 0) {
+				velocity = OriginExtensions.Vec2FromPolar(dir, velocity.Length());
+				times--;
+				player.direction = Math.Sign(velocity.X);
+			}
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, ai0: player.itemAnimation == player.itemTime ? 1 : 0, ai1: player.itemAnimation == player.itemTime ? -1 : 1);
 			return false;
+		}
+		public override void UpdateInventory(Player player) {
+			if (Main.rand.NextBool(180)) {
+				NPC npc;
+				for (int n = 0; n < Main.maxNPCs; n++) {
+					npc = Main.npc[n];
+					if (npc.DistanceSQ(player.MountedCenter) < 128 * 128 && npc.CanBeChasedBy()) {
+						for (int i = 0; i < Main.InventoryItemSlotsCount; i++) {
+							if (player.inventory[i].ModItem == this) {
+								player.selectedItem = i;
+								player.controlUseItem = true;
+								dir = (npc.Center - player.MountedCenter).ToRotation();
+								times = 2;
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
+		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
+			if(times > 0)player.controlUseItem = true;
 		}
 	}
 	public class Cursed_Vorpal_Sword_Slash : ModProjectile {
@@ -184,16 +213,24 @@ namespace Origins.Items.Weapons.Riven {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			player.immune = true;
-			player.immuneAlpha = 0;
-			player.immuneTime = 15;
 			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
 			Projectile.rotation = MathHelper.Lerp(-2.75f, 2f, swingFactor) * Projectile.ai[1];
-			player.velocity = Vector2.Lerp(
-				Vector2.Lerp(player.velocity, Vector2.Zero, swingFactor),
-				Projectile.velocity * 3f,
-				MathHelper.Lerp(swingFactor, 0, swingFactor)
-			);
+			switch ((int)Projectile.ai[0]) {
+				case 0:
+				player.velocity = Vector2.Lerp(
+					Vector2.Lerp(player.velocity, Vector2.Zero, swingFactor),
+					Projectile.velocity * 3f,
+					MathHelper.Lerp(swingFactor, 0, swingFactor)
+				);
+				break;
+				case 1:
+				player.velocity = Vector2.Lerp(
+					Vector2.Lerp(player.velocity, Vector2.Zero, swingFactor),
+					Vector2.Zero,
+					MathHelper.Lerp(swingFactor, 0, swingFactor)
+				);
+				break;
+			}
 			float realRotation = Projectile.rotation + Projectile.velocity.ToRotation();
 			Projectile.Center = player.MountedCenter - Projectile.velocity + (Vector2)new PolarVec2(32, realRotation);
 			Projectile.timeLeft = player.itemTime * Projectile.MaxUpdates;

@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Riven {
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 0f;
 			Item.value = 5000;
-            Item.useTurn = true;
+            Item.useTurn = false;
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.ArmorPenetration = 9999;
@@ -188,9 +188,6 @@ namespace Origins.Items.Weapons.Riven {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			player.immune = true;
-			player.immuneAlpha = 0;
-			player.immuneTime = 15;
 			float swingFactor = 1 - player.itemTime / (float)player.itemTimeMax;
 			Projectile.rotation = MathHelper.Lerp(-2.75f, 2f, swingFactor) * Projectile.ai[1];
 			/*player.velocity = Vector2.Lerp(
