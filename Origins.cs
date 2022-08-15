@@ -787,7 +787,7 @@ namespace Origins {
                 TextureAssets.GlowMask = glowMasks;
                 return (short)(glowMasks.Length - 1);
             }
-            else return 0;
+            else return -1;
         }
         public static short AddGlowMask(ModItem item, string suffix = "_Glow") {
             if (Main.netMode != NetmodeID.Server) {
@@ -802,7 +802,7 @@ namespace Origins {
                     return (short)(glowMasks.Length - 1);
                 }
             }
-            return 0;
+            return -1;
         }
         internal static void AddHelmetGlowmask(int armorID, string texture) {
             if (Main.netMode != NetmodeID.Server && instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
