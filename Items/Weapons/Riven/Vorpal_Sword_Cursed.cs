@@ -154,6 +154,21 @@ namespace Origins.Items.Weapons.Riven {
 			if (line.Name == "SnickerSnack") {
 				line.X += Main.rand.Next(-2, 3);
 				line.Y += Main.rand.Next(-2, 3);
+			}else if (line.Name == "ItemName") {
+				Terraria.UI.Chat.ChatManager.DrawColorCodedStringWithShadow(
+					Main.spriteBatch,
+					line.Font,
+					line.Text,
+					new Vector2(line.X, line.Y),
+					new Color(0.65f, 0f, 0.65f, Main.mouseTextColor / 255f).MultiplyRGBA(Main.MouseTextColorReal),
+					new Color(0.15f, 0f, 0f) * (Main.mouseTextColor / 255f),
+					line.Rotation,
+					line.Origin,
+					line.BaseScale,
+					line.MaxWidth,
+					line.Spread
+				);
+				return false;
 			}
 			return true;
 		}
@@ -170,7 +185,7 @@ namespace Origins.Items.Weapons.Riven {
 			return false;
 		}
 		public override void UpdateInventory(Player player) {
-			if (Main.rand.NextBool(180)) {
+			if (Main.rand.NextBool(60)) {
 				NPC npc;
 				for (int n = 0; n < Main.maxNPCs; n++) {
 					npc = Main.npc[n];
