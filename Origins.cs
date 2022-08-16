@@ -29,6 +29,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -40,9 +41,11 @@ using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Default;
+using Terraria.ModLoader.IO;
 using Terraria.UI;
 using Terraria.Utilities;
 using static Origins.OriginExtensions;
@@ -464,7 +467,78 @@ namespace Origins {
                 return orig(index);
             };
 			On.Terraria.Graphics.Light.TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
+			On.Terraria.GameContent.UI.Elements.UIWorldListItem.GetIcon += UIWorldListItem_GetIcon;
         }
+        private FieldInfo _UIWorldListItem_data;
+        private FieldInfo _worldIcon;
+        FieldInfo UIWorldListItem_Data => _UIWorldListItem_data ??=
+            typeof(Terraria.GameContent.UI.Elements.UIWorldListItem)
+            .GetField("_data", BindingFlags.NonPublic | BindingFlags.Instance);
+        FieldInfo UIWorldListItem_WorldIcon => _worldIcon ??=
+            typeof(Terraria.GameContent.UI.Elements.UIWorldListItem)
+            .GetField("_worldIcon", BindingFlags.NonPublic | BindingFlags.Instance);
+        private Asset<Texture2D> UIWorldListItem_GetIcon(On.Terraria.GameContent.UI.Elements.UIWorldListItem.orig_GetIcon orig, Terraria.GameContent.UI.Elements.UIWorldListItem self) {
+            void changeWorldIcon() {
+                try {
+                    WorldFileData data = (WorldFileData)UIWorldListItem_Data.GetValue(self);
+                    if (!data.DrunkWorld && !data.ForTheWorthy && !data.NotTheBees && !data.Anniversary && !data.DontStarve) {
+                        string path = Path.ChangeExtension(data.Path, ".twld");
+                        if (!FileUtilities.Exists(path, data.IsCloudSave)) {
+                            return;
+                        }
+                        byte[] buf = FileUtilities.ReadAllBytes(path, data.IsCloudSave);
+                        if (buf[0] == 31 && buf[1] == 139) {
+                            TagCompound tag = TagIO.FromStream(new MemoryStream(buf));
+                            TagCompound worldTag = tag.GetList<TagCompound>("modData")
+                            .Where(v => v.GetString("mod") == Name).First();
+                            OriginSystem originSystem = new OriginSystem();
+                            originSystem.LoadWorldData(worldTag.GetCompound("data"));
+                            var image = (Terraria.GameContent.UI.Elements.UIImage)UIWorldListItem_WorldIcon.GetValue(self);
+                            image.AllowResizingDimensions = false;
+                            switch (originSystem.worldEvil) {
+                                case OriginSystem.evil_wastelands:
+                                image.SetImage(Assets.Request<Texture2D>("UI/WorldGen/IconDefiled" + (data.IsHardMode ? "Hallow" : "")));
+                                break;
+                                case OriginSystem.evil_riven:
+                                image.SetImage(Assets.Request<Texture2D>("UI/WorldGen/IconRiven" + (data.IsHardMode ? "Hallow" : "")));
+                                break;
+                            }
+                        }
+                    }
+                } catch (Exception) { }
+            }
+            Task.Run(changeWorldIcon);
+            return orig(self);
+        }
+        // poor performance, switching in hopes that an async
+        /*private Asset<Texture2D> UIWorldListItem_GetIcon(On.Terraria.GameContent.UI.Elements.UIWorldListItem.orig_GetIcon orig, Terraria.GameContent.UI.Elements.UIWorldListItem self) {
+            try {
+                WorldFileData data = (WorldFileData)UIWorldListItem_Data.GetValue(self);
+                if (!data.DrunkWorld && !data.ForTheWorthy && !data.NotTheBees && !data.Anniversary && !data.DontStarve) {
+                    string path = Path.ChangeExtension(data.Path, ".twld");
+                    if (!FileUtilities.Exists(path, data.IsCloudSave)) {
+                        goto def;
+                    }
+                    byte[] buf = FileUtilities.ReadAllBytes(path, data.IsCloudSave);
+                    if (buf[0] == 31 && buf[1] == 139) {
+                        TagCompound tag = TagIO.FromStream(new MemoryStream(buf));
+                        TagCompound worldTag = tag.GetList<TagCompound>("modData")
+                        .Where(v => v.GetString("mod") == Name).First();
+                        OriginSystem originSystem = new OriginSystem();
+                        originSystem.LoadWorldData(worldTag.GetCompound("data"));
+						switch (originSystem.worldEvil) {
+                            case OriginSystem.evil_wastelands:
+                            return Assets.Request<Texture2D>("UI/WorldGen/IconDefiled" + (data.IsHardMode ? "Hallow" : ""));
+                            case OriginSystem.evil_riven:
+                            return Assets.Request<Texture2D>("UI/WorldGen/IconDefiled" + (data.IsHardMode ? "Hallow" : ""));
+                        }
+                    }
+                }
+			} catch (Exception) {}
+            def:
+            return orig(self);
+		}*/
+
         [Obsolete("can't be implemented without more knowledge of MonoMod")]
         static bool PlantLoader_ShakeTree(int x, int y, int type, ref bool createLeaves) {
             UnifiedRandom genRand = WorldGen.genRand.Clone();
