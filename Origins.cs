@@ -493,7 +493,8 @@ namespace Origins {
                             .Where(v => v.GetString("mod") == Name).First();
                             OriginSystem originSystem = new OriginSystem();
                             originSystem.LoadWorldData(worldTag.GetCompound("data"));
-                            var image = (Terraria.GameContent.UI.Elements.UIImage)UIWorldListItem_WorldIcon.GetValue(self);
+                            var image = UIWorldListItem_WorldIcon.GetValue(self) as Terraria.GameContent.UI.Elements.UIImage;
+                            if (image is null) return;
                             image.AllowResizingDimensions = false;
                             switch (originSystem.worldEvil) {
                                 case OriginSystem.evil_wastelands:
