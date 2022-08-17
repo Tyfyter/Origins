@@ -468,8 +468,58 @@ namespace Origins {
             };
 			On.Terraria.Graphics.Light.TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
 			On.Terraria.GameContent.UI.Elements.UIWorldListItem.GetIcon += UIWorldListItem_GetIcon;
+			On.Terraria.GameContent.UI.Elements.UIGenProgressBar.DrawSelf += UIGenProgressBar_DrawSelf;
         }
-        private FieldInfo _UIWorldListItem_data;
+
+        private AutoCastingAsset<Texture2D> _texOuterDefiled;
+        private AutoCastingAsset<Texture2D> _texOuterRiven;
+        private AutoCastingAsset<Texture2D> _texOuterLower;
+        private FieldInfo _visualOverallProgress;
+        private FieldInfo _targetOverallProgress;
+        private FieldInfo _visualCurrentProgress;
+        private FieldInfo _targetCurrentProgress;
+        private MethodInfo _drawFilling2;
+        private void UIGenProgressBar_DrawSelf(On.Terraria.GameContent.UI.Elements.UIGenProgressBar.orig_DrawSelf orig, Terraria.GameContent.UI.Elements.UIGenProgressBar self, SpriteBatch spriteBatch) {
+            byte evil = OriginSystem.WorldEvil;
+            if (evil > 4) {
+
+                if (_texOuterDefiled.Value is null) _texOuterDefiled = Assets.Request<Texture2D>("UI/WorldGen/Outer_Defiled");
+                if (_texOuterRiven.Value is null) _texOuterRiven = Assets.Request<Texture2D>("UI/WorldGen/Outer_Riven");
+                if (_texOuterLower.Value is null) _texOuterLower = Main.Assets.Request<Texture2D>("Images/UI/WorldGen/Outer_Lower");
+                if (_visualOverallProgress is null) _visualOverallProgress = typeof(Terraria.GameContent.UI.Elements.UIGenProgressBar).GetField("_visualOverallProgress", BindingFlags.NonPublic|BindingFlags.Instance);
+                if (_targetOverallProgress is null) _targetOverallProgress = typeof(Terraria.GameContent.UI.Elements.UIGenProgressBar).GetField("_targetOverallProgress", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (_visualCurrentProgress is null) _visualCurrentProgress = typeof(Terraria.GameContent.UI.Elements.UIGenProgressBar).GetField("_visualCurrentProgress", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (_targetCurrentProgress is null) _targetCurrentProgress = typeof(Terraria.GameContent.UI.Elements.UIGenProgressBar).GetField("_targetCurrentProgress", BindingFlags.NonPublic | BindingFlags.Instance);
+                if (_drawFilling2 is null) _drawFilling2 = typeof(Terraria.GameContent.UI.Elements.UIGenProgressBar).GetMethod("DrawFilling2", BindingFlags.NonPublic | BindingFlags.Instance);
+
+                const int _smallBarWidth = 508;
+
+                const int _longBarWidth = 570;
+                bool flag = evil == OriginSystem.evil_riven;
+                if (WorldGen.drunkWorldGen && Main.rand.NextBool(2)) {
+                    flag = !flag;
+                }
+                _visualOverallProgress.SetValue(self, _targetOverallProgress.GetValue(self));
+                _visualCurrentProgress.SetValue(self, _targetCurrentProgress.GetValue(self));
+                CalculatedStyle dimensions = self.GetDimensions();
+                int completedWidth = (int)((float)_visualOverallProgress.GetValue(self) * _longBarWidth);
+                int completedWidth2 = (int)((float)_visualCurrentProgress.GetValue(self) * _smallBarWidth);
+                Vector2 value = new Vector2(dimensions.X, dimensions.Y);
+                Color color = default(Color);
+                color.PackedValue = (flag ? 4294946846u : 4289374890u);
+                _drawFilling2.Invoke(self, new object[] { spriteBatch, value + new Vector2(20f, 40f), 16, completedWidth, _longBarWidth, color, Color.Lerp(color, Color.Black, 0.5f), new Color(48, 48, 48) });
+                color.PackedValue = 4290947159u;
+                _drawFilling2.Invoke(self, new object[] { spriteBatch, value + new Vector2(50f, 60f), 8, completedWidth2, _smallBarWidth, color, Color.Lerp(color, Color.Black, 0.5f), new Color(33, 33, 33) });
+                Rectangle r = dimensions.ToRectangle();
+                r.X -= 8;
+                spriteBatch.Draw(flag ? _texOuterRiven : _texOuterDefiled, r.TopLeft(), Color.White);
+                spriteBatch.Draw(_texOuterLower.Value, r.TopLeft() + new Vector2(44f, 60f), Color.White);
+            } else {
+                orig(self, spriteBatch);
+            }
+		}
+
+		private FieldInfo _UIWorldListItem_data;
         private FieldInfo _worldIcon;
         FieldInfo UIWorldListItem_Data => _UIWorldListItem_data ??=
             typeof(Terraria.GameContent.UI.Elements.UIWorldListItem)
@@ -493,9 +543,8 @@ namespace Origins {
                             .Where(v => v.GetString("mod") == Name).First();
                             OriginSystem originSystem = new OriginSystem();
                             originSystem.LoadWorldData(worldTag.GetCompound("data"));
-                            var image = UIWorldListItem_WorldIcon.GetValue(self) as Terraria.GameContent.UI.Elements.UIImage;
-                            if (image is null) return;
-                            image.AllowResizingDimensions = false;
+							if (UIWorldListItem_WorldIcon.GetValue(self) is not Terraria.GameContent.UI.Elements.UIImage image) return;
+							image.AllowResizingDimensions = false;
                             switch (originSystem.worldEvil) {
                                 case OriginSystem.evil_wastelands:
                                 image.SetImage(Assets.Request<Texture2D>("UI/WorldGen/IconDefiled" + (data.IsHardMode ? "Hallow" : "")));

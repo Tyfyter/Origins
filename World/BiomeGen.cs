@@ -47,7 +47,14 @@ namespace Origins {
             }
             }));*/
             #endregion _
-            tasks.Insert(0, new PassLegacy("setting worldEvil type", (GenerationProgress progress, GameConfiguration _) =>{worldEvil|=crimson?evil_crimson:evil_corruption;}));
+            bool altWorldEvil = (WorldGen.genRand.Next(0, 2) + OriginConfig.Instance.worldTypeSkew) > 0;
+            tasks.Insert(0, new PassLegacy("setting worldEvil type", (GenerationProgress progress, GameConfiguration _) =>{
+				if (altWorldEvil) {
+                    worldEvil = crimson ? evil_riven : evil_wastelands;
+                } else {
+                    worldEvil = crimson ? evil_crimson : evil_corruption;
+                }
+            }));
             int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
             if(genIndex != -1) {
                 int duskStoneID = TileType<Dusk_Stone>();
@@ -138,7 +145,7 @@ namespace Origins {
             }
             genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
             Stack<Point> DefiledHearts = new Stack<Point>() { };
-            if(genIndex != -1&&(WorldGen.genRand.Next(0, 2)+OriginConfig.Instance.worldTypeSkew)>0) {
+            if(genIndex != -1 && altWorldEvil) {
                 bool dungeonLeft = dungeonX < Main.maxTilesX / 2;
                 int i2;
                 ushort grassType = TileID.Grass;
@@ -153,7 +160,7 @@ namespace Origins {
                 ushort iceType = TileID.IceBlock;
                 List<(Point, int)> EvilSpikes = new List<(Point, int)>() { };
                 tasks[genIndex] = new PassLegacy("Corruption", (GenerationProgress progress, GameConfiguration _) => {
-                    worldEvil = crimson ? evil_riven : evil_wastelands;
+                    //worldEvil = crimson ? evil_riven : evil_wastelands;
                     if(crimson) {
                         getEvilTileConversionTypes(evil_riven, out stoneType, out grassType, out plantType, out sandType, out sandstoneType, out hardenedSandType, out iceType);
                         getEvilWallConversionTypes(evil_riven, out stoneWallTypes, out hardenedSandWallTypes, out sandstoneWallTypes);
