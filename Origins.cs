@@ -503,13 +503,13 @@ namespace Origins {
                 _visualCurrentProgress.SetValue(self, _targetCurrentProgress.GetValue(self));
                 CalculatedStyle dimensions = self.GetDimensions();
                 int completedWidth = (int)((float)_visualOverallProgress.GetValue(self) * _longBarWidth);
-                int completedWidth2 = (int)((float)_visualCurrentProgress.GetValue(self) * _smallBarWidth);
-                Vector2 value = new Vector2(dimensions.X, dimensions.Y);
+                int completedWidthSmall = (int)((float)_visualCurrentProgress.GetValue(self) * _smallBarWidth);
+                Vector2 value = new(dimensions.X, dimensions.Y);
                 Color color = default(Color);
                 color.PackedValue = (flag ? 4294946846u : 4289374890u);
                 _drawFilling2.Invoke(self, new object[] { spriteBatch, value + new Vector2(20f, 40f), 16, completedWidth, _longBarWidth, color, Color.Lerp(color, Color.Black, 0.5f), new Color(48, 48, 48) });
                 color.PackedValue = 4290947159u;
-                _drawFilling2.Invoke(self, new object[] { spriteBatch, value + new Vector2(50f, 60f), 8, completedWidth2, _smallBarWidth, color, Color.Lerp(color, Color.Black, 0.5f), new Color(33, 33, 33) });
+                _drawFilling2.Invoke(self, new object[] { spriteBatch, value + new Vector2(50f, 60f), 8, completedWidthSmall, _smallBarWidth, color, Color.Lerp(color, Color.Black, 0.5f), new Color(33, 33, 33) });
                 Rectangle r = dimensions.ToRectangle();
                 r.X -= 8;
                 spriteBatch.Draw(flag ? _texOuterRiven : _texOuterDefiled, r.TopLeft(), Color.White);
