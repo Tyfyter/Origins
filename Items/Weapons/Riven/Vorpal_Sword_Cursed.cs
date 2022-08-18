@@ -204,7 +204,11 @@ namespace Origins.Items.Weapons.Riven {
 			}
 		}
 		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
-			if(times > 0)player.controlUseItem = true;
+			Item.autoReuse = false;
+			if(times > 0) {
+				player.controlUseItem = true;
+				Item.autoReuse = true;
+			}
 		}
 	}
 	public class Cursed_Vorpal_Sword_Slash : ModProjectile {

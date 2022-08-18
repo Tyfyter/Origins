@@ -46,7 +46,7 @@ namespace Origins.Items.Armor.Myth {
             Item.rare = ItemRarityID.Green;
         }
         public override void UpdateEquip(Player player) {
-        player.jumpSpeedBoost += 0.45f;
+            player.jumpSpeedBoost += 0.45f;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
