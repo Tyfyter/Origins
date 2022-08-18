@@ -21,7 +21,6 @@ namespace Origins.Items.Other.Consumables {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Strange_String>(), 8);
-			//recipe.AddRecipeGroup(OriginSystem.DeathweedRecipeGroupID);
 			recipe.AddTile(TileID.CookingPots);
 			recipe.Register();
 		}

@@ -67,6 +67,10 @@ namespace Origins.Projectiles.Misc {
             }
         }
         public override void Kill(int timeLeft) {
+            if ((int)Projectile.ai[0] == 2) {
+                WorldGen.shadowOrbCount = 2;
+                Projectile.ai[0] = 1;
+            }
             if ((int)Projectile.ai[0] == 1) {
                 Color color = Color.Lerp(new Color(50, 255, 130), new Color(222, 222, 222), WorldGen.shadowOrbCount / 2f);
 

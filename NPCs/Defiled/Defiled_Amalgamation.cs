@@ -22,6 +22,8 @@ using Tyfyter.Utils;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
+using Terraria.Localization;
+using Terraria.Chat;
 
 namespace Origins.NPCs.Defiled {
     [AutoloadBossHead]
@@ -100,6 +102,19 @@ namespace Origins.NPCs.Defiled {
 
         public override void OnSpawn(IEntitySource source) {
             spawnDA = false;
+            if (Main.netMode == NetmodeID.Server) {
+                ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", NPC.GetTypeNetName()), new Color(222, 222, 222));
+            } else {
+                if (Main.netMode == NetmodeID.SinglePlayer) {
+                    Main.NewText(Language.GetTextValue("Announcement.HasAwoken", NPC.TypeName), 222, 222, 222);
+                }
+                SoundEngine.PlaySound(
+                    new SoundStyle("Origins/Sounds/Custom/Defiled_Kill1") {
+                        Pitch = -1,
+                        Volume = 0.66f
+                    }, NPC.Center
+                );
+            }
         }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -117,7 +132,6 @@ namespace Origins.NPCs.Defiled {
         public override void AI() {
             NPC.TargetClosest();
             if (NPC.HasPlayerTarget) {
-
                 Player target = Main.player[NPC.target];
                 float leftArmTarget = 0.5f;
                 float rightArmTarget = 0.25f;
@@ -368,6 +382,8 @@ namespace Origins.NPCs.Defiled {
                 }
                 OriginExtensions.AngularSmoothing(ref rightArmRot, rightArmTarget, armSpeed);
                 OriginExtensions.AngularSmoothing(ref leftArmRot, leftArmTarget, armSpeed * 1.5f);
+			} else {
+                NPC.EncourageDespawn(10);
             }
             NPC.alpha = NPC.noTileCollide ? 75 : 0;
         }

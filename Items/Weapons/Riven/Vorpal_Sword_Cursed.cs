@@ -240,9 +240,9 @@ namespace Origins.Items.Weapons.Riven {
 				break;
 				case 1:
 				player.velocity = Vector2.Lerp(
-					Vector2.Lerp(player.velocity, Vector2.Zero, swingFactor),
-					Vector2.Zero,
-					MathHelper.Lerp(swingFactor, 0, swingFactor)
+					player.velocity,
+					Vector2.Lerp(player.velocity, Vector2.Zero, swingFactor * swingFactor),
+					MathHelper.Lerp(swingFactor * swingFactor, 0, swingFactor)
 				);
 				break;
 			}

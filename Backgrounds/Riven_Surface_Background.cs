@@ -5,15 +5,15 @@ using Terraria.ModLoader;
 namespace Origins.Backgrounds {
 	public class Riven_Surface_Background : ModSurfaceBackgroundStyle {
 		public override int ChooseFarTexture() {
-			return BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Riven_Background_Background3");
+			return BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Riven_Background3");
 		}
 
 		public override int ChooseMiddleTexture() {
-			return BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Riven_Background_Background2");
+			return BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Riven_Background2");
 		}
 
 		public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b) {
-			return BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Riven_Background_Background3");
+			return BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Riven_Background");
 		}
 
 		public override void ModifyFarFades(float[] fades, float transitionSpeed) {
