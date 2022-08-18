@@ -6,7 +6,7 @@ namespace Origins.Items.Other.Consumables {
     public class Jam_Sandwich : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Jam Sandwich");
-			Tooltip.SetDefault("Moderate improvements to all stats \n'What kind of jam is this?'");
+			Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'What kind of jam is this?'");
 			SacrificeTotal = 5;
 		}
 		public override void SetDefaults() {

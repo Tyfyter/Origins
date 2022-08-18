@@ -43,7 +43,7 @@ BOSSES AND MINI-BOSSES:
 (#, $, ^2) Seer
 
 (^) Defiled Amalgmation*
-(#2, $, ^2) Fiberglass Weaver !!!
+($) Fiberglass Weaver !!!
 (X) Primordial Amoeba !!!
 
 (X) Aurelian Bouncer
@@ -709,7 +709,7 @@ CONSUMABLES:
 (^) Krunch Mix*
 (X) One of a Kind Cookie
 (X) Potato
-(#, ^2) Soul Spaghetti !!!
+(^) Soul Spaghetti !!!
 (X) Strange Soda
 (X) Tasty Vanilla Shake
 

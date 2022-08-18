@@ -9,7 +9,7 @@ namespace Origins.Items.Other.Consumables {
 	public class Krunch_Mix : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Krunch Mix");
-			Tooltip.SetDefault("Increased regeneration and minor improvements to all stats \n'And, that's why I love...'");
+			Tooltip.SetDefault("{$CommonItemTooltip.MinorStats} and further increased regeneration\n'And, that's why I love...'");
 			SacrificeTotal = 5;
 		}
 		public override void SetDefaults() {
