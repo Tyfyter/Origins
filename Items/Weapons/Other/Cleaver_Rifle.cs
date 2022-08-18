@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,9 +16,14 @@ namespace Origins.Items.Weapons.Other {
             Item.damage = 39;
             Item.useAnimation = Item.useTime = 10;
             Item.shootSpeed*=2;
-            Item.width = 106;
-            Item.height = 32;
-            Item.scale = 0.7f;
+            Item.width = 92;
+            Item.height = 28;
+            //Item.scale = 0.75f;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.HallowedBar, 13);
+            recipe.Register();
         }
         public override Vector2? HoldoutOffset() => new Vector2(-18, 0);
     }

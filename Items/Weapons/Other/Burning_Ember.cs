@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 using Terraria.ID;
-using Origins.Projectiles.Weapons;
-using Microsoft.Xna.Framework.Graphics;
+using Terraria.ModLoader;
 using Tyfyter.Utils;
-using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Other {
     public class Burning_Ember : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Burning Ember");
+            DisplayName.SetDefault("Amber of Embers");
             Tooltip.SetDefault("");
             Item.staff[Item.type] = true;
             SacrificeTotal = 1;
@@ -28,8 +21,8 @@ namespace Origins.Items.Weapons.Other {
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = 11;
             Item.useTime = 11;
-            Item.width = 78;
-            Item.height = 78;
+            Item.width = 48;
+            Item.height = 54;
             Item.mana = 3;
             Item.shoot = ModContent.ProjectileType<Burning_Ember_P>();
             Item.shootSpeed = 8f;

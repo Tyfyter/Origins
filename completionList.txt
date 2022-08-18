@@ -43,7 +43,7 @@ BOSSES AND MINI-BOSSES:
 (#, $, ^2) Seer
 
 (^) Defiled Amalgmation*
-($) Fiberglass Weaver !!!
+($, ^2/3) Fiberglass Weaver !!!
 (X) Primordial Amoeba !!!
 
 (X) Aurelian Bouncer
@@ -206,7 +206,7 @@ ARMOR:
 (#3, ^2) Felnum Armor
 (^) Fiberglass Armor
 (#2, ^2) Myth Armor !!!
-(#3, ^2) Riven Armor
+(#3, ^2) Riven Armor !!!
 
 (^) Acrid Armor
 (@, ^3) Bleeding Obsidian Armor
@@ -380,13 +380,13 @@ MELEE WEAPONS:
 (^) Riverang
 (^) Spiker Sword
 (^) Tyrfing
-(#2, ^2) Vorpal Sword !!!
+(#3/4, ^2) Vorpal Sword !!!
 
-(X) Envenomed Frenzy*
+(@5, #) Envenomed Frenzy*
 (^) Fragarach
 (^) Knee Slapper
-(X) Nematoclaw*
-(X) Scale Saw
+(#, ^2) Nematoclaw*
+(#, ^2) Scale Saw
 (^) Telephone Pole*
 
 (X) Mass Blade*
@@ -407,7 +407,7 @@ RANGED WEAPONS:
 (^) Bolt Gun
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
-(X) Harpoon Gun !!!
+(#2, ^2) Harpoon Gun !!!
 (^) Longbone
 (#, ^2) Riven Splitter !!!
 (#, ^2) Tendon Tear !!!
@@ -419,7 +419,7 @@ RANGED WEAPONS:
 (#, ^2) Acrid Impaler
 (X) Adamantite Harpoon Gun
 (^) Boiler
-(@, ^3) Cleaver Rifle
+(^) Cleaver Rifle
 (X) Cobalt Harpoon Gun
 (X) Cursed Flute
 (^) Dragon's Breath
@@ -430,7 +430,7 @@ RANGED WEAPONS:
 (X) Spray 'N Pray
 (#4, ^) Tiny Sniper
 (X) Titanium Harpoon Gun
-(@, ^3) Vipershot
+(@5, ^3) Vipershot
 
 (%3, X) Barrel Blaster
 (^) Laser Tag Gun
@@ -456,11 +456,11 @@ MAGIC WEAPONS:
 (#, ^2) Slashswarm !!!
 (^) Tones of Agony
 
-(@, ^3) Bled Out Staff
-(X) Boulder Blender
-(@, ^3) Burning Ember
+(^) Bled Out Staff
+(#, ^2) Boulder Blender
+(^) Amber of Embers
 (^) Dismay
-(X) Meltdown
+(#, ^2) Meltdown
 (^) Seam Beam
 (^) Splashid
 
@@ -521,6 +521,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Bomb Launcher !!!
 (#, ^2) Defiled Spirit !!!
 (^) Hand Grenade Launcher
+(#, ^2) Floaty Bomb !!!
 (^) Impact Explosives
 (^) Lightning Grenade
 (^) Peatball*
@@ -534,10 +535,10 @@ EXPLOSIVE WEAPONS:
 (^) Thermite Launcher
 
 (%3, ^) Ace Shrapnel
-(X) Acid Bomb
+(#, ^2) Acid Bomb
 (^) Acid Grenade
 (^) Black Hole Bomb
-(X) Crystal Bomb
+(#, ^2) Crystal Bomb
 (^) Crystal Grenade
 (@, ^3) Fallout
 (X) Grenade Lawnchair
@@ -641,7 +642,7 @@ MATERIALS:
 (X) Brineglow
 (^) Bud Barnacle
 (^) Defiled Bar*
-(#, ^2) Defiled Powder !!!
+(^) Defiled Powder
 (^) Encrusted Bar
 (^) Felnum Bar
 (^) Fiberglass Shard
@@ -653,7 +654,7 @@ MATERIALS:
 (^) Tree Sap
 (^) Undead Chunk*
 (^) Wilting Rose
-(^) Wrycoral !!!
+(^) Wrycoral
 
 (^) Acid Bottle
 (^) Acrid Bar
@@ -709,11 +710,11 @@ CONSUMABLES:
 (^) Krunch Mix*
 (X) One of a Kind Cookie
 (X) Potato
-(^) Soul Spaghetti !!!
+(^) Soul Spaghetti
 (X) Strange Soda
 (X) Tasty Vanilla Shake
 
-(#, ^2) Nerve Impulse Manipulator* !!!
+(^) Nerve Impulse Manipulator*
 (X) Quantum Cell
 (#, ^2) Suspicious Looking Ice Cream !!!
 (X) The Button

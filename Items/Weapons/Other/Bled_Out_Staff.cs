@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -45,7 +44,7 @@ namespace Origins.Items.Weapons.Other {
             Projectile.extraUpdates = 1;
         }
         public override void AI() {
-	        Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.GemDiamond, 0f, 0f, 0, new Color(255,255,0), 1f);
+	        Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.GemDiamond, 0f, 0f, 0, new Color(255,0,255), 1f);
 	        dust.noGravity = true;
 	        dust.velocity/=2;
         }
