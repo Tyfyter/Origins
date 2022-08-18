@@ -40,6 +40,12 @@ namespace Origins.Items.Weapons.Riven {
 			Item.UseSound = null;
 			//Item.glowMask = glowmask;
 		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ModContent.ItemType<Vorpal_Sword_Cursed>());
+			recipe.AddTile(TileID.BewitchingTable);
+			recipe.Register();
+		}
 		static int textIndex = -1;
 		static int delayTime = 0;
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
