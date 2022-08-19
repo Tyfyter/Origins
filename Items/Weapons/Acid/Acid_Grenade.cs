@@ -1,15 +1,10 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles.Weapons;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginExtensions;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Acid {
-	public class Acid_Grenade : ModItem {
+    public class Acid_Grenade : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acid Grenade");
@@ -26,7 +21,7 @@ namespace Origins.Items.Weapons.Acid {
 			Item.shootSpeed*=1.5f;
             Item.knockBack = 5f;
             Item.ammo = ItemID.Grenade;
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.LightRed;
             Item.glowMask = glowmask;
         }
         public override void AddRecipes() {

@@ -28,6 +28,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             DisplayName.SetDefault("Agility Core");
             SacrificeTotal = 1;
         }
+        public override void SetDefaults() {
+            Item.rare = Crimson.ID;
+        }
         public override void UpdateEquip(Player player) {
             player.wingTimeMax *= 2;
             player.moveSpeed *= 4f;
@@ -42,6 +45,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             DisplayName.SetDefault("Combat Core");
             SacrificeTotal = 1;
         }
+        public override void SetDefaults() {
+            Item.rare = Crimson.ID;
+        }
         public override void UpdateEquip(Player player) {
             player.GetDamage(DamageClass.Generic) *= 1.24f;
             player.moveSpeed *= 1.5f;
@@ -55,6 +61,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Construction Core");
             SacrificeTotal = 1;
+        }
+        public override void SetDefaults() {
+            Item.rare = Crimson.ID;
         }
         public override void UpdateEquip(Player player) {
             player.tileSpeed *= 2f;
@@ -71,6 +80,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             DisplayName.SetDefault("Vitality Core");
             Tooltip.SetDefault("Get a life.");
             SacrificeTotal = 1;
+        }
+        public override void SetDefaults() {
+            Item.rare = Crimson.ID;
         }
         public override void UpdateEquip(Player player) {
             player.statLifeMax2 += player.statLifeMax2 / 2;

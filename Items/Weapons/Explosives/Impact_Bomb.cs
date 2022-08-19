@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,7 +20,7 @@ namespace Origins.Items.Weapons.Explosives {
             Item.shoot = ModContent.ProjectileType<Impact_Bomb_P>();
 			Item.shootSpeed*=1.75f;
             Item.knockBack = 13f;
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Blue;
 		}
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

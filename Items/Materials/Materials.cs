@@ -1,13 +1,12 @@
 ﻿using Origins.Tiles;
-using Origins.Tiles.Defiled;
-using Origins.Tiles.Riven;
-using Origins.Tiles.Dusk;
 using Origins.Tiles.Brine;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Dusk;
+using Origins.Tiles.Riven;
 using Terraria;
-using Terraria.GameContent.Creative;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
 
 namespace Origins.Items.Materials {
     public class Acid_Bottle : ModItem {
@@ -222,7 +221,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = Crimson.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -271,7 +270,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = Crimson.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -301,7 +300,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = Crimson.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -342,7 +341,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = Crimson.ID;
         }
     }
     public class Formium_Bar : ModItem {
@@ -353,7 +352,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = Butterscotch.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -369,7 +368,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ItemRarityID.Purple;
         }
     }
     public class Infested_Bar : ModItem {
@@ -494,7 +493,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = Butterscotch.ID;
             Item.glowMask = glowmask;
         }
     }
@@ -676,7 +675,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = Butterscotch.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 3);
@@ -696,7 +695,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = Crimson.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 2);
@@ -758,12 +757,12 @@ namespace Origins.Items.Materials {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Unpowered Eyndum Core");
             Tooltip.SetDefault("'Limitless potential'");
-            Item.rare = ItemRarityID.Red;
             SacrificeTotal = 2;
             
         }
         public override void SetDefaults() {
             Item.maxStack = 8;
+            Item.rare = Butterscotch.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -820,7 +819,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = Butterscotch.ID;
             Item.glowMask = glowmask;
         }
         public override void AddRecipes() {

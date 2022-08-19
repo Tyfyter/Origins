@@ -27,6 +27,7 @@ namespace Origins.Items.Weapons.Explosives {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Boomstick);
             Item.useAmmo = ItemID.Grenade;
+            Item.rare = ItemRarityID.Pink;
         }
         public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
             Player drawPlayer = drawInfo.drawPlayer;

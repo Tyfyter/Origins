@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,10 +20,10 @@ namespace Origins.Items.Weapons.Other {
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = 19;
             Item.useAnimation = 19;
-            Item.knockBack = 2f;
+            Item.knockBack = 0f;
             Item.value = 50000;
             Item.shoot = ProjectileID.None;
-            Item.rare = ItemRarityID.Blue;
+            Item.rare = ItemRarityID.White;
             Item.autoReuse = true;
             Item.scale = 1f;
         }

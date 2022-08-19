@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Other {
             Item.useAnimation = 22;
             Item.knockBack = 9.5f;
             Item.value = 500000;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = ItemRarityID.Lime;
             Item.shoot = Cometburn_P.ID;
             Item.shootSpeed = 10f;
             Item.autoReuse = true;
@@ -51,9 +51,6 @@ namespace Origins.Items.Weapons.Other {
             recipe.AddIngredient(ModContent.ItemType<Space_Rock>(), 15);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();
-        }
-        public override void ModifyTooltips(List<TooltipLine> tooltips) {
-            tooltips[0].OverrideColor = new Color(0, Main.mouseTextColor, 0, Main.mouseTextColor);
         }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			for (int i = 0; i < 3; i++) {

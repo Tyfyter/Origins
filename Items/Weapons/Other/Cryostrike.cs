@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Projectiles.Weapons;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 //using static Origins.OriginExtensions;
@@ -26,7 +25,7 @@ namespace Origins.Items.Weapons.Other {
 			Item.mana = 8;
 			Item.value = 5000;
             Item.shoot = ModContent.ProjectileType<Cryostrike_P>();
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.White;
             Item.scale = 0.85f;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {

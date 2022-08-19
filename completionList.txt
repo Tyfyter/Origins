@@ -380,7 +380,7 @@ MELEE WEAPONS:
 (^) Riverang
 (^) Spiker Sword
 (^) Tyrfing
-(#3/4, ^2) Vorpal Sword !!!
+(^) Vorpal Sword
 
 (@5, #) Envenomed Frenzy*
 (^) Fragarach

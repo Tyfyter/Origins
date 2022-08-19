@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,8 +11,8 @@ namespace Origins.Items.Weapons.Other {
         public ushort Element => Elements.Earth;
 
         public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tones Of Agony");
-			Tooltip.SetDefault("A tome full of ancient spells used for malicious intent.");
+			DisplayName.SetDefault("Tones of Agony");
+			Tooltip.SetDefault("'Cries of the suffering'");
             SacrificeTotal = 1;
         }
 		public override void SetDefaults() {

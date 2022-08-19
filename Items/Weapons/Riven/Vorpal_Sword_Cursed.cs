@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Riven {
 			Item.knockBack = 0f;
 			Item.value = 5000;
             Item.useTurn = false;
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = Cursed.ID;
 			Item.UseSound = SoundID.Item1;
 			Item.ArmorPenetration = 9999;
 			Item.UseSound = null;
@@ -154,21 +154,6 @@ namespace Origins.Items.Weapons.Riven {
 			if (line.Name == "SnickerSnack") {
 				line.X += Main.rand.Next(-2, 3);
 				line.Y += Main.rand.Next(-2, 3);
-			}else if (line.Name == "ItemName") {
-				Terraria.UI.Chat.ChatManager.DrawColorCodedStringWithShadow(
-					Main.spriteBatch,
-					line.Font,
-					line.Text,
-					new Vector2(line.X, line.Y),
-					new Color(0.65f, 0f, 0.65f, Main.mouseTextColor / 255f).MultiplyRGBA(Main.MouseTextColorReal),
-					new Color(0.15f, 0f, 0f) * (Main.mouseTextColor / 255f),
-					line.Rotation,
-					line.Origin,
-					line.BaseScale,
-					line.MaxWidth,
-					line.Spread
-				);
-				return false;
 			}
 			return true;
 		}

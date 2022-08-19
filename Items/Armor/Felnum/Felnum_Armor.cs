@@ -14,6 +14,7 @@ namespace Origins.Items.Armor.Felnum {
         }
 		public override void SetDefaults() {
             Item.defense = 5;
+            Item.rare = ItemRarityID.Green;
 		}
         public override void UpdateEquip(Player player) {
             player.GetDamage(DamageClass.Generic) += 0.04f;
@@ -58,7 +59,8 @@ namespace Origins.Items.Armor.Felnum {
         }
 		public override void SetDefaults() {
             Item.defense = 6;
-		}
+            Item.rare = ItemRarityID.Green;
+        }
         public override void UpdateEquip(Player player) {
             player.GetDamage(DamageClass.Generic) += 0.02f;
             player.moveSpeed+=0.05f;
@@ -79,7 +81,8 @@ namespace Origins.Items.Armor.Felnum {
         }
 		public override void SetDefaults() {
             Item.defense = 5;
-		}
+            Item.rare = ItemRarityID.Green;
+        }
         public override void UpdateEquip(Player player) {
             player.moveSpeed+=0.05f;
         }

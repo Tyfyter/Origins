@@ -1,7 +1,6 @@
 ﻿using Origins.Buffs;
 using Origins.Items.Materials;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,7 +15,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             Item.accessory = true;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = Butterscotch.ID;
             Item.glowMask = glowmask;
         }
         public override void UpdateEquip(Player player) {

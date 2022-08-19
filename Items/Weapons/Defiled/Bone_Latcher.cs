@@ -1,21 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.Items.Weapons.Defiled {
-	public class Bone_Latcher : ModItem {
+    public class Bone_Latcher : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bone Latcher");
@@ -28,7 +23,7 @@ namespace Origins.Items.Weapons.Defiled {
 
 			Item.DamageType = DamageClass.Melee;
 			Item.damage = 20;
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
 		}
 		public override int ChoosePrefix(UnifiedRandom rand) {

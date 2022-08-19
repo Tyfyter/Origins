@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Projectiles.Misc;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -31,15 +29,12 @@ namespace Origins.Items.Weapons.Other {
             Item.knockBack = 9.5f;
             Item.value = 500000;
             Item.shoot = ProjectileID.None;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = ItemRarityID.LightPurple;
             Item.shoot = ModContent.ProjectileType<Fragarach_P>();
             Item.shootSpeed = 8f;
             Item.autoReuse = true;
             Item.scale = 1f;
             Item.glowMask = glowmask;
-        }
-        public override void ModifyTooltips(List<TooltipLine> tooltips) {
-            tooltips[0].OverrideColor = new Color(50, 230, 230).MultiplyRGBA(Main.MouseTextColorReal);
         }
     }
     public class Fragarach_P : ModProjectile {

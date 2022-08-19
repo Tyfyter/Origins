@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Explosives {
             Item.shoot = ModContent.ProjectileType<Shrapnel_Bomb_P>();
 			Item.shootSpeed*=0.95f;
             Item.knockBack = 13f;
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Pink;
 		}
     }
     public class Shrapnel_Bomb_P : ModProjectile {

@@ -1,18 +1,17 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.ID;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
 using Tyfyter.Utils;
-using Terraria.GameContent.Creative;
-using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Other {
     public class Gravaulter : ModItem {
@@ -39,7 +38,7 @@ namespace Origins.Items.Weapons.Other {
             Item.useAnimation = 12;
             Item.knockBack = 9.5f;
             Item.value = 500000;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = ItemRarityID.Lime;
             Item.shoot = Gravaulter_P.ID;
             Item.shootSpeed = 10f;
             Item.autoReuse = false;
@@ -54,9 +53,6 @@ namespace Origins.Items.Weapons.Other {
             recipe.AddIngredient(ModContent.ItemType<Space_Rock>(), 25);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();
-        }
-        public override void ModifyTooltips(List<TooltipLine> tooltips) {
-            tooltips[0].OverrideColor = new Color(0, Main.mouseTextColor, 0, Main.mouseTextColor);
         }
         public override void HoldItem(Player player) {
             int heldProjectile = player.GetModPlayer<OriginPlayer>().heldProjectile;

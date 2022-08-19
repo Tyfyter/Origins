@@ -19,6 +19,7 @@ namespace Origins.Items.Weapons.Other {
             Item.width = 92;
             Item.height = 28;
             //Item.scale = 0.75f;
+            Item.rare = ItemRarityID.Pink;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

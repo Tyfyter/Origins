@@ -28,6 +28,7 @@ namespace Origins.Items.Tools {
 			//Wooden Fishing Pole is 9f and Golden Fishing Rod is 17f
 			Item.shootSpeed = 13.7f;
 			Item.shoot = ModContent.ProjectileType<Lightning_Rod_Bobber>();
+			Item.rare = ItemRarityID.Green;
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			const float factor = 1.5f;

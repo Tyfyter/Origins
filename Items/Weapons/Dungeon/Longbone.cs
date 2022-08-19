@@ -32,6 +32,7 @@ namespace Origins.Items.Weapons.Dungeon {
             Item.width = 24;
             Item.height = 56;
             Item.autoReuse = false;
+            Item.rare = ItemRarityID.Green;
         }
         public override Vector2? HoldoutOffset() {
             return new Vector2(-8f,0);

@@ -40,6 +40,7 @@ namespace Origins.Tiles {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.DemoniteOre);
             Item.createTile = TileType<Felnum_Ore>();
+            Item.rare = ItemRarityID.Green;
 		}
     }
 }

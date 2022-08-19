@@ -1,15 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Felnum {
-	public class Felnum_Golf_Ball : ModItem {
+    public class Felnum_Golf_Ball : ModItem {
 		public override string Texture => "Terraria/Images/Item_"+ItemID.GolfBallDyedBrown;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Golf Ball");
@@ -21,6 +16,7 @@ namespace Origins.Items.Weapons.Felnum {
 			Item.DamageType = DamageClass.Generic;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Felnum_Golf_Ball_P>();
+			Item.rare = ItemRarityID.Green;
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			damage = damage.MultiplyBonuses(1.5f);

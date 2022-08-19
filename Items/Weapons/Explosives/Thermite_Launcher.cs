@@ -1,22 +1,13 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Weapons.Acid;
 using Origins.Items.Weapons.Ammo;
-using Origins.Items.Weapons.Felnum;
 using System;
-using System.IO;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Graphics;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
-	public class Thermite_Launcher : ModItem {
+    public class Thermite_Launcher : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Thermite Launcher");
 			Tooltip.SetDefault("Burn.\nUses Thermite Canisters for ammo");
@@ -35,7 +26,7 @@ namespace Origins.Items.Weapons.Explosives {
             Item.useAmmo = ModContent.ItemType<Thermite_Canister>();
             Item.knockBack = 2f;
             Item.shootSpeed = 12f;
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
             type = Item.shoot;

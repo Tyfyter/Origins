@@ -1,17 +1,13 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
-using Origins.Items.Materials;
-using Origins.Items.Other.Fish;
+﻿using Origins.Items.Materials;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Misc;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class Nerve_Impulse_Manipulator : ModItem {
+    public class Nerve_Impulse_Manipulator : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Nerve Impulse Manipulator");
 			Tooltip.SetDefault("Summons the Defiled Amalgamation");
@@ -21,6 +17,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WormFood);
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override bool CanUseItem(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneDefiled && !NPC.AnyNPCs(ModContent.NPCType<Defiled_Amalgamation>());

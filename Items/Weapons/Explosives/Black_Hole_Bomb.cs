@@ -1,20 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Effects;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using System;
-using static Origins.OriginExtensions;
-using static Microsoft.Xna.Framework.MathHelper;
 using Tyfyter.Utils;
-using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
+using static Microsoft.Xna.Framework.MathHelper;
 
 namespace Origins.Items.Weapons.Explosives {
-	public class Black_Hole_Bomb : ModItem {
+    public class Black_Hole_Bomb : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Black Hole Bomb");
 			Tooltip.SetDefault("Explode. Implode");
@@ -29,7 +24,7 @@ namespace Origins.Items.Weapons.Explosives {
             Item.shoot = ModContent.ProjectileType<Black_Hole_Bomb_P>();
 			Item.shootSpeed*=2;
             Item.knockBack = 13f;
-			Item.rare = ItemRarityID.Green;
+			Item.rare = Crimson.ID;
 		}
     }
     public class Black_Hole_Bomb_P : ModProjectile {

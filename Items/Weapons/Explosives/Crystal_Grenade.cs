@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.shootSpeed*=1.5f;
             Item.knockBack = 5f;
             Item.ammo = ItemID.Grenade;
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.LightRed;
 		}
         public override void AddRecipes() {
         }

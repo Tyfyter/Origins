@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
     public class Queen_of_Hearts : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Queen of Hearts");
-            Tooltip.SetDefault("+2 minion slots\nIncreases max health by 30 for every active minion\nExpert");
+            Tooltip.SetDefault("+2 minion slots\nIncreases max health by 30 for every active minion");
             SacrificeTotal = 1;
             Main.RegisterItemAnimation(Type, new DrawAnimationVertical(8, 5, true));//uses "ping-pong" animation to reduce file size
         }

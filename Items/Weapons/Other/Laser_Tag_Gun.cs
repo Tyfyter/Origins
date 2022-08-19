@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Other {
 			Item.mana = 10;
 			Item.value = 70000;
             Item.shoot = ModContent.ProjectileType<Laser_Tag_Laser>();
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Lime;
             Item.glowMask = glowmask;
             Item.scale = 1;
 		}

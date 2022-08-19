@@ -4,15 +4,11 @@ using Origins.Items.Materials;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Projectiles.Misc;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Felnum {
     public class Felnum_Wand : ModItem {
@@ -32,6 +28,7 @@ namespace Origins.Items.Weapons.Felnum {
             //item.mana = 0;
             //item.useTime = 1;
             //item.useAnimation = 10;
+            Item.rare = ItemRarityID.Green;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

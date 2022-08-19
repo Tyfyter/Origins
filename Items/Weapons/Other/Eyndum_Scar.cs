@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Other {
             Item.knockBack = 9.5f;
             Item.value = 500000;
             Item.shoot = ProjectileID.None;
-            Item.rare = ItemRarityID.Purple;
+            Item.rare = Crimson.ID;
             Item.autoReuse = true;
             Item.scale = 1f;
         }

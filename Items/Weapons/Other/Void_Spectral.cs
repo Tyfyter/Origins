@@ -1,14 +1,13 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
-using Microsoft.Xna.Framework.Graphics;
-using Tyfyter.Utils;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
+using Terraria.GameContent;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Other {
     public class Void_Spectral : ModItem {

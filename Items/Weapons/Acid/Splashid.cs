@@ -3,7 +3,6 @@ using Origins.Projectiles.Weapons;
 using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -32,7 +31,7 @@ namespace Origins.Items.Weapons.Acid {
 			Item.mana = 18;
 			Item.value = 5000;
             Item.shoot = ModContent.ProjectileType<Acid_Shot>();
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.LightRed;
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {

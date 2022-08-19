@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
+using Origins.Tiles.Dusk;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -17,7 +19,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Flamelash);
-            Item.damage = 25;
+            Item.damage = 31;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.useAnimation = 11;
             Item.useTime = 11;
@@ -28,6 +30,15 @@ namespace Origins.Items.Weapons.Other {
             Item.shootSpeed = 8f;
             Item.autoReuse = true;
             //item.scale = 0.8f;
+            Item.rare = ItemRarityID.Pink;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Amber, 8);
+            recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 4);
+            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 10);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
         }
     }
     public class Burning_Ember_P : ModProjectile {

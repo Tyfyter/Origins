@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Other {
 			Item.mana = 4;
 			Item.value = 5000;
             Item.shoot = ModContent.ProjectileType<Rigged_Cubix_P>();
-			Item.rare = ItemRarityID.Green;
+			Item.rare = Butterscotch.ID;
 			Item.UseSound = null;
 			Item.glowMask = glowmask;
 		}

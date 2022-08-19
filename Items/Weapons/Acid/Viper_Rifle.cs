@@ -1,10 +1,9 @@
-﻿using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
+﻿using Microsoft.Xna.Framework;
 using Origins.Projectiles;
+using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Acid {
     public class Viper_Rifle : ModItem {
@@ -23,7 +22,7 @@ namespace Origins.Items.Weapons.Acid {
             Item.height = 40;
             Item.autoReuse = false;
             Item.scale = 0.75f;
-            Item.rare = ItemRarityID.Pink;
+            Item.rare = ItemRarityID.LightRed;
             Item.UseSound = Origins.Sounds.HeavyCannon;
         }
         public override Vector2? HoldoutOffset() => new Vector2(-6, 0);

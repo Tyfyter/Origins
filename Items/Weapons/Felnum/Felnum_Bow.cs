@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Felnum {
     public class Felnum_Bow : ModItem {
@@ -26,6 +20,7 @@ namespace Origins.Items.Weapons.Felnum {
             Item.useTime = Item.useAnimation = 32;
             Item.shootSpeed*=2.5f;
             Item.autoReuse = false;
+            Item.rare = ItemRarityID.Green;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

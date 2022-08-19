@@ -1,20 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.NPCs;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
 using Tyfyter.Utils;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Defiled {
-	public class Knee_Slapper : ModItem {
+    public class Knee_Slapper : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Knee Slapper");
 			Tooltip.SetDefault("'Fish have feelings too'");
@@ -35,7 +30,7 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.shootSpeed = 16f;
 			Item.value = 5000;
             Item.useTurn = true;
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
 		}
