@@ -221,7 +221,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = Crimson.ID;
+            Item.rare = CrimsonRarity.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -270,7 +270,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = Crimson.ID;
+            Item.rare = CrimsonRarity.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -300,7 +300,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = Crimson.ID;
+            Item.rare = CrimsonRarity.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -341,7 +341,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = Crimson.ID;
+            Item.rare = CrimsonRarity.ID;
         }
     }
     public class Formium_Bar : ModItem {
@@ -695,7 +695,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = Crimson.ID;
+            Item.rare = CrimsonRarity.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 2);

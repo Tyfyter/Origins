@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Riven {
 			Item.knockBack = 0f;
 			Item.value = 5000;
             Item.useTurn = false;
-			Item.rare = Cursed.ID;
+			Item.rare = CursedRarity.ID;
 			Item.UseSound = SoundID.Item1;
 			Item.ArmorPenetration = 9999;
 			Item.UseSound = null;

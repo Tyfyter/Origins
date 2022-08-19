@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.useAnimation = 9;
 			Item.value = 5000;
             Item.shoot = ModContent.ProjectileType<Missile_Minigun_P1>();
-			Item.rare = Crimson.ID;
+			Item.rare = CrimsonRarity.ID;
             Item.autoReuse = true;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {

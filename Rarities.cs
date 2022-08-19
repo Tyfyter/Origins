@@ -1,24 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins {
-	public class Cursed : ModRarity {
+	public class CursedRarity : ModRarity {
 		public static int ID { get; private set; }
-		public override Color RarityColor => new Color(136, 22, 156);
+		public static Color Color => new Color(0.65f, 0f, 0.65f, Main.mouseTextColor / 255f).MultiplyRGBA(Main.MouseTextColorReal);
+		public override Color RarityColor => Color;//new Color(136, 22, 156);
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}
 		public override int GetPrefixedRarity(int offset, float valueMult) {
-			switch (offset) {
-				case 0:
-					return ID;
-				default:
-					return ItemRarityID.Count + offset;
-			}
+			return ID;
 		}
 	}
-		public class AltCyanRarity : ModRarity {
+	public class AltCyanRarity : ModRarity {
 		public static int ID { get; private set; }
 		public override Color RarityColor => new Color(43, 145, 255);
 		public override void SetStaticDefaults() {
@@ -48,17 +45,17 @@ namespace Origins {
 		public override int GetPrefixedRarity(int offset, float valueMult) {
 			switch (offset) {
 				case 0:
-					return ID;
+				return ID;
 				case 1:
-					return Crimson.ID;
+				return CrimsonRarity.ID;
 				case 2:
-					return RoyalBlue.ID;
+				return RoyalBlueRarity.ID;
 				default:
-					return ItemRarityID.Count + offset;
+				return ItemRarityID.Count + offset;
 			}
 		}
 	}
-	public class Crimson : ModRarity {
+	public class CrimsonRarity : ModRarity {
 		public static int ID { get; private set; }
 		public override Color RarityColor => new Color(164, 29, 7);
 		public override void SetStaticDefaults() {
@@ -67,17 +64,17 @@ namespace Origins {
 		public override int GetPrefixedRarity(int offset, float valueMult) {
 			switch (offset) {
 				case 0:
-					return ID;
+				return ID;
 				case 1:
-					return RoyalBlue.ID;
+				return RoyalBlueRarity.ID;
 				case 2:
-					return RoyalBlue.ID;
+				return RoyalBlueRarity.ID;
 				default:
-					return ItemRarityID.Count + offset;
+				return ItemRarityID.Count + offset;
 			}
 		}
 	}
-	public class RoyalBlue : ModRarity {
+	public class RoyalBlueRarity : ModRarity {
 		public static int ID { get; private set; }
 		public override Color RarityColor => new Color(12, 42, 165);
 		public override void SetStaticDefaults() {
@@ -86,9 +83,9 @@ namespace Origins {
 		public override int GetPrefixedRarity(int offset, float valueMult) {
 			switch (offset) {
 				case 0:
-					return ID;
+				return ID;
 				default:
-					return ItemRarityID.Count + offset;
+				return ItemRarityID.Count + offset;
 			}
 		}
 	}

@@ -29,7 +29,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.rare = Crimson.ID;
+            Item.rare = CrimsonRarity.ID;
         }
         public override void UpdateEquip(Player player) {
             player.wingTimeMax *= 2;
@@ -46,7 +46,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.rare = Crimson.ID;
+            Item.rare = CrimsonRarity.ID;
         }
         public override void UpdateEquip(Player player) {
             player.GetDamage(DamageClass.Generic) *= 1.24f;
@@ -63,7 +63,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.rare = Crimson.ID;
+            Item.rare = CrimsonRarity.ID;
         }
         public override void UpdateEquip(Player player) {
             player.tileSpeed *= 2f;
@@ -82,7 +82,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.rare = Crimson.ID;
+            Item.rare = CrimsonRarity.ID;
         }
         public override void UpdateEquip(Player player) {
             player.statLifeMax2 += player.statLifeMax2 / 2;

@@ -26,7 +26,6 @@ namespace Origins.Items.Weapons.Other {
             recipe.AddIngredient(ItemID.HallowedBar, 13);
             recipe.Register();
         }
-        public override Vector2? HoldoutOffset() => new Vector2(-18, 0);
+        public override Vector2? HoldoutOffset() => new Vector2(-18, -2);
     }
-    //Undecided obtain method...
 }

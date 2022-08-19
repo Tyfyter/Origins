@@ -185,9 +185,28 @@ namespace Origins.Items {
                 break;
                 }
             }
+        }
+		public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset) {
+            if (item.rare == CursedRarity.ID && line.Name == "ItemName") {
+                Terraria.UI.Chat.ChatManager.DrawColorCodedStringWithShadow(
+                    Main.spriteBatch,
+                    line.Font,
+                    line.Text,
+                    new Vector2(line.X, line.Y),
+                    CursedRarity.Color,
+                    new Color(0.15f, 0f, 0f) * (Main.mouseTextColor / 255f),
+                    line.Rotation,
+                    line.Origin,
+                    line.BaseScale,
+                    line.MaxWidth,
+                    line.Spread
+                );
+                return false;
+            }
+            return true;
 		}
 
-        public static ushort GetItemElement(Item item) {
+		public static ushort GetItemElement(Item item) {
             if(item.ModItem is null) {
                 return Origins.VanillaElements[item.type];
             }else if(item.ModItem is IElementalItem elementalItem) {
