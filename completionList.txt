@@ -108,12 +108,12 @@ ENEMY NPCS:
 (^) Fiberglass Enemies
 (#, ^2) Measely Moeba !!!
 (#3, ^2/4) Pre-H Defiled Enemies !!!
-(#2, ^2) Riven Protoform !!!
+(☻) Riven Protoform !!!
 (#, ^2) Scanner Scout
 (#, ^2) Single-Cellular Nautilus !!!
 (#, ^2) Spider Amoeba !!!
 
-(#3, ^2) Amebic Mummy !!!
+(☻) Amebic Mummy !!!
 (#, ^2) Amoeba Bugger !!!
 (#, ^2) Barnacle Mound !!!
 (#, ^2) Carpalfish*
@@ -124,7 +124,7 @@ ENEMY NPCS:
 (^) Flagellant
 (#, ^2) Mildew Creeper
 (#2, ^2) Mitoworm !!!
-(@5, #3, %2) Riven Mimic !!!
+(@5, #3) Riven Mimic !!!
 (#, ^2) Scalron
 (#, ^2) Vent Hopper
 

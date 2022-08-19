@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
     public class Riven_Fighter : Glowing_Mod_NPC {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Riven Acolyte");
+            DisplayName.SetDefault("Riven Protoform");
             Main.npcFrameCount[NPC.type] = 5;
         }
         public override void SetDefaults() {
