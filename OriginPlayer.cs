@@ -577,9 +577,14 @@ namespace Origins {
         }
 		public override void HideDrawLayers(PlayerDrawSet drawInfo) {
             Item item = drawInfo.heldItem;
-            if (drawInfo.drawPlayer.ItemAnimationActive && 
-                ((item.useStyle == ItemUseStyleID.Shoot &&item.ModItem is ICustomDrawItem) || 
-                (item.useStyle == ItemUseStyleID.Swing && item.ModItem is AnimatedModItem))) PlayerDrawLayers.HeldItem.Hide();
+            if (
+                (
+                    drawInfo.drawPlayer.ItemAnimationActive && (
+                        (item.useStyle == ItemUseStyleID.Shoot &&item.ModItem is ICustomDrawItem) || 
+                        (item.useStyle == ItemUseStyleID.Swing && item.ModItem is AnimatedModItem)
+                    )
+                ) ||
+                Origins.isDrawingShadyDupes) PlayerDrawLayers.HeldItem.Hide();
 		}
 		/*public override void ModifyDrawLayers(List<PlayerLayer> layers) {
             if (Player.HeldItem.ModItem is Chocolate_Bar animator) {

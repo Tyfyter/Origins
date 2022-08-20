@@ -1291,11 +1291,11 @@ namespace Origins {
             self.type = t;
         }
         private static FieldInfo _inext;
-        internal static FieldInfo Inext => _dangerousBiomes ??= typeof(UnifiedRandom).GetField("_inext", BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static FieldInfo Inext => _inext ??= typeof(UnifiedRandom).GetField("inext", BindingFlags.NonPublic | BindingFlags.Instance);
         private static FieldInfo _inextp;
-        internal static FieldInfo Inextp => _dangerousBiomes ??= typeof(UnifiedRandom).GetField("_inextp", BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static FieldInfo Inextp => _inextp ??= typeof(UnifiedRandom).GetField("inextp", BindingFlags.NonPublic | BindingFlags.Instance);
         private static FieldInfo _seedArray;
-        internal static FieldInfo SeedArray => _dangerousBiomes ??= typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static FieldInfo SeedArray => _seedArray ??= typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic | BindingFlags.Instance);
         private static FieldInfo _dangerousBiomes;
         internal static FieldInfo dangerousBiomes => _dangerousBiomes ??= typeof(ShopHelper).GetField("_dangerousBiomes", BindingFlags.NonPublic | BindingFlags.Instance);
         /*internal static void initExt() {

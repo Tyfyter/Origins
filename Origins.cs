@@ -469,9 +469,48 @@ namespace Origins {
 			On.Terraria.Graphics.Light.TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
 			On.Terraria.GameContent.UI.Elements.UIWorldListItem.GetIcon += UIWorldListItem_GetIcon;
 			On.Terraria.GameContent.UI.Elements.UIGenProgressBar.DrawSelf += UIGenProgressBar_DrawSelf;
+            /*HookEndpointManager.Add(typeof(PlantLoader).GetMethod("ShakeTree", BindingFlags.Public | BindingFlags.Static), 
+                (hook_ShakeTree)((orig_ShakeTree orig, int x, int y, int type, ref bool createLeaves) => {
+					if (orig(x, y, type, ref createLeaves)) {
+                        PlantLoader_ShakeTree(x, y, type, ref createLeaves);
+                        return true;
+					}
+                    return false;
+                })
+            );*/
+			On.Terraria.WorldGen.ShakeTree += WorldGen_ShakeTree;
         }
 
-        private AutoCastingAsset<Texture2D> _texOuterDefiled;
+		private void WorldGen_ShakeTree(On.Terraria.WorldGen.orig_ShakeTree orig, int i, int j) {
+            if (WorldGen.numTreeShakes == WorldGen.maxTreeShakes) {
+                return;
+            }
+            getTreeBottom(i, j, out var x, out var y);
+            int num = y;
+            int tileType = Main.tile[x, y].TileType;
+            TreeTypes treeType = WorldGen.GetTreeType(tileType);
+            if (treeType == TreeTypes.None) {
+                return;
+            }
+            for (int k = 0; k < WorldGen.numTreeShakes; k++) {
+                if (WorldGen.treeShakeX[k] == x && WorldGen.treeShakeY[k] == y) {
+                    return;
+                }
+            }
+            y--;
+            while (y > 10 && Main.tile[x, y].HasTile && TileID.Sets.IsShakeable[Main.tile[x, y].TileType]) {
+                y--;
+            }
+            y++;
+            if (!WorldGen.IsTileALeafyTreeTop(x, y) || Collision.SolidTiles(x - 2, x + 2, y - 2, y + 2)) {
+                return;
+            }
+            bool flag = false;
+            PlantLoader_ShakeTree(x, y, tileType, ref flag);
+            orig(i, j);
+		}
+
+		private AutoCastingAsset<Texture2D> _texOuterDefiled;
         private AutoCastingAsset<Texture2D> _texOuterRiven;
         private AutoCastingAsset<Texture2D> _texOuterLower;
         private FieldInfo _visualOverallProgress;
@@ -560,37 +599,17 @@ namespace Origins {
             Task.Run(changeWorldIcon);
             return orig(self);
         }
-        // poor performance, switching in hopes that an async
-        /*private Asset<Texture2D> UIWorldListItem_GetIcon(On.Terraria.GameContent.UI.Elements.UIWorldListItem.orig_GetIcon orig, Terraria.GameContent.UI.Elements.UIWorldListItem self) {
-            try {
-                WorldFileData data = (WorldFileData)UIWorldListItem_Data.GetValue(self);
-                if (!data.DrunkWorld && !data.ForTheWorthy && !data.NotTheBees && !data.Anniversary && !data.DontStarve) {
-                    string path = Path.ChangeExtension(data.Path, ".twld");
-                    if (!FileUtilities.Exists(path, data.IsCloudSave)) {
-                        goto def;
-                    }
-                    byte[] buf = FileUtilities.ReadAllBytes(path, data.IsCloudSave);
-                    if (buf[0] == 31 && buf[1] == 139) {
-                        TagCompound tag = TagIO.FromStream(new MemoryStream(buf));
-                        TagCompound worldTag = tag.GetList<TagCompound>("modData")
-                        .Where(v => v.GetString("mod") == Name).First();
-                        OriginSystem originSystem = new OriginSystem();
-                        originSystem.LoadWorldData(worldTag.GetCompound("data"));
-						switch (originSystem.worldEvil) {
-                            case OriginSystem.evil_wastelands:
-                            return Assets.Request<Texture2D>("UI/WorldGen/IconDefiled" + (data.IsHardMode ? "Hallow" : ""));
-                            case OriginSystem.evil_riven:
-                            return Assets.Request<Texture2D>("UI/WorldGen/IconDefiled" + (data.IsHardMode ? "Hallow" : ""));
-                        }
-                    }
-                }
-			} catch (Exception) {}
-            def:
-            return orig(self);
-		}*/
 
+        delegate bool orig_ShakeTree(int x, int y, int type, ref bool createLeaves);
+        delegate bool hook_ShakeTree(orig_ShakeTree orig, int x, int y, int type, ref bool createLeaves);
+        delegate void GetTreeBottom(int i, int j, out int x, out int y);
+        GetTreeBottom _getTreeBottom;
+        static GetTreeBottom getTreeBottom => instance._getTreeBottom ??=
+            typeof(WorldGen).GetMethod("GetTreeBottom", BindingFlags.NonPublic | BindingFlags.Static)
+            .CreateDelegate<GetTreeBottom>(null);
         [Obsolete("can't be implemented without more knowledge of MonoMod")]
         static bool PlantLoader_ShakeTree(int x, int y, int type, ref bool createLeaves) {
+            //getTreeBottom(i, j, out var x, out var y);
             UnifiedRandom genRand = WorldGen.genRand.Clone();
             TreeTypes treeType = WorldGen.GetTreeType(type);
             if (!(
@@ -628,10 +647,10 @@ namespace Origins {
                 if (WorldGen.genRand.NextBool(20)) {
                     switch (WorldGen.genRand.Next(2)) {
                         case 0:
-                        Item.NewItem(new EntitySource_ShakeTree(x, y), x* 16, y* 16, 16, 16, MC.ItemType<Tree_Sap>(), WorldGen.genRand.Next(1, 3));
+                        Item.NewItem(new EntitySource_ShakeTree(x, y), x * 16, y * 16, 16, 16, MC.ItemType<Tree_Sap>(), WorldGen.genRand.Next(1, 3));
                         break;
                         case 1:
-                        Item.NewItem(new EntitySource_ShakeTree(x, y), x* 16, y* 16, 16, 16, MC.ItemType<Bark>(), WorldGen.genRand.Next(1, 3));
+                        Item.NewItem(new EntitySource_ShakeTree(x, y), x * 16, y * 16, 16, 16, MC.ItemType<Bark>(), WorldGen.genRand.Next(1, 3));
                         break;
                     }
                     return false;
@@ -671,7 +690,7 @@ namespace Origins {
                 orig(proj, out timeToFlyOut, out segments, out rangeMultiplier);
 			}
 		}
-
+        internal static bool isDrawingShadyDupes = false;
 		private void LegacyPlayerRenderer_DrawPlayerInternal(On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.orig_DrawPlayerInternal orig, Terraria.Graphics.Renderers.LegacyPlayerRenderer self, Camera camera, Player drawPlayer, Vector2 position, float rotation, Vector2 rotationOrigin, float shadow, float alpha, float scale, bool headOnly) {
             bool shaded = false;
             try {
@@ -683,8 +702,9 @@ namespace Origins {
                     drawPlayer.hairDye = amebicProtectionHairShaderID;
 
                     const float offset = 2;
-                    int itemAnimation = drawPlayer.itemAnimation;
-                    drawPlayer.itemAnimation = 0;
+                    //int itemAnimation = drawPlayer.itemAnimation;
+                    //drawPlayer.itemAnimation = 0;
+                    isDrawingShadyDupes = true;
                     amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(offset, 0));
                     orig(self, camera, drawPlayer, position + new Vector2(offset, 0), rotation, rotationOrigin, shadow, alpha, scale, headOnly);
 
@@ -698,7 +718,8 @@ namespace Origins {
                     orig(self, camera, drawPlayer, position + new Vector2(0, -offset), rotation, rotationOrigin, shadow, alpha, scale, headOnly);
                     shaderSet.Apply(drawPlayer);
                     drawPlayer.hairDye = playerHairDye;
-                    drawPlayer.itemAnimation = itemAnimation;
+                    //drawPlayer.itemAnimation = itemAnimation;
+                    isDrawingShadyDupes = false;
                 }
                 int rasterizedTime = originPlayer.rasterizedTime;
                 if (rasterizedTime > 0) {
@@ -712,6 +733,7 @@ namespace Origins {
                 }
                 orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);
             } finally {
+                isDrawingShadyDupes = false;
                 if (shaded) {
                     Main.spriteBatch.Restart();
                 }

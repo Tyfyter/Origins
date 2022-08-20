@@ -42,7 +42,7 @@ BOSSES AND MINI-BOSSES:
 (#, ^2) Ichor Storm
 (#, $, ^2) Seer
 
-(^) Defiled Amalgmation*
+(^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver !!!
 (X) Primordial Amoeba !!!
 
@@ -94,7 +94,7 @@ VANILLA MODIFICATIONS:
 (X) Dryad Selling Evil Items on Blood Moon*
 (#2/3) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)* !!!
 (%2) Harpoon (new weapon to introduce sub-class)*
-(#2) Trees (add Bark and Tree Sap as drops when chopping down trees)* !!!
+(☻) Trees (add Bark and Tree Sap as drops when chopping down trees)* !!!
 (^) Wall of Flesh (to drop Exploder Emblem)*
 
 (@, %3, X) Nova Pillar in Lunar Invasion
@@ -343,7 +343,7 @@ WINGS:
 (X) Anti-Gravity Booster
 (X) Futuristic Jetpack
 
-(X) Ascendent Wings
+(X) Ascendent Wings (ascendant might be the correct word here, they could just be alternate spellings, or this might be more correct, can't find definitive proof of any of these)
 (x) Booster Pack
 (X) Celestine Wings
 (X) Fibron Thruster Array
