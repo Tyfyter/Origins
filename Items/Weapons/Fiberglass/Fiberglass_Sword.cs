@@ -4,7 +4,8 @@ using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Fiberglass {
-	public class Fiberglass_Sword : ModItem {
+	public class Fiberglass_Sword : ModItem, IElementalItem {
+		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Sword");
 			Tooltip.SetDefault("Be careful, it's sharp");

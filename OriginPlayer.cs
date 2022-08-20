@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Items.Accessories;
 using Origins.Items.Accessories.Eyndum_Cores;
 using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Materials;
@@ -66,8 +67,9 @@ namespace Origins {
         public bool rasterize = false;
         public bool decayingScale = false;
         public bool lazyCloakVisible = false;
-        public bool amebicVial = false;
+        public bool amebicVialVisible = false;
         public byte amebicVialCooldown = 0;
+        public bool entangledEnergy = false;
         #endregion
 
         #region explosive stats
@@ -170,7 +172,8 @@ namespace Origins {
             rasterize = false;
             decayingScale = false;
             lazyCloakVisible = false;
-            amebicVial = false;
+            amebicVialVisible = false;
+            entangledEnergy = false;
             toxicShock = false;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;
@@ -409,6 +412,18 @@ namespace Origins {
                 target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
                 target.AddBuff(Solvent_Debuff.ID, 300);
             }
+            if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
+                Projectile.NewProjectile(
+                    Player.GetSource_OnHit(target),
+                    target.Center,
+                    default,
+                    ModContent.ProjectileType<Entangled_Energy_Lifesteal>(),
+                    0,
+                    0,
+                    Player.whoAmI,
+                    ai1:damage / 10
+                );
+            }
         }
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
             if(crit) {
@@ -446,7 +461,7 @@ namespace Origins {
             }
             MeleeCollisionNPCData.knockbackMult = 1f;
         }
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource) {
+        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter) {
             if(Player.HasBuff(Solvent_Debuff.ID)&&Main.rand.Next(9)<3) {
                 crit = true;
             }
@@ -475,8 +490,13 @@ namespace Origins {
 			}
             return damage != 0;
         }
-        #endregion
-        public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
+		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
+			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
+                damage.Flat += Player.statDefense / 2;
+			}
+		}
+		#endregion
+		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
             if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {
                 OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
                 if (originWorld.peatSold < 999) {

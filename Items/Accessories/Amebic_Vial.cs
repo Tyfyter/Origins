@@ -22,11 +22,12 @@ namespace Origins.Items.Accessories {
 			Item.shoot = ModContent.ProjectileType<Amebic_Vial_Tentacle>();
 			Item.rare = ItemRarityID.Expert;
 			Item.expert = true;
+			Item.canBePlacedInVanityRegardlessOfConditions = true;
 		}
 		public override void UpdateAccessory(Player player, bool isVisible) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.amebicVial = isVisible;
 			if (originPlayer.amebicVialCooldown > 0) return;
+			originPlayer.amebicVialVisible = isVisible;
 			const float maxDist = 64 * 64;
 			Vector2 target = default;
 			float bestWeight = 0;
@@ -67,6 +68,9 @@ namespace Origins.Items.Accessories {
 				Projectile.NewProjectile(player.GetSource_Accessory(Item), player.MountedCenter, (target - player.MountedCenter).SafeNormalize(default).RotatedBy(dir * -1f) * 3.2f, Item.shoot, 1, 0, player.whoAmI, ai1:dir);
 				originPlayer.amebicVialCooldown = 120;
 			}
+		}
+		public override void UpdateVanity(Player player) {
+			player.GetModPlayer<OriginPlayer>().amebicVialVisible = true;
 		}
 	}
 	public class Amebic_Vial_Tentacle : ModProjectile {

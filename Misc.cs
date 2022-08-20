@@ -28,6 +28,7 @@ using Origins.Tiles;
 using ReLogic.Content;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader.Exceptions;
+using ReLogic.Reflection;
 
 namespace Origins {
     public class LinkedQueue<T> : ICollection<T> {
@@ -438,7 +439,8 @@ namespace Origins {
         public const ushort Fire = 1;
         public const ushort Earth = 2;
         public const ushort Acid = 4;
-        public const ushort Ice = 4;
+        public const ushort Ice = 8;
+        public const ushort Fiberglass = 16;
     }
     public static class SlopeID {
         public const byte None = 0;
@@ -993,6 +995,7 @@ namespace Origins {
         public const int Marble = 51;
         public const int Crystal = 52;
         public const int Golden = 53;
+        public static readonly IdDictionary Search = IdDictionary.Create(typeof(ChestID), typeof(int));
     }
     public delegate void hook_DropItem(ItemDropper orig, DropAttemptInfo info, int item, int stack, bool scattered = false);
     public delegate void ItemDropper(DropAttemptInfo info, int item, int stack, bool scattered = false);

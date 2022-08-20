@@ -11,8 +11,9 @@ using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Fiberglass {
-	public class Fiberglass_Shard : ModItem {
-		public override void SetStaticDefaults() {
+	public class Fiberglass_Shard : ModItem, IElementalItem {
+        public ushort Element => Elements.Fiberglass;
+        public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Shard");
 			Tooltip.SetDefault("Be careful, it's sharp");
             SacrificeTotal = 1;

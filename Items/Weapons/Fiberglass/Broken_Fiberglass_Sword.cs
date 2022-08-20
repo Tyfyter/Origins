@@ -7,7 +7,8 @@ using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Fiberglass {
-	public class Broken_Fiberglass_Sword : ModItem {
+	public class Broken_Fiberglass_Sword : ModItem, IElementalItem {
+		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Broken Fiberglass Sword");
 			Tooltip.SetDefault("It's even sharper now");

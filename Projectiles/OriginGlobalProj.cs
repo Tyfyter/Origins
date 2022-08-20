@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Items.Accessories;
 using Origins.Items.Weapons.Felnum;
 using Origins.Items.Weapons.Riven;
 using Terraria;
@@ -36,6 +37,7 @@ namespace Origins.Projectiles {
         public bool isFromMitosis = false;
         public bool hasUsedMitosis = false;
         public int mitosisTimeLeft = 3600;
+        public bool fiberglassLifesteal = false;
         public override void SetDefaults(Projectile projectile) {
             if(hostileNext) {
                 projectile.hostile = true;
@@ -98,7 +100,12 @@ namespace Origins.Projectiles {
         public override void OnSpawn(Projectile projectile, IEntitySource source) {
             if(projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall && projectile.originalDamage < projectile.damage)
                 projectile.originalDamage = projectile.damage;
-			if (source is EntitySource_Parent source_Parent && source_Parent.Entity is Projectile parentProjectile) {
+			if (source is EntitySource_ItemUse itemUseSource) {
+				if (itemUseSource.Item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0 && 
+                    itemUseSource.Entity is Player player && player.GetModPlayer<OriginPlayer>().entangledEnergy) {
+                    fiberglassLifesteal = true;
+				}
+			} else if (source is EntitySource_Parent source_Parent && source_Parent.Entity is Projectile parentProjectile) {
 				if (parentProjectile.type == ModContent.ProjectileType<Amoeba_Bubble>()) {
                     isFromMitosis = true;
                     projectile.alpha = 100;
@@ -193,6 +200,17 @@ namespace Origins.Projectiles {
                     target.AddBuff(BuffID.Oiled, 600);
                     target.AddBuff(BuffID.OnFire, 600);
                 }
+            }
+			if (fiberglassLifesteal) {
+                Projectile.NewProjectile(
+                    projectile.GetSource_OnHit(target),
+                    target.Center,
+                    default,
+                    ModContent.ProjectileType<Entangled_Energy_Lifesteal>(),
+                    damage / 10,
+                    0,
+                    projectile.owner
+                );
             }
         }
         public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {

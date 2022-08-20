@@ -676,7 +676,7 @@ namespace Origins {
             bool shaded = false;
             try {
                 OriginPlayer originPlayer = drawPlayer.GetModPlayer<OriginPlayer>();
-				if (originPlayer.amebicVial && originPlayer.amebicVialCooldown <= 0) {
+				if (originPlayer.amebicVialVisible) {
                     PlayerShaderSet shaderSet = new PlayerShaderSet(drawPlayer);
                     new PlayerShaderSet(amebicProtectionShaderID).Apply(drawPlayer);
                     int playerHairDye = drawPlayer.hairDye;

@@ -13,7 +13,8 @@ using Terraria.UI.Chat;
 using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Fiberglass {
-	public class Broken_Fiberglass_Bow : AnimatedModItem {
+	public class Broken_Fiberglass_Bow : AnimatedModItem, IElementalItem {
+        public ushort Element => Elements.Fiberglass;
         protected override bool CloneNewInstances => true;
         int strung = 0;
         const int strungMax = 50;
