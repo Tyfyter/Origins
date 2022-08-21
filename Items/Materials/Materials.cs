@@ -352,7 +352,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = Butterscotch.ID;
+            Item.rare = ButterscotchRarity.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -493,7 +493,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = Butterscotch.ID;
+            Item.rare = ButterscotchRarity.ID;
             Item.glowMask = glowmask;
         }
     }
@@ -675,7 +675,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
-            Item.rare = Butterscotch.ID;
+            Item.rare = ButterscotchRarity.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 3);
@@ -762,7 +762,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 8;
-            Item.rare = Butterscotch.ID;
+            Item.rare = ButterscotchRarity.ID;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -819,7 +819,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.rare = Butterscotch.ID;
+            Item.rare = ButterscotchRarity.ID;
             Item.glowMask = glowmask;
         }
         public override void AddRecipes() {

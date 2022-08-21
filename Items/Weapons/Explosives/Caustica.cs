@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.mana = 16;
 			Item.value = 5000;
             Item.shoot = ModContent.ProjectileType<Caustica_P>();
-			Item.rare = Butterscotch.ID;
+			Item.rare = ButterscotchRarity.ID;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    int a = Main.rand.Next(5,7);

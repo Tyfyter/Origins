@@ -5,6 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins {
 	public class CursedRarity : ModRarity {
+		public static string RarityName => "Cursed";
 		public static int ID { get; private set; }
 		public static Color Color => new Color(0.65f, 0f, 0.65f, Main.mouseTextColor / 255f).MultiplyRGBA(Main.MouseTextColorReal);
 		public override Color RarityColor => Color;//new Color(136, 22, 156);
@@ -16,6 +17,7 @@ namespace Origins {
 		}
 	}
 	public class AltCyanRarity : ModRarity {
+		public static string RarityName => "Not Quite Cyan";
 		public static int ID { get; private set; }
 		public override Color RarityColor => new Color(43, 145, 255);
 		public override void SetStaticDefaults() {
@@ -36,7 +38,8 @@ namespace Origins {
 			return offset == 0 ? Type : ItemRarityID.Cyan + offset;
 		}
 	}
-	public class Butterscotch : ModRarity {
+	public class ButterscotchRarity : ModRarity {
+		public static string RarityName => "Butterscotch";
 		public static int ID { get; private set; }
 		public override Color RarityColor => new Color(226, 182, 65);
 		public override void SetStaticDefaults() {
@@ -56,6 +59,7 @@ namespace Origins {
 		}
 	}
 	public class CrimsonRarity : ModRarity {
+		public static string RarityName => "Crimson";
 		public static int ID { get; private set; }
 		public override Color RarityColor => new Color(164, 29, 7);
 		public override void SetStaticDefaults() {
@@ -75,6 +79,7 @@ namespace Origins {
 		}
 	}
 	public class RoyalBlueRarity : ModRarity {
+		public static string RarityName => "Royal Blue";
 		public static int ID { get; private set; }
 		public override Color RarityColor => new Color(12, 42, 165);
 		public override void SetStaticDefaults() {

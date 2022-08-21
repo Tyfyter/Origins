@@ -18,10 +18,28 @@ float2 uTargetPosition;
 float4 uLegacyArmorSourceRect;
 float2 uLegacyArmorSheetSize;
 
+bool IsInBounds(float2 value) {
+	if (value.x < 0)
+		return false;
+	if (value.x > 1)
+		return false;
+	if (value.y < 0)
+		return false;
+	if (value.y > 1)
+		return false;
+	return true;
+}
+
 float4 AmebicProtection(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	float2 realOffset = uOffset / uImageSize0;
 	realOffset.x *= uDirection;
-	float alpha = tex2D(uImage0, coords + realOffset).a > 0 ? 0 : tex2D(uImage0, coords).a;
+	float alpha;
+	if (IsInBounds(coords + realOffset)) {
+		alpha = tex2D(uImage0, coords + realOffset).a > 0 ? 0 : tex2D(uImage0, coords).a;
+	} else {
+		alpha = tex2D(uImage0, coords).a;
+	}
+
 	float2 spriteCoords = float2(round(coords.x), round(coords.y)) * uImageSize0;
 	return float4(0, alpha * (sin((uTime + spriteCoords.x + spriteCoords.y * 10) * 2) + 1) * 0.5, alpha * (sin(uTime + spriteCoords.x + spriteCoords.y * 10) + 3) * 0.25, 0);
 }

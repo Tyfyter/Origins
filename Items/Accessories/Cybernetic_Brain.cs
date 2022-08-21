@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             Item.accessory = true;
-            Item.rare = Butterscotch.ID;
+            Item.rare = ButterscotchRarity.ID;
             Item.glowMask = glowmask;
         }
         public override void UpdateEquip(Player player) {
