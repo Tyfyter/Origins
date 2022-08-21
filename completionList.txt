@@ -108,12 +108,12 @@ ENEMY NPCS:
 (^) Fiberglass Enemies
 (#, ^2) Measely Moeba !!!
 (#3, ^2/4) Pre-H Defiled Enemies !!!
-(☻) Riven Protoform !!!
+(^) Riven Protoform !!!
 (#, ^2) Scanner Scout
 (#, ^2) Single-Cellular Nautilus !!!
 (#, ^2) Spider Amoeba !!!
 
-(☻) Amebic Mummy !!!
+(^) Amebic Mummy !!!
 (#, ^2) Amoeba Bugger !!!
 (#, ^2) Barnacle Mound !!!
 (#, ^2) Carpalfish*
@@ -281,7 +281,7 @@ ACCESSORIES:
 (%3, X) Armored Core
 (%3, X) Atomic Clock
 (X) Backtack
-(#, ^2) Entangled Energy !!!
+(^) Entangled Energy
 (%3, X) Immortal Core
 (^) Lazy Cloak
 (X) Magnetic Brain
