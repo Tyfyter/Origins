@@ -44,7 +44,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver !!!
-(X) Primordial Amoeba !!!
+(#, ^2) Primordial Amoeba !!!
 
 (X) Aurelian Bouncer
 (X) Aurelian Clinger
@@ -94,7 +94,7 @@ VANILLA MODIFICATIONS:
 (X) Dryad Selling Evil Items on Blood Moon*
 (#2/3) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)* !!!
 (%2) Harpoon (new weapon to introduce sub-class)*
-(☻) Trees (add Bark and Tree Sap as drops when chopping down trees)* !!!
+(#4) Trees (add Bark and Tree Sap as drops when chopping down trees)* !!!
 (^) Wall of Flesh (to drop Exploder Emblem)*
 
 (@, %3, X) Nova Pillar in Lunar Invasion
@@ -455,6 +455,7 @@ MAGIC WEAPONS:
 (^) Magnus
 (#, ^2) Slashswarm !!!
 (^) Tones of Agony
+(#, ^2) Transfusion !!!
 
 (^) Bled Out Staff
 (#, ^2) Boulder Blender
@@ -519,14 +520,17 @@ EXPLOSIVE WEAPONS:
 (^) Ameballoon
 (#, ^2) Bombardment !!!
 (#, ^2) Bomb Launcher !!!
+(#, ^2) Brainade !!!
 (#, ^2) Defiled Spirit !!!
 (^) Hand Grenade Launcher
 (#, ^2) Floaty Bomb !!!
 (^) Impact Explosives
 (^) Lightning Grenade
+(#, ^2) Outbreak Bomb !!!
 (^) Peatball*
 
 (^) Bomboomstick
+(X) Boomphracken
 (#, ^2) Klangjet
 (#, ^2) Mortar Shell
 (X) Napalm Bomb
