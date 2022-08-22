@@ -35,7 +35,10 @@ namespace Origins {
 				wikiSiteMap = new HashSet<string>();
 				using (WebClient client = new WebClient()) {
 					client.DownloadStringCompleted += (object sender, DownloadStringCompletedEventArgs e) => {
-						//new StringReader(e.Result)
+						if (e.Error is not null) {
+							mod.Logger.Error(e.Error);
+							return;
+						}
 						XDocument doc = XDocument.Parse(e.Result);
 						var desc = doc.Descendants();
 						foreach (var item in doc.Descendants()) if (item.Name.LocalName == "loc") {
