@@ -1,4 +1,6 @@
-﻿using Origins.World.BiomeData;
+﻿using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,41 +8,40 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.LootConditions {
-	public class OneOfEachRule : IItemDropRule {
-		public List<IItemDropRuleChainAttempt> ChainedRules { get; }
-		IItemDropRule[] rules;
-		public bool CanDrop(DropAttemptInfo info) => true;
-		public void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
-			for (int i = 0; i < rules.Length; i++) {
-				rules[i].ReportDroprates(drops, ratesInfo);
-			}
-		}
-		public ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
-			ItemDropAttemptResult result = new ItemDropAttemptResult() {
-				State = ItemDropAttemptResultState.DidNotRunCode
-			};
-			for (int i = 0; i < rules.Length; i++) {
-				switch (rules[i].TryDroppingItem(info).State) {
-					case ItemDropAttemptResultState.Success:
-					result.State = ItemDropAttemptResultState.Success;
-					break;
-					case ItemDropAttemptResultState.DoesntFillConditions:
-					if (result.State is ItemDropAttemptResultState.DidNotRunCode or ItemDropAttemptResultState.FailedRandomRoll) {
-						result.State = ItemDropAttemptResultState.DoesntFillConditions;
+	public static class LootFixers {
+		public static void WorldEvilFixer(List<IItemDropRule> dropRules, Action<ItemDropWithConditionRule> onCorruptRule = null) {
+			IItemDropRule entry;
+			int len = dropRules.Count;
+			for (int i = 0; i < len; i++) {
+				entry = dropRules[i];
+				if (entry is ItemDropWithConditionRule rule) {
+					if (rule.condition is Conditions.IsCorruption) {
+						rule.condition = new IsWorldEvil(OriginSystem.evil_corruption);
+					} else if (rule.condition is Conditions.IsCrimson) {
+						rule.condition = new IsWorldEvil(OriginSystem.evil_crimson);
+					} else if (rule.condition is Conditions.IsCorruptionAndNotExpert) {
+						rule.condition = new IsWorldEvilAndNotExpert(OriginSystem.evil_corruption);
+						if(onCorruptRule is not null) onCorruptRule(rule);
+					} else if (rule.condition is Conditions.IsCrimsonAndNotExpert) {
+						rule.condition = new IsWorldEvilAndNotExpert(OriginSystem.evil_crimson);
 					}
-					break;
-					case ItemDropAttemptResultState.FailedRandomRoll:
-					if (result.State is ItemDropAttemptResultState.DidNotRunCode) {
-						result.State = ItemDropAttemptResultState.FailedRandomRoll;
+				} else if (entry is LeadingConditionRule leadingRule) {
+					if (leadingRule.condition is Conditions.IsCorruption) {
+						leadingRule.condition = new IsWorldEvil(OriginSystem.evil_corruption);
+					} else if (leadingRule.condition is Conditions.IsCrimson) {
+						leadingRule.condition = new IsWorldEvil(OriginSystem.evil_crimson);
+					} else if (leadingRule.condition is Conditions.IsCorruptionAndNotExpert) {
+						leadingRule.condition = new IsWorldEvilAndNotExpert(OriginSystem.evil_corruption);
+					} else if (leadingRule.condition is Conditions.IsCrimsonAndNotExpert) {
+						leadingRule.condition = new IsWorldEvilAndNotExpert(OriginSystem.evil_crimson);
 					}
-					break;
 				}
 			}
-			return result;
 		}
 	}
 	public class IsWorldEvil : IItemDropRuleCondition {

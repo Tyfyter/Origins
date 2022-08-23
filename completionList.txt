@@ -90,12 +90,12 @@ VANILLA MODIFICATIONS:
 
 (^) Bats (drop Bat Hide)*
 (^) Boss Immunities (make every boss immune to anything with Stun)*
-(#3) Demolitionist (to sell different items based on peat sold)*
+(#3) Demolitionist (to sell different items based on peat sold)* (already implemented?)
 (X) Dryad Selling Evil Items on Blood Moon*
-(^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)* !!! (also checked balance, is on par with vilethorn with neutral armor)
+(^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)* !!! (also checked balance, is about on par with vilethorn with neutral armor)
 (%2) Harpoon (new weapon to introduce sub-class)*
 (☻ (each ~1/45 chance from tree shaking)) Trees (add Bark and Tree Sap as drops when chopping down trees)* !!!
-(^) Wall of Flesh (to drop Exploder Emblem)*
+(^) Wall of Flesh (to drop Exploder Emblem & Thermite Launcher)*
 
 (@, %3, X) Nova Pillar in Lunar Invasion
 ---

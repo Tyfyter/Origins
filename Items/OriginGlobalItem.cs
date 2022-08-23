@@ -16,6 +16,8 @@ using Terraria.DataStructures;
 using Origins.NPCs;
 using Origins.Items.Accessories;
 using Origins.Tiles.Riven;
+using Terraria.GameContent.ItemDropRules;
+using Origins.LootConditions;
 
 namespace Origins.Items {
     public class OriginGlobalItem : GlobalItem {
@@ -185,6 +187,77 @@ namespace Origins.Items {
                 break;
                 }
             }
+        }
+		public override void ModifyItemLoot(Item item, ItemLoot itemLoot) {
+            List<IItemDropRule> dropRules = itemLoot.Get(false);
+            var def = new IsWorldEvil(OriginSystem.evil_wastelands);
+            var riv = new IsWorldEvil(OriginSystem.evil_riven);
+            var defExp = new IsWorldEvilAndNotExpert(OriginSystem.evil_wastelands);
+            var rivExp = new IsWorldEvilAndNotExpert(OriginSystem.evil_riven);
+            LootFixers.WorldEvilFixer(dropRules, (rule) => {
+                switch (rule.itemId) {
+                    case ItemID.DemoniteOre:
+                    itemLoot.Add(ItemDropRule.ByCondition(
+                        defExp,
+                        ModContent.ItemType<Defiled_Ore_Item>(),
+                        rule.chanceDenominator,
+                        rule.amountDroppedMinimum,
+                        rule.amountDroppedMaximum,
+                        rule.chanceNumerator
+                    ));
+                    itemLoot.Add(ItemDropRule.ByCondition(
+                        rivExp,
+                        ModContent.ItemType<Infested_Ore_Item>(),
+                        rule.chanceDenominator,
+                        rule.amountDroppedMinimum,
+                        rule.amountDroppedMaximum,
+                        rule.chanceNumerator
+                    ));
+                    break;
+                    case ItemID.CorruptSeeds:
+                    itemLoot.Add(ItemDropRule.ByCondition(
+                        defExp,
+                        ModContent.ItemType<Defiled_Grass_Seeds>(),
+                        rule.chanceDenominator,
+                        rule.amountDroppedMinimum,
+                        rule.amountDroppedMaximum,
+                        rule.chanceNumerator
+                    ));
+                    break;
+                }
+            });
+			switch (item.type) {
+                case ItemID.WallOfFleshBossBag:
+                IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
+                r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
+                dropRule.dropIds.Contains(ItemID.WarriorEmblem));
+                if (rules.Any()) {
+                    OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
+                    if (rule is not null) {
+                        Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
+                        rule.dropIds[^1] = ModContent.ItemType<Exploder_Emblem>();
+                    } else {
+                        Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+                    }
+                } else {
+                    Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+                }
+                rules = dropRules.Where((r) =>
+                r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
+                dropRule.dropIds.Contains(ItemID.BreakerBlade));
+                if (rules.Any()) {
+                    OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
+                    if (rule is not null) {
+                        Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
+                        rule.dropIds[^1] = ModContent.ItemType<Weapons.Explosives.Thermite_Launcher>();
+                    } else {
+                        Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+                    }
+                } else {
+                    Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+                }
+                break;
+			}
         }
 		public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset) {
             if (item.rare == CursedRarity.ID && line.Name == "ItemName") {

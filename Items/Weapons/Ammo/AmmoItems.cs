@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RocketI);
-            Item.damage = 30;
+            Item.damage = 20;
             Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
             Item.ammo = Item.type;
             Item.glowMask = glowmask;

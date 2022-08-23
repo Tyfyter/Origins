@@ -2,8 +2,10 @@
 using Origins.Items.Materials;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Dungeon;
+using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Other;
 using Origins.Items.Weapons.Summon;
+using Origins.LootConditions;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
@@ -25,57 +27,43 @@ namespace Origins.NPCs {
 		internal static int woFEmblemsCount = 4;
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
 			List<IItemDropRule> dropRules = npcLoot.Get(false);
-			IItemDropRule entry;
-			int len = dropRules.Count;
-			var def = new LootConditions.IsWorldEvil(OriginSystem.evil_wastelands);
-			var riv = new LootConditions.IsWorldEvil(OriginSystem.evil_riven);
-			var defExp = new LootConditions.IsWorldEvilAndNotExpert(OriginSystem.evil_wastelands);
-			var rivExp = new LootConditions.IsWorldEvilAndNotExpert(OriginSystem.evil_riven);
-			for (int i = 0; i < len; i++) {
-				entry = dropRules[i];
-				if (entry is ItemDropWithConditionRule rule) {
-					if (rule.condition is Conditions.IsCorruption) {
-						rule.condition = new LootConditions.IsWorldEvil(OriginSystem.evil_corruption);
-					} else if (rule.condition is Conditions.IsCrimson) {
-						rule.condition = new LootConditions.IsWorldEvil(OriginSystem.evil_crimson);
-					} else if (rule.condition is Conditions.IsCorruptionAndNotExpert) {
-						rule.condition = new LootConditions.IsWorldEvilAndNotExpert(OriginSystem.evil_corruption);
-						switch (rule.itemId) {
-							case ItemID.DemoniteOre:
-							npcLoot.Add(ItemDropRule.ByCondition(
-								defExp,
-								ModContent.ItemType<Defiled_Ore_Item>(),
-								rule.chanceDenominator,
-								rule.amountDroppedMinimum,
-								rule.amountDroppedMaximum,
-								rule.chanceNumerator
-							));
-							npcLoot.Add(ItemDropRule.ByCondition(
-								rivExp,
-								ModContent.ItemType<Infested_Ore_Item>(),
-								rule.chanceDenominator,
-								rule.amountDroppedMinimum,
-								rule.amountDroppedMaximum,
-								rule.chanceNumerator
-							));
-							break;
-							case ItemID.CorruptSeeds:
-							npcLoot.Add(ItemDropRule.ByCondition(
-								defExp,
-								ModContent.ItemType<Defiled_Grass_Seeds>(),
-								rule.chanceDenominator,
-								rule.amountDroppedMinimum,
-								rule.amountDroppedMaximum,
-								rule.chanceNumerator
-							));
-							break;
-						}
-					} else if (rule.condition is Conditions.IsCrimsonAndNotExpert) {
-						rule.condition = new LootConditions.IsWorldEvilAndNotExpert(OriginSystem.evil_crimson);
-					}
+			var def = new IsWorldEvil(OriginSystem.evil_wastelands);
+			var riv = new IsWorldEvil(OriginSystem.evil_riven);
+			var defExp = new IsWorldEvilAndNotExpert(OriginSystem.evil_wastelands);
+			var rivExp = new IsWorldEvilAndNotExpert(OriginSystem.evil_riven);
+			LootFixers.WorldEvilFixer(dropRules, (rule) => {
+				switch (rule.itemId) {
+					case ItemID.DemoniteOre:
+					npcLoot.Add(ItemDropRule.ByCondition(
+						defExp,
+						ModContent.ItemType<Defiled_Ore_Item>(),
+						rule.chanceDenominator,
+						rule.amountDroppedMinimum,
+						rule.amountDroppedMaximum,
+						rule.chanceNumerator
+					));
+					npcLoot.Add(ItemDropRule.ByCondition(
+						rivExp,
+						ModContent.ItemType<Infested_Ore_Item>(),
+						rule.chanceDenominator,
+						rule.amountDroppedMinimum,
+						rule.amountDroppedMaximum,
+						rule.chanceNumerator
+					));
+					break;
+					case ItemID.CorruptSeeds:
+					npcLoot.Add(ItemDropRule.ByCondition(
+						defExp,
+						ModContent.ItemType<Defiled_Grass_Seeds>(),
+						rule.chanceDenominator,
+						rule.amountDroppedMinimum,
+						rule.amountDroppedMaximum,
+						rule.chanceNumerator
+					));
+					break;
 				}
-			}
-            switch (npc.type) {
+			});
+			switch (npc.type) {
                 case NPCID.CaveBat:
                 case NPCID.GiantBat:
                 case NPCID.IceBat:
@@ -127,8 +115,7 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_Power_Up>(), 106));
 				break;
 				case NPCID.WallofFlesh:
-				IEnumerable<IItemDropRule> rules = npcLoot.Get(false);
-				rules = rules.Where((r) => 
+				IEnumerable<IItemDropRule> rules = dropRules.Where((r) => 
 				r is LeadingConditionRule conditionRule &&
 				conditionRule.ChainedRules.Any() &&
 				conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
@@ -139,6 +126,22 @@ namespace Origins.NPCs {
 						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
 						rule.dropIds[^1] = ModContent.ItemType<Exploder_Emblem>();
 						woFEmblemsCount = rule.dropIds.Length;
+					} else {
+						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+					}
+				} else {
+					Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+				}
+				rules = dropRules.Where((r) =>
+				r is LeadingConditionRule conditionRule &&
+				conditionRule.ChainedRules.Any() &&
+				conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
+				dropRule.dropIds.Contains(ItemID.BreakerBlade));
+				if (rules.Any()) {
+					OneFromOptionsNotScaledWithLuckDropRule rule = rules.First().ChainedRules[0].RuleToChain as OneFromOptionsNotScaledWithLuckDropRule;
+					if (rule is not null) {
+						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
+						rule.dropIds[^1] = ModContent.ItemType<Thermite_Launcher>();
 					} else {
 						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
 					}

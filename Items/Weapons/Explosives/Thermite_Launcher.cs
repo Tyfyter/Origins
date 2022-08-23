@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Origins.Items.Weapons.Ammo;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
@@ -15,13 +16,12 @@ namespace Origins.Items.Weapons.Explosives {
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.GrenadeLauncher);
-            //item.maxStack = 999;
+            Item.damage = 27;
             Item.width = 44;
             Item.height = 18;
-            Item.damage = 34;
-			Item.value/=2;
-			Item.useTime = (int)(Item.useTime*1.35);
-			Item.useAnimation = (int)(Item.useAnimation*1.35);
+			Item.value = 175000;
+			Item.useTime = 32;
+			Item.useAnimation = 32;
             Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
             Item.useAmmo = ModContent.ItemType<Thermite_Canister>();
             Item.knockBack = 2f;
@@ -29,8 +29,15 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-            type = Item.shoot;
+            //type = Item.shoot;
         }
+        //can't just chain rules since OneFromOptionsNotScaledWithLuckDropRule drops all the items directly
+        //but that's fine since other bosses that drop a ranged weapon don't show the ammo in the bestiary
+        public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ItemOpen or EntitySource_Loot) {
+                Item.NewItem(source, Item.position, ModContent.ItemType<Thermite_Canister>(), Main.rand.Next(40, 51));
+			}
+		}
 	}
     public class Thermite_Canister_P  : ModProjectile {
         public override string Texture => "Origins/Projectiles/Ammo/Thermite_Canister_P";
@@ -67,7 +74,7 @@ namespace Origins.Items.Weapons.Explosives {
 		    Projectile.Center = Projectile.position;
             Projectile.Damage();
             for(int i = 0; i < 5; i++) {
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Projectile.velocity/2)+Vec2FromPolar((i/Main.rand.NextFloat(5,7))*MathHelper.TwoPi, Main.rand.NextFloat(2,4)), ModContent.ProjectileType<Thermite_P>(), (int)(Projectile.damage*0.75f), 0, Projectile.owner);
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Projectile.velocity/2)+Vec2FromPolar((i/Main.rand.NextFloat(5,7))*MathHelper.TwoPi, Main.rand.NextFloat(2,4)), ModContent.ProjectileType<Thermite_P>(), (int)(Projectile.damage*0.65f), 0, Projectile.owner);
             }
         }
         public override void AI() {
@@ -88,13 +95,15 @@ namespace Origins.Items.Weapons.Explosives {
             Projectile.aiStyle = 1;
             Projectile.penetrate = 25;
             Projectile.timeLeft = Main.rand.Next(300, 451);
+            Projectile.usesIDStaticNPCImmunity = true;
+            Projectile.idStaticNPCHitCooldown = 15;
         }
         public override void AI() {
 			float v = 0.75f+(float)(0.125f*(Math.Sin(Projectile.timeLeft/5f)+2*Math.Sin(Projectile.timeLeft/60f)));
             Lighting.AddLight(Projectile.Center, v, v*0.5f, 0);
         }
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-            width = height = 0;
+            width = height = 2;
             fallThrough = true;
             return true;
         }
@@ -102,10 +111,11 @@ namespace Origins.Items.Weapons.Explosives {
             if(Projectile.ai[0]==0f) {
                 Projectile.ai[0] = 1f;
                 Projectile.aiStyle = 0;
-                Projectile.tileCollide = false;
-                Projectile.position+=Vector2.Normalize(oldVelocity)*2;
+                //Projectile.tileCollide = false;
+                //Projectile.position+=Vector2.Normalize(oldVelocity)*2;
             }
-            Projectile.velocity = Vector2.Zero;
+            Projectile.velocity *= 0.9f;
+            //Projectile.velocity = Vector2.Zero;
             return false;
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
