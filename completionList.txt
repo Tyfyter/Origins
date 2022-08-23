@@ -92,9 +92,9 @@ VANILLA MODIFICATIONS:
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (#3) Demolitionist (to sell different items based on peat sold)*
 (X) Dryad Selling Evil Items on Blood Moon*
-(#2/3) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)* !!!
+(^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)* !!! (also checked balance, is on par with vilethorn with neutral armor)
 (%2) Harpoon (new weapon to introduce sub-class)*
-(☻) Trees (add Bark and Tree Sap as drops when chopping down trees)* !!!
+(☻ (each ~1/45 chance from tree shaking)) Trees (add Bark and Tree Sap as drops when chopping down trees)* !!!
 (^) Wall of Flesh (to drop Exploder Emblem)*
 
 (@, %3, X) Nova Pillar in Lunar Invasion
@@ -107,7 +107,7 @@ ENEMY NPCS:
 (#, %2) Crimbrain
 (^) Fiberglass Enemies
 (#, ^2) Measely Moeba !!!
-(#3, ^2/4) Pre-H Defiled Enemies !!!
+(#3, ^2/4) Pre-H Defiled Enemies !!! (what's missing?)
 (^) Riven Protoform !!!
 (#, ^2) Scanner Scout
 (#, ^2) Single-Cellular Nautilus !!!

@@ -127,6 +127,34 @@ namespace Origins.NPCs {
 				}
 				damage += Main.rand.RandomRound(damageBoost);
 			}
+			if (Main.expertMode) {
+				if (npc.type >= NPCID.EaterofWorldsHead && npc.type <= NPCID.EaterofWorldsTail) {
+					switch (projectile.type) {
+						case ProjectileID.Bomb:
+						case ProjectileID.Dynamite:
+						case ProjectileID.Grenade:
+						case ProjectileID.StickyBomb:
+						case ProjectileID.Explosives:
+						case 181://bee?? like, all of them?
+						case ProjectileID.Beenade:
+						case ProjectileID.ExplosiveBunny:
+						case ProjectileID.StickyGrenade:
+						case ProjectileID.StickyDynamite:
+						case ProjectileID.BouncyBomb:
+						case ProjectileID.BouncyGrenade:
+						case ProjectileID.BombFish:
+						case ProjectileID.GiantBee:// these too?
+						case ProjectileID.PartyGirlGrenade:
+						case ProjectileID.BouncyDynamite:
+						case ProjectileID.ScarabBomb:
+						if(!Main.masterMode) damage *= new Fraction(5, 2);
+						break;
+						default:
+						if(projectile.CountsAsClass(DamageClasses.Explosive))damage /= Main.masterMode ? 5 : 2;
+						break;
+					}
+				}
+			}
 		}
 		/*public override void OnHitNPC(NPC npc, NPC target, int damage, float knockback, bool crit) {
 			knockback*=MeleeCollisionNPCData.knockbackMult;

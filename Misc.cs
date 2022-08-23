@@ -183,7 +183,7 @@ namespace Origins {
             return new Fraction(f1.N * f2.D, f1.D * f2.N);
         }
         public static Fraction operator *(Fraction frac, int i) {
-            return new Fraction(frac.N*i, frac.D);
+            return new Fraction(frac.N * i, frac.D);
         }
         public static int operator *(int i, Fraction frac) {
             return (i * frac.N) / frac.D;
