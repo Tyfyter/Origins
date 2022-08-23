@@ -31,11 +31,11 @@ namespace Origins.NPCs {
 			var riv = new IsWorldEvil(OriginSystem.evil_riven);
 			var defExp = new IsWorldEvilAndNotExpert(OriginSystem.evil_wastelands);
 			var rivExp = new IsWorldEvilAndNotExpert(OriginSystem.evil_riven);
-			LootFixers.WorldEvilFixer(dropRules, (rule) => {
+			LootFixers.WorldEvilFixer(dropRules, (rule, isExpert) => {
 				switch (rule.itemId) {
 					case ItemID.DemoniteOre:
 					npcLoot.Add(ItemDropRule.ByCondition(
-						defExp,
+						isExpert ? defExp : def,
 						ModContent.ItemType<Defiled_Ore_Item>(),
 						rule.chanceDenominator,
 						rule.amountDroppedMinimum,
@@ -43,7 +43,7 @@ namespace Origins.NPCs {
 						rule.chanceNumerator
 					));
 					npcLoot.Add(ItemDropRule.ByCondition(
-						rivExp,
+						isExpert ? rivExp : riv,
 						ModContent.ItemType<Infested_Ore_Item>(),
 						rule.chanceDenominator,
 						rule.amountDroppedMinimum,
@@ -53,7 +53,7 @@ namespace Origins.NPCs {
 					break;
 					case ItemID.CorruptSeeds:
 					npcLoot.Add(ItemDropRule.ByCondition(
-						defExp,
+						isExpert ? defExp : def,
 						ModContent.ItemType<Defiled_Grass_Seeds>(),
 						rule.chanceDenominator,
 						rule.amountDroppedMinimum,

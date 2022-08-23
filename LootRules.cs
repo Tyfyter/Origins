@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 
 namespace Origins.LootConditions {
 	public static class LootFixers {
-		public static void WorldEvilFixer(List<IItemDropRule> dropRules, Action<ItemDropWithConditionRule> onCorruptRule = null) {
+		public static void WorldEvilFixer(List<IItemDropRule> dropRules, Action<ItemDropWithConditionRule, bool> onCorruptRule = null) {
 			IItemDropRule entry;
 			int len = dropRules.Count;
 			for (int i = 0; i < len; i++) {
@@ -22,11 +22,12 @@ namespace Origins.LootConditions {
 				if (entry is ItemDropWithConditionRule rule) {
 					if (rule.condition is Conditions.IsCorruption) {
 						rule.condition = new IsWorldEvil(OriginSystem.evil_corruption);
+						if (onCorruptRule is not null) onCorruptRule(rule, false);
 					} else if (rule.condition is Conditions.IsCrimson) {
 						rule.condition = new IsWorldEvil(OriginSystem.evil_crimson);
 					} else if (rule.condition is Conditions.IsCorruptionAndNotExpert) {
 						rule.condition = new IsWorldEvilAndNotExpert(OriginSystem.evil_corruption);
-						if(onCorruptRule is not null) onCorruptRule(rule);
+						if(onCorruptRule is not null) onCorruptRule(rule, true);
 					} else if (rule.condition is Conditions.IsCrimsonAndNotExpert) {
 						rule.condition = new IsWorldEvilAndNotExpert(OriginSystem.evil_crimson);
 					}

@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Origins.World.BiomeData;
+using System.IO;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Mite : ModNPC {
@@ -33,9 +34,24 @@ namespace Origins.NPCs.Defiled {
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
+        static int MaxMana => 16;
+        static int MaxManaDrain => 8;
+        float Mana {
+            get;
+            set;
+        }
+        public override void OnHitPlayer(Player target, int damage, bool crit) {
+            int maxDrain = (int)Math.Min(MaxMana - Mana, MaxManaDrain);
+            int manaDrain = Math.Min(maxDrain, target.statMana);
+            target.statMana -= manaDrain;
+            Mana += manaDrain;
+            if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
+        }
         public override void UpdateLifeRegen(ref int damage) {
-            if (NPC.life > 20) {
-                NPC.lifeRegen += 18 / (NPC.life / 20);
+            if (NPC.life < NPC.lifeMax && Mana > 0) {
+                int factor = 16;
+                NPC.lifeRegen += factor;
+                Mana -= factor / 120f;// 1 mana for every 1 health regenerated
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -110,6 +126,12 @@ namespace Origins.NPCs.Defiled {
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
                 for(int i = 0; i < 3; i++)Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
             }
+        }
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(Mana);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            Mana = reader.ReadSingle();
         }
     }
 }

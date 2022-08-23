@@ -12,6 +12,7 @@ using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Materials;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
+using System.IO;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Brute : ModNPC {
@@ -34,16 +35,24 @@ namespace Origins.NPCs.Defiled {
             NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
             NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
         }
-        //float Mana { get; set; }
-        //int manaDrain { get; set; }
-
-        //public override void OnHitPlayer(Player target, int damage, bool crit) {
-            //Mana = Math.Min(Mana + 20, 200);
-            //manaDrain = Math.Min(14, target.statMana);
-        //}
+        static int MaxMana => 200;
+        static int MaxManaDrain => 24;
+        float Mana {
+            get;
+            set;
+        }
+        public override void OnHitPlayer(Player target, int damage, bool crit) {
+            int maxDrain = (int)Math.Min(MaxMana - Mana, MaxManaDrain);
+            int manaDrain = Math.Min(maxDrain, target.statMana);
+            target.statMana -= manaDrain;
+            Mana += manaDrain;
+            if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
+        }
         public override void UpdateLifeRegen(ref int damage) {
-            if (NPC.life > 20) {
-                NPC.lifeRegen += 18 / (NPC.life / 20);
+            if (NPC.life < NPC.lifeMax && Mana > 0) {
+                int factor = 24 / ((NPC.life / 40) + 2);
+                NPC.lifeRegen += factor;
+                Mana -= factor / 90f;// 3 mana for every 2 health regenerated
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -147,6 +156,12 @@ namespace Origins.NPCs.Defiled {
                 for(int i = 0; i < 6; i++)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
                 for(int i = 0; i < 10; i++)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
             }
+        }
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(Mana);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            Mana = reader.ReadSingle();
         }
     }
 }

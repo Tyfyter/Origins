@@ -33,9 +33,15 @@ namespace Origins.NPCs.Defiled {
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
+        float Mana {
+            get => NPC.localAI[0];
+            set => NPC.localAI[0] = value;
+        }
         public override void UpdateLifeRegen(ref int damage) {
-            if (NPC.life > 20) {
-                NPC.lifeRegen += 18 / (NPC.life / 20);
+            if (NPC.life < NPC.lifeMax && Mana > 0) {
+                int factor = Main.rand.RandomRound((1 - (NPC.life / 360f)) * 12 + 4);
+                NPC.lifeRegen += factor;
+                Mana -= factor / 240f;// 1 mana for every 2 health regenerated
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -52,6 +58,7 @@ namespace Origins.NPCs.Defiled {
                 NPC.FaceTarget();
                 NPC.spriteDirection = NPC.direction;
             }
+            Main.LocalPlayer.chatOverhead.NewMessage(Mana+"", 5);
             return true;
         }
 		public override void OnSpawn(IEntitySource source) {
@@ -210,6 +217,16 @@ namespace Origins.NPCs.Defiled {
                 //npc.Center = next.oldPosition + new Vector2(next.width/2, next.height/2) - new Vector2(24, 0).RotatedBy(npc.rotation);
             }
         }
+        static int MaxMana => 50;
+        static int MaxManaDrain => 50;
+        public override void OnHitPlayer(Player target, int damage, bool crit) {
+            ref float mana = ref Main.npc[NPC.realLife].localAI[0];
+            int maxDrain = (int)Math.Min(MaxMana - mana, MaxManaDrain);
+            int manaDrain = Math.Min(maxDrain, target.statMana);
+            target.statMana -= manaDrain;
+            mana += manaDrain;
+            if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
+        }
 
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
             if(NPC.realLife!=NPC.whoAmI) {
@@ -270,12 +287,14 @@ namespace Origins.NPCs.Defiled {
             writer.Write(ai[1]);
             writer.Write(ai[2]);
             writer.Write(ai[3]);
+            writer.Write(NPC.localAI[0]);
         }
         public override void ReceiveExtraAI(BinaryReader reader) {
             ai[0] = reader.ReadInt32();
             ai[1] = reader.ReadInt32();
             ai[2] = reader.ReadInt32();
             ai[3] = reader.ReadInt32();
+            NPC.localAI[0] = reader.ReadSingle();
         }
     }
 }

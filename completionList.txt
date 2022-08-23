@@ -107,7 +107,7 @@ ENEMY NPCS:
 (#, %2) Crimbrain
 (^) Fiberglass Enemies
 (#, ^2) Measely Moeba !!!
-(#3, ^2/4) Pre-H Defiled Enemies !!! (what's missing?)
+(☻) Pre-H Defiled Enemies !!!
 (^) Riven Protoform !!!
 (#, ^2) Scanner Scout
 (#, ^2) Single-Cellular Nautilus !!!

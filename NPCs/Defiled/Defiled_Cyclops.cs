@@ -2,6 +2,7 @@
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Defiled;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -29,9 +30,24 @@ namespace Origins.NPCs.Defiled {
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
+        static int MaxMana => 50;
+        static int MaxManaDrain => 10;
+        float Mana {
+            get;
+            set;
+        }
+        public override void OnHitPlayer(Player target, int damage, bool crit) {
+            int maxDrain = (int)Math.Min(MaxMana - Mana, MaxManaDrain);
+            int manaDrain = Math.Min(maxDrain, target.statMana);
+            target.statMana -= manaDrain;
+            Mana += manaDrain;
+            if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
+        }
         public override void UpdateLifeRegen(ref int damage) {
-            if (NPC.life > 20) {
-                NPC.lifeRegen += 18 / (NPC.life / 20);
+            if (NPC.life < NPC.lifeMax && Mana > 0) {
+                int factor = 24 / ((NPC.life / 10) + 1);
+                NPC.lifeRegen += factor;
+                Mana -= factor / 120f;// 1 mana for every 1 health regenerated
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -79,6 +95,12 @@ namespace Origins.NPCs.Defiled {
                 for(int i = 0; i < 3; i++)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
                 for(int i = 0; i < 6; i++)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
             }
+        }
+        public override void SendExtraAI(BinaryWriter writer) {
+            writer.Write(Mana);
+        }
+        public override void ReceiveExtraAI(BinaryReader reader) {
+            Mana = reader.ReadSingle();
         }
     }
 }
