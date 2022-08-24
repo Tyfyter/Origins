@@ -466,21 +466,21 @@ namespace Origins {
                 crit = true;
             }
             if(defiledSet) {
-                float manaDamage = Math.Max(damage-Player.statDefense*(Main.expertMode?0.75f:0.5f), 1) * (reshapingChunk ? 0.25f : 0.15f);
+                float manaDamage = damage;
                 float costMult = 3;
-                float costMult2 = 1/(Player.GetDamage(DamageClass.Magic).Additive/Player.GetDamage(DamageClass.Magic).Multiplicative);
-                if(Player.statMana < manaDamage*costMult*costMult2) {
+                float costMult2 = (float)Math.Pow((reshapingChunk ? 0.25f : 0.15f), 1/Player.manaCost);
+                if (Player.magicCuffs) {
+                    costMult = 1;
+                    Player.magicCuffs = false;
+                }
+                if (Player.statMana < manaDamage*costMult*costMult2) {
                     manaDamage = Player.statMana/(costMult*costMult2);
                 }
-                if(Player.magicCuffs) {
-                    if(costMult2>1)
-                        costMult2 = 1/costMult2;
+                if (manaDamage * costMult * costMult2 >= 1f) {
+                    Player.ManaEffect((int)-(manaDamage * costMult * costMult2));
                 }
-                if(manaDamage*costMult*costMult2>=1f)
-                    Player.ManaEffect((int)-(manaDamage*costMult*costMult2));
-                Player.CheckMana((int)Math.Floor(manaDamage*costMult*costMult2), true);
-                damage = (int)(damage-manaDamage);
-                Player.magicCuffs = false;
+                Player.CheckMana((int)Math.Floor(manaDamage * costMult * costMult2), true);
+                damage = (int)(damage - (manaDamage * costMult2));
                 Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Buff>(), 50);
             }else if (reshapingChunk) {
                 damage -= damage / 20;

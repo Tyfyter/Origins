@@ -5,6 +5,7 @@ using Origins.NPCs.Defiled;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
@@ -50,6 +51,13 @@ namespace Origins {
 				worldTypeSkew = 0;
 				break;
 			}
+		}
+		internal void Save() {
+			Directory.CreateDirectory(ConfigManager.ModConfigPath);
+			string filename = Mod.Name + "_" + Name + ".json";
+			string path = Path.Combine(ConfigManager.ModConfigPath, filename);
+			string json = JsonConvert.SerializeObject(this, ConfigManager.serializerSettings);
+			File.WriteAllText(path, json);
 		}
 	}
 	[Label("Client Settings")]
