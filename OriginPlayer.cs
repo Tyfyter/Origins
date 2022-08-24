@@ -466,7 +466,6 @@ namespace Origins {
                 crit = true;
             }
             if(defiledSet) {
-                damage = 200;
                 float manaDamage = damage;
                 float costMult = 3;
                 float costMult2 = reshapingChunk ? 0.25f : 0.15f;
