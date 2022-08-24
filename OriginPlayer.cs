@@ -466,21 +466,23 @@ namespace Origins {
                 crit = true;
             }
             if(defiledSet) {
+                damage = 200;
                 float manaDamage = damage;
                 float costMult = 3;
-                float costMult2 = (float)Math.Pow((reshapingChunk ? 0.25f : 0.15f), 1/Player.manaCost);
+                float costMult2 = reshapingChunk ? 0.25f : 0.15f;
+                float costMult3 = (float)Math.Pow(reshapingChunk ? 0.25f : 0.15f, Player.manaCost);
                 if (Player.magicCuffs) {
                     costMult = 1;
                     Player.magicCuffs = false;
                 }
                 if (Player.statMana < manaDamage*costMult*costMult2) {
-                    manaDamage = Player.statMana/(costMult*costMult2);
+                    manaDamage = Player.statMana / (costMult * costMult2);
                 }
                 if (manaDamage * costMult * costMult2 >= 1f) {
                     Player.ManaEffect((int)-(manaDamage * costMult * costMult2));
                 }
                 Player.CheckMana((int)Math.Floor(manaDamage * costMult * costMult2), true);
-                damage = (int)(damage - (manaDamage * costMult2));
+                damage = (int)(damage - (manaDamage * costMult3));
                 Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Buff>(), 50);
             }else if (reshapingChunk) {
                 damage -= damage / 20;
