@@ -40,17 +40,11 @@ namespace Origins {
 
 		[OnDeserialized]
 		internal void OnDeserialized(StreamingContext context) {
-			switch(altWorldEvil) {
-				case "never":
-				worldTypeSkew = -1;
-				break;
-				case "always":
-				worldTypeSkew = 1;
-				break;
-				default:
-				worldTypeSkew = 0;
-				break;
-			}
+			worldTypeSkew = altWorldEvil switch {
+				"never" => -1,
+				"always" => 1,
+				_ => 0,
+			};
 		}
 		internal void Save() {
 			Directory.CreateDirectory(ConfigManager.ModConfigPath);
@@ -58,6 +52,7 @@ namespace Origins {
 			string path = Path.Combine(ConfigManager.ModConfigPath, filename);
 			string json = JsonConvert.SerializeObject(this, ConfigManager.serializerSettings);
 			File.WriteAllText(path, json);
+			OnDeserialized(new(StreamingContextStates.Other));
 		}
 	}
 	[Label("Client Settings")]
