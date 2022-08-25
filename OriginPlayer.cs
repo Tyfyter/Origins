@@ -461,6 +461,12 @@ namespace Origins {
             }
             MeleeCollisionNPCData.knockbackMult = 1f;
         }
+        public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
+            if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
+                damage.Flat += Player.statDefense / 2;
+            }
+        }
+        #endregion
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter) {
             if(Player.HasBuff(Solvent_Debuff.ID)&&Main.rand.Next(9)<3) {
                 crit = true;
@@ -491,12 +497,6 @@ namespace Origins {
 			}
             return damage != 0;
         }
-		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
-			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
-                damage.Flat += Player.statDefense / 2;
-			}
-		}
-		#endregion
 		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
             if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {
                 OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();

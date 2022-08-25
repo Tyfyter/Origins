@@ -25,7 +25,7 @@ namespace Origins.Items.Armor.Defiled {
             return body.type == ModContent.ItemType<Defiled_Breastplate>() && legs.type == ModContent.ItemType<Defiled_Greaves>();
         }
         public override void UpdateArmorSet(Player player) {
-            player.setBonus = "Some damage recieved is redirected to mana";
+            player.setBonus = "15% of damage taken is redirected to mana";
             player.GetModPlayer<OriginPlayer>().defiledSet = true;
         }
         public override void AddRecipes() {

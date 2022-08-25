@@ -24,9 +24,9 @@ namespace Origins.NPCs.TownNPCs {
     public class Acid_Freak : ModNPC {
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Acid Freak");
-			Main.npcFrameCount[Type] = 23; // The amount of frames the NPC has
+			Main.npcFrameCount[Type] = 23; // The amount of frames the NPC has, walk frame count (15) + ExtraFramesCount
 
-			NPCID.Sets.ExtraFramesCount[Type] = 9; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
+			NPCID.Sets.ExtraFramesCount[Type] = 8; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
 			NPCID.Sets.AttackFrameCount[Type] = 4;
 			NPCID.Sets.DangerDetectRange[Type] = 700; // The amount of pixels away from the center of the npc that it tries to attack enemies.
 			NPCID.Sets.AttackType[Type] = 0;
@@ -61,7 +61,7 @@ namespace Origins.NPCs.TownNPCs {
             NPC.CloneDefaults(NPCID.WitchDoctor);
 			NPC.townNPC = true;
 			NPC.friendly = true;
-			AnimationType = NPCID.Merchant;
+			AnimationType = NPCID.BestiaryGirl;
 		}
 		public override bool PreAI() {
 			NPC.wet = false;
