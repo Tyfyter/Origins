@@ -24,7 +24,7 @@ namespace Origins.NPCs.TownNPCs {
     public class Acid_Freak : ModNPC {
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Acid Freak");
-			Main.npcFrameCount[Type] = 25; // The amount of frames the NPC has
+			Main.npcFrameCount[Type] = 23; // The amount of frames the NPC has
 
 			NPCID.Sets.ExtraFramesCount[Type] = 9; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
 			NPCID.Sets.AttackFrameCount[Type] = 4;

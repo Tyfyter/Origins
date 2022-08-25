@@ -570,16 +570,6 @@ namespace Origins.Items.Materials {
         public override void SetDefaults() {
             Item.maxStack = 999;
         }
-        public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Bark>(), 3);
-            recipe.AddTile(TileID.GlassKiln);
-            recipe.Register();
-            recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Tree_Sap>(), 3);
-            recipe.AddTile(TileID.GlassKiln);
-            recipe.Register();
-        }
     }
     public class Silicon_Wafer : ModItem {
         public override void SetStaticDefaults() {

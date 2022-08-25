@@ -1,9 +1,7 @@
 using Origins.Items.Materials;
 using Terraria;
-using Origins.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Armor.Defiled {
     [AutoloadEquip(EquipType.Head)]
@@ -27,7 +25,7 @@ namespace Origins.Items.Armor.Defiled {
             return body.type == ModContent.ItemType<Defiled_Breastplate>() && legs.type == ModContent.ItemType<Defiled_Greaves>();
         }
         public override void UpdateArmorSet(Player player) {
-            player.setBonus = "15% of damage taken is redirected to mana";
+            player.setBonus = "Some damage recieved is redirected to mana";
             player.GetModPlayer<OriginPlayer>().defiledSet = true;
         }
         public override void AddRecipes() {
@@ -42,7 +40,7 @@ namespace Origins.Items.Armor.Defiled {
     public class Defiled_Breastplate : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Breastplate");
-            Tooltip.SetDefault("10% increased magic damage");
+            Tooltip.SetDefault("15% increased magic damage");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -51,7 +49,7 @@ namespace Origins.Items.Armor.Defiled {
             Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
-            player.GetAttackSpeed(DamageClass.Magic) += 0.1f;
+            player.GetAttackSpeed(DamageClass.Magic) += 0.15f;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

@@ -37,6 +37,7 @@ X: No progress
 BOSSES AND MINI-BOSSES:
 ---
 (X) Defiled Spawnswarmer
+(#, ^2) Defiled Spawnswarmer
 (X) Discombobulator
 (#, ^2) Grand Corruptor
 (#, ^2) Ichor Storm
@@ -70,7 +71,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(@5, #2, %2) Acid Freak
+(#2, %2, ^2) Acid Freak
 (%2, X) Darkathian Miner
 (X) Defiled Envoy
 
@@ -90,11 +91,11 @@ VANILLA MODIFICATIONS:
 
 (^) Bats (drop Bat Hide)*
 (^) Boss Immunities (make every boss immune to anything with Stun)*
-(#3) Demolitionist (to sell different items based on peat sold)* (already implemented?)
+(#3, %2) Demolitionist (to sell different items based on peat sold)* (No, want to implement more in future for usefulness past pre-h)
 (X) Dryad Selling Evil Items on Blood Moon*
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)* !!! (also checked balance, is about on par with vilethorn with neutral armor)
-(%2) Harpoon (new weapon to introduce sub-class)*
-(☻ (each ~1/45 chance from tree shaking)) Trees (add Bark and Tree Sap as drops when chopping down trees)* !!!
+(#, ^2) Harpoon (new weapon to introduce sub-class)*
+(^) Trees*
 (^) Wall of Flesh (to drop Exploder Emblem & Thermite Launcher)*
 
 (@, %3, X) Nova Pillar in Lunar Invasion
@@ -107,7 +108,7 @@ ENEMY NPCS:
 (#, %2) Crimbrain
 (^) Fiberglass Enemies
 (#, ^2) Measely Moeba !!!
-(☻) Pre-H Defiled Enemies !!!
+(^) Pre-H Defiled Enemies !!!
 (^) Riven Protoform !!!
 (#, ^2) Scanner Scout
 (#, ^2) Single-Cellular Nautilus !!!
