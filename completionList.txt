@@ -36,7 +36,7 @@ X: No progress
 
 BOSSES AND MINI-BOSSES:
 ---
-(X) Defiled Spawnswarmer
+(#, ^2) Defiled Spawnswarmer
 (#, ^2) Defiled Spawnswarmer
 (X) Discombobulator
 (#, ^2) Grand Corruptor
@@ -210,7 +210,7 @@ ARMOR:
 (#3, ^2) Riven Armor !!!
 
 (^) Acrid Armor
-(@, ^3) Bleeding Obsidian Armor
+(#4, ^2) Bleeding Obsidian Armor
 (@, ^3) Mimic Armor
 
 (X) Anti-Gravity Armor
@@ -429,7 +429,7 @@ RANGED WEAPONS:
 (X) Orichalcum Harpoon Gun
 (X) Palladium Harpoon Gun
 (X) Spray 'N Pray
-(#4, ^) Tiny Sniper
+(^) Tiny Sniper
 (X) Titanium Harpoon Gun
 (@5, ^3) Vipershot
 
@@ -531,7 +531,7 @@ EXPLOSIVE WEAPONS:
 (^) Peatball*
 
 (^) Bomboomstick
-(X) Boomphracken
+(#2, ^2) Boomphracken
 (#, ^2) Klangjet
 (#, ^2) Mortar Shell
 (X) Napalm Bomb
@@ -757,6 +757,7 @@ AMMO:
 (^) Peatball*
 
 (#, ^2) Acid Harpoon
+(#2, ^2) Giant Metal Slug
 (#, ^2) Teal Solution !!!
 (^) Thermite Canister
 (^) White Solution

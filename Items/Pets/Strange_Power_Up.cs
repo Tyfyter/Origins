@@ -26,6 +26,7 @@ namespace Origins.Items.Pets {
             Item.rare = ItemRarityID.Cyan;// dev items are cyan rarity, despite being expert exclusive
             Item.buffType = buffID;
             Item.shoot = projectileID;
+            Item.UseSound = Origins.Sounds.PowerUp;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {

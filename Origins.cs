@@ -330,6 +330,7 @@ namespace Origins {
             };
             Sounds.Krunch = new SoundStyle("Origins/Sounds/Custom/BurstCannon", SoundType.Sound);
             Sounds.HeavyCannon = new SoundStyle("Origins/Sounds/Custom/HeavyCannon", SoundType.Sound);
+            Sounds.PowerUp = new SoundStyle("Origins/Sounds/Custom/PowerUp", SoundType.Sound);
             Sounds.EnergyRipple = new SoundStyle("Origins/Sounds/Custom/EnergyRipple", SoundType.Sound);
             Sounds.DeepBoom = new SoundStyle("Origins/Sounds/Custom/DeepBoom", SoundType.Sound);
             Sounds.DefiledIdle = new SoundStyle("Origins/Sounds/Custom/Defiled_Idle", new int[] { 2, 3 }, SoundType.Sound) {
@@ -511,6 +512,7 @@ namespace Origins {
             public static SoundStyle DefiledIdle = SoundID.Zombie1;
             public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;
             public static SoundStyle DefiledKill = SoundID.NPCDeath1;
+            public static SoundStyle PowerUp = SoundID.Item4;
         }
 		public override object Call(params object[] args) {
 			return args[0] switch {

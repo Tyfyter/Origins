@@ -21,11 +21,8 @@ namespace Origins.Items.Weapons.Other {
             Item.useTime = 33;
             Item.width = 34;
             Item.height = 12;
-            //item.scale = 0.5f;
+            Item.scale = 0.5f;
 		}
-        public override Vector2? HoldoutOffset() {
-            return new Vector2(-1,0);
-        }
         public override void HoldItemFrame(Player player) {
             if(Item.holdStyle==4) {
                 float rot = (Main.MouseWorld - player.MountedCenter).SafeNormalize(Vector2.Zero).Y;//player.itemRotation * player.direction;
@@ -43,17 +40,6 @@ namespace Origins.Items.Weapons.Other {
 				        player.bodyFrame.Y = player.bodyFrame.Height * 2;
 			        }
 		        }
-            }
-        }
-        public override void HoldStyle(Player player, Rectangle heldItemFrame) {
-            Item.holdStyle = ItemHoldStyleID.HoldFront;
-            if(player.scope&&(PlayerInput.UsingGamepad?(PlayerInput.GamepadThumbstickRight.Length() != 0f||!Main.SmartCursorIsUsed):Main.mouseRight)) {
-                Item.holdStyle = 4;
-				player.itemLocation.X = player.Center.X - 17f - (player.direction * 2);
-				player.itemLocation.Y = player.MountedCenter.Y - 6f;
-                Vector2 diff = Main.MouseWorld - player.MountedCenter;
-                player.direction = System.Math.Sign(diff.X);
-                player.itemRotation = diff.ToRotation()+(diff.X>0?0:MathHelper.Pi);
             }
         }
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {

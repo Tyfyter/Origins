@@ -1,17 +1,17 @@
 using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Defiled {
     public class Defiled_Burst : ModItem {
+        static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("The Kruncher");
             Tooltip.SetDefault("Very pointy");
+            glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -32,6 +32,7 @@ namespace Origins.Items.Weapons.Defiled {
             Item.useTurn = false;
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.05f);
+            Item.glowMask = glowmask;
         }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    for(int i = 0; i<5; i++)Projectile.NewProjectile(source, position, velocity.RotatedByRandom(i/10f), type, damage, knockback, player.whoAmI);

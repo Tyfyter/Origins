@@ -1,15 +1,27 @@
-﻿using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dusts;
 using Origins.Items.Weapons.Explosives;
 using Origins.Projectiles;
-using Origins.Dusts;
-using Terraria.GameContent.Creative;
-using Origins.Items.Materials;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-	public class Thermite_Canister : ModItem {
+    public class Giant_Metal_Slug : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Giant Metal Slug");
+            SacrificeTotal = 199;
+            //Tooltip.SetDefault();
+        }
+        public override void SetDefaults() {
+            Item.CloneDefaults(ItemID.MusketBall);
+            Item.damage = 25;
+            //Item.shoot = ModContent.ProjectileType<Giant_Metal_Slug_P>();
+            Item.ammo = Item.type;
+        }
+    }
+
+    public class Thermite_Canister : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Thermite Canister");

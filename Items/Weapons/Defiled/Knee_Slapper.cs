@@ -10,9 +10,11 @@ using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Defiled {
     public class Knee_Slapper : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Knee Slapper");
 			Tooltip.SetDefault("'Fish have feelings too'");
+			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -33,6 +35,7 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;
+			Item.glowMask = glowmask;
 		}
 		public override int ChoosePrefix(UnifiedRandom rand) {
 			if (Item.noUseGraphic) {

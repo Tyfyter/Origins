@@ -1,13 +1,10 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Runtime.CompilerServices;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;using Terraria.GameContent.Creative;
-using Origins.Items.Materials;
-
+using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Defiled {
-	public class Defiled_Chakram : ModItem {
+    public class Defiled_Chakram : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Krakram");
 			Tooltip.SetDefault("Very pointy");

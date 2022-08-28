@@ -1,22 +1,21 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.NPCs;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Defiled {
-	public class Infusion : ModItem {
+    public class Infusion : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Infusion");
 			Tooltip.SetDefault("");
+			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -38,6 +37,7 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitchRange(0.9f, 1f);
 			Item.autoReuse = true;
+			Item.glowMask = glowmask;
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(8, 0);

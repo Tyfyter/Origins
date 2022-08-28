@@ -1,15 +1,13 @@
 using Origins.Items.Materials;
 using Terraria;
-using Origins.Buffs;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Armor.Rift {
     [AutoloadEquip(EquipType.Head)]
     public class Rift_Helmet : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Bleeding Obsidian Maniac Mask");
+            DisplayName.SetDefault("Bleeding Obsidian Hardee");
             Tooltip.SetDefault("Increased explosive velocity");
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Rift/Rift_Helmet_Head_Glow");
@@ -45,7 +43,6 @@ namespace Origins.Items.Armor.Rift {
             Tooltip.SetDefault("-25% explosive self-damage");
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Rift/Rift_Breastplate_Body_Glow");
-                Origins.AddBreastplateGlowmask(-Item.bodySlot, "Items/Armor/Rift/Rift_Breastplate_FemaleBody_Glow");
             }
             SacrificeTotal = 1;
         }
