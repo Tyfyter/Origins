@@ -15,7 +15,6 @@ using Microsoft.Xna.Framework;
 using Terraria.Utilities;
 using Origins.Items.Weapons.Other;
 using Origins.Walls;
-using static Origins.OriginSystem.LootQueueAction;
 using Origins.Tiles.Riven;
 using Origins.Tiles.Brine;
 using Origins.World;
@@ -23,6 +22,11 @@ using Origins.Items.Accessories;
 using System.Collections;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Summon;
+using Terraria.Localization;
+using Tyfyter.Utils;
+using static Tyfyter.Utils.ChestLootCache.LootQueueAction;
+using static Tyfyter.Utils.ChestLootCache.LootQueueMode;
+using static Tyfyter.Utils.ChestLootCache;
 
 namespace Origins {
     public partial class OriginSystem : ModSystem {
@@ -165,6 +169,10 @@ namespace Origins {
             ApplyWeightedLootQueue(chestLoots,
                 (CHANGE_QUEUE, ChestID.Normal, 0f),
                 (ENQUEUE, ModContent.ItemType<Syah_Nara>(), 1f),
+                //example:
+                //(SWITCH_MODE, MODE_ADD, 1f),
+                //(ENQUEUE, ItemID.Sashimi, 0.5f),
+                //(SWITCH_MODE, MODE_REPLACE, 1f),
                 (CHANGE_QUEUE, ChestID.LivingWood, 0f),
                 (ENQUEUE, ModContent.ItemType<Woodsprite_Staff>(), 1f),
                 (CHANGE_QUEUE, ChestID.LockedShadow, 0f),
@@ -182,6 +190,7 @@ namespace Origins {
                 (ENQUEUE, ModContent.ItemType<Bomb_Yeeter>(), 1f));
             _worldSurfaceLow = WorldGen.worldSurfaceLow;
         }
+        [Obsolete]
         public static void ApplyLootQueue(ChestLootCache[] lootCache, params (LootQueueAction action, int param)[] actions) {
             int lootType;
             ChestLootCache cache = null;
@@ -190,43 +199,63 @@ namespace Origins {
             Queue<int> items = new Queue<int>();
             WeightedRandom<int> random;
             int newLootType;
-            if(actions[0].action==CHANGE_QUEUE) {
+            int queueMode = MODE_REPLACE;
+            switch (actions[0].action) {
+                case CHANGE_QUEUE:
                 cache = lootCache[actions[0].param];
-            } else {
-                throw new ArgumentException("the first action in ApplyLootQueue must be CHANGE_QUEUE", nameof(actions));
+                break;
+                case SWITCH_MODE:
+                queueMode = actions[0].param;
+                break;
+                case ENQUEUE:
+                throw new ArgumentException("the first action in ApplyLootQueue must not be ENQUEUE", "actions");
             }
             int actionIndex = 1;
             cont:
-            if(actionIndex<actions.Length&&actions[actionIndex].action==ENQUEUE) {
+            if (actionIndex < actions.Length && actions[actionIndex].action == ENQUEUE) {
                 items.Enqueue(actions[actionIndex].param);
-                Origins.instance.Logger.Info("adding item "+actions[actionIndex].param+" to world");
+                Origins.instance.Logger.Info("adding item " + actions[actionIndex].param + " to world");
                 actionIndex++;
                 goto cont;
             }
-            while(items.Count>0) {
+            int i = actions.Length;
+            if (cache is null) {
+                return;
+            }
+            while (items.Count > 0) {
                 random = cache.GetWeightedRandom();
                 lootType = random.Get();
                 chestIndex = WorldGen.genRand.Next(cache[lootType]);
                 chest = Main.chest[chestIndex];
                 newLootType = items.Dequeue();
-                chest.item[0].SetDefaults(newLootType);
-                chest.item[0].Prefix(-1);
+                int targetIndex = 0;
+                switch (queueMode) {
+                    case MODE_ADD:
+                    for (targetIndex = 0; targetIndex < Chest.maxItems; targetIndex++) if (chest.item[targetIndex].IsAir) break;
+                    break;
+                }
+                if (targetIndex >= Chest.maxItems) {
+                    if (--i > 0) items.Enqueue(newLootType);
+                }
+                chest.item[targetIndex].SetDefaults(newLootType);
+                chest.item[targetIndex].Prefix(-2);
                 cache[lootType].Remove(chestIndex);
             }
-            if(actionIndex<actions.Length&&actions[actionIndex].action==CHANGE_QUEUE) {
+            if (actionIndex < actions.Length && actions[actionIndex].action == CHANGE_QUEUE) {
                 cache = lootCache[actions[actionIndex].param];
                 actionIndex++;
                 goto cont;
             }
         }
-        public static void ApplyWeightedLootQueue(ChestLootCache[] lootCache, params (LootQueueAction action, int param, float weight)[] actions) {
+        public static void ApplyWeightedLootQueue(ChestLootCache[] lootCaches, params (LootQueueAction action, int param, float weight)[] actions) {
             int lootType;
             ChestLootCache cache = null;
             Chest chest;
             int chestIndex = -1;
-            Queue<(int, float)> items = new Queue<(int, float)>();
+            Queue<(int, float, int)> items = new Queue<(int, float, int)>();
             WeightedRandom<int> random;
-            (int param, float weight) newLootType;
+            (int param, float weight, int mode) newLootType;
+            int queueMode = MODE_REPLACE;
 
             int actionIndex = 0;
             void filterCache() {
@@ -279,22 +308,32 @@ namespace Origins {
                     break;
                 }
                 cache = new ChestLootCache(cache.Where((c) => c.Value.Count > 0));
-                Origins.instance.Logger.Info($"using chest cache #{actions[0].param} with mode {(int)actions[0].weight}: {string.Join(", ", cache.Select(v => $"{v.Value.Count} {new Item(v.Key).Name} (s)"))}");
+                Origins.instance.Logger.Info($"using chest cache #{actions[actionIndex].param} {ChestID.Search.GetName(actions[actionIndex].param)} with mode {(int)actions[actionIndex].weight}: {string.Join(", ", cache.Select(v => $"{v.Value.Count} {new Item(v.Key).Name} (s)"))}");
             }
-
-            if (actions[0].action == CHANGE_QUEUE) {
-                cache = lootCache[actions[0].param];
+            switch (actions[actionIndex].action) {
+                case CHANGE_QUEUE:
+                cache = lootCaches[actions[actionIndex].param];
                 filterCache();
-            } else {
-                throw new ArgumentException("the first action in ApplyLootQueue must be CHANGE_QUEUE", nameof(actions));
+                break;
+                case SWITCH_MODE:
+                queueMode = actions[actionIndex].param;
+                break;
+                case ENQUEUE:
+                throw new ArgumentException("the first action in ApplyLootQueue must not be ENQUEUE", nameof(actions));
             }
             actionIndex = 1;
             cont:
             if (actionIndex < actions.Length && actions[actionIndex].action == ENQUEUE) {
-                items.Enqueue((actions[actionIndex].param, actions[actionIndex].weight));
+                items.Enqueue((actions[actionIndex].param, actions[actionIndex].weight, queueMode));
                 actionIndex++;
                 goto cont;
             }
+            if (actionIndex < actions.Length && actions[actionIndex].action == SWITCH_MODE) {
+                queueMode = actions[actionIndex].param;
+                actionIndex++;
+                goto cont;
+            }
+            int actionCount = actions.Length;
             int neutralWeight = cache.ChestLoots
                 .GroupBy((n) => n.Value.Count)
                 .OrderByDescending((g) => g.Count())
@@ -303,79 +342,42 @@ namespace Origins {
                 random = cache.GetWeightedRandom();
                 newLootType = items.Dequeue();
                 int i = WorldGen.genRand.RandomRound(neutralWeight * newLootType.weight);
-                Origins.instance.Logger.Info($"adding {i} {new Item(newLootType.param).Name}(s) to chests (weight {newLootType.weight})");
+                switch (newLootType.mode) {
+                    case MODE_ADD:
+                    i = WorldGen.genRand.RandomRound(cache.ChestLoots.Count * newLootType.weight);
+                    break;
+                }
+                Origins.instance.Logger.Info($"adding {i} {Lang.GetItemNameValue(newLootType.param)}(s) to chests (weight {newLootType.weight}, mode {newLootType.mode})");
                 for (; i-- > 0;) {
                     lootType = random.Get();
+                    if (cache[lootType].Count == 0) {
+                        Origins.instance.Logger.Error($"broke on {Lang.GetItemNameValue(newLootType.param)} with {i} remaining, no further valid chests");
+                        break;
+                    }
                     chestIndex = WorldGen.genRand.Next(cache[lootType]);
                     chest = Main.chest[chestIndex];
-                    chest.item[0].SetDefaults(newLootType.param);
-                    chest.item[0].Prefix(-1);
+                    int targetIndex = 0;
+                    switch (newLootType.mode) {
+                        case MODE_ADD:
+                        for (targetIndex = 0; targetIndex < Chest.maxItems; targetIndex++) if (chest.item[targetIndex].IsAir) break;
+                        break;
+                    }
+                    if (targetIndex >= Chest.maxItems) {
+                        if (--actionCount > 0) items.Enqueue(newLootType);
+                    }
+                    chest.item[targetIndex].SetDefaults(newLootType.param);
+                    chest.item[targetIndex].Prefix(-1);
                     cache[lootType].Remove(chestIndex);
+                    random = cache.GetWeightedRandom();
                 }
             }
             if (actionIndex < actions.Length && actions[actionIndex].action == CHANGE_QUEUE) {
-                cache = lootCache[actions[actionIndex].param];
+                cache = lootCaches[actions[actionIndex].param];
                 filterCache();
                 actionIndex++;
                 goto cont;
             }
         }
-        public enum LootQueueAction {
-            ENQUEUE,
-            CHANGE_QUEUE
-        }
-        public class ChestLootCache : IEnumerable<KeyValuePair<int, List<int>>> {
-            internal Dictionary<int, List<int>> ChestLoots;
-			public ChestLootCache() {
-                ChestLoots = new Dictionary<int, List<int>>();
-            }
-            public ChestLootCache(IEnumerable<KeyValuePair<int, List<int>>> enumerable) {
-                ChestLoots = new Dictionary<int, List<int>>(enumerable);
-            }
-            public List<int> this[int lootType] {
-                get {
-                    if(ChestLoots.ContainsKey(lootType)) {
-                        return ChestLoots[lootType];
-                    } else {
-                        return null;
-                    }
-                }
-            }
-            public void AddLoot(int lootType, int chestIndex) {
-                if(ChestLoots.ContainsKey(lootType)) {
-                    ChestLoots[lootType].Add(chestIndex);
-                } else {
-                    ChestLoots.Add(lootType, new List<int>{chestIndex});
-                }
-            }
-            public int CountLoot(int lootType) {
-                if(ChestLoots.ContainsKey(lootType)) {
-                    return ChestLoots[lootType].Count;
-                } else {
-                    return 0;
-                }
-            }
-
-			public WeightedRandom<int> GetWeightedRandom(bool cullUnique = true, UnifiedRandom random = null) {
-                bool cull = false;
-                WeightedRandom<int> rand = new WeightedRandom<int>(random??WorldGen.genRand);
-                foreach(KeyValuePair<int,List<int>> kvp in ChestLoots) {
-                    if(kvp.Value.Count>1) {
-                        cull = cullUnique;
-                    }
-                    rand.Add(kvp.Key, kvp.Value.Count);
-                }
-                if(cull)rand.elements.RemoveAll((e)=>e.Item2<=1);
-                return rand;
-            }
-
-            public IEnumerator<KeyValuePair<int, List<int>>> GetEnumerator() {
-                return ChestLoots.GetEnumerator();
-            }
-            IEnumerator IEnumerable.GetEnumerator() {
-				return ChestLoots.GetEnumerator();
-			}
-		}
         public static byte GetAdjTileCount(int i, int j) {
             byte count = 0;
             if(Main.tile[i-1,j-1].HasTile) count++;

@@ -161,7 +161,7 @@ namespace Origins {
                 List<(Point, int)> EvilSpikes = new List<(Point, int)>() { };
                 tasks[genIndex] = new PassLegacy("Corruption", (GenerationProgress progress, GameConfiguration _) => {
                     //worldEvil = crimson ? evil_riven : evil_wastelands;
-                    if(crimson) {
+                    if(worldEvil == evil_riven) {
                         getEvilTileConversionTypes(evil_riven, out stoneType, out grassType, out plantType, out sandType, out sandstoneType, out hardenedSandType, out iceType);
                         getEvilWallConversionTypes(evil_riven, out stoneWallTypes, out hardenedSandWallTypes, out sandstoneWallTypes);
                         progress.Message = Lang.gen[72].Value+"n't";
@@ -542,7 +542,7 @@ namespace Origins {
                                 }
                             } else {
                                 if(Main.tile[i, j].HasTile && (!SolidTile(i, j + 1) || !SolidTile(i, j + 2))) {
-                                    if(Main.tile[i, j].TileType==sandType)
+                                    if(Main.tile[i, j].TileType == sandType)
                                         Main.tile[i, j].TileType = hardenedSandType;
                                 }
                             }
