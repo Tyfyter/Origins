@@ -74,6 +74,7 @@ namespace Origins {
         public static Dictionary<int, AutoCastingAsset<Texture2D>> HelmetGlowMasks { get; private set; }
         public static Dictionary<int, AutoCastingAsset<Texture2D>> BreastplateGlowMasks { get; private set; }
         public static Dictionary<int, AutoCastingAsset<Texture2D>> LeggingGlowMasks { get; private set; }
+        public static Dictionary<int, AutoCastingAsset<Texture2D>> TorsoLegLayers { get; private set; }
 
         #endregion Armor IDs
         public static int[] celestineBoosters;
@@ -276,7 +277,9 @@ namespace Origins {
             HelmetGlowMasks = new();
             BreastplateGlowMasks = new();
             LeggingGlowMasks = new();
-			if (!Main.dedServ) {
+            TorsoLegLayers = new();
+
+            if (!Main.dedServ) {
                 //OriginExtensions.drawPlayerItemPos = (Func<float, int, Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float, int, Vector2>), Main.instance);
                 perlinFade0 = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/PerlinFade", AssetRequestMode.ImmediateLoad).Value), "RedFade");
                 //perlinFade0.UseImage("Images/Misc/Perlin");
@@ -428,6 +431,7 @@ namespace Origins {
             HelmetGlowMasks = null;
             BreastplateGlowMasks = null;
             LeggingGlowMasks = null;
+            TorsoLegLayers = null;
             instance = null;
 			Defiled_Tree.Unload();
             OriginExtensions.unInitExt();

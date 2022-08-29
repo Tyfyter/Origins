@@ -1,4 +1,6 @@
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -43,6 +45,9 @@ namespace Origins.Items.Armor.Rift {
             Tooltip.SetDefault("-25% explosive self-damage");
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Rift/Rift_Breastplate_Body_Glow");
+                if (Mod.RequestAssetIfExists("Items/Armor/Rift/Rift_Trenchcoat_Cloth_Legs", out Asset<Texture2D> asset)) {
+                    Origins.TorsoLegLayers.Add(Item.bodySlot, asset);
+                }
             }
             SacrificeTotal = 1;
         }

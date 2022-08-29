@@ -45,5 +45,36 @@ namespace Origins.Layers {
                 drawInfo.DrawDataCache.Add(item);
             }
         }
-	}
+    }
+    public class Arm_Glow_Layer : PlayerDrawLayer {
+        public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
+            return Origins.BreastplateGlowMasks.ContainsKey(drawInfo.drawPlayer.body) || Origins.BreastplateGlowMasks.ContainsKey(-drawInfo.drawPlayer.body);
+        }
+        public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.ArmOverItem);
+        protected override void Draw(ref PlayerDrawSet drawInfo) {
+            Player drawPlayer = drawInfo.drawPlayer;
+            AutoCastingAsset<Texture2D> texture;
+            if (!Origins.BreastplateGlowMasks.TryGetValue(drawPlayer.Male ? drawPlayer.body : -drawPlayer.body, out texture)) {
+                texture = Origins.BreastplateGlowMasks[drawPlayer.Male ? -drawPlayer.body : drawPlayer.body];
+            }
+
+            if (drawInfo.usesCompositeTorso) {
+                Vector2 position = new Vector2((int)(drawInfo.Position.X - (drawInfo.drawPlayer.bodyFrame.Width / 2) + (drawInfo.drawPlayer.width / 2)), (int)(drawInfo.Position.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawInfo.drawPlayer.bodyPosition + new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2) - Main.screenPosition;
+                Vector2 offset = Main.OffsetsPlayerHeadgear[drawInfo.drawPlayer.bodyFrame.Y / drawInfo.drawPlayer.bodyFrame.Height];
+                offset.Y -= 2f;
+                position += offset * -drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically).ToDirectionInt();
+                position += drawInfo.frontShoulderOffset;
+                DrawData drawData = new DrawData(texture, position, drawInfo.compFrontShoulderFrame, Color.White, drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
+                drawData.shader = drawInfo.cBody;
+                drawInfo.DrawDataCache.Add(drawData);
+            } else {
+                Rectangle Frame = drawPlayer.bodyFrame;
+
+                Vector2 Position = new Vector2(((int)(drawInfo.Position.X - Main.screenPosition.X - Frame.Width / 2f + drawPlayer.width / 2f)), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - Frame.Height + 4f)) + drawPlayer.bodyPosition + drawInfo.bodyVect;
+                DrawData item = new DrawData(texture, Position, Frame, Color.White, drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
+                item.shader = drawInfo.cBody;
+                drawInfo.DrawDataCache.Add(item);
+            }
+        }
+    }
 }
