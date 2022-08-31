@@ -11,13 +11,31 @@ namespace Origins.Items.Weapons.Ammo {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Giant Metal Slug");
             SacrificeTotal = 199;
-            //Tooltip.SetDefault();
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.MusketBall);
             Item.damage = 25;
-            //Item.shoot = ModContent.ProjectileType<Giant_Metal_Slug_P>();
+            Item.shoot = Giant_Metal_Slug_P.ID;
             Item.ammo = Item.type;
+        }
+    }
+    public class Giant_Metal_Slug_P : ModProjectile {
+        public static int ID { get; private set; }
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Giant Metal Slug");
+            ID = Type;
+        }
+        public override void SetDefaults() {
+            Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
+            Projectile.width = 10;
+            Projectile.height = 8;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.timeLeft = 900;
+            Projectile.alpha = 0;
+        }
+        public override void AI() {
+
         }
     }
 

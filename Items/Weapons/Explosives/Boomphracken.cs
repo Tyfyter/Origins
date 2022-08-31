@@ -35,15 +35,21 @@ namespace Origins.Items.Weapons.Explosives {
             Item.autoReuse = true;
 
         }
-        public override void AddRecipes() {
+		public override Vector2? HoldoutOffset() {
+			return Vector2.Zero;
+		}
+		public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.IllegalGunParts, 8);
+            recipe.AddIngredient(ItemID.IllegalGunParts, 8);//is this intentional? each of these costs 20 gold
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 60);
             recipe.AddIngredient(ModContent.ItemType<Cleaver_Rifle>());
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
         }
-    }
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+            if (type == Giant_Metal_Slug_P.ID) type = Item.shoot;
+		}
+	}
     public class Boomphracken_P  : ModProjectile {
         public override string Texture => "Origins/Projectiles/Ammo/Boomphracken_P";
         public override void SetStaticDefaults() {
@@ -56,9 +62,13 @@ namespace Origins.Items.Weapons.Explosives {
             Projectile.friendly = true;
             Projectile.penetrate = -1;
             Projectile.timeLeft = 900;
+            Projectile.alpha = 0;
             //projectile.aiStyle = 14;
             //projectile.usesLocalNPCImmunity = true;
             //projectile.localNPCHitCooldown = 7;
 		}
-    }
+		public override void AI() {
+			
+		}
+	}
 }
