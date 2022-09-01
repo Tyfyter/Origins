@@ -102,6 +102,12 @@ VANILLA MODIFICATIONS:
 ---
 
 
+OTHER:
+---
+(@, #) Journal (page sprites, button/pseudoitem sprite)
+---
+
+
 ENEMY NPCS:
 ---
 (#, ^2) Barnacleback !!!
