@@ -10,6 +10,7 @@ using Origins.Items.Other.Testing;
 using Origins.Items.Weapons.Defiled;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Summon;
+using Origins.Journal;
 using Origins.Layers;
 using Origins.Projectiles;
 using Origins.Projectiles.Misc;
@@ -70,6 +71,8 @@ namespace Origins {
         public bool amebicVialVisible = false;
         public byte amebicVialCooldown = 0;
         public bool entangledEnergy = false;
+        public bool asylumWhistle = false;
+        public int asylumWhistleTarget = -1;
         #endregion
 
         #region explosive stats
@@ -119,6 +122,8 @@ namespace Origins {
         public float[] minionSubSlots = new float[minionSubSlotValues];
         public int wormHeadIndex = -1;
         public int heldProjectile = -1;
+        public int lastMinionAttackTarget = -1;
+        public HashSet<string> unlockedJournalEntries = new();
         public override void ResetEffects() {
             oldBonuses = 0;
             if(fiberglassSet||fiberglassDagger)oldBonuses|=1;
@@ -193,6 +198,24 @@ namespace Origins {
             plagueSight = false;
             plagueSightLight = false;
             minionSubSlots = new float[minionSubSlotValues];
+			if (lastMinionAttackTarget != Player.MinionAttackTargetNPC) {
+				if (asylumWhistle) {
+                    if (Player.MinionAttackTargetNPC == -1) {
+                        Player.MinionAttackTargetNPC = asylumWhistleTarget;
+					} else {
+                        asylumWhistleTarget = lastMinionAttackTarget;
+					}
+				}
+                lastMinionAttackTarget = Player.MinionAttackTargetNPC;
+            }
+			if (!asylumWhistle) {
+                asylumWhistleTarget = -1;
+			} else if(asylumWhistleTarget > -1) {
+                NPC possibleTarget = Main.npc[asylumWhistleTarget];
+                if (possibleTarget.CanBeChasedBy() || possibleTarget.Hitbox.Distance(Player.Center) > 3000f) {
+
+				}
+			}
         }
         public override void PostUpdate() {
             heldProjectile = -1;
@@ -516,13 +539,15 @@ namespace Origins {
                 }
             }
         }
-        public override void PreUpdateMovement() {
+        public bool DisplayJournalTooltip(IJournalEntryItem journalItem) {
+            if (unlockedJournalEntries.Contains(journalItem.EntryName)) return false;
+			if (Origins.InspectItemKey.JustPressed) {
+                unlockedJournalEntries.Add(journalItem.EntryName);
+                return false;
+			}
+            return true;
         }
-        /*public override void PostBuyItem(NPC vendor, Item[] shopInventory, Item item) {
-            if(item.type==ModContent.ItemType<Peat_Moss>()) {
 
-            }
-        }*/
         public override void LoadData(TagCompound tag) {
             if (tag.SafeGet<Item>("EyndumCore") is Item eyndumCoreItem) {
                 eyndumCore = new Ref<Item>(eyndumCoreItem);

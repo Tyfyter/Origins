@@ -88,6 +88,15 @@
 		Interface: {
 			Journal: Journal
 		}
+		Journal: {
+			Indicator:{
+				Whispers:"insert text for spooky ghost whispers here"
+			}
+			Asylum_Whistle:
+			'''
+			They always told us to come back into the citadel whenever the rain came. That whistle would always sound to get us children inside, and following that would always be a strike of lightning. They told us it was too dangerous to wander in the rain because the clouds would get angry and strike at the ground in fury. I was just curious as to why they were so angry at the ground all the time, but I would never get to know that because that whistle would always sound.
+			'''
+		}
 		Generic: {
 			Riven: Riven
 		}

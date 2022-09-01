@@ -18,6 +18,7 @@ using Origins.Items.Accessories;
 using Origins.Tiles.Riven;
 using Terraria.GameContent.ItemDropRules;
 using Origins.LootConditions;
+using Origins.Journal;
 
 namespace Origins.Items {
     public class OriginGlobalItem : GlobalItem {
@@ -138,6 +139,11 @@ namespace Origins.Items {
             } catch(Exception e) {
                 Mod.Logger.Error(e);
             }
+			if (item.ModItem is IJournalEntryItem journalItem) {
+				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().DisplayJournalTooltip(journalItem)) {
+                    tooltips.Add(new TooltipLine(Mod, "JournalIndicator", Language.GetTextValue(journalItem.IndicatorKey)));
+                }
+			}
         }
         /*
         [Obsolete("replace with ModifyItemLoot when that exists")]

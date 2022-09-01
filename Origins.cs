@@ -61,6 +61,7 @@ namespace Origins {
         static bool[] forceFelnumShockOnShoot;
         public static bool[] ForceFelnumShockOnShoot { get => forceFelnumShockOnShoot; }
         public static ModKeybind SetBonusTriggerKey { get; private set; }
+        public static ModKeybind InspectItemKey { get; private set; }
         #region Armor IDs
         public static int FelnumHeadArmorID { get; private set; }
         public static int FelnumBodyArmorID { get; private set; }
@@ -326,6 +327,7 @@ namespace Origins {
                 }
             }
             SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
+            InspectItemKey = KeybindLoader.RegisterKeybind(this, "Inspect Item", "Mouse3");
             Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
                 MaxInstances = 0,
                 SoundLimitBehavior = SoundLimitBehavior.ReplaceOldest,
