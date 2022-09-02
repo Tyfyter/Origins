@@ -216,7 +216,7 @@ ARMOR:
 (#3, ^2) Riven Armor !!!
 
 (^) Acrid Armor
-(#4, ^2) Bleeding Obsidian Armor
+(^) Bleeding Obsidian Armor
 (@, ^3) Mimic Armor
 
 (X) Anti-Gravity Armor
@@ -232,6 +232,9 @@ ARMOR:
 (X) Nanite Armor
 (#, ^2) Nova Armor
 (X) Locus Armor
+
+(X) Bulwark of the Abyss
+(X) Daedal Auspice
 ---
 
 
@@ -250,6 +253,7 @@ ACCESSORIES:
 (^) Dim Starlight*
 (#, ^2) Energy Shield*
 (^) Exploder Emblem*
+(X) Grave Danger
 (#, ^2) Gun Glove
 (X) Locus Control Tuner
 (#3, ^2) Mitosis !!!
@@ -264,7 +268,7 @@ ACCESSORIES:
 (%3, X) Sun Medallion
 (#, ^2) Symbiote Skull !!!
 
-(#, ^2) Asylum Whistle !!!
+(#2, ^2) Asylum Whistle !!!
 (X) Lost Page
 (#3, ^2) Stone Mask !!!
 (X) Timbre of Hell !!!

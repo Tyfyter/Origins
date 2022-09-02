@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Acid;
+using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum;
 using Origins.Projectiles.Weapons;
 using Terraria;
@@ -13,27 +14,26 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Origins.OriginExtensions;
 
-namespace Origins.Items.Weapons.Explosives {
-    public class Hand_Grenade_Launcher : ModItem {
+namespace Origins.Items.Weapons.Dungeon {
+    public class Bomb_Launcher : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hand Grenade Launcher");
-			Tooltip.SetDefault("'Doesn't this defeat the purpose of a hand grenade?'");
+			DisplayName.SetDefault("Bomb Launcher");
+			Tooltip.SetDefault("Uses bombs as ammo");
             SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.GrenadeLauncher);
-            //item.maxStack = 999;
-            Item.width = 44;
-            Item.height = 18;
-            Item.damage = 17;
+            Item.width = 78;
+            Item.height = 30;
+            Item.damage = 23;
 			Item.value/=2;
 			Item.useTime = (int)(Item.useTime*1.15);
 			Item.useAnimation = (int)(Item.useAnimation*1.15);
-            Item.shoot = ProjectileID.Grenade;
-            Item.useAmmo = ItemID.Grenade;
+            Item.shoot = ProjectileID.Bomb;
+            Item.useAmmo = ItemID.Bomb;
             Item.knockBack = 2f;
-            Item.shootSpeed = 5f;
-			Item.rare = ItemRarityID.Orange;
+            Item.shootSpeed = 4f;
+			Item.rare = ItemRarityID.Green;
 		}
         public override bool AltFunctionUse(Player player) {
             return true;
@@ -41,10 +41,10 @@ namespace Origins.Items.Weapons.Explosives {
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    if(player.altFunctionUse == 2) {
                 if(type == ModContent.ProjectileType<Shock_Grenade_P>()) {
-                    damage-=15;
+                    damage-=23;
                     damage+=(damage-16)*2;
-                    type = ModContent.ProjectileType<Awe_Grenade_P>();
-                    velocity *= 1.25f;
+                    type = ModContent.ProjectileType<Awe_Bomb_P>();
+                    velocity *= 1.15f;
                     knockback *= 3; Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
                     return false;
                 }
@@ -102,14 +102,14 @@ namespace Origins.Items.Weapons.Explosives {
             return true;
         }
     }
-    public class Awe_Grenade_P : ModProjectile {
+    public class Awe_Bomb_P : ModProjectile {
         Vector2 oldVelocity;
         public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Awe Grenade");
+			DisplayName.SetDefault("Awe Bomb");
             //Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override void SetDefaults() {
-            Projectile.CloneDefaults(ProjectileID.Grenade);
+            Projectile.CloneDefaults(ProjectileID.Bomb);
             Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
             Projectile.timeLeft = 45;
             Projectile.penetrate = 1;
@@ -144,18 +144,18 @@ namespace Origins.Items.Weapons.Explosives {
             */
 			SoundEngine.PlaySound(SoundID.Item38.WithVolume(0.75f), Projectile.Center);
             SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(5), Projectile.Center);
-            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Awe_Grenade_Blast>(), Projectile.damage, 24, Projectile.owner);
+            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Awe_Bomb_Blast>(), Projectile.damage, 24, Projectile.owner);
         }
     }
-    public class Awe_Grenade_Blast  : ModProjectile {
+    public class Awe_Bomb_Blast  : ModProjectile {
         public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Awe Grenade");
+			DisplayName.SetDefault("Awe Bomb");
             //Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
         public override string Texture => "Origins/Projectiles/Pixel";
         const int duration = 15;
         public override void SetDefaults() {
-            Projectile.CloneDefaults(ProjectileID.Grenade);
+            Projectile.CloneDefaults(ProjectileID.Bomb);
             Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
             Projectile.friendly = true;
             Projectile.hostile = true;
@@ -202,16 +202,16 @@ namespace Origins.Items.Weapons.Explosives {
 			return false;
         }
     }
-    public class Impact_Grenade_Blast  : ModProjectile {
+    public class Impact_Bomb_Blast  : ModProjectile {
         public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Blast Grenade");
+			DisplayName.SetDefault("Blast Bomb");
 		}
         public override string Texture => "Terraria/Images/Projectile_"+ProjectileID.DD2ExplosiveTrapT1Explosion;
         protected override bool CloneNewInstances => true;
         float dist;
 
         public override void SetDefaults() {
-            Projectile.CloneDefaults(ProjectileID.Grenade);
+            Projectile.CloneDefaults(ProjectileID.Bomb);
             Projectile.aiStyle = 0;
             Projectile.timeLeft = 8;
             Projectile.width = Projectile.height = 5;

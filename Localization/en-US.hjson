@@ -90,7 +90,7 @@
 		}
 		Journal: {
 			Indicator:{
-				Whispers:"insert text for spooky ghost whispers here"
+				Whispers:"You hear whispers nearby..."
 			}
 			Asylum_Whistle:
 			'''

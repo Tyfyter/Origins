@@ -1,18 +1,16 @@
-﻿using Origins.Items.Materials;
-using Origins.Journal;
+﻿using Origins.Journal;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Asylum_Whistle : ModItem, IJournalEntryItem {
+    public class Asylum_Whistle : ModItem, IJournalEntryItem {
         public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
         public string EntryName => "Origins/"+typeof(Asylum_Whistle_Entry).Name;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Asylum Whistle");
-            Tooltip.SetDefault("");
+            Tooltip.SetDefault("Able to click on and target two enemies at once\nIncreased summoning damage");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -21,6 +19,7 @@ namespace Origins.Items.Accessories {
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().asylumWhistle = true;
+            player.GetDamage(DamageClass.Summon) += 0.1f;
         }
     }
 	public class Asylum_Whistle_Entry : JournalEntry {
