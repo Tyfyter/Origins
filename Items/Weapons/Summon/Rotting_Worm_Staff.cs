@@ -140,13 +140,33 @@ namespace Origins.Items.Weapons.Summon.Minions {
 
             #region Find target
             // Starting search distance
-            float targetDist = 700f;
+            float targetDist = 2000f;
 			float targetAngle = -2;
             Vector2 targetCenter = Projectile.position;
             int target = -1;
-            bool foundTarget = false;
-
-            if(player.HasMinionAttackTargetNPC) {
+            void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+                if (!isPriorityTarget && targetDist > 700f) {
+                    targetDist = 700f;
+                }
+                if (npc.CanBeChasedBy()) {
+                    Vector2 diff = npc.Hitbox.ClosestPointInRect(Projectile.Center) - Projectile.Center;
+                    float dist = diff.Length();
+                    if (dist > targetDist) return;
+                    float dot = NormDotWithPriorityMult(diff, Projectile.velocity, targetPriorityMultiplier);
+                    bool inRange = dist < targetDist;
+                    //bool jumpOfHight = (npc.Bottom.Y-projectile.Top.Y)<160;
+                    if ((dot > targetAngle && inRange) || !foundTarget) {
+                        targetDist = dist;
+                        targetAngle = dot;
+                        targetCenter = npc.height / (float)npc.width > 1 ? npc.Top + new Vector2(0, 8) : npc.Center;
+                        target = npc.whoAmI;
+                        foundTarget = true;
+                    }
+                }
+            }
+            bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
+            /*
+            if (player.HasMinionAttackTargetNPC) {
                 NPC npc = Main.npc[player.MinionAttackTargetNPC];
                 float between = Vector2.Distance(npc.Center, Projectile.Center);
                 if(between < 2000f) {
@@ -166,7 +186,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 						float dot = NormDot(diff,Projectile.velocity);
 						bool inRange = dist < targetDist;
                         //bool jumpOfHight = (npc.Bottom.Y-projectile.Top.Y)<160;
-                        if(((dot>targetAngle && inRange) || !foundTarget)) {
+                        if(((dot > targetAngle && inRange) || !foundTarget)) {
                             targetDist = dist;
                             targetAngle = dot;
                             targetCenter = npc.height/(float)npc.width>1 ? npc.Top+new Vector2(0, 8) : npc.Center;
@@ -175,7 +195,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
                         }
                     }
                 }
-            }
+            }*/
 
             Projectile.friendly = foundTarget;
             #endregion

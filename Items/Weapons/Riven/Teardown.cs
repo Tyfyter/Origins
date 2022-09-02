@@ -134,18 +134,28 @@ namespace Origins.Items.Weapons.Riven {
 			float targetAngle = -2;
 			Vector2 targetCenter = Projectile.Center;
             int target = -1;
-			bool foundTarget = false;
-
-			if (player.HasMinionAttackTargetNPC) {
-				NPC npc = Main.npc[player.MinionAttackTargetNPC];
-				float dist = Vector2.Distance(npc.Center, Projectile.Center);
-				if (dist < 2000f) {
-					targetDist = dist;
-					targetCenter = npc.Center;
-                    target = player.MinionAttackTargetNPC;
-					foundTarget = true;
-				}
-			}
+			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+				if (isPriorityTarget && Projectile.ai[1] < 0) foundTarget = true;
+                if (npc.CanBeChasedBy()) {
+                    Vector2 diff = Projectile.Center - npc.Center;
+                    float dist = diff.Length();
+                    if (dist > targetDist) return;
+                    float dot = NormDotWithPriorityMult(diff, Projectile.velocity, targetPriorityMultiplier) - (player.DistanceSQ(npc.Center) / (640 * 640));
+                    bool inRange = dist <= targetDist;
+                    bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
+                    if (
+                        ((dot >= targetAngle && inRange) || !foundTarget) &&
+                        (isPriorityTarget || lineOfSight || npc.whoAmI == Projectile.ai[0])
+                        ) {
+                        targetDist = dist;
+                        targetAngle = dot;
+                        targetCenter = npc.Center;
+                        target = npc.whoAmI;
+                        foundTarget = true;
+                    }
+                }
+            }
+			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
             if(Projectile.ai[1]<0) goto movement;
 			if (!foundTarget) {
 				for (int i = 0; i < Main.maxNPCs; i++) {

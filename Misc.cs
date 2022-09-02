@@ -1230,6 +1230,10 @@ namespace Origins {
             return (Vector2.Normalize(a)*Vector2.Normalize(b)).Sum();
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float NormDotWithPriorityMult(Vector2 a, Vector2 b, float priorityMult) {
+            return ((Vector2.Normalize(a) * Vector2.Normalize(b)).Sum() - 1) * priorityMult + 1;
+        }
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float Sum(this Vector2 a) {
             return a.X+a.Y;
         }

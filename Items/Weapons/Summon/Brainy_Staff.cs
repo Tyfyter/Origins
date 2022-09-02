@@ -153,41 +153,30 @@ namespace Origins.Items.Weapons.Summon.Minions {
 
 			#region Find target
 			// Starting search distance
-			float distanceFromTarget = 700f;
+			float distanceFromTarget = 2000f;
 			Vector2 targetCenter = Projectile.position;
             int target = -1;
-			bool foundTarget = false;
-
-			if (player.HasMinionAttackTargetNPC) {
-				NPC npc = Main.npc[player.MinionAttackTargetNPC];
-				float between = Vector2.Distance(npc.Center, Projectile.Center);
-				if (between < 2000f) {
-					distanceFromTarget = between;
-					targetCenter = npc.Center;
-                    target = player.MinionAttackTargetNPC;
-					foundTarget = true;
+			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+				if (!isPriorityTarget && distanceFromTarget > 700f) {
+					distanceFromTarget = 700f;
 				}
-			}
-			if (!foundTarget) {
-				for (int i = 0; i < Main.maxNPCs; i++) {
-					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy()) {
-						float between = Vector2.Distance(npc.Center, Projectile.Center);
-						bool closest = Vector2.Distance(Projectile.Center, targetCenter) > between;
-						bool inRange = between < distanceFromTarget;
-						bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
-						// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
-						// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
-						bool closeThroughWall = between < 100f;
-						if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall)) {
-							distanceFromTarget = between;
-							targetCenter = npc.height/(float)npc.width>1?npc.Top+new Vector2(0,8):npc.Center;
-                            target = npc.whoAmI;
-							foundTarget = true;
-						}
+				if (npc.CanBeChasedBy()) {
+					float between = Vector2.Distance(npc.Center, Projectile.Center);
+					bool closest = Vector2.Distance(Projectile.Center, targetCenter) > between;
+					bool inRange = between < distanceFromTarget;
+					bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
+					// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
+					// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
+					bool closeThroughWall = between < 100f;
+					if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall)) {
+						distanceFromTarget = between;
+						targetCenter = npc.height / (float)npc.width > 1 ? npc.Top + new Vector2(0, 8) : npc.Center;
+						target = npc.whoAmI;
+						foundTarget = true;
 					}
 				}
 			}
+			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
 
 			Projectile.friendly = foundTarget;
 			#endregion

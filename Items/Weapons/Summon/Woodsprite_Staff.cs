@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using Origins.Items.Weapons.Summon;
 using System;
+using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -148,12 +149,32 @@ namespace Origins.Items.Weapons.Summon.Minions {
 
 			#region Find target
 			// Starting search distance
-			float distanceFromTarget = 700f;
-			Vector2 targetCenter = Projectile.position;
+			float distanceFromTarget = 2000f;
+			Vector2 targetCenter = default;
             int target = -1;
-			bool foundTarget = false;
-
-			if (player.HasMinionAttackTargetNPC) {
+			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+				if (!isPriorityTarget && distanceFromTarget > 700f) {
+					distanceFromTarget = 700f;
+				}
+				if (npc.CanBeChasedBy()) {
+					float between = Vector2.Distance(npc.Center, Projectile.Center);
+					bool closest = Vector2.Distance(Projectile.Center, targetCenter) > between;
+					bool inRange = between < distanceFromTarget;
+					bool lineOfSight = isPriorityTarget || Collision.CanHitLine(Projectile.position + new Vector2(1, 4), Projectile.width - 2, Projectile.height - 8, npc.position, npc.width, npc.height);
+					// Additional check for this specific minion behavior, otherwise it will stop attacking once it dashed through an enemy while flying though tiles afterwards
+					// The number depends on various parameters seen in the movement code below. Test different ones out until it works alright
+					bool closeThroughWall = between < 100f;
+					if (((closest && inRange) || !foundTarget) && (lineOfSight || closeThroughWall)) {
+						distanceFromTarget = between;
+						targetCenter = npc.Center;
+						target = npc.whoAmI;
+						foundTarget = true;
+					}
+				}
+			}
+			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
+			#region old targeting code
+			/*if (player.HasMinionAttackTargetNPC) {
 				NPC npc = Main.npc[player.MinionAttackTargetNPC];
 				float between = Vector2.Distance(npc.Center, Projectile.Center);
 				if (between < 2000f) {
@@ -182,7 +203,8 @@ namespace Origins.Items.Weapons.Summon.Minions {
 						}
 					}
 				}
-			}
+			}*/
+			#endregion
 
 			Projectile.friendly = foundTarget;
 			#endregion
@@ -250,7 +272,12 @@ namespace Origins.Items.Weapons.Summon.Minions {
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Woodsprite_Lifesteal>(), damage/3, 0, Projectile.owner);
         }
-    }
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			width -= 2;
+			height -= 8;
+			return true;
+		}
+	}
     public class Woodsprite_Lifesteal : ModProjectile {
         public override string Texture => "Origins/Projectiles/Pixel";
         public override void SetDefaults() {

@@ -212,10 +212,21 @@ namespace Origins {
                 asylumWhistleTarget = -1;
 			} else if(asylumWhistleTarget > -1) {
                 NPC possibleTarget = Main.npc[asylumWhistleTarget];
-                if (possibleTarget.CanBeChasedBy() || possibleTarget.Hitbox.Distance(Player.Center) > 3000f) {
-
-				}
-			}
+                if (!possibleTarget.CanBeChasedBy() || possibleTarget.Hitbox.Distance(Player.Center) > 3000f) {
+                    asylumWhistleTarget = -1;
+                } else {
+                    Vector2 center = possibleTarget.Center;
+                    float count = Player.miscCounter / 60f;
+                    float offset = MathHelper.TwoPi / 3f;
+                    for (int i = 0; i < 3; i++) {
+                        int dust = Dust.NewDust(center, 0, 0, DustID.WitherLightning, 0f, 0f, 100, default(Color), 0.35f);
+                        Main.dust[dust].noGravity = true;
+                        Main.dust[dust].velocity = Vector2.Zero;
+                        Main.dust[dust].noLight = true;
+                        Main.dust[dust].position = center + (count * MathHelper.TwoPi + offset * i).ToRotationVector2() * 6f;
+                    }
+                }
+            }
         }
         public override void PostUpdate() {
             heldProjectile = -1;
@@ -489,6 +500,22 @@ namespace Origins {
                 damage.Flat += Player.statDefense / 2;
             }
         }
+        /// <param name="target">the potential target</param>
+        /// <param name="targetPriorityMultiplier"></param>
+        /// <param name="isPriorityTarget">whether or not this npc is a "priority" target (i.e. a manually selected target)</param>
+        /// <param name="foundTarget">whether or not a target has already been found</param>
+        public delegate void Minion_Selector(NPC target, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget);
+        public bool GetMinionTarget(Minion_Selector selector) {
+            bool foundTarget = false;
+            if(Player.MinionAttackTargetNPC > -1) selector(Main.npc[Player.MinionAttackTargetNPC], 1f, true, ref foundTarget);
+            if (asylumWhistleTarget > -1) selector(Main.npc[asylumWhistleTarget], 1f, true, ref foundTarget);
+            if (!foundTarget) {
+                for (int i = 0; i < Main.maxNPCs; i++) {
+                    selector(Main.npc[i], 1f, false, ref foundTarget);
+                }
+            }
+            return foundTarget;
+		}
         #endregion
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter) {
             if(Player.HasBuff(Solvent_Debuff.ID)&&Main.rand.Next(9)<3) {

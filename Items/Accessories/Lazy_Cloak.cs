@@ -130,21 +130,20 @@ namespace Origins.Items.Accessories {
 
 			#region Find target
 			// Starting search distance
-			float distanceFromTarget = 700f;
+			float distanceFromTarget = 2000f * 2000f;
 			Vector2 targetCenter = Projectile.position;
 			int target = -1;
-			bool foundTarget = false;
-
-			if (player.HasMinionAttackTargetNPC) {
-				NPC npc = Main.npc[player.MinionAttackTargetNPC];
-				float between = Vector2.Distance(npc.Center, Projectile.Center);
-				if (between < 2000f) {
+			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+				if (!isPriorityTarget) return;
+				float between = Vector2.DistanceSquared(npc.Center, Projectile.Center);
+				if (between < distanceFromTarget) {
 					distanceFromTarget = between;
 					targetCenter = npc.Center;
 					target = player.MinionAttackTargetNPC;
 					foundTarget = true;
 				}
 			}
+			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
 			/*if (!foundTarget) {
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					NPC npc = Main.npc[i];

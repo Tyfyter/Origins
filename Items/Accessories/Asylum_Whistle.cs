@@ -10,7 +10,7 @@ namespace Origins.Items.Accessories {
         public string EntryName => "Origins/"+typeof(Asylum_Whistle_Entry).Name;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Asylum Whistle");
-            Tooltip.SetDefault("Able to click on and target two enemies at once\nIncreased summoning damage");
+            Tooltip.SetDefault("Summons can target two enemies at once\nIncreases minion damage by 10%");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
