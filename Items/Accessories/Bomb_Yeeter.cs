@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
     public class Bomb_Yeeter : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomb Handling Device");
-            Tooltip.SetDefault("Also commonly referred to as the 'Bomb Yeeter'");
+            Tooltip.SetDefault("30% increased explosive throwing velocity\nAlso commonly referred to as the 'Bomb Yeeter'");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -20,7 +20,7 @@ namespace Origins.Items.Accessories {
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().bombHandlingDevice = true;
-            player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed+=0.5f;
+            player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed+=0.3f;
         }
     }
 }

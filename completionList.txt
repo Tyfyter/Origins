@@ -253,7 +253,7 @@ ACCESSORIES:
 (^) Dim Starlight*
 (#, ^2) Energy Shield*
 (^) Exploder Emblem*
-(X) Grave Danger
+(#, ^2) Grave Danger
 (#, ^2) Gun Glove
 (X) Locus Control Tuner
 (#3, ^2) Mitosis !!!
@@ -270,7 +270,7 @@ ACCESSORIES:
 
 (#2, ^2) Asylum Whistle !!!
 (X) Lost Page
-(#3, ^2) Stone Mask !!!
+(#3 (needs multi-tile generation), ^2) Stone Mask !!!
 (X) Timbre of Hell !!!
 (X) Tinkerer's Handy Guide
 
@@ -383,7 +383,7 @@ TOOLS:
 MELEE WEAPONS:
 ---
 (^) Cyah Nara
-(#, ^2) Decimator !!!
+(#4, ^2) Decimator !!!
 (^) Felnum Spear
 (^) Fiberglass Broadsword
 (^) Krakram*
@@ -462,7 +462,7 @@ MAGIC WEAPONS:
 (^) Beginner's Tome
 (#4, ^) Cryostike
 (^) Infusion
-(#4, ^) Low Signal !!!
+(^) Low Signal
 (^) Magnus
 (#, ^2) Slashswarm !!!
 (^) Tones of Agony
@@ -530,13 +530,15 @@ EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
 (#, ^2) Bombardment !!!
-(#, ^2) Bomb Launcher !!!
+(#2, ^2) Bomb Launcher !!!
 (#, ^2) Brainade !!!
 (#, ^2) Defiled Spirit !!!
 (^) Hand Grenade Launcher
 (#, ^2) Floaty Bomb !!!
 (^) Impact Explosives
 (^) Lightning Grenade
+(#, ^2) Napalm Bomb !!!
+(#, ^2) Napalm Grenade !!!
 (#, ^2) Outbreak Bomb !!!
 (^) Peatball*
 
@@ -544,8 +546,6 @@ EXPLOSIVE WEAPONS:
 (#2, ^2) Boomphracken
 (#, ^2) Klangjet
 (#, ^2) Mortar Shell
-(X) Napalm Bomb
-(X) RPG
 (^) Shrapnel Bomb
 (^) Thermite Launcher
 
@@ -639,12 +639,12 @@ TILES:
 (X) Music Box (Riven Hive) !!!
 (X) Music Box (Ruins)
 
-(X) Defiled Amalgamation Trophy !!!
-(X) Defiled Amalgamation Relic !!!
+(#, ^2) Defiled Amalgamation Trophy !!!
+(#, ^2) Defiled Amalgamation Relic !!!
 (X) Quantux Trophy
 (X) Quantux Relic
-(X) Riven Crest Trophy !!!
-(X) Riven Crest Relic !!!
+(X) Primordial Amoeba Trophy !!!
+(X) Primordial Amoeba Relic !!!
 ---
 
 
