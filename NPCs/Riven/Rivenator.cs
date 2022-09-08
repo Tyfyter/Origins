@@ -1,4 +1,5 @@
 using Origins.Items.Materials;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
@@ -66,6 +67,9 @@ namespace Origins.NPCs.Riven {
 		public override string GlowTexturePath => Texture;
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Mitoworm");
+            SpawnModBiomes = new int[] {
+                ModContent.GetInstance<Riven_Hive>().Type
+            };
         }
 
         public override void AI() {

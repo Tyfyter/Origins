@@ -113,7 +113,7 @@ ENEMY NPCS:
 (#, ^2) Barnacleback !!!
 (#, %2) Crimbrain
 (^) Fiberglass Enemies
-(#, ^2) Measely Moeba !!!
+(☻) Measly Moeba !!!
 (^) Pre-H Defiled Enemies !!!
 (^) Riven Protoform !!!
 (#, ^2) Scanner Scout

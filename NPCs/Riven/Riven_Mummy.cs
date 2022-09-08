@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -10,6 +11,9 @@ namespace Origins.NPCs.Riven {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Amebic Mummy");
             Main.npcFrameCount[NPC.type] = 16;
+            SpawnModBiomes = new int[] {
+                ModContent.GetInstance<Riven_Hive>().Type
+            };
         }
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.Zombie);

@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.Tiles.Other;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,7 +16,10 @@ namespace Origins.Items.Accessories {
             Item.CloneDefaults(ItemID.Aglet);
             Item.neckSlot = -1;
             Item.faceSlot = slot;
-            Item.rare = ItemRarityID.White;
+            Item.rare = ItemRarityID.Blue;
+            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useTime = Item.useAnimation = 12;
+            Item.createTile = ModContent.TileType<Stone_Mask_Tile>();
         }
         public override void UpdateEquip(Player player) {
             player.statDefense += 8;

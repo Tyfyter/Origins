@@ -1,5 +1,6 @@
 ﻿using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -11,6 +12,9 @@ namespace Origins.NPCs.Riven {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Pustule Jelly");
             Main.npcFrameCount[NPC.type] = 4;
+            SpawnModBiomes = new int[] {
+                ModContent.GetInstance<Riven_Hive>().Type
+            };
         }
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.BloodJelly);

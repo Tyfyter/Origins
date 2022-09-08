@@ -9,9 +9,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Flagellant : Glowing_Mod_NPC {
+    public class Measly_Moeba : Glowing_Mod_NPC {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Flagellant");
+            DisplayName.SetDefault("Measly Moeba");
             Main.npcFrameCount[NPC.type] = 4;
             SpawnModBiomes = new int[] {
                 ModContent.GetInstance<Riven_Hive>().Type
@@ -19,16 +19,16 @@ namespace Origins.NPCs.Riven {
         }
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.BloodJelly);
-            NPC.lifeMax = 380;
-            NPC.defense = 20;
-            NPC.damage = 70;
-            NPC.width = 56;
-            NPC.height = 60;
-            NPC.frame.Height = 58;
+            NPC.lifeMax = 34;
+            NPC.defense = 4;
+            NPC.damage = 25;
+            NPC.width = 20;
+            NPC.height = 20;
+            NPC.frame.Height = 22;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("A gentle swimmer in the amoeba-infested waters. It is flimsy and fragile, so travelers should be weary when approaching it."),
+                new FlavorTextBestiaryInfoElement(""),
             });
         }
         public override void FindFrame(int frameHeight) {
@@ -37,12 +37,10 @@ namespace Origins.NPCs.Riven {
 		    if (NPC.frameCounter >= 24.0){
 			    NPC.frameCounter = 0.0;
 		    }
-		    NPC.frame.Y = 60 * (int)(NPC.frameCounter / 6.0);
+		    NPC.frame.Y = 24 * (int)(NPC.frameCounter / 6.0);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Amebic_Gel>(), 1, 1, 3));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 17));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Flagellash>(), 25));
+
         }
     }
 }

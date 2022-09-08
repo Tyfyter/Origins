@@ -8,12 +8,16 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.DataStructures;
+using Origins.World.BiomeData;
 
 namespace Origins.NPCs.Riven {
     public class Riven_Mimic : Glowing_Mod_NPC {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Mimic");
             Main.npcFrameCount[NPC.type] = 14;
+            SpawnModBiomes = new int[] {
+                ModContent.GetInstance<Riven_Hive>().Type
+            };
         }
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.BigMimicCrimson);

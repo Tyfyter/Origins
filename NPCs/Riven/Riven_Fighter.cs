@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -11,6 +12,9 @@ namespace Origins.NPCs.Riven {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Protoform");
             Main.npcFrameCount[NPC.type] = 5;
+            SpawnModBiomes = new int[] {
+                ModContent.GetInstance<Riven_Hive>().Type
+            };
         }
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.Zombie);

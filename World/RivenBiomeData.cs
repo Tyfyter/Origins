@@ -19,6 +19,7 @@ using Origins.Items.Weapons.Riven;
 using Origins.Items.Other.Testing;
 using Origins.Water;
 using Origins.Backgrounds;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins.World.BiomeData {
 	public class Riven_Hive : ModBiome {
@@ -29,10 +30,11 @@ namespace Origins.World.BiomeData {
 		// turns out if a biome doesn't have a background it's treated as if its water style has no priority
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Riven_Surface_Background>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => ModContent.GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.ZoneRiven = OriginSystem.rivenTiles > Riven_Hive.NeededTiles;
-			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (Riven_Hive.NeededTiles - Riven_Hive.ShaderTileCount), Riven_Hive.ShaderTileCount) / Riven_Hive.ShaderTileCount;
+			originPlayer.ZoneRiven = OriginSystem.rivenTiles > NeededTiles;
+			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (NeededTiles - ShaderTileCount), ShaderTileCount) / ShaderTileCount;
 			LinearSmoothing(ref originPlayer.ZoneRivenProgressSmoothed, originPlayer.ZoneRivenProgress, OriginSystem.biomeShaderSmoothing * 0.1f);
 			
 			return originPlayer.ZoneRiven;
@@ -63,7 +65,7 @@ namespace Origins.World.BiomeData {
 		public static class SpawnRates {
 			public const float Fighter = 1;
 			public const float Mummy = 1;
-			public const float Jelly = 0.8f;
+			public const float Jelly = 0.4f;
 			public const float Tank = 0.6f;
 			public const float Shark1 = 0.4f;
 			public const float Worm = 0.6f;
