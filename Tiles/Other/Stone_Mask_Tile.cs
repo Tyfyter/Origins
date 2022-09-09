@@ -20,13 +20,15 @@ namespace Origins.Tiles.Other {
 		public override void SetStaticDefaults() {
 			// Properties
 			Main.tileFrameImportant[Type] = true;
+			TileID.Sets.CanBeSloped[Type] = false;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLavaDeath[Type] = false;
 			TileID.Sets.HasOutlines[Type] = false;
 			TileID.Sets.DisableSmartCursor[Type] = true;
+			DustType = DustID.Stone;
 
 			// Names
-			AddMapEntry(new Color(100, 100, 100), Language.GetText("MapObject.Chair"));
+			AddMapEntry(new Color(100, 100, 100), Language.GetText("Stone Mask"));
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);

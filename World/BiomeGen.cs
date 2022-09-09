@@ -3,6 +3,7 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.World;
@@ -620,6 +621,19 @@ namespace Origins {
                     }
                 }));
             }
+            tasks.Add(new PassLegacy("Stone Mask", (GenerationProgress progress, GameConfiguration _) => {
+                int i = 0;
+				while (i < 100) {
+                    int x = genRand.Next(oceanDistance, Main.maxTilesX - oceanDistance);
+                    int y = 0;
+                    for (; !Main.tile[x, y + 1].HasTile; y++);
+					if (Main.tileSolid[Main.tile[x, y + 1].TileType] && Main.tileSolid[Main.tile[x + 1, y + 1].TileType]) {
+						if (PlaceTile(x, y, TileType<Stone_Mask_Tile>())) {
+                            break;
+						}
+					}
+				}
+            }));
         }
         public static void GERunnerHook(On.Terraria.WorldGen.orig_GERunner orig, int i, int j, float speedX = 0f, float speedY = 0f, bool good = true) {
             byte worldEvil = GetInstance<OriginSystem>().worldEvil;
