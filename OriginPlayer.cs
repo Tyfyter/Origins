@@ -48,7 +48,6 @@ namespace Origins {
         public bool celestineSet = false;
         public bool minerSet = false;
         public bool defiledSet = false;
-        public bool reshapingChunk = false;
         public bool rivenSet = false;
         public bool riftSet = false;
         public bool eyndumSet = false;
@@ -73,6 +72,7 @@ namespace Origins {
         public bool entangledEnergy = false;
         public bool asylumWhistle = false;
         public int asylumWhistleTarget = -1;
+        public bool reshapingChunk = false;
         #endregion
 
         #region explosive stats

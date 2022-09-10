@@ -20,6 +20,7 @@ namespace Origins.Items.Accessories {
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = Item.useAnimation = 12;
             Item.createTile = ModContent.TileType<Stone_Mask_Tile>();
+            Item.consumable = true;
         }
         public override void UpdateEquip(Player player) {
             player.statDefense += 8;

@@ -261,16 +261,16 @@ ACCESSORIES:
 (#, ^2) Olid Organ*
 (#, ^2) Parasitic Influence* !!!
 (^) Pneumatic Bomb Thrower*
-(#, ^2) Return To Sender* !!!
+(☻) Return To Sender* !!!
 (#, ^2) Sonar Visor*
 (^) Freeze Frame*
 (X) Stasis Field
 (%3, X) Sun Medallion
 (#, ^2) Symbiote Skull !!!
 
-(#2, ^2) Asylum Whistle !!!
+(☻) Asylum Whistle !!!
 (X) Lost Page
-(#3 (needs multi-tile generation), ^2) Stone Mask !!!
+(☻) Stone Mask !!!
 (X) Timbre of Hell !!!
 (X) Tinkerer's Handy Guide
 
