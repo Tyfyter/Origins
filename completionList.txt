@@ -113,7 +113,7 @@ ENEMY NPCS:
 (#, ^2) Barnacleback !!!
 (#, %2) Crimbrain
 (^) Fiberglass Enemies
-(☻) Measly Moeba !!!
+(#3, ^2) Measly Moeba !!!
 (^) Pre-H Defiled Enemies !!!
 (^) Riven Protoform !!!
 (#, ^2) Scanner Scout
@@ -261,16 +261,16 @@ ACCESSORIES:
 (#, ^2) Olid Organ*
 (#, ^2) Parasitic Influence* !!!
 (^) Pneumatic Bomb Thrower*
-(☻) Return To Sender* !!!
+(^) Return To Sender*
 (#, ^2) Sonar Visor*
 (^) Freeze Frame*
 (X) Stasis Field
 (%3, X) Sun Medallion
 (#, ^2) Symbiote Skull !!!
 
-(☻) Asylum Whistle !!!
+(^) Asylum Whistle
 (X) Lost Page
-(☻) Stone Mask !!!
+(^) Stone Mask
 (X) Timbre of Hell !!!
 (X) Tinkerer's Handy Guide
 
