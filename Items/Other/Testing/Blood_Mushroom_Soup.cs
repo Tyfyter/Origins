@@ -77,9 +77,37 @@ namespace Origins.Items.Other.Testing {
             Point mousePos = new Point((int)(Main.MouseScreen.X / 16), (int)(Main.MouseScreen.Y / 16));
             int mousePacked = mousePos.X + (Main.screenWidth / 16) * mousePos.Y;
             double mousePackedDouble = (Main.MouseScreen.X/16d + (Main.screenWidth/16d) * Main.MouseScreen.Y/16d)/16d;
-            Tile mouseTile  = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
+            Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
+                case 9 | p0:
+                parameters.Enqueue(new Point(Player.tileTargetX, Player.tileTargetY));
+                Apply();
+                break;
+                case 8 | p0:
+                parameters.Enqueue(new Point(Player.tileTargetX, Player.tileTargetY));
+                break;
+                case 8 | p1:
+                parameters.Enqueue(Math.Sqrt(mousePackedDouble / 16));
+                break;
+                case 8 | p2:
+                parameters.Enqueue(Main.MouseWorld);
+                break;
+                case 8 | p3:
+                parameters.Enqueue(mousePackedDouble);
+                break;
+                case 8 | p4:
+                parameters.Enqueue(Math.Sqrt(mousePackedDouble / 16));
+                break;
+                case 8 | p5:
+                parameters.Enqueue(Main.LocalPlayer.controlUp ? 0 : diffFromPlayer.ToRotation());
+                break;
+                case 8 | p6:
+                parameters.Enqueue(Main.MouseScreen.Y > Main.screenHeight / 2f);
+                break;
+                case 8 | p7:
+                Apply();
+                break;
                 case 7|p0:
                 parameters.Enqueue(Main.MouseWorld.ToTileCoordinates());
                 Apply();
@@ -136,45 +164,63 @@ namespace Origins.Items.Other.Testing {
             int mousePacked = mousePos.X + (Main.screenWidth / 16) * mousePos.Y;
             double mousePackedDouble = (Main.MouseScreen.X/16d + (Main.screenWidth/16d) * Main.MouseScreen.Y/16d)/16d;
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
-            switch(packedMode) {
-                case 7|p0:
-                return "remove tree";
-                case 6|p0:
-                return "place defiled stone ring";
-                case 5|p0:
-                return "place defiled start";
-                case 4|p0:
-                return "place brine pool";
-                case 3|p0:
-                return "place riven cave";
-                case 2|p0:
-                return "place riven start";
-                case 1|p0:
-                case 0|p0:
-                return $"i,j: {Player.tileTargetX}, {Player.tileTargetY}";
-                case 1|p1:
-                case 0|p1:
-                return $"j: {Player.tileTargetY}";
-                case 1|p2:
-                case 0|p2:
-                return $"strength: {mousePackedDouble / 16}";
-                case 1|p3:
-                case 0|p3:
-                return $"speed: {diffFromPlayer / 16}";
-                case 1|p4:
-                case 0|p4:
-                return $"length: {mousePackedDouble}";
-                case 1|p5:
-                case 0|p5:
-                return $"twist: {(Main.LocalPlayer.controlUp?0:(double)diffFromPlayer.ToRotation())}";
-                case 1|p6:
-                case 0|p6:
-                return $"random twist: {Main.MouseScreen.Y>Main.screenHeight/2f}";
-                case 1|p7:
-                return $"branch count (optional): {(byte)((mousePacked/16)%256)}";
-                //return $":{}";
-            }
-            return "";
+			switch (packedMode) {
+                case 9 | p0:
+                return "place defiled fissure";
+                case 8 | p0:
+                return "defiled vein position";
+                case 8 | p1:
+                return "defiled vein strength: " + Math.Sqrt(mousePackedDouble / 16);
+                case 8 | p2:
+                return "defiled vein target";
+                case 8 | p3:
+                return "defiled vein length: " + mousePackedDouble;
+                case 8 | p4:
+                return "defiled vein wall thickness: " + Math.Sqrt(mousePackedDouble / 16);
+                case 8 | p5:
+                return "defiled vein twist: " + (Main.LocalPlayer.controlUp ? 0 : (double)diffFromPlayer.ToRotation());
+                case 8 | p6:
+                return "defiled vein twist randomization: " + (Main.MouseScreen.Y > Main.screenHeight / 2f);
+                case 8 | p7:
+                return "start defiled vein";
+                case 7 | p0:
+				return "remove tree";
+				case 6 | p0:
+				return "place defiled stone ring";
+				case 5 | p0:
+				return "place defiled start";
+				case 4 | p0:
+				return "place brine pool";
+				case 3 | p0:
+				return "place riven cave";
+				case 2 | p0:
+				return "place riven start";
+				case 1 | p0:
+				case 0 | p0:
+				return $"i,j: {Player.tileTargetX}, {Player.tileTargetY}";
+				case 1 | p1:
+				case 0 | p1:
+				return $"j: {Player.tileTargetY}";
+				case 1 | p2:
+				case 0 | p2:
+				return $"strength: {mousePackedDouble / 16}";
+				case 1 | p3:
+				case 0 | p3:
+				return $"speed: {diffFromPlayer / 16}";
+				case 1 | p4:
+				case 0 | p4:
+				return $"length: {mousePackedDouble}";
+				case 1 | p5:
+				case 0 | p5:
+				return $"twist: {(Main.LocalPlayer.controlUp ? 0 : (double)diffFromPlayer.ToRotation())}";
+				case 1 | p6:
+				case 0 | p6:
+				return $"random twist: {Main.MouseScreen.Y > Main.screenHeight / 2f}";
+				case 1 | p7:
+				return $"branch count (optional): {(byte)((mousePacked / 16) % 256)}";
+				//return $":{}";
+			}
+			return "";
         }
         void Apply() {
             switch(mode) {
@@ -251,6 +297,56 @@ namespace Origins.Items.Other.Testing {
                 //Main.NewText(treeLoc);
                 OriginSystem.RemoveTree(treeLoc.X, treeLoc.Y);
                 break;
+                case 8: {
+                    Point pos = (Point)parameters.Dequeue();
+                    double strength = (double)parameters.Dequeue();
+                    Vector2 speed = (((Vector2)parameters.Dequeue()) - pos.ToVector2() * 16).SafeNormalize(Vector2.UnitY);
+                    double length = (double)parameters.Dequeue();
+                    double wallThickness = (double)parameters.Dequeue();
+                    float twist = (float)parameters.Dequeue();
+                    bool twistRand = (bool)parameters.Dequeue();
+                    World.BiomeData.Defiled_Wastelands.Gen.DefiledVeinRunner(
+                        pos.X, pos.Y,
+                        strength,
+                        speed,
+                        length,
+                        (ushort)ModContent.TileType<Tiles.Defiled.Defiled_Stone>(),
+                        (float)wallThickness,
+                        twist,
+                        twistRand,
+                        (ushort)ModContent.WallType<Walls.Defiled_Stone_Wall>()
+                    );
+                    break;
+                }
+                case 9: {
+                    ushort stoneID = (ushort)ModContent.TileType<Tiles.Defiled.Defiled_Stone>();
+                    ushort fissureID = (ushort)ModContent.TileType<Tiles.Defiled.Defiled_Fissure>();
+                    Point pos = (Point)parameters.Dequeue();
+                    for (int oY = 1; oY < 2; oY++) {
+                        for (int o = 0; o > -5; o = o > 0 ? -o : -o + 1) {
+                            Point p = pos;
+                            int loop = 0;
+                            for (; !Main.tile[p.X + o - 1, p.Y + oY].HasTile || !Main.tile[p.X + o, p.Y + oY].HasTile; p.Y++) {
+                                if (++loop > 10) {
+                                    break;
+                                }
+                            }
+                            WorldGen.KillTile(p.X + o - 1, p.Y - 1);
+                            WorldGen.KillTile(p.X + o, p.Y - 1);
+                            WorldGen.KillTile(p.X + o - 1, p.Y);
+                            WorldGen.KillTile(p.X + o, p.Y);
+                            WorldGen.PlaceTile(p.X + o - 1, p.Y + 1, stoneID);
+                            WorldGen.PlaceTile(p.X + o, p.Y + 1, stoneID);
+                            WorldGen.SlopeTile(p.X + o - 1, p.Y + 1, SlopeID.None);
+                            WorldGen.SlopeTile(p.X + o, p.Y + 1, SlopeID.None);
+                            if (TileObject.CanPlace(p.X + o, p.Y, fissureID, 0, 0, out TileObject to)) {
+                                WorldGen.Place2x2(p.X + o, p.Y, fissureID, 0);
+                                break;
+                            }
+                        }
+                    }
+                    break;
+                }
             }
         }
     }

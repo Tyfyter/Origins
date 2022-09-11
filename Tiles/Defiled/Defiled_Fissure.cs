@@ -23,13 +23,15 @@ namespace Origins.Tiles.Defiled {
 			Main.tileNoAttach[Type] = true;
             Main.tileHammer[Type] = true;
             Main.tileLighted[Type] = true;
-			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
 			TileObjectData.newTile.CoordinateHeights = new[] { 18, 18 };
 			//TileObjectData.newTile.AnchorBottom = new AnchorData();
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Defiled Fissure");
-			AddMapEntry(new Color(200, 200, 200), name);
+			AddMapEntry(new Color(40, 40, 40), name);
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.ShadowOrbs };
             ID = Type;

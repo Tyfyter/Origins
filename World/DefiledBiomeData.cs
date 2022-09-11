@@ -73,7 +73,6 @@ namespace Origins.World.BiomeData {
 			public const float Tripod = 0.3f;
 		}
 		public static class Gen {
-			static int fisureCount = 0;
 			public static void StartDefiled(float i, float j) {
 				const float strength = 2.8f; //width of tunnels
 				const float wallThickness = 3.1f;
@@ -81,7 +80,7 @@ namespace Origins.World.BiomeData {
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
 				ushort stoneWallID = (ushort)ModContent.WallType<Defiled_Stone_Wall>();
 				Vector2 startVec = new Vector2(i, j);
-				fisureCount = 0;
+				int fisureCount = 0;
 				DefiledCave(i, j);
 				Queue<(int generation, (Vector2 position, Vector2 velocity))> veins = new Queue<(int generation, (Vector2 position, Vector2 velocity))>();
 				int startCount = genRand.Next(4, 9);
@@ -196,23 +195,32 @@ namespace Origins.World.BiomeData {
 				ushort fissureID = (ushort)ModContent.TileType<Defiled_Fissure>();
                 while (fisureCount < 6 && fisureCheckSpots.Count > 0) {
 					int ch = genRand.Next(fisureCheckSpots.Count);
-                    for (int o = 0; o > -5; o = o > 0 ? -o : -o + 1) {
-						Vector2 p = fisureCheckSpots[ch];
+					for (int o = 0; o > -5; o = o > 0 ? -o : -o + 1) {
+						Point p = fisureCheckSpots[ch].ToPoint();
 						int loop = 0;
-                        for (; !Main.tile[(int)p.X, (int)p.Y + 1].HasTile; p.Y++) {
-                            if (++loop > 10) {
+						for (; !Main.tile[p.X + o - 1, p.Y + 1].HasTile || !Main.tile[p.X + o, p.Y + 1].HasTile; p.Y++) {
+							if (++loop > 10) {
 								break;
-                            }
-                        }
-                        if (TileObject.CanPlace((int)p.X, (int)p.Y, fissureID, 0, 0, out TileObject to)) {
-							WorldGen.Place2x2((int)p.X, (int)p.Y, fissureID, 0);
+							}
+						}
+						WorldGen.KillTile(p.X + o - 1, p.Y - 1);
+						WorldGen.KillTile(p.X + o, p.Y - 1);
+						WorldGen.KillTile(p.X + o - 1, p.Y);
+						WorldGen.KillTile(p.X + o, p.Y);
+						WorldGen.PlaceTile(p.X + o - 1, p.Y + 1, stoneID);
+						WorldGen.PlaceTile(p.X + o, p.Y + 1, stoneID);
+						WorldGen.SlopeTile(p.X + o - 1, p.Y + 1, SlopeID.None);
+						WorldGen.SlopeTile(p.X + o, p.Y + 1, SlopeID.None);
+						if (TileObject.CanPlace(p.X + o, p.Y, fissureID, 0, 0, out TileObject to)) {
+							WorldGen.Place2x2(p.X + o, p.Y, fissureID, 0);
 							fisureCount++;
 							break;
-                        }
-                    }
+						}
+					}
 					fisureCheckSpots.RemoveAt(ch);
                 }
-				Main.NewText(fisureCount);
+				Origins.instance.Logger.Info($"Generated Defiled Wastelands with {fisureCount} fissures");
+				//Main.NewText($"Generated Defiled Wastelands with {fisureCount} fissures");
 			}
 			public static void DefiledCave(float i, float j, float sizeMult = 1f) {
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
@@ -306,6 +314,9 @@ namespace Origins.World.BiomeData {
 							float ek = k + (GenRunners.GetWallDistOffset((float)length + l) + 0.5f) / 2.5f;
 							double dist = Math.Pow(Math.Abs(el - pos.X), 2) + Math.Pow(Math.Abs(ek - pos.Y), 2);
 							tile = Main.tile[l, k];
+							if (Main.tileDungeon[tile.TileType]) {
+								return (pos, speed);
+							}
 							bool openAir = (k < Main.worldSurface && tile.WallType == WallID.None);
 							if (dist > strength) {
 								double d = Math.Sqrt(dist);

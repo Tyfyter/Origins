@@ -160,7 +160,8 @@ namespace Origins {
                 ushort hardenedSandType = TileID.HardenedSand;
                 ushort iceType = TileID.IceBlock;
                 List<(Point, int)> EvilSpikes = new List<(Point, int)>() { };
-                tasks[genIndex] = new PassLegacy("Corruption", (GenerationProgress progress, GameConfiguration _) => {
+                List<int> defiledCenters = new();
+                tasks[genIndex] = new PassLegacy("Corruption't", (GenerationProgress progress, GameConfiguration _) => {
                     //worldEvil = crimson ? evil_riven : evil_wastelands;
                     if(worldEvil == evil_riven) {
                         getEvilTileConversionTypes(evil_riven, out stoneType, out grassType, out plantType, out sandType, out sandstoneType, out hardenedSandType, out iceType);
@@ -341,7 +342,7 @@ namespace Origins {
                         defiledAltResurgenceTiles = new List<(int, int, ushort)> { };
                         getEvilTileConversionTypes(evil_wastelands, out stoneType, out grassType, out plantType, out sandType, out sandstoneType, out hardenedSandType, out iceType);
                         getEvilWallConversionTypes(evil_wastelands, out stoneWallTypes, out hardenedSandWallTypes, out sandstoneWallTypes);
-                        progress.Message = "Corruptionn't";
+                        progress.Message = "Corruption't";
                         for(int genCount = 0; genCount < Main.maxTilesX * 0.00045; genCount++) {
                             float value15 = (float)(genCount / (Main.maxTilesX * 0.00045));
                             progress.Set(value15);
@@ -349,17 +350,18 @@ namespace Origins {
                             int centerX = 0;
                             int genLeft = 0;
                             int genRight = 0;
-                            while(!foundPosition) {
-                                int jungleCheckCount = 0;
+                            int jungleCheckCount = 0;
+                            int defiledCheckCount = 0;
+                            while (!foundPosition) {
                                 foundPosition = true;
                                 int worldCenter = Main.maxTilesX / 2;
-                                centerX = genRand.Next(320, Main.maxTilesX - 320);
+                                centerX = genRand.Next(420, Main.maxTilesX - 420);
                                 genLeft = centerX - genRand.Next(200) - 100;
                                 genRight = centerX + genRand.Next(200) + 100;
                                 if(genLeft < 285) {
-                                    genLeft = 285;
+                                    genLeft = 385;
                                 }
-                                if(genRight > Main.maxTilesX - 285) {
+                                if(genRight > Main.maxTilesX - 385) {
                                     genRight = Main.maxTilesX - 285;
                                 }
                                 if(centerX > worldCenter - 200 && centerX < worldCenter + 200) {
@@ -371,7 +373,16 @@ namespace Origins {
                                 if(genRight > worldCenter - 200 && genRight < worldCenter + 200) {
                                     foundPosition = false;
                                 }
-                                if(centerX > UndergroundDesertLocation.X && centerX < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
+                                if (centerX > dungeonX - 200 && centerX < dungeonX + 200) {
+                                    foundPosition = false;
+                                }
+                                if (genLeft > dungeonX - 200 && genLeft < dungeonX + 200) {
+                                    foundPosition = false;
+                                }
+                                if (genRight > dungeonX - 200 && genRight < dungeonX + 200) {
+                                    foundPosition = false;
+                                }
+                                if (centerX > UndergroundDesertLocation.X && centerX < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
                                     foundPosition = false;
                                 }
                                 if(genLeft > UndergroundDesertLocation.X && genLeft < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
@@ -380,7 +391,7 @@ namespace Origins {
                                 if(genRight > UndergroundDesertLocation.X && genRight < UndergroundDesertLocation.X + UndergroundDesertLocation.Width) {
                                     foundPosition = false;
                                 }
-                                for(int checkX = genLeft; checkX < genRight; checkX++) {
+                                if(foundPosition)for(int checkX = genLeft; checkX < genRight; checkX++) {
                                     for(int checkY = 0; checkY < (int)Main.worldSurface; checkY += 5) {
                                         if(Main.tile[checkX, checkY].HasTile && Main.tileDungeon[Main.tile[checkX, checkY].TileType]) {
                                             foundPosition = false;
@@ -391,9 +402,16 @@ namespace Origins {
                                         }
                                     }
                                 }
-                                if(jungleCheckCount < 200 && JungleX > genLeft && JungleX < genRight) {
+                                if(jungleCheckCount < 200 && genLeft < JungleX + 200 && genRight > JungleX - 200) {
                                     jungleCheckCount++;
                                     foundPosition = false;
+                                }
+                                if (defiledCheckCount < 200) {
+									foreach (var other in defiledCenters) if (genLeft < other && genRight > other) {
+                                        defiledCheckCount++;
+                                        foundPosition = false;
+                                        break;
+                                    }
                                 }
                             }
                             int num518 = 0;
@@ -490,24 +508,33 @@ namespace Origins {
                                     }
                                 }
                             }
-                            int startY;
-                            for (startY = (int)WorldGen.worldSurfaceLow; !Main.tile[centerX, startY].HasTile; startY++);
-                            Point start = new Point(centerX, startY + genRand.Next(105, 150));//range of depths
-
-                            bool gr = TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite];
-                            bool mb = TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble];
-                            TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = true;
-                            TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = true;
-
-                            Defiled_Wastelands.Gen.StartDefiled(start.X, start.Y);
-                            DefiledHearts.Push(start);
-
-                            TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = gr;
-                            TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = mb;
+                            defiledCenters.Add(centerX);
                         }
                     }
                 });
-                
+
+                int dunGenIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
+                genIndex = dunGenIndex > -1 ? dunGenIndex : genIndex + 3;
+
+                tasks.Insert(genIndex+1, new PassLegacy("Corruption't 2: Electric Boogaloo", (GenerationProgress progress, GameConfiguration _) => {
+					foreach (var centerX in defiledCenters) {
+                        int startY;
+                        for (startY = (int)WorldGen.worldSurfaceLow; !Main.tile[centerX, startY].HasTile; startY++) ;
+                        Point start = new Point(centerX, startY + genRand.Next(105, 150));//range of depths
+
+                        bool gr = TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite];
+                        bool mb = TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble];
+                        TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = true;
+                        TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = true;
+
+                        Defiled_Wastelands.Gen.StartDefiled(start.X, start.Y);
+                        DefiledHearts.Push(start);
+
+                        TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = gr;
+                        TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = mb;
+                    }
+                }));
+
                 genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Altars"));
                 tasks.Insert(genIndex+1, new PassLegacy("Alternate World Evil Altars", (GenerationProgress progress, GameConfiguration _) => {
                     ushort oreType = crimson ? TileID.Crimtane : TileID.Demonite;
