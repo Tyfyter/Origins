@@ -137,7 +137,7 @@ namespace Origins.Items.Weapons.Riven {
 			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
 				if (isPriorityTarget && Projectile.ai[1] < 0) foundTarget = true;
                 if (npc.CanBeChasedBy()) {
-                    Vector2 diff = Projectile.Center - npc.Center;
+                    Vector2 diff = npc.Center - Projectile.Center;
                     float dist = diff.Length();
                     if (dist > targetDist) return;
                     float dot = NormDotWithPriorityMult(diff, Projectile.velocity, targetPriorityMultiplier) - (player.DistanceSQ(npc.Center) / (640 * 640));

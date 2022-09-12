@@ -125,6 +125,9 @@ namespace Origins.NPCs {
 				if (npc.HasBuff(Flagellash_Buff_2.ID)) {
 					damageBoost += 2.65f;
 				}
+				if (amebolizeDebuff) {
+					damageBoost += 5f;
+				}
 				damage += Main.rand.RandomRound(damageBoost);
 			}
 			if (Main.expertMode) {

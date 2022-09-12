@@ -29,6 +29,7 @@ X: No progress
 !!!: Priority
 
 ☻: Pending review
+♦: I don't think I did this as planned, pending review anyway
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -36,7 +37,6 @@ X: No progress
 
 BOSSES AND MINI-BOSSES:
 ---
-(#, ^2) Defiled Spawnswarmer
 (#, ^2) Defiled Spawnswarmer
 (X) Discombobulator
 (#, ^2) Grand Corruptor
@@ -464,7 +464,7 @@ MAGIC WEAPONS:
 (^) Infusion
 (^) Low Signal
 (^) Magnus
-(#, ^2) Slashswarm !!!
+(#, @2) Slashswarm !!!
 (^) Tones of Agony
 (#, ^2) Transfusion !!!
 
@@ -493,7 +493,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 ---
-(#, ^2) Amebolize Incantation !!!
+(♦) Amebolize Incantation !!!
 (^) Bone Latcher
 (^) Brainy Staff
 (#, ^2) Desert Crown !!!

@@ -22,6 +22,7 @@ namespace Origins.NPCs {
         internal int rasterizedTime = 0;
         internal int toxicShockTime = 0;
         internal List<int> infusionSpikes;
+        internal bool amebolizeDebuff = false;
         public override void ResetEffects(NPC npc) {
             int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
             if (rasterized >= 0) {
@@ -29,6 +30,7 @@ namespace Origins.NPCs {
 			} else {
                 rasterizedTime = 0;
 			}
+            amebolizeDebuff = false;
         }
         public override void AI(NPC npc) {
             if(shrapnelTime>0) {
@@ -37,7 +39,15 @@ namespace Origins.NPCs {
                 }
             }
         }
-        public static void AddInfusionSpike(NPC npc, int projectileID) {
+		public override void UpdateLifeRegen(NPC npc, ref int damage) {
+            if (amebolizeDebuff) {
+                if (npc.lifeRegen > 0) {
+                    npc.lifeRegen = 0;
+                }
+                npc.lifeRegen -= 4;
+            }
+		}
+		public static void AddInfusionSpike(NPC npc, int projectileID) {
             OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
             if (globalNPC.infusionSpikes is null) globalNPC.infusionSpikes = new List<int>();
             globalNPC.infusionSpikes.Add(projectileID);

@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Other {
             Item.height = 34;
             Item.useAmmo = ItemID.Fireblossom;
             Item.shoot = ModContent.ProjectileType<Dragons_Breath_P>();
-            Item.shootSpeed = 30f;
+            Item.shootSpeed = 10f;
             Item.knockBack = 2.5f;
             Item.useAmmo = AmmoID.None;
             Item.rare = ItemRarityID.Orange;
@@ -56,14 +56,14 @@ namespace Origins.Items.Weapons.Other {
         }
         public override void AI() {
             //projectile.ignoreWater = true;
-            if(Projectile.timeLeft%12==0) {
+            if(Projectile.timeLeft%3==0) {
                 float n = Main.rand.Next(4)*MathHelper.PiOver2;
                 particles.Add(new Particle(new PolarVec2(0, Projectile.velocity.ToRotation()+n), Projectile.timeLeft%60==0?1:-1));
             }
-            if(Projectile.timeLeft < 12 && particles.Count>0)Projectile.timeLeft = 11;
+            if(Projectile.timeLeft < 3 && particles.Count>0)Projectile.timeLeft = 2;
             Vector2 center = Projectile.Center;
             Projectile.oldPosition = center;
-            if(Projectile.timeLeft > 12) {
+            if(Projectile.timeLeft > 3) {
                 Dust.NewDustPerfect(center, 6, Vector2.Zero, Scale: Projectile.timeLeft > 72 ? 2 : (Projectile.timeLeft / 36f)).noGravity = true;
             }
 
@@ -126,7 +126,7 @@ namespace Origins.Items.Weapons.Other {
             bool centered = target.Hitbox.Contains(Projectile.oldPosition.ToPoint());
             target.AddBuff(BuffID.Daybreak, centered?30:5);
 			target.immune[Projectile.owner] = 12;
-            if(Projectile.timeLeft < 12 || centered)Projectile.velocity*=0.95f;
+            if(Projectile.timeLeft < 3 || centered)Projectile.velocity*=0.95f;
             if(Projectile.frame == 1) {
                 PolarVec2 vel = particles[Projectile.frameCounter].Pos;
                 vel.R = knockback*-1.5f;
