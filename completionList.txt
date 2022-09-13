@@ -493,7 +493,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 ---
-(♦) Amebolize Incantation !!!
+(☻) Amebolize Incantation !!!
 (^) Bone Latcher
 (^) Brainy Staff
 (#, ^2) Desert Crown !!!
