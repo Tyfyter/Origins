@@ -1585,6 +1585,7 @@ namespace Origins {
             return new Point(self.X + x, self.Y + y);
         }
         public static Vector2 WithMaxLength(this Vector2 vector, float length) {
+            if (length <= 0) return Vector2.Zero;
             float pLength = vector.LengthSquared();
             return pLength > length * length ? Vector2.Normalize(vector) * length: vector;
         }

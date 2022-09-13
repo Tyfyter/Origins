@@ -155,34 +155,11 @@ namespace Origins.Items.Weapons.Riven {
                     }
                 }
             }
-			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
-            if(Projectile.ai[1]<0) goto movement;
-			if (!foundTarget) {
-				for (int i = 0; i < Main.maxNPCs; i++) {
-					NPC npc = Main.npc[i];
-					if (npc.CanBeChasedBy()) {
-                        Vector2 diff = Projectile.Center - npc.Center;
-                        float dist = diff.Length();
-						if(dist>targetDist)continue;
-						float dot = NormDot(diff,Projectile.velocity) - (player.DistanceSQ(npc.Center) / (640 * 640));
-						bool inRange = dist <= targetDist;
-						bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
-                        if (((dot>=targetAngle && inRange) || !foundTarget) && (lineOfSight || i == Projectile.ai[0])) {
-                            targetDist = dist;
-                            targetAngle = dot;
-							targetCenter = npc.Center;
-                            target = npc.whoAmI;
-							foundTarget = true;
-						}
-					}
-				}
-			}
-
-			Projectile.friendly = foundTarget;
+            bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
+            Projectile.friendly = foundTarget;
             #endregion
 
             #region Movement
-            movement:
             // Default movement parameters (here for attacking)
             float speed = 12f;
             float turnSpeed = 1.5f + (Projectile.ai[1] / 60f);
@@ -192,7 +169,7 @@ namespace Origins.Items.Weapons.Riven {
                     Projectile.ai[0] = target;
                     Projectile.ai[1] = 0;
                 } else {
-                    if(++Projectile.ai[1]>180) {
+                    if(++Projectile.ai[1] > 180) {
                         Projectile.ai[1] = -30;
                     }
                 }

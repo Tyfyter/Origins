@@ -57,7 +57,7 @@ namespace Origins.Items.Weapons.Riven {
             Projectile.friendly = true;
             Projectile.timeLeft = 90;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 90;
+            Projectile.localNPCHitCooldown = -1;
         }
         public override void AI() {
             Player player = Main.player[Projectile.owner];
@@ -70,7 +70,7 @@ namespace Origins.Items.Weapons.Riven {
             int target = -1;
             void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
                 if (isPriorityTarget) return;
-                if (npc.CanBeChasedBy() && Projectile.localNPCImmunity[npc.whoAmI] <= 0) {
+                if (npc.CanBeChasedBy() && Projectile.localNPCImmunity[npc.whoAmI] == 0) {
                     Vector2 diff = npc.Center - Projectile.Center;
                     float dist = diff.Length();
                     if (dist > targetDist) return;
@@ -85,34 +85,41 @@ namespace Origins.Items.Weapons.Riven {
                     }
                 }
             }
-            bool foundTarget = player.channel || player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
-			if (player.channel && Main.myPlayer == Projectile.owner) {
-                targetCenter = Main.MouseWorld;
-			}
+            bool foundTarget = player.channel;
+			if (player.channel && Projectile.ai[0] == 0) {
+                if(Main.myPlayer == Projectile.owner) targetCenter = Main.MouseWorld;
+                Projectile.timeLeft = 90;
+                Projectile.localNPCHitCooldown = 30;
+            } else {
+                foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
+                Projectile.ai[0] = 1;
+                Projectile.localNPCHitCooldown = -1;
+            }
             #endregion
 
             #region Movement
             // Default movement parameters (here for attacking)
-            float speed = 12f;
-            float turnSpeed = 3f;
             float currentSpeed = Projectile.velocity.Length();
+            float speed = 24f;
+            float turnSpeed = 12f;
             if (foundTarget) {
                 if ((int)Math.Ceiling(targetAngle) == -1) {
                     targetCenter.Y -= 16;
                 }
             }
-            LinearSmoothing(ref currentSpeed, speed, currentSpeed < 1 ? 1 : 0.1f);
+            LinearSmoothing(ref currentSpeed, speed, currentSpeed < 1 ? 1 : 0.25f);
 			if (foundTarget) { 
                 Vector2 direction = targetCenter - Projectile.Center;
-                direction.Normalize();
-                Projectile.velocity = Vector2.Normalize(Projectile.velocity + direction * turnSpeed) * currentSpeed;
+                float distance = direction.Length();
+                direction /= distance;
+                Projectile.velocity = (Vector2.Normalize(Projectile.velocity + direction * turnSpeed) * currentSpeed).WithMaxLength(distance);
             }
             #endregion
 
             #region Animation and visuals
 
-            Projectile.rotation = (float)Math.Atan(Projectile.velocity.Y / Projectile.velocity.X);
-            Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
+            if(Projectile.velocity != Vector2.Zero)Projectile.rotation = (float)Math.Atan(Projectile.velocity.Y / Projectile.velocity.X);
+            Projectile.spriteDirection = Projectile.velocity.X < 0 ? -1 : 1;
 
             // This is a simple "loop through all frames from top to bottom" animation
             Projectile.frameCounter++;
@@ -128,12 +135,15 @@ namespace Origins.Items.Weapons.Riven {
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             target.AddBuff(Amebolize_Buff.ID, 240);
             if (target.life > 0 && target.CanBeChasedBy()) Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
-            Projectile.damage = (int)(Projectile.damage * 0.90);
+            if(Projectile.ai[0] != 0) Projectile.damage = (int)(Projectile.damage * 0.90);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity) {
             //Projectile.Kill();
             return false;
         }
-    }
+		public override Color? GetAlpha(Color lightColor) {
+            return new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f);
+		}
+	}
 }
