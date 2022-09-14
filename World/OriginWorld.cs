@@ -40,7 +40,7 @@ namespace Origins {
         private static double? _worldSurfaceLow;
         public static double worldSurfaceLow => _worldSurfaceLow??Main.worldSurface-165;
         public static byte WorldEvil => instance.worldEvil;
-        public bool defiledResurgence => Main.hardMode;//true;
+        public bool defiledResurgence => Main.hardMode && ! NPC.downedPlantBoss;//true;
         public const byte evil_corruption = 0b0001;//1
         public const byte evil_crimson = 0b0010;//2
         //difference of 4 (2^2)
@@ -539,6 +539,28 @@ namespace Origins {
                 return true;
             }else if(TileID.Sets.Conversion.Sand[tileType]||(aggressive&&TileID.Sets.Falling[tileType])) {
                 tileType = sandType;
+                return true;
+            }
+            return false;
+        }
+        public static bool HallowConvertTile(ref ushort tileType, bool aggressive = false) {
+            if (TileID.Sets.Conversion.Grass[tileType]) {
+                tileType = TileID.HallowedGrass;
+                return true;
+            } else if (TileID.Sets.Conversion.Stone[tileType]) {
+                tileType = TileID.Pearlstone;
+                return true;
+            } else if (TileID.Sets.Conversion.Sandstone[tileType]) {
+                tileType = TileID.HallowSandstone;
+                return true;
+            } else if (TileID.Sets.Conversion.HardenedSand[tileType]) {
+                tileType = TileID.HallowHardenedSand;
+                return true;
+            } else if (TileID.Sets.Conversion.Ice[tileType]) {
+                tileType = TileID.HallowedIce;
+                return true;
+            } else if (TileID.Sets.Conversion.Sand[tileType] || (aggressive && TileID.Sets.Falling[tileType])) {
+                tileType = TileID.Pearlsand;
                 return true;
             }
             return false;

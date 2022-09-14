@@ -666,9 +666,11 @@ namespace Origins {
             byte worldEvil = GetInstance<OriginSystem>().worldEvil;
             if(!good&&(worldEvil&4)!=0) {
                 ERunner(i, j, worldEvil, speedX, speedY);
-                return;
+            }else if (good) {
+                GRunner(i, j, speedX, speedY);
+			} else {
+                orig(i, j, speedX, speedY, good);
             }
-            orig(i, j, speedX, speedY, good);
         }
         static void ERunner(int i, int j, byte worldEvil, float speedX = 0f, float speedY = 0f) {
             int size = genRand.Next(200, 250);
@@ -736,6 +738,73 @@ namespace Origins {
                 loopCount++;
             }
             Origins.instance.Logger.Info("hardmode evil stripe generation complete in "+loopCount+" loops with "+conversionCount+" tile conversions");
+        }
+        static void GRunner(int i, int j, float speedX = 0f, float speedY = 0f) {
+            int size = genRand.Next(200, 250);
+            float sizeMult = Main.maxTilesX / 4200;
+            size = (int)(size * sizeMult);
+            Vector2 pos = default;
+            pos.X = i;
+            pos.Y = j;
+            Vector2 velocity = default;
+            velocity.X = genRand.Next(-10, 11) * 0.1f;
+            velocity.Y = genRand.Next(-10, 11) * 0.1f;
+            if (speedX != 0f || speedY != 0f) {
+                velocity.X = speedX;
+                velocity.Y = speedY;
+            }
+            int loopCount = 0;
+            long conversionCount = 0;
+            bool cont = true;
+            while (cont) {
+                int minX = (int)(pos.X - size * 0.5);
+                int maxX = (int)(pos.X + size * 0.5);
+                int minY = (int)(pos.Y - size * 0.5);
+                int maxY = (int)(pos.Y + size * 0.5);
+                if (minX < 0) {
+                    minX = 0;
+                }
+                if (maxX > Main.maxTilesX) {
+                    maxX = Main.maxTilesX;
+                }
+                if (minY < 0) {
+                    minY = 0;
+                }
+                if (maxY > Main.maxTilesY) {
+                    maxY = Main.maxTilesY;
+                }
+                for (int k = minX; k < maxX; k++) {
+                    for (int l = minY; l < maxY; l++) {
+                        if (!(Math.Abs(k - pos.X) + Math.Abs(l - pos.Y) < size * 0.5 * (1.0 + genRand.Next(-10, 11) * 0.015))) {
+                            continue;
+                        }
+                        if (Main.tile[k, l].WallType == 63 || Main.tile[k, l].WallType == 65 || Main.tile[k, l].WallType == 66 || Main.tile[k, l].WallType == 68) {
+                            //Main.tile[k, l].wall = 69;//unsafe grass wall
+                        } else if (Main.tile[k, l].WallType == 216) {
+                            //Main.tile[k, l].wall = 217;//hardened sand
+                        } else if (Main.tile[k, l].WallType == 187) {
+                            //Main.tile[k, l].wall = WallID;//sandstone
+                        }
+                        if (HallowConvertTile(ref Main.tile[k, l].TileType, true)) {
+                            SquareTileFrame(k, l);
+                            conversionCount++;
+                        }
+                    }
+                }
+                pos += velocity;
+                velocity.X += genRand.Next(-10, 11) * 0.05f;
+                if (velocity.X > speedX + 1f) {
+                    velocity.X = speedX + 1f;
+                }
+                if (velocity.X < speedX - 1f) {
+                    velocity.X = speedX - 1f;
+                }
+                if (pos.X < (-size) || pos.Y < -size || pos.X > Main.maxTilesX + size || pos.Y > Main.maxTilesX + size) {
+                    cont = false;
+                }
+                loopCount++;
+            }
+            Origins.instance.Logger.Info("hardmode hallow stripe generation complete in " + loopCount + " loops with " + conversionCount + " tile conversions");
         }
         public static void RemoveTree(int i, int j) {
             Tile tile = Main.tile[i, j];

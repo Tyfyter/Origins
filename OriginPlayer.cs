@@ -179,6 +179,7 @@ namespace Origins {
             lazyCloakVisible = false;
             amebicVialVisible = false;
             entangledEnergy = false;
+            asylumWhistle = false;
             toxicShock = false;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;

@@ -537,7 +537,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Floaty Bomb !!!
 (^) Impact Explosives
 (^) Lightning Grenade
-(#, ^2) Napalm Bomb !!!
+(#, ^2) Napalm Bomb !!! (potentially redundant, see Molotov Cocktail)
 (#, ^2) Napalm Grenade !!!
 (#, ^2) Outbreak Bomb !!!
 (^) Peatball*

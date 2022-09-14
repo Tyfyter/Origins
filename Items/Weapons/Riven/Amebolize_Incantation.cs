@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Riven {
             SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
-			Item.damage = 16;
+			Item.damage = 20;
             Item.DamageType = DamageClass.Summon;
             Item.width = 20;
 			Item.height = 22;
@@ -100,14 +100,14 @@ namespace Origins.Items.Weapons.Riven {
             #region Movement
             // Default movement parameters (here for attacking)
             float currentSpeed = Projectile.velocity.Length();
-            float speed = 24f;
+            float speed = 18f;
             float turnSpeed = 12f;
             if (foundTarget) {
                 if ((int)Math.Ceiling(targetAngle) == -1) {
                     targetCenter.Y -= 16;
                 }
             }
-            LinearSmoothing(ref currentSpeed, speed, currentSpeed < 1 ? 1 : 0.25f);
+            LinearSmoothing(ref currentSpeed, speed, 0.5f - (currentSpeed / 50f));
 			if (foundTarget) { 
                 Vector2 direction = targetCenter - Projectile.Center;
                 float distance = direction.Length();

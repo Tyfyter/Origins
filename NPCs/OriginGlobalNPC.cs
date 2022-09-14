@@ -174,7 +174,7 @@ namespace Origins.NPCs {
 				if (Main.hardMode) {
 					pool.Add(ModContent.NPCType<Defiled_Hunter_Head>(), Defiled_Wastelands.SpawnRates.Hunter);
 					if (TileID.Sets.Conversion.Sand[Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType]) {
-						pool.Add(ModContent.NPCType<Defiled_Cyclops>(), Defiled_Wastelands.SpawnRates.Cyclops);
+						pool.Add(ModContent.NPCType<Shattered_Mummy>(), Defiled_Wastelands.SpawnRates.Cyclops);
 					}
 					if (!spawnInfo.PlayerSafe) {
 						pool.Add(ModContent.NPCType<Defiled_Tripod>(), Defiled_Wastelands.SpawnRates.Tripod);
