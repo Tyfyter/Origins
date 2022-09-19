@@ -22,6 +22,7 @@ using Origins.Items.Accessories;
 using Terraria.DataStructures;
 using Terraria.ModLoader.Utilities;
 using Origins.NPCs.Riven;
+using Origins.Tiles;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
@@ -138,7 +139,7 @@ namespace Origins.NPCs {
 						case ProjectileID.Grenade:
 						case ProjectileID.StickyBomb:
 						case ProjectileID.Explosives:
-						case 181://bee?? like, all of them?
+						case ProjectileID.Bee://bee?? like, all of them?
 						case ProjectileID.Beenade:
 						case ProjectileID.ExplosiveBunny:
 						case ProjectileID.StickyGrenade:
@@ -153,7 +154,7 @@ namespace Origins.NPCs {
 						if(!Main.masterMode) damage *= new Fraction(5, 2);
 						break;
 						default:
-						if(projectile.CountsAsClass(DamageClasses.Explosive))damage /= Main.masterMode ? 5 : 2;
+						if(projectile.CountsAsClass(DamageClasses.Explosive)) damage /= Main.masterMode ? 5 : 2;
 						break;
 					}
 				}
@@ -165,8 +166,12 @@ namespace Origins.NPCs {
 		}*/
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
 			Player player = spawnInfo.Player;
-			if (player.GetModPlayer<OriginPlayer>().ZoneDefiled) {
-				pool[0] = 0;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex) {
+				return;
+			}
+			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is DefiledTile) {
+				if (Main.invasionType <= 0) pool[0] = 0;
 
 				pool.Add(ModContent.NPCType<Defiled_Cyclops>(), Defiled_Wastelands.SpawnRates.Cyclops);
 
@@ -204,12 +209,6 @@ namespace Origins.NPCs {
 					}
 					pool.Add(ModContent.NPCType<Defiled_Mite>(), Defiled_Wastelands.SpawnRates.Mite);
 					SkipMiteSpawn:;
-					if (Main.hardMode && !spawnInfo.PlayerSafe) {
-						pool.Add(ModContent.NPCType<Defiled_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
-						if (spawnInfo.SpawnTileY > Main.rockLayer) {
-							pool.Add(ModContent.NPCType<Enchanted_Trident>(), Defiled_Wastelands.SpawnRates.Bident);
-						}
-					}
 				} else {
 					pool.Add(ModContent.NPCType<Defiled_Brute>(), Defiled_Wastelands.SpawnRates.Brute);
 				}
@@ -221,8 +220,9 @@ namespace Origins.NPCs {
 						pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 999);
 					}
 				}
-			} else if (player.GetModPlayer<OriginPlayer>().ZoneRiven) {
-				pool[0] = 0;
+			}
+			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is RivenTile) {
+				if (Main.invasionType <= 0) pool[0] = 0;
 
 				pool.Add(ModContent.NPCType<Riven_Fighter>(), Riven_Hive.SpawnRates.Fighter);
 
@@ -238,31 +238,18 @@ namespace Origins.NPCs {
 						//sandshark here
 					}
 				}
-
-				/*if (spawnInfo.spawnTileY > Main.worldSurface) {
-					pool.Add(ModContent.NPCType<Defiled_Digger_Head>(), DefiledWastelands.SpawnRates.Worm);
-					int yPos = spawnInfo.spawnTileY;
-					Tile tile;
-					for (int i = 0; i < Defiled_Mite.spawnCheckDistance; i++) {
-						tile = Main.tile[spawnInfo.spawnTileX, ++yPos];
-						if (tile.active()) {
-							yPos--;
-							break;
-						}
+			}
+			if (Main.hardMode && !spawnInfo.PlayerSafe) {
+				if (spawnInfo.SpawnTileY > Main.rockLayer) {
+					if (originPlayer.ZoneDefiled) {
+						pool.Add(ModContent.NPCType<Defiled_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
+						pool.Add(ModContent.NPCType<Enchanted_Trident>(), Defiled_Wastelands.SpawnRates.Bident);
 					}
-					bool? halfSlab = null;
-					for (int i = spawnInfo.spawnTileX - 1; i < spawnInfo.spawnTileX + 2; i++) {
-						tile = Main.tile[i, yPos + 1];
-						if (!tile.active() || !Main.tileSolid[tile.type] || tile.slope() != SlopeID.None || (halfSlab.HasValue && halfSlab.Value != tile.halfBrick())) {
-							tile = null;
-							goto SkipMiteSpawn;
-						}
-						halfSlab = tile.halfBrick();
+					if (originPlayer.ZoneRiven) {
+						pool.Add(ModContent.NPCType<Riven_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
+						//pool.Add(ModContent.NPCType<Enchanted_Trident>(), Defiled_Wastelands.SpawnRates.Bident);
 					}
-					tile = null;
-					pool.Add(ModContent.NPCType<Defiled_Mite>(), DefiledWastelands.SpawnRates.Mite);
-				SkipMiteSpawn:;
-				}*/
+				}
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) {

@@ -22,6 +22,7 @@ namespace Origins.Projectiles.Weapons {
             Projectile.extraUpdates = 1;
             Projectile.aiStyle = 1;
             Projectile.localNPCHitCooldown = 10;
+            Projectile.usesLocalNPCImmunity = true;
             drawOffsetY = 0;//-34;
             DrawOriginOffsetX = -0.5f;
             Projectile.hide = true;

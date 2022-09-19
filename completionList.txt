@@ -30,6 +30,7 @@ X: No progress
 
 ☻: Pending review
 ♦: I don't think I did this as planned, pending review anyway
+?: requesting explanation
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -71,7 +72,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(#2, %2, ^2) Acid Freak
+(#2?, %2, ^2) Acid Freak
 (%2, X) Darkathian Miner
 (X) Defiled Envoy
 
@@ -93,7 +94,7 @@ VANILLA MODIFICATIONS:
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (#3, %2) Demolitionist (to sell different items based on peat sold)* (No, want to implement more in future for usefulness past pre-h)
 (X) Dryad Selling Evil Items on Blood Moon*
-(^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)* !!! (also checked balance, is about on par with vilethorn with neutral armor)
+(^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)* (also checked balance, is about on par with vilethorn with neutral armor)
 (#, ^2) Harpoon (new weapon to introduce sub-class)*
 (^) Trees*
 (^) Wall of Flesh (to drop Exploder Emblem & Thermite Launcher)*
@@ -113,7 +114,7 @@ ENEMY NPCS:
 (#, ^2) Barnacleback !!!
 (#, %2) Crimbrain
 (^) Fiberglass Enemies
-(#3, ^2) Measly Moeba !!!
+(☻) Measly Moeba !!!
 (^) Pre-H Defiled Enemies !!!
 (^) Riven Protoform !!!
 (#, ^2) Scanner Scout
@@ -383,7 +384,7 @@ TOOLS:
 MELEE WEAPONS:
 ---
 (^) Cyah Nara
-(#4, ^2) Decimator !!!
+(☻) Decimator !!!
 (^) Felnum Spear
 (^) Fiberglass Broadsword
 (^) Krakram*
@@ -460,7 +461,7 @@ RANGED WEAPONS:
 MAGIC WEAPONS:
 ---
 (^) Beginner's Tome
-(#4, ^) Cryostike
+(#4?, ^) Cryostike
 (^) Infusion
 (^) Low Signal
 (^) Magnus
