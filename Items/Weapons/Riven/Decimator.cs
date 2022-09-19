@@ -35,10 +35,6 @@ namespace Origins.Items.Weapons.Riven {
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;
 		}
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-		    Projectile.NewProjectile(source, position, velocity.RotatedBy(-0.5f*player.direction), type, damage, knockback, player.whoAmI);
-            return false;
-        }
 		public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 9);
@@ -55,8 +51,8 @@ namespace Origins.Items.Weapons.Riven {
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Spear);
             Projectile.timeLeft = 24;
-			Projectile.width = 18;
-			Projectile.height = 18;
+			Projectile.width = 32;
+			Projectile.height = 32;
             //projectile.scale*=1.25f;
         }
         public float movementFactor{
@@ -85,7 +81,6 @@ namespace Origins.Items.Weapons.Riven {
 					movementFactor+=2.3f;
                 }
 			}
-            Projectile.velocity = Projectile.velocity.RotatedBy(projOwner.direction*0.025f);
 			Projectile.position += Projectile.velocity * movementFactor;
 			if (projOwner.itemAnimation == 0) {
 				Projectile.Kill();
@@ -95,21 +90,17 @@ namespace Origins.Items.Weapons.Riven {
 				Projectile.rotation -= MathHelper.PiOver2;
 			}
 		}
-        static bool handleHit = false;
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-            handleHit = false;
-            if(projHitbox.Intersects(targetHitbox)||(handleHit=Collision.CheckAABBvLineCollision(targetHitbox.Location.ToVector2(), targetHitbox.Size(), Main.player[Projectile.owner].MountedCenter+Projectile.velocity*2, Projectile.Center))) {
-                return true;
-            }
-            return null;
-        }
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            if(handleHit) {
-                damage = (int)(damage*0.65f);
-            }
-        }
         public override bool PreDraw(ref Color lightColor){
-            Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, Projectile.Center - Main.screenPosition + Projectile.velocity*5, new Rectangle(0, 0, 100, 98), lightColor, Projectile.rotation, new Vector2(40+40*Projectile.spriteDirection,0), Projectile.scale, Projectile.spriteDirection>0?SpriteEffects.None:SpriteEffects.FlipHorizontally, 0);
+            Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				Projectile.Center - Main.screenPosition + Projectile.velocity*5,
+				new Rectangle(0, 0, 100, 98),
+				lightColor,
+				Projectile.rotation,
+				new Vector2(50 + 39 * Projectile.spriteDirection, 9),
+				Projectile.scale,
+				Projectile.spriteDirection>0?SpriteEffects.None:SpriteEffects.FlipHorizontally,
+			0);
             return false;
         }
     }

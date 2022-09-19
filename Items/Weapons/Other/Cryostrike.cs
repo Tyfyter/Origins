@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Other {
 			if (Collision.CanHitLine(position, 1, 1, position + offset, 1, 1)) position += offset;
 		}
 		public override Vector2? HoldoutOrigin() {
-            return new Vector2(6,6);
+            return null;
         }
     }
 }

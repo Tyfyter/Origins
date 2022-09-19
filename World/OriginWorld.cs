@@ -40,7 +40,7 @@ namespace Origins {
         private static double? _worldSurfaceLow;
         public static double worldSurfaceLow => _worldSurfaceLow??Main.worldSurface-165;
         public static byte WorldEvil => instance.worldEvil;
-        public bool defiledResurgence => Main.hardMode && ! NPC.downedPlantBoss;//true;
+        public bool DefiledResurgenceActive => Main.hardMode && ! NPC.downedPlantBoss;//true;
         public const byte evil_corruption = 0b0001;//1
         public const byte evil_crimson = 0b0010;//2
         //difference of 4 (2^2)
@@ -102,7 +102,7 @@ namespace Origins {
         protected internal Queue<(int x, int y)> queuedKillTiles;
         protected internal HashSet<Point> anoxicAirTiles;
 		public override void PostUpdateWorld() {
-            if(defiledResurgence) {
+            if(DefiledResurgenceActive) {
                 if(defiledResurgenceTiles.Count>0&&WorldGen.genRand.NextBool(5)) {
                     int index = WorldGen.genRand.Next(defiledResurgenceTiles.Count);
                     (int k, int l) pos = defiledResurgenceTiles[index];
@@ -416,7 +416,7 @@ namespace Origins {
                     for(int l = j - size; l <= j + size; l++) {
                         tileConvertBuffer = -1;
                         current = Main.tile[k,l];
-                        if(originWorld.defiledResurgence&&ModContent.GetModTile(current.TileType) is DefiledTile) {
+                        if(originWorld.DefiledResurgenceActive&&ModContent.GetModTile(current.TileType) is DefiledTile) {
                             originWorld.defiledResurgenceTiles.Add((k,l));
                         }
                         if(conversionType == 0) {
