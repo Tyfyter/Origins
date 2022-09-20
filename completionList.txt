@@ -72,7 +72,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(#2?, %2, ^2) Acid Freak
+(#2, %2, ^2) Acid Freak
 (%2, X) Darkathian Miner
 (X) Defiled Envoy
 
@@ -94,7 +94,7 @@ VANILLA MODIFICATIONS:
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (#3, %2) Demolitionist (to sell different items based on peat sold)* (No, want to implement more in future for usefulness past pre-h)
 (X) Dryad Selling Evil Items on Blood Moon*
-(^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)* (also checked balance, is about on par with vilethorn with neutral armor)
+(^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
 (#, ^2) Harpoon (new weapon to introduce sub-class)*
 (^) Trees*
 (^) Wall of Flesh (to drop Exploder Emblem & Thermite Launcher)*
@@ -114,14 +114,14 @@ ENEMY NPCS:
 (#, ^2) Barnacleback !!!
 (#, %2) Crimbrain
 (^) Fiberglass Enemies
-(☻) Measly Moeba !!!
-(^) Pre-H Defiled Enemies !!!
-(^) Riven Protoform !!!
+(^) Measly Moeba
+(^) Pre-H Defiled Enemies
+(^) Riven Protoform
 (#, ^2) Scanner Scout
-(#, ^2) Single-Cellular Nautilus !!!
+(^) Single-Cellular Nautilus
 (#, ^2) Spider Amoeba !!!
 
-(^) Amebic Mummy !!!
+(^) Amebic Mummy
 (#, ^2) Amoeba Bugger !!!
 (#, ^2) Barnacle Mound !!!
 (#, ^2) Carpalfish*
@@ -384,7 +384,7 @@ TOOLS:
 MELEE WEAPONS:
 ---
 (^) Cyah Nara
-(☻) Decimator !!!
+(^) Decimator
 (^) Felnum Spear
 (^) Fiberglass Broadsword
 (^) Krakram*
@@ -461,11 +461,11 @@ RANGED WEAPONS:
 MAGIC WEAPONS:
 ---
 (^) Beginner's Tome
-(#4?, ^) Cryostike
+(^) Cryostike
 (^) Infusion
 (^) Low Signal
 (^) Magnus
-(#, @2) Slashswarm !!!
+(@2 (I guess I do have OCD), #) Slashswarm !!!
 (^) Tones of Agony
 (#, ^2) Transfusion !!!
 
@@ -494,7 +494,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 ---
-(☻) Amebolize Incantation !!!
+(♦ (see Discord convo)) Amebolize Incantation !!!
 (^) Bone Latcher
 (^) Brainy Staff
 (#, ^2) Desert Crown !!!
@@ -538,7 +538,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Floaty Bomb !!!
 (^) Impact Explosives
 (^) Lightning Grenade
-(#, ^2) Napalm Bomb !!! (potentially redundant, see Molotov Cocktail)
+(#, ^2) Napalm Bomb !!! (is fine, see #demo-weapons)
 (#, ^2) Napalm Grenade !!!
 (#, ^2) Outbreak Bomb !!!
 (^) Peatball*
