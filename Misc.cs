@@ -1538,6 +1538,9 @@ namespace Origins {
         public static void SetLiquidType(this Tile tile, int liquidType) {
             tile.LiquidType = liquidType;
         }
+        public static bool HasSolidTile(this Tile tile) {
+            return tile.HasUnactuatedTile && Main.tileSolid[tile.TileType];
+        }
         public static T SafeGet<T>(this TagCompound self, string key) {
             try {
                 return self.Get<T>(key);

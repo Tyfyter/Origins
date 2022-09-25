@@ -166,10 +166,10 @@ namespace Origins.NPCs {
 		}*/
 		public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo) {
 			Player player = spawnInfo.Player;
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (player.ZoneTowerNebula || player.ZoneTowerSolar || player.ZoneTowerStardust || player.ZoneTowerVortex) {
 				return;
 			}
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is DefiledTile) {
 				if (Main.invasionType <= 0) pool[0] = 0;
 
@@ -226,7 +226,7 @@ namespace Origins.NPCs {
 
 				pool.Add(ModContent.NPCType<Riven_Fighter>(), Riven_Hive.SpawnRates.Fighter);
 
-				if (spawnInfo.Water) pool.Add(ModContent.NPCType<Measly_Moeba>(), Riven_Hive.SpawnRates.Jelly);
+				if (spawnInfo.Water) pool.Add(ModContent.NPCType<Measly_Moeba>(), Riven_Hive.SpawnRates.Moeba);
 
 				//if (spawnInfo.playerFloorY <= Main.worldSurface + 50 && spawnInfo.spawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
 				if (Main.hardMode) {

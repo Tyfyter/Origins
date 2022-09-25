@@ -87,6 +87,10 @@ namespace Origins.Items {
                 item.defense = 7;
                 break;
             }
+			if (item.width == 0 && item.height == 0) {
+                item.width = 4;
+                item.height = 4;
+			}
 		}
         public override void UpdateEquip(Item item, Player player) {
             switch(item.type) {
