@@ -491,6 +491,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float lifePercent, ref float shieldPercent) {
             NPC owner = Main.npc[info.npcIndexToAimAt];
+            if (!owner.active || owner.life <= 0) return null;
 
             int tickCount = 10 - Defiled_Amalgamation.DifficultyMult * 2;
             int tickSize = owner.lifeMax / tickCount;
