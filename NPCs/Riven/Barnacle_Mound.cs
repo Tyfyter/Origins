@@ -30,17 +30,17 @@ namespace Origins.NPCs.Riven {
             NPC.aiStyle = 0;
             NPC.noGravity = true;
             NPC.lifeMax = 90;
-            NPC.defense = 30;
+            NPC.defense = 16;
             NPC.damage = 0;
             NPC.width = 24;
             NPC.height = 24;
             NPC.knockBackResist = 0;
         }
 		public override void AI() {
-			if (++NPC.ai[0] > 300) {
+			if (++NPC.ai[0] > (Main.masterMode ? 420 : (Main.expertMode? 540 : 600))) {
                 int type = ModContent.NPCType<Amoeba_Bugger>();
 				for (int i = Main.rand.Next(5, 8); i-->0;) {
-                    NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.position.X, (int)NPC.position.Y, type).ai[1] = i * 10;
+                    NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.position.X, (int)NPC.position.Y, type, ai0: Main.rand.NextFloat(-4, 4), ai1: Main.rand.NextFloat(-4, 4));
 				}
                 NPC.ai[0] = 0;
 			}

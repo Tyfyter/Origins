@@ -12,6 +12,7 @@ using Origins.Items.Materials;
 using Terraria.Audio;
 using Origins.Tiles.Defiled;
 using Terraria.GameContent.Bestiary;
+using Terraria.DataStructures;
 
 namespace Origins.NPCs.Riven {
     public class Amoeba_Bugger : Glowing_Mod_NPC {
@@ -21,7 +22,7 @@ namespace Origins.NPCs.Riven {
         }
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.Bunny);
-            NPC.aiStyle = NPCAIStyleID.Sharkron;
+            NPC.aiStyle = NPCAIStyleID.Bat;
             NPC.lifeMax = 20;
             NPC.defense = 0;
             NPC.damage = 10;
@@ -37,10 +38,14 @@ namespace Origins.NPCs.Riven {
                 new FlavorTextBestiaryInfoElement(""),
             });
         }
-        public override void AI() {
+		public override void OnSpawn(IEntitySource source) {
+            NPC.velocity = new(NPC.ai[0], NPC.ai[1]);
+		}
+		public override void AI() {
             if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.2f), NPC.Center);
             NPC.FaceTarget();
-            if(!NPC.HasValidTarget)NPC.direction = Math.Sign(NPC.velocity.X);
+            if (NPC.velocity.HasNaNs()) NPC.velocity = default;
+            if (!NPC.HasValidTarget)NPC.direction = Math.Sign(NPC.velocity.X);
             NPC.spriteDirection = NPC.direction;
             if(++NPC.frameCounter>5) {
                 NPC.frame = new Rectangle(0, (NPC.frame.Y+28)%56, 32, 26);
