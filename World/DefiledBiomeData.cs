@@ -218,7 +218,47 @@ namespace Origins.World.BiomeData {
 						}
 					}
 					fisureCheckSpots.RemoveAt(ch);
-                }
+				}
+				ushort defiledAltar = (ushort)ModContent.TileType<Defiled_Altar>();
+				for (int i0 = genRand.Next(10, 15); i0-->0;) {
+					int tries = 0;
+					bool placed = false;
+					while (!placed && ++tries < 10000) {
+						int x = (int)i + genRand.Next(-100, 101);
+						int y = (int)j + genRand.Next(-80, 81);
+						if (!Framing.GetTileSafely(x, y).HasTile) {
+							for (; !Framing.GetTileSafely(x, y).HasTile; y++) {
+								if (y > Main.maxTilesY) break;
+							}
+							y--;
+						} else {
+							while (Framing.GetTileSafely(x, y).HasTile && y > Main.worldSurface) {
+								y--;
+							}
+						}
+						Place3x2(x, y, defiledAltar);
+						placed = Framing.GetTileSafely(x, y).TileIsType(defiledAltar);
+					}
+				}
+				ushort defiledPot = (ushort)ModContent.TileType<Defiled_Pot>();
+				int placedPots = 0;
+				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
+					int x = (int)i + genRand.Next(-100, 101);
+					int y = (int)j + genRand.Next(-80, 81);
+					if (!Framing.GetTileSafely(x, y).HasTile) {
+						for (; !Framing.GetTileSafely(x, y).HasTile; y++) {
+							if (y > Main.maxTilesY) break;
+						}
+						y--;
+					} else {
+						while (Framing.GetTileSafely(x, y).HasTile && y > Main.worldSurface) {
+							y--;
+						}
+					}
+					Place3x2(x, y, defiledPot);
+					if (Framing.GetTileSafely(x, y).TileIsType(defiledPot)) placedPots++;
+				}
+				Origins.instance.Logger.Info($"Placed {placedPots} defiled pots");
 				Origins.instance.Logger.Info($"Generated Defiled Wastelands with {fisureCount} fissures");
 				//Main.NewText($"Generated Defiled Wastelands with {fisureCount} fissures");
 			}

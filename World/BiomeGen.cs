@@ -536,7 +536,46 @@ namespace Origins {
                 }));
 
                 genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Altars"));
-                tasks.Insert(genIndex+1, new PassLegacy("Alternate World Evil Altars", (GenerationProgress progress, GameConfiguration _) => {
+                tasks[genIndex] = new PassLegacy("Alternate World Evil Altars", (GenerationProgress progress, GameConfiguration _) => {
+                    Main.tileSolid[484] = false;
+                    progress.Message = Lang.gen[26].Value;
+                    float targetCount = Main.maxTilesX * Main.maxTilesY * 2E-05f;
+                    ushort defiledAltar = (ushort)TileType<Defiled_Altar>();
+                    ushort rivenAltar = (ushort)TileType<Riven_Altar>();
+                    for (int i = 0; i < targetCount; i++) {
+                        progress.Set(i / targetCount);
+                        for (int tries = 0; tries < 10000; tries++) {
+                            int x = genRand.Next(281, Main.maxTilesX - 3 - 280);
+                            while (x > Main.maxTilesX * 0.45 && x < Main.maxTilesX * 0.55) {
+                                x = genRand.Next(281, Main.maxTilesX - 3 - 280);
+                            }
+                            int y = (int)(Main.worldSurface * 2.0 + Main.rockLayer) / 3;
+                            while (oceanDepths(x, y)) {
+                                x = genRand.Next(281, Main.maxTilesX - 3 - 280);
+                                while (x > Main.maxTilesX * 0.45 && x < Main.maxTilesX * 0.55) {
+                                    x = genRand.Next(281, Main.maxTilesX - 3 - 280);
+                                }
+                                y = (int)(Main.worldSurface * 2.0 + Main.rockLayer) / 3;
+                            }
+                            ushort style = crimson ? rivenAltar : defiledAltar;
+                            if (!IsTileNearby(x, y, 26, 3)) {
+                                Place3x2(x, y, style);
+                            }
+                            if (Main.tile[x, y].TileType == style) {
+                                break;
+                            }
+                        }
+                    }
+                    ushort oreType = crimson ? TileID.Crimtane : TileID.Demonite;
+                    ushort altOreType = (ushort)(crimson ? TileType<Infested_Ore>() : TileType<Defiled_Ore>());
+                    ushort altarType = (ushort)(crimson ? TileType<Riven_Altar>() : TileType<Defiled_Altar>());
+                    for (int y = 0; y < Main.maxTilesY; y++) {
+                        for (int x = 0; x < Main.maxTilesX; x++) {
+                            if (Main.tile[x, y].TileType == oreType) Main.tile[x, y].TileType = altOreType;
+                        }
+                    }
+                });
+                /*tasks.Insert(genIndex+1, new PassLegacy("Alternate World Evil Altars", (GenerationProgress progress, GameConfiguration _) => {
                     ushort oreType = crimson ? TileID.Crimtane : TileID.Demonite;
                     ushort altOreType = (ushort)(crimson ? TileType<Infested_Ore>() : TileType<Defiled_Ore>());
                     ushort altarType = (ushort)(crimson ? TileType<Riven_Altar>() : TileType<Defiled_Altar>());
@@ -550,7 +589,7 @@ namespace Origins {
                             }
                         }
                     }
-                }));
+                }));*/
                 genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Weeds"));
                 tasks.Insert(genIndex+1, new PassLegacy("Evil Weeds and Sand", (GenerationProgress progress, GameConfiguration _) => {
                     int tilesSinceSpike = 0;
