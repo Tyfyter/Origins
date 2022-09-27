@@ -122,8 +122,8 @@ ENEMY NPCS:
 (#, ^2) Spider Amoeba !!!
 
 (^) Amebic Mummy
-(#, ^2) Amoeba Bugger !!!
-(#, ^2) Barnacle Mound !!!
+(☻) Amoeba Bugger !!!
+(☻) Barnacle Mound !!!
 (#, ^2) Carpalfish*
 (%3) Defiled Clipper (feel like a more unique aquatic enemy could be made)
 (#3, ^2/4) Defiled Hunter
@@ -131,7 +131,7 @@ ENEMY NPCS:
 (%3) Defiled Reaper (currently just a namespace. Could be removed)
 (^) Flagellant
 (#, ^2) Mildew Creeper
-(#2, ^2) Mitoworm !!!
+(#2?, ^2) Mitoworm !!!
 (@5, #3) Riven Mimic !!!
 (#, ^2) Scalron
 (#, ^2) Vent Hopper
@@ -175,7 +175,7 @@ STATUS EFFECTS:
 (^) Impeding Shrapnel
 (X) Levitation
 (#3, ^2) Rasterize
-(%3) Riven Debuff (see proposal) !!!
+(@, #) Riven Debuff !!!
 (^) Solvent
 (#, ^2) Totally Safe
 (#, ^2) Toxic Shock
@@ -213,8 +213,8 @@ ARMOR:
 (^) Defiled Armor*
 (#3, ^2) Felnum Armor
 (^) Fiberglass Armor
-(#2, ^2) Myth Armor !!!
-(#3, ^2) Riven Armor !!!
+(#2?, ^2) Myth Armor !!!
+(#3?, ^2) Riven Armor !!!
 
 (^) Acrid Armor
 (^) Bleeding Obsidian Armor
