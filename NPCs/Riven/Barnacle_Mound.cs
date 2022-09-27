@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
-using Origins.Items.Other.Consumables;
-using Origins.Items.Weapons.Riven;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
@@ -30,7 +28,7 @@ namespace Origins.NPCs.Riven {
             NPC.aiStyle = 0;
             NPC.noGravity = true;
             NPC.lifeMax = 90;
-            NPC.defense = 16;
+            NPC.defense = 18;
             NPC.damage = 0;
             NPC.width = 24;
             NPC.height = 24;
@@ -85,7 +83,7 @@ namespace Origins.NPCs.Riven {
         }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement(""),
+                new FlavorTextBestiaryInfoElement("Barnacle mounds act as a self-contained ecosystem of microbes, buggers, and the Riven of course."),
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {

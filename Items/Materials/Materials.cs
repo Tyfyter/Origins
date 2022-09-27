@@ -296,6 +296,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Eyndum Bar");
+            Tooltip.SetDefault("Half-life means nothing when used in the same sentence");
             SacrificeTotal = 25;
         }
         public override void SetDefaults() {
@@ -391,7 +392,7 @@ namespace Origins.Items.Materials {
         static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Lunar Token");
-            Tooltip.SetDefault("Valuable to the demented.");
+            Tooltip.SetDefault("Valuable to the demented");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 100;
@@ -444,6 +445,7 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
             Item.rare = ItemRarityID.Cyan;
             Item.glowMask = glowmask;
+            ///Item.noGravity = true;
         }
     }
     public class Peat_Moss : ModItem {
@@ -488,6 +490,7 @@ namespace Origins.Items.Materials {
         static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Qube");
+            Tooltip.SetDefault("Physical information. Like everything else in the world");
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 100;
         }

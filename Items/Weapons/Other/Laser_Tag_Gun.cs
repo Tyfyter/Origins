@@ -5,7 +5,6 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -18,7 +17,7 @@ namespace Origins.Items.Weapons.Other {
         public override Color? GlowmaskTint => Main.teamColor[Main.player[Item.playerIndexTheItemIsReservedFor].team];
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Laser Tag Gun");
-			Tooltip.SetDefault("‘Pew. Pew. Muddathrucka...’");
+			Tooltip.SetDefault("‘Pew pew, Muddathrucka...’");
             animation = new DrawAnimationManual(1);
 			Main.RegisterItemAnimation(Item.type, animation);
             glowmask = Origins.AddGlowMask(this);

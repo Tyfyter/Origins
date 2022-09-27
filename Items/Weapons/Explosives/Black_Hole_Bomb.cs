@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Explosives {
     public class Black_Hole_Bomb : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Black Hole Bomb");
-			Tooltip.SetDefault("Explode. Implode");
+			Tooltip.SetDefault("'Operator of the device will be completely unaffected from its DESTRUCTIVE EFFECTS'");
             SacrificeTotal = 99;
         }
 		public override void SetDefaults() {
@@ -23,15 +23,15 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.useAnimation = (int)(Item.useAnimation*0.75);
             Item.shoot = ModContent.ProjectileType<Black_Hole_Bomb_P>();
 			Item.shootSpeed*=2;
-            Item.knockBack = 13f;
+            Item.knockBack = 50f;
 			Item.rare = CrimsonRarity.ID;
 		}
     }
     public class Black_Hole_Bomb_P : ModProjectile {
         const int initDur = 5;
         const int maxDur = 1800;
-        const int growDur = 180;
-        const float distExp = 2.5f;
+        const int growDur = 90;
+        const float distExp = 2f;
         const float strengthMult = 512f;
         const float knockbackResistanceSignificance = 0.9f;
         const float dotDivisor = 10;
@@ -115,7 +115,7 @@ namespace Origins.Items.Weapons.Explosives {
             Projectile.friendly = false;
         }
         public override bool PreKill(int timeLeft) {
-            Projectile.type = ProjectileID.RocketI;
+            Projectile.type = ProjectileID.Dynamite;
             return true;
         }
         public override void Kill(int timeLeft) {

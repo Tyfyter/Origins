@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Other {
         //public override bool OnlyShootOnSwing => true;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Fragarach");
-            Tooltip.SetDefault("");
+            Tooltip.SetDefault("The Irish were in it for the shock value");
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 1;
         }

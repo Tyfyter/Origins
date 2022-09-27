@@ -122,8 +122,8 @@ ENEMY NPCS:
 (#, ^2) Spider Amoeba !!!
 
 (^) Amebic Mummy
-(☻) Amoeba Bugger !!!
-(☻) Barnacle Mound !!!
+(^) Amoeba Bugger
+(^) Barnacle Mound
 (#, ^2) Carpalfish*
 (%3) Defiled Clipper (feel like a more unique aquatic enemy could be made)
 (#3, ^2/4) Defiled Hunter
@@ -175,7 +175,7 @@ STATUS EFFECTS:
 (^) Impeding Shrapnel
 (X) Levitation
 (#3, ^2) Rasterize
-(@, #) Riven Debuff !!!
+(@, #) Torn !!!
 (^) Solvent
 (#, ^2) Totally Safe
 (#, ^2) Toxic Shock
@@ -401,16 +401,12 @@ MELEE WEAPONS:
 (#, ^2) Scale Saw
 (^) Telephone Pole*
 
-(X) Mass Blade*
 (#, ^2) Personal Laser Blade*
 (#, ^2) Rive Knife*
-(%3, X) The Spoon
 
 (%3, X) Celestial Point
 (X) Chromtain Smasher
 (%3, ^) Eyndum Scar
-(%3, X) Gigastar
-(%3, X) Singulus
 ---
 
 
@@ -444,7 +440,6 @@ RANGED WEAPONS:
 (X) Titanium Harpoon Gun
 (@5, ^3) Vipershot
 
-(%3, X) Barrel Blaster
 (^) Laser Tag Gun
 (X) Serpentine
 (X) Skewr
@@ -454,7 +449,6 @@ RANGED WEAPONS:
 (X) L.W.M.U.G.
 (X) Pinpoint
 (X) Synergy
-(%3, X) The Deviant
 ---
 
 
@@ -470,7 +464,7 @@ MAGIC WEAPONS:
 (#, ^2) Transfusion !!!
 
 (^) Bled Out Staff
-(#, ^2) Boulder Blender
+(#, ^2) Boulder Bash
 (^) Amber of Embers
 (^) Dismay
 (#, ^2) Meltdown
@@ -478,7 +472,6 @@ MAGIC WEAPONS:
 (^) Splashid
 
 (^) Cometburn
-(X) Fistfury
 (^) Gravaulter
 (X) Lunarfire
 (#, ^2) Phantom Fury
@@ -488,7 +481,6 @@ MAGIC WEAPONS:
 
 (X) Ion Minigun
 (^) Rigged Cubix
-(X) Undying Energy
 ---
 
 
@@ -499,7 +491,6 @@ SUMMONER WEAPONS:
 (^) Brainy Staff
 (#, ^2) Desert Crown !!!
 (^) Eyeball Staff
-(%3, X) Fiend Staff !!!
 (^) Flagellash
 (#, ^2) Forest Staff !!!
 (#, ^2) Ocean Amulet !!!
@@ -509,7 +500,6 @@ SUMMONER WEAPONS:
 
 (@2, #) Back-Up Mag
 (^) Bomb Artifact
-(X) Enkindled Rose
 (X) Mildew Whip
 (X) Stubborn Leaf
 
@@ -534,12 +524,12 @@ EXPLOSIVE WEAPONS:
 (#2, ^2) Bomb Launcher !!!
 (#, ^2) Brainade !!!
 (#, ^2) Defiled Spirit !!!
-(^) Hand Grenade Launcher
 (#, ^2) Floaty Bomb !!!
+(^) Hand Grenade Launcher
+(#, ^2) Hellfire Bomb !!!
+(#, ^2) Hellfire Grenade !!!
 (^) Impact Explosives
 (^) Lightning Grenade
-(#, ^2) Napalm Bomb !!! (is fine, see #demo-weapons)
-(#, ^2) Napalm Grenade !!!
 (#, ^2) Outbreak Bomb !!!
 (^) Peatball*
 
@@ -548,7 +538,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Klangjet
 (#, ^2) Mortar Shell
 (^) Shrapnel Bomb
-(^) Thermite Launcher
+(#3, ^2) Thermite Launcher
 
 (%3, ^) Ace Shrapnel
 (#, ^2) Acid Bomb
@@ -607,7 +597,7 @@ TILES:
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (#, ^2) Fiberglass Wall
-(^) Spug Flesh Wall
+(#4, ^2) Spug Flesh Wall !!!
 (X) Sulphur Stone Wall
 
 (X) Acid Chest
@@ -804,7 +794,7 @@ MUSIC:
 (X) Mildew Carrion
 (X) Quantux
 (X) Restless Flame
-(X) Primordial Amoeba !!!
+(#, ^2) Primordial Amoeba !!!
 (X) Severus
 (X) Void Wyrm
 

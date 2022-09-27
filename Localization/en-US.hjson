@@ -104,6 +104,10 @@
 			Generic: {
 				Riven: Blue Lobster
 			}
+			Items: {
+				DefiledBar: Spare Chunks
+				LaserTagGunTooltip: 'Pew pew, Motherfucker...'
+			}
 			Dialogue: {
 				Acid_Freak: {
 					InteractionWimd: It fucken WIMDY!

@@ -1,12 +1,10 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
-	public class Shrapnel_Bomb : ModItem {
+    public class Shrapnel_Bomb : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Shrapnel Bomb");
 			Tooltip.SetDefault("Explodes into shrapnel");

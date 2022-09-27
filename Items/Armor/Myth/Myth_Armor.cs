@@ -7,7 +7,7 @@ namespace Origins.Items.Armor.Myth {
     public class Mythic_Skull : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Mythic Skull");
-            Tooltip.SetDefault("Increased explosive velocity\n'Skull ON'");
+            Tooltip.SetDefault("Increased explosive velocity\n'Mythic Skull ON'");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {

@@ -9,7 +9,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 	public class Plague_Texan_Mask : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Plague Texan's Visage");
-			Tooltip.SetDefault("Great for impersonating Origins devs!'\n");
+			Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -21,7 +21,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 	public class Plague_Texan_Jacket : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Plague Texan's Surprisingly Affordable Style");
-			Tooltip.SetDefault("Great for impersonating Origins devs!'\n");
+			Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
             ArmorIDs.Body.Sets.HidesHands[Item.bodySlot] = false;
             SacrificeTotal = 1;
         }
@@ -34,7 +34,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
 	public class Plague_Texan_Jeans : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Plague Texan's Jeans");
-			Tooltip.SetDefault("Great for impersonating Origins devs!'\n");
+			Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -46,7 +46,7 @@ namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
         public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Plague Texan's Gift");
-			Tooltip.SetDefault("Great for impersonating Origins devs!'\nForesight is '20/20'");
+			Tooltip.SetDefault("'Great for impersonating Origins devs!'\nForesight is '20/20'");
             SacrificeTotal = 1;
             ID = Item.type;
 		}

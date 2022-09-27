@@ -8,7 +8,7 @@ namespace Origins.Items.Weapons.Explosives {
     public class Impact_Dynamite : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Dynamite");
-			Tooltip.SetDefault("Be careful, it's not book");
+			Tooltip.SetDefault("Be careful, it's not a book");
             SacrificeTotal = 99;
         }
 		public override void SetDefaults() {
