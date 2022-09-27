@@ -105,7 +105,7 @@ VANILLA MODIFICATIONS:
 
 OTHER:
 ---
-(@, #) Journal (page sprites, button/pseudoitem sprite)
+(#, ^2) Journal (page sprites, button/pseudoitem sprite) !!!
 ---
 
 
@@ -175,8 +175,8 @@ STATUS EFFECTS:
 (^) Impeding Shrapnel
 (X) Levitation
 (#3, ^2) Rasterize
-(@, #) Torn !!!
 (^) Solvent
+(#, ^2) Torn !!!
 (#, ^2) Totally Safe
 (#, ^2) Toxic Shock
 (X) Whiplash
@@ -614,7 +614,7 @@ TILES:
 (X) Omni-Printer
 
 (X) Brineglow Vine
-(#2, ^2) Defiled Misc Tiles* (please implement Defiled Pots and Large foliage) !!!
+(#3, ^2) Defiled Misc Tiles* (please implement Large foliage) !!!
 (#2, ^2) Riven Foliage !!!
 (#2, ^2) Riven Lesion !!!
 (#, ^2) Riven Pot !!!
