@@ -411,6 +411,18 @@ namespace Origins {
                     }
                 }
                 break;
+                case origin_conversion_type + 1:
+                for (int k = i - size; k <= i + size; k++) {
+                    for (int l = j - size; l <= j + size; l++) {
+                        if (!WorldGen.InWorld(k, l, 1) || Math.Abs(k - i) + Math.Abs(l - j) >= 6) {
+                            continue;
+                        }
+                        current = Main.tile[k, l];
+                        ConvertTile(ref current.TileType, evil_riven);
+                        ConvertWall(ref current.WallType, evil_riven);
+                    }
+                }
+                break;
                 default:
                 for(int k = i - size; k <= i + size; k++) {
                     for(int l = j - size; l <= j + size; l++) {

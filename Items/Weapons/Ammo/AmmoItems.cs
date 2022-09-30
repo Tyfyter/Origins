@@ -88,4 +88,25 @@ namespace Origins.Items.Weapons.Ammo {
             OriginGlobalProj.ClentaminatorAI(Projectile, OriginSystem.origin_conversion_type, ModContent.DustType<Solution_D>(), Color.GhostWhite);
         }
     }
+    public class Teal_Solution : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Teal Solution");
+            SacrificeTotal = 99;
+            //Tooltip.SetDefault();
+        }
+        public override void SetDefaults() {
+            Item.CloneDefaults(ItemID.GreenSolution);
+            Item.shoot = ModContent.ProjectileType<Teal_Solution_P>() - ProjectileID.PureSpray;
+        }
+    }
+    public class Teal_Solution_P : ModProjectile {
+        public override string Texture => "Origins/Projectiles/Pixel";
+        public override void SetDefaults() {
+            Projectile.CloneDefaults(ProjectileID.PureSpray);
+            Projectile.aiStyle = 0;
+        }
+        public override void AI() {
+            OriginGlobalProj.ClentaminatorAI(Projectile, OriginSystem.origin_conversion_type + 1, ModContent.DustType<Solution_D>(), Color.Teal);
+        }
+    }
 }
