@@ -266,7 +266,7 @@ namespace Origins {
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet) {
             releaseTriggerSetBonus = !controlTriggerSetBonus;
-            controlTriggerSetBonus = triggersSet.KeyStatus["Origins: Trigger Set Bonus"];
+            controlTriggerSetBonus = Origins.SetBonusTriggerKey.Current;
 			if (controlTriggerSetBonus && releaseTriggerSetBonus) {
                 TriggerSetBonus();
 			}
