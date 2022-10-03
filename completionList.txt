@@ -618,7 +618,7 @@ TILES:
 (#2, ^2) Riven Foliage !!!
 (#2, ^2) Riven Lesion !!!
 (#, ^2) Riven Pot !!!
-(@5, #3) Riven Tree !!!
+(#3, ^2) Riven Tree !!!
 (#2, ^2) Wilting Rose !!!
 (#, ^2) Wrycoral !!!
 

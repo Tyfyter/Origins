@@ -26,7 +26,8 @@ namespace Origins.Items.Weapons.Explosives {
             Item.useAmmo = ModContent.ItemType<Thermite_Canister>();
             Item.knockBack = 2f;
             Item.shootSpeed = 12f;
-			Item.rare = ItemRarityID.LightRed;
+            Item.autoReuse = false;
+            Item.rare = ItemRarityID.LightRed;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
             //type = Item.shoot;

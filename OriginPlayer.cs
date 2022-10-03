@@ -327,7 +327,6 @@ namespace Origins {
             if (setAbilityCooldown > 0) return;
 			switch (setActiveAbility) {
                 case 1: {
-					if (Player.CheckMana((int)(40 * Player.manaCost), true)) {
                         Vector2 speed = Vector2.Normalize(Main.MouseWorld - Player.MountedCenter) * 14;
                         int type = ModContent.ProjectileType<Infusion_P>();
 						for (int i = -5; i < 6; i++) {
@@ -335,7 +334,6 @@ namespace Origins {
                         }
                         setAbilityCooldown = 30;
                         if(Player.manaRegenDelay < 60) Player.manaRegenDelay = 60;
-                    }
 				}
                 break;
                 case 2: {

@@ -19,7 +19,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void UpdateLifeRegen(ref int damage) {
             if (NPC.life > 20) {
-                NPC.lifeRegen += 18 / (NPC.life / 20);
+                NPC.lifeRegen += 24 / (NPC.life / 20);
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

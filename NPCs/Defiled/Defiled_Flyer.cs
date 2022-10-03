@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
+using System;
+using System.IO;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent.ItemDropRules;
-using Origins.Items.Materials;
-using Terraria.Audio;
-using Terraria.GameContent.Bestiary;
-using Origins.Items.Other.Consumables;
-using System.IO;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Flyer : ModNPC {
@@ -24,15 +21,15 @@ namespace Origins.NPCs.Defiled {
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.Bunny);
             NPC.aiStyle = 14;
-            NPC.lifeMax = 40;
-            NPC.defense = 8;
+            NPC.lifeMax = 42;
+            NPC.defense = 10;
             NPC.damage = 20;
             NPC.width = 104;
             NPC.height = 38;
             NPC.friendly = false;
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
-            NPC.knockBackResist = 0.5f;
+            NPC.knockBackResist = 0.75f;
         }
         static int MaxMana => 35;
         static int MaxManaDrain => 15;
@@ -49,7 +46,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void UpdateLifeRegen(ref int damage) {
             if (NPC.life < NPC.lifeMax && Mana > 0) {
-                int factor = 8 / ((NPC.life / 10) + 1);
+                int factor = 57 / ((NPC.life / 10) + 1);
                 NPC.lifeRegen += factor;
                 Mana -= factor / 180f;// 1 mana for every 1 health regenerated
             }
@@ -65,6 +62,8 @@ namespace Origins.NPCs.Defiled {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Krunch_Mix>(), 17));
         }
         public override void AI() {
+            NPCAimedTarget target = NPC.GetTargetData();
+            NPC.rotation = NPC.AngleTo(target.Center) + MathHelper.PiOver2;
             if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.1f), NPC.Center);
             NPC.FaceTarget();
             if(!NPC.HasValidTarget)NPC.direction = Math.Sign(NPC.velocity.X);

@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using System;
+using System.IO;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
-using System.IO;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
     public class Shattered_Mummy : ModNPC {

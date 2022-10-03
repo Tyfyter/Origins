@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
+﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using System;
+using System.IO;
+using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
-using System.IO;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Brute : ModNPC {
@@ -50,7 +45,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void UpdateLifeRegen(ref int damage) {
             if (NPC.life < NPC.lifeMax && Mana > 0) {
-                int factor = 24 / ((NPC.life / 40) + 2);
+                int factor = 37 / ((NPC.life / 40) + 2);
                 NPC.lifeRegen += factor;
                 Mana -= factor / 90f;// 3 mana for every 2 health regenerated
             }

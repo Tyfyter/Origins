@@ -49,7 +49,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void UpdateLifeRegen(ref int damage) {
             if (NPC.life < NPC.lifeMax && Mana > 0) {
-                int factor = 16;
+                int factor = 64;
                 NPC.lifeRegen += factor;
                 Mana -= factor / 120f;// 1 mana for every 1 health regenerated
             }

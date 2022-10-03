@@ -1,29 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
-using Origins.Items.Materials;
-using Terraria.Audio;
-using Terraria.GameContent.Bestiary;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using Terraria.GameContent;
-using Terraria.GameContent.UI.BigProgressBar;
-using Terraria.Utilities;
+using Origins.Items.Accessories;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Defiled;
-using Tyfyter.Utils;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.Defiled;
-using Origins.World.BiomeData;
-using Terraria.Localization;
+using ReLogic.Content;
+using System;
+using Terraria;
+using Terraria.Audio;
 using Terraria.Chat;
+using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.UI.BigProgressBar;
+using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Origins.NPCs.Defiled {
     [AutoloadBossHead]
@@ -125,9 +119,9 @@ namespace Origins.NPCs.Defiled {
             IItemDropRuleCondition notExpert = new Conditions.NotExpert();
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Defiled_Ore_Item>(), 1, 140, 330));
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1, 40, 100));
-            npcLoot.Add(new LeadingConditionRule(notExpert).OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>()))); //I am in agreement with this change.
+            npcLoot.Add(new LeadingConditionRule(notExpert).OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>())));
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1));
-            //add Fiend Staff & Return To Sender to the below rule once they're added, there were 2 items listed with 33% chance, perfect for fitting in a third
+            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Return_To_Sender>(), 3));
         }
         public override void AI() {
             NPC.TargetClosest();

@@ -12,6 +12,7 @@ using Origins.Items.Materials;
 using Terraria.Audio;
 using Origins.Tiles.Defiled;
 using Terraria.GameContent.Bestiary;
+using Terraria.DataStructures;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Swarmer : ModNPC {
@@ -23,7 +24,7 @@ namespace Origins.NPCs.Defiled {
             NPC.CloneDefaults(NPCID.Bunny);
             NPC.aiStyle = NPCAIStyleID.Demon_Eye;
             NPC.lifeMax = 20;
-            NPC.defense = 0;
+            NPC.defense = 6;
             NPC.damage = 10;
             NPC.width = 28;
             NPC.height = 26;
@@ -33,7 +34,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void UpdateLifeRegen(ref int damage) {
             if (NPC.life > 20) {
-                NPC.lifeRegen += 18 / (NPC.life / 20);
+                NPC.lifeRegen += 75 / (NPC.life / 20);
             }
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -47,6 +48,8 @@ namespace Origins.NPCs.Defiled {
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.PlayerNeedsHealing(), ItemID.Heart, 2));
         }
         public override void AI() {
+            NPCAimedTarget target = NPC.GetTargetData();
+            NPC.rotation = NPC.AngleTo(target.Center) + MathHelper.PiOver2;
             if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.2f), NPC.Center);
             NPC.FaceTarget();
             if(!NPC.HasValidTarget)NPC.direction = Math.Sign(NPC.velocity.X);
