@@ -28,7 +28,7 @@ namespace Origins.Items.Armor.Mimic {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.mimicSet = true;
 
-			float defiledPercentage = 3f;//((OriginWorld.totalDefiled * 3) / (float)WorldGen.totalSolid);
+			float defiledPercentage = OriginSystem.totalDefiled / (float)WorldGen.totalSolid;
 
 			originPlayer.explosiveThrowSpeed += 0.2f * defiledPercentage;
 			player.lifeRegenCount += (int)(4 * defiledPercentage);
@@ -37,7 +37,8 @@ namespace Origins.Items.Armor.Mimic {
 			player.setBonus = string.Format("Not yet fully implemented\nSet bonus scales with the percentage of the world taken over by the defiled wastelands\nCurrent percentage: {0:P1}, ", defiledPercentage/3);
 			Origins.SetMimicSetUI();
 
-			if (defiledPercentage >= 0.08) {
+			int mimicSetLevel = OriginSystem.MimicSetLevel;
+			if (mimicSetLevel >= 1) {
 				switch (originPlayer.GetMimicSetChoice(0)) {
 					case 1:
 					//BROADCAST
@@ -50,7 +51,7 @@ namespace Origins.Items.Armor.Mimic {
 					break;
 				}
 			}
-			if (defiledPercentage >= 0.36) {
+			if (mimicSetLevel >= 2) {
 				switch (originPlayer.GetMimicSetChoice(1)) {
 					case 1:
 					//INJECT
@@ -64,7 +65,7 @@ namespace Origins.Items.Armor.Mimic {
 					break;
 				}
 			}
-			if (defiledPercentage >= 0.81) {
+			if (mimicSetLevel >= 3) {
 				switch (originPlayer.GetMimicSetChoice(2)) {
 					case 1:
 					//FLOAT
@@ -75,6 +76,7 @@ namespace Origins.Items.Armor.Mimic {
 						player.wingsLogic = 26;
 						player.wingTimeMax = 180;
 					}
+					player.noFallDmg = true;
 					break;
 					case 2:
 					//COMMAND

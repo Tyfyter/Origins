@@ -117,11 +117,13 @@ namespace Origins.NPCs.Defiled {
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             IItemDropRuleCondition notExpert = new Conditions.NotExpert();
+            IItemDropRuleCondition expert = new Conditions.IsExpert();
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Defiled_Ore_Item>(), 1, 140, 330));
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1, 40, 100));
-            npcLoot.Add(new LeadingConditionRule(notExpert).OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>())));
+            npcLoot.Add(new LeadingConditionRule(notExpert).OnSuccess(
+                ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>())
+            ));
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1));
-            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Return_To_Sender>(), 3));
         }
         public override void AI() {
             NPC.TargetClosest();

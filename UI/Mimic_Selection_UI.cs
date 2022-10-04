@@ -64,11 +64,17 @@ namespace Origins.UI {
 		}
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
-			int currentLevel = 3;//(int)((OriginWorld.totalDefiled * 3) / (float)WorldGen.totalSolid);
+			int currentLevel = OriginSystem.MimicSetLevel;
 			AutoCastingAsset<Texture2D>[] textures = new AutoCastingAsset<Texture2D>[] {
-				Origins.instance.Assets.Request<Texture2D>("UI/Defiled_Buff_Choice_Generic_1"),
-				Origins.instance.Assets.Request<Texture2D>("UI/Defiled_Buff_Choice_Generic_2"),
-				Origins.instance.Assets.Request<Texture2D>("UI/Defiled_Buff_Choice_Generic_3")
+				Origins.instance.Assets.Request<Texture2D>("UI/Broadcast_Icon"),
+				Origins.instance.Assets.Request<Texture2D>("UI/Dream_Icon"),
+				Origins.instance.Assets.Request<Texture2D>("UI/Grow_Icon"),
+				Origins.instance.Assets.Request<Texture2D>("UI/Inject_Icon"),
+				Origins.instance.Assets.Request<Texture2D>("UI/Manipulate_Icon"),
+				Origins.instance.Assets.Request<Texture2D>("UI/Focus_Icon"),
+				Origins.instance.Assets.Request<Texture2D>("UI/Float_Icon"),
+				Origins.instance.Assets.Request<Texture2D>("UI/Command_Icon"),
+				Origins.instance.Assets.Request<Texture2D>("UI/Evolve_Icon")
 			};
 			int boxSize = (int)(32 * Main.inventoryScale);
 			float posX = StartX;
@@ -89,7 +95,7 @@ namespace Origins.UI {
 						Main.hoverItemName = GetAbilityTooltip(level, i);
 						glow = true;
 					}
-					spriteBatch.Draw(textures[i], rectangle, glow ? Color.White : Color.LightSlateGray);
+					spriteBatch.Draw(textures[i + level * 3], rectangle, glow ? Color.White : Color.LightSlateGray);
 					posY += boxSize + 2;
 				}
 				posX -= boxSize + 4;

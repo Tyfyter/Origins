@@ -53,6 +53,16 @@ namespace Origins {
         public static int totalRiven;
         public static int totalRiven2;
         public static byte tRiven;
+        public static int MimicSetLevel {
+            get {
+                float currentPercent = totalDefiled / (float)WorldGen.totalSolid;
+                int currentLevel = 0;
+                if (currentPercent >= 0.08) currentLevel++;
+                if (currentPercent >= 0.36) currentLevel++;
+                if (currentPercent >= 0.81) currentLevel++;
+                return currentLevel;
+            }
+        }
         public List<Point> Defiled_Hearts { get; set; } = new List<Point>();
         private List<Point> _abandonedBombs;
         public List<Point> AbandonedBombs => _abandonedBombs ??= new List<Point>();
