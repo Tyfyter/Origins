@@ -9,11 +9,12 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using Tyfyter.Utils;
 
 namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : ModItem {
         int mode;
-        const int modeCount = 10;
+        const int modeCount = 20;
         long packedMode => (long)mode|((long)parameters.Count<<32);
         LinkedQueue<object> parameters = new LinkedQueue<object>();
 		public override void SetStaticDefaults() {
@@ -38,9 +39,9 @@ namespace Origins.Items.Other.Testing {
                 if(player.altFunctionUse == 2) {
                     parameters.Clear();
                     if(player.controlSmart) {
-                        mode = (mode + modeCount - 1)%modeCount;
+                        mode = (mode + modeCount) % (modeCount + 1);
                     } else {
-                        mode = (mode + 1)%modeCount;
+                        mode = (mode + 1) % (modeCount + 1);
                     }
                 } else {
                     if(player.controlSmart) {
@@ -80,6 +81,19 @@ namespace Origins.Items.Other.Testing {
             Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
+                case 10 | p0:
+                parameters.Enqueue(Player.tileTargetX);
+                goto case 10 | p1;
+                case 10 | p1:
+                parameters.Enqueue(Player.tileTargetY);
+                break;
+                case 10 | p2:
+                parameters.Enqueue(Player.tileTargetX);
+                goto case 10 | p3;
+                case 10 | p3:
+                parameters.Enqueue(Player.tileTargetY);
+                Apply();
+                break;
                 case 9 | p0:
                 parameters.Enqueue(new Point(Player.tileTargetX, Player.tileTargetY));
                 Apply();
@@ -157,6 +171,10 @@ namespace Origins.Items.Other.Testing {
                 case 1|p7:
                 parameters.Enqueue((byte)((mousePacked/16)%256));
                 break;
+
+                case -1 | p1:
+                Apply();
+                break;
             }
         }
         string GetMouseText() {
@@ -165,6 +183,10 @@ namespace Origins.Items.Other.Testing {
             double mousePackedDouble = (Main.MouseScreen.X/16d + (Main.screenWidth/16d) * Main.MouseScreen.Y/16d)/16d;
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
 			switch (packedMode) {
+                case 10 | p0:
+                return "place WFC test point 1";
+                case 10 | p2:
+                return "place WFC test point 2";
                 case 9 | p0:
                 return "place defiled fissure";
                 case 8 | p0:
@@ -218,12 +240,24 @@ namespace Origins.Items.Other.Testing {
 				return $"random twist: {Main.MouseScreen.Y > Main.screenHeight / 2f}";
 				case 1 | p7:
 				return $"branch count (optional): {(byte)((mousePacked / 16) % 256)}";
-				//return $":{}";
-			}
+                
+                case -1 | p1:
+                return $"continue";
+                //return $":{}";
+            }
 			return "";
         }
         void Apply() {
             switch(mode) {
+                case -1: {
+                    Func<bool> function = (Func<bool>)parameters.Dequeue();
+					if (function()) {
+                        parameters.Enqueue(function);
+					} else {
+                        mode = 0;
+					}
+                    break;
+				}
                 case 0: {
                     GenRunners.VeinRunner(
                         i: (int)parameters.Dequeue(),
@@ -343,6 +377,55 @@ namespace Origins.Items.Other.Testing {
                                 WorldGen.Place2x2(p.X + o, p.Y, fissureID, 0);
                                 break;
                             }
+                        }
+                    }
+                    break;
+                }
+                case 10: {
+                    int x1 = (int)parameters.Dequeue();
+                    int y1 = (int)parameters.Dequeue();
+                    int x2 = (int)parameters.Dequeue();
+                    int y2 = (int)parameters.Dequeue();
+                    for (int i = x1; i < x2; i++) {
+                        for (int j = y1; j < y2; j++) {
+                            Framing.GetTileSafely(i, j).ResetToType(TileID.StoneSlab);
+                        }
+                    }
+                    WorldGen.RangeFrame(x1, y1, x2, y2);
+                    x2 = x2 - x1;
+					if (x2 < 0) {
+                        x1 += x2;
+                        x2 = -x2;
+					}
+                    x2++;
+                    y2 = y2 - y1;
+                    if (y2 < 0) {
+                        y1 += y2;
+                        y2 = -y2;
+                    }
+                    y2++;
+                    ushort mask_none = 0b011;
+                    ushort mask_full = 0b101;
+                    WaveFunctionCollapse.Generator<BlockType> generator = new(x2, y2, null, new Tuple<WaveFunctionCollapse.Generator<BlockType>.Cell, double>[] {
+                        new(new(BlockType.SlopeDownLeft,  mask_none, mask_full, mask_full, mask_none), 1),
+                        new(new(BlockType.SlopeDownRight, mask_none, mask_none, mask_full, mask_full), 1),
+                        new(new(BlockType.SlopeUpLeft,    mask_full, mask_full, mask_none, mask_none), 1),
+                        new(new(BlockType.SlopeUpRight,   mask_full, mask_none, mask_none, mask_full), 1)
+                    });
+                    /*mode = -1;
+                    parameters.Enqueue((Func<bool>)(() => {
+                        return generator.CollapseStepWith(
+							(int i, int j, BlockType type) => {
+                                Main.NewText(type);
+                                Framing.GetTileSafely(i + x1, j + y1).BlockType = type;
+                            }
+                        );
+                    }));*/
+                    //generator.Force(0, 0, new(BlockType.SlopeDownLeft, mask_none, mask_full, mask_full, mask_none));
+                    generator.Collapse();
+                    for (int i = 0; i < x2; i++) {
+                        for (int j = 0; j < y2; j++) {
+                            Framing.GetTileSafely(i + x1, j + y1).BlockType = generator.GetActual(i, j);
                         }
                     }
                     break;
