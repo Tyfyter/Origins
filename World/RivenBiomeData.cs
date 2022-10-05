@@ -73,7 +73,7 @@ namespace Origins.World.BiomeData {
 		}
 		public static class Gen {
 			static int lesionCount = 0;
-			public static void StartHive(int i, int j) {
+			public static void StartHive_Old(int i, int j) {
 				const float strength = 2.4f;
 				const float wallThickness = 4f;
 				ushort fleshID = (ushort)ModContent.TileType<Riven_Flesh>();
@@ -141,21 +141,21 @@ namespace Origins.World.BiomeData {
 				}
 				//t = Main.tile[(int)last.position.X, (int)last.position.Y];
 				//t.ResetToType(TileID.AmethystGemspark);
-				Point caveCenter = HiveCave((int)last.position.X, (int)last.position.Y);
+				Point caveCenter = HiveCave_Old((int)last.position.X, (int)last.position.Y);
 				Vector2 cavernOpening = last.position - caveCenter.ToVector2();
 				GenRunners.VeinRunner((int)last.position.X, (int)last.position.Y, strength, cavernOpening.SafeNormalize(Vector2.Zero), cavernOpening.Length());
 				GenRunners.VeinRunner(startValues.x, startValues.y, strength, startValues.direction, startValues.length);
 				(Vector2 position, Vector2 velocity)[] arms = new (Vector2 position, Vector2 velocity)[4];
 				arms[0] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(1, -0.25f).RotatedByRandom(0.2f, genRand), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
-				HiveCave((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
+				HiveCave_Old((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
 				arms[1] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(1, 0.25f).RotatedByRandom(0.2f, genRand), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
-				HiveCave((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
+				HiveCave_Old((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
 				arms[2] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(-1, -0.25f).RotatedByRandom(0.2f, genRand), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
-				HiveCave((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
+				HiveCave_Old((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
 				arms[3] = last = GenRunners.WalledVeinRunner(caveCenter.X, caveCenter.Y, strength * genRand.NextFloat(0.9f, 1.1f), new Vector2(-1, 0.25f).RotatedByRandom(0.2f, genRand), genRand.NextFloat(32, 64), weakFleshID, wallThickness, wallType: fleshWallID);
-				HiveCave((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
+				HiveCave_Old((int)last.position.X, (int)last.position.Y, genRand.NextFloat(0.3f, 0.5f));
 			}
-			public static Point HiveCave(int i, int j, float sizeMult = 1f) {
+			public static Point HiveCave_Old(int i, int j, float sizeMult = 1f) {
 				ushort fleshID = (ushort)ModContent.TileType<Riven_Flesh>();
 				ushort fleshWallID = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
 				ushort lesionID = (ushort)ModContent.TileType<Riven_Lesion>();

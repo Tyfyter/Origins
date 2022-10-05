@@ -233,7 +233,7 @@ namespace Origins {
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = true;
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = true;
 
-                            Riven_Hive.Gen.StartHive(startPos, (int)worldSurfaceLow - 10);
+                            Riven_Hive.Gen.StartHive_Old(startPos, (int)worldSurfaceLow - 10);
 
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = gr;
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = mb;

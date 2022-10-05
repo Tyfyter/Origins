@@ -40,7 +40,7 @@ namespace Origins {
         private static double? _worldSurfaceLow;
         public static double worldSurfaceLow => _worldSurfaceLow??Main.worldSurface-165;
         public static byte WorldEvil => instance.worldEvil;
-        public bool DefiledResurgenceActive => Main.hardMode && ! NPC.downedPlantBoss;//true;
+        public static bool DefiledResurgenceActive => Main.hardMode && ! NPC.downedPlantBoss;//true;
         public const byte evil_corruption = 0b0001;//1
         public const byte evil_crimson = 0b0010;//2
         //difference of 4 (2^2)
@@ -438,7 +438,7 @@ namespace Origins {
                     for(int l = j - size; l <= j + size; l++) {
                         tileConvertBuffer = -1;
                         current = Main.tile[k,l];
-                        if(originWorld.DefiledResurgenceActive&&ModContent.GetModTile(current.TileType) is DefiledTile) {
+                        if(DefiledResurgenceActive && ModContent.GetModTile(current.TileType) is DefiledTile) {
                             originWorld.defiledResurgenceTiles.Add((k,l));
                         }
                         if(conversionType == 0) {
