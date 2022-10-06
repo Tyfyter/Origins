@@ -57,9 +57,9 @@ namespace Origins {
             get {
                 float currentPercent = totalDefiled / (float)WorldGen.totalSolid;
                 int currentLevel = 0;
-                if (currentPercent >= 0.08) currentLevel++;
-                if (currentPercent >= 0.36) currentLevel++;
-                if (currentPercent >= 0.81) currentLevel++;
+                if (currentPercent >= 0) currentLevel++; //8%
+                if (currentPercent >= 0) currentLevel++; //36%
+                if (currentPercent >= 0) currentLevel++; //81%
                 return currentLevel;
             }
         }

@@ -1,22 +1,13 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameInput;
 using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.UI;
-using Terraria.UI.Chat;
-using System;
-using System.Linq;
-using static Tyfyter.Utils.UITools;
-using Origins.Items.Accessories.Eyndum_Cores;
-using Origins.World;
 
 namespace Origins.UI {
-	public class Mimic_Selection_UI : UIState {
+    public class Mimic_Selection_UI : UIState {
 		public float StartX => Main.screenWidth - 64 - 14 - 142;
 		public float StartY => (174 + (!Main.mapFullscreen && Main.mapStyle == 1 ? 204 : 0)) + (1 * 56) * 0.85f;
 		public string GetAbilityTooltip(int level, int choice) {
@@ -24,39 +15,39 @@ namespace Origins.UI {
 				case 0:
 				switch (choice) {
 					case 0:
-					return "Gives wings";
+					return "BRO@dCAST: We $hare your p0tion effects";
 
 					case 1:
-					break;
+					return "DR3aM: @dapt to any scenario";
 
 					case 2:
-					break;
+					return "GR0w: Se3d the world 4 improved base s7ats";
 				}
 				break;
 
 				case 1:
 				switch (choice) {
 					case 0: 
-					return "Active ability: consume 40 mana to shoot spines in an arc";
+					return "INJE%t: Help y0ur enemies d1scover their inner-$elves";
 					
 					case 1:
-					return "Active ability: consume 40 mana to gain several buffs for a short time\n30 second cooldown";
+					return "D3fILE: We welc0me all, there !s alw@ys room";
 
 					case 2:
-					break;
+					return "F0cUS: Seed th3 world to hone your d#structive p0tent!al";
 				}
 				break;
 
 				case 2:
 				switch (choice) {
 					case 0:
-					return "Gives an extra accessory slot";
+					return "F1oAT: Grow y0ur wings";
 
 					case 1:
-					return "Greatly increases movement speed";
+					return "COM#aND: The anti-b0d!es are your army";
 
 					case 2:
-					return "Increases damage and efficiency while in the air";
+					return "EV0lVE: Se3d the w0rld for stronge3r equipment effects";
 				}
 				break;
 			}
@@ -70,7 +61,7 @@ namespace Origins.UI {
 				Origins.instance.Assets.Request<Texture2D>("UI/Dream_Icon"),
 				Origins.instance.Assets.Request<Texture2D>("UI/Grow_Icon"),
 				Origins.instance.Assets.Request<Texture2D>("UI/Inject_Icon"),
-				Origins.instance.Assets.Request<Texture2D>("UI/Manipulate_Icon"),
+				Origins.instance.Assets.Request<Texture2D>("UI/Defile_Icon"),
 				Origins.instance.Assets.Request<Texture2D>("UI/Focus_Icon"),
 				Origins.instance.Assets.Request<Texture2D>("UI/Float_Icon"),
 				Origins.instance.Assets.Request<Texture2D>("UI/Command_Icon"),

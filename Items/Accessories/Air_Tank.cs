@@ -1,11 +1,10 @@
 ﻿using Origins.Items.Materials;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Air_Tank : ModItem {
+    public class Air_Tank : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Air Tank");
             Tooltip.SetDefault("Extends underwater breathing\nImmunity to ‘Suffocation’");

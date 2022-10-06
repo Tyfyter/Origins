@@ -146,6 +146,7 @@
 			Items: {
 				DefiledBar: Spare Chunks
 				LaserTagGunTooltip: 'Pew pew, Motherfucker...'
+				MimicTooltip: It's made of Ditherium!
 			}
 			Dialogue: {
 				Acid_Freak: {

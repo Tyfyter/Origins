@@ -1,11 +1,10 @@
-﻿using Terraria.GameContent.Creative;
+﻿using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Items.Materials;
 
 namespace Origins.Items.Accessories {
-	public class Air_Pack : ModItem {
+    public class Air_Pack : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Air Pack");
             Tooltip.SetDefault("Greatly extends underwater breathing\nImmunity to ‘Suffocation’");

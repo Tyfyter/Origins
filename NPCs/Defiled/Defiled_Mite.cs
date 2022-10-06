@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using System;
+using System.IO;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
-using Origins.World.BiomeData;
-using System.IO;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Mite : ModNPC {
@@ -26,7 +21,7 @@ namespace Origins.NPCs.Defiled {
             NPC.CloneDefaults(NPCID.Bunny);
             NPC.aiStyle = NPCAIStyleID.None;
             NPC.lifeMax = 22;
-            NPC.defense = 6;
+            NPC.defense = 9;
             NPC.damage = 34;
             NPC.width = 34;
             NPC.height = 26;

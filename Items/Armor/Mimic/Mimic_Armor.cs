@@ -1,10 +1,9 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Armor.Mimic {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Mimic_Helmet : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Mimic Helmet");
@@ -28,13 +27,9 @@ namespace Origins.Items.Armor.Mimic {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.mimicSet = true;
 
-			float defiledPercentage = OriginSystem.totalDefiled / (float)WorldGen.totalSolid;
+			float defiledPercentage = 1f; //OriginSystem.totalDefiled / (float)WorldGen.totalSolid;
 
-			originPlayer.explosiveThrowSpeed += 0.2f * defiledPercentage;
-			player.lifeRegenCount += (int)(4 * defiledPercentage);
-			player.GetDamage(DamageClasses.Explosive) += 0.2f * defiledPercentage;
-
-			player.setBonus = string.Format("Not yet fully implemented\nSet bonus scales with the percentage of the world taken over by the defiled wastelands\nCurrent percentage: {0:P1}, ", defiledPercentage/3);
+			player.setBonus = string.Format("Not yet fully implemented\nSpread the Defiled to unlock more abilities\nCurrent percentage: {0:P1}, ", defiledPercentage/3);
 			Origins.SetMimicSetUI();
 
 			int mimicSetLevel = OriginSystem.MimicSetLevel;
@@ -48,6 +43,13 @@ namespace Origins.Items.Armor.Mimic {
 					break;
 					case 3:
 					//GROW
+					player.statLifeMax2 += (int)(200 * defiledPercentage);
+					player.statManaMax2 += (int)(40 * defiledPercentage);
+					player.moveSpeed += 1 * defiledPercentage;
+					player.lifeRegenCount += (int)(7 * defiledPercentage);
+					player.jumpSpeedBoost += 5 * defiledPercentage;
+					player.breathMax += (int)(157 * defiledPercentage);
+					player.statDefense += (int)(10 * defiledPercentage);
 					break;
 				}
 			}
@@ -62,6 +64,12 @@ namespace Origins.Items.Armor.Mimic {
 					break;
 					case 3:
 					//FOCUS
+					originPlayer.explosiveThrowSpeed += 0.4f * defiledPercentage;
+					originPlayer.explosiveSelfDamage -= defiledPercentage;
+					//originPlayer.explosiveBlastRadius += 0.5f * defiledPercentage;
+					if (defiledPercentage == 1) {
+					player.GetModPlayer<OriginPlayer>().riftSet = true;
+					}
 					break;
 				}
 			}
@@ -72,9 +80,10 @@ namespace Origins.Items.Armor.Mimic {
 					if (player.wings == 0) {
 						player.wings = 8;
 					}
-					if (player.wingsLogic == 0 || player.wingTimeMax <= 180) {
+					if (player.wingsLogic == 0 || player.wingTimeMax <= 140) {
 						player.wingsLogic = 26;
-						player.wingTimeMax = 180;
+						player.wingTimeMax = 140;
+						player.wingTimeMax += (int)(60 * defiledPercentage);
 					}
 					player.noFallDmg = true;
 					break;

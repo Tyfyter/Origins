@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
+using Origins.Tiles.Defiled;
+using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.GameContent.ItemDropRules;
-using Origins.Items.Materials;
-using Terraria.Audio;
-using Origins.Tiles.Defiled;
-using Terraria.GameContent.Bestiary;
-using Terraria.DataStructures;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Swarmer : ModNPC {
@@ -24,7 +20,7 @@ namespace Origins.NPCs.Defiled {
             NPC.CloneDefaults(NPCID.Bunny);
             NPC.aiStyle = NPCAIStyleID.Demon_Eye;
             NPC.lifeMax = 20;
-            NPC.defense = 6;
+            NPC.defense = 8;
             NPC.damage = 10;
             NPC.width = 28;
             NPC.height = 26;

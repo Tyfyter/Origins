@@ -204,6 +204,9 @@ NPC DIALOGUE:
 (X) Dryad
 
 (^) Acid Freak
+(X) Cubekon Tinkerer
+(X) Defiled Envoy
+(X) Dusk Trader
 ---
 
 
@@ -218,7 +221,7 @@ ARMOR:
 
 (^) Acrid Armor
 (^) Bleeding Obsidian Armor
-(@, ^3) Mimic Armor
+(#3, ^2) Mimic Armor
 
 (X) Anti-Gravity Armor
 (X) Mutant Armor

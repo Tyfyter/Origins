@@ -5,7 +5,6 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -62,8 +61,6 @@ namespace Origins.NPCs.Defiled {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Krunch_Mix>(), 17));
         }
         public override void AI() {
-            NPCAimedTarget target = NPC.GetTargetData();
-            NPC.rotation = NPC.AngleTo(target.Center) + MathHelper.PiOver2;
             if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.1f), NPC.Center);
             NPC.FaceTarget();
             if(!NPC.HasValidTarget)NPC.direction = Math.Sign(NPC.velocity.X);
