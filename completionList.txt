@@ -92,8 +92,8 @@ VANILLA MODIFICATIONS:
 
 (^) Bats (drop Bat Hide)*
 (^) Boss Immunities (make every boss immune to anything with Stun)*
-(#3, %2) Demolitionist (to sell different items based on peat sold)* (No, want to implement more in future for usefulness past pre-h)
-(X) Dryad Selling Evil Items on Blood Moon*
+(#3, %2) Demolitionist (to sell different items based on peat sold)*
+(X) Dryad Selling Origins Evil Items on Blood Moon*
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
 (#, ^2) Harpoon (new weapon to introduce sub-class)*
 (^) Trees*
@@ -205,7 +205,7 @@ NPC DIALOGUE:
 
 (^) Acid Freak
 (X) Cubekon Tinkerer
-(X) Defiled Envoy
+(#) Defiled Envoy
 (X) Dusk Trader
 ---
 

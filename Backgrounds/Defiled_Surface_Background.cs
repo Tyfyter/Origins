@@ -13,7 +13,7 @@ namespace Origins.Backgrounds {
 		}
 
 		public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b) {
-			return BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Defiled_Background3");
+			return BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Defiled_Background");
 		}
 
 		public override void ModifyFarFades(float[] fades, float transitionSpeed) {
