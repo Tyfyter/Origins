@@ -53,6 +53,9 @@ namespace Origins {
         public static int totalRiven;
         public static int totalRiven2;
         public static byte tRiven;
+        bool fiberglassNeedsFraming;
+        Point fiberglassMin;
+        Point fiberglassMax;
         public static int MimicSetLevel {
             get {
                 float currentPercent = totalDefiled / (float)WorldGen.totalSolid;
@@ -139,6 +142,74 @@ namespace Origins {
                     break;
                 }
             }
+			if (fiberglassNeedsFraming) {
+                fiberglassNeedsFraming = false;
+                const ushort none = 0b10000001;
+                var cellTypes = new Tuple<WaveFunctionCollapse.Generator<Point>.Cell, double>[] {
+#region first 3 columns
+                    new(new(new(0, 0), none, 7 << 1, none, 8 << 1), 1),
+                    new(new(new(1, 0), none, 8 << 1, none, 9 << 1), 1),
+                    new(new(new(2, 0), none, 7 << 1, none, 9 << 1), 1),
+
+                    new(new(new(0, 1), none, 7 << 1, 9 << 1, none), 1),
+                    new(new(new(1, 1), none, 8 << 1, 7 << 1, none), 1),
+                    new(new(new(2, 1), none, 7 << 1, 9 << 1, none), 1),
+
+                    new(new(new(0, 2), 9 << 1, 9 << 1, none, 9 << 1), 1),
+                    new(new(new(1, 2), 9 << 1, 9 << 1, none, 9 << 1), 1),
+                    new(new(new(2, 2), 9 << 1, 7 << 1, none, 9 << 1), 1),
+
+                    new(new(new(0, 3), 7 << 1, none, none, none), 1),
+                    new(new(new(1, 3), 9 << 1, none, none, none), 1),
+                    new(new(new(2, 3), 9 << 1, none, none, none), 1),
+
+                    new(new(new(0, 4), 8 << 1, 9 << 1, 7 << 1, 9 << 1), 1),
+                    new(new(new(1, 4), 7 << 1, 7 << 1, 7 << 1, 9 << 1), 1),
+                    new(new(new(2, 4), 9 << 1, 7 << 1, 7 << 1, none), 1),
+#endregion first 3 columns
+#region second 3 columns
+                    new(new(new(4, 0), 7 << 1, none, 7 << 1, none), 1),
+                    new(new(new(5, 0), 9 << 1, none, 9 << 1, none), 1),
+                    new(new(new(6, 0), 7 << 1, none, 7 << 1, none), 1),
+
+                    new(new(new(4, 1), 5 << 1, none, none, 9 << 1), 1),
+                    new(new(new(5, 1), 7 << 1, none, none, 7 << 1), 1),
+                    new(new(new(6, 1), 7 << 1, none, none, 7 << 1), 1),
+
+                    new(new(new(4, 2), none, 9 << 1, 9 << 1, 9 << 1), 1),
+                    new(new(new(5, 2), none, 7 << 1, 9 << 1, 7 << 1), 1),
+                    new(new(new(6, 2), none, 9 << 1, 9 << 1, 7 << 1), 1),
+
+                    new(new(new(4, 3), none, none, none, 9 << 1), 1),
+                    new(new(new(5, 3), none, none, none, 7 << 1), 1),
+                    new(new(new(6, 3), none, none, none, 9 << 1), 1),
+
+                    new(new(new(4, 4), none, none, none, none), 1),
+                    new(new(new(5, 4), none, none, none, none), 1),
+                    new(new(new(6, 4), none, none, none, none), 1),
+#endregion second 3 columns
+#region last 3 columns
+                    new(new(new(8, 0),  none, none, 5 << 1, 7 << 1), 1),
+                    new(new(new(9, 0),  none, none, 7 << 1, 9 << 1), 1),
+                    new(new(new(10, 0), none, none, 7 << 1, 9 << 1), 1),
+
+                    new(new(new(8, 1),  8 << 1, 9 << 1, none, none), 1),
+                    new(new(new(9, 1),  none, 9 << 1, none, none), 1),
+                    new(new(new(10, 1), 7 << 1, 9 << 1, none, none), 1),
+
+                    new(new(new(8, 2),  none, none, 7 << 1, none), 1),
+                    new(new(new(9, 2),  none, none, 9 << 1, none), 1),
+                    new(new(new(10, 2), none, none, 7 << 1, none), 1),
+
+                    new(new(new(8, 3),  none, 7 << 1, none, none), 1),
+                    new(new(new(9, 3),  none, 9 << 1, none, none), 1),
+                    new(new(new(10, 3), none, 7 << 1, none, none), 1),
+#endregion last 3 columns
+                    new(new(new(3, 4), none, none, none, none), 1)// empty spot
+                };
+                var generator = new WaveFunctionCollapse.Generator<Point>(fiberglassMax.X - fiberglassMin.X, fiberglassMax.Y - fiberglassMin.Y, matchAll:true, cellTypes:cellTypes);
+
+			}
         }
         public void QueueKillTile(int i, int j) {
             if (queuedKillTiles is null) {
@@ -609,6 +680,14 @@ namespace Origins {
                 }
             }
             return dirs;
+        }
+
+        internal void AddFiberglassFrameTile(int i, int j) {
+            if (i < fiberglassMin.X || !fiberglassNeedsFraming) fiberglassMin.X = i;
+            if (j < fiberglassMin.Y || !fiberglassNeedsFraming) fiberglassMin.Y = j;
+            if (i > fiberglassMax.X || !fiberglassNeedsFraming) fiberglassMax.X = i;
+            if (j > fiberglassMax.Y || !fiberglassNeedsFraming) fiberglassMax.Y = j;
+            fiberglassNeedsFraming = true;
         }
     }
 }

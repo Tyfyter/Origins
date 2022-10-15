@@ -701,7 +701,8 @@ namespace Origins {
 				}
             }));
         }
-        public static void GERunnerHook(On.Terraria.WorldGen.orig_GERunner orig, int i, int j, float speedX = 0f, float speedY = 0f, bool good = true) {
+
+		public static void GERunnerHook(On.Terraria.WorldGen.orig_GERunner orig, int i, int j, float speedX = 0f, float speedY = 0f, bool good = true) {
             byte worldEvil = GetInstance<OriginSystem>().worldEvil;
             if(!good&&(worldEvil&4)!=0) {
                 ERunner(i, j, worldEvil, speedX, speedY);

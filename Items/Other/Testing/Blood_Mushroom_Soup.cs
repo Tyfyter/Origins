@@ -406,7 +406,7 @@ namespace Origins.Items.Other.Testing {
                     y2++;
                     ushort mask_none = 0b011;
                     ushort mask_full = 0b101;
-                    WaveFunctionCollapse.Generator<BlockType> generator = new(x2, y2, null, new Tuple<WaveFunctionCollapse.Generator<BlockType>.Cell, double>[] {
+                    WaveFunctionCollapse.Generator<BlockType> generator = new(x2, y2, cellTypes: new Tuple<WaveFunctionCollapse.Generator<BlockType>.Cell, double>[] {
                         new(new(BlockType.SlopeDownLeft,  mask_none, mask_full, mask_full, mask_none), 1),
                         new(new(BlockType.SlopeDownRight, mask_none, mask_none, mask_full, mask_full), 1),
                         new(new(BlockType.SlopeUpLeft,    mask_full, mask_full, mask_none, mask_none), 1),
