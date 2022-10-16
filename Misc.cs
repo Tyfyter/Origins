@@ -237,7 +237,7 @@ namespace Origins {
 	    }
     }
     public struct AutoCastingAsset<T> where T : class {
-        public bool IsLoaded => asset?.IsLoaded??false;
+        public bool IsLoaded => asset?.IsLoaded ?? false;
         public T Value => asset?.Value;
 
         readonly Asset<T> asset;

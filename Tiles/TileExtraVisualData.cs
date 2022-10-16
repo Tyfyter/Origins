@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Origins.Tiles {
-	public class TileExtraVisualData : ITileData {
+	public struct TileExtraVisualData : ITileData {
 		public short TileFrameX;
 		public short TileFrameY;
 	}

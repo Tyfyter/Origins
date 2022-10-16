@@ -422,10 +422,18 @@ namespace Origins.Items.Other.Testing {
                         );
                     }));*/
                     //generator.Force(0, 0, new(BlockType.SlopeDownLeft, mask_none, mask_full, mask_full, mask_none));
-                    generator.Collapse();
+                    retry:
+                    try {
+                        generator.Collapse();
+                    } catch (Exception) {
+                        goto retry;
+                    }
                     for (int i = 0; i < x2; i++) {
                         for (int j = 0; j < y2; j++) {
                             Framing.GetTileSafely(i + x1, j + y1).BlockType = generator.GetActual(i, j);
+							if (Framing.GetTileSafely(i + x1, j + y1).BlockType == (BlockType)6) {
+                                Framing.GetTileSafely(i + x1, j + y1).HasTile = false;
+							}
                         }
                     }
                     break;
