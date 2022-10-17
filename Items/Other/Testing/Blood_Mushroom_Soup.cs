@@ -10,6 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Tyfyter.Utils;
+using Origins.World.BiomeData;
 
 namespace Origins.Items.Other.Testing {
 	public class Blood_Mushroom_Soup : ModItem {
@@ -81,6 +82,11 @@ namespace Origins.Items.Other.Testing {
             Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
             switch(packedMode) {
+                case 11 | p0:
+                parameters.Enqueue(Player.tileTargetX);
+                parameters.Enqueue(Player.tileTargetY);
+                Apply();
+                break;
                 case 10 | p0:
                 parameters.Enqueue(Player.tileTargetX);
                 goto case 10 | p1;
@@ -183,6 +189,8 @@ namespace Origins.Items.Other.Testing {
             double mousePackedDouble = (Main.MouseScreen.X/16d + (Main.screenWidth/16d) * Main.MouseScreen.Y/16d)/16d;
             Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
 			switch (packedMode) {
+                case 11 | p0:
+                return "start fiberglass undergrowth";
                 case 10 | p0:
                 return "place WFC test point 1";
                 case 10 | p2:
@@ -438,6 +446,10 @@ namespace Origins.Items.Other.Testing {
                     }
                     break;
                 }
+                case 11: {
+                    Fiberglass_Undergrowth.Gen.FiberglassStart((int)parameters.Dequeue(), (int)parameters.Dequeue());
+                    break;
+				}
             }
         }
     }

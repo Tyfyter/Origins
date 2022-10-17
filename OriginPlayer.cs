@@ -96,6 +96,10 @@ namespace Origins {
         public bool ZoneBrine { get; internal set; } = false;
         public float ZoneBrineProgress = 0;
         public float ZoneBrineProgressSmoothed = 0;
+
+        public bool ZoneFiberglass { get; internal set; } = false;
+        public float ZoneFiberglassProgress = 0;
+        public float ZoneFiberglassProgressSmoothed = 0;
         #endregion
 
         #region buffs

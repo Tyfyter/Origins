@@ -12,9 +12,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
     //current sprites are very unfinished
-    public class Fiberglass : OriginTile {
+    public class Fiberglass_Tile : OriginTile {
 		static AutoCastingAsset<Texture2D>? vineTexture;
-		public static AutoCastingAsset<Texture2D>? VineTexture => vineTexture ??= Origins.instance.Assets.Request<Texture2D>("Tiles/Other/Fiber");
+		public static AutoCastingAsset<Texture2D>? VineTexture => vineTexture ??= Origins.instance.Assets.Request<Texture2D>("Tiles/Other/Fiberglass_Vines");
 		public override void Unload() {
 			vineTexture = null;
 		}
@@ -36,8 +36,6 @@ namespace Origins.Tiles.Other {
             originWorld.AddFiberglassFrameTile(i, j);
 			return true;
 		}
-		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-        }
     }
     public class Fiberglass_Item : ModItem {
         public override void SetStaticDefaults() {
@@ -45,7 +43,7 @@ namespace Origins.Tiles.Other {
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Glass);
-            Item.createTile = TileType<Fiberglass>();
+            Item.createTile = TileType<Fiberglass_Tile>();
             Item.rare = ItemRarityID.Green;
 		}
     }

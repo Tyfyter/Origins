@@ -71,28 +71,33 @@ namespace Tyfyter.Utils {
 					if (targets.Count <= 0) goto cont;
 				}
 			}
-			public bool CollapseStepWith(Action<int, int, T> act) {
-				if (!Refresh()) {
-					List<(int x, int y)> targets = new();
-					int targetCount = int.MaxValue;
-					for (int i = 0; i < potentials.GetLength(0); i++) {
-						for (int j = 0; j < potentials.GetLength(1); j++) {
-							if (potentials[i, j].elements.Count <= 1) continue;
-							if (potentials[i, j].elements.Count < targetCount) {
-								targetCount = potentials[i, j].elements.Count;
-								targets.Clear();
-								targets.Add((i, j));
-							} else if (potentials[i, j].elements.Count == targetCount) {
-								targets.Add((i, j));
-							}
+			public void CollapseWith(Action<int, int, T> act) {
+				List<(int x, int y)> targets = new();
+				int targetCount = int.MaxValue;
+				cont:
+				for (int i = 0; i < potentials.GetLength(0); i++) {
+					for (int j = 0; j < potentials.GetLength(1); j++) {
+						if (potentials[i, j].elements.Count <= 1) continue;
+						if (potentials[i, j].elements.Count < targetCount) {
+							targetCount = potentials[i, j].elements.Count;
+							targets.Clear();
+							targets.Add((i, j));
+						} else if (potentials[i, j].elements.Count == targetCount) {
+							targets.Add((i, j));
 						}
 					}
-					(int i1, int j1) = random.Next(targets);
-					potentials[i1, j1] = new WeightedRandom<Cell>(random, new Tuple<Cell, double>(potentials[i1, j1].Get(), 1));
-					act(i1, j1, potentials[i1, j1].elements[0].Item1.value);
-					return true;
 				}
-				return false;
+				if (targets.Count <= 0) {
+					return;
+				}
+				while (!Refresh()) {
+					int index = random.Next(targets.Count);
+					(int i1, int j1) = targets[index];
+					targets.RemoveAt(index);
+					potentials[i1, j1] = new WeightedRandom<Cell>(random, new Tuple<Cell, double>((actuals[i1, j1] = potentials[i1, j1].Get()).Value, 1));
+					act(i1, j1, actuals[i1, j1].Value.value);
+					if (targets.Count <= 0) goto cont;
+				}
 			}
 			public void Reset(bool refresh = true) {
 				for (int i = 0; i < potentials.GetLength(0); i++) {

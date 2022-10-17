@@ -34,6 +34,7 @@ namespace Origins {
 		public static int defiledTiles;
         public static int rivenTiles;
         public static int brineTiles;
+        public static int fiberglassTiles;
         public int peatSold;
         public const float biomeShaderSmoothing = 0.025f;
         public byte worldEvil = 0;
@@ -57,6 +58,7 @@ namespace Origins {
         Point fiberglassMin;
         Point fiberglassMax;
         HashSet<Point> fiberglassFrameSet;
+        Task fiberglassFrameTask;
         public static int MimicSetLevel {
             get {
                 float currentPercent = totalDefiled / (float)WorldGen.totalSolid;
@@ -144,9 +146,20 @@ namespace Origins {
                 }
             }
 			if (fiberglassNeedsFraming) {
-                fiberglassNeedsFraming = false;
-                const ushort none = 0x8001;//0b1000000000000001
-                var cellTypes = new Tuple<WaveFunctionCollapse.Generator<(short X, short Y)>.Cell, double>[] {
+                if (fiberglassFrameTask?.IsCompleted??true)
+                    fiberglassFrameTask = Task.Run(FrameFiberglass);
+			}
+        }
+        public void FrameFiberglass() {
+            fiberglassNeedsFraming = false;
+            Point fiberglassMin = this.fiberglassMin;
+            Point fiberglassMax = this.fiberglassMax;
+            HashSet<Point> fiberglassFrameSet;
+            lock (this.fiberglassFrameSet) {
+                fiberglassFrameSet = this.fiberglassFrameSet.ToHashSet();
+            }
+            const ushort none = 0x8001;//0b1000000000000001
+            var cellTypes = new Tuple<WaveFunctionCollapse.Generator<(short X, short Y)>.Cell, double>[] {
 #region first 3 columns
                     new(new(new(0, 0), none, 1 << 4, none, 3 << 4), 1),
                     new(new(new(1, 0), none, 3 << 4, none, 1 << 5), 1),
@@ -208,39 +221,42 @@ namespace Origins {
 #endregion last 3 columns
                     new(new(new(3, 4), none, none, none, none), 0.15f)// empty spot
                 };
-                fiberglassMin -= new Point(1, 1);
-                fiberglassMax += new Point(1, 1);
-                var actuals = new WaveFunctionCollapse.Generator<(short X, short Y)>.Cell?[fiberglassMax.X - fiberglassMin.X + 1, fiberglassMax.Y - fiberglassMin.Y + 1];
-                int fiberglassType = ModContent.TileType<Tiles.Other.Fiberglass>();
-                for (int i = fiberglassMin.X; i <= fiberglassMax.X; i++) {
-                        for (int j = fiberglassMin.Y; j <= fiberglassMax.Y; j++) {
-                        if (!fiberglassFrameSet.Contains(new(i,j)) || i == fiberglassMin.X || i == fiberglassMax.X || j == fiberglassMin.Y || j == fiberglassMax.Y) {
-                            bool notFiberglass = !Framing.GetTileSafely(i, j).TileIsType(fiberglassType);
-                            var cell = notFiberglass ? new(new(0, 0), none, none, none, none) : cellTypes.Where(v => {
-                                var curr = Framing.GetTileSafely(i, j).Get<TileExtraVisualData>();
-                                return v.Item1.value.X == curr.TileFrameX && v.Item1.value.Y == curr.TileFrameY;
-                            }).First().Item1;
-                            actuals[i - fiberglassMin.X, j - fiberglassMin.Y] = cell;
-                        }
+            fiberglassMin -= new Point(1, 1);
+            fiberglassMax += new Point(1, 1);
+            var actuals = new WaveFunctionCollapse.Generator<(short X, short Y)>.Cell?[fiberglassMax.X - fiberglassMin.X + 1, fiberglassMax.Y - fiberglassMin.Y + 1];
+            int fiberglassType = ModContent.TileType<Tiles.Other.Fiberglass_Tile>();
+            for (int i = fiberglassMin.X; i <= fiberglassMax.X; i++) {
+                for (int j = fiberglassMin.Y; j <= fiberglassMax.Y; j++) {
+                    if (!fiberglassFrameSet.Contains(new(i, j)) || i == fiberglassMin.X || i == fiberglassMax.X || j == fiberglassMin.Y || j == fiberglassMax.Y) {
+                        bool notFiberglass = !Framing.GetTileSafely(i, j).TileIsType(fiberglassType);
+                        var cell = notFiberglass ? new(new(0, 0), none, none, none, none) : cellTypes.Where(v => {
+                            var curr = Framing.GetTileSafely(i, j).Get<TileExtraVisualData>();
+                            return v.Item1.value.X == curr.TileFrameX && v.Item1.value.Y == curr.TileFrameY;
+                        }).First().Item1;
+                        actuals[i - fiberglassMin.X, j - fiberglassMin.Y] = cell;
                     }
                 }
-                fiberglassFrameSet.Clear();
-                var generator = new WaveFunctionCollapse.Generator<(short X, short Y)>(actuals, matchAll:false, cellTypes:cellTypes);
-                //fiberglassMin += new Point(1, 1);
-                //fiberglassMax -= new Point(1, 1);
-				while (!generator.GetCollapsed()) {
-                    generator.Collapse();
-				}
-                for (int i = fiberglassMin.X; i <= fiberglassMax.X; i++) {
-                    for (int j = fiberglassMin.Y; j <= fiberglassMax.Y; j++) {
-						//if (Framing.GetTileSafely(i, j).TileIsType(fiberglassType)) {
-                            (short X, short Y) = generator.GetActual(i - fiberglassMin.X, j - fiberglassMin.Y);
-                            Framing.GetTileSafely(i, j).Get<TileExtraVisualData>().TileFrameX = X;
-                            Framing.GetTileSafely(i, j).Get<TileExtraVisualData>().TileFrameY = Y;
-                        //}
-                    }
+            }
+            fiberglassFrameSet.Clear();
+            var generator = new WaveFunctionCollapse.Generator<(short X, short Y)>(actuals, matchAll: false, cellTypes: cellTypes);
+            //fiberglassMin += new Point(1, 1);
+            //fiberglassMax -= new Point(1, 1);
+            while (!generator.GetCollapsed()) {
+                generator.Collapse();
+                /*generator.CollapseWith((x, y, val) => {
+                    Framing.GetTileSafely(x + fiberglassMin.X, y + fiberglassMin.Y).Get<TileExtraVisualData>().TileFrameX = val.X;
+                    Framing.GetTileSafely(x + fiberglassMin.X, y + fiberglassMin.Y).Get<TileExtraVisualData>().TileFrameY = val.Y;
+                });*/
+            }
+            for (int i = fiberglassMin.X; i <= fiberglassMax.X; i++) {
+                for (int j = fiberglassMin.Y; j <= fiberglassMax.Y; j++) {
+                    //if (Framing.GetTileSafely(i, j).TileIsType(fiberglassType)) {
+                    (short X, short Y) = generator.GetActual(i - fiberglassMin.X, j - fiberglassMin.Y);
+                    Framing.GetTileSafely(i, j).Get<TileExtraVisualData>().TileFrameX = X;
+                    Framing.GetTileSafely(i, j).Get<TileExtraVisualData>().TileFrameY = Y;
+                    //}
                 }
-			}
+            }
         }
         public void QueueKillTile(int i, int j) {
             if (queuedKillTiles is null) {
