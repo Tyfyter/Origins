@@ -56,6 +56,7 @@ namespace Origins {
         bool fiberglassNeedsFraming;
         Point fiberglassMin;
         Point fiberglassMax;
+        HashSet<Point> fiberglassFrameSet;
         public static int MimicSetLevel {
             get {
                 float currentPercent = totalDefiled / (float)WorldGen.totalSolid;
@@ -213,9 +214,9 @@ namespace Origins {
                 var fiberglassType = ModContent.TileType<Tiles.Other.Fiberglass>();
                 for (int i = fiberglassMin.X; i <= fiberglassMax.X; i++) {
                         for (int j = fiberglassMin.Y; j <= fiberglassMax.Y; j++) {
-                        if (i == fiberglassMin.X || i == fiberglassMax.X ||j == fiberglassMin.Y || j == fiberglassMax.Y) {
-                            bool b = !Framing.GetTileSafely(i, j).TileIsType(fiberglassType);
-                            var cell = b ? new(new(0, 0), none, none, none, none) : cellTypes.Where(v => {
+                        if (!fiberglassFrameSet.Contains(new(i,j)) || i == fiberglassMin.X || i == fiberglassMax.X || j == fiberglassMin.Y || j == fiberglassMax.Y) {
+                            bool notFiberglass = !Framing.GetTileSafely(i, j).TileIsType(fiberglassType);
+                            var cell = notFiberglass ? new(new(0, 0), none, none, none, none) : cellTypes.Where(v => {
                                 var curr = Framing.GetTileSafely(i, j).Get<TileExtraVisualData>();
                                 return v.Item1.value.X == curr.TileFrameX && v.Item1.value.X == curr.TileFrameX;
                             }).First().Item1;
@@ -238,6 +239,7 @@ namespace Origins {
                         }
                     }
                 }
+                fiberglassFrameSet.Clear();
 			}
         }
         public void QueueKillTile(int i, int j) {
@@ -716,6 +718,8 @@ namespace Origins {
             if (j < fiberglassMin.Y || !fiberglassNeedsFraming) fiberglassMin.Y = j;
             if (i > fiberglassMax.X || !fiberglassNeedsFraming) fiberglassMax.X = i;
             if (j > fiberglassMax.Y || !fiberglassNeedsFraming) fiberglassMax.Y = j;
+            if (fiberglassFrameSet is null) fiberglassFrameSet = new();
+            fiberglassFrameSet.Add(new(i, j));
             fiberglassNeedsFraming = true;
         }
     }
