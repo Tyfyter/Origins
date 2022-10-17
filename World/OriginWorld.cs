@@ -145,101 +145,101 @@ namespace Origins {
             }
 			if (fiberglassNeedsFraming) {
                 fiberglassNeedsFraming = false;
-                const ushort none = 0b10000001;
+                const ushort none = 0x8001;//0b1000000000000001
                 var cellTypes = new Tuple<WaveFunctionCollapse.Generator<(short X, short Y)>.Cell, double>[] {
 #region first 3 columns
-                    new(new(new(0, 0), none, 7 << 1, none, 8 << 1), 1),
-                    new(new(new(1, 0), none, 8 << 1, none, 9 << 1), 1),
-                    new(new(new(2, 0), none, 7 << 1, none, 9 << 1), 1),
+                    new(new(new(0, 0), none, 1 << 4, none, 3 << 4), 1),
+                    new(new(new(1, 0), none, 3 << 4, none, 1 << 5), 1),
+                    new(new(new(2, 0), none, 1 << 4, none, 1 << 5), 1),
 
-                    new(new(new(0, 1), none, 7 << 1, 9 << 1, none), 1),
-                    new(new(new(1, 1), none, 8 << 1, 7 << 1, none), 1),
-                    new(new(new(2, 1), none, 7 << 1, 9 << 1, none), 1),
+                    new(new(new(0, 1), none, 1 << 4, 1 << 5, none), 1),
+                    new(new(new(1, 1), none, 3 << 4, 1 << 4, none), 1),
+                    new(new(new(2, 1), none, 1 << 4, 1 << 5, none), 1),
 
-                    new(new(new(0, 2), 9 << 1, 9 << 1, none, 9 << 1), 1),
-                    new(new(new(1, 2), 9 << 1, 9 << 1, none, 9 << 1), 1),
-                    new(new(new(2, 2), 9 << 1, 7 << 1, none, 9 << 1), 1),
+                    new(new(new(0, 2), 1 << 5, 1 << 5, none, 1 << 5), 1),
+                    new(new(new(1, 2), 1 << 5, 1 << 5, none, 1 << 5), 1),
+                    new(new(new(2, 2), 1 << 5, 1 << 4, none, 1 << 5), 1),
 
-                    new(new(new(0, 3), 7 << 1, none, none, none), 1),
-                    new(new(new(1, 3), 9 << 1, none, none, none), 1),
-                    new(new(new(2, 3), 9 << 1, none, none, none), 1),
+                    new(new(new(0, 3), 1 << 4, none, none, none), 0.5f),
+                    new(new(new(1, 3), 1 << 5, none, none, none), 0.5f),
+                    new(new(new(2, 3), 1 << 5, none, none, none), 0.5f),
 
-                    new(new(new(0, 4), 8 << 1, 9 << 1 , 7 << 1, 9 << 1), 1),
-                    new(new(new(1, 4), 7 << 1, 7 << 1, 7 << 1, 9 << 1), 1),
-                    new(new(new(2, 4), 9 << 1, 7 << 1, 7 << 1, none), 1),
+                    new(new(new(0, 4), 3 << 4, 1 << 5 , 1 << 4, 1 << 5), 1),
+                    new(new(new(1, 4), 1 << 4, 1 << 4, 1 << 4, 1 << 5), 1),
+                    new(new(new(2, 4), 1 << 5, 1 << 4, 1 << 4, none), 1),
 #endregion first 3 columns
 #region second 3 columns
-                    new(new(new(4, 0), 7 << 1, none, 7 << 1, none), 1),
-                    new(new(new(5, 0), 9 << 1, none, 9 << 1, none), 1),
-                    new(new(new(6, 0), 7 << 1, none, 7 << 1, none), 1),
+                    new(new(new(4, 0), 1 << 4, none, 1 << 4, none), 1),
+                    new(new(new(5, 0), 1 << 5, none, 1 << 5, none), 1),
+                    new(new(new(6, 0), 1 << 4, none, 1 << 4, none), 1),
 
-                    new(new(new(4, 1), 5 << 1, none, none, 9 << 1), 1),
-                    new(new(new(5, 1), 7 << 1, none, none, 7 << 1), 1),
-                    new(new(new(6, 1), 7 << 1, none, none, 7 << 1), 1),
+                    new(new(new(4, 1), 1 << 3, none, none, 1 << 5), 1),
+                    new(new(new(5, 1), 1 << 4, none, none, 1 << 4), 1),
+                    new(new(new(6, 1), 1 << 4, none, none, 1 << 4), 1),
 
-                    new(new(new(4, 2), none, 9 << 1, 9 << 1, 9 << 1), 1),
-                    new(new(new(5, 2), none, 7 << 1, 9 << 1, 7 << 1), 1),
-                    new(new(new(6, 2), none, 9 << 1, 9 << 1, 7 << 1), 1),
+                    new(new(new(4, 2), none, 1 << 5, 1 << 5, 1 << 5), 1),
+                    new(new(new(5, 2), none, 1 << 4, 1 << 5, 1 << 4), 1),
+                    new(new(new(6, 2), none, 1 << 5, 1 << 5, 1 << 4), 1),
 
-                    new(new(new(4, 3), none, none, none, 9 << 1), 1),
-                    new(new(new(5, 3), none, none, none, 7 << 1), 1),
-                    new(new(new(6, 3), none, none, none, 9 << 1), 1),
+                    new(new(new(4, 3), none, none, none, 1 << 5), 0.5f),
+                    new(new(new(5, 3), none, none, none, 1 << 4), 0.5f),
+                    new(new(new(6, 3), none, none, none, 1 << 5), 0.5f),
 
-                    new(new(new(4, 4), none, none, none, none), 0.25f),
-                    new(new(new(5, 4), none, none, none, none), 0.25f),
-                    new(new(new(6, 4), none, none, none, none), 0.25f),
+                    new(new(new(4, 4), none, none, none, none), 0.15f),
+                    new(new(new(5, 4), none, none, none, none), 0.15f),
+                    new(new(new(6, 4), none, none, none, none), 0.15f),
 #endregion second 3 columns
 #region last 3 columns
-                    new(new(new(8, 0),  none, none, 5 << 1, 7 << 1), 1),
-                    new(new(new(9, 0),  none, none, 7 << 1, 9 << 1), 1),
-                    new(new(new(10, 0), none, none, 7 << 1, 9 << 1), 1),
+                    new(new(new(8, 0),  none, none, 1 << 3, 1 << 4), 1),
+                    new(new(new(9, 0),  none, none, 1 << 4, 1 << 5), 1),
+                    new(new(new(10, 0), none, none, 1 << 4, 1 << 5), 1),
 
-                    new(new(new(8, 1),  8 << 1, 9 << 1, none, none), 1),
-                    new(new(new(9, 1),  none, 9 << 1, none, none), 1),
-                    new(new(new(10, 1), 7 << 1, 9 << 1, none, none), 1),
+                    new(new(new(8, 1),  3 << 4, 1 << 5, none, none), 1),
+                    new(new(new(9, 1),  none, 1 << 5, none, none), 1),
+                    new(new(new(10, 1), 1 << 4, 1 << 5, none, none), 1),
 
-                    new(new(new(8, 2),  none, none, 7 << 1, none), 1),
-                    new(new(new(9, 2),  none, none, 9 << 1, none), 1),
-                    new(new(new(10, 2), none, none, 7 << 1, none), 1),
+                    new(new(new(8, 2),  none, none, 1 << 4, none), 0.5f),
+                    new(new(new(9, 2),  none, none, 1 << 5, none), 0.5f),
+                    new(new(new(10, 2), none, none, 1 << 4, none), 0.5f),
 
-                    new(new(new(8, 3),  none, 7 << 1, none, none), 1),
-                    new(new(new(9, 3),  none, 9 << 1, none, none), 1),
-                    new(new(new(10, 3), none, 7 << 1, none, none), 1),
+                    new(new(new(8, 3),  none, 1 << 4, none, none), 0.5f),
+                    new(new(new(9, 3),  none, 1 << 5, none, none), 0.5f),
+                    new(new(new(10, 3), none, 1 << 4, none, none), 0.5f),
 #endregion last 3 columns
-                    new(new(new(3, 4), none, none, none, none), 0.25f)// empty spot
+                    new(new(new(3, 4), none, none, none, none), 0.15f)// empty spot
                 };
                 fiberglassMin -= new Point(1, 1);
                 fiberglassMax += new Point(1, 1);
                 var actuals = new WaveFunctionCollapse.Generator<(short X, short Y)>.Cell?[fiberglassMax.X - fiberglassMin.X + 1, fiberglassMax.Y - fiberglassMin.Y + 1];
-                var fiberglassType = ModContent.TileType<Tiles.Other.Fiberglass>();
+                int fiberglassType = ModContent.TileType<Tiles.Other.Fiberglass>();
                 for (int i = fiberglassMin.X; i <= fiberglassMax.X; i++) {
                         for (int j = fiberglassMin.Y; j <= fiberglassMax.Y; j++) {
                         if (!fiberglassFrameSet.Contains(new(i,j)) || i == fiberglassMin.X || i == fiberglassMax.X || j == fiberglassMin.Y || j == fiberglassMax.Y) {
                             bool notFiberglass = !Framing.GetTileSafely(i, j).TileIsType(fiberglassType);
                             var cell = notFiberglass ? new(new(0, 0), none, none, none, none) : cellTypes.Where(v => {
                                 var curr = Framing.GetTileSafely(i, j).Get<TileExtraVisualData>();
-                                return v.Item1.value.X == curr.TileFrameX && v.Item1.value.X == curr.TileFrameX;
+                                return v.Item1.value.X == curr.TileFrameX && v.Item1.value.Y == curr.TileFrameY;
                             }).First().Item1;
                             actuals[i - fiberglassMin.X, j - fiberglassMin.Y] = cell;
                         }
                     }
                 }
-                var generator = new WaveFunctionCollapse.Generator<(short X, short Y)>(actuals, matchAll:true, cellTypes:cellTypes);
-                fiberglassMin += new Point(1, 1);
-                fiberglassMax -= new Point(1, 1);
+                fiberglassFrameSet.Clear();
+                var generator = new WaveFunctionCollapse.Generator<(short X, short Y)>(actuals, matchAll:false, cellTypes:cellTypes);
+                //fiberglassMin += new Point(1, 1);
+                //fiberglassMax -= new Point(1, 1);
 				while (!generator.GetCollapsed()) {
                     generator.Collapse();
 				}
                 for (int i = fiberglassMin.X; i <= fiberglassMax.X; i++) {
                     for (int j = fiberglassMin.Y; j <= fiberglassMax.Y; j++) {
-						if (Framing.GetTileSafely(i, j).TileIsType(fiberglassType)) {
-                            (short X, short Y) = generator.GetActual(i - fiberglassMin.X + 1, j - fiberglassMin.Y + 1);
+						//if (Framing.GetTileSafely(i, j).TileIsType(fiberglassType)) {
+                            (short X, short Y) = generator.GetActual(i - fiberglassMin.X, j - fiberglassMin.Y);
                             Framing.GetTileSafely(i, j).Get<TileExtraVisualData>().TileFrameX = X;
                             Framing.GetTileSafely(i, j).Get<TileExtraVisualData>().TileFrameY = Y;
-                        }
+                        //}
                     }
                 }
-                fiberglassFrameSet.Clear();
 			}
         }
         public void QueueKillTile(int i, int j) {
