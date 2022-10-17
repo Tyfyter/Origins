@@ -27,10 +27,9 @@ namespace Origins.Tiles.Other {
 			ModTranslation name = CreateMapEntryName();
 			AddMapEntry(new Color(42, 116, 160), name);
 		}
-		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			var curr = Framing.GetTileSafely(i, j).Get<TileExtraVisualData>();
-			spriteBatch.Draw(VineTexture, new Vector2(i * 16, j * 16) - Main.screenPosition, new Rectangle(curr.TileFrameX * 18, curr.TileFrameY * 18, 16, 16), Lighting.GetColor(i, j));
-			return true;
+			spriteBatch.Draw(VineTexture, new Vector2((i + 12) * 16, (j + 12) * 16) - Main.screenPosition, new Rectangle(curr.TileFrameX * 18, curr.TileFrameY * 18, 16, 16), Lighting.GetColor(i, j));
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
             OriginSystem originWorld = OriginSystem.instance;

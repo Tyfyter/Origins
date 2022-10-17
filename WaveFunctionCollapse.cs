@@ -23,21 +23,31 @@ namespace Tyfyter.Utils {
 				this.matchAll = matchAll;
 				Reset();
 			}
-			public void Force(Cell?[,] values, int iOffset = 0, int jOffset = 0) {
+			public Generator(Cell?[,] actuals, UnifiedRandom random = null, bool matchAll = false, params Tuple<Cell, double>[] cellTypes) {
+				this.random = random ?? Main.rand;
+				potentials = new WeightedRandom<Cell>[actuals.GetLength(0), actuals.GetLength(1)];
+				this.actuals = actuals;
+				this.cellTypes = cellTypes.ToList();
+				this.matchAll = matchAll;
+				Reset(false);
+				Force(actuals);
+			}
+			public void Force(Cell?[,] values, int iOffset = 0, int jOffset = 0, bool refresh = true) {
 				for (int i = 0; i < values.GetLength(0); i++) {
 					for (int j = 0; j < values.GetLength(1); j++) {
 						if(values[i, j] is Cell value) potentials[i - iOffset, j - jOffset] = new WeightedRandom<Cell>(random, new Tuple<Cell, double>(value, 1));
 					}
 				}
-				Refresh();
+				if (refresh) Refresh();
 			}
-			public void Force(int i, int j, Cell value) {
+			public void Force(int i, int j, Cell value, bool refresh = true) {
 				potentials[i, j] = new WeightedRandom<Cell>(random, new Tuple<Cell, double>(value, 1));
-				Refresh();
+				if (refresh) Refresh();
 			}
 			public void Collapse() {
 				List<(int x, int y)> targets = new();
 				int targetCount = int.MaxValue;
+				cont:
 				for (int i = 0; i < potentials.GetLength(0); i++) {
 					for (int j = 0; j < potentials.GetLength(1); j++) {
 						if (potentials[i, j].elements.Count <= 1) continue;
@@ -50,11 +60,15 @@ namespace Tyfyter.Utils {
 						}
 					}
 				}
+				if (targets.Count <= 0) {
+					return;
+				}
 				while (!Refresh()) {
 					int index = random.Next(targets.Count);
 					(int i1, int j1) = targets[index];
 					targets.RemoveAt(index);
-					potentials[i1, j1] = new WeightedRandom<Cell>(random, new Tuple<Cell, double>(potentials[i1, j1].Get(), 1));
+					potentials[i1, j1] = new WeightedRandom<Cell>(random, new Tuple<Cell, double>((actuals[i1, j1] = potentials[i1, j1].Get()).Value, 1));
+					if (targets.Count <= 0) goto cont;
 				}
 			}
 			public bool CollapseStepWith(Action<int, int, T> act) {
@@ -80,13 +94,13 @@ namespace Tyfyter.Utils {
 				}
 				return false;
 			}
-			public void Reset() {
+			public void Reset(bool refresh = true) {
 				for (int i = 0; i < potentials.GetLength(0); i++) {
 					for (int j = 0; j < potentials.GetLength(1); j++) {
 						potentials[i, j] = new WeightedRandom<Cell>(random, cellTypes.ToArray());
 					}
 				}
-				Refresh();
+				if (refresh) Refresh();
 			}
 			/// <summary>
 			/// removes all invalid potentials
@@ -98,6 +112,7 @@ namespace Tyfyter.Utils {
 				bool collapsed = true;
 				int tries = 0;
 				int culls = 0;
+				string log = "";
 				loop:
 				for (int i = 0; i < potentials.GetLength(0); i++) {
 					for (int j = 0; j < potentials.GetLength(1); j++) {
@@ -133,14 +148,17 @@ namespace Tyfyter.Utils {
 						if (potentials[i, j].elements.Count < 1) {
 							throw new InvalidWFCException($"cell {i}, {j} has 0 potentials after top comparison");
 						}
+						log = "";
 						potentials[i, j].elements.RemoveAll((v) => {
 							bool matches = false;
 							if (i > 0) {
 								matches = potentials[i - 1, j].elements.Any(
 									(o) => {
 										if (matchAll) {
+											log += $"{v.Item1.left} & {not_1_mask} ?= {o.Item1.right} & {not_1_mask}\n";
 											return (v.Item1.left & not_1_mask) == (o.Item1.right & not_1_mask);
 										}
+										log += $"{v.Item1.left} & {o.Item1.right} & {not_1_mask} ?= {v.Item1.left & o.Item1.right & not_1_mask}\n";
 										return (v.Item1.left & o.Item1.right & not_1_mask) != 0;
 									}
 								);
@@ -155,6 +173,7 @@ namespace Tyfyter.Utils {
 							return false;
 						});
 						if (potentials[i, j].elements.Count < 1) {
+							Origins.Origins.instance.Logger.Info(log);
 							throw new InvalidWFCException($"cell {i}, {j} has 0 potentials after left comparison");
 						}
 						potentials[i, j].elements.RemoveAll((v) => {
@@ -217,6 +236,14 @@ namespace Tyfyter.Utils {
 				}
 				Origins.Origins.instance.Logger.Info($"culled {culls} entries");
 				return collapsed;
+			}
+			public bool GetCollapsed() {
+				for (int i = 0; i < actuals.GetLength(0); i++) {
+					for (int j = 0; j < actuals.GetLength(1); j++) {
+						if (!actuals[i, j].HasValue) return false;
+					}
+				}
+				return true;
 			}
 			public T GetActual(int i, int j) {
 				if (!actuals[i, j].HasValue) {
