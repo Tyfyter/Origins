@@ -242,13 +242,13 @@ namespace Origins {
             //fiberglassMin += new Point(1, 1);
             //fiberglassMax -= new Point(1, 1);
             while (!generator.GetCollapsed()) {
-                generator.Collapse();
-                /*generator.CollapseWith((x, y, val) => {
+                //generator.Collapse();
+                generator.CollapseWith((x, y, val) => {
                     Framing.GetTileSafely(x + fiberglassMin.X, y + fiberglassMin.Y).Get<TileExtraVisualData>().TileFrameX = val.X;
                     Framing.GetTileSafely(x + fiberglassMin.X, y + fiberglassMin.Y).Get<TileExtraVisualData>().TileFrameY = val.Y;
-                });*/
+                });
             }
-            for (int i = fiberglassMin.X; i <= fiberglassMax.X; i++) {
+            /*for (int i = fiberglassMin.X; i <= fiberglassMax.X; i++) {
                 for (int j = fiberglassMin.Y; j <= fiberglassMax.Y; j++) {
                     //if (Framing.GetTileSafely(i, j).TileIsType(fiberglassType)) {
                     (short X, short Y) = generator.GetActual(i - fiberglassMin.X, j - fiberglassMin.Y);
@@ -256,7 +256,7 @@ namespace Origins {
                     Framing.GetTileSafely(i, j).Get<TileExtraVisualData>().TileFrameY = Y;
                     //}
                 }
-            }
+            }*/
         }
         public void QueueKillTile(int i, int j) {
             if (queuedKillTiles is null) {
