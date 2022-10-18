@@ -25,19 +25,25 @@ namespace Origins.World.BiomeData {
 		public override bool IsBiomeActive(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneFiberglass = OriginSystem.fiberglassTiles > Fiberglass_Undergrowth.NeededTiles;
 		}
-        public const int NeededTiles = 250;
+        public const int NeededTiles = 1000;
         public const int ShaderTileCount = 75;
         public static class SpawnRates {
         }
         public static class Gen {
 			public static void FiberglassStart(int i, int j) {
-				for (int x = -32; x <= 32; x++) {
-					for (int y = -32; y <= 32; y++) {
-						float distSq = (x * x + y * y) * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.04f + 1.5f);
-						//SpreadFiberglass(i + x, j + y, (distSq < 20 * 20), 12);
-						SpreadFiberglassWalls(i + x, j + y, (distSq < 18 * 18), 14);
+				for (int x = 0; x <= 32; x++) {
+					for (int y = 0; y <= 32; y++) {
+						TrySpread(i, j, x, y);
+						TrySpread(i, j, -x, y);
+						TrySpread(i, j, x, -y);
+						TrySpread(i, j, -x, -y);
 					}
 				}
+			}
+			public static void TrySpread(int i, int j, int x, int y) {
+				float distSq = (x * x + y * y) * (GenRunners.GetWallDistOffset((float)Math.Atan2(y, x) * 4 + x + y) * 0.04f + 1.5f);
+				//SpreadFiberglass(i + x, j + y, (distSq < 20 * 20), 12);
+				SpreadFiberglassWalls(i + x, j + y, (distSq < 18 * 18), 14);
 			}
 			public static void SpreadFiberglass(int i, int j, bool clear, int maxRange = 20) {
 				ushort tileType = (ushort)ModContent.TileType<Fiberglass_Tile>();
@@ -48,7 +54,7 @@ namespace Origins.World.BiomeData {
 					Tile tile = Framing.GetTileSafely(x, y);
 					if (TileID.Sets.IsATreeTrunk[tile.TileType] || (Math.Pow(x - i, 2) + Math.Pow(y - j, 2) < maxRange * maxRange)) {
 						if (clear) {
-							if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && WorldGen.CanKillTile(x, y)) {
+							if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && WorldGen.CanKillTile(x, y) && !tile.TileIsType(tileType)) {
 								if (tile.HasTile) {
 									tiles.Push((x - 1, y));
 									tiles.Push((x, y - 1));
@@ -70,7 +76,7 @@ namespace Origins.World.BiomeData {
 				}
 			}
 			public static void SpreadFiberglassWalls(int i, int j, bool force, int maxRange = 28) {
-				ushort wallType = WallID.Glass;//(ushort)ModContent.WallType<Fiberglass_Wall>();
+				ushort wallType = (ushort)ModContent.WallType<Fiberglass_Wall>();
 				Stack<(int x, int y)> tiles = new();
 				tiles.Push((i, j));
 				while (tiles.Count > 0) {
@@ -80,7 +86,11 @@ namespace Origins.World.BiomeData {
 						Tile tile = Framing.GetTileSafely(x, y);
 						if (force) {
 							tile.WallType = wallType;
-							SpreadFiberglass(x, y, true, 8);
+							if (distSq < Math.Pow(maxRange / 2, 2) || !WorldGen.genRand.NextBool(16)) {
+								SpreadFiberglass(x, y, true, 8);
+							} else {
+								SpreadFiberglass(x, y, false, 2);
+							}
 						} else {
 							if (tile.WallType != WallID.None && tile.WallType != wallType) {
 								tile.WallType = wallType;

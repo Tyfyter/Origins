@@ -170,6 +170,19 @@ namespace Origins.NPCs {
 				return;
 			}
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			if (spawnInfo.SpawnTileType == ModContent.TileType<Tiles.Other.Fiberglass_Tile>()) {
+				if (originPlayer.ZoneFiberglass) {
+					pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Sword>(), 1);
+					pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Bow>(), 1);
+					pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Pistol>(), 1);
+				}
+				pool[0] = 0;
+				return;
+			}
+			if (originPlayer.ZoneFiberglass) {
+				pool[0] = 0;
+				return;
+			}
 			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is DefiledTile) {
 				if (Main.invasionType <= 0) pool[0] = 0;
 

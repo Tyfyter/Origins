@@ -102,6 +102,7 @@ namespace Origins {
             defiledTiles = 0;
             rivenTiles = 0;
             brineTiles = 0;
+            fiberglassTiles = 0;
         }
 
 		public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts) {
@@ -112,6 +113,8 @@ namespace Origins {
             rivenTiles = tileCounts[ModContent.TileType<Riven_Flesh>()];//+tileCounts[ModContent.TileType<Riven_Grass>()]+tileCounts[ModContent.TileType<Riven_Sand>()]+tileCounts[ModContent.TileType<Riven_Ice>()];
 
             brineTiles = tileCounts[ModContent.TileType<Sulphur_Stone>()];
+
+            fiberglassTiles = tileCounts[ModContent.TileType<Tiles.Other.Fiberglass_Tile>()];
         }
         protected internal List<(int x, int y)> defiledResurgenceTiles;
         protected internal List<(int x, int y, ushort)> defiledAltResurgenceTiles;
