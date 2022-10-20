@@ -229,7 +229,7 @@ ARMOR:
 (X) Viridium Armor
 
 (X) Ascendant Armor
-(@, ^3) Celestine Armor
+(@5, ^3) Celestine Armor
 (^) Chromtain Armor
 (#2, ^2) Eyndum Armor
 (X) Fibron Armor
@@ -432,7 +432,7 @@ RANGED WEAPONS:
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun
-(X) Cursed Flute
+(#, ^2) Cursed Flute
 (^) Dragon's Breath
 (^) Firespit
 (X) Mythril Harpoon Gun

@@ -24,8 +24,8 @@ namespace Origins.Items.Weapons.Other {
             Item.crit = 5;
             Item.knockBack *= 0.5f;
             Item.useAnimation = Item.useTime = 27;
-            Item.width = 56;
-            Item.height = 46;
+            Item.width = 50;
+            Item.height = 42;
             Item.glowMask = glowmask;
             Item.shoot = ModContent.ProjectileType<Void_Spectral_P>();
             Item.shootSpeed *= 1.5f;

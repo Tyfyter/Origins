@@ -37,7 +37,7 @@ namespace Origins.Tiles.Defiled {
     }
     public class Defiled_Ice_Item : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Ice");
+            DisplayName.SetDefault("Gray Ice");
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.StoneBlock);
