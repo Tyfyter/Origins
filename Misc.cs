@@ -1278,6 +1278,59 @@ namespace Origins {
             recipe.acceptedGroups.Add(recipeGroupId);
             return recipe;
         }
+        public static bool IsTileReplacable(int x, int y) {
+            Tile tile = Main.tile[x, y];
+            return !tile.HasTile || (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && WorldGen.CanKillTile(x, x));
+		}
+        public static void SpreadWall(int x, int y, ushort wallType, Dictionary<ushort, bool> replacables) {
+            if (!WorldGen.InWorld(x, y)) {
+                return;
+            }
+            int count = 0;
+            Stack<Point> positions = new Stack<Point>();
+            Stack<Point> nextPositions = new Stack<Point>();
+            HashSet<Point> oldPositions = new HashSet<Point>();
+            void AddPosition(Point newPosition) {
+                if (!oldPositions.Contains(newPosition)) {
+                    nextPositions.Push(newPosition);
+                }
+            }
+            nextPositions.Push(new Point(x, y));
+            while (nextPositions.Count > 0) {
+                while (nextPositions.Count > 0) positions.Push(nextPositions.Pop());
+                while (positions.Count > 0) {
+                    Point position = positions.Pop();
+                    if (!WorldGen.InWorld(position.X, position.Y, 1)) {
+                        continue;
+                    }
+                    oldPositions.Add(position);
+                    Tile tile = Main.tile[position.X, position.Y];
+                    if (tile.WallType != wallType) {
+                        if (!WorldGen.SolidTile(position.X, position.Y)) {
+                            if (tile.WallType == WallID.None) {
+                                continue;
+                            }
+                            count++;
+                            if (count >= WorldGen.maxWallOut2) {
+                                continue;
+                            }
+                            AddPosition(new Point(position.X - 1, position.Y));
+                            AddPosition(new Point(position.X + 1, position.Y));
+                            AddPosition(new Point(position.X, position.Y - 1));
+                            AddPosition(new Point(position.X, position.Y + 1));
+                            AddPosition(new Point(position.X - 1, position.Y - 1));
+                            AddPosition(new Point(position.X + 1, position.Y - 1));
+                            AddPosition(new Point(position.X - 1, position.Y + 1));
+                            AddPosition(new Point(position.X + 1, position.Y + 1));
+                            AddPosition(new Point(position.X - 2, position.Y));
+                            AddPosition(new Point(position.X + 2, position.Y));
+                        }
+                        if(replacables.TryGetValue(tile.WallType, out bool isReplacable) && isReplacable) tile.WallType = wallType;
+                    }
+                }
+            }
+        }
+
         public static bool IsDevName(string name, int dev = 0) {
             if (dev is 0 or 1) {//Tyfyter
                 return name is "Jennifer" or "Asher";

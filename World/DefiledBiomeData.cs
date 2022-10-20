@@ -363,7 +363,7 @@ namespace Origins.World.BiomeData {
 							bool openAir = (k < Main.worldSurface && tile.WallType == WallID.None);
 							if (dist > strength) {
 								double d = Math.Sqrt(dist);
-								if (!openAir && d < baseStrength + basewallThickness && TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && tile.WallType != _wallType && CanKillTile(l, k)) {
+								if (!openAir && d < baseStrength + basewallThickness && OriginExtensions.IsTileReplacable(l, k) && tile.WallType != _wallType) {
 									
                                     if (!Main.tileContainer[tile.TileType]) {
 										tile.HasTile = true;
@@ -371,8 +371,11 @@ namespace Origins.World.BiomeData {
 									}
 									//WorldGen.SquareTileFrame(l, k);
 									if (hasWall) {
-										if (tile.WallType == WallID.GrassUnsafe) {
-											WorldGen.Spread.Wall2(l, k, _wallType);
+										if (tile.WallType == WallID.DirtUnsafe || tile.WallType == WallID.MudUnsafe) {
+											OriginExtensions.SpreadWall(l, k, _wallType, new Dictionary<ushort, bool>() {
+												[WallID.DirtUnsafe] = true,
+												[WallID.MudUnsafe] = true
+											});
 										}
 										tile.WallType = _wallType;
 									}

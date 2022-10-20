@@ -125,7 +125,7 @@ namespace Origins.World.BiomeData {
 							int compY = (int)(y + wallOffset);
 							if (dist > strength) {
 								double d = Math.Sqrt(dist);
-								if (d < baseStrength + wallThickness && TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && CanKillTile(x, y)) {
+								if (d < baseStrength + wallThickness && OriginExtensions.IsTileReplacable(x, y)) {
 									if (tile.WallType != fleshWallType) {
 										if (compY > j || (tile.HasTile && Main.tileSolid[tile.TileType])) {
 											tile.HasTile = true;
@@ -144,7 +144,7 @@ namespace Origins.World.BiomeData {
 								continue;
 							}
 							if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
-								if (compY > j && CanKillTile(x, y)) {
+								if (compY > j && OriginExtensions.IsTileReplacable(x, y)) {
 									tile.HasTile = false;
 								} else if (tile.HasTile && Main.tileSolid[tile.TileType]) {
 									tile.TileType = fleshBlockType;
@@ -332,7 +332,7 @@ namespace Origins.World.BiomeData {
 							Main.tile[x, y].ResetToType(fleshID);
 						}
 						Main.tile[x, y].WallType = fleshWallID;
-						if ((diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult) && CanKillTile(x, y)) {
+						if ((diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult) && OriginExtensions.IsTileReplacable(x, y)) {
 							Main.tile[x, y].SetActive(false);
 							if (diff > 34 * sizeMult - 5 && Main.tile[x, y+1].TileIsType(fleshID)) {
 								lesionPlacementSpots.Enqueue(new Point(x, y));

@@ -57,7 +57,7 @@ namespace Origins.World.BiomeData {
 					Tile tile = Framing.GetTileSafely(x, y);
 					if (TileID.Sets.IsATreeTrunk[tile.TileType] || (Math.Pow(x - i, 2) + Math.Pow(y - j, 2) < maxRange * maxRange)) {
 						if (clear) {
-							if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && WorldGen.CanKillTile(x, y) && !tile.TileIsType(tileType)) {
+							if (OriginExtensions.IsTileReplacable(x, y) && !tile.TileIsType(tileType)) {
 								if (tile.HasTile) {
 									tiles.Push((x - 1, y));
 									tiles.Push((x, y - 1));

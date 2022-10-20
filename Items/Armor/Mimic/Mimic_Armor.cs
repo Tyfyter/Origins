@@ -1,5 +1,6 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Mimic {
@@ -29,7 +30,7 @@ namespace Origins.Items.Armor.Mimic {
 
 			float defiledPercentage = 1f; //OriginSystem.totalDefiled / (float)WorldGen.totalSolid;
 
-			player.setBonus = string.Format("Not yet fully implemented\nSpread the {$Defiled_Wastelands} to unlock more abilities\nCurrent percentage: {0:P1}, ", defiledPercentage/3);
+			player.setBonus = $"Not yet fully implemented\nSpread {Language.GetText("The_Defiled_Wastelands")} to unlock more abilities\nCurrent percentage: {defiledPercentage:P1}, ";
 			Origins.SetMimicSetUI();
 
 			int mimicSetLevel = OriginSystem.MimicSetLevel;

@@ -171,6 +171,9 @@ namespace Origins {
             newTranslation = LocalizationLoader.CreateTranslation("Defiled_Wastelands");
             newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "{$Mods.Origins.Generic.Defiled_Wastelands}");
             LocalizationLoader.AddTranslation(newTranslation);
+            newTranslation = LocalizationLoader.CreateTranslation("The_Defiled_Wastelands");
+            newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "the {$Mods.Origins.Generic.Defiled_Wastelands}");
+            LocalizationLoader.AddTranslation(newTranslation);
 
             ExplosiveBaseDamage = new Dictionary<int, int>();
             DamageModOnHit = new bool[ProjectileLoader.ProjectileCount];
