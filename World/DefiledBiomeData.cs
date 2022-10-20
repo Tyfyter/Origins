@@ -262,7 +262,7 @@ namespace Origins.World.BiomeData {
 					if (Framing.GetTileSafely(x, y).TileIsType(defiledPot)) placedPots++;
 				}
 				Origins.instance.Logger.Info($"Placed {placedPots} defiled pots");
-				Origins.instance.Logger.Info($"Generated {$Defiled_Wastelands} with {fisureCount} fissures");
+				Origins.instance.Logger.Info($"Generated {{$Defiled_Wastelands}} with {fisureCount} fissures");
 				//Main.NewText($"Generated Defiled Wastelands with {fisureCount} fissures");
 			}
 			public static void DefiledCave(float i, float j, float sizeMult = 1f) {
@@ -371,6 +371,9 @@ namespace Origins.World.BiomeData {
 									}
 									//WorldGen.SquareTileFrame(l, k);
 									if (hasWall) {
+										if (tile.WallType == WallID.GrassUnsafe) {
+											WorldGen.Spread.Wall2(l, k, _wallType);
+										}
 										tile.WallType = _wallType;
 									}
 								}
