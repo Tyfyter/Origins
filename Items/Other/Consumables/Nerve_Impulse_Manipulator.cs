@@ -10,7 +10,7 @@ namespace Origins.Items.Other.Consumables {
     public class Nerve_Impulse_Manipulator : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Nerve Impulse Manipulator");
-			Tooltip.SetDefault("Summons the Defiled Amalgamation");
+			Tooltip.SetDefault("Summons the {$Defiled} Amalgamation");
 
 			SacrificeTotal = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;

@@ -90,7 +90,7 @@ namespace Origins.Tiles.Defiled
 			TileObjectData.addTile(Type);
 
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Defiled Sapling");
+			name.SetDefault("{$Defiled} Sapling");
 			AddMapEntry(new Color(200, 200, 200), name);
 
 			TileID.Sets.TreeSapling[Type] = true;

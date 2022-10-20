@@ -97,7 +97,7 @@ namespace Origins.Tiles.Defiled {
     }
     public class Defiled_Sand_Item : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Sand");
+            DisplayName.SetDefault("{$Defiled} Sand");
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.SandBlock);
@@ -116,7 +116,7 @@ namespace Origins.Tiles.Defiled {
 		protected const int dustType = 51;
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled Sand Ball");
+			DisplayName.SetDefault("{$Defiled} Sand Ball");
 			ProjectileID.Sets.ForcePlateDetection[Projectile.type] = true;
 		}
 

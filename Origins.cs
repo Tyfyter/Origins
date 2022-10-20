@@ -159,9 +159,18 @@ namespace Origins {
             }
         }
         public override void Load() {
-            ModTranslation rivenTranslation = LocalizationLoader.CreateTranslation("Riven");
-            rivenTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Riven}" : "{$Mods.Origins.Generic.Riven}");
-            LocalizationLoader.AddTranslation(rivenTranslation);
+            ModTranslation newTranslation = LocalizationLoader.CreateTranslation("Riven");
+            newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Riven}" : "{$Mods.Origins.Generic.Riven}");
+            LocalizationLoader.AddTranslation(newTranslation);
+            newTranslation = LocalizationLoader.CreateTranslation("Dusk");
+            newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Dusk}" : "{$Mods.Origins.Generic.Dusk}");
+            LocalizationLoader.AddTranslation(newTranslation);
+            newTranslation = LocalizationLoader.CreateTranslation("Defiled");
+            newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled}" : "{$Mods.Origins.Generic.Defiled}");
+            LocalizationLoader.AddTranslation(newTranslation);
+            newTranslation = LocalizationLoader.CreateTranslation("Defiled_Wastelands");
+            newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "{$Mods.Origins.Generic.Defiled_Wastelands}");
+            LocalizationLoader.AddTranslation(newTranslation);
 
             ExplosiveBaseDamage = new Dictionary<int, int>();
             DamageModOnHit = new bool[ProjectileLoader.ProjectileCount];

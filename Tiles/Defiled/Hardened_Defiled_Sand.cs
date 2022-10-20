@@ -27,7 +27,7 @@ namespace Origins.Tiles.Defiled {
     }
     public class Hardened_Defiled_Sand_Item : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Hardened Defiled Sand");
+            DisplayName.SetDefault("Hardened {$Defiled} Sand");
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.StoneBlock);

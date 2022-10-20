@@ -61,7 +61,7 @@ namespace Origins.Projectiles.Weapons {
         public static int ID { get; private set; } = -1;
         Vector2 realPosition;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Spike Eruption");
+            DisplayName.SetDefault("{$Defiled} Spike Eruption");
             ID = Projectile.type;
         }
         public override void SetDefaults() {

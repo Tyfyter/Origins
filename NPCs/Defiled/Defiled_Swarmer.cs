@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
     public class Defiled_Swarmer : ModNPC {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Swarmer");
+            DisplayName.SetDefault("{$Defiled} Swarmer");
             Main.npcFrameCount[NPC.type] = 3;
         }
         public override void SetDefaults() {
@@ -35,7 +35,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("Not commonly found in the Wastelands. They appear when a massive Defiled being is in distress."),
+                new FlavorTextBestiaryInfoElement("Not commonly found in the Wastelands. They appear when a massive {$Defiled} being is in distress."),
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {

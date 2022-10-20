@@ -262,7 +262,7 @@ namespace Origins.World.BiomeData {
 					if (Framing.GetTileSafely(x, y).TileIsType(defiledPot)) placedPots++;
 				}
 				Origins.instance.Logger.Info($"Placed {placedPots} defiled pots");
-				Origins.instance.Logger.Info($"Generated Defiled Wastelands with {fisureCount} fissures");
+				Origins.instance.Logger.Info($"Generated {$Defiled_Wastelands} with {fisureCount} fissures");
 				//Main.NewText($"Generated Defiled Wastelands with {fisureCount} fissures");
 			}
 			public static void DefiledCave(float i, float j, float sizeMult = 1f) {
@@ -521,7 +521,8 @@ namespace Origins.World.BiomeData {
 	}
 	public class Defiled_Wastelands_Alt_Biome : AltBiome {
 		public override string WorldIcon => "";//TODO: Redo tree icons for AltLib
-		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Riven";
+		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";
+		public override string IconSmall => "Origins/icon_small";
 		public override Color OuterColor => new(170, 170, 170);
 		public override List<int> SpreadingTiles => new List<int> {
 			ModContent.TileType<Defiled_Grass>(),
@@ -533,7 +534,7 @@ namespace Origins.World.BiomeData {
 		};
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
-			GenPassName.SetDefault("Defiled Wastelands");
+			GenPassName.SetDefault("{$Defiled_Wastelands}");
 			BiomeGrass = ModContent.TileType<Defiled_Grass>();
 			BiomeStone = ModContent.TileType<Defiled_Stone>();
 			BiomeSand = ModContent.TileType<Defiled_Sand>();
@@ -550,11 +551,31 @@ namespace Origins.World.BiomeData {
 			return new Defiled_Wastelands_Generation_Pass();
 		}
 		public class Defiled_Wastelands_Generation_Pass : EvilBiomeGenerationPass {
+			Stack<Point> defiledHearts = new Stack<Point>() { };
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
+				int startY;
+				for (startY = (int)WorldGen.worldSurfaceLow; !Main.tile[evilBiomePosition, startY].HasTile; startY++) ;
+				Point start = new Point(evilBiomePosition, startY + genRand.Next(105, 150));//range of depths
 
+				Defiled_Wastelands.Gen.StartDefiled(start.X, start.Y);
+				defiledHearts.Push(start);
 			}
 
-			public override void PostGenerateEvil() { }
+			public override void PostGenerateEvil() {
+				Point heart;
+				while (defiledHearts.Count > 0) {
+					heart = defiledHearts.Pop();
+					Defiled_Wastelands.Gen.DefiledRibs(heart.X + genRand.NextFloat(-0.5f, 0.5f), heart.Y + genRand.NextFloat(-0.5f, 0.5f));
+					for (int i = heart.X - 1; i < heart.X + 3; i++) {
+						for (int j = heart.Y - 2; j < heart.Y + 2; j++) {
+							Main.tile[i, j].SetActive(false);
+						}
+					}
+					TileObject.CanPlace(heart.X, heart.Y, (ushort)ModContent.TileType<Defiled_Heart>(), 0, 1, out var data);
+					TileObject.Place(data);
+					OriginSystem.instance.Defiled_Hearts.Add(heart);
+				}
+			}
 		}
 	}
 }

@@ -15,7 +15,7 @@ namespace Origins.NPCs.Defiled {
         //public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
         //bool attacking = false;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Krusher");
+            DisplayName.SetDefault("{$Defiled} Krusher");
             Main.npcFrameCount[NPC.type] = 4;
         }
         public override void SetDefaults() {
@@ -52,7 +52,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("A stumbling defender of the Wastelands. It will be summoned if other Defiled antibodies struggle."),
+                new FlavorTextBestiaryInfoElement("A stumbling defender of the Wastelands. It will be summoned if other {$Defiled} antibodies struggle."),
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {

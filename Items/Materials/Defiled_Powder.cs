@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Materials {
 	public class Defiled_Powder : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled Powder");
+			DisplayName.SetDefault("{$Defiled} Powder");
 			SacrificeTotal = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.VilePowder];
 		}
 		public override void SetDefaults() {

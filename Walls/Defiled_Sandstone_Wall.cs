@@ -27,7 +27,7 @@ namespace Origins.Walls {
     }
     public class Defiled_Sandstone_Wall_Item : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Sandstone Wall");
+            DisplayName.SetDefault("{$Defiled} Sandstone Wall");
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.StoneWall);

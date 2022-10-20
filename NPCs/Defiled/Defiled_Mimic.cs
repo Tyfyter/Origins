@@ -14,7 +14,7 @@ using Terraria.GameContent.ItemDropRules;
 namespace Origins.NPCs.Defiled {
     public class Defiled_Mimic : ModNPC {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Mimic");
+            DisplayName.SetDefault("{$Defiled} Mimic");
             Main.npcFrameCount[NPC.type] = 14;
         }
         public override void SetDefaults() {

@@ -774,6 +774,16 @@ AMMO:
 (#, ^2) Starfuze
 ---
 
+UI:
+---
+fiberglass bestiary background
+fiberglass bestiary icon
+defiled bestiary background
+riven bestiary background
+riven bestiary icon
+dusk bestiary background
+dusk bestiary icon
+---
 
 MUSIC:
 ---

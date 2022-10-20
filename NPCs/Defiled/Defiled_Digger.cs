@@ -105,7 +105,7 @@ namespace Origins.NPCs.Defiled {
 
     public abstract class Defiled_Digger : ModNPC {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Digger");
+            DisplayName.SetDefault("{$Defiled} Digger");
         }
 
         public override void AI() {

@@ -15,7 +15,7 @@ namespace Origins.NPCs.Defiled {
         public const float speedMult = 1f;
         bool attacking = false;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Cyclops");
+            DisplayName.SetDefault("{$Defiled} Cyclops");
             Main.npcFrameCount[NPC.type] = 4;
         }
         public override void SetDefaults() {
@@ -52,7 +52,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("The face of the Defiled. A deadly unit that handles the smallest threats."),
+                new FlavorTextBestiaryInfoElement("The face of the {$Defiled}. A deadly unit that handles the smallest threats."),
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {

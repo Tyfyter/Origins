@@ -14,7 +14,7 @@ namespace Origins.Items.Pets {
         internal static int buffID = 0;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Suspicious Looking Pebble");
-            Tooltip.SetDefault("Summons a Defiled blight to light your way");
+            Tooltip.SetDefault("Summons a {$Defiled} blight to light your way");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -33,7 +33,7 @@ namespace Origins.Items.Pets {
 		public override string Texture => "Origins/Items/Pets/Defiled_Blight";
 		public override void SetStaticDefaults() {
 			Suspicious_Looking_Pebble.projectileID = Projectile.type;
-			DisplayName.SetDefault("Defiled Blight");
+			DisplayName.SetDefault("{$Defiled} Blight");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;
 
@@ -149,8 +149,8 @@ namespace Origins.Items.Pets {
 namespace Origins.Buffs {
 	public class Defiled_Blight_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled Blight");
-			Description.SetDefault("The Defiled Blight will light your way");
+			DisplayName.SetDefault("{$Defiled} Blight");
+			Description.SetDefault("The {$Defiled} Blight will light your way");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.lightPet[Type] = true;

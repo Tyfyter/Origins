@@ -36,7 +36,7 @@ namespace Origins.Tiles.Defiled {
 	public class Defiled_Pot_Item : ModItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Pot";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled Pot (Debugging Item)");
+			DisplayName.SetDefault("{$Defiled} Pot (Debugging Item)");
 		}
 
 		public override void SetDefaults() {

@@ -235,7 +235,7 @@ namespace Origins.Items.Materials {
     public class Defiled_Bar : ModItem {
         //add lore here
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Bar");
+            DisplayName.SetDefault("{$Defiled} Bar");
             SacrificeTotal = 25;
         }
         public override void SetDefaults() {
@@ -252,7 +252,7 @@ namespace Origins.Items.Materials {
     public class Defiled_Key : ModItem {
         //add lore here
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Key");
+            DisplayName.SetDefault("{$Defiled} Key");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {

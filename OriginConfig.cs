@@ -18,12 +18,13 @@ namespace Origins {
 	public class OriginConfig : ModConfig {
 		public static OriginConfig Instance;
 		public override ConfigScope Mode => ConfigScope.ServerSide;
-		[Label("Use alternate world evil biomes")]
-		[OptionStrings(new string[] { "never", "50/50", "always" })]
-		[DefaultValue("50/50")]
+		//[Label("Use alternate world evil biomes")]
+		//[OptionStrings(new string[] { "never", "50/50", "always" })]
+		//[DefaultValue("50/50")]
+		[JsonIgnore]
 		public string altWorldEvil;
 		[JsonIgnore]
-		public sbyte worldTypeSkew = 0;
+		public sbyte worldTypeSkew = -1;
 
 		[Header("Vanilla Buffs")]
 

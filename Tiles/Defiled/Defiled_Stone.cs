@@ -33,7 +33,7 @@ namespace Origins.Tiles.Defiled {
     }
     public class Defiled_Stone_Item : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Stone");
+            DisplayName.SetDefault("{$Defiled} Stone");
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.StoneBlock);

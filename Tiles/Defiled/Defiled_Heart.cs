@@ -36,7 +36,7 @@ namespace Origins.Tiles.Defiled {
             TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Defiled Heart");
+			name.SetDefault("{$Defiled} Heart");
 			AddMapEntry(new Color(50, 50, 50), name);
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.ShadowOrbs };
@@ -59,7 +59,7 @@ namespace Origins.Tiles.Defiled {
     public class Defiled_Heart_Item : ModItem {
         public override string Texture => "Origins/Tiles/Defiled/Defiled_Heart";
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Heart (Debugging Item)");
+            DisplayName.SetDefault("{$Defiled} Heart (Debugging Item)");
         }
         public override void SetDefaults() {
             Item.width = 26;

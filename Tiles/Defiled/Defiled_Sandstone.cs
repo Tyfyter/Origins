@@ -35,7 +35,7 @@ namespace Origins.Tiles.Defiled {
     }
     public class Defiled_Sandstone_Item : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Sandstone");
+            DisplayName.SetDefault("{$Defiled} Sandstone");
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.StoneBlock);

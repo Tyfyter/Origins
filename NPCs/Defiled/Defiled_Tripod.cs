@@ -16,7 +16,7 @@ namespace Origins.NPCs.Defiled {
         public const float horizontalAirSpeed = 2f;
         public const float verticalSpeed = 4f;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Tripod");
+            DisplayName.SetDefault("{$Defiled} Tripod");
             Main.npcFrameCount[NPC.type] = 4;
         }
         public override void SetDefaults() {
@@ -54,7 +54,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("Fast and hard-hitting, the Tripod is the last defense of the Defiled. It is the last thing any traveler would want to encounter."),
+                new FlavorTextBestiaryInfoElement("Fast and hard-hitting, the Tripod is the last defense of the {$Defiled}. It is the last thing any traveler would want to encounter."),
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {

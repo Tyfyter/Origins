@@ -14,7 +14,7 @@ namespace Origins.NPCs.Defiled {
         byte frame = 0;
         byte anger = 0;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Mite");
+            DisplayName.SetDefault("{$Defiled} Mite");
             Main.npcFrameCount[NPC.type] = 4;
         }
         public override void SetDefaults() {
@@ -51,7 +51,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("Dweller of the Defiled Caverns. Hard to spot as it does not move until prey draws near."),
+                new FlavorTextBestiaryInfoElement("Dweller of the {$Defiled} Caverns. Hard to spot as it does not move until prey draws near."),
             });
         }
 		public override bool PreAI() {

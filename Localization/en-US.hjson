@@ -138,10 +138,16 @@
 		}
 		Generic: {
 			Riven: Riven
+			Dusk: Dusk
+			Defiled: Defiled
+			Defiled_Wastelands: Defiled Wastelands
 		}
 		April_Fools: {
 			Generic: {
 				Riven: Blue Lobster
+				Dusk: Duck
+				Defiled: Blŏkus
+				Defiled_Wastelands: Blŏkusland
 			}
 			Items: {
 				DefiledBar: Spare Chunks

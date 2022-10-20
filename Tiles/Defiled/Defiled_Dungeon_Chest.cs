@@ -18,21 +18,21 @@ namespace Origins.Tiles.Defiled {
         public override void SetStaticDefaults() {
             base.SetStaticDefaults();
 			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Defiled Chest");
+			name.SetDefault("{$Defiled} Chest");
 			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
 			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
-			name.SetDefault("Locked Defiled Chest");
+			name.SetDefault("Locked {$Defiled} Chest");
 			AddMapEntry(new Color(140, 140, 140), name, MapChestName);
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.Containers };
-			ContainerName.SetDefault("Defiled Chest");
+			ContainerName.SetDefault("{$Defiled} Chest");
 			ChestDrop = ModContent.ItemType<Defiled_Dungeon_Chest_Item>();
             keyItem = ModContent.ItemType<Defiled_Key>();
 		}
     }
     public class Defiled_Dungeon_Chest_Item : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Chest");
+            DisplayName.SetDefault("{$Defiled} Chest");
         }
 
         public override void SetDefaults() {

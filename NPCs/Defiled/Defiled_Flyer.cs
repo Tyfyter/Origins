@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
     public class Defiled_Flyer : ModNPC {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Phantom");
+            DisplayName.SetDefault("{$Defiled} Phantom");
             //Origins.AddGlowMask(NPC. "NPCs/Defiled/Defiled_Flyer_Glow");
             Main.npcFrameCount[NPC.type] = 4;
         }

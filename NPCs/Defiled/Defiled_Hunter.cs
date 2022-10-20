@@ -170,7 +170,7 @@ namespace Origins.NPCs.Defiled {
         protected const int animationTime = 4;
         protected internal int[] ai = new int[4];
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Hunter");
+            DisplayName.SetDefault("{$Defiled} Hunter");
             NPCID.Sets.TrailCacheLength[NPC.type] = 2;
             NPCID.Sets.TrailingMode[NPC.type] = 3;
         }

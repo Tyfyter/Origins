@@ -29,7 +29,7 @@ namespace Origins.Items.Armor.Mimic {
 
 			float defiledPercentage = 1f; //OriginSystem.totalDefiled / (float)WorldGen.totalSolid;
 
-			player.setBonus = string.Format("Not yet fully implemented\nSpread the Defiled to unlock more abilities\nCurrent percentage: {0:P1}, ", defiledPercentage/3);
+			player.setBonus = string.Format("Not yet fully implemented\nSpread the {$Defiled_Wastelands} to unlock more abilities\nCurrent percentage: {0:P1}, ", defiledPercentage/3);
 			Origins.SetMimicSetUI();
 
 			int mimicSetLevel = OriginSystem.MimicSetLevel;

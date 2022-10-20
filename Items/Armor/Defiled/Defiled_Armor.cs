@@ -7,7 +7,7 @@ namespace Origins.Items.Armor.Defiled {
     [AutoloadEquip(EquipType.Head)]
     public class Defiled_Helmet : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Helmet");
+            DisplayName.SetDefault("{$Defiled} Helmet");
             Tooltip.SetDefault("Increased mana regeneration rate");
             if (Main.netMode != NetmodeID.Server) {
                 Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Defiled/Defiled_Helmet_Head_Glow");
@@ -39,7 +39,7 @@ namespace Origins.Items.Armor.Defiled {
     [AutoloadEquip(EquipType.Body)]
     public class Defiled_Breastplate : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Breastplate");
+            DisplayName.SetDefault("{$Defiled} Breastplate");
             Tooltip.SetDefault("15% increased magic damage");
             SacrificeTotal = 1;
         }
@@ -62,7 +62,7 @@ namespace Origins.Items.Armor.Defiled {
     [AutoloadEquip(EquipType.Legs)]
     public class Defiled_Greaves : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Greaves");
+            DisplayName.SetDefault("{$Defiled} Greaves");
             Tooltip.SetDefault("5% increased movement speed");
             SacrificeTotal = 1;
         }
@@ -85,7 +85,7 @@ namespace Origins.Items.Armor.Defiled {
 namespace Origins.Buffs {
     public class Defiled_Exhaustion_Buff : ModBuff {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Defiled Exhaustion");
+            DisplayName.SetDefault("{$Defiled} Exhaustion");
         }
         public override void Update(Player player, ref int buffIndex) {
             player.manaRegenBuff = false;
