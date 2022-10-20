@@ -311,7 +311,7 @@ namespace Origins.Items.Other.Testing {
                     break;
                 }
                 case 2:
-                World.BiomeData.Riven_Hive.Gen.StartHive_Old((int)parameters.Dequeue(), (int)parameters.Dequeue());
+                World.BiomeData.Riven_Hive.Gen.StartHive((int)parameters.Dequeue(), (int)parameters.Dequeue());
                 break;
                 case 3:
                 World.BiomeData.Riven_Hive.Gen.HiveCave_Old((int)parameters.Dequeue(), (int)parameters.Dequeue());

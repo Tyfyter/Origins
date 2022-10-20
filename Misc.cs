@@ -1140,7 +1140,7 @@ namespace Origins {
             spriteBatch.Draw(Origins.instance.Assets.Request<Texture2D>("Projectiles/Pixel").Value, drawRect, null, color, (end - start).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LinearSmoothing(ref float smoothed, float target, float rate) {
+        public static bool LinearSmoothing(ref float smoothed, float target, float rate) {
             if(target!=smoothed) {
                 if(Math.Abs(target-smoothed)<rate) {
                     smoothed = target;
@@ -1150,11 +1150,13 @@ namespace Origins {
                     }else if(target<smoothed) {
                         smoothed-=rate;
                     }
+                    return false;
                 }
             }
+            return true;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LinearSmoothing(ref Vector2 smoothed, Vector2 target, float rate) {
+        public static bool LinearSmoothing(ref Vector2 smoothed, Vector2 target, float rate) {
             if(target!=smoothed) {
                 Vector2 diff = (target-smoothed);
                 if((target-smoothed).Length()<rate) {
@@ -1162,32 +1164,38 @@ namespace Origins {
                 } else {
                     diff.Normalize();
                     smoothed+=diff*rate;
+                    return false;
                 }
             }
+            return true;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LerpSmoothing(ref float smoothed, float target, float rate, float snap) {
+        public static bool LerpSmoothing(ref float smoothed, float target, float rate, float snap) {
             if(target!=smoothed) {
                 if(Math.Abs(target-smoothed)<snap) {
                     smoothed = target;
                 } else {
                     smoothed = MathHelper.Lerp(smoothed, target, rate);
+                    return false;
                 }
             }
+            return true;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void LerpSmoothing(ref Vector2 smoothed, Vector2 target, float rate, float snap) {
+        public static bool LerpSmoothing(ref Vector2 smoothed, Vector2 target, float rate, float snap) {
             if(target!=smoothed) {
                 Vector2 diff = (target-smoothed);
                 if((target-smoothed).Length()<snap) {
                     smoothed = target;
                 } else {
                     smoothed = Vector2.Lerp(smoothed, target, rate);
+                    return false;
                 }
             }
+            return true;
         }
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void AngularSmoothing(ref float smoothed, float target, float rate) {
+        public static bool AngularSmoothing(ref float smoothed, float target, float rate) {
             if(target!=smoothed) {
                 float diff = GeometryUtils.AngleDif(smoothed, target, out int dir);
                 diff = Math.Abs(diff);
@@ -1196,8 +1204,10 @@ namespace Origins {
                     smoothed = target;
                 } else {
                     smoothed+=rate*dir;
+                    return false;
                 }
             }
+            return true;
         }
         public static void AngularSmoothing(ref float smoothed, float target, float rate, out bool equal) {
             equal = true;

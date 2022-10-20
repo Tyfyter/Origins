@@ -28,7 +28,10 @@ namespace Origins.World.BiomeData {
         public const int NeededTiles = 1000;
         public const int ShaderTileCount = 75;
         public static class SpawnRates {
-        }
+			public const float Sword = 1;
+			public const float Bow = 1;
+			public const float Gun = 1;
+		}
         public static class Gen {
 			public static void FiberglassStart(int i, int j) {
 				for (int x = 0; x <= 32; x++) {

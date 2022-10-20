@@ -20,6 +20,9 @@ using static Origins.OriginExtensions;
 using Terraria.Chat;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Pets;
+using AltLibrary.Common.AltBiomes;
+using Origins.NPCs.Defiled;
+using AltLibrary.Core.Generation;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -360,7 +363,7 @@ namespace Origins.World.BiomeData {
 							bool openAir = (k < Main.worldSurface && tile.WallType == WallID.None);
 							if (dist > strength) {
 								double d = Math.Sqrt(dist);
-								if (!openAir && d < baseStrength + basewallThickness && TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && tile.WallType != _wallType) {
+								if (!openAir && d < baseStrength + basewallThickness && TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && tile.WallType != _wallType && CanKillTile(l, k)) {
 									
                                     if (!Main.tileContainer[tile.TileType]) {
 										tile.HasTile = true;
@@ -514,6 +517,44 @@ namespace Origins.World.BiomeData {
 		public override int Music => Origins.Music.UndergroundDefiled;
 		public override bool IsBiomeActive(Player player) {
 			return base.IsBiomeActive(player);
+		}
+	}
+	public class Defiled_Wastelands_Alt_Biome : AltBiome {
+		public override string WorldIcon => "";//TODO: Redo tree icons for AltLib
+		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Riven";
+		public override Color OuterColor => new(170, 170, 170);
+		public override List<int> SpreadingTiles => new List<int> {
+			ModContent.TileType<Defiled_Grass>(),
+			ModContent.TileType<Defiled_Stone>(),
+			ModContent.TileType<Defiled_Sand>(),
+			ModContent.TileType<Defiled_Sandstone>(),
+			ModContent.TileType<Hardened_Defiled_Sand>(),
+			ModContent.TileType<Defiled_Ice>(),
+		};
+		public override void SetStaticDefaults() {
+			BiomeType = AltLibrary.BiomeType.Evil;
+			GenPassName.SetDefault("Defiled Wastelands");
+			BiomeGrass = ModContent.TileType<Defiled_Grass>();
+			BiomeStone = ModContent.TileType<Defiled_Stone>();
+			BiomeSand = ModContent.TileType<Defiled_Sand>();
+			BiomeSandstone = ModContent.TileType<Defiled_Sandstone>();
+			BiomeHardenedSand = ModContent.TileType<Hardened_Defiled_Sand>();
+			BiomeIce = ModContent.TileType<Defiled_Ice>();
+			BiomeOre = ModContent.TileType<Defiled_Ore>();
+			BiomeOreItem = ModContent.ItemType<Defiled_Ore_Item>();
+			AltarTile = ModContent.TileType<Defiled_Altar>();
+			BiomeChestTile = ModContent.TileType<Defiled_Dungeon_Chest>();
+			MimicType = ModContent.NPCType<Defiled_Mimic>();
+		}
+		public override EvilBiomeGenerationPass GetEvilBiomeGenerationPass() {
+			return new Defiled_Wastelands_Generation_Pass();
+		}
+		public class Defiled_Wastelands_Generation_Pass : EvilBiomeGenerationPass {
+			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
+
+			}
+
+			public override void PostGenerateEvil() { }
 		}
 	}
 }

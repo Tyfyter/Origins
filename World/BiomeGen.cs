@@ -146,6 +146,7 @@ namespace Origins {
             }
             genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
             Stack<Point> DefiledHearts = new Stack<Point>() { };
+            
             if(genIndex != -1 && altWorldEvil) {
                 bool dungeonLeft = dungeonX < Main.maxTilesX / 2;
                 int i2;
@@ -233,7 +234,7 @@ namespace Origins {
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = true;
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = true;
 
-                            Riven_Hive.Gen.StartHive_Old(startPos, (int)worldSurfaceLow - 10);
+                            Riven_Hive.Gen.StartHive(startPos, (int)worldSurfaceLow - 10);
 
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Granite] = gr;
                             TileID.Sets.CanBeClearedDuringGeneration[TileID.Marble] = mb;
@@ -686,7 +687,7 @@ namespace Origins {
                         Defiled_Hearts.Add(heart);
                     }
                 }));
-            }
+            }//*/
             tasks.Add(new PassLegacy("Stone Mask", (GenerationProgress progress, GameConfiguration _) => {
                 int i = 0;
 				while (i < 100) {

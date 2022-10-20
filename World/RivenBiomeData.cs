@@ -20,6 +20,9 @@ using Origins.Items.Other.Testing;
 using Origins.Water;
 using Origins.Backgrounds;
 using Terraria.GameContent.Bestiary;
+using AltLibrary.Common.AltBiomes;
+using Origins.NPCs.Riven;
+using AltLibrary.Core.Generation;
 
 namespace Origins.World.BiomeData {
 	public class Riven_Hive : ModBiome {
@@ -73,6 +76,162 @@ namespace Origins.World.BiomeData {
 		}
 		public static class Gen {
 			static int lesionCount = 0;
+			public enum FeatureType {
+				CHUNK,
+				CUSP,
+				CAVE
+			}
+			public static void StartHive(int i, int j) {
+				lesionCount = 0;
+				Vector2 pos = new Vector2(i, j);
+				ushort fleshBlockType = (ushort)ModContent.TileType<Riven_Flesh>();
+				ushort fleshWallType = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
+				Tile tile;
+				int X0 = int.MaxValue;
+				int X1 = 0;
+				int Y0 = int.MaxValue;
+				int Y1 = 0;
+				List<(int x, int y, FeatureType type, bool rightSide)> features = new();
+
+				float targetTwist = genRand.NextFloat(-0.5f, 0.5f);
+				PolarVec2 speed = new PolarVec2(8, genRand.NextFloat(-0.5f, 0.5f) + MathHelper.PiOver2);
+				double strength = 32;
+				double baseStrength = strength;
+				strength = Math.Pow(strength, 2);
+				double wallThickness = 24;
+				float decay = 1;
+				while (strength > 16) {
+					int minX = (int)(pos.X - (strength + wallThickness) * 0.5);
+					int maxX = (int)(pos.X + (strength + wallThickness) * 0.5);
+					int minY = (int)(pos.Y - (strength + wallThickness) * 0.5);
+					int maxY = (int)(pos.Y + (strength + wallThickness) * 0.5);
+					if (minX < 1) {
+						minX = 1;
+					}
+					if (maxX > Main.maxTilesX - 1) {
+						maxX = Main.maxTilesX - 1;
+					}
+					if (minY < 1) {
+						minY = 1;
+					}
+					if (maxY > Main.maxTilesY - 1) {
+						maxY = Main.maxTilesY - 1;
+					}
+					for (int x = minX; x < maxX; x++) {
+						for (int y = minY; y < maxY; y++) {
+							double wallOffset = (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1);
+							double dist = (Math.Pow(Math.Abs(x - pos.X), 2) + Math.Pow(Math.Abs(y - pos.Y), 2)) * wallOffset;
+							tile = Main.tile[x, y];
+							int compY = (int)(y + wallOffset);
+							if (dist > strength) {
+								double d = Math.Sqrt(dist);
+								if (d < baseStrength + wallThickness && TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && CanKillTile(x, y)) {
+									if (tile.WallType != fleshWallType) {
+										if (compY > j || (tile.HasTile && Main.tileSolid[tile.TileType])) {
+											tile.HasTile = true;
+											tile.TileType = fleshBlockType;
+											tile.WallType = fleshWallType;
+										} else if (tile.WallType != WallID.None) {
+											tile.WallType = fleshWallType;
+										}
+									}
+
+									if (d < baseStrength + 8 && genRand.Next(1500000 + (int)strength) < strength + 424) {
+										features.Add((x, y, genRand.NextBool() ? FeatureType.CUSP : FeatureType.CAVE, x > i));
+									}
+									//WorldGen.SquareTileFrame(l, k);
+								}
+								continue;
+							}
+							if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
+								if (compY > j && CanKillTile(x, y)) {
+									tile.HasTile = false;
+								} else if (tile.HasTile && Main.tileSolid[tile.TileType]) {
+									tile.TileType = fleshBlockType;
+								}
+								//WorldGen.SquareTileFrame(l, k);
+								if(compY > j || tile.WallType != WallID.None) tile.WallType = fleshWallType;
+								if (x > X1) {
+									X1 = x;
+								} else if (x < X0) {
+									X0 = x;
+								}
+								if (y > Y1) {
+									Y1 = y;
+								} else if (y < Y0) {
+									Y0 = y;
+								}
+								if (genRand.Next(3000000) < strength + 924) {
+									features.Add((x, y, FeatureType.CHUNK, false));
+								}
+							}
+						}
+					}
+					pos += (Vector2)speed;
+					if(OriginExtensions.LinearSmoothing(ref speed.Theta, targetTwist + MathHelper.PiOver2, 0.05f)) targetTwist = genRand.NextFloat(-0.5f, 0.5f);
+					strength *= decay;
+					speed.R = (float)Math.Min(speed.R, (float)Math.Sqrt(strength));
+					decay -= 0.01f;
+				}
+				if (X0 < 1) {
+					X0 = 1;
+				}
+				if (Y0 > Main.maxTilesX - 1) {
+					Y0 = Main.maxTilesX - 1;
+				}
+				if (X1 < 1) {
+					X1 = 1;
+				}
+				if (Y1 > Main.maxTilesY - 1) {
+					Y1 = Main.maxTilesY - 1;
+				}
+				for (int index = 0; index < features.Count; index++) {
+					(int x, int y, FeatureType type, bool rightSide) = features[index];
+					tile = Main.tile[x, y];
+					switch (type) {
+						case FeatureType.CHUNK:
+						GenRunners.SpikeRunner(x, y,
+							fleshBlockType,
+							Vec2FromPolar(genRand.NextFloat(MathHelper.TwoPi), genRand.NextFloat(4, 8)),
+							8,
+							twist: genRand.NextFloat(-2, 2) + MathHelper.Pi
+						);
+						break;
+						case FeatureType.CUSP:
+						GenRunners.SpikeRunner(x, y,
+							fleshBlockType,
+							Vec2FromPolar(genRand.NextFloat(-0.1f, 0.1f) + (rightSide ? MathHelper.Pi : 0), genRand.NextFloat(2, 4)),
+							8,
+							twist: genRand.NextFloat(-0.2f, 0.2f)
+						);
+						break;
+						case FeatureType.CAVE:
+						Defiled_Wastelands.Gen.DefiledVeinRunner(
+							x, y,
+							5,
+							Vec2FromPolar(genRand.NextFloat(-0.1f, 0.1f) + (rightSide ? MathHelper.Pi : 0), genRand.NextFloat(4, 8)),
+							12,
+							fleshBlockType,//fleshBlockType
+							6,
+							wallType: fleshWallType
+						);
+						pos = Defiled_Wastelands.Gen.DefiledVeinRunner(
+							x, y,
+							5,
+							Vec2FromPolar(genRand.NextFloat(-0.1f, 0.1f) + (rightSide ? 0 : MathHelper.Pi), genRand.NextFloat(4, 8)),
+							genRand.NextFloat(12, 24),
+							fleshBlockType,//fleshBlockType
+							6,
+							wallType:fleshWallType
+						).position;
+						HiveCave_Old((int)pos.X, (int)pos.Y, 0.5f);
+						break;
+					}
+					tile.HasTile = true;
+				}
+				WorldGen.RangeFrame(X0, Y0, X1, Y1);
+				NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
+			}
 			public static void StartHive_Old(int i, int j) {
 				const float strength = 2.4f;
 				const float wallThickness = 4f;
@@ -173,7 +332,7 @@ namespace Origins.World.BiomeData {
 							Main.tile[x, y].ResetToType(fleshID);
 						}
 						Main.tile[x, y].WallType = fleshWallID;
-						if (diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult) {
+						if ((diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult) && CanKillTile(x, y)) {
 							Main.tile[x, y].SetActive(false);
 							if (diff > 34 * sizeMult - 5 && Main.tile[x, y+1].TileIsType(fleshID)) {
 								lesionPlacementSpots.Enqueue(new Point(x, y));
@@ -313,6 +472,40 @@ namespace Origins.World.BiomeData {
 		public override int Music => Origins.Music.UndergroundRiven;
 		public override bool IsBiomeActive(Player player) {
 			return base.IsBiomeActive(player);
+		}
+	}
+	public class Riven_Hive_Alt_Biome : AltBiome {
+		public override string WorldIcon => "";//TODO: Redo tree icons for AltLib
+		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Riven";
+		public override Color OuterColor => new(30, 176, 255);
+		public override List<int> SpreadingTiles => new List<int> {
+			ModContent.TileType<Riven_Flesh>()
+		};
+		public override void SetStaticDefaults() {
+			BiomeType = AltLibrary.BiomeType.Evil;
+			GenPassName.SetDefault("{$Riven}");
+			//BiomeGrass = ModContent.TileType<Riven_Grass>();
+			BiomeStone = ModContent.TileType<Riven_Flesh>();
+			//BiomeSand = ModContent.TileType<Defiled_Sand>();
+			//BiomeSandstone = ModContent.TileType<Defiled_Sandstone>();
+			//BiomeHardenedSand = ModContent.TileType<Hardened_Defiled_Sand>();
+			//BiomeIce = ModContent.TileType<Riven_Ice>();
+			BiomeOre = ModContent.TileType<Infested_Ore>();
+			AltarTile = ModContent.TileType<Riven_Altar>();
+			BiomeChestTile = ModContent.TileType<Riven_Dungeon_Chest>();
+			MimicType = ModContent.NPCType<Riven_Mimic>();
+		}
+		public override EvilBiomeGenerationPass GetEvilBiomeGenerationPass() {
+			return new Riven_Hive_Generation_Pass();
+		}
+		public class Riven_Hive_Generation_Pass : EvilBiomeGenerationPass {
+			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
+				int y = (int)worldSurface - 100;
+				for (; !Main.tile[evilBiomePosition, y].HasTile; y++);
+				Riven_Hive.Gen.StartHive(evilBiomePosition, y);
+			}
+
+			public override void PostGenerateEvil() { }
 		}
 	}
 }
