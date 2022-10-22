@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Weak_Riven_Flesh : RivenTile {
+    public class Weak_Riven_Flesh : OriginTile, RivenTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;

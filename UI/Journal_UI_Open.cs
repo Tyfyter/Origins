@@ -19,8 +19,7 @@ using Terraria.UI.Gamepad;
 using Terraria.DataStructures;
 
 namespace Origins.UI {
-	public class Journal_UI_Button : UIState {
-		public static AutoCastingAsset<Texture2D> Texture;
+	public class Journal_UI_Open : UIState {
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			Main.inventoryScale = 0.85f;
 			int width = 30;
@@ -34,7 +33,7 @@ namespace Origins.UI {
 			}
 			Rectangle rectangle = new Rectangle(num, num2, width, num4);
 			bool flag = false;
-			Texture2D texture = Texture.Value;
+			Texture2D texture = Journal_UI_Button.Texture.Value;
 			Vector2 position = rectangle.Center.ToVector2();
 			Vector2 origin = new Vector2(15, 15);
 			Color white = Color.White;
@@ -51,11 +50,11 @@ namespace Origins.UI {
 					//IngameFancyUI.OpenUIState(BestiaryUI);
 					//BestiaryUI.OnOpenPage();
 				}
-				spriteBatch.Draw(texture, position, new Rectangle(0, 64, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0);
+				spriteBatch.Draw(texture, position, new Rectangle(0, 64, 30, 30), white, 0f, origin * 0, 1f, SpriteEffects.None, 0);
 			}
 			spriteBatch.Draw(texture, position, new Rectangle(0, 32, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0);
 			spriteBatch.Restart(SpriteSortMode.Immediate, transformMatrix: Main.UIScaleMatrix);
-			DrawData data = new(texture, position, new Rectangle(0, 0, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0) {
+			DrawData data = new(texture, position, new Rectangle(0, 0, 30, 30), white, 0f, origin * 2, 1f, SpriteEffects.None, 0) {
 				shader = Main.LocalPlayer.HeldItem.dye > 0 ? Main.LocalPlayer.HeldItem.dye : 81
 			};
 			Terraria.Graphics.Shaders.GameShaders.Armor.ApplySecondary(data.shader, Main.LocalPlayer, data);

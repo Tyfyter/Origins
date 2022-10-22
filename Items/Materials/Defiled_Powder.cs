@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dusts;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -74,7 +75,8 @@ namespace Origins.Items.Materials {
 						(Projectile.position.Y + Projectile.height > comparePos.Y) &&
 						(Projectile.position.Y < comparePos.Y + 16f) &&
 						Main.myPlayer == Projectile.owner || Main.tile[x, y].HasTile) {
-						WorldGen.Convert(x, y, OriginSystem.origin_conversion_type, 1);
+						AltLibrary.Core.ALConvert.Convert<Defiled_Wastelands_Alt_Biome>(x, y, 1);
+						//WorldGen.Convert(x, y, OriginSystem.origin_conversion_type, 1);
 					}
 				}
 			}

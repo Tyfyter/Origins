@@ -324,6 +324,7 @@ namespace Origins {
                 //Filters.Scene["BlackHole"].Load();
                 eyndumCoreUITexture = Assets.Request<Texture2D>("UI/CoreSlot");
                 eyndumCoreTexture = Assets.Request<Texture2D>("Items/Armor/Eyndum/Eyndum_Breastplate_Body_Core");
+                Journal_UI_Button.Texture = Assets.Request<Texture2D>("UI/Lore/Journal");
                 On.Terraria.Player.KeyDoubleTap += (On.Terraria.Player.orig_KeyDoubleTap orig, Player self, int keyDir) => {
                     orig(self, keyDir);
                     if (OriginClientConfig.Instance.SetBonusDoubleTap) {
@@ -440,6 +441,7 @@ namespace Origins {
             rasterizeShader = null;
             amebicProtectionShader = null;
             cellNoiseTexture = null;
+            Journal_UI_Button.Texture = null;
             OriginExtensions.drawPlayerItemPos = null;
             Tolruk.glowmasks = null;
             HelmetGlowMasks = null;

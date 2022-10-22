@@ -33,6 +33,7 @@ namespace Origins.NPCs.Riven {
         }
 		public override void OnSpawn(IEntitySource source) {
             NPC.velocity = new(NPC.ai[0], NPC.ai[1]);
+            NPC.netUpdate = true;
 		}
 		public override void AI() {
             if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.2f), NPC.Center);

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
@@ -237,9 +238,9 @@ namespace Origins.Projectiles {
                 break;
             }
         }
-		public static void ClentaminatorAI(Projectile projectile, int conversionType, int dustType, Color color) {
+		public static void ClentaminatorAI<TBiome>(Projectile projectile, int dustType, Color color) where TBiome : AltBiome {
 	        if (projectile.owner == Main.myPlayer) {
-		        WorldGen.Convert((int)(projectile.Center.X) / 16, (int)(projectile.Center.Y) / 16, conversionType, 2);
+                AltLibrary.Core.ALConvert.Convert<TBiome>((int)(projectile.Center.X) / 16, (int)(projectile.Center.Y) / 16, 2);
 	        }
 	        if (projectile.timeLeft > 133) {
 		        projectile.timeLeft = 133;

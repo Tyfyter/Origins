@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Grass : DefiledTile {
+    public class Defiled_Grass : OriginTile, DefiledTile {
 		public override void SetStaticDefaults() {
             TileID.Sets.Grass[Type] = true;
             TileID.Sets.NeedsGrassFraming[Type] = true;
@@ -52,7 +52,7 @@ namespace Origins.Tiles.Defiled {
             NetMessage.SendTileSquare(-1, i, j, 1);
 
         }
-        public override void RandomUpdate(int i, int j) {
+        /*public override void RandomUpdate(int i, int j) {
             int retryCount = 0;
             retry:
             if(retryCount++>100)return;
@@ -93,7 +93,7 @@ namespace Origins.Tiles.Defiled {
                 base.RandomUpdate(i,j);
                 break;
             }
-        }
+        }*/
 		/*public override int SaplingGrowthType(ref int style) {
 			style = 0;
 			return ModContent.TileType<Defiled_Tree_Sapling>();

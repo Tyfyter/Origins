@@ -2,6 +2,7 @@
 using Origins.Dusts;
 using Origins.Items.Weapons.Explosives;
 using Origins.Projectiles;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -85,7 +86,7 @@ namespace Origins.Items.Weapons.Ammo {
             Projectile.aiStyle = 0;
         }
         public override void AI() {
-            OriginGlobalProj.ClentaminatorAI(Projectile, OriginSystem.origin_conversion_type, ModContent.DustType<Solution_D>(), Color.GhostWhite);
+            OriginGlobalProj.ClentaminatorAI<Defiled_Wastelands_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), Color.GhostWhite);
         }
     }
     public class Teal_Solution : ModItem {
@@ -106,7 +107,7 @@ namespace Origins.Items.Weapons.Ammo {
             Projectile.aiStyle = 0;
         }
         public override void AI() {
-            OriginGlobalProj.ClentaminatorAI(Projectile, OriginSystem.origin_conversion_type + 1, ModContent.DustType<Solution_D>(), Color.Teal);
+            OriginGlobalProj.ClentaminatorAI<Riven_Hive_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), Color.Teal);
         }
     }
 }

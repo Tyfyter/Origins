@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Hardened_Defiled_Sand : DefiledTile {
+    public class Hardened_Defiled_Sand : OriginTile, DefiledTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;

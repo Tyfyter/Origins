@@ -73,8 +73,8 @@ namespace Origins {
                 self.type = realID;
             };
             On.Terraria.NPC.GetMeleeCollisionData += NPC_GetMeleeCollisionData;
-            On.Terraria.WorldGen.GERunner += OriginSystem.GERunnerHook;
-            On.Terraria.WorldGen.Convert += OriginSystem.ConvertHook;
+            //On.Terraria.WorldGen.GERunner += OriginSystem.GERunnerHook;
+            //On.Terraria.WorldGen.Convert += OriginSystem.ConvertHook;
             Defiled_Tree.Load();
             OriginSystem worldInstance = MC.GetInstance<OriginSystem>();
             if (!(worldInstance is null)) {

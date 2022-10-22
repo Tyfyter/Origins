@@ -22,6 +22,7 @@ using static Tyfyter.Utils.UITools;
 using System.Diagnostics;
 using System.IO;
 using SysDraw = System.Drawing;
+using Terraria.GameInput;
 
 namespace Origins {
     public partial class OriginSystem : ModSystem {
@@ -58,7 +59,17 @@ namespace Origins {
             //but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
             Origins.instance.LateLoad();
         }
-        public static int GemStaffRecipeGroupID { get; private set; }
+		public override void PostUpdateInput() {
+			if (PlayerInput.Triggers.JustPressed.Inventory) {
+				if (journalUI.CurrentState is Journal_UI_Open) {
+                    PlayerInput.Triggers.Current.Inventory = false;
+                    PlayerInput.Triggers.JustPressed.Inventory = false;
+                    Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuClose);
+                    journalUI.SetState(null);
+                }
+			}
+		}
+		public static int GemStaffRecipeGroupID { get; private set; }
         public static int DeathweedRecipeGroupID { get; private set; }
         public override void AddRecipeGroups() {
             RecipeGroup group = new RecipeGroup(() => "Gem Staves", new int[] {
@@ -147,6 +158,7 @@ namespace Origins {
                     },
                     InterfaceScaleType.UI) { Active = Main.playerInventory }
                 );
+                if (journalUI.CurrentState is Journal_UI_Open) layers[inventoryIndex].Active = false;
             }
         }
         public override void PreUpdateProjectiles() {

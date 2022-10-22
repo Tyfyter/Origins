@@ -328,14 +328,16 @@ namespace Origins.World.BiomeData {
 						if (diff > 35 * sizeMult) {
 							continue;
 						}
-						if (Main.tile[x, y].WallType != fleshWallID) {
-							Main.tile[x, y].ResetToType(fleshID);
-						}
-						Main.tile[x, y].WallType = fleshWallID;
-						if ((diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult) && OriginExtensions.IsTileReplacable(x, y)) {
-							Main.tile[x, y].SetActive(false);
-							if (diff > 34 * sizeMult - 5 && Main.tile[x, y+1].TileIsType(fleshID)) {
-								lesionPlacementSpots.Enqueue(new Point(x, y));
+						if (OriginExtensions.IsTileReplacable(x, y)) {
+							if (Main.tile[x, y].WallType != fleshWallID) {
+								Main.tile[x, y].ResetToType(fleshID);
+							}
+							Main.tile[x, y].WallType = fleshWallID;
+							if ((diff < 35 * sizeMult - 5 || ((y - j) * (y - j)) + (x - i) * (x - i) < 25 * sizeMult * sizeMult)) {
+								Main.tile[x, y].SetActive(false);
+								if (diff > 34 * sizeMult - 5 && Main.tile[x, y + 1].TileIsType(fleshID)) {
+									lesionPlacementSpots.Enqueue(new Point(x, y));
+								}
 							}
 						}
 					}

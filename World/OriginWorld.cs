@@ -521,6 +521,7 @@ namespace Origins {
             if(Main.tile[i+1,j+1].HasTile) count++;
             return count;
         }
+        /*
         /// <summary>
         /// the first clentaminator conversion type from Origins (from ASCII 'Org')
         /// </summary>
@@ -600,6 +601,7 @@ namespace Origins {
                 break;
             }
         }
+        //*/
         internal static void UpdateTotalEvilTiles() {
 	        totalDefiled = totalDefiled2;
 	        tDefiled = (byte)Math.Round((totalDefiled / (float)WorldGen.totalSolid2) * 100f);
