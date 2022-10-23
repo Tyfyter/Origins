@@ -392,7 +392,7 @@ namespace Origins {
 
         }
     }
-    public record SpriteBatchState(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix transformMatrix = null);
+    public record SpriteBatchState(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix transformMatrix = default);
     public abstract class AnimatedModItem : ModItem {
         public abstract DrawAnimation Animation { get; }
         public virtual Color? GlowmaskTint { get => null; }
@@ -1034,11 +1034,11 @@ namespace Origins {
             spriteBatch.Begin(sortMode, blendState ?? BlendState.AlphaBlend, samplerState ?? SamplerState.LinearClamp, DepthStencilState.None, rasterizerState ?? Main.Rasterizer, effect, transformMatrix ?? Main.GameViewMatrix.TransformationMatrix);
         }
         private static FieldInfo _sortMode;
-        internal static FieldInfo sortMode => _sortMode ??= typeof(UnifiedRandom).GetField("sortMode", BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static FieldInfo sortMode => _sortMode ??= typeof(SpriteBatch).GetField("sortMode", BindingFlags.NonPublic | BindingFlags.Instance);
         private static FieldInfo _customEffect;
-        internal static FieldInfo customEffect => _customEffect ??= typeof(UnifiedRandom).GetField("customEffect", BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static FieldInfo customEffect => _customEffect ??= typeof(SpriteBatch).GetField("customEffect", BindingFlags.NonPublic | BindingFlags.Instance);
         private static FieldInfo _transformMatrix;
-        internal static FieldInfo transformMatrix => _transformMatrix ??= typeof(UnifiedRandom).GetField("transformMatrix", BindingFlags.NonPublic | BindingFlags.Instance);
+        internal static FieldInfo transformMatrix => _transformMatrix ??= typeof(SpriteBatch).GetField("transformMatrix", BindingFlags.NonPublic | BindingFlags.Instance);
         public static SpriteBatchState GetState(this SpriteBatch spriteBatch) {
             return new SpriteBatchState(
                 (SpriteSortMode)sortMode.GetValue(spriteBatch),
@@ -1046,8 +1046,8 @@ namespace Origins {
                 spriteBatch.GraphicsDevice.SamplerStates[0],
                 spriteBatch.GraphicsDevice.DepthStencilState,
                 spriteBatch.GraphicsDevice.RasterizerState,
-                (Effect)sortMode.GetValue(customEffect),
-                (Matrix)sortMode.GetValue(transformMatrix)
+                (Effect)customEffect.GetValue(spriteBatch),
+                (Matrix)transformMatrix.GetValue(spriteBatch)
             );
         }
         public static void Restart(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
