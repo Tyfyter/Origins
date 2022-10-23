@@ -325,6 +325,8 @@ namespace Origins {
                 eyndumCoreUITexture = Assets.Request<Texture2D>("UI/CoreSlot");
                 eyndumCoreTexture = Assets.Request<Texture2D>("Items/Armor/Eyndum/Eyndum_Breastplate_Body_Core");
                 Journal_UI_Button.Texture = Assets.Request<Texture2D>("UI/Lore/Journal");
+                Journal_UI_Open.BackTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Use_Back");
+                Journal_UI_Open.PageTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Use");
                 On.Terraria.Player.KeyDoubleTap += (On.Terraria.Player.orig_KeyDoubleTap orig, Player self, int keyDir) => {
                     orig(self, keyDir);
                     if (OriginClientConfig.Instance.SetBonusDoubleTap) {

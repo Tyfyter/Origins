@@ -47,7 +47,8 @@ namespace Origins.UI {
 					Main.npcChatText = "";
 					Main.mouseLeftRelease = false;
 					SoundEngine.PlaySound(SoundID.MenuTick);
-					OriginSystem.instance.journalUI.SetState(new Journal_UI_Open());
+					IngameFancyUI.OpenUIState(new Journal_UI_Open());
+					//OriginSystem.instance.journalUI.SetState(new Journal_UI_Open());
 					//IngameFancyUI.OpenUIState(BestiaryUI);
 					//BestiaryUI.OnOpenPage();
 				}

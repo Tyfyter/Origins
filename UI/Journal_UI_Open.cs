@@ -20,50 +20,27 @@ using Terraria.DataStructures;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {
+		public static AutoCastingAsset<Texture2D> BackTexture;
+		public static AutoCastingAsset<Texture2D> PageTexture;
+		UIElement baseElement;
+		public override void OnInitialize() {
+			this.RemoveAllChildren();
+			baseElement = new UIElement();
+			baseElement.Width.Set(0f, 0.875f);
+			baseElement.MaxWidth.Set(900f, 0f);
+			baseElement.MinWidth.Set(700f, 0f);
+			baseElement.Top.Set(190f, 0f);
+			baseElement.Height.Set(-310f, 1f);
+			baseElement.HAlign = 0.5f;
+			Append(baseElement);
+		}
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
-			Main.inventoryScale = 0.85f;
-			int width = 30;
-			int num4 = 30;
-			int num = 566;
-			int num2 = 244 + num4 + 4;
-			if ((Main.LocalPlayer.chest != -1 || Main.npcShop > 0) && !Main.recBigList) {
-				num2 += 168;
-				Main.inventoryScale = 0.755f;
-				num += 5;
-			}
-			Rectangle rectangle = new Rectangle(num, num2, width, num4);
-			bool flag = false;
-			Texture2D texture = Journal_UI_Button.Texture.Value;
-			Vector2 position = rectangle.Center.ToVector2();
-			Vector2 origin = new Vector2(15, 15);
-			Color white = Color.White;
-			if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
-				Main.LocalPlayer.mouseInterface = true;
-				flag = true;
-				if (Main.mouseLeft && Main.mouseLeftRelease) {
-					Main.LocalPlayer.SetTalkNPC(-1);
-					Main.npcChatCornerItem = 0;
-					Main.npcChatText = "";
-					Main.mouseLeftRelease = false;
-					SoundEngine.PlaySound(SoundID.MenuTick);
-					OriginSystem.instance.journalUI.SetState(new Journal_UI_Open());
-					//IngameFancyUI.OpenUIState(BestiaryUI);
-					//BestiaryUI.OnOpenPage();
-				}
-				spriteBatch.Draw(texture, position, new Rectangle(0, 64, 30, 30), white, 0f, origin * 0, 1f, SpriteEffects.None, 0);
-			}
-			spriteBatch.Draw(texture, position, new Rectangle(0, 32, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0);
-			spriteBatch.Restart(SpriteSortMode.Immediate, transformMatrix: Main.UIScaleMatrix);
-			DrawData data = new(texture, position, new Rectangle(0, 0, 30, 30), white, 0f, origin * 2, 1f, SpriteEffects.None, 0) {
-				shader = Main.LocalPlayer.HeldItem.dye > 0 ? Main.LocalPlayer.HeldItem.dye : 81
-			};
-			Terraria.Graphics.Shaders.GameShaders.Armor.ApplySecondary(data.shader, Main.LocalPlayer, data);
-			data.Draw(spriteBatch);
-			spriteBatch.Restart(transformMatrix: Main.UIScaleMatrix);
-			//UILinkPointNavigator.SetPosition(15001, position);
-			if (!Main.mouseText && flag) {
-				Main.instance.MouseText(Language.GetTextValue("Mods.Origins.Interface.Journal"), 0, 0);
-			}
+			SpriteBatchState spriteBatchState = spriteBatch.GetState();
+			spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp);
+			Rectangle bounds = baseElement.GetDimensions().ToRectangle();
+			spriteBatch.Draw(BackTexture, bounds, Color.White);
+			spriteBatch.Draw(PageTexture, bounds, Color.White);
+			spriteBatch.Restart(spriteBatchState);
 		}
 	}
 }

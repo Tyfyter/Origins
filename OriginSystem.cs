@@ -60,14 +60,6 @@ namespace Origins {
             Origins.instance.LateLoad();
         }
 		public override void PostUpdateInput() {
-			if (PlayerInput.Triggers.JustPressed.Inventory) {
-				if (journalUI.CurrentState is Journal_UI_Open) {
-                    PlayerInput.Triggers.Current.Inventory = false;
-                    PlayerInput.Triggers.JustPressed.Inventory = false;
-                    Terraria.Audio.SoundEngine.PlaySound(SoundID.MenuClose);
-                    journalUI.SetState(null);
-                }
-			}
 		}
 		public static int GemStaffRecipeGroupID { get; private set; }
         public static int DeathweedRecipeGroupID { get; private set; }
@@ -145,7 +137,7 @@ namespace Origins {
                 layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
                     "Origins: Set Bonus UI",
                     delegate {
-                        setBonusUI?.Draw(Main.spriteBatch, new GameTime());
+                        setBonusUI?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
                         return true;
                     },
                     InterfaceScaleType.UI) { Active = Main.playerInventory }
@@ -153,12 +145,11 @@ namespace Origins {
                 layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
                     "Origins: Journal UI",
                     delegate {
-                        journalUI?.Draw(Main.spriteBatch, new GameTime());
+                        journalUI?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
                         return true;
                     },
                     InterfaceScaleType.UI) { Active = Main.playerInventory }
                 );
-                if (journalUI.CurrentState is Journal_UI_Open) layers[inventoryIndex].Active = false;
             }
         }
         public override void PreUpdateProjectiles() {

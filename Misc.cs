@@ -392,6 +392,7 @@ namespace Origins {
 
         }
     }
+    public record SpriteBatchState(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix transformMatrix = null);
     public abstract class AnimatedModItem : ModItem {
         public abstract DrawAnimation Animation { get; }
         public virtual Color? GlowmaskTint { get => null; }
@@ -1031,6 +1032,27 @@ namespace Origins {
         public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
             spriteBatch.End();
             spriteBatch.Begin(sortMode, blendState ?? BlendState.AlphaBlend, samplerState ?? SamplerState.LinearClamp, DepthStencilState.None, rasterizerState ?? Main.Rasterizer, effect, transformMatrix ?? Main.GameViewMatrix.TransformationMatrix);
+        }
+        private static FieldInfo _sortMode;
+        internal static FieldInfo sortMode => _sortMode ??= typeof(UnifiedRandom).GetField("sortMode", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static FieldInfo _customEffect;
+        internal static FieldInfo customEffect => _customEffect ??= typeof(UnifiedRandom).GetField("customEffect", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static FieldInfo _transformMatrix;
+        internal static FieldInfo transformMatrix => _transformMatrix ??= typeof(UnifiedRandom).GetField("transformMatrix", BindingFlags.NonPublic | BindingFlags.Instance);
+        public static SpriteBatchState GetState(this SpriteBatch spriteBatch) {
+            return new SpriteBatchState(
+                (SpriteSortMode)sortMode.GetValue(spriteBatch),
+                spriteBatch.GraphicsDevice.BlendState,
+                spriteBatch.GraphicsDevice.SamplerStates[0],
+                spriteBatch.GraphicsDevice.DepthStencilState,
+                spriteBatch.GraphicsDevice.RasterizerState,
+                (Effect)sortMode.GetValue(customEffect),
+                (Matrix)sortMode.GetValue(transformMatrix)
+            );
+        }
+        public static void Restart(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
+            spriteBatch.End();
+            spriteBatch.Begin(sortMode, blendState ?? spriteBatchState.blendState, samplerState ?? spriteBatchState.samplerState, spriteBatchState.depthStencilState, rasterizerState ?? spriteBatchState.rasterizerState, effect ?? spriteBatchState.effect, transformMatrix ?? spriteBatchState.transformMatrix);
         }
         public static int RandomRound(this UnifiedRandom random, float value) {
             float amount = value % 1;
