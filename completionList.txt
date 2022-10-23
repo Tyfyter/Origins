@@ -48,18 +48,12 @@ BOSSES AND MINI-BOSSES:
 ($, ^2/3) Fiberglass Weaver !!!
 (#, ^2) Primordial Amoeba !!!
 
-(X) Aurelian Bouncer
-(X) Aurelian Clinger
-(X) Aurelian Golem
-(X) Aurelian Merger
-(X) Aurelian Puppet
-(X) Aurelian Worm
 (X) Mad Maniac
 (%2, X) Mildew Carrion
-(X) Severus, the Dark One
 
 (X) Alien Queen
 (X) Duskord
+(X) Severus, the Dark One
 
 (%3) Origins final boss
 (#, $, ^2) I.C.A.R.U.S
@@ -125,10 +119,10 @@ ENEMY NPCS:
 (^) Amoeba Bugger
 (^) Barnacle Mound
 (#, ^2) Carpalfish*
-(%3) Defiled Clipper (feel like a more unique aquatic enemy could be made)
+(%3) Defiled Clipper (feel like a more unique aquatic enemy could be made) !!!
 (#3, ^2/4) Defiled Hunter
 (@5, #3, %2) Defiled Mimic
-(%3) Defiled Reaper (currently just a namespace. Could be removed)
+(%3) Defiled Reaper (currently just a namespace. Could be removed) !!!
 (^) Flagellant
 (#, ^2) Mildew Creeper
 (#2?, ^2) Mitoworm !!!
@@ -163,7 +157,7 @@ EVENTS:
 (#, %2) Defiled Invasion
 (#, %2) Riven Invasion
 
-(#, %2) Seer Patrol
+(#, %2) Seer Patrol !!!
 ---
 
 STATUS EFFECTS:
@@ -212,7 +206,7 @@ NPC DIALOGUE:
 
 ARMOR:
 ---
-(^) Cryosten Armor (Wiki needs work)*
+(^) Cryosten Armor*
 (^) Defiled Armor*
 (#3, ^2) Felnum Armor
 (^) Fiberglass Armor
@@ -236,9 +230,6 @@ ARMOR:
 (X) Nanite Armor
 (#, ^2) Nova Armor
 (X) Locus Armor
-
-(X) Bulwark of the Abyss
-(X) Daedal Auspice
 ---
 
 
@@ -249,7 +240,6 @@ ACCESSORIES:
 (^) Air Tank*
 (@5, #) All-Knowing Mind*
 (^) Blast-Resistant Plate*
-(X) Bluelight Glasses
 (^) Bomb Charm*
 (^) Bomb Handling Device*
 (^) Cybernetic Brain*
@@ -261,14 +251,12 @@ ACCESSORIES:
 (#, ^2) Gun Glove
 (X) Locus Control Tuner
 (#3, ^2) Mitosis !!!
-(X) Moon Shoes
 (#, ^2) Olid Organ*
 (#, ^2) Parasitic Influence* !!!
 (^) Pneumatic Bomb Thrower*
 (^) Return To Sender*
 (#, ^2) Sonar Visor*
 (^) Freeze Frame*
-(X) Stasis Field
 (%3, X) Sun Medallion
 (#, ^2) Symbiote Skull !!!
 
@@ -316,9 +304,9 @@ ACCESSORIES:
 VANITY:
 ---
 (X) Alien Queen Head
-(#, ^2) Defiled Amalgamation Mask !!!
+(^) Defiled Amalgamation Mask
 (X) Duskord Mask
-(#, ^2) Fiberglass Weaver Head !!!
+(^) Fiberglass Weaver Head
 (X) I.C.A.R.U.S. Mask
 (X) Mad Maniac Wig
 (X) Mildew Carrion Mask
@@ -332,7 +320,6 @@ VANITY:
 (X) Decay Protector Set
 (X) Gore Protector Set
 (#, ^2) Trimmed Demon Horns
-(X) T1-T4N Set
 
 (^) Tyfyter's Set
 (X) The First Dream
@@ -462,7 +449,7 @@ MAGIC WEAPONS:
 (^) Infusion
 (^) Low Signal
 (^) Magnus
-(@2 (I guess I do have OCD), #) Slashswarm !!!
+(#, ^2 (uses amoeba bubble)) Slashswarm !!!
 (^) Tones of Agony
 (#, ^2) Transfusion !!!
 
@@ -489,7 +476,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 ---
-(♦ (see Discord convo)) Amebolize Incantation !!!
+(^ (I'll pass it for now, but I may wanna rework in future)) Amebolize Incantation
 (^) Bone Latcher
 (^) Brainy Staff
 (#, ^2) Desert Crown !!!
@@ -570,7 +557,6 @@ TILES:
 ---
 (X) Absorber Culture
 (#, ^2) Amoeba Fluid !!!
-(X) Ancient Stone Brick
 (#3, ^2) Batholith*
 (^) Bleeding Obsidian
 (X) Cubekon Altar
@@ -611,7 +597,6 @@ TILES:
 (X) Defiled Water Fountain
 (#3, ^2) Riven Dungeon Chest !!!
 (X) Riven Water Fountain
-(X) Ruins Chest
 
 (X) Fabricator
 (X) Omni-Printer
@@ -631,7 +616,6 @@ TILES:
 (@, #2-4) Music Box (Defiled Wastelands) !!!
 (X) Music Box (Dusk)
 (X) Music Box (Riven Hive) !!!
-(X) Music Box (Ruins)
 
 (#, ^2) Defiled Amalgamation Trophy !!!
 (#, ^2) Defiled Amalgamation Relic !!!
@@ -747,7 +731,6 @@ MOUNTS & PETS:
 
 (#, ^2) Chew Toy (Chee Toy, also consider implementing soon)
 (X) Familiar Dog Bone (Rufus)
-(X, ☻) Fertilizer (Peashooter, Sunflower, Plantern, and Cattail)
 ---
 
 
@@ -761,8 +744,8 @@ AMMO:
 (^) Peatball*
 
 (#, ^2) Acid Harpoon
-(#2, ^2) Giant Metal Slug
-(#, ^2) Teal Solution !!!
+(^) Giant Metal Slug
+(^) Teal Solution
 (^) Thermite Canister
 (^) White Solution
 
@@ -776,13 +759,17 @@ AMMO:
 
 UI:
 ---
-fiberglass bestiary background
-fiberglass bestiary icon
-defiled bestiary background
-riven bestiary background
-riven bestiary icon
-dusk bestiary background
-dusk bestiary icon
+(X) Defiled Map/Bestiary Backdrop
+(#, ^2) Defiled Icon
+(X) Dusk Map/Bestiary Backdrop
+(X) Dusk Icon
+(X) Fiberglass Map/Bestiary Backdrop
+(X) Fiberglass Icon
+(X) Riven Map/Bestiary Backdrop
+(#, ^2) Riven Icon
+
+(@5, ^3) 30x30 Origins Icon
+(#, ^2) Origins Mod Browser Logo
 ---
 
 MUSIC:
@@ -795,19 +782,17 @@ MUSIC:
 (^) Defiled Wastelands - Mimic Route
 (O) Fiberglass Caves !!!
 (^) Riven Hive
-(O) Ruins !!!
 (^) The Dusk
 
 (X) Alien Queen
-(^) Defiled Amalgamation
+(O) Defiled Amalgamation !!!
 (X) Duskord
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S
 (X) Mad Maniac
 (X) Mildew Carrion
 (X) Quantux
-(X) Restless Flame
-(#, ^2) Primordial Amoeba !!!
+(O) Primordial Amoeba !!!
 (X) Severus
 (X) Void Wyrm
 
@@ -815,5 +800,5 @@ MUSIC:
 (X) Crimson Invasion
 (X) Defiled Invasion
 (X) Riven Invasion
-(X) Seer Chase
+(O) Seer Chase
 ---
