@@ -89,6 +89,9 @@
 			Journal: Journal
 		}
 		Journal: {
+			Name:{
+				
+			}
 			Indicator:{
 				Whispers:"You hear whispers nearby..."
 			}

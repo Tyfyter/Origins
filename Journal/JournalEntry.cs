@@ -12,6 +12,8 @@ namespace Origins.Journal {
 		public virtual ArmorShaderData TextShader => null;
 		protected sealed override void Register() {
 			ModTypeLookup<JournalEntry>.Register(this);
+			if (Journal_Registry.Entries is null) Journal_Registry.Entries = new Dictionary<string, JournalEntry>();
+			Journal_Registry.Entries.Add(TextKey, this);
 		}
 	}
 }

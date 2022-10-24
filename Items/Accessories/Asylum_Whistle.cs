@@ -23,7 +23,7 @@ namespace Origins.Items.Accessories {
         }
     }
 	public class Asylum_Whistle_Entry : JournalEntry {
-        public override string TextKey => "Mods.Origins.Journal.Asylum_Whistle";
+        public override string TextKey => "Asylum_Whistle";
         public override ArmorShaderData TextShader => null;
 	}
 }

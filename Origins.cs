@@ -47,6 +47,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Default;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
+using Terraria.UI.Chat;
 using Terraria.Utilities;
 using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
@@ -341,6 +342,10 @@ namespace Origins {
                     AutoLoadGores.AddGore("Origins/" + gore.Replace(".rawimg", null), this);
                 }
             }
+            ChatManager.Register<Journal_Link_Handler>(new string[]{
+                "journal",
+                "j"
+            });
             SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
             InspectItemKey = KeybindLoader.RegisterKeybind(this, "Inspect Item", "Mouse3");
             Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
@@ -444,6 +449,7 @@ namespace Origins {
             amebicProtectionShader = null;
             cellNoiseTexture = null;
             Journal_UI_Button.Texture = null;
+            Journal.Journal_Registry.Entries = null;
             OriginExtensions.drawPlayerItemPos = null;
             Tolruk.glowmasks = null;
             HelmetGlowMasks = null;

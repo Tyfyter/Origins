@@ -20,6 +20,8 @@ using Terraria.DataStructures;
 using ReLogic.Graphics;
 using System.Text.RegularExpressions;
 using System.Text;
+using Origins.Journal;
+using Terraria.Graphics.Shaders;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {
@@ -30,6 +32,8 @@ namespace Origins.UI {
 		float yMargin;
 		float xMargin;
 		int pageOffset = 0;
+		Journal_UI_Mode mode = Journal_UI_Mode.Normal_Page;
+		ArmorShaderData currentEffect = null;
 		public override void OnInitialize() {
 			this.RemoveAllChildren();
 			baseElement = new UIElement();
@@ -43,7 +47,8 @@ namespace Origins.UI {
 			Recalculate();
 			xMargin = baseElement.GetDimensions().Width * 0.1f;
 			yMargin = baseElement.GetDimensions().Height * 0.1f;
-			SetText(loremIpsum);
+			//SetText(loremIpsum);
+			Switch_Mode(Journal_UI_Mode.Index_Page, null);
 		}
 		public void SetText(string text) {
 			CalculatedStyle bounds = baseElement.GetDimensions();
@@ -56,7 +61,7 @@ namespace Origins.UI {
 			float x = font.MeasureString(" ").X;
 			float snippetScale;
 			float num3 = 0f;
-			List<TextSnippet> snippets = ChatManager.ParseMessage(text, Color.White);
+			List<TextSnippet> snippets = ChatManager.ParseMessage(text, Color.Black);
 
 			List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
 			StringBuilder currentText = new StringBuilder();
@@ -142,167 +147,374 @@ namespace Origins.UI {
 			finishPage();
 			pages = snippetPages.ToArray();
 		}
+		public void Switch_Mode(Journal_UI_Mode newMode, string key) {
+			switch (mode = newMode) {
+				case Journal_UI_Mode.Normal_Page:
+				currentEffect = Journal_Registry.Entries[key].TextShader;
+				SetText(Language.GetTextValue("Mods.Origins.Journal."+key));
+				break;
+				case Journal_UI_Mode.Index_Page:
+				List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
+				List<TextSnippet> currentPage = new List<TextSnippet>();
+				int lineCount = 0;
+				foreach (var entry in Journal_Registry.Entries.Keys) {
+					currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(entry, Color.Black));
+					currentPage.Add(new TextSnippet("\n"));
+					if (++lineCount > 16) {
+						snippetPages.Add(currentPage.ToArray());
+						currentPage = new List<TextSnippet>();
+						lineCount = 0;
+					}
+				}
+				snippetPages.Add(currentPage.ToArray());
+				pages = snippetPages.ToArray();
+				break;
+				case Journal_UI_Mode.Search_Page:
+
+				break;
+			}
+		}
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			SpriteBatchState spriteBatchState = spriteBatch.GetState();
 			spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp);
 			Rectangle bounds = baseElement.GetDimensions().ToRectangle();
 			spriteBatch.Draw(BackTexture, bounds, Color.White);
 			spriteBatch.Draw(PageTexture, bounds, Color.White);
-			int pageCount = pages?.Length??0;
-			/*
-			ChatManager.DrawColorCodedString(spriteBatch,
-					FontAssets.MouseText.Value,
-					loremIpsum,
-					new Vector2(bounds.X + xMargin, bounds.Y + yMargin),
-					Color.Red,
-					0,
-					Vector2.Zero,
-					Vector2.One,
-					bounds.Width * 0.5f - xMargin * 2
-				);//*/
-			for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
-				ChatManager.DrawColorCodedString(spriteBatch,
-					FontAssets.MouseText.Value,
-					pages[i + pageOffset],
-					new Vector2(bounds.X + (i * bounds.Width * 0.5f) + xMargin, bounds.Y + yMargin),
-					Color.Black,
-					0,
-					Vector2.Zero,
-					Vector2.One,
-					out _,
-					bounds.Width * 0.5f - xMargin * 2
-				);
-			}
-			if (pageOffset < pageCount - 2) {
-				Vector2 position = new Vector2(bounds.X + bounds.Width - xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
-				Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
-				//temp highlight
-				if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
-					if (Main.mouseLeft && Main.mouseLeftRelease) {
-						pageOffset += 2;
+			switch (mode) {
+				case Journal_UI_Mode.Normal_Page: {
+					int pageCount = pages?.Length ?? 0;
+					spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp, effect:currentEffect?.Shader);
+					/*
+					ChatManager.DrawColorCodedString(spriteBatch,
+							FontAssets.MouseText.Value,
+							loremIpsum,
+							new Vector2(bounds.X + xMargin, bounds.Y + yMargin),
+							Color.Red,
+							0,
+							Vector2.Zero,
+							Vector2.One,
+							bounds.Width * 0.5f - xMargin * 2
+						);
+					//*/
+					for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
+						ChatManager.DrawColorCodedString(spriteBatch,
+							FontAssets.MouseText.Value,
+							pages[i + pageOffset],
+							new Vector2(bounds.X + (i * bounds.Width * 0.5f) + xMargin, bounds.Y + yMargin),
+							Color.Black,
+							0,
+							Vector2.Zero,
+							Vector2.One,
+							out _,
+							bounds.Width * 0.5f - xMargin * 2
+						);
 					}
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position + new Vector2(0, 2),
-						null,
-						new Color(1f, 1f, 0f, 0f),
-						-MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position - new Vector2(0, 2),
-						null,
-						new Color(1f, 1f, 0f, 0f),
-						-MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position + new Vector2(2, 0),
-						null,
-						new Color(1f, 1f, 0f, 0f),
-						-MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position - new Vector2(2, 0),
-						null,
-						new Color(1f, 1f, 0f, 0f),
-						-MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-				}
-				spriteBatch.Draw(
-					TextureAssets.Item[ItemID.WoodenArrow].Value,
-					position,
-					null,
-					Color.White,
-					-MathHelper.PiOver2,
-					new Vector2(7, 16),
-					1,
-					0,
-					0
-				);
-			}
-			if (pageOffset > 0) {
-				Vector2 position = new Vector2(bounds.X + xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
-				Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
-				//temp highlight
-				if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
-					if (Main.mouseLeft && Main.mouseLeftRelease) {
-						pageOffset = Math.Max(pageOffset - 2, 0);
+					if (pageOffset < pageCount - 2) {
+						Vector2 position = new Vector2(bounds.X + bounds.Width - xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
+						Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
+						//temp highlight
+						if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+							if (Main.mouseLeft && Main.mouseLeftRelease) {
+								pageOffset += 2;
+							}
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+						}
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position,
+							null,
+							Color.White,
+							-MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
 					}
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position + new Vector2(0, 2),
-						null,
-						new Color(1f, 1f, 0f, 0f),
-						MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position - new Vector2(0, 2),
-						null,
-						new Color(1f, 1f, 0f, 0f),
-						MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position + new Vector2(2, 0),
-						null,
-						new Color(1f, 1f, 0f, 0f),
-						MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
-					spriteBatch.Draw(
-						TextureAssets.Item[ItemID.WoodenArrow].Value,
-						position - new Vector2(2, 0),
-						null,
-						new Color(1f, 1f, 0f, 0f),
-						MathHelper.PiOver2,
-						new Vector2(7, 16),
-						1,
-						0,
-						0
-					);
+					if (pageOffset > 0) {
+						Vector2 position = new Vector2(bounds.X + xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
+						Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
+						//temp highlight
+						if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+							if (Main.mouseLeft && Main.mouseLeftRelease) {
+								pageOffset = Math.Max(pageOffset - 2, 0);
+							}
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+						}
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position,
+							null,
+							Color.White,
+							MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+					}
+					break;
 				}
-				spriteBatch.Draw(
-					TextureAssets.Item[ItemID.WoodenArrow].Value,
-					position,
-					null,
-					Color.White,
-					MathHelper.PiOver2,
-					new Vector2(7, 16),
-					1,
-					0,
-					0
-				);
+				case Journal_UI_Mode.Index_Page: {
+					int pageCount = pages?.Length ?? 0;
+					spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp, effect: currentEffect?.Shader);
+					/*
+					ChatManager.DrawColorCodedString(spriteBatch,
+							FontAssets.MouseText.Value,
+							loremIpsum,
+							new Vector2(bounds.X + xMargin, bounds.Y + yMargin),
+							Color.Red,
+							0,
+							Vector2.Zero,
+							Vector2.One,
+							bounds.Width * 0.5f - xMargin * 2
+						);
+					//*/
+					for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
+						ChatManager.DrawColorCodedString(spriteBatch,
+							FontAssets.MouseText.Value,
+							pages[i + pageOffset],
+							new Vector2(bounds.X + (i * bounds.Width * 0.5f) + xMargin, bounds.Y + yMargin),
+							Color.Black,
+							0,
+							Vector2.Zero,
+							Vector2.One,
+							out int hoveredSnippet,
+							bounds.Width * 0.5f - xMargin * 2
+						);
+						if (hoveredSnippet >= 0) {
+							if (pages[i + pageOffset][hoveredSnippet] is Journal_Link_Handler.Journal_Link_Snippet currentSnippet) {
+								currentSnippet.OnHover();
+								if (Main.mouseLeft && Main.mouseLeftRelease) {
+									currentSnippet.OnClick();
+								}
+							}
+						}
+					}
+					if (pageOffset < pageCount - 2) {
+						Vector2 position = new Vector2(bounds.X + bounds.Width - xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
+						Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
+						//temp highlight
+						if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+							if (Main.mouseLeft && Main.mouseLeftRelease) {
+								pageOffset += 2;
+							}
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+						}
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position,
+							null,
+							Color.White,
+							-MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+					}
+					if (pageOffset > 0) {
+						Vector2 position = new Vector2(bounds.X + xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
+						Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
+						//temp highlight
+						if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+							if (Main.mouseLeft && Main.mouseLeftRelease) {
+								pageOffset = Math.Max(pageOffset - 2, 0);
+							}
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+						}
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position,
+							null,
+							Color.White,
+							MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+					}
+					break;
+				}
+				case Journal_UI_Mode.Search_Page:{
+
+					break;
+				}
 			}
+			
 			spriteBatch.Restart(spriteBatchState);
 		}
 		static string loremIpsum =
@@ -315,5 +527,10 @@ Soluta corrupti delectus quod in quia reiciendis quo nihil. Culpa eum qui nesciu
 Excepturi minus consequuntur ipsum quos. Sit eius soluta nesciunt ipsam odio laudantium aut. Est voluptatibus et animi. Neque reiciendis est laborum quisquam qui amet error sunt. Molestias consequatur odit et quaerat repellendus quia.
 
 Fugiat odio voluptate sunt praesentium consequuntur quia voluptas eum. Facilis molestias doloremque corrupti eaque molestiae illo molestiae. Quaerat velit itaque inventore reprehenderit et itaque. Nam aut rerum animi deleniti sed eius non rem. Iste aliquam architecto ut iste sit repellendus maxime quia.";
+	}
+	public enum Journal_UI_Mode {
+		Normal_Page,
+		Index_Page,
+		Search_Page
 	}
 }
