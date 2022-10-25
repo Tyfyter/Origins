@@ -479,13 +479,15 @@ namespace Origins.World.BiomeData {
 	public class Riven_Hive_Alt_Biome : AltBiome {
 		public override string WorldIcon => "";//TODO: Redo tree icons for AltLib
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Riven";
+		public override string IconSmall => "Origins/UI/WorldGen/IconEvilRiven";
 		public override Color OuterColor => new(30, 176, 255);
 		public override List<int> SpreadingTiles => new List<int> {
 			ModContent.TileType<Riven_Flesh>()
 		};
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
-			GenPassName.SetDefault("{$Riven}");
+			//DisplayName.SetDefault(Language.GetTextValue("Mods.Origins.Generic.Riven_Hive"));
+			GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
 			//BiomeGrass = ModContent.TileType<Riven_Grass>();
 			BiomeStone = ModContent.TileType<Riven_Flesh>();
 			//BiomeSand = ModContent.TileType<Defiled_Sand>();

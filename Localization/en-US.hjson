@@ -140,6 +140,7 @@
 			'''
 		}
 		Generic: {
+			Riven_Hive: "{$Riven} Hive"
 			Riven: Riven
 			Dusk: Dusk
 			Defiled: Defiled
@@ -162,6 +163,10 @@
 					InteractionWimd: It fucken WIMDY!
 				}
 			}
+		}
+		AltBiomeName: {
+			Defiled_Wastelands_Alt_Biome: "Defiled Wastelands"
+			Riven_Hive_Alt_Biome: "Riven Hive"
 		}
 	}
 }

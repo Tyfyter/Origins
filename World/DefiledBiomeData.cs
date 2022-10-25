@@ -528,7 +528,7 @@ namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands_Alt_Biome : AltBiome {
 		public override string WorldIcon => "";//TODO: Redo tree icons for AltLib
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";
-		public override string IconSmall => "Origins/icon_small";
+		public override string IconSmall => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override Color OuterColor => new(170, 170, 170);
 		public override List<int> SpreadingTiles => new List<int> {
 			ModContent.TileType<Defiled_Grass>(),
@@ -540,7 +540,8 @@ namespace Origins.World.BiomeData {
 		};
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
-			GenPassName.SetDefault("{$Defiled_Wastelands}");
+			//DisplayName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
+			GenPassName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
 			BiomeGrass = ModContent.TileType<Defiled_Grass>();
 			BiomeStone = ModContent.TileType<Defiled_Stone>();
 			BiomeSand = ModContent.TileType<Defiled_Sand>();
