@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Journal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Origins.UI {
 			int lastHovered = 0;
 			public Journal_Link_Snippet(string key, Color color = default) : base() {
 				this.key = key;
-				Text = Language.Exists("Mods.Origins.Journal.Name." + key) ? Language.GetTextValue("Mods.Origins.Journal.Name." + key) : Language.GetTextValue("Mods.Origins.ItemName." + key);
+				Text = Journal_Registry.Entries[key].Name;
 				CheckForHover = true;
 				this.Color = color;
 			}
@@ -37,7 +38,7 @@ namespace Origins.UI {
 				bool canRetry = true;
 				retry:
 				if (Main.InGameUI.CurrentState is Journal_UI_Open journalUI) {
-					journalUI.Switch_Mode(Journal_UI_Mode.Normal_Page, key);
+					journalUI.SwitchMode(Journal_UI_Mode.Normal_Page, key);
 				} else if(canRetry) {
 					IngameFancyUI.OpenUIState(new Journal_UI_Open());
 					canRetry = false;

@@ -64,5 +64,9 @@ namespace Origins {
 		[Label("Use Double Tap For Set Bonus Abilities")]
 		[DefaultValue(false)]
 		public bool SetBonusDoubleTap = false;
+
+		[Label("Alternate Journal Layout")]
+		[DefaultValue(false)]
+		public bool TabbyJournal = false;
 	}
 }

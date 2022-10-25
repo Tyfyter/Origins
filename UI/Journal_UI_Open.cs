@@ -34,7 +34,9 @@ namespace Origins.UI {
 		int pageOffset = 0;
 		Journal_UI_Mode mode = Journal_UI_Mode.Normal_Page;
 		ArmorShaderData currentEffect = null;
+		bool tabLayout = false;
 		public override void OnInitialize() {
+			tabLayout = OriginClientConfig.Instance.TabbyJournal;
 			this.RemoveAllChildren();
 			baseElement = new UIElement();
 			baseElement.Width.Set(0f, 0.875f);
@@ -48,7 +50,7 @@ namespace Origins.UI {
 			xMargin = baseElement.GetDimensions().Width * 0.1f;
 			yMargin = baseElement.GetDimensions().Height * 0.1f;
 			//SetText(loremIpsum);
-			Switch_Mode(Journal_UI_Mode.Index_Page, null);
+			SwitchMode(tabLayout ? Journal_UI_Mode.Index_Page : Journal_UI_Mode.Search_Page, "");
 		}
 		public void SetText(string text) {
 			CalculatedStyle bounds = baseElement.GetDimensions();
@@ -147,32 +149,86 @@ namespace Origins.UI {
 			finishPage();
 			pages = snippetPages.ToArray();
 		}
-		public void Switch_Mode(Journal_UI_Mode newMode, string key) {
+		public void SwitchMode(Journal_UI_Mode newMode, string key) {
 			switch (mode = newMode) {
 				case Journal_UI_Mode.Normal_Page:
 				currentEffect = Journal_Registry.Entries[key].TextShader;
-				SetText(Language.GetTextValue("Mods.Origins.Journal."+key));
+				SetText(Language.GetTextValue("Mods.Origins.Journal." + key));
 				break;
-				case Journal_UI_Mode.Index_Page:
-				List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
-				List<TextSnippet> currentPage = new List<TextSnippet>();
-				int lineCount = 0;
-				foreach (var entry in Journal_Registry.Entries.Keys) {
-					currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(entry, Color.Black));
-					currentPage.Add(new TextSnippet("\n"));
-					if (++lineCount > 16) {
-						snippetPages.Add(currentPage.ToArray());
-						currentPage = new List<TextSnippet>();
-						lineCount = 0;
-					}
-				}
-				snippetPages.Add(currentPage.ToArray());
-				pages = snippetPages.ToArray();
-				break;
-				case Journal_UI_Mode.Search_Page:
 
-				break;
+				case Journal_UI_Mode.Index_Page: {
+					List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
+					List<TextSnippet> currentPage = new List<TextSnippet>();
+					int lineCount = 0;
+					foreach (var entry in Journal_Registry.Entries.Keys) {
+						currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(entry, Color.Black));
+						currentPage.Add(new TextSnippet("\n"));
+						if (++lineCount > 16) {
+							snippetPages.Add(currentPage.ToArray());
+							currentPage = new List<TextSnippet>();
+							lineCount = 0;
+						}
+					}
+					snippetPages.Add(currentPage.ToArray());
+					pages = snippetPages.ToArray();
+					break;
+				}
+
+				case Journal_UI_Mode.Search_Page: {
+					if (!tabLayout) {
+						Rectangle bounds = baseElement.GetDimensions().ToRectangle();
+						pages = new TextSnippet[][]{
+							new TextSnippet[] {
+								new Journal_Search_Snippet(
+									new CalculatedStyle(bounds.X + xMargin,
+									bounds.Y + yMargin,
+									bounds.Width * 0.5f - xMargin * 2,
+									FontAssets.MouseText.Value.MeasureString("_").Y)
+								) {
+									Text = key ?? ""
+								}
+							}
+						};
+					}
+					SetSearchResults(key);
+					break;
+				}
 			}
+		}
+		public void SetSearchResults(string query) {
+			List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
+			List<TextSnippet> currentPage = new List<TextSnippet>();
+			int lineCount = 0;
+			if (!tabLayout) {
+				if (pages.Length < 1 || pages[0].Length < 0 || pages[0][0] is not Journal_Search_Snippet) {
+					SwitchMode(Journal_UI_Mode.Search_Page, query);
+				}
+				currentPage.Add(pages[0][0]);
+				currentPage.Add(new TextSnippet("\n"));
+				lineCount += 1;
+			}
+			foreach (var entry in GetSearchResults(query)) {
+				currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(entry, Color.Black));
+				currentPage.Add(new TextSnippet("\n"));
+				if (++lineCount > 16) {
+					snippetPages.Add(currentPage.ToArray());
+					currentPage = new List<TextSnippet>();
+					lineCount = 0;
+				}
+			}
+			snippetPages.Add(currentPage.ToArray());
+			pages = snippetPages.ToArray();
+		}
+		public static string[] GetSearchResults(string query) {
+			if (string.IsNullOrWhiteSpace(query)) return Array.Empty<string>();
+			List<(string key, int weight)> entries = new List<(string, int)>();
+			foreach (var item in Journal_Registry.Entries) {
+				int index = item.Value.GetQueryIndex(query);
+				if (index >= 0) {
+					entries.Add((item.Key, index));
+				}
+			}
+			return entries.OrderBy(v => v.weight).Select(v => v.key).ToArray();
 		}
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			SpriteBatchState spriteBatchState = spriteBatch.GetState();
@@ -442,6 +498,178 @@ namespace Origins.UI {
 							0
 						);
 					}
+					if (tabLayout) {
+						Vector2 position = new Vector2(bounds.X + xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
+						Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
+						//temp highlight
+						if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+							if (Main.mouseLeft && Main.mouseLeftRelease) {
+								if (pageOffset > 0) {
+									pageOffset = Math.Max(pageOffset - 2, 0);
+								} else {
+									SwitchMode(Journal_UI_Mode.Search_Page, "");
+								}
+							}
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+						}
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position,
+							null,
+							Color.White,
+							MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+					}
+					break;
+				}
+				case Journal_UI_Mode.Search_Page:{
+					int pageCount = pages?.Length ?? 0;
+					spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp, effect: currentEffect?.Shader);
+					/*
+					ChatManager.DrawColorCodedString(spriteBatch,
+							FontAssets.MouseText.Value,
+							loremIpsum,
+							new Vector2(bounds.X + xMargin, bounds.Y + yMargin),
+							Color.Red,
+							0,
+							Vector2.Zero,
+							Vector2.One,
+							bounds.Width * 0.5f - xMargin * 2
+						);
+					//*/
+					for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
+						ChatManager.DrawColorCodedString(spriteBatch,
+							FontAssets.MouseText.Value,
+							pages[i + pageOffset],
+							new Vector2(bounds.X + (i * bounds.Width * 0.5f) + xMargin, bounds.Y + yMargin),
+							Color.Black,
+							0,
+							Vector2.Zero,
+							Vector2.One,
+							out int hoveredSnippet,
+							bounds.Width * 0.5f - xMargin * 2
+						);
+						if (hoveredSnippet >= 0) {
+							if (pages[i + pageOffset][hoveredSnippet] is TextSnippet currentSnippet) {
+								currentSnippet.OnHover();
+								if (Main.mouseLeft && Main.mouseLeftRelease) {
+									currentSnippet.OnClick();
+								}
+							}
+						}
+					}
+					if (pageOffset < pageCount - 2) {
+						Vector2 position = new Vector2(bounds.X + bounds.Width - xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
+						Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
+						//temp highlight
+						if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+							if (Main.mouseLeft && Main.mouseLeftRelease) {
+								pageOffset += 2;
+							}
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+						}
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position,
+							null,
+							Color.White,
+							-MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+					}
 					if (pageOffset > 0) {
 						Vector2 position = new Vector2(bounds.X + xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
 						Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
@@ -507,10 +735,6 @@ namespace Origins.UI {
 							0
 						);
 					}
-					break;
-				}
-				case Journal_UI_Mode.Search_Page:{
-
 					break;
 				}
 			}
