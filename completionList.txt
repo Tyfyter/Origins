@@ -99,7 +99,7 @@ VANILLA MODIFICATIONS:
 
 OTHER:
 ---
-(#, ^2) Journal (page sprites, button/pseudoitem sprite) !!!
+(#3, ^2) Journal (page sprites, button/pseudoitem sprite)
 ---
 
 

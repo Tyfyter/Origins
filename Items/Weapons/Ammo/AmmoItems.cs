@@ -70,7 +70,7 @@ namespace Origins.Items.Weapons.Ammo {
     }
     public class White_Solution : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("White Solution");
+            DisplayName.SetDefault("Gray Solution");
             SacrificeTotal = 99;
             //Tooltip.SetDefault();
         }

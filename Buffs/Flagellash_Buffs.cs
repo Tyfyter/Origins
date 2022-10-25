@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.NPCs;
-using Terraria.ID;
 
 namespace Origins.Buffs {
     public class Flagellash_Buff_0 : ModBuff {
