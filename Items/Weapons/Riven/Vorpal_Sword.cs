@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Journal;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -7,6 +8,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
@@ -240,5 +242,9 @@ namespace Origins.Items.Weapons.Riven {
 			);
 			return false;
 		}
+	}
+	public class Vorpal_Sword_Entry : JournalEntry {
+		public override string TextKey => "Vorpal_Sword";
+		public override ArmorShaderData TextShader => null;
 	}
 }
