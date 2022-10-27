@@ -38,6 +38,8 @@ namespace Origins.UI {
 			Vector2 position = rectangle.Center.ToVector2();
 			Vector2 origin = new Vector2(15, 15);
 			Color white = Color.White;
+			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+			int journalShader = originPlayer.journalDye.dye;
 			if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
 				Main.LocalPlayer.mouseInterface = true;
 				flag = true;
@@ -51,13 +53,22 @@ namespace Origins.UI {
 					//OriginSystem.instance.journalUI.SetState(new Journal_UI_Open());
 					//IngameFancyUI.OpenUIState(BestiaryUI);
 					//BestiaryUI.OnOpenPage();
+				} else if (Main.mouseRight && Main.mouseRightRelease && (Main.LocalPlayer.HeldItem.dye > 0 || Main.LocalPlayer.HeldItem.IsAir)) {
+					Main.mouseLeft = Main.mouseLeftRelease = true;
+					Main.mouseRight = false;
+					ItemSlot.Handle(ref originPlayer.journalDye);
+					Main.mouseLeft = Main.mouseLeftRelease = false;
+					Main.mouseRight = true;
+				}
+				if (Main.LocalPlayer.HeldItem.dye > 0) {
+					journalShader = Main.LocalPlayer.HeldItem.dye;
 				}
 				spriteBatch.Draw(texture, position, new Rectangle(0, 64, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0);
 			}
 			spriteBatch.Draw(texture, position, new Rectangle(0, 32, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0);
 			spriteBatch.Restart(SpriteSortMode.Immediate, transformMatrix: Main.UIScaleMatrix);
 			DrawData data = new(texture, position, new Rectangle(0, 0, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0) {
-				shader = Main.LocalPlayer.HeldItem.dye > 0 ? Main.LocalPlayer.HeldItem.dye : 81
+				shader = journalShader
 			};
 			Terraria.Graphics.Shaders.GameShaders.Armor.ApplySecondary(data.shader, Main.LocalPlayer, data);
 			data.Draw(spriteBatch);

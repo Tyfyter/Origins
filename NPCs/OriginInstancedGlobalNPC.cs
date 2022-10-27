@@ -23,6 +23,10 @@ namespace Origins.NPCs {
         internal int toxicShockTime = 0;
         internal List<int> infusionSpikes;
         internal bool amebolizeDebuff = false;
+        public bool tornDebuff = false;
+        public int tornTime = 0;
+        const int tornTargetTime = 180;
+        const float tornTarget = 0.7f;
         public override void ResetEffects(NPC npc) {
             int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
             if (rasterized >= 0) {
@@ -31,6 +35,14 @@ namespace Origins.NPCs {
                 rasterizedTime = 0;
 			}
             amebolizeDebuff = false;
+            if (tornDebuff) {
+                if (tornTime < tornTargetTime) {
+                    tornTime++;
+                }
+            } else if (tornTime > 0) {
+                tornTime--;
+            }
+            tornDebuff = false;
         }
         public override void AI(NPC npc) {
             if(shrapnelTime>0) {
@@ -46,7 +58,7 @@ namespace Origins.NPCs {
                 }
                 npc.lifeRegen -= 4;
             }
-		}
+        }
 		public static void AddInfusionSpike(NPC npc, int projectileID) {
             OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
             if (globalNPC.infusionSpikes is null) globalNPC.infusionSpikes = new List<int>();
@@ -75,10 +87,10 @@ namespace Origins.NPCs {
                 return true;
             }
             if(npc.HasBuff(Solvent_Debuff.ID)) {
-	            Origins.solventShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
+                Origins.solventShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
                 Origins.solventShader.Shader.Parameters["uSaturation"].SetValue(Main.npcFrameCount[npc.type]);
                 Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;
-			    spriteBatch.Restart(SpriteSortMode.Immediate, effect: Origins.solventShader.Shader);
+                spriteBatch.Restart(SpriteSortMode.Immediate, effect: Origins.solventShader.Shader);
                 return true;
             }
             return true;

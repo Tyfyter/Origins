@@ -112,6 +112,9 @@ namespace Origins.NPCs {
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				damage += defense * 0.1f;
 			}
+			if (tornTime > 0) {
+				damage /= 1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime));
+			}
 			return true;
 		}
 		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {

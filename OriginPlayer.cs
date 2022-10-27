@@ -108,7 +108,7 @@ namespace Origins {
         public bool toxicShock = false;
         public bool tornDebuff = false;
         public int tornTime = 0;
-        public int tornTargetTime = 60;
+        public int tornTargetTime = 180;
         public float tornTarget = 0.7f;
         #endregion
 
@@ -116,6 +116,8 @@ namespace Origins {
         public bool controlTriggerSetBonus = false;
         public bool releaseTriggerSetBonus = false;
         #endregion
+
+        public Item journalDye = null;
 
         public bool itemLayerWrench = false;
         public bool plagueSight = false;
@@ -200,7 +202,7 @@ namespace Origins {
             if (rapidSpawnFrames>0)
                 rapidSpawnFrames--;
             if (!tornDebuff && tornTime > 0 && --tornTime <= 0) {
-                tornTargetTime = 60;
+                tornTargetTime = 180;
                 tornTarget = 0.7f;
             }
             tornDebuff = false;
@@ -602,12 +604,18 @@ namespace Origins {
             if (tag.SafeGet<int>("MimicSetSelection") is int mimicSetSelection) {
                 mimicSetChoices = mimicSetSelection;
             }
+            if (tag.SafeGet<Item>("JournalDye") is Item journalDyeItem) {
+                journalDye = journalDyeItem;
+            }
         }
-        public override void SaveData(TagCompound tag)/* Edit tag parameter rather than returning new TagCompound */ {
+        public override void SaveData(TagCompound tag) {
             if (eyndumCore is not null) {
                 tag.Add("EyndumCore", eyndumCore.Value);
             }
             tag.Add("MimicSetSelection", mimicSetChoices);
+            if (journalDye is not null) {
+                tag.Add("JournalDye", journalDye);
+            }
         }
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
             bool zoneDefiled = ZoneDefiled;

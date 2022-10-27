@@ -459,7 +459,7 @@ namespace Origins.NPCs.Defiled {
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
             drawColor *= (255 - NPC.alpha) / 255f;
             bool dir = NPC.spriteDirection == 1;
-            spriteBatch.Draw(Mod.Assets.Request<Texture2D>("NPCs/Defiled/Defiled_Amalgamation_RA").Value,
+            Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("NPCs/Defiled/Defiled_Amalgamation_RA").Value,
                 NPC.Center - new Vector2(-46 * NPC.spriteDirection, 12) * NPC.scale - screenPos,
                 null,
                 drawColor,
@@ -469,7 +469,7 @@ namespace Origins.NPCs.Defiled {
                 dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
             0);
 
-            spriteBatch.Draw(Mod.Assets.Request<Texture2D>("NPCs/Defiled/Defiled_Amalgamation_LA").Value,
+            Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("NPCs/Defiled/Defiled_Amalgamation_LA").Value,
                 NPC.Center - new Vector2(36 * NPC.spriteDirection, 0) * NPC.scale - screenPos,
                 null,
                 drawColor,
