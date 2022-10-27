@@ -106,6 +106,10 @@ namespace Origins {
         public int rapidSpawnFrames = 0;
         public int rasterizedTime = 0;
         public bool toxicShock = false;
+        public bool tornDebuff = false;
+        public int tornTime = 0;
+        public int tornTargetTime = 60;
+        public float tornTarget = 0.7f;
         #endregion
 
         #region keybinds
@@ -195,6 +199,11 @@ namespace Origins {
                 amebicVialCooldown--;
             if (rapidSpawnFrames>0)
                 rapidSpawnFrames--;
+            if (!tornDebuff && tornTime > 0 && --tornTime <= 0) {
+                tornTargetTime = 60;
+                tornTarget = 0.7f;
+            }
+            tornDebuff = false;
             int rasterized = Player.FindBuffIndex(Rasterized_Debuff.ID);
             if (rasterized >= 0) {
                 rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 8), Player.buffTime[rasterized] - 1);
@@ -265,6 +274,14 @@ namespace Origins {
                 }
             }
             Player.buffImmune[Rasterized_Debuff.ID] = Player.buffImmune[BuffID.Cursed];
+			if (tornDebuff) {
+				if (tornTime < tornTargetTime) {
+                    tornTime++;
+				}
+			}
+			if (tornTime > 0) {
+                Player.statLifeMax2 = (int)(Player.statLifeMax2 * (1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime))));
+            }
         }
 		public override void UpdateVisibleVanityAccessories() {
 		}
