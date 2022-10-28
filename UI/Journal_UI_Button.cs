@@ -46,7 +46,6 @@ namespace Origins.UI {
 				if (Main.mouseLeft && Main.mouseLeftRelease) {
 					Main.LocalPlayer.SetTalkNPC(-1);
 					Main.npcChatCornerItem = 0;
-					Main.npcChatText = "";
 					Main.mouseLeftRelease = false;
 					SoundEngine.PlaySound(SoundID.MenuTick);
 					IngameFancyUI.OpenUIState(new Journal_UI_Open());
@@ -66,13 +65,14 @@ namespace Origins.UI {
 				spriteBatch.Draw(texture, position, new Rectangle(0, 64, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0);
 			}
 			spriteBatch.Draw(texture, position, new Rectangle(0, 32, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0);
-			spriteBatch.Restart(SpriteSortMode.Immediate, transformMatrix: Main.UIScaleMatrix);
+			var oldstate = spriteBatch.GetState();
+			spriteBatch.Restart(oldstate, SpriteSortMode.Immediate);
 			DrawData data = new(texture, position, new Rectangle(0, 0, 30, 30), white, 0f, origin, 1f, SpriteEffects.None, 0) {
 				shader = journalShader
 			};
 			Terraria.Graphics.Shaders.GameShaders.Armor.ApplySecondary(data.shader, Main.LocalPlayer, data);
 			data.Draw(spriteBatch);
-			spriteBatch.Restart(transformMatrix: Main.UIScaleMatrix);
+			spriteBatch.Restart(oldstate);
 			//UILinkPointNavigator.SetPosition(15001, position);
 			if (!Main.mouseText && flag) {
 				Main.instance.MouseText(Language.GetTextValue("Mods.Origins.Interface.Journal"), 0, 0);

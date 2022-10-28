@@ -24,10 +24,13 @@ namespace Origins.Items.Accessories {
 			Item.expert = true;
 			Item.canBePlacedInVanityRegardlessOfConditions = true;
 		}
-		public override void UpdateAccessory(Player player, bool isVisible) {
+		public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			if (originPlayer.amebicVialCooldown > 0) return;
-			originPlayer.amebicVialVisible = isVisible;
+			if (originPlayer.amebicVialCooldown > 0) {
+				originPlayer.amebicVialVisible = false;
+				return;
+			}
+			originPlayer.amebicVialVisible = !isHidden;
 			const float maxDist = 64 * 64;
 			Vector2 target = default;
 			float bestWeight = 0;

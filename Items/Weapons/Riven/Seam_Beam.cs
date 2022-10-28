@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Items.Materials;
 using System;
 using Terraria;
@@ -61,32 +62,28 @@ namespace Origins.Items.Weapons.Riven {
             EndTexture = null;
         }
         private Vector2 _targetPos;         //Ending position of the laser beam
-        public override void SetDefaults() {
-            //projectile.name = "Wind";  //this is the projectile name
-            Projectile.width = 10;
-            Projectile.height = 10;
-            Projectile.friendly = true;     //this defines if the projectile is friendly
-            Projectile.penetrate = -1;  //this defines the projectile penetration, -1 = infinity
-            Projectile.tileCollide = true;   //this defines if the tile can collide with walls
-            Projectile.DamageType = DamageClass.Magic;
-            Projectile.timeLeft = 32;
-            //projectile.hide = true;
-        }
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Seam Beam");
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Seam Beam");
             if (!Main.dedServ) {
                 StartTexture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Seam_Beam_Start");
                 EndTexture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Seam_Beam_End");
             }
-		}
-
-        public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-            width = 1;
-            height = 1;
-			return false;
+        }
+        public override void SetDefaults() {
+            Projectile.width = 10;
+            Projectile.height = 10;
+            Projectile.friendly = true;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = true;
+            Projectile.DamageType = DamageClass.Magic;
+            Projectile.timeLeft = 32;
         }
 
-        public override bool PreDraw(ref Color lightColor) {
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+            target.AddBuff(Torn_Buff.ID, 300);
+		}
+
+		public override bool PreDraw(ref Color lightColor) {
             Vector2 unit = velocity;//_targetPos - projectile.Center;
             unit.Normalize();
             DrawLaser(Main.spriteBatch, Projectile.Center, unit, 1, new Vector2(1f,0.55f), maxDist:(_targetPos-Projectile.Center).Length());
@@ -179,10 +176,8 @@ namespace Origins.Items.Weapons.Riven {
         /// </summary>
         public override void AI() {
 
-            Vector2 start = Projectile.Center;
             Vector2 unit = velocity;
             unit.Normalize();
-            Vector2 samplingPoint = Projectile.Center;
 
             // Overriding that, if the player shoves the Prism into or through a wall, the interpolation starts at the player's center.
             // This last part prevents the player from projecting beams through walls under any circumstances.
@@ -191,11 +186,11 @@ namespace Origins.Items.Weapons.Riven {
                 velocity = Vector2.Normalize(Main.MouseWorld - player.MountedCenter);
                 Projectile.position += velocity * 16;
                 if(!Collision.CanHitLine(player.Center, 0, 0, Projectile.Center, 0, 0)) {
-                    samplingPoint = Projectile.Center = player.Center;
+                    Projectile.Center = player.Center;
                 }
 			}
             float[] laserScanResults = new float[sample_points];
-			Collision.LaserScan(samplingPoint, unit, collision_size * Projectile.scale, 1200f, laserScanResults);
+			Collision.LaserScan(Projectile.Center, unit, collision_size * Projectile.scale, 1200f, laserScanResults);
 			float averageLengthSample = 0f;
 			for (int i = 0; i < laserScanResults.Length; ++i) {
 				averageLengthSample += laserScanResults[i];

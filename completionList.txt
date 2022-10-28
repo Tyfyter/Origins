@@ -170,7 +170,7 @@ STATUS EFFECTS:
 (X) Levitation
 (#3, ^2) Rasterize
 (^) Solvent
-(#, ^2) Torn !!!
+(☻) Torn !!!
 (#, ^2) Totally Safe
 (#, ^2) Toxic Shock
 (X) Whiplash
