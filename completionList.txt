@@ -59,7 +59,6 @@ BOSSES AND MINI-BOSSES:
 (#, $, ^2) I.C.A.R.U.S
 (#, $, ^2) Quantux
 (%2, X) Rakar
-(X) Shade Leviathan
 (%2, X) Tartarus
 ---
 
@@ -242,10 +241,10 @@ ACCESSORIES:
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
+(#, ^2) Bullet Shield*
 (^) Cybernetic Brain*
 (^) Decaying Scale*
 (^) Dim Starlight*
-(#, ^2) Energy Shield*
 (^) Exploder Emblem*
 (#, ^2) Grave Danger
 (#, ^2) Gun Glove
@@ -272,18 +271,16 @@ ACCESSORIES:
 (#, ^2) Extremophile Charm
 (^) Fiberglass Dagger
 (X) Forbidden Salt
-(X) Legging Motorizer
+(X) Gyroscope
 (^) Queen of Hearts
 (^) Refactoring Pieces
 (%3, ^2) Runed Insignia
-(#3, ^2) Temptation Spell
+(#3, ^2) SOTH
 (X) Void Arcanum
 (x) Warp Drive
-(#, ^2) Worm Teeth
 
 (%3, X) Armored Core
 (%3, X) Atomic Clock
-(X) Backtack
 (^) Entangled Energy
 (%3, X) Immortal Core
 (^) Lazy Cloak
@@ -292,7 +289,7 @@ ACCESSORIES:
 (☻) Mysterious Spray !!!
 (%3, X) Parallax
 (☻) Protozoa Food !!!
-(X) Stomach of Craving
+(X) Scrapped Content
 
 (^) Agility Core
 (^) Combat Core
@@ -402,10 +399,12 @@ MELEE WEAPONS:
 
 RANGED WEAPONS:
 ---
+(X) Ancient Kruncher !!!
 (^) Bolt Gun
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
 (#2, ^2) Harpoon Gun !!!
+(X) Kruncher-but-it-shoots-darts !!!
 (^) Longbone
 (#, ^2) Riven Splitter !!!
 (#, ^2) Tendon Tear !!!

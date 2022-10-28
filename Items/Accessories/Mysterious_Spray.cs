@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
     public class Mysterious_Spray : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Mysterious Spray");
-            Tooltip.SetDefault("Increases life regeneration at low health");
+            Tooltip.SetDefault("Increases life regeneration at low health\n'The perfect ailment to attack your senses'");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {

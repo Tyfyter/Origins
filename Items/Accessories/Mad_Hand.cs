@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
     public class Mad_Hand : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Temptation Spell");
+            DisplayName.SetDefault("SOTH");
             Tooltip.SetDefault("Double the gunpowder, double the fun.");
             SacrificeTotal = 1;
         }
