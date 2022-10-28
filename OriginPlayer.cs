@@ -76,6 +76,7 @@ namespace Origins {
         public float mysteriousSprayMult = 1;
         public bool protozoaFood = false;
         public int protozoaFoodCooldown = 0;
+        public Item protozoaFoodItem = null;
         #endregion
 
         #region explosive stats
@@ -195,6 +196,7 @@ namespace Origins {
             asylumWhistle = false;
             mysteriousSprayMult = 1;
             protozoaFood = false;
+            protozoaFoodItem = null;
             toxicShock = false;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;
@@ -263,8 +265,8 @@ namespace Origins {
         }
         public override void PostUpdateMiscEffects() {
             if(cryostenHelmet) {
-                if(Player.statLife!=Player.statLifeMax2&&(int)Main.time%(cryostenLifeRegenCount>0 ? 5 : 15)==0)
-                    for(int i = 0; i < 10; i++) {
+                if (Player.statLife != Player.statLifeMax2 && (int)Main.time % (cryostenLifeRegenCount > 0 ? 5 : 15) == 0) {
+                    for (int i = 0; i < 10; i++) {
                         int num6 = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Frost);
                         Main.dust[num6].noGravity = true;
                         Main.dust[num6].velocity *= 0.75f;
@@ -275,6 +277,20 @@ namespace Origins {
                         Main.dust[num6].velocity.X = -num7 * 0.075f;
                         Main.dust[num6].velocity.Y = -num8 * 0.075f;
                     }
+                }
+            }
+			if (protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions) {
+                Item item = protozoaFoodItem;
+                Projectile.NewProjectileDirect(
+                    Player.GetSource_Accessory(item),
+                    Player.Center,
+                    OriginExtensions.Vec2FromPolar(Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi), Main.rand.NextFloat(1, 8)),
+                    Mini_Protozoa_P.ID,
+                    item.damage,
+                    item.knockBack,
+                    Player.whoAmI
+                ).originalDamage = item.damage;
+                protozoaFoodCooldown = item.useTime;
             }
         }
         public override void PostUpdateEquips() {

@@ -29,18 +29,7 @@ namespace Origins.Items.Accessories {
             player.maxMinions += 1;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.protozoaFood = true;
-			if (originPlayer.protozoaFoodCooldown <= 0 && player.ownedProjectileCounts[Mini_Protozoa_P.ID] < player.maxMinions) {
-				Projectile.NewProjectileDirect(
-					player.GetSource_Accessory(Item),
-					player.Center,
-					OriginExtensions.Vec2FromPolar(Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi), Main.rand.NextFloat(1, 8)),
-					Mini_Protozoa_P.ID,
-					Item.damage,
-					Item.knockBack,
-					player.whoAmI
-				).originalDamage = Item.damage;
-				originPlayer.protozoaFoodCooldown = Item.useTime;
-			}
+			originPlayer.protozoaFoodItem = Item;
 		}
 		public override int ChoosePrefix(UnifiedRandom rand) {
 			if (!Item.noUseGraphic) {
