@@ -89,7 +89,8 @@ namespace Origins.Items.Weapons.Summon.Minions {
 		}
 
 		public sealed override void SetDefaults() {
-			Projectile.width = 28;
+            Projectile.DamageType = DamageClass.Summon;
+            Projectile.width = 28;
 			Projectile.height = 28;
 			Projectile.tileCollide = true;
 			Projectile.friendly = true;

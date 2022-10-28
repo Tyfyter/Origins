@@ -289,9 +289,9 @@ ACCESSORIES:
 (^) Lazy Cloak
 (X) Magnetic Brain
 (X) Mildew Urchin
-(#, ^2) Mysterious Spray !!!
+(☻) Mysterious Spray !!!
 (%3, X) Parallax
-(#, ^2) Protozoa Food !!!
+(☻) Protozoa Food !!!
 (X) Stomach of Craving
 
 (^) Agility Core

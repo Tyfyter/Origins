@@ -84,6 +84,9 @@ namespace Origins.NPCs {
 				npc.velocity = Vector2.Lerp(npc.velocity, npc.oldVelocity, rasterizedTime * 0.0625f * 0.5f);
 				npc.position = Vector2.Lerp(npc.position, npc.oldPosition, rasterizedTime * 0.0625f * 0.5f);
 			}
+			if (slowDebuff) {
+				npc.position = Vector2.Lerp(npc.oldPosition, npc.position, 0.7f);
+			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				if (toxicShockTime < Toxic_Shock_Debuff.stun_duration) {
 					toxicShockTime++;

@@ -26,15 +26,7 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
 		}
-		public override int ChoosePrefix(UnifiedRandom rand) {
-			if (Item.noUseGraphic) {
-				Item.noUseGraphic = false;
-				Item.Prefix(-2);
-				Item.noUseGraphic = true;
-				return Item.prefix;
-			}
-			return -1;
-		}
+		public override bool MeleePrefix() => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI).scale *= player.GetAdjustedItemScale(Item);
 			return false;

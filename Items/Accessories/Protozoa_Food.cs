@@ -1,102 +1,87 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
-using Origins.Items.Weapons.Summon;
 using System;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
-namespace Origins.Items.Weapons.Summon {
-    public class Brainy_Staff : ModItem {
-        internal static int projectileID = 0;
-        internal static int buffID = 0;
+namespace Origins.Items.Accessories {
+    public class Protozoa_Food : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Brainy Staff");
-            Tooltip.SetDefault("Summons a mini Brain of Cthulhu to fight for you");
-			SacrificeTotal = 1;
-		}
+            DisplayName.SetDefault("Protozoa Food");
+            Tooltip.SetDefault("Increases life regeneration at low health");
+            SacrificeTotal = 1;
+        }
         public override void SetDefaults() {
-            Item.damage = 10;
-			Item.DamageType = DamageClass.Summon;
+			Item.damage = 13;
+			Item.knockBack = 3;
+			Item.useTime = Item.useAnimation = 45;
 			Item.mana = 10;
-            Item.width = 32;
-            Item.height = 32;
-            Item.useTime = 36;
-            Item.useAnimation = 36;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.value = Item.buyPrice(0, 30, 0, 0);
-            Item.rare = ItemRarityID.Blue;
-            Item.UseSound = SoundID.Item44;
-            Item.buffType = buffID;
-            Item.shoot = projectileID;
-            Item.noMelee = true;
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
+			Item.accessory = true;
+            Item.width = 21;
+            Item.height = 20;
+            Item.rare = ItemRarityID.Master;
+            Item.master = true;
         }
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (buffID==0)buffID = ModContent.BuffType<Brainy_Buff>();
-            player.AddBuff(Item.buffType, 2);
-            position = Main.MouseWorld;
+		public override void UpdateAccessory(Player player, bool hideVisual) {
+            player.maxMinions += 1;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.protozoaFood = true;
+			if (originPlayer.protozoaFoodCooldown <= 0 && player.ownedProjectileCounts[Mini_Protozoa_P.ID] < player.maxMinions) {
+				Projectile.NewProjectileDirect(
+					player.GetSource_Accessory(Item),
+					player.Center,
+					OriginExtensions.Vec2FromPolar(Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi), Main.rand.NextFloat(1, 8)),
+					Mini_Protozoa_P.ID,
+					Item.damage,
+					Item.knockBack,
+					player.whoAmI
+				).originalDamage = Item.damage;
+				originPlayer.protozoaFoodCooldown = Item.useTime;
+			}
 		}
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			if (buffID == 0) buffID = ModContent.BuffType<Wormy_Buff>();
-			player.AddBuff(buffID, 2);
-			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
-			return false;
+		public override int ChoosePrefix(UnifiedRandom rand) {
+			if (!Item.noUseGraphic) {
+				Item.noUseGraphic = true;
+				Item.accessory = rand.NextBool();
+				Item.Prefix(-2);
+				Item.accessory = true;
+				Item.noUseGraphic = false;
+				return Item.prefix;
+			}
+			return -1;
 		}
+		public override bool MagicPrefix() => true;
+		public override bool WeaponPrefix() => false;
 	}
-}
-namespace Origins.Buffs {
-    public class Brainy_Buff : ModBuff {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Mini Brain of Cthulhu");
-            Description.SetDefault("The Brain of Cthulhu will fight for you");
-            Main.buffNoSave[Type] = true;
-            Main.buffNoTimeDisplay[Type] = true;
-            Brainy_Staff.buffID = Type;
-        }
-
-        public override void Update(Player player, ref int buffIndex) {
-            if(player.ownedProjectileCounts[Brainy_Staff.projectileID] > 0) {
-                player.buffTime[buffIndex] = 18000;
-            } else {
-                player.DelBuff(buffIndex);
-                buffIndex--;
-            }
-        }
-    }
-}
-
-namespace Origins.Items.Weapons.Summon.Minions {
-    public class Mini_BOC : ModProjectile {
-		public const int frameSpeed = 4;
+	public class Mini_Protozoa_P : ModProjectile {
+		public override string Texture => "Origins/Items/Weapons/Riven/Amoeba_Ball";
+		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-            Brainy_Staff.projectileID = Projectile.type;
-			DisplayName.SetDefault("Brainy");
+			ID = Projectile.type;
+			DisplayName.SetDefault("Little Protozoa");
 			// Sets the amount of frames this minion has on its spritesheet
-			Main.projFrames[Projectile.type] = 4;
-			// This is necessary for right-click targeting
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
+			Main.projFrames[Projectile.type] = 1;
 
 			// These below are needed for a minion
 			// Denotes that this projectile is a pet or minion
 			Main.projPet[Projectile.type] = true;
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
-			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
+			ProjectileID.Sets.MinionSacrificable[Projectile.type] = false;
 			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
 		}
 
 		public sealed override void SetDefaults() {
-			Projectile.DamageType = DamageClass.Summon;
-			Projectile.width = 46;
-			Projectile.height = 34;
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
+			Projectile.width = 8;
+			Projectile.height = 8;
 			Projectile.tileCollide = true;
 			Projectile.friendly = true;
 			Projectile.minion = true;
-			Projectile.minionSlots = 2f;
-			Projectile.penetrate = -1;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 14;
+			Projectile.minionSlots = 0f;
+			Projectile.penetrate = 1;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -112,29 +97,22 @@ namespace Origins.Items.Weapons.Summon.Minions {
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 
+
 			#region Active check
-			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
-			if (player.dead || !player.active) {
-				player.ClearBuff(Brainy_Staff.buffID);
-			}
-			if (player.HasBuff(Brainy_Staff.buffID)) {
+			if (!player.dead && player.active && player.GetModPlayer<OriginPlayer>().protozoaFood) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
 
 			#region General behavior
 			Vector2 idlePosition = player.Top;
-            idlePosition.X -= 48f*player.direction;
+			idlePosition.X -= 48f * player.direction;
 
 			// Teleport to player if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
 			float distanceToIdlePosition = vectorToIdlePosition.Length();
 			if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 2000f) {
-				// Whenever you deal with non-regular events that change the behavior or position drastically, make sure to only run the code on the owner of the projectile,
-				// and then set netUpdate to true
-				Projectile.position = idlePosition;
-				Projectile.velocity *= 0.1f;
-				Projectile.netUpdate = true;
+				Projectile.Kill();
 			}
 
 			// If your minion is flying, you want to do this independently of any conditions
@@ -156,7 +134,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			// Starting search distance
 			float distanceFromTarget = 2000f;
 			Vector2 targetCenter = Projectile.position;
-            int target = -1;
+			int target = -1;
 			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
 				if (!isPriorityTarget && distanceFromTarget > 700f) {
 					distanceFromTarget = 700f;
@@ -185,21 +163,21 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			#region Movement
 
 			// Default movement parameters (here for attacking)
-			float speed = 12f;
-			float inertia = 16f;
+			float speed = 24f;
+			float inertia = 12f;
 
 			if (foundTarget) {
-                Projectile.tileCollide = true;
+				Projectile.tileCollide = true;
 				// Minion has a target: attack (here, fly towards the enemy)
 				//if (distanceFromTarget > 40f || !projectile.Hitbox.Intersects(Main.npc[target].Hitbox)) {
-					// The immediate range around the target (so it doesn't latch onto it when close)
-					Vector2 direction = targetCenter - Projectile.Center;
-					direction.Normalize();
-					direction *= speed;
-					Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
+				// The immediate range around the target (so it doesn't latch onto it when close)
+				Vector2 direction = targetCenter - Projectile.Center;
+				direction.Normalize();
+				direction *= speed;
+				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
 				//}
 			} else {
-                Projectile.tileCollide = false;
+				Projectile.tileCollide = false;
 				if (distanceToIdlePosition > 600f) {
 					speed = 24f;
 					inertia = 36f;
@@ -227,7 +205,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			Projectile.rotation = Projectile.velocity.X * 0.05f;
 
 			// This is a simple "loop through all frames from top to bottom" animation
-			int frameSpeed = 5;
+			/*int frameSpeed = 5;
 			Projectile.frameCounter++;
 			if (Projectile.frameCounter >= frameSpeed) {
 				Projectile.frameCounter = 0;
@@ -235,13 +213,14 @@ namespace Origins.Items.Weapons.Summon.Minions {
 				if (Projectile.frame >= Main.projFrames[Projectile.type]) {
 					Projectile.frame = 0;
 				}
-			}
+			}*/
 			#endregion
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            if(Main.rand.Next(10)<3&&(target.Center-Main.player[Projectile.owner].Center).Length()<480) {
-                target.AddBuff(BuffID.Confused, 60);
-            }
-        }
-    }
+		public override Color? GetAlpha(Color lightColor) {
+			return new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f);
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			target.AddBuff(Slow_Debuff.ID, Main.rand.Next(120, 180));
+		}
+	}
 }

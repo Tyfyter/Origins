@@ -73,6 +73,9 @@ namespace Origins {
         public bool asylumWhistle = false;
         public int asylumWhistleTarget = -1;
         public bool reshapingChunk = false;
+        public float mysteriousSprayMult = 1;
+        public bool protozoaFood = false;
+        public int protozoaFoodCooldown = 0;
         #endregion
 
         #region explosive stats
@@ -190,15 +193,21 @@ namespace Origins {
             amebicVialVisible = false;
             entangledEnergy = false;
             asylumWhistle = false;
+            mysteriousSprayMult = 1;
+            protozoaFood = false;
             toxicShock = false;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;
             if(cryostenLifeRegenCount>0)
                 cryostenLifeRegenCount--;
+
             if(dimStarlightCooldown>0)
                 dimStarlightCooldown--;
             if (amebicVialCooldown > 0)
                 amebicVialCooldown--;
+            if (protozoaFoodCooldown > 0)
+                protozoaFoodCooldown--;
+
             if (rapidSpawnFrames>0)
                 rapidSpawnFrames--;
             if (!tornDebuff && tornTime > 0 && --tornTime <= 0) {
@@ -529,7 +538,7 @@ namespace Origins {
         public delegate void Minion_Selector(NPC target, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget);
         public bool GetMinionTarget(Minion_Selector selector) {
             bool foundTarget = false;
-            if(Player.MinionAttackTargetNPC > -1) selector(Main.npc[Player.MinionAttackTargetNPC], 1f, true, ref foundTarget);
+            if (Player.MinionAttackTargetNPC > -1) selector(Main.npc[Player.MinionAttackTargetNPC], 1f, true, ref foundTarget);
             if (asylumWhistleTarget > -1) selector(Main.npc[asylumWhistleTarget], 1f, true, ref foundTarget);
             if (!foundTarget) {
                 for (int i = 0; i < Main.maxNPCs; i++) {
@@ -661,19 +670,38 @@ namespace Origins {
             if (
                 (
                     drawInfo.drawPlayer.ItemAnimationActive && (
-                        (item.useStyle == ItemUseStyleID.Shoot &&item.ModItem is ICustomDrawItem) || 
+                        (item.useStyle == ItemUseStyleID.Shoot && item.ModItem is ICustomDrawItem) || 
                         (item.useStyle == ItemUseStyleID.Swing && item.ModItem is AnimatedModItem)
                     )
                 ) ||
                 Origins.isDrawingShadyDupes) PlayerDrawLayers.HeldItem.Hide();
 		}
-		/*public override void ModifyDrawLayers(List<PlayerLayer> layers) {
-            if (Player.HeldItem.ModItem is Chocolate_Bar animator) {
-                layers.Add(new PlayerLayer("Origins (debugging tool)", "animator", (v)=>animator.DrawAnimations(v)));
-            }
-        }*/
 		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
-            if(plagueSight) drawInfo.colorEyes = IsDevName(Player.name, 1) ? new Color(43, 185, 255) : Color.Gold;
+            if (plagueSight) drawInfo.colorEyes = IsDevName(Player.name, 1) ? new Color(43, 185, 255) : Color.Gold;
+			if (mysteriousSprayMult != 1f) {
+                float lightSaturationMult = (float)Math.Pow(mysteriousSprayMult, 2f);
+                float saturationMult = 1f - (float)Math.Pow(1f - mysteriousSprayMult, 1.5f);
+                drawInfo.colorArmorHead = OriginExtensions.Desaturate(drawInfo.colorArmorHead, lightSaturationMult);
+                drawInfo.colorArmorBody = OriginExtensions.Desaturate(drawInfo.colorArmorBody, lightSaturationMult);
+                drawInfo.colorArmorLegs = OriginExtensions.Desaturate(drawInfo.colorArmorLegs, lightSaturationMult);
+                drawInfo.floatingTubeColor = OriginExtensions.Desaturate(drawInfo.floatingTubeColor, lightSaturationMult);
+                drawInfo.itemColor = OriginExtensions.Desaturate(drawInfo.itemColor, lightSaturationMult);
+
+                drawInfo.headGlowColor = OriginExtensions.Desaturate(drawInfo.headGlowColor, saturationMult);
+                drawInfo.armGlowColor = OriginExtensions.Desaturate(drawInfo.armGlowColor, saturationMult);
+                drawInfo.bodyGlowColor = OriginExtensions.Desaturate(drawInfo.bodyGlowColor, saturationMult);
+                drawInfo.legsGlowColor = OriginExtensions.Desaturate(drawInfo.legsGlowColor, saturationMult);
+
+                drawInfo.colorElectricity = OriginExtensions.Desaturate(drawInfo.colorElectricity, saturationMult);
+                drawInfo.ArkhalisColor = OriginExtensions.Desaturate(drawInfo.ArkhalisColor, saturationMult);
+
+                drawInfo.colorHair = OriginExtensions.Desaturate(drawInfo.colorHair, saturationMult);
+                drawInfo.colorHead = OriginExtensions.Desaturate(drawInfo.colorHead, saturationMult);
+                drawInfo.colorEyes = Color.Lerp(drawInfo.colorEyes, Color.White, 1f - saturationMult);
+                drawInfo.colorEyeWhites = Color.Lerp(drawInfo.colorEyeWhites, Color.Black, 1f - saturationMult);
+                drawInfo.colorBodySkin = OriginExtensions.Desaturate(drawInfo.colorBodySkin, saturationMult);
+
+            }
         }
         public override void FrameEffects() {
             for(int i = 13; i < 18+Player.extraAccessorySlots; i++) {

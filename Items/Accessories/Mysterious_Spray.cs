@@ -16,9 +16,15 @@ namespace Origins.Items.Accessories {
             Item.rare = ItemRarityID.Master;
             Item.master = true;
         }
-        public override void UpdateEquip(Player player) {
+		public override void UpdateAccessory(Player player, bool hideVisual) {
             int factor = (int)(30 / ((player.statLife / (float)player.statLifeMax2) * 3.5f + 0.5f));
             player.lifeRegen += factor;
+			if (!hideVisual) {
+                player.GetModPlayer<OriginPlayer>().mysteriousSprayMult *= player.statLife / (float)player.statLifeMax2;
+            }
         }
-    }
+		public override void UpdateVanity(Player player) {
+            player.GetModPlayer<OriginPlayer>().mysteriousSprayMult *= player.statLife / (float)player.statLifeMax2;
+        }
+	}
 }

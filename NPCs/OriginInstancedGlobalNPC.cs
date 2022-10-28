@@ -27,6 +27,8 @@ namespace Origins.NPCs {
         public int tornTime = 0;
         const int tornTargetTime = 180;
         const float tornTarget = 0.7f;
+        public bool slowDebuff = false;
+        public bool oldSlowDebuff = false;
         public override void ResetEffects(NPC npc) {
             int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
             if (rasterized >= 0) {
@@ -43,6 +45,11 @@ namespace Origins.NPCs {
                 tornTime--;
             }
             tornDebuff = false;
+			if (oldSlowDebuff && !slowDebuff) {
+                npc.velocity *= 0.7f;
+			}
+            oldSlowDebuff = slowDebuff;
+            slowDebuff = false;
         }
         public override void AI(NPC npc) {
             if(shrapnelTime>0) {

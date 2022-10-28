@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Riven {
         internal static int buffID = 0;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Teardown");
-            Tooltip.SetDefault("Summons a mini Flying Exoskeleton to fight for you");
+            Tooltip.SetDefault("Summons a mini Flying Exoskeleton to fight for you\nIgnores some enemy defense");
             ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
             SacrificeTotal = 1;
         }
@@ -62,7 +62,8 @@ namespace Origins.Items.Weapons.Riven {
 		}
 
 		public sealed override void SetDefaults() {
-			Projectile.width = 28;
+            Projectile.DamageType = DamageClass.Summon;
+            Projectile.width = 28;
 			Projectile.height = 28;
             Projectile.tileCollide = false;
             Projectile.friendly = true;
@@ -209,11 +210,12 @@ namespace Origins.Items.Weapons.Riven {
             #endregion
 		}
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            Projectile.ArmorPenetration = 0;
+            /*Projectile.ArmorPenetration = 0;
 			while (damage - ((target.defense - Projectile.ArmorPenetration) / 2) < 4) {
                 Projectile.ArmorPenetration += (target.defense - Projectile.ArmorPenetration) / 2;
             }
-            Projectile.ArmorPenetration += armorPenetration;
+            Projectile.ArmorPenetration += armorPenetration;*/
+            Projectile.ArmorPenetration = armorPenetration + target.defense / 2;
         }
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             Projectile.ai[1] = 0;

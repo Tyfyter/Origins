@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
     public class Lazy_Cloak : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Lazy Cloak");
-            Tooltip.SetDefault("It just doesn't want to do all the work\nMaster");
+            Tooltip.SetDefault("It just doesn't want to do all the work");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -28,6 +28,7 @@ namespace Origins.Items.Accessories {
 			Item.frontSlot = 3;
 			Item.accessory = true;
 			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.master = true;
         }
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			Item.backSlot = -1;
@@ -64,6 +65,7 @@ namespace Origins.Items.Accessories {
 		}
 
 		public sealed override void SetDefaults() {
+			Projectile.DamageType = DamageClass.Summon;
 			Projectile.width = 40;
 			Projectile.height = 28;
 			Projectile.tileCollide = true;

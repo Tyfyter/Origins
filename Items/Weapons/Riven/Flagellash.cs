@@ -26,17 +26,7 @@ namespace Origins.Items.Weapons.Riven {
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
 		}
-		public override int ChoosePrefix(UnifiedRandom rand) {
-			if (Item.noUseGraphic) {
-				Item.DamageType = DamageClass.Melee;
-				Item.noUseGraphic = false;
-				Item.Prefix(-2);
-				Item.DamageType = DamageClass.SummonMeleeSpeed;
-				Item.noUseGraphic = true;
-				return Item.prefix;
-			}
-			return -1;
-		}
+		public override bool MeleePrefix() => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			Flagellash_P.pitch = Main.rand.NextFloat(0.1f, 0.5f);
 			float scale = player.GetAdjustedItemScale(Item);

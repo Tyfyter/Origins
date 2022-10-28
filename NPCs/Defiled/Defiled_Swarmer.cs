@@ -14,17 +14,19 @@ namespace Origins.NPCs.Defiled {
     public class Defiled_Swarmer : ModNPC {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("{$Defiled} Swarmer");
-            Main.npcFrameCount[NPC.type] = 3;
+            Main.npcFrameCount[Type] = 3;
+            NPCID.Sets.DontDoHardmodeScaling[Type] = true;
         }
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.Bunny);
             NPC.aiStyle = NPCAIStyleID.Demon_Eye;
-            NPC.lifeMax = 20;
+            NPC.lifeMax = NPC.life = 20;
             NPC.defense = 8;
             NPC.damage = 10;
             NPC.width = 28;
             NPC.height = 26;
             NPC.friendly = false;
+            NPC.catchItem = 0;
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
         }
