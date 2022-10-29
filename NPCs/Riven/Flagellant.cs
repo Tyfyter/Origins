@@ -44,5 +44,8 @@ namespace Origins.NPCs.Riven {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 17));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Flagellash>(), 25));
         }
+        public override void OnHitPlayer(Player target, int damage, bool crit) {
+            OriginPlayer.InflictTorn(target, 1800, 180, 0.47f);
+        }
     }
 }

@@ -1,12 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
-using Origins.Items.Other.Consumables;
-using Origins.Items.Weapons.Riven;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 

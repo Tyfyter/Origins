@@ -156,7 +156,7 @@ EVENTS:
 (#, %2) Defiled Invasion
 (#, %2) Riven Invasion
 
-(#, %2) Seer Patrol !!!
+(#, %2, ^4) Seer Patrol !!!
 ---
 
 STATUS EFFECTS:
@@ -169,7 +169,7 @@ STATUS EFFECTS:
 (X) Levitation
 (#3, ^2) Rasterize
 (^) Solvent
-(☻) Torn !!!
+(^) Torn
 (#, ^2) Totally Safe
 (#, ^2) Toxic Shock
 (X) Whiplash
@@ -286,9 +286,9 @@ ACCESSORIES:
 (^) Lazy Cloak
 (X) Magnetic Brain
 (X) Mildew Urchin
-(☻) Mysterious Spray !!!
+(^) Mysterious Spray
 (%3, X) Parallax
-(☻) Protozoa Food !!!
+(^) Protozoa Food
 (X) Scrapped Content
 
 (^) Agility Core
@@ -399,12 +399,11 @@ MELEE WEAPONS:
 
 RANGED WEAPONS:
 ---
-(X) Ancient Kruncher !!!
+(^) Ancient Kruncher
 (^) Bolt Gun
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
 (#2, ^2) Harpoon Gun !!!
-(X) Kruncher-but-it-shoots-darts !!!
 (^) Longbone
 (#, ^2) Riven Splitter !!!
 (#, ^2) Tendon Tear !!!
@@ -421,6 +420,7 @@ RANGED WEAPONS:
 (#, ^2) Cursed Flute
 (^) Dragon's Breath
 (^) Firespit
+(^) Incision
 (X) Mythril Harpoon Gun
 (X) Orichalcum Harpoon Gun
 (X) Palladium Harpoon Gun
@@ -540,6 +540,7 @@ EXPLOSIVE WEAPONS:
 (X) Grenado
 (#, ^2) Nade O' Plenty
 (#, ^2) Nuclear Arm*
+(X) Omni-Directional Claymore
 
 (%3, X) Big Bang
 (%3, X) Big Bomba
@@ -714,8 +715,8 @@ CONSUMABLES:
 (^) Crusty Crate
 (^) Pointy Crate
 
-(X) Gooey Water !!!
-(X) White Water !!!
+(#, ^2) Gooey Water !!!
+(#, ^2) White Water !!!
 ---
 
 MOUNTS & PETS:

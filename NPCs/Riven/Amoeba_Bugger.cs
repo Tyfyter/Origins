@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -53,6 +54,9 @@ namespace Origins.NPCs.Riven {
             } else {
                 Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
             }
+        }
+        public override void OnHitPlayer(Player target, int damage, bool crit) {
+            OriginPlayer.InflictTorn(target, 300, 180, 0.85f);
         }
     }
 }
