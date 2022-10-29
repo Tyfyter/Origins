@@ -1,3 +1,4 @@
+using Origins.Buffs;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Terraria;
@@ -90,5 +91,8 @@ namespace Origins.NPCs.Riven {
             Gore.NewGore(npc.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Small"+Main.rand.Next(1,4)));
             //for(int i = 0; i < 3; i++)
         }
-    }
+		public override void OnHitPlayer(Player target, int damage, bool crit) {
+            target.AddBuff(Torn_Buff.ID, 600);
+        }
+	}
 }
