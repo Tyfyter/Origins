@@ -449,7 +449,7 @@ MAGIC WEAPONS:
 (^) Infusion
 (^) Low Signal
 (^) Magnus
-(☻) Slashswarm !!!
+(^) Slashswarm
 (^) Tones of Agony
 (#, ^2) Transfusion !!!
 
@@ -476,7 +476,7 @@ MAGIC WEAPONS:
 
 SUMMONER WEAPONS:
 ---
-(^ (I'll pass it for now, but I may wanna rework in future)) Amebolize Incantation
+(^) Amebolize Incantation
 (^) Bone Latcher
 (^) Brainy Staff
 (#, ^2) Desert Crown !!!
@@ -510,21 +510,21 @@ SUMMONER WEAPONS:
 EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
-(#, ^2, %2) Bombardment !!!
+(#, ^2) Bombardment !!!
 (#2, ^2) Bomb Launcher !!!
-(#, ^2, %2) Brainade !!!
+(#, ^2) Brainade !!!
 (#, ^2) Defiled Spirit !!!
-(#, ^2, %2) Floaty Bomb !!!
+(#, ^2) Floaty Bomb !!!
 (^) Hand Grenade Launcher
 (#, ^2) Hellfire Bomb !!!
 (#, ^2) Hellfire Grenade !!!
 (^) Impact Explosives
 (^) Lightning Grenade
-(#, ^2, %2) Outbreak Bomb !!!
+(#, ^2) Outbreak Bomb !!!
 (^) Peatball*
 
 (^) Bomboomstick
-(#2, ^2, %2) Boomphracken
+(#2, ^2) Boomphracken
 (#, ^2) Klangjet
 (#, ^2) Mortar Shell
 (^) Shrapnel Bomb
@@ -540,7 +540,7 @@ EXPLOSIVE WEAPONS:
 (X) Grenade Lawnchair
 (X) Grenado
 (#, ^2) Nade O' Plenty
-(#, @2 (needs arm sprites)) Nuclear Arm*
+(#, ^2) Nuclear Arm*
 (X) Omni-Directional Claymore
 
 (%3, X) Big Bang
