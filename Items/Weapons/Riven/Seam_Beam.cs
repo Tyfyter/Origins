@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Items.Materials;
+using Origins.NPCs;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -80,7 +81,7 @@ namespace Origins.Items.Weapons.Riven {
         }
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            target.AddBuff(Torn_Buff.ID, 300);
+            OriginGlobalNPC.InflictTorn(target, 300);
 		}
 
 		public override bool PreDraw(ref Color lightColor) {

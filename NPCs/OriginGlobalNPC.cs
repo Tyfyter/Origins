@@ -116,7 +116,6 @@ namespace Origins.NPCs {
 				damage += defense * 0.1f;
 			}
 			if (tornTime > 0) {
-				Main.NewText($"+{(damage / (1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime)))) - damage} damage from torn");
 				damage /= 1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime));
 			}
 			return true;

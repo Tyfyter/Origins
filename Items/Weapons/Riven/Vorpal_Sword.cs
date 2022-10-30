@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Journal;
+using Origins.NPCs;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -224,7 +225,7 @@ namespace Origins.Items.Weapons.Riven {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-			target.AddBuff(Torn_Buff.ID, 20);
+			OriginGlobalNPC.InflictTorn(target, 20, targetSeverity:0.6f);
 		}
 		public override void CutTiles() {
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;

@@ -24,9 +24,9 @@ namespace Origins.NPCs {
         internal List<int> infusionSpikes;
         internal bool amebolizeDebuff = false;
         public bool tornDebuff = false;
-        public int tornTime = 0;
-        const int tornTargetTime = 180;
-        const float tornTarget = 0.7f;
+        int tornTime = 0;
+        int tornTargetTime = 180;
+        float tornTarget = 0.7f;
         public bool slowDebuff = false;
         public bool oldSlowDebuff = false;
         public override void ResetEffects(NPC npc) {
@@ -41,8 +41,9 @@ namespace Origins.NPCs {
                 if (tornTime < tornTargetTime) {
                     tornTime++;
                 }
-            } else if (tornTime > 0) {
-                tornTime--;
+            } else if (tornTime > 0 && --tornTime <= 0) {
+                tornTargetTime = 180;
+                tornTarget = 0.7f;
             }
             tornDebuff = false;
 			if (oldSlowDebuff && !slowDebuff) {
@@ -106,6 +107,12 @@ namespace Origins.NPCs {
             if(npc.HasBuff(Solvent_Debuff.ID) || rasterizedTime > 0) {
 			    spriteBatch.Restart();
 			}
+        }
+        public static void InflictTorn(NPC npc, int duration, int targetTime = 180, float targetSeverity = 0.7f) {
+            npc.AddBuff(Torn_Buff.ID, duration);
+            OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
+            globalNPC.tornTargetTime = Math.Min(globalNPC.tornTargetTime, targetTime);
+            globalNPC.tornTarget = Math.Max(Math.Min(globalNPC.tornTarget, targetSeverity), float.Epsilon);
         }
     }
 }

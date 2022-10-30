@@ -526,7 +526,7 @@ namespace Origins.World.BiomeData {
 		}
 	}
 	public class Defiled_Wastelands_Alt_Biome : AltBiome {
-		public override string WorldIcon => "";//TODO: Redo tree icons for AltLib
+		public override string WorldIcon => "Origins/UI/WorldGen/IconDefiled";
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override Color OuterColor => new(170, 170, 170);
@@ -537,6 +537,10 @@ namespace Origins.World.BiomeData {
 			ModContent.TileType<Defiled_Sandstone>(),
 			ModContent.TileType<Hardened_Defiled_Sand>(),
 			ModContent.TileType<Defiled_Ice>(),
+		};
+		public override Dictionary<int, int> SpecialConversion => new Dictionary<int, int>() {
+			[TileID.LargePiles] = ModContent.TileType<Defiled_Large_Foliage>(),
+			[TileID.LargePiles2] = ModContent.TileType<Defiled_Large_Foliage>()
 		};
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;

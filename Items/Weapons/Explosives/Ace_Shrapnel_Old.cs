@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.rare = ItemRarityID.Lime;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-		    type-=ModContent.ProjectileType<Ace_Shrapnel_P>();
+		    type-=ModContent.ProjectileType<Ace_Shrapnel_Old_P>();
             type/=3;
             Projectile.NewProjectile(source, position, velocity, Item.shoot, damage, knockback, player.whoAmI, 6+type, 0-type);
             return false;

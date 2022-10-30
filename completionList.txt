@@ -449,7 +449,7 @@ MAGIC WEAPONS:
 (^) Infusion
 (^) Low Signal
 (^) Magnus
-(#, ^2 (uses amoeba bubble)) Slashswarm !!!
+(☻) Slashswarm !!!
 (^) Tones of Agony
 (#, ^2) Transfusion !!!
 
@@ -510,21 +510,21 @@ SUMMONER WEAPONS:
 EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
-(#, ^2) Bombardment !!!
+(#, ^2, %2) Bombardment !!!
 (#2, ^2) Bomb Launcher !!!
-(#, ^2) Brainade !!!
+(#, ^2, %2) Brainade !!!
 (#, ^2) Defiled Spirit !!!
-(#, ^2) Floaty Bomb !!!
+(#, ^2, %2) Floaty Bomb !!!
 (^) Hand Grenade Launcher
 (#, ^2) Hellfire Bomb !!!
 (#, ^2) Hellfire Grenade !!!
 (^) Impact Explosives
 (^) Lightning Grenade
-(#, ^2) Outbreak Bomb !!!
+(#, ^2, %2) Outbreak Bomb !!!
 (^) Peatball*
 
 (^) Bomboomstick
-(#2, ^2) Boomphracken
+(#2, ^2, %2) Boomphracken
 (#, ^2) Klangjet
 (#, ^2) Mortar Shell
 (^) Shrapnel Bomb
@@ -540,7 +540,7 @@ EXPLOSIVE WEAPONS:
 (X) Grenade Lawnchair
 (X) Grenado
 (#, ^2) Nade O' Plenty
-(#, ^2) Nuclear Arm*
+(#, @2 (needs arm sprites)) Nuclear Arm*
 (X) Omni-Directional Claymore
 
 (%3, X) Big Bang
@@ -548,7 +548,7 @@ EXPLOSIVE WEAPONS:
 (X) Black Hole Bomb Launcher
 (%3, X) Catalyst
 (@, ^3) Caustica
-(X) Flakjack
+(@, #) Flakjack
 (@, ^3) Missile Minigun
 (@2, #) Starburst
 ---
@@ -619,7 +619,7 @@ TILES:
 (X) Music Box (Riven Hive) !!!
 
 (#, ^2) Defiled Amalgamation Trophy !!!
-(#, ^2) Defiled Amalgamation Relic !!!
+(#, @4) Defiled Amalgamation Relic !!!
 (X) Quantux Trophy
 (X) Quantux Relic
 (X) Primordial Amoeba Trophy !!!

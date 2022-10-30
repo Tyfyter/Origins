@@ -19,10 +19,15 @@ namespace Origins {
 		private static OriginsModIntegrations instance;
 		Mod wikiThis;
 		public static Mod WikiThis { get => instance.wikiThis; set => instance.wikiThis = value; }
+		Mod phaseIndicator;
+		public static Mod PhaseIndicator { get => instance.phaseIndicator; set => instance.phaseIndicator = value; }
 		static string WikiURL => "https://tyfyter.github.io/OriginsWiki";
 		static HashSet<string> wikiSiteMap;
 		public void Load(Mod mod) {
 			instance = this;
+			if (ModLoader.TryGetMod("PhaseIndicator", out Mod phaseIndicator)) {//TODO: PhaseIndicator integration
+
+			}
 			if (!Main.dedServ && ModLoader.TryGetMod("Wikithis", out wikiThis)) {
 				//WikiThis.Call("AddModURL", Origins.instance, "tyfyter.github.io/OriginsWiki");
 				WikiThis.Call(

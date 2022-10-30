@@ -51,8 +51,8 @@ namespace Origins.Items.Weapons.Riven {
             Projectile.DamageType = DamageClass.Summon;
             Projectile.aiStyle = 0;
             Projectile.penetrate = -1;
-			Projectile.width = 22;
-			Projectile.height = 22;
+			Projectile.width = 30;
+			Projectile.height = 30;
             Projectile.ignoreWater = true;
             Projectile.friendly = true;
             Projectile.timeLeft = 90;
