@@ -596,9 +596,9 @@ TILES:
 (X) Brine Water Fountain
 (X) Cubekon Chest
 (X) Cubekon Node
-(#3, ^2) Defiled Dungeon Chest !!!
+(#3?, ^2) Defiled Dungeon Chest !!!
 (X) Defiled Water Fountain
-(#3, ^2) Riven Dungeon Chest !!!
+(#3?, ^2) Riven Dungeon Chest !!!
 (X) Riven Water Fountain
 
 (X) Fabricator

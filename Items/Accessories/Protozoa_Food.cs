@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
@@ -71,6 +72,8 @@ namespace Origins.Items.Accessories {
 			Projectile.minion = true;
 			Projectile.minionSlots = 0f;
 			Projectile.penetrate = 1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -207,6 +210,15 @@ namespace Origins.Items.Accessories {
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			return new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f);
+		}
+		public override bool PreKill(int timeLeft) {
+			SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.position);
+			Projectile.position -= new Vector2(40);
+			Projectile.width += 40;
+			Projectile.height += 40;
+			Projectile.penetrate = -1;
+			Projectile.Damage();
+			return true;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
 			target.AddBuff(Slow_Debuff.ID, Main.rand.Next(120, 180));

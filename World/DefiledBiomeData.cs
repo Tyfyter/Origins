@@ -547,6 +547,7 @@ namespace Origins.World.BiomeData {
 			//DisplayName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
 			GenPassName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
 			BiomeGrass = ModContent.TileType<Defiled_Grass>();
+			SeedType = ModContent.ItemType<Defiled_Grass_Seeds>();
 			BiomeStone = ModContent.TileType<Defiled_Stone>();
 			BiomeSand = ModContent.TileType<Defiled_Sand>();
 			BiomeSandstone = ModContent.TileType<Defiled_Sandstone>();
@@ -556,6 +557,7 @@ namespace Origins.World.BiomeData {
 			BiomeOreItem = ModContent.ItemType<Defiled_Ore_Item>();
 			AltarTile = ModContent.TileType<Defiled_Altar>();
 			BiomeChestTile = ModContent.TileType<Defiled_Dungeon_Chest>();
+			BiomeChestTileStyle = 1;
 			MimicType = ModContent.NPCType<Defiled_Mimic>();
 		}
 		public override EvilBiomeGenerationPass GetEvilBiomeGenerationPass() {

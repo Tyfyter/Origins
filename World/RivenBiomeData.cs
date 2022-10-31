@@ -489,6 +489,7 @@ namespace Origins.World.BiomeData {
 			//DisplayName.SetDefault(Language.GetTextValue("Mods.Origins.Generic.Riven_Hive"));
 			GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
 			//BiomeGrass = ModContent.TileType<Riven_Grass>();
+			//SeedType = ModContent.ItemType<Riven_Grass_Seeds>();
 			BiomeStone = ModContent.TileType<Riven_Flesh>();
 			//BiomeSand = ModContent.TileType<Defiled_Sand>();
 			//BiomeSandstone = ModContent.TileType<Defiled_Sandstone>();
@@ -497,6 +498,7 @@ namespace Origins.World.BiomeData {
 			BiomeOre = ModContent.TileType<Infested_Ore>();
 			AltarTile = ModContent.TileType<Riven_Altar>();
 			BiomeChestTile = ModContent.TileType<Riven_Dungeon_Chest>();
+			BiomeChestTileStyle = 1;
 			MimicType = ModContent.NPCType<Riven_Mimic>();
 		}
 		public override EvilBiomeGenerationPass GetEvilBiomeGenerationPass() {
