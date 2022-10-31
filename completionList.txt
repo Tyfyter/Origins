@@ -582,6 +582,8 @@ TILES:
 (@, ^3) Sulphur Stone
 (X) Taranum
 (^) White Ice
+(X) Defiled Cactus
+(X) Riven Cactus
 
 (X) Batholith Wall
 (^) Defiled Sandstone Wall
@@ -716,8 +718,8 @@ CONSUMABLES:
 (^) Crusty Crate
 (^) Pointy Crate
 
-(#, ^2) Gooey Water !!!
-(#, ^2) White Water !!!
+(☻) Gooey Water !!! (still needs dust sprite)
+(☻) White Water !!! (still needs dust sprite)
 ---
 
 MOUNTS & PETS:
