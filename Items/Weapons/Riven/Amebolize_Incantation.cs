@@ -134,6 +134,7 @@ namespace Origins.Items.Weapons.Riven {
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             target.AddBuff(Amebolize_Buff.ID, 240);
+            target.AddBuff(Slow_Debuff.ID, 90);
             if (target.life > 0 && target.CanBeChasedBy()) Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
             if(Projectile.ai[0] != 0) Projectile.damage = (int)(Projectile.damage * 0.90);
         }
