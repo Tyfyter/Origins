@@ -48,6 +48,7 @@ namespace Origins.Items.Accessories {
 	}
 	public class Mini_Protozoa_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Riven/Amoeba_Ball";
+		public override string GlowTexture => Texture;
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			ID = Projectile.type;
@@ -74,6 +75,7 @@ namespace Origins.Items.Accessories {
 			Projectile.penetrate = 1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
+			Projectile.alpha = 150;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -212,11 +214,12 @@ namespace Origins.Items.Accessories {
 			return new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f);
 		}
 		public override bool PreKill(int timeLeft) {
+			if (!Projectile.friendly) return true;
 			SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.position);
-			Projectile.position -= new Vector2(40);
+			Projectile.position -= new Vector2(20);
 			Projectile.width += 40;
 			Projectile.height += 40;
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 15;
 			Projectile.Damage();
 			return true;
 		}

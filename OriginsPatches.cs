@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Mono.Cecil;
+using Mono.Cecil.Cil;
+using MonoMod.Cil;
 using MonoMod.RuntimeDetour;
 using MonoMod.RuntimeDetour.HookGen;
 using Origins.Buffs;
@@ -18,6 +21,7 @@ using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
 using Origins.UI;
 using Origins.World;
 using Origins.World.BiomeData;
@@ -46,6 +50,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Default;
 using Terraria.ModLoader.IO;
+using Terraria.ObjectData;
 using Terraria.UI;
 using Terraria.Utilities;
 using static Origins.OriginExtensions;
@@ -170,9 +175,9 @@ namespace Origins {
                 return orig(index);
             };
             On.Terraria.Graphics.Light.TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
-            //On.Terraria.GameContent.UI.Elements.UIWorldListItem.GetIcon += UIWorldListItem_GetIcon;
-            //On.Terraria.GameContent.UI.Elements.UIGenProgressBar.DrawSelf += UIGenProgressBar_DrawSelf;
-            /*HookEndpointManager.Add(typeof(PlantLoader).GetMethod("ShakeTree", BindingFlags.Public | BindingFlags.Static), 
+			//On.Terraria.GameContent.UI.Elements.UIWorldListItem.GetIcon += UIWorldListItem_GetIcon;
+			//On.Terraria.GameContent.UI.Elements.UIGenProgressBar.DrawSelf += UIGenProgressBar_DrawSelf;
+			/*HookEndpointManager.Add(typeof(PlantLoader).GetMethod("ShakeTree", BindingFlags.Public | BindingFlags.Static), 
                 (hook_ShakeTree)((orig_ShakeTree orig, int x, int y, int type, ref bool createLeaves) => {
 					if (orig(x, y, type, ref createLeaves)) {
                         PlantLoader_ShakeTree(x, y, type, ref createLeaves);
@@ -181,8 +186,92 @@ namespace Origins {
                     return false;
                 })
             );*/
+			IL.Terraria.WorldGen.PlantAlch += WorldGen_PlantAlch;
             On.Terraria.WorldGen.ShakeTree += WorldGen_ShakeTree;
         }
+
+		private void WorldGen_PlantAlch(ILContext il) {
+            ILCursor c = new ILCursor(il);
+            if (!c.TryGotoNext(
+                moveType: MoveType.Before,
+                new Func<Instruction, bool>[] {
+                    v => v.MatchCall<NetMessage>("SendTileSquare")
+                }
+            )) return;
+            if (!c.TryGotoPrev(
+                moveType: MoveType.Before,
+                new Func<Instruction, bool>[] {
+                    v => v.MatchLdsflda<Main>("tile")
+                }
+            )) return;
+            if (!c.TryFindPrev(
+                out ILCursor[] prevs,
+                new Func<Instruction, bool>[] {
+                    v => v.MatchCall<WorldGen>("PlaceAlch")
+                }
+            )) return;
+            ILCursor c2 = prevs[0];
+            c.Index = c2.Index;
+            c2.Index++;
+            Stack<Instruction> ins = new Stack<Instruction>();
+			while (!c2.Next.MatchBneUn(out _)) {
+                ins.Push(c2.Next);
+                c2.Index--;
+            }
+            if (!c.TryGotoNext(
+                moveType: MoveType.AfterLabel,
+                new Func<Instruction, bool>[] {
+                    v => v.MatchLdsflda<Main>("tile")
+                }
+            )) return;
+            Instruction instruction;
+            while (ins.Count > 0) {
+                instruction = ins.Pop();
+				switch (instruction.OpCode.Code) {
+                    case Mono.Cecil.Cil.Code.Ldloc_0:
+                    case Mono.Cecil.Cil.Code.Ldloc_1:
+                    case Mono.Cecil.Cil.Code.Ldc_I4_1:
+                    case Mono.Cecil.Cil.Code.Sub:
+                    case Mono.Cecil.Cil.Code.Ldc_I4_6:
+                    c.Emit(instruction.OpCode, instruction.Operand);
+                    break;
+                    case Mono.Cecil.Cil.Code.Call:
+                    MethodBase placeCustomAlch = typeof(Origins).GetMethod("PlaceCustomAlch", BindingFlags.Public | BindingFlags.Static);
+                    c.Emit(instruction.OpCode, placeCustomAlch);
+                    break;
+                    case Mono.Cecil.Cil.Code.Pop:
+                    c.Emit(instruction.OpCode, instruction.Operand);
+                    break;
+                }
+			}
+        }
+        public static bool PlaceCustomAlch(int x, int y, int style) {
+            Tile tile = Framing.GetTileSafely(x, y);
+            ushort wiltedRose = (ushort)MC.TileType<Wilted_Rose>();
+            if (TileObjectData.GetTileData(wiltedRose, 0).AnchorValidTiles.Contains(Main.tile[x, y + 1].TileType) && tile.LiquidAmount <= 0) {
+                tile.HasTile = true;
+                tile.TileType = wiltedRose;
+                tile.TileFrameX = 0;
+                tile.TileFrameY = 0;
+                return true;
+            }
+            ushort wrycoral = (ushort)MC.TileType<Wrycoral>();
+            if (TileObjectData.GetTileData(wrycoral, 0).AnchorValidTiles.Contains(Main.tile[x, y + 1].TileType) && Main.rand.NextBool(2, 5)) {
+                tile.HasTile = true;
+                tile.TileType = wrycoral;
+                tile.TileFrameX = (short)(Main.rand.Next(2) * 18);
+                tile.TileFrameY = 0;
+                return true;
+            }
+            if (TileObjectData.GetTileData(wrycoral, 0).AnchorValidTiles.Contains(Main.tile[x, y - 1].TileType) && Main.rand.NextBool(5)) {
+                tile.HasTile = true;
+                tile.TileType = wrycoral;
+                tile.TileFrameX = 36;
+                tile.TileFrameY = 0;
+                return true;
+            }
+            return false;
+		}
 
         private AutoCastingAsset<Texture2D> _texOuterDefiled;
         private AutoCastingAsset<Texture2D> _texOuterRiven;

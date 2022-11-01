@@ -50,6 +50,7 @@ namespace Origins.Items.Weapons.Riven {
 			Projectile.height = 22;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 900;
+            Projectile.alpha = 150;
         }
 		public override void AI() {
             Projectile.velocity *= 0.95f;

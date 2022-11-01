@@ -31,7 +31,8 @@ namespace Origins.Items.Weapons.Riven {
 			Item.value = 5000;
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
-            Item.glowMask = glowmask;
+			Item.reuseDelay = 8;
+			Item.glowMask = glowmask;
         }
     }
     public class Slashswarm_P : ModProjectile {
@@ -52,6 +53,7 @@ namespace Origins.Items.Weapons.Riven {
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 180;
 			Projectile.scale = 0.75f;
+			Projectile.alpha = 150;
 		}
 		public override void AI() {
 			Projectile.frameCounter++;
@@ -125,6 +127,7 @@ namespace Origins.Items.Weapons.Riven {
 			Projectile.ignoreWater = true;
 			Projectile.timeLeft = 60;
 			Projectile.scale = 0.5f;
+			Projectile.alpha = 150;
 		}
 	}
 }

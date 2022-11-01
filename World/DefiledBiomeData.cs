@@ -23,6 +23,7 @@ using Origins.Items.Pets;
 using AltLibrary.Common.AltBiomes;
 using Origins.NPCs.Defiled;
 using AltLibrary.Core.Generation;
+using Origins.Items.Materials;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -559,6 +560,13 @@ namespace Origins.World.BiomeData {
 			BiomeChestTile = ModContent.TileType<Defiled_Dungeon_Chest>();
 			BiomeChestTileStyle = 1;
 			MimicType = ModContent.NPCType<Defiled_Mimic>();
+		}
+		public override AltMaterialContext MaterialContext {
+			get {
+				AltMaterialContext context = new AltMaterialContext();
+				context.SetEvilHerb(ModContent.ItemType<Wilting_Rose_Item>());
+				return context;
+			}
 		}
 		public override EvilBiomeGenerationPass GetEvilBiomeGenerationPass() {
 			return new Defiled_Wastelands_Generation_Pass();

@@ -48,6 +48,7 @@ namespace Origins.Items.Weapons.Riven {
             Projectile.scale*=0.6f;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 60;
+            Projectile.alpha = 150;
         }
 		public override bool PreKill(int timeLeft) {
 			return base.PreKill(timeLeft);

@@ -78,6 +78,7 @@ namespace Origins.Items.Accessories {
 	}
 	public class Amebic_Vial_Tentacle : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Riven/Flagellash_P";
+		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Amebic Tentacle");
 		}
@@ -88,6 +89,7 @@ namespace Origins.Items.Accessories {
 			Projectile.height = 16;
 			Projectile.aiStyle = 0;
 			Projectile.tileCollide = false;
+			Projectile.alpha = 150;
 		}
 		public float movementFactor {
 			get => Projectile.ai[0];

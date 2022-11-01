@@ -23,6 +23,7 @@ using Terraria.GameContent.Bestiary;
 using AltLibrary.Common.AltBiomes;
 using Origins.NPCs.Riven;
 using AltLibrary.Core.Generation;
+using Origins.Items.Materials;
 
 namespace Origins.World.BiomeData {
 	public class Riven_Hive : ModBiome {
@@ -488,18 +489,25 @@ namespace Origins.World.BiomeData {
 			BiomeType = AltLibrary.BiomeType.Evil;
 			//DisplayName.SetDefault(Language.GetTextValue("Mods.Origins.Generic.Riven_Hive"));
 			GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
-			//BiomeGrass = ModContent.TileType<Riven_Grass>();
+			BiomeGrass = TileID.Dirt;//ModContent.TileType<Riven_Grass>();
 			//SeedType = ModContent.ItemType<Riven_Grass_Seeds>();
 			BiomeStone = ModContent.TileType<Riven_Flesh>();
-			//BiomeSand = ModContent.TileType<Defiled_Sand>();
-			//BiomeSandstone = ModContent.TileType<Defiled_Sandstone>();
-			//BiomeHardenedSand = ModContent.TileType<Hardened_Defiled_Sand>();
-			//BiomeIce = ModContent.TileType<Riven_Ice>();
+			BiomeSand = TileID.Silt;//ModContent.TileType<Defiled_Sand>();
+			BiomeSandstone = TileID.SandstoneBrick;//ModContent.TileType<Defiled_Sandstone>();
+			BiomeHardenedSand = TileID.Hive;//ModContent.TileType<Hardened_Defiled_Sand>();
+			BiomeIce = TileID.IceBrick;//ModContent.TileType<Riven_Ice>();
 			BiomeOre = ModContent.TileType<Infested_Ore>();
 			AltarTile = ModContent.TileType<Riven_Altar>();
 			BiomeChestTile = ModContent.TileType<Riven_Dungeon_Chest>();
 			BiomeChestTileStyle = 1;
 			MimicType = ModContent.NPCType<Riven_Mimic>();
+		}
+		public override AltMaterialContext MaterialContext {
+			get {
+				AltMaterialContext context = new AltMaterialContext();
+				context.SetEvilHerb(ModContent.ItemType<Wrycoral_Item>());
+				return context;
+			}
 		}
 		public override EvilBiomeGenerationPass GetEvilBiomeGenerationPass() {
 			return new Riven_Hive_Generation_Pass();

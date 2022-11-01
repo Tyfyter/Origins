@@ -58,6 +58,7 @@ namespace Origins.Items.Weapons.Riven {
             Projectile.timeLeft = 90;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.alpha = 150;
         }
         public override void AI() {
             Player player = Main.player[Projectile.owner];
