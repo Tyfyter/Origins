@@ -36,7 +36,8 @@ namespace Origins.Tiles.Riven {
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			TileObjectData.newTile.AnchorValidTiles = new int[] {
-				TileType<Riven_Flesh>()
+				TileType<Riven_Flesh>(),
+				TileType<Riven_Grass>()
 			};
 			TileObjectData.newTile.AnchorAlternateTiles = new int[] {
 				TileID.ClayPot,

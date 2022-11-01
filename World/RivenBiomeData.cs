@@ -483,13 +483,14 @@ namespace Origins.World.BiomeData {
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilRiven";
 		public override Color OuterColor => new(30, 176, 255);
 		public override List<int> SpreadingTiles => new List<int> {
-			ModContent.TileType<Riven_Flesh>()
+			ModContent.TileType<Riven_Flesh>(),
+			ModContent.TileType<Riven_Grass>()
 		};
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
 			//DisplayName.SetDefault(Language.GetTextValue("Mods.Origins.Generic.Riven_Hive"));
 			GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
-			BiomeGrass = TileID.Dirt;//ModContent.TileType<Riven_Grass>();
+			BiomeGrass = ModContent.TileType<Riven_Grass>();
 			//SeedType = ModContent.ItemType<Riven_Grass_Seeds>();
 			BiomeStone = ModContent.TileType<Riven_Flesh>();
 			BiomeSand = TileID.Silt;//ModContent.TileType<Defiled_Sand>();
