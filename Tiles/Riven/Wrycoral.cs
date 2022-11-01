@@ -91,7 +91,7 @@ namespace Origins.Tiles.Riven {
 			Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
 			Player nearestPlayer = Main.player[Player.FindClosest(worldPosition, 16, 16)];
 
-			int herbItemType = ItemType<Wilting_Rose_Item>();
+			int herbItemType = ItemType<Wrycoral_Item>();
 			int herbItemStack = 1;
 
 			if (nearestPlayer.active && nearestPlayer.HeldItem.type == ItemID.StaffofRegrowth) {

@@ -105,13 +105,14 @@ namespace Origins.Tiles.Riven {
             return false;
         }*/
     }
-    public class Defiled_Grass_Seeds : ModItem {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("{$Defiled} Seeds");
+    public class Riven_Grass_Seeds : ModItem {
+		public override string Texture => "Terraria/Images/Item_27";
+		public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Riven Seeds");
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.GrassSeeds);
-            Item.placeStyle = ModContent.TileType<Defiled_Grass>();
+            Item.placeStyle = ModContent.TileType<Riven_Grass>();
 		}
         public override bool ConsumeItem(Player player) {
             Main.tile[Player.tileTargetX, Player.tileTargetY].TileType = (ushort)Item.placeStyle;

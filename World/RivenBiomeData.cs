@@ -118,6 +118,7 @@ namespace Origins.World.BiomeData {
 					if (maxY > Main.maxTilesY - 1) {
 						maxY = Main.maxTilesY - 1;
 					}
+					bool generatedChunk = false;
 					for (int x = minX; x < maxX; x++) {
 						for (int y = minY; y < maxY; y++) {
 							double wallOffset = (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1);
@@ -162,8 +163,9 @@ namespace Origins.World.BiomeData {
 								} else if (y < Y0) {
 									Y0 = y;
 								}
-								if (genRand.Next(3000000) < strength + 924) {
+								if (!generatedChunk && genRand.Next(3000000) < strength + 924) {
 									features.Add((x, y, FeatureType.CHUNK, false));
+									//generatedChunk = true;
 								}
 							}
 						}
@@ -491,7 +493,7 @@ namespace Origins.World.BiomeData {
 			//DisplayName.SetDefault(Language.GetTextValue("Mods.Origins.Generic.Riven_Hive"));
 			GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
 			BiomeGrass = ModContent.TileType<Riven_Grass>();
-			//SeedType = ModContent.ItemType<Riven_Grass_Seeds>();
+			SeedType = ModContent.ItemType<Riven_Grass_Seeds>();
 			BiomeStone = ModContent.TileType<Riven_Flesh>();
 			BiomeSand = TileID.Silt;//ModContent.TileType<Defiled_Sand>();
 			BiomeSandstone = TileID.SandstoneBrick;//ModContent.TileType<Defiled_Sandstone>();
@@ -515,7 +517,7 @@ namespace Origins.World.BiomeData {
 		}
 		public class Riven_Hive_Generation_Pass : EvilBiomeGenerationPass {
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
-				int y = (int)worldSurface - 100;
+				int y = (int)worldSurface - 50;
 				for (; !Main.tile[evilBiomePosition, y].HasTile; y++);
 				Riven_Hive.Gen.StartHive(evilBiomePosition, y);
 			}

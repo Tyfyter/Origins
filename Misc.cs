@@ -1309,7 +1309,7 @@ namespace Origins {
         }
         public static bool IsTileReplacable(int x, int y) {
             Tile tile = Main.tile[x, y];
-            return !tile.HasTile || (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && WorldGen.CanKillTile(x, x));
+            return !tile.HasTile || (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && WorldGen.CanKillTile(x, y));
 		}
         public static void SpreadWall(int x, int y, ushort wallType, Dictionary<ushort, bool> replacables) {
             if (!WorldGen.InWorld(x, y)) {
