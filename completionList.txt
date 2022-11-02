@@ -50,6 +50,7 @@ BOSSES AND MINI-BOSSES:
 
 (X) Mad Maniac
 (%2, X) Mildew Carrion
+(X) Miscreant
 
 (X) Alien Queen
 (X) Duskord
@@ -308,6 +309,7 @@ VANITY:
 (X) I.C.A.R.U.S. Mask
 (X) Mad Maniac Wig
 (X) Mildew Carrion Mask
+(X) Miscreant Mask
 (X) Quantux Mask
 (X) Restless Flame Mask
 (X) Primordial Amoeba Mask !!!
@@ -576,9 +578,10 @@ TILES:
 (^) Lost Ore
 (X) Mildew
 (#2, ^2) Peat Moss* !!!
+(^) Riven Grass
 (X) Space Rock
 (#2, ^2) Space Goo
-(#3, ^2) Spug Flesh !!!
+(^) Spug Flesh
 (@, ^3) Sulphur Stone
 (X) Taranum
 (^) White Ice
@@ -604,14 +607,16 @@ TILES:
 (X) Fabricator
 (X) Omni-Printer
 
+(#, ^2) Acetabularia !!!
 (X) Brineglow Vine
-(#3, ^2) Defiled Misc Tiles* (please implement Large foliage) !!!
+(^) Defiled Misc Tiles*
 (#2, ^2) Riven Foliage !!!
 (#2, ^2) Riven Lesion !!!
 (#, ^2) Riven Pot !!!
-(#3, ^2) Riven Tree !!!
-(#2, ^2) Wilting Rose !!!
-(#, ^2) Wrycoral !!!
+(^) Riven Tree
+(#, ^2) Soulspore !!!
+(^) Wilting Rose
+(X) Wrycoral !!!
 
 (X) Music Box (Brine Pool)
 (X) Music Box (Cubekon Temple)
@@ -622,6 +627,8 @@ TILES:
 
 (#, ^2) Defiled Amalgamation Trophy !!!
 (#, @4) Defiled Amalgamation Relic !!!
+(X) Miscreant Trophy
+(X) Miscreant Relic
 (X) Quantux Trophy
 (X) Quantux Relic
 (X) Primordial Amoeba Trophy !!!
@@ -631,6 +638,7 @@ TILES:
 
 MATERIALS:
 ---
+(#, ^2) Acetabularia !!!
 (^) Adhesive Wrap
 (^) Angelium
 (^) Bark
@@ -644,8 +652,9 @@ MATERIALS:
 (^) Fiberglass Shard
 (^) Riven Carapace
 (^) Rubber
-(#, ^2) Sentient Powder !!!
+(#4, ^2) Sentient Powder !!!
 (^) Silicon Packet
+(#, ^2) Soulspore !!!
 (^) Strange String*
 (^) Tree Sap
 (^) Undead Chunk*
@@ -718,8 +727,8 @@ CONSUMABLES:
 (^) Crusty Crate
 (^) Pointy Crate
 
-(☻) Gooey Water !!! (still needs dust sprite)
-(☻) White Water !!! (still needs dust sprite)
+(#4, ^2) Gooey Water !!!
+(^) White Water
 ---
 
 MOUNTS & PETS:
@@ -784,6 +793,7 @@ MUSIC:
 (^) Defiled Wastelands
 (^) Defiled Wastelands - Mimic Route
 (O) Fiberglass Caves !!!
+(X) Miscreant
 (^) Riven Hive
 (^) The Dusk
 
@@ -803,5 +813,5 @@ MUSIC:
 (X) Crimson Invasion
 (X) Defiled Invasion
 (X) Riven Invasion
-(O) Seer Chase
+(^) Seer Chase
 ---
