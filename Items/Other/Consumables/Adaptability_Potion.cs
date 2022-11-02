@@ -11,7 +11,7 @@ namespace Origins.Items.Other.Consumables {
 		public override string Texture => "Terraria/Images/Buff_160";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Adaptability Potion");
-			Tooltip.SetDefault("10% class stat share");
+			Tooltip.SetDefault("50% class stat share");
 			SacrificeTotal = 20;
 		}
 		public override void SetDefaults() {

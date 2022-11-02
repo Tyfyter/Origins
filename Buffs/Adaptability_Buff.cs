@@ -7,7 +7,7 @@ namespace Origins.Buffs {
 		public static int ID { get; private set; } = -1;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Adaptability");
-            Description.SetDefault("10% class stat share");
+            Description.SetDefault("50% class stat share");
             ID = Type;
         }
 		public override void Update(Player player, ref int buffIndex) {
