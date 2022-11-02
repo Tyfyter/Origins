@@ -125,6 +125,9 @@ namespace Origins.Items.Weapons.Riven {
 			for (int i = 0; i < list.Count - 1; i++) {
 				Vector2 element = list[i];
 				Vector2 diff = list[i + 1] - element;
+				if (diff.HasNaNs()) {
+					continue;
+				}
 
 				float dist = (diff.Length() + 2);
 				if (progress + dist >= texture.Width - 2) {

@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
@@ -65,7 +66,13 @@ namespace Origins.Tiles.Riven {
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
             this.DrawTileGlow(i, j, spriteBatch);
         }
-    }
+		public override void RandomUpdate(int i, int j) {
+            if (Main.rand.NextBool((int)(100 * MathHelper.Lerp(151, 151 * 2.8f, MathHelper.Clamp(Main.maxTilesX / 4200f - 1f, 0f, 1f)))) && !TileObject.CanPlace(i, j + 1, TileType<Wrycoral>(), 2, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
+                TileObject.Place(objectData);
+                Main.LocalPlayer.Teleport(new Vector2(i, j).ToWorldCoordinates(), 1);
+            }
+        }
+	}
     public class Riven_Flesh_Item : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Spug Flesh");

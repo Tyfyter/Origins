@@ -246,6 +246,9 @@ namespace Origins {
 			}
         }
         public static bool PlaceCustomAlch(int x, int y, int style) {
+			if (Main.tile[x, y + 1].BlockType != BlockType.Solid) {
+                return false;
+			}
             Tile tile = Framing.GetTileSafely(x, y);
             ushort wiltedRose = (ushort)MC.TileType<Wilted_Rose>();
             if (TileObjectData.GetTileData(wiltedRose, 0).AnchorValidTiles.Contains(Main.tile[x, y + 1].TileType) && tile.LiquidAmount <= 0) {
@@ -255,19 +258,9 @@ namespace Origins {
                 tile.TileFrameY = 0;
                 return true;
             }
-            ushort wrycoral = (ushort)MC.TileType<Wrycoral>();
-            if (TileObjectData.GetTileData(wrycoral, 0).AnchorValidTiles.Contains(Main.tile[x, y + 1].TileType) && Main.rand.NextBool(2, 5)) {
-                tile.HasTile = true;
-                tile.TileType = wrycoral;
-                tile.TileFrameX = (short)(Main.rand.Next(2) * 18);
-                tile.TileFrameY = 0;
-                return true;
-            }
-            if (TileObjectData.GetTileData(wrycoral, 0).AnchorValidTiles.Contains(Main.tile[x, y - 1].TileType) && Main.rand.NextBool(5)) {
-                tile.HasTile = true;
-                tile.TileType = wrycoral;
-                tile.TileFrameX = 36;
-                tile.TileFrameY = 0;
+            if (TileObject.CanPlace(x, y, MC.TileType<Wrycoral>(), Main.rand.Next(2), 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
+                TileObject.Place(objectData);
+                Main.LocalPlayer.Teleport(new(x * 16, y * 16));// && Main.rand.NextBool(2, 5)
                 return true;
             }
             return false;

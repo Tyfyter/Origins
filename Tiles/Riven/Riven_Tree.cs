@@ -37,7 +37,8 @@ namespace Origins.Tiles.Riven {
 
 		public override void SetStaticDefaults() {
 			GrowsOnTileId = new int[] {
-				ModContent.TileType<Riven_Flesh>()
+				ModContent.TileType<Riven_Flesh>(),
+				ModContent.TileType<Riven_Grass>()
 			};
 		}
 
