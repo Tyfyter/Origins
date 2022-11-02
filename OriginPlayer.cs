@@ -121,6 +121,8 @@ namespace Origins {
         public bool releaseTriggerSetBonus = false;
         #endregion
 
+        public float statSharePercent = 0f;
+
         public Item journalDye = null;
 
         public bool itemLayerWrench = false;
@@ -200,10 +202,11 @@ namespace Origins {
             toxicShock = false;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;
-            if(cryostenLifeRegenCount>0)
+            statSharePercent = 0f;
+            if (cryostenLifeRegenCount>0)
                 cryostenLifeRegenCount--;
-
-            if(dimStarlightCooldown>0)
+            
+            if (dimStarlightCooldown>0)
                 dimStarlightCooldown--;
             if (amebicVialCooldown > 0)
                 amebicVialCooldown--;
@@ -292,6 +295,21 @@ namespace Origins {
                 ).originalDamage = item.damage;
                 protozoaFoodCooldown = item.useTime;
             }
+			if (statSharePercent != 0f) {
+                foreach (DamageClass damageClass in DamageClasses.All) {
+					if (damageClass == DamageClass.Generic) {
+                        continue;
+					}
+                    Player.GetArmorPenetration(DamageClass.Generic) += Player.GetArmorPenetration(damageClass) * statSharePercent;
+                    Player.GetArmorPenetration(damageClass) -= Player.GetArmorPenetration(damageClass) * statSharePercent;
+
+                    Player.GetDamage(DamageClass.Generic) = Player.GetDamage(DamageClass.Generic).CombineWith(Player.GetDamage(damageClass).MultiplyBonuses(statSharePercent));
+                    Player.GetDamage(damageClass) = Player.GetDamage(damageClass).MultiplyBonuses(1f - statSharePercent);
+
+                    Player.GetAttackSpeed(DamageClass.Generic) += (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
+                    Player.GetAttackSpeed(damageClass) -= (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
+                }
+            }
         }
         public override void PostUpdateEquips() {
             if (eyndumSet) {
@@ -338,8 +356,7 @@ namespace Origins {
             Player.lavaMax += Player.lavaMax / 2;
             #endregion
             #region damage
-            List<DamageClass> damageClasses = (List<DamageClass>)(typeof(DamageClassLoader).GetField("DamageClasses", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null));
-			foreach (DamageClass damageClass in damageClasses) {
+			foreach (DamageClass damageClass in DamageClasses.All) {
                 Player.GetArmorPenetration(damageClass) += Player.GetArmorPenetration(damageClass) * 0.5f;
 
                 Player.GetDamage(damageClass) = Player.GetDamage(damageClass).MultiplyBonuses(1.5f);

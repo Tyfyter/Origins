@@ -17,8 +17,11 @@ namespace Origins {
 		public static DamageClass ThrownExplosive => thrownExplosive ??= ModContent.GetInstance<ThrownExplosive>();
 		public static Dictionary<DamageClass, DamageClass> ExplosiveVersion { get; private set; }
 		public static DamageClass Ranged_Magic => ranged_Magic ??= ModContent.GetInstance<Ranged_Magic>();
+		static FieldInfo _damageClasses;
+		static FieldInfo _DamageClasses => _damageClasses ??= typeof(DamageClassLoader).GetField("DamageClasses", BindingFlags.Static | BindingFlags.NonPublic);
+		public static List<DamageClass> All => (List<DamageClass>)(_DamageClasses.GetValue(null));
 		public void Load(Mod mod) {
-			List<DamageClass> damageClasses = (List<DamageClass>)(typeof(DamageClassLoader).GetField("DamageClasses", BindingFlags.Static | BindingFlags.NonPublic).GetValue(null));
+			List<DamageClass> damageClasses = All;
 			int len = damageClasses.Count;
 			ExplosiveVersion = new Dictionary<DamageClass, DamageClass>(new DamageClass_Equality_Comparer());
 			for (int i = 0; i < len; i++) {
