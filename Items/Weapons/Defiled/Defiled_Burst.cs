@@ -15,14 +15,14 @@ namespace Origins.Items.Weapons.Defiled {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.damage = 6;
+            Item.damage = 4;
             Item.DamageType = DamageClass.Ranged;
             Item.noMelee = true;
             Item.crit = -1;
             Item.width = 56;
             Item.height = 18;
-            Item.useTime = 18;
-            Item.useAnimation = 18;
+            Item.useTime = 27;
+            Item.useAnimation = 27;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 5;
             Item.shootSpeed = 15f;
@@ -33,6 +33,7 @@ namespace Origins.Items.Weapons.Defiled {
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.05f);
             Item.glowMask = glowmask;
+            Item.autoReuse = true;
         }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    for(int i = 0; i<5; i++)Projectile.NewProjectile(source, position, velocity.RotatedByRandom(i/10f), type, damage, knockback, player.whoAmI);

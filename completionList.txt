@@ -105,19 +105,26 @@ OTHER:
 
 ENEMY NPCS:
 ---
+(X) Amebic Slime !!!
 (#, ^2) Barnacleback !!!
+(X) Chunky Slime !!!
+(#, ^2) Cranivore !!!
 (#, %2) Crimbrain
 (^) Fiberglass Enemies
 (^) Measly Moeba
+(#, ^2) Optiphage !!!
 (^) Pre-H Defiled Enemies
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
 (#, ^2) Spider Amoeba !!!
 
+(X) Acid Monster
 (^) Amebic Mummy
 (^) Amoeba Bugger
+(X) Angel of Death
 (^) Barnacle Mound
+(X) Brine Moccasin
 (#, ^2) Carpalfish*
 (%3) Defiled Clipper (feel like a more unique aquatic enemy could be made) !!!
 (#3, ^2/4) Defiled Hunter
@@ -322,7 +329,7 @@ VANITY:
 (#, ^2) Trimmed Demon Horns
 
 (^) Tyfyter's Set
-(X) The First Dream
+(@, #) The First Dream
 ---
 
 
@@ -572,7 +579,7 @@ TILES:
 (^) Dusklight
 (@5, ^3) Encrusted Ore !!!
 (^) Felnum Ore
-(#, ^2) Fiberglass !!!
+(^) Fiberglass
 (#, ^2) Geyser Core
 (^) Hardened Defiled Sand
 (^) Lost Ore
@@ -582,7 +589,7 @@ TILES:
 (X) Space Rock
 (#2, ^2) Space Goo
 (^) Spug Flesh
-(@, ^3) Sulphur Stone
+(@5, ^3) Sulphur Stone
 (X) Taranum
 (^) White Ice
 (X) Defiled Cactus
@@ -702,8 +709,10 @@ CONSUMABLES:
 
 (#3, ^2) Absorption Potion
 (@2, #) Extreme O' Potion
+(^) Fervor Potion
 (@2, #) Focus Potion
 (@2, #) Nullification Potion
+(^) Protean Potion
 (X) Purification Potion
 (@2, #) Regen Burst Potion
 (X) Tuned Greater Healing Potion

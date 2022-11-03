@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -13,14 +12,14 @@ namespace Origins.Items.Weapons.Defiled {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.damage = 16;
+            Item.damage = 13;
             Item.DamageType = DamageClass.Ranged;
             Item.noMelee = true;
             Item.crit = -1;
             Item.width = 56;
             Item.height = 18;
-            Item.useTime = 36;
-            Item.useAnimation = 36;
+            Item.useTime = 40;
+            Item.useAnimation = 40;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 5;
             Item.shootSpeed = 15f;
