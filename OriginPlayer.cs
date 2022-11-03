@@ -308,6 +308,10 @@ namespace Origins {
 
                     Player.GetAttackSpeed(DamageClass.Generic) += (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
                     Player.GetAttackSpeed(damageClass) -= (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
+
+                    float crit = Player.GetCritChance(damageClass) * statSharePercent;
+                    Player.GetCritChance(DamageClass.Generic) += crit;
+                    Player.GetCritChance(damageClass) -= crit;
                 }
             }
         }
@@ -540,9 +544,9 @@ namespace Origins {
                 target.AddBuff(Solvent_Debuff.ID, 300);
             }
         }
-        public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
+		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
             if(proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
-                float damageVal = damage;
+                /*float damageVal = damage;
                 if(minerSet) {
                     explosiveSelfDamage-=0.2f;
                     float inverseDamage = Player.GetDamage(DamageClasses.Explosive).ApplyTo(damage);
@@ -550,7 +554,7 @@ namespace Origins {
                     //damage = (int)(damage/explosiveDamage);
                     //damage-=damage/5;
                 }
-                damage = (int)(damageVal * explosiveSelfDamage);
+                damage = (int)(damageVal * explosiveSelfDamage);*/
             }
         }
         public override void OnHitByNPC(NPC npc, int damage, bool crit) {
@@ -581,9 +585,27 @@ namespace Origins {
             return foundTarget;
 		}
         #endregion
+        internal static FieldInfo _sourcePlayerIndex;
+        static FieldInfo SourcePlayerIndex => _sourcePlayerIndex ??= typeof(PlayerDeathReason).GetField("_sourcePlayerIndex", BindingFlags.Instance | BindingFlags.NonPublic);
+        internal static FieldInfo _sourceProjectileIndex;
+        static FieldInfo SourceProjectileIndex => _sourceProjectileIndex ??= typeof(PlayerDeathReason).GetField("_sourceProjectileIndex", BindingFlags.Instance | BindingFlags.NonPublic);
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter) {
-            if(Player.HasBuff(Solvent_Debuff.ID)&&Main.rand.Next(9)<3) {
+            if(Player.HasBuff(Solvent_Debuff.ID) && Main.rand.Next(9)<3) {
                 crit = true;
+            }
+			if ((int)SourcePlayerIndex.GetValue(damageSource) == Player.whoAmI) {
+                Projectile sourceProjectile = Main.projectile[(int)SourceProjectileIndex.GetValue(damageSource)];
+                if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
+                    float damageVal = damage;
+                    if (minerSet) {
+                        explosiveSelfDamage -= 0.2f;
+                        float inverseDamage = Player.GetDamage(DamageClasses.Explosive).ApplyTo(damage);
+                        damageVal -= inverseDamage - damage;
+                        //damage = (int)(damage/explosiveDamage);
+                        //damage-=damage/5;
+                    }
+                    damage = (int)(damageVal * explosiveSelfDamage);
+                }
             }
             if(defiledSet) {
                 float manaDamage = damage;

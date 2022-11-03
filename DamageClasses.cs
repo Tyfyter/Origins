@@ -36,6 +36,7 @@ namespace Origins {
 			explosive = null;
 			ExplosiveVersion = null;
 			ranged_Magic = null;
+			_damageClasses = null;
 		}
 	}
 	public class DamageClass_Equality_Comparer : IEqualityComparer<DamageClass> {
@@ -53,7 +54,7 @@ namespace Origins {
 			}
 		}
 		public override void SetDefaultStats(Player player) {
-			player.GetCritChance(this) += 4;
+			//player.GetCritChance(this) += 4;
 		}
 	}
 	public class ThrownExplosive : DamageClass {
@@ -73,7 +74,7 @@ namespace Origins {
 			return StatInheritanceData.None;
 		}
 		public override void SetDefaultStats(Player player) {
-			player.GetCritChance(this) += 4;
+			//player.GetCritChance(this) += 4;
 		}
 	}
 	[Autoload(false)]
@@ -111,7 +112,7 @@ namespace Origins {
 			return other.GetModifierInheritance(damageClass);
 		}
 		public override void SetDefaultStats(Player player) {
-			player.GetCritChance(this) -= 4;
+			//player.GetCritChance(this) -= 4;
 		}
 	}
 	public class Ranged_Magic : DamageClass {
