@@ -138,7 +138,7 @@ namespace Origins.World.BiomeData {
 										}
 									}
 
-									if (d < baseStrength + 8 && genRand.Next(1500000 + (int)strength) < strength + 424) {
+									if (compY > j && d < baseStrength + 8 && genRand.Next(1500000 + (int)strength) < strength + 424) {
 										features.Add((x, y, genRand.NextBool() ? FeatureType.CUSP : FeatureType.CAVE, x > i));
 									}
 									//WorldGen.SquareTileFrame(l, k);
@@ -518,7 +518,7 @@ namespace Origins.World.BiomeData {
 		public class Riven_Hive_Generation_Pass : EvilBiomeGenerationPass {
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
 				int y = (int)worldSurface - 50;
-				for (; !Main.tile[evilBiomePosition, y].HasTile; y++);
+				for (; !Main.tile[evilBiomePosition, y].HasSolidTile(); y++);
 				Riven_Hive.Gen.StartHive(evilBiomePosition, y);
 			}
 
