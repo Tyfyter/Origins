@@ -111,8 +111,10 @@ namespace Origins.NPCs {
         public static void InflictTorn(NPC npc, int duration, int targetTime = 180, float targetSeverity = 0.7f) {
             npc.AddBuff(Torn_Buff.ID, duration);
             OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
-            globalNPC.tornTargetTime = Math.Min(globalNPC.tornTargetTime, targetTime);
-            globalNPC.tornTarget = Math.Max(Math.Min(globalNPC.tornTarget, targetSeverity), float.Epsilon);
+            if (targetSeverity < globalNPC.tornTarget) {
+                globalNPC.tornTargetTime = targetTime;
+                globalNPC.tornTarget = Math.Max(targetSeverity, float.Epsilon);
+            }
         }
     }
 }

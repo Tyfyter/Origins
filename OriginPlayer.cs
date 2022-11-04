@@ -662,9 +662,11 @@ namespace Origins {
         }
         public static void InflictTorn(Player player, int duration, int targetTime = 180, float targetSeverity = 0.7f) {
             player.AddBuff(Torn_Buff.ID, duration);
-            OriginPlayer globalNPC = player.GetModPlayer<OriginPlayer>();
-            globalNPC.tornTargetTime = Math.Min(globalNPC.tornTargetTime, targetTime);
-            globalNPC.tornTarget = Math.Min(globalNPC.tornTarget, targetSeverity);
+            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+            if (targetSeverity < originPlayer.tornTarget) {
+                originPlayer.tornTargetTime = targetTime;
+                originPlayer.tornTarget = targetSeverity;
+            }
         }
 
         public override void LoadData(TagCompound tag) {
