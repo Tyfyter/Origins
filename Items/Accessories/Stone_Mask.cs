@@ -1,11 +1,15 @@
-﻿using Origins.Tiles.Other;
+﻿using Origins.Journal;
+using Origins.Tiles.Other;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
     [AutoloadEquip(EquipType.Face)]
-    public class Stone_Mask : ModItem {
+    public class Stone_Mask : ModItem, IJournalEntryItem {
+        public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
+        public string EntryName => "Origins/" + typeof(Stone_Mask_Entry).Name;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Stone Mask");
             Tooltip.SetDefault("Increases defense by 8, but your movement is hindered\nYou hear whispers nearby...");
@@ -27,5 +31,9 @@ namespace Origins.Items.Accessories {
             player.moveSpeed *= 0.9f;
             player.jumpSpeedBoost -= 1.8f;
         }
+    }
+    public class Stone_Mask_Entry : JournalEntry {
+        public override string TextKey => "Stone_Mask";
+        public override ArmorShaderData TextShader => null;
     }
 }

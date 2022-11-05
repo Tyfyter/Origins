@@ -12,6 +12,7 @@ using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Summon;
 using Origins.Journal;
 using Origins.Layers;
+using Origins.NPCs;
 using Origins.Projectiles;
 using Origins.Projectiles.Misc;
 using Origins.World;
@@ -77,6 +78,7 @@ namespace Origins {
         public bool protozoaFood = false;
         public int protozoaFoodCooldown = 0;
         public Item protozoaFoodItem = null;
+        public bool symbioteSkull = false;
         #endregion
 
         #region explosive stats
@@ -199,6 +201,7 @@ namespace Origins {
             mysteriousSprayMult = 1;
             protozoaFood = false;
             protozoaFoodItem = null;
+            symbioteSkull = false;
             toxicShock = false;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;
@@ -510,6 +513,9 @@ namespace Origins {
             if (rasterize) { 
                 target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
             }
+            if (symbioteSkull) {
+                OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.9f);
+            }
             if (decayingScale) {
                 target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
                 target.AddBuff(Solvent_Debuff.ID, 300);
@@ -538,6 +544,9 @@ namespace Origins {
             }
             if (rasterize) { 
                 target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
+            }
+            if (symbioteSkull) { 
+                OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.9f);
             }
             if (decayingScale) {
                 target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
