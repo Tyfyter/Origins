@@ -185,7 +185,8 @@ namespace Origins.NPCs {
                 Tile tile;
                 int fails = 0;
                 int success = 0;
-                for (int k = 0; k < (int)((Main.maxTilesX * Main.maxTilesY) * (Main.expertMode?6E-06:4E-06)); k++) {
+				int maxFeln = (int)((Main.maxTilesX * Main.maxTilesY) * (Main.expertMode ? 6E-06 : 4E-06));
+				for (int k = 0; k < maxFeln; k++) {
                     int tries = 0;
                     type = TileID.BlueDungeonBrick;
                     while(type!=TileID.Cloud&&type!=TileID.Dirt&&type!=TileID.Grass&&type!=TileID.Stone&&type!=TileID.RainCloud) {

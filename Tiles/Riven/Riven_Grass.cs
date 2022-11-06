@@ -31,7 +31,7 @@ namespace Origins.Tiles.Riven {
             }
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			AddMapEntry(new Color(0, 48, 64));
+			AddMapEntry(new Color(0, 100, 160));
 			//SetModTree(Defiled_Tree.Instance);
             ItemDrop = ItemID.DirtBlock;
 		}
@@ -51,6 +51,13 @@ namespace Origins.Tiles.Riven {
             Main.tile[i, j].SetSlope(slope);
             NetMessage.SendTileSquare(-1, i, j, 1);
 
+        }
+        public override void RandomUpdate(int i, int j) {
+            Tile above = Framing.GetTileSafely(i, j - 1);
+			if (!above.HasTile && Main.rand.NextBool(250)) {
+                above.ResetToType((ushort)ModContent.TileType<Acetabularia>());
+                WorldGen.TileFrame(i, j - 1);
+			}
         }
         /*public override void RandomUpdate(int i, int j) {
             int retryCount = 0;

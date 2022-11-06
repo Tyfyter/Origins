@@ -69,7 +69,7 @@ namespace Origins.Tiles.Riven {
 		public override void RandomUpdate(int i, int j) {
             if (Main.rand.NextBool((int)(100 * MathHelper.Lerp(151, 151 * 2.8f, MathHelper.Clamp(Main.maxTilesX / 4200f - 1f, 0f, 1f)))) && !TileObject.CanPlace(i, j + 1, TileType<Wrycoral>(), 2, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
                 TileObject.Place(objectData);
-                Main.LocalPlayer.Teleport(new Vector2(i, j).ToWorldCoordinates(), 1);
+                //Main.LocalPlayer.Teleport(new Vector2(i, j).ToWorldCoordinates(), 1);
             }
         }
 	}

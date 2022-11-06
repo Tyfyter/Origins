@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dusts;
+using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,12 @@ namespace Origins.Items.Materials {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.VilePowder);
 			Item.shoot = ModContent.ProjectileType<Defiled_Powder_P>();
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type, 5);
+			recipe.AddIngredient(ModContent.ItemType<Soulspore_Item>());
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
 		}
 	}
 	public class Defiled_Powder_P : ModProjectile {

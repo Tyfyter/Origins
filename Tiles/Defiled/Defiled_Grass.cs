@@ -52,6 +52,13 @@ namespace Origins.Tiles.Defiled {
             NetMessage.SendTileSquare(-1, i, j, 1);
 
         }
+        public override void RandomUpdate(int i, int j) {
+            Tile above = Framing.GetTileSafely(i, j - 1);
+            if (!above.HasTile && Main.rand.NextBool(250)) {
+                above.ResetToType((ushort)ModContent.TileType<Soulspore>());
+                WorldGen.TileFrame(i, j - 1);
+            }
+        }
         /*public override void RandomUpdate(int i, int j) {
             int retryCount = 0;
             retry:
@@ -94,7 +101,7 @@ namespace Origins.Tiles.Defiled {
                 break;
             }
         }*/
-		/*public override int SaplingGrowthType(ref int style) {
+        /*public override int SaplingGrowthType(ref int style) {
 			style = 0;
 			return ModContent.TileType<Defiled_Tree_Sapling>();
 		}

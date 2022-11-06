@@ -260,7 +260,7 @@ namespace Origins {
             }
             if (TileObject.CanPlace(x, y, MC.TileType<Wrycoral>(), Main.rand.Next(2), 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
                 TileObject.Place(objectData);
-                Main.LocalPlayer.Teleport(new(x * 16, y * 16));// && Main.rand.NextBool(2, 5)
+                //Main.LocalPlayer.Teleport(new(x * 16, y * 16));// && Main.rand.NextBool(2, 5)
                 return true;
             }
             return false;

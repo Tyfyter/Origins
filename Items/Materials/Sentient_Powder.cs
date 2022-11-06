@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dusts;
+using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,12 @@ namespace Origins.Items.Materials {
 			Item.CloneDefaults(ItemID.VilePowder);
 			Item.shoot = ModContent.ProjectileType<Sentient_Powder_P>();
 			Item.glowMask = glowmask;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type, 5);
+			recipe.AddIngredient(ModContent.ItemType<Acetabularia_Item>());
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
 		}
 	}
 	public class Sentient_Powder_P : ModProjectile {
