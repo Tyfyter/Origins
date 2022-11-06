@@ -335,7 +335,7 @@ VANITY:
 
 UTILITIES:
 ---
-(#, ^2) Amoeba Hook !!!
+(☻, @2) Amoeba Hook !!!
 (#, ^2) Nano Hook
 (#, ^2) Quantum Hook
 

@@ -7,6 +7,7 @@ using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Materials;
 using Origins.Items.Other.Fish;
 using Origins.Items.Other.Testing;
+using Origins.Items.Tools;
 using Origins.Items.Weapons.Defiled;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Summon;
@@ -79,6 +80,7 @@ namespace Origins {
         public int protozoaFoodCooldown = 0;
         public Item protozoaFoodItem = null;
         public bool symbioteSkull = false;
+        public byte parasiticInfluenceCooldown = 0;
         #endregion
 
         #region explosive stats
@@ -141,6 +143,7 @@ namespace Origins {
         public int wormHeadIndex = -1;
         public int heldProjectile = -1;
         public int lastMinionAttackTarget = -1;
+        public int hookTarget = -1;
         public HashSet<string> unlockedJournalEntries = new();
         public override void ResetEffects() {
             oldBonuses = 0;
@@ -215,6 +218,8 @@ namespace Origins {
                 amebicVialCooldown--;
             if (protozoaFoodCooldown > 0)
                 protozoaFoodCooldown--;
+            if (parasiticInfluenceCooldown > 0)
+                parasiticInfluenceCooldown--;
 
             if (rapidSpawnFrames>0)
                 rapidSpawnFrames--;
@@ -261,7 +266,24 @@ namespace Origins {
                 }
             }
         }
-        public override void PostUpdate() {
+		public override void PreUpdateMovement() {
+            if (hookTarget >= 0) {//ropeVel.HasValue&&
+                Player.fallStart = (int)(Player.position.Y / 16f);
+                Projectile projectile = Main.projectile[hookTarget];
+				if (projectile.type == Amoeba_Hook_Projectile.ID) {
+                    Vector2 diff = Player.Center - projectile.Center;
+                    Vector2 normDiff = diff.SafeNormalize(default);
+                    float dot = Vector2.Dot(normDiff, Player.velocity.SafeNormalize(default));
+                    Player.velocity = Vector2.Lerp(normDiff * -16, Player.velocity, 0.85f + dot * 0.1f);
+					if (diff.LengthSquared() > 64) {
+                        Player.GoingDownWithGrapple = true;
+					}
+                }
+            }
+            //endCustomMovement:
+            hookTarget = -1;
+        }
+		public override void PostUpdate() {
             heldProjectile = -1;
             if (rasterizedTime > 0) {
                 Player.velocity = Vector2.Lerp(Player.velocity, Player.oldVelocity, rasterizedTime * 0.06f);
@@ -287,15 +309,16 @@ namespace Origins {
             }
 			if (protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions) {
                 Item item = protozoaFoodItem;
+                int damage = Player.GetWeaponDamage(item);
                 Projectile.NewProjectileDirect(
                     Player.GetSource_Accessory(item),
                     Player.Center,
                     OriginExtensions.Vec2FromPolar(Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi), Main.rand.NextFloat(1, 8)),
                     Mini_Protozoa_P.ID,
-                    item.damage,
-                    item.knockBack,
+                    damage,
+                    Player.GetWeaponKnockback(item),
                     Player.whoAmI
-                ).originalDamage = item.damage;
+                ).originalDamage = damage;
                 protozoaFoodCooldown = item.useTime;
             }
 			if (statSharePercent != 0f) {
@@ -315,6 +338,14 @@ namespace Origins {
                     float crit = Player.GetCritChance(damageClass) * statSharePercent;
                     Player.GetCritChance(DamageClass.Generic) += crit;
                     Player.GetCritChance(damageClass) -= crit;
+                }
+            }
+            if (hookTarget >= 0) {
+                Projectile projectile = Main.projectile[hookTarget];
+                if (projectile.type == Amoeba_Hook_Projectile.ID) {
+                    if (projectile.ai[1] < 5 || Player.controlJump || (Player.Center - projectile.Center).LengthSquared() > 2304) {
+                        Player.GoingDownWithGrapple = true;
+                    }
                 }
             }
         }
