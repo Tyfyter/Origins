@@ -32,10 +32,11 @@ namespace Origins.Items.Weapons.Other {
             Item.reuseDelay = 9;
             Item.rare = ItemRarityID.Orange;
             Item.glowMask = glowmask;
+            Item.consumeAmmoOnFirstShotOnly = true;
         }
-        public override bool CanConsumeAmmo(Item ammo, Player player) {
+        /*public override bool CanConsumeAmmo(Item ammo, Player player) {
             return player.ItemAnimationJustStarted;
-        }
+        }*/
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
             if (player.itemAnimationMax - player.itemAnimation > 9) return;
