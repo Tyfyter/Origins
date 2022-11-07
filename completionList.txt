@@ -129,7 +129,7 @@ ENEMY NPCS:
 (%3) Defiled Clipper (feel like a more unique aquatic enemy could be made) !!!
 (#3, ^2/4) Defiled Hunter
 (@5, #3, %2) Defiled Mimic
-(%3) Defiled Reaper (currently just a namespace. Could be removed) !!!
+(X) Defiled Reaper !!!
 (@5, ^3/4) Defiled Tripod
 (^) Flagellant
 (#, ^2) Mildew Creeper
@@ -324,9 +324,9 @@ VANITY:
 
 (X) Amebic Protector Set
 (X) Chunk Protector Set
+(^) Cranivore Beanie
 (X) Decay Protector Set
 (X) Gore Protector Set
-(#, ^2) Trimmed Demon Horns
 
 (^) Tyfyter's Set
 (@, #) The First Dream

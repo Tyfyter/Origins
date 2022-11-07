@@ -1,10 +1,9 @@
 ﻿using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Bomb_Charm : ModItem {
+    public class Bomb_Charm : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomb Charm");
             Tooltip.SetDefault("Reduces explosive self-damage by 20%");
