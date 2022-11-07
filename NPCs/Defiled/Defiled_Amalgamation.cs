@@ -4,6 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Defiled;
 using Origins.Projectiles.Enemies;
+using Origins.Tiles.BossDrops;
 using Origins.Tiles.Defiled;
 using ReLogic.Content;
 using System;
@@ -123,7 +124,8 @@ namespace Origins.NPCs.Defiled {
             npcLoot.Add(new LeadingConditionRule(notExpert).OnSuccess(
                 ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>())
             ));
-            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1));
+            //npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1));
+            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<DA_Trophy_Item>(), 10));
         }
         public override void AI() {
             NPC.TargetClosest();
