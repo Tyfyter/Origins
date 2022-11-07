@@ -645,7 +645,7 @@ TILES:
 
 MATERIALS:
 ---
-(#, ^2) Acetabularia !!!
+(☻) Acetabularia !!!
 (^) Adhesive Wrap
 (^) Angelium
 (^) Bark
@@ -659,9 +659,9 @@ MATERIALS:
 (^) Fiberglass Shard
 (^) Riven Carapace
 (^) Rubber
-(#4, ^2) Sentient Powder !!!
+(☻) Sentient Powder !!!
 (^) Silicon Packet
-(#, ^2) Soulspore !!!
+(☻) Soulspore !!!
 (^) Strange String*
 (^) Tree Sap
 (^) Undead Chunk*
@@ -736,7 +736,7 @@ CONSUMABLES:
 (^) Crusty Crate
 (^) Pointy Crate
 
-(#4, ^2) Gooey Water !!!
+(^) Gooey Water !!!
 (^) White Water
 ---
 

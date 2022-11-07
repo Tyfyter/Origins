@@ -6,6 +6,7 @@ using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using Terraria.Audio;
 using Microsoft.Xna.Framework;
+using Origins.Dusts;
 
 namespace Origins.Items.Other.Consumables {
     public class Gooey_Water : ModItem {
@@ -42,7 +43,7 @@ namespace Origins.Items.Other.Consumables {
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Glass);
 			}
 			for (int i = 0; i < 30; i++) {
-				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.UnholyWater, 0f, -2f, 0, default(Color), 1.1f);
+				Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, Gooey_Water_Dust.ID, 0f, -2f, 0, default(Color), 1.1f);
 				dust.alpha = 100;
 				dust.velocity.X *= 1.5f;
 				dust.velocity *= 3f;
