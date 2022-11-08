@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Weapons.Ammo;
-using Origins.Projectiles.Weapons;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -29,7 +26,7 @@ namespace Origins.Items.Weapons.Other {
             Item.shoot = ProjectileID.Harpoon;//ModContent.ProjectileType<Lava_Shot>();
             Item.shootSpeed = 14.75f;
             Item.UseSound = SoundID.Item11;
-            Item.rare = ItemRarityID.Orange;
+            Item.rare = ItemRarityID.Green;
             Item.autoReuse = true;
         }
         public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
@@ -43,7 +40,7 @@ namespace Origins.Items.Weapons.Other {
 			return true;
 		}
 		public override void OnConsumeAmmo(Item ammo, Player player) {
-			if (!Main.rand.NextBool(5)) {
+			if (!Main.rand.NextBool(7)) {
                 ammo.stack++;
             } else {
                 consume = true;

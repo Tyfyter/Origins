@@ -267,6 +267,7 @@ ACCESSORIES:
 (^) Freeze Frame*
 (%3, X) Sun Medallion
 (#, ^2) Symbiote Skull !!!
+(#, ^2) Turbo Reel !!!
 
 (^) Asylum Whistle
 (X) Lost Page
@@ -335,7 +336,7 @@ VANITY:
 
 UTILITIES:
 ---
-(☻, @2) Amoeba Hook !!!
+((Uses Flagellash_P und Amoeba_Chain_End)^) Amoeba Hook !!!
 (#, ^2) Nano Hook
 (#, ^2) Quantum Hook
 
@@ -599,7 +600,7 @@ TILES:
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (#, ^2) Fiberglass Wall
-(#4?, ^2) Spug Flesh Wall !!!
+(#4 (R-enemies cant spawn), ^2) Spug Flesh Wall !!!
 (X) Sulphur Stone Wall
 
 (X) Acid Chest
@@ -614,25 +615,25 @@ TILES:
 (X) Fabricator
 (X) Omni-Printer
 
-(☻) Acetabularia !!!
+(^) Acetabularia
 (X) Brineglow Vine
 (^) Defiled Misc Tiles*
 (#2, ^2) Riven Foliage !!!
 (#2, ^2) Riven Lesion !!!
 (#, ^2) Riven Pot !!!
 (^) Riven Tree
-(☻) Soulspore !!!
+(^) Soulspore
 (^) Wilting Rose
 (X) Wrycoral !!!
 
 (X) Music Box (Brine Pool)
 (X) Music Box (Cubekon Temple)
-(@, #2-4) Music Box (Defiled Caverns) !!!
-(@, #2-4) Music Box (Defiled Wastelands) !!!
+(@5, #2-4) Music Box (Defiled Caverns) !!!
+(@5, #2-4) Music Box (Defiled Wastelands) !!!
 (X) Music Box (Dusk)
 (X) Music Box (Riven Hive) !!!
 
-(#, ^2) Defiled Amalgamation Trophy !!!
+(^) Defiled Amalgamation Trophy
 (#, @4) Defiled Amalgamation Relic !!!
 (X) Miscreant Trophy
 (X) Miscreant Relic
@@ -645,7 +646,7 @@ TILES:
 
 MATERIALS:
 ---
-(☻) Acetabularia !!!
+(^) Acetabularia
 (^) Adhesive Wrap
 (^) Angelium
 (^) Bark
@@ -659,9 +660,9 @@ MATERIALS:
 (^) Fiberglass Shard
 (^) Riven Carapace
 (^) Rubber
-(☻) Sentient Powder !!!
+(^) Sentient Powder
 (^) Silicon Packet
-(☻) Soulspore !!!
+(^) Soulspore
 (^) Strange String*
 (^) Tree Sap
 (^) Undead Chunk*
@@ -719,7 +720,7 @@ CONSUMABLES:
 (X) Tuned Greater Mana Potion
 (@2, #) Voidsight Potion
 
-(X) Blue Bovine
+(#, ^2) Blue Bovine
 (^) Jam Sandwich
 (^) Krunch Mix*
 (X) One of a Kind Cookie
@@ -736,7 +737,7 @@ CONSUMABLES:
 (^) Crusty Crate
 (^) Pointy Crate
 
-(^) Gooey Water !!!
+(^) Gooey Water
 (^) White Water
 ---
 
@@ -759,12 +760,13 @@ AMMO:
 ---
 (#, ^2) Bouncy Harpoon
 (#, ^2) Explosive Harpoon
-(#, ^2) Flammable Harpoon
+(^) Flammable Harpoon
 (#, ^2) Glittershot
-(#, ^2) Harpoon
+(^) Harpoon
 (^) Peatball*
 
-(#, ^2) Acid Harpoon
+(^) Acid Harpoon
+(^) Cursed Harpoon
 (^) Giant Metal Slug
 (^) Teal Solution
 (^) Thermite Canister

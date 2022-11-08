@@ -1,15 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Projectiles.Weapons;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
     public class Cursed_Harpoon : ModItem {
-        public override string Texture => "Origins/Items/Weapons/Ammo/Acid_Harpoon";
+        public override string Texture => "Origins/Items/Weapons/Ammo/Cursed_Harpoon";
         public static int ID { get; private set; } = -1;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Cursed Harpoon");
@@ -23,6 +21,18 @@ namespace Origins.Items.Weapons.Ammo {
             Item.maxStack = 99;
             Item.shoot = Cursed_Harpoon_P.ID;
             Item.ammo = Harpoon.ID;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.IronBar);
+            recipe.AddIngredient(ItemID.CursedFlame);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+            recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.LeadBar);
+            recipe.AddIngredient(ItemID.CursedFlame);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
     }
     public class Cursed_Harpoon_P : ModProjectile {

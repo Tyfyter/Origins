@@ -2,12 +2,11 @@
 using Origins.Items.Materials;
 using Origins.Items.Other.Fish;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class Fervor_Potion : ModItem {
+    public class Fervor_Potion : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fervor Potion");
 			Tooltip.SetDefault("Increases attack speed by 10%");

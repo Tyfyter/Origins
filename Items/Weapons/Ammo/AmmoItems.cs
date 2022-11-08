@@ -19,6 +19,16 @@ namespace Origins.Items.Weapons.Ammo {
             Item.shoot = Giant_Metal_Slug_P.ID;
             Item.ammo = Item.type;
         }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.IronBar);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
+            recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.LeadBar);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
+        }
     }
     public class Giant_Metal_Slug_P : ModProjectile {
         public static int ID { get; private set; }

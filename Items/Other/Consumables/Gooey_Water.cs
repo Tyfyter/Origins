@@ -1,12 +1,11 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dusts;
+using Origins.Tiles.Riven;
+using Origins.World.BiomeData;
+using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Items.Materials;
-using Origins.Tiles.Defiled;
-using Origins.World.BiomeData;
-using Terraria.Audio;
-using Microsoft.Xna.Framework;
-using Origins.Dusts;
 
 namespace Origins.Items.Other.Consumables {
     public class Gooey_Water : ModItem {
@@ -20,10 +19,10 @@ namespace Origins.Items.Other.Consumables {
 			Item.shoot = ModContent.ProjectileType<Gooey_Water_P>();
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
+			Recipe recipe = Recipe.Create(Type, 10);
 			recipe.AddIngredient(ItemID.BottledWater, 10);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Sand_Item>(), 1);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Grass_Seeds>(), 1);
+			recipe.AddIngredient(ModContent.ItemType<Riven_Flesh_Item>());
+			recipe.AddIngredient(ModContent.ItemType<Riven_Grass_Seeds>());
 			recipe.Register();
 		}
 	}

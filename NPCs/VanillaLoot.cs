@@ -1,6 +1,7 @@
 ﻿using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Pets;
+using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Dungeon;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Other;
@@ -13,8 +14,6 @@ using Origins.World;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Chat;
 using Terraria.GameContent.ItemDropRules;
@@ -113,6 +112,14 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Power_Core>(), 4, 1, 2));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotor>(), 2, 5, 22));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_Power_Up>(), 106));
+				break;
+				case NPCID.GoblinArcher:
+				case NPCID.GoblinPeon:
+				case NPCID.GoblinScout:
+				case NPCID.GoblinSorcerer:
+				case NPCID.GoblinWarrior:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Harpoon_Gun>(), 200));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Harpoon>(), 2, 1, 2));
 				break;
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = dropRules.Where((r) => 

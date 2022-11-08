@@ -2,18 +2,13 @@
 using Origins.Dusts;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
-	public class Sentient_Powder : ModItem {
+    public class Sentient_Powder : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Sentient Powder");
