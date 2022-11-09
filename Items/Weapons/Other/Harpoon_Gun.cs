@@ -20,6 +20,7 @@ namespace Origins.Items.Weapons.Other {
             Item.noMelee = true;
             Item.useAnimation = 3;
             Item.useTime = 3;
+            Item.reuseDelay = 2;
             Item.width = 58;
             Item.height = 22;
             Item.useAmmo = Harpoon.ID;

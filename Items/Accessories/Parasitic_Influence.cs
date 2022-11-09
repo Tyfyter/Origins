@@ -13,7 +13,7 @@ namespace Origins.Items.Accessories {
 	public class Parasitic_Influence : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Parasitic Influence");
-			Tooltip.SetDefault("Amebic tentacles will protect you from projectiles");
+			Tooltip.SetDefault("");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

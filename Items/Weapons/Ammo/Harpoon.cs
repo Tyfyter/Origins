@@ -41,6 +41,8 @@ namespace Origins.Items.Weapons.Ammo {
         }
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Harpoon);
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 10;
         }
 		public override void OnSpawn(IEntitySource source) {
             if (Projectile.ai[1] == 1) {
@@ -62,6 +64,9 @@ namespace Origins.Items.Weapons.Ammo {
                     pos += diff;
 				}
             }
+			if (Projectile.penetrate == 1) {
+                Projectile.penetrate--;
+			}
 		}
 	}
 }

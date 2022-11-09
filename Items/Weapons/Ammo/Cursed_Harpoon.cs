@@ -35,22 +35,14 @@ namespace Origins.Items.Weapons.Ammo {
             recipe.Register();
         }
     }
-    public class Cursed_Harpoon_P : ModProjectile {
+    public class Cursed_Harpoon_P : Harpoon_P {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Harpoon;
-		public static int ID { get; private set; } = -1;
+		public static new int ID { get; private set; } = -1;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Cursed Harpoon");
             ID = Type;
         }
-        public override void SetDefaults() {
-            Projectile.CloneDefaults(ProjectileID.Harpoon);
-        }
-		public override void OnSpawn(IEntitySource source) {
-            if (Projectile.ai[1] == 1) {
-                Projectile.penetrate = 2;
-            }
-		}
-		public override void AI() {
+		public override void AI() {//still needs its own AI override since it has unique AI functionality
             if (Projectile.ai[0] == 1 && Projectile.penetrate >= 0) {
                 Projectile.aiStyle = 1;
                 Projectile.velocity = Projectile.oldVelocity;
@@ -65,7 +57,10 @@ namespace Origins.Items.Weapons.Ammo {
                     pos += diff;
 				}
             }
-		}
+            if (Projectile.penetrate == 1) {
+                Projectile.penetrate--;
+            }
+        }
     }
     public class Cursed_Harpoon_Flame : ModProjectile {
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.CursedDartFlame;

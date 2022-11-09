@@ -414,7 +414,7 @@ RANGED WEAPONS:
 (^) Bolt Gun
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
-(#2, ^2) Harpoon Gun !!!
+(☻) Harpoon Gun !!!
 (^) Longbone
 (#, ^2) Riven Splitter !!!
 (#, @2 (tendon sprite)) Tendon Tear !!!

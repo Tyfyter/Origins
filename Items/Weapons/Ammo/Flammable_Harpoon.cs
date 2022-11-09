@@ -35,37 +35,13 @@ namespace Origins.Items.Weapons.Ammo {
             recipe.Register();
         }
     }
-    public class Flammable_Harpoon_P : ModProjectile {
+    public class Flammable_Harpoon_P : Harpoon_P {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Harpoon;
 		public static int ID { get; private set; } = -1;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Flammable Harpoon");
             ID = Type;
         }
-        public override void SetDefaults() {
-            Projectile.CloneDefaults(ProjectileID.Harpoon);
-        }
-		public override void OnSpawn(IEntitySource source) {
-            if (Projectile.ai[1] == 1) {
-                Projectile.penetrate = 2;
-            }
-		}
-		public override void AI() {
-            if (Projectile.ai[0] == 1 && Projectile.penetrate >= 0) {
-                Projectile.aiStyle = 1;
-                Projectile.velocity = Projectile.oldVelocity;
-                Projectile.tileCollide = true;
-                Vector2 diff = Main.player[Projectile.owner].itemLocation - Projectile.Center;
-                SoundEngine.PlaySound(SoundID.Item10, Projectile.Center + diff / 2);
-                float len = diff.Length() * 0.125f;
-                diff /= len;
-                Vector2 pos = Projectile.Center;
-                for (int i = 0; i < len; i++) {
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), pos, default, Cursed_Harpoon_Flame.ID, Projectile.damage, 0, Projectile.owner, i * 0.15f);
-                    pos += diff;
-				}
-            }
-		}
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             target.AddBuff(BuffID.OnFire, Main.rand.Next(270, 360));
         }
