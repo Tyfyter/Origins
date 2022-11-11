@@ -89,7 +89,7 @@ VANILLA MODIFICATIONS:
 (#3, %2) Demolitionist (to sell different items based on peat sold)*
 (X) Dryad Selling Origins Evil Items on Blood Moon*
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
-(#, ^2) Harpoon (new weapon to introduce sub-class)*
+(^) Harpoon (new weapon to introduce sub-class)*
 (^) Trees*
 (^) Wall of Flesh (to drop Exploder Emblem & Thermite Launcher)*
 
@@ -99,7 +99,7 @@ VANILLA MODIFICATIONS:
 
 OTHER:
 ---
-(#3, ^2) Journal (page sprites, button/pseudoitem sprite)
+(^) Journal (page sprites, button/pseudoitem sprite)
 ---
 
 
@@ -414,12 +414,12 @@ RANGED WEAPONS:
 (^) Bolt Gun
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
-(☻) Harpoon Gun !!!
+(^) Harpoon Gun
 (^) Longbone
-(#, ^2) Riven Splitter !!!
-(#, @2 (tendon sprite)) Tendon Tear !!!
+(^) Riven Splitter
+(#3, ^2) Tendon Tear !!!
 (^) The Kruncher
-(#, ^2) Threemoepeater !!!
+(#3, ^2) Threemoepeater !!!
 (^) 2-in-1 Shotty
 (^) 3-in-1 Shotty
 

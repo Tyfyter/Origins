@@ -1,13 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Projectiles;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Creative;
-using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,10 +17,10 @@ namespace Origins.Items.Weapons.Other {
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Musket);
-            Item.damage = 80;
+            Item.damage = 6;
             Item.crit = -2;
-            Item.useAnimation = 29;
-            Item.useTime = 29;
+            Item.useAnimation = 10;
+            Item.useTime = 10;
             Item.width = 70;
             Item.height = 26;
         }

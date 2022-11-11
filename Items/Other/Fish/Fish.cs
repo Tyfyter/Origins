@@ -13,6 +13,7 @@ namespace Origins.Items.Other.Fish {
 	}
 	public class Bonehead_Jellyfish : ModItem {
 		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Bonehead Jellyfish");
 			SacrificeTotal = 3;
 		}
 		public override void SetDefaults() {
