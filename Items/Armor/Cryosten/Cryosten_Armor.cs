@@ -20,7 +20,7 @@ namespace Origins.Items.Armor.Cryosten {
             return body.type == ModContent.ItemType<Cryosten_Breastplate>() && legs.type == ModContent.ItemType<Cryosten_Greaves>();
         }
         public override void UpdateArmorSet(Player player) {
-            player.setBonus = "Life restoration from hearts increased. Immune to Chilled, Frozen, and Frostburn";// changed back for consistency with vanilla
+            player.setBonus = "Life restoration from hearts increased. Resistance to Chilled, Frozen, and Frostburn";// changed back for consistency with vanilla
             player.GetModPlayer<OriginPlayer>().cryostenSet = true;
             if(player.HasBuff(BuffID.Chilled))player.buffTime[player.FindBuffIndex(BuffID.Chilled)]--;
             if(player.HasBuff(BuffID.Frozen))player.buffTime[player.FindBuffIndex(BuffID.Frozen)]--;

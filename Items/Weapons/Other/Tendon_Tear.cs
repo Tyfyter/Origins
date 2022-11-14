@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,25 +27,11 @@ namespace Origins.Items.Weapons.Other {
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             int i = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
-            Projectile.NewProjectile(source, position, velocity, Tendon_Tear_Connected.ID, damage, knockback, player.whoAmI, ai1:i);
+			float len = velocity.Length() * Main.projectile[i].MaxUpdates;
+
+			Projectile.NewProjectile(source, position, velocity, Tendon_Tear_Swing.ID, damage, knockback, player.whoAmI, ai0:-(728 / len), ai1:i);
             return false;
         }
-	}
-	public class Tendon_Tear_Connected : ModProjectile {
-		public static int ID { get; private set; } = -1;
-		public override string Texture => "Origins/Items/Weapons/Other/Tendon_Tear_P";
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tendon Tear");
-			ID = Type;
-		}
-		public override void SetDefaults() {
-			Projectile.timeLeft = 14;
-			Projectile.friendly = false;
-			Projectile.tileCollide = false;
-		}
-		public override void Kill(int timeLeft) {
-			Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * 0.5f, Tendon_Tear_Swing.ID, Projectile.damage, Projectile.knockBack, Projectile.owner, ai1:Projectile.ai[1]);
-		}
 	}
 	public class Tendon_Tear_Swing : ModProjectile, IWhipProjectile {
 		public static int ID { get; private set; } = -1;
@@ -52,7 +39,7 @@ namespace Origins.Items.Weapons.Other {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tendon Tear");
 			// This makes the projectile use whip collision detection and allows flasks to be applied to it.
-			ProjectileID.Sets.IsAWhip[Type] = true;
+			//ProjectileID.Sets.IsAWhip[Type] = true;
 			ID = Type;
 		}
 
@@ -65,7 +52,7 @@ namespace Origins.Items.Weapons.Other {
 			Projectile.friendly = true;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
-			Projectile.ownerHitCheck = true; // This prevents the projectile from hitting through solid tiles.
+			Projectile.ownerHitCheck = false;
 			Projectile.extraUpdates = 1;
 			//Projectile.extraUpdates = 0;
 			Projectile.usesLocalNPCImmunity = true;
@@ -84,7 +71,9 @@ namespace Origins.Items.Weapons.Other {
 				Projectile.Center = ownerProj.Center;
 				if (!ownerProj.active) {
 					Projectile.ai[1] = -1;
-					Projectile.velocity /= Projectile.MaxUpdates;
+					if (Timer < 0) Timer = 0;
+					//Projectile.velocity.Normalize();// /= Projectile.MaxUpdates;
+					Projectile.velocity *= 0.25f;
 				}
 			}
 
@@ -98,18 +87,42 @@ namespace Origins.Items.Weapons.Other {
 			}
 
 			// These two lines ensure that the timing of the owner's use animation is correct.
-			if (Timer == swingTime / 2) {
+			if (Timer == swingTime / 2 || Timer == -15) {
 				// Plays a whipcrack sound at the tip of the whip.
 				List<Vector2> points = Projectile.WhipPointsForCollision;
-				FillWhipControlPoints(Projectile, points);
+				FillWhipControlPoints(points);
 				SoundEngine.PlaySound(SoundID.Item153, points[^1]);
 			}
 		}
-
+		public override void CutTiles() {
+			if (Timer < 0) return;
+			List<Vector2> whipPointsForCollision = Projectile.WhipPointsForCollision;
+			whipPointsForCollision.Clear();
+			FillWhipControlPoints(whipPointsForCollision);
+			Vector2 value = new Vector2(Projectile.width * Projectile.scale / 2f, 0f);
+			for (int i = 0; i < whipPointsForCollision.Count; i++) {
+				DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
+				Utils.PlotTileLine(whipPointsForCollision[i] - value, whipPointsForCollision[i] + value, Projectile.height * Projectile.scale, DelegateMethods.CutTiles);
+			}
+		}
+		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
+			if (Timer < 0) return false;
+			List<Vector2> whipPointsForCollision = Projectile.WhipPointsForCollision;
+			whipPointsForCollision.Clear();
+			FillWhipControlPoints(whipPointsForCollision);
+			for (int n = 0; n < whipPointsForCollision.Count; n++) {
+				Point point = whipPointsForCollision[n].ToPoint();
+				projHitbox.Location = new Point(point.X - projHitbox.Width / 2, point.Y - projHitbox.Height / 2);
+				if (projHitbox.Intersects(targetHitbox)) {
+					return true;
+				}
+			}
+			return false;
+		}
 		public void GetWhipSettings(out float timeToFlyOut, out int segments, out float rangeMultiplier) {
 			timeToFlyOut = 15 * Projectile.MaxUpdates;
-			segments = 20;
-			rangeMultiplier = 0.9f * Projectile.scale;
+			segments = 15;
+			rangeMultiplier = 1;
 		}
 
 		// This method draws a line between all points of the whip, in case there's empty space between the sprites.
@@ -133,13 +146,13 @@ namespace Origins.Items.Weapons.Other {
 				if (i == list.Count - 2) {
 					progress = texture.Height - (int)dist;
 				}
-				Rectangle frame = new Rectangle(0, progress + 2, 6, 2);
+				Rectangle frame = new Rectangle(0, progress + 2, 8, (int)dist);
 				progress += (int)dist;
 				float rotation = diff.ToRotation();
-				Color color = Color.Lerp(Lighting.GetColor(element.ToTileCoordinates(), Color.White), Color.White, 0.85f);
-				Vector2 scale = Vector2.One;//new Vector2(1, dist / frame.Height);
+				Color color = Lighting.GetColor(element.ToTileCoordinates(), Color.White);
+				Vector2 scale = new Vector2(0.5f, 1f);//new Vector2(1, dist / frame.Height);
 
-				Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation + MathHelper.Pi, origin, scale, SpriteEffects.None, 0);
+				Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation + MathHelper.PiOver2, origin, scale, SpriteEffects.None, 0);
 
 				pos += diff;
 			}
@@ -147,58 +160,63 @@ namespace Origins.Items.Weapons.Other {
 
 		public override bool PreDraw(ref Color lightColor) {
 			List<Vector2> list = new List<Vector2>();
-			FillWhipControlPoints(Projectile, list);
-			for (int i = 0; i < list.Count - 1; i++) Dust.NewDustPerfect(list[i], 6);
+			FillWhipControlPoints(list);
 			DrawLine(list);
+			//for (int i = 0; i < list.Count - 1; i++) Dust.NewDustPerfect(list[i], 6);
 			return false;
 		}
-		public void FillWhipControlPoints(Projectile proj, List<Vector2> controlPoints) {
-			Projectile.GetWhipSettings(proj, out var timeToFlyOut, out var segments, out var rangeMultiplier);
-			float num = proj.ai[0] / timeToFlyOut;
-			float num10 = 0.5f;
-			float num11 = 1f + num10;
-			float num12 = (float)System.Math.PI * 10f * (1f - num * num11) * (float)(-proj.spriteDirection) / (float)segments;
-			float num13 = num * num11;
+		//https://youtu.be/PP5fBKo9998
+		public void FillWhipControlPoints(List<Vector2> controlPoints) {
+			GetWhipSettings(out var timeToFlyOut, out var segments, out var rangeMultiplier);
+			float progress = MathHelper.Max(Projectile.ai[0], 7) / timeToFlyOut;
+			float oneHalf = 0.5f;
+			float threeHalves = 1f + oneHalf;
+			float rotSpeed = MathHelper.Pi * 10f * (1f - progress * threeHalves) * (-Projectile.spriteDirection) / segments;
+			float num13 = progress * threeHalves;
 			float num14 = 0f;
 			if (num13 > 1f) {
-				num14 = (num13 - 1f) / num10;
+				num14 = (num13 - 1f) / oneHalf;
 				num13 = MathHelper.Lerp(1f, 0f, num14);
 			}
-			float num15 = proj.ai[0] - 1f;
-			Player player = Main.player[proj.owner];
-			Item heldItem = Main.player[proj.owner].HeldItem;
-			num15 = (float)(ContentSamples.ItemsByType[heldItem.type].useAnimation * 2) * num * player.whipRangeMultiplier;
-			float num16 = proj.velocity.Length() * num15 * num13 * rangeMultiplier / (float)segments;
-			float num17 = 1f;
-			Vector2 playerArmPosition = Projectile.Center;
-			Vector2 vector = playerArmPosition;
-			float num2 = -(float)System.Math.PI / 2f;
-			Vector2 value = vector;
-			float num3 = (float)System.Math.PI / 2f + (float)System.Math.PI / 2f * (float)proj.spriteDirection;
-			Vector2 value2 = vector;
-			float num4 = (float)System.Math.PI / 2f;
-			controlPoints.Add(playerArmPosition);
+			float range = 12 * 20 * progress * num13 * rangeMultiplier / segments;
+			Vector2 basePosition = Projectile.Center;
+			Vector2 pos0 = basePosition;
+			float rot0 = -MathHelper.PiOver2;
+
+			Vector2 pos1 = basePosition;
+			float rot1 = MathHelper.PiOver2;
+
+			Vector2 pos2 = basePosition;
+			float rot2 = MathHelper.PiOver2 * (Projectile.spriteDirection + 1);
+			controlPoints.Add(basePosition);
 			for (int i = 0; i < segments; i++) {
-				float num5 = (float)i / (float)segments;
-				float num6 = num12 * num5 * num17;
-				Vector2 vector2 = vector + num2.ToRotationVector2() * num16;
-				Vector2 vector3 = value2 + num4.ToRotationVector2() * (num16 * 2f);
-				Vector2 vector4 = value + num3.ToRotationVector2() * (num16 * 2f);
+				float segPercent = i / (float)segments;
+				float num6 = rotSpeed * segPercent;
+				Vector2 nextPos0 = pos0 + OriginExtensions.Vec2FromPolar(rot0, range);
+				Vector2 nextPos1 = pos1 + OriginExtensions.Vec2FromPolar(rot1, range * 2f);
+				Vector2 nextPos2 = pos2 + OriginExtensions.Vec2FromPolar(rot2, range * 2f);
 				float num7 = 1f - num13;
 				float num8 = 1f - num7 * num7;
-				Vector2 value3 = Vector2.Lerp(vector3, vector2, num8 * 0.9f + 0.1f);
-				Vector2 value4 = Vector2.Lerp(vector4, value3, num8 * 0.7f + 0.3f);
-				Vector2 spinningpoint = playerArmPosition + (value4 - playerArmPosition) * new Vector2(1f, num11);
+				Vector2 value4 = Vector2.Lerp(nextPos2, Vector2.Lerp(nextPos1, nextPos0, num8 * 0.9f + 0.1f), num8 * 0.7f + 0.3f);
+				Vector2 spinningpoint = basePosition + (value4 - basePosition) * new Vector2(1f, threeHalves);
 				float num9 = num14;
 				num9 *= num9;
-				Vector2 item = spinningpoint.RotatedBy(proj.rotation + 4.712389f * num9 * (float)proj.spriteDirection, playerArmPosition);
-				controlPoints.Add(item);
-				num2 += num6;
-				num4 += num6;
-				num3 += num6;
-				vector = vector2;
-				value2 = vector3;
-				value = vector4;
+				Vector2 point = spinningpoint.RotatedBy(Projectile.rotation + 4.712389f * num9 * Projectile.spriteDirection, basePosition);
+				controlPoints.Add(point);
+				rot0 += num6;
+				rot1 += num6;
+				rot2 += num6;
+				pos0 = nextPos0;
+				pos1 = nextPos1;
+				pos2 = nextPos2;
+			}
+			if (Projectile.ai[0] < 0) {
+				float val = MathHelper.Min(-Projectile.ai[0] / 15, 1);
+				Vector2 connectTarget = Main.player[Projectile.owner].MountedCenter;
+				for (int i = 0; i <= segments; i++) {
+					float segPercent = i / (float)segments;
+					controlPoints[i] = Vector2.Lerp(controlPoints[i], connectTarget, segPercent * val);
+				}
 			}
 		}
 	}
