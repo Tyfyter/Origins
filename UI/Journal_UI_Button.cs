@@ -52,7 +52,7 @@ namespace Origins.UI {
 					//OriginSystem.instance.journalUI.SetState(new Journal_UI_Open());
 					//IngameFancyUI.OpenUIState(BestiaryUI);
 					//BestiaryUI.OnOpenPage();
-				} else if (Main.mouseRight && Main.mouseRightRelease && (Main.LocalPlayer.HeldItem.dye > 0 || Main.LocalPlayer.HeldItem.IsAir)) {
+				} else if (Main.mouseRight && Main.mouseRightRelease && (Main.mouseItem.dye > 0 || Main.mouseItem.IsAir)) {
 					Main.mouseLeft = Main.mouseLeftRelease = true;
 					Main.mouseRight = false;
 					ItemSlot.Handle(ref originPlayer.journalDye);
