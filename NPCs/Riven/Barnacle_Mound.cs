@@ -35,12 +35,14 @@ namespace Origins.NPCs.Riven {
             NPC.knockBackResist = 0;
         }
 		public override void AI() {
-			if (++NPC.ai[0] > (Main.masterMode ? 420 : (Main.expertMode? 540 : 600))) {
+            NPC.TargetClosest(faceTarget:false);
+			if (NPC.HasValidTarget && ++NPC.ai[0] > (Main.masterMode ? 420 : (Main.expertMode? 540 : 600))) {
                 int type = ModContent.NPCType<Amoeba_Bugger>();
-				for (int i = Main.rand.Next(5, 8); i-->0;) {
-                    NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.position.X, (int)NPC.position.Y, type, ai0: Main.rand.NextFloat(-4, 4), ai1: Main.rand.NextFloat(-4, 4));
-				}
                 NPC.ai[0] = 0;
+                for (int i = Main.rand.Next(4, 7); i-->0;) {
+                    NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.position.X, (int)NPC.position.Y, type, ai0: Main.rand.NextFloat(-4, 4), ai1: Main.rand.NextFloat(-4, 4));
+                    NPC.ai[0] -= 30;
+                }
 			}
             NPC.position = NPC.oldPosition;
             NPC.velocity = Vector2.Zero;

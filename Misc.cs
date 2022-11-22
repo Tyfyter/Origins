@@ -1479,6 +1479,18 @@ namespace Origins {
             }
             return true;
         }
+        public static IItemDropRule WithOnFailedConditions(this IItemDropRule rule, IItemDropRule ruleToChain, bool hideLootReport = false) {
+            rule.OnFailedConditions(ruleToChain, hideLootReport);
+            return rule;
+        }
+        public static IItemDropRule WithOnFailedRoll(this IItemDropRule rule, IItemDropRule ruleToChain, bool hideLootReport = false) {
+            rule.OnFailedRoll(ruleToChain, hideLootReport);
+            return rule;
+        }
+        public static IItemDropRule WithOnSuccess(this IItemDropRule rule, IItemDropRule ruleToChain, bool hideLootReport = false) {
+            rule.OnSuccess(ruleToChain, hideLootReport);
+            return rule;
+		}
 
         public static ItemDropAttemptResult ResolveRule(IItemDropRule rule, DropAttemptInfo info) {
             if (!rule.CanDrop(info)) {

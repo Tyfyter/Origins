@@ -26,6 +26,7 @@ namespace Origins.NPCs.Riven {
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
             NPC.noGravity = true;
+            NPC.npcSlots = 0.25f;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

@@ -245,6 +245,8 @@ namespace Origins.NPCs {
 
 				pool.Add(ModContent.NPCType<Riven_Fighter>(), Riven_Hive.SpawnRates.Fighter);
 
+				pool.Add(ModContent.NPCType<Barnacle_Mound>(), Riven_Hive.SpawnRates.Barnacle);
+
 				if (spawnInfo.Water) pool.Add(ModContent.NPCType<Measly_Moeba>(), Riven_Hive.SpawnRates.Moeba);
 
 				//if (spawnInfo.playerFloorY <= Main.worldSurface + 50 && spawnInfo.spawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));

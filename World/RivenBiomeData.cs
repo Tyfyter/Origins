@@ -24,6 +24,7 @@ using AltLibrary.Common.AltBiomes;
 using Origins.NPCs.Riven;
 using AltLibrary.Core.Generation;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Ammo;
 
 namespace Origins.World.BiomeData {
 	public class Riven_Hive : ModBiome {
@@ -49,8 +50,8 @@ namespace Origins.World.BiomeData {
 			//player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", originPlayer.ZoneRivenProgressSmoothed > 0, player.Center);
 		}
 		public override void Load() {
-			FirstLesionDropRule = ItemDropRule.NotScalingWithLuck(ItemID.TheUndertaker);// presumably Riven Splitter?
-			FirstLesionDropRule.OnSuccess(ItemDropRule.NotScalingWithLuck(ItemID.MusketBall, 1, 100, 100));// presumably harpoons?
+			FirstLesionDropRule = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Riven_Splitter>())
+				.WithOnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Harpoon>(), 1, 100, 100));
 
 			LesionDropRule = new OneFromRulesRule(1,
 				FirstLesionDropRule,
@@ -69,8 +70,8 @@ namespace Origins.World.BiomeData {
 		public static class SpawnRates {
 			public const float Fighter = 1;
 			public const float Mummy = 1;
+			public const float Barnacle = 0.5f;
 			public const float Moeba = 0.8f;
-			public const float Tank = 0.6f;
 			public const float Shark1 = 0.4f;
 			public const float Worm = 0.6f;
 			public const float Crawler = 0.8f;
