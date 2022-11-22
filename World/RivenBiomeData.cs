@@ -502,8 +502,9 @@ namespace Origins.World.BiomeData {
 			BiomeIce = TileID.IceBrick;//ModContent.TileType<Riven_Ice>();
 			BiomeOre = ModContent.TileType<Infested_Ore>();
 			AltarTile = ModContent.TileType<Riven_Altar>();
+			BiomeChestItem = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
 			BiomeChestTile = ModContent.TileType<Riven_Dungeon_Chest>();
-			BiomeChestTileStyle = 1;
+			BiomeChestTileStyle = 1;//1:540, -1:836, 0:864
 			MimicType = ModContent.NPCType<Riven_Mimic>();
 		}
 		public override AltMaterialContext MaterialContext {
