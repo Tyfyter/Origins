@@ -651,7 +651,7 @@ MATERIALS:
 (^) Angelium
 (^) Bark
 (^) Bat Hide
-(X) Brineglow
+(#, ^2) Brineglow
 (^) Bud Barnacle
 (^) Defiled Bar*
 (^) Defiled Powder
