@@ -46,7 +46,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver !!!
-(#, ^2) Primordial Amoeba !!!
+(#3, ^2) Primordial Amoeba !!!
 
 (X) Mad Maniac
 (%2, X) Mildew Carrion
@@ -216,10 +216,10 @@ ARMOR:
 ---
 (^) Cryosten Armor*
 (^) Defiled Armor*
-(#3, ^2) Felnum Armor
+(^) Felnum Armor
 (^) Fiberglass Armor
-(#2?, ^2) Myth Armor !!!
-(#3?, ^2) Riven Armor !!!
+(#2 (still needs set bonus effects), ^2) Myth Armor !!!
+(^) Riven Armor !!!
 
 (^) Acrid Armor
 (^) Bleeding Obsidian Armor
@@ -246,7 +246,6 @@ ACCESSORIES:
 (^) Advanced Imaging*
 (^) Air Pack*
 (^) Air Tank*
-(@5, #) All-Knowing Mind*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
@@ -264,8 +263,7 @@ ACCESSORIES:
 (^) Pneumatic Bomb Thrower*
 (^) Return To Sender*
 (#, ^2) Sonar Visor*
-(^) Freeze Frame*
-(%3, X) Sun Medallion
+(^) Still Image*
 (#, ^2) Symbiote Skull !!!
 (#, ^2) Turbo Reel !!!
 
@@ -284,7 +282,6 @@ ACCESSORIES:
 (X) Gyroscope
 (^) Queen of Hearts
 (^) Refactoring Pieces
-(%3, ^2) Runed Insignia
 (#3, ^2) SOTH
 (X) Void Arcanum
 (x) Warp Drive
@@ -292,7 +289,6 @@ ACCESSORIES:
 (%3, X) Armored Core
 (%3, X) Atomic Clock
 (^) Entangled Energy
-(%3, X) Immortal Core
 (^) Lazy Cloak
 (X) Magnetic Brain
 (X) Mildew Urchin
@@ -336,7 +332,7 @@ VANITY:
 
 UTILITIES:
 ---
-((Uses Flagellash_P und Amoeba_Chain_End)^) Amoeba Hook !!!
+(^) Amoeba Hook
 (#, ^2) Nano Hook
 (#, ^2) Quantum Hook
 
@@ -373,6 +369,8 @@ TOOLS:
 (^) Acrid Hamaxe
 (^) Acrid Pickaxe
 (X) Bleeding Obsidian Dramaxe
+
+(#, %2, ^2)Impactaxe
 
 (X) Terraformer
 (X) Ahe
@@ -540,6 +538,7 @@ EXPLOSIVE WEAPONS:
 (^) Shrapnel Bomb
 (#3, ^2) Thermite Launcher
 
+(#, %2, ^2) Abrasion Blaster
 (%3, ^) Ace Shrapnel
 (#, ^2) Acid Bomb
 (^) Acid Grenade
@@ -549,8 +548,10 @@ EXPLOSIVE WEAPONS:
 (@, ^3) Fallout
 (X) Grenade Lawnchair
 (X) Grenado
+(X, %2) Mine Flayer
 (#, ^2) Nade O' Plenty
 (#, ^2) Nuclear Arm*
+(X, %2) Overhead Missile Cannon
 (X) Omni-Directional Claymore
 
 (%3, X) Big Bang

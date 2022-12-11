@@ -61,7 +61,7 @@ namespace Origins.NPCs.Defiled {
             NPC.aiStyle = NPCAIStyleID.None;
             NPC.lifeMax = 2400;
             NPC.defense = 14;
-            NPC.damage = 36;
+            NPC.damage = 60;
             NPC.width = 122;
             NPC.height = 114;
             NPC.friendly = false;
@@ -78,19 +78,19 @@ namespace Origins.NPCs.Defiled {
                 case 1:
                 NPC.lifeMax = 2400;
                 NPC.defense = 14;
-                NPC.damage = 36;
+                NPC.damage = 60;
                 break;
 
                 case 2:
                 NPC.lifeMax = 3840 / 2;
                 NPC.defense = 15;
-                NPC.damage = 36;
+                NPC.damage = 75;
                 break;
 
                 case 3:
                 NPC.lifeMax = 6144 / 3;
                 NPC.defense = 16;
-                NPC.damage = 36;
+                NPC.damage = 90;
                 break;
             }
 		}

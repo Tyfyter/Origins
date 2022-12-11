@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Accessories {
     public class Rasterize : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Freeze Frame");
+            DisplayName.SetDefault("Still Image");
             Tooltip.SetDefault("Attacks may inflict \"Rasterize\"");
             SacrificeTotal = 1;
         }

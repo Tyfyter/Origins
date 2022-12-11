@@ -1,10 +1,9 @@
 ﻿using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Advanced_Imaging : ModItem {
+    public class Advanced_Imaging : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Advanced Imaging");
