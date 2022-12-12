@@ -35,7 +35,6 @@ namespace Origins.NPCs.Riven {
 		//bool attacking = false;
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Primordial Amoeba");
-            Main.npcFrameCount[NPC.type] = 1;
             NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
                 SpecificallyImmuneTo = new int[] {
                     BuffID.Confused
@@ -68,20 +67,14 @@ namespace Origins.NPCs.Riven {
 			switch (DifficultyMult) {
                 case 1:
                 NPC.lifeMax = 1800;
-                NPC.defense = 14;
-                NPC.damage = 36;
                 break;
 
                 case 2:
                 NPC.lifeMax = 2700 / 2;
-                NPC.defense = 15;
-                NPC.damage = 36;
                 break;
 
                 case 3:
                 NPC.lifeMax = 3600 / 3;
-                NPC.defense = 16;
-                NPC.damage = 36;
                 break;
             }
 		}
@@ -112,7 +105,7 @@ namespace Origins.NPCs.Riven {
             IItemDropRuleCondition expert = new Conditions.IsExpert();
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Infested_Ore_Item>(), 1, 140, 330));
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Riven_Sample>(), 1, 40, 100));
-            npcLoot.Add(new LeadingConditionRule(notExpert).OnSuccess(
+            npcLoot.Add(new LeadingConditionRule(notExpert).WithOnSuccess(
                 ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>())
             ));
             //npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1));
@@ -132,13 +125,11 @@ namespace Origins.NPCs.Riven {
 
 			Vector2 center = NPC.Center;
 			int difficultyMult = DifficultyMult;// just saving the value as a slight optimization
-			bool enraged = false;
 			bool runAway = false;
 			NPC.TargetClosest();
 			Player target = Main.player[NPC.target];
 			if (target.dead) {
 				runAway = true;
-				enraged = true;
 			}
 			if (Main.netMode != NetmodeID.MultiplayerClient) {
 				int range = 6000;
@@ -154,12 +145,7 @@ namespace Origins.NPCs.Riven {
 			float targetDiffX = target.Center.X - center.X;
 			float targetDiffY = target.Center.Y - center.Y;
 			NPC.rotation = (float)Math.Atan2(targetDiffY, targetDiffX) + 1.57f;
-			int damage = 10;
-			if (enraged) {
-				NPC.defense *= 2;
-				damage *= 2;
-			}
-			NPC.damage = NPC.GetAttackDamage_ScaledByStrength(damage);
+			NPC.damage = NPC.GetAttackDamage_ScaledByStrength(NPC.defDamage);
 			#region projectile attack
 			if (Main.netMode != NetmodeID.MultiplayerClient) {
 				NPC.localAI[1] += 1f;
@@ -175,7 +161,7 @@ namespace Origins.NPCs.Riven {
 				if (NPC.life < NPC.lifeMax * 0.6f) {
 					NPC.localAI[1] += 0.4f * difficultyMult;
 				}
-				if (enraged) {
+				if (runAway) {
 					NPC.localAI[1] += 2f * difficultyMult;
 				}
 				if (Main.expertMode && NPC.justHit && Main.rand.NextBool(2)) {
@@ -184,7 +170,7 @@ namespace Origins.NPCs.Riven {
 				if (Main.getGoodWorld) {
 					NPC.localAI[1] += 1f * difficultyMult;
 				}
-				if (NPC.localAI[1] > 180f) {
+				if (NPC.localAI[1] > 900f) {
 					NPC.localAI[1] = 0f;
 					bool canShootAtTarget = Collision.CanHit(NPC.position, NPC.width, NPC.height, target.position, target.width, target.height);
 					if (NPC.localAI[3] > 0f) {
@@ -198,22 +184,24 @@ namespace Origins.NPCs.Riven {
 						float normFact = projVel.Length();
 						normFact = projSpeed / normFact;
 						projVel *= normFact;
-						int projDamage = 9;
+						int projDamage = 13;
 						int projType = 275;
-						if (enraged) {
+						if (runAway) {
 							projDamage *= 2;
 						}
 						projDamage = NPC.GetAttackDamage_ForProjectiles(projDamage, projDamage * 0.9f);
 						projPos += projVel * 3f;
-						Projectile.NewProjectile(
-							NPC.GetSource_FromAI(),
-							projPos,
-							projVel,
-							projType,
-							projDamage,
-							0f,
-							Main.myPlayer
-						);
+						for (int i = 0; i < 5; i++) {
+							Projectile.NewProjectile(
+								NPC.GetSource_FromAI(),
+								projPos,
+								projVel.RotatedByRandom(0.4f),
+								projType,
+								projDamage,
+								0f,
+								Main.myPlayer
+							);
+						}
 					}
 				}
 			}
@@ -237,11 +225,10 @@ namespace Origins.NPCs.Riven {
 					}
 				}
 			}
-			NPC.defense = 10 + tentacleCount * 2 * difficultyMult;
-			if (tentacleCount < 7 && Main.netMode != NetmodeID.MultiplayerClient && difficultyMult > 1){
-				if (Main.rand.NextBool(180 / difficultyMult)) {
-					NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, tentacleID, NPC.whoAmI);
-				}
+			NPC.defense = 12 + (tentacleCount + 1) * 2 * difficultyMult;
+			if (runAway) {
+				NPC.defense *= 2;
+				NPC.damage *= 2;
 			}
 			if (tentacleCount <= 0) {
 				if (Collision.IsClearSpotTest(NPC.position + new Vector2(16), 16f, NPC.width - 32, NPC.height - 32, checkSlopes: true)) {
@@ -255,32 +242,37 @@ namespace Origins.NPCs.Riven {
 					}
 				}
 				return true;
-			} else {
-				NPC.noTileCollide = true;
-				NPC.noGravity = true;
+			}
+			NPC.noTileCollide = true;
+			NPC.noGravity = true;
+			if (tentacleCount < 7 && Main.netMode != NetmodeID.MultiplayerClient && difficultyMult > 1) {
+				NPC.ai[2] += difficultyMult + 1;
+				if (NPC.ai[2] > 1600) {
+					NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, tentacleID, NPC.whoAmI);
+					NPC.ai[2] = 0;
+				}
 			}
 			tentacleCenterX /= tentacleCount;
 			tentacleCenterY /= tentacleCount;
 			float speedFactor = 3f;
 			float moveAccelleration = 0.03f;
 			if (NPC.life < NPC.lifeMax / 2) {
-				speedFactor *= 1.5f;
-				moveAccelleration *= 1.5f;
+				speedFactor *= 1.25f;
+				moveAccelleration *= 1.25f;
 			}
 			if (NPC.life < NPC.lifeMax / 4) {
-				speedFactor *= 1.5f;
+				speedFactor *= 1.25f;
 			}
 			if (!target.InModBiome<Riven_Hive>()) {
 				runAway = true;
-				enraged = true;
 				speedFactor += 6.4f;
 				moveAccelleration *= 3f;
 			}
 			if (Main.expertMode) {
-				speedFactor += 0.8f;
-				speedFactor *= 1.1f;
+				speedFactor += 0.4f;
+				speedFactor *= 1.05f;
 				moveAccelleration += 0.01f;
-				moveAccelleration *= 1.1f;
+				moveAccelleration *= 1.05f;
 			}
 			if (Main.getGoodWorld) {
 				speedFactor *= 1.15f;
@@ -296,7 +288,7 @@ namespace Origins.NPCs.Riven {
 			}
 			float tentacleDist = (float)Math.Sqrt(tentacleDiffX * tentacleDiffX + tentacleDiffY * tentacleDiffY);
 			int distFactor = 500;
-			if (enraged) {
+			if (runAway) {
 				distFactor += 350;
 			}
 			if (Main.expertMode) {
@@ -349,6 +341,10 @@ namespace Origins.NPCs.Riven {
 			return useVanillaAI;
 		}
 		public override bool SpecialOnKill() {
+			return false;
+		}
+		public override void OnKill() {
+            NPC.downedBoss2 = true;
 			int tentacleID = Primordial_Amoeba_Tentacle.ID;
 			int tentacleCount = 0;
 			for (int i = 0; i < 200; i++) {
@@ -360,10 +356,6 @@ namespace Origins.NPCs.Riven {
 					}
 				}
 			}
-			return true;
-		}
-		public override void OnKill() {
-            NPC.downedBoss2 = true;
 		}
 		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
             Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
@@ -386,20 +378,48 @@ namespace Origins.NPCs.Riven {
 		public static int ID { get; private set; }
         public override void SetStaticDefaults() {
             ID = Type;
-        }
+			NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
+				SpecificallyImmuneTo = new int[] {
+					BuffID.Confused
+				}
+			};
+			NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
+			NPCID.Sets.CantTakeLunchMoney[Type] = true;
+		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.PlanterasHook);
 			NPC.aiStyle = NPCAIStyleID.None;
-			NPC.damage = 0;
+			NPC.damage = 13;
 			NPC.dontTakeDamage = false;
-			NPC.lifeMax = 300;
-			NPC.width = NPC.height = 16;
+			NPC.lifeMax = 800;
+			NPC.width = NPC.height = 24;
 			NPC.defense = 0;
+		}
+		public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
+			switch (Primordial_Amoeba.DifficultyMult) {
+				case 1:
+				NPC.lifeMax = 800;
+				NPC.damage = 13;
+				NPC.defense = 0;
+				break;
+
+				case 2:
+				NPC.lifeMax = 1000 / 2;
+				NPC.damage = 11;
+				NPC.defense = 2;
+				break;
+
+				case 3:
+				NPC.lifeMax = 1200 / 3;
+				NPC.damage = 9;
+				NPC.defense = 4;
+				break;
+			}
 		}
 		public override void OnSpawn(IEntitySource source) {
 			int hitboxID = Primordial_Amoeba_Tentacle_Hitbox.ID;
-			for (int i = 0; i < 7; i++) {
-				NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, hitboxID, NPC.whoAmI, NPC.whoAmI, (i + 1) / 8f);
+			for (int i = 0; i < 11; i++) {
+				 NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, hitboxID, NPC.whoAmI, NPC.whoAmI, (i + 1) / 12f);
 			}
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
@@ -482,6 +502,15 @@ namespace Origins.NPCs.Riven {
 						checkSize += (int)(tries / 10f);
 						int checkX = checkBaseX + Main.rand.Next(-checkSize, checkSize + 1);
 						int checkY = checkBaseY + Main.rand.Next(-checkSize, checkSize + 1);
+						if (Main.rand.NextBool(6)) {
+							NPC.TargetClosest();
+							int playerCenterX = (int)(targetCenter.X / 16f);
+							int playerCenterY = (int)(targetCenter.Y / 16f);
+							if (Main.tile[playerCenterX, playerCenterY].WallType > 0) {
+								checkX = playerCenterX;
+								checkY = playerCenterY;
+							}
+						}
 						try {
 							if (WorldGen.InWorld(checkX, checkY) && (WorldGen.SolidTile(checkX, checkY) || (Main.tile[checkX, checkY].WallType > 0 && tries > 500))) {
 								foundSpot = true;
@@ -565,6 +594,13 @@ namespace Origins.NPCs.Riven {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
+			NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
+				SpecificallyImmuneTo = new int[] {
+					BuffID.Confused
+				}
+			};
+			NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
+			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.PlanterasHook);
@@ -573,7 +609,7 @@ namespace Origins.NPCs.Riven {
 			NPC.dontTakeDamage = false;
 			NPC.lifeMax = 99999;
 			NPC.defense = 0;
-			NPC.width = NPC.height = 16;
+			NPC.width = NPC.height = 24;
 			NPC.hide = true;
 		}
 		public override void AI() {
@@ -587,8 +623,7 @@ namespace Origins.NPCs.Riven {
 			NPC.realLife = (int)NPC.ai[0];
 			NPC.life = NPC.lifeMax;
 			NPC bodyNPC = Main.npc[Primordial_Amoeba.npcIndex];
-			NPC.Center = tentacleNPC.Center;
-			NPC.netOffset = (bodyNPC.Center - NPC.Center) * NPC.ai[1];
+			NPC.Center = tentacleNPC.Center + (bodyNPC.Center - tentacleNPC.Center) * NPC.ai[1];
 		}
 		public override bool? CanBeHitByProjectile(Projectile projectile) {
 			return
