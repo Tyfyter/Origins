@@ -25,6 +25,8 @@ using Origins.NPCs.Riven;
 using AltLibrary.Core.Generation;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
+using Origins.Items.Pets;
+using Origins.Items.Accessories;
 
 namespace Origins.World.BiomeData {
 	public class Riven_Hive : ModBiome {
@@ -55,10 +57,10 @@ namespace Origins.World.BiomeData {
 
 			LesionDropRule = new OneFromRulesRule(1,
 				FirstLesionDropRule,
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<NPC_Spawner>(), 1, NPCID.Bee, NPCID.Bee),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<NPC_Spawner>(), 1, NPCID.Bee, NPCID.Bee), //probably magic weapon
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Riverang>()),
-				ItemDropRule.NotScalingWithLuck(ItemID.ShadowOrb),
-				ItemDropRule.NotScalingWithLuck(ItemID.PanicNecklace)
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Amoeba_Toy>()),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Parasitic_Influence>())
 			);
 		}
 		public override void Unload() {

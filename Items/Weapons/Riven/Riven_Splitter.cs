@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Riven {
     public class Riven_Splitter : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Splitter");
-            Tooltip.SetDefault("Uses harpoons as ammo");
+            Tooltip.SetDefault("Uses harpoons as ammo\n87.5% chance not to consume ammo");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {

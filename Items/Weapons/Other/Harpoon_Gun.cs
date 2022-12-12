@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Other {
     public class Harpoon_Gun : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Harpoon Gun");
-            Tooltip.SetDefault("Uses harpoons as ammo");
+            Tooltip.SetDefault("Uses harpoons as ammo\n85.7% chance not to consume ammo");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
