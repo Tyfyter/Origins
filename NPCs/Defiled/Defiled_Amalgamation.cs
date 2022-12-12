@@ -121,7 +121,7 @@ namespace Origins.NPCs.Defiled {
             IItemDropRuleCondition expert = new Conditions.IsExpert();
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Defiled_Ore_Item>(), 1, 140, 330));
             npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1, 40, 100));
-            npcLoot.Add(new LeadingConditionRule(notExpert).OnSuccess(
+            npcLoot.Add(new LeadingConditionRule(notExpert).WithOnSuccess(
                 ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>())
             ));
             //npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1));

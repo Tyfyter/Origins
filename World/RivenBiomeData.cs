@@ -456,7 +456,7 @@ namespace Origins.World.BiomeData {
 				shadowOrbCount++;
 				if (shadowOrbCount >= 3) {
 					shadowOrbCount = 0;
-					NPC.SpawnOnPlayer(plr, 1);
+					NPC.SpawnOnPlayer(plr, ModContent.NPCType<Primordial_Amoeba>());
 				} else {
 					LocalizedText localizedText = Lang.misc[10];
 					if (shadowOrbCount == 2) {

@@ -10,6 +10,7 @@ using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
+using System.Security.Cryptography;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -28,11 +29,7 @@ namespace Origins.NPCs.Riven {
     public class Primordial_Amoeba : ModNPC {
 		public override string BossHeadTexture => "Origins/UI/BossMap/Map_Icon_DA";
 		internal static int npcIndex;
-        public static bool spawnDA = false;
-        int trappedTime = 0;
         public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
-		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
-		//bool attacking = false;
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Primordial Amoeba");
             NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
@@ -80,26 +77,20 @@ namespace Origins.NPCs.Riven {
 		}
 
         public override void OnSpawn(IEntitySource source) {
-            spawnDA = false;
             if (Main.netMode == NetmodeID.Server) {
                 ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", NPC.GetTypeNetName()), new Color(222, 222, 222));
             } else {
                 if (Main.netMode == NetmodeID.SinglePlayer) {
                     Main.NewText(Language.GetTextValue("Announcement.HasAwoken", NPC.TypeName), 222, 222, 222);
                 }
-                SoundEngine.PlaySound(
-                    new SoundStyle("Origins/Sounds/Custom/Defiled_Kill1") {
-                        Pitch = -1,
-                        Volume = 0.66f
-                    }, NPC.Center
-                );
+                SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(-1), NPC.Center);
             }
         }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 new FlavorTextBestiaryInfoElement("A murderous super-organism just trying to kill you."),
             });
-        }
+		}
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             IItemDropRuleCondition notExpert = new Conditions.NotExpert();
             IItemDropRuleCondition expert = new Conditions.IsExpert();
