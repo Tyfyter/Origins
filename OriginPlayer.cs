@@ -278,6 +278,7 @@ namespace Origins {
 					if (diff.LengthSquared() > 64) {
                         Player.GoingDownWithGrapple = true;
 					}
+                    Player.RefreshMovementAbilities();
                 }
             }
             //endCustomMovement:

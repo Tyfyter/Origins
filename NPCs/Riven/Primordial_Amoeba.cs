@@ -47,7 +47,7 @@ namespace Origins.NPCs.Riven {
             NPC.aiStyle = NPCAIStyleID.None;
             NPC.lifeMax = 1800;
             NPC.defense = 14;
-            NPC.damage = 36;
+            NPC.damage = 23;
             NPC.width = 144;
             NPC.height = 148;
             NPC.friendly = false;
@@ -64,15 +64,18 @@ namespace Origins.NPCs.Riven {
 			switch (DifficultyMult) {
                 case 1:
                 NPC.lifeMax = 1800;
-                break;
+				NPC.damage = 23;
+				break;
 
                 case 2:
                 NPC.lifeMax = 2700 / 2;
-                break;
+				NPC.damage = 23;
+				break;
 
                 case 3:
                 NPC.lifeMax = 3600 / 3;
-                break;
+				NPC.damage = 23;
+				break;
             }
 		}
 
@@ -83,7 +86,7 @@ namespace Origins.NPCs.Riven {
                 if (Main.netMode == NetmodeID.SinglePlayer) {
                     Main.NewText(Language.GetTextValue("Announcement.HasAwoken", NPC.TypeName), 222, 222, 222);
                 }
-                SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(-1), NPC.Center);
+                SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(-1));
             }
         }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -170,13 +173,13 @@ namespace Origins.NPCs.Riven {
 					}
 					if (canShootAtTarget) {
 						Vector2 projPos = new Vector2(NPC.Center.X, NPC.Center.Y);
-						float projSpeed = 15f + difficultyMult;
+						float projSpeed = 10f + difficultyMult;
 						Vector2 projVel = target.position + target.Size * 0.5f - projPos;
 						float normFact = projVel.Length();
 						normFact = projSpeed / normFact;
 						projVel *= normFact;
 						int projDamage = 13;
-						int projType = 275;
+						int projType = Amoebic_Gel_P.ID;
 						if (runAway) {
 							projDamage *= 2;
 						}
@@ -186,7 +189,7 @@ namespace Origins.NPCs.Riven {
 							Projectile.NewProjectile(
 								NPC.GetSource_FromAI(),
 								projPos,
-								projVel.RotatedByRandom(0.4f),
+								projVel.RotatedByRandom(0.3f) * Main.rand.NextFloat(0.85f, 1f),
 								projType,
 								projDamage,
 								0f,
@@ -216,6 +219,10 @@ namespace Origins.NPCs.Riven {
 					}
 				}
 			}
+			NPC.dontTakeDamage = false;
+			if (difficultyMult > 1 && tentacleCount > 0 && NPC.life < NPC.lifeMax / 2) {
+				NPC.dontTakeDamage = true;
+			}
 			NPC.defense = 12 + (tentacleCount + 1) * 2 * difficultyMult;
 			if (runAway) {
 				NPC.defense *= 2;
@@ -236,7 +243,7 @@ namespace Origins.NPCs.Riven {
 			}
 			NPC.noTileCollide = true;
 			NPC.noGravity = true;
-			if (tentacleCount < 7 && Main.netMode != NetmodeID.MultiplayerClient && difficultyMult > 1) {
+			if (tentacleCount < 7 && NPC.life > NPC.lifeMax && Main.netMode != NetmodeID.MultiplayerClient && difficultyMult > 1) {
 				NPC.ai[2] += difficultyMult + 1;
 				if (NPC.ai[2] > 1600) {
 					NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, tentacleID, NPC.whoAmI);
@@ -245,14 +252,14 @@ namespace Origins.NPCs.Riven {
 			}
 			tentacleCenterX /= tentacleCount;
 			tentacleCenterY /= tentacleCount;
-			float speedFactor = 3f;
-			float moveAccelleration = 0.03f;
+			float speedFactor = 2.75f;
+			float moveAccelleration = 0.025f;
 			if (NPC.life < NPC.lifeMax / 2) {
-				speedFactor *= 1.25f;
-				moveAccelleration *= 1.25f;
+				speedFactor *= 1.15f;
+				moveAccelleration *= 1.15f;
 			}
 			if (NPC.life < NPC.lifeMax / 4) {
-				speedFactor *= 1.25f;
+				speedFactor *= 1.15f;
 			}
 			if (!target.InModBiome<Riven_Hive>()) {
 				runAway = true;
@@ -260,7 +267,7 @@ namespace Origins.NPCs.Riven {
 				moveAccelleration *= 3f;
 			}
 			if (Main.expertMode) {
-				speedFactor += 0.4f;
+				speedFactor += 0.3f;
 				speedFactor *= 1.05f;
 				moveAccelleration += 0.01f;
 				moveAccelleration *= 1.05f;
@@ -272,7 +279,7 @@ namespace Origins.NPCs.Riven {
 			Vector2 tentacleCenter = new Vector2(tentacleCenterX, tentacleCenterY);
 			float tentacleDiffX = target.Center.X - tentacleCenter.X;
 			float tentacleDiffY = target.Center.Y - tentacleCenter.Y;
-			if (runAway) {
+			if (runAway || Math.Sqrt(targetDiffX * targetDiffX + targetDiffY * targetDiffY) < 128) {
 				tentacleDiffY *= -1f;
 				tentacleDiffX *= -1f;
 				speedFactor += 8f;
@@ -283,7 +290,7 @@ namespace Origins.NPCs.Riven {
 				distFactor += 350;
 			}
 			if (Main.expertMode) {
-				distFactor += 150;
+				distFactor += 100;
 			}
 			if (tentacleDist >= distFactor) {
 				tentacleDist = distFactor / tentacleDist;
@@ -368,7 +375,6 @@ namespace Origins.NPCs.Riven {
 		public override string Texture => "Origins/Items/Weapons/Riven/Flagellash_P";
 		public static int ID { get; private set; }
         public override void SetStaticDefaults() {
-            ID = Type;
 			NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
 				SpecificallyImmuneTo = new int[] {
 					BuffID.Confused
@@ -376,6 +382,7 @@ namespace Origins.NPCs.Riven {
 			};
 			NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
+			ID = Type;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.PlanterasHook);
@@ -384,33 +391,33 @@ namespace Origins.NPCs.Riven {
 			NPC.dontTakeDamage = false;
 			NPC.lifeMax = 800;
 			NPC.width = NPC.height = 24;
-			NPC.defense = 0;
+			NPC.defense = 8;
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
 			switch (Primordial_Amoeba.DifficultyMult) {
 				case 1:
 				NPC.lifeMax = 800;
 				NPC.damage = 13;
-				NPC.defense = 0;
+				NPC.defense = 8;
 				break;
 
 				case 2:
 				NPC.lifeMax = 1000 / 2;
-				NPC.damage = 11;
-				NPC.defense = 2;
+				NPC.damage = 17;
+				NPC.defense = 10;
 				break;
 
 				case 3:
 				NPC.lifeMax = 1200 / 3;
-				NPC.damage = 9;
-				NPC.defense = 4;
+				NPC.damage = 20;
+				NPC.defense = 12;
 				break;
 			}
 		}
 		public override void OnSpawn(IEntitySource source) {
 			int hitboxID = Primordial_Amoeba_Tentacle_Hitbox.ID;
-			for (int i = 0; i < 11; i++) {
-				 NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, hitboxID, NPC.whoAmI, NPC.whoAmI, (i + 1) / 12f);
+			for (int i = 0; i < 14; i++) {
+				 NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, hitboxID, NPC.whoAmI, NPC.whoAmI, (i + 1) / 15f);
 			}
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
@@ -584,7 +591,6 @@ namespace Origins.NPCs.Riven {
 		public override string Texture => "Origins/Items/Weapons/Riven/Flagellash_P";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			ID = Type;
 			NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
 				SpecificallyImmuneTo = new int[] {
 					BuffID.Confused
@@ -592,6 +598,7 @@ namespace Origins.NPCs.Riven {
 			};
 			NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
+			ID = Type;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.PlanterasHook);
@@ -635,7 +642,35 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 	}
-    public class Boss_Bar_PA : ModBossBar {
+	public class Amoebic_Gel_P : ModProjectile {
+		public override string Texture => "Origins/Items/Weapons/Riven/Minions/Amoeba_Bubble";
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Amoebic Gel");
+			Main.projFrames[Projectile.type] = 4;
+			ID = Type;
+		}
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.WoodenArrowHostile);
+			Projectile.timeLeft = 3600;
+			Projectile.aiStyle = ProjAIStyleID.Arrow;
+			Projectile.penetrate = -1;
+			Projectile.extraUpdates = 0;
+			Projectile.width = 22;
+			Projectile.height = 22;
+			Projectile.friendly = false;
+			Projectile.hostile = true;
+			Projectile.scale = 0.85f;
+			Projectile.ignoreWater = true;
+		}
+		public override Color? GetAlpha(Color lightColor) {
+			return Color.Lerp(lightColor, Color.White, 0.85f);
+		}
+		public override void Kill(int timeLeft) {
+			if (timeLeft < 3590) SoundEngine.PlaySound(SoundID.NPCDeath1.WithPitch(0.15f).WithVolumeScale(0.5f));
+		}
+	}
+	public class Boss_Bar_PA : ModBossBar {
         public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
             return Asset<Texture2D>.Empty;
         }
