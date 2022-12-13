@@ -21,10 +21,6 @@ namespace Origins {
 		//[Label("Use alternate world evil biomes")]
 		//[OptionStrings(new string[] { "never", "50/50", "always" })]
 		//[DefaultValue("50/50")]
-		[JsonIgnore]
-		public string altWorldEvil;
-		[JsonIgnore]
-		public sbyte worldTypeSkew = -1;
 
 		[Header("Vanilla Buffs")]
 
@@ -38,22 +34,12 @@ namespace Origins {
 		[ReloadRequired]
 		[DefaultValue(true)]
 		public bool GrassMerge = true;
-
-		[OnDeserialized]
-		internal void OnDeserialized(StreamingContext context) {
-			worldTypeSkew = altWorldEvil switch {
-				"never" => -1,
-				"always" => 1,
-				_ => 0,
-			};
-		}
 		internal void Save() {
 			Directory.CreateDirectory(ConfigManager.ModConfigPath);
 			string filename = Mod.Name + "_" + Name + ".json";
 			string path = Path.Combine(ConfigManager.ModConfigPath, filename);
 			string json = JsonConvert.SerializeObject(this, ConfigManager.serializerSettings);
 			File.WriteAllText(path, json);
-			OnDeserialized(new(StreamingContextStates.Other));
 		}
 	}
 	[Label("Client Settings")]

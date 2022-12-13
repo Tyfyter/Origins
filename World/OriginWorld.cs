@@ -37,7 +37,18 @@ namespace Origins {
         public static int fiberglassTiles;
         public int peatSold;
         public const float biomeShaderSmoothing = 0.025f;
-        public byte worldEvil = 0;
+        public byte worldEvil {
+            get {
+				switch (AltLibrary.Common.Systems.WorldBiomeManager.WorldEvil) {
+                    case "Origins/Defiled_Wastelands_Alt_Biome":
+                    return evil_wastelands;
+                    case "Origins/Riven_Hive_Alt_Biome":
+                    return evil_riven;
+                    default:
+                    return WorldGen.crimson ? evil_crimson : evil_corruption;
+				}
+			}
+        }
         private static double? _worldSurfaceLow;
         public static double worldSurfaceLow => _worldSurfaceLow??Main.worldSurface-165;
         public static byte WorldEvil => instance.worldEvil;
@@ -76,12 +87,6 @@ namespace Origins {
         public override void LoadWorldData(TagCompound tag) {
             if (tag.ContainsKey("peatSold")) {
                 peatSold = tag.GetAsInt("peatSold");
-            }
-            if (tag.ContainsKey("worldEvil")) {
-                worldEvil = tag.GetByte("worldEvil");
-            }
-			if (worldEvil == 0) {
-                worldEvil = WorldGen.crimson ? evil_crimson : evil_corruption;
             }
             if(tag.ContainsKey("worldSurfaceLow"))_worldSurfaceLow = tag.GetDouble("worldSurfaceLow");
             if(tag.ContainsKey("defiledHearts"))Defiled_Hearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint).ToList();

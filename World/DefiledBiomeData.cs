@@ -571,9 +571,15 @@ namespace Origins.World.BiomeData {
 		public override EvilBiomeGenerationPass GetEvilBiomeGenerationPass() {
 			return new Defiled_Wastelands_Generation_Pass();
 		}
+		public static List<int> defiledWastelandsWestEdge;
+		public static List<int> defiledWastelandsEastEdge;
 		public class Defiled_Wastelands_Generation_Pass : EvilBiomeGenerationPass {
 			Stack<Point> defiledHearts = new Stack<Point>() { };
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
+				defiledWastelandsWestEdge ??= new();
+				defiledWastelandsEastEdge ??= new();
+				defiledWastelandsWestEdge.Add(evilBiomePositionWestBound);
+				defiledWastelandsEastEdge.Add(evilBiomePositionEastBound);
 				int startY;
 				for (startY = (int)WorldGen.worldSurfaceLow; !Main.tile[evilBiomePosition, startY].HasTile; startY++) ;
 				Point start = new Point(evilBiomePosition, startY + genRand.Next(105, 150));//range of depths

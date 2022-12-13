@@ -25,6 +25,9 @@ namespace Origins {
     public partial class OriginSystem : ModSystem {
         internal static List<(Point, int)> HellSpikes = new List<(Point, int)>() { };
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight) {
+            Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge = new();
+            Defiled_Wastelands_Alt_Biome.defiledWastelandsEastEdge = new();
+
             #region _
             /*genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
             if (genIndex == -1) {
@@ -48,14 +51,6 @@ namespace Origins {
             }
             }));*/
             #endregion _
-            bool altWorldEvil = (WorldGen.genRand.Next(0, 2) + OriginConfig.Instance.worldTypeSkew) > 0;
-            tasks.Insert(0, new PassLegacy("setting worldEvil type", (GenerationProgress progress, GameConfiguration _) =>{
-				if (altWorldEvil) {
-                    worldEvil = crimson ? evil_riven : evil_wastelands;
-                } else {
-                    worldEvil = crimson ? evil_crimson : evil_corruption;
-                }
-            }));
             int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
             if(genIndex != -1) {
                 int duskStoneID = TileType<Dusk_Stone>();
@@ -144,6 +139,78 @@ namespace Origins {
                     //}
                 }));
             }
+            List<(Point, int)> EvilSpikes = new List<(Point, int)>() { };
+            genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Weeds"));
+            getEvilTileConversionTypes(evil_wastelands, out ushort defiledStoneType, out ushort defiledGrassType, out ushort defiledPlantType, out ushort defiledSandType, out ushort _, out ushort _, out ushort defilediceType);
+            tasks.Insert(genIndex + 1, new PassLegacy("Finding Spots For Spikes", (GenerationProgress progress, GameConfiguration _) => {
+				for (int index = 0; index < Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge.Count; index++) {
+                    int minX = Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge[index];
+                    int maxX = Defiled_Wastelands_Alt_Biome.defiledWastelandsEastEdge[index];
+                    int tilesSinceSpike = 0;
+                    for (int i = minX; i <= maxX; i++) {
+                        int heightSinceSurface = 0;
+                        bool canSpike = true;
+                        for (int j = 1; j < Main.maxTilesY; j++) {
+                            if (Main.tile[i, j].HasTile && !(Main.tile[i, j].IsHalfBlock || Main.tile[i, j].Slope != SlopeID.None)) {
+                                if (Main.tile[i, j].TileType == TileID.Plants) {
+                                    Main.tile[i, j].TileType = defiledPlantType;
+                                }
+                                if (Main.tile[i, j].TileType == TileID.Grass) {
+                                    Main.tile[i, j].TileType = defiledGrassType;
+								}
+								if (canSpike && (Main.tile[i, j].TileType == defiledStoneType
+                                    || Main.tile[i, j].TileType == defiledGrassType
+                                    || Main.tile[i, j].TileType == defiledSandType
+                                    || Main.tile[i, j].TileType == defilediceType
+                                    || Main.tile[i, j].TileType == TileID.SnowBlock)) {
+                                    if (genRand.Next(0, 10 + EvilSpikes.Count) <= tilesSinceSpike / 5) {
+                                        EvilSpikes.Add((new Point(i, j), genRand.Next(9, 18) + tilesSinceSpike / 5));
+                                        tilesSinceSpike = -15;
+                                        canSpike = false;
+                                    } else {
+                                        tilesSinceSpike++;
+                                    }
+                                }
+								if (++heightSinceSurface > 30) {
+                                    break;
+								}
+                            }
+                        }
+                    }
+                }
+                if (EvilSpikes.Count > 0) {
+                    Mod.Logger.Info($"Adding {EvilSpikes.Count} Evil Spikes");
+                }
+                crimson = true;
+            }));
+            genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
+            tasks.Insert(genIndex + 1, new PassLegacy("Placing Spikes", (GenerationProgress progress, GameConfiguration _) => {
+                while (EvilSpikes.Count > 0) {
+                    (Point pos, int size) i = EvilSpikes[0];
+                    Point p = i.pos;
+                    EvilSpikes.RemoveAt(0);
+                    Vector2 vel = -GetTileDirs(p.X, p.Y).TakeAverage();
+                    if (vel.Length() == 0f) {
+                        vel = genRand.NextVector2Circular(0.5f, 0.5f);
+                    } else {
+                        vel = vel.RotatedByRandom(0.75f, genRand);
+                    }
+                    //TestRunners.SpikeRunner(p.X, p.Y, duskStoneID, vel, i.Item2, randomtwist: true);
+                    double size = i.size * 0.25;
+                    if (genRand.NextBool(5)) {
+                        size += 6;
+                        Vector2 tempPos = new Vector2(p.X, p.Y);
+                        while (Main.tile[(int)tempPos.X, (int)tempPos.Y].HasTile && Main.tileSolid[Main.tile[(int)tempPos.X, (int)tempPos.Y].TileType]) {
+                            tempPos += vel;
+                        }
+                        tempPos -= vel * 3;
+                        p = tempPos.ToPoint();
+                        //p = new Point(p.X+(int)(vel.X*18),p.Y+(int)(vel.Y*18));
+                    }
+                    bool twist = genRand.NextBool();
+                    GenRunners.SmoothSpikeRunner(p.X, p.Y, size, defiledStoneType, vel, decay: genRand.NextFloat(0.15f, 0.35f), twist: twist ? genRand.NextFloat(-0.05f, 0.05f) : 1f, randomtwist: !twist, cutoffStrength: 1.5);
+                }
+            }));
             tasks.Add(new PassLegacy("Stone Mask", (GenerationProgress progress, GameConfiguration _) => {
                 int i = 0;
 				while (i < 100) {
