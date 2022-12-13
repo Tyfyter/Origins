@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿#define tentacleDamage
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
@@ -69,12 +70,12 @@ namespace Origins.NPCs.Riven {
 
                 case 2:
                 NPC.lifeMax = 2700 / 2;
-				NPC.damage = 23;
+				NPC.damage = 36;
 				break;
 
                 case 3:
                 NPC.lifeMax = 3600 / 3;
-				NPC.damage = 23;
+				NPC.damage = 49;
 				break;
             }
 		}
@@ -610,6 +611,30 @@ namespace Origins.NPCs.Riven {
 			NPC.width = NPC.height = 24;
 			NPC.hide = true;
 		}
+		public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
+			switch (Primordial_Amoeba.DifficultyMult) {
+				case 1:
+#if tentacleDamage
+				NPC.damage = 13;
+#endif
+				NPC.defense = 8;
+				break;
+
+				case 2:
+#if tentacleDamage
+				NPC.damage = 17;
+#endif
+				NPC.defense = 10;
+				break;
+
+				case 3:
+#if tentacleDamage
+				NPC.damage = 20;
+#endif
+				NPC.defense = 12;
+				break;
+			}
+		}
 		public override void AI() {
 			NPC tentacleNPC = Main.npc[(int)NPC.ai[0]];
 			if (!tentacleNPC.active) {
@@ -621,7 +646,9 @@ namespace Origins.NPCs.Riven {
 			NPC.realLife = (int)NPC.ai[0];
 			NPC.life = NPC.lifeMax;
 			NPC bodyNPC = Main.npc[Primordial_Amoeba.npcIndex];
-			NPC.Center = tentacleNPC.Center + (bodyNPC.Center - tentacleNPC.Center) * NPC.ai[1];
+			Vector2 diff = tentacleNPC.Center + (bodyNPC.Center - tentacleNPC.Center);
+			diff -= diff.WithMaxLength(64);
+			NPC.Center = diff * NPC.ai[1];
 		}
 		public override bool? CanBeHitByProjectile(Projectile projectile) {
 			return
