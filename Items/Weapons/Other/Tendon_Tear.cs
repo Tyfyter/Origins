@@ -18,12 +18,12 @@ namespace Origins.Items.Weapons.Other {
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Musket);
-            Item.damage = 6;
+            Item.damage = 18;
             Item.crit = -2;
-            Item.useAnimation = 10;
-            Item.useTime = 10;
-            Item.width = 70;
-            Item.height = 26;
+            Item.useAnimation = 38;
+            Item.useTime = 38;
+            Item.width = 86;
+            Item.height = 22;
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             int i = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);

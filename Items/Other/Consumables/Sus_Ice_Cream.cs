@@ -1,15 +1,13 @@
 ﻿using Origins.Items.Materials;
 using Origins.NPCs.Riven;
-using Origins.Projectiles.Misc;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
     public class Sus_Ice_Cream : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Sus_Ice_Cream");
+			DisplayName.SetDefault("Suspicious Looking Ice Cream");
 			Tooltip.SetDefault("Summons the Primordial Amoeba");
 
 			SacrificeTotal = 3;
