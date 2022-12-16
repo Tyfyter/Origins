@@ -181,6 +181,7 @@ namespace Origins.NPCs {
 					pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Sword>(), 1);
 					pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Bow>(), 1);
 					pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Pistol>(), 1);
+					pool.Add(ModContent.NPCType<Fiberglass.Fiberglass_Weaver>(), 0.025f);
 				}
 				pool[0] = 0;
 				return;

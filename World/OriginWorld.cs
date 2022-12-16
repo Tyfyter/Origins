@@ -159,6 +159,7 @@ namespace Origins {
 			}
         }
         public void FrameFiberglass() {
+            return;
             fiberglassNeedsFraming = false;
             Point fiberglassMin = this.fiberglassMin;
             Point fiberglassMax = this.fiberglassMax;
