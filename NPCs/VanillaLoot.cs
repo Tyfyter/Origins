@@ -89,8 +89,8 @@ namespace Origins.NPCs {
 				case NPCID.AngryBonesBig:
 				case NPCID.AngryBonesBigMuscle:
 				case NPCID.AngryBonesBigHelmet:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolter>(), 9));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 8));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolter>(), 41));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 32));
 				break;
 				case NPCID.RedDevil:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Burning_Ember>(), 15));

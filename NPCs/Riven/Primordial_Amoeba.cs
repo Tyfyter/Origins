@@ -64,17 +64,17 @@ namespace Origins.NPCs.Riven {
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
 			switch (DifficultyMult) {
                 case 1:
-                NPC.lifeMax = 1800;
+                NPC.lifeMax = (int)(1800 * bossLifeScale);
 				NPC.damage = 23;
 				break;
 
                 case 2:
-                NPC.lifeMax = 2700 / 2;
+                NPC.lifeMax = (int)(2700 * bossLifeScale) / 2;
 				NPC.damage = 36;
 				break;
 
                 case 3:
-                NPC.lifeMax = 3600 / 3;
+                NPC.lifeMax = (int)(3600 * bossLifeScale) / 3;
 				NPC.damage = 49;
 				break;
             }
@@ -397,19 +397,19 @@ namespace Origins.NPCs.Riven {
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
 			switch (Primordial_Amoeba.DifficultyMult) {
 				case 1:
-				NPC.lifeMax = 800;
+				NPC.lifeMax = (int)(800 * bossLifeScale);
 				NPC.damage = 13;
 				NPC.defense = 8;
 				break;
 
 				case 2:
-				NPC.lifeMax = 1000 / 2;
+				NPC.lifeMax = (int)(1000 * bossLifeScale) / 2;
 				NPC.damage = 17;
 				NPC.defense = 10;
 				break;
 
 				case 3:
-				NPC.lifeMax = 1200 / 3;
+				NPC.lifeMax = (int)(1200 * bossLifeScale) / 3;
 				NPC.damage = 20;
 				NPC.defense = 12;
 				break;

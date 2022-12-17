@@ -43,6 +43,7 @@ namespace Origins.NPCs.Defiled {
         }
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;
+        public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Amalgamation");
             Main.npcFrameCount[NPC.type] = 8;
@@ -53,6 +54,7 @@ namespace Origins.NPCs.Defiled {
             };
             NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
             NPCID.Sets.CantTakeLunchMoney[Type] = true;
+            ID = Type;
         }
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.Zombie);
@@ -76,19 +78,19 @@ namespace Origins.NPCs.Defiled {
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
 			switch (DifficultyMult) {
                 case 1:
-                NPC.lifeMax = 2400;
+                NPC.lifeMax = (int)(2400 * bossLifeScale);
                 NPC.defense = 14;
                 NPC.damage = 60;
                 break;
 
                 case 2:
-                NPC.lifeMax = 3840 / 2;
+                NPC.lifeMax = (int)(3840 * bossLifeScale) / 2;
                 NPC.defense = 15;
                 NPC.damage = 75;
                 break;
 
                 case 3:
-                NPC.lifeMax = 6144 / 3;
+                NPC.lifeMax = (int)(6144 * bossLifeScale) / 3;
                 NPC.defense = 16;
                 NPC.damage = 90;
                 break;
@@ -386,6 +388,11 @@ namespace Origins.NPCs.Defiled {
             NPC.alpha = NPC.noTileCollide ? 75 : 0;
         }
         public void CheckTrappedCollision() {
+			if (NPC.position.Y > Main.UnderworldLayer * 16) {
+                NPC.noTileCollide = false;
+                trappedTime = 30;
+                return;
+			}
             if (Collision.IsClearSpotTest(NPC.position + new Vector2(16), 16f, NPC.width - 32, NPC.height - 32, checkSlopes: true)) {
                 NPC.noTileCollide = false;
             }
@@ -398,7 +405,17 @@ namespace Origins.NPCs.Defiled {
                 trappedTime--;
             }
         }
-		public override void FindFrame(int frameHeight) {
+        public override bool? CanFallThroughPlatforms() {
+			if ((int)NPC.ai[0] == 3) {
+                int cycleLength = 100 - (DifficultyMult * 4);
+                int dashLength = 60 - (DifficultyMult * 2);
+                int activeLength = cycleLength * 2 + dashLength;
+                return NPC.ai[1] <= activeLength;
+            }
+            return true;
+        }
+
+        public override void FindFrame(int frameHeight) {
             int cycleLength = 100 - (DifficultyMult * 4);
             int dashLength = 60 - (DifficultyMult * 2);
             int activeLength = cycleLength * 2 + dashLength;
@@ -489,6 +506,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float lifePercent, ref float shieldPercent) {
             NPC owner = Main.npc[info.npcIndexToAimAt];
+            if (owner.type != Defiled_Amalgamation.ID) return false;
             if (!owner.active || owner.life <= 0) return null;
 
             int tickCount = 10 - Defiled_Amalgamation.DifficultyMult * 2;
