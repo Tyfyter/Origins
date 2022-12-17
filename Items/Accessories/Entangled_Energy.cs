@@ -19,6 +19,7 @@ namespace Origins.Items.Accessories {
             Item.accessory = true;
             Item.rare = ItemRarityID.Master;
             Item.master = true;
+            Item.value = Item.buyPrice(gold: 5);
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().entangledEnergy = true;

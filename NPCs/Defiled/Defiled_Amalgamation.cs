@@ -78,9 +78,9 @@ namespace Origins.NPCs.Defiled {
             NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(-1f, -0.75f);
             NPC.noGravity = true;
             NPC.npcSlots = 200;
-            NPC.value = 10000;
             Music = Origins.Music.DefiledBoss;
             NPC.knockBackResist = 0;// actually a multiplier
+            NPC.value = Item.buyPrice(gold: 5);
         }
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
 			switch (DifficultyMult) {

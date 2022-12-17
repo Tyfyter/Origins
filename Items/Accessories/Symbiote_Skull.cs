@@ -13,6 +13,7 @@ namespace Origins.Items.Accessories {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Aglet);
             Item.rare = ItemRarityID.Blue;
+            Item.value = Item.buyPrice(gold: 2);
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().symbioteSkull = true;

@@ -17,6 +17,7 @@ namespace Origins.Items.Accessories {
             Item.height = 30;
             Item.rare = ItemRarityID.Blue;
             Item.glowMask = glowmask;
+            Item.value = Item.buyPrice(gold: 1);
         }
         public override void UpdateEquip(Player player) {
             player.thorns += 0.75f;

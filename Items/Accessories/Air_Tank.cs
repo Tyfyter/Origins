@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
             Item.handOffSlot = -1;
             Item.handOnSlot = -1;
             Item.rare = ItemRarityID.LightRed;
+            Item.value = Item.buyPrice(gold: 2);
         }
         public override void UpdateEquip(Player player) {
             player.buffImmune[BuffID.Suffocation] = true;

@@ -23,6 +23,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Expert;
 			Item.expert = true;
 			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.value = Item.buyPrice(gold: 2);
 		}
 		public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

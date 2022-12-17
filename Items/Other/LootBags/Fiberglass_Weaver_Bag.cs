@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Origins.Items.Other.LootBags {
 	public class Fiberglass_Weaver_Bag : ModItem {
@@ -24,6 +25,7 @@ namespace Origins.Items.Other.LootBags {
 			itemLoot.Add(Fiberglass_Weaver.normalDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Dagger>()));
 			itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Entangled_Energy>()));
+			itemLoot.Add(ItemDropRule.Coins(Item.buyPrice(gold: 3), false));
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
 			itemGroup = ContentSamples.CreativeHelper.ItemGroup.BossBags;

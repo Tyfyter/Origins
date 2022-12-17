@@ -26,6 +26,7 @@ namespace Origins.Items.Accessories {
 			Item.useTime = Item.useAnimation = 30;
 			Item.shoot = ModContent.ProjectileType<Parasitic_Influence_Tentacle>();
 			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.buyPrice(gold: 1);
 		}
 		public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

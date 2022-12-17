@@ -18,6 +18,7 @@ namespace Origins.Items.Accessories {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
+            Item.CloneDefaults(ItemID.WarriorEmblem);
             Item.accessory = true;
             Item.width = 28;
             Item.height = 28;

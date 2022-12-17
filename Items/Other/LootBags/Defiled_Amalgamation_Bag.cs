@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria;
 
 namespace Origins.Items.Other.LootBags {
 	public class Defiled_Amalgamation_Bag : ModItem {
@@ -23,6 +24,7 @@ namespace Origins.Items.Other.LootBags {
 			itemLoot.Add(Defiled_Amalgamation.normalDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Reshaping_Chunk>()));
 			itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Mysterious_Spray>()));
+			itemLoot.Add(ItemDropRule.Coins(Item.buyPrice(gold:3), false));
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
 			itemGroup = ContentSamples.CreativeHelper.ItemGroup.BossBags;

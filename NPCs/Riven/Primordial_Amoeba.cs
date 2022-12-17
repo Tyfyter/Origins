@@ -64,10 +64,10 @@ namespace Origins.NPCs.Riven {
             NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			NPC.npcSlots = 200;
-            NPC.value = 10000;
             Music = Origins.Music.RivenBoss;
             NPC.knockBackResist = 0f;// actually a multiplier
-        }
+			NPC.value = Item.buyPrice(gold: 5);
+		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
 			switch (DifficultyMult) {
                 case 1:
@@ -115,7 +115,7 @@ namespace Origins.NPCs.Riven {
 
 			npcLoot.Add(new DropBasedOnExpertMode(
 				normalDropRule,
-				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Defiled_Amalgamation_Bag>(), 1, 1, 1, null)
+				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Primordial_Amoeba_Bag>(), 1, 1, 1, null)
 			));
 		}
 		public override bool PreAI() {

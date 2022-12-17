@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
             Item.height = 20;
             Item.rare = ItemRarityID.Master;
             Item.master = true;
+            Item.value = Item.buyPrice(gold: 5);
         }
 		public override void UpdateAccessory(Player player, bool hideVisual) {
             int factor = (int)(30 / ((player.statLife / (float)player.statLifeMax2) * 3.5f + 0.5f));

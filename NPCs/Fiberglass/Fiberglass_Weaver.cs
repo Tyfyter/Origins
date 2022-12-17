@@ -52,6 +52,7 @@ namespace Origins.NPCs.Fiberglass {
             NPC.aiStyle = 0;
             NPC.width = NPC.height = 68;
             NPC.knockBackResist = 0.1f;
+            NPC.value = Item.buyPrice(gold: 3);
         }
 		public override void OnSpawn(IEntitySource source) {
             if (legs is null) {
@@ -231,7 +232,7 @@ namespace Origins.NPCs.Fiberglass {
             
             npcLoot.Add(new DropBasedOnExpertMode(
                 normalDropRule,
-                new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Defiled_Amalgamation_Bag>(), 1, 1, 1, null)
+                new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Fiberglass_Weaver_Bag>(), 1, 1, 1, null)
             ));
             //npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>(), 1));
             //npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>(), 1));
