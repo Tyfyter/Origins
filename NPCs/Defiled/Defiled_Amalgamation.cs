@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Vanity.Other.BossMasks;
 using Origins.Items.Materials;
+using Origins.Items.Other.LootBags;
 using Origins.Items.Weapons.Defiled;
+using Origins.LootConditions;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Defiled;
@@ -41,8 +44,12 @@ namespace Origins.NPCs.Defiled {
                 return inactiveTime;
             }
         }
-		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
-		//bool attacking = false;
+        //public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
+        //bool attacking = false;
+        internal static IItemDropRule normalDropRule;
+        public override void Unload() {
+            normalDropRule = null;
+        }
         public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Defiled Amalgamation");
@@ -119,15 +126,19 @@ namespace Origins.NPCs.Defiled {
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            IItemDropRuleCondition notExpert = new Conditions.NotExpert();
-            IItemDropRuleCondition expert = new Conditions.IsExpert();
-            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Defiled_Ore_Item>(), 1, 140, 330));
-            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1, 40, 100));
-            npcLoot.Add(new LeadingConditionRule(notExpert).WithOnSuccess(
-                ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>())
+            normalDropRule = new LeadingSuccessRule();
+
+            normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Defiled_Ore_Item>(), 1, 140, 330));
+            normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Undead_Chunk>(), 1, 40, 100));
+            normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>()));
+            
+            normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<DA_Trophy_Item>(), 10));
+            normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<DA_Mask>(), 10));
+
+            npcLoot.Add(new DropBasedOnExpertMode(
+                normalDropRule, 
+                new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Defiled_Amalgamation_Bag>(), 1, 1, 1, null)
             ));
-            //npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1));
-            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<DA_Trophy_Item>(), 10));
         }
         public override void AI() {
             NPC.TargetClosest();

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Armor.Fiberglass;
+using Origins.Items.Other.LootBags;
 using Origins.Items.Weapons.Fiberglass;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace Origins.NPCs.Fiberglass {
         public static AutoCastingAsset<Texture2D> LowerLegTexture { get; private set; }
         Arm[] legs;
         Vector2[] legTargets;
-        static IItemDropRule normalDropRule;
+        internal static IItemDropRule normalDropRule;
         const float upperLegLength = 70.1f;
         const float lowerLegLength = 76f;
         const float totalLegLength = upperLegLength + lowerLegLength;
@@ -38,6 +39,7 @@ namespace Origins.NPCs.Fiberglass {
 		public override void Unload() {
             UpperLegTexture = null;
             LowerLegTexture = null;
+            normalDropRule = null;
         }
 		public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.PossessedArmor);
@@ -226,9 +228,10 @@ namespace Origins.NPCs.Fiberglass {
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             normalDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>());
             normalDropRule.OnSuccess(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>()));
+            
             npcLoot.Add(new DropBasedOnExpertMode(
                 normalDropRule,
-                new DropLocalPerClientAndResetsNPCMoneyTo0(ItemID.BossBagDarkMage, 1, 1, 1, null)
+                new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Defiled_Amalgamation_Bag>(), 1, 1, 1, null)
             ));
             //npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>(), 1));
             //npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>(), 1));

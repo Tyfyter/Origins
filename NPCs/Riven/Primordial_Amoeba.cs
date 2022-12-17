@@ -2,8 +2,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Vanity.Other.BossMasks;
 using Origins.Items.Materials;
+using Origins.Items.Other.LootBags;
 using Origins.Items.Weapons.Defiled;
+using Origins.LootConditions;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Defiled;
@@ -31,6 +34,10 @@ namespace Origins.NPCs.Riven {
 		public override string BossHeadTexture => "Origins/UI/BossMap/Map_Icon_DA";
 		internal static int npcIndex;
         public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
+		internal static IItemDropRule normalDropRule;
+		public override void Unload() {
+			normalDropRule = null;
+		}
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Primordial Amoeba");
             NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
@@ -96,16 +103,21 @@ namespace Origins.NPCs.Riven {
             });
 		}
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            IItemDropRuleCondition notExpert = new Conditions.NotExpert();
-            IItemDropRuleCondition expert = new Conditions.IsExpert();
-            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Infested_Ore_Item>(), 1, 140, 330));
-            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Riven_Sample>(), 1, 40, 100));
-            npcLoot.Add(new LeadingConditionRule(notExpert).WithOnSuccess(
-                ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>())
-            ));
-            //npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<Undead_Chunk>(), 1));
-            npcLoot.Add(ItemDropRule.ByCondition(notExpert, ModContent.ItemType<DA_Trophy_Item>(), 10));
-        }
+
+			normalDropRule = new LeadingSuccessRule();
+
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Infested_Ore_Item>(), 1, 140, 330));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Riven_Sample>(), 1, 40, 100));
+			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>()));
+
+			//normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PA_Trophy_Item>(), 10));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PA_Mask>(), 10));
+
+			npcLoot.Add(new DropBasedOnExpertMode(
+				normalDropRule,
+				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Defiled_Amalgamation_Bag>(), 1, 1, 1, null)
+			));
+		}
 		public override bool PreAI() {
 			const bool useVanillaAI = false;
 			int tentacleID = Primordial_Amoeba_Tentacle.ID;

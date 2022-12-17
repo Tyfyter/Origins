@@ -45,6 +45,21 @@ namespace Origins.LootConditions {
 			}
 		}
 	}
+	public class LeadingSuccessRule : IItemDropRule {
+		public List<IItemDropRuleChainAttempt> ChainedRules { get; }
+		public LeadingSuccessRule() {
+			ChainedRules = new List<IItemDropRuleChainAttempt>();
+		}
+		public bool CanDrop(DropAttemptInfo info) => true;
+		public void ReportDroprates(List<DropRateInfo> drops, DropRateInfoChainFeed ratesInfo) {
+			Chains.ReportDroprates(ChainedRules, 1f, drops, ratesInfo);
+		}
+		public ItemDropAttemptResult TryDroppingItem(DropAttemptInfo info) {
+			ItemDropAttemptResult result = default(ItemDropAttemptResult);
+			result.State = ItemDropAttemptResultState.Success;
+			return result;
+		}
+	}
 	public class IsWorldEvil : IItemDropRuleCondition {
 		int worldEvil;
 		public IsWorldEvil(int worldEvil) {
