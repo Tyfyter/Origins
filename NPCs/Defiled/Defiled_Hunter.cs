@@ -58,7 +58,6 @@ namespace Origins.NPCs.Defiled {
                 NPC.FaceTarget();
                 NPC.spriteDirection = NPC.direction;
             }
-            Main.LocalPlayer.chatOverhead.NewMessage(Mana+"", 5);
             return true;
         }
 		public override void OnSpawn(IEntitySource source) {

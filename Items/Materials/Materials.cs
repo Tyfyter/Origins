@@ -546,6 +546,19 @@ namespace Origins.Items.Materials {
             recipe.AddIngredient(this, 5);
             recipe.AddTile(TileID.Hellforge);
             recipe.Register();
+
+            recipe = Recipe.Create(ItemID.VoidVault);
+            recipe.AddIngredient(ItemID.Bone, 15);
+            recipe.AddIngredient(ItemID.JungleSpores, 8);
+            recipe.AddIngredient(this, 15);
+            recipe.AddTile(TileID.DemonAltar);
+            recipe.Register();
+            recipe = Recipe.Create(ItemID.VoidLens);
+            recipe.AddIngredient(ItemID.Bone, 30);
+            recipe.AddIngredient(ItemID.JungleSpores, 15);
+            recipe.AddIngredient(this, 30);
+            recipe.AddTile(TileID.DemonAltar);
+            recipe.Register();
         }
     }
         public class Rotor : ModItem {
@@ -743,6 +756,19 @@ namespace Origins.Items.Materials {
             recipe.AddIngredient(ItemID.Obsidian, 20);
             recipe.AddIngredient(this, 5);
             recipe.AddTile(TileID.Hellforge);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.VoidVault);
+            recipe.AddIngredient(ItemID.Bone, 15);
+            recipe.AddIngredient(ItemID.JungleSpores, 8);
+            recipe.AddIngredient(this, 15);
+            recipe.AddTile(TileID.DemonAltar);
+            recipe.Register();
+            recipe = Recipe.Create(ItemID.VoidLens);
+            recipe.AddIngredient(ItemID.Bone, 30);
+            recipe.AddIngredient(ItemID.JungleSpores, 15);
+            recipe.AddIngredient(this, 30);
+            recipe.AddTile(TileID.DemonAltar);
             recipe.Register();
         }
     }
