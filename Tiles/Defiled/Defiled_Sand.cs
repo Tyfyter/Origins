@@ -29,6 +29,7 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(175, 175, 175));
 			//SetModTree(Defiled_Tree.Instance);
             mergeID = TileID.Sand;
+			AddDefiledTile();
 		}
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			if (WorldGen.noTileActions)

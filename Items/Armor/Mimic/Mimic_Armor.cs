@@ -115,7 +115,6 @@ namespace Origins.Items.Armor.Mimic {
 		}
 		public override void SetDefaults() {
 			Item.defense = 11;
-			Item.wornArmor = true;
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {

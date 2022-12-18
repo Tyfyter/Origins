@@ -20,6 +20,9 @@ namespace Origins.Layers {
             Player drawPlayer = drawInfo.drawPlayer;
             float num77 = drawPlayer.itemRotation + MathHelper.PiOver4 * drawPlayer.direction;
             Item item = drawPlayer.inventory[drawPlayer.selectedItem];
+            if (item?.ModItem is null) {
+                return;
+            }
             Texture2D itemTexture = TextureAssets.Item[item.type].Value;
             AnimatedModItem aItem = (AnimatedModItem)item.ModItem;
             Rectangle frame = aItem.Animation.GetFrame(itemTexture);

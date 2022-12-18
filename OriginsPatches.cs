@@ -61,8 +61,8 @@ namespace Origins {
 		void ApplyPatches() {
             On.Terraria.NPC.UpdateCollision += (orig, self) => {
                 int realID = self.type;
-                if (self.ModNPC is ISandsharkNPC shark) {
-                    self.type = NPCID.SandShark;
+                if (self.ModNPC is ICustomCollisionNPC shark) {
+                    if(shark.IsSandshark) self.type = NPCID.SandShark;
                     try {
                         shark.PreUpdateCollision();
                         orig(self);
@@ -72,7 +72,7 @@ namespace Origins {
                     self.type = realID;
                     return;
                 }
-                ITileCollideNPC tcnpc = self.ModNPC as ITileCollideNPC;
+                IAltTileCollideNPC tcnpc = self.ModNPC as IAltTileCollideNPC;
                 self.type = tcnpc?.CollisionType ?? realID;
                 orig(self);
                 self.type = realID;

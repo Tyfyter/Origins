@@ -34,6 +34,7 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(200, 200, 200));
 			//SetModTree(Defiled_Tree.Instance);
             ItemDrop = ItemID.DirtBlock;
+            AddDefiledTile();
 		}
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
             fail = true;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Defiled;
+using Origins.Tiles.Defiled;
 using System;
 using System.IO;
 using Terraria;
@@ -102,5 +103,5 @@ namespace Origins.NPCs.Defiled {
         public override void ReceiveExtraAI(BinaryReader reader) {
             Mana = reader.ReadSingle();
         }
-    }
+	}
 }

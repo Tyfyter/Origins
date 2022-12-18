@@ -87,19 +87,19 @@ namespace Origins.NPCs.Defiled {
                 case 1:
                 NPC.lifeMax = (int)(2400 * bossLifeScale);
                 NPC.defense = 14;
-                NPC.damage = 60;
+                NPC.damage = 43;
                 break;
 
                 case 2:
                 NPC.lifeMax = (int)(3840 * bossLifeScale) / 2;
                 NPC.defense = 15;
-                NPC.damage = 75;
+                NPC.damage = 60;
                 break;
 
                 case 3:
                 NPC.lifeMax = (int)(6144 * bossLifeScale) / 3;
                 NPC.defense = 16;
-                NPC.damage = 90;
+                NPC.damage = 75;
                 break;
             }
 		}
@@ -142,7 +142,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void AI() {
             NPC.TargetClosest();
-            if (NPC.HasPlayerTarget) {
+            if (NPC.HasPlayerTarget && Main.player[NPC.target].active && !Main.player[NPC.target].dead) {
                 Player target = Main.player[NPC.target];
                 float leftArmTarget = 0.5f;
                 float rightArmTarget = 0.25f;
@@ -161,15 +161,18 @@ namespace Origins.NPCs.Defiled {
                         float targetHeight = 96 + (float)(Math.Sin(++time * (0.04f + (0.01f * difficultyMult))) + 0.5f) * 32 * difficultyMult;
                         float targetX = 256 + (float)Math.Sin(++time * (0.02f + (0.01f * difficultyMult))) * 48 * difficultyMult;
                         float speed = 5;
+                        float accelerationMult = 1f;
 
                         float diffY = NPC.Bottom.Y - (target.MountedCenter.Y - targetHeight);
                         float diffX = NPC.Center.X - target.MountedCenter.X;
                         diffX -= Math.Sign(diffX) * targetX;
-						if (NPC.DistanceSQ(target.MountedCenter) > 640 * 640) {
-                            speed *= 5;
-						}
-                        OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), (Math.Abs(NPC.velocity.Y) > 16 ? 4 : 0.4f));
-                        OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), (Math.Abs(NPC.velocity.X) > 16 ? 4 : 0.4f));
+                        float dist = NPC.DistanceSQ(target.MountedCenter);
+						if (dist > 640 * 640) {
+                            accelerationMult = 1 + ((dist / (640 * 640)) - 1) * 3;
+                            speed *= accelerationMult;
+                        }
+                        OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), (Math.Abs(NPC.velocity.Y) > 16 ? 4 : 0.4f) * accelerationMult);
+                        OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), (Math.Abs(NPC.velocity.X) > 16 ? 4 : 0.4f) * accelerationMult);
 
                         if (NPC.ai[0] <= 0) {
                             NPC.ai[1] += 0.75f + (0.25f * difficultyMult);
@@ -395,11 +398,19 @@ namespace Origins.NPCs.Defiled {
                 OriginExtensions.AngularSmoothing(ref leftArmRot, leftArmTarget, armSpeed * 1.5f);
 			} else {
                 NPC.EncourageDespawn(10);
+                if (++trappedTime > 30) {
+                    NPC.noTileCollide = true;
+                }
+                float leftArmTarget = 0f;
+                float rightArmTarget = 0f;
+                float armSpeed = 0.09f;
+                OriginExtensions.AngularSmoothing(ref rightArmRot, rightArmTarget, armSpeed);
+                OriginExtensions.AngularSmoothing(ref leftArmRot, leftArmTarget, armSpeed * 1.5f);
             }
             NPC.alpha = NPC.noTileCollide ? 75 : 0;
         }
         public void CheckTrappedCollision() {
-			if (NPC.position.Y > Main.UnderworldLayer * 16) {
+			if (NPC.position.Y > Main.UnderworldLayer * 16 && NPC.HasValidTarget) {
                 NPC.noTileCollide = false;
                 trappedTime = 30;
                 return;
@@ -427,6 +438,11 @@ namespace Origins.NPCs.Defiled {
         }
 
         public override void FindFrame(int frameHeight) {
+			if (!NPC.HasValidTarget) {
+                NPC.frame = new Rectangle(0, (frameHeight * 7) % (frameHeight * 8), 122, frameHeight);
+                NPC.velocity.Y += 0.12f;
+                return;
+			}
             int cycleLength = 100 - (DifficultyMult * 4);
             int dashLength = 60 - (DifficultyMult * 2);
             int activeLength = cycleLength * 2 + dashLength;
@@ -511,21 +527,32 @@ namespace Origins.NPCs.Defiled {
         }
 	}
     public class Boss_Bar_DA : ModBossBar {
+        int lifeMax;
+        int life;
+        bool isDead = false;
         float lastTickPercent = 1f;
         public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
             return Asset<Texture2D>.Empty;
         }
         public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float lifePercent, ref float shieldPercent) {
             NPC owner = Main.npc[info.npcIndexToAimAt];
-            if (owner.type != Defiled_Amalgamation.ID) return false;
-            if (!owner.active || owner.life <= 0) return null;
+            if (owner.type != Defiled_Amalgamation.ID || (lastTickPercent < 0 && isDead)) return false;
+            if (!owner.active || owner.life <= 0) {
+                isDead = true;
+                life = 0;
+            }
+            if (owner.life > 0 && owner.active) {
+                isDead = false;
+                life = owner.life;
+                lifeMax = owner.lifeMax;
+            }
 
             int tickCount = 10 - Defiled_Amalgamation.DifficultyMult * 2;
-            int tickSize = owner.lifeMax / tickCount;
-            float lifeTarget = ((owner.life + tickSize - 1) / tickSize) / (float)tickCount;
+            int tickSize = lifeMax / tickCount;
+            float lifeTarget = ((life + tickSize - 1) / tickSize) / (float)tickCount;
             OriginExtensions.LinearSmoothing(ref lastTickPercent, lifeTarget, 0.015f);
             lifePercent = lastTickPercent;
-            shieldPercent = owner.life / (float)owner.lifeMax;
+            shieldPercent = life / (float)lifeMax;
             return lifePercent > 0;
 		}
 	}

@@ -26,7 +26,8 @@ namespace Origins.Tiles.Defiled {
 			ItemDrop = ItemType<Defiled_Ice_Item>();
 			AddMapEntry(new Color(225, 225, 225));
             mergeID = TileID.IceBlock;
-		}
+            AddDefiledTile();
+        }
         public override bool CreateDust(int i, int j, ref int type) {
             type = Defiled_Wastelands.DefaultTileDust;
             return true;

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -48,6 +49,7 @@ namespace Origins.Items.Weapons.Explosives {
             Projectile.localNPCHitCooldown = 4;
             Projectile.width = 26;
             Projectile.height = 24;
+            Projectile.hide = true;
         }
         public override void AI() {
             if(Main.netMode != NetmodeID.Server) {
@@ -128,7 +130,10 @@ namespace Origins.Items.Weapons.Explosives {
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
         }
-        public override void PostDraw(Color lightColor) {
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+            behindNPCsAndTiles.Add(index);
+		}
+		public override void PostDraw(Color lightColor) {
             Main.spriteBatch.Restart(SpriteSortMode.Immediate);
             float percent = Clamp((totalDur-Projectile.timeLeft) / (float)growDur,0,1);
             float scale = 0;

@@ -20,6 +20,7 @@ namespace Origins.Projectiles.Enemies {
 			Projectile.penetrate = -1;
 			Projectile.extraUpdates = Main.rand.Next(4, 6);
 			Projectile.hide = true;
+			Projectile.timeLeft = 180;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_Parent parentSource && parentSource.Entity is NPC parentNPC) {

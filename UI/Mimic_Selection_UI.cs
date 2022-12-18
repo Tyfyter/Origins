@@ -69,6 +69,9 @@ namespace Origins.UI {
 			};
 			int boxSize = (int)(32 * Main.inventoryScale);
 			float posX = StartX;
+			if (Main.netMode == NetmodeID.MultiplayerClient) {
+				posX -= 38;
+			}
 			for (int level = 0; level < currentLevel; level++) {
 				float posY = StartY;
 				for (int i = 0; i < 3; i++) {

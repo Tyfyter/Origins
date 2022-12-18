@@ -460,6 +460,7 @@ namespace Origins {
 			Defiled_Tree.Unload();
             OriginExtensions.unInitExt();
             OriginTile.IDs = null;
+            OriginTile.DefiledTiles = null;
             OriginSystem worldInstance = ModContent.GetInstance<OriginSystem>();
             if(!(worldInstance is null)) {
                 worldInstance.defiledResurgenceTiles = null;

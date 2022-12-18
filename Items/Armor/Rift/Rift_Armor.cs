@@ -53,7 +53,6 @@ namespace Origins.Items.Armor.Rift {
         }
         public override void SetDefaults() {
             Item.defense = 10;
-            Item.wornArmor = true;
             Item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {

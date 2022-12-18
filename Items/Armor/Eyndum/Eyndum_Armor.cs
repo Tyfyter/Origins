@@ -47,7 +47,6 @@ namespace Origins.Items.Armor.Eyndum {
         }
         public override void SetDefaults() {
             Item.defense = 16;
-            Item.wornArmor = true;
             Item.rare = CrimsonRarity.ID;
         }
         public override void UpdateEquip(Player player) {

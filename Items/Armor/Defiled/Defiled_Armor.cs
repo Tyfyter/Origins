@@ -45,7 +45,6 @@ namespace Origins.Items.Armor.Defiled {
         }
         public override void SetDefaults() {
             Item.defense = 7;
-            Item.wornArmor = true;
             Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {

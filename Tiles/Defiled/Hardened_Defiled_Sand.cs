@@ -23,7 +23,8 @@ namespace Origins.Tiles.Defiled {
 			ItemDrop = ItemType<Hardened_Defiled_Sand_Item>();
 			AddMapEntry(new Color(200, 200, 200));
             mergeID = TileID.HardenedSand;
-		}
+            AddDefiledTile();
+        }
     }
     public class Hardened_Defiled_Sand_Item : ModItem {
         public override void SetStaticDefaults() {

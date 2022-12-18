@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.Tiles;
 using System;
 using System.IO;
 using Terraria;
@@ -11,13 +12,15 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Tripod : ModNPC {
+    public class Defiled_Tripod : ModNPC, ICustomCollisionNPC {
         public const float horizontalSpeed = 3.2f;
         public const float horizontalAirSpeed = 2f;
         public const float verticalSpeed = 4f;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("{$Defiled} Tripod");
             Main.npcFrameCount[NPC.type] = 4;
+            NPCID.Sets.TrailCacheLength[NPC.type] = 4;
+            NPCID.Sets.TrailingMode[NPC.type] = 1;
         }
         public override void SetDefaults() {
             NPC.CloneDefaults(NPCID.Zombie);
@@ -76,7 +79,7 @@ namespace Origins.NPCs.Defiled {
                 NPC.position.Y++;
             }
             float moveDir = Math.Sign(NPC.velocity.X);
-            float absX = moveDir==0?0:NPC.velocity.X / moveDir;
+            float absX = moveDir == 0 ? 0 : NPC.velocity.X / moveDir;
 
             if(NPC.collideY) {
                 NPC.ai[1] = 0;
@@ -168,6 +171,23 @@ namespace Origins.NPCs.Defiled {
         }
         public override void ReceiveExtraAI(BinaryReader reader) {
             Mana = reader.ReadSingle();
+        }
+        bool phasing = false;
+        public void PreUpdateCollision() {
+            if (phasing = (NPC.targetRect.Top - NPC.Bottom.Y > 0 || !NPC.collideY)) {
+                for (int i = 0; i < OriginTile.DefiledTiles.Count; i++) {
+                    Main.tileSolidTop[OriginTile.DefiledTiles[i]] = true;
+                    Main.tileSolid[OriginTile.DefiledTiles[i]] = false;
+                }
+            }
+        }
+        public void PostUpdateCollision() {
+			if (phasing) {
+                for (int i = 0; i < OriginTile.DefiledTiles.Count; i++) {
+                    Main.tileSolidTop[OriginTile.DefiledTiles[i]] = false;
+                    Main.tileSolid[OriginTile.DefiledTiles[i]] = true;
+                }
+            }
         }
     }
 }

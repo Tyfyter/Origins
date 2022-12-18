@@ -27,7 +27,8 @@ namespace Origins.Tiles.Defiled {
 			ItemDrop = ItemType<Defiled_Sandstone_Item>();
 			AddMapEntry(new Color(150, 150, 150));
             mergeID = TileID.Sandstone;
-		}
+            AddDefiledTile();
+        }
         public override bool CreateDust(int i, int j, ref int type) {
             type = Defiled_Wastelands.DefaultTileDust;
             return true;

@@ -42,7 +42,6 @@ namespace Origins.Items.Armor.Myth {
         }
         public override void SetDefaults() {
             Item.defense = 4;
-            Item.wornArmor = true;
             Item.rare = ItemRarityID.Green;
         }
         public override void UpdateEquip(Player player) {

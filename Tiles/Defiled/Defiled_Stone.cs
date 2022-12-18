@@ -25,7 +25,8 @@ namespace Origins.Tiles.Defiled {
             mergeID = TileID.Stone;
             MinPick = 65;
             MineResist = 2;
-		}
+            AddDefiledTile();
+        }
         public override bool CreateDust(int i, int j, ref int type) {
             type = Defiled_Wastelands.DefaultTileDust;
             return true;
