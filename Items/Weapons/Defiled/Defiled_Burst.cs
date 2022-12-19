@@ -11,6 +11,7 @@ namespace Origins.Items.Weapons.Defiled {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("The Kruncher");
             Tooltip.SetDefault("Very pointy");
+            Origins.FlatDamageMultiplier[Type] = 3f / 8f;
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 1;
         }

@@ -560,6 +560,39 @@ namespace Origins.World.BiomeData {
 			BiomeChestTile = ModContent.TileType<Defiled_Dungeon_Chest>();
 			BiomeChestTileStyle = 1;
 			MimicType = ModContent.NPCType<Defiled_Mimic>();
+
+			WallContext = new WallContext()
+				.AddReplacement<Walls.Defiled_Stone_Wall>(
+					WallID.Stone,
+					WallID.CaveUnsafe,
+					WallID.Cave2Unsafe,
+					WallID.Cave3Unsafe,
+					WallID.Cave4Unsafe,
+					WallID.Cave5Unsafe,
+					WallID.Cave6Unsafe,
+					WallID.Cave7Unsafe,
+					WallID.Cave8Unsafe,
+					WallID.EbonstoneUnsafe,
+					WallID.CorruptionUnsafe1,
+					WallID.CorruptionUnsafe2,
+					WallID.CorruptionUnsafe3,
+					WallID.CorruptionUnsafe4,
+					WallID.CrimstoneUnsafe,
+					WallID.CrimsonUnsafe1,
+					WallID.CrimsonUnsafe2,
+					WallID.CrimsonUnsafe3,
+					WallID.CrimsonUnsafe4
+				).AddReplacement<Walls.Defiled_Sandstone_Wall>(
+					WallID.Sandstone,
+					WallID.CorruptSandstone,
+					WallID.CrimsonSandstone,
+					WallID.HallowSandstone
+				).AddReplacement<Walls.Hardened_Defiled_Sand_Wall>(
+					WallID.HardenedSand,
+					WallID.CorruptHardenedSand,
+					WallID.CrimsonHardenedSand,
+					WallID.HallowHardenedSand
+				);
 		}
 		public override AltMaterialContext MaterialContext {
 			get {

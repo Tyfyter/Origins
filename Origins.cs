@@ -61,6 +61,8 @@ namespace Origins {
         public static ushort[] VanillaElements { get; private set; }
         static bool[] forceFelnumShockOnShoot;
         public static bool[] ForceFelnumShockOnShoot { get => forceFelnumShockOnShoot; }
+        static float[] flatDamageMultiplier;
+        public static float[] FlatDamageMultiplier { get => flatDamageMultiplier; }
         public static ModKeybind SetBonusTriggerKey { get; private set; }
         public static ModKeybind InspectItemKey { get; private set; }
         #region Armor IDs
@@ -191,10 +193,6 @@ namespace Origins {
             DamageModOnHit[ProjectileID.HoneyBomb] = true;
             DamageModOnHit[ProjectileID.ScarabBomb] = true;
             forceFelnumShockOnShoot = new bool[ProjectileLoader.ProjectileCount];
-            NonFishItem.ResizeArrays += () => {
-                Array.Resize(ref DamageModOnHit, ProjectileLoader.ProjectileCount);
-                Array.Resize(ref forceFelnumShockOnShoot, ProjectileLoader.ProjectileCount);
-            };
             #region vanilla weapon elements
             VanillaElements = ItemID.Sets.Factory.CreateUshortSet(0,
             #region fire
@@ -441,6 +439,7 @@ namespace Origins {
             DamageModOnHit = null;
             VanillaElements = null;
             forceFelnumShockOnShoot = null;
+            flatDamageMultiplier = null;
             celestineBoosters = null;
             perlinFade0 = null;
             blackHoleShade = null;
@@ -523,6 +522,13 @@ namespace Origins {
                 LeggingGlowMasks.Add(armorID, asset);
             }
         }
+        internal static void ResizeArrays() {
+            Array.Resize(ref DamageModOnHit, ProjectileLoader.ProjectileCount);
+            Array.Resize(ref forceFelnumShockOnShoot, ProjectileLoader.ProjectileCount);
+            flatDamageMultiplier = new SetFactory(ItemLoader.ItemCount).CreateFloatSet(1f,
+                ItemID.Minishark, 3f/8f
+            );
+        }
         public static class Music {
             public static int Dusk = MusicID.PumpkinMoon;
             public static int Defiled = MusicID.Corruption;
@@ -550,13 +556,4 @@ namespace Origins {
 			};
 		}
 	}
-    public sealed class NonFishItem : ModItem {
-        public override string Texture => "Terraria/Images/Item_2290";
-        public static event Action ResizeArrays;
-        public override bool IsQuestFish() {
-            if (ResizeArrays is not null) ResizeArrays();
-            ResizeArrays = null;
-            return false;
-        }
-    }
 }

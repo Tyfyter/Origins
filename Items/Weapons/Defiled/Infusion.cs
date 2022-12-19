@@ -15,6 +15,7 @@ namespace Origins.Items.Weapons.Defiled {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Infusion");
 			Tooltip.SetDefault("");
+			Origins.FlatDamageMultiplier[Type] = 2f / 8f;
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}

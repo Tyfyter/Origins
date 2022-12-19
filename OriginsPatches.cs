@@ -188,6 +188,13 @@ namespace Origins {
             );*/
 			IL.Terraria.WorldGen.PlantAlch += WorldGen_PlantAlch;
             On.Terraria.WorldGen.ShakeTree += WorldGen_ShakeTree;
+            HookEndpointManager.Add(
+                typeof(MC).GetMethod("ResizeArrays", BindingFlags.NonPublic | BindingFlags.Static),
+				(Action<bool> orig, bool unloading) => {
+                    orig(unloading);
+                    if (!unloading) Origins.ResizeArrays();
+				}
+            );
         }
 
 		private void WorldGen_PlantAlch(ILContext il) {

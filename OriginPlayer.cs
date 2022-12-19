@@ -608,6 +608,7 @@ namespace Origins {
             if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
                 damage.Flat += Player.statDefense / 2;
             }
+            damage.Flat *= Origins.FlatDamageMultiplier[item.type];
         }
         /// <param name="target">the potential target</param>
         /// <param name="targetPriorityMultiplier"></param>
@@ -642,6 +643,12 @@ namespace Origins {
                         explosiveSelfDamage -= 0.2f;
                         float inverseDamage = Player.GetDamage(DamageClasses.Explosive).ApplyTo(damage);
                         damageVal -= inverseDamage - damage;
+						if (explosiveSelfDamage < 0) {
+                            explosiveSelfDamage = 0;
+                        }
+                        if (damageVal < 0) {
+                            damageVal = 0;
+                        }
                         //damage = (int)(damage/explosiveDamage);
                         //damage-=damage/5;
                     }
@@ -672,7 +679,7 @@ namespace Origins {
 			if (toxicShock) {
                 damage += Player.statDefense / 10;
 			}
-            return damage != 0;
+            return damage > 0;
         }
 		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
             if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {

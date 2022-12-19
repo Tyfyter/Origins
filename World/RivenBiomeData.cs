@@ -508,6 +508,29 @@ namespace Origins.World.BiomeData {
 			BiomeChestTile = ModContent.TileType<Riven_Dungeon_Chest>();
 			BiomeChestTileStyle = 1;//1:540, -1:836, 0:864
 			MimicType = ModContent.NPCType<Riven_Mimic>();
+
+			WallContext = new WallContext()
+				.AddReplacement<Walls.Riven_Flesh_Wall>(
+					WallID.Stone,
+					WallID.CaveUnsafe,
+					WallID.Cave2Unsafe,
+					WallID.Cave3Unsafe,
+					WallID.Cave4Unsafe,
+					WallID.Cave5Unsafe,
+					WallID.Cave6Unsafe,
+					WallID.Cave7Unsafe,
+					WallID.Cave8Unsafe,
+					WallID.EbonstoneUnsafe,
+					WallID.CorruptionUnsafe1,
+					WallID.CorruptionUnsafe2,
+					WallID.CorruptionUnsafe3,
+					WallID.CorruptionUnsafe4,
+					WallID.CrimstoneUnsafe,
+					WallID.CrimsonUnsafe1,
+					WallID.CrimsonUnsafe2,
+					WallID.CrimsonUnsafe3,
+					WallID.CrimsonUnsafe4
+				);
 		}
 		public override AltMaterialContext MaterialContext {
 			get {
