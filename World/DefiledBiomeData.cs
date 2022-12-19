@@ -75,6 +75,7 @@ namespace Origins.World.BiomeData {
 			public const float Mimic = 0.1f;
 			public const float Bident = 0.2f;
 			public const float Tripod = 0.3f;
+			public const float AncientCyclops = 0.01f;
 		}
 		public static class Gen {
 			public static void StartDefiled(float i, float j) {
