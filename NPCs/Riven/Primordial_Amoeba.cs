@@ -5,16 +5,13 @@ using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.Other.BossMasks;
 using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
-using Origins.Items.Weapons.Defiled;
+using Origins.Items.Tools;
+using Origins.Items.Weapons.Riven;
 using Origins.LootConditions;
-using Origins.Projectiles.Enemies;
-using Origins.Tiles.BossDrops;
-using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
-using System.Security.Cryptography;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -22,11 +19,9 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 
 namespace Origins.NPCs.Riven {
     [AutoloadBossHead]
@@ -108,7 +103,8 @@ namespace Origins.NPCs.Riven {
 
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Infested_Ore_Item>(), 1, 140, 330));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Riven_Sample>(), 1, 40, 100));
-			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>()));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Amoeba_Hook>(), 1));
+			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Teardown>(), ModContent.ItemType<Return_To_Sender>()));
 
 			//normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PA_Trophy_Item>(), 10));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PA_Mask>(), 10));

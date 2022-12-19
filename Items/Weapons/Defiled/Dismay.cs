@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -28,7 +29,15 @@ namespace Origins.Items.Weapons.Defiled {
             Item.shootSpeed *= 1.2f;
             Item.useTurn = false;
         }
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.SoulofNight, 15);
+            recipe.AddIngredient(ItemID.SpellTome);
+            recipe.AddIngredient(ModContent.ItemType<Shaping_Matter>(), 20);
+            recipe.AddTile(TileID.Bookcases);
+            recipe.Register();
+        }
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 		    int n = (player.itemAnimationMax-player.itemAnimation)/player.itemTime+1;
             velocity = velocity.RotatedBy(((n/2)*((n&1)==0?1:-1))*0.3f);
         }

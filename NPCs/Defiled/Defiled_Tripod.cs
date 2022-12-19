@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Defiled;
 using Origins.Tiles;
 using System;
 using System.IO;
@@ -63,6 +64,7 @@ namespace Origins.NPCs.Defiled {
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Vitamins, 100));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shaping_Matter>(), 1, 1, 3));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Dart_Burst>(), 50));
         }
         public override void AI() {
             if (Main.rand.NextBool(400)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);

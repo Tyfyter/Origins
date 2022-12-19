@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using Origins.NPCs;
 using System.Collections.Generic;
 using System.IO;
@@ -39,6 +40,14 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitchRange(0.9f, 1f);
 			Item.autoReuse = true;
 			Item.glowMask = glowmask;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.FallenStar, 8);
+			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 8);
+			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 6);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(8, 0);

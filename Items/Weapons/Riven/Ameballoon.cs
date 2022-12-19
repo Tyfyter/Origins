@@ -1,8 +1,7 @@
 using Microsoft.Xna.Framework;
-using System;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
@@ -31,6 +30,16 @@ namespace Origins.Items.Weapons.Riven {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
             Item.glowMask = glowmask;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type, 40);
+            recipe.AddCondition(
+               Terraria.Localization.NetworkText.FromLiteral("Riven Water"),
+               (_) => Main.LocalPlayer.adjWater && Main.LocalPlayer.GetModPlayer<OriginPlayer>().ZoneRiven
+            );
+            recipe.AddIngredient(ModContent.ItemType<Rubber>(), 40);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
         }
     }
     public class Ameballoon_P : ModProjectile {

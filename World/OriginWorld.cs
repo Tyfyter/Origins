@@ -27,6 +27,7 @@ using Tyfyter.Utils;
 using static Tyfyter.Utils.ChestLootCache.LootQueueAction;
 using static Tyfyter.Utils.ChestLootCache.LootQueueMode;
 using static Tyfyter.Utils.ChestLootCache;
+using Origins.Items.Weapons.Dungeon;
 
 namespace Origins {
     public partial class OriginSystem : ModSystem {
@@ -325,6 +326,7 @@ namespace Origins {
                 (CHANGE_QUEUE, ChestID.LockedGold, 0f),
                 (ENQUEUE, ModContent.ItemType<Tones_Of_Agony>(), 1f),
                 (ENQUEUE, ModContent.ItemType<Asylum_Whistle>(), 1f),
+                (ENQUEUE, ModContent.ItemType<Bomb_Launcher>(), 1f),
                 (ENQUEUE, ModContent.ItemType<Bomb_Yeeter>(), 1f));
             _worldSurfaceLow = WorldGen.worldSurfaceLow;
         }

@@ -1,3 +1,4 @@
+using Origins.Items.Materials;
 using Origins.Projectiles.Weapons;
 using Terraria;
 using Terraria.ID;
@@ -25,8 +26,8 @@ namespace Origins.Items.Weapons.Acid {
             Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.Grenade, 2);
+            Recipe recipe = Recipe.Create(Type, 3);
+            recipe.AddIngredient(ItemID.Grenade, 3);
             //recipe.AddIngredient(ModContent.ItemType<Absorber_Culture_Item>());
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();

@@ -296,7 +296,7 @@ namespace Origins.Items.Materials {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Eyndum Bar");
-            Tooltip.SetDefault("Half-life means nothing when used in the same sentence");
+            Tooltip.SetDefault("'Half-life' means nothing when used in the same sentence");
             SacrificeTotal = 25;
         }
         public override void SetDefaults() {
@@ -457,6 +457,7 @@ namespace Origins.Items.Materials {
         public override void SetDefaults() {
             Item.maxStack = 999;
             Item.value = 300;//3 silver
+            Item.rare = ItemRarityID.Green;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ItemID.ExplosivePowder);

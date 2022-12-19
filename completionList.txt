@@ -108,6 +108,7 @@ OTHER:
 ENEMY NPCS:
 ---
 (#, ^2) Amebic Slime !!!
+(#, ^2) Ancient Cyclops !!!
 (#, ^2) Barnacleback !!!
 (#, ^2) Chunky Slime !!!
 (#, ^2) Cranivore !!!

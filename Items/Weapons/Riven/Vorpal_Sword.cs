@@ -49,6 +49,14 @@ namespace Origins.Items.Weapons.Riven {
 			recipe.AddIngredient(ModContent.ItemType<Vorpal_Sword_Cursed>());
 			recipe.AddTile(TileID.BewitchingTable);
 			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.NightsEdge);
+			recipe.AddIngredient(this);
+			recipe.AddIngredient(ItemID.Muramasa);
+			recipe.AddIngredient(ItemID.BladeofGrass);
+			recipe.AddIngredient(ItemID.FieryGreatsword);
+			recipe.AddTile(TileID.DemonAltar);
+			recipe.Register();
 		}
 		static int textIndex = -1;
 		static int delayTime = 0;

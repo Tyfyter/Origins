@@ -1,4 +1,5 @@
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Riven;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
@@ -22,6 +23,7 @@ namespace Origins.NPCs.Riven {
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Amebic_Gel>(), 1, 1, 3));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Seam_Beam>(), 80));
         }
         public override void AI() { }
         public override void OnSpawn(IEntitySource source) {

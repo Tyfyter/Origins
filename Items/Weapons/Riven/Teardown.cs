@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Riven;
 using System;
 using Terraria;
@@ -33,6 +34,13 @@ namespace Origins.Items.Weapons.Riven {
             Item.buffType = buffID;
             Item.shoot = projectileID;
             Item.noMelee = true;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 10);
+            recipe.AddIngredient(ModContent.ItemType<Riven_Sample>(), 5);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             if(buffID==0)buffID = ModContent.BuffType<Teardown_Buff>();

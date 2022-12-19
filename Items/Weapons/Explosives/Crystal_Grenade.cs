@@ -1,21 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.IO;
-using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
-using SysDraw = System.Drawing;
-using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
+using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Explosives {
-	public class Crystal_Grenade : ModItem {
+    public class Crystal_Grenade : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Grenade");
 			Tooltip.SetDefault("");
@@ -34,6 +28,11 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.rare = ItemRarityID.LightRed;
 		}
         public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type, 5);
+            recipe.AddIngredient(ItemID.CrystalShard);
+            recipe.AddIngredient(ItemID.Grenade, 5);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
         }
         #region blend mode testing
         /*public override bool AltFunctionUse(Player player) {

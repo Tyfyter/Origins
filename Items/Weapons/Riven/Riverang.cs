@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Default;
@@ -30,6 +30,13 @@ namespace Origins.Items.Weapons.Riven {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
             Item.glowMask = glowmask;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 7);
+            recipe.AddIngredient(ModContent.ItemType<Riven_Sample>(), 4);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
         public override bool CanUseItem(Player player) {
             return player.ownedProjectileCounts[Item.shoot]<=0;
