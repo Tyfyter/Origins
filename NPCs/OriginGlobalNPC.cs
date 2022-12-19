@@ -225,10 +225,10 @@ namespace Origins.NPCs {
 
 				pool.Add(ModContent.NPCType<Defiled_Cyclops>(), Defiled_Wastelands.SpawnRates.Cyclops);
 
+				if (NPC.downedBoss1 || NPC.downedBoss2 || NPC.downedBoss3 || NPC.downedQueenBee || NPC.downedDeerclops || Main.hardMode) pool.Add(ModContent.NPCType<Ancient_Defiled_Cyclops>(), Defiled_Wastelands.SpawnRates.AncientCyclops);
+
 				if (spawnInfo.PlayerFloorY <= Main.worldSurface + 50 && spawnInfo.SpawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), Defiled_Wastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
 				if (Main.hardMode) {
-					pool.Add(ModContent.NPCType<Ancient_Defiled_Cyclops>(), Defiled_Wastelands.SpawnRates.AncientCyclops);
-
 					pool.Add(ModContent.NPCType<Defiled_Hunter_Head>(), Defiled_Wastelands.SpawnRates.Hunter);
 					if (TileID.Sets.Conversion.Sand[Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType]) {
 						pool.Add(ModContent.NPCType<Shattered_Mummy>(), Defiled_Wastelands.SpawnRates.Cyclops);
