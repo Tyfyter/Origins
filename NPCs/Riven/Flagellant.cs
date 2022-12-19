@@ -1,4 +1,5 @@
-﻿using Origins.Items.Materials;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Riven;
 using Origins.World.BiomeData;
@@ -46,6 +47,14 @@ namespace Origins.NPCs.Riven {
         }
         public override void OnHitPlayer(Player target, int damage, bool crit) {
             OriginPlayer.InflictTorn(target, 1800, 180, 0.47f);
+        }
+        public override void HitEffect(int hitDirection, double damage) {
+            if (NPC.life < 0) {
+                for (int i = 0; i < 3; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Meat" + Main.rand.Next(2, 4)));
+            } else {
+                Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
+            }
         }
     }
 }
