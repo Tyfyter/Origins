@@ -12,7 +12,7 @@ namespace Origins.Items.Accessories {
         public string EntryName => "Origins/" + typeof(Stone_Mask_Entry).Name;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Stone Mask");
-            Tooltip.SetDefault("Increases defense by 8, but your movement is hindered\nYou hear whispers nearby...");
+            Tooltip.SetDefault("Increases defense by 8, but your movement is hindered");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {

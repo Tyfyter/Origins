@@ -1,8 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+﻿using Origins.Items.Materials;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -31,6 +28,11 @@ namespace Origins.Items.Weapons.Ammo {
             recipe.Register();
             recipe = Recipe.Create(Type, 8);
             recipe.AddIngredient(ItemID.LeadBar);
+            recipe.AddIngredient(ModContent.ItemType<Acid_Bottle>());
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+            recipe = Recipe.Create(Type, 8);
+            recipe.AddIngredient(ModContent.ItemType<Harpoon>());
             recipe.AddIngredient(ModContent.ItemType<Acid_Bottle>());
             recipe.AddTile(TileID.Anvils);
             recipe.Register();

@@ -1,19 +1,13 @@
 ﻿using Origins.Items.Accessories;
-using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
 
 namespace Origins.Items.Other.LootBags {
-	public class Primordial_Amoeba_Bag : ModItem {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.CultistBossBag;
+    public class Primordial_Amoeba_Bag : ModItem {
+		public override string Texture => "Origins/Items/Other/LootBags/PA_Bag";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Treasure Bag (Primordial Amoeba)");
 		}

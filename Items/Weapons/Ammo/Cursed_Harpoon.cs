@@ -33,6 +33,11 @@ namespace Origins.Items.Weapons.Ammo {
             recipe.AddIngredient(ItemID.CursedFlame);
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
+            recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Harpoon>());
+            recipe.AddIngredient(ItemID.CursedFlame);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
         }
     }
     public class Cursed_Harpoon_P : Harpoon_P {
