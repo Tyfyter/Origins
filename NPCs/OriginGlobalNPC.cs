@@ -23,44 +23,74 @@ using Terraria.DataStructures;
 using Terraria.ModLoader.Utilities;
 using Origins.NPCs.Riven;
 using Origins.Tiles;
+using Origins.Items.Weapons.Ammo;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
 		public override void SetupShop(int type, Chest shop, ref int nextSlot) {
+			bool worldHasWastelands = false;
+			bool worldHasHive = false;
+			switch (AltLibrary.Common.Systems.WorldBiomeManager.WorldEvil) {
+				case "Origins/Defiled_Wastelands_Alt_Biome":
+				worldHasWastelands = true;
+				break;
+				case "Origins/Riven_Hive_Alt_Biome":
+				worldHasHive = true;
+				break;
+			}
 			//Demo-man
-			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 0) {
-				shop.item[nextSlot++].SetDefaults(ItemID.ExplosivePowder);
-			}
-			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 5) {
-				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Peatball>());
-			}
-			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 10) {
-				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
-			}
-			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 20) {
-				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
-			}
-			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 35) {
-				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
-			}
-			//if statment for Hardmode here
-			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 50) {
-				//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Mortar_Shell>());
-			}
-			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 75) {
-				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Acid_Grenade>());
-			}
-			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 100) {
-				//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Acid_Bomb>());
-			}
-			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 120) {
-				//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Nade_O_Plenty>());
-			}
-			if (type == NPCID.Demolitionist && ModContent.GetInstance<OriginSystem>().peatSold >= 999) {
-				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Caustica>());
-			}
-			//Cyborg
-			if (type == NPCID.Cyborg) {
+			if (type == NPCID.Demolitionist) {
+				if (ModContent.GetInstance<OriginSystem>().peatSold >= 0) {
+					shop.item[nextSlot++].SetDefaults(ItemID.ExplosivePowder);
+				}
+				if (ModContent.GetInstance<OriginSystem>().peatSold >= 5) {
+					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Peatball>());
+				}
+				if (ModContent.GetInstance<OriginSystem>().peatSold >= 10) {
+					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
+				}
+				if (ModContent.GetInstance<OriginSystem>().peatSold >= 20) {
+					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
+				}
+				if (ModContent.GetInstance<OriginSystem>().peatSold >= 35) {
+					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
+				}
+				if (Main.hardMode) {
+					if (ModContent.GetInstance<OriginSystem>().peatSold >= 50) {
+						//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Mortar_Shell>());
+					}
+					if (ModContent.GetInstance<OriginSystem>().peatSold >= 75) {
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Acid_Grenade>());
+					}
+					if (ModContent.GetInstance<OriginSystem>().peatSold >= 100) {
+						//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Acid_Bomb>());
+					}
+					if (ModContent.GetInstance<OriginSystem>().peatSold >= 120) {
+						//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Nade_O_Plenty>());
+					}
+					if (ModContent.GetInstance<OriginSystem>().peatSold >= 999) {
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Caustica>());
+					}
+				}
+			} else if (type == NPCID.Steampunker) {
+				if (Main.bloodMoon || Main.eclipse) {
+					if (worldHasWastelands) {
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<White_Solution>());
+					}
+					if (worldHasHive) {
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Teal_Solution>());
+					}
+				}
+			} else if (type == NPCID.Dryad) {
+				if (Main.player[Main.myPlayer].ZoneGraveyard) {
+					if (!worldHasWastelands) {
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Defiled_Grass_Seeds>());
+					}
+					if (!worldHasHive) {
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Riven_Grass_Seeds>());
+					}
+				}
+			} else if (type == NPCID.Cyborg) {
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Advanced_Imaging>());
 			}
 		}
