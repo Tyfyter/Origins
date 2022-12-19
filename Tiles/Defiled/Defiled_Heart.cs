@@ -25,7 +25,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileNoAttach[Type] = true;
             Main.tileHammer[Type] = true;
             Main.tileLighted[Type] = true;
-			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
             TileObjectData.newTile.Width = 4;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16 };
 			TileObjectData.newTile.Origin = new Point16(1, 2);
@@ -42,7 +42,10 @@ namespace Origins.Tiles.Defiled {
 			AdjTiles = new int[] { TileID.ShadowOrbs };
             ID = Type;
 		}
-        public override bool CreateDust(int i, int j, ref int type) {
+		public override bool CanExplode(int i, int j) {
+			return false;
+		}
+		public override bool CreateDust(int i, int j, ref int type) {
             type = Defiled_Wastelands.DefaultTileDust;
             return true;
         }
