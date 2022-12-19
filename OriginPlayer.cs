@@ -232,6 +232,9 @@ namespace Origins {
             if (rasterized >= 0) {
                 rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 8), Player.buffTime[rasterized] - 1);
             }
+			if (Player.breath > Player.breathMax) {
+                Player.breath = Player.breathMax;
+			}
             Player.breathMax = 200;
             plagueSight = false;
             plagueSightLight = false;

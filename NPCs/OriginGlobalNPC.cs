@@ -40,7 +40,7 @@ namespace Origins.NPCs {
 			}
 			//Demo-man
 			if (type == NPCID.Demolitionist) {
-				if (ModContent.GetInstance<OriginSystem>().peatSold >= 0) {
+				if (ModContent.GetInstance<OriginSystem>().peatSold >= 0 && !Main.hardMode) {
 					shop.item[nextSlot++].SetDefaults(ItemID.ExplosivePowder);
 				}
 				if (ModContent.GetInstance<OriginSystem>().peatSold >= 5) {
