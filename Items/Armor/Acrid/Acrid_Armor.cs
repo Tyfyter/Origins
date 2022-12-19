@@ -32,6 +32,7 @@ namespace Origins.Items.Armor.Acrid{
             return body.type == ModContent.ItemType<Acrid_Breastplate>() && legs.type == ModContent.ItemType<Acrid_Greaves>();
         }
         public override void UpdateArmorSet(Player player) {
+            player.setBonus = "we actually just didn't have set bonus text for it, it wasn't that it wasn't displaying it";
             player.buffImmune[BuffID.Poisoned] = true;
             player.buffImmune[BuffID.Venom] = true;
             player.breathMax += (int)(player.breathMax*1.8f);

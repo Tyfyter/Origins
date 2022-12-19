@@ -33,7 +33,7 @@ namespace Origins.NPCs.Defiled {
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
-            npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsExpert(), ModContent.ItemType<Ancient_Kruncher>(), 1));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ancient_Kruncher>()));
         }
         public override void AI() {
             NPC.TargetClosest();
