@@ -32,9 +32,11 @@ namespace Origins.Items.Armor.Acrid{
             return body.type == ModContent.ItemType<Acrid_Breastplate>() && legs.type == ModContent.ItemType<Acrid_Greaves>();
         }
         public override void UpdateArmorSet(Player player) {
-            player.setBonus = "we actually just didn't have set bonus text for it, it wasn't that it wasn't displaying it";
+            player.setBonus = "Immunity to 'Toxic Shock', 'Solvent', 'Acid Venom', and 'Poisoned' debuffs\nChance to inflict 'Toxic Shock'\nGreatly extends breath time";
             player.buffImmune[BuffID.Poisoned] = true;
             player.buffImmune[BuffID.Venom] = true;
+            //player.buffImmune[BuffID.ToxicShock] = true;
+            //player.buffImmune[BuffID.Solvent] = true;
             player.breathMax += (int)(player.breathMax*1.8f);
             if (Main.GameUpdateCount%4 != 0) {
                 player.ignoreWater = true;

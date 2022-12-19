@@ -108,7 +108,7 @@ OTHER:
 ENEMY NPCS:
 ---
 (#, ^2) Amebic Slime !!!
-(#, ^2) Ancient Cyclops !!!
+(^) Ancient Cyclops
 (#, ^2) Barnacleback !!!
 (#, ^2) Chunky Slime !!!
 (#, ^2) Cranivore !!!
@@ -605,7 +605,7 @@ TILES:
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (#, ^2) Fiberglass Wall
-(#4 (R-enemies cant spawn), ^2) Spug Flesh Wall !!!
+(^) Spug Flesh Wall
 (X) Sulphur Stone Wall
 
 (X) Acid Chest
