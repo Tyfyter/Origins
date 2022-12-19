@@ -139,6 +139,7 @@ namespace Origins.NPCs.Defiled {
                 normalDropRule, 
                 new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Defiled_Amalgamation_Bag>(), 1, 1, 1, null)
             ));
+            npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Mysterious_Spray>(), 4));
         }
         public override void AI() {
             NPC.TargetClosest();

@@ -7,7 +7,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.LootBags {
     public class Primordial_Amoeba_Bag : ModItem {
-		public override string Texture => "Origins/Items/Other/LootBags/PA_Bag";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Treasure Bag (Primordial Amoeba)");
 		}
@@ -18,7 +17,7 @@ namespace Origins.Items.Other.LootBags {
 			IItemDropRuleCondition master = new Conditions.IsMasterMode();
 			itemLoot.Add(Primordial_Amoeba.normalDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Amebic_Vial>()));
-			itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Protozoa_Food>()));
+			//itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Protozoa_Food>()));
 			itemLoot.Add(ItemDropRule.Coins(Item.buyPrice(gold: 3), false));
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {

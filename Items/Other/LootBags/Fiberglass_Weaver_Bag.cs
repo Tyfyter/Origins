@@ -7,7 +7,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.LootBags {
     public class Fiberglass_Weaver_Bag : ModItem {
-		public override string Texture => "Origins/Items/Other/LootBags/FW_Bag";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Treasure Bag (Fiberglass Weaver)");
 		}
@@ -18,7 +17,7 @@ namespace Origins.Items.Other.LootBags {
 			IItemDropRuleCondition master = new Conditions.IsMasterMode();
 			itemLoot.Add(Fiberglass_Weaver.normalDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Dagger>()));
-			itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Entangled_Energy>()));
+			//itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Entangled_Energy>()));
 			itemLoot.Add(ItemDropRule.Coins(Item.buyPrice(gold: 3), false));
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {

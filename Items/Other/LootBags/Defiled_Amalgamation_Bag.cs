@@ -7,7 +7,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.LootBags {
     public class Defiled_Amalgamation_Bag : ModItem {
-		public override string Texture => "Origins/Items/Other/LootBags/DA_Bag";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Treasure Bag (Defiled Amalgamation)");
 		}
@@ -18,7 +17,7 @@ namespace Origins.Items.Other.LootBags {
 			IItemDropRuleCondition master = new Conditions.IsMasterMode();
 			itemLoot.Add(Defiled_Amalgamation.normalDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Reshaping_Chunk>()));
-			itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Mysterious_Spray>()));
+			//itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Mysterious_Spray>()));
 			itemLoot.Add(ItemDropRule.Coins(Item.buyPrice(gold:3), false));
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {

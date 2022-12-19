@@ -17,8 +17,8 @@ namespace Origins.Items.Accessories {
         }
         public override void UpdateEquip(Player player) {
             player.statDefense -= 4;
-            player.GetDamage(DamageClass.Default).Flat += 4;
-            player.GetDamage(DamageClass.Generic).Flat += 4;
+            player.GetDamage(DamageClass.Default).Flat += 8;
+            player.GetDamage(DamageClass.Generic).Flat += 8;
             //player.GetModPlayer<OriginPlayer>().fiberglassDagger = true;
         }
     }

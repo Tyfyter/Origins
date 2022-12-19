@@ -117,6 +117,7 @@ namespace Origins.NPCs.Riven {
 				normalDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Primordial_Amoeba_Bag>(), 1, 1, 1, null)
 			));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Protozoa_Food>(), 4));
 		}
 		public override bool PreAI() {
 			const bool useVanillaAI = false;

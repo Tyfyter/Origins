@@ -15,7 +15,7 @@ namespace Origins.Items.Tools {
 			Item.DamageType = DamageClass.Melee;
             Item.pick = 0;
             Item.hammer = 0;
-            Item.axe = 15;
+            Item.axe = 85;
 			Item.width = 38;
 			Item.height = 32;
 			Item.useTime = 28;
