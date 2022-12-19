@@ -161,29 +161,35 @@ namespace Origins.Items.Weapons.Riven {
 		}
 		int times = 0;
 		float dir = 0;
+		int switchbackSlot = -1;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			SoundEngine.PlaySound(SoundID.Item1, position);
 			if (times > 0) {
 				velocity = OriginExtensions.Vec2FromPolar(dir, velocity.Length());
 				times--;
 				player.direction = Math.Sign(velocity.X);
+				if (times == 0 && switchbackSlot > -1) {
+					player.selectedItem = switchbackSlot;
+					switchbackSlot = -1;
+				}
 			}
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, ai0: player.itemAnimation == player.itemTime ? 1 : 0, ai1: player.itemAnimation == player.itemTime ? -1 : 1);
 			return false;
 		}
 		public override void UpdateInventory(Player player) {
-			if (Main.rand.NextBool(60)) {
+			if (times == 0 && Main.rand.NextBool(60)) {
 				NPC npc;
 				for (int n = 0; n < Main.maxNPCs; n++) {
 					npc = Main.npc[n];
 					if (npc.DistanceSQ(player.MountedCenter) < 128 * 128 && npc.CanBeChasedBy()) {
 						for (int i = 0; i < Main.InventoryItemSlotsCount; i++) {
 							if (player.inventory[i].ModItem == this) {
+								switchbackSlot = player.selectedItem;
 								player.selectedItem = i;
 								player.controlUseItem = true;
 								dir = (npc.Center - player.MountedCenter).ToRotation();
 								times = 2;
-								break;
+								return;
 							}
 						}
 					}
