@@ -2,12 +2,13 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Defiled {
-    public class Dismay : ModItem {
+    public class Dismay : ModItem, ICustomDrawItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Dismay");
             Tooltip.SetDefault("Very pointy for a book");
@@ -38,8 +39,33 @@ namespace Origins.Items.Weapons.Defiled {
             recipe.Register();
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-		    int n = (player.itemAnimationMax-player.itemAnimation)/player.itemTime+1;
-            velocity = velocity.RotatedBy(((n/2)*((n&1)==0?1:-1))*0.3f);
+            if (!player.ItemAnimationJustStarted) velocity = (OriginExtensions.Vec2FromPolar(player.itemRotation, velocity.Length()) * player.direction);
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+            int n = (player.itemAnimationMax - player.itemAnimation) / player.itemTime + 1;
+            velocity = velocity.RotatedBy(((n / 2) * ((n & 1) == 0 ? 1 : -1)) * 0.3f);
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+            return false;
+        }
+
+        public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
+            Player drawPlayer = drawInfo.drawPlayer;
+            float itemRotation = drawPlayer.itemRotation;
+
+            drawOrigin = new Vector2(20, 35);
+
+            Vector2 pos = new Vector2((int)(drawInfo.ItemLocation.X - Main.screenPosition.X + itemCenter.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
+
+            drawInfo.DrawDataCache.Add(new DrawData(
+                itemTexture,
+                pos,
+                null,
+                Item.GetAlpha(lightColor),
+                itemRotation + MathHelper.PiOver2 * drawPlayer.direction,
+                drawOrigin,
+                drawPlayer.GetAdjustedItemScale(Item),
+                drawInfo.itemEffect,
+            0));
         }
     }
     public class Dismay_Spike : ModProjectile {
