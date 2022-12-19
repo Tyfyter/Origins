@@ -1,18 +1,13 @@
 ﻿using Origins.Items.Accessories;
 using Origins.NPCs.Defiled;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria;
 
 namespace Origins.Items.Other.LootBags {
-	public class Defiled_Amalgamation_Bag : ModItem {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.CultistBossBag;
+    public class Defiled_Amalgamation_Bag : ModItem {
+		public override string Texture => "Origins/Items/Other/LootBags/DA_Bag";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Treasure Bag (Defiled Amalgamation)");
 		}

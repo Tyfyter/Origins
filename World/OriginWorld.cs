@@ -324,6 +324,7 @@ namespace Origins {
                 (ENQUEUE, ModContent.ItemType<Beginner_Tome>(), 1f),
                 (CHANGE_QUEUE, ChestID.LockedGold, 0f),
                 (ENQUEUE, ModContent.ItemType<Tones_Of_Agony>(), 1f),
+                (ENQUEUE, ModContent.ItemType<Asylum_Whistle>(), 1f),
                 (ENQUEUE, ModContent.ItemType<Bomb_Yeeter>(), 1f));
             _worldSurfaceLow = WorldGen.worldSurfaceLow;
         }

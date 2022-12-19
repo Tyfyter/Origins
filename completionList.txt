@@ -361,6 +361,7 @@ TOOLS:
 ---
 (^) Brick Breaker
 (^) Dismantler
+(^) Dissector
 (^) Felnum Hamaxe
 (^) Felnum Pickaxe
 (^) Rivenator
@@ -492,6 +493,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash
 (#, ^2) Forest Staff !!!
+(X) Maelstrom Incantation !!!
 (#, ^2) Ocean Amulet !!!
 (^) Rotted Worm Staff
 (^) Teardown
@@ -741,6 +743,10 @@ CONSUMABLES:
 
 (^) Gooey Water
 (^) White Water
+
+(^) Defiled Amalgamation Bag
+(^) Fiberglass Weaver Bag
+(^) Primordial Amoeba Bag
 ---
 
 MOUNTS & PETS:
