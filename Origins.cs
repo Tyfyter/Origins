@@ -160,6 +160,7 @@ namespace Origins {
                     Main.tileMerge[pair.Item2][pair.Item1] = true;
                 }
             }
+            OriginsModIntegrations.LateLoad();
         }
         public override void Load() {
             ModTranslation newTranslation = LocalizationLoader.CreateTranslation("Riven");

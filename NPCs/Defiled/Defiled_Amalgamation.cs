@@ -556,5 +556,30 @@ namespace Origins.NPCs.Defiled {
             shieldPercent = life / (float)lifeMax;
             return lifePercent > 0;
 		}
+		public override void PostDraw(SpriteBatch spriteBatch, NPC npc, BossBarDrawParams drawParams) {
+			if (OriginsModIntegrations.PhaseIndicator?.Value is Texture2D phaseIndicator) {
+                int tickCount = 10 - Defiled_Amalgamation.DifficultyMult * 2;
+                int tickSize = lifeMax / tickCount;
+                float lifeTarget = ((life + tickSize - 1) / tickSize) / (float)tickCount;
+                Vector2 barSize = new Vector2(456, 22);
+                Vector2 barPos = drawParams.BarCenter - barSize * new Vector2(0.5f, 0);
+                Vector2 origin = phaseIndicator.Size() / 2;
+                float tickPercent = 1f / tickCount;
+                for (float f = 0; f < drawParams.LifePercentToShow; f += tickPercent) {
+                    if (f == 0f) continue;
+                    float animFactor = Math.Min((drawParams.LifePercentToShow - f) / tickPercent, 1);
+                    spriteBatch.Draw(
+                        phaseIndicator,
+                        barPos + barSize * new Vector2(f, 0),
+                        null,
+                        new Color(animFactor, animFactor, animFactor, animFactor),
+                        0f,
+                        origin,
+                        2f - animFactor,
+                        SpriteEffects.None,
+                    0f);
+                }
+            }
+		}
 	}
 }

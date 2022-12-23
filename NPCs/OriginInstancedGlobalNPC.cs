@@ -67,7 +67,7 @@ namespace Origins.NPCs {
                 npc.lifeRegen -= 4;
             }
         }
-		public static void AddInfusionSpike(NPC npc, int projectileID) {
+        public static void AddInfusionSpike(NPC npc, int projectileID) {
             OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
             if (globalNPC.infusionSpikes is null) globalNPC.infusionSpikes = new List<int>();
             globalNPC.infusionSpikes.Add(projectileID);

@@ -13,21 +13,20 @@ using Terraria.ModLoader;
 using System.Xml;
 using System.Xml.Linq;
 using System.Text.RegularExpressions;
+using ReLogic.Content;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
 		private static OriginsModIntegrations instance;
 		Mod wikiThis;
 		public static Mod WikiThis { get => instance.wikiThis; set => instance.wikiThis = value; }
-		Mod phaseIndicator;
-		public static Mod PhaseIndicator { get => instance.phaseIndicator; set => instance.phaseIndicator = value; }
+		Asset<Texture2D> phaseIndicator;
+		public static Asset<Texture2D> PhaseIndicator { get => instance.phaseIndicator; set => instance.phaseIndicator = value; }
 		static string WikiURL => "https://tyfyter.github.io/OriginsWiki";
 		static HashSet<string> wikiSiteMap;
 		public void Load(Mod mod) {
 			instance = this;
-			if (ModLoader.TryGetMod("PhaseIndicator", out Mod phaseIndicator)) {//TODO: PhaseIndicator integration
-
-			}
 			if (!Main.dedServ && ModLoader.TryGetMod("Wikithis", out wikiThis)) {
 				//WikiThis.Call("AddModURL", Origins.instance, "tyfyter.github.io/OriginsWiki");
 				WikiThis.Call(
@@ -38,22 +37,26 @@ namespace Origins {
 				);
 				Origins.instance.Logger.Info("Added Wikithis integration");
 				wikiSiteMap = new HashSet<string>();
-				using (WebClient client = new WebClient()) {
-					client.DownloadStringCompleted += (object sender, DownloadStringCompletedEventArgs e) => {
-						if (e.Error is not null) {
-							mod.Logger.Error(e.Error);
-							return;
+				using WebClient client = new WebClient();
+				client.DownloadStringCompleted += (object sender, DownloadStringCompletedEventArgs e) => {
+					if (e.Error is not null) {
+						mod.Logger.Error(e.Error);
+						return;
+					}
+					XDocument doc = XDocument.Parse(e.Result);
+					var desc = doc.Descendants();
+					foreach (var item in doc.Descendants()) if (item.Name.LocalName == "loc") {
+							if (Regex.Match(item.Value, "(?<=\\/)[^\\/]*(?=.html)").Value is string s && !string.IsNullOrEmpty(s)) {
+								wikiSiteMap.Add(s);
+							}
 						}
-						XDocument doc = XDocument.Parse(e.Result);
-						var desc = doc.Descendants();
-						foreach (var item in doc.Descendants()) if (item.Name.LocalName == "loc") {
-								if (Regex.Match(item.Value, "(?<=\\/)[^\\/]*(?=.html)").Value is string s && !string.IsNullOrEmpty(s)) {
-									wikiSiteMap.Add(s);
-								}
-						}
-					};
-					client.DownloadStringAsync(new Uri(WikiURL + "/sitemap.xml"));
-				}
+				};
+				client.DownloadStringAsync(new Uri(WikiURL + "/sitemap.xml"));
+			}
+		}
+		public static void LateLoad() {
+			if (ModLoader.TryGetMod("PhaseIndicator", out Mod phaseIndicatorMod) && phaseIndicatorMod.RequestAssetIfExists("PhaseIndicator", out Asset<Texture2D> phaseIndicatorTexture)) {
+				instance.phaseIndicator = phaseIndicatorTexture;
 			}
 		}
 		public static bool WikiPageExists(object obj, object id) {
