@@ -271,15 +271,17 @@ namespace Origins.NPCs.Defiled {
                             case 60:
                             case 70:
                             SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), NPC.Center);
-                            Projectile.NewProjectileDirect(
-                                NPC.GetSource_FromAI(),
-                                NPC.Center,
-                                Vector2.Normalize(target.MountedCenter - NPC.Center).RotatedByRandom(0.15f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.9f, 1.1f),
-                                ModContent.ProjectileType<Low_Signal_P>(),
-                                22 - (difficultyMult * 3), // for some reason NPC projectile damage is just arbitrarily doubled
-                                0f,
-                                Main.myPlayer
-                            ).tileCollide = Collision.CanHitLine(target.position, target.width, target.height, NPC.Center, 8, 8);
+                            if (Main.netMode != NetmodeID.MultiplayerClient) {
+                                Projectile.NewProjectileDirect(
+                                    NPC.GetSource_FromAI(),
+                                    NPC.Center,
+                                    Vector2.Normalize(target.MountedCenter - NPC.Center).RotatedByRandom(0.15f) * (10 + difficultyMult * 2) * Main.rand.NextFloat(0.9f, 1.1f),
+                                    ModContent.ProjectileType<Low_Signal_P>(),
+                                    22 - (difficultyMult * 3), // for some reason NPC projectile damage is just arbitrarily doubled
+                                    0f,
+                                    Main.myPlayer
+                                ).tileCollide = Collision.CanHitLine(target.position, target.width, target.height, NPC.Center, 8, 8);
+                            }
                             break;
                             case 12:
                             case 17:
@@ -376,16 +378,18 @@ namespace Origins.NPCs.Defiled {
                             NPC.velocity = new Vector2(0, -4);
                             if ((int)NPC.ai[1] == 45) {
                                 SoundEngine.PlaySound(SoundID.ForceRoar.WithPitchRange(0.1f, 0.2f));
-                                for (int i = 3 + difficultyMult; i-- > 0;) {
-                                    Projectile.NewProjectileDirect(
-                                        NPC.GetSource_FromAI(),
-                                        target.Center - new Vector2(Main.rand.Next(80, 640) * (Main.rand.Next(2) * 2 - 1), 640),
-                                        new Vector2(0, 8),
-                                        ModContent.ProjectileType<Defiled_Enemy_Summon>(),
-                                        0,
-                                        0f,
-                                        Main.myPlayer
-                                    );
+								if (Main.netMode != NetmodeID.MultiplayerClient) {
+                                    for (int i = 3 + (difficultyMult * NPC.statsAreScaledForThisManyPlayers); i-- > 0;) {
+                                        Projectile.NewProjectileDirect(
+                                            NPC.GetSource_FromAI(),
+                                            target.Center - new Vector2(Main.rand.Next(80, 640) * (Main.rand.Next(2) * 2 - 1), 640),
+                                            new Vector2(0, 8),
+                                            ModContent.ProjectileType<Defiled_Enemy_Summon>(),
+                                            0,
+                                            0f,
+                                            Main.myPlayer
+                                        );
+                                    }
                                 }
                             }
                             leftArmTarget = -1.25f;
@@ -560,7 +564,6 @@ namespace Origins.NPCs.Defiled {
 			if (OriginsModIntegrations.PhaseIndicator?.Value is Texture2D phaseIndicator) {
                 int tickCount = 10 - Defiled_Amalgamation.DifficultyMult * 2;
                 int tickSize = lifeMax / tickCount;
-                float lifeTarget = ((life + tickSize - 1) / tickSize) / (float)tickCount;
                 Vector2 barSize = new Vector2(456, 22);
                 Vector2 barPos = drawParams.BarCenter - barSize * new Vector2(0.5f, 0);
                 Vector2 origin = phaseIndicator.Size() / 2;
