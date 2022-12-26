@@ -728,26 +728,25 @@ CONSUMABLES:
 ---
 (#, ^2) Quantum Injector
 
-(#3, ^2) Absorption Potion
-(@2, #) Extreme O' Potion
+(^) Absorption Potion
+(#, ^2) Extreme O' Potion
 (^) Fervor Potion
-(@2, #) Focus Potion
-(@2, #) Nullification Potion
+(#, ^2) Focus Potion
+(#, ^2) Nullification Potion (Nullification potion doesn't need a buff graphic, it's a single-instance effect)
 (^) Protean Potion
-(X) Purification Potion
+(#, ^2) Purification Potion !!!
 (@2, #) Regen Burst Potion
 (X) Tuned Greater Healing Potion
 (X) Tuned Greater Mana Potion
-(@2, #) Voidsight Potion
+(#, ^2) Voidsight Potion
 
 (#, ^2) Blue Bovine
 (^) Jam Sandwich
 (^) Krunch Mix*
-(X) One of a Kind Cookie
-(X) Potato
+(#, ^2) One of a Kind Cookie
+(#, ^2) Potato
 (^) Soul Spaghetti
-(X) Strange Soda
-(X) Tasty Vanilla Shake
+(#, ^2) Tasty Vanilla Shake
 
 (^) Nerve Impulse Manipulator*
 (X) Quantum Cell
@@ -770,7 +769,7 @@ MOUNTS & PETS:
 ---
 (X) Ever-Watchful Eye (Juvenile Amalgamation) !!!
 (^) Strange Power-Up (Platformer Mech)
-(X) Chromatic Scale (Rainbow Pangolin)
+(@2, #) Chromatic Scale (Rainbow Pangolin)
 
 (#3, ^2) Amoeba Toy (Meberoid) !!!
 (^) Suspicious Looking Pebble (Defiled Blight)
