@@ -1,18 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
+using Origins.Items.Materials;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
-using Terraria.Graphics.Shaders;
-using Terraria.DataStructures;
-using Origins.Items.Materials;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Fallout : ModItem {
@@ -42,9 +36,9 @@ namespace Origins.Items.Weapons.Explosives {
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.ExplosivePowder, 10);
             recipe.AddIngredient(ItemID.ChlorophyteBar, 25);
             recipe.AddIngredient(ModContent.ItemType<Space_Goo>(), 15);
+            recipe.AddIngredient(ModContent.ItemType<Illegal_Explosive_Parts>(), 3);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();
         }

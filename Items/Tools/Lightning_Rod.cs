@@ -1,15 +1,14 @@
-using Origins.Items.Materials;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
+using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using Terraria.GameContent;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Tools {
-	public class Lightning_Rod : ModItem {
+    public class Lightning_Rod : ModItem {
 
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Lightning Rod");

@@ -1,32 +1,23 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+using Origins.Buffs;
+using Origins.Items.Accessories;
 using Origins.Items.Weapons.Acid;
+using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
 using Origins.NPCs.Defiled;
+using Origins.NPCs.Riven;
+using Origins.Tiles;
 using Origins.Tiles.Defiled;
-using Origins.World;
-using System;
+using Origins.Tiles.Riven;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.World.BiomeData;
-using Origins.Buffs;
-using Terraria.GameContent.ItemDropRules;
-using Origins.Tiles.Riven;
-using Origins.Items.Accessories;
-using Terraria.DataStructures;
-using Terraria.ModLoader.Utilities;
-using Origins.NPCs.Riven;
-using Origins.Tiles;
-using Origins.Items.Weapons.Ammo;
 
 namespace Origins.NPCs {
-	public partial class OriginGlobalNPC : GlobalNPC {
+    public partial class OriginGlobalNPC : GlobalNPC {
 		public override void SetupShop(int type, Chest shop, ref int nextSlot) {
 			bool worldHasWastelands = false;
 			bool worldHasHive = false;

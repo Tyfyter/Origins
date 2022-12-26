@@ -365,7 +365,9 @@ TOOLS:
 (^) Dissector
 (^) Felnum Hamaxe
 (^) Felnum Pickaxe
+(#3, ^2) Parasitic Manipulator !!!
 (^) Rivenator
+(#3, ^2) Snatcher !!!
 (^) Stabsmash
 
 (^) Acrid Drill
@@ -418,6 +420,7 @@ RANGED WEAPONS:
 (^) Harpoon Gun
 (^) Longbone
 (^) Riven Splitter
+(#, ^2) Sleetfire !!!
 (^) Tendon Tear
 (^) The Kruncher
 (#3, ^2) Threemoepeater !!!
@@ -465,7 +468,6 @@ MAGIC WEAPONS:
 (#, ^2) Transfusion !!!
 
 (^) Bled Out Staff
-(#, ^2) Boulder Bash
 (^) Amber of Embers
 (^) Dismay
 (#, ^2) Meltdown
@@ -507,6 +509,7 @@ SUMMONER WEAPONS:
 
 (X) Doom Incantation
 (X) Ego
+(@2/3, #) Fiber Optic Whip
 (X) Obsidian Bone
 (X) Queen's Call
 (X) Ribatar
@@ -680,6 +683,7 @@ MATERIALS:
 (^) Bleeding Obsidian Shard
 (^) Brine Sample
 (^) Defiled Key
+(^) Illegal Explosive Parts
 (^) Meta Gel
 (^) Riven Key
 
@@ -706,6 +710,17 @@ MATERIALS:
 (@, %3, ^3) Thruster Component
 (^) Unpowered Eyndum Core
 (@, ^3) Void Spark
+---
+
+
+CRITTERS AND FISH:
+---
+(#, ^2) Amoeba Buggy !!!
+(X) Bug
+(#, ^2) Cicada 3301 !!!
+
+(^) Bonehead Jellyfish
+(^) Prikish
 ---
 
 
@@ -744,6 +759,7 @@ CONSUMABLES:
 
 (^) Gooey Water
 (^) White Water
+(#, ^2) Void Lock !!!
 
 (^) Defiled Amalgamation Bag
 (^) Fiberglass Weaver Bag

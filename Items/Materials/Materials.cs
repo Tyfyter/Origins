@@ -292,6 +292,22 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
     }
+    public class Infested_Bar : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Encrusted Bar");
+            SacrificeTotal = 25;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 99;
+            Item.rare = ItemRarityID.Blue;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Infested_Ore_Item>(), 3);
+            recipe.AddTile(TileID.Furnaces);
+            recipe.Register();
+        }
+    }
     public class Eyndum_Bar : ModItem {
         //add lore here
         public override void SetStaticDefaults() {
@@ -372,20 +388,16 @@ namespace Origins.Items.Materials {
             Item.rare = ItemRarityID.Purple;
         }
     }
-    public class Infested_Bar : ModItem {
+    public class Illegal_Explosive_Parts : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Encrusted Bar");
-            SacrificeTotal = 25;
+            DisplayName.SetDefault("Illegal Explosive Parts");
+            Tooltip.SetDefault("All explosive parts are illegal...");
+            SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.maxStack = 99;
-            Item.rare = ItemRarityID.Blue;
-        }
-        public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Infested_Ore_Item>(), 3);
-            recipe.AddTile(TileID.Furnaces);
-            recipe.Register();
+            Item.maxStack = 999;
+            Item.value = 200000;//20 gold
+            Item.rare = ItemRarityID.LightRed;
         }
     }
     public class Lunar_Token : ModItem {
@@ -848,6 +860,11 @@ namespace Origins.Items.Materials {
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 12);
             recipe.AddIngredient(ModContent.ItemType<Lunar_Token>());
             recipe.AddTile(TileID.Anvils); //You guessed it, no Omni-Printer
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.GoldShortsword); //Completely unrelated to Void Sparks, just putting the recipe here.
+            recipe.AddIngredient(ItemID.EnchantedSword);
+            recipe.AddTile(TileID.BewitchingTable);
             recipe.Register();
         }
     }
