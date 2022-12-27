@@ -460,6 +460,7 @@ MAGIC WEAPONS:
 ---
 (^) Beginner's Tome
 (^) Cryostike
+(#, ^2) Hot Potato !!!
 (^) Infusion
 (^) Low Signal
 (^) Magnus
@@ -537,6 +538,7 @@ EXPLOSIVE WEAPONS:
 (^) Lightning Grenade
 (#, ^2) Outbreak Bomb !!!
 (^) Peatball*
+(#, ^2) Potato Mine !!!
 
 (^) Bomboomstick
 (#2, ^2) Boomphracken
@@ -569,6 +571,12 @@ EXPLOSIVE WEAPONS:
 (@, #) Flakjack
 (@, ^3) Missile Minigun
 (@2, #) Starburst
+---
+
+
+CLASSLESS WEAPONS:
+---
+(X) Potato Launcher !!!
 ---
 
 
@@ -769,9 +777,9 @@ MOUNTS & PETS:
 ---
 (X) Ever-Watchful Eye (Juvenile Amalgamation) !!!
 (^) Strange Power-Up (Platformer Mech)
-(@2, #) Chromatic Scale (Rainbow Pangolin)
+(#, ^2) Chromatic Scale (Rainbow Pangolin)
 
-(#3, ^2) Amoeba Toy (Meberoid) !!!
+(^) Amoeba Toy (Meberoid)
 (^) Suspicious Looking Pebble (Defiled Blight)
 (@, #, %3) Unknown summoning item (Dwarf Dwarf)
 
