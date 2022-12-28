@@ -1,12 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Pets;
 using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -16,8 +14,8 @@ namespace Origins.Items.Pets {
         internal static int projectileID = 0;
         internal static int buffID = 0;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Strange Power Up");
-            Tooltip.SetDefault("The very first sprite.");
+            DisplayName.SetDefault("Chromatic Scale");
+            Tooltip.SetDefault("A very long an convoluted tooltip text because Ty forgot to mess with its name and tooltip :p");
 
             SacrificeTotal = 1;
         }
@@ -29,7 +27,6 @@ namespace Origins.Items.Pets {
             Item.rare = ItemRarityID.Cyan;// dev items are cyan rarity, despite being expert exclusive
             Item.buffType = buffID;
             Item.shoot = projectileID;
-            Item.UseSound = Origins.Sounds.PowerUp;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {

@@ -46,7 +46,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver !!!
-(#3, ^2) Primordial Amoeba !!!
+(#3, $, ^2) Primordial Amoeba !!!
 
 (X) Mad Maniac
 (%2, X) Mildew Carrion
@@ -66,6 +66,8 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
+(X) TOWN NPC QUEST MECHANICS (general)
+
 (#2, %2, ^2) Acid Freak
 (%2, X) Darkathian Miner
 (X) Defiled Envoy
@@ -81,21 +83,19 @@ VANILLA MODIFICATIONS:
 (^) Avenger Emblem (craftable from Exploder Emblem)*
 (^) Glass Kiln (craft some Origins materials)*
 (^) Miner Set (https://tyfyter.github.io/OriginsWiki/Recipe_Changes)*
-(X) Nights Edge with Origins equivalents !!!
+(^) Nights Edge with Origins equivalents
 (^) Obsidian Set (craftable from Undead Chunk AND Riven Sample)*
 (^) Strange String/Bud Barnacle (to craft Mechanical Worm and Battle Potion)*
 
 (^) Bats (drop Bat Hide)*
 (^) Boss Immunities (make every boss immune to anything with Stun)*
-(#3, %2) Demolitionist (to sell different items based on peat sold)*
-(X) Dryad Selling Origins Evil Items on Blood Moon*
+(^) Demolitionist (to sell different items based on peat sold)*
+(^) Dryad Selling Origins Evil Items on Blood Moon*
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
 (X) Explosive Defense Punishment (increased affliction from defense) !!!
 (^) Harpoon (new weapon to introduce sub-class)*
 (^) Trees*
 (^) Wall of Flesh (to drop Exploder Emblem & Thermite Launcher)*
-
-(@, %3, X) Nova Pillar in Lunar Invasion
 ---
 
 
@@ -222,7 +222,7 @@ ARMOR:
 (^) Felnum Armor
 (^) Fiberglass Armor
 (#2 (still needs set bonus effects), ^2) Myth Armor !!!
-(^) Riven Armor !!!
+(^) Riven Armor
 
 (^) Acrid Armor
 (^) Bleeding Obsidian Armor
@@ -260,7 +260,7 @@ ACCESSORIES:
 (#, ^2) Grave Danger
 (#, ^2) Gun Glove
 (X) Locus Control Tuner
-(#3, ^2) Mitosis !!!
+(#3, ^2) Mitosis
 (#, ^2) Olid Organ*
 (^) Parasitic Influence*
 (^) Pneumatic Bomb Thrower*
@@ -420,7 +420,7 @@ RANGED WEAPONS:
 (^) Harpoon Gun
 (^) Longbone
 (^) Riven Splitter
-(#, ^2) Sleetfire !!!
+(^) Sleetfire
 (^) Tendon Tear
 (^) The Kruncher
 (#3, ^2) Threemoepeater !!!
@@ -748,13 +748,13 @@ CONSUMABLES:
 (X) Tuned Greater Mana Potion
 (#, ^2) Voidsight Potion
 
-(#, ^2) Blue Bovine
+(^) Blue Bovine
 (^) Jam Sandwich
 (^) Krunch Mix*
-(#, ^2) One of a Kind Cookie
-(#, ^2) Potato
+(#4, ^2) One of a Kind Cookie
+(#3, ^2) Potato
 (^) Soul Spaghetti
-(#, ^2) Tasty Vanilla Shake
+(^) Tasty Vanilla Shake
 
 (^) Nerve Impulse Manipulator*
 (X) Quantum Cell
@@ -777,7 +777,7 @@ MOUNTS & PETS:
 ---
 (X) Ever-Watchful Eye (Juvenile Amalgamation) !!!
 (^) Strange Power-Up (Platformer Mech)
-(#, ^2) Chromatic Scale (Rainbow Pangolin)
+(^) Chromatic Scale (Rainbow Pangolin)
 
 (^) Amoeba Toy (Meberoid)
 (^) Suspicious Looking Pebble (Defiled Blight)

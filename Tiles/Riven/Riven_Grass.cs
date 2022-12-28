@@ -1,14 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.World;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 
 namespace Origins.Tiles.Riven {
     public class Riven_Grass : OriginTile, RivenTile {
@@ -113,7 +107,6 @@ namespace Origins.Tiles.Riven {
         }*/
     }
     public class Riven_Grass_Seeds : ModItem {
-		public override string Texture => "Terraria/Images/Item_27";
 		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riven Seeds");
         }

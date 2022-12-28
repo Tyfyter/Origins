@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Acid;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Explosives;
@@ -30,6 +31,9 @@ namespace Origins.NPCs {
 				break;
 			}
 			//Demo-man
+			if (type == NPCID.Merchant) {
+				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Blue_Bovine>());
+			}
 			if (type == NPCID.Demolitionist) {
 				if (ModContent.GetInstance<OriginSystem>().peatSold >= 0 && !Main.hardMode) {
 					shop.item[nextSlot++].SetDefaults(ItemID.ExplosivePowder);

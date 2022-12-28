@@ -1,5 +1,6 @@
 ﻿using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Dungeon;
@@ -120,6 +121,20 @@ namespace Origins.NPCs {
 				case NPCID.GoblinWarrior:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Harpoon_Gun>(), 200));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Harpoon>(), 2, 1, 2));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 50));
+				break;
+				case NPCID.Zombie:
+				case NPCID.Harpy:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 13));
+				break;
+				case NPCID.Nymph:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>()));
+				break;
+				case NPCID.Wolf:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tasty_Vanilla_Shake>(), 21));
+				break;
+				case NPCID.RainbowSlime:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<One_Kind_Cookie>(), 20, 1, 2));
 				break;
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = dropRules.Where((r) => 
