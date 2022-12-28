@@ -168,5 +168,38 @@
 			Defiled_Wastelands_Alt_Biome: "Defiled Wastelands"
 			Riven_Hive_Alt_Biome: "Riven Hive"
 		}
+		GuideAdvice: {
+			World_Evils: {
+				DA_Summon_Item: "You can combine defiled powder and strange string to create a nerve impulse manipulator. Make sure you are in the
+				wastelands before using it."
+				PA_Summon_Item: "You can create suspicious looking ice cream using sentient powder and bud barnacles. Make sure you are in the riven
+				hive before using it."
+
+				DAltar: "Defiled altars can usually be found in the defiled wastelands. You will need to be near them to craft some items."
+				RAltar: "Riven altars can usually be found in the riven hive. You will need to be near them to craft some items."
+
+				DSeer1: "Watch out for the defiled seer as it watches over the wastelands! It will be attracted to any noises you make."
+				DSeer2: "When the defiled seer is nearby either flee or conceal yourself from being seen by it. If it spots you it will chase after
+				you!"
+				DSeer3: "When in a chase from the defiled seer, try to out maneuver it or block it off from getting to you."
+
+				DFissure: "Defiled fissures can usually be found in the chasms around defiled areas. The heart will alert the immune system if too many
+				have been destroyed. Defeating the amalgamation will cause meteors to fall from the sky!"
+				RLesion: "Riven lesions can usually be found in the riven hive. Smashing too many will unleash the primordial amoeba. Defeating this
+				foe may cause meteors to fall out of the sky!"
+
+				Defiled_Heart: "The Defiled quickly reclaims purified tiles until all Defiled Hearts are smashed. Find them in Caverns at the center of
+				the system."
+
+				HardmodeAltarD: "Make sure to smash any defiled altar you can find. Something good is bound to happen if you do!"
+				HardmodeAltarR: "Make sure to smash any riven altar you can find. Something good is bound to happen if you do!"
+			}
+			Other: {
+				Stone_Mask: "Travel far along the surface of the world. You will be bound to find a stone mask to defend you from evil creatures."
+
+				AcidFreakUnlock: "I heard rumors a lone lizardwoman in the brine pool. If I recall correctly, the brine pool is not an ideal place to
+				call home..."
+			}
+		}
 	}
 }
