@@ -16,6 +16,7 @@ using Origins.Layers;
 using Origins.NPCs;
 using Origins.Projectiles;
 using Origins.Projectiles.Misc;
+using Origins.UI;
 using Origins.World;
 using Origins.World.BiomeData;
 using System;
@@ -32,6 +33,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.UI;
 using static Origins.Items.OriginGlobalItem;
 using static Origins.OriginExtensions;
 
@@ -707,6 +709,9 @@ namespace Origins {
             if (unlockedJournalEntries.Contains(journalItem.EntryName)) return false;
 			if (Origins.InspectItemKey.JustPressed) {
                 unlockedJournalEntries.Add(journalItem.EntryName);
+				if (OriginClientConfig.Instance.OpenJournalOnUnlock) {
+                    Origins.OpenJournalEntry(journalItem.EntryName);
+                }
                 return false;
 			}
             return true;

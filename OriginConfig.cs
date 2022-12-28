@@ -18,9 +18,6 @@ namespace Origins {
 	public class OriginConfig : ModConfig {
 		public static OriginConfig Instance;
 		public override ConfigScope Mode => ConfigScope.ServerSide;
-		//[Label("Use alternate world evil biomes")]
-		//[OptionStrings(new string[] { "never", "50/50", "always" })]
-		//[DefaultValue("50/50")]
 
 		[Header("Vanilla Buffs")]
 
@@ -51,8 +48,14 @@ namespace Origins {
 		[DefaultValue(false)]
 		public bool SetBonusDoubleTap = false;
 
+		[Header("Journal")]
+
 		[Label("Alternate Journal Layout")]
 		[DefaultValue(false)]
 		public bool TabbyJournal = false;
+
+		[Label("Open Journal Entries on Unlock")]
+		[DefaultValue(true)]
+		public bool OpenJournalOnUnlock = true;
 	}
 }

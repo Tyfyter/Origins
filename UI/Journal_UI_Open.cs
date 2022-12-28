@@ -151,9 +151,11 @@ namespace Origins.UI {
 		}
 		public void SwitchMode(Journal_UI_Mode newMode, string key) {
 			switch (mode = newMode) {
-				case Journal_UI_Mode.Normal_Page:
-				currentEffect = Journal_Registry.Entries[key].TextShader;
-				SetText(Language.GetTextValue("Mods.Origins.Journal." + key));
+				case Journal_UI_Mode.Normal_Page: {
+					JournalEntry entry = Journal_Registry.Entries[key];
+					currentEffect = entry.TextShader;
+					SetText(Language.GetTextValue($"Mods.{entry.Mod.Name}.Journal.{entry.TextKey}"));
+				}
 				break;
 
 				case Journal_UI_Mode.Index_Page: {
@@ -161,7 +163,7 @@ namespace Origins.UI {
 					List<TextSnippet> currentPage = new List<TextSnippet>();
 					int lineCount = 0;
 					foreach (var entry in Journal_Registry.Entries.Keys) {
-						currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(entry, Color.Black));
+						currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(Journal_Registry.Entries[entry].TextKey, Color.Black));
 						currentPage.Add(new TextSnippet("\n"));
 						if (++lineCount > 16) {
 							snippetPages.Add(currentPage.ToArray());
@@ -596,7 +598,7 @@ namespace Origins.UI {
 							out int hoveredSnippet,
 							bounds.Width * 0.5f - xMargin * 2
 						);
-						if (hoveredSnippet >= 0) {
+						if (hoveredSnippet >= 0 && hoveredSnippet < pages[i + pageOffset].Length) {
 							if (pages[i + pageOffset][hoveredSnippet] is TextSnippet currentSnippet) {
 								currentSnippet.OnHover();
 								if (Main.mouseLeft && Main.mouseLeftRelease) {

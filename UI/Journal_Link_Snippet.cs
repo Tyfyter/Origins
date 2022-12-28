@@ -21,7 +21,7 @@ namespace Origins.UI {
 			int lastHovered = 0;
 			public Journal_Link_Snippet(string key, Color color = default) : base() {
 				this.key = key;
-				Text = Journal_Registry.Entries[key].Name;
+				Text = Journal_Registry.Entries[key].NameValue;
 				CheckForHover = true;
 				this.Color = color;
 			}
@@ -35,15 +35,7 @@ namespace Origins.UI {
 				Main.LocalPlayer.mouseInterface = true;
 			}
 			public override void OnClick() {
-				bool canRetry = true;
-				retry:
-				if (Main.InGameUI.CurrentState is Journal_UI_Open journalUI) {
-					journalUI.SwitchMode(Journal_UI_Mode.Normal_Page, key);
-				} else if(canRetry) {
-					IngameFancyUI.OpenUIState(new Journal_UI_Open());
-					canRetry = false;
-					goto retry;
-				}
+				Origins.OpenJournalEntry(key);
 			}
 			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1) {
 				if (justCheckingString || lastHovered == 0 || lastHovered == 2 || spriteBatch is null || color != Color.Black) {

@@ -481,6 +481,17 @@ namespace Origins {
                 setBonusUI.SetState(new Mimic_Selection_UI());
             }
         }
+        public static void OpenJournalEntry(string key) {
+            bool canRetry = true;
+            retry:
+            if (Main.InGameUI.CurrentState is Journal_UI_Open journalUI) {
+                journalUI.SwitchMode(Journal_UI_Mode.Normal_Page, key);
+            } else if (canRetry) {
+                IngameFancyUI.OpenUIState(new Journal_UI_Open());
+                canRetry = false;
+                goto retry;
+            }
+        }
         internal static short AddGlowMask(string name){
             if (Main.netMode!=NetmodeID.Server){
                 Asset<Texture2D>[] glowMasks = new Asset<Texture2D>[TextureAssets.GlowMask.Length + 1];
