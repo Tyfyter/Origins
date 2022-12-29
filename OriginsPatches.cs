@@ -207,9 +207,13 @@ namespace Origins {
                 return fail;
             };
 			On.Terraria.Main.DrawNPCChatButtons += Main_DrawNPCChatButtons;
+            On.Terraria.Main.CloseNPCChatOrSign += (orig) => {
+                orig();
+                npcChatQuestSelected = false;
+            };
         }
-        bool npcChatQuestFocus = false;
-
+        static bool npcChatQuestFocus = false;
+        public static bool npcChatQuestSelected = false;
         private void Main_DrawNPCChatButtons(On.Terraria.Main.orig_DrawNPCChatButtons orig, int superColor, Color chatColor, int numLines, string focusText, string focusText3) {
             Player player = Main.LocalPlayer;
             Questing.Quest quest = Questing.Quest_Registry.Quests.Values.FirstOrDefault((q) => q.HasDialogue(Main.npc[player.talkNPC]));
@@ -262,6 +266,7 @@ namespace Origins {
                     Main.mouseLeftRelease = false;
                     player.releaseUseItem = false;
                     player.mouseInterface = true;
+                    SoundEngine.PlaySound(SoundID.MenuTick);
                     quest.OnDialogue();
                 }
             }

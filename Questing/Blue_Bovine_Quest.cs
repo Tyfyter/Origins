@@ -5,18 +5,71 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
 	public class Blue_Bovine_Quest : Quest {
+		int stage = 0;
+		int progress = 0;
+		const int target = 12;
+		public override int Stage {
+			get => stage;
+			set {
+				stage = value;
+				KillEnemyEvents = null;
+				switch (stage) {
+					case 1:
+					KillEnemyEvents.Add((npc) => {
+						if (npc.type == NPCID.Harpy) {
+							if (++progress >= target) {
+								Stage = 2;
+							}
+						}
+					});
+					break;
+				}
+			}
+		}
+		public override bool Started => Stage > 0;
+		public override bool Completed => Stage > 2;
 		public override bool HasDialogue(NPC npc) {
 			if (npc.type != NPCID.Merchant) return false;
-			return !Started;
+			return !Started || !Completed;
 		}
 		public override string GetDialogue() {
-			return "Moo";
+			if (Origins.npcChatQuestSelected) {
+				return "Accept";
+			}
+			return "Quest";
 		}
 		public override void OnDialogue() {
-			Main.npcChatText = "oh, you actually clicked on it?";
+			switch (stage) {
+				case 0: {
+					if (Origins.npcChatQuestSelected) {
+						Stage = 1;
+					} else {
+						Main.npcChatText = "Oh, you actually clicked on it? Kill some harpies for me, OK?";
+						Origins.npcChatQuestSelected = true;
+					}
+					break;
+				}
+				case 2: {
+					Main.npcChatText = "Oh, you Kill some harpies for me? OK";
+					Stage = 3;
+					break;
+				}
+			}
+		}
+		public override string GetJournalPage() {
+			return $"testing, stage {Stage}, {progress}/{target}";
+		}
+		public override void SaveData(TagCompound tag) {
+			tag.Add("Stage", Stage);
+			tag.Add("Progress", progress);
+		}
+		public override void LoadData(TagCompound tag) {
+			Stage = tag.SafeGet<int>("Stage");
+			progress = tag.SafeGet<int>("Progress");
 		}
 	}
 }

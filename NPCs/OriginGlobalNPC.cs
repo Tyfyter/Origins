@@ -8,6 +8,7 @@ using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven;
+using Origins.Questing;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
@@ -32,7 +33,9 @@ namespace Origins.NPCs {
 			}
 			//Demo-man
 			if (type == NPCID.Merchant) {
-				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Blue_Bovine>());
+				if (ModContent.GetInstance<Blue_Bovine_Quest>().Completed) {
+					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Blue_Bovine>());
+				}
 			}
 			if (type == NPCID.Demolitionist) {
 				if (ModContent.GetInstance<OriginSystem>().peatSold >= 0 && !Main.hardMode) {

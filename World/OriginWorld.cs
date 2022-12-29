@@ -28,6 +28,7 @@ using static Tyfyter.Utils.ChestLootCache.LootQueueAction;
 using static Tyfyter.Utils.ChestLootCache.LootQueueMode;
 using static Tyfyter.Utils.ChestLootCache;
 using Origins.Items.Weapons.Dungeon;
+using Origins.Questing;
 
 namespace Origins {
     public partial class OriginSystem : ModSystem {
@@ -94,6 +95,10 @@ namespace Origins {
 
             defiledResurgenceTiles = new List<(int, int)>(){};
             defiledAltResurgenceTiles = new List<(int, int, ushort)>(){};
+            TagCompound questsTag = tag.SafeGet<TagCompound>("Quests") ?? new TagCompound();
+            foreach (var quest in Quest_Registry.Quests.Values) {
+                if (quest.SaveToWorld) quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+            }
         }
         public override void SaveWorldData(TagCompound tag) {
             tag.Add("peatSold", peatSold);
@@ -101,6 +106,16 @@ namespace Origins {
             tag.Add( "defiledHearts", Defiled_Hearts.Select(Utils.ToVector2).ToList());
             if(_worldSurfaceLow.HasValue) {
                 tag.Add("worldSurfaceLow", _worldSurfaceLow);
+            }
+            TagCompound questsTag = new TagCompound();
+            foreach (var quest in Quest_Registry.Quests.Values) {
+                if (quest.SaveToWorld) {
+                    TagCompound questTag = new TagCompound();
+                    if (questTag.Count > 0) questsTag.Add(quest.FullName, questTag);
+                }
+            }
+            if (questsTag.Count > 0) {
+                tag.Add("Quests", questsTag);
             }
         }
         public override void ResetNearbyTileEffects() {

@@ -22,6 +22,7 @@ using System.Text.RegularExpressions;
 using System.Text;
 using Origins.Journal;
 using Terraria.Graphics.Shaders;
+using Origins.Questing;
 
 namespace Origins.UI {
 	public class Journal_UI_Open : UIState {
@@ -204,6 +205,57 @@ namespace Origins.UI {
 					SetSearchResults(key);
 					break;
 				}
+
+				case Journal_UI_Mode.Quest_List: {
+					List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
+					List<TextSnippet> currentPage = new List<TextSnippet>();
+					int lineCount = 0;
+					List<Quest> activeQuests = new();
+					List<Quest> completedQuests = new();
+					foreach (var quest in Quest_Registry.Quests.Values) {
+						if (quest.ShowInJournal()) {
+							if (quest.Completed) {
+								completedQuests.Add(quest);
+							} else {
+								activeQuests.Add(quest);
+							}
+						}
+					}
+					for (int i = 0; i < activeQuests.Count; i++) {
+						currentPage.Add(new Quest_Link_Handler.Quest_Link_Snippet(activeQuests[i], Color.Black));
+						currentPage.Add(new TextSnippet("\n"));
+						if (++lineCount > 16) {
+							snippetPages.Add(currentPage.ToArray());
+							currentPage = new List<TextSnippet>();
+							lineCount = 0;
+						}
+					}
+					if (activeQuests.Count > 0 && completedQuests.Count > 0) {
+						if (++lineCount >= 16) {
+							snippetPages.Add(currentPage.ToArray());
+							currentPage = new List<TextSnippet>();
+							lineCount = 0;
+						} else {
+							currentPage.Add(new TextSnippet("______________", Color.Black));
+						}
+					}
+					for (int i = 0; i < completedQuests.Count; i++) {
+						currentPage.Add(new Quest_Link_Handler.Quest_Link_Snippet(completedQuests[i], new Color(25, 25, 25)));
+						currentPage.Add(new TextSnippet("\n"));
+						if (++lineCount > 16) {
+							snippetPages.Add(currentPage.ToArray());
+							currentPage = new List<TextSnippet>();
+							lineCount = 0;
+						}
+					}
+					snippetPages.Add(currentPage.ToArray());
+					pages = snippetPages.ToArray();
+					break;
+				}
+				case Journal_UI_Mode.Quest_Page: {
+					SetText(Quest_Registry.Quests[key].GetJournalPage());
+				}
+				break;
 			}
 		}
 		public void SetSearchResults(string query) {
@@ -254,30 +306,37 @@ namespace Origins.UI {
 				Texture2D texture = TabsTexture;
 				float pixelSize = bounds.Width / (256f * 2);
 				Journal_UI_Mode? switchMode = null;
-				for (int i = 0; i < 2; i++) {
+				for (int i = 0; i < 3; i++) {
 					Journal_UI_Mode tabMode = Journal_UI_Mode.Normal_Page;
 					bool active = false;
 					switch (i) {
 						case 0:
 						frame = new(2, 66, 70, 30);
-						position = bounds.TopLeft() - new Vector2(pixelSize * 24, pixelSize * -31.25f);
+						position = bounds.TopLeft() + new Vector2(pixelSize * -24, pixelSize * 31.25f);
 						tabMode = Journal_UI_Mode.Index_Page;
 						break;
 
 						case 1:
+						frame = new(2, 34, 70, 30);
+						position = bounds.TopLeft() + new Vector2(pixelSize * -24, pixelSize * 69.25f);
+						tabMode = Journal_UI_Mode.Quest_List;
+						break;
+
+						case 2:
 						frame = new(2, 2, 70, 30);
-						position = bounds.BottomLeft() - new Vector2(pixelSize * 24, pixelSize * 61.25f);
+						position = bounds.BottomLeft() + new Vector2(pixelSize * -24, pixelSize * -61.25f);
 						tabMode = Journal_UI_Mode.Search_Page;
 						break;
 					}
 					if (tabMode == mode) {
 						position.X -= pixelSize * Math.Min(timeSinceSwitch * 3, 12);
 						active = true;
-					} else if (tabMode == lastMode){
+					} else if (tabMode == lastMode) {
 						position.X -= pixelSize * Math.Max(12 - timeSinceSwitch * 3, 0);
 					}
 					if (!PlayerInput.IgnoreMouseInterface && new Rectangle((int)position.X, (int)position.Y, (int)(pixelSize * 70), (int)(pixelSize * 30)).Contains(Main.MouseScreen)) {
 						active = true;
+						Main.LocalPlayer.mouseInterface = true;
 						if (Main.mouseLeft && Main.mouseLeftRelease) {
 							switchMode = tabMode;
 						}
@@ -291,6 +350,7 @@ namespace Origins.UI {
 			timeSinceSwitch++;
 			spriteBatch.Draw(PageTexture, bounds, Color.White);
 			switch (mode) {
+				case Journal_UI_Mode.Quest_Page: 
 				case Journal_UI_Mode.Normal_Page: {
 					int pageCount = pages?.Length ?? 0;
 					spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp, effect:currentEffect?.Shader);
@@ -791,6 +851,178 @@ namespace Origins.UI {
 					}
 					break;
 				}
+				case Journal_UI_Mode.Quest_List: {
+					int pageCount = pages?.Length ?? 0;
+					spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp, effect: currentEffect?.Shader);
+					/*
+					ChatManager.DrawColorCodedString(spriteBatch,
+							FontAssets.MouseText.Value,
+							loremIpsum,
+							new Vector2(bounds.X + xMargin, bounds.Y + yMargin),
+							Color.Red,
+							0,
+							Vector2.Zero,
+							Vector2.One,
+							bounds.Width * 0.5f - xMargin * 2
+						);
+					//*/
+					for (int i = 0; i < 2 && i + pageOffset < pageCount; i++) {
+						ChatManager.DrawColorCodedString(spriteBatch,
+							FontAssets.MouseText.Value,
+							pages[i + pageOffset],
+							new Vector2(bounds.X + (i * bounds.Width * 0.5f) + xMargin, bounds.Y + yMargin),
+							Color.Black,
+							0,
+							Vector2.Zero,
+							Vector2.One,
+							out int hoveredSnippet,
+							bounds.Width * 0.5f - xMargin * 2
+						);
+						if (hoveredSnippet >= 0) {
+							if (pages[i + pageOffset][hoveredSnippet] is Quest_Link_Handler.Quest_Link_Snippet currentSnippet) {
+								currentSnippet.OnHover();
+								if (Main.mouseLeft && Main.mouseLeftRelease) {
+									currentSnippet.OnClick();
+								}
+							}
+						}
+					}
+					if (pageOffset < pageCount - 2) {
+						Vector2 position = new Vector2(bounds.X + bounds.Width - xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
+						Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
+						//temp highlight
+						if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+							if (Main.mouseLeft && Main.mouseLeftRelease) {
+								pageOffset += 2;
+							}
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								-MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+						}
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position,
+							null,
+							Color.White,
+							-MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+					}
+					if (tabLayout && pageOffset > 0) {
+						Vector2 position = new Vector2(bounds.X + xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
+						Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
+						//temp highlight
+						if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
+							if (Main.mouseLeft && Main.mouseLeftRelease) {
+								if (pageOffset > 0) {
+									pageOffset = Math.Max(pageOffset - 2, 0);
+								} else {
+									SwitchMode(Journal_UI_Mode.Search_Page, "");
+								}
+							}
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(0, 2),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position + new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+							spriteBatch.Draw(
+								TextureAssets.Item[ItemID.WoodenArrow].Value,
+								position - new Vector2(2, 0),
+								null,
+								new Color(1f, 1f, 0f, 0f),
+								MathHelper.PiOver2,
+								new Vector2(7, 16),
+								1,
+								0,
+								0
+							);
+						}
+						spriteBatch.Draw(
+							TextureAssets.Item[ItemID.WoodenArrow].Value,
+							position,
+							null,
+							Color.White,
+							MathHelper.PiOver2,
+							new Vector2(7, 16),
+							1,
+							0,
+							0
+						);
+					}
+					break;
+				}
 			}
 			
 			spriteBatch.Restart(spriteBatchState);
@@ -810,6 +1042,8 @@ Fugiat odio voluptate sunt praesentium consequuntur quia voluptas eum. Facilis m
 		Normal_Page,
 		Index_Page,
 		Search_Page,
-		//INVALID
+		Quest_List,
+		Quest_Page,
+		INVALID
 	}
 }

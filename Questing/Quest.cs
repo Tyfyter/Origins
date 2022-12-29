@@ -7,11 +7,19 @@ using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
 	public abstract class Quest : ModType {
+		/// <summary>
+		/// not yet synced, don't use until it is
+		/// </summary>
+		public virtual bool SaveToWorld => false;
 		public virtual bool Started => false;
 		public virtual bool Completed => false;
+		public string NameKey { get; private set; }
+		public string NameValue => Language.GetTextValue(NameKey);
+		public virtual int Stage { get; set; }
 		public virtual bool HasDialogue(NPC npc) {
 			return false;
 		}
@@ -21,8 +29,24 @@ namespace Origins.Questing {
 		public virtual void OnDialogue() {
 
 		}
+		public virtual bool ShowInJournal() {
+			return Started;
+		}
+		public virtual bool GrayInJournal() {
+			return Completed;
+		}
+		public virtual string GetJournalPage() {
+			return "";
+		}
+		public virtual void SaveData(TagCompound tag) {}
+		public virtual void LoadData(TagCompound tag) {}
+		#region events
+		List<Action<NPC>> killEnemyEvents;
+		public List<Action<NPC>> KillEnemyEvents { get => killEnemyEvents ??= new(); protected set => killEnemyEvents = value; }
+		#endregion events
 		protected sealed override void Register() {
 			ModTypeLookup<Quest>.Register(this);
+			NameKey ??= $"Mods.{FullName}";
 			if (Quest_Registry.Quests is null) Quest_Registry.Quests = new Dictionary<string, Quest>();
 			Quest_Registry.Quests.Add(FullName, this);
 		}

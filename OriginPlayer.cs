@@ -16,6 +16,7 @@ using Origins.Layers;
 using Origins.NPCs;
 using Origins.Projectiles;
 using Origins.Projectiles.Misc;
+using Origins.Questing;
 using Origins.UI;
 using Origins.Water;
 using Origins.World;
@@ -570,24 +571,7 @@ namespace Origins {
             }
         }
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
-            if(crit) {
-                if(celestineSet)
-                    Item.NewItem(item.GetSource_OnHit(target, "SetBonus_Celestine"), target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
-                if(dimStarlight&&dimStarlightCooldown<1 && Main.rand.NextBool(5)) {
-                    Item.NewItem(item.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
-                    dimStarlightCooldown = 90;
-                }
-            }
-            if (rasterize) { 
-                target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
-            }
-            if (symbioteSkull) {
-                OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.9f);
-            }
-            if (decayingScale) {
-                target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
-                target.AddBuff(Solvent_Debuff.ID, 300);
-            }
+            OnHitNPCGeneral(item, target, damage, knockback, crit);
             if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
                 Projectile.NewProjectile(
                     Player.GetSource_OnHit(target),
@@ -602,26 +586,39 @@ namespace Origins {
             }
         }
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
-            if(crit) {
-                if(celestineSet)
-                    Item.NewItem(proj.GetSource_OnHit(target, "SetBonus_Celestine"), target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
-                if(dimStarlight&&dimStarlightCooldown<1) {
-                    Item.NewItem(proj.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
+            OnHitNPCGeneral(proj, target, damage, knockback, crit);
+        }
+        public void OnHitNPCGeneral(Entity entity, NPC target, int damage, float knockback, bool crit) {
+            if (crit) {
+                if (celestineSet)
+                    Item.NewItem(entity.GetSource_OnHit(target, "SetBonus_Celestine"), target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
+                if (dimStarlight && dimStarlightCooldown < 1) {
+                    Item.NewItem(entity.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
                     dimStarlightCooldown = 90;
                 }
             }
-            if (rasterize) { 
+            if (rasterize) {
                 target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
             }
-            if (symbioteSkull) { 
+            if (symbioteSkull) {
                 OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.9f);
             }
             if (decayingScale) {
                 target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
                 target.AddBuff(Solvent_Debuff.ID, 300);
             }
+			if (target.life <= 0) {
+                foreach (var quest in Quest_Registry.Quests.Values) {
+                    if (!quest.SaveToWorld) {
+                        for (int i = 0; i < quest.KillEnemyEvents.Count; i++) {
+                            quest.KillEnemyEvents[i](target);
+                        }
+                    }
+                }
+            }
         }
-		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
+
+        public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
             if(proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
                 /*float damageVal = damage;
                 if(minerSet) {
@@ -775,6 +772,10 @@ namespace Origins {
             if (tag.ContainsKey("journalUnlocked")) {
                 journalUnlocked = tag.Get<bool>("journalUnlocked");
             }
+            TagCompound questsTag = tag.SafeGet<TagCompound>("Quests") ?? new TagCompound();
+            foreach (var quest in Quest_Registry.Quests.Values) {
+                if (!quest.SaveToWorld) quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+            }
         }
         public override void SaveData(TagCompound tag) {
             if (eyndumCore is not null) {
@@ -788,6 +789,16 @@ namespace Origins {
             if (unlockedJournalEntries is not null) {
                 tag.Add("UnlockedJournalEntries", unlockedJournalEntries.ToList());
             }
+            TagCompound questsTag = new TagCompound();
+            foreach (var quest in Quest_Registry.Quests.Values) {
+                if (!quest.SaveToWorld) {
+                    TagCompound questTag = new TagCompound();
+                    if (questTag.Count > 0) questsTag.Add(quest.FullName, questTag);
+                }
+            }
+            if (questsTag.Count > 0) {
+                tag.Add("Quests", questsTag);
+			}
         }
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
             bool zoneDefiled = ZoneDefiled;
