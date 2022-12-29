@@ -26,6 +26,7 @@ using Origins.UI;
 using Origins.World;
 using Origins.World.BiomeData;
 using ReLogic.Content;
+using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -41,6 +42,7 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
+using Terraria.GameInput;
 using Terraria.Graphics;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
@@ -52,6 +54,8 @@ using Terraria.ModLoader.Default;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI;
+using Terraria.UI.Chat;
+using Terraria.UI.Gamepad;
 using Terraria.Utilities;
 using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
@@ -202,7 +206,66 @@ namespace Origins {
 				}
                 return fail;
             };
+			On.Terraria.Main.DrawNPCChatButtons += Main_DrawNPCChatButtons;
         }
+        bool npcChatQuestFocus = false;
+
+        private void Main_DrawNPCChatButtons(On.Terraria.Main.orig_DrawNPCChatButtons orig, int superColor, Color chatColor, int numLines, string focusText, string focusText3) {
+            Player player = Main.LocalPlayer;
+            Questing.Quest quest = Questing.Quest_Registry.Quests.Values.FirstOrDefault((q) => q.HasDialogue(Main.npc[player.talkNPC]));
+            bool hasQuest = quest is not null;
+			if (hasQuest) {
+                player.currentShoppingSettings.HappinessReport = "";
+			}
+            orig(superColor, chatColor, numLines, focusText, focusText3);
+			if (hasQuest) {
+                DynamicSpriteFont font = FontAssets.MouseText.Value;
+                float x = 180 + (Main.screenWidth - 800) / 2;
+                x += ChatManager.GetStringSize(font, focusText, new Vector2(0.9f)).X + 30f;
+                x += ChatManager.GetStringSize(font, Lang.inter[52].Value, new Vector2(0.9f)).X + 30f;
+                if (!string.IsNullOrWhiteSpace(focusText3)) x += ChatManager.GetStringSize(font, focusText3, new Vector2(0.9f)).X + 30f;
+                Vector2 position = new Vector2(x, 130 + numLines * 30);
+
+                string textValue = quest.GetDialogue();
+                Vector2 scale = new Vector2(0.9f);
+                Vector2 stringSize = ChatManager.GetStringSize(font, textValue, scale);
+                Color baseColor = new Color(superColor, (int)(superColor / 1.1), superColor / 2, superColor);
+
+                if (Main.MouseScreen.Between(position, position + stringSize * scale) && !PlayerInput.IgnoreMouseInterface) {
+                    player.mouseInterface = true;
+                    player.releaseUseItem = false;
+                    scale *= 1.2f;
+                    if (!npcChatQuestFocus) {
+                        SoundEngine.PlaySound(SoundID.MenuTick);
+                    }
+                    npcChatQuestFocus = true;
+                } else {
+                    if (npcChatQuestFocus) {
+                        SoundEngine.PlaySound(SoundID.MenuTick);
+                    }
+                    npcChatQuestFocus = false;
+                }
+                ChatManager.DrawColorCodedStringWithShadow(
+                    Main.spriteBatch,
+                    font,
+                    textValue,
+                    position + stringSize * 0.5f,
+                    baseColor,
+                    (!npcChatQuestFocus) ? Color.Black : Color.Brown,
+                    0f,
+                    stringSize * 0.5f,
+                    scale
+                );
+                UILinkPointNavigator.SetPosition(2503, position + stringSize * 0.5f);
+                UILinkPointNavigator.Shortcuts.NPCCHAT_ButtonsRight2 = true;
+                if (npcChatQuestFocus && !PlayerInput.IgnoreMouseInterface && Main.mouseLeft && Main.mouseLeftRelease) {
+                    Main.mouseLeftRelease = false;
+                    player.releaseUseItem = false;
+                    player.mouseInterface = true;
+                    quest.OnDialogue();
+                }
+            }
+		}
 
 		private void WorldGen_PlantAlch(ILContext il) {
             ILCursor c = new ILCursor(il);
@@ -279,96 +342,6 @@ namespace Origins {
             }
             return false;
 		}
-
-        private AutoCastingAsset<Texture2D> _texOuterDefiled;
-        private AutoCastingAsset<Texture2D> _texOuterRiven;
-        private AutoCastingAsset<Texture2D> _texOuterLower;
-        private FieldInfo _visualOverallProgress;
-        private FieldInfo _targetOverallProgress;
-        private FieldInfo _visualCurrentProgress;
-        private FieldInfo _targetCurrentProgress;
-        private MethodInfo _drawFilling2;
-        private void UIGenProgressBar_DrawSelf(On.Terraria.GameContent.UI.Elements.UIGenProgressBar.orig_DrawSelf orig, Terraria.GameContent.UI.Elements.UIGenProgressBar self, SpriteBatch spriteBatch) {
-            byte evil = OriginSystem.WorldEvil;
-            if (evil > 4) {
-
-                if (_texOuterDefiled.Value is null) _texOuterDefiled = Assets.Request<Texture2D>("UI/WorldGen/Outer_Defiled");
-                if (_texOuterRiven.Value is null) _texOuterRiven = Assets.Request<Texture2D>("UI/WorldGen/Outer_Riven");
-                if (_texOuterLower.Value is null) _texOuterLower = Main.Assets.Request<Texture2D>("Images/UI/WorldGen/Outer_Lower");
-                if (_visualOverallProgress is null) _visualOverallProgress = typeof(Terraria.GameContent.UI.Elements.UIGenProgressBar).GetField("_visualOverallProgress", BindingFlags.NonPublic | BindingFlags.Instance);
-                if (_targetOverallProgress is null) _targetOverallProgress = typeof(Terraria.GameContent.UI.Elements.UIGenProgressBar).GetField("_targetOverallProgress", BindingFlags.NonPublic | BindingFlags.Instance);
-                if (_visualCurrentProgress is null) _visualCurrentProgress = typeof(Terraria.GameContent.UI.Elements.UIGenProgressBar).GetField("_visualCurrentProgress", BindingFlags.NonPublic | BindingFlags.Instance);
-                if (_targetCurrentProgress is null) _targetCurrentProgress = typeof(Terraria.GameContent.UI.Elements.UIGenProgressBar).GetField("_targetCurrentProgress", BindingFlags.NonPublic | BindingFlags.Instance);
-                if (_drawFilling2 is null) _drawFilling2 = typeof(Terraria.GameContent.UI.Elements.UIGenProgressBar).GetMethod("DrawFilling2", BindingFlags.NonPublic | BindingFlags.Instance);
-
-                const int _smallBarWidth = 508;
-
-                const int _longBarWidth = 570;
-                bool flag = evil == OriginSystem.evil_riven;
-                if (WorldGen.drunkWorldGen && Main.rand.NextBool(2)) {
-                    flag = !flag;
-                }
-                _visualOverallProgress.SetValue(self, _targetOverallProgress.GetValue(self));
-                _visualCurrentProgress.SetValue(self, _targetCurrentProgress.GetValue(self));
-                CalculatedStyle dimensions = self.GetDimensions();
-                int completedWidth = (int)((float)_visualOverallProgress.GetValue(self) * _longBarWidth);
-                int completedWidthSmall = (int)((float)_visualCurrentProgress.GetValue(self) * _smallBarWidth);
-                Vector2 value = new(dimensions.X, dimensions.Y);
-                Color color = default(Color);
-                color.PackedValue = (flag ? 4294946846u : 4289374890u);
-                _drawFilling2.Invoke(self, new object[] { spriteBatch, value + new Vector2(20f, 40f), 16, completedWidth, _longBarWidth, color, Color.Lerp(color, Color.Black, 0.5f), new Color(48, 48, 48) });
-                color.PackedValue = 4290947159u;
-                _drawFilling2.Invoke(self, new object[] { spriteBatch, value + new Vector2(50f, 60f), 8, completedWidthSmall, _smallBarWidth, color, Color.Lerp(color, Color.Black, 0.5f), new Color(33, 33, 33) });
-                Rectangle r = dimensions.ToRectangle();
-                r.X -= 8;
-                spriteBatch.Draw(flag ? _texOuterRiven : _texOuterDefiled, r.TopLeft(), Color.White);
-                spriteBatch.Draw(_texOuterLower.Value, r.TopLeft() + new Vector2(44f, 60f), Color.White);
-            } else {
-                orig(self, spriteBatch);
-            }
-        }
-
-        private FieldInfo _UIWorldListItem_data;
-        private FieldInfo _worldIcon;
-        FieldInfo UIWorldListItem_Data => _UIWorldListItem_data ??=
-            typeof(Terraria.GameContent.UI.Elements.UIWorldListItem)
-            .GetField("_data", BindingFlags.NonPublic | BindingFlags.Instance);
-        FieldInfo UIWorldListItem_WorldIcon => _worldIcon ??=
-            typeof(Terraria.GameContent.UI.Elements.UIWorldListItem)
-            .GetField("_worldIcon", BindingFlags.NonPublic | BindingFlags.Instance);
-        private Asset<Texture2D> UIWorldListItem_GetIcon(On.Terraria.GameContent.UI.Elements.UIWorldListItem.orig_GetIcon orig, Terraria.GameContent.UI.Elements.UIWorldListItem self) {
-            void changeWorldIcon() {
-                try {
-                    WorldFileData data = (WorldFileData)UIWorldListItem_Data.GetValue(self);
-                    if (!data.DrunkWorld && !data.ForTheWorthy && !data.NotTheBees && !data.Anniversary && !data.DontStarve) {
-                        string path = Path.ChangeExtension(data.Path, ".twld");
-                        if (!FileUtilities.Exists(path, data.IsCloudSave)) {
-                            return;
-                        }
-                        byte[] buf = FileUtilities.ReadAllBytes(path, data.IsCloudSave);
-                        if (buf[0] == 31 && buf[1] == 139) {
-                            TagCompound tag = TagIO.FromStream(new MemoryStream(buf));
-                            TagCompound worldTag = tag.GetList<TagCompound>("modData")
-                            .Where(v => v.GetString("mod") == Name).First();
-                            OriginSystem originSystem = new OriginSystem();
-                            originSystem.LoadWorldData(worldTag.GetCompound("data"));
-                            if (UIWorldListItem_WorldIcon.GetValue(self) is not Terraria.GameContent.UI.Elements.UIImage image) return;
-                            image.AllowResizingDimensions = false;
-                            switch (originSystem.worldEvil) {
-                                case OriginSystem.evil_wastelands:
-                                image.SetImage(Assets.Request<Texture2D>("UI/WorldGen/IconDefiled" + (data.IsHardMode ? "Hallow" : "")));
-                                break;
-                                case OriginSystem.evil_riven:
-                                image.SetImage(Assets.Request<Texture2D>("UI/WorldGen/IconRiven" + (data.IsHardMode ? "Hallow" : "")));
-                                break;
-                            }
-                        }
-                    }
-                } catch (Exception) { }
-            }
-            Task.Run(changeWorldIcon);
-            return orig(self);
-        }
 
         delegate bool orig_ShakeTree(int x, int y, int type, ref bool createLeaves);
         delegate bool hook_ShakeTree(orig_ShakeTree orig, int x, int y, int type, ref bool createLeaves);

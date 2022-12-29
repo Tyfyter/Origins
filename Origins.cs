@@ -455,7 +455,6 @@ namespace Origins {
             Journal_UI_Open.BackTexture = null;
             Journal_UI_Open.PageTexture = null;
             Journal_UI_Open.TabsTexture = null;
-            Journal.Journal_Registry.Entries = null;
             OriginExtensions.drawPlayerItemPos = null;
             Tolruk.glowmasks = null;
             HelmetGlowMasks = null;
