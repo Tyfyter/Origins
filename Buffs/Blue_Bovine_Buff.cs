@@ -12,6 +12,9 @@ namespace Origins.Buffs {
 		public override void Update(Player player, ref int buffIndex) {
 			if (player.wings == 0) {
 				player.wings = 10;
+				if (player.cWings == 0) {
+					player.cWings = 36;
+				}
 			}
 			if (player.wingsLogic == 0 || player.wingTimeMax <= 15) {
 				player.wingsLogic = 13;
