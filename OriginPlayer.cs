@@ -393,7 +393,15 @@ namespace Origins {
 			}
 			if (tornTime > 0) {
                 Player.statLifeMax2 = (int)(Player.statLifeMax2 * (1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime))));
+				if (Player.statLifeMax2 <= 0) {
+                    Player.KillMe(PlayerDeathReason.ByOther(0), 1, 0);
+				}
             }
+        }
+		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
+            tornTime = 0;
+            tornTargetTime = 180;
+            tornTarget = 0.7f;
         }
 		public override void UpdateVisibleVanityAccessories() {
 		}
