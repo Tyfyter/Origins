@@ -195,6 +195,13 @@ namespace Origins {
                     if (!unloading) Origins.ResizeArrays();
 				}
             );
+			On.Terraria.WorldGen.KillWall_CheckFailure += (On.Terraria.WorldGen.orig_KillWall_CheckFailure orig, bool fail, Tile tileCache) => {
+                fail = orig(fail, tileCache);
+                if (Main.LocalPlayer.HeldItem.hammer < Origins.WallHammerRequirement[tileCache.WallType]) {
+                    fail = true;
+				}
+                return fail;
+            };
         }
 
 		private void WorldGen_PlantAlch(ILContext il) {

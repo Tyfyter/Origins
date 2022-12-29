@@ -130,6 +130,7 @@ namespace Origins {
 
         public float statSharePercent = 0f;
 
+        public bool journalUnlocked = false;
         public Item journalDye = null;
 
         public bool itemLayerWrench = false;
@@ -707,6 +708,9 @@ namespace Origins {
             }
         }
         public bool DisplayJournalTooltip(IJournalEntryItem journalItem) {
+			if (!journalUnlocked) {
+                return true;
+			}
             bool unlockedEntry = unlockedJournalEntries.Contains(journalItem.EntryName);
 			if (Origins.InspectItemKey.JustPressed) {
                 if (!unlockedEntry) unlockedJournalEntries.Add(journalItem.EntryName);
@@ -739,12 +743,16 @@ namespace Origins {
             if (tag.SafeGet<List<string>>("UnlockedJournalEntries") is List<string> journalEntries) {
                 unlockedJournalEntries = journalEntries.ToHashSet();
             }
+            if (tag.ContainsKey("journalUnlocked")) {
+                journalUnlocked = tag.Get<bool>("journalUnlocked");
+            }
         }
         public override void SaveData(TagCompound tag) {
             if (eyndumCore is not null) {
                 tag.Add("EyndumCore", eyndumCore.Value);
             }
             tag.Add("MimicSetSelection", mimicSetChoices);
+            tag.Add("journalUnlocked", journalUnlocked);
             if (journalDye is not null) {
                 tag.Add("JournalDye", journalDye);
             }

@@ -133,14 +133,16 @@ namespace Origins {
                     },
                     InterfaceScaleType.UI) { Active = Main.playerInventory }
                 );
-                layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-                    "Origins: Journal UI",
-                    delegate {
-                        journalUI?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
-                        return true;
-                    },
-                    InterfaceScaleType.UI) { Active = Main.playerInventory }
-                );
+				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().journalUnlocked) {
+                    layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
+                        "Origins: Journal UI",
+                        delegate {
+                            journalUI?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
+                            return true;
+                        },
+                        InterfaceScaleType.UI) { Active = Main.playerInventory }
+                    );
+                }
             }
         }
         public override void PreUpdateProjectiles() {

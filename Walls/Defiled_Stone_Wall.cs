@@ -14,7 +14,8 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
             WallID.Sets.Conversion.Stone[Type] = true;
             Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
-			AddMapEntry(new Color(150, 150, 150));
+            Origins.WallHammerRequirement[Type] = 70;
+            AddMapEntry(new Color(150, 150, 150));
 		}
     }
     public class Defiled_Stone_Wall_Safe : Defiled_Stone_Wall {

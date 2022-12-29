@@ -63,6 +63,8 @@ namespace Origins {
         public static bool[] ForceFelnumShockOnShoot { get => forceFelnumShockOnShoot; }
         static float[] flatDamageMultiplier;
         public static float[] FlatDamageMultiplier { get => flatDamageMultiplier; }
+        static int[] wallHammerRequirement;
+        public static int[] WallHammerRequirement { get => wallHammerRequirement; }
         public static ModKeybind SetBonusTriggerKey { get; private set; }
         public static ModKeybind InspectItemKey { get; private set; }
         #region Armor IDs
@@ -541,6 +543,7 @@ namespace Origins {
         internal static void ResizeArrays() {
             Array.Resize(ref DamageModOnHit, ProjectileLoader.ProjectileCount);
             Array.Resize(ref forceFelnumShockOnShoot, ProjectileLoader.ProjectileCount);
+            Array.Resize(ref wallHammerRequirement, WallLoader.WallCount);
             flatDamageMultiplier = new SetFactory(ItemLoader.ItemCount).CreateFloatSet(1f,
                 ItemID.Minishark, 3f/8f
             );
