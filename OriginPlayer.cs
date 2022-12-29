@@ -17,6 +17,7 @@ using Origins.NPCs;
 using Origins.Projectiles;
 using Origins.Projectiles.Misc;
 using Origins.UI;
+using Origins.Water;
 using Origins.World;
 using Origins.World.BiomeData;
 using System;
@@ -148,6 +149,7 @@ namespace Origins {
         public int heldProjectile = -1;
         public int lastMinionAttackTarget = -1;
         public int hookTarget = -1;
+        bool rivenWet = false;
         public HashSet<string> unlockedJournalEntries = new();
         public override void ResetEffects() {
             oldBonuses = 0;
@@ -291,6 +293,11 @@ namespace Origins {
             //endCustomMovement:
             hookTarget = -1;
         }
+		public override void PreUpdate() {
+            if (rivenWet) {
+                Player.gravity = 0.25f;
+            }
+        }
 		public override void PostUpdate() {
             heldProjectile = -1;
             if (rasterizedTime > 0) {
@@ -298,6 +305,20 @@ namespace Origins {
                 Player.position = Vector2.Lerp(Player.position, Player.oldPosition, rasterizedTime * 0.06f);
             }
             Player.oldVelocity = Player.velocity;
+            rivenWet = false;
+            if (Player.wet && !(Player.lavaWet || Player.honeyWet) && LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle) is Riven_Water_Style) {
+                rivenWet = true;
+                int duration = 30;
+                int targetTime = 1440;
+                float targetSeverity = 0f;
+                bool hadTorn = Player.HasBuff(Torn_Buff.ID);
+                Player.AddBuff(Torn_Buff.ID, duration);
+                if (hadTorn || targetSeverity < tornTarget) {
+                    tornTargetTime = targetTime;
+                    tornTarget = targetSeverity;
+                }
+                Player.velocity.X *= 0.975f;
+            }
         }
         public override void PostUpdateMiscEffects() {
             if(cryostenHelmet) {

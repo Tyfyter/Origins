@@ -23,9 +23,13 @@ namespace Origins.Buffs {
             npc.GetGlobalNPC<OriginGlobalNPC>().tornDebuff = true;
         }
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
-            float target = Main.LocalPlayer.GetModPlayer<OriginPlayer>().tornTarget;
+            OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+            float target = originPlayer.tornTarget;
+            float targetTime = originPlayer.tornTargetTime;
+            float time = originPlayer.tornTime;
             if (target == 0.7f) return;
-            string text = $"{target:P0}";
+
+            string text = $"{(1 - target) * (time / (float)targetTime):P0}";
             ChatManager.DrawColorCodedStringWithShadow(
                 spriteBatch,
                 FontAssets.CombatText[0].Value,
