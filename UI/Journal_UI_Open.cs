@@ -167,7 +167,11 @@ namespace Origins.UI {
 					List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
 					List<TextSnippet> currentPage = new List<TextSnippet>();
 					int lineCount = 0;
+					OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 					foreach (var entry in Journal_Registry.Entries.Keys) {
+						if (!originPlayer.unlockedJournalEntries.Contains(entry)) {
+							continue;
+						}
 						currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(entry, Color.Black));
 						currentPage.Add(new TextSnippet("\n"));
 						if (++lineCount > 16) {
@@ -206,15 +210,17 @@ namespace Origins.UI {
 			List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
 			List<TextSnippet> currentPage = new List<TextSnippet>();
 			int lineCount = 0;
-			//if (!tabLayout) {
-				if (pages.Length < 1 || pages[0].Length < 0 || pages[0][0] is not Journal_Search_Snippet) {
-					SwitchMode(Journal_UI_Mode.Search_Page, query);
-				}
-				currentPage.Add(pages[0][0]);
-				currentPage.Add(new TextSnippet("\n"));
-				lineCount += 1;
-			//}
+			if (pages.Length < 1 || pages[0].Length < 0 || pages[0][0] is not Journal_Search_Snippet) {
+				SwitchMode(Journal_UI_Mode.Search_Page, query);
+			}
+			currentPage.Add(pages[0][0]);
+			currentPage.Add(new TextSnippet("\n"));
+			lineCount += 1;
+			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 			foreach (var entry in GetSearchResults(query)) {
+				if (!originPlayer.unlockedJournalEntries.Contains(entry)) {
+					continue;
+				}
 				currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(entry, Color.Black));
 				currentPage.Add(new TextSnippet("\n"));
 				if (++lineCount > 16) {

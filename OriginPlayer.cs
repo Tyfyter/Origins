@@ -22,6 +22,7 @@ using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using Terraria;
 using Terraria.Audio;
@@ -735,6 +736,9 @@ namespace Origins {
             if (tag.SafeGet<Item>("JournalDye") is Item journalDyeItem) {
                 journalDye = journalDyeItem;
             }
+            if (tag.SafeGet<List<string>>("UnlockedJournalEntries") is List<string> journalEntries) {
+                unlockedJournalEntries = journalEntries.ToHashSet();
+            }
         }
         public override void SaveData(TagCompound tag) {
             if (eyndumCore is not null) {
@@ -743,6 +747,9 @@ namespace Origins {
             tag.Add("MimicSetSelection", mimicSetChoices);
             if (journalDye is not null) {
                 tag.Add("JournalDye", journalDye);
+            }
+            if (unlockedJournalEntries is not null) {
+                tag.Add("UnlockedJournalEntries", unlockedJournalEntries.ToList());
             }
         }
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
