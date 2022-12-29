@@ -706,15 +706,15 @@ namespace Origins {
             }
         }
         public bool DisplayJournalTooltip(IJournalEntryItem journalItem) {
-            if (unlockedJournalEntries.Contains(journalItem.EntryName)) return false;
+            bool unlockedEntry = unlockedJournalEntries.Contains(journalItem.EntryName);
 			if (Origins.InspectItemKey.JustPressed) {
-                unlockedJournalEntries.Add(journalItem.EntryName);
+                if (!unlockedEntry) unlockedJournalEntries.Add(journalItem.EntryName);
 				if (OriginClientConfig.Instance.OpenJournalOnUnlock) {
                     Origins.OpenJournalEntry(journalItem.EntryName);
                 }
                 return false;
 			}
-            return true;
+            return !unlockedEntry;
         }
         public static void InflictTorn(Player player, int duration, int targetTime = 180, float targetSeverity = 0.7f) {
             player.AddBuff(Torn_Buff.ID, duration);

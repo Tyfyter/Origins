@@ -327,6 +327,7 @@ namespace Origins {
                 Journal_UI_Button.Texture = Assets.Request<Texture2D>("UI/Lore/Journal");
                 Journal_UI_Open.BackTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Use_Back");
                 Journal_UI_Open.PageTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Use");
+                Journal_UI_Open.TabsTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Tabs");
                 On.Terraria.Player.KeyDoubleTap += (On.Terraria.Player.orig_KeyDoubleTap orig, Player self, int keyDir) => {
                     orig(self, keyDir);
                     if (OriginClientConfig.Instance.SetBonusDoubleTap) {
@@ -449,6 +450,9 @@ namespace Origins {
             amebicProtectionShader = null;
             cellNoiseTexture = null;
             Journal_UI_Button.Texture = null;
+            Journal_UI_Open.BackTexture = null;
+            Journal_UI_Open.PageTexture = null;
+            Journal_UI_Open.TabsTexture = null;
             Journal.Journal_Registry.Entries = null;
             OriginExtensions.drawPlayerItemPos = null;
             Tolruk.glowmasks = null;

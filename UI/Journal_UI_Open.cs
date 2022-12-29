@@ -27,11 +27,14 @@ namespace Origins.UI {
 	public class Journal_UI_Open : UIState {
 		public static AutoCastingAsset<Texture2D> BackTexture;
 		public static AutoCastingAsset<Texture2D> PageTexture;
+		public static AutoCastingAsset<Texture2D> TabsTexture;
 		UIElement baseElement;
 		TextSnippet[][] pages;
 		float yMargin;
 		float xMargin;
 		int pageOffset = 0;
+		int timeSinceSwitch = 0;
+		Journal_UI_Mode lastMode = Journal_UI_Mode.Normal_Page;
 		Journal_UI_Mode mode = Journal_UI_Mode.Normal_Page;
 		ArmorShaderData currentEffect = null;
 		bool tabLayout = false;
@@ -150,6 +153,8 @@ namespace Origins.UI {
 			pages = snippetPages.ToArray();
 		}
 		public void SwitchMode(Journal_UI_Mode newMode, string key) {
+			lastMode = timeSinceSwitch == 0 ? lastMode : mode;
+			timeSinceSwitch = 0;
 			switch (mode = newMode) {
 				case Journal_UI_Mode.Normal_Page: {
 					JournalEntry entry = Journal_Registry.Entries[key];
@@ -163,7 +168,7 @@ namespace Origins.UI {
 					List<TextSnippet> currentPage = new List<TextSnippet>();
 					int lineCount = 0;
 					foreach (var entry in Journal_Registry.Entries.Keys) {
-						currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(Journal_Registry.Entries[entry].TextKey, Color.Black));
+						currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(entry, Color.Black));
 						currentPage.Add(new TextSnippet("\n"));
 						if (++lineCount > 16) {
 							snippetPages.Add(currentPage.ToArray());
@@ -177,7 +182,7 @@ namespace Origins.UI {
 				}
 
 				case Journal_UI_Mode.Search_Page: {
-					if (!tabLayout) {
+					//if (!tabLayout) {
 						Rectangle bounds = baseElement.GetDimensions().ToRectangle();
 						pages = new TextSnippet[][]{
 							new TextSnippet[] {
@@ -191,7 +196,7 @@ namespace Origins.UI {
 								}
 							}
 						};
-					}
+					//}
 					SetSearchResults(key);
 					break;
 				}
@@ -201,14 +206,14 @@ namespace Origins.UI {
 			List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
 			List<TextSnippet> currentPage = new List<TextSnippet>();
 			int lineCount = 0;
-			if (!tabLayout) {
+			//if (!tabLayout) {
 				if (pages.Length < 1 || pages[0].Length < 0 || pages[0][0] is not Journal_Search_Snippet) {
 					SwitchMode(Journal_UI_Mode.Search_Page, query);
 				}
 				currentPage.Add(pages[0][0]);
 				currentPage.Add(new TextSnippet("\n"));
 				lineCount += 1;
-			}
+			//}
 			foreach (var entry in GetSearchResults(query)) {
 				currentPage.Add(new Journal_Link_Handler.Journal_Link_Snippet(entry, Color.Black));
 				currentPage.Add(new TextSnippet("\n"));
@@ -237,6 +242,47 @@ namespace Origins.UI {
 			spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp);
 			Rectangle bounds = baseElement.GetDimensions().ToRectangle();
 			spriteBatch.Draw(BackTexture, bounds, Color.White);
+			if (OriginClientConfig.Instance.TabbyJournal) {
+				Vector2 position = default;
+				Rectangle frame = default;
+				Texture2D texture = TabsTexture;
+				float pixelSize = bounds.Width / (256f * 2);
+				Journal_UI_Mode? switchMode = null;
+				for (int i = 0; i < 2; i++) {
+					Journal_UI_Mode tabMode = Journal_UI_Mode.Normal_Page;
+					bool active = false;
+					switch (i) {
+						case 0:
+						frame = new(2, 66, 70, 30);
+						position = bounds.TopLeft() - new Vector2(pixelSize * 24, pixelSize * -31.25f);
+						tabMode = Journal_UI_Mode.Index_Page;
+						break;
+
+						case 1:
+						frame = new(2, 2, 70, 30);
+						position = bounds.BottomLeft() - new Vector2(pixelSize * 24, pixelSize * 61.25f);
+						tabMode = Journal_UI_Mode.Search_Page;
+						break;
+					}
+					if (tabMode == mode) {
+						position.X -= pixelSize * Math.Min(timeSinceSwitch * 3, 12);
+						active = true;
+					} else if (tabMode == lastMode){
+						position.X -= pixelSize * Math.Max(12 - timeSinceSwitch * 3, 0);
+					}
+					if (!PlayerInput.IgnoreMouseInterface && new Rectangle((int)position.X, (int)position.Y, (int)(pixelSize * 70), (int)(pixelSize * 30)).Contains(Main.MouseScreen)) {
+						active = true;
+						if (Main.mouseLeft && Main.mouseLeftRelease) {
+							switchMode = tabMode;
+						}
+					}
+					spriteBatch.Draw(texture, position, frame, active ? Color.White : Color.LightGray, 0, default, pixelSize, 0, 0);
+				}
+				if (switchMode.HasValue) {
+					SwitchMode(switchMode.Value, "");
+				}
+			}
+			timeSinceSwitch++;
 			spriteBatch.Draw(PageTexture, bounds, Color.White);
 			switch (mode) {
 				case Journal_UI_Mode.Normal_Page: {
@@ -500,7 +546,7 @@ namespace Origins.UI {
 							0
 						);
 					}
-					if (tabLayout) {
+					if (tabLayout && pageOffset > 0) {
 						Vector2 position = new Vector2(bounds.X + xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
 						Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
 						//temp highlight
@@ -757,6 +803,7 @@ Fugiat odio voluptate sunt praesentium consequuntur quia voluptas eum. Facilis m
 	public enum Journal_UI_Mode {
 		Normal_Page,
 		Index_Page,
-		Search_Page
+		Search_Page,
+		//INVALID
 	}
 }
