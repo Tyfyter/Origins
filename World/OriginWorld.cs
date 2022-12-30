@@ -95,11 +95,9 @@ namespace Origins {
 
             defiledResurgenceTiles = new List<(int, int)>(){};
             defiledAltResurgenceTiles = new List<(int, int, ushort)>(){};
-            TagCompound questsTag = tag.SafeGet<TagCompound>("Quests") ?? new TagCompound();
-            foreach (var quest in Quest_Registry.Quests.Values) {
-                if (quest.SaveToWorld) quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
-            }
+            questsTag = tag.SafeGet<TagCompound>("Quests");
         }
+        internal TagCompound questsTag;
         public override void SaveWorldData(TagCompound tag) {
             tag.Add("peatSold", peatSold);
             tag.Add("worldEvil", worldEvil);
@@ -111,6 +109,7 @@ namespace Origins {
             foreach (var quest in Quest_Registry.Quests.Values) {
                 if (quest.SaveToWorld) {
                     TagCompound questTag = new TagCompound();
+                    quest.SaveData(questTag);
                     if (questTag.Count > 0) questsTag.Add(quest.FullName, questTag);
                 }
             }

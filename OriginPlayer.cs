@@ -772,12 +772,21 @@ namespace Origins {
             if (tag.ContainsKey("journalUnlocked")) {
                 journalUnlocked = tag.Get<bool>("journalUnlocked");
             }
-            TagCompound questsTag = tag.SafeGet<TagCompound>("Quests") ?? new TagCompound();
+            questsTag = tag.SafeGet<TagCompound>("Quests");
+        }
+        TagCompound questsTag;
+        public override void OnEnterWorld(Player player) {
+            questsTag ??= new TagCompound();
+            TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? new TagCompound();
             foreach (var quest in Quest_Registry.Quests.Values) {
-                if (!quest.SaveToWorld) quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+                if (!quest.SaveToWorld) {
+                    quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+				} else {
+                    quest.LoadData(worldQuestsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+                }
             }
         }
-        public override void SaveData(TagCompound tag) {
+		public override void SaveData(TagCompound tag) {
             if (eyndumCore is not null) {
                 tag.Add("EyndumCore", eyndumCore.Value);
             }
@@ -793,6 +802,7 @@ namespace Origins {
             foreach (var quest in Quest_Registry.Quests.Values) {
                 if (!quest.SaveToWorld) {
                     TagCompound questTag = new TagCompound();
+                    quest.SaveData(questTag);
                     if (questTag.Count > 0) questsTag.Add(quest.FullName, questTag);
                 }
             }
