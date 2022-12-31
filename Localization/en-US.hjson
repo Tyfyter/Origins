@@ -194,5 +194,9 @@
 				AcidFreakUnlock: "I heard rumors a lone lizardwoman in the brine pool. If I recall correctly, the brine pool is not an ideal place to call home..."
 			}
 		}
+		Words: {
+			2ndrefcasualmale: "boy"
+			2ndrefcasualfemale: "girl"
+		}
 	}
 }

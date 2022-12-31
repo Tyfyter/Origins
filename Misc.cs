@@ -29,6 +29,7 @@ using ReLogic.Content;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader.Exceptions;
 using ReLogic.Reflection;
+using Terraria.Localization;
 
 namespace Origins {
     public class LinkedQueue<T> : ICollection<T> {
@@ -1390,6 +1391,10 @@ namespace Origins {
             self.VanillaFindFrame(frameHeight, false, type);
             self.type = t;
         }
+        public static string Get2ndPersonReference(this Player self, string args = "") {
+            return Language.GetTextValue($"Mods.Origins.Words.2ndref{args}{(Main.LocalPlayer.Male ? "male" : "female")}");
+        }
+
         private static FieldInfo _inext;
         internal static FieldInfo Inext => _inext ??= typeof(UnifiedRandom).GetField("inext", BindingFlags.NonPublic | BindingFlags.Instance);
         private static FieldInfo _inextp;

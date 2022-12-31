@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
@@ -43,20 +44,20 @@ namespace Origins.Questing {
 					if (Origins.npcChatQuestSelected) {
 						Stage = 1;
 					} else {
-						Main.npcChatText = "Hey boy, I've had a bit of a vendetta against those harpies. Go and get twelve of 'em for me eh? I'll give you a nice reward if you do!";
+						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Merchant.Blue_Bovine.Start", Main.LocalPlayer.Get2ndPersonReference("casual"));
 						Origins.npcChatQuestSelected = true;
 					}
 					break;
 				}
 				case 2: {
-					Main.npcChatText = "Thank you. Those feather-ridden sky-folk were disrupting me from getting an important commodity! I'll offer you this new item at a discounted price for your services!";
+					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Merchant.Blue_Bovine.Complete");
 					Stage = 3;
 					break;
 				}
 			}
 		}
 		public override string GetJournalPage() {
-			return $"To the Skies!\nClient: Merchant\n\n'Hey boy, I've had a bit of a vendetta against those harpies. Go and get twelve of 'em for me eh? I'll give you a nice reward if you do!'\n\n - Slay 12 Harpies.\nStage {Stage}, {progress}/{target} Harpies slain\n\nUnlocks [Blue_Bovine.png]";
+			return Language.GetTextValue("Mods.Origins.Quests.Merchant.Blue_Bovine.Journal", Main.LocalPlayer.Get2ndPersonReference("casual"), progress, target, progress < target ? "00" : "55");
 		}
 		public override void SaveData(TagCompound tag) {
 			tag.Add("Stage", Stage);

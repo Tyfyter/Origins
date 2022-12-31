@@ -83,9 +83,11 @@ namespace Origins.UI {
 				TextSnippet textSnippet = snippets[i];
 				textSnippet.Update();
 				snippetScale = textSnippet.Scale;
+				Color snippetColor = textSnippet.GetVisibleColor();
 				if (textSnippet.UniqueDraw(justCheckingString: true, out var size, Main.spriteBatch, cursor, default, snippetScale)) {
 					cursor.X += size.X * baseScale.X * snippetScale;
 					result.X = Math.Max(result.X, cursor.X);
+					currentPage.Add(textSnippet);
 					continue;
 				}
 				string[] lines = textSnippet.Text.Split('\n');
@@ -133,7 +135,7 @@ namespace Origins.UI {
 						}
 						currentText.Append(words[j]);
 					}
-					currentPage.Add(new TextSnippet(currentText.ToString(), Color.Black));
+					currentPage.Add(new TextSnippet(currentText.ToString(), snippetColor));
 					currentText.Clear();
 					if (lines.Length > 1 && realLine) {
 						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
@@ -160,7 +162,7 @@ namespace Origins.UI {
 				case Journal_UI_Mode.Normal_Page: {
 					JournalEntry entry = Journal_Registry.Entries[key];
 					currentEffect = entry.TextShader;
-					SetText(Language.GetTextValue($"Mods.{entry.Mod.Name}.Journal.{entry.TextKey}"));
+					SetText(FormatTags(Language.GetTextValue($"Mods.{entry.Mod.Name}.Journal.{entry.TextKey}")));
 				}
 				break;
 
@@ -253,10 +255,24 @@ namespace Origins.UI {
 					break;
 				}
 				case Journal_UI_Mode.Quest_Page: {
-					SetText(Quest_Registry.Quests[key].GetJournalPage());
+					SetText(FormatTags(Quest_Registry.Quests[key].GetJournalPage()));
 				}
 				break;
 			}
+		}
+		//for example, [i:Origins/Blue_Bovine]
+		public static string FormatTags(string text) {
+			string outputText = text;
+			Regex itemTagRegex = new Regex("(?<=\\[i:)\\S+?(?=:|])");
+			Match currentMatch = itemTagRegex.Match(outputText);
+			int tries = 1000;
+			while (currentMatch is not null && tries-->0) {
+				if (ModContent.TryFind(currentMatch.Value, out ModItem item)) {
+					outputText = itemTagRegex.Replace(outputText, item.Type + "", 1);
+				}
+				currentMatch = itemTagRegex.Match(outputText);
+			}
+			return outputText;
 		}
 		public void SetSearchResults(string query) {
 			List<TextSnippet[]> snippetPages = new List<TextSnippet[]>();
@@ -375,9 +391,15 @@ namespace Origins.UI {
 							0,
 							Vector2.Zero,
 							Vector2.One,
-							out _,
+							out int hoveredSnippet,
 							bounds.Width * 0.5f - xMargin * 2
 						);
+						if (hoveredSnippet >= 0) {
+							pages[i + pageOffset][hoveredSnippet].OnHover();
+							if (Main.mouseLeft && Main.mouseLeftRelease) {
+								pages[i + pageOffset][hoveredSnippet].OnClick();
+							}
+						}
 					}
 					if (pageOffset < pageCount - 2) {
 						Vector2 position = new Vector2(bounds.X + bounds.Width - xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);

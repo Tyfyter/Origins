@@ -1,0 +1,24 @@
+﻿Mods: {
+	Origins: {
+		Quests: {
+			Merchant: {
+				Blue_Bovine: {
+					Journal:
+					'''
+					To the Skies!
+					Client: Merchant
+					
+					'{$Mods.Origins.Quests.Merchant.Blue_Bovine.Start}'
+					
+					- Slay {2} Harpies.
+					[c/{3}{3}{3}:{1}/{2} Harpies slain]
+					
+					Unlocks: [i:Origins/Blue_Bovine]
+					'''
+					Start:"Hey {0}, I've had a bit of a vendetta against those harpies. Go and get twelve of 'em for me eh? I'll give you a nice reward if you do!"
+					Complete:"Thank you. Those feather-ridden sky-folk were disrupting me from getting an important commodity! I'll offer you this new item at a discounted price for your services!"
+				}
+			}
+		}
+	}
+}
