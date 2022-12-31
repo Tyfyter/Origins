@@ -66,7 +66,7 @@ BOSSES AND MINI-BOSSES:
 
 TOWN NPCs:
 ---
-(X) TOWN NPC QUEST MECHANICS (general)
+(#2) TOWN NPC QUEST MECHANICS (general)
 
 (#2, %2, ^2) Acid Freak
 (%2, X) Darkathian Miner
@@ -687,12 +687,12 @@ MATERIALS:
 
 (^) Acid Bottle
 (^) Acrid Bar
-(^) Amebic Gel
+(^) Alkahest
+(^) Black Bile
 (^) Bleeding Obsidian Shard
 (^) Brine Sample
 (^) Defiled Key
 (^) Illegal Explosive Parts
-(^) Meta Gel
 (^) Riven Key
 
 (^) Busted Servo

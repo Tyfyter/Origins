@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
-	public class Blue_Bovine_Quest : Quest {
+    public class Blue_Bovine_Quest : Quest {
 		int stage = 0;
 		int progress = 0;
 		const int target = 12;
@@ -48,20 +43,20 @@ namespace Origins.Questing {
 					if (Origins.npcChatQuestSelected) {
 						Stage = 1;
 					} else {
-						Main.npcChatText = "Oh, you actually clicked on it? Kill some harpies for me, OK?";
+						Main.npcChatText = "Hey boy, I've had a bit of a vendetta against those harpies. Go and get twelve of 'em for me eh? I'll give you a nice reward if you do!";
 						Origins.npcChatQuestSelected = true;
 					}
 					break;
 				}
 				case 2: {
-					Main.npcChatText = "Oh, you Kill some harpies for me? OK";
+					Main.npcChatText = "Thank you. Those feather-ridden sky-folk were disrupting me from getting an important commodity! I'll offer you this new item at a discounted price for your services!";
 					Stage = 3;
 					break;
 				}
 			}
 		}
 		public override string GetJournalPage() {
-			return $"testing, stage {Stage}, {progress}/{target}";
+			return $"To the Skies!\nClient: Merchant\n\n'Hey boy, I've had a bit of a vendetta against those harpies. Go and get twelve of 'em for me eh? I'll give you a nice reward if you do!'\n\n - Slay 12 Harpies.\nStage {Stage}, {progress}/{target} Harpies slain\n\nUnlocks [Blue_Bovine.png]";
 		}
 		public override void SaveData(TagCompound tag) {
 			tag.Add("Stage", Stage);

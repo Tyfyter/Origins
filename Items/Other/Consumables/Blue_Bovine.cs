@@ -14,7 +14,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.WrathPotion);
 			Item.buffType = Blue_Bovine_Buff.ID;
 			Item.buffTime = 60 * 60 * 4;
-			Item.value = Item.buyPrice(gold: 2);
+			Item.value = Item.buyPrice(gold: 1);
 		}
 	}
 }

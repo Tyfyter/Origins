@@ -1,15 +1,12 @@
-﻿using Origins.Buffs;
-using Origins.Items.Other.Fish;
-using Terraria;
-using Terraria.GameContent.Creative;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class Krunch_Mix : ModItem {
+    public class Krunch_Mix : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Krunch Mix");
-			Tooltip.SetDefault("{$CommonItemTooltip.MinorStats} and further increased regeneration\n'And, that's why I love...'");
+			Tooltip.SetDefault("{$CommonItemTooltip.MinorStats} and further increased regeneration\n'Taste the graynbow'");
 			SacrificeTotal = 5;
 		}
 		public override void SetDefaults() {

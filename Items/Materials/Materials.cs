@@ -68,16 +68,14 @@ namespace Origins.Items.Materials {
         }
     }
     public class Amebic_Gel : ModItem {
-        static short glowmask;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Amebic Gel");
-            glowmask = Origins.AddGlowMask(this, "");
+            DisplayName.SetDefault("Alkahest");
+            Tooltip.SetDefault("Don't touch it");
             SacrificeTotal = 25;
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
             Item.rare = ItemRarityID.Orange;
-            Item.glowMask = glowmask;
         }
     }
     public class Angelium : ModItem {
@@ -117,6 +115,17 @@ namespace Origins.Items.Materials {
             recipe.AddIngredient(this, 4);
             recipe.AddTile(TileID.HeavyWorkBench);
             recipe.Register();
+        }
+    }
+    public class Shaping_Matter : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Black Bile");
+            SacrificeTotal = 25;
+
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 99;
+            Item.rare = ItemRarityID.Orange;
         }
     }
     public class Bleeding_Obsidian_Shard : ModItem {
@@ -414,17 +423,6 @@ namespace Origins.Items.Materials {
             Item.rare = ItemRarityID.Cyan;
             //Item.IsCurrency = true;
             Item.glowMask = glowmask;
-        }
-    }
-    public class Shaping_Matter : ModItem {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Meta Gel");
-            SacrificeTotal = 25;
-            
-        }
-        public override void SetDefaults() {
-            Item.maxStack = 99;
-            Item.rare = ItemRarityID.Orange;
         }
     }
     public class Modular_Plating : ModItem {
