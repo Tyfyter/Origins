@@ -40,11 +40,10 @@ namespace Origins.World.BiomeData {
 		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => ModContent.GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.ZoneRiven = OriginSystem.rivenTiles > NeededTiles;
 			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (NeededTiles - ShaderTileCount), ShaderTileCount) / ShaderTileCount;
 			LinearSmoothing(ref originPlayer.ZoneRivenProgressSmoothed, originPlayer.ZoneRivenProgress, OriginSystem.biomeShaderSmoothing * 0.1f);
 			
-			return originPlayer.ZoneRiven;
+			return OriginSystem.rivenTiles > NeededTiles;
 		}
 		public override void SpecialVisuals(Player player, bool isActive) {
 			//OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

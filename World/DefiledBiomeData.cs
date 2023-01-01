@@ -34,11 +34,10 @@ namespace Origins.World.BiomeData {
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.ZoneDefiled = OriginSystem.defiledTiles > Defiled_Wastelands.NeededTiles;
 			originPlayer.ZoneDefiledProgress = Math.Min(OriginSystem.defiledTiles - (Defiled_Wastelands.NeededTiles - Defiled_Wastelands.ShaderTileCount), Defiled_Wastelands.ShaderTileCount) / Defiled_Wastelands.ShaderTileCount;
 			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
 
-			return originPlayer.ZoneDefiled;
+			return OriginSystem.defiledTiles > Defiled_Wastelands.NeededTiles;
 		}
 		public override void SpecialVisuals(Player player, bool isActive) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

@@ -15,12 +15,15 @@ using System.Xml.Linq;
 using System.Text.RegularExpressions;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.World.BiomeData;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
 		private static OriginsModIntegrations instance;
 		Mod wikiThis;
 		public static Mod WikiThis { get => instance.wikiThis; set => instance.wikiThis = value; }
+		Mod epikV2;
+		public static Mod EpikV2 { get => instance.epikV2; set => instance.epikV2 = value; }
 		Asset<Texture2D> phaseIndicator;
 		public static Asset<Texture2D> PhaseIndicator { get => instance.phaseIndicator; set => instance.phaseIndicator = value; }
 		static string WikiURL => "https://tyfyter.github.io/OriginsWiki";
@@ -57,6 +60,10 @@ namespace Origins {
 		public static void LateLoad() {
 			if (ModLoader.TryGetMod("PhaseIndicator", out Mod phaseIndicatorMod) && phaseIndicatorMod.RequestAssetIfExists("PhaseIndicator", out Asset<Texture2D> phaseIndicatorTexture)) {
 				instance.phaseIndicator = phaseIndicatorTexture;
+			}
+			if (ModLoader.TryGetMod("EpikV2", out instance.epikV2)) {
+				EpikV2.Call("AddModEvilBiome", ModContent.GetInstance<Defiled_Wastelands>());
+				EpikV2.Call("AddModEvilBiome", ModContent.GetInstance<Riven_Hive>());
 			}
 		}
 		public static bool WikiPageExists(object obj, object id) {

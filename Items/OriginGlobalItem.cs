@@ -19,6 +19,7 @@ using Origins.Tiles.Riven;
 using Terraria.GameContent.ItemDropRules;
 using Origins.LootConditions;
 using Origins.Journal;
+using Origins.Questing;
 
 namespace Origins.Items {
     public class OriginGlobalItem : GlobalItem {
@@ -149,7 +150,16 @@ namespace Origins.Items {
                 }
 			}
         }
-        /*
+		public override void UpdateInventory(Item item, Player player) {
+            if (player.whoAmI == Main.myPlayer) {
+                foreach (var quest in Quest_Registry.Quests.Values) {
+                    if (!quest.SaveToWorld && quest.UpdateInventoryEvent is not null) {
+                        quest.UpdateInventoryEvent(item);
+                    }
+                }
+            }
+        }
+		/*
         [Obsolete("replace with ModifyItemLoot when that exists")]
 		public override void OnSpawn(Item item, IEntitySource source) {
             if (source is EntitySource_ItemOpen) {

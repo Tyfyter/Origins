@@ -293,11 +293,11 @@ namespace Origins.NPCs {
 			}
 			if (Main.hardMode && !spawnInfo.PlayerSafe) {
 				if (spawnInfo.SpawnTileY > Main.rockLayer) {
-					if (originPlayer.ZoneDefiled) {
+					if (player.InModBiome<Defiled_Wastelands>()) {
 						pool.Add(ModContent.NPCType<Defiled_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
 						pool.Add(ModContent.NPCType<Enchanted_Trident>(), Defiled_Wastelands.SpawnRates.Bident);
 					}
-					if (originPlayer.ZoneRiven) {
+					if (player.InModBiome<Riven_Hive>()) {
 						pool.Add(ModContent.NPCType<Riven_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
 						//pool.Add(ModContent.NPCType<Enchanted_Trident>(), Defiled_Wastelands.SpawnRates.Bident);
 					}

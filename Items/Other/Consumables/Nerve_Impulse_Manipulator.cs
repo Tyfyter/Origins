@@ -1,6 +1,7 @@
 ﻿using Origins.Items.Materials;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles.Misc;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -20,7 +21,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override bool CanUseItem(Player player) {
-			return player.GetModPlayer<OriginPlayer>().ZoneDefiled && !NPC.AnyNPCs(ModContent.NPCType<Defiled_Amalgamation>());
+			return player.InModBiome<Defiled_Wastelands>() && !NPC.AnyNPCs(ModContent.NPCType<Defiled_Amalgamation>());
 		}
 		public override bool? UseItem(Player player) {
 			if (player.whoAmI == Main.myPlayer) {

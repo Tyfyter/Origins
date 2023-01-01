@@ -41,8 +41,9 @@ namespace Origins.Questing {
 		public virtual void SaveData(TagCompound tag) {}
 		public virtual void LoadData(TagCompound tag) {}
 		#region events
-		List<Action<NPC>> killEnemyEvents;
-		public List<Action<NPC>> KillEnemyEvents { get => killEnemyEvents ??= new(); protected set => killEnemyEvents = value; }
+		public Action<NPC> KillEnemyEvent { get; protected set; }
+		public Action PreUpdateInventoryEvent { get; protected set; }
+		public Action<Item> UpdateInventoryEvent { get; protected set; }
 		#endregion events
 		protected sealed override void Register() {
 			ModTypeLookup<Quest>.Register(this);

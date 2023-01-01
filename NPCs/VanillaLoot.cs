@@ -190,7 +190,8 @@ namespace Origins.NPCs {
 					conditionalRule.condition = new LootConditions.SoulOfNight();
 				}
 			}
-			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Defiled_Key>(), 2500, 1, 1, new LootConditions.DefiledKeyCondition()));
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Defiled_Key>(), 2500, 1, 1, new LootConditions.Defiled_Key_Condition()));
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Riven_Key>(), 2500, 1, 1, new LootConditions.Riven_Key_Condition()));
 		}
 
 		static void GenFelnumOre() {

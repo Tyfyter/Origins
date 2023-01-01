@@ -1,5 +1,6 @@
 ﻿using Origins.Items.Materials;
 using Origins.NPCs.Riven;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,7 +19,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override bool CanUseItem(Player player) {
-			return player.GetModPlayer<OriginPlayer>().ZoneRiven && !NPC.AnyNPCs(ModContent.NPCType<Primordial_Amoeba>());
+			return player.InModBiome<Riven_Hive>() && !NPC.AnyNPCs(ModContent.NPCType<Primordial_Amoeba>());
 		}
 		public override bool? UseItem(Player player) {
 			if (player.whoAmI == Main.myPlayer) {

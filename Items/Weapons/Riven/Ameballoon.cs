@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -35,7 +36,7 @@ namespace Origins.Items.Weapons.Riven {
             Recipe recipe = Recipe.Create(Type, 40);
             recipe.AddCondition(
                Terraria.Localization.NetworkText.FromLiteral("Riven Water"),
-               (_) => Main.LocalPlayer.adjWater && Main.LocalPlayer.GetModPlayer<OriginPlayer>().ZoneRiven
+               (_) => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Riven_Hive>()
             );
             recipe.AddIngredient(ModContent.ItemType<Rubber>(), 40);
             recipe.AddTile(TileID.WorkBenches);

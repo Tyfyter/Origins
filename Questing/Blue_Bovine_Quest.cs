@@ -12,16 +12,16 @@ namespace Origins.Questing {
 			get => stage;
 			set {
 				stage = value;
-				KillEnemyEvents = null;
+				KillEnemyEvent = null;
 				switch (stage) {
 					case 1:
-					KillEnemyEvents.Add((npc) => {
+					KillEnemyEvent = (npc) => {
 						if (npc.type == NPCID.Harpy) {
 							if (++progress >= target) {
 								Stage = 2;
 							}
 						}
-					});
+					};
 					break;
 				}
 			}

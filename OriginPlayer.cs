@@ -98,11 +98,9 @@ namespace Origins {
         public float ZoneVoidProgress = 0;
         public float ZoneVoidProgressSmoothed = 0;
 
-        public bool ZoneDefiled { get; internal set; } = false;
         public float ZoneDefiledProgress = 0;
         public float ZoneDefiledProgressSmoothed = 0;
 
-        public bool ZoneRiven { get; internal set; } = false;
         public float ZoneRivenProgress = 0;
         public float ZoneRivenProgressSmoothed = 0;
 
@@ -399,6 +397,15 @@ namespace Origins {
 				}
             }
         }
+		public override void PostUpdateBuffs() {
+            if (Player.whoAmI == Main.myPlayer) {
+                foreach (var quest in Quest_Registry.Quests.Values) {
+                    if (!quest.SaveToWorld && quest.PreUpdateInventoryEvent is not null) {
+                        quest.PreUpdateInventoryEvent();
+                    }
+                }
+            }
+        }
 		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
             tornTime = 0;
             tornTargetTime = 180;
@@ -609,10 +616,8 @@ namespace Origins {
             }
 			if (target.life <= 0) {
                 foreach (var quest in Quest_Registry.Quests.Values) {
-                    if (!quest.SaveToWorld) {
-                        for (int i = 0; i < quest.KillEnemyEvents.Count; i++) {
-                            quest.KillEnemyEvents[i](target);
-                        }
+                    if (!quest.SaveToWorld && quest.KillEnemyEvent is not null) {
+                        quest.KillEnemyEvent(target);
                     }
                 }
             }
@@ -811,8 +816,8 @@ namespace Origins {
 			}
         }
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
-            bool zoneDefiled = ZoneDefiled;
-            bool zoneRiven = ZoneRiven;
+            bool zoneDefiled = Player.InModBiome<Defiled_Wastelands>();
+            bool zoneRiven = Player.InModBiome<Riven_Hive>();
 			if (zoneDefiled && zoneDefiled) {
 				if (Main.rand.NextBool()) {
                     zoneDefiled = false;

@@ -106,9 +106,22 @@ namespace Origins.LootConditions {
 			};
 		}
 	}
-	public class DefiledKeyCondition : IItemDropRuleCondition {
+	public class Defiled_Key_Condition : IItemDropRuleCondition {
 		public bool CanDrop(DropAttemptInfo info) {
-			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.GetModPlayer<OriginPlayer>().ZoneDefiled;
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>();
+		}
+
+		public bool CanShowItemDropInUI() {
+			return true;
+		}
+
+		public string GetConditionDescription() {
+			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+		}
+	}
+	public class Riven_Key_Condition : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Riven_Hive>();
 		}
 
 		public bool CanShowItemDropInUI() {
