@@ -1652,11 +1652,7 @@ namespace Origins {
             return tile.HasUnactuatedTile && Main.tileSolid[tile.TileType];
         }
         public static T SafeGet<T>(this TagCompound self, string key) {
-            try {
-                return self.Get<T>(key);
-            } catch (Exception) {
-                return default;
-            }
+            return self.TryGet(key, out T output) ? output : default;
         }
         public static void DrawTileGlow(this IGlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
             if (self.GlowTexture.Value is null) {
