@@ -60,9 +60,15 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
+            Recipe recipe = Recipe.Create(Type, 3);
             recipe.AddIngredient(ModContent.ItemType<Tree_Sap>(), 3);
-            recipe.AddIngredient(ModContent.ItemType<Silicon_Wafer>(), 1);
+            recipe.AddIngredient(ModContent.ItemType<Silicon_Wafer>());
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.AdhesiveBandage);
+            recipe.AddIngredient(this);
+            recipe.AddIngredient(ItemID.GlowingMushroom, 3);
             recipe.AddTile(TileID.WorkBenches);
             recipe.Register();
         }
@@ -425,6 +431,26 @@ namespace Origins.Items.Materials {
             Item.glowMask = glowmask;
         }
     }
+    public class Magic_Hair_Spray : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Magic Hair Treatment Gel");
+            SacrificeTotal = 1;
+
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 99;
+            Item.rare = ItemRarityID.Quest;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type, 5);
+            recipe.AddIngredient(ItemID.BottledWater, 5);
+            recipe.AddIngredient(ItemID.FallenStar);
+            recipe.AddIngredient(ItemID.Gel, 5);
+            recipe.AddIngredient(ModContent.ItemType<Silicon_Wafer>(), 2);
+            recipe.AddTile(TileID.Bottles);
+            recipe.Register();
+        }
+    }
     public class Modular_Plating : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Modular Plating");
@@ -600,7 +626,7 @@ namespace Origins.Items.Materials {
     }
     public class Silicon_Wafer : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Silicon Packet");
+            DisplayName.SetDefault("Silicon");
             SacrificeTotal = 25;
         }
         public override void SetDefaults() {

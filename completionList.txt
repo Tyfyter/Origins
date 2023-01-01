@@ -253,6 +253,7 @@ ACCESSORIES:
 (^) Bomb Charm*
 (^) Bomb Handling Device*
 (#, ^2) Bullet Shield*
+(^) Comb
 (^) Cybernetic Brain*
 (^) Decaying Scale*
 (^) Dim Starlight*
@@ -395,6 +396,7 @@ MELEE WEAPONS:
 (^) Tyrfing
 (^) Vorpal Sword
 
+(#, ^2) Crystal Cutter
 (@5, #) Envenomed Frenzy*
 (^) Fragarach
 (^) Knee Slapper
@@ -642,6 +644,8 @@ TILES:
 (^) Wilting Rose
 (X) Wrycoral !!!
 
+(X) A Perfect World
+
 (X) Music Box (Brine Pool)
 (X) Music Box (Cubekon Temple)
 (@5, #2-4) Music Box (Defiled Caverns) !!!
@@ -674,10 +678,11 @@ MATERIALS:
 (^) Encrusted Bar
 (^) Felnum Bar
 (^) Fiberglass Shard
+(^) Magic Hair Treatment Gel
 (^) Riven Carapace
 (^) Rubber
 (^) Sentient Powder
-(^) Silicon Packet
+(^) Silicon
 (^) Soulspore
 (^) Strange String*
 (^) Tree Sap
@@ -765,6 +770,7 @@ CONSUMABLES:
 (^) Pointy Crate
 
 (^) Gooey Water
+(#, ^2) Holiday Hair Dye
 (^) White Water
 (#, ^2) Void Lock !!!
 
