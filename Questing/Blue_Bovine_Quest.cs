@@ -80,7 +80,7 @@ namespace Origins.Questing {
 				Main.LocalPlayer.Get2ndPersonReference("casual"), //gendered casual second person reference, at index 0 because it occurs in the start message, which is copied into the journal text, so it occurs at the same index in both
 				progress,
 				target,
-				progress < target ? "" : "/completed" //used 3 times to get a hex code for a color tag, either #000000 (black) or #555555 (gray)
+				progress < target ? "" : "/completed" //used in a quest stage tag to show the stage as completed
 			);
 		}
 		public override void SaveData(TagCompound tag) {
