@@ -10,9 +10,7 @@
 					
 					'{$Mods.Origins.Quests.Merchant.Blue_Bovine.Start}'
 					
-					- Slay {2} Harpies.
-					[c/{3}{3}{3}:{1}/{2} Harpies slain]
-					
+					- [qs{3}:Slay {2} Harpies ({1}/{2})]
 					Unlocks: [i:Origins/Blue_Bovine]
 					'''
 					Start:"Hey {0}, I've had a bit of a vendetta against those harpies. Go and get twelve of 'em for me eh? I'll give you a nice reward if you do!"

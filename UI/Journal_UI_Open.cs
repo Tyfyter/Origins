@@ -92,7 +92,9 @@ namespace Origins.UI {
 				}
 				string[] lines = textSnippet.Text.Split('\n');
 				bool realLine = true;
+				int lineNum = 0;
 				foreach (string line in lines) {
+					lineNum++;
 					if (line == "\n") {
 						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
 						cursor.X = 0f;
@@ -137,7 +139,7 @@ namespace Origins.UI {
 					}
 					currentPage.Add(new TextSnippet(currentText.ToString(), snippetColor));
 					currentText.Clear();
-					if (lines.Length > 1 && realLine) {
+					if (lines.Length > lineNum && realLine) {
 						cursor.Y += font.LineSpacing * num3 * baseScale.Y;
 						cursor.X = 0f;
 						//result.Y = Math.Max(result.Y, cursor.Y);

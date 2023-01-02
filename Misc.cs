@@ -30,6 +30,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ModLoader.Exceptions;
 using ReLogic.Reflection;
 using Terraria.Localization;
+using ReLogic.Graphics;
 
 namespace Origins {
     public class LinkedQueue<T> : ICollection<T> {
@@ -1414,6 +1415,9 @@ namespace Origins {
             _inextp = null;
             _seedArray = null;
             _dangerousBiomes = null;
+            _defaultCharacterData = null;
+            _spriteCharacters = null;
+            strikethroughFont = null;
         }
         public static UnifiedRandom Clone(this UnifiedRandom r) {
             UnifiedRandom o = new UnifiedRandom();
@@ -1707,6 +1711,26 @@ namespace Origins {
                 (method(value.c) ? 4 : 0) |
                 (method(value.b) ? 2 : 0) |
                 (method(value.a) ? 1 : 0));
+        }
+        static FieldInfo _spriteCharacters;
+        static FieldInfo _SpriteCharacters => _spriteCharacters ??= typeof(DynamicSpriteFont).GetField("_spriteCharacters", BindingFlags.NonPublic | BindingFlags.Instance);
+        static FieldInfo _defaultCharacterData;
+        static FieldInfo _DefaultCharacterData => _defaultCharacterData ??= typeof(DynamicSpriteFont).GetField("_defaultCharacterData", BindingFlags.NonPublic | BindingFlags.Instance);
+        static DynamicSpriteFont strikethroughFont;
+        public static DynamicSpriteFont StrikethroughFont {
+            get {
+                if (strikethroughFont is null) {
+                    if (FontAssets.MouseText.IsLoaded) {
+                        DynamicSpriteFont baseFont = FontAssets.MouseText.Value;
+                        strikethroughFont = new DynamicSpriteFont(-2, baseFont.LineSpacing, baseFont.DefaultCharacter);
+                        _SpriteCharacters.SetValue(strikethroughFont, _SpriteCharacters.GetValue(baseFont));
+                        _DefaultCharacterData.SetValue(strikethroughFont, _DefaultCharacterData.GetValue(baseFont));
+                    } else {
+                        return FontAssets.MouseText.Value;
+                    }
+                }
+                return strikethroughFont;
+            }
         }
     }
 }
