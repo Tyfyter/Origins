@@ -83,6 +83,9 @@ namespace Origins.Questing {
 				progress < target ? "" : "/completed" //used in a quest stage tag to show the stage as completed
 			);
 		}
+		public override void SetStaticDefaults() {
+			NameKey = "Mods.Origins.Quests.Merchant.Blue_Bovine.Name";
+		}
 		public override void SaveData(TagCompound tag) {
 			//save stage and kills
 			tag.Add("Stage", Stage);

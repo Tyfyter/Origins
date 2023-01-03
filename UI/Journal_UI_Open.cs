@@ -226,7 +226,7 @@ namespace Origins.UI {
 						}
 					}
 					for (int i = 0; i < activeQuests.Count; i++) {
-						currentPage.Add(new Quest_Link_Handler.Quest_Link_Snippet(activeQuests[i], Color.Black));
+						currentPage.Add(new Quest_Link_Handler.Quest_Link_Snippet(activeQuests[i], Color.Black, inJournal:true));
 						currentPage.Add(new TextSnippet("\n"));
 						if (++lineCount > 16) {
 							snippetPages.Add(currentPage.ToArray());
@@ -234,7 +234,7 @@ namespace Origins.UI {
 							lineCount = 0;
 						}
 					}
-					if (activeQuests.Count > 0 && completedQuests.Count > 0) {
+					/*if (activeQuests.Count > 0 && completedQuests.Count > 0) {
 						if (++lineCount >= 16) {
 							snippetPages.Add(currentPage.ToArray());
 							currentPage = new List<TextSnippet>();
@@ -242,9 +242,9 @@ namespace Origins.UI {
 						} else {
 							currentPage.Add(new TextSnippet("______________", Color.Black));
 						}
-					}
+					}*/
 					for (int i = 0; i < completedQuests.Count; i++) {
-						currentPage.Add(new Quest_Link_Handler.Quest_Link_Snippet(completedQuests[i], new Color(25, 25, 25)));
+						currentPage.Add(new Quest_Link_Handler.Quest_Link_Snippet(completedQuests[i], new Color(25, 25, 25), true, true));
 						currentPage.Add(new TextSnippet("\n"));
 						if (++lineCount > 16) {
 							snippetPages.Add(currentPage.ToArray());

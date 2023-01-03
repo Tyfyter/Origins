@@ -3,9 +3,10 @@
 		Quests: {
 			Merchant: {
 				Blue_Bovine: {
+					Name:"To the Skies!"
 					Journal:
 					'''
-					To the Skies!
+					{$Mods.Origins.Quests.Merchant.Blue_Bovine.Name}
 					Client: Merchant
 					
 					'{$Mods.Origins.Quests.Merchant.Blue_Bovine.Start}'

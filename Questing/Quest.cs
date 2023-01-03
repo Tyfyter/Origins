@@ -17,7 +17,7 @@ namespace Origins.Questing {
 		public virtual bool SaveToWorld => false;
 		public virtual bool Started => false;
 		public virtual bool Completed => false;
-		public string NameKey { get; private set; }
+		public string NameKey { get; protected set; }
 		public string NameValue => Language.GetTextValue(NameKey);
 		public virtual int Stage { get; set; }
 		public virtual bool HasDialogue(NPC npc) {
@@ -45,6 +45,9 @@ namespace Origins.Questing {
 		public Action PreUpdateInventoryEvent { get; protected set; }
 		public Action<Item> UpdateInventoryEvent { get; protected set; }
 		#endregion events
+		public sealed override void SetupContent() {
+			SetStaticDefaults();
+		}
 		protected sealed override void Register() {
 			ModTypeLookup<Quest>.Register(this);
 			NameKey ??= $"Mods.{FullName}";
