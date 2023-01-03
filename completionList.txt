@@ -272,10 +272,12 @@ ACCESSORIES:
 (#, ^2) Turbo Reel !!!
 
 (^) Asylum Whistle
+(#, ^2) Eccentric Stone/Spirit Shard
 (X) Lost Page
 (^) Stone Mask
 (X) Timbre of Hell !!!
 (X) Tinkerer's Handy Guide
+(#, ^2) Tripod Nip
 
 (X) Sonic Radar
 
@@ -327,6 +329,7 @@ VANITY:
 (^) Cranivore Beanie
 (X) Decay Protector Set
 (X) Gore Protector Set
+(X) Steampunk Mechanist Set
 
 (^) Tyfyter's Set
 (@, #) The First Dream
@@ -340,6 +343,10 @@ UTILITIES:
 (#, ^2) Quantum Hook
 
 (X) Rocket-Boosted Minecart
+
+(X) Strange Backpack
+
+(#, ^2) Black Light
 ---
 
 
@@ -396,6 +403,7 @@ MELEE WEAPONS:
 (^) Tyrfing
 (^) Vorpal Sword
 
+(X) Origins Biome Keybrand
 (#, ^2) Crystal Cutter
 (@5, #) Envenomed Frenzy*
 (^) Fragarach
@@ -483,6 +491,7 @@ MAGIC WEAPONS:
 (#, ^2) Phantom Fury
 (X) Shocktrain
 (X) Spectra
+(X) Steam Blaster
 (^) Void Spectral
 
 (X) Ion Minigun
@@ -510,6 +519,7 @@ SUMMONER WEAPONS:
 (X) Mildew Whip
 (X) Stubborn Leaf
 
+(X) Controller/Patrol Bot Controller
 (X) Doom Incantation
 (X) Ego
 (@2/3, #) Fiber Optic Whip
@@ -544,6 +554,7 @@ EXPLOSIVE WEAPONS:
 
 (^) Bomboomstick
 (#2, ^2) Boomphracken
+(X) Groove Grenade
 (#, ^2) Klangjet
 (#, ^2) Mortar Shell
 (^) Shrapnel Bomb
@@ -649,7 +660,9 @@ TILES:
 (X) Music Box (Brine Pool)
 (X) Music Box (Cubekon Temple)
 (@5, #2-4) Music Box (Defiled Caverns) !!!
+(X) Music Box (Defiled Otherworldly)
 (@5, #2-4) Music Box (Defiled Wastelands) !!!
+(X) Music Box (Ancient Defiled Wastelands)
 (X) Music Box (Dusk)
 (X) Music Box (Riven Hive) !!!
 
@@ -771,6 +784,7 @@ CONSUMABLES:
 
 (^) Gooey Water
 (#, ^2) Holiday Hair Dye
+(#, ^2) Invisible Ink
 (^) White Water
 (#, ^2) Void Lock !!!
 
