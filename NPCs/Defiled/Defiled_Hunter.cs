@@ -241,6 +241,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override bool? CanBeHitByProjectile(Projectile projectile) {
             if(NPC.realLife==NPC.whoAmI)return null;
+            if (NPC.realLife < 0) return null;
             if((projectile.usesLocalNPCImmunity?projectile.localNPCImmunity[NPC.realLife]:Main.npc[NPC.realLife].immune[projectile.owner])>0) {
                 return false;
             }

@@ -99,7 +99,8 @@ namespace Origins {
                     for (int i = 0; i < Main.maxTilesX; i++) WorldGen.CountTiles(i);
                 }
             };
-            On.Terraria.Lang.GetDryadWorldStatusDialog += Lang_GetDryadWorldStatusDialog;
+            //AltLibrary hooks Lang.GetDryadWorldStatusDialog, so ours is probably not necessary
+            //On.Terraria.Lang.GetDryadWorldStatusDialog += Lang_GetDryadWorldStatusDialog;
             HookEndpointManager.Add(typeof(TileLoader).GetMethod("MineDamage", BindingFlags.Public | BindingFlags.Static), (hook_MinePower)MineDamage);
 
             On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.DrawPlayerInternal += LegacyPlayerRenderer_DrawPlayerInternal;
