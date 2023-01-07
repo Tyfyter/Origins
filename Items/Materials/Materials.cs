@@ -1,5 +1,4 @@
 ﻿using Origins.Tiles;
-using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
 using Origins.Tiles.Riven;
@@ -21,7 +20,7 @@ namespace Origins.Items.Materials {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.Bottle);
             recipe.AddIngredient(ItemID.Stinger, 2);
-            recipe.AddIngredient(ModContent.ItemType<Brine_Sample>(), 1);
+            //recipe.AddIngredient(ModContent.ItemType<Brine_Sample>(), 1);
             recipe.AddTile(TileID.AlchemyTable);
             recipe.Register();
         }
@@ -76,7 +75,7 @@ namespace Origins.Items.Materials {
     public class Amebic_Gel : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Alkahest");
-            Tooltip.SetDefault("Don't touch it");
+            Tooltip.SetDefault("'Don't touch it'");
             SacrificeTotal = 25;
         }
         public override void SetDefaults() {
@@ -126,6 +125,7 @@ namespace Origins.Items.Materials {
     public class Shaping_Matter : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Black Bile");
+            Tooltip.SetDefault("'Lethal when ingested by gods'");
             SacrificeTotal = 25;
 
         }
@@ -155,7 +155,7 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-    public class Brine_Sample : ModItem {
+    /*public class Brine_Sample : ModItem {
         //add lore here
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Brine Sample");
@@ -175,7 +175,7 @@ namespace Origins.Items.Materials {
             recipe.AddTile(TileID.AlchemyTable);
             recipe.Register();
         }
-    }
+    }*/
     public class Bud_Barnacle : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bud Barnacle");
@@ -190,6 +190,24 @@ namespace Origins.Items.Materials {
             recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wrycoral_Item>());
             recipe.AddIngredient(Type, 1);
             recipe.AddTile(TileID.Bottles);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.MonsterLasagna);
+            recipe.AddIngredient(Type, 8);
+            recipe.AddTile(TileID.CookingPots);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.UnholyArrow, 5);
+            recipe.AddRecipeGroup(ItemID.WoodenArrow, 5);
+            recipe.AddIngredient(Type);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.CoffinMinecart);
+            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
+            recipe.AddRecipeGroup(RecipeGroupID.Wood, 10);
+            recipe.AddIngredient(Type, 10);
+            recipe.AddTile(TileID.Anvils);
             recipe.Register();
 
             recipe = Recipe.Create(ItemID.MechanicalWorm);
@@ -406,7 +424,7 @@ namespace Origins.Items.Materials {
     public class Illegal_Explosive_Parts : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Illegal Explosive Parts");
-            Tooltip.SetDefault("All explosive parts are illegal...");
+            Tooltip.SetDefault("'All explosive parts are illegal...'");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -434,6 +452,7 @@ namespace Origins.Items.Materials {
     public class Magic_Hair_Spray : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Magic Hair Treatment Gel");
+            Tooltip.SetDefault("Keeps your hair in perfect form!");
             SacrificeTotal = 1;
 
         }
@@ -701,6 +720,24 @@ namespace Origins.Items.Materials {
             recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>(), 1);
             recipe.AddIngredient(Type, 1);
             recipe.AddTile(TileID.Bottles);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.MonsterLasagna);
+            recipe.AddIngredient(Type, 8);
+            recipe.AddTile(TileID.CookingPots);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.UnholyArrow, 5);
+            recipe.AddRecipeGroup(ItemID.WoodenArrow, 5);
+            recipe.AddIngredient(Type);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.CoffinMinecart);
+            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
+            recipe.AddRecipeGroup(RecipeGroupID.Wood, 10);
+            recipe.AddIngredient(Type, 10);
+            recipe.AddTile(TileID.Anvils);
             recipe.Register();
 
             recipe = Recipe.Create(ItemID.MechanicalWorm);

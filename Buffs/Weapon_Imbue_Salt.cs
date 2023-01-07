@@ -1,11 +1,10 @@
 ﻿using Terraria.ModLoader;
 
 namespace Origins.Buffs {
-    public class Solvent_Debuff : ModBuff {
-		public override string Texture => "Terraria/Images/Buff_160";
+    public class Weapon_Imbue_Salt : ModBuff {
 		public static int ID { get; private set; } = -1;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Solvent");
+            DisplayName.SetDefault("Weapon Imbue Alkahest");
             ID = Type;
         }
     }

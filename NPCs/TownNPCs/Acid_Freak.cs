@@ -155,9 +155,9 @@ namespace Origins.NPCs.TownNPCs {
 					continue;
 				}
 
-				if (player.inventory.Any(item => item.type == ModContent.ItemType<Brine_Sample>())) {
+				/*if (player.inventory.Any(item => item.type == ModContent.ItemType<Brine_Sample>())) {
 					return true;
-				}
+				}*/
 			}
 
 			return false;

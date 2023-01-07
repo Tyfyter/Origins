@@ -118,6 +118,7 @@ namespace Origins {
         public int rasterizedTime = 0;
         public bool toxicShock = false;
         public bool tornDebuff = false;
+        public bool flaskBile = false;
         public int tornTime = 0;
         public int tornTargetTime = 180;
         public float tornTarget = 0.7f;
@@ -240,6 +241,9 @@ namespace Origins {
 			if (Player.breath > Player.breathMax) {
                 Player.breath = Player.breathMax;
 			}
+            if (flaskBile) {
+                rasterize = true;
+            }
             Player.breathMax = 200;
             plagueSight = false;
             plagueSightLight = false;

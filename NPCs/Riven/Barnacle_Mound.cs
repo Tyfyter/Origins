@@ -88,9 +88,6 @@ namespace Origins.NPCs.Riven {
                 new FlavorTextBestiaryInfoElement("Barnacle mounds act as a self-contained ecosystem of microbes, buggers, and the Riven of course."),
             });
         }
-        public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Amebic_Gel>(), 1, 1, 3));
-        }
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
             Vector2 halfSize = new Vector2(GlowTexture.Width / 2, GlowTexture.Height / Main.npcFrameCount[NPC.type]);
             Vector2 position = NPC.Center + new Vector2(0, 12).RotatedBy(NPC.rotation);

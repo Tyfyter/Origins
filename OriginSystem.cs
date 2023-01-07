@@ -46,6 +46,12 @@ namespace Origins {
             recipe.AddIngredient(ItemID.EnchantedSword);
             recipe.AddTile(TileID.BewitchingTable);
             recipe.Register();
+
+            recipe = Recipe.Create(ItemID.SpelunkerGlowstick, 200);
+            recipe.AddIngredient(ItemID.SpelunkerPotion);
+            recipe.AddIngredient(ItemID.Glowstick, 200);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
             //this hook is supposed to be used for adding recipes,
             //but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
             Origins.instance.LateLoad();

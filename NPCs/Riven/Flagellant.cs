@@ -41,7 +41,6 @@ namespace Origins.NPCs.Riven {
 		    NPC.frame.Y = 60 * (int)(NPC.frameCounter / 6.0);
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Amebic_Gel>(), 1, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 17));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Flagellash>(), 25));
         }

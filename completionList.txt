@@ -123,6 +123,7 @@ ENEMY NPCS:
 (#, ^2) Spider Amoeba !!!
 
 (X) Acid Monster
+(X) Amebeye
 (^) Amebic Mummy
 (^) Amoeba Bugger
 (X) Angel of Death
@@ -139,6 +140,8 @@ ENEMY NPCS:
 (#2?, ^2) Mitoworm !!!
 (@5, #3) Riven Mimic !!!
 (#, ^2) Scalron
+(X) Shattered Ghoul
+(X) Torn Ghoul
 (#, ^2) Vent Hopper
 
 (X) Annihilator
@@ -186,19 +189,6 @@ STATUS EFFECTS:
 (#, ^2) Toxic Shock
 (X) Whiplash
 (X) Workout
-
-(^) Brainy Buff
-(^) Flying Exoskeleton
-(^) Friendly Bomb Buff
-(^) Lazy Cloak Buff
-(^) Mini-EOC Buff
-(^) Mini-EOW Buff
-(#, ^2) Nano Buff
-(^) Woodsprite Buff
-
-(^) Defiled Blight Buff
-(^) Meberoid Buff
-(^) Platformer Mech Buff
 ---
 
 
@@ -247,7 +237,6 @@ ARMOR:
 ACCESSORIES:
 ---
 (^) Advanced Imaging*
-(^) Air Pack*
 (^) Air Tank*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
@@ -633,12 +622,17 @@ TILES:
 (X) Sulphur Stone Wall
 
 (X) Acid Chest
+(#, ^2) Alkahest Torch
+(#, ^2) Bile Torch
 (X) Brine Water Fountain
 (X) Cubekon Chest
 (X) Cubekon Node
 (#3?, ^2) Defiled Dungeon Chest !!!
 (X) Defiled Water Fountain
+(#, ^2) Living Alkahest
+(#, ^2) Living Bile
 (#3?, ^2) Riven Dungeon Chest !!!
+(#, ^2) Riven Torch
 (X) Riven Water Fountain
 
 (X) Fabricator
@@ -757,6 +751,8 @@ CONSUMABLES:
 (^) Absorption Potion
 (#, ^2) Extreme O' Potion
 (^) Fervor Potion
+(#, ^2) Flask of Alkahest
+(#, ^2) Flask of Black Bile
 (#, ^2) Focus Potion
 (#, ^2) Nullification Potion (Nullification potion doesn't need a buff graphic, it's a single-instance effect)
 (^) Protean Potion
@@ -785,6 +781,7 @@ CONSUMABLES:
 (^) Gooey Water
 (#, ^2) Holiday Hair Dye
 (#, ^2) Invisible Ink
+(#, ^2) Magic Brine Dropper
 (^) White Water
 (#, ^2) Void Lock !!!
 
@@ -818,6 +815,11 @@ AMMO:
 (^) Peatball*
 
 (^) Acid Harpoon
+(^) Alkahest Arrow
+(#3, ^2) Alkahest Bullet
+(^) Bile Arrow 
+(X) Bile Bullet
+(#, ^2) Bile Dart
 (^) Cursed Harpoon
 (^) Giant Metal Slug
 (^) Teal Solution
