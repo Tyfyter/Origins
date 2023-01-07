@@ -27,7 +27,7 @@ namespace Origins.Buffs {
             float target = originPlayer.tornTarget;
             float targetTime = originPlayer.tornTargetTime;
             float time = originPlayer.tornTime;
-            if (target == 0.7f) return;
+            //if (target == 0.7f) return;
 
             string text = $"{(1 - target) * (time / (float)targetTime):P0}";
             ChatManager.DrawColorCodedStringWithShadow(

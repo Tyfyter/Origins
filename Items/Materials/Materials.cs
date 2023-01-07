@@ -125,7 +125,7 @@ namespace Origins.Items.Materials {
     public class Shaping_Matter : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Black Bile");
-            Tooltip.SetDefault("'Lethal when ingested by gods'");
+            Tooltip.SetDefault("'Lethal when ingested by gods'");// oddly specific, was ever this mentioned elsewhere?
             SacrificeTotal = 25;
 
         }
