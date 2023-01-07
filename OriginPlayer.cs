@@ -241,9 +241,6 @@ namespace Origins {
 			if (Player.breath > Player.breathMax) {
                 Player.breath = Player.breathMax;
 			}
-            if (flaskBile) {
-                rasterize = true;
-            }
             Player.breathMax = 200;
             plagueSight = false;
             plagueSightLight = false;
@@ -595,16 +592,23 @@ namespace Origins {
                     ai1:damage / 10
                 );
             }
+            if (flaskBile && item.CountsAsClass(DamageClass.Melee)) {
+                target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
+            }
         }
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
             OnHitNPCGeneral(proj, target, damage, knockback, crit);
+            if (flaskBile && (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type])) {
+                target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
+            }
         }
         public void OnHitNPCGeneral(Entity entity, NPC target, int damage, float knockback, bool crit) {
+            Entity sourceEntity = entity is Projectile ? entity: Player;
             if (crit) {
                 if (celestineSet)
-                    Item.NewItem(entity.GetSource_OnHit(target, "SetBonus_Celestine"), target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
+                    Item.NewItem(sourceEntity.GetSource_OnHit(target, "SetBonus_Celestine"), target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
                 if (dimStarlight && dimStarlightCooldown < 1) {
-                    Item.NewItem(entity.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
+                    Item.NewItem(sourceEntity.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
                     dimStarlightCooldown = 90;
                 }
             }
