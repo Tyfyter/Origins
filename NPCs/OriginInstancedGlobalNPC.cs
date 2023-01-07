@@ -33,7 +33,11 @@ namespace Origins.NPCs {
             int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
             if (rasterized >= 0) {
                 rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 16), npc.buffTime[rasterized] - 1);
-			} else {
+				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out var adjustment)) {
+                    rasterizedTime = Math.Min(rasterizedTime, adjustment.Item1);
+                    npc.oldVelocity = Vector2.Lerp(npc.oldVelocity, npc.velocity, adjustment.Item2);
+                }
+            } else {
                 rasterizedTime = 0;
 			}
             amebolizeDebuff = false;

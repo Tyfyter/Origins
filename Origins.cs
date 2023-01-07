@@ -65,6 +65,7 @@ namespace Origins {
         public static float[] FlatDamageMultiplier { get => flatDamageMultiplier; }
         static int[] wallHammerRequirement;
         public static int[] WallHammerRequirement { get => wallHammerRequirement; }
+        public static Dictionary<int, (int maxLevel, float velDiffMult)> RasterizeAdjustment { get; private set; }
         public static ModKeybind SetBonusTriggerKey { get; private set; }
         public static ModKeybind InspectItemKey { get; private set; }
         #region Armor IDs
@@ -181,6 +182,7 @@ namespace Origins {
             newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "the {$Mods.Origins.Generic.Defiled_Wastelands}");
             LocalizationLoader.AddTranslation(newTranslation);
 
+            RasterizeAdjustment = new Dictionary<int, (int, float)>();
             ExplosiveBaseDamage = new Dictionary<int, int>();
             DamageModOnHit = new bool[ProjectileLoader.ProjectileCount];
             DamageModOnHit[ProjectileID.Bomb] = true;
@@ -391,14 +393,37 @@ namespace Origins {
         }
 		public override void PostSetupContent() {
             foreach (KeyValuePair<int, NPCDebuffImmunityData> item in NPCID.Sets.DebuffImmunitySets) {
-                    NPCDebuffImmunityData immunityData = item.Value;
-                    if (immunityData is not null && immunityData.SpecificallyImmuneTo is not null && immunityData.SpecificallyImmuneTo.Contains(BuffID.Confused)) {
-                        Array.Resize(ref immunityData.SpecificallyImmuneTo, immunityData.SpecificallyImmuneTo.Length + 3);
-                        immunityData.SpecificallyImmuneTo[^3] = Stunned_Debuff.ID;
-                        immunityData.SpecificallyImmuneTo[^2] = Toxic_Shock_Debuff.ID;
-                        immunityData.SpecificallyImmuneTo[^1] = Rasterized_Debuff.ID;
-                    }
+                NPCDebuffImmunityData immunityData = item.Value;
+                if (immunityData is not null && immunityData.SpecificallyImmuneTo is not null && immunityData.SpecificallyImmuneTo.Contains(BuffID.Confused)) {
+                    Array.Resize(ref immunityData.SpecificallyImmuneTo, immunityData.SpecificallyImmuneTo.Length + 2);
+                    immunityData.SpecificallyImmuneTo[^2] = Stunned_Debuff.ID;
+                    immunityData.SpecificallyImmuneTo[^1] = Toxic_Shock_Debuff.ID;
+                    //immunityData.SpecificallyImmuneTo[^1] = Rasterized_Debuff.ID;
+                    switch (item.Key) {
+                        case NPCID.KingSlime:
+                        case NPCID.QueenSlimeBoss:
+                        RasterizeAdjustment.Add(item.Key, (0, 1));
+                        break;
+
+                        case NPCID.QueenBee:
+                        RasterizeAdjustment.Add(item.Key, (16, 0.95f));
+                        break;
+
+                        case NPCID.EaterofWorldsHead:
+                        RasterizeAdjustment.Add(item.Key, (8, 0.5f));
+                        break;
+
+                        case NPCID.Deerclops:
+                        RasterizeAdjustment.Add(item.Key, (8, 0));
+                        break;
+
+                        default:
+                        RasterizeAdjustment.Add(item.Key, (8, 0.95f));
+                        break;
+					}
+
                 }
+            }
         }
 		public override void HandlePacket(BinaryReader reader, int whoAmI) {
             byte type = reader.ReadByte();
@@ -452,6 +477,7 @@ namespace Origins {
             VanillaElements = null;
             forceFelnumShockOnShoot = null;
             flatDamageMultiplier = null;
+            RasterizeAdjustment = null;
             celestineBoosters = null;
             perlinFade0 = null;
             blackHoleShade = null;
