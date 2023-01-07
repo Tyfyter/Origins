@@ -20,6 +20,9 @@ namespace Origins.Questing {
 		public string NameKey { get; protected set; }
 		public string NameValue => Language.GetTextValue(NameKey);
 		public virtual int Stage { get; set; }
+		public virtual bool HasStartDialogue(NPC npc) {
+			return false;
+		}
 		public virtual bool HasDialogue(NPC npc) {
 			return false;
 		}

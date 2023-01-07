@@ -87,6 +87,7 @@
 		}
 		Interface: {
 			Journal: Journal
+			Quests: Quests
 		}
 		Generic: {
 			Riven_Hive: "{$Riven} Hive"

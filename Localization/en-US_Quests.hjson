@@ -18,6 +18,11 @@
 					Complete:"Thank you. Those feather-ridden sky-folk were disrupting me from getting an important commodity! I'll offer you this new item at a discounted price for your services!"
 				}
 			}
+			Party_Girl:{
+				Tax_Collector_Hat: {
+					Name: "<PH> how about hat?"
+				}
+			}
 		}
 	}
 }

@@ -72,6 +72,8 @@ namespace Origins {
         Point fiberglassMax;
         HashSet<Point> fiberglassFrameSet;
         Task fiberglassFrameTask;
+
+        public bool taxCollectorWearsPartyhat;
         public static int MimicSetLevel {
             get {
                 float currentPercent = totalDefiled / (float)WorldGen.totalSolid;
