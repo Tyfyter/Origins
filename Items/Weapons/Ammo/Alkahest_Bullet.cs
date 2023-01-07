@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.NPCs;
 using Terraria;
@@ -31,12 +32,24 @@ namespace Origins.Items.Weapons.Ammo {
     public class Alkahest_Bullet_P : ModProjectile {
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.CursedBullet);
-            Projectile.penetrate = 1;
-            Projectile.width = 20;
-            Projectile.height = 2;
         }
-        public override void Kill(int timeLeft) {
-            SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
+		public override void AI() {
+            if (Projectile.alpha > 0)
+                Projectile.alpha -= 15;
+            if (Projectile.alpha < 0)
+                Projectile.alpha = 0;
+            //TODO: add light
+        }
+		public override Color? GetAlpha(Color lightColor) {
+			if (Projectile.alpha < 200) {
+				return new Color(255 - Projectile.alpha, 255 - Projectile.alpha, 255 - Projectile.alpha, 0);
+			}
+			return Color.Transparent;
+		}
+		public override void Kill(int timeLeft) {
+            Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+            SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
+            SoundEngine.PlaySound(SoundID.Shatter.WithVolume(0.5f), Projectile.position);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             OriginGlobalNPC.InflictTorn(target, 180, 180, 0.75f);
