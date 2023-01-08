@@ -72,7 +72,7 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-    public class Amebic_Gel : ModItem {
+    public class Alkahest : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Alkahest");
             Tooltip.SetDefault("'Don't touch it'");
@@ -122,7 +122,7 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-    public class Shaping_Matter : ModItem {
+    public class Black_Bile : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Black Bile");
             Tooltip.SetDefault("'Lethal when ingested by gods'");// oddly specific, was ever this mentioned elsewhere?

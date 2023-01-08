@@ -34,7 +34,7 @@ namespace Origins.Items.Weapons.Defiled {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.SoulofNight, 15);
             recipe.AddIngredient(ItemID.SpellTome);
-            recipe.AddIngredient(ModContent.ItemType<Shaping_Matter>(), 20);
+            recipe.AddIngredient(ModContent.ItemType<Black_Bile>(), 20);
             recipe.AddTile(TileID.Bookcases);
             recipe.Register();
         }

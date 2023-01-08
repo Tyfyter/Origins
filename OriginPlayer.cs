@@ -213,6 +213,8 @@ namespace Origins {
             protozoaFoodItem = null;
             symbioteSkull = false;
             toxicShock = false;
+            flaskBile = false;
+            flaskSalt = false;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;
             statSharePercent = 0f;
@@ -593,17 +595,24 @@ namespace Origins {
                     ai1:damage / 10
                 );
             }
-            if (flaskBile && item.CountsAsClass(DamageClass.Melee)) {
-                target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
-            }
-            if (flaskSalt && item.CountsAsClass(DamageClass.Melee)) {
-                OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f);
+			if (item.CountsAsClass(DamageClass.Melee)) {//flasks
+                if (flaskBile) {
+                    target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
+                }
+                if (flaskSalt) {
+                    OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f);
+                }
             }
         }
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
             OnHitNPCGeneral(proj, target, damage, knockback, crit);
-            if (flaskBile && (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type])) {
-                target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
+			if (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) {//flasks
+                if (flaskBile) {
+                    target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
+                }
+                if (flaskSalt) {
+                    OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f);
+                }
             }
         }
         public void OnHitNPCGeneral(Entity entity, NPC target, int damage, float knockback, bool crit) {

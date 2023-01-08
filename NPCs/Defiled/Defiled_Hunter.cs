@@ -50,7 +50,7 @@ namespace Origins.NPCs.Defiled {
             });
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shaping_Matter>(), 1, 1, 3));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
         }
         public override bool PreAI() {
             NPC.TargetClosest();

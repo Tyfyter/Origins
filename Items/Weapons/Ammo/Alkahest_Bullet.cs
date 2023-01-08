@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Ammo {
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 50);
             recipe.AddIngredient(ItemID.EmptyBullet, 50);
-            recipe.AddIngredient(ModContent.ItemType<Amebic_Gel>());
+            recipe.AddIngredient(ModContent.ItemType<Alkahest>());
             recipe.Register();
         }
     }

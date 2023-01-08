@@ -23,7 +23,7 @@ namespace Origins.NPCs.Riven {
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Vitamins, 100));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Amebic_Gel>(), 1, 1, 3));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Alkahest>(), 1, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Seam_Beam>(), 80));
         }
         public override void AI() { }
