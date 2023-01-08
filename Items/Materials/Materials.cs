@@ -20,7 +20,7 @@ namespace Origins.Items.Materials {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.Bottle);
             recipe.AddIngredient(ItemID.Stinger, 2);
-            //recipe.AddIngredient(ModContent.ItemType<Brine_Sample>(), 1);
+            //recipe.AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>());
             recipe.AddTile(TileID.AlchemyTable);
             recipe.Register();
         }
@@ -35,14 +35,14 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.TitaniumBar, 1);
+            Recipe recipe = Recipe.Create(Type, 10);
+            recipe.AddIngredient(ItemID.TitaniumBar, 10);
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 10);
             recipe.AddIngredient(ModContent.ItemType<Acid_Bottle>(), 3);
             recipe.AddTile(TileID.DemonAltar);
             recipe.Register();
-            recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.AdamantiteBar, 1);
+            recipe = Recipe.Create(Type, 10);
+            recipe.AddIngredient(ItemID.AdamantiteBar, 10);
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 10);
             recipe.AddIngredient(ModContent.ItemType<Acid_Bottle>(), 3);
             recipe.AddTile(TileID.DemonAltar);
@@ -59,8 +59,8 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type, 3);
-            recipe.AddIngredient(ModContent.ItemType<Tree_Sap>(), 3);
+            Recipe recipe = Recipe.Create(Type, 5);
+            recipe.AddIngredient(ModContent.ItemType<Rubber>(), 5);
             recipe.AddIngredient(ModContent.ItemType<Silicon_Wafer>());
             recipe.AddTile(TileID.WorkBenches);
             recipe.Register();
@@ -101,7 +101,7 @@ namespace Origins.Items.Materials {
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>());
-            recipe.AddIngredient(this, 3);
+            recipe.AddIngredient(this);
             recipe.AddTile(TileID.GlassKiln);
             recipe.Register();
         }
@@ -150,6 +150,7 @@ namespace Origins.Items.Materials {
             Recipe recipe = Recipe.Create(ModContent.ItemType<Bleeding_Obsidian_Item>());
             recipe.AddIngredient(this, 6);
             recipe.Register();
+
             recipe = Recipe.Create(Type, 6);
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>());
             recipe.Register();
@@ -767,24 +768,6 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-    public class Thruster_Component : ModItem {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Thruster Component");
-            SacrificeTotal = 99;
-            
-        }
-        public override void SetDefaults() {
-            Item.maxStack = 999;
-            Item.rare = CrimsonRarity.ID;
-        }
-        public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type, 2);
-            recipe.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 8);
-            recipe.AddIngredient(ModContent.ItemType<Space_Goo>(), 4);
-            recipe.AddTile(TileID.Anvils); //No Omni-Printer
-            recipe.Register();
-        }
-    }
     public class Tree_Sap : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Tree Sap");
@@ -795,7 +778,7 @@ namespace Origins.Items.Materials {
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>());
-            recipe.AddIngredient(this, 3);
+            recipe.AddIngredient(this);
             recipe.AddTile(TileID.GlassKiln);
             recipe.Register();
         }

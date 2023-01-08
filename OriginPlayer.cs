@@ -119,6 +119,7 @@ namespace Origins {
         public bool toxicShock = false;
         public bool tornDebuff = false;
         public bool flaskBile = false;
+        public bool flaskSalt = false;
         public int tornTime = 0;
         public int tornTargetTime = 180;
         public float tornTarget = 0.7f;
@@ -594,6 +595,9 @@ namespace Origins {
             }
             if (flaskBile && item.CountsAsClass(DamageClass.Melee)) {
                 target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
+            }
+            if (flaskSalt && item.CountsAsClass(DamageClass.Melee)) {
+                OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f);
             }
         }
         public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {

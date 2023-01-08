@@ -1,23 +1,23 @@
 using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items.Materials;
-using Origins.NPCs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-    public class Alkahest_Bullet : ModItem {
+    public class Bile_Bullet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Alkahest Bullet");
-			Tooltip.SetDefault("Tenderizes the target");
+			DisplayName.SetDefault("Bile Bullet");
+			Tooltip.SetDefault("Stuns the target");
             SacrificeTotal = 99;
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.CursedBullet);
             Item.maxStack = 999;
-            Item.damage = 12;
-            Item.shoot = ModContent.ProjectileType<Alkahest_Bullet_P>();
+            Item.damage = 11;
+            Item.shoot = ModContent.ProjectileType<Bile_Bullet_P>();
 			Item.shootSpeed = 5f;
             Item.knockBack = 4f;
 			Item.rare = ItemRarityID.Orange;
@@ -25,11 +25,11 @@ namespace Origins.Items.Weapons.Ammo {
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 50);
             recipe.AddIngredient(ItemID.EmptyBullet, 50);
-            recipe.AddIngredient(ModContent.ItemType<Amebic_Gel>());
+            recipe.AddIngredient(ModContent.ItemType<Shaping_Matter>());
             recipe.Register();
         }
     }
-    public class Alkahest_Bullet_P : ModProjectile {
+    public class Bile_Bullet_P : ModProjectile {
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.CursedBullet);
             Projectile.aiStyle = 0;
@@ -44,17 +44,17 @@ namespace Origins.Items.Weapons.Ammo {
         }
 		public override Color? GetAlpha(Color lightColor) {
 			if (Projectile.alpha < 200) {
-				return new Color(255 - Projectile.alpha, 255 - Projectile.alpha, 255 - Projectile.alpha, 0);
+				return new Color(255 - Projectile.alpha, 185 - Projectile.alpha, 185 - Projectile.alpha, 185);
 			}
 			return Color.Transparent;
 		}
 		public override void Kill(int timeLeft) {
             Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
             SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
-            SoundEngine.PlaySound(SoundID.Shatter.WithVolume(0.5f), Projectile.position);
+            SoundEngine.PlaySound(SoundID.NPCHit22.WithVolume(0.5f), Projectile.position);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            OriginGlobalNPC.InflictTorn(target, 180, 180, 0.75f);
+            target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 20);
         }
     }
 }

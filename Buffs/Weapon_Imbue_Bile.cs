@@ -7,6 +7,7 @@ namespace Origins.Buffs {
         public static int ID { get; private set; } = -1;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Weapon Imbue: Bile");
+            Description.SetDefault("Melee and whip attacks stun enemies");
             BuffID.Sets.IsAFlaskBuff[Type] = true;
             Main.meleeBuff[Type] = true;
             ID = Type;

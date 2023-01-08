@@ -182,7 +182,7 @@ STATUS EFFECTS:
 (X) Ionizing Radiation
 (^) Impeding Shrapnel
 (X) Levitation
-(#3, ^2) Rasterize
+(^) Rasterize
 (^) Solvent
 (^) Torn
 (#, ^2) Totally Safe
@@ -709,7 +709,6 @@ MATERIALS:
 
 (^) Busted Servo
 (^) Conductor Rod
-(^) Modular Plating
 (^) Power Core
 (^) Rotor
 (^) Space Goo
@@ -727,7 +726,6 @@ MATERIALS:
 (#3, ^2) Nova Fragment
 (@, ^3) Stellar Spark
 (^) Super Conductor
-(@, %3, ^3) Thruster Component
 (^) Unpowered Eyndum Core
 (@, ^3) Void Spark
 ---
@@ -751,8 +749,8 @@ CONSUMABLES:
 (^) Absorption Potion
 (#, ^2) Extreme O' Potion
 (^) Fervor Potion
-(#, ^2) Flask of Alkahest
-(#, ^2) Flask of Black Bile
+(^) Flask of Alkahest
+(^) Flask of Black Bile
 (#, ^2) Focus Potion
 (#, ^2) Nullification Potion (Nullification potion doesn't need a buff graphic, it's a single-instance effect)
 (^) Protean Potion
@@ -816,9 +814,9 @@ AMMO:
 
 (^) Acid Harpoon
 (^) Alkahest Arrow
-(#3, ^2) Alkahest Bullet
+(^) Alkahest Bullet
 (^) Bile Arrow 
-(X) Bile Bullet
+(^) Bile Bullet
 (#, ^2) Bile Dart
 (^) Cursed Harpoon
 (^) Giant Metal Slug

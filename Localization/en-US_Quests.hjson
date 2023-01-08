@@ -20,7 +20,19 @@
 			}
 			Party_Girl:{
 				Tax_Collector_Hat: {
-					Name: "<PH> how about hat?"
+					Name: "Livin' Up the Party"
+					Journal:
+					'''
+					{$Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Name}
+					Client: Party Girl
+					
+					'{$Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Start}'
+					
+					 - [qs{3}:Put a Party Hat on the Tax Collector]
+					Unlocks: ... uhhhh...
+					'''
+					Start:"The party is ready and everything is set in place! But, something is missing... it's that dreary tax collector again. Try and cheer him up with a party hat so he doesn't give bad vibes."
+					Complete:"Thank you so much, {0}! We can now have the best party ever thanks to you cheering that old man up!"
 				}
 			}
 		}

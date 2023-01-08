@@ -7,9 +7,13 @@ namespace Origins.Buffs {
 		public static int ID { get; private set; } = -1;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Weapon Imbue: Alkahest");
+            Description.SetDefault("Melee and whip attacks tenderize enemies");
             BuffID.Sets.IsAFlaskBuff[Type] = true;
             Main.meleeBuff[Type] = true;
             ID = Type;
+        }
+        public override void Update(Player player, ref int buffIndex) {
+            player.GetModPlayer<OriginPlayer>().flaskSalt = true;
         }
     }
 }

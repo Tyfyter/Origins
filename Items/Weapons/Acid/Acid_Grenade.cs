@@ -1,4 +1,3 @@
-using Origins.Items.Materials;
 using Origins.Projectiles.Weapons;
 using Terraria;
 using Terraria.ID;
@@ -6,11 +5,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Acid {
     public class Acid_Grenade : ModItem {
-        static short glowmask;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acid Grenade");
 			Tooltip.SetDefault("");
-            glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 99;
         }
 		public override void SetDefaults() {
@@ -23,7 +20,6 @@ namespace Origins.Items.Weapons.Acid {
             Item.knockBack = 5f;
             Item.ammo = ItemID.Grenade;
 			Item.rare = ItemRarityID.LightRed;
-            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 3);
