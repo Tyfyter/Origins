@@ -471,23 +471,6 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-    public class Modular_Plating : ModItem {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Modular Plating");
-            SacrificeTotal = 99;
-            
-        }
-        public override void SetDefaults() {
-            Item.maxStack = 999;
-            Item.rare = ItemRarityID.Pink;
-        }
-        public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.HallowedBar, 6);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.Register();
-        }
-    }
     public class Nova_Fragment : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
