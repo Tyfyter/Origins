@@ -207,7 +207,6 @@ namespace Origins {
             lazyCloakVisible = false;
             amebicVialVisible = false;
             entangledEnergy = false;
-            asylumWhistle = false;
             mysteriousSprayMult = 1;
             protozoaFood = false;
             protozoaFoodItem = null;
@@ -264,7 +263,7 @@ namespace Origins {
                 NPC possibleTarget = Main.npc[asylumWhistleTarget];
                 if (!possibleTarget.CanBeChasedBy() || possibleTarget.Hitbox.Distance(Player.Center) > 3000f) {
                     asylumWhistleTarget = -1;
-                } else {
+                } else if(Player.HeldItem.CountsAsClass(DamageClass.Summon)) {
                     Vector2 center = possibleTarget.Center;
                     float count = Player.miscCounter / 60f;
                     float offset = MathHelper.TwoPi / 3f;
@@ -277,6 +276,7 @@ namespace Origins {
                     }
                 }
             }
+            asylumWhistle = false;
         }
 		public override void PreUpdateMovement() {
             if (hookTarget >= 0) {//ropeVel.HasValue&&
