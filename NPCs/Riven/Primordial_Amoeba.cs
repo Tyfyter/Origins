@@ -385,6 +385,7 @@ namespace Origins.NPCs.Riven {
 		public override string Texture => "Origins/Items/Weapons/Riven/Flagellash_P";
 		public static int ID { get; private set; }
         public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Primordial Amoeba");
 			NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
 				SpecificallyImmuneTo = new int[] {
 					BuffID.Confused
@@ -441,6 +442,7 @@ namespace Origins.NPCs.Riven {
 		public override void AI() {
 			bool targetLeftBiome = false;
 			bool targetDead = false;
+			NPC.timeLeft = 937;
 			if (Primordial_Amoeba.npcIndex < 0) {
 				NPC.StrikeNPCNoInteraction(9999, 0f, 0);
 				NPC.netUpdate = true;
@@ -510,6 +512,8 @@ namespace Origins.NPCs.Riven {
 						checkSize += (int)(tries / 10f);
 						int checkX = checkBaseX + Main.rand.Next(-checkSize, checkSize + 1);
 						int checkY = checkBaseY + Main.rand.Next(-checkSize, checkSize + 1);
+						checkX = (int)MathHelper.Clamp(checkX, (bodyNPC.Center.X - 24 * 15) / 16, (bodyNPC.Center.X + 24 * 15) / 16);
+						checkY = (int)MathHelper.Clamp(checkY, (bodyNPC.Center.Y - 24 * 15) / 16, (bodyNPC.Center.Y + 24 * 15) / 16);
 						if (Main.rand.NextBool(6)) {
 							NPC.TargetClosest();
 							int playerCenterX = (int)(targetCenter.X / 16f);
@@ -601,6 +605,7 @@ namespace Origins.NPCs.Riven {
 		public override string Texture => "Origins/Items/Weapons/Riven/Flagellash_P";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Primordial Amoeba");
 			NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
 				SpecificallyImmuneTo = new int[] {
 					BuffID.Confused
@@ -646,6 +651,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void AI() {
 			NPC tentacleNPC = Main.npc[(int)NPC.ai[0]];
+			NPC.timeLeft = 937;
 			if (!tentacleNPC.active) {
 				NPC.active = false;
 				NPC.netUpdate = true;
@@ -655,9 +661,10 @@ namespace Origins.NPCs.Riven {
 			NPC.realLife = (int)NPC.ai[0];
 			NPC.life = NPC.lifeMax;
 			NPC bodyNPC = Main.npc[Primordial_Amoeba.npcIndex];
-			Vector2 diff = tentacleNPC.Center + (bodyNPC.Center - tentacleNPC.Center);
+			Vector2 diff = (bodyNPC.Center - tentacleNPC.Center);
 			diff -= diff.WithMaxLength(64);
-			NPC.Center = diff * NPC.ai[1];
+			//diff = new Vector2(16);
+			NPC.Center = tentacleNPC.Center + diff * NPC.ai[1];
 		}
 		public override bool? CanBeHitByProjectile(Projectile projectile) {
 			return

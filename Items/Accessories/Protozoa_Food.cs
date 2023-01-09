@@ -202,7 +202,7 @@ namespace Origins.Items.Accessories {
 
 
 			#region Active check
-			if (!player.dead && player.active && player.GetModPlayer<OriginPlayer>().protozoaFood) {
+			if (!player.dead && Projectile.ai[0] != 1 && player.active && player.GetModPlayer<OriginPlayer>().protozoaFood) {
 				Projectile.timeLeft = 2;
 			}
 			#endregion
@@ -215,7 +215,8 @@ namespace Origins.Items.Accessories {
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
 			float distanceToIdlePosition = vectorToIdlePosition.Length();
 			if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 2000f) {
-				Projectile.Kill();
+				Projectile.ai[0] = 1;
+				Projectile.netUpdate = true;
 			}
 
 			// If your minion is flying, you want to do this independently of any conditions
