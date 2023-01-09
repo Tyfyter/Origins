@@ -2,7 +2,7 @@
 ---
 @: Needs resource (missing base sprite. Includes gun sprite for weapons, the actual entity for NPCs, or the appearance of a tile)
 @2: Needs resource (missing projectile/use sprite. Includes NPC attack animations)
-@3: Needs resource (missing glowmask sprite)
+@3: Needs resource (missing texture for shader/filter)
 @4: Resource needs modification (changing of the sprite format)
 @5: Resource needs modification (resprite)
 
@@ -184,9 +184,9 @@ STATUS EFFECTS:
 (X) Levitation
 (^) Rasterize
 (^) Solvent
-(^) Torn
-(#, ^2) Totally Safe
-(#, ^2) Toxic Shock
+(^, @3) Torn
+(^) Totally Safe
+(^) Toxic Shock
 (X) Whiplash
 (X) Workout
 ---
@@ -248,7 +248,7 @@ ACCESSORIES:
 (^) Dim Starlight*
 (^) Exploder Emblem*
 (#, ^2) Grave Danger
-(#, ^2) Gun Glove
+(^) Gun Glove
 (X) Locus Control Tuner
 (#3, ^2) Mitosis
 (#, ^2) Olid Organ*

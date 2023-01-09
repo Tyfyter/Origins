@@ -86,6 +86,9 @@ namespace Origins {
         public Item protozoaFoodItem = null;
         public bool symbioteSkull = false;
         public byte parasiticInfluenceCooldown = 0;
+        public bool gunGlove = false;
+        public Item gunGloveItem = null;
+        public int gunGloveCooldown = 0;
         #endregion
 
         #region explosive stats
@@ -212,6 +215,8 @@ namespace Origins {
             protozoaFoodItem = null;
             symbioteSkull = false;
             toxicShock = false;
+            gunGlove = false;
+            gunGloveItem = null;
             flaskBile = false;
             flaskSalt = false;
             explosiveThrowSpeed = 1f;
@@ -228,6 +233,8 @@ namespace Origins {
                 protozoaFoodCooldown--;
             if (parasiticInfluenceCooldown > 0)
                 parasiticInfluenceCooldown--;
+            if (gunGloveCooldown > 0)
+                gunGloveCooldown--;
 
             if (rapidSpawnFrames>0)
                 rapidSpawnFrames--;
@@ -505,8 +512,31 @@ namespace Origins {
         public override void UpdateLifeRegen() {
             if(cryostenHelmet)Player.lifeRegenCount+=cryostenLifeRegenCount>0 ? 180 : 1;
         }
-        #region attacks
-        public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
+		#region attacks
+		public override void MeleeEffects(Item item, Rectangle hitbox) {
+            if (flaskBile) {
+                Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.BloodWater, newColor:Color.Black);
+            } else if (flaskSalt) {
+                Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.GoldFlame, newColor: Color.Lime);
+            }
+			if (gunGlove && gunGloveCooldown <= 0) {
+                if (Player.PickAmmo(gunGloveItem, out int projToShoot, out float speed, out int damage, out float knockback, out int usedAmmoItemId, ItemID.Sets.gunProj[gunGloveItem.type])) {
+					if (CombinedHooks.CanShoot(Player, gunGloveItem)) {
+                        Vector2 position = Player.itemLocation;
+                        Vector2 velocity = Vec2FromPolar(Player.direction == 1 ? Player.itemRotation : Player.itemRotation + MathHelper.Pi, speed);
+                            
+                        CombinedHooks.ModifyShootStats(Player, gunGloveItem, ref position, ref velocity, ref projToShoot, ref damage, ref knockback);
+                        EntitySource_ItemUse_WithAmmo source = (EntitySource_ItemUse_WithAmmo)Player.GetSource_ItemUse_WithPotentialAmmo(gunGloveItem, usedAmmoItemId);
+						if (CombinedHooks.Shoot(Player, gunGloveItem, source, position, velocity, projToShoot, damage, knockback)) {
+                            Projectile.NewProjectile(source, position, velocity, projToShoot, damage, knockback, Player.whoAmI);
+                            SoundEngine.PlaySound(gunGloveItem.UseSound, position);
+                        }
+					}
+                    gunGloveCooldown = CombinedHooks.TotalUseTime(gunGloveItem.useTime, Player, gunGloveItem);
+                }
+			}
+        }
+		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
             if(felnumShock>29) {
                 damage+=(int)(felnumShock/15);
                 felnumShock = 0;
