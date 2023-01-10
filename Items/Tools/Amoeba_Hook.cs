@@ -18,7 +18,7 @@ namespace Origins.Items.Tools {
 			Item.CloneDefaults(ItemID.AmethystHook);
 			Item.shootSpeed = 18f;
 			Item.shoot = ProjectileType<Amoeba_Hook_Projectile>();
-			Item.value = Item.buyPrice(silver: 40);
+			Item.value = Item.sellPrice(silver: 8);
 		}
 	}
 	public class Amoeba_Hook_Projectile : ModProjectile {

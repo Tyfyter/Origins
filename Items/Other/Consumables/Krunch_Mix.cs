@@ -15,7 +15,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.scale = 0.4f;
 			Item.buffType = BuffID.WellFed;
 			Item.buffTime = 60 * 60 * 10;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.sellPrice(silver: 20);
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override bool? UseItem(Player player) {

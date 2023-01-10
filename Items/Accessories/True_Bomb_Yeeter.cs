@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             Item.accessory = true;
-            Item.value = Item.buyPrice(gold: 15);
+            Item.value = Item.sellPrice(gold: 3);
             Item.rare = ItemRarityID.LightRed;
         }
 		public override void UpdateEquip(Player player) {

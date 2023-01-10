@@ -12,7 +12,7 @@ namespace Origins.Items.Accessories {
         public override void SetDefaults() {
             Item.accessory = true;
             Item.rare = ItemRarityID.Pink;
-            Item.value = Item.buyPrice(gold: 16, silver: 50);
+            Item.value = Item.sellPrice(gold: 3, silver: 30);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

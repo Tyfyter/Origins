@@ -22,7 +22,7 @@ namespace Origins.Items.Tools {
 			Item.useTime = 13;
 			Item.useAnimation = 24;
 			Item.knockBack = 4f;
-			Item.value = Item.buyPrice(gold: 1, silver: 50);
+			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;

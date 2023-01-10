@@ -21,7 +21,7 @@ namespace Origins.Items.Tools {
 			Item.knockBack*=2f;
             Item.shootSpeed = 56f;
             Item.shoot = ModContent.ProjectileType<Acrid_Drill_P>();
-			Item.value = Item.buyPrice(gold: 22);
+			Item.value = Item.buyPrice(gold: 4, silver: 4);
 			Item.rare = ItemRarityID.LightRed;
 			Item.glowMask = glowmask;
 		}

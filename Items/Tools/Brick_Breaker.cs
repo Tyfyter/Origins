@@ -21,7 +21,7 @@ namespace Origins.Items.Tools {
 			Item.useTime = 17;
 			Item.useAnimation = 27;
 			Item.knockBack = 4.3f;
-			Item.value = Item.buyPrice(gold: 1, silver: 50);
+			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 		}

@@ -17,7 +17,7 @@ namespace Origins.Items.Accessories {
             Item.height = 30;
             Item.rare = ItemRarityID.Expert;
             Item.expert = true;
-            Item.value = Item.buyPrice(gold: 10);
+            Item.value = Item.sellPrice(gold: 2);
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().reshapingChunk = true;

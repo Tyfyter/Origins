@@ -15,7 +15,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.scale = 0.6f;
 			Item.buffType = BuffID.WellFed2;
 			Item.buffTime = 60 * 60 * 6;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.LightRed;
 		}
 	}

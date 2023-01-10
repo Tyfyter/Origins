@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Shackle);
-            Item.value = Item.buyPrice(gold: 1, silver: 50);
+            Item.value = Item.sellPrice(silver: 30);
             Item.rare = ItemRarityID.White;
         }
         public override void UpdateEquip(Player player) {

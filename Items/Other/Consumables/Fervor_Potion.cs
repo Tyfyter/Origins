@@ -15,7 +15,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WrathPotion);
 			Item.buffType = Fervor_Buff.ID;
-			Item.value = Item.buyPrice(silver: 10);
+			Item.value = Item.sellPrice(silver: 2);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

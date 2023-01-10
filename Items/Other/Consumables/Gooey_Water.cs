@@ -17,7 +17,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.BloodWater);
 			Item.shoot = ModContent.ProjectileType<Gooey_Water_P>();
-			Item.value = Item.buyPrice(silver: 2);
+			Item.value = Item.sellPrice(copper: 20);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 10);

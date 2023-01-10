@@ -14,7 +14,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.WrathPotion);
 			Item.buffType = Safe_Buff.ID;
 			Item.buffTime = 60 * 60 * 8;
-			Item.value = Item.buyPrice(silver: 10);
+			Item.value = Item.sellPrice(silver: 2);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

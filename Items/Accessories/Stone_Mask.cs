@@ -20,7 +20,7 @@ namespace Origins.Items.Accessories {
             Item.CloneDefaults(ItemID.Aglet);
             Item.neckSlot = -1;
             Item.faceSlot = slot;
-            Item.value = Item.buyPrice(gold: 50);
+            Item.value = Item.sellPrice(gold: 10);
             Item.rare = ItemRarityID.Blue;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = Item.useAnimation = 12;

@@ -13,7 +13,7 @@ namespace Origins.Items.Accessories {
             Item.CloneDefaults(ItemID.WormScarf);
             Item.neckSlot = -1;
             Item.rare = ItemRarityID.Expert;
-            Item.value = Item.buyPrice(gold: 10);
+            Item.value = Item.sellPrice(gold: 2);
         }
         public override void UpdateEquip(Player player) {
             player.statDefense -= 4;

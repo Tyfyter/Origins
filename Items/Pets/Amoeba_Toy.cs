@@ -16,7 +16,7 @@ namespace Origins.Items.Pets {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
-			Item.value = Item.buyPrice(gold: 37, silver: 50);
+			Item.value = Item.sellPrice(gold: 7, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 		}
 

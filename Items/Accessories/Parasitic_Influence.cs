@@ -23,7 +23,7 @@ namespace Origins.Items.Accessories {
 			Item.knockBack = 3;
 			Item.useTime = Item.useAnimation = 30;
 			Item.shoot = ModContent.ProjectileType<Parasitic_Influence_Tentacle>();
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateAccessory(Player player, bool isHidden) {

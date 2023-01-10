@@ -22,7 +22,7 @@ namespace Origins.Items.Accessories {
             Item.useTime = 36;
             Item.useAnimation = 36;
 			Item.shoot = ModContent.ProjectileType<Lazy_Cloak_P>();
-			Item.value = Item.buyPrice(gold: 30);
+			Item.value = Item.sellPrice(gold: 6);
 			Item.rare = ItemRarityID.Master;
 			Item.backSlot = 5;
 			Item.frontSlot = 3;

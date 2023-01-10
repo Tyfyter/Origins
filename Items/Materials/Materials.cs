@@ -15,7 +15,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 1;
-            Item.value = Item.buyPrice(silver: 2);
+            Item.value = Item.sellPrice(copper: 40);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -32,7 +32,7 @@ namespace Origins.Items.Materials {
             SacrificeTotal = 25;
         }
         public override void SetDefaults() {
-            Item.value = Item.buyPrice(gold: 2);
+            Item.value = Item.sellPrice(silver: 40);
             Item.rare = ItemRarityID.LightRed;
             Item.maxStack = 999;
         }
@@ -58,7 +58,7 @@ namespace Origins.Items.Materials {
             
         }
         public override void SetDefaults() {
-            Item.value = Item.buyPrice(copper: 90);
+            Item.value = Item.sellPrice(copper: 18);
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
@@ -83,7 +83,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
-            Item.value = Item.buyPrice(silver: 45);
+            Item.value = Item.sellPrice(silver: 12);
             Item.rare = ItemRarityID.Orange;
         }
     }
@@ -117,7 +117,7 @@ namespace Origins.Items.Materials {
             
         }
         public override void SetDefaults() {
-            Item.value = Item.buyPrice(copper: 20);
+            Item.value = Item.sellPrice(copper: 4);
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
@@ -136,7 +136,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
-            Item.value = Item.buyPrice(silver: 50);
+            Item.value = Item.sellPrice(silver: 10);
             Item.rare = ItemRarityID.Orange;
         }
     }
@@ -169,7 +169,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
-            Item.value = Item.buyPrice(copper: 10);
+            Item.value = Item.sellPrice(copper: 2);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ItemID.BattlePotion);
@@ -243,7 +243,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(gold: 5);
+            Item.value = Item.sellPrice(gold: 1);
             Item.rare = CrimsonRarity.ID;
         }
         public override void AddRecipes() {
@@ -263,7 +263,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(gold: 1, silver: 50);
+            Item.value = Item.sellPrice(silver: 30);
             Item.rare = ItemRarityID.Blue;
         }
         public override void AddRecipes() {
@@ -294,7 +294,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(gold: 5);
+            Item.value = Item.sellPrice(gold: 1);
             Item.rare = CrimsonRarity.ID;
         }
         public override void AddRecipes() {
@@ -324,7 +324,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
-            Item.value = Item.buyPrice(gold: 1, silver: 50);
+            Item.value = Item.sellPrice(silver: 30);
             Item.rare = ItemRarityID.Blue;
         }
         public override void AddRecipes() {
@@ -343,7 +343,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(gold: 5);
+            Item.value = Item.sellPrice(gold: 1);
             Item.rare = CrimsonRarity.ID;
         }
         public override void AddRecipes() {
@@ -481,7 +481,7 @@ namespace Origins.Items.Materials {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.FragmentSolar); //I thought this would make it float like souls and other fragments
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(gold: 1);
+            Item.value = Item.sellPrice(silver: 20);
             Item.rare = ItemRarityID.Cyan;
             Item.glowMask = glowmask;
             ///Item.noGravity = true;
@@ -537,7 +537,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(gold: 8);
+            Item.value = Item.sellPrice(gold: 1, silver:60);
             Item.rare = ButterscotchRarity.ID;
             Item.glowMask = glowmask;
         }
@@ -566,7 +566,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
-            Item.value = Item.buyPrice(silver: 7, copper: 50);
+            Item.value = Item.sellPrice(gold: 1, copper: 50);
             Item.rare = ItemRarityID.Blue;
             Item.glowMask= glowmask;
         }
@@ -604,14 +604,14 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-        public class Rotor : ModItem {
+    public class Rotor : ModItem {
         //add lore here
         public override void SetStaticDefaults() {
             SacrificeTotal = 99;
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(silver: 2);
+            Item.value = Item.sellPrice(copper: 40);
             Item.rare = ItemRarityID.Pink;
         }
         public override void AddRecipes() {
@@ -629,7 +629,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(copper: 30);
+            Item.value = Item.buyPrice(copper: 6);
         }
     }
     public class Silicon_Wafer : ModItem {
@@ -639,7 +639,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(silver: 2, copper: 20);
+            Item.value = Item.sellPrice(copper: 44);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -703,7 +703,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
-            Item.value = Item.buyPrice(copper: 10);
+            Item.value = Item.sellPrice(copper: 2);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ItemID.BattlePotion);
@@ -765,7 +765,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(copper: 10);
+            Item.value = Item.sellPrice(copper: 2);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>());
@@ -783,7 +783,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
-            Item.value = Item.buyPrice(silver: 7, copper: 50);
+            Item.value = Item.sellPrice(silver: 1, copper: 50);
             Item.rare = ItemRarityID.Blue;
             Item.glowMask = glowmask;
         }
@@ -830,7 +830,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 8;
-            Item.value = Item.buyPrice(gold: 10);
+            Item.value = Item.sellPrice(gold: 10);
             Item.rare = ButterscotchRarity.ID;
         }
         public override void AddRecipes() {
@@ -850,7 +850,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(gold: 5);
+            Item.value = Item.sellPrice(gold: 1);
             Item.rare = ItemRarityID.Yellow;
         }
         public override void AddRecipes() {
@@ -870,7 +870,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(gold: 4, silver: 50);
+            Item.value = Item.sellPrice(silver: 90);
             Item.rare = ItemRarityID.Lime;
         }
         public override void AddRecipes() {
