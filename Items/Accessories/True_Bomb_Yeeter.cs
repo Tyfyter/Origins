@@ -1,5 +1,4 @@
 ﻿using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,6 +11,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             Item.accessory = true;
+            Item.value = Item.buyPrice(gold: 15);
             Item.rare = ItemRarityID.LightRed;
         }
 		public override void UpdateEquip(Player player) {

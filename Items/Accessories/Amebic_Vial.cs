@@ -1,15 +1,13 @@
-﻿using Terraria.GameContent.Creative;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Items.Materials;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using System;
 
 namespace Origins.Items.Accessories {
-	public class Amebic_Vial : ModItem {
+    public class Amebic_Vial : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Amebic Vial");
 			Tooltip.SetDefault("Amebic tentacles will protect you from projectiles");
@@ -23,7 +21,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Expert;
 			Item.expert = true;
 			Item.canBePlacedInVanityRegardlessOfConditions = true;
-			Item.value = Item.buyPrice(gold: 2);
+			Item.value = Item.buyPrice(gold: 10);
 		}
 		public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

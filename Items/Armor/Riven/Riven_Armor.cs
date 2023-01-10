@@ -17,6 +17,7 @@ namespace Origins.Items.Armor.Riven {
         }
         public override void SetDefaults() {
             Item.defense = 6;
+            Item.value = Item.buyPrice(silver: 80);
             Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
@@ -53,6 +54,7 @@ namespace Origins.Items.Armor.Riven {
         }
         public override void SetDefaults() {
             Item.defense = 7;
+            Item.value = Item.buyPrice(silver: 80);
             Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
@@ -80,6 +82,7 @@ namespace Origins.Items.Armor.Riven {
         }
         public override void SetDefaults() {
             Item.defense = 6;
+            Item.value = Item.buyPrice(silver: 80);
             Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {

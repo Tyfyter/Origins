@@ -58,7 +58,7 @@ namespace Origins.NPCs.Defiled {
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
-            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bombardment>(), 8));
+            //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bombardment>(), 58));
         }
 
         public override bool PreAI() {

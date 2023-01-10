@@ -16,6 +16,7 @@ namespace Origins.Items.Accessories {
             Item.CloneDefaults(ItemID.YoYoGlove);
             Item.handOffSlot = handOffSlot;
             Item.handOnSlot = handOnSlot;
+            Item.value = Item.buyPrice(gold: 10);
             Item.rare = ItemRarityID.Green;
             Item.damage = 10;
             Item.DamageType = DamageClass.Ranged;

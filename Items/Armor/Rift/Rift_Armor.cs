@@ -18,6 +18,7 @@ namespace Origins.Items.Armor.Rift {
         }
         public override void SetDefaults() {
             Item.defense = 7;
+            Item.value = Item.buyPrice(gold: 2);
             Item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
@@ -53,6 +54,7 @@ namespace Origins.Items.Armor.Rift {
         }
         public override void SetDefaults() {
             Item.defense = 10;
+            Item.value = Item.buyPrice(gold: 2);
             Item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
@@ -78,6 +80,7 @@ namespace Origins.Items.Armor.Rift {
         }
         public override void SetDefaults() {
             Item.defense = 9;
+            Item.value = Item.buyPrice(gold: 2);
             Item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {

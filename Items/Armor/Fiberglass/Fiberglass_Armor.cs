@@ -14,6 +14,7 @@ namespace Origins.Items.Armor.Fiberglass {
 		}
 		public override void SetDefaults() {
             Item.defense = 5;
+			Item.value = Item.buyPrice(silver: 10);
 		}
         public override bool IsArmorSet(Item head, Item body, Item legs) {
             return body.type == ModContent.ItemType<Fiberglass_Body>() && legs.type == ModContent.ItemType<Fiberglass_Legs>();
@@ -40,6 +41,7 @@ namespace Origins.Items.Armor.Fiberglass {
 		}
 		public override void SetDefaults() {
             Item.defense = 6;
+			Item.value = Item.buyPrice(silver: 10);
 		}
 	}
     [AutoloadEquip(EquipType.Legs)]
@@ -55,6 +57,7 @@ namespace Origins.Items.Armor.Fiberglass {
 		}
 		public override void SetDefaults() {
             Item.defense = 5;
+			Item.value = Item.buyPrice(silver: 10);
 		}
 	}
 }

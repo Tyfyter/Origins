@@ -15,6 +15,7 @@ namespace Origins.Items.Armor.Eyndum {
         }
         public override void SetDefaults() {
             Item.defense = 8;
+            Item.value = Item.buyPrice(platinum: 1);
             Item.rare = CrimsonRarity.ID;
         }
         public override void UpdateEquip(Player player) {
@@ -47,6 +48,7 @@ namespace Origins.Items.Armor.Eyndum {
         }
         public override void SetDefaults() {
             Item.defense = 16;
+            Item.value = Item.buyPrice(platinum: 1);
             Item.rare = CrimsonRarity.ID;
         }
         public override void UpdateEquip(Player player) {
@@ -72,6 +74,7 @@ namespace Origins.Items.Armor.Eyndum {
         }
         public override void SetDefaults() {
             Item.defense = 12;
+            Item.value = Item.buyPrice(platinum: 1);
             Item.rare = CrimsonRarity.ID;
         }
         public override void UpdateEquip(Player player) {

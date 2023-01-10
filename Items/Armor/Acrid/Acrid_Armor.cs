@@ -1,13 +1,12 @@
 using Microsoft.Xna.Framework;
+using Origins.Items.Accessories;
+using Origins.Items.Materials;
 using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using Origins.Items.Materials;
-using Origins.Items.Accessories;
 
-namespace Origins.Items.Armor.Acrid{
+namespace Origins.Items.Armor.Acrid {
     [AutoloadEquip(EquipType.Head)]
 	public class Acrid_Helmet : ModItem {
         public override void SetStaticDefaults() {
@@ -20,6 +19,7 @@ namespace Origins.Items.Armor.Acrid{
         }
         public override void SetDefaults() {
             Item.defense = 10;
+            Item.value = Item.buyPrice(gold: 5);
             Item.rare = ItemRarityID.LightRed;
         }
         public override void UpdateEquip(Player player) {
@@ -59,6 +59,7 @@ namespace Origins.Items.Armor.Acrid{
         }
         public override void SetDefaults() {
             Item.defense = 18;
+            Item.value = Item.buyPrice(gold: 5);
             Item.rare = ItemRarityID.LightRed;
         }
         public override void UpdateEquip(Player player) {
@@ -82,6 +83,7 @@ namespace Origins.Items.Armor.Acrid{
         }
         public override void SetDefaults() {
             Item.defense = 14;
+            Item.value = Item.buyPrice(gold: 5);
             Item.rare = ItemRarityID.LightRed;
         }
         public override void UpdateEquip(Player player) {

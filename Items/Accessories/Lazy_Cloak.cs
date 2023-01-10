@@ -22,8 +22,8 @@ namespace Origins.Items.Accessories {
             Item.useTime = 36;
             Item.useAnimation = 36;
 			Item.shoot = ModContent.ProjectileType<Lazy_Cloak_P>();
-            Item.value = Item.buyPrice(0, 30, 0, 0);
-            Item.rare = ItemRarityID.Master;
+			Item.value = Item.buyPrice(gold: 30);
+			Item.rare = ItemRarityID.Master;
 			Item.backSlot = 5;
 			Item.frontSlot = 3;
 			Item.accessory = true;

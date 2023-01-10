@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.DataStructures;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Accessories {
     public class Exploder_Emblem : ModItem {
@@ -22,6 +14,7 @@ namespace Origins.Items.Accessories {
             Item.accessory = true;
             Item.width = 28;
             Item.height = 28;
+            Item.value = Item.buyPrice(gold: 10);
             Item.rare = ItemRarityID.LightRed;
         }
         public override void UpdateEquip(Player player) {

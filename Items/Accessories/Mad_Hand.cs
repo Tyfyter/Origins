@@ -13,6 +13,7 @@ namespace Origins.Items.Accessories {
             Item.accessory = true;
             Item.width = 21;
             Item.height = 20;
+            Item.value = Item.buyPrice(gold: 10);
             Item.rare = ItemRarityID.Expert;
             Item.expert = true;
         }

@@ -17,6 +17,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.createTile = ModContent.TileType<Potato_Tile>();
 			Item.buffType = BuffID.WellFed;
 			Item.buffTime = 60 * 60 * 10;
+			Item.value = Item.buyPrice(silver: 1);
 			Item.rare = ItemRarityID.White;
 		}
 		public override void AddRecipes() {

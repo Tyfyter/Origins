@@ -15,6 +15,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WrathPotion);
 			Item.buffType = Adaptability_Buff.ID;
+			Item.value = Item.buyPrice(silver: 10);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

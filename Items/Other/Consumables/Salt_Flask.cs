@@ -15,6 +15,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.FlaskofIchor);
 			Item.buffType = Weapon_Imbue_Salt.ID;
 			Item.buffTime = 60 * 60 * 20;
+			Item.value = Item.buyPrice(silver: 25);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();

@@ -1,15 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Entangled_Energy : ModItem {
+    public class Entangled_Energy : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Entangled Energy");
             Tooltip.SetDefault("Fiberglass weapons gain damage based on defense\nFiberglass weapons gain lifesteal");
@@ -19,7 +14,7 @@ namespace Origins.Items.Accessories {
             Item.accessory = true;
             Item.rare = ItemRarityID.Master;
             Item.master = true;
-            Item.value = Item.buyPrice(gold: 5);
+            Item.value = Item.buyPrice(gold: 30);
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().entangledEnergy = true;

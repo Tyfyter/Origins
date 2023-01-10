@@ -16,7 +16,7 @@ namespace Origins.Items.Accessories {
         public override void SetDefaults() {
             Item.accessory = true;
             Item.rare = ItemRarityID.Orange;
-            Item.value = Item.buyPrice(gold: 1);
+            Item.value = Item.buyPrice(gold: 5);
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().asylumWhistle = true;

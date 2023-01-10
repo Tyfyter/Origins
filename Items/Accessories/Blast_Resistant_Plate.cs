@@ -1,11 +1,9 @@
-﻿using Origins.Items.Materials;
-using Terraria;
-using Terraria.GameContent.Creative;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Blast_Resistant_Plate : ModItem {
+    public class Blast_Resistant_Plate : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Blast Resistant Plate");
             Tooltip.SetDefault("Reduces explosive self-damage by 20%");
@@ -13,6 +11,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             Item.accessory = true;
+            Item.value = Item.buyPrice(gold: 5);
             Item.rare = ItemRarityID.LightRed;
         }
         public override void UpdateEquip(Player player) {

@@ -1,5 +1,4 @@
-﻿using Origins.Items.Materials;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,6 +11,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Shackle);
+            Item.value = Item.buyPrice(gold: 1, silver: 50);
             Item.rare = ItemRarityID.White;
         }
         public override void UpdateEquip(Player player) {

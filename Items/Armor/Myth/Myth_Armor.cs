@@ -12,6 +12,7 @@ namespace Origins.Items.Armor.Myth {
         }
         public override void SetDefaults() {
             Item.defense = 4;
+            Item.value = Item.buyPrice(silver: 80);
             Item.rare = ItemRarityID.Green;
         }
         public override void UpdateEquip(Player player) {
@@ -42,6 +43,7 @@ namespace Origins.Items.Armor.Myth {
         }
         public override void SetDefaults() {
             Item.defense = 4;
+            Item.value = Item.buyPrice(silver: 80);
             Item.rare = ItemRarityID.Green;
         }
         public override void UpdateEquip(Player player) {
@@ -65,6 +67,7 @@ namespace Origins.Items.Armor.Myth {
         }
         public override void SetDefaults() {
             Item.defense = 4;
+            Item.value = Item.buyPrice(silver: 80);
             Item.rare = ItemRarityID.Green;
         }
         public override void UpdateEquip(Player player) {

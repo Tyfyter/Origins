@@ -20,12 +20,12 @@ namespace Origins.Items.Accessories {
             Item.CloneDefaults(ItemID.Aglet);
             Item.neckSlot = -1;
             Item.faceSlot = slot;
+            Item.value = Item.buyPrice(gold: 50);
             Item.rare = ItemRarityID.Blue;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.useTime = Item.useAnimation = 12;
             Item.createTile = ModContent.TileType<Stone_Mask_Tile>();
             Item.consumable = true;
-            Item.value = Item.buyPrice(gold: 1);
         }
         public override void UpdateEquip(Player player) {
             player.statDefense += 8;

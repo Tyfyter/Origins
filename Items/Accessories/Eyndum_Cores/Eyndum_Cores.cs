@@ -29,6 +29,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
+            Item.value = Item.buyPrice(platinum: 5);
             Item.rare = CrimsonRarity.ID;
         }
         public override void UpdateEquip(Player player) {
@@ -46,6 +47,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
+            Item.value = Item.buyPrice(platinum: 5);
             Item.rare = CrimsonRarity.ID;
         }
         public override void UpdateEquip(Player player) {
@@ -63,6 +65,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
+            Item.value = Item.buyPrice(platinum: 5);
             Item.rare = CrimsonRarity.ID;
         }
         public override void UpdateEquip(Player player) {
@@ -82,6 +85,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
+            Item.value = Item.buyPrice(platinum: 5);
             Item.rare = CrimsonRarity.ID;
         }
         public override void UpdateEquip(Player player) {

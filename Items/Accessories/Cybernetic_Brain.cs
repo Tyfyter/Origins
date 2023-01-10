@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             Item.accessory = true;
+            Item.value = Item.buyPrice(gold: 50);
             Item.rare = ButterscotchRarity.ID;
             Item.glowMask = glowmask;
         }

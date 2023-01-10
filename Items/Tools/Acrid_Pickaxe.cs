@@ -1,11 +1,10 @@
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using Origins.Items.Materials;
 
 namespace Origins.Items.Tools {
-	public class Acrid_Pickaxe : ModItem {
+    public class Acrid_Pickaxe : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Pickaxe");
@@ -23,7 +22,7 @@ namespace Origins.Items.Tools {
 			Item.useTime = 7;
 			Item.useAnimation = 22;
 			Item.knockBack = 4f;
-			Item.value = 3600;
+			Item.value = Item.buyPrice(gold: 20);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;

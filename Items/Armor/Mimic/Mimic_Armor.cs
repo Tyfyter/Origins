@@ -16,6 +16,7 @@ namespace Origins.Items.Armor.Mimic {
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
+			Item.value = Item.buyPrice(gold: 4);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
@@ -115,6 +116,7 @@ namespace Origins.Items.Armor.Mimic {
 		}
 		public override void SetDefaults() {
 			Item.defense = 11;
+			Item.value = Item.buyPrice(gold: 4);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
@@ -138,6 +140,7 @@ namespace Origins.Items.Armor.Mimic {
 		}
 		public override void SetDefaults() {
 			Item.defense = 8;
+			Item.value = Item.buyPrice(gold: 4);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {

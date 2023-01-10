@@ -20,6 +20,7 @@ namespace Origins.Items.Tools {
 			Item.fishingPole = 27;
 			Item.shootSpeed = 14f;
 			Item.shoot = ModContent.ProjectileType<Parasitic_Bobber>();
+			Item.value = Item.buyPrice(gold: 21, silver: 80);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {

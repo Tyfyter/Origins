@@ -1,10 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
 using Origins.Items.Pets;
 using System;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -19,7 +16,7 @@ namespace Origins.Items.Pets {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
-			Item.value = Item.buyPrice(0, 30, 0, 0);
+			Item.value = Item.buyPrice(gold: 37, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 		}
 
@@ -147,7 +144,7 @@ namespace Origins.Items.Pets {
 }
 
 namespace Origins.Buffs {
-	public class Defiled_Blight_Buff : ModBuff {
+    public class Defiled_Blight_Buff : ModBuff {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Blight");
 			Description.SetDefault("The {$Defiled} Blight will light your way");

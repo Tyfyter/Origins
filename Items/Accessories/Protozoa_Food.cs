@@ -25,7 +25,7 @@ namespace Origins.Items.Accessories {
             Item.height = 20;
             Item.rare = ItemRarityID.Master;
             Item.master = true;
-			Item.value = Item.buyPrice(gold: 3);
+			Item.value = Item.buyPrice(gold: 30);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
             player.maxMinions += 1;

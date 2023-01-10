@@ -67,7 +67,7 @@ namespace Origins {
         #region accessories
         public bool bombHandlingDevice = false;
         public bool dimStarlight = false;
-        public byte dimStarlightCooldown = 0;
+        public int dimStarlightCooldown = 0;
         public bool madHand = false;
         public bool fiberglassDagger = false;
         public bool advancedImaging = false;
@@ -89,6 +89,7 @@ namespace Origins {
         public bool gunGlove = false;
         public Item gunGloveItem = null;
         public int gunGloveCooldown = 0;
+        public bool guardedHeart = false;
         #endregion
 
         #region explosive stats
@@ -652,7 +653,7 @@ namespace Origins {
                     Item.NewItem(sourceEntity.GetSource_OnHit(target, "SetBonus_Celestine"), target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
                 if (dimStarlight && dimStarlightCooldown < 1) {
                     Item.NewItem(sourceEntity.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
-                    dimStarlightCooldown = 90;
+                    dimStarlightCooldown = 300;
                 }
             }
             if (rasterize) {
@@ -770,7 +771,12 @@ namespace Origins {
 			}
             return damage > 0;
         }
-		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
+        public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter) {
+            if(guardedHeart == true) {
+                Player.AddBuff(Guarded_Heart_Buff.ID, 60 * 8);
+            }
+        }
+        public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
             if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {
                 OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
                 if (originWorld.peatSold < 999) {

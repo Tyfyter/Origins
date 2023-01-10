@@ -32,7 +32,7 @@ namespace Origins.Items.Other.Testing {
 			//item.name = "jfdjfrbh";
 			Item.width = 16;
 			Item.height = 26;
-			Item.value = 25000;
+			Item.value = Item.buyPrice(platinum: 9001);
 			Item.rare = ItemRarityID.Green;
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.useAnimation = 10;

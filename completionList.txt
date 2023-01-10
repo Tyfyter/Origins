@@ -242,6 +242,7 @@ ACCESSORIES:
 (^) Bomb Charm*
 (^) Bomb Handling Device*
 (#, ^2) Bullet Shield*
+(^) Celestial Starlight
 (^) Comb
 (^) Cybernetic Brain*
 (^) Decaying Scale*
@@ -249,15 +250,19 @@ ACCESSORIES:
 (^) Exploder Emblem*
 (#, ^2) Grave Danger
 (^) Gun Glove
+(X) Hazard Charm !!!
+(^) Locket Necklace
 (X) Locus Control Tuner
 (#3, ^2) Mitosis
+(#, ^2) No U Card
 (#, ^2) Olid Organ*
 (^) Parasitic Influence*
 (^) Pneumatic Bomb Thrower*
 (^) Return To Sender*
 (#, ^2) Sonar Visor*
-(^) Still Image*
+(^) Rasterized Fish*
 (^) Symbiote Skull
+(#, ^2) Trap Charm !!!
 (#, ^2) Turbo Reel !!!
 
 (^) Asylum Whistle
@@ -362,9 +367,9 @@ TOOLS:
 (^) Dissector
 (^) Felnum Hamaxe
 (^) Felnum Pickaxe
-(#3, ^2) Parasitic Manipulator !!!
+(^) Parasitic Manipulator
 (^) Rivenator
-(#3, ^2) Snatcher !!!
+(^) Snatcher
 (^) Stabsmash
 
 (^) Acrid Drill
@@ -395,7 +400,6 @@ MELEE WEAPONS:
 (X) Origins Biome Keybrand
 (#, ^2) Crystal Cutter
 (@5, #) Envenomed Frenzy*
-(^) Fragarach
 (^) Knee Slapper
 (#, ^2) Nematoclaw*
 (#, ^2) Scale Saw
@@ -497,7 +501,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash
 (#, ^2) Forest Staff !!!
-(X) Maelstrom Incantation !!!
+(#, ^2) Maelstrom Incantation !!!
 (#, ^2) Ocean Amulet !!!
 (^) Rotted Worm Staff
 (^) Teardown
@@ -506,7 +510,6 @@ SUMMONER WEAPONS:
 (@2, #) Back-Up Mag
 (^) Bomb Artifact
 (X) Mildew Whip
-(X) Stubborn Leaf
 
 (X) Controller/Patrol Bot Controller
 (X) Doom Incantation
@@ -543,7 +546,6 @@ EXPLOSIVE WEAPONS:
 
 (^) Bomboomstick
 (#2, ^2) Boomphracken
-(X) Groove Grenade
 (#, ^2) Klangjet
 (#, ^2) Mortar Shell
 (^) Shrapnel Bomb
@@ -559,7 +561,7 @@ EXPLOSIVE WEAPONS:
 (@, ^3) Fallout
 (X) Grenade Lawnchair
 (X) Grenado
-(X, %2) Mine Flayer
+(X) Mine Flayer
 (#, ^2) Nade O' Plenty
 (#, ^2) Nuclear Arm*
 (X, %2) Overhead Missile Cannon
@@ -651,14 +653,16 @@ TILES:
 
 (X) A Perfect World
 
+(X) Ancient Music Box (Brine Pool)
+(X) Ancient Music Box (Defiled Wastelands)
+(X) Ancient Music Box (Riven Hive)
 (X) Music Box (Brine Pool)
 (X) Music Box (Cubekon Temple)
 (@5, #2-4) Music Box (Defiled Caverns) !!!
-(X) Music Box (Defiled Otherworldly)
 (@5, #2-4) Music Box (Defiled Wastelands) !!!
-(X) Music Box (Ancient Defiled Wastelands)
 (X) Music Box (Dusk)
 (X) Music Box (Riven Hive) !!!
+(X) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Trophy
 (#, @4) Defiled Amalgamation Relic !!!

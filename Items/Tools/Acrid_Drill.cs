@@ -1,11 +1,10 @@
+using Origins.Items.Materials;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Items.Materials;
 
 namespace Origins.Items.Tools {
-	public class Acrid_Drill : ModItem {
+    public class Acrid_Drill : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Drill");
@@ -22,7 +21,7 @@ namespace Origins.Items.Tools {
 			Item.knockBack*=2f;
             Item.shootSpeed = 56f;
             Item.shoot = ModContent.ProjectileType<Acrid_Drill_P>();
-			Item.value = 3600;
+			Item.value = Item.buyPrice(gold: 22);
 			Item.rare = ItemRarityID.LightRed;
 			Item.glowMask = glowmask;
 		}

@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
             Item.CloneDefaults(ItemID.YoYoGlove);
             Item.handOffSlot = -1;
             Item.handOnSlot = -1;
-            Item.value = 200000; //PPGGSSCC
+            Item.value = Item.buyPrice(gold: 25);
             Item.rare = ItemRarityID.Yellow;
             Item.glowMask = glowmask;
         }

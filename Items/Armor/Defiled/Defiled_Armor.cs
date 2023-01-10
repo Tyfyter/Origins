@@ -16,6 +16,7 @@ namespace Origins.Items.Armor.Defiled {
         }
         public override void SetDefaults() {
             Item.defense = 6;
+            Item.value = Item.buyPrice(gold: 1, silver: 20);
             Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
@@ -45,6 +46,7 @@ namespace Origins.Items.Armor.Defiled {
         }
         public override void SetDefaults() {
             Item.defense = 7;
+            Item.value = Item.buyPrice(gold: 1, silver: 20);
             Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
@@ -67,6 +69,7 @@ namespace Origins.Items.Armor.Defiled {
         }
         public override void SetDefaults() {
             Item.defense = 6;
+            Item.value = Item.buyPrice(gold: 1, silver: 20);
             Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {

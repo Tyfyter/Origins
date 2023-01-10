@@ -2,10 +2,9 @@ using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Tools {
-	public class Brick_Breaker : ModItem {
+    public class Brick_Breaker : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Brick Breaker");
 			Tooltip.SetDefault("Very pointy");
@@ -22,7 +21,7 @@ namespace Origins.Items.Tools {
 			Item.useTime = 17;
 			Item.useAnimation = 27;
 			Item.knockBack = 4.3f;
-			Item.value = 3600;
+			Item.value = Item.buyPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 		}

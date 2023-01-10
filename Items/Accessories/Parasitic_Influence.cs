@@ -1,19 +1,17 @@
-﻿using Terraria.GameContent.Creative;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Items.Materials;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.GameContent;
-using System;
 using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
-	public class Parasitic_Influence : ModItem {
+    public class Parasitic_Influence : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Parasitic Influence");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Chance to randomly strike nearby enemies");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -25,8 +23,8 @@ namespace Origins.Items.Accessories {
 			Item.knockBack = 3;
 			Item.useTime = Item.useAnimation = 30;
 			Item.shoot = ModContent.ProjectileType<Parasitic_Influence_Tentacle>();
+			Item.value = Item.buyPrice(gold: 5);
 			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.buyPrice(gold: 1);
 		}
 		public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

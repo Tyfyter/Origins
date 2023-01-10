@@ -13,6 +13,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.ChocolateChipCookie);
 			Item.buffType = BuffID.WellFed3;
 			Item.buffTime = 60 * 60 * 10;
+			Item.value = Item.buyPrice(platinum: 1);
 			Item.rare = ItemRarityID.Expert;
 		}
 	}
