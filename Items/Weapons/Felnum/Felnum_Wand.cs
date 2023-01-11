@@ -43,7 +43,7 @@ namespace Origins.Items.Weapons.Felnum {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
-            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, Item.playerIndexTheItemIsReservedFor);
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
             //Projectile.NewProjectile(position, speed, 777, damage, knockBack, item.owner, position.X, position.Y);
             return false;
         }

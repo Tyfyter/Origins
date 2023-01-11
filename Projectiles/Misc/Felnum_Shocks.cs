@@ -42,7 +42,7 @@ namespace Origins.Projectiles.Misc {
                 damage = target.life - 1;
                 target.GetGlobalNPC<OriginGlobalNPC>().shockTime = 15;
             }
-            damage += target.defense / 2;
+            damage += Math.Max(target.defense - Projectile.ArmorPenetration, 0) / 2;
         }
         public override void Kill(int timeLeft) {
             if(timeLeft>0) {

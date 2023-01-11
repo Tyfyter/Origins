@@ -397,7 +397,7 @@ namespace Origins {
     public record SpriteBatchState(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix transformMatrix = default);
     public abstract class AnimatedModItem : ModItem {
         public abstract DrawAnimation Animation { get; }
-        public virtual Color? GlowmaskTint { get => null; }
+        public virtual Color? GetGlowmaskTint(Player player) => null;
         public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
             Texture2D texture = TextureAssets.Item[Item.type].Value;
             spriteBatch.Draw(texture, Item.position-Main.screenPosition, Animation.GetFrame(texture), lightColor, 0f, default(Vector2), scale, SpriteEffects.None, 0f);

@@ -35,7 +35,7 @@ namespace Origins.Layers {
                 drawInfo.DrawDataCache.Add(value);
             }
             if (drawPlayer.inventory[drawPlayer.selectedItem].glowMask != -1) {
-                value = new DrawData(TextureAssets.GlowMask[drawPlayer.inventory[drawPlayer.selectedItem].glowMask].Value, new Vector2((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y)), frame, aItem.GlowmaskTint ?? new Color(250, 250, 250, item.alpha), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
+                value = new DrawData(TextureAssets.GlowMask[drawPlayer.inventory[drawPlayer.selectedItem].glowMask].Value, new Vector2((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y)), frame, aItem.GetGlowmaskTint(drawPlayer) ?? new Color(250, 250, 250, item.alpha), drawPlayer.itemRotation, new Vector2(frame.Width * 0.5f - frame.Width * 0.5f * drawPlayer.direction, frame.Height), drawPlayer.inventory[drawPlayer.selectedItem].scale, spriteEffects, 0);
                 drawInfo.DrawDataCache.Add(value);
             }
         }

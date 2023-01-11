@@ -92,6 +92,9 @@ namespace Tyfyter.Utils {
             float maxY = (int)Math.Max(Math.Max(a.Y, b.Y), c.Y);
             return (new Vector2(minX, minY), new Vector2(maxX, maxY));
 		}
+        public bool HasNaNs() {
+            return a.HasNaNs() || b.HasNaNs() || c.HasNaNs();
+		}
 	}
     public struct Line {
         public readonly Vector2 a;

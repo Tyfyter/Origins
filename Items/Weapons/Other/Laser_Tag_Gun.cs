@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Other {
         public ushort Element => Elements.Earth;
         static DrawAnimationManual animation;
         public override DrawAnimation Animation => animation;
-        public override Color? GlowmaskTint => Main.teamColor[Main.player[Item.playerIndexTheItemIsReservedFor].team];
+        public override Color? GetGlowmaskTint(Player player) => Main.teamColor[player.team];
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Laser Tag Gun");
 			Tooltip.SetDefault("‘Defective to some, glory to others’");

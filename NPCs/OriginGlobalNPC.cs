@@ -8,6 +8,7 @@ using Origins.Items.Weapons.Explosives;
 using Origins.Items.Weapons.Felnum.Tier2;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven;
+using Origins.Projectiles.Misc;
 using Origins.Questing;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
@@ -160,6 +161,9 @@ namespace Origins.NPCs {
 				if (npc.HasBuff(Flagellash_Buff_2.ID)) {
 					damageBoost += 2.65f;
 				}
+				if (npc.HasBuff(Maelstrom_Buff_Damage.ID)) {
+					damageBoost += npc.HasBuff(Maelstrom_Buff_Zap.ID) ? 7f : 5f;
+				}
 				if (amebolizeDebuff) {
 					damageBoost += 5f;
 				}
@@ -191,6 +195,38 @@ namespace Origins.NPCs {
 						if(projectile.CountsAsClass(DamageClasses.Explosive)) damage /= Main.masterMode ? 5 : 2;
 						break;
 					}
+				}
+			}
+		}
+		public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit) {
+			if (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]) {
+				if (npc.HasBuff(Maelstrom_Buff_Zap.ID)) {
+					float targetDist = 96 * 96;
+					Vector2 targetStart = default;
+					Vector2 targetEnd = default;
+					for (int i = 0; i < Main.maxNPCs; i++) {
+						NPC currentTarget = Main.npc[i];
+						if (i == npc.whoAmI || !currentTarget.CanBeChasedBy()) continue;
+						Vector2 currentStart = currentTarget.Center.Clamp(npc.Hitbox);
+						Vector2 currentEnd = npc.Center.Clamp(currentTarget.Hitbox);
+						float currentDist = (currentEnd - currentStart).LengthSquared();
+						if (currentDist < targetDist) {
+							targetDist = currentDist;
+							targetStart = currentStart;
+							targetEnd = currentEnd;
+						}
+					}
+					Projectile.NewProjectileDirect(
+						projectile.GetSource_OnHit(npc),
+						targetEnd,
+						default,
+						Felnum_Shock_Leader.ID,
+						5,
+						knockback,
+						projectile.owner,
+						targetStart.X,
+						targetStart.Y
+					).ArmorPenetration = 20;
 				}
 			}
 		}
