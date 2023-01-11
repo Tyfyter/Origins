@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Felnum {
     public class Maelstrom_Incantation : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Maelstrom Incantation");
-            Tooltip.SetDefault("Receives 50% higher damage bonuses");
+            Tooltip.SetDefault("5 summon tag damage\nDirectly struck enemies will shock nearby enemies when hit by minions\nYour summons will focus struck enemies \nReceives 50% higher damage bonuses");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -47,6 +47,7 @@ namespace Origins.Items.Weapons.Felnum {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             //SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
+            SoundEngine.PlaySound(SoundID.Item117.WithPitchRange(0.0f, 0.2f), position);//117
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, player.itemTime);
             //Projectile.NewProjectile(position, speed, 777, damage, knockBack, item.owner, position.X, position.Y);
             return false;
@@ -62,7 +63,7 @@ namespace Origins.Items.Weapons.Felnum {
             Projectile.CloneDefaults(ProjectileID.AmberBolt);
             Projectile.DamageType = DamageClass.Summon;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 10;
+            Projectile.localNPCHitCooldown = 16;
             Projectile.width = 0;
             Projectile.height = 0;
             Projectile.aiStyle = 0;
@@ -94,8 +95,8 @@ namespace Origins.Items.Weapons.Felnum {
                     owner.direction = Math.Sign(Projectile.velocity.X);
                     owner.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation - MathHelper.PiOver2);
                     if (age == (int)Projectile.ai[0]) {
-                        SoundEngine.PlaySound(SoundID.Item122.WithPitchRange(0.9f, 1.1f).WithVolume(2), Projectile.Center);
-                        SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitchRange(0.0f, 0.2f).WithVolume(0.5f), Projectile.Center);
+                        //SoundEngine.PlaySound(SoundID.Item122.WithPitchRange(0.9f, 1.1f).WithVolume(1f), Projectile.Center);
+                        //SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitchRange(0.0f, 0.2f).WithVolume(0.35f), Projectile.Center);
                         Projectile.NewProjectile(
                             Projectile.GetSource_FromThis(),
                             Projectile.position,
@@ -123,9 +124,11 @@ namespace Origins.Items.Weapons.Felnum {
 			} else {
 				if (--Projectile.ai[0] <= -16) {
                     if (Projectile.ai[0] > -24) {
-                        if (Projectile.ai[0] == -12) {
+                        if (Projectile.ai[0] == -16) {
                             SoundEngine.PlaySound(SoundID.Item122.WithPitchRange(0.9f, 1.1f).WithVolume(2), Projectile.Center);
                             SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithPitchRange(0.0f, 0.2f).WithVolume(0.75f), Projectile.Center);
+                            Projectile.damage += Projectile.damage / 2;
+                            Projectile.knockBack += Projectile.knockBack;
                         }
                         Projectile.scale += 0.5f;
                     } else {
@@ -136,7 +139,7 @@ namespace Origins.Items.Weapons.Felnum {
 					if ((int)Projectile.ai[0] % 2 == 0) {
                         float angle = Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi);
                         Vector2 targetEnd = OriginExtensions.Vec2FromPolar(angle, Main.rand.NextFloat(18, 24) * Projectile.scale) + Projectile.position;
-                        Vector2 targetStart = OriginExtensions.Vec2FromPolar(angle, Main.rand.NextFloat(4) * Projectile.scale) + Projectile.position;
+                        Vector2 targetStart = OriginExtensions.Vec2FromPolar(angle, Main.rand.NextFloat(2) * Projectile.scale) + Projectile.position;
                         Projectile.NewProjectileDirect(
                             Projectile.GetSource_FromThis(),
                             targetEnd,
