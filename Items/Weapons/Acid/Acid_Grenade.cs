@@ -19,7 +19,8 @@ namespace Origins.Items.Weapons.Acid {
 			Item.shootSpeed*=1.5f;
             Item.knockBack = 5f;
             Item.ammo = ItemID.Grenade;
-			Item.rare = ItemRarityID.LightRed;
+            Item.value = Item.sellPrice(silver: 2);
+            Item.rare = ItemRarityID.LightRed;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 3);

@@ -8,7 +8,7 @@ namespace Origins.Items.Weapons.Other {
     public class Eyndum_Scar : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Eyndum Scar");
-            Tooltip.SetDefault("");
+            Tooltip.SetDefault("A very lame end-game sword");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -23,11 +23,10 @@ namespace Origins.Items.Weapons.Other {
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.knockBack = 9.5f;
-            Item.value = 500000;
             Item.shoot = ProjectileID.None;
+            Item.value = Item.buyPrice(gold: 25);
             Item.rare = CrimsonRarity.ID;
             Item.autoReuse = true;
-            Item.scale = 1f;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

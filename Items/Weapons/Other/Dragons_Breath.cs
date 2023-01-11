@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
@@ -28,6 +27,7 @@ namespace Origins.Items.Weapons.Other {
             Item.shootSpeed = 10f;
             Item.knockBack = 2.5f;
             Item.useAmmo = AmmoID.None;
+            Item.value = Item.sellPrice(gold: 2);
             Item.rare = ItemRarityID.Orange;
             Item.glowMask = glowmask;
         }

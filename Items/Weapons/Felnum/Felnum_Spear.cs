@@ -5,10 +5,9 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Felnum {
-	public class Felnum_Spear : ModItem {
+    public class Felnum_Spear : ModItem {
         public const int baseDamage = 18;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Boar Spear");
@@ -26,11 +25,11 @@ namespace Origins.Items.Weapons.Felnum {
 			Item.useAnimation = 24;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 6;
-			Item.value = 5000;
 			Item.autoReuse = true;
             Item.useTurn = false;
 			Item.shootSpeed = 3;
             Item.shoot = ModContent.ProjectileType<Felnum_Spear_Stab>();
+			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item1;
 		}

@@ -21,6 +21,7 @@ namespace Origins.Items.Weapons.Other {
             Item.shoot = ModContent.ProjectileType<Sleetfire_P>();
             Item.shootSpeed = 7f;
             Item.reuseDelay = 9;
+            Item.value = Item.buyPrice(silver: 50);
             Item.rare = ItemRarityID.White;
             Item.ArmorPenetration = 5;
             Item.UseSound = SoundID.Item34;

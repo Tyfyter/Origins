@@ -20,6 +20,7 @@ namespace Origins.Items.Weapons.Felnum {
             Item.useTime = Item.useAnimation = 32;
             Item.shootSpeed*=2.5f;
             Item.autoReuse = false;
+            Item.value = Item.sellPrice(silver: 50);
             Item.rare = ItemRarityID.Green;
         }
         public override void AddRecipes() {

@@ -18,6 +18,7 @@ namespace Origins.Items.Weapons.Ammo {
             Item.damage = 25;
             Item.shoot = Giant_Metal_Slug_P.ID;
             Item.ammo = Item.type;
+            Item.value = Item.sellPrice(silver: 3);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -64,6 +65,7 @@ namespace Origins.Items.Weapons.Ammo {
             Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
             Item.ammo = Item.type;
             Item.glowMask = glowmask;
+            Item.value = Item.sellPrice(silver: 3, copper: 2);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -87,6 +89,7 @@ namespace Origins.Items.Weapons.Ammo {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.GreenSolution);
             Item.shoot = ModContent.ProjectileType<White_Solution_P>()-ProjectileID.PureSpray;
+            Item.value = Item.sellPrice(silver: 3);
         }
     }
     public class White_Solution_P : ModProjectile {
@@ -108,6 +111,7 @@ namespace Origins.Items.Weapons.Ammo {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.GreenSolution);
             Item.shoot = ModContent.ProjectileType<Teal_Solution_P>() - ProjectileID.PureSpray;
+            Item.value = Item.sellPrice(silver: 3);
         }
     }
     public class Teal_Solution_P : ModProjectile {

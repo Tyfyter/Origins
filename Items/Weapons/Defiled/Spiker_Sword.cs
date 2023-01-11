@@ -1,6 +1,5 @@
 using Origins.Items.Materials;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -22,8 +21,8 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.useAnimation = 28;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 7.5f;
-			Item.value = 5000;
             Item.useTurn = true;
+			Item.value = Item.sellPrice(silver: 40);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;

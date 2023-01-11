@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
 using Origins.NPCs;
 using System;
 using System.Collections.Generic;
@@ -35,8 +34,8 @@ namespace Origins.Items.Weapons.Riven {
 			Item.shootSpeed = 12;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 0f;
-			Item.value = 5000;
             Item.useTurn = false;
+			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = CursedRarity.ID;
 			Item.UseSound = SoundID.Item1;
 			Item.ArmorPenetration = 9999;

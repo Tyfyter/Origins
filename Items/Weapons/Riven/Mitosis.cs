@@ -1,12 +1,8 @@
 using Microsoft.Xna.Framework;
 using Origins.Projectiles;
-using System;
 using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Riven {
     public class Mitosis : ModItem {

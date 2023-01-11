@@ -22,9 +22,9 @@ namespace Origins.Items.Weapons.Other {
 			Item.height = 30;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
-			Item.mana = 8;
-			Item.value = 5000;
+			Item.mana = 10;
             Item.shoot = ModContent.ProjectileType<Cryostrike_P>();
+			Item.value = Item.sellPrice(silver: 48);
 			Item.rare = ItemRarityID.White;
             Item.scale = 0.85f;
 		}

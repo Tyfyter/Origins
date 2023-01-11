@@ -25,7 +25,8 @@ namespace Origins.Items.Weapons.Explosives {
             Item.shoot = ModContent.ProjectileType<Black_Hole_Bomb_P>();
 			Item.shootSpeed*=2;
             Item.knockBack = 50f;
-			Item.rare = CrimsonRarity.ID;
+            Item.value = Item.sellPrice(gold: 1);
+            Item.rare = CrimsonRarity.ID;
 		}
     }
     public class Black_Hole_Bomb_P : ModProjectile {

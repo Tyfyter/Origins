@@ -27,6 +27,7 @@ namespace Origins.Items.Weapons.Other {
             Item.shoot = ProjectileID.Harpoon;//ModContent.ProjectileType<Lava_Shot>();
             Item.shootSpeed = 14.75f;
             Item.UseSound = SoundID.Item11;
+            Item.value = Item.buyPrice(silver: 54);
             Item.rare = ItemRarityID.Green;
             Item.autoReuse = true;
         }

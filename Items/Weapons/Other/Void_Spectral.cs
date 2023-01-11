@@ -13,14 +13,14 @@ namespace Origins.Items.Weapons.Other {
     public class Void_Spectral : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Void Spectral");
-            Tooltip.SetDefault("");
+            DisplayName.SetDefault("Haunted Vase");
+            Tooltip.SetDefault("'Try not to disturb the spirits within'");
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.ToxicFlask);
-            Item.damage = 85;
+            Item.damage = 57;
             Item.crit = 5;
             Item.knockBack *= 0.5f;
             Item.useAnimation = Item.useTime = 27;
@@ -29,6 +29,9 @@ namespace Origins.Items.Weapons.Other {
             Item.glowMask = glowmask;
             Item.shoot = ModContent.ProjectileType<Void_Spectral_P>();
             Item.shootSpeed *= 1.5f;
+            Item.value = Item.buyPrice(gold: 5);
+            Item.rare = ItemRarityID.Pink;
+
         }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, ai1:velocity.Length()*0.3f);

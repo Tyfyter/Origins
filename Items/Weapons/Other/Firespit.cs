@@ -3,7 +3,6 @@ using Origins.Projectiles.Weapons;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -30,6 +29,7 @@ namespace Origins.Items.Weapons.Other {
             Item.shootSpeed = 8.75f;
             Item.UseSound = SoundID.Item20;
             Item.reuseDelay = 9;
+            Item.value = Item.buyPrice(gold: 2);
             Item.rare = ItemRarityID.Orange;
             Item.glowMask = glowmask;
             Item.consumeAmmoOnFirstShotOnly = true;

@@ -22,10 +22,10 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.damage = 250;
 			Item.useTime = 90;
 			Item.useAnimation = 90;
-			Item.value = 5000;
             Item.shootSpeed*=0.75f;
             Item.shoot = ModContent.ProjectileType<Fallout_P1>();
-			Item.rare = ItemRarityID.Lime;
+            Item.value = Item.sellPrice(gold: 10);
+            Item.rare = ItemRarityID.Lime;
             Item.autoReuse = true;
             Item.glowMask = glowmask;
         }

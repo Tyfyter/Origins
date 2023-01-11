@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Acid {
 		public ushort Element => Elements.Acid;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acid Splash");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Shoots a flurry of acid droplets");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}
@@ -29,8 +29,8 @@ namespace Origins.Items.Weapons.Acid {
 			Item.useAnimation = 24;
             Item.reuseDelay = 8;
 			Item.mana = 18;
-			Item.value = 5000;
             Item.shoot = ModContent.ProjectileType<Acid_Shot>();
+			Item.value = Item.sellPrice(silver: 20, copper: 80);
 			Item.rare = ItemRarityID.LightRed;
 			Item.glowMask = glowmask;
 		}

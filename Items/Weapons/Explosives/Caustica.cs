@@ -1,17 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Caustica : ModItem, IElementalItem {
@@ -19,7 +12,7 @@ namespace Origins.Items.Weapons.Explosives {
 
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Caustica");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Shoots a flurry of chaotic sparkles");
             SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
@@ -35,9 +28,9 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.useAnimation = 24;
             Item.reuseDelay = 8;
 			Item.mana = 16;
-			Item.value = 5000;
             Item.shoot = ModContent.ProjectileType<Caustica_P>();
-			Item.rare = ButterscotchRarity.ID;
+            Item.value = Item.sellPrice(gold: 10);
+            Item.rare = ButterscotchRarity.ID;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    int a = Main.rand.Next(5,7);

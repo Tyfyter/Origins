@@ -20,8 +20,8 @@ namespace Origins.Items.Weapons.Defiled {
 			//item.knockBack = 5;
             Item.shoot = ModContent.ProjectileType<Defiled_Chakram_P>();
             Item.shootSpeed = 9.75f;
-			Item.value = 5000;
-			Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(silver: 40);
+            Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 		}
         public override bool CanUseItem(Player player) {

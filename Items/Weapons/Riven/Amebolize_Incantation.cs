@@ -1,13 +1,9 @@
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
-using Origins.Projectiles;
 using System;
 using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Riven {
@@ -31,8 +27,8 @@ namespace Origins.Items.Weapons.Riven {
             Item.shootSpeed = 9.75f;
             Item.mana = 10;
             Item.knockBack = 0f;
-			Item.value = 5000;
-			Item.rare = ItemRarityID.Blue;
+            Item.value = Item.buyPrice(gold: 1, silver: 50);
+            Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item7;
             Item.glowMask = glowmask;
             Item.channel = true;

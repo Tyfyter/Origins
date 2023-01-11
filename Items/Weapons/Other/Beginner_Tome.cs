@@ -20,9 +20,9 @@ namespace Origins.Items.Weapons.Other {
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.mana = 8;
-			Item.value = 5000;
             Item.shoot = ModContent.ProjectileType<Beginner_Spell>();
-			Item.rare = ItemRarityID.Green;
+			Item.value = Item.sellPrice(silver: 30);
+			Item.rare = ItemRarityID.White;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

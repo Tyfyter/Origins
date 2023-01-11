@@ -399,7 +399,6 @@ MELEE WEAPONS:
 
 (X) Origins Biome Keybrand
 (#, ^2) Crystal Cutter
-(@5, #) Envenomed Frenzy*
 (^) Knee Slapper
 (#, ^2) Nematoclaw*
 (#, ^2) Scale Saw
@@ -447,6 +446,7 @@ RANGED WEAPONS:
 (X) Titanium Harpoon Gun
 (@5, ^3) Vipershot
 
+(^) Dreikan
 (^) Laser Tag Gun
 (X) Serpentine
 (X) Skewr
@@ -480,12 +480,12 @@ MAGIC WEAPONS:
 
 (^) Cometburn
 (^) Gravaulter
+(^) Haunted Vase
 (X) Lunarfire
 (#, ^2) Phantom Fury
 (X) Shocktrain
 (X) Spectra
 (X) Steam Blaster
-(^) Void Spectral
 
 (X) Ion Minigun
 (^) Rigged Cubix
@@ -509,6 +509,7 @@ SUMMONER WEAPONS:
 
 (@2, #) Back-Up Mag
 (^) Bomb Artifact
+(@5, #) Envenomed Frenzy*
 (X) Mildew Whip
 
 (X) Controller/Patrol Bot Controller

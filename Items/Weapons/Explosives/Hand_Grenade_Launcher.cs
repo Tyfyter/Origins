@@ -33,7 +33,8 @@ namespace Origins.Items.Weapons.Explosives {
             Item.useAmmo = ItemID.Grenade;
             Item.knockBack = 2f;
             Item.shootSpeed = 5f;
-			Item.rare = ItemRarityID.Orange;
+            Item.value = Item.sellPrice(gold: 1);
+            Item.rare = ItemRarityID.Orange;
 		}
         public override bool AltFunctionUse(Player player) {
             return true;

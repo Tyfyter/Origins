@@ -21,6 +21,7 @@ namespace Origins.Items.Weapons.Ammo {
             Item.maxStack = 99;
             Item.shoot = Cursed_Harpoon_P.ID;
             Item.ammo = Harpoon.ID;
+            Item.value = Item.sellPrice(silver: 30);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

@@ -1,10 +1,9 @@
-﻿using Terraria;
-using Terraria.Audio;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.ID;
+﻿using Microsoft.Xna.Framework;
 using Origins.Projectiles.Weapons;
-using Terraria.GameContent.Creative;
+using Terraria;
+using Terraria.Audio;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Other {
     public class Boiler_Pistol : ModItem {
@@ -27,6 +26,7 @@ namespace Origins.Items.Weapons.Other {
             Item.shoot = ModContent.ProjectileType<Lava_Shot>();
             Item.shootSpeed*=1.75f;
             Item.UseSound = SoundID.Item41;
+            Item.value = Item.sellPrice(gold: 1);
             Item.rare = ItemRarityID.Orange;
             Item.glowMask = glowmask;
         }

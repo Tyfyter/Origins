@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Other {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Rigged Cubix");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("'Infinite ammo, infinite wisdom'");
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
@@ -28,8 +28,8 @@ namespace Origins.Items.Weapons.Other {
 			Item.useAnimation = 54;
 			Item.shootSpeed = 14;
 			Item.mana = 4;
-			Item.value = 5000;
             Item.shoot = ModContent.ProjectileType<Rigged_Cubix_P>();
+			Item.value = Item.buyPrice(platinum: 1);
 			Item.rare = ButterscotchRarity.ID;
 			Item.UseSound = null;
 			Item.glowMask = glowmask;

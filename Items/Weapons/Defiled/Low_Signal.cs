@@ -31,8 +31,8 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.knockBack = 5;
             Item.shoot = ModContent.ProjectileType<Low_Signal_P>();
             Item.shootSpeed = 14f;
-			Item.value = 5000;
             Item.useTurn = false;
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f);
 			Item.autoReuse = true;

@@ -30,6 +30,8 @@ namespace Origins.NPCs.Defiled {
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
+            npcLoot.Add(ItemDropRule.Common(ItemID.CopperCoin, 1, 40));
         }
         public override void OnSpawn(IEntitySource source) {
             NPC.spriteDirection = Main.rand.NextBool() ? 1 : -1;

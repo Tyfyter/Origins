@@ -29,8 +29,8 @@ namespace Origins.Items.Weapons.Defiled {
             Item.shootSpeed = 15f;
             Item.shoot = ProjectileID.Bullet;
             Item.useAmmo = AmmoID.Bullet;
-            Item.value = 15000;
             Item.useTurn = false;
+            Item.value = Item.sellPrice(silver: 50);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.05f);
             Item.glowMask = glowmask;

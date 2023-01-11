@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,6 +24,7 @@ namespace Origins.Items.Weapons.Other {
             Item.shoot = ModContent.ProjectileType<Dreikan_Shot>();
             Item.reuseDelay = 6;
             Item.scale = 0.75f;
+			Item.value = Item.sellPrice(gold: 5);
 		}
         public override Vector2? HoldoutOffset() {
             return new Vector2(-16,2);

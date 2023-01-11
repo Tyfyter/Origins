@@ -25,7 +25,8 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.shootSpeed*=1.5f;
             Item.knockBack = 5f;
             Item.ammo = ItemID.Grenade;
-			Item.rare = ItemRarityID.LightRed;
+            Item.value = Item.sellPrice(silver: 5);
+            Item.rare = ItemRarityID.LightRed;
 		}
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 5);

@@ -1,20 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.ID;
-using Terraria.DataStructures;
-using Origins.Projectiles.Misc;
-using Terraria.Graphics.Shaders;
-using Tyfyter.Utils;
-using Terraria.GameContent.Creative;
-using Terraria.GameContent.Creative;
+﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
+using Terraria.ID;
+using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Other {
     public class Cometburn : ModItem {

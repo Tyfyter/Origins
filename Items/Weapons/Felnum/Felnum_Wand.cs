@@ -28,6 +28,7 @@ namespace Origins.Items.Weapons.Felnum {
             //item.mana = 0;
             //item.useTime = 1;
             //item.useAnimation = 10;
+            Item.value = Item.sellPrice(silver: 60);
             Item.rare = ItemRarityID.Green;
         }
         public override void AddRecipes() {

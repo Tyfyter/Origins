@@ -13,14 +13,14 @@ namespace Origins.Items.Weapons.Explosives {
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Bomb);
-            Item.damage = 46;
-			Item.value*=2;
+            Item.damage = 45;
 			Item.useTime = (int)(Item.useTime*0.75);
 			Item.useAnimation = (int)(Item.useAnimation*0.75);
             Item.shoot = ModContent.ProjectileType<Impact_Bomb_P>();
 			Item.shootSpeed*=1.75f;
             Item.knockBack = 13f;
-			Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(silver: 1);
+            Item.rare = ItemRarityID.Blue;
 		}
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

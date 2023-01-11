@@ -33,7 +33,8 @@ namespace Origins.Items.Weapons.Dungeon {
             Item.useAmmo = ItemID.Bomb;
             Item.knockBack = 2f;
             Item.shootSpeed = 4f;
-			Item.rare = ItemRarityID.Green;
+            Item.value = Item.sellPrice(silver: 80);
+            Item.rare = ItemRarityID.Green;
 		}
         public override bool AltFunctionUse(Player player) {
             return true;

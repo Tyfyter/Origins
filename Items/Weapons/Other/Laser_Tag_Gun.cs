@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Other {
         public override Color? GlowmaskTint => Main.teamColor[Main.player[Item.playerIndexTheItemIsReservedFor].team];
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Laser Tag Gun");
-			Tooltip.SetDefault("‘Pew pew, Muddathrucka...’");
+			Tooltip.SetDefault("‘Defective to some, glory to others’");
             animation = new DrawAnimationManual(1);
 			Main.RegisterItemAnimation(Item.type, animation);
             glowmask = Origins.AddGlowMask(this);
@@ -34,11 +34,10 @@ namespace Origins.Items.Weapons.Other {
 			Item.useTime = 16;
 			Item.useAnimation = 16;
 			Item.mana = 10;
-			Item.value = 70000;
             Item.shoot = ModContent.ProjectileType<Laser_Tag_Laser>();
-			Item.rare = ItemRarityID.Lime;
+            Item.value = Item.buyPrice(gold: 10);
+            Item.rare = ItemRarityID.Lime;
             Item.glowMask = glowmask;
-            Item.scale = 1;
 		}
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

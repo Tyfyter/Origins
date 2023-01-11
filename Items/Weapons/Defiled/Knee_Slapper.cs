@@ -5,7 +5,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Defiled {
@@ -30,8 +29,8 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.knockBack = 5;
             Item.shoot = ModContent.ProjectileType<Knee_Slapper_P>();
 			Item.shootSpeed = 16f;
-			Item.value = 5000;
             Item.useTurn = true;
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item1;
 			Item.autoReuse = true;

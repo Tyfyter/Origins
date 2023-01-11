@@ -1,13 +1,10 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
-using Origins.Items.Materials;
 using Origins.NPCs;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,7 +13,6 @@ namespace Origins.Items.Weapons.Riven {
         static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Seam Beam");
-            Tooltip.SetDefault("");
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 1;
         }
@@ -24,7 +20,7 @@ namespace Origins.Items.Weapons.Riven {
         public override void SetDefaults(){
             Item.damage = 42;
             Item.DamageType = DamageClass.Magic;
-            Item.mana = 12;
+            Item.mana = 22;
             Item.shoot = ModContent.ProjectileType<Seam_Beam_Beam>();
             Item.shootSpeed = 0f;
             Item.useTime = Item.useAnimation = 20;
@@ -34,7 +30,7 @@ namespace Origins.Items.Weapons.Riven {
             Item.shootSpeed = 1;
             Item.width = 12;
             Item.height = 10;
-            Item.value = 10000;
+            Item.value = Item.buyPrice(gold: 4);
             Item.rare = ItemRarityID.Pink;
             Item.UseSound = Origins.Sounds.EnergyRipple;
             Item.glowMask = glowmask;

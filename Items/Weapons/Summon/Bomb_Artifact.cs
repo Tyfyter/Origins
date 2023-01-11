@@ -22,13 +22,13 @@ namespace Origins.Items.Weapons.Summon {
         public override void SetDefaults() {
             Item.damage = 80;
             Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
-            Item.mana = 20;
+            Item.mana = 40;
             Item.width = 32;
             Item.height = 32;
             Item.useTime = 36;
             Item.useAnimation = 36;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.value = Item.sellPrice(0, 6, 0, 0);
+            Item.value = Item.buyPrice(gold: 4);
             Item.rare = ItemRarityID.Pink;
             Item.UseSound = SoundID.Item44;
             Item.buffType = buffID;

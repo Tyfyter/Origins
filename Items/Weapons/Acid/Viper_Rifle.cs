@@ -22,6 +22,7 @@ namespace Origins.Items.Weapons.Acid {
             Item.height = 40;
             Item.autoReuse = false;
             Item.scale = 0.75f;
+            Item.value = Item.sellPrice(silver: 50);
             Item.rare = ItemRarityID.LightRed;
             Item.UseSound = Origins.Sounds.HeavyCannon;
         }

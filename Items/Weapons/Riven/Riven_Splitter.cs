@@ -27,6 +27,7 @@ namespace Origins.Items.Weapons.Riven {
             Item.shoot = ProjectileID.Harpoon;//ModContent.ProjectileType<Lava_Shot>();
             Item.shootSpeed = 18.75f;
             Item.UseSound = SoundID.Item11;
+            Item.value = Item.buyPrice(gold: 1);
             Item.rare = ItemRarityID.Blue;
             Item.autoReuse = true;
         }

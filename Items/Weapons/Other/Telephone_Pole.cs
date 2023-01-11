@@ -24,14 +24,14 @@ namespace Origins.Items.Weapons.Other {
             Item.useTime = 25;
             Item.useAnimation = 18;
             Item.knockBack = 14f;
-            Item.value = 100000;
             Item.shoot = ProjectileID.None;
+            Item.value = Item.buyPrice(gold: 2);
             Item.rare = ItemRarityID.LightRed;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.Wood, 50);
-            recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 7);
+            recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 7);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }

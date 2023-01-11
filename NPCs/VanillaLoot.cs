@@ -72,9 +72,8 @@ namespace Origins.NPCs {
                 case NPCID.VampireBat:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bat_Hide>(), 3, 1, 3));
                 break;
-                case NPCID.ArmoredSkeleton:
-                case NPCID.SkeletonArcher:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tiny_Sniper>(), 50));
+				case NPCID.SkeletonSniper:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tiny_Sniper>(), 24));
                 break;
 				case NPCID.Snatcher:
 				case NPCID.JungleSlime:

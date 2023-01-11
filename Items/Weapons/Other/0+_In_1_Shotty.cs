@@ -2,7 +2,6 @@
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,6 +14,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Boomstick);
+            Item.value = Item.sellPrice(gold: 4);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -38,6 +38,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Boomstick);
+            Item.value = Item.sellPrice(gold: 6);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

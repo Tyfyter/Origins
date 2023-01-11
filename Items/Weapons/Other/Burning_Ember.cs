@@ -13,7 +13,6 @@ namespace Origins.Items.Weapons.Other {
     public class Burning_Ember : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Amber of Embers");
-            Tooltip.SetDefault("");
             Item.staff[Item.type] = true;
             SacrificeTotal = 1;
         }
@@ -25,11 +24,11 @@ namespace Origins.Items.Weapons.Other {
             Item.useTime = 11;
             Item.width = 48;
             Item.height = 54;
-            Item.mana = 3;
+            Item.mana = 7;
             Item.shoot = ModContent.ProjectileType<Burning_Ember_P>();
             Item.shootSpeed = 8f;
             Item.autoReuse = true;
-            //item.scale = 0.8f;
+            Item.value = Item.sellPrice(gold: 2);
             Item.rare = ItemRarityID.Pink;
         }
         public override void AddRecipes() {

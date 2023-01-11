@@ -1,19 +1,14 @@
 using Microsoft.Xna.Framework;
-using Origins.Projectiles;
 using System;
 using Terraria;
-using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Riven {
     public class Slashswarm : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Slashswarm");
-			Tooltip.SetDefault("");
             glowmask = Origins.AddGlowMask(this, "");
             SacrificeTotal = 1;
         }
@@ -26,9 +21,9 @@ namespace Origins.Items.Weapons.Riven {
 			Item.useAnimation = 24;
             Item.shoot = ModContent.ProjectileType<Slashswarm_P>();
             Item.shootSpeed = 8.75f;
-            Item.mana = 10;
+            Item.mana = 16;
             Item.knockBack = 0f;
-			Item.value = 5000;
+			Item.value = Item.buyPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.reuseDelay = 8;

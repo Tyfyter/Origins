@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Felnum.Tier2 {
     public class Felnum_Greatbow : ModItem {
@@ -27,6 +21,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             Item.useTime = Item.useAnimation = 29;
             Item.shootSpeed*=1.5f;
             Item.autoReuse = true;
+            Item.value = Item.sellPrice(gold: 2);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

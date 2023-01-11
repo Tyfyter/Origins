@@ -4,7 +4,6 @@ using Origins.Items.Weapons.Summon;
 using System;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
@@ -22,13 +21,13 @@ namespace Origins.Items.Weapons.Summon {
         public override void SetDefaults() {
             Item.damage = 8;
             Item.DamageType = DamageClass.Summon;
-            Item.mana = 10;
+            Item.mana = 11;
             Item.width = 32;
             Item.height = 32;
             Item.useTime = 36;
             Item.useAnimation = 36;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.value = Item.sellPrice(0, 6, 0, 0);
+            Item.value = Item.buyPrice(gold: 1);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item44;
             Item.buffType = buffID;

@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Felnum {
 			Item.DamageType = DamageClass.Generic;
 			Item.noMelee = true;
 			Item.shoot = ModContent.ProjectileType<Felnum_Golf_Ball_P>();
+			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {

@@ -34,6 +34,7 @@ namespace Origins.NPCs.Defiled {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ancient_Kruncher>()));
+            npcLoot.Add(ItemDropRule.Common(ItemID.GoldCoin));
         }
         public override void AI() {
             NPC.TargetClosest();

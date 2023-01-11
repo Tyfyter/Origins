@@ -16,12 +16,12 @@ namespace Origins.Items.Weapons.Felnum {
             Item.CloneDefaults(ItemID.Grenade);
             //item.maxStack = 999;
             Item.damage = 32;
-			Item.value *= 4;
             Item.shoot = ModContent.ProjectileType<Shock_Grenade_P>();
 			Item.shootSpeed *= 1.5f;
             Item.knockBack = 15f;
             Item.ammo = ItemID.Grenade;
-			Item.rare = ItemRarityID.Green;
+            Item.value = Item.sellPrice(copper: 70);
+            Item.rare = ItemRarityID.Green;
 		}
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 70);

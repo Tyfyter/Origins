@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.Creative;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,8 +22,9 @@ namespace Origins.Items.Weapons.Other {
             Item.height = 12;
             Item.scale = 0.5f;
             Item.holdStyle = ItemHoldStyleID.HoldHeavy;
+            Item.value = Item.buyPrice(gold: 4);
         }
-		public override void HoldItemFrame(Player player) {
+        public override void HoldItemFrame(Player player) {
             if(player.scope && (PlayerInput.UsingGamepad ? (PlayerInput.GamepadThumbstickRight.Length() != 0f || !Main.SmartCursorIsUsed) : Main.mouseRight)) {
                 Vector2 diff = (Main.MouseWorld - (player.MountedCenter + player.headPosition)).SafeNormalize(Vector2.Zero);//player.itemRotation * player.direction;
                 float rot = diff.ToRotation();

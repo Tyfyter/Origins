@@ -6,7 +6,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons.Other {
+namespace Origins.Items.Weapons.Dungeon {
     public class Tones_Of_Agony : ModItem, IElementalItem {
         public ushort Element => Elements.Earth;
 
@@ -24,10 +24,10 @@ namespace Origins.Items.Weapons.Other {
 			Item.height = 30;
 			Item.useTime = 28;
 			Item.useAnimation = 28;
-			Item.mana = 18;
-			Item.value = 5000;
+			Item.mana = 15;
             Item.shoot = ModContent.ProjectileType<Agony_Shard>();
-			Item.rare = ItemRarityID.Green;
+            Item.value = Item.buyPrice(silver: 80);
+            Item.rare = ItemRarityID.Green;
 		}
     }
     public class Agony_Shard : ModProjectile {
@@ -58,7 +58,7 @@ namespace Origins.Items.Weapons.Other {
             hitbox.Y+=(int)Projectile.velocity.Y;
         }
         public override bool PreDraw(ref Color lightColor) {
-            Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Items/Weapons/Other/Agony_Shard").Value, (Projectile.Center+Projectile.velocity) - Main.screenPosition, new Rectangle(0,0,10,14), lightColor, Projectile.rotation, new Vector2(5, 7), 1f, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Items/Weapons/Dungeon/Agony_Shard").Value, (Projectile.Center+Projectile.velocity) - Main.screenPosition, new Rectangle(0,0,10,14), lightColor, Projectile.rotation, new Vector2(5, 7), 1f, SpriteEffects.None, 0);
             return true;
         }
     }

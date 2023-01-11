@@ -26,8 +26,8 @@ namespace Origins.Items.Weapons.Riven {
             Item.shoot = ModContent.ProjectileType<Riverang_P>();
             Item.shootSpeed = 10.75f;
             Item.knockBack = 5f;
-			Item.value = 5000;
-			Item.rare = ItemRarityID.Blue;
+            Item.value = Item.buyPrice(silver: 40);
+            Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
             Item.glowMask = glowmask;
         }

@@ -1,20 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.Graphics.Shaders;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginExtensions;
 using static Microsoft.Xna.Framework.MathHelper;
-using Origins.NPCs;
-using GNPC = Origins.NPCs.OriginGlobalNPC;
-using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
+using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Explosives {
     public class Ace_Shrapnel_Old : ModItem {
@@ -32,9 +22,9 @@ namespace Origins.Items.Weapons.Explosives {
 			Item.useTime = 28;
 			Item.useAnimation = 28;
             Item.shootSpeed/=2;
-			Item.value = 5000;
             Item.shoot = ModContent.ProjectileType<Ace_Shrapnel_Old_P>();
-			Item.rare = ItemRarityID.Lime;
+            Item.value = Item.sellPrice(gold: 10);
+            Item.rare = ItemRarityID.Lime;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    type-=ModContent.ProjectileType<Ace_Shrapnel_Old_P>();

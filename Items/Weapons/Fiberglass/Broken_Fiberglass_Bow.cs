@@ -1,19 +1,16 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Fiberglass {
-	public class Broken_Fiberglass_Bow : AnimatedModItem, IElementalItem {
+    public class Broken_Fiberglass_Bow : AnimatedModItem, IElementalItem {
         public ushort Element => Elements.Fiberglass;
         protected override bool CloneNewInstances => true;
         int strung = 0;
@@ -43,12 +40,12 @@ namespace Origins.Items.Weapons.Fiberglass {
 			Item.useAnimation = 20;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 1;
-			Item.value = 5000;
 			Item.shootSpeed = 9;
 			Item.autoReuse = false;
             Item.useAmmo = AmmoID.Arrow;
             Item.shoot = ProjectileID.WoodenArrowFriendly;
-			Item.rare = ItemRarityID.Green;
+            Item.value = Item.sellPrice(silver: 30);
+            Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item5;
 		}
         public override void LoadData(TagCompound tag) {

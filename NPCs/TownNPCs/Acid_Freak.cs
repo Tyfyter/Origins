@@ -1,23 +1,18 @@
-﻿using Origins.Items.Materials;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Origins.Projectiles.Weapons;
 using Origins.World.BiomeData;
+using ReLogic.Content;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Events;
 using Terraria.GameContent.Personalities;
 using Terraria.ID;
-using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Terraria.GameContent.UI;
-using Terraria.Utilities;
 using Terraria.Localization;
-using Terraria.GameContent.Events;
+using Terraria.ModLoader;
 using Terraria.ModLoader.Default;
-using Terraria.GameContent;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
+using Terraria.Utilities;
 
 namespace Origins.NPCs.TownNPCs {
     [AutoloadHead]

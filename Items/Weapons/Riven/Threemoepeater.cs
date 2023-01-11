@@ -19,6 +19,7 @@ namespace Origins.Items.Weapons.Riven {
             Item.width = 50;
             Item.height = 10;
             Item.UseSound = SoundID.Item11;
+            Item.value = Item.buyPrice(silver: 42);
             Item.rare = ItemRarityID.Blue;
         }
         public override void AddRecipes() {

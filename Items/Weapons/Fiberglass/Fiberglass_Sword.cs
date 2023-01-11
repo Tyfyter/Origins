@@ -1,10 +1,8 @@
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Fiberglass {
-	public class Fiberglass_Sword : ModItem, IElementalItem {
+    public class Fiberglass_Sword : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Sword");
@@ -20,7 +18,6 @@ namespace Origins.Items.Weapons.Fiberglass {
 			Item.useAnimation = 16;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 2;
-			Item.value = 5000;
 			Item.autoReuse = true;
             Item.useTurn = true;
 			Item.rare = ItemRarityID.Green;

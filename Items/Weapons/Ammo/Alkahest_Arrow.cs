@@ -19,7 +19,8 @@ namespace Origins.Items.Weapons.Ammo {
             Item.shoot = ModContent.ProjectileType<Alkahest_Arrow_P>();
 			Item.shootSpeed = 4f;
             Item.knockBack = 3f;
-			Item.rare = ItemRarityID.Orange;
+            Item.value = Item.sellPrice(silver: 9, copper: 1);
+            Item.rare = ItemRarityID.Orange;
 		}
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 150);

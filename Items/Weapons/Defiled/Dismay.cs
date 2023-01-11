@@ -19,6 +19,7 @@ namespace Origins.Items.Weapons.Defiled {
             Item.damage = 50;
             Item.DamageType = DamageClass.Magic;
             Item.noMelee = true;
+            Item.mana = 14;
             Item.crit = 6;
             Item.width = 28;
             Item.height = 30;
@@ -29,6 +30,8 @@ namespace Origins.Items.Weapons.Defiled {
             Item.shoot = ModContent.ProjectileType<Dismay_Spike>();
             Item.shootSpeed *= 1.2f;
             Item.useTurn = false;
+            Item.value = Item.sellPrice(gold: 4);
+            Item.rare = ItemRarityID.LightRed;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

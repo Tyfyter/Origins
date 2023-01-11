@@ -1,12 +1,10 @@
 using Microsoft.Xna.Framework;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Fiberglass {
-	public class Fiberglass_Pistol : ModItem, IElementalItem {
+    public class Fiberglass_Pistol : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Pistol");
@@ -22,11 +20,11 @@ namespace Origins.Items.Weapons.Fiberglass {
 			Item.useAnimation = 12;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 1;
-			Item.value = 5000;
 			Item.shootSpeed = 14;
 			Item.autoReuse = true;
             Item.useAmmo = AmmoID.Bullet;
             Item.shoot = ProjectileID.Bullet;
+			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item11;
 		}

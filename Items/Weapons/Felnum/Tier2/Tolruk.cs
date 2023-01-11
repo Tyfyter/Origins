@@ -8,8 +8,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginExtensions;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Felnum.Tier2 {
     public class Tolruk : ModItem {
@@ -43,11 +41,11 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             Item.useAnimation = 10;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.knockBack = 1;
-            Item.value = 500000;
             Item.shootSpeed = 14;
             Item.autoReuse = true;
             Item.useAmmo = AmmoID.Bullet;
             Item.shoot = ProjectileID.Bullet;
+            Item.value = Item.sellPrice(gold: 2);
             Item.rare = ItemRarityID.Lime;
             Item.UseSound = SoundID.Item11;
         }

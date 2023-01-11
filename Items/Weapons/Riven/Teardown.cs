@@ -22,13 +22,13 @@ namespace Origins.Items.Weapons.Riven {
         public override void SetDefaults() {
             Item.damage = 11;
             Item.DamageType = DamageClass.Summon;
-            Item.mana = 10;
+            Item.mana = 18;
             Item.width = 32;
             Item.height = 32;
             Item.useTime = 36;
             Item.useAnimation = 36;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.value = Item.sellPrice(0, 6, 0, 0);
+            Item.value = Item.buyPrice(gold: 1, silver: 50);
             Item.rare = ItemRarityID.Blue;
             Item.UseSound = SoundID.Item44;
             Item.buffType = buffID;

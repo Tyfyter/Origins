@@ -1,13 +1,11 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Fiberglass {
-	public class Broken_Fiberglass_Sword : ModItem, IElementalItem {
+    public class Broken_Fiberglass_Sword : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Broken Fiberglass Sword");
@@ -25,11 +23,11 @@ namespace Origins.Items.Weapons.Fiberglass {
 			Item.useAnimation = 14;
 			Item.useStyle = ItemUseStyleID.Rapier;
 			Item.knockBack = 6;
-			Item.value = 5000;
 			Item.autoReuse = true;
             Item.useTurn = true;
 			Item.shootSpeed = 3;
             Item.shoot = ModContent.ProjectileType<Broken_Fiberglass_Sword_Stab>();
+			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item1;
 		}

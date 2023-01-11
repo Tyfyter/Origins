@@ -9,7 +9,6 @@ namespace Origins.Items.Weapons.Other {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bled Out Staff");
-			Tooltip.SetDefault("");
 			Item.staff[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
@@ -24,8 +23,8 @@ namespace Origins.Items.Weapons.Other {
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.mana = 16;
-			Item.value = 5000;
             Item.shoot = ModContent.ProjectileType<Bled_Out_Staff_P>();
+			Item.value = Item.sellPrice(silver: 80);
 			Item.rare = ItemRarityID.LightRed;
 			Item.glowMask = glowmask;
 		}

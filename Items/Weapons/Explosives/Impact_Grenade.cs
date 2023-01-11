@@ -13,15 +13,15 @@ namespace Origins.Items.Weapons.Explosives {
 		}
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Grenade);
-            Item.damage = 38;
-			Item.value*=2;
+            Item.damage = 35;
 			Item.useTime = (int)(Item.useTime*0.75);
 			Item.useAnimation = (int)(Item.useAnimation*0.75);
             Item.shoot = ModContent.ProjectileType<Impact_Grenade_P>();
 			Item.shootSpeed*=1.75f;
             Item.knockBack = 10f;
             Item.ammo = ItemID.Grenade;
-			Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(copper: 35);
+            Item.rare = ItemRarityID.Blue;
 		}
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

@@ -29,8 +29,8 @@ namespace Origins.Items.Weapons.Defiled {
 			Item.knockBack = 5;
             Item.shoot = ModContent.ProjectileType<Ripper_Lance_P>();
             Item.shootSpeed = 3.75f;
-			Item.value = 5000;
             Item.useTurn = false;
+			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;

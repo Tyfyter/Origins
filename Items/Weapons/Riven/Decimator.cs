@@ -2,7 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -29,8 +28,8 @@ namespace Origins.Items.Weapons.Riven {
 			Item.knockBack = 4;
             Item.shoot = ModContent.ProjectileType<Decimator_P>();
             Item.shootSpeed = 3.75f;
-			Item.value = 5000;
             Item.useTurn = false;
+			Item.value = Item.buyPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;

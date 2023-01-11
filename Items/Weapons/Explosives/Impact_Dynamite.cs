@@ -13,14 +13,14 @@ namespace Origins.Items.Weapons.Explosives {
         }
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Dynamite);
-            Item.damage = 78;
-			Item.value*=2;
+            Item.damage = 75;
 			Item.useTime = (int)(Item.useTime*0.75);
 			Item.useAnimation = (int)(Item.useAnimation*0.75);
             Item.shoot = ModContent.ProjectileType<Impact_Dynamite_P>();
 			Item.shootSpeed*=1.75f;
             Item.knockBack = 16f;
-			Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(silver: 6);
+            Item.rare = ItemRarityID.Blue;
 		}
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

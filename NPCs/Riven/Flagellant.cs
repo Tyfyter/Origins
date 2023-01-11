@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Riven;
 using Origins.World.BiomeData;
@@ -43,6 +42,7 @@ namespace Origins.NPCs.Riven {
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 17));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Flagellash>(), 25));
+            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin, 1, 5));
         }
         public override void OnHitPlayer(Player target, int damage, bool crit) {
             OriginPlayer.InflictTorn(target, 1800, 180, 0.47f);

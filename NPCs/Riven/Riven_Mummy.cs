@@ -51,6 +51,7 @@ namespace Origins.NPCs.Riven {
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyMask, 75));
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyShirt, 75));
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyPants, 75));
+            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin, 1, 7));
         }
         public override void HitEffect(int hitDirection, double damage) {
             //spawn gore if npc is dead after being hit

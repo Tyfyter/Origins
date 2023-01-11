@@ -7,7 +7,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 
 namespace Origins.Items.Weapons.Defiled {
     public class Bone_Latcher : ModItem {
@@ -23,6 +22,7 @@ namespace Origins.Items.Weapons.Defiled {
 
 			Item.DamageType = DamageClass.Melee;
 			Item.damage = 20;
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
 		}

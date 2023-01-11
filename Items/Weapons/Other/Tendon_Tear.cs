@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Other {
     public class Tendon_Tear : ModItem {
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tendon Tear");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("'Snap. Crackle. Pop'");
             SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Other {
             Item.useTime = 38;
             Item.width = 86;
             Item.height = 22;
-        }
+		}
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             int i = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 			float len = velocity.Length() * Main.projectile[i].MaxUpdates;

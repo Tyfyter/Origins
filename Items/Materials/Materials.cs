@@ -83,7 +83,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 99;
-            Item.value = Item.sellPrice(silver: 12);
+            Item.value = Item.sellPrice(silver: 9);
             Item.rare = ItemRarityID.Orange;
         }
     }
@@ -909,7 +909,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(silver: 1);
+            Item.value = Item.sellPrice(copper: 20);
         }
     }
     public class Wrycoral_Item : ModItem {
@@ -920,7 +920,7 @@ namespace Origins.Items.Materials {
         }
         public override void SetDefaults() {
             Item.maxStack = 999;
-            Item.value = Item.buyPrice(silver: 1);
+            Item.value = Item.sellPrice(copper: 20);
         }
     }
 }

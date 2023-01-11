@@ -26,8 +26,8 @@ namespace Origins.Items.Weapons.Defiled {
             Item.shootSpeed = 20f;
             Item.shoot = ProjectileID.PurificationPowder;
             Item.useAmmo = AmmoID.Dart;
-            Item.value = 80000;
             Item.useTurn = false;
+            Item.value = Item.sellPrice(gold: 8);
             Item.rare = ItemRarityID.Pink;
             Item.autoReuse = true;
             Item.UseSound = SoundID.Item99;

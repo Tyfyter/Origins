@@ -2,7 +2,6 @@
 using Origins.Buffs;
 using Origins.Items.Weapons.Summon;
 using System;
-using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -22,14 +21,14 @@ namespace Origins.Items.Weapons.Summon {
         public override void SetDefaults() {
             Item.damage = 3;
 			Item.DamageType = DamageClass.Summon;
-            Item.mana = 10;
+            Item.mana = 12;
             Item.width = 32;
             Item.height = 32;
             Item.useTime = 36;
             Item.useAnimation = 36;
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.value = Item.sellPrice(0, 6, 0, 0);
-            Item.rare = ItemRarityID.White;
+			Item.value = Item.buyPrice(gold: 1);
+			Item.rare = ItemRarityID.White;
             Item.UseSound = SoundID.Item44;
             buffID = ModContent.BuffType<Woodsprite_Buff>();
             Item.buffType = buffID;

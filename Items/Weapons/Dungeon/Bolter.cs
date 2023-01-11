@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Dungeon {
     public class Bolter : ModItem {
@@ -28,6 +22,8 @@ namespace Origins.Items.Weapons.Dungeon {
             Item.width = 38;
             Item.height = 18;
             Item.autoReuse = true;
+            Item.value = Item.sellPrice(silver: 80);
+            Item.rare = ItemRarityID.Green;
         }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    Projectile p = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);

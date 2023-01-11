@@ -19,7 +19,6 @@ namespace Origins.Items.Weapons.Explosives {
             Item.damage = 27;
             Item.width = 44;
             Item.height = 18;
-			Item.value = 175000;
 			Item.useTime = 32;
 			Item.useAnimation = 32;
             Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
@@ -27,6 +26,7 @@ namespace Origins.Items.Weapons.Explosives {
             Item.knockBack = 2f;
             Item.shootSpeed = 12f;
             Item.autoReuse = false;
+            Item.value = Item.sellPrice(gold: 1, silver: 50);
             Item.rare = ItemRarityID.LightRed;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {

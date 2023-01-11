@@ -14,15 +14,14 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Snowball);
             Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
-            //item.maxStack = 999;
             Item.damage*=3;//Needs nerf in accordance to Peatball.html;
-			Item.value+=75;
 			Item.useTime = (int)(Item.useTime*0.75);
 			Item.useAnimation = (int)(Item.useAnimation*0.75);
             Item.shoot = ModContent.ProjectileType<Peatball_P>();
 			Item.shootSpeed*=1.35f;
             Item.knockBack*=2;
-			Item.rare = ItemRarityID.Blue;
+            Item.value = Item.sellPrice(copper: 75);
+            Item.rare = ItemRarityID.Blue;
 		}
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 4);

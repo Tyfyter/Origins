@@ -13,13 +13,13 @@ namespace Origins.Items.Weapons.Explosives {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Bomb);
             Item.damage = 89;
-			Item.value*=2;
 			Item.useTime = (int)(Item.useTime*1.15);
 			Item.useAnimation = (int)(Item.useAnimation*1.15);
             Item.shoot = ModContent.ProjectileType<Shrapnel_Bomb_P>();
 			Item.shootSpeed*=0.95f;
             Item.knockBack = 13f;
-			Item.rare = ItemRarityID.Pink;
+            Item.value = Item.sellPrice(silver: 8);
+            Item.rare = ItemRarityID.Pink;
 		}
     }
     public class Shrapnel_Bomb_P : ModProjectile {

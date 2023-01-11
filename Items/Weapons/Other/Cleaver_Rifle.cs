@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Other {
-    //implemented in 10 minutes, so it might have an issue or two
     public class Cleaver_Rifle : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Cleaver Rifle");
@@ -18,7 +17,7 @@ namespace Origins.Items.Weapons.Other {
             Item.shootSpeed*=2;
             Item.width = 92;
             Item.height = 28;
-            //Item.scale = 0.75f;
+            Item.value = Item.sellPrice(gold: 4);
             Item.rare = ItemRarityID.Pink;
         }
         public override void AddRecipes() {

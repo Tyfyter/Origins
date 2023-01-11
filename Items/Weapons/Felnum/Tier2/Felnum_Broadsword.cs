@@ -43,10 +43,10 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
 			Item.useAnimation = 16;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 9;
-			Item.value = 5000;
 			Item.autoReuse = true;
             Item.useTurn = false;
-			Item.rare = ItemRarityID.Lime;
+            Item.value = Item.sellPrice(gold: 2);
+            Item.rare = ItemRarityID.Lime;
 			Item.UseSound = SoundID.Item1;
 		}
         public override void AddRecipes() {

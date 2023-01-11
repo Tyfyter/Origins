@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
@@ -34,7 +33,10 @@ namespace Origins.NPCs.Riven {
             NPC.height = 24;
             NPC.knockBackResist = 0;
         }
-		public override void AI() {
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
+        }
+        public override void AI() {
             NPC.TargetClosest(faceTarget:false);
 			if (NPC.HasValidTarget && ++NPC.ai[0] > (Main.masterMode ? 420 : (Main.expertMode? 540 : 600))) {
                 int type = ModContent.NPCType<Amoeba_Bugger>();

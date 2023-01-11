@@ -5,13 +5,11 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Fiberglass {
-	public class Fiberglass_Shard : ModItem, IElementalItem {
+    public class Fiberglass_Shard : ModItem, IElementalItem {
         public ushort Element => Elements.Fiberglass;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Shard");
@@ -25,11 +23,11 @@ namespace Origins.Items.Weapons.Fiberglass {
 			Item.height = 14;
 			Item.useTime-=6;
 			Item.useAnimation-=6;
-            Item.value*=4;
 			Item.shootSpeed+=4;
 			Item.autoReuse = true;
             Item.shoot = ModContent.ProjectileType<Fiberglass_Shard_Proj>();
-		}
+            Item.value = Item.sellPrice(copper: 20);
+        }
     }
     public class Fiberglass_Shard_Proj : ModProjectile {
         public override void SetStaticDefaults() {

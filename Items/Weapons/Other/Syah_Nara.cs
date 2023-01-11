@@ -6,7 +6,6 @@ namespace Origins.Items.Weapons.Other {
     public class Syah_Nara : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Cyah Nara");
-            Tooltip.SetDefault("");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -21,11 +20,10 @@ namespace Origins.Items.Weapons.Other {
             Item.useTime = 19;
             Item.useAnimation = 19;
             Item.knockBack = 0f;
-            Item.value = 50000;
             Item.shoot = ProjectileID.None;
+            Item.value = Item.buyPrice(silver: 2);
             Item.rare = ItemRarityID.White;
             Item.autoReuse = true;
-            Item.scale = 1f;
         }
     }
     /*public class Syah_Nara : ModItem, ICustomDrawItem {

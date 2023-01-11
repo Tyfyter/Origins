@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Weapons.Felnum.Tier2 {
     public class Felnum_Staff : ModItem {
@@ -27,7 +21,9 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             Item.useAnimation = 30;
             Item.useTime = 30;
             Item.shootSpeed/=2;
-			Item.rare = ItemRarityID.Lime;
+            Item.value = Item.sellPrice(gold: 2);
+            Item.rare = ItemRarityID.Lime;
+            Item.mana = 17;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

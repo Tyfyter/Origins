@@ -53,6 +53,7 @@ namespace Origins.NPCs.Fiberglass {
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Broken_Fiberglass_Bow>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
         }
         public override void HitEffect(int hitDirection, double damage) {
             NPC.velocity.X += hitDirection * 3;
@@ -314,6 +315,7 @@ namespace Origins.NPCs.Fiberglass {
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Broken_Fiberglass_Sword>(), 10));
+            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
         }
         public override void HitEffect(int hitDirection, double damage) {
             NPC.velocity.X += hitDirection * 3;
