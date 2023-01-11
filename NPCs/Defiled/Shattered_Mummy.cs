@@ -60,7 +60,7 @@ namespace Origins.NPCs.Defiled {
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyMask, 75));
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyShirt, 75));
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyPants, 75));
-            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin, 1, 7));
+            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin, 1, 7, 7));
         }
         public override void AI() {
             if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);

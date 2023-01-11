@@ -60,7 +60,7 @@ namespace Origins.NPCs.Defiled {
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bombardment>(), 58));
             npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
-            npcLoot.Add(ItemDropRule.Common(ItemID.CopperCoin, 1, 3));
+            npcLoot.Add(ItemDropRule.Common(ItemID.CopperCoin, 1, 3, 3));
         }
 
         public override bool PreAI() {

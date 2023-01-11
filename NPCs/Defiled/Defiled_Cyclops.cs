@@ -60,7 +60,7 @@ namespace Origins.NPCs.Defiled {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsExpert(), ModContent.ItemType<Bone_Latcher>(), 38));
-            npcLoot.Add(ItemDropRule.Common(ItemID.CopperCoin, 1, 90));
+            npcLoot.Add(ItemDropRule.Common(ItemID.CopperCoin, 1, 90, 90));
         }
         public override void AI() {
             if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);

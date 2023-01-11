@@ -32,7 +32,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Nazar, 100));
-            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin, 1, 10));
+            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin, 1, 10, 10));
         }
 		public override void HitEffect(int hitDirection, double damage) {
 
