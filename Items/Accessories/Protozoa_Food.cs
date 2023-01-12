@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
     public class Protozoa_Food : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Protozoa Food");
-            Tooltip.SetDefault("Increases life regeneration at low health");
+            Tooltip.SetDefault("//TODO: add tooltip");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -191,12 +191,14 @@ namespace Origins.Items.Accessories {
 		public override bool? CanCutTiles() {
 			return false;
 		}
-
 		// This is mandatory if your minion deals contact damage (further related stuff in AI() in the Movement region)
 		public override bool MinionContactDamage() {
 			return true;
 		}
-
+		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
+			fallThrough = true;
+			return true;
+		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 
@@ -216,7 +218,6 @@ namespace Origins.Items.Accessories {
 			float distanceToIdlePosition = vectorToIdlePosition.Length();
 			if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 2000f) {
 				Projectile.ai[0] = 1;
-				Projectile.netUpdate = true;
 			}
 
 			// If your minion is flying, you want to do this independently of any conditions
@@ -324,7 +325,12 @@ namespace Origins.Items.Accessories {
 			return new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f);
 		}
 		public override bool PreKill(int timeLeft) {
-			if (!Projectile.friendly || timeLeft == 0) return true;
+			if (!Projectile.friendly || timeLeft == 0) {
+				if (Main.myPlayer == Projectile.owner && Main.netMode == NetmodeID.MultiplayerClient) {
+					NetMessage.SendData(MessageID.SyncProjectile, -1, -1, null, Projectile.whoAmI);
+				}
+				return true;
+			}
 			SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.position);
 			Projectile.position -= new Vector2(20);
 			Projectile.width += 40;
