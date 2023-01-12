@@ -244,23 +244,28 @@ ACCESSORIES:
 (#, ^2) Bullet Shield*
 (^) Celestial Starlight
 (^) Comb
+(#, ^2) Coologne
 (^) Cybernetic Brain*
 (^) Decaying Scale*
 (^) Dim Starlight*
 (^) Exploder Emblem*
 (#, ^2) Grave Danger
 (^) Gun Glove
+(#, ^2) Handy Helper !!!
 (X) Hazard Charm !!!
+(^) Keepsake Remains
 (^) Locket Necklace
 (X) Locus Control Tuner
+(#, ^2) Makeover Choker
 (#3, ^2) Mitosis
 (#, ^2) No U Card
 (#, ^2) Olid Organ*
 (^) Parasitic Influence*
 (^) Pneumatic Bomb Thrower*
+(X) Proactive Protozoa !!!
 (^) Return To Sender*
 (#, ^2) Sonar Visor*
-(^) Rasterized Fish*
+(#, ^2) Scavenger Bag
 (^) Symbiote Skull
 (#, ^2) Trap Charm !!!
 (#, ^2) Turbo Reel !!!
@@ -511,13 +516,13 @@ SUMMONER WEAPONS:
 (@2, #) Back-Up Mag
 (^) Bomb Artifact
 (@5, #) Envenomed Frenzy*
+(#, ^2) Forsaken Desire
 (X) Mildew Whip
 
 (X) Controller/Patrol Bot Controller
 (X) Doom Incantation
 (X) Ego
 (@2/3, #) Fiber Optic Whip
-(#, ^2) Forsaken Desire
 (X) Obsidian Bone
 (X) Queen's Call
 (X) Ribatar
