@@ -149,6 +149,7 @@ namespace Origins.Items.Weapons.Felnum {
 								Projectiles.Misc.Felnum_Shock_Arc.ID,
 								0,
 								0,
+								Owner: Main.myPlayer,
 								ai0: targetStart.X,
 								ai1: targetStart.Y
 							);
