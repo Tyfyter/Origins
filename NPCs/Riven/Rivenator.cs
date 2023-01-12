@@ -15,6 +15,7 @@ namespace Origins.NPCs.Riven {
             NPC.lifeMax = 634;
             NPC.defense = 18;
             NPC.damage = 52;
+            NPC.value = 1000;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -25,7 +26,6 @@ namespace Origins.NPCs.Riven {
             npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Vitamins, 100));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Alkahest>(), 1, 1, 3));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Seam_Beam>(), 80));
-            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin, 1, 10, 10));
         }
         public override void AI() { }
         public override void OnSpawn(IEntitySource source) {

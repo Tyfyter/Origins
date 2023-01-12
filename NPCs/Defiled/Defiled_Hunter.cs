@@ -32,6 +32,7 @@ namespace Origins.NPCs.Defiled {
             NPC.noTileCollide = false;
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
+            NPC.value = 500;
         }
         float Mana {
             get => NPC.localAI[0];
@@ -51,7 +52,6 @@ namespace Origins.NPCs.Defiled {
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
-            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin, 1, 5, 5));
         }
         public override bool PreAI() {
             NPC.TargetClosest();

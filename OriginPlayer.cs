@@ -546,7 +546,7 @@ namespace Origins {
         }
         public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
             if (advancedImaging) {
-                velocity *= 1.3f;
+                velocity *= 1.38f;
             }
             if (item.CountsAsClass(DamageClasses.Explosive)) {
                 if (item.useAmmo == 0 && item.CountsAsClass(DamageClass.Throwing)) {

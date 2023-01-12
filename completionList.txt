@@ -469,11 +469,11 @@ MAGIC WEAPONS:
 (^) Magnus
 (^) Slashswarm
 (^) Tones of Agony
-(#, ^2) Transfusion !!!
 
 (^) Bled Out Staff
 (^) Amber of Embers
 (^) Dismay
+(#, ^2) Innermost Manifest !!!
 (#, ^2) Meltdown
 (^) Seam Beam
 (^) Splashid
@@ -483,6 +483,7 @@ MAGIC WEAPONS:
 (^) Haunted Vase
 (X) Lunarfire
 (#, ^2) Phantom Fury
+(#, ^2) Pike of Deepneus
 (X) Shocktrain
 (X) Spectra
 (X) Steam Blaster
@@ -501,7 +502,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash
 (#, ^2) Forest Staff !!!
-(#, ^2) Maelstrom Incantation !!!
+(^) Maelstrom Incantation
 (#, ^2) Ocean Amulet !!!
 (^) Rotted Worm Staff
 (^) Teardown
@@ -516,6 +517,7 @@ SUMMONER WEAPONS:
 (X) Doom Incantation
 (X) Ego
 (@2/3, #) Fiber Optic Whip
+(#, ^2) Forsaken Desire
 (X) Obsidian Bone
 (X) Queen's Call
 (X) Ribatar
