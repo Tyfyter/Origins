@@ -24,6 +24,7 @@ namespace Origins.NPCs.Riven {
             NPC.width = 40;
             NPC.height = 54;
             NPC.friendly = false;
+            NPC.value = 7;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -51,7 +52,6 @@ namespace Origins.NPCs.Riven {
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyMask, 75));
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyShirt, 75));
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyPants, 75));
-            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin, 1, 7, 7));
         }
         public override void HitEffect(int hitDirection, double damage) {
             //spawn gore if npc is dead after being hit

@@ -25,6 +25,7 @@ namespace Origins.NPCs.Riven {
             NPC.width = 56;
             NPC.height = 60;
             NPC.frame.Height = 58;
+            NPC.value = 500;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -42,7 +43,6 @@ namespace Origins.NPCs.Riven {
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 17));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Flagellash>(), 25));
-            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin, 1, 5, 5));
         }
         public override void OnHitPlayer(Player target, int damage, bool crit) {
             OriginPlayer.InflictTorn(target, 1800, 180, 0.47f);

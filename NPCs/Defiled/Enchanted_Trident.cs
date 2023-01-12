@@ -19,6 +19,7 @@ namespace Origins.NPCs.Defiled {
             NPC.width = 40;
             NPC.height = 40;
             NPC.knockBackResist = 0.35f;
+            NPC.value = 1000;
         }
 		public override void AI() {
 			if (NPC.ai[0] == 2) {
@@ -32,7 +33,6 @@ namespace Origins.NPCs.Defiled {
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Nazar, 100));
-            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin, 1, 10, 10));
         }
 		public override void HitEffect(int hitDirection, double damage) {
 

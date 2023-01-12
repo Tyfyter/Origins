@@ -25,6 +25,7 @@ namespace Origins.NPCs.Riven {
             NPC.width = 36;
             NPC.height = 40;
             NPC.friendly = false;
+            NPC.value = 90;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -33,7 +34,6 @@ namespace Origins.NPCs.Riven {
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
-            npcLoot.Add(ItemDropRule.Common(ItemID.CopperCoin, 1, 90, 90));
         }
 		public override bool PreAI() {
             NPC.ai[0] += Main.rand.NextFloat(0, 1);

@@ -29,6 +29,7 @@ namespace Origins.NPCs.Defiled {
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
             NPC.knockBackResist = 0.75f;
+            NPC.value = 76;
         }
         static int MaxMana => 35;
         static int MaxManaDrain => 15;
@@ -59,7 +60,6 @@ namespace Origins.NPCs.Defiled {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Krunch_Mix>(), 17));
-            npcLoot.Add(ItemDropRule.Common(ItemID.CopperCoin, 1, 76, 76));
         }
         public override void AI() {
             if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.1f), NPC.Center);

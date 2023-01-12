@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
+using Origins.Items.Weapons.Defiled;
+using System;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Microsoft.Xna.Framework;
-using Terraria.DataStructures;
-using Origins.Items.Materials;
-using Terraria.GameContent.ItemDropRules;
-using Origins.Items.Weapons.Defiled;
 
 namespace Origins.NPCs.Defiled {
-	public class Ancient_Defiled_Cyclops : ModNPC, IMeleeCollisionDataNPC {
+    public class Ancient_Defiled_Cyclops : ModNPC, IMeleeCollisionDataNPC {
         public const float speedMult = 1f;
         bool attacking = false;
         public override void SetStaticDefaults() {
@@ -29,12 +24,12 @@ namespace Origins.NPCs.Defiled {
             NPC.width = 110;
             NPC.height = 120;
             NPC.friendly = false;
+            NPC.value = 10000;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ancient_Kruncher>()));
-            npcLoot.Add(ItemDropRule.Common(ItemID.GoldCoin));
         }
         public override void AI() {
             NPC.TargetClosest();

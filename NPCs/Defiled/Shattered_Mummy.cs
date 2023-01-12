@@ -27,6 +27,7 @@ namespace Origins.NPCs.Defiled {
             NPC.friendly = false;
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
+            NPC.value = 700;
         }
         static int MaxMana => 100;
         static int MaxManaDrain => 20;
@@ -60,7 +61,6 @@ namespace Origins.NPCs.Defiled {
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyMask, 75));
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyShirt, 75));
             npcLoot.Add(ItemDropRule.Common(ItemID.MummyPants, 75));
-            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin, 1, 7, 7));
         }
         public override void AI() {
             if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);

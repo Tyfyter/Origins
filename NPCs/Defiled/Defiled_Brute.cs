@@ -29,6 +29,7 @@ namespace Origins.NPCs.Defiled {
             NPC.friendly = false;
             NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
             NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
+            NPC.value = 103;
         }
         static int MaxMana => 200;
         static int MaxManaDrain => 24;
@@ -59,8 +60,6 @@ namespace Origins.NPCs.Defiled {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
             //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bombardment>(), 58));
-            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
-            npcLoot.Add(ItemDropRule.Common(ItemID.CopperCoin, 1, 3, 3));
         }
 
         public override bool PreAI() {

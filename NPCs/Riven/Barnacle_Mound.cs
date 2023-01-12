@@ -32,9 +32,7 @@ namespace Origins.NPCs.Riven {
             NPC.width = 24;
             NPC.height = 24;
             NPC.knockBackResist = 0;
-        }
-        public override void ModifyNPCLoot(NPCLoot npcLoot) {
-            npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
+            NPC.value = 100;
         }
         public override void AI() {
             NPC.TargetClosest(faceTarget:false);

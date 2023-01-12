@@ -25,6 +25,7 @@ namespace Origins.NPCs.Riven {
             NPC.height = 20;
             NPC.frame.Height = 22;
 			NPC.alpha = 100;
+			NPC.value = 20;
         }
 		public override void AI() {
 			if (NPC.direction == 0) {

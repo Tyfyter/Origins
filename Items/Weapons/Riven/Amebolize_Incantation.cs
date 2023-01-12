@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Riven {
         static short glowmask;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Amebolize Incantation");
-			Tooltip.SetDefault("Struck enemies will wither away\n5 summon tag damage\n{$CommonItemTooltip.Whips}");
+			Tooltip.SetDefault("Tenderizes enemies\n5 summon tag damage\n{$CommonItemTooltip.Whips}");
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 1;
         }
