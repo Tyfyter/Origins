@@ -324,7 +324,7 @@ namespace Origins.Items.Accessories {
 			return new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f);
 		}
 		public override bool PreKill(int timeLeft) {
-			if (!Projectile.friendly) return true;
+			if (!Projectile.friendly || timeLeft == 0) return true;
 			SoundEngine.PlaySound(SoundID.NPCDeath1, Projectile.position);
 			Projectile.position -= new Vector2(20);
 			Projectile.width += 40;

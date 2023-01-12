@@ -201,32 +201,31 @@ namespace Origins.NPCs {
 		public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit) {
 			if (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]) {
 				if (npc.HasBuff(Maelstrom_Buff_Zap.ID)) {
-					float targetDist = 96 * 96;
+					const float maxDist = 96 * 96;
 					Vector2 targetStart = default;
 					Vector2 targetEnd = default;
 					for (int i = 0; i < Main.maxNPCs; i++) {
 						NPC currentTarget = Main.npc[i];
 						if (i == npc.whoAmI || !currentTarget.CanBeChasedBy()) continue;
+
 						Vector2 currentStart = currentTarget.Center.Clamp(npc.Hitbox);
 						Vector2 currentEnd = npc.Center.Clamp(currentTarget.Hitbox);
 						float currentDist = (currentEnd - currentStart).LengthSquared();
-						if (currentDist < targetDist) {
-							targetDist = currentDist;
-							targetStart = currentStart;
-							targetEnd = currentEnd;
+
+						if (currentDist < maxDist && Main.rand.NextBool(3)) {
+							Projectile.NewProjectileDirect(
+								projectile.GetSource_OnHit(npc),
+								targetEnd,
+								default,
+								Felnum_Shock_Leader.ID,
+								5,
+								knockback,
+								projectile.owner,
+								targetStart.X,
+								targetStart.Y
+							).ArmorPenetration = 20;
 						}
 					}
-					Projectile.NewProjectileDirect(
-						projectile.GetSource_OnHit(npc),
-						targetEnd,
-						default,
-						Felnum_Shock_Leader.ID,
-						5,
-						knockback,
-						projectile.owner,
-						targetStart.X,
-						targetStart.Y
-					).ArmorPenetration = 20;
 				}
 			}
 		}

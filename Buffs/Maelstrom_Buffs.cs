@@ -10,7 +10,7 @@ namespace Origins.Buffs {
             ID = Type;
         }
     }
-    public class Maelstrom_Buff_Zap : Flagellash_Buff_0 {
+    public class Maelstrom_Buff_Zap : Maelstrom_Buff_Damage {
         public static new int ID { get; private set; } = -1;
         public override void SetStaticDefaults() {
             BuffID.Sets.IsAnNPCWhipDebuff[Type] = true;
