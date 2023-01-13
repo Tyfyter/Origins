@@ -14,7 +14,6 @@ namespace Origins.Items.Tools {
 
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
-			Item.damage = 0;
 			Item.DamageType = DamageClass.Generic;
 			Item.noMelee = true;
 			Item.fishingPole = 26;
@@ -31,18 +30,18 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Snatcher_Bobber : ModProjectile {
-
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Snatcher Bobber");
 		}
-
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BobberReinforced);
 			DrawOriginOffsetY = -8;
+			/*
 			Projectile.friendly = true;
 			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
+			Projectile.localNPCHitCooldown = 10;//*/
 		}
+		/*
 		public override void AI() {
 			if (Projectile.ai[0] == 1) {
 				Projectile.usesLocalNPCImmunity = false;
@@ -60,6 +59,9 @@ namespace Origins.Items.Tools {
 			if (Projectile.ai[0] == 1) {
 				target.velocity = Vector2.Lerp(target.velocity, Projectile.velocity, target.knockBackResist);
 			}
+		}//*/
+		public override void ModifyFishingLine(ref Vector2 lineOriginOffset, ref Color lineColor) {
+			//I think you just set lineOriginOffset to wherever in the sprite it should connect to
 		}
 	}
 }

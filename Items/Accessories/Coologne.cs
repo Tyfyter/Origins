@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
     public class Coologne : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Coologne");
-            Tooltip.SetDefault("Increases life regeneration at low health\n	Puts a shell around the owner when below 50% life that reduces damage by 25%");
+            Tooltip.SetDefault("Increases life regeneration at low health\nPuts a shell around the owner when below 50% life that reduces damage by 25%");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
