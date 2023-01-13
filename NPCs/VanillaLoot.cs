@@ -170,6 +170,9 @@ namespace Origins.NPCs {
 					Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
 				}
 				break;
+				case NPCID.TheGroom:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Comb>(), 10));
+				break;
 				default:
                 break;
             }

@@ -17,13 +17,14 @@ namespace Origins.Items.Weapons.Felnum {
 	public class Maelstrom_Incantation : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Maelstrom Incantation");
-			Tooltip.SetDefault("5 summon tag damage\nDirectly struck enemies will shock nearby enemies when hit by minions\nYour summons will focus struck enemies \nReceives 50% higher damage bonuses");
+			Tooltip.SetDefault("5 summon tag damage\nDirectly struck enemies will shock nearby enemies when hit by minions\n{$CommonItemTooltip.Whips}\nReceives 50% higher damage bonuses");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
 			Item.damage = 19;
-			Item.DamageType = DamageClass.Summon;
+			Item.DamageType = DamageClasses.SummonMagicSpeed;
+			Item.knockBack = 4;
 			Item.shoot = ModContent.ProjectileType<Maelstrom_Incantation_P>();
 			Item.noUseGraphic = true;
 			Item.shootSpeed = 16f;
@@ -61,7 +62,7 @@ namespace Origins.Items.Weapons.Felnum {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.AmberBolt);
-			Projectile.DamageType = DamageClass.Summon;
+			Projectile.DamageType = DamageClasses.SummonMagicSpeed;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 16;
 			Projectile.width = 0;

@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Other {
         }
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
-            Projectile.DamageType = DamageClasses.Ranged_Magic;
+            Projectile.DamageType = DamageClasses.RangedMagic;
             Projectile.aiStyle = 0;
             Projectile.ignoreWater = false;
             Projectile.extraUpdates = 0;

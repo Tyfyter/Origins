@@ -11,13 +11,13 @@ namespace Origins.Items.Weapons.Riven {
         static short glowmask;
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Amebolize Incantation");
-			Tooltip.SetDefault("Tenderizes enemies\n5 summon tag damage\n{$CommonItemTooltip.Whips}");
+			Tooltip.SetDefault("Struck enemies will wither away\n5 summon tag damage\n{$CommonItemTooltip.Whips}");
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 1;
         }
 		public override void SetDefaults() {
 			Item.damage = 20;
-            Item.DamageType = DamageClass.Summon;
+            Item.DamageType = DamageClasses.SummonMagicSpeed;
             Item.width = 20;
 			Item.height = 22;
             Item.useStyle = ItemUseStyleID.Shoot;

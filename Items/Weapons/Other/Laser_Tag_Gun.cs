@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Other {
 		public override void SetDefaults() {
             Item.CloneDefaults(ItemID.SpaceGun);
 			Item.damage = 1;
-			Item.DamageType = DamageClasses.Ranged_Magic;
+			Item.DamageType = DamageClasses.RangedMagic;
 			Item.noMelee = true;
             Item.crit = 46;
 			Item.width = 42;
@@ -81,7 +81,7 @@ namespace Origins.Items.Weapons.Other {
             Projectile.light = 0;
             Projectile.aiStyle = 0;
             Projectile.extraUpdates++;
-			Projectile.DamageType = DamageClasses.Ranged_Magic;
+			Projectile.DamageType = DamageClasses.RangedMagic;
         }
         public override void AI() {
             Projectile.rotation = Projectile.velocity.ToRotation();

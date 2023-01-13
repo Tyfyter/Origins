@@ -17,15 +17,21 @@ namespace Origins.Items.Accessories {
             Item.master = true;
             Item.value = Item.sellPrice(gold: 6);
         }
-		public override void UpdateAccessory(Player player, bool hideVisual) {
+        public static void EquippedEffect(Player player) {
             int factor = (int)(30 / ((player.statLife / (float)player.statLifeMax2) * 3.5f + 0.5f));
             player.lifeRegen += factor;
+        }
+        public static void VanityEffect(Player player) {
+            player.GetModPlayer<OriginPlayer>().mysteriousSprayMult *= player.statLife / (float)player.statLifeMax2;
+        }
+        public override void UpdateAccessory(Player player, bool hideVisual) {
+            EquippedEffect(player);
 			if (!hideVisual) {
-                player.GetModPlayer<OriginPlayer>().mysteriousSprayMult *= player.statLife / (float)player.statLifeMax2;
+                VanityEffect(player);
             }
         }
 		public override void UpdateVanity(Player player) {
-            player.GetModPlayer<OriginPlayer>().mysteriousSprayMult *= player.statLife / (float)player.statLifeMax2;
+            VanityEffect(player);
         }
-	}
+    }
 }
