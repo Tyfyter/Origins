@@ -13,8 +13,7 @@ namespace Origins.Items.Accessories {
             Item.accessory = true;
             Item.width = 21;
             Item.height = 20;
-            Item.rare = ItemRarityID.Master;
-            Item.master = true;
+            Item.rare = ItemRarityID.Pink;
             Item.value = Item.sellPrice(gold: 10);
         }
         public override void UpdateAccessory(Player player, bool hideVisual) {

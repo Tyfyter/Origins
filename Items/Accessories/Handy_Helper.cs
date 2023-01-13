@@ -21,8 +21,7 @@ namespace Origins.Items.Accessories {
 			Item.CloneDefaults(ItemID.PowerGlove);
 			if (!bothGloves) Item.handOffSlot = -1;
 			Item.knockBack = 8;
-			Item.rare = ItemRarityID.Expert;
-			Item.expert = true;
+			Item.rare = ItemRarityID.Pink;
 			Item.canBePlacedInVanityRegardlessOfConditions = true;
 			Item.value = Item.sellPrice(gold: 8);
 		}

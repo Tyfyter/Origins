@@ -11,6 +11,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Shackle);
+            Item.defense = 0;
             Item.value = Item.sellPrice(silver: 30);
             Item.rare = ItemRarityID.Green;
             Item.handOnSlot = -1;

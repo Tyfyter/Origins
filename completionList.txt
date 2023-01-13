@@ -244,19 +244,19 @@ ACCESSORIES:
 (#, ^2) Bullet Shield*
 (^) Celestial Starlight
 (^) Comb
-(#, ^2) Coologne
+(^) Coologne
 (^) Cybernetic Brain*
 (^) Decaying Scale*
 (^) Dim Starlight*
 (^) Exploder Emblem*
 (#, ^2) Grave Danger
 (^) Gun Glove
-(#, ^2) Handy Helper !!!
+(^) Handy Helper
 (X) Hazard Charm !!!
 (^) Keepsake Remains
 (^) Locket Necklace
 (X) Locus Control Tuner
-(#, ^2) Makeover Choker
+(^) Makeover Choker
 (#3, ^2) Mitosis
 (#, ^2) No U Card
 (#, ^2) Olid Organ*
@@ -265,7 +265,7 @@ ACCESSORIES:
 (X) Proactive Protozoa !!!
 (^) Return To Sender*
 (#, ^2) Sonar Visor*
-(#, ^2) Scavenger Bag
+(^) Scavenger Bag
 (^) Symbiote Skull
 (#, ^2) Trap Charm !!!
 (#, ^2) Turbo Reel !!!

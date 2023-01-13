@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
     public class Lazy_Cloak : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Lazy Cloak");
-            Tooltip.SetDefault("It just doesn't want to do all the work");
+            Tooltip.SetDefault("Chases after marked enemies\n'It just doesn't want to do all the work'");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {

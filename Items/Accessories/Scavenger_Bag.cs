@@ -12,7 +12,7 @@ namespace Origins.Items.Accessories {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.Aglet);
             Item.value = Item.sellPrice(gold: 9);
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.Yellow;
         }
         public override void UpdateEquip(Player player) {
             player.GetKnockback(DamageClass.Summon).Base += 2f;

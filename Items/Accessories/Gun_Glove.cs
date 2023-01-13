@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
     public class Gun_Glove : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Gun Glove");
-            Tooltip.SetDefault("shoots");
+            Tooltip.SetDefault("Shoots as you swing\n'Ammo not included'");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
