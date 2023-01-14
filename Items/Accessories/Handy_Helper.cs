@@ -12,6 +12,7 @@ using Terraria.ModLoader.IO;
 namespace Origins.Items.Accessories {
     public class Handy_Helper : ModItem {
 		bool bothGloves = false;
+		bool noGloves = false;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Handy Helper");
 			Tooltip.SetDefault("Amebic tentacles will protect you from projectiles and enemies\nIncreases melee knockback\n12% increased melee speed\nEnables auto swing for melee weapons\nIncreases the size of melee weapons");
@@ -20,6 +21,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.PowerGlove);
 			if (!bothGloves) Item.handOffSlot = -1;
+			if (noGloves) Item.handOnSlot = -1;
 			Item.knockBack = 8;
 			Item.rare = ItemRarityID.Pink;
 			Item.canBePlacedInVanityRegardlessOfConditions = true;
@@ -99,49 +101,42 @@ namespace Origins.Items.Accessories {
 			recipe.AddCondition(NetworkText.Empty, _ => !AprilFools.CheckAprilFools());
 			recipe.Register();
 
-			recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Amebic_Vial>());
-			recipe.AddIngredient(ItemID.PowerGlove, 2);
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddCondition(NetworkText.Empty, _ => AprilFools.CheckAprilFools());
-			recipe.AddOnCraftCallback((_, result, consumed) => {
-				(result.ModItem as Handy_Helper).bothGloves = true;
-				Item dropped = consumed[Main.rand.Next(1, 3)];
-				switch (dropped.prefix) {
+			static void HalfPrefix(Item item) {
+				switch (item.prefix) {
 					case PrefixID.Warding:
-					dropped.prefix = PrefixID.Guarding;
+					item.prefix = PrefixID.Guarding;
 					break;
 					case PrefixID.Armored:
 					case PrefixID.Guarding:
-					dropped.prefix = PrefixID.Hard;
+					item.prefix = PrefixID.Hard;
 					break;
 
 					case PrefixID.Lucky:
-					dropped.prefix = PrefixID.Precise;
+					item.prefix = PrefixID.Precise;
 					break;
 
 					case PrefixID.Menacing:
-					dropped.prefix = PrefixID.Spiked;
+					item.prefix = PrefixID.Spiked;
 					break;
 					case PrefixID.Angry:
 					case PrefixID.Spiked:
-					dropped.prefix = PrefixID.Jagged;
+					item.prefix = PrefixID.Jagged;
 					break;
 
 					case PrefixID.Quick:
-					dropped.prefix = PrefixID.Fleeting;
+					item.prefix = PrefixID.Fleeting;
 					break;
 					case PrefixID.Hasty:
 					case PrefixID.Fleeting:
-					dropped.prefix = PrefixID.Brisk;
+					item.prefix = PrefixID.Brisk;
 					break;
 
 					case PrefixID.Violent:
-					dropped.prefix = PrefixID.Rash;
+					item.prefix = PrefixID.Rash;
 					break;
 					case PrefixID.Intrepid:
 					case PrefixID.Rash:
-					dropped.prefix = PrefixID.Wild;
+					item.prefix = PrefixID.Wild;
 					break;
 
 					case PrefixID.Hard:
@@ -150,18 +145,59 @@ namespace Origins.Items.Accessories {
 					case PrefixID.Brisk:
 					case PrefixID.Wild:
 					case PrefixID.Arcane:
-					dropped.prefix = 0;
+					item.prefix = 0;
 					break;
 				}
+			}
+
+			recipe = CreateRecipe();
+			recipe.AddIngredient(ModContent.ItemType<Amebic_Vial>());
+			recipe.AddIngredient(ItemID.PowerGlove, 2);
+			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.AddCondition(NetworkText.Empty, _ => AprilFools.CheckAprilFools());
+			recipe.AddOnCraftCallback((_, result, consumed) => {
+				if (result.ModItem is Handy_Helper helper) {
+					helper.bothGloves = true;
+					helper.SetDefaults();
+				}
+
+				Item dropped = consumed[Main.rand.Next(1, 3)];
+				HalfPrefix(dropped);
+				Main.LocalPlayer.QuickSpawnClonedItem(Entity.GetSource_DropAsItem(), dropped);
+			});
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.PowerGlove);
+			recipe.AddIngredient(Type);
+			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.AddCondition(NetworkText.FromLiteral("Does not consume Handy Helper"), _ => AprilFools.CheckAprilFools());
+			recipe.AddOnCraftCallback((_, result, consumed) => {
+				Item dropped = consumed[0];
+				if (dropped.ModItem is Handy_Helper helper) {
+					if (helper.bothGloves) {
+						helper.bothGloves = false;
+					}else if (!helper.noGloves) {
+						helper.noGloves = true;
+					} else {
+						dropped.SetDefaults(ModContent.ItemType<Amebic_Vial>());
+					}
+					int droppedPrefix = dropped.prefix;
+					helper.SetDefaults();
+				}
+				HalfPrefix(dropped);
 				Main.LocalPlayer.QuickSpawnClonedItem(Entity.GetSource_DropAsItem(), dropped);
 			});
 			recipe.Register();
 		}
 		public override void SaveData(TagCompound tag) {
 			tag.Add("bothGloves", bothGloves);
+			tag.Add("noGloves", noGloves);
 		}
 		public override void LoadData(TagCompound tag) {
 			tag.TryGet("bothGloves", out bothGloves);
+			tag.TryGet("noGloves", out noGloves);
+			Item.handOnSlot = (sbyte)(noGloves ? -1 : ArmorIDs.HandOn.PowerGlove);
+			Item.handOffSlot = (sbyte)(bothGloves ? ArmorIDs.HandOn.PowerGlove : -1);
 		}
 	}
 	//extends Amebic_Vial_Tentacle so it inherits all of the changes that might be made to it that it can
