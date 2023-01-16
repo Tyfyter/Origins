@@ -889,9 +889,6 @@ namespace Origins {
             bool junk = (itemDrop >= ItemID.OldShoe && itemDrop < ItemID.MinecartTrack);
 			if (zoneDefiled && zoneDefiled) {
 				if (Main.rand.NextBool()) {
-                    if (junk) {
-                        itemDrop = ModContent.ItemType<Tire>();
-                    }
                     zoneDefiled = false;
                 } else {
                     zoneRiven = false;
@@ -917,7 +914,7 @@ namespace Origins {
                 } else if (attempt.uncommon && !attempt.rare) {
                     itemDrop = ModContent.ItemType<Prikish>();
                 }
-                if (Main.rand.NextBool()) {
+                if (Main.rand.NextBool(4)) {
                     if (junk) {
                         itemDrop = ModContent.ItemType<Tire>();
                     }
@@ -979,9 +976,6 @@ namespace Origins {
         }
         public int GetMimicSetChoice(int level) {
             return (mimicSetChoices >> level * 2) & 3;
-        }
-        public override void ModifyCaughtFish(Item fish) {
-            ModContent.ItemType<Tire>();
         }
     }
 }
