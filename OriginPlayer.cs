@@ -42,7 +42,8 @@ using static Origins.OriginExtensions;
 
 namespace Origins {
     public class OriginPlayer : ModPlayer {
-        public const float rivenMaxMult = 0.3f;
+		#region variables and defaults
+		public const float rivenMaxMult = 0.3f;
         public float rivenMult => (1f-rivenMaxMult)+Math.Max((Player.statLife/(float)Player.statLifeMax2)*(rivenMaxMult*2), rivenMaxMult);
         
         #region set bonuses
@@ -295,6 +296,7 @@ namespace Origins {
             }
             asylumWhistle = false;
         }
+		#endregion
 		public override void PreUpdateMovement() {
             if (hookTarget >= 0) {//ropeVel.HasValue&&
                 Player.fallStart = (int)(Player.position.Y / 16f);
@@ -523,6 +525,10 @@ namespace Origins {
             if(cryostenHelmet)Player.lifeRegenCount+=cryostenLifeRegenCount>0 ? 180 : 1;
         }
 		#region attacks
+		public override bool? CanAutoReuseItem(Item item) {
+            if (destructiveClaws && item.CountsAsClass(DamageClasses.Explosive)) return true;
+			return null;
+		}
 		public override void MeleeEffects(Item item, Rectangle hitbox) {
             if (flaskBile) {
                 Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.BloodWater, newColor:Color.Black);
@@ -558,10 +564,8 @@ namespace Origins {
                 velocity *= 1.38f;
             }
             if (item.CountsAsClass(DamageClasses.Explosive)) {
-                //autoUse = true;
                 if (item.useAmmo == 0 && item.CountsAsClass(DamageClass.Throwing)) {
                     velocity *= explosiveThrowSpeed;
-                    //useTime *= explosiveUseTime;
                 }
             }
             if (item.shoot > ProjectileID.None && felnumShock > 29) {

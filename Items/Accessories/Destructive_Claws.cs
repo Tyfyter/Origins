@@ -20,8 +20,10 @@ namespace Origins.Items.Accessories {
             Item.rare = ItemRarityID.Orange;
         }
         public override void UpdateEquip(Player player) {
-            player.GetModPlayer<OriginPlayer>().destructiveClaws = true; //Needs autouse and usetime boosts
-            player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed += 0.3f;
+            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+            player.GetAttackSpeed(DamageClasses.Explosive) += 0.1f;
+            originPlayer.destructiveClaws = true;
+            originPlayer.explosiveThrowSpeed += 0.3f;
         }
     }
 }
