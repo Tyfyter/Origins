@@ -66,6 +66,7 @@ namespace Origins {
 
         #region accessories
         public bool bombHandlingDevice = false;
+        public bool destructiveClaws = false;
         public bool dimStarlight = false;
         public int dimStarlightCooldown = 0;
         public bool madHand = false;
@@ -202,6 +203,7 @@ namespace Origins {
                 }
 			}
             bombHandlingDevice = false;
+            destructiveClaws = false;
             dimStarlight = false;
             madHand = false;
             fiberglassDagger = false;
@@ -549,8 +551,10 @@ namespace Origins {
                 velocity *= 1.38f;
             }
             if (item.CountsAsClass(DamageClasses.Explosive)) {
+                //autoUse = true;
                 if (item.useAmmo == 0 && item.CountsAsClass(DamageClass.Throwing)) {
                     velocity *= explosiveThrowSpeed;
+                    //useTime *= explosiveUseTime;
                 }
             }
             if (item.shoot > ProjectileID.None && felnumShock > 29) {
@@ -875,8 +879,12 @@ namespace Origins {
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
             bool zoneDefiled = Player.InModBiome<Defiled_Wastelands>();
             bool zoneRiven = Player.InModBiome<Riven_Hive>();
+            bool junk = (itemDrop >= ItemID.OldShoe && itemDrop < ItemID.MinecartTrack);
 			if (zoneDefiled && zoneDefiled) {
 				if (Main.rand.NextBool()) {
+                    if (junk) {
+                        itemDrop = ModContent.ItemType<Tire>();
+                    }
                     zoneDefiled = false;
                 } else {
                     zoneRiven = false;
@@ -892,15 +900,20 @@ namespace Origins {
                 } else if (attempt.uncommon && !attempt.rare) {
                     itemDrop = ModContent.ItemType<Prikish>();
                 }
-            }else if (zoneRiven) {
+            } else if (zoneRiven) {
                 if (attempt.crate) {
-					if (attempt.rare && !(attempt.veryrare || attempt.legendary)) {
+                    if (attempt.rare && !(attempt.veryrare || attempt.legendary)) {
                         itemDrop = ModContent.ItemType<Crusty_Crate>();
                     }
                 } else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
                     itemDrop = ModContent.ItemType<Knee_Slapper>();
                 } else if (attempt.uncommon && !attempt.rare) {
                     itemDrop = ModContent.ItemType<Prikish>();
+                }
+                if (Main.rand.NextBool()) {
+                    if (junk) {
+                        itemDrop = ModContent.ItemType<Tire>();
+                    }
                 }
             }
         }
@@ -959,6 +972,9 @@ namespace Origins {
         }
         public int GetMimicSetChoice(int level) {
             return (mimicSetChoices >> level * 2) & 3;
+        }
+        public override void ModifyCaughtFish(Item fish) {
+            ModContent.ItemType<Tire>();
         }
     }
 }

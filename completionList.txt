@@ -243,10 +243,12 @@ ACCESSORIES:
 (^) Bomb Handling Device*
 (#, ^2) Bullet Shield*
 (^) Celestial Starlight
+(^) Celestial Stone Mask
 (^) Comb
 (^) Coologne
 (^) Cybernetic Brain*
 (^) Decaying Scale*
+(#2, ^2) Destructive Claws !!!
 (^) Dim Starlight*
 (^) Exploder Emblem*
 (#, ^2) Grave Danger
@@ -256,19 +258,24 @@ ACCESSORIES:
 (^) Keepsake Remains
 (^) Locket Necklace
 (X) Locus Control Tuner
+(#, ^2) Lover's Leap !!!
 (^) Makeover Choker
 (#3, ^2) Mitosis
+(#2, ^2) Nitro Crate !!!
 (#, ^2) No U Card
 (#, ^2) Olid Organ*
 (^) Parasitic Influence*
 (^) Pneumatic Bomb Thrower*
 (X) Proactive Protozoa !!!
+(#2, ^2) Razorwire !!!
 (^) Return To Sender*
 (#, ^2) Sonar Visor*
 (^) Scavenger Bag
+(#2, ^2) Shield of Retribution !!!
 (^) Symbiote Skull
 (#, ^2) Trap Charm !!!
 (#, ^2) Turbo Reel !!!
+(#3, ^2) Volatile Charm !!!
 
 (^) Asylum Whistle
 (#, ^2) Eccentric Stone/Spirit Shard
@@ -346,6 +353,7 @@ UTILITIES:
 (X) Strange Backpack
 
 (#, ^2) Black Light
+(#, ^2) Impenetrable Trashcan Lid !!!
 ---
 
 
@@ -538,6 +546,7 @@ SUMMONER WEAPONS:
 EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
+(#, ^2) Bloombomb !!!
 (#, ^2) Bombardment !!!
 (#2, ^2) Bomb Launcher !!!
 (#, ^2) Brainade !!!
@@ -704,6 +713,7 @@ MATERIALS:
 (^) Silicon
 (^) Soulspore
 (^) Strange String*
+(^) Tire
 (^) Tree Sap
 (^) Undead Chunk*
 (^) Wilting Rose
