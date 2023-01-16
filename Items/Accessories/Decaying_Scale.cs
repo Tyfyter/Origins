@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
     public class Decaying_Scale : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Decaying Scale");
-            Tooltip.SetDefault("Attacks inflict Toxic Shock and Solvent on enemies\nEffects are stronger while Acrid Armor is equipped");
+            Tooltip.SetDefault("Attacks inflict 'Toxic Shock' and 'Solvent' on enemies\nEffects are stronger while Acrid Armor is equipped");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {

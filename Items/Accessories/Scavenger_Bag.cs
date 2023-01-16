@@ -23,8 +23,8 @@ namespace Origins.Items.Accessories {
         }
         public override void AddRecipes() {
             Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ModContent.ItemType<Keepsake_Remains>());
             recipe.AddIngredient(ItemID.PapyrusScarab);
+            recipe.AddIngredient(ModContent.ItemType<Keepsake_Remains>());
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();
         }

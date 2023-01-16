@@ -18,6 +18,7 @@ namespace Origins.Items.Accessories {
             Item.handOnSlot = handOnSlot;
             Item.value = Item.sellPrice(gold: 2);
             Item.rare = ItemRarityID.Green;
+
             Item.damage = 10;
             Item.DamageType = DamageClass.Ranged;
             Item.useTime = 5;

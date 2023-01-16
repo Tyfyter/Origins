@@ -43,6 +43,7 @@ BOSSES AND MINI-BOSSES:
 (#, ^2) Grand Corruptor
 (#, ^2) Ichor Storm
 (#, $, ^2) Seer
+(X) Super Brainz
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver !!!
@@ -110,6 +111,7 @@ ENEMY NPCS:
 (#, ^2) Amebic Slime !!!
 (^) Ancient Cyclops
 (#, ^2) Barnacleback !!!
+(X) Buckethead Zombie !!!
 (#, ^2) Chunky Slime !!!
 (#, ^2) Cranivore !!!
 (#, %2) Crimbrain
@@ -251,52 +253,53 @@ ACCESSORIES:
 (#2, ^2) Destructive Claws !!!
 (^) Dim Starlight*
 (^) Exploder Emblem*
-(#, ^2) Grave Danger
+(#2, ^2) Grave Danger
 (^) Gun Glove
 (^) Handy Helper
 (X) Hazard Charm !!!
 (^) Keepsake Remains
 (^) Locket Necklace
+(#2, ^2) Lover's Leap !!!
 (X) Locus Control Tuner
 (#, ^2) Lover's Leap !!!
 (^) Makeover Choker
 (#3, ^2) Mitosis
 (#2, ^2) Nitro Crate !!!
 (#, ^2) No U Card
-(#, ^2) Olid Organ*
+(^) Olid Organ*
 (^) Parasitic Influence*
 (^) Pneumatic Bomb Thrower*
+(^) Powerflower
 (X) Proactive Protozoa !!!
 (#2, ^2) Razorwire !!!
 (^) Return To Sender*
-(#, ^2) Sonar Visor*
+(#2, ^2) Sonar Visor*
 (^) Scavenger Bag
+(#2, ^2) Sonic Radar
 (#2, ^2) Shield of Retribution !!!
 (^) Symbiote Skull
-(#, ^2) Trap Charm !!!
+(#2, ^2) Trap Charm !!!
 (#, ^2) Turbo Reel !!!
 (#3, ^2) Volatile Charm !!!
 
 (^) Asylum Whistle
-(#, ^2) Eccentric Stone/Spirit Shard
+(#2, ^2) Eccentric Stone/Spirit Shard
 (X) Lost Page
 (^) Stone Mask
 (X) Timbre of Hell !!!
 (X) Tinkerer's Handy Guide
 (#, ^2) Tripod Nip
 
-(X) Sonic Radar
-
 (^) Amebic Vial
-(#, ^2) Extremophile Charm
+(#2, ^2) Extremophile Charm
 (^) Fiberglass Dagger
 (X) Forbidden Salt
 (X) Gyroscope
 (^) Queen of Hearts
 (^) Refactoring Pieces
-(#3, ^2) SOTH
+(X) SOTH
 (X) Void Arcanum
-(x) Warp Drive
+(#2, ^2) Warp Drive
 
 (%3, X) Armored Core
 (%3, X) Atomic Clock
@@ -312,7 +315,9 @@ ACCESSORIES:
 (^) Agility Core
 (^) Combat Core
 (^) Construction Core
-(^) Vitality Core
+(^) Fishing Core
+(^) Lifeforce Core
+(^) Magic Core
 ---
 
 
@@ -766,7 +771,7 @@ CRITTERS AND FISH:
 
 CONSUMABLES:
 ---
-(#, ^2) Quantum Injector
+(^) Quantum Injector
 
 (^) Absorption Potion
 (#, ^2) Extreme O' Potion

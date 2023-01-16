@@ -80,6 +80,9 @@ namespace Origins {
         public bool entangledEnergy = false;
         public bool asylumWhistle = false;
         public int asylumWhistleTarget = -1;
+        public bool mitosis = false;
+        public Item mitosisItem = null;
+        public int mitosisCooldown = 0;
         public bool reshapingChunk = false;
         public float mysteriousSprayMult = 1;
         public bool protozoaFood = false;
@@ -212,6 +215,8 @@ namespace Origins {
             decayingScale = false;
             lazyCloakVisible = false;
             amebicVialVisible = false;
+            mitosis = false;
+            mitosisItem = null;
             entangledEnergy = false;
             mysteriousSprayMult = 1;
             protozoaFood = false;
@@ -238,6 +243,8 @@ namespace Origins {
                 parasiticInfluenceCooldown--;
             if (gunGloveCooldown > 0)
                 gunGloveCooldown--;
+            if (mitosisCooldown > 0)
+                mitosisCooldown--;
 
             if (rapidSpawnFrames>0)
                 rapidSpawnFrames--;

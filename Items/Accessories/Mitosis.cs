@@ -1,63 +1,60 @@
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons.Riven {
+namespace Origins.Items.Accessories {
     public class Mitosis : ModItem {
-        public override string Texture => "Origins/Items/Weapons/Riven/Mitosis";
-        static short glowmask;
         public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mitosis");
-			Tooltip.SetDefault("Try throwing something into it\n'It won't get off!'");
-            glowmask = Origins.AddGlowMask(this, "");
+            DisplayName.SetDefault("Mitosis");
+            Tooltip.SetDefault("Shoots out a mitosis node that duplicates projectiles");
             SacrificeTotal = 1;
         }
-		public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 16;
-			Item.width = 20;
-			Item.height = 22;
-			Item.useTime = 18;
-			Item.useAnimation = 18;
+        public override void SetDefaults() {
+            Item.accessory = true;
+            Item.rare = ItemRarityID.Pink;
+            Item.value = Item.sellPrice(gold: 8);
+
+            Item.damage = 0;
+            Item.DamageType = DamageClass.Ranged;
+            Item.useTime = 5;
+            Item.useAnimation = 5;
+            Item.shootSpeed = 5;
             Item.shoot = ModContent.ProjectileType<Amoeba_Bubble>();
-            Item.shootSpeed = 8.75f;
-            Item.mana = 10;
-            Item.knockBack = 0f;
-			Item.value = 5000;
-			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item1;
-            Item.glowMask = glowmask;
-            Item.consumable = false;
+        }
+        public override void UpdateAccessory(Player player, bool hideVisual) {
+            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+            originPlayer.mitosis = true;
+            originPlayer.mitosisItem = Item;
         }
     }
     public class Amoeba_Bubble : ModProjectile {
-        public override string Texture => "Origins/Items/Weapons/Riven/Mitosis_P";
-		public override string GlowTexture => Texture;
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mitosis");
-		}
+        public override string Texture => "Origins/Items/Accessories/Mitosis_P";
+        public override string GlowTexture => Texture;
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Mitosis Node");
+        }
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Grenade);
             Projectile.aiStyle = 0;
             Projectile.penetrate = -1;
-			Projectile.width = 22;
-			Projectile.height = 22;
+            Projectile.width = 22;
+            Projectile.height = 22;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 900;
             Projectile.alpha = 150;
         }
-		public override void AI() {
+        public override void AI() {
             Projectile.velocity *= 0.95f;
-			for (int i = 0; i < Main.maxProjectiles; i++) {
+            for (int i = 0; i < Main.maxProjectiles; i++) {
                 if (i == Projectile.whoAmI) continue;
                 Projectile other = Main.projectile[i];
                 if (other.active && !ProjectileID.Sets.IsAWhip[other.type] && other.Colliding(other.Hitbox, Projectile.Hitbox)) {
                     OriginGlobalProj globalProj = other.GetGlobalProjectile<OriginGlobalProj>();
-					if (other.type == 1075) {
+                    if (other.type == 1075) {
 
-					}
+                    }
                     if (!globalProj.isFromMitosis && !globalProj.hasUsedMitosis) {
                         Projectile duplicated = Projectile.NewProjectileDirect(
                             Projectile.GetSource_FromThis(),
@@ -77,12 +74,12 @@ namespace Origins.Items.Weapons.Riven {
                         globalProj.hasUsedMitosis = true;
                         if (other.minion) {
                             globalProj.mitosisTimeLeft = 300;
-						}
+                        }
                     }
-				}
-			}
-		}
-		public override bool OnTileCollide(Vector2 oldVelocity) {
+                }
+            }
+        }
+        public override bool OnTileCollide(Vector2 oldVelocity) {
             //Projectile.Kill();
             return false;
         }
