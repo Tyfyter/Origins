@@ -12,9 +12,22 @@ namespace Origins.NPCs.Defiled {
             Main.npcFrameCount[NPC.type] = 14;
         }
         public override void SetDefaults() {
-            NPC.CloneDefaults(NPCID.BigMimicCorruption);
-        }
-        public override void FindFrame(int frameHeight) {
+			NPC.width = 28;
+			NPC.height = 44;
+			NPC.aiStyle = NPCAIStyleID.Biome_Mimic;
+			NPC.damage = 90;
+			NPC.defense = 34;
+			NPC.lifeMax = 3500;
+			NPC.HitSound = SoundID.NPCHit4;
+			NPC.DeathSound = SoundID.NPCDeath6;
+			NPC.value = 30000f;
+			NPC.knockBackResist = 0.1f;
+			NPC.rarity = 5;
+		}
+		public override int SpawnNPC(int tileX, int tileY) {//should disable spawning
+			return -1;
+		}
+		public override void FindFrame(int frameHeight) {
             NPC.CloneFrame(NPCID.BigMimicCorruption, frameHeight);
         }
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

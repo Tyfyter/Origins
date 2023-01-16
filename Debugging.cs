@@ -12,5 +12,8 @@ namespace Origins {
 			Main.LocalPlayer.chatOverhead.NewMessage(message, duration);
 #endif
 		}
+		internal static void ChatOverhead(object message, int duration = 5) {
+			ChatOverhead(message.ToString(), duration);
+		}
 	}
 }
