@@ -792,7 +792,7 @@ namespace Origins {
             return damage > 0;
         }
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter) {
-            if(guardedHeart == true) {
+            if(guardedHeart) {
                 Player.AddBuff(Guarded_Heart_Buff.ID, 60 * 8);
             }
 			if (razorwire) {
