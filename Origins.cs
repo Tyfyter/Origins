@@ -66,6 +66,8 @@ namespace Origins {
         static int[] wallHammerRequirement;
         public static int[] WallHammerRequirement { get => wallHammerRequirement; }
         public static Dictionary<int, (int maxLevel, float velDiffMult)> RasterizeAdjustment { get; private set; }
+        static bool[] artifactMinion;
+        public static bool[] ArtifactMinion { get => artifactMinion; }
         public static ModKeybind SetBonusTriggerKey { get; private set; }
         public static ModKeybind InspectItemKey { get; private set; }
         #region Armor IDs
@@ -593,6 +595,7 @@ namespace Origins {
             flatDamageMultiplier = new SetFactory(ItemLoader.ItemCount).CreateFloatSet(1f,
                 ItemID.Minishark, 3f/8f
             );
+            Array.Resize(ref artifactMinion, ProjectileLoader.ProjectileCount);
         }
         public static class Music {
             public static int Dusk = MusicID.PumpkinMoon;

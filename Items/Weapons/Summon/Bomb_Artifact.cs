@@ -99,7 +99,8 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
 			ProjectileID.Sets.MinionSacrificable[Type] = true;
             Origins.ForceFelnumShockOnShoot[Type] = true;
-		}
+            Origins.ArtifactMinion[Type] = true;
+        }
 
 		public sealed override void SetDefaults() {
             Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
@@ -354,6 +355,8 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
+            //sets type back to the actual type it should be so spirit shard doesn't just spawn a grenade
+            Projectile.type = Bomb_Artifact.projectileID;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity) {
@@ -379,7 +382,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
                 texture,
                 Projectile.Center - Main.screenPosition,
                 new Rectangle(0, Projectile.frame*52, 56, 50),
-                lightColor,
+                Projectile.GetAlpha(lightColor),
                 Projectile.rotation,
                 new Vector2(28, 25),
                 Projectile.scale,

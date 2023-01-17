@@ -442,6 +442,9 @@ namespace Origins {
     interface IIsExplodingProjectile {
         bool IsExploding();
     }
+    interface ICustomRespawnArtifact {
+        void Respawn();
+    }
     public static class Elements {
         public const ushort Fire = 1;
         public const ushort Earth = 2;

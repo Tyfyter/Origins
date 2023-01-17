@@ -97,6 +97,7 @@ namespace Origins {
         public bool guardedHeart = false;
         public bool razorwire = false;
         public Item razorwireItem = null;
+        public bool spiritShard = false;
         #endregion
 
         #region explosive stats
@@ -231,6 +232,7 @@ namespace Origins {
             gunGloveItem = null;
             razorwire = false;
             razorwireItem = null;
+            spiritShard = false;
 
             flaskBile = false;
             flaskSalt = false;

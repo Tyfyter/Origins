@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
             Item.rare = ItemRarityID.Green;
         }
         public override void UpdateEquip(Player player) {
-            //player.GetModPlayer<OriginPlayer>().spiritShard = true;
+            player.GetModPlayer<OriginPlayer>().spiritShard = true;
         }
     }
 }
