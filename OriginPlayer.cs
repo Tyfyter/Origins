@@ -389,8 +389,8 @@ namespace Origins {
                     Player.GetArmorPenetration(DamageClass.Generic) += Player.GetArmorPenetration(damageClass) * statSharePercent;
                     Player.GetArmorPenetration(damageClass) -= Player.GetArmorPenetration(damageClass) * statSharePercent;
 
-                    Player.GetDamage(DamageClass.Generic) = Player.GetDamage(DamageClass.Generic).CombineWith(Player.GetDamage(damageClass).MultiplyBonuses(statSharePercent));
-                    Player.GetDamage(damageClass) = Player.GetDamage(damageClass).MultiplyBonuses(1f - statSharePercent);
+                    Player.GetDamage(DamageClass.Generic) = Player.GetDamage(DamageClass.Generic).CombineWith(Player.GetDamage(damageClass).Scale(statSharePercent));
+                    Player.GetDamage(damageClass) = Player.GetDamage(damageClass).Scale(1f - statSharePercent);
 
                     Player.GetAttackSpeed(DamageClass.Generic) += (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
                     Player.GetAttackSpeed(damageClass) -= (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
@@ -474,14 +474,16 @@ namespace Origins {
 			foreach (DamageClass damageClass in DamageClasses.All) {
                 Player.GetArmorPenetration(damageClass) += Player.GetArmorPenetration(damageClass) * 0.5f;
 
-                Player.GetDamage(damageClass) = Player.GetDamage(damageClass).MultiplyBonuses(1.5f);
+                Player.GetDamage(damageClass) = Player.GetDamage(damageClass).Scale(1.5f);
 
                 Player.GetAttackSpeed(damageClass) += (Player.GetAttackSpeed(damageClass) - 1) * 0.5f;
             }
 
-            Player.arrowDamage = Player.arrowDamage.MultiplyBonuses(1.5f);
-            Player.bulletDamage = Player.bulletDamage.MultiplyBonuses(1.5f);
-            Player.rocketDamage = Player.rocketDamage.MultiplyBonuses(1.5f);
+            Player.arrowDamage = Player.arrowDamage.Scale(1.5f);
+            Player.bulletDamage = Player.bulletDamage.Scale(1.5f);
+            Player.rocketDamage = Player.rocketDamage.Scale(1.5f);
+
+            explosiveBlastRadius = explosiveBlastRadius.Scale(1.5f);
 
             //explosiveDamage += (explosiveDamage - 1) * 0.5f;
             //explosiveThrowSpeed += (explosiveThrowSpeed - 1) * 0.5f;

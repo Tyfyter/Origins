@@ -68,7 +68,7 @@ namespace Origins.Items.Weapons.Felnum.Tier2 {
             return new Vector2(-12, 0);
         }
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-            damage = damage.MultiplyBonuses(1.5f);
+            damage = damage.Scale(1.5f);
         }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 		    Vector2 offset = velocity.SafeNormalize(Vector2.Zero);

@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Felnum {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.MultiplyBonuses(1.5f);
+			damage = damage.Scale(1.5f);
 		}
 	}
 	public class Felnum_Golf_Ball_P : Golf_Ball_Projectile {

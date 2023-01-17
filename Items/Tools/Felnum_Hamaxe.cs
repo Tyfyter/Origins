@@ -29,7 +29,7 @@ namespace Origins.Items.Tools {
             return 1f / ((player.pickSpeed-1)*0.75f+1);
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.MultiplyBonuses(1.5f);
+			damage = damage.Scale(1.5f);
 		}
 	}
 }

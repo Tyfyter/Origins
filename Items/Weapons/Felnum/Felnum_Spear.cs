@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Felnum {
             recipe.Register();
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-			damage = damage.MultiplyBonuses(1.5f);
+			damage = damage.Scale(1.5f);
 		}
 	}
     public class Felnum_Spear_Stab : ModProjectile {

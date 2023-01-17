@@ -1030,14 +1030,6 @@ namespace Origins {
             soundStyle.Volume = volume;
             return soundStyle;
         }
-        public static StatModifier MultiplyBonuses(this StatModifier statModifier, float factor) {
-            return new StatModifier(
-                (statModifier.Additive - 1) * factor + 1,
-                (statModifier.Multiplicative - 1) * factor + 1,
-                statModifier.Flat * factor,
-                statModifier.Base * factor
-            );
-        }
         public static StatModifier Scale(this StatModifier statModifier, float additive = 1f, float multiplicative = 1f, float flat = 1f, float @base = 1f) {
             return new StatModifier(
                 (statModifier.Additive - 1) * additive + 1,

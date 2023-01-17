@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Felnum {
             recipe.Register();
         }
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-            damage = damage.MultiplyBonuses(1.5f);
+            damage = damage.Scale(1.5f);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);

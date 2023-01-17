@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Felnum {
             return new Vector2(-8f,0);
         }
         public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
-            damage = damage.MultiplyBonuses(1.5f);
+            damage = damage.Scale(1.5f);
         }
     }
 }
