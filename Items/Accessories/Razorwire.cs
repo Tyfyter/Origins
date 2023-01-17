@@ -16,7 +16,9 @@ namespace Origins.Items.Accessories {
         }
         public override void UpdateEquip(Player player) {
             player.aggro -= 400;
-            //player.GetModPlayer<OriginPlayer>().razorwire = true;
+            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+            originPlayer.razorwire = true;
+            originPlayer.razorwireItem = Item;
         }
     }
 }

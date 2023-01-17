@@ -95,6 +95,8 @@ namespace Origins {
         public Item gunGloveItem = null;
         public int gunGloveCooldown = 0;
         public bool guardedHeart = false;
+        public bool razorwire = false;
+        public Item razorwireItem = null;
         #endregion
 
         #region explosive stats
@@ -226,6 +228,9 @@ namespace Origins {
             toxicShock = false;
             gunGlove = false;
             gunGloveItem = null;
+            razorwire = false;
+            razorwireItem = null;
+
             flaskBile = false;
             flaskSalt = false;
             explosiveThrowSpeed = 1f;
@@ -789,6 +794,49 @@ namespace Origins {
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter) {
             if(guardedHeart == true) {
                 Player.AddBuff(Guarded_Heart_Buff.ID, 60 * 8);
+            }
+			if (razorwire) {
+                const float maxDist = 96 * 96;
+                const int armorPenetration = 0;
+                double totalDamage = damage * 0.67f;
+                List<(int id, float weight)> targets = new();
+                NPC npc;
+                for (int i = 0; i < Main.maxNPCs; i++) {
+                    npc = Main.npc[i];
+                    if (npc.active && npc.damage > 0 && !npc.friendly) {
+                        Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
+                        Vector2 diff = currentPos - Player.MountedCenter;
+                        float dist = diff.LengthSquared();
+                        if (dist > maxDist) continue;
+                        float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
+						if (totalDamage / 3 - npc.checkArmorPenetration(armorPenetration) > npc.life) {
+                            currentWeight = 0;
+						}
+						if (targets.Count >= 3) {
+                            for (int j = 0; j < 3; j++) {
+                                if (targets[j].weight < currentWeight) {
+                                    targets.Insert(j, (i, currentWeight));
+                                    break;
+                                }
+                            }
+						} else {
+                            targets.Add((i, currentWeight));
+                        }
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    if (i >= targets.Count) break;
+                    Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
+                    Projectile.NewProjectile(
+                        Player.GetSource_Accessory(razorwireItem),
+                        Player.MountedCenter,
+                        (currentPos - Player.MountedCenter).WithMaxLength(12),
+                        ProjectileID.JestersArrow,// proper projectile not implemented yet, unless it's not supposed to have a visual effect it'll probably need one
+                        (int)totalDamage,
+                        10,
+                        Player.whoAmI
+                    );
+                }
             }
         }
         public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
