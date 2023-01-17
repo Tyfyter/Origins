@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
             Item.CloneDefaults(ItemID.ObsidianShield);
             Item.shieldSlot = slot;
             Item.defense = 3;
+            Item.shoot = ProjectileID.BulletHighVelocity;
             Item.value = Item.sellPrice(gold: 3);
             Item.rare = ItemRarityID.Pink;
         }

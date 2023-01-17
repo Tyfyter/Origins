@@ -62,7 +62,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
         public override Color CoreGlowColor => new Color(255, 160, 0, 160);
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Construction Core");
-            Tooltip.SetDefault("Allows incredible construction cabilities");
+            Tooltip.SetDefault("Allows incredible construction abilities");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {

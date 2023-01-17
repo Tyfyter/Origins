@@ -92,6 +92,9 @@ namespace Origins.NPCs {
 			} else if (type == NPCID.Cyborg) {
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Advanced_Imaging>());
 			}
+			if (type == NPCID.SkeletonMerchant) {
+				//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Trash_Lid>());
+			}
 		}
 		public override bool PreAI(NPC npc) {
 			if (shockTime > 0) {

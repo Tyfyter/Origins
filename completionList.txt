@@ -264,27 +264,29 @@ ACCESSORIES:
 (#, ^2) Lover's Leap !!!
 (^) Makeover Choker
 (#3, ^2) Mitosis
-(☻) Nitro Crate
+(^) Nitro Crate
 (#, ^2) No U Card
 (^) Olid Organ*
 (^) Parasitic Influence*
 (^) Pneumatic Bomb Thrower*
 (^) Powerflower
 (X) Proactive Protozoa !!!
-(☻) Razorwire
+(^) Razorwire
+(#2, ^2) Ravel !!!
 (^) Return To Sender*
 (#2, ^2) Sonar Visor*
 (^) Scavenger Bag
 (#2, ^2) Sonic Radar
-(☻) Shield of Retribution
+(^) Shield of Retribution
+(#2, ^2) Stealth Ravel
 (^) Symbiote Skull
 (#2, ^2) Trap Charm !!!
 (#, ^2) Turbo Reel !!!
-(☻) Volatile Charm !!!
+(^) Volatile Charm !!!
 
 (^) Asylum Whistle
 (#2, ^2) Eccentric Stone
-(☻) Spirit Shard
+(^) Spirit Shard
 (X) Lost Page
 (^) Stone Mask
 (X) Timbre of Hell !!!

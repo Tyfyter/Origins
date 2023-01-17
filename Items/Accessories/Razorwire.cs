@@ -13,6 +13,7 @@ namespace Origins.Items.Accessories {
             Item.accessory = true;
             Item.rare = ItemRarityID.Green;
             Item.value = Item.sellPrice(gold: 1);
+            Item.shoot = ProjectileID.BulletHighVelocity;
         }
         public override void UpdateEquip(Player player) {
             player.aggro -= 400;

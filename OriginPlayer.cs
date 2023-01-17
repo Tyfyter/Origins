@@ -800,7 +800,7 @@ namespace Origins {
                 Player.AddBuff(Guarded_Heart_Buff.ID, 60 * 8);
             }
 			if (razorwire) {
-                const float maxDist = 96 * 96;
+                const float maxDist = 240 * 240;
                 const int armorPenetration = 0;
                 double totalDamage = damage * 0.67f;
                 List<(int id, float weight)> targets = new();
@@ -835,7 +835,7 @@ namespace Origins {
                         Player.GetSource_Accessory(razorwireItem),
                         Player.MountedCenter,
                         (currentPos - Player.MountedCenter).WithMaxLength(12),
-                        ProjectileID.JestersArrow,// proper projectile not implemented yet, unless it's not supposed to have a visual effect it'll probably need one
+                        razorwireItem.shoot,
                         (int)totalDamage,
                         10,
                         Player.whoAmI
