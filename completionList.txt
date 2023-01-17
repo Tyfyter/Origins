@@ -250,7 +250,7 @@ ACCESSORIES:
 (^) Coologne
 (^) Cybernetic Brain*
 (^) Decaying Scale*
-(#2, ^2) Destructive Claws !!!
+(@4, ^3) Destructive Claws !!!
 (^) Dim Starlight*
 (^) Exploder Emblem*
 (#2, ^2) Grave Danger
@@ -264,26 +264,27 @@ ACCESSORIES:
 (#, ^2) Lover's Leap !!!
 (^) Makeover Choker
 (#3, ^2) Mitosis
-(#2, ^2) Nitro Crate !!!
+(☻) Nitro Crate
 (#, ^2) No U Card
 (^) Olid Organ*
 (^) Parasitic Influence*
 (^) Pneumatic Bomb Thrower*
 (^) Powerflower
 (X) Proactive Protozoa !!!
-(#2, ^2) Razorwire !!!
+(☻) Razorwire
 (^) Return To Sender*
 (#2, ^2) Sonar Visor*
 (^) Scavenger Bag
 (#2, ^2) Sonic Radar
-(#2, ^2) Shield of Retribution !!!
+(☻) Shield of Retribution
 (^) Symbiote Skull
 (#2, ^2) Trap Charm !!!
 (#, ^2) Turbo Reel !!!
-(#3, ^2) Volatile Charm !!!
+(☻) Volatile Charm !!!
 
 (^) Asylum Whistle
-(#2, ^2) Eccentric Stone/Spirit Shard
+(#2, ^2) Eccentric Stone
+(☻) Spirit Shard
 (X) Lost Page
 (^) Stone Mask
 (X) Timbre of Hell !!!

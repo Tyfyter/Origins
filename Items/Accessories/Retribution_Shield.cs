@@ -26,5 +26,12 @@ namespace Origins.Items.Accessories {
             originPlayer.razorwire = true;
             originPlayer.razorwireItem = Item;
         }
+        public override void AddRecipes() {
+            Recipe recipe = CreateRecipe();
+            recipe.AddIngredient(ItemID.ObsidianShield);
+            recipe.AddIngredient(ModContent.ItemType<Razorwire>());
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.Register();
+        }
     }
 }
