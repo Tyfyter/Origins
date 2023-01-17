@@ -18,7 +18,7 @@ namespace Origins.Items.Accessories {
         }
     }
     public class Eccentric_Stone_Entry : JournalEntry {
-        public override string TextKey => "Eccentric Stone";
+        public override string TextKey => "Eccentric_Stone";
         public override ArmorShaderData TextShader => null;
     }
 }

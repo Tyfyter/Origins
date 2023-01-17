@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
     public class Spirit_Shard : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Spirit Shard");
-            Tooltip.SetDefault("Artifact minions turn into ghosts of their formerselves upon death");
+            Tooltip.SetDefault("Artifact minions turn into ghosts of their former selves upon death");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {

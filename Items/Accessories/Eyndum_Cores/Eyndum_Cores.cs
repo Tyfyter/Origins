@@ -82,7 +82,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
         public override Color CoreGlowColor => new Color(255, 0, 160, 75);
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Fishing Core");
-            Tooltip.SetDefault("Permits flawless fishing skills");
+            Tooltip.SetDefault("Facilitates flawless fishing");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -125,7 +125,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
         public override void UpdateEquip(Player player) {
             player.manaCost *= 0.8f;
             player.manaFlower = true;
-            player.manaSickReduction = 0.5f;
+            player.manaSickReduction *= 0.5f;//this is the damage reduction from mana sickness, it doesn't reduce it
         }
     }
 }
