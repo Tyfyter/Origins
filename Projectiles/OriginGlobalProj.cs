@@ -217,8 +217,9 @@ namespace Origins.Projectiles {
         public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
             if(projectile.CountsAsClass(DamageClasses.Explosive)) {
                 OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-                if(originPlayer.madHand&&(projectile.timeLeft<=3||projectile.penetrate==0)) {
-                    hitbox.Inflate(hitbox.Width/4,hitbox.Height/4);
+                if(IsExploding(projectile) && originPlayer.explosiveBlastRadius != 1f) {
+                    float mult = (originPlayer.explosiveBlastRadius - 1f) / 2;
+                    hitbox.Inflate((int)(hitbox.Width * mult), (int)(hitbox.Height * mult));
                 }
             }
 			switch (projectile.type) {
@@ -237,6 +238,12 @@ namespace Origins.Projectiles {
 				}
                 break;
             }
+        }
+        public static bool IsExploding(Projectile projectile) {
+			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {
+                return explodingProjectile.IsExploding();
+			}
+            return projectile.timeLeft <= 3 || projectile.penetrate == 0;
         }
 		public static void ClentaminatorAI<TBiome>(Projectile projectile, int dustType, Color color) where TBiome : AltBiome {
 	        if (projectile.owner == Main.myPlayer) {

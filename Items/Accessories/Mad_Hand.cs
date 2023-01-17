@@ -18,8 +18,10 @@ namespace Origins.Items.Accessories {
             Item.expert = true;
         }
         public override void UpdateEquip(Player player) {
-            player.GetModPlayer<OriginPlayer>().madHand = true;
-            player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed+=0.65f;
+            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+            originPlayer.madHand = true;
+            originPlayer.explosiveBlastRadius += 0.25f;
+            originPlayer.explosiveThrowSpeed += 0.65f;
         }
     }
 }

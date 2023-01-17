@@ -439,6 +439,9 @@ namespace Origins {
     public interface IShadedProjectile {
         public int Shader { get; }
     }
+    interface IIsExplodingProjectile {
+        bool IsExploding();
+    }
     public static class Elements {
         public const ushort Fire = 1;
         public const ushort Earth = 2;

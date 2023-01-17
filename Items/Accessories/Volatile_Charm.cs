@@ -16,7 +16,14 @@ namespace Origins.Items.Accessories {
         }
         public override void UpdateEquip(Player player) {
             player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.2f;
-            //player.GetModPlayer<OriginPlayer>().explosiveBlastRadius+=0.25f;
+            player.GetModPlayer<OriginPlayer>().explosiveBlastRadius += 0.25f;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = CreateRecipe();
+            recipe.AddIngredient(ModContent.ItemType<Bomb_Charm>());
+            recipe.AddIngredient(ModContent.ItemType<Nitro_Crate>());
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.Register();
         }
     }
 }
