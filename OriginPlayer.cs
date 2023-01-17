@@ -811,7 +811,7 @@ namespace Origins {
                         float dist = diff.LengthSquared();
                         if (dist > maxDist) continue;
                         float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
-						if (totalDamage / 3 - npc.checkArmorPenetration(armorPenetration) > npc.life) {
+						if (totalDamage / 3 - npc.defense / 2 > npc.life) {
                             currentWeight = 0;
 						}
 						if (targets.Count >= 3) {
