@@ -98,6 +98,10 @@ namespace Origins {
         public bool razorwire = false;
         public Item razorwireItem = null;
         public bool spiritShard = false;
+        public bool ravel = false;
+        public Item ravelItem = null;
+        public bool spiderRavel = false;
+        public bool ceilingRavel = false;
         #endregion
 
         #region explosive stats
@@ -164,6 +168,12 @@ namespace Origins {
         public int lastMinionAttackTarget = -1;
         public int hookTarget = -1;
         bool rivenWet = false;
+        public bool mountOnly = false;
+        public bool changeSize = false;
+        public int targetWidth;
+        public int targetHeight;
+        public int oldXSign = 0;
+        public bool collidingX = false;
         public HashSet<string> unlockedJournalEntries = new();
         public override void ResetEffects() {
             oldBonuses = 0;
@@ -233,6 +243,8 @@ namespace Origins {
             razorwire = false;
             razorwireItem = null;
             spiritShard = false;
+            ravel = false;
+            spiderRavel = false;
 
             flaskBile = false;
             flaskSalt = false;
@@ -273,6 +285,8 @@ namespace Origins {
             Player.breathMax = 200;
             plagueSight = false;
             plagueSightLight = false;
+            mountOnly = false;
+            changeSize = false;
             minionSubSlots = new float[minionSubSlotValues];
 			if (lastMinionAttackTarget != Player.MinionAttackTargetNPC) {
 				if (asylumWhistle) {
@@ -321,12 +335,38 @@ namespace Origins {
                     Player.RefreshMovementAbilities();
                 }
             }
+            if (changeSize) {
+                Player.position.X -= (targetWidth - Player.width) / 2;
+                Player.position.Y -= targetHeight - Player.height;
+                Player.width = targetWidth;
+                Player.height = targetHeight;
+            }
+            oldXSign = Math.Sign(Player.velocity.X);
             //endCustomMovement:
             hookTarget = -1;
         }
 		public override void PreUpdate() {
             if (rivenWet) {
                 Player.gravity = 0.25f;
+            }
+			if (ravel && spiderRavel) {
+                ceilingRavel = false;
+				if (collidingX) {
+                    Player.gravity = 0;
+                    Player.velocity.Y *= 0.9f;
+                    if (Player.controlUp) {
+                        Player.velocity.Y -= 0.35f;
+                    }
+                    if (Player.controlDown) {
+                        Player.velocity.Y += 0.35f;
+                    }
+                }else if (Collision.TileCollision(Player.position, new Vector2(0, -8), Player.width, Player.height, gravDir: -1) != new Vector2(0, -8)) {
+                    ceilingRavel = true;
+                    if (Player.controlUp && !Player.controlDown) {
+                        Player.gravity = 0f;
+                        Player.velocity.Y -= 0.25f;
+                    }
+                }
             }
         }
 		public override void PostUpdate() {
@@ -803,7 +843,6 @@ namespace Origins {
             }
 			if (razorwire) {
                 const float maxDist = 240 * 240;
-                const int armorPenetration = 0;
                 double totalDamage = damage * 0.67f;
                 List<(int id, float weight)> targets = new();
                 NPC npc;
@@ -815,7 +854,7 @@ namespace Origins {
                         float dist = diff.LengthSquared();
                         if (dist > maxDist) continue;
                         float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
-						if (totalDamage / 3 - npc.defense / 2 > npc.life) {
+						if (totalDamage / 3 > npc.life) {
                             currentWeight = 0;
 						}
 						if (targets.Count >= 3) {
@@ -838,7 +877,7 @@ namespace Origins {
                         Player.MountedCenter,
                         (currentPos - Player.MountedCenter).WithMaxLength(12),
                         razorwireItem.shoot,
-                        (int)totalDamage,
+                        (int)(totalDamage / targets.Count) + 1,
                         10,
                         Player.whoAmI
                     );
@@ -980,6 +1019,7 @@ namespace Origins {
             }
         }
 		public override bool PreItemCheck() {
+            collidingX = oldXSign != 0 && Player.velocity.X == 0;
             ItemChecking = true;
             return true;
         }
@@ -996,6 +1036,14 @@ namespace Origins {
                     )
                 ) ||
                 Origins.isDrawingShadyDupes) PlayerDrawLayers.HeldItem.Hide();
+			if (mountOnly && !drawInfo.headOnlyRender) {
+				for (int i = 0; i < PlayerDrawLayerLoader.DrawOrder.Count; i++) {
+                    PlayerDrawLayer layer = PlayerDrawLayerLoader.DrawOrder[i];
+                    if (layer != PlayerDrawLayers.MountFront && layer != PlayerDrawLayers.MountBack) {
+                        layer.Hide();
+                    }
+				}
+            }
 		}
 		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
             if (plagueSight) drawInfo.colorEyes = IsDevName(Player.name, 1) ? new Color(43, 185, 255) : Color.Gold;

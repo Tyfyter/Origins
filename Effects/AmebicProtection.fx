@@ -29,9 +29,12 @@ bool IsInBounds(float2 value) {
 		return false;
 	return true;
 }
+float2 Rotate(float2 value, float angle) {
+	return float2(value.x * cos(angle) - value.y * sin(angle), value.x * sin(angle) + value.y * cos(angle));
+}
 
 float4 AmebicProtection(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
-	float2 realOffset = uOffset / uImageSize0;
+	float2 realOffset = Rotate(uOffset, uRotation) / uImageSize0;
 	realOffset.x *= uDirection;
 	float alpha;
 	if (IsInBounds(coords + realOffset)) {
