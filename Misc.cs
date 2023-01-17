@@ -1037,7 +1037,15 @@ namespace Origins {
                 statModifier.Flat * factor,
                 statModifier.Base * factor
             );
-		}
+        }
+        public static StatModifier Scale(this StatModifier statModifier, float additive = 1f, float multiplicative = 1f, float flat = 1f, float @base = 1f) {
+            return new StatModifier(
+                (statModifier.Additive - 1) * additive + 1,
+                (statModifier.Multiplicative - 1) * multiplicative + 1,
+                statModifier.Flat * flat,
+                statModifier.Base * @base
+            );
+        }
         public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
             spriteBatch.End();
             spriteBatch.Begin(sortMode, blendState ?? BlendState.AlphaBlend, samplerState ?? SamplerState.LinearClamp, DepthStencilState.None, rasterizerState ?? Main.Rasterizer, effect, transformMatrix ?? Main.GameViewMatrix.TransformationMatrix);

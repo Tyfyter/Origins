@@ -217,9 +217,9 @@ namespace Origins.Projectiles {
         public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
             if(projectile.CountsAsClass(DamageClasses.Explosive)) {
                 OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-                if(IsExploding(projectile) && originPlayer.explosiveBlastRadius != 1f) {
-                    float mult = (originPlayer.explosiveBlastRadius - 1f) / 2;
-                    hitbox.Inflate((int)(hitbox.Width * mult), (int)(hitbox.Height * mult));
+                if(IsExploding(projectile) && originPlayer.explosiveBlastRadius != StatModifier.Default) {
+                    StatModifier modifier = originPlayer.explosiveBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+                    hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
                 }
             }
 			switch (projectile.type) {

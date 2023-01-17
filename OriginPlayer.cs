@@ -103,7 +103,7 @@ namespace Origins {
         #region explosive stats
         public float explosiveThrowSpeed = 1;
         public float explosiveSelfDamage = 1;
-        public float explosiveBlastRadius = 1;
+        public StatModifier explosiveBlastRadius = StatModifier.Default;
         #endregion
 
         #region biomes
@@ -238,7 +238,7 @@ namespace Origins {
             flaskSalt = false;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;
-            explosiveBlastRadius = 1;
+            explosiveBlastRadius = StatModifier.Default;
             statSharePercent = 0f;
             if (cryostenLifeRegenCount>0)
                 cryostenLifeRegenCount--;

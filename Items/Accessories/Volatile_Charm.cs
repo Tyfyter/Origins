@@ -15,8 +15,9 @@ namespace Origins.Items.Accessories {
             Item.rare = ItemRarityID.Green;
         }
         public override void UpdateEquip(Player player) {
-            player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.2f;
-            player.GetModPlayer<OriginPlayer>().explosiveBlastRadius *= 1.35f;
+            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+            originPlayer.explosiveSelfDamage -= 0.2f;
+            originPlayer.explosiveBlastRadius *= 1.35f;
         }
         public override void AddRecipes() {
             Recipe recipe = CreateRecipe();
