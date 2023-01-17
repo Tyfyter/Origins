@@ -336,10 +336,10 @@ namespace Origins {
                 (ENQUEUE, ModContent.ItemType<Hand_Grenade_Launcher>(), 1f),
                 (CHANGE_QUEUE, ChestID.Ice, 0f),
                 (ENQUEUE, ModContent.ItemType<Cryostrike>(), 1f),
-                (CHANGE_QUEUE, 5, 1f),//1 for all underground gold chests, 5 for "underground" layer, 7 for "cavern" layer
+                (CHANGE_QUEUE, ChestID.Gold, 0b0101),
                 (ENQUEUE, ModContent.ItemType<Bomb_Charm>(), 1f),
                 (ENQUEUE, ModContent.ItemType<Beginner_Tome>(), 1f),
-                (CHANGE_QUEUE, 7, 1f),
+                (CHANGE_QUEUE, ChestID.Gold, 0b1101),
                 (ENQUEUE, ModContent.ItemType<Nitro_Crate>(), 1f),
                 (CHANGE_QUEUE, ChestID.LockedGold, 0f),
                 (ENQUEUE, ModContent.ItemType<Tones_Of_Agony>(), 1f),
@@ -420,8 +420,12 @@ namespace Origins {
                 switch (actions[actionIndex].param) {
                     case ChestID.Gold: {
                         int typeVar = (int)actions[actionIndex].weight;
-                        if ((typeVar & 1) != 0) {
-                            if ((typeVar & 2) == 0) {
+                        //lower 2 bits:
+                        //00, 10: no exclusion for pyramid chests
+                        //01: exclude pyramid chests
+                        //11: exclude non-pyramid chests
+                        if ((typeVar & 0b0001) != 0) {
+                            if ((typeVar & 0b0010) == 0) {
                                 cache = new ChestLootCache(cache.Where((c) => {
                                     Chest selChest = Main.chest[c.Value[0]];
                                     return Main.tile[selChest.x, selChest.y + 2].TileType != TileID.SandstoneBrick;
@@ -433,6 +437,10 @@ namespace Origins {
                                 }));
                             }
                         }
+                        //second 2 bits:
+                        //00, 10: no exclusion for height
+                        //01: only above caverns
+                        //11: only in caverns
                         if ((typeVar & 4) != 0) {
                             if ((typeVar & 8) == 0) {
                                 cache = new ChestLootCache(
