@@ -22,9 +22,12 @@ namespace Origins.Items.Accessories {
             Item.rare = ItemRarityID.Pink;
             Item.value = Item.sellPrice(gold: 8);
             Item.shoot = ModContent.MountType<Ravel_Mount>();//can't use mountType because that'd make it fit in the mount slot
+			Item.canBePlacedInVanityRegardlessOfConditions = true;
         }
         public override void UpdateEquip(Player player) {
-            player.GetModPlayer<OriginPlayer>().ravelEquipped = true;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.ravelEquipped = true;
+			originPlayer.vanityRavel = Type;
             const int down = 0;
             bool toggle = player.controlDown && player.releaseDown && player.doubleTapCardinalTimer[down] < 15;
             if (player.mount.Type == Item.shoot) {
@@ -34,7 +37,10 @@ namespace Origins.Items.Accessories {
                 if (toggle || Ravel_Mount.RavelMounts.Contains(player.mount.Type)) player.mount.SetMount(Item.shoot, player);
             }
         }
-        protected virtual void UpdateRaveled(Player player) {
+		public override void UpdateVanity(Player player) {
+			player.GetModPlayer<OriginPlayer>().vanityRavel = Type;
+		}
+		protected virtual void UpdateRaveled(Player player) {
             player.blackBelt = true;
         }
 		public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player) {
@@ -87,7 +93,10 @@ namespace Origins.Items.Accessories {
 		public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle frame, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
             //playerDrawData.Clear();
             rotation = drawPlayer.mount._frameCounter * 0.1f;
-            texture = Terraria.GameContent.TextureAssets.Item[Ravel.ID].Value;
+			int vanityRavel = drawPlayer.GetModPlayer<OriginPlayer>().vanityRavel;
+			if (vanityRavel < 0) return false;
+			Main.instance.LoadItem(vanityRavel);
+			texture = Terraria.GameContent.TextureAssets.Item[vanityRavel].Value;
             drawOrigin = new Vector2(12, 12);
             DrawData item = new DrawData(texture, drawPosition, null, drawColor, rotation, drawOrigin, drawScale, spriteEffects, 0);
             item.shader = Mount.currentShader;
@@ -105,8 +114,8 @@ namespace Origins.Items.Accessories {
             BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
                 mountID = MountID
             };
-            //Main.buffNoTimeDisplay[Type] = true;//makes the buff time not display, commented out to demonstrate that base.SetStaticDefaults() in Stealth_Ravel fixes the limited duration
-            Main.buffNoSave[Type] = true;//makes the buff not save when leaving a world so that you don't spawn in already raveled
+            Main.buffNoTimeDisplay[Type] = true;
+            Main.buffNoSave[Type] = true;
         }
         public override void Update(Player player, ref int buffIndex) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

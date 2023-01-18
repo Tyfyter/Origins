@@ -55,24 +55,14 @@ namespace Origins.Items.Accessories {
             }
             return false;
         }
-        public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle frame, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
-            //playerDrawData.Clear();
-            rotation = drawPlayer.mount._frameCounter * 0.1f;
-            texture = Terraria.GameContent.TextureAssets.Item[Stealth_Ravel.ID].Value;
-            drawOrigin = new Vector2(12, 12);
-            DrawData item = new DrawData(texture, drawPosition, null, drawColor, rotation, drawOrigin, drawScale, spriteEffects, 0);
-            item.shader = Mount.currentShader;
-            playerDrawData.Add(item);
-            return false;
-        }
     }
     public class Stealth_Ravel_Mount_Buff : Ravel_Mount_Buff {
         public override string Texture => "Origins/Buffs/Ravel_Generic_Buff";
         protected override int MountID => ModContent.MountType<Stealth_Ravel_Mount>();
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Stealth Ravel");
-            Description.SetDefault("10% chance to dodge. Less likely to be targeted");
 			base.SetStaticDefaults();
+			DisplayName.SetDefault("Stealth Ravel");
+            Description.SetDefault("10% chance to dodge. Less likely to be targeted");
         }
     }
 }

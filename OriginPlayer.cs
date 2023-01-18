@@ -102,10 +102,12 @@ namespace Origins {
         public bool ravelEquipped = false;
         public bool spiderRavel = false;
         public bool ceilingRavel = false;
-        #endregion
+		public int spiderRavelTime;
+		public int vanityRavel;
+		#endregion
 
-        #region explosive stats
-        public float explosiveThrowSpeed = 1;
+		#region explosive stats
+		public float explosiveThrowSpeed = 1;
         public float explosiveSelfDamage = 1;
         public StatModifier explosiveBlastRadius = StatModifier.Default;
         #endregion
@@ -249,8 +251,10 @@ namespace Origins {
 			}
             ravelEquipped = false;
             spiderRavel = false;
+			if (spiderRavelTime > 0) spiderRavelTime--;
+			vanityRavel = -1;
 
-            flaskBile = false;
+			flaskBile = false;
             flaskSalt = false;
             explosiveThrowSpeed = 1f;
             explosiveSelfDamage = 1f;
@@ -364,13 +368,27 @@ namespace Origins {
                     if (Player.controlDown) {
                         Player.velocity.Y += 0.35f;
                     }
-                }else if (Collision.TileCollision(Player.position, new Vector2(0, -8), Player.width, Player.height, gravDir: -1) != new Vector2(0, -8)) {
-                    ceilingRavel = true;
-                    if (Player.controlUp && !Player.controlDown) {
-                        Player.gravity = 0f;
-                        Player.velocity.Y -= 0.25f;
-                    }
-                }
+                } else {
+					bool colliding = false;
+					for (int i = -1; i < 2; i++) {
+						Tile currentTile = Main.tile[(Player.Center - Player.velocity + new Vector2(9 * i, -14)).ToTileCoordinates()];
+						if (currentTile.HasTile && Main.tileSolid[currentTile.TileType] && !Main.tileSolidTop[currentTile.TileType]) {
+							colliding = true;
+							break;
+						}
+					}
+					if (colliding) {
+						ceilingRavel = true;
+						spiderRavelTime = 10;
+					}
+					if (Player.controlDown || Player.controlJump) {
+						spiderRavelTime = 0;
+					}
+					if (spiderRavelTime > 0 && Player.controlUp) {
+						Player.gravity = 0f;
+						Player.velocity.Y -= 0.35f;
+					}
+				}
             }
         }
 		public override void PostUpdate() {
