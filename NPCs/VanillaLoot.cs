@@ -135,6 +135,9 @@ namespace Origins.NPCs {
 				case NPCID.RainbowSlime:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<One_Kind_Cookie>(), 20, 1, 2));
 				break;
+				case NPCID.WyvernHead:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Startillery>(), 12));
+				break;
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = dropRules.Where((r) => 
 				r is LeadingConditionRule conditionRule &&
