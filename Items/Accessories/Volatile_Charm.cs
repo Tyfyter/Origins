@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
     public class Volatile_Charm : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Volatile Charm");
-            Tooltip.SetDefault("Increases explosive blast radius by 35% and reduces explosive self-damage by 20%");
+            Tooltip.SetDefault("Increases explosive blast radius by 40% and reduces explosive self-damage by 20%");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -17,7 +17,7 @@ namespace Origins.Items.Accessories {
         public override void UpdateEquip(Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
             originPlayer.explosiveSelfDamage -= 0.2f;
-            originPlayer.explosiveBlastRadius *= 1.35f;
+            originPlayer.explosiveBlastRadius *= 1.4f;
         }
         public override void AddRecipes() {
             Recipe recipe = CreateRecipe();

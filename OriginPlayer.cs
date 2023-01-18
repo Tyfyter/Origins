@@ -1019,6 +1019,9 @@ namespace Origins {
             }
         }
 		public override bool PreItemCheck() {
+            if (ravel) {
+                return false;
+            }
             collidingX = oldXSign != 0 && Player.velocity.X == 0;
             ItemChecking = true;
             return true;

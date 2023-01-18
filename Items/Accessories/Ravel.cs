@@ -33,7 +33,9 @@ namespace Origins.Items.Accessories {
                 if (toggle) player.mount.SetMount(Item.shoot, player);
             }
         }
-        protected virtual void UpdateRaveled(Player player) {}
+        protected virtual void UpdateRaveled(Player player) {
+            player.blackBelt = true;
+        }
 		public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player) {
             return equippedItem.ModItem is not Ravel;
 		}
@@ -88,9 +90,12 @@ namespace Origins.Items.Accessories {
 		}
     }
     public class Ravel_Mount_Buff : ModBuff {
-        public override string Texture => "Terraria/Images/Buff_160";
+        public override string Texture => "Origins/Buffs/Ravel_Generic_Buff";
         protected virtual int MountID => ModContent.MountType<Ravel_Mount>();
         public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Ravel");
+            Description.SetDefault("10% chance to dodge");
+
             BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
                 mountID = MountID
             };

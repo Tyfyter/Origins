@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Defiled {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Infusion");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Rapidly fires spikes that will detonate when the target is implanted with enough");
 			Origins.FlatDamageMultiplier[Type] = 2f / 8f;
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;

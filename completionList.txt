@@ -257,6 +257,7 @@ ACCESSORIES:
 (^) Gun Glove
 (^) Handy Helper
 (X) Hazard Charm !!!
+(X) Headstomperz
 (^) Keepsake Remains
 (^) Locket Necklace
 (#2, ^2) Lover's Leap !!!
@@ -272,13 +273,15 @@ ACCESSORIES:
 (^) Powerflower
 (X) Proactive Protozoa !!!
 (^) Razorwire
-(#2, ^2) Ravel !!!
+(^) Ravel
 (^) Return To Sender*
 (#2, ^2) Sonar Visor*
 (^) Scavenger Bag
 (#2, ^2) Sonic Radar
 (^) Shield of Retribution
-(#2, ^2) Stealth Ravel
+(^) Spider Ravel
+(^) Stealth Ravel
+(X) Superjump Cape
 (^) Symbiote Skull
 (#2, ^2) Trap Charm !!!
 (#, ^2) Turbo Reel !!!
@@ -344,6 +347,7 @@ VANITY:
 (X) Decay Protector Set
 (X) Gore Protector Set
 (X) Steampunk Mechanist Set
+(X) Well-Gelled Hero's Hair
 
 (^) Tyfyter's Set
 (@, #) The First Dream
@@ -498,6 +502,7 @@ MAGIC WEAPONS:
 (#, ^2) Meltdown
 (^) Seam Beam
 (^) Splashid
+(^) Startillery
 
 (^) Cometburn
 (^) Gravaulter
@@ -536,6 +541,7 @@ SUMMONER WEAPONS:
 (X) Mildew Whip
 
 (X) Controller/Patrol Bot Controller
+(X) Core of Cogs
 (X) Doom Incantation
 (X) Ego
 (@2/3, #) Fiber Optic Whip

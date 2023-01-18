@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
         static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Return To Sender");
-            Tooltip.SetDefault("Attackers recieve 75% of their contact damage");
+            Tooltip.SetDefault("Attackers recieve all damage inflicted to the user");
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 1;
         }
@@ -20,7 +20,7 @@ namespace Origins.Items.Accessories {
             Item.value = Item.sellPrice(gold: 1);
         }
         public override void UpdateEquip(Player player) {
-            player.thorns += 0.75f;
+            player.thorns += 1f;
         }
     }
 }
