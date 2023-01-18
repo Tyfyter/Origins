@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
             SacrificeTotal = 1;
             ID = Type;
         }
-        public override void SetDefaults() {
+		public override void SetDefaults() {
             Item.width = 24;
             Item.height = 24;
             Item.accessory = true;
@@ -24,20 +24,21 @@ namespace Origins.Items.Accessories {
             Item.shoot = ModContent.MountType<Ravel_Mount>();//can't use mountType because that'd make it fit in the mount slot
         }
         public override void UpdateEquip(Player player) {
+            player.GetModPlayer<OriginPlayer>().ravelEquipped = true;
             const int down = 0;
             bool toggle = player.controlDown && player.releaseDown && player.doubleTapCardinalTimer[down] < 15;
             if (player.mount.Type == Item.shoot) {
                 UpdateRaveled(player);
                 if (toggle) player.mount.Dismount(player);
             } else {
-                if (toggle) player.mount.SetMount(Item.shoot, player);
+                if (toggle || Ravel_Mount.RavelMounts.Contains(player.mount.Type)) player.mount.SetMount(Item.shoot, player);
             }
         }
         protected virtual void UpdateRaveled(Player player) {
             player.blackBelt = true;
         }
 		public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player) {
-            return equippedItem.ModItem is not Ravel;
+            return incomingItem.ModItem is not Ravel || equippedItem.ModItem is not Ravel;
 		}
 	}
     public class Ravel_Mount : ModMount {
@@ -47,7 +48,11 @@ namespace Origins.Items.Accessories {
             MountData.buff = ModContent.BuffType<Ravel_Mount_Buff>();
             ID = Type;
         }
-        public override void SetStaticDefaults() {
+        protected internal static HashSet<int> RavelMounts { get; private set; }
+        public override void Unload() {
+            RavelMounts = null;
+		}
+		public override void SetStaticDefaults() {
             // Movement
             MountData.jumpHeight = 8; // How high the mount can jump.
             MountData.acceleration = 0.19f; // The rate at which the mount speeds up.
@@ -66,6 +71,7 @@ namespace Origins.Items.Accessories {
 
             MountData.totalFrames = 1; // Amount of animation frames for the mount
             MountData.playerYOffsets = new int[] { -22 };
+            (RavelMounts ??= new()).Add(Type);
             SetID();
         }
 		public override void UpdateEffects(Player player) {
@@ -99,9 +105,10 @@ namespace Origins.Items.Accessories {
             BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
                 mountID = MountID
             };
-            Main.buffNoTimeDisplay[Type] = true;
+            //Main.buffNoTimeDisplay[Type] = true;//makes the buff time not display, commented out to demonstrate that base.SetStaticDefaults() in Stealth_Ravel fixes the limited duration
+            Main.buffNoSave[Type] = true;//makes the buff not save when leaving a world so that you don't spawn in already raveled
         }
-		public override void Update(Player player, ref int buffIndex) {
+        public override void Update(Player player, ref int buffIndex) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
             originPlayer.changeSize = true;
             originPlayer.targetWidth = 20;

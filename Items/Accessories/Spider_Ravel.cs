@@ -25,10 +25,7 @@ namespace Origins.Items.Accessories {
             Item.buffTime = 9999 * 9999;
         }
 		protected override void UpdateRaveled(Player player) {
-            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-            originPlayer.spiderRavel = true;
-            if (originPlayer.ceilingRavel) {
-            }
+            player.GetModPlayer<OriginPlayer>().spiderRavel = true;
             player.blackBelt = true;
         }
 		public override void AddRecipes() {
@@ -63,7 +60,7 @@ namespace Origins.Items.Accessories {
         public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle frame, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
             //playerDrawData.Clear();
             rotation = drawPlayer.mount._frameCounter * 0.1f;
-            texture = Terraria.GameContent.TextureAssets.Item[Stealth_Ravel.ID].Value;
+            texture = Terraria.GameContent.TextureAssets.Item[Spider_Ravel.ID].Value;
             drawOrigin = new Vector2(12, 12);
             DrawData item = new DrawData(texture, drawPosition, null, drawColor, rotation, drawOrigin, drawScale, spriteEffects, 0);
             item.shader = Mount.currentShader;

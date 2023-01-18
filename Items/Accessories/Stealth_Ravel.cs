@@ -71,7 +71,8 @@ namespace Origins.Items.Accessories {
         protected override int MountID => ModContent.MountType<Stealth_Ravel_Mount>();
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Stealth Ravel");
-            Description.SetDefault("10% chance to dodge. Less likely to be targetted");
+            Description.SetDefault("10% chance to dodge. Less likely to be targeted");
+			base.SetStaticDefaults();
         }
     }
 }

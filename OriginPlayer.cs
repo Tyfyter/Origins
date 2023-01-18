@@ -99,7 +99,7 @@ namespace Origins {
         public Item razorwireItem = null;
         public bool spiritShard = false;
         public bool ravel = false;
-        public Item ravelItem = null;
+        public bool ravelEquipped = false;
         public bool spiderRavel = false;
         public bool ceilingRavel = false;
         #endregion
@@ -244,6 +244,10 @@ namespace Origins {
             razorwireItem = null;
             spiritShard = false;
             ravel = false;
+			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
+                Player.mount.Dismount(Player);
+			}
+            ravelEquipped = false;
             spiderRavel = false;
 
             flaskBile = false;
@@ -1018,10 +1022,13 @@ namespace Origins {
                 }
             }
         }
-		public override bool PreItemCheck() {
+		public override bool CanUseItem(Item item) {
             if (ravel) {
                 return false;
             }
+            return true;
+		}
+		public override bool PreItemCheck() {
             collidingX = oldXSign != 0 && Player.velocity.X == 0;
             ItemChecking = true;
             return true;
