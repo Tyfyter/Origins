@@ -42,16 +42,14 @@ BOSSES AND MINI-BOSSES:
 (X) Discombobulator
 (#, ^2) Grand Corruptor
 (#, ^2) Ichor Storm
-(#, $, ^2) Seer
 (X) Super Brainz
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver !!!
 (#3, $, ^2) Primordial Amoeba !!!
 
-(X) Mad Maniac
-(%2, X) Mildew Carrion
 (X) Miscreant
+(X) Scrapper
 
 (X) Alien Queen
 (X) Duskord
@@ -60,8 +58,6 @@ BOSSES AND MINI-BOSSES:
 (%3) Origins final boss
 (#, $, ^2) I.C.A.R.U.S
 (#, $, ^2) Quantux
-(%2, X) Rakar
-(%2, X) Tartarus
 ---
 
 
@@ -115,6 +111,7 @@ ENEMY NPCS:
 (#, ^2) Chunky Slime !!!
 (#, ^2) Cranivore !!!
 (#, %2) Crimbrain
+(X) Defiled Wisp !!!
 (^) Fiberglass Enemies
 (^) Measly Moeba
 (#, ^2) Optiphage !!!
@@ -132,8 +129,6 @@ ENEMY NPCS:
 (^) Barnacle Mound
 (X) Brine Moccasin
 (#, ^2) Carpalfish*
-(%3) Defiled Clipper (feel like a more unique aquatic enemy could be made) !!!
-(#3, ^2/4) Defiled Hunter
 (@5, #3, %2) Defiled Mimic
 (X) Defiled Reaper !!!
 (@5, ^3/4) Defiled Tripod
@@ -146,6 +141,7 @@ ENEMY NPCS:
 (X) Torn Ghoul
 (#, ^2) Vent Hopper
 
+(%3) Alien Colony Enemies
 (X) Annihilator
 (X) Clockwork
 (X) Clustroid
@@ -154,9 +150,9 @@ ENEMY NPCS:
 (@2/3, #) Electromancer
 (@2/3, #) Etherealizer
 (@2, #) Illusionary
-(%3) Impact Enemies
 (X) Soulpine
 (X) Sploder
+(X) Tiny Skeleton Sniper
 (X) Volstroy
 
 (#, ^2) Blox
@@ -172,8 +168,6 @@ EVENTS:
 (#, %2) Crimson Invasion
 (#, %2) Defiled Invasion
 (#, %2) Riven Invasion
-
-(#, ^4) Seer Patrol !!!
 ---
 
 STATUS EFFECTS:
@@ -186,7 +180,7 @@ STATUS EFFECTS:
 (X) Levitation
 (^) Rasterize
 (^) Solvent
-(^, @3) Torn
+(@3, ^3) Torn
 (^) Totally Safe
 (^) Toxic Shock
 (X) Whiplash
@@ -274,27 +268,37 @@ ACCESSORIES:
 (^) Powerflower
 (X) Proactive Protozoa !!!
 (^) Razorwire
-(^) Ravel
 (^) Return To Sender*
 (#2, ^2) Sonar Visor*
 (^) Scavenger Bag
 (#2, ^2) Sonic Radar
 (^) Shield of Retribution
-(^) Spider Ravel
-(^) Stealth Ravel
 (X) Superjump Cape
 (^) Symbiote Skull
 (#2, ^2) Trap Charm !!!
 (#, ^2) Turbo Reel !!!
 (^) Volatile Charm !!!
 
+(X) Agile Ravel
+(X) Bouncy Ravel
+(X) Dash Ravel
+(X) Dive Ravel
+(X) Drill Ravel
+(X) Grapple Ravel
+(X) Ninja Ravel
+(^) Ravel
+(X) Scroll Ravel
+(X) Slick Ravel
+(^) Spider Ravel
+(^) Stealth Ravel
+(X) Thrust Ravel
+(X) Versatile Ravel
+
 (^) Asylum Whistle
 (#2, ^2) Eccentric Stone
 (^) Spirit Shard
-(X) Lost Page
 (^) Stone Mask
 (X) Timbre of Hell !!!
-(X) Tinkerer's Handy Guide
 (#, ^2) Tripod Nip
 
 (^) Amebic Vial
@@ -335,11 +339,11 @@ VANITY:
 (X) Duskord Mask
 (^) Fiberglass Weaver Head
 (X) I.C.A.R.U.S. Mask
-(X) Mad Maniac Wig
-(X) Mildew Carrion Mask
+(X) Lost Diver Head
 (X) Miscreant Mask
 (X) Quantux Mask
 (^) Primordial Amoeba Mask
+(X) Scrapper Head
 (X) Severus' Hat
 
 (X) Amebic Protector Set
@@ -618,12 +622,11 @@ CLASSLESS WEAPONS:
 
 TILES:
 ---
-(X) Absorber Culture
 (#, ^2) Amoeba Fluid !!!
+(X) Angelic Cloud
 (#3, ^2) Batholith*
 (^) Bleeding Obsidian
 (X) Cubekon Altar
-(#, ^2) Decaying Mush
 (^) Defiled Grass*
 (^) Defiled Sand
 (^) Defiled Sandstone
@@ -635,6 +638,7 @@ TILES:
 (^) Fiberglass
 (#, ^2) Geyser Core
 (^) Hardened Defiled Sand
+(X) Harmony Brick
 (^) Lost Ore
 (X) Mildew
 (#2, ^2) Peat Moss* !!!
@@ -652,6 +656,7 @@ TILES:
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (#, ^2) Fiberglass Wall
+(X) Harmony Brick Wall
 (^) Spug Flesh Wall
 (X) Sulphur Stone Wall
 
@@ -690,6 +695,7 @@ TILES:
 (X) Ancient Music Box (Riven Hive)
 (X) Music Box (Brine Pool)
 (X) Music Box (Cubekon Temple)
+(X) Music Box (Dawn)
 (@5, #2-4) Music Box (Defiled Caverns) !!!
 (@5, #2-4) Music Box (Defiled Wastelands) !!!
 (X) Music Box (Dusk)
@@ -711,10 +717,8 @@ MATERIALS:
 ---
 (^) Acetabularia
 (^) Adhesive Wrap
-(^) Angelium
 (^) Bark
 (^) Bat Hide
-(#, ^2) Brineglow
 (^) Bud Barnacle
 (^) Defiled Bar*
 (^) Defiled Powder
@@ -734,23 +738,21 @@ MATERIALS:
 (^) Wilting Rose
 (^) Wrycoral
 
-(^) Acid Bottle
 (^) Acrid Bar
 (^) Alkahest
 (^) Black Bile
 (^) Bleeding Obsidian Shard
-(^) Brine Sample
+(^) Bottled Acid
+(#, ^2) Brineglow
 (^) Defiled Key
 (^) Illegal Explosive Parts
 (^) Riven Key
 
 (^) Busted Servo
-(^) Conductor Rod
 (^) Power Core
 (^) Rotor
 (^) Space Goo
 (^) Space Rock
-(@, ^3) Viridium Bar
 
 (^) Chromtain Bar
 (^) Element-36 Bundle
@@ -761,10 +763,7 @@ MATERIALS:
 (^) Formium Scrap
 (#3, ^2) Lunar Token
 (#3, ^2) Nova Fragment
-(@, ^3) Stellar Spark
-(^) Super Conductor
 (^) Unpowered Eyndum Core
-(@, ^3) Void Spark
 ---
 
 
@@ -871,6 +870,8 @@ AMMO:
 
 UI:
 ---
+(X) Dawn Map/Bestiary Backdrop
+(X) Dawn Icon
 (X) Defiled Map/Bestiary Backdrop
 (^) Defiled Icon
 (X) Dusk Map/Bestiary Backdrop
@@ -889,11 +890,11 @@ MUSIC:
 (X) Alien Colony
 (O) Brine Pool !!!
 (^) Cubekon Temple
+(X) Dawn
 (X) Defiled Caverns !!!
 (^) Defiled Wastelands
 (^) Defiled Wastelands - Mimic Route
 (O) Fiberglass Caves !!!
-(X) Miscreant
 (^) Riven Hive
 (^) The Dusk
 
@@ -902,15 +903,15 @@ MUSIC:
 (X) Duskord
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S
-(X) Mad Maniac
-(X) Mildew Carrion
+(X) Lost Diver
+(X) Miscreant
 (X) Quantux
 (O) Primordial Amoeba !!!
+(X) Scrapper
 (X) Severus
 
 (X) Corruption Invasion
 (X) Crimson Invasion
 (X) Defiled Invasion
 (X) Riven Invasion
-(^) Seer Chase
 ---

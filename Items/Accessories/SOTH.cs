@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Mad_Hand : ModItem {
+    public class SOTH : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("SOTH");
             Tooltip.SetDefault("Double the gunpowder, double the fun.");

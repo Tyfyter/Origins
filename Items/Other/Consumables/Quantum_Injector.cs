@@ -20,7 +20,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.SuperManaPotion);
-			recipe.AddIngredient(ModContent.ItemType<Quantium>());
+			recipe.AddIngredient(ModContent.ItemType<Qube>());
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}

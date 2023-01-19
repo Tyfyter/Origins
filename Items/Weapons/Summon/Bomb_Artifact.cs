@@ -23,11 +23,11 @@ namespace Origins.Items.Weapons.Summon {
             Item.damage = 80;
             Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
             Item.mana = 40;
-            Item.width = 32;
-            Item.height = 32;
+            Item.width = 24;
+            Item.height = 38;
             Item.useTime = 36;
             Item.useAnimation = 36;
-            Item.useStyle = ItemUseStyleID.Swing;
+            Item.useStyle = ItemUseStyleID.HoldUp;
             Item.value = Item.buyPrice(gold: 4);
             Item.rare = ItemRarityID.Pink;
             Item.UseSound = SoundID.Item44;

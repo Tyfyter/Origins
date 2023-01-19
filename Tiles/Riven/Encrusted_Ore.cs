@@ -16,7 +16,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileBlockLight[Type] = true;
             Main.tileLighted[Type] = true;
             TileID.Sets.Ore[Type] = true;
-			ItemDrop = ItemType<Infested_Ore_Item>();
+			ItemDrop = ItemType<Encrusted_Ore_Item>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Encrusted Ore");
 			AddMapEntry(new Color(40, 148, 207), name);
@@ -36,7 +36,7 @@ namespace Origins.Tiles.Riven {
             this.DrawTileGlow(i, j, spriteBatch);
         }
     }
-    public class Infested_Ore_Item : ModItem {
+    public class Encrusted_Ore_Item : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Encrusted Ore");
         }

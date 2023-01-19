@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Riven {
 		}
 		public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Infested_Bar>(), 9);
+            recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 9);
             recipe.AddIngredient(ModContent.ItemType<Riven_Sample>(), 5);
             recipe.AddTile(TileID.Anvils);
             recipe.Register();

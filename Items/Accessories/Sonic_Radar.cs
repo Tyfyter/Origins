@@ -17,14 +17,14 @@ namespace Origins.Items.Accessories {
         public override void UpdateEquip(Player player) {
             //player.GetModPlayer<OriginPlayer>().sonicRadar = true;
         }
-        /*public override void AddRecipes() {
+        public override void AddRecipes() {
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.MetalDetector);
             recipe.AddIngredient(ItemID.Radar);
-            recipe.AddIngredient(ItemID.DangersensePotion, 5);
             recipe.AddIngredient(ItemID.SpelunkerPotion, 5);
-            recipe.AddTile(TileID.Fabricator);
+            recipe.AddIngredient(ItemID.TrapsightPotion, 5);
+            recipe.AddTile(TileID.MythrilAnvil); //Fabricator
             recipe.Register();
-        }*/
+        }
     }
 }

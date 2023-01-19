@@ -101,7 +101,7 @@ namespace Origins.NPCs.Riven {
 
 			normalDropRule = new LeadingSuccessRule();
 
-			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Infested_Ore_Item>(), 1, 140, 330));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Encrusted_Ore_Item>(), 1, 140, 330));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Riven_Sample>(), 1, 40, 100));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Amoeba_Hook>(), 1));
 			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Teardown>(), ModContent.ItemType<Return_To_Sender>()));

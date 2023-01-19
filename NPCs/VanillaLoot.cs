@@ -44,7 +44,7 @@ namespace Origins.NPCs {
 					));
 					npcLoot.Add(ItemDropRule.ByCondition(
 						isExpert ? rivExp : riv,
-						ModContent.ItemType<Infested_Ore_Item>(),
+						ModContent.ItemType<Encrusted_Ore_Item>(),
 						rule.chanceDenominator,
 						rule.amountDroppedMinimum,
 						rule.amountDroppedMaximum,

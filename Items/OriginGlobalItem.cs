@@ -1,25 +1,18 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Accessories;
+using Origins.Journal;
+using Origins.LootConditions;
+using Origins.Questing;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
-using OnTerraria = On.Terraria;
-using Origins.Tiles.Defiled;
-using Origins.World;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
-using Origins.NPCs;
-using Origins.Items.Accessories;
-using Origins.Tiles.Riven;
-using Terraria.GameContent.ItemDropRules;
-using Origins.LootConditions;
-using Origins.Journal;
-using Origins.Questing;
 
 namespace Origins.Items {
     public class OriginGlobalItem : GlobalItem {
@@ -184,7 +177,7 @@ namespace Origins.Items {
                             break;
 
                             case OriginSystem.evil_riven:
-                            item.SetDefaults(ModContent.ItemType<Infested_Ore_Item>());
+                            item.SetDefaults(ModContent.ItemType<Encrusted_Ore_Item>());
                             break;
                         }
                         item.stack = stack;
@@ -228,7 +221,7 @@ namespace Origins.Items {
                     ));
                     itemLoot.Add(ItemDropRule.ByCondition(
                         isExpert ? rivExp : riv,
-                        ModContent.ItemType<Infested_Ore_Item>(),
+                        ModContent.ItemType<Encrusted_Ore_Item>(),
                         rule.chanceDenominator,
                         rule.amountDroppedMinimum,
                         rule.amountDroppedMaximum,

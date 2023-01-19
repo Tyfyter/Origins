@@ -24,17 +24,17 @@ namespace Origins.Items.Weapons.Ammo {
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 8);
             recipe.AddIngredient(ItemID.IronBar, 8);
-            recipe.AddIngredient(ModContent.ItemType<Acid_Bottle>());
+            recipe.AddIngredient(ModContent.ItemType<Bottled_Acid>());
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
             recipe = Recipe.Create(Type, 8);
             recipe.AddIngredient(ItemID.LeadBar);
-            recipe.AddIngredient(ModContent.ItemType<Acid_Bottle>());
+            recipe.AddIngredient(ModContent.ItemType<Bottled_Acid>());
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
             recipe = Recipe.Create(Type, 8);
             recipe.AddIngredient(ModContent.ItemType<Harpoon>());
-            recipe.AddIngredient(ModContent.ItemType<Acid_Bottle>());
+            recipe.AddIngredient(ModContent.ItemType<Bottled_Acid>());
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
         }
