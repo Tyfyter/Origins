@@ -381,12 +381,20 @@ namespace Origins {
 						ceilingRavel = true;
 						spiderRavelTime = 10;
 					}
-					if (Player.controlDown || Player.controlJump) {
+					if (Player.controlDown) {
 						spiderRavelTime = 0;
 					}
 					if (spiderRavelTime > 0 && Player.controlUp) {
 						Player.gravity = 0f;
 						Player.velocity.Y -= 0.35f;
+						for (int i = -1; i < 2; i++) {
+							Tile currentTile = Main.tile[(Player.Center - Player.velocity + new Vector2(9 * i, -30)).ToTileCoordinates()];
+							if (currentTile.HasTile && Main.tileSolid[currentTile.TileType] && !Main.tileSolidTop[currentTile.TileType]) {
+								Player.velocity.Y -= 1;
+								break;
+							}
+						}
+						Collision.StepUp(ref Player.position, ref Player.velocity, Player.width, Player.height, ref Player.stepSpeed, ref Player.gfxOffY, -1, true);
 					}
 				}
             }
