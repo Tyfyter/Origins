@@ -46,6 +46,18 @@ namespace Origins.Items.Accessories {
 		public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player) {
             return incomingItem.ModItem is not Ravel || equippedItem.ModItem is not Ravel;
 		}
+		public override bool CanEquipAccessory(Player player, int slot, bool modded) {
+			if (slot > Player.InitialAccSlotCount + player.extraAccessorySlots + 3) {
+				return true;
+			}
+			for (int i = 0; i < Player.InitialAccSlotCount + player.extraAccessorySlots; i++) {
+				if (i + 3 == slot) continue;
+				if (player.armor[i + 3].ModItem is Ravel) {
+					return false;
+				}
+			}
+			return true;
+		}
 	}
     public class Ravel_Mount : ModMount {
 		public override string Texture => "Origins/Items/Accessories/Ravel";
