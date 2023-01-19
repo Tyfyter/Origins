@@ -277,7 +277,7 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-	public class Infested_Bar : Renamed_Item<Encrusted_Bar> {}
+	[LegacyName("Infested_Bar")]
 	public class Encrusted_Bar : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Encrusted Bar");

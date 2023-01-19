@@ -37,7 +37,7 @@ namespace Origins.Tiles.Riven {
             this.DrawTileGlow(i, j, spriteBatch);
         }
 	}
-	public class Infested_Ore_Item : Renamed_Item<Encrusted_Ore_Item> { }
+	[LegacyName("Infested_Ore_Item")]
 	public class Encrusted_Ore_Item : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Encrusted Ore");
