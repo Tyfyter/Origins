@@ -277,7 +277,8 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-    public class Encrusted_Bar : ModItem {
+	public class Infested_Bar : Renamed_Item<Encrusted_Bar> {}
+	public class Encrusted_Bar : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Encrusted Bar");
             SacrificeTotal = 25;
@@ -481,8 +482,8 @@ namespace Origins.Items.Materials {
             recipe.AddTile(TileID.Anvils); //Fabricator not implemented yet
             recipe.Register();
         }
-    }
-    public class Qube : ModItem {
+	}
+	public class Qube : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Qube");

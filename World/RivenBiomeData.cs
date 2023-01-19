@@ -501,7 +501,7 @@ namespace Origins.World.BiomeData {
 			BiomeSandstone = TileID.SandstoneBrick;//ModContent.TileType<Defiled_Sandstone>();
 			BiomeHardenedSand = TileID.Hive;//ModContent.TileType<Hardened_Defiled_Sand>();
 			BiomeIce = TileID.IceBrick;//ModContent.TileType<Riven_Ice>();
-			BiomeOre = ModContent.TileType<Infested_Ore>();
+			BiomeOre = ModContent.TileType<Encrusted_Ore>();
 			AltarTile = ModContent.TileType<Riven_Altar>();
 			BiomeChestItem = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
 			BiomeChestTile = ModContent.TileType<Riven_Dungeon_Chest>();

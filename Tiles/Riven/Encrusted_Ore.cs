@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -7,7 +8,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Infested_Ore : OriginTile, IGlowingModTile, IComplexMineDamageTile {
+    public class Encrusted_Ore : OriginTile, IGlowingModTile, IComplexMineDamageTile {
         public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
         public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
         public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly)+2)*0.5f;
@@ -35,14 +36,15 @@ namespace Origins.Tiles.Riven {
         public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
             this.DrawTileGlow(i, j, spriteBatch);
         }
-    }
-    public class Encrusted_Ore_Item : ModItem {
+	}
+	public class Infested_Ore_Item : Renamed_Item<Encrusted_Ore_Item> { }
+	public class Encrusted_Ore_Item : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Encrusted Ore");
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.CrimtaneOre);
-            Item.createTile = TileType<Infested_Ore>();
+            Item.createTile = TileType<Encrusted_Ore>();
 		}
     }
 }
