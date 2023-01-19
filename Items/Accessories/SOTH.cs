@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	[LegacyName("Infested_Bar")]
+	[LegacyName("Mad_Hand")]
 	public class SOTH : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("SOTH");
