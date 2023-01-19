@@ -25,5 +25,12 @@ namespace Origins.Items.Accessories {
             float light = 0.2f+(originPlayer.dimStarlightCooldown/1000f);
             Lighting.AddLight(player.Center,0.3f,0.3f,0f);
         }
+        public override void AddRecipes() {
+            Recipe recipe = CreateRecipe();
+            recipe.AddIngredient(ItemID.ManaFlower);
+            recipe.AddIngredient(ModContent.ItemType<Dim_Starlight>());
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.Register();
+        }
     }
 }
