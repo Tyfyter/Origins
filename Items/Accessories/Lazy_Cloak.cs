@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
-using Origins.Items.Weapons.Summon;
+using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
 using Terraria.ID;

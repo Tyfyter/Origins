@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Defiled;
 using Origins.Tiles;
 using System;
 using System.IO;

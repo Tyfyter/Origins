@@ -1,5 +1,5 @@
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Riven;
+using Origins.Items.Weapons.Magic;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;

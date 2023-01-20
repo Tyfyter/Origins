@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
-using Origins.Items.Weapons.Defiled;
+using Origins.Items.Weapons.Ranged;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -32,7 +32,7 @@ namespace Origins.NPCs.Defiled {
             NPC.CloneFrame(NPCID.BigMimicCorruption, frameHeight);
         }
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<Defiled_Dart_Burst>(), 3007, 3013, 3016, 3020));
+			npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<Incision>(), 3007, 3013, 3016, 3020));
 			npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<Ravel>(), 3007, 3013, 3016, 3020));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));

@@ -5,11 +5,9 @@ using Origins.Walls;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
 using static Terraria.WorldGen;
 using System;
 using Terraria.ID;
-using Origins.Items.Weapons.Defiled;
 using Terraria.Localization;
 using Terraria.GameContent.Achievements;
 using Origins.Projectiles.Misc;
@@ -17,13 +15,15 @@ using Origins.Items.Accessories;
 using Origins.Backgrounds;
 using Terraria.Graphics.Effects;
 using static Origins.OriginExtensions;
-using Terraria.Chat;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Pets;
 using AltLibrary.Common.AltBiomes;
 using Origins.NPCs.Defiled;
 using AltLibrary.Core.Generation;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Ranged;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -45,13 +45,13 @@ namespace Origins.World.BiomeData {
 			player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", originPlayer.ZoneDefiledProgressSmoothed > 0, player.Center);
 		}
 		public override void Load() {
-			FirstFissureDropRule = ItemDropRule.Common(ModContent.ItemType<Defiled_Burst>());
+			FirstFissureDropRule = ItemDropRule.Common(ModContent.ItemType<Kruncher>());
 			FirstFissureDropRule.OnSuccess(ItemDropRule.Common(ItemID.MusketBall, 1, 100, 100));
 
 			FissureDropRule = new OneFromRulesRule(1,
 				FirstFissureDropRule,
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Infusion>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Defiled_Chakram>()),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Krakram>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Suspicious_Looking_Pebble>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Dim_Starlight>())
 			);

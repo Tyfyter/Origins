@@ -1,35 +1,35 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria.Graphics.Effects;
+﻿using AltLibrary.Common.AltBiomes;
+using AltLibrary.Core.Generation;
+using Microsoft.Xna.Framework;
+using Origins.Backgrounds;
+using Origins.Items.Accessories;
+using Origins.Items.Materials;
+using Origins.Items.Other.Testing;
+using Origins.Items.Pets;
+using Origins.Items.Weapons.Ammo;
+using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
+using Origins.NPCs.Riven;
 using Origins.Tiles.Riven;
 using Origins.Walls;
+using Origins.Water;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
 using Terraria.GameContent.Achievements;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
-using static Terraria.WorldGen;
 using static Origins.OriginExtensions;
-using Terraria.GameContent.ItemDropRules;
-using Origins.Items.Weapons.Riven;
-using Origins.Items.Other.Testing;
-using Origins.Water;
-using Origins.Backgrounds;
-using Terraria.GameContent.Bestiary;
-using AltLibrary.Common.AltBiomes;
-using Origins.NPCs.Riven;
-using AltLibrary.Core.Generation;
-using Origins.Items.Materials;
-using Origins.Items.Weapons.Ammo;
-using Origins.Items.Pets;
-using Origins.Items.Accessories;
+using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
-	public class Riven_Hive : ModBiome {
+    public class Riven_Hive : ModBiome {
 		public static IItemDropRule FirstLesionDropRule;
 		public static IItemDropRule LesionDropRule;
 		public override int Music => Origins.Music.Riven;

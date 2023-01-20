@@ -3,10 +3,10 @@ using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Ammo;
-using Origins.Items.Weapons.Dungeon;
-using Origins.Items.Weapons.Explosives;
-using Origins.Items.Weapons.Other;
-using Origins.Items.Weapons.Summon;
+using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
@@ -72,9 +72,9 @@ namespace Origins.NPCs {
                 case NPCID.VampireBat:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bat_Hide>(), 3, 1, 3));
                 break;
-				case NPCID.SkeletonSniper:
+				/*case NPCID.SkeletonSniper:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tiny_Sniper>(), 24));
-                break;
+                break;*/
 				case NPCID.Snatcher:
 				case NPCID.JungleSlime:
 				case NPCID.SpikedJungleSlime:
@@ -89,11 +89,11 @@ namespace Origins.NPCs {
 				case NPCID.AngryBonesBig:
 				case NPCID.AngryBonesBigMuscle:
 				case NPCID.AngryBonesBigHelmet:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolter>(), 41));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolt_Gun>(), 41));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 41));
 				break;
 				case NPCID.RedDevil:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Burning_Ember>(), 15));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Amber_Of_Embers>(), 15));
 				break;
 				case NPCID.EaterofWorldsHead:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotting_Worm_Staff>(), 43));

@@ -2,10 +2,9 @@
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
-using Origins.Items.Weapons.Acid;
 using Origins.Items.Weapons.Ammo;
-using Origins.Items.Weapons.Explosives;
-using Origins.Items.Weapons.Felnum.Tier2;
+using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Melee;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;

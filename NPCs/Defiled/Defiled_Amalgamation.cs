@@ -4,7 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.Other.BossMasks;
 using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
-using Origins.Items.Weapons.Defiled;
+using Origins.Items.Weapons.Magic;
 using Origins.LootConditions;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.BossDrops;

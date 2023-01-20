@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using AltLibrary.Common.AltBiomes;
+﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
-using Origins.Items.Weapons.Felnum;
-using Origins.Items.Weapons.Riven;
+using Origins.Items.Weapons.Demolitionist;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -182,7 +175,7 @@ namespace Origins.Projectiles {
         public override bool PreKill(Projectile projectile, int timeLeft) {
             if(felnumEffect&&projectile.type==ProjectileID.WaterGun) {//projectile.aiStyle==60
                 OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-                Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<Shock_Grenade_Shock>(), (int)(originPlayer.felnumShock / 2.5f), projectile.knockBack, projectile.owner).timeLeft = 1;
+                Projectile.NewProjectileDirect(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<Felnum_Shock_Grenade_Shock>(), (int)(originPlayer.felnumShock / 2.5f), projectile.knockBack, projectile.owner).timeLeft = 1;
                 originPlayer.felnumShock = 0;
                 SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), projectile.Center);
             }

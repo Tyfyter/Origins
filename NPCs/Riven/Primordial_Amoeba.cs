@@ -6,7 +6,7 @@ using Origins.Items.Armor.Vanity.Other.BossMasks;
 using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Tools;
-using Origins.Items.Weapons.Riven;
+using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
@@ -382,7 +382,7 @@ namespace Origins.NPCs.Riven {
         }
 	}
     public class Primordial_Amoeba_Tentacle : ModNPC {
-		public override string Texture => "Origins/Items/Weapons/Riven/Flagellash_P";
+		public override string Texture => "Origins/Items/Weapons/Summoner/Flagellash_P";
 		public static int ID { get; private set; }
         public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Primordial Amoeba");
@@ -602,7 +602,7 @@ namespace Origins.NPCs.Riven {
 		}
 	}
 	public class Primordial_Amoeba_Tentacle_Hitbox : ModNPC {
-		public override string Texture => "Origins/Items/Weapons/Riven/Flagellash_P";
+		public override string Texture => "Origins/Items/Weapons/Summoner/Flagellash_P";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Primordial Amoeba");
@@ -686,7 +686,7 @@ namespace Origins.NPCs.Riven {
 		}
 	}
 	public class Amoebic_Gel_P : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Riven/Minions/Amoeba_Bubble";
+		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Amoeba_Bubble";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Amoebic Gel");

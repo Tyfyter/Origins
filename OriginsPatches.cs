@@ -1,40 +1,20 @@
 ﻿using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
-using MonoMod.RuntimeDetour;
 using MonoMod.RuntimeDetour.HookGen;
-using Origins.Buffs;
-using Origins.Gores.NPCs;
-using Origins.Items;
-using Origins.Items.Accessories;
-using Origins.Items.Armor.Felnum;
-using Origins.Items.Armor.Rift;
-using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Explosives;
-using Origins.Items.Weapons.Felnum.Tier2;
 using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
-using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
-using Origins.UI;
-using Origins.World;
 using Origins.World.BiomeData;
-using ReLogic.Content;
 using ReLogic.Graphics;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -44,16 +24,11 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
 using Terraria.GameInput;
 using Terraria.Graphics;
-using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
-using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Default;
-using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
-using Terraria.UI;
 using Terraria.UI.Chat;
 using Terraria.UI.Gamepad;
 using Terraria.Utilities;
@@ -61,7 +36,7 @@ using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
 
 namespace Origins {
-	public partial class Origins : Mod {
+    public partial class Origins : Mod {
 		void ApplyPatches() {
             On.Terraria.NPC.UpdateCollision += (orig, self) => {
                 int realID = self.type;

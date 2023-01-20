@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Projectiles.Enemies {
 	public class Defiled_Enemy_Summon : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Defiled/Infusion_P";
+		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 		public override void SetDefaults() {
 			Projectile.aiStyle = 0;
 			Projectile.width = 8;

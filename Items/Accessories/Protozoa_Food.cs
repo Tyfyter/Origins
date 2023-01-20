@@ -156,7 +156,7 @@ namespace Origins.Items.Accessories {
 		public override bool WeaponPrefix() => false;
 	}
 	public class Mini_Protozoa_P : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Riven/Amoeba_Ball";
+		public override string Texture => "Origins/Projectiles/Weapons/Amoeba_Ball";
 		public override string GlowTexture => Texture;
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {

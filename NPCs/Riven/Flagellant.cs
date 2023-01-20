@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Other.Consumables;
-using Origins.Items.Weapons.Riven;
+using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;

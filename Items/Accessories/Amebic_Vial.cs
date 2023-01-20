@@ -76,7 +76,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Amebic_Vial_Tentacle : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Riven/Flagellash_P";
+		public override string Texture => "Origins/Items/Weapons/Summoner/Flagellash_P";
 		public override string GlowTexture => Texture;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {

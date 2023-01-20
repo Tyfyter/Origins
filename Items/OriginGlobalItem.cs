@@ -263,7 +263,7 @@ namespace Origins.Items {
                     OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
                     if (rule is not null) {
                         Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-                        rule.dropIds[^1] = ModContent.ItemType<Weapons.Explosives.Thermite_Launcher>();
+                        rule.dropIds[^1] = ModContent.ItemType<Weapons.Demolitionist.Thermite_Launcher>();
                     } else {
                         Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
                     }

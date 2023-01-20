@@ -77,7 +77,7 @@ namespace Origins.Items.Accessories {
 		public override bool WeaponPrefix() => false;
 	}
 	public class Parasitic_Influence_Tentacle : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Riven/Flagellash_P";
+		public override string Texture => "Origins/Items/Weapons/Summoner/Flagellash_P";
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Parasitic Influence");

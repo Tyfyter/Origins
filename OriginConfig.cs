@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
-using Origins.Items.Weapons.Explosives;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs.Defiled;
 using System;
 using System.Collections.Generic;

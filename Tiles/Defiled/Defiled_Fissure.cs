@@ -1,19 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Weapons.Defiled;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent.Achievements;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using Terraria.Utilities;
-using static Origins.OriginExtensions;
 
 namespace Origins.Tiles.Defiled {
     public class Defiled_Fissure : ModTile {

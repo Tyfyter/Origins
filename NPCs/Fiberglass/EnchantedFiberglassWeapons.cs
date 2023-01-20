@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Weapons.Fiberglass;
+using Origins.Items.Weapons;
+using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -147,7 +149,7 @@ namespace Origins.NPCs.Fiberglass {
                 for(int i = Main.rand.Next(4,7); i >= 0; i--) {
                     speed = speed.RotatedByRandom(0.25f);
                     int proj =
-                    Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center, speed, ModContent.ProjectileType<Fiberglass_Shard_Proj>(), 9, 3f, NPC.target);
+                    Projectile.NewProjectile(NPC.GetSource_Death(), NPC.Center, speed, ModContent.ProjectileType<Fiberglass_Shard_P>(), 9, 3f, NPC.target);
                     Main.projectile[proj].hostile = true;
                     Main.projectile[proj].friendly = false;
                     Main.projectile[proj].hide = false;

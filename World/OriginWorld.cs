@@ -1,34 +1,31 @@
-﻿using Origins.Items.Weapons.Felnum.Tier2;
+﻿using Microsoft.Xna.Framework;
+using Origins.Items.Accessories;
+using Origins.Items.Weapons;
+using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
+using Origins.Questing;
 using Origins.Tiles;
-using Origins.Tiles.Dusk;
+using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Dusk;
+using Origins.Tiles.Riven;
+using Origins.World;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-using Terraria;
-using Microsoft.Xna.Framework;
 using Terraria.Utilities;
-using Origins.Items.Weapons.Other;
-using Origins.Walls;
-using Origins.Tiles.Riven;
-using Origins.Tiles.Brine;
-using Origins.World;
-using Origins.Items.Accessories;
-using System.Collections;
-using Origins.Items.Weapons.Explosives;
-using Origins.Items.Weapons.Summon;
-using Terraria.Localization;
 using Tyfyter.Utils;
+using static Tyfyter.Utils.ChestLootCache;
 using static Tyfyter.Utils.ChestLootCache.LootQueueAction;
 using static Tyfyter.Utils.ChestLootCache.LootQueueMode;
-using static Tyfyter.Utils.ChestLootCache;
-using Origins.Items.Weapons.Dungeon;
-using Origins.Questing;
 
 namespace Origins {
     public partial class OriginSystem : ModSystem {
@@ -322,7 +319,7 @@ namespace Origins {
             if(noLoot)return;
             ApplyWeightedLootQueue(chestLoots,
                 (CHANGE_QUEUE, ChestID.Normal, 0f),
-                (ENQUEUE, ModContent.ItemType<Syah_Nara>(), 1f),
+                (ENQUEUE, ModContent.ItemType<Cyah_Nara>(), 1f),
                 //example:
                 //(SWITCH_MODE, MODE_ADD, 1f),
                 //(ENQUEUE, ItemID.Sashimi, 0.5f),
@@ -330,7 +327,7 @@ namespace Origins {
                 (CHANGE_QUEUE, ChestID.LivingWood, 0f),
                 (ENQUEUE, ModContent.ItemType<Woodsprite_Staff>(), 1f),
                 (CHANGE_QUEUE, ChestID.LockedShadow, 0f),
-                (ENQUEUE, ModContent.ItemType<Boiler_Pistol>(), 1f),
+                (ENQUEUE, ModContent.ItemType<Boiler>(), 1f),
                 (ENQUEUE, ModContent.ItemType<Firespit>(), 1f),
                 (ENQUEUE, ModContent.ItemType<Dragons_Breath>(), 1f),
                 (ENQUEUE, ModContent.ItemType<Hand_Grenade_Launcher>(), 1f),
@@ -338,7 +335,7 @@ namespace Origins {
                 (ENQUEUE, ModContent.ItemType<Cryostrike>(), 1f),
                 (CHANGE_QUEUE, ChestID.Gold, 0b0101),
                 (ENQUEUE, ModContent.ItemType<Bomb_Charm>(), 1f),
-                (ENQUEUE, ModContent.ItemType<Beginner_Tome>(), 1f),
+                (ENQUEUE, ModContent.ItemType<Beginners_Tome>(), 1f),
                 (CHANGE_QUEUE, ChestID.Gold, 0b1101),
                 (ENQUEUE, ModContent.ItemType<Nitro_Crate>(), 1f),
                 (CHANGE_QUEUE, ChestID.LockedGold, 0f),

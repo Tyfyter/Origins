@@ -241,7 +241,7 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Handy_Helper_NPC_Tentacle : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Riven/Flagellash_P";
+		public override string Texture => "Origins/Items/Weapons/Summoner/Flagellash_P";
 		public override string GlowTexture => Texture;
 		public static AutoCastingAsset<Texture2D> GloveTexture { get; private set; }
 		public static int ID { get; private set; }
