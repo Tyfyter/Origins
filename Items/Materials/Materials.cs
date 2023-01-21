@@ -58,6 +58,17 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
+    public class Aetherite_Bar : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Aetherite Bar");
+            SacrificeTotal = 25;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+            Item.value = Item.sellPrice(gold: 1);
+            Item.rare = ItemRarityID.Yellow;
+        }
+    }
     public class Alkahest : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Alkahest");
@@ -257,6 +268,21 @@ namespace Origins.Items.Materials {
             Item.rare = ItemRarityID.Yellow;
         }
     }
+    public class Dream_Vapor : ModItem {
+        static short glowmask;
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Dream Vapor");
+            glowmask = Origins.AddGlowMask(this);
+            SacrificeTotal = 25;
+        }
+        public override void SetDefaults() {
+            Item.CloneDefaults(ItemID.Ectoplasm);
+            Item.maxStack = 99;
+            Item.value = Item.buyPrice(silver: 80);
+            Item.rare = ItemRarityID.Yellow;
+            Item.glowMask = glowmask;
+        }
+    }
     public class Element36_Bundle : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Element-36 Bundle");
@@ -277,7 +303,19 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-	[LegacyName("Infested_Bar")]
+    public class Empyrite : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Empyrite");
+            SacrificeTotal = 25;
+        }
+        public override void SetDefaults() {
+            Item.CloneDefaults(ItemID.Ectoplasm);
+            Item.maxStack = 999;
+            Item.value = Item.buyPrice(silver: 50);
+            Item.rare = ItemRarityID.Yellow;
+        }
+    }
+    [LegacyName("Infested_Bar")]
 	public class Encrusted_Bar : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Encrusted Bar");
@@ -392,7 +430,7 @@ namespace Origins.Items.Materials {
         static short glowmask;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Lunar Token");
-            Tooltip.SetDefault("Valuable to the demented");
+            Tooltip.SetDefault("'Valuable to the demented'");
             Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
             glowmask = Origins.AddGlowMask(this);
             SacrificeTotal = 100;
@@ -408,7 +446,7 @@ namespace Origins.Items.Materials {
     public class Magic_Hair_Spray : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Magic Hair Treatment Gel");
-            Tooltip.SetDefault("Keeps your hair in perfect form!");
+            Tooltip.SetDefault("'Keeps your hair in perfect form!'");
             SacrificeTotal = 1;
 
         }
@@ -732,6 +770,17 @@ namespace Origins.Items.Materials {
             recipe.AddIngredient(this, 30);
             recipe.AddTile(TileID.DemonAltar);
             recipe.Register();
+        }
+    }
+    public class Unity_Shard : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Unity Shard");
+            SacrificeTotal = 1;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 999;
+            Item.value = Item.sellPrice(gold: 1);
+            Item.rare = ItemRarityID.Yellow;
         }
     }
     public class Unpowered_Eyndum_Core : ModItem {

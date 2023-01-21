@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
-using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
+using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Materials;
 using Origins.Items.Other.Fish;
 using Origins.Items.Tools;
@@ -41,7 +41,6 @@ namespace Origins {
         public bool felnumSet = false;
         public float felnumShock = 0;
         public float oldFelnumShock = 0;
-        public bool celestineSet = false;
         public bool minerSet = false;
         public bool defiledSet = false;
         public bool rivenSet = false;
@@ -189,7 +188,6 @@ namespace Origins {
                 }
             }
             felnumSet = false;
-            celestineSet = false;
             minerSet = false;
             defiledSet = false;
             reshapingChunk = false;
@@ -733,8 +731,6 @@ namespace Origins {
         public void OnHitNPCGeneral(Entity entity, NPC target, int damage, float knockback, bool crit) {
             Entity sourceEntity = entity is Projectile ? entity: Player;
             if (crit) {
-                if (celestineSet)
-                    Item.NewItem(sourceEntity.GetSource_OnHit(target, "SetBonus_Celestine"), target.Hitbox, Main.rand.Next(Origins.celestineBoosters));
                 if (dimStarlight && dimStarlightCooldown < 1) {
                     Item.NewItem(sourceEntity.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
                     dimStarlightCooldown = 300;

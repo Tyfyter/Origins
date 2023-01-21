@@ -2,9 +2,8 @@ using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
 
-namespace Origins.Items.Armor.Vanity.Terlet.PlagueTexan{
+namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
     [AutoloadEquip(EquipType.Head)]
 	public class Plague_Texan_Mask : ModItem {
 		public override void SetStaticDefaults() {

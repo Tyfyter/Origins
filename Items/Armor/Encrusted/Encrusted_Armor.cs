@@ -4,15 +4,15 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Armor.Riven {
+namespace Origins.Items.Armor.Encrusted {
     [AutoloadEquip(EquipType.Head)]
-    public class Riven_Mask : ModItem {
+    public class Encrusted_Mask : ModItem {
         public const float lightMagnitude = 0.3f;
         public static short GlowMask = -1;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("{$Riven} Mask");
+            DisplayName.SetDefault("Encrusted Mask");
             Tooltip.SetDefault("Increases minion damage by 10%");
-            GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Mask_Head_Glow");
+            GlowMask = Origins.AddGlowMask("Armor/Encrusted/Encrusted_Mask_Head_Glow");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -28,7 +28,7 @@ namespace Origins.Items.Armor.Riven {
             glowMaskColor = Color.White;
         }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
-            return body.type == ModContent.ItemType<Riven_Coat>() && legs.type == ModContent.ItemType<Riven_Pants>();
+            return body.type == ModContent.ItemType<Encrusted_Coat>() && legs.type == ModContent.ItemType<Encrusted_Pants>();
         }
         public override void UpdateArmorSet(Player player) {
             player.setBonus = "Increases minion damage by up to 30% when over half health";
@@ -43,13 +43,13 @@ namespace Origins.Items.Armor.Riven {
         }
     }
     [AutoloadEquip(EquipType.Body)]
-    public class Riven_Coat : ModItem {
+    public class Encrusted_Coat : ModItem {
         public static short GlowMask = -1;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("{$Riven} Coat");
+            DisplayName.SetDefault("Encrusted Coat");
             Tooltip.SetDefault("Increases your max number of minions by 1");
-            GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Coat_Body_Glow");
-            Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Riven/Riven_Coat_Body_Glow");
+            GlowMask = Origins.AddGlowMask("Armor/Encrusted/Encrusted_Coat_Body_Glow");
+            Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Encrusted/Encrusted_Coat_Body_Glow");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -73,10 +73,10 @@ namespace Origins.Items.Armor.Riven {
         }
     }
     [AutoloadEquip(EquipType.Legs)]
-    public class Riven_Pants : ModItem {
+    public class Encrusted_Pants : ModItem {
         public static short GlowMask = -1;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("{$Riven} Pants");
+            DisplayName.SetDefault("Encrusted Pants");
             Tooltip.SetDefault("Increases jump height");
             SacrificeTotal = 1;
         }

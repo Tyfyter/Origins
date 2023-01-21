@@ -6,7 +6,7 @@ using Origins.Gores.NPCs;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Rift;
-using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
+using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Tiles;

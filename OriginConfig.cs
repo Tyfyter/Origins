@@ -1,20 +1,11 @@
 ﻿using Newtonsoft.Json;
-using Origins.Items.Armor.Vanity.Terlet.PlagueTexan;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.NPCs.Defiled;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
 namespace Origins {
-	[Label("Settings")]
+    [Label("Settings")]
 	public class OriginConfig : ModConfig {
 		public static OriginConfig Instance;
 		public override ConfigScope Mode => ConfigScope.ServerSide;

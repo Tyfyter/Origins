@@ -205,25 +205,19 @@ ARMOR:
 ---
 (^) Cryosten Armor*
 (^) Defiled Armor*
+(^) Encrusted Armor
 (^) Felnum Armor
 (^) Fiberglass Armor
 (#2 (still needs set bonus effects), ^2) Myth Armor !!!
-(^) Riven Armor
 
 (^) Acrid Armor
 (^) Bleeding Obsidian Armor
-(#3, ^2) Mimic Armor
 
-(X) Anti-Gravity Armor
-(X) Mutant Armor
 (X) Necromancer Armor
-(X) Viridium Armor
 
 (X) Ascendant Armor
-(@5, ^3) Celestine Armor
 (^) Chromtain Armor
 (#2, ^2) Eyndum Armor
-(X) Fibron Armor
 (X) Nanite Armor
 (#, ^2) Nova Armor
 (X) Locus Armor
@@ -616,6 +610,7 @@ EXPLOSIVE WEAPONS:
 
 CLASSLESS WEAPONS:
 ---
+(^) Fiberglass Shard
 (X) Potato Launcher !!!
 ---
 
@@ -680,6 +675,7 @@ TILES:
 (^) Acetabularia
 (X) Brineglow Vine
 (^) Defiled Misc Tiles*
+(X) Eden Tree
 (#2, ^2) Riven Foliage !!!
 (#2, ^2) Riven Lesion !!!
 (#, ^2) Riven Pot !!!
@@ -724,7 +720,6 @@ MATERIALS:
 (^) Defiled Powder
 (^) Encrusted Bar
 (^) Felnum Bar
-(^) Fiberglass Shard
 (^) Magic Hair Treatment Gel
 (^) Riven Carapace
 (^) Rubber
@@ -748,11 +743,15 @@ MATERIALS:
 (^) Illegal Explosive Parts
 (^) Riven Key
 
+(^) Aetherite Bar
 (^) Busted Servo
+(^) Dream Vapor
+(^) Empyrite
 (^) Power Core
 (^) Rotor
 (^) Space Goo
 (^) Space Rock
+(^) Unity Shard
 
 (^) Chromtain Bar
 (^) Element-36 Bundle
@@ -781,6 +780,7 @@ CRITTERS AND FISH:
 CONSUMABLES:
 ---
 (^) Quantum Injector
+(X) The Defiled Will
 
 (^) Absorption Potion
 (#, ^2) Extreme O' Potion
