@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
-    public class Riven_Altar : ModTile, IGlowingModTile {
+    public class Riven_Altar : ModTile, IGlowingModTile, IComplexMineDamageTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
@@ -35,14 +35,16 @@ namespace Origins.Tiles.Riven {
             ID = Type;
 		}
 
-        public override bool CanKillTile(int i, int j, ref bool blockDamaged) {
-            Player player = Main.LocalPlayer;
-            if(Main.hardMode&&player.HeldItem.hammer>=80)return true;
-            player.Hurt(PlayerDeathReason.ByOther(4), player.statLife / 2, -player.direction);
-            return false;
-        }
+		public void MinePower(int i, int j, int minePower, ref int damage) {
+			Player player = Main.LocalPlayer;
+			if (Main.hardMode && player.HeldItem.hammer >= 80) {
+				damage += (int)(1.2f * minePower);
+			} else {
+				player.Hurt(PlayerDeathReason.ByOther(4), player.statLife / 2, -player.direction);
+			}
+		}
 
-        public override void NumDust(int i, int j, bool fail, ref int num) {
+		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {

@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Altar : ModTile {
+    public class Defiled_Altar : ModTile, IComplexMineDamageTile {
         public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -27,12 +27,14 @@ namespace Origins.Tiles.Defiled {
             ID = Type;
 		}
 
-        public override bool CanKillTile(int i, int j, ref bool blockDamaged) {
-            Player player = Main.LocalPlayer;
-            if(Main.hardMode&&player.HeldItem.hammer>=80)return true;
-            player.Hurt(PlayerDeathReason.ByOther(4), player.statLife / 2, -player.direction);
-            return false;
-        }
+		public void MinePower(int i, int j, int minePower, ref int damage) {
+			Player player = Main.LocalPlayer;
+			if (Main.hardMode && player.HeldItem.hammer >= 80) {
+				damage += (int)(1.2f * minePower);
+			} else {
+				player.Hurt(PlayerDeathReason.ByOther(4), player.statLife / 2, -player.direction);
+			}
+		}
 
         public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Other.Consumables;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;
@@ -24,7 +25,14 @@ namespace Origins.Tiles.Other {
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
 			TileObjectData.newTile.Direction = TileObjectDirection.None;
+			//TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, 1, 0);
 			TileObjectData.addTile(Type);
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			tile.TileFrameX = 0;
+			tile.TileFrameY = 0;
+			return false;
 		}
 		public override bool RightClick(int i, int j) {
 			WorldGen.KillTile(i, j);

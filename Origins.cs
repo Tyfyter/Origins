@@ -408,28 +408,6 @@ namespace Origins {
                 }
             }
         }
-		public override void HandlePacket(BinaryReader reader, int whoAmI) {
-            byte type = reader.ReadByte();
-            if(Main.netMode == NetmodeID.MultiplayerClient) {
-                switch(type) {
-                    case MessageID.TileCounts:
-                    OriginSystem.tDefiled = reader.ReadByte();
-                    break;
-                    default:
-                    Logger.Warn($"Invalid packet type ({type}) received on client");
-                    break;
-                }
-            }else if(Main.netMode == NetmodeID.Server) {
-                switch(type) {
-                    case MessageID.TileCounts:
-                    OriginSystem.tDefiled = reader.ReadByte();
-                    break;
-                    default:
-                    Logger.Warn($"Invalid packet type ({type}) received on server");
-                    break;
-                }
-            }
-        }
 
         private static void FixedDrawBreath(On.Terraria.Main.orig_DrawInterface_Resources_Breath orig) {
             Player localPlayer = Main.LocalPlayer;

@@ -254,7 +254,13 @@ namespace Origins.Items.Materials {
             recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 3);
             recipe.AddTile(TileID.Furnaces);
             recipe.Register();
-        }
+
+			recipe = Recipe.Create(ItemID.Magiluminescence);
+			recipe.AddIngredient(Type, 12);
+			recipe.AddIngredient(ItemID.Topaz, 5);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+		}
     }
     public class Defiled_Key : ModItem {
         public override void SetStaticDefaults() {
@@ -331,7 +337,13 @@ namespace Origins.Items.Materials {
             recipe.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 3);
             recipe.AddTile(TileID.Furnaces);
             recipe.Register();
-        }
+
+			recipe = Recipe.Create(ItemID.Magiluminescence);
+			recipe.AddIngredient(Type, 12);
+			recipe.AddIngredient(ItemID.Topaz, 5);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+		}
     }
     public class Eyndum_Bar : ModItem {
         public override void SetStaticDefaults() {

@@ -678,12 +678,10 @@ namespace Origins {
         private delegate void hook_MinePower(orig_MinePower orig, int minePower, ref int damage);
         private void MineDamage(orig_MinePower orig, int minePower, ref int damage) {
             ModTile modTile = MC.GetModTile(Main.tile[Player.tileTargetX, Player.tileTargetY].TileType);
-            if (modTile is null) {
-                damage += minePower;
-            } else if (modTile is IComplexMineDamageTile damageTile) {
+            if (modTile is IComplexMineDamageTile damageTile) {
                 damageTile.MinePower(Player.tileTargetX, Player.tileTargetY, minePower, ref damage);
             } else {
-                damage += ((int)(minePower / modTile.MineResist));
+				orig(minePower, ref damage);
             }
         }
         #endregion

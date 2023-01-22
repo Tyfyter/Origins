@@ -5,6 +5,8 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
     public class Quantum_Injector : ModItem {
+		public const int mana_per_use = 10;
+		public const int max_uses = 20;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Quantum Injector");
 			Tooltip.SetDefault("Permanently increases maximum mana by 10");
@@ -14,8 +16,15 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.ManaCrystal);
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ButterscotchRarity.ID;
-			Item.manaIncrease += 10; //Max of 20
 			Item.UseSound = SoundID.Item90;
+		}
+		public override bool? UseItem(Player player) {
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			if (originPlayer.quantumInjectors < max_uses) {
+				originPlayer.quantumInjectors++;
+				return true;
+			}
+			return false;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();

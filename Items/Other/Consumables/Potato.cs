@@ -14,11 +14,23 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.ChocolateChipCookie);
 			Item.holdStyle = ItemHoldStyleID.HoldUp;
 			Item.scale = 0.75f;
-			Item.createTile = ModContent.TileType<Potato_Tile>();
 			Item.buffType = BuffID.WellFed;
 			Item.buffTime = 60 * 60 * 10;
 			Item.value = Item.buyPrice(silver: 1);
 			Item.rare = ItemRarityID.White;
+		}
+		public override bool AltFunctionUse(Player player) {
+			return true;
+		}
+		public override bool CanUseItem(Player player) {
+			if (player.altFunctionUse == 2) {
+				Item.createTile = -1;
+				Item.buffType = BuffID.WellFed;
+			} else {
+				Item.createTile = ModContent.TileType<Potato_Tile>();
+				Item.buffType = 0;
+			}
+			return true;
 		}
 		public override void AddRecipes() {
 			//Recipe recipe = Recipe.Create(ModContent.ItemType<Hot_Potato>());

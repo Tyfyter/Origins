@@ -79,7 +79,8 @@ namespace Origins {
             DeathweedRecipeGroupID = RecipeGroup.RegisterGroup("Deathweed", group);
             group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.CursedFlame), new int[] {
                 ItemID.CursedFlame,
-                ModContent.ItemType<Alkahest>(),
+				ItemID.Ichor,
+				ModContent.ItemType<Alkahest>(),
                 ModContent.ItemType<Black_Bile>()
             });
             CursedFlameRecipeGroupID = RecipeGroup.RegisterGroup("Cursed Flame", group);

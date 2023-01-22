@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Fish;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
@@ -17,6 +18,7 @@ using Origins.Water;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using Terraria;
@@ -135,9 +137,11 @@ namespace Origins {
         #region keybinds
         public bool controlTriggerSetBonus = false;
         public bool releaseTriggerSetBonus = false;
-        #endregion
+		#endregion
 
-        public float statSharePercent = 0f;
+		public int quantumInjectors = 0;
+
+		public float statSharePercent = 0f;
 
         public bool journalUnlocked = false;
         public Item journalDye = null;
@@ -157,7 +161,6 @@ namespace Origins {
         public int heldProjectile = -1;
         public int lastMinionAttackTarget = -1;
         public int hookTarget = -1;
-        public bool explosive = false;
         bool rivenWet = false;
         public bool mountOnly = false;
         public bool changeSize = false;
@@ -223,7 +226,6 @@ namespace Origins {
             mitosis = false;
             mitosisItem = null;
             entangledEnergy = false;
-            explosive = false;
             mysteriousSprayMult = 1;
             protozoaFood = false;
             protozoaFoodItem = null;
@@ -315,8 +317,11 @@ namespace Origins {
                 }
             }
             asylumWhistle = false;
+
+			Player.statManaMax2 += quantumInjectors * Quantum_Injector.mana_per_use;
         }
 		#endregion
+		public const float explosive_defense_factor = 1f;
 		public override void PreUpdateMovement() {
             if (hookTarget >= 0) {//ropeVel.HasValue&&
                 Player.fallStart = (int)(Player.position.Y / 16f);
@@ -628,12 +633,11 @@ namespace Origins {
                 damage+=(int)(felnumShock/15);
                 felnumShock = 0;
                 SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), target.Center);
-                if (item.CountsAsClass(DamageClasses.Explosive)) {
-                    explosive = true;
-                    //damage = damage - enemyDefense;
-                }
-            }
-        }
+			}
+			if (item.CountsAsClass(DamageClasses.Explosive)) {
+				damage -= (int)Math.Max((target.defense - Player.GetWeaponArmorPenetration(item)) * (explosive_defense_factor - 0.5f), 0);
+			}
+		}
         public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
             if (advancedImaging) {
                 velocity *= 1.38f;
@@ -704,8 +708,11 @@ namespace Origins {
             }
             if(proj.minion&&rivenSet) {
                 damage = (int)(damage*rivenMult);
-            }
-        }
+			}
+			if (proj.CountsAsClass(DamageClasses.Explosive)) {
+				damage -= (int)Math.Max((target.defense - proj.ArmorPenetration) * (explosive_defense_factor - 0.5f), 0);
+			}
+		}
         public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
             OnHitNPCGeneral(item, target, damage, knockback, crit);
             if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
@@ -1103,8 +1110,20 @@ namespace Origins {
                 drawInfo.colorBodySkin = OriginExtensions.Desaturate(drawInfo.colorBodySkin, saturationMult);
 
             }
-        }
-        public override void FrameEffects() {
+		}
+		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
+			//return;
+			if (Main.netMode == NetmodeID.SinglePlayer) return;
+			ModPacket packet = Mod.GetPacket();
+			packet.Write(Origins.NetMessageType.sync_player);
+			packet.Write((byte)Player.whoAmI);
+			packet.Write((byte)quantumInjectors);
+			packet.Send(toWho, fromWho);
+		}
+		public void ReceivePlayerSync(BinaryReader reader) {
+			quantumInjectors = reader.ReadByte();
+		}
+		public override void FrameEffects() {
             for(int i = 13; i < 18+Player.extraAccessorySlots; i++) {
                 if(Player.armor[i].type==Plague_Texan_Sight.ID)Plague_Texan_Sight.ApplyVisuals(Player);
             }
