@@ -655,8 +655,8 @@ namespace Origins {
                     velocity *= explosiveThrowSpeed;
                 }
                 if (mythSet) {
-                    damage *= (int)(Player.moveSpeed);
-                    velocity *= (int)(Player.moveSpeed);
+                    damage += (int)(Player.velocity.Length() * 2f);
+                    velocity *= (int)(Player.velocity.Length() * 0.3f);
                 }
             }
             if (item.shoot > ProjectileID.None && felnumShock > 29) {
