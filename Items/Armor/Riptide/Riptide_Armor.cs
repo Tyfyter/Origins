@@ -8,7 +8,7 @@ namespace Origins.Items.Armor.Riptide {
     public class Riptide_Helmet : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riptide Helm");
-            Tooltip.SetDefault("10% increased magic damage\nGreatly extends underwater breathing");
+            Tooltip.SetDefault("5% increased magic damage\nGreatly extends underwater breathing");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -17,17 +17,15 @@ namespace Origins.Items.Armor.Riptide {
             Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
-            player.GetDamage(DamageClass.Magic) += 0.1f;
-            player.breath += 63;
+            player.GetDamage(DamageClass.Magic) += 0.05f;
+            player.breathMax += 63;
         }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
             return body.type == ModContent.ItemType<Riptide_Breastplate>() && legs.type == ModContent.ItemType<Riptide_Greaves>();
         }
         public override void UpdateArmorSet(Player player) {
-            player.setBonus = "10% increased magic damage when submerged or in rain\nGrants the ability to dash which releases a tidal wave upon dashing";
-            player.dashType = 4;
-            player.dashDelay = -1;
-            //player.GetModPlayer<OriginPlayer>().riptideSet = true;
+            player.setBonus = "5% increased magic damage when submerged or in rain\nGrants the ability to dash which releases a tidal wave upon dashing";
+			player.GetModPlayer<OriginPlayer>().riptideSet = true;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
@@ -77,7 +75,7 @@ namespace Origins.Items.Armor.Riptide {
     public class Riptide_Greaves : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Riptide Leggings");
-            Tooltip.SetDefault("10% increased magic damage\nGrants the ability to swim and provides increased movement speed in water");
+            Tooltip.SetDefault("5% increased magic damage\nGrants the ability to swim and provides increased movement speed in water");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -86,12 +84,10 @@ namespace Origins.Items.Armor.Riptide {
             Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
-            player.GetDamage(DamageClass.Magic) += 0.1f;
+            player.GetDamage(DamageClass.Magic) += 0.05f;
             player.accFlipper = true;
-            if (player.adjWater) {
-                player.moveSpeed *= 1.25f;
-            }
-        }
+			player.GetModPlayer<OriginPlayer>().riptideLegs = true;
+		}
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.ShellPileBlock, 13);

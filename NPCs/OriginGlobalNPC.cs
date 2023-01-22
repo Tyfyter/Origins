@@ -205,7 +205,7 @@ namespace Origins.NPCs {
 		}
 		public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit) {
 			if (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]) {
-				if (npc.HasBuff(Maelstrom_Buff_Zap.ID)) {
+				if (npc.HasBuff(Maelstrom_Buff_Zap.ID) && projectile.owner == Main.myPlayer) {
 					const float maxDist = 136 * 136;
 					bool first = true;
 					for (int i = 0; i < Main.maxNPCs; i++) {

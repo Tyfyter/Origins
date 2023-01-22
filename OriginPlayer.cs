@@ -36,7 +36,7 @@ namespace Origins {
 		public const float rivenMaxMult = 0.3f;
         public float rivenMult => (1f-rivenMaxMult)+Math.Max((Player.statLife/(float)Player.statLifeMax2)*(rivenMaxMult*2), rivenMaxMult);
         
-        #region set bonuses
+        #region armor/set bonuses
         public bool fiberglassSet = false;
         public bool cryostenSet = false;
         public bool cryostenHelmet = false;
@@ -50,13 +50,15 @@ namespace Origins {
         public bool eyndumSet = false;
         public bool mimicSet = false;
         public bool mythSet = false;
-        public int mimicSetChoices = 0;
+		public bool riptideSet = false;
+		public bool riptideLegs = false;
+		public int mimicSetChoices = 0;
         public int setActiveAbility = 0;
         public int setAbilityCooldown = 0;
-        #endregion set bonuses
+		#endregion armor/set bonuses
 
-        #region accessories
-        public bool bombHandlingDevice = false;
+		#region accessories
+		public bool bombHandlingDevice = false;
         public bool destructiveClaws = false;
         public bool dimStarlight = false;
         public int dimStarlightCooldown = 0;
@@ -200,7 +202,9 @@ namespace Origins {
             riftSet = false;
             eyndumSet = false;
             mimicSet = false;
-            setActiveAbility = 0;
+			riptideSet = false;
+			riptideLegs = false;
+			setActiveAbility = 0;
             if (setAbilityCooldown > 0) {
                 setAbilityCooldown--;
                 if (setAbilityCooldown == 0) {
@@ -323,7 +327,11 @@ namespace Origins {
 		#endregion
 		public const float explosive_defense_factor = 1f;
 		public override void PreUpdateMovement() {
-            if (hookTarget >= 0) {//ropeVel.HasValue&&
+			if (riptideLegs && !Player.ignoreWater && Player.wet) {
+				Player.velocity *= 0.97f;
+				Player.ignoreWater = true;
+			}
+			if (hookTarget >= 0) {//ropeVel.HasValue&&
                 Player.fallStart = (int)(Player.position.Y / 16f);
                 Projectile projectile = Main.projectile[hookTarget];
 				if (projectile.type == Amoeba_Hook_Projectile.ID) {
