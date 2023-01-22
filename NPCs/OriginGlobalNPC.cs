@@ -149,6 +149,9 @@ namespace Origins.NPCs {
 			if (tornTime > 0) {
 				damage /= 1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime));
 			}
+			/*if (explosive) {
+				damage = damage - npc.defense;
+			}*/
 			return true;
 		}
 		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {

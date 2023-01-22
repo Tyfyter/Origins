@@ -623,6 +623,19 @@ namespace Origins.Items.Materials {
             Item.maxStack = 999;
             Item.value = Item.buyPrice(copper: 6);
         }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(ItemID.Flipper);
+            recipe.AddIngredient(Type, 15);
+            recipe.AddIngredient(ModContent.ItemType<Silicon>(), 8);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.FloatingTube);
+            recipe.AddIngredient(Type, 20);
+            recipe.AddIngredient(ModContent.ItemType<Silicon>(), 10);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+        }
     }
     public class Silicon : ModItem {
         public override void SetStaticDefaults() {

@@ -209,11 +209,13 @@ ARMOR:
 (^) Felnum Armor
 (^) Fiberglass Armor
 (#2 (still needs set bonus effects), ^2) Myth Armor !!!
+(X) Riptide Armor !!!
 
 (^) Acrid Armor
 (^) Bleeding Obsidian Armor
 
 (X) Necromancer Armor
+(X) Blast Armor
 
 (X) Ascendant Armor
 (^) Chromtain Armor
@@ -246,6 +248,7 @@ ACCESSORIES:
 (^) Handy Helper
 (X) Hazard Charm !!!
 (X) Headstomperz
+(X) Helium Tank
 (^) Keepsake Remains
 (^) Locket Necklace
 (#2, ^2) Lover's Leap !!!

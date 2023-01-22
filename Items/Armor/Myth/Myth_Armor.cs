@@ -7,7 +7,7 @@ namespace Origins.Items.Armor.Myth {
     public class Mythic_Skull : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Mythic Skull");
-            Tooltip.SetDefault("Increased explosive velocity\n'Mythic Skull ON'");
+            Tooltip.SetDefault("Increased explosive velocity\n'Skull ON'");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -22,8 +22,8 @@ namespace Origins.Items.Armor.Myth {
             return body.type == ModContent.ItemType<Mythic_Shell>() && legs.type == ModContent.ItemType<Mythic_Leggings>();
         }
         public override void UpdateArmorSet(Player player) {
-            player.setBonus = "Explosive damage and velocity increased by movement speed\nBoosted knockback from explosions\nChance to dash toward explosions";
-            //player.GetModPlayer<OriginPlayer>().mythSet = true;
+            player.setBonus = "Explosive damage and velocity increased by movement speed";
+            player.GetModPlayer<OriginPlayer>().mythSet = true;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);

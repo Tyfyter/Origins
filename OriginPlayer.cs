@@ -47,6 +47,7 @@ namespace Origins {
         public bool riftSet = false;
         public bool eyndumSet = false;
         public bool mimicSet = false;
+        public bool mythSet = false;
         public int mimicSetChoices = 0;
         public int setActiveAbility = 0;
         public int setAbilityCooldown = 0;
@@ -156,6 +157,7 @@ namespace Origins {
         public int heldProjectile = -1;
         public int lastMinionAttackTarget = -1;
         public int hookTarget = -1;
+        public bool explosive = false;
         bool rivenWet = false;
         public bool mountOnly = false;
         public bool changeSize = false;
@@ -221,6 +223,7 @@ namespace Origins {
             mitosis = false;
             mitosisItem = null;
             entangledEnergy = false;
+            explosive = false;
             mysteriousSprayMult = 1;
             protozoaFood = false;
             protozoaFoodItem = null;
@@ -620,10 +623,15 @@ namespace Origins {
 			}
         }
 		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
+            //enemyDefense = NPC.GetDefense;
             if(felnumShock>29) {
                 damage+=(int)(felnumShock/15);
                 felnumShock = 0;
                 SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), target.Center);
+                if (item.CountsAsClass(DamageClasses.Explosive)) {
+                    explosive = true;
+                    //damage = damage - enemyDefense;
+                }
             }
         }
         public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
@@ -633,6 +641,10 @@ namespace Origins {
             if (item.CountsAsClass(DamageClasses.Explosive)) {
                 if (item.useAmmo == 0 && item.CountsAsClass(DamageClass.Throwing)) {
                     velocity *= explosiveThrowSpeed;
+                }
+                if (mythSet) {
+                    damage *= (int)(Player.moveSpeed);
+                    velocity *= (int)(Player.moveSpeed);
                 }
             }
             if (item.shoot > ProjectileID.None && felnumShock > 29) {

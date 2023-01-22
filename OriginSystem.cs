@@ -60,6 +60,7 @@ namespace Origins {
 		}
 		public static int GemStaffRecipeGroupID { get; private set; }
         public static int DeathweedRecipeGroupID { get; private set; }
+        public static int CursedFlameRecipeGroupID { get; private set; }
         public override void AddRecipeGroups() {
             RecipeGroup group = new RecipeGroup(() => "Gem Staves", new int[] {
                 ItemID.AmethystStaff,
@@ -76,6 +77,12 @@ namespace Origins {
                 ModContent.ItemType<Wrycoral_Item>()
             });
             DeathweedRecipeGroupID = RecipeGroup.RegisterGroup("Deathweed", group);
+            group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.CursedFlame), new int[] {
+                ItemID.CursedFlame,
+                ModContent.ItemType<Alkahest>(),
+                ModContent.ItemType<Black_Bile>()
+            });
+            CursedFlameRecipeGroupID = RecipeGroup.RegisterGroup("Cursed Flame", group);
         }
         public override void PostAddRecipes() {
             int l = Main.recipe.Length;
