@@ -16,7 +16,7 @@ namespace Origins.Items.Accessories {
             Item.shoot = ProjectileID.BulletHighVelocity;
         }
         public override void UpdateEquip(Player player) {
-            player.aggro -= 400;
+            player.aggro -= 125;
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
             originPlayer.razorwire = true;
             originPlayer.razorwireItem = Item;

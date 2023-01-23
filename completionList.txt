@@ -208,13 +208,13 @@ ARMOR:
 (^) Encrusted Armor
 (^) Felnum Armor
 (^) Fiberglass Armor
-(#2 (still needs set bonus effects), ^2) Myth Armor !!!
-(X) Riptide Armor !!!
+(#3, ^2) Myth Armor !!!
+(@, #2) Riptide Armor !!!
 
 (^) Acrid Armor
 (^) Bleeding Obsidian Armor
 
-(X) Necromancer Armor
+(#2, ^2) Necromancer Armor
 (X) Blast Armor
 
 (X) Ascendant Armor
@@ -274,18 +274,19 @@ ACCESSORIES:
 (^) Symbiote Skull
 (#2, ^2) Trap Charm !!!
 (#, ^2) Turbo Reel !!!
+(#3, ^2) Unsought Organ
 (^) Volatile Charm !!!
 
-(X) Agile Ravel
 (X) Bouncy Ravel
 (X) Dash Ravel
-(X) Dive Ravel
+(^) Depth Ravel
 (X) Drill Ravel
 (X) Grapple Ravel
-(X) Ninja Ravel
+(^) Ninja Ravel
 (^) Ravel
 (X) Scroll Ravel
 (X) Slick Ravel
+(^) Speed Ravel
 (^) Spider Ravel
 (^) Stealth Ravel
 (X) Thrust Ravel
@@ -299,7 +300,6 @@ ACCESSORIES:
 (#, ^2) Tripod Nip
 
 (^) Amebic Vial
-(#2, ^2) Extremophile Charm
 (^) Fiberglass Dagger
 (X) Forbidden Salt
 (X) Gyroscope
@@ -314,7 +314,6 @@ ACCESSORIES:
 (^) Entangled Energy
 (^) Lazy Cloak
 (X) Magnetic Brain
-(X) Mildew Urchin
 (^) Mysterious Spray
 (%3, X) Parallax
 (^) Protozoa Food

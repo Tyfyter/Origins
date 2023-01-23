@@ -89,6 +89,8 @@ namespace Origins {
         public bool guardedHeart = false;
         public bool razorwire = false;
         public Item razorwireItem = null;
+        public bool unsoughtOrgan = false;
+        public Item unsoughtOrganItem = null;
         public bool spiritShard = false;
         public bool ravel = false;
         public bool ravelEquipped = false;
@@ -239,6 +241,8 @@ namespace Origins {
             gunGloveItem = null;
             razorwire = false;
             razorwireItem = null;
+            unsoughtOrgan = false;
+            unsoughtOrganItem = null;
             spiritShard = false;
             ravel = false;
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
@@ -328,7 +332,7 @@ namespace Origins {
 		public const float explosive_defense_factor = 1f;
 		public override void PreUpdateMovement() {
 			if (riptideLegs && !Player.ignoreWater && Player.wet) {
-				Player.velocity *= 0.97f;
+				Player.velocity *= 1.0048f;
 				Player.ignoreWater = true;
 			}
 			if (hookTarget >= 0) {//ropeVel.HasValue&&
@@ -910,7 +914,7 @@ namespace Origins {
                         }
                     }
                 }
-                for (int i = 0; i < 3; i++) {
+                    for (int i = 0; i < 3; i++) {
                     if (i >= targets.Count) break;
                     Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
                     Projectile.NewProjectile(
@@ -918,6 +922,48 @@ namespace Origins {
                         Player.MountedCenter,
                         (currentPos - Player.MountedCenter).WithMaxLength(12),
                         razorwireItem.shoot,
+                        (int)(totalDamage / targets.Count) + 1,
+                        10,
+                        Player.whoAmI
+                    );
+                }
+            }
+            if (unsoughtOrgan) {
+                const float maxDist = 240 * 240;
+                double totalDamage = damage * 0.5f;
+                List<(int id, float weight)> targets = new();
+                NPC npc;
+                for (int i = 0; i < Main.maxNPCs; i++) {
+                    npc = Main.npc[i];
+                    if (npc.active && npc.damage > 0 && !npc.friendly) {
+                        Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
+                        Vector2 diff = currentPos - Player.MountedCenter;
+                        float dist = diff.LengthSquared();
+                        if (dist > maxDist) continue;
+                        float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
+                        if (totalDamage / 3 > npc.life) {
+                            currentWeight = 0;
+                        }
+                        if (targets.Count >= 3) {
+                            for (int j = 0; j < 3; j++) {
+                                if (targets[j].weight < currentWeight) {
+                                    targets.Insert(j, (i, currentWeight));
+                                    break;
+                                }
+                            }
+                        } else {
+                            targets.Add((i, currentWeight));
+                        }
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    if (i >= targets.Count) break;
+                    Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
+                    Projectile.NewProjectile(
+                        Player.GetSource_Accessory(unsoughtOrganItem),
+                        Player.MountedCenter,
+                        (currentPos - Player.MountedCenter).WithMaxLength(12),
+                        unsoughtOrganItem.shoot,
                         (int)(totalDamage / targets.Count) + 1,
                         10,
                         Player.whoAmI

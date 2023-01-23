@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,7 +18,7 @@ namespace Origins.Items.Accessories {
             Item.accessory = true;
             Item.rare = ItemRarityID.Pink;
             Item.value = Item.sellPrice(gold: 8);
-            Item.shoot = ModContent.MountType<Spider_Ravel_Mount>();//can't use mountType because that'd make it fit in the mount slot
+            Item.shoot = ModContent.MountType<Spider_Ravel_Mount>();
         }
 		protected override void UpdateRaveled(Player player) {
             player.GetModPlayer<OriginPlayer>().spiderRavel = true;

@@ -20,7 +20,7 @@ namespace Origins.Items.Accessories {
             Item.rare = ItemRarityID.Pink;
         }
         public override void UpdateEquip(Player player) {
-            player.aggro -= 400;
+            player.aggro -= 125;
             player.noKnockback = true;
             player.fireWalk = true;
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
