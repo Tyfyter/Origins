@@ -24,13 +24,12 @@ namespace Origins.Items.Armor.Necromancer {
         }
         public override void UpdateArmorSet(Player player) {
             player.setBonus = "Slain enemies provide a temporary boost to all stats\nMana usage is halved when in a Graveyard and artifact minions cost half as much\nEnemies spawn more frequently\n+3 minion slots";
-            /*if (Origins.ArtifactMinion[Type]) {
-                player.manaCost = 0.5f;
-            }*/
-            player.maxMinions += 3;
-            //player.GetModPlayer<OriginPlayer>().necroSet = true;
-        }
-        public override void AddRecipes() {
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.artifactManaCost *= 0.5f;
+			//originPlayer.necroSet = true;
+			player.maxMinions += 3;
+		}
+		public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.ChlorophyteBar, 12);
             recipe.AddIngredient(ItemID.DarkShard);
@@ -76,10 +75,8 @@ namespace Origins.Items.Armor.Necromancer {
             Item.rare = ItemRarityID.Yellow;
         }
         public override void UpdateEquip(Player player) {
-            /*if (Origins.ArtifactMinion[Type]) {
-                player.GetDamage(DamageClass.Summon) += 0.25f;
-            }*/
-        }
+			player.GetModPlayer<OriginPlayer>().artifactDamage += 0.25f;
+		}
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.ChlorophyteBar, 18);

@@ -8,7 +8,8 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Mimic : ModNPC {
-        public override void SetStaticDefaults() {
+		public override string Texture => "Terraria/Images/NPC_" + NPCID.BigMimicCorruption;// remove when sprite is complete
+		public override void SetStaticDefaults() {
             DisplayName.SetDefault("{$Defiled} Mimic");
             Main.npcFrameCount[NPC.type] = 14;
         }
@@ -25,15 +26,17 @@ namespace Origins.NPCs.Defiled {
 			NPC.knockBackResist = 0.1f;
 			NPC.rarity = 5;
 		}
-		public override int SpawnNPC(int tileX, int tileY) {//should disable spawning
-			return -1;
-		}
 		public override void FindFrame(int frameHeight) {
             NPC.CloneFrame(NPCID.BigMimicCorruption, frameHeight);
         }
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<Incision>(), 3007, 3013, 3016, 3020));
-			npcLoot.Add(ItemDropRule.OneFromOptions(5, ModContent.ItemType<Ravel>(), 3007, 3013, 3016, 3020));
+			npcLoot.Add(ItemDropRule.OneFromOptions(1,
+				ItemID.SoulDrain,
+				ModContent.ItemType<Incision>(),
+				ItemID.FetidBaghnakhs,
+				ModContent.ItemType<Ravel>(),
+				ItemID.TendonHook
+			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
         }

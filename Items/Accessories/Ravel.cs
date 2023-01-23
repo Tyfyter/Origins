@@ -110,7 +110,7 @@ namespace Origins.Items.Accessories {
 			Main.instance.LoadItem(vanityRavel);
 			texture = Terraria.GameContent.TextureAssets.Item[vanityRavel].Value;
             drawOrigin = new Vector2(12, 12);
-            DrawData item = new DrawData(texture, drawPosition, null, drawColor, rotation, drawOrigin, drawScale, spriteEffects, 0);
+            DrawData item = new DrawData(texture, drawPosition, null, drawColor, rotation, drawOrigin, drawScale, 0, 0);
             item.shader = Mount.currentShader;
             playerDrawData.Add(item);
             return false;

@@ -10,7 +10,7 @@ namespace Origins.Buffs {
             ID = Type;
         }
 		public override void Update(Player player, ref int buffIndex) {
-            player.GetModPlayer<OriginPlayer>().explosiveSelfDamage = 0;
+            player.GetModPlayer<OriginPlayer>().explosiveSelfDamage = new StatModifier(0, 0);
         }
 	}
 }

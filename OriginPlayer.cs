@@ -49,7 +49,6 @@ namespace Origins {
         public bool riftSet = false;
         public bool eyndumSet = false;
         public bool mimicSet = false;
-        public bool mythSet = false;
 		public bool riptideSet = false;
 		public bool riptideLegs = false;
 		public int mimicSetChoices = 0;
@@ -101,13 +100,19 @@ namespace Origins {
 		#endregion
 
 		#region explosive stats
-		public float explosiveThrowSpeed = 1;
-        public float explosiveSelfDamage = 1;
+		public StatModifier explosiveProjectileSpeed = StatModifier.Default;
+		public StatModifier explosiveThrowSpeed = StatModifier.Default;
+        public StatModifier explosiveSelfDamage = StatModifier.Default;
         public StatModifier explosiveBlastRadius = StatModifier.Default;
-        #endregion
+		#endregion
 
-        #region biomes
-        public bool ZoneVoid { get; internal set; } = false;
+		#region summon stats
+		public StatModifier artifactDamage = StatModifier.Default;
+		public float artifactManaCost = 1f;
+		#endregion
+
+		#region biomes
+		public bool ZoneVoid { get; internal set; } = false;
         public float ZoneVoidProgress = 0;
         public float ZoneVoidProgressSmoothed = 0;
 
@@ -196,6 +201,7 @@ namespace Origins {
                     felnumShock -= (felnumShock - Player.statLifeMax2) / Player.statLifeMax2 * 5 + 1;
                 }
             }
+
             felnumSet = false;
             minerSet = false;
             defiledSet = false;
@@ -207,6 +213,7 @@ namespace Origins {
 			riptideSet = false;
 			riptideLegs = false;
 			setActiveAbility = 0;
+
             if (setAbilityCooldown > 0) {
                 setAbilityCooldown--;
                 if (setAbilityCooldown == 0) {
@@ -219,6 +226,7 @@ namespace Origins {
                     }
                 }
 			}
+
             bombHandlingDevice = false;
             destructiveClaws = false;
             dimStarlight = false;
@@ -245,6 +253,7 @@ namespace Origins {
             unsoughtOrganItem = null;
             spiritShard = false;
             ravel = false;
+
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
                 Player.mount.Dismount(Player);
 			}
@@ -255,10 +264,16 @@ namespace Origins {
 
 			flaskBile = false;
             flaskSalt = false;
-            explosiveThrowSpeed = 1f;
-            explosiveSelfDamage = 1f;
+
+			explosiveProjectileSpeed = StatModifier.Default;
+			explosiveThrowSpeed = StatModifier.Default;
+            explosiveSelfDamage = StatModifier.Default;
             explosiveBlastRadius = StatModifier.Default;
-            statSharePercent = 0f;
+
+			artifactDamage = StatModifier.Default;
+			artifactManaCost = 1f;
+
+			statSharePercent = 0f;
             if (cryostenLifeRegenCount>0)
                 cryostenLifeRegenCount--;
             
@@ -331,7 +346,7 @@ namespace Origins {
 		#endregion
 		public const float explosive_defense_factor = 1f;
 		public override void PreUpdateMovement() {
-			if (riptideLegs && !Player.ignoreWater && Player.wet) {
+			if (riptideLegs && Player.wet) {
 				Player.velocity *= 1.0048f;
 				Player.ignoreWater = true;
 			}
@@ -612,6 +627,11 @@ namespace Origins {
             if(cryostenHelmet)Player.lifeRegenCount+=cryostenLifeRegenCount>0 ? 180 : 1;
         }
 		#region attacks
+		public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
+			if (Origins.ArtifactMinion[item.shoot]) {
+				mult *= artifactManaCost;
+			}
+		}
 		public override bool? CanAutoReuseItem(Item item) {
             if (destructiveClaws && item.CountsAsClass(DamageClasses.Explosive)) return true;
 			return null;
@@ -655,13 +675,12 @@ namespace Origins {
                 velocity *= 1.38f;
             }
             if (item.CountsAsClass(DamageClasses.Explosive)) {
+				StatModifier velocityModifier = explosiveProjectileSpeed;
                 if (item.useAmmo == 0 && item.CountsAsClass(DamageClass.Throwing)) {
-                    velocity *= explosiveThrowSpeed;
+					velocityModifier = velocityModifier.CombineWith(explosiveThrowSpeed);
                 }
-                if (mythSet) {
-                    damage += (int)(Player.velocity.Length() * 2f);
-                    velocity *= (int)(Player.velocity.Length() * 0.3f);
-                }
+				float baseSpeed = velocity.Length();
+				velocity *= velocityModifier.ApplyTo(baseSpeed) / baseSpeed;
             }
             if (item.shoot > ProjectileID.None && felnumShock > 29) {
                 Projectile p = new();
@@ -808,8 +827,10 @@ namespace Origins {
         public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
             if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
                 damage.Flat += Player.statDefense / 2;
-            }
-            damage.Flat *= Origins.FlatDamageMultiplier[item.type];
+			}
+			if (Origins.ArtifactMinion[item.shoot]) damage = damage.CombineWith(artifactDamage);
+			damage.Base *= Origins.FlatDamageMultiplier[item.type];
+			damage.Flat *= Origins.FlatDamageMultiplier[item.type];
         }
         /// <param name="target">the potential target</param>
         /// <param name="targetPriorityMultiplier"></param>
@@ -844,16 +865,16 @@ namespace Origins {
                         explosiveSelfDamage -= 0.2f;
                         float inverseDamage = Player.GetDamage(DamageClasses.Explosive).ApplyTo(damage);
                         damageVal -= inverseDamage - damage;
-						if (explosiveSelfDamage < 0) {
-                            explosiveSelfDamage = 0;
-                        }
                         if (damageVal < 0) {
                             damageVal = 0;
                         }
                         //damage = (int)(damage/explosiveDamage);
                         //damage-=damage/5;
                     }
-                    damage = (int)(damageVal * explosiveSelfDamage);
+                    damage = (int)explosiveSelfDamage.ApplyTo(damageVal);
+					if (Math.Sign(damage) != Math.Sign(damageVal)) {
+						damage = 0;
+					}
                 }
             }
             if(defiledSet) {
