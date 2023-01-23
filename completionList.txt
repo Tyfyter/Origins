@@ -77,19 +77,15 @@ TOWN NPCs:
 
 VANILLA MODIFICATIONS:
 ---
-(^) Avenger Emblem (craftable from Exploder Emblem)*
-(^) Glass Kiln (craft some Origins materials)*
-(^) Miner Set (https://tyfyter.github.io/OriginsWiki/Recipe_Changes)*
-(^) Nights Edge with Origins equivalents
-(^) Obsidian Set (craftable from Undead Chunk AND Riven Sample)*
-(^) Strange String/Bud Barnacle (to craft Mechanical Worm and Battle Potion)*
+(O) Recipes General
 
+(X) Aggro Nerf
 (^) Bats (drop Bat Hide)*
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (^) Demolitionist (to sell different items based on peat sold)*
 (^) Dryad Selling Origins Evil Items on Blood Moon*
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
-(X) Explosive Defense Punishment (increased affliction from defense) !!!
+(^) Explosive Defense Punishment (increased affliction from defense)
 (^) Harpoon (new weapon to introduce sub-class)*
 (^) Trees*
 (^) Wall of Flesh (to drop Exploder Emblem & Thermite Launcher)*
@@ -254,7 +250,9 @@ ACCESSORIES:
 (#2, ^2) Lover's Leap !!!
 (X) Locus Control Tuner
 (#, ^2) Lover's Leap !!!
+(X) Magic Glove
 (^) Makeover Choker
+(^) Missile Arm Cannon
 (#3, ^2) Mitosis
 (X) Ninja Ravel !!!
 (^) Nitro Crate
