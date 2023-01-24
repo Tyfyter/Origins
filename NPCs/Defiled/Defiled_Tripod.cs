@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items.Materials;
 using Origins.Tiles;
 using System;
@@ -43,6 +44,7 @@ namespace Origins.NPCs.Defiled {
             set;
         }
         public override void OnHitPlayer(Player target, int damage, bool crit) {
+            target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 70);
             int maxDrain = (int)Math.Min(MaxMana - Mana, MaxManaDrain);
             int manaDrain = Math.Min(maxDrain, target.statMana);
             target.statMana -= manaDrain;

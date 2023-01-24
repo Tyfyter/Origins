@@ -79,7 +79,6 @@ VANILLA MODIFICATIONS:
 ---
 (O) Recipes General
 
-(X) Aggro Nerf
 (^) Bats (drop Bat Hide)*
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (^) Demolitionist (to sell different items based on peat sold)*
@@ -235,6 +234,7 @@ ACCESSORIES:
 (^) Comb
 (^) Coologne
 (^) Cybernetic Brain*
+(X) Dangerous Fuse
 (^) Decaying Scale*
 (@4, ^3) Destructive Claws !!!
 (^) Dim Starlight*
@@ -246,12 +246,14 @@ ACCESSORIES:
 (X) Headstomperz
 (X) Helium Tank
 (^) Keepsake Remains
+(X) Last Descendent
 (^) Locket Necklace
 (#2, ^2) Lover's Leap !!!
 (X) Locus Control Tuner
 (#, ^2) Lover's Leap !!!
 (X) Magic Glove
 (^) Makeover Choker
+(X) Messy Leech
 (^) Missile Arm Cannon
 (#3, ^2) Mitosis
 (X) Ninja Ravel !!!
@@ -268,7 +270,9 @@ ACCESSORIES:
 (^) Scavenger Bag
 (#2, ^2) Sonic Radar
 (^) Shield of Retribution
+(X) Super Party Hat
 (X) Superjump Cape
+(X) Superstar Celebration Gear
 (^) Symbiote Skull
 (#2, ^2) Trap Charm !!!
 (#, ^2) Turbo Reel !!!
@@ -576,6 +580,7 @@ EXPLOSIVE WEAPONS:
 
 (^) Bomboomstick
 (#2, ^2) Boomphracken
+(^) Happy Bomb
 (#, ^2) Klangjet
 (#, ^2) Mortar Shell
 (^) Shrapnel Bomb

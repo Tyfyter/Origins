@@ -138,6 +138,9 @@ namespace Origins.NPCs {
 				case NPCID.WyvernHead:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Startillery>(), 12));
 				break;
+				case NPCID.Clown:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Happy_Bomb>(), 10, 7, 21));
+				break;
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = dropRules.Where((r) => 
 				r is LeadingConditionRule conditionRule &&
