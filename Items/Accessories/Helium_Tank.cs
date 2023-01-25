@@ -4,10 +4,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Air_Tank : ModItem {
+    public class Helium_Tank : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Air Tank");
-            Tooltip.SetDefault("Extends underwater breathing\nImmunity to ‘Suffocation’");
+            DisplayName.SetDefault("Helium Tank");
+            Tooltip.SetDefault("Extends underwater breathing\nImmunity to ‘Suffocation’\n'Don't laugh'");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -18,18 +18,13 @@ namespace Origins.Items.Accessories {
         public override void UpdateEquip(Player player) {
             player.buffImmune[BuffID.Suffocation] = true;
             player.breathMax += 257;
+            player.GetModPlayer<OriginPlayer>().heliumTank = true;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.TitaniumBar, 20);
-            recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
-            recipe.AddTile(TileID.MythrilAnvil);
-            recipe.Register();
-
-            recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.AdamantiteBar, 20);
-            recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
-            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.AddIngredient(ItemID.WhoopieCushion);
+            recipe.AddIngredient(ModContent.ItemType<Air_Tank>());
+            recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();
         }
     }

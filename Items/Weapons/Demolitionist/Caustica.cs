@@ -102,7 +102,7 @@ namespace Origins.Items.Weapons.Demolitionist {
                 Projectile.ai[0]++;
                 Projectile.ai[1] = target.whoAmI;
             }
-            target.AddBuff(Solvent_Debuff.ID, 480);
+            target.AddBuff(Toxic_Shock_Debuff.ID, 480);
             target.AddBuff(BuffID.CursedInferno, 480);
             target.AddBuff(BuffID.Venom, 480);
             for(int i = 5; 0<--i;) {

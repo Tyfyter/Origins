@@ -72,9 +72,11 @@ namespace Origins {
         public bool entangledEnergy = false;
         public bool asylumWhistle = false;
         public int asylumWhistleTarget = -1;
+        public bool heliumTank = false;
         public bool mitosis = false;
         public Item mitosisItem = null;
         public int mitosisCooldown = 0;
+        public bool messyLeech = false;
         public bool reshapingChunk = false;
         public float mysteriousSprayMult = 1;
         public bool protozoaFood = false;
@@ -239,7 +241,9 @@ namespace Origins {
             amebicVialVisible = false;
             mitosis = false;
             mitosisItem = null;
+            messyLeech = false;
             entangledEnergy = false;
+            heliumTank = false;
             mysteriousSprayMult = 1;
             protozoaFood = false;
             protozoaFoodItem = null;
@@ -669,6 +673,12 @@ namespace Origins {
 			if (item.CountsAsClass(DamageClasses.Explosive)) {
 				damage -= (int)Math.Max((target.defense - Player.GetWeaponArmorPenetration(item)) * (explosive_defense_factor - 0.5f), 0);
 			}
+            if (messyLeech) {
+                /*if (NPC.Defiled) {
+                    NPC.lifeRegen = 0;
+                }*/
+                target.AddBuff(BuffID.Bleeding, 480);
+            }
 		}
         public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
             if (advancedImaging) {
@@ -794,7 +804,6 @@ namespace Origins {
             }
             if (decayingScale) {
                 target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
-                target.AddBuff(Solvent_Debuff.ID, 300);
             }
 			if (target.life <= 0) {
                 foreach (var quest in Quest_Registry.Quests.Values) {
@@ -819,7 +828,10 @@ namespace Origins {
             }
         }
         public override void OnHitByNPC(NPC npc, int damage, bool crit) {
-            if(!Player.noKnockback && damage!=0) {
+            if (heliumTank) {
+                SoundEngine.PlaySound(SoundID.PlayerHit.WithPitch(3));
+            }
+            if (!Player.noKnockback && damage!=0) {
                 Player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
             }
             MeleeCollisionNPCData.knockbackMult = 1f;
@@ -854,7 +866,7 @@ namespace Origins {
         internal static FieldInfo _sourceProjectileIndex;
         static FieldInfo SourceProjectileIndex => _sourceProjectileIndex ??= typeof(PlayerDeathReason).GetField("_sourceProjectileIndex", BindingFlags.Instance | BindingFlags.NonPublic);
         public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter) {
-            if(Player.HasBuff(Solvent_Debuff.ID) && Main.rand.Next(9)<3) {
+            if(Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(9)<3) {
                 crit = true;
             }
 			if ((int)SourcePlayerIndex.GetValue(damageSource) == Player.whoAmI) {

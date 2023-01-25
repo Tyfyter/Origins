@@ -46,12 +46,11 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver !!!
-(#3, $, ^2) Primordial Amoeba !!!
+(#4, $, ^2) Primordial Amoeba !!!
 
 (X) Miscreant
 (X) Scrapper
 
-(X) Alien Queen
 (X) Duskord
 (X) Severus, the Dark One
 
@@ -66,7 +65,6 @@ TOWN NPCs:
 (#2) TOWN NPC QUEST MECHANICS (general)
 
 (#2, %2, ^2) Acid Freak
-(%2, X) Darkathian Miner
 (X) Defiled Envoy
 
 (%2, X) Dusk Trader
@@ -79,15 +77,11 @@ VANILLA MODIFICATIONS:
 ---
 (O) Recipes General
 
-(^) Bats (drop Bat Hide)*
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (^) Demolitionist (to sell different items based on peat sold)*
-(^) Dryad Selling Origins Evil Items on Blood Moon*
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
 (^) Explosive Defense Punishment (increased affliction from defense)
 (^) Harpoon (new weapon to introduce sub-class)*
-(^) Trees*
-(^) Wall of Flesh (to drop Exploder Emblem & Thermite Launcher)*
 ---
 
 
@@ -136,7 +130,6 @@ ENEMY NPCS:
 (X) Torn Ghoul
 (#, ^2) Vent Hopper
 
-(%3) Alien Colony Enemies
 (X) Annihilator
 (X) Clockwork
 (X) Clustroid
@@ -172,12 +165,10 @@ STATUS EFFECTS:
 (#3, ^2) Defiled Exhaustion
 (X) Ionizing Radiation
 (^) Impeding Shrapnel
-(X) Levitation
 (^) Rasterize
-(^) Solvent
 (@3, ^3) Torn
 (^) Totally Safe
-(^) Toxic Shock
+(O) Toxic Shock
 (X) Whiplash
 (X) Workout
 ---
@@ -209,7 +200,7 @@ ARMOR:
 (^) Acrid Armor
 (^) Bleeding Obsidian Armor
 
-(#2, ^2) Necromancer Armor
+(#3, ^2) Necromancer Armor
 (X) Blast Armor
 
 (X) Ascendant Armor
@@ -228,14 +219,13 @@ ACCESSORIES:
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
-(#, ^2) Bullet Shield*
 (^) Celestial Starlight
 (^) Celestial Stone Mask
 (^) Comb
 (^) Coologne
-(^) Cybernetic Brain*
-(X) Dangerous Fuse
+(#2, ^2) I-WTPA Standard
 (^) Decaying Scale*
+(X) Deep Diving Gear
 (@4, ^3) Destructive Claws !!!
 (^) Dim Starlight*
 (^) Exploder Emblem*
@@ -243,32 +233,33 @@ ACCESSORIES:
 (^) Gun Glove
 (^) Handy Helper
 (X) Hazard Charm !!!
-(X) Headstomperz
-(X) Helium Tank
+(@2, #2) Headstomperz
+(^) Helium Tank
 (^) Keepsake Remains
-(X) Last Descendent
+(#2, ^2) Last Descendent
 (^) Locket Necklace
 (#2, ^2) Lover's Leap !!!
-(X) Locus Control Tuner
-(#, ^2) Lover's Leap !!!
-(X) Magic Glove
+(@2, #3) Magic Glove
 (^) Makeover Choker
-(X) Messy Leech
-(^) Missile Arm Cannon
+(#3, ^2) Messy Leech
+(#3, ^2) Messy Magma Leech
+(@2, #3) Missile Arm Cannon
 (#3, ^2) Mitosis
-(X) Ninja Ravel !!!
 (^) Nitro Crate
 (#, ^2) No U Card
 (^) Olid Organ*
 (^) Parasitic Influence*
+(#2, ^2) Plasma Phial !!!
 (^) Pneumatic Bomb Thrower*
 (^) Powerflower
 (X) Proactive Protozoa !!!
 (^) Razorwire
+(@2, #2) Rebreather
+(@2, #3) Rebreather Kit
 (^) Return To Sender*
 (#2, ^2) Sonar Visor*
 (^) Scavenger Bag
-(#2, ^2) Sonic Radar
+(@5, #2) Sonic Radar
 (^) Shield of Retribution
 (X) Super Party Hat
 (X) Superjump Cape
@@ -303,23 +294,17 @@ ACCESSORIES:
 
 (^) Amebic Vial
 (^) Fiberglass Dagger
-(X) Forbidden Salt
-(X) Gyroscope
-(^) Queen of Hearts
 (^) Refactoring Pieces
 (X) SOTH
 (X) Void Arcanum
-(#2, ^2) Warp Drive
+(#2, ^2) Mana Drive
 
 (%3, X) Armored Core
-(%3, X) Atomic Clock
 (^) Entangled Energy
 (^) Lazy Cloak
-(X) Magnetic Brain
 (^) Mysterious Spray
-(%3, X) Parallax
 (^) Protozoa Food
-(X) Scrapped Content
+(X) Scrap Compactor
 
 (^) Agility Core
 (^) Combat Core
@@ -332,7 +317,6 @@ ACCESSORIES:
 
 VANITY:
 ---
-(X) Alien Queen Head
 (^) Defiled Amalgamation Mask
 (X) Duskord Mask
 (^) Fiberglass Weaver Head
@@ -349,7 +333,9 @@ VANITY:
 (^) Cranivore Beanie
 (X) Decay Protector Set
 (X) Gore Protector Set
+(X) Sandals
 (X) Steampunk Mechanist Set
+(X) Sunflower Sandals
 (X) Well-Gelled Hero's Hair
 
 (^) Tyfyter's Set
@@ -507,8 +493,6 @@ MAGIC WEAPONS:
 (^) Splashid
 (^) Startillery
 
-(^) Cometburn
-(^) Gravaulter
 (^) Haunted Vase
 (X) Lunarfire
 (#, ^2) Phantom Fury
@@ -551,6 +535,7 @@ SUMMONER WEAPONS:
 (X) Obsidian Bone
 (X) Queen's Call
 (X) Ribatar
+(X) Seraphim Song
 (X) SMART Wrench
 (#, ^2) The Project
 
@@ -593,7 +578,6 @@ EXPLOSIVE WEAPONS:
 (^) Black Hole Bomb
 (#, ^2) Crystal Bomb
 (^) Crystal Grenade
-(@, ^3) Fallout
 (X) Grenade Lawnchair
 (X) Grenado
 (X) Mine Flayer
@@ -643,11 +627,8 @@ TILES:
 (X) Mildew
 (#2, ^2) Peat Moss* !!!
 (^) Riven Grass
-(X) Space Rock
-(#2, ^2) Space Goo
 (^) Spug Flesh
 (@5, ^3) Sulphur Stone
-(X) Taranum
 (^) White Ice
 (X) Defiled Cactus
 (X) Riven Cactus
@@ -754,8 +735,6 @@ MATERIALS:
 (^) Empyrite
 (^) Power Core
 (^) Rotor
-(^) Space Goo
-(^) Space Rock
 (^) Unity Shard
 
 (^) Chromtain Bar
@@ -788,7 +767,7 @@ CONSUMABLES:
 (X) The Defiled Will
 
 (^) Absorption Potion
-(#, ^2) Extreme O' Potion
+(X) Antisolve Potion
 (^) Fervor Potion
 (^) Flask of Alkahest
 (^) Flask of Black Bile
@@ -892,7 +871,6 @@ UI:
 
 MUSIC:
 ---
-(X) Alien Colony
 (O) Brine Pool !!!
 (^) Cubekon Temple
 (X) Dawn
@@ -903,7 +881,6 @@ MUSIC:
 (^) Riven Hive
 (^) The Dusk
 
-(X) Alien Queen
 (O) Defiled Amalgamation !!!
 (X) Duskord
 (X) Fiberglass Weaver

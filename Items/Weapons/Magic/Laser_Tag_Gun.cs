@@ -39,13 +39,13 @@ namespace Origins.Items.Weapons.Magic {
             Item.rare = ItemRarityID.Lime;
             Item.glowMask = glowmask;
 		}
-        public override void AddRecipes() {
+        /*public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Space_Goo>(), 10);
             recipe.AddIngredient(ModContent.ItemType<Space_Rock>(), 20);
             recipe.AddTile(TileID.LunarCraftingStation);
             recipe.Register();
-        }
+        }*/
         public override void UpdateInventory(Player player) {
         }
 

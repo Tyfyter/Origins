@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Origins.NPCs;
 using Terraria;
 using Terraria.ModLoader;
-using Origins.NPCs;
 
 namespace Origins.Buffs {
     public class Toxic_Shock_Debuff : ModBuff {
@@ -14,6 +9,7 @@ namespace Origins.Buffs {
         public static int ID { get; private set; } = -1;
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Toxic Shock");
+            Description.SetDefault("The agony is getting to you.");
             ID = Type;
         }
 		public override void Update(Player player, ref int buffIndex) {

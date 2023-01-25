@@ -98,7 +98,7 @@ namespace Origins.NPCs {
 			    spriteBatch.Restart(SpriteSortMode.Immediate, effect: Origins.rasterizeShader.Shader);
                 return true;
             }
-            if(npc.HasBuff(Solvent_Debuff.ID)) {
+            if(npc.HasBuff(Toxic_Shock_Debuff.ID)) {
                 Origins.solventShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
                 Origins.solventShader.Shader.Parameters["uSaturation"].SetValue(Main.npcFrameCount[npc.type]);
                 Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;
@@ -108,7 +108,7 @@ namespace Origins.NPCs {
             return true;
         }
         public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-            if(npc.HasBuff(Solvent_Debuff.ID) || rasterizedTime > 0) {
+            if(npc.HasBuff(Toxic_Shock_Debuff.ID) || rasterizedTime > 0) {
 			    spriteBatch.Restart();
 			}
         }

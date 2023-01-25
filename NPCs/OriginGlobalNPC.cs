@@ -140,11 +140,11 @@ namespace Origins.NPCs {
 			return base.CanHitPlayer(npc, target, ref cooldownSlot);
 		}
 		public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) {
-			if (npc.HasBuff(Solvent_Debuff.ID) && crit) {
-				damage *= 1.3;
-			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				damage += defense * 0.1f;
+				if (crit) {
+                    damage *= 1.3;
+				}
 			}
 			if (tornTime > 0) {
 				damage /= 1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime));

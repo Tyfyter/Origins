@@ -141,6 +141,12 @@ namespace Origins.NPCs {
 				case NPCID.Clown:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Happy_Bomb>(), 10, 7, 21));
 				break;
+				case NPCID.PurpleSlime:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plasma_Phial>(), 6));
+				break;
+				case NPCID.AnglerFish:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rebreather>(), 10));
+				break;
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = dropRules.Where((r) => 
 				r is LeadingConditionRule conditionRule &&

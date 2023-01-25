@@ -665,30 +665,6 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-    public class Space_Goo : ModItem {
-        static short glowmask;
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Space Goo");
-            glowmask = Origins.AddGlowMask(this);
-            SacrificeTotal = 99;
-            
-        }
-        public override void SetDefaults() {
-            Item.maxStack = 999;
-            Item.rare = ItemRarityID.Yellow;
-            Item.glowMask = glowmask;
-        }
-    }
-    public class Space_Rock : ModItem {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Space Rock");
-            SacrificeTotal = 99;
-            
-        }
-        public override void SetDefaults() {
-            Item.maxStack = 999;
-        }
-    }
     public class Strange_String : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Strange String");
