@@ -72,11 +72,9 @@ namespace Origins {
         public bool entangledEnergy = false;
         public bool asylumWhistle = false;
         public int asylumWhistleTarget = -1;
-        public bool heliumTank = false;
-        public bool mitosis = false;
+		public bool mitosis = false;
         public Item mitosisItem = null;
         public int mitosisCooldown = 0;
-        public bool messyLeech = false;
         public bool reshapingChunk = false;
         public float mysteriousSprayMult = 1;
         public bool protozoaFood = false;
@@ -99,6 +97,9 @@ namespace Origins {
         public bool ceilingRavel = false;
 		public int spiderRavelTime;
 		public int vanityRavel;
+		public bool heliumTank = false;
+		public bool heliumTankHit = false;
+		public bool messyLeech = false;
 		#endregion
 
 		#region explosive stats
@@ -241,9 +242,7 @@ namespace Origins {
             amebicVialVisible = false;
             mitosis = false;
             mitosisItem = null;
-            messyLeech = false;
             entangledEnergy = false;
-            heliumTank = false;
             mysteriousSprayMult = 1;
             protozoaFood = false;
             protozoaFoodItem = null;
@@ -257,6 +256,8 @@ namespace Origins {
             unsoughtOrganItem = null;
             spiritShard = false;
             ravel = false;
+			heliumTank = false;
+			messyLeech = false;
 
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
                 Player.mount.Dismount(Player);
@@ -648,7 +649,11 @@ namespace Origins {
             }
 			if (gunGlove && gunGloveCooldown <= 0) {
                 if (Player.PickAmmo(gunGloveItem, out int projToShoot, out float speed, out int damage, out float knockback, out int usedAmmoItemId, ItemID.Sets.gunProj[gunGloveItem.type])) {
-					if (CombinedHooks.CanShoot(Player, gunGloveItem)) {
+					int manaCost = Player.GetManaCost(gunGloveItem);
+					if (CombinedHooks.CanShoot(Player, gunGloveItem) && Player.CheckMana(manaCost, true)) {
+						if (manaCost > 0) {
+							Player.manaRegenDelay = (int)Player.maxRegenDelay;
+						}
                         Vector2 position = Player.itemLocation;
                         Vector2 velocity = Vec2FromPolar(Player.direction == 1 ? Player.itemRotation : Player.itemRotation + MathHelper.Pi, speed);
                             
@@ -828,9 +833,6 @@ namespace Origins {
             }
         }
         public override void OnHitByNPC(NPC npc, int damage, bool crit) {
-            if (heliumTank) {
-                SoundEngine.PlaySound(SoundID.PlayerHit.WithPitch(3));
-            }
             if (!Player.noKnockback && damage!=0) {
                 Player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
             }
@@ -869,6 +871,13 @@ namespace Origins {
             if(Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(9)<3) {
                 crit = true;
             }
+			heliumTankHit = false;
+			if (heliumTank && playSound) {
+				if (!Player.stoned && !Player.frostArmor && !Player.boneArmor) {
+					heliumTankHit = true;
+					playSound = false;
+				}
+			}
 			if ((int)SourcePlayerIndex.GetValue(damageSource) == Player.whoAmI) {
                 Projectile sourceProjectile = Main.projectile[(int)SourceProjectileIndex.GetValue(damageSource)];
                 if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
@@ -916,6 +925,17 @@ namespace Origins {
             return damage > 0;
         }
         public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter) {
+			if (heliumTankHit) {
+				if ((Player.wereWolf || Player.forceWerewolf) && !Player.hideWolf) {
+					SoundEngine.PlaySound(SoundID.NPCHit6.WithPitch(1), Player.position);
+				} else if (Main.dontStarveWorld) {
+					SoundStyle style = (Player.Male ? SoundID.DSTMaleHurt : SoundID.DSTFemaleHurt).WithPitch(1);
+					SoundEngine.PlaySound(in style, Player.position);
+				} else {
+					SoundEngine.PlaySound((Player.Male ? SoundID.PlayerHit : SoundID.FemaleHit).WithPitch(1), Player.position);
+				}
+				Player.eyeHelper.BlinkBecausePlayerGotHurt();
+			}
             if(guardedHeart) {
                 Player.AddBuff(Guarded_Heart_Buff.ID, 60 * 8);
             }

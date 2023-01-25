@@ -9,7 +9,8 @@ namespace Origins.Items.Accessories {
             DisplayName.SetDefault("Missile Armcannon");
             Tooltip.SetDefault("30% increased explosive throwing velocity\nIncreases attack speed of thrown explosives\nEnables autouse for all explosive weapons\nShoots rockets as you swing\n'Payload not included'");
             SacrificeTotal = 1;
-        }
+			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];
+		}
         public override void SetDefaults() {
             sbyte handOnSlot = Item.handOnSlot;
             sbyte handOffSlot = Item.handOffSlot;
@@ -21,11 +22,11 @@ namespace Origins.Items.Accessories {
 
             Item.damage = 10;
             Item.DamageType = DamageClasses.Explosive;
-            Item.useTime = 5;
-            Item.useAnimation = 5;
+            Item.useTime = 15;
+            Item.useAnimation = 15;
             Item.shootSpeed = 5;
-            Item.useAmmo = AmmoID.Rocket; //Doesnt work for some reason
-            Item.UseSound = SoundID.Item10;
+            Item.useAmmo = AmmoID.Rocket;
+            Item.UseSound = SoundID.Item61;
         }
         public override void UpdateEquip(Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

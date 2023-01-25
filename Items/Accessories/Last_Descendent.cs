@@ -23,7 +23,10 @@ namespace Origins.Items.Accessories {
             recipe.Register();
         }
         public override void UpdateEquip(Player player) {
-            //player.GetModPlayer<OriginPlayer>().lastDescendent = true;
-        }
+			player.longInvince = true;
+			player.starCloakItem = Item;
+			player.starCloakItem_starVeilOverrideItem = Item;
+			player.GetModPlayer<OriginPlayer>().guardedHeart = true;
+		}
     }
 }

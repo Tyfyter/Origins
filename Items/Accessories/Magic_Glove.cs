@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,8 +22,8 @@ namespace Origins.Items.Accessories {
             Item.damage = 10;
             Item.DamageType = DamageClass.Magic;
             Item.useTime = 5;
-            Item.useAnimation = 5;
-            Item.shootSpeed = 5;
+            Item.useAnimation = 7;
+            Item.shootSpeed = 7;
             Item.mana = 1;
             Item.UseSound = SoundID.Item4;
         }
@@ -31,5 +32,20 @@ namespace Origins.Items.Accessories {
             originPlayer.gunGlove = true;
             originPlayer.gunGloveItem = Item;
         }
-    }
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			switch (Main.rand.Next(3)) {
+				case 0:
+				type = ProjectileID.AmberBolt;
+				break;
+
+				case 1:
+				type = ProjectileID.MagicMissile;
+				break;
+
+				case 2:
+				type = ProjectileID.WaterBolt;
+				break;
+			}
+		}
+	}
 }
