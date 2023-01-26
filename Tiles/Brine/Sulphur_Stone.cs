@@ -1,9 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,7 +14,8 @@ namespace Origins.Tiles.Brine {
 			ItemDrop = ItemType<Sulphur_Stone_Item>();
 			AddMapEntry(new Color(18, 73, 56));
             mergeID = TileID.Stone;
-		}
+            //HitSound = SoundID.digstone;
+        }
         public override bool CanExplode(int i, int j) {
             return false;
         }

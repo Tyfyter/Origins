@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Origins.Projectiles.Weapons;
 using Origins.Tiles.Brine;
 using Terraria;
@@ -11,7 +12,7 @@ namespace Origins.Items.Weapons.Magic {
 		static short glowmask;
 		public ushort Element => Elements.Acid;
         public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acid Splash");
+			DisplayName.SetDefault("Splashid");
 			Tooltip.SetDefault("Shoots a flurry of acid droplets");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
@@ -36,8 +37,9 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Sulphur_Stone_Item>(), 15);
-			//recipe.AddIngredient(ModContent.ItemType<Absorber_Culture_Item>(), 8);
+			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 15);
+			recipe.AddIngredient(ModContent.ItemType<Brineglow>(), 8);
+			recipe.AddIngredient(ModContent.ItemType<Sulphur_Stone_Item>(), 10);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

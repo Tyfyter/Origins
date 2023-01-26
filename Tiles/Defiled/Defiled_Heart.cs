@@ -30,7 +30,8 @@ namespace Origins.Tiles.Defiled {
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.ShadowOrbs };
             ID = Type;
-		}
+            HitSound = Origins.Sounds.DefiledIdle;
+        }
 		public override bool CanExplode(int i, int j) {
 			return false;
 		}

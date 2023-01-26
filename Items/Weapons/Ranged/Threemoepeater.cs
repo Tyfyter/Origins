@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Ranged {
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.HallowedRepeater);
-            Item.damage = 14;
+            Item.damage = 10;
             Item.DamageType = DamageClass.Ranged;
             Item.knockBack = 5;
             Item.noMelee = true;
@@ -52,7 +52,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override string Texture => "Origins/Projectiles/Weapons/Amoeba_Ball";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Threemoepeater");
+			DisplayName.SetDefault("Amoeba Ball");
 			ID = Type;
 		}
 		public override void SetDefaults() {

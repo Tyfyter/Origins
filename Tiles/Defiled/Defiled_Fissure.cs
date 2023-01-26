@@ -25,6 +25,7 @@ namespace Origins.Tiles.Defiled {
 			AdjTiles = new int[] { TileID.ShadowOrbs };
             ID = Type;
             AnimationFrameHeight = 144 / 4;
+            HitSound = Origins.Sounds.DefiledIdle;
         }
         public override void AnimateTile(ref int frame, ref int frameCounter) {
             if (++frameCounter >= 9) {

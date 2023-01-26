@@ -194,7 +194,7 @@ ARMOR:
 (^) Encrusted Armor
 (^) Felnum Armor
 (^) Fiberglass Armor
-(☻) Myth Armor !!!
+(^) Myth Armor
 (@, #2) Riptide Armor !!!
 
 (^) Acrid Armor
@@ -439,7 +439,7 @@ RANGED WEAPONS:
 (^) Sleetfire
 (^) Tendon Tear
 (^) The Kruncher
-(☻) Threemoepeater !!!
+(^) Threemoepeater
 (^) 2-in-1 Shotty
 (^) 3-in-1 Shotty
 
@@ -606,7 +606,7 @@ CLASSLESS WEAPONS:
 
 TILES:
 ---
-(#, ^2) Amoeba Fluid !!!
+(^) Amoeba Fluid
 (X) Angelic Cloud
 (#3, ^2) Batholith*
 (^) Bleeding Obsidian
@@ -615,8 +615,9 @@ TILES:
 (^) Defiled Sand
 (^) Defiled Sandstone
 (^) Defiled Stone*
-(@, ^3) Dusk Stone
+(@5, ^3) Dusk Stone
 (^) Dusklight
+(^) Eitrite Ore
 (@5, ^3) Encrusted Ore !!!
 (^) Felnum Ore
 (^) Fiberglass
@@ -719,13 +720,13 @@ MATERIALS:
 (^) Wilting Rose
 (^) Wrycoral
 
-(^) Acrid Bar
 (^) Alkahest
 (^) Black Bile
 (^) Bleeding Obsidian Shard
 (^) Bottled Acid
-(#, ^2) Brineglow
+(^) Brineglow
 (^) Defiled Key
+(^) Eitrite Bar
 (^) Illegal Explosive Parts
 (^) Riven Key
 

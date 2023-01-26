@@ -8,7 +8,6 @@ namespace Origins.Items.Tools {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Pickaxe");
-			Tooltip.SetDefault("Non-corrosive");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}
@@ -17,8 +16,6 @@ namespace Origins.Items.Tools {
 			Item.damage = 28;
 			Item.DamageType = DamageClass.Melee;
             Item.pick = 195;
-			Item.width = 34;
-			Item.height = 32;
 			Item.useTime = 7;
 			Item.useAnimation = 22;
 			Item.knockBack = 4f;
@@ -32,7 +29,7 @@ namespace Origins.Items.Tools {
         }
 		public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 15);
+            recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 15);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }

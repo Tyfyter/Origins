@@ -8,7 +8,6 @@ namespace Origins.Items.Tools {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Drill");
-			Tooltip.SetDefault("Non-corrosive");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}
@@ -16,8 +15,8 @@ namespace Origins.Items.Tools {
             Item.CloneDefaults(ItemID.TitaniumDrill);
 			Item.damage = 28;
             Item.pick = 195;
-			Item.width = 34;
-			Item.height = 32;
+			Item.width = 28;
+			Item.height = 26;
 			Item.knockBack*=2f;
             Item.shootSpeed = 56f;
             Item.shoot = ModContent.ProjectileType<Acrid_Drill_P>();
@@ -30,7 +29,7 @@ namespace Origins.Items.Tools {
         }
 		public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 15);
+            recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 15);
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }

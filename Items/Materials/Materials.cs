@@ -1,4 +1,5 @@
 ﻿using Origins.Tiles;
+using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
 using Origins.Tiles.Riven;
@@ -8,29 +9,20 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
-    public class Acrid_Bar : ModItem {
+    public class Eitrite_Bar : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Acrid Bar");
+            DisplayName.SetDefault("Eitrite Bar");
             SacrificeTotal = 25;
         }
         public override void SetDefaults() {
-            Item.value = Item.sellPrice(silver: 40);
-            Item.rare = ItemRarityID.LightRed;
+            Item.value = Item.sellPrice(silver: 81);
+            Item.rare = ItemRarityID.Orange;
             Item.maxStack = 999;
         }
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type, 10);
-            recipe.AddIngredient(ItemID.AdamantiteBar, 10);
-            recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 10);
-            recipe.AddIngredient(ModContent.ItemType<Bottled_Acid>(), 3);
-            recipe.AddTile(TileID.DemonAltar);
-            recipe.Register();
-
-            recipe = Recipe.Create(Type, 10);
-            recipe.AddIngredient(ItemID.TitaniumBar, 10);
-            recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 10);
-            recipe.AddIngredient(ModContent.ItemType<Bottled_Acid>(), 3);
-            recipe.AddTile(TileID.DemonAltar);
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Eitrite_Ore_Item>(), 4);
+            recipe.AddTile(TileID.AdamantiteForge);
             recipe.Register();
         }
     }
@@ -164,6 +156,20 @@ namespace Origins.Items.Materials {
             //recipe.AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>());
             recipe.AddTile(TileID.AlchemyTable);
             recipe.Register();
+        }
+    }
+    public class Brineglow : ModItem {
+        static short glowmask;
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Brineglow");
+            glowmask = Origins.AddGlowMask(this);
+            SacrificeTotal = 5;
+        }
+        public override void SetDefaults() {
+            Item.maxStack = 99;
+            Item.value = Item.sellPrice(silver: 5);
+            Item.rare = ItemRarityID.White;
+            Item.glowMask = glowmask;
         }
     }
     public class Bud_Barnacle : ModItem {
@@ -527,8 +533,8 @@ namespace Origins.Items.Materials {
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.HallowedBar, 4);
-            recipe.AddIngredient(ModContent.ItemType<Acrid_Bar>(), 8);
+            recipe.AddIngredient(ItemID.HallowedBar, 2);
+            recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 4);
             recipe.AddTile(TileID.Anvils); //Fabricator not implemented yet
             recipe.Register();
         }

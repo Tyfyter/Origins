@@ -22,6 +22,7 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(0, 200, 200));
             MinPick = 10;
             MineResist = 1f;
+            HitSound = SoundID.NPCHit13;
         }
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
             return true;

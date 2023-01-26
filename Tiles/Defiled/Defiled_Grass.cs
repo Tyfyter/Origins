@@ -1,14 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.World;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 
 namespace Origins.Tiles.Defiled {
     public class Defiled_Grass : OriginTile, DefiledTile {
@@ -23,7 +17,8 @@ namespace Origins.Tiles.Defiled {
             Main.tileMerge[TileID.Dirt][Type] = true;
             Main.tileMerge[Type][TileID.Mud] = true;
             Main.tileMerge[TileID.Mud][Type] = true;
-            for(int i = 0; i < TileLoader.TileCount; i++) {
+            HitSound = Origins.Sounds.DefiledIdle;
+            for (int i = 0; i < TileLoader.TileCount; i++) {
                 if(TileID.Sets.Grass[i]||TileID.Sets.GrassSpecial[i]) {
                     Main.tileMerge[Type][i] = true;
                     Main.tileMerge[i][Type] = true;
