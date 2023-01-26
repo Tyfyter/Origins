@@ -548,7 +548,7 @@ SUMMONER WEAPONS:
 EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
-(#, ^2) Bloombomb !!!
+(☻) Bloombomb !!!
 (#, ^2) Bombardment !!!
 (#2, ^2) Bomb Launcher !!!
 (#, ^2) Brainade !!!

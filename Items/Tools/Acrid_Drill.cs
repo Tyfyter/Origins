@@ -43,7 +43,8 @@ namespace Origins.Items.Tools {
             Projectile.CloneDefaults(ProjectileID.TitaniumDrill);
 		}
         public override void AI() {
-            if(Main.player[Projectile.owner].wet)++Projectile.frameCounter;
+			Projectile.position -= Projectile.velocity.SafeNormalize(default) * 4;
+            if (Main.player[Projectile.owner].wet) ++Projectile.frameCounter;
 			if (++Projectile.frameCounter > 4) {
 				Projectile.frameCounter = 0;
 				if (++Projectile.frame > 1) {

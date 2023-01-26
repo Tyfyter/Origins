@@ -396,8 +396,10 @@ namespace Origins {
                     }
                 } else {
 					bool colliding = false;
+					float halfSpiderWidth = Player.width / 2 - 1;
+					float halfSpiderHeight = Player.height / 2 + 4;
 					for (int i = -1; i < 2; i++) {
-						Tile currentTile = Main.tile[(Player.Center - Player.velocity + new Vector2(9 * i, -14)).ToTileCoordinates()];
+						Tile currentTile = Main.tile[(Player.Center - Player.velocity + new Vector2(halfSpiderWidth * i, -halfSpiderHeight)).ToTileCoordinates()];
 						if (currentTile.HasTile && Main.tileSolid[currentTile.TileType] && !Main.tileSolidTop[currentTile.TileType]) {
 							colliding = true;
 							break;
