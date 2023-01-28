@@ -267,7 +267,6 @@ namespace Origins.NPCs {
 
 				if (spawnInfo.PlayerFloorY <= Main.worldSurface + 50 && spawnInfo.SpawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), Defiled_Wastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
 				if (Main.hardMode) {
-					pool.Add(ModContent.NPCType<Defiled_Hunter_Head>(), Defiled_Wastelands.SpawnRates.Hunter);
 					if (TileID.Sets.Conversion.Sand[Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType]) {
 						pool.Add(ModContent.NPCType<Shattered_Mummy>(), Defiled_Wastelands.SpawnRates.Cyclops);
 					}
@@ -334,7 +333,7 @@ namespace Origins.NPCs {
 			if (Main.hardMode && !spawnInfo.PlayerSafe) {
 				if (spawnInfo.SpawnTileY > Main.rockLayer) {
 					if (player.InModBiome<Defiled_Wastelands>()) {
-						//pool.Add(ModContent.NPCType<Defiled_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
+						pool.Add(ModContent.NPCType<Defiled_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
 						pool.Add(ModContent.NPCType<Enchanted_Trident>(), Defiled_Wastelands.SpawnRates.Bident);
 					}
 					if (player.InModBiome<Riven_Hive>()) {

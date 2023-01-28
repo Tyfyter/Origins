@@ -70,7 +70,6 @@ namespace Origins.World.BiomeData {
             public const float Brute = 0.6f;
             public const float Flyer = 0.6f;
             public const float Worm = 0.6f;
-            public const float Hunter = 0.6f;
 			public const float Mimic = 0.1f;
 			public const float Bident = 0.2f;
 			public const float Tripod = 0.3f;
