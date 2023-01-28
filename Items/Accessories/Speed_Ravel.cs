@@ -29,6 +29,18 @@ namespace Origins.Items.Accessories {
             recipe.AddIngredient(Ravel.ID);
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();
+
+			recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.SailfishBoots);
+			recipe.AddIngredient(Ravel.ID);
+			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.Register();
+
+			recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.FlurryBoots);
+			recipe.AddIngredient(Ravel.ID);
+			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.Register();
 		}
 	}
     public class Speed_Ravel_Mount : Ravel_Mount {

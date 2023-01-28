@@ -102,6 +102,8 @@ namespace Origins {
 		public bool heliumTank = false;
 		public bool heliumTankHit = false;
 		public bool messyLeech = false;
+		public bool noU = false;
+		public HashSet<Point> noUOldBuffs;
 		#endregion
 
 		#region explosive stats
@@ -264,6 +266,7 @@ namespace Origins {
             ravel = false;
 			heliumTank = false;
 			messyLeech = false;
+			noU = false;
 
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
                 Player.mount.Dismount(Player);
@@ -843,12 +846,6 @@ namespace Origins {
                 damage = (int)(damageVal * explosiveSelfDamage);*/
             }
         }
-        public override void OnHitByNPC(NPC npc, int damage, bool crit) {
-            if (!Player.noKnockback && damage!=0) {
-                Player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
-            }
-            MeleeCollisionNPCData.knockbackMult = 1f;
-        }
         public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
             if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
                 damage.Flat += Player.statDefense / 2;
@@ -856,12 +853,26 @@ namespace Origins {
 			if (Origins.ArtifactMinion[item.shoot]) damage = damage.CombineWith(artifactDamage);
 			damage.Base *= Origins.FlatDamageMultiplier[item.type];
 			damage.Flat *= Origins.FlatDamageMultiplier[item.type];
-        }
-        /// <param name="target">the potential target</param>
-        /// <param name="targetPriorityMultiplier"></param>
-        /// <param name="isPriorityTarget">whether or not this npc is a "priority" target (i.e. a manually selected target)</param>
-        /// <param name="foundTarget">whether or not a target has already been found</param>
-        public delegate void Minion_Selector(NPC target, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget);
+		}
+		public override void OnHitByNPC(NPC npc, int damage, bool crit) {
+			if (!Player.noKnockback && damage != 0) {
+				Player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
+			}
+			if (noU) {
+				for (int i = 0; i < Player.MaxBuffs; i++) {
+					if (!noUOldBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
+						npc.AddBuff(Player.buffType[i], Player.buffTime[i]);
+						Player.DelBuff(i--);
+					}
+				}
+			}
+			MeleeCollisionNPCData.knockbackMult = 1f;
+		}
+		/// <param name="target">the potential target</param>
+		/// <param name="targetPriorityMultiplier"></param>
+		/// <param name="isPriorityTarget">whether or not this npc is a "priority" target (i.e. a manually selected target)</param>
+		/// <param name="foundTarget">whether or not a target has already been found</param>
+		public delegate void Minion_Selector(NPC target, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget);
         public bool GetMinionTarget(Minion_Selector selector) {
             bool foundTarget = false;
             if (Player.MinionAttackTargetNPC > -1) selector(Main.npc[Player.MinionAttackTargetNPC], 1f, true, ref foundTarget);
@@ -1034,6 +1045,12 @@ namespace Origins {
                     );
                 }
             }
+			if (noU) {
+				noUOldBuffs = new();
+				for (int i = 0; i < Player.MaxBuffs; i++) {
+					noUOldBuffs.Add(new Point(Player.buffType[i], Player.buffTime[i]));
+				}
+			}
         }
         public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
             if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {
