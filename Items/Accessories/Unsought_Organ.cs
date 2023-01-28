@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.Buffs;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -6,14 +7,14 @@ namespace Origins.Items.Accessories {
     public class Unsought_Organ : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Unsought Organ");
-            Tooltip.SetDefault("Half of damage recieved is split across 3 enemies whilst inflicting 'Toxic Shock'\n5% increased damage and critical strike chance\nEnemies are less likely to target you");
+            Tooltip.SetDefault("Half of damage received is split across 3 enemies, inflicting 'Toxic Shock'\n5% increased damage and critical strike chance\nEnemies are less likely to target you");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.YoYoGlove);
             Item.rare = ItemRarityID.LightPurple;
             Item.value = Item.sellPrice(gold: 5);
-            Item.shoot = ProjectileID.BulletHighVelocity;
+			Item.shoot = ModContent.ProjectileType<Unsought_Organ_P>();
         }
         public override void UpdateEquip(Player player) {
             player.aggro -= 275;
@@ -31,4 +32,22 @@ namespace Origins.Items.Accessories {
             recipe.Register();
         }
     }
+	public class Unsought_Organ_P : ModProjectile {
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.CursedBullet;
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.CursedBullet);
+			Projectile.aiStyle = 0;
+		}
+		public override void AI() {
+			Projectile.rotation = Projectile.velocity.ToRotation();
+			if (Projectile.alpha > 0)
+				Projectile.alpha -= 15;
+			if (Projectile.alpha < 0)
+				Projectile.alpha = 0;
+			//TODO: add light
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
+		}
+	}
 }

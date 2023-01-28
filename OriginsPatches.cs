@@ -578,9 +578,9 @@ namespace Origins {
                     PlayerShaderSet shaderSet = new PlayerShaderSet(drawPlayer);
                     new PlayerShaderSet(amebicProtectionShaderID).Apply(drawPlayer);
                     int playerHairDye = drawPlayer.hairDye;
-                    drawPlayer.hairDye = amebicProtectionHairShaderID;
+					drawPlayer.hairDye = amebicProtectionHairShaderID;
 
-                    const float offset = 2;
+					const float offset = 2;
                     int itemAnimation = drawPlayer.itemAnimation;
                     drawPlayer.itemAnimation = 0;
                     isDrawingShadyDupes = true;
@@ -597,7 +597,7 @@ namespace Origins {
                     orig(self, camera, drawPlayer, position + new Vector2(0, -offset), rotation, rotationOrigin, shadow, alpha, scale, headOnly);
                     shaderSet.Apply(drawPlayer);
                     drawPlayer.hairDye = playerHairDye;
-                    drawPlayer.itemAnimation = itemAnimation;
+					drawPlayer.itemAnimation = itemAnimation;
                     isDrawingShadyDupes = false;
                 }
                 int rasterizedTime = originPlayer.rasterizedTime;

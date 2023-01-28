@@ -15,8 +15,8 @@ namespace Origins.Items.Accessories {
             Item.rare = ItemRarityID.Blue;
         }
         public override void UpdateEquip(Player player) {
-            player.lifeRegen += 1;
-           // player.GetModPlayer<OriginPlayer>().plasmaPhial = true;
+			player.lifeRegen += 1;
+			player.GetModPlayer<OriginPlayer>().plasmaPhial = true;
         }
     }
 }

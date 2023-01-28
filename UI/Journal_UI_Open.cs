@@ -51,7 +51,7 @@ namespace Origins.UI {
 			baseElement.HAlign = 0.5f;
 			Append(baseElement);
 			Recalculate();
-			xMargin = baseElement.GetDimensions().Width * 0.1f;
+			xMargin = baseElement.GetDimensions().Width * 0.075f;
 			yMargin = baseElement.GetDimensions().Height * 0.1f;
 			//SetText(loremIpsum);
 			SwitchMode(tabLayout ? Journal_UI_Mode.Index_Page : Journal_UI_Mode.Search_Page, "");
@@ -270,9 +270,11 @@ namespace Origins.UI {
 			int tries = 1000;
 			while (currentMatch is not null && tries-->0) {
 				if (ModContent.TryFind(currentMatch.Value, out ModItem item)) {
-					outputText = itemTagRegex.Replace(outputText, item.Type + "", 1);
+					outputText = itemTagRegex.Replace(outputText, item.Type + "", 1, currentMatch.Index);
+				} else if (ItemID.Search.TryGetId(currentMatch.Value, out int id)) {
+					outputText = itemTagRegex.Replace(outputText, id + "", 1, currentMatch.Index);
 				}
-				currentMatch = itemTagRegex.Match(outputText);
+				currentMatch = itemTagRegex.Match(outputText, currentMatch.Index + 1);
 			}
 			return outputText;
 		}

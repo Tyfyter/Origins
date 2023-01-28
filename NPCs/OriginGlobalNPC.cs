@@ -31,13 +31,18 @@ namespace Origins.NPCs {
 				worldHasHive = true;
 				break;
 			}
-			//Demo-man
-			if (type == NPCID.Merchant) {
+			if (type == NPCID.GoblinTinkerer) {
+				if (ModContent.GetInstance<Turbo_Reel_Quest>().Completed) {
+					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Turbo_Reel>());
+				}
+				if (ModContent.GetInstance<Gun_Glove_Quest>().Completed) {
+					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Gun_Glove>());
+				}
+			} else if (type == NPCID.Merchant) {
 				if (ModContent.GetInstance<Blue_Bovine_Quest>().Completed) {
 					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Blue_Bovine>());
 				}
-			}
-			if (type == NPCID.Demolitionist) {
+			} else if (type == NPCID.Demolitionist) {
 				if (ModContent.GetInstance<OriginSystem>().peatSold >= 0 && !Main.hardMode) {
 					shop.item[nextSlot++].SetDefaults(ItemID.ExplosivePowder);
 				}
@@ -90,8 +95,7 @@ namespace Origins.NPCs {
 				}
 			} else if (type == NPCID.Cyborg) {
 				shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Advanced_Imaging>());
-			}
-			if (type == NPCID.SkeletonMerchant) {
+			} else if (type == NPCID.SkeletonMerchant) {
 				//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Trash_Lid>());
 			}
 		}

@@ -103,7 +103,8 @@ namespace Origins {
 		public bool heliumTankHit = false;
 		public bool messyLeech = false;
 		public bool noU = false;
-		public HashSet<Point> noUOldBuffs;
+		public HashSet<Point> preHitBuffs;
+		public bool plasmaPhial = false;
 		#endregion
 
 		#region explosive stats
@@ -267,6 +268,7 @@ namespace Origins {
 			heliumTank = false;
 			messyLeech = false;
 			noU = false;
+			plasmaPhial = false;
 
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
                 Player.mount.Dismount(Player);
@@ -536,6 +538,19 @@ namespace Origins {
 				}
             }
         }
+		public override void UpdateDyes() {
+			if (Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
+				for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
+					if (Player.armor[i].ModItem is Ravel) {
+						Player.cMount = Player.dye[i].dye;
+					}
+					if (Player.armor[i + 10].ModItem is Ravel) {
+						Player.cMount = Player.dye[i].dye;
+						break;
+					}
+				}
+			}
+		}
 		public override void PostUpdateBuffs() {
             if (Player.whoAmI == Main.myPlayer) {
                 foreach (var quest in Quest_Registry.Quests.Values) {
@@ -642,6 +657,11 @@ namespace Origins {
         public override void UpdateLifeRegen() {
             if(cryostenHelmet)Player.lifeRegenCount+=cryostenLifeRegenCount>0 ? 180 : 1;
         }
+		public override void UpdateBadLifeRegen() {
+			if (plasmaPhial && Player.bleed) {
+				Player.lifeRegen -= 12;
+			}
+		}
 		#region attacks
 		public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
 			if (Origins.ArtifactMinion[item.shoot]) {
@@ -858,11 +878,20 @@ namespace Origins {
 			if (!Player.noKnockback && damage != 0) {
 				Player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
 			}
-			if (noU) {
-				for (int i = 0; i < Player.MaxBuffs; i++) {
-					if (!noUOldBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
-						npc.AddBuff(Player.buffType[i], Player.buffTime[i]);
+			for (int i = 0; i < Player.MaxBuffs; i++) {
+				if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
+					int buffType = Player.buffType[i];
+					if (noU) {
+						bool immune = npc.buffImmune[buffType];
+						npc.buffImmune[buffType] = false;
+						npc.AddBuff(buffType, Player.buffTime[i]);
+						npc.buffImmune[buffType] = immune;
+
 						Player.DelBuff(i--);
+					} else if (plasmaPhial) {
+						if (Main.debuff[buffType]) {
+							Player.buffTime[i] /= 2;
+						}
 					}
 				}
 			}
@@ -1044,14 +1073,12 @@ namespace Origins {
                         Player.whoAmI
                     );
                 }
-            }
-			if (noU) {
-				noUOldBuffs = new();
-				for (int i = 0; i < Player.MaxBuffs; i++) {
-					noUOldBuffs.Add(new Point(Player.buffType[i], Player.buffTime[i]));
-				}
 			}
-        }
+			preHitBuffs = new();
+			for (int i = 0; i < Player.MaxBuffs; i++) {
+				preHitBuffs.Add(new Point(Player.buffType[i], Player.buffTime[i]));
+			}
+		}
         public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
             if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {
                 OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();

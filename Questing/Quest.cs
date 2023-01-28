@@ -57,5 +57,23 @@ namespace Origins.Questing {
 			if (Quest_Registry.Quests is null) Quest_Registry.Quests = new Dictionary<string, Quest>();
 			Quest_Registry.Quests.Add(FullName, this);
 		}
+		public static string StageTagOption(bool completed) => completed ? "/completed" : "";
+		public static void ConsumeItems(Item[] inventory, params (Predicate<Item> match, int count)[] items) {
+			for (int j = 0; j < inventory.Length; j++) {
+				Item item = inventory[j];
+				for (int i = 0; i < items.Length; i++) {
+					var current = items[i];
+					if (current.match(item)) {
+						if (current.count >= item.stack) {
+							current.count -= item.stack;
+							item.TurnToAir();
+						} else {
+							item.stack -= current.count;
+							current.count = 0;
+						}
+					}
+				}
+			}
+		}
 	}
 }
