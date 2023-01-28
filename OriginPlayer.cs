@@ -51,6 +51,8 @@ namespace Origins {
         public bool mimicSet = false;
 		public bool riptideSet = false;
 		public bool riptideLegs = false;
+		public bool necroSet = false;
+		public float necroSetAmount = 0f;
 		public int mimicSetChoices = 0;
         public int setActiveAbility = 0;
         public int setAbilityCooldown = 0;
@@ -215,6 +217,10 @@ namespace Origins {
             mimicSet = false;
 			riptideSet = false;
 			riptideLegs = false;
+			necroSet = false;
+			if (necroSetAmount > 0) {
+				necroSetAmount -= 1 + necroSetAmount * 0.01f;
+			}
 			setActiveAbility = 0;
 
             if (setAbilityCooldown > 0) {
@@ -818,6 +824,9 @@ namespace Origins {
                         quest.KillEnemyEvent(target);
                     }
                 }
+				if (necroSet) {
+					necroSetAmount += target.lifeMax;
+				}
             }
         }
 

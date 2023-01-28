@@ -26,7 +26,16 @@ namespace Origins.Items.Armor.Necromancer {
             player.setBonus = "Slain enemies provide a temporary boost to all stats\nMana usage is halved when in a Graveyard and artifact minions cost half as much\nEnemies spawn more frequently\n+3 minion slots";
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.artifactManaCost *= 0.5f;
-			//originPlayer.necroSet = true;
+			if (player.ZoneGraveyard) {
+				player.manaCost *= 0.5f;
+			}
+			originPlayer.necroSet = true;
+			float killMult = originPlayer.necroSetAmount * 0.01f;
+			player.GetAttackSpeed(DamageClass.Melee) += 0.1f * killMult;
+			player.GetDamage(DamageClass.Generic) += 0.1f * killMult;
+			player.lifeRegenCount += (int)(killMult * 4);
+			player.statDefense += (int)(12 * killMult);
+
 			player.maxMinions += 3;
 		}
 		public override void AddRecipes() {

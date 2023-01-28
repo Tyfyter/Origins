@@ -345,7 +345,12 @@ namespace Origins.NPCs {
 			}
 		}
 		public override void EditSpawnRate(Player player, ref int spawnRate, ref int maxSpawns) {
-			if (player.GetModPlayer<OriginPlayer>().rapidSpawnFrames > 0) {
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			if (originPlayer.necroSet) {
+				spawnRate = (int)(spawnRate * 0.5);
+				maxSpawns = (int)(maxSpawns * 2f);
+			}
+			if (originPlayer.rapidSpawnFrames > 0) {
 				spawnRate = 1;
 			}
 		}
