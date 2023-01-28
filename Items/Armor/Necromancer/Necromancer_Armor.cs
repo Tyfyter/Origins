@@ -31,7 +31,7 @@ namespace Origins.Items.Armor.Necromancer {
 			}
 			originPlayer.necroSet = true;
 			float killMult = originPlayer.necroSetAmount * 0.01f;
-			player.GetAttackSpeed(DamageClass.Melee) += 0.1f * killMult;
+			player.GetAttackSpeed(DamageClass.Summon) += 0.1f * killMult;
 			player.GetDamage(DamageClass.Generic) += 0.1f * killMult;
 			player.lifeRegenCount += (int)(killMult * 4);
 			player.statDefense += (int)(12 * killMult);
