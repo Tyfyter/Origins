@@ -33,7 +33,10 @@ namespace Origins.Items.Armor.Necromancer {
 			originPlayer.necroSet = true;
 			float killMult = originPlayer.necroSetAmount * 0.002f;
 			player.GetAttackSpeed(DamageClass.Summon) += Math.Min(0.1f * killMult, 0.6f);
-			player.GetDamage(DamageClass.Generic) += Math.Min(0.1f * killMult, 0.75f) + (float)Math.Pow(0.1f * killMult, 0.25f);
+			player.GetDamage(DamageClass.Summon) += Math.Min(0.1f * killMult, 0.75f);
+			if (killMult > 0) {
+				player.GetDamage(DamageClass.Summon) += (float)Math.Max(Math.Pow(0.1f * killMult, 0.5f), 0);
+			}
 			player.lifeRegenCount += (int)Math.Min(4 * killMult, 5);
 			player.statDefense += (int)Math.Min(6 * killMult, 13);
 
