@@ -1,4 +1,5 @@
 using Origins.Items.Materials;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,11 +31,19 @@ namespace Origins.Items.Armor.Necromancer {
 				player.manaCost *= 0.5f;
 			}
 			originPlayer.necroSet = true;
-			float killMult = originPlayer.necroSetAmount * 0.01f;
+			float killMult = originPlayer.necroSetAmount * 0.002f;
+			player.GetAttackSpeed(DamageClass.Summon) += Math.Min(0.1f * killMult, 0.6f);
+			player.GetDamage(DamageClass.Generic) += Math.Min(0.1f * killMult, 0.75f) + (float)Math.Pow(0.1f * killMult, 0.25f);
+			player.lifeRegenCount += (int)Math.Min(4 * killMult, 5);
+			player.statDefense += (int)Math.Min(6 * killMult, 13);
+
+			/*godmode dev set:
+			float killMult = originPlayer.necroSetAmount * 0.002f;
 			player.GetAttackSpeed(DamageClass.Summon) += 0.1f * killMult;
 			player.GetDamage(DamageClass.Generic) += 0.1f * killMult;
 			player.lifeRegenCount += (int)(killMult * 4);
 			player.statDefense += (int)(12 * killMult);
+			 */
 
 			player.maxMinions += 3;
 		}
@@ -51,7 +60,7 @@ namespace Origins.Items.Armor.Necromancer {
     public class Necromancer_Breastplate : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Necromancer Breastplate");
-            Tooltip.SetDefault("+1 minion slot");
+            Tooltip.SetDefault("+1 minion slot\n15% increased summoning attack speed");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -61,7 +70,8 @@ namespace Origins.Items.Armor.Necromancer {
         }
         public override void UpdateEquip(Player player) {
             player.maxMinions += 1;
-        }
+			player.GetAttackSpeed(DamageClass.Summon) += 0.15f;
+		}
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.ChlorophyteBar, 24);

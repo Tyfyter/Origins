@@ -60,8 +60,8 @@ namespace Origins {
 			}
 		}
 		internal static class NetMessageType {
-			internal const int tile_counts = 0;
-			internal const int sync_player = 1;
+			internal const byte tile_counts = 0;
+			internal const byte sync_player = 1;
 		}
 	}
 }
