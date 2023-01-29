@@ -889,6 +889,7 @@ namespace Origins {
 			if (!Player.noKnockback && damage != 0) {
 				Player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
 			}
+			if (preHitBuffs is not null)
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
 					int buffType = Player.buffType[i];
@@ -913,6 +914,7 @@ namespace Origins {
 			MeleeCollisionNPCData.knockbackMult = 1f;
 		}
 		public override void OnHitByProjectile(Projectile proj, int damage, bool crit) {
+			if (preHitBuffs is not null)
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
 					int buffType = Player.buffType[i];
