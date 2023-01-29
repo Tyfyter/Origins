@@ -212,11 +212,11 @@ namespace Origins {
                 }
             }
             if (donorWristband) {
-                float healLogic  = (1 - (float)(0.375)) / (Player.pStone ? (float)(0.75) : 1);
+                float healLogic  = (1 - 0.375f) / (Player.pStone ? 0.75f : 1);
 
-                Player.potionDelayTime = (int)((Player.potionDelayTime * healLogic));
-                Player.restorationDelayTime = (int)((Player.restorationDelayTime * healLogic));
-                Player.mushroomDelayTime = (int)((Player.mushroomDelayTime * healLogic));
+                Player.potionDelayTime = (int)(Player.potionDelayTime * healLogic);
+                Player.restorationDelayTime = (int)(Player.restorationDelayTime * healLogic);
+                Player.mushroomDelayTime = (int)(Player.mushroomDelayTime * healLogic);
             }
 
             felnumSet = false;
@@ -905,12 +905,28 @@ namespace Origins {
                         }
                     } else if (donorWristband) {
                         if (Main.debuff[buffType]) {
-                            Player.buffTime[i] -= (int)0.375f;
+                            Player.buffTime[i] -= (int)(Player.buffTime[i] * 0.375f);
                         }
                     }
 				}
 			}
 			MeleeCollisionNPCData.knockbackMult = 1f;
+		}
+		public override void OnHitByProjectile(Projectile proj, int damage, bool crit) {
+			for (int i = 0; i < Player.MaxBuffs; i++) {
+				if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
+					int buffType = Player.buffType[i];
+					if (plasmaPhial) {
+						if (Main.debuff[buffType]) {
+							Player.buffTime[i] /= 2;
+						}
+					} else if (donorWristband) {
+						if (Main.debuff[buffType]) {
+							Player.buffTime[i] -= (int)(Player.buffTime[i] * 0.375f);
+						}
+					}
+				}
+			}
 		}
 		/// <param name="target">the potential target</param>
 		/// <param name="targetPriorityMultiplier"></param>
