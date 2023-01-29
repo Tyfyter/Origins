@@ -216,7 +216,7 @@ namespace Origins.UI {
 					int lineCount = 0;
 					List<Quest> activeQuests = new();
 					List<Quest> completedQuests = new();
-					foreach (var quest in Quest_Registry.Quests.Values) {
+					foreach (var quest in Quest_Registry.Quests) {
 						if (quest.ShowInJournal()) {
 							if (quest.Completed) {
 								completedQuests.Add(quest);
@@ -257,7 +257,7 @@ namespace Origins.UI {
 					break;
 				}
 				case Journal_UI_Mode.Quest_Page: {
-					SetText(FormatTags(Quest_Registry.Quests[key].GetJournalPage()));
+					SetText(FormatTags(Quest_Registry.GetQuestByKey(key).GetJournalPage()));
 				}
 				break;
 			}

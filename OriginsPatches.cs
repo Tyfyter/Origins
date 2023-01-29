@@ -206,7 +206,7 @@ namespace Origins {
             Questing.Quest quest = null;
             List<Questing.Quest> startableQuests = new();
             NPC talkNPC = Main.npc[player.talkNPC];
-			foreach (var currentQuest in Questing.Quest_Registry.Quests.Values) {
+			foreach (var currentQuest in Questing.Quest_Registry.Quests) {
                 if (currentQuest.HasDialogue(talkNPC)) {
                     quest = currentQuest;
                     break;

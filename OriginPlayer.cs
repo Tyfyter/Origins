@@ -564,7 +564,7 @@ namespace Origins {
 		}
 		public override void PostUpdateBuffs() {
             if (Player.whoAmI == Main.myPlayer) {
-                foreach (var quest in Quest_Registry.Quests.Values) {
+                foreach (var quest in Quest_Registry.Quests) {
                     if (!quest.SaveToWorld && quest.PreUpdateInventoryEvent is not null) {
                         quest.PreUpdateInventoryEvent();
                     }
@@ -853,7 +853,7 @@ namespace Origins {
                 target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
             }
 			if (target.life <= 0) {
-                foreach (var quest in Quest_Registry.Quests.Values) {
+                foreach (var quest in Quest_Registry.Quests) {
                     if (!quest.SaveToWorld && quest.KillEnemyEvent is not null) {
                         quest.KillEnemyEvent(target);
                     }
@@ -1158,7 +1158,7 @@ namespace Origins {
         public override void OnEnterWorld(Player player) {
             questsTag ??= new TagCompound();
             TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? new TagCompound();
-            foreach (var quest in Quest_Registry.Quests.Values) {
+            foreach (var quest in Quest_Registry.Quests) {
                 if (!quest.SaveToWorld) {
                     quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
 				} else {
@@ -1179,7 +1179,7 @@ namespace Origins {
                 tag.Add("UnlockedJournalEntries", unlockedJournalEntries.ToList());
             }
             TagCompound questsTag = new TagCompound();
-            foreach (var quest in Quest_Registry.Quests.Values) {
+            foreach (var quest in Quest_Registry.Quests) {
                 if (!quest.SaveToWorld) {
                     TagCompound questTag = new TagCompound();
                     quest.SaveData(questTag);

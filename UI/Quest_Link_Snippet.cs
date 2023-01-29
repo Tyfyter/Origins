@@ -22,7 +22,7 @@ namespace Origins.UI {
 			int lastHovered = 0;
 			bool completed;
 			bool inJournal;
-			public Quest_Link_Snippet(string key, Color color = default, bool completed = false, bool inJournal = false) : this(Quest_Registry.Quests[key], color, completed, inJournal) {}
+			public Quest_Link_Snippet(string key, Color color = default, bool completed = false, bool inJournal = false) : this(Quest_Registry.GetQuestByKey(key), color, completed, inJournal) {}
 			public Quest_Link_Snippet(Quest quest, Color color = default, bool completed = false, bool inJournal = false) : base() {
 				key = quest.FullName;
 				Text = quest.NameValue;

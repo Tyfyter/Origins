@@ -7,13 +7,31 @@ using Terraria.ModLoader;
 
 namespace Origins.Questing {
 	public class Quest_Registry : ILoadable {
-		public static Dictionary<string, Quest> Quests { get; internal set; }
-
+		public static Dictionary<string, int> QuestIDs { get; internal set; }
+		public static List<Quest> Quests { get; internal set; }
+		/// <summary>
+		/// </summary>
+		/// <exception cref="System.Collections.Generic.KeyNotFoundException">
+		/// The key does not exist in QuestIDs.
+		/// </exception>
+		public static Quest GetQuestByKey(string key) => QuestIDs.TryGetValue(key, out int type) ? Quests[type] : throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
+		public static Quest GetQuestByType(int type) => Quests[type];
+		public static void RegisterQuest(Quest quest) {
+			Setup();
+			quest.Type = Quests.Count;
+			QuestIDs.Add(quest.FullName, quest.Type);
+			Quests.Add(quest);
+		}
+		static void Setup() {
+			if (QuestIDs is null) QuestIDs = new Dictionary<string, int>();
+			if (Quests is null) Quests = new List<Quest>();
+		}
 		public void Load(Mod mod) {
-			if (Quests is null) Quests = new Dictionary<string, Quest>();
+			Setup();
 		}
 
 		public void Unload() {
+			QuestIDs = null;
 			Quests = null;
 		}
 	}

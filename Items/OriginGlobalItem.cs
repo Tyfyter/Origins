@@ -145,7 +145,7 @@ namespace Origins.Items {
         }
 		public override void UpdateInventory(Item item, Player player) {
             if (player.whoAmI == Main.myPlayer) {
-                foreach (var quest in Quest_Registry.Quests.Values) {
+                foreach (var quest in Quest_Registry.Quests) {
                     if (!quest.SaveToWorld && quest.UpdateInventoryEvent is not null) {
                         quest.UpdateInventoryEvent(item);
                     }

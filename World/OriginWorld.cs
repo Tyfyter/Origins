@@ -86,6 +86,7 @@ namespace Origins {
         public List<Point> AbandonedBombs => _abandonedBombs ??= new List<Point>();
 
         public override void LoadWorldData(TagCompound tag) {
+			Mod.Logger.Info("LoadWorldData called on netmode " + Main.netMode);
             if (tag.ContainsKey("peatSold")) {
                 peatSold = tag.GetAsInt("peatSold");
             }
@@ -105,7 +106,7 @@ namespace Origins {
                 tag.Add("worldSurfaceLow", _worldSurfaceLow);
             }
             TagCompound questsTag = new TagCompound();
-            foreach (var quest in Quest_Registry.Quests.Values) {
+            foreach (var quest in Quest_Registry.Quests) {
                 if (quest.SaveToWorld) {
                     TagCompound questTag = new TagCompound();
                     quest.SaveData(questTag);

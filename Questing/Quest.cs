@@ -54,9 +54,9 @@ namespace Origins.Questing {
 		protected sealed override void Register() {
 			ModTypeLookup<Quest>.Register(this);
 			NameKey ??= $"Mods.{FullName}";
-			if (Quest_Registry.Quests is null) Quest_Registry.Quests = new Dictionary<string, Quest>();
-			Quest_Registry.Quests.Add(FullName, this);
+			Quest_Registry.RegisterQuest(this);
 		}
+		public int Type { get; internal set; }
 		public static string StageTagOption(bool completed) => completed ? "/completed" : "";
 		public static void ConsumeItems(Item[] inventory, params (Predicate<Item> match, int count)[] items) {
 			for (int j = 0; j < inventory.Length; j++) {
