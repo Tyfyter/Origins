@@ -105,6 +105,7 @@ namespace Origins {
 		public bool noU = false;
 		public HashSet<Point> preHitBuffs;
 		public bool plasmaPhial = false;
+		public bool turboReel = false;
 		#endregion
 
 		#region explosive stats
@@ -269,6 +270,7 @@ namespace Origins {
 			messyLeech = false;
 			noU = false;
 			plasmaPhial = false;
+			turboReel = false;
 
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
                 Player.mount.Dismount(Player);

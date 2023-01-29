@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
             Item.rare = ItemRarityID.Green;
         }
 		public override void UpdateEquip(Player player) {
-            //player.GetModPlayer<OriginPlayer>().turboReel = true;
+            player.GetModPlayer<OriginPlayer>().turboReel = true;
         }
     }
 }
