@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using Origins.Tiles.Other;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -39,13 +40,15 @@ namespace Origins.Items.Weapons.Magic {
             Item.rare = ItemRarityID.Lime;
             Item.glowMask = glowmask;
 		}
-        /*public override void AddRecipes() {
+        public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Space_Goo>(), 10);
-            recipe.AddIngredient(ModContent.ItemType<Space_Rock>(), 20);
-            recipe.AddTile(TileID.LunarCraftingStation);
+            recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 15);
+            recipe.AddIngredient(ModContent.ItemType<Fiberglass_Item>(), 18);
+            recipe.AddIngredient(ModContent.ItemType<Power_Core>());
+            recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
+            recipe.AddTile(TileID.MythrilAnvil); //Fabricator
             recipe.Register();
-        }*/
+        }
         public override void UpdateInventory(Player player) {
         }
 

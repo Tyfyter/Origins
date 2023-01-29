@@ -200,7 +200,7 @@ ARMOR:
 (^) Acrid Armor
 (^) Bleeding Obsidian Armor
 
-(#3, ^2) Necromancer Armor
+(^) Necromancer Armor
 (X) Blast Armor
 
 (X) Ascendant Armor
@@ -226,8 +226,9 @@ ACCESSORIES:
 (#2, ^2) I-WTPA Standard
 (^) Decaying Scale*
 (X) Deep Diving Gear
-(@4, ^3) Destructive Claws !!!
+(@2, ^3) Destructive Claws !!!
 (^) Dim Starlight*
+(^) Donor Wristband
 (^) Exploder Emblem*
 (#2, ^2) Grave Danger
 (^) Gun Glove
@@ -236,20 +237,20 @@ ACCESSORIES:
 (@2, #2) Headstomperz
 (^) Helium Tank
 (^) Keepsake Remains
-(#2, ^2) Last Descendent
+(^) Last Descendent
 (^) Locket Necklace
 (#2, ^2) Lover's Leap !!!
-(@2, #3) Magic Glove
+(@2, ^3) Magic Glove
 (^) Makeover Choker
 (#3, ^2) Messy Leech
 (#3, ^2) Messy Magma Leech
-(@2, #3) Missile Arm Cannon
+(@2, ^3) Missile Arm Cannon
 (#3, ^2) Mitosis
 (^) Nitro Crate
-(#, ^2) No U Card
+(^) No U Card
 (^) Olid Organ*
 (^) Parasitic Influence*
-(#2, ^2) Plasma Phial !!!
+(^) Plasma Phial
 (^) Pneumatic Bomb Thrower*
 (^) Powerflower
 (X) Proactive Protozoa !!!
@@ -266,9 +267,9 @@ ACCESSORIES:
 (X) Superstar Celebration Gear
 (^) Symbiote Skull
 (#2, ^2) Trap Charm !!!
-(#, ^2) Turbo Reel !!!
-(#3, ^2) Unsought Organ
-(^) Volatile Charm !!!
+(^) Turbo Reel
+(^) Unsought Organ
+(^) Volatile Charm
 
 (X) Bouncy Ravel
 (X) Dash Ravel
@@ -419,7 +420,7 @@ MELEE WEAPONS:
 (^) Telephone Pole*
 
 (#, ^2) Personal Laser Blade*
-(#, ^2) Rive Knife*
+(X) Pile Bunker
 
 (%3, X) Celestial Point
 (X) Chromtain Smasher
@@ -448,8 +449,7 @@ RANGED WEAPONS:
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun
-(#, ^2) Cursed Flute
-(^) Dragon's Breath
+(^) Dragon's Breath (replanning soon)
 (^) Firespit
 (^) Incision
 (X) Mythril Harpoon Gun
@@ -537,7 +537,7 @@ SUMMONER WEAPONS:
 (X) Ribatar
 (X) Seraphim Song
 (X) SMART Wrench
-(#, ^2) The Project
+(#, ^2) The Project (might remove)
 
 (X) Flame of the Phoenix
 (#, ^2) Nanoswarmer
@@ -548,7 +548,7 @@ SUMMONER WEAPONS:
 EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
-(☻) Bloombomb !!!
+(^) Bloombomb
 (#, ^2) Bombardment !!!
 (#2, ^2) Bomb Launcher !!!
 (#, ^2) Brainade !!!
@@ -656,7 +656,7 @@ TILES:
 (#, ^2) Riven Torch
 (X) Riven Water Fountain
 
-(X) Fabricator
+(#, ^2) Fabricator !!!
 (X) Omni-Printer
 
 (^) Acetabularia
@@ -832,6 +832,7 @@ AMMO:
 (#, ^2) Glittershot
 (^) Harpoon
 (^) Peatball*
+(#, ^2) Resizable Mine !!!
 
 (^) Acid Harpoon
 (^) Alkahest Arrow

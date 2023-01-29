@@ -28,6 +28,13 @@ namespace Origins.Items.Accessories {
             Item.useAmmo = AmmoID.Rocket;
             Item.UseSound = SoundID.Item61;
         }
+        public override void AddRecipes() {
+            Recipe recipe = CreateRecipe();
+            recipe.AddIngredient(ModContent.ItemType<Destructive_Claws>());
+            recipe.AddIngredient(ModContent.ItemType<Gun_Glove>());
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.Register();
+        }
         public override void UpdateEquip(Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
             player.GetAttackSpeed(DamageClasses.Explosive) += 0.1f;

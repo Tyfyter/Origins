@@ -103,6 +103,7 @@ namespace Origins {
 		public bool heliumTankHit = false;
 		public bool messyLeech = false;
 		public bool noU = false;
+        public bool donorWristband = false;
 		public HashSet<Point> preHitBuffs;
 		public bool plasmaPhial = false;
 		public bool turboReel = false;
@@ -195,7 +196,7 @@ namespace Origins {
             cryostenSet = false;
             cryostenHelmet = false;
             oldFelnumShock = felnumShock;
-            if(!felnumSet) {
+            if (!felnumSet) {
                 felnumShock = 0;
             } else {
                 if(felnumShock > Player.statLifeMax2) {
@@ -209,6 +210,13 @@ namespace Origins {
                     }
                     felnumShock -= (felnumShock - Player.statLifeMax2) / Player.statLifeMax2 * 5 + 1;
                 }
+            }
+            if (donorWristband) {
+                float healLogic  = (1 - (float)(0.375)) / (Player.pStone ? (float)(0.75) : 1);
+
+                Player.potionDelayTime = (int)((Player.potionDelayTime * healLogic));
+                Player.restorationDelayTime = (int)((Player.restorationDelayTime * healLogic));
+                Player.mushroomDelayTime = (int)((Player.mushroomDelayTime * healLogic));
             }
 
             felnumSet = false;
@@ -271,6 +279,7 @@ namespace Origins {
 			noU = false;
 			plasmaPhial = false;
 			turboReel = false;
+            donorWristband = false;
 
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
                 Player.mount.Dismount(Player);
@@ -883,18 +892,22 @@ namespace Origins {
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
 					int buffType = Player.buffType[i];
-					if (noU) {
-						bool immune = npc.buffImmune[buffType];
-						npc.buffImmune[buffType] = false;
-						npc.AddBuff(buffType, Player.buffTime[i]);
-						npc.buffImmune[buffType] = immune;
+                    if (noU) {
+                        bool immune = npc.buffImmune[buffType];
+                        npc.buffImmune[buffType] = false;
+                        npc.AddBuff(buffType, Player.buffTime[i]);
+                        npc.buffImmune[buffType] = immune;
 
-						Player.DelBuff(i--);
-					} else if (plasmaPhial) {
-						if (Main.debuff[buffType]) {
-							Player.buffTime[i] /= 2;
-						}
-					}
+                        Player.DelBuff(i--);
+                    } else if (plasmaPhial) {
+                        if (Main.debuff[buffType]) {
+                            Player.buffTime[i] /= 2;
+                        }
+                    } else if (donorWristband) {
+                        if (Main.debuff[buffType]) {
+                            Player.buffTime[i] -= (int)0.375f;
+                        }
+                    }
 				}
 			}
 			MeleeCollisionNPCData.knockbackMult = 1f;
