@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
             Item.rare = ItemRarityID.LightPurple;
         }
         public override void UpdateEquip(Player player) {
+			player.thorns += 0.5f;
             player.GetModPlayer<OriginPlayer>().noU = true;
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				switch (player.buffType[i]) {
