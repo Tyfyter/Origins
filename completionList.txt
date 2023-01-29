@@ -156,6 +156,8 @@ EVENTS:
 (#, %2) Crimson Invasion
 (#, %2) Defiled Invasion
 (#, %2) Riven Invasion
+
+(X) Laser Tag
 ---
 
 STATUS EFFECTS:
@@ -237,6 +239,7 @@ ACCESSORIES:
 (@2, #2) Headstomperz
 (^) Helium Tank
 (^) Keepsake Remains
+(X) Laser Tag Vest
 (^) Last Descendent
 (^) Locket Necklace
 (#2, ^2) Lover's Leap !!!
@@ -663,6 +666,7 @@ TILES:
 (X) Brineglow Vine
 (^) Defiled Misc Tiles*
 (X) Eden Tree
+(X) Laser Tag Console
 (#2, ^2) Riven Foliage !!!
 (#2, ^2) Riven Lesion !!!
 (#, ^2) Riven Pot !!!

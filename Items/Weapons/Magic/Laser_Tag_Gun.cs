@@ -30,12 +30,13 @@ namespace Origins.Items.Weapons.Magic {
 			Item.DamageType = DamageClasses.RangedMagic;
 			Item.noMelee = true;
             Item.crit = 46;
-			Item.width = 42;
-			Item.height = 14;
+			Item.width = 26;
+			Item.height = 18;
 			Item.useTime = 16;
 			Item.useAnimation = 16;
 			Item.mana = 10;
             Item.shoot = ModContent.ProjectileType<Laser_Tag_Laser>();
+            Item.scale = 1f;
             Item.value = Item.buyPrice(gold: 10);
             Item.rare = ItemRarityID.Lime;
             Item.glowMask = glowmask;
@@ -66,9 +67,9 @@ namespace Origins.Items.Weapons.Magic {
         public override void ModifyWeaponCrit(Player player, ref float crit) {
             if(player.HeldItem.type != Item.type)crit+= GetCritMod(player);
         }
-        public override Vector2? HoldoutOffset() {
+        /*public override Vector2? HoldoutOffset() {
             return new Vector2(3-(11*Main.player[Item.playerIndexTheItemIsReservedFor].direction),0);
-        }
+        }*/
         public override void HoldItem(Player player) {
             if(player.itemAnimation!=0) {
                 player.GetModPlayer<OriginPlayer>().itemLayerWrench = true;
