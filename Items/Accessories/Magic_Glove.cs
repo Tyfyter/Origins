@@ -19,10 +19,10 @@ namespace Origins.Items.Accessories {
             Item.value = Item.sellPrice(gold: 2);
             Item.rare = ItemRarityID.Green;
 
-            Item.damage = 15;
+            Item.damage = 10;
             Item.DamageType = DamageClass.Magic;
-            Item.useTime = 10;
-            Item.useAnimation = 10;
+            Item.useTime = 5;
+            Item.useAnimation = 7;
             Item.shootSpeed = 7;
             Item.mana = 1;
             Item.UseSound = SoundID.Item4;
@@ -32,27 +32,18 @@ namespace Origins.Items.Accessories {
             originPlayer.gunGlove = true;
             originPlayer.gunGloveItem = Item;
         }
-		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Gun_Glove>());
-			//??
-			//I don't remember the rest of the recipe
-		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			Tyfyter.Utils.PolarVec2 baseVel = (Tyfyter.Utils.PolarVec2)velocity;
-			baseVel.Theta += OriginExtensions.AngleDif(baseVel.Theta, (Main.MouseWorld - position).ToRotation(), out int dir) * dir * 0.65f;
-			velocity = (Vector2)baseVel;
 			switch (Main.rand.Next(3)) {
 				case 0:
-				type = ProjectileID.ThunderStaffShot;
+				type = ProjectileID.AmberBolt;
 				break;
 
 				case 1:
-				type = ProjectileID.CrystalPulse;
+				type = ProjectileID.MagicMissile;
 				break;
 
 				case 2:
-				type = ProjectileID.PoisonFang;
+				type = ProjectileID.WaterBolt;
 				break;
 			}
 		}
