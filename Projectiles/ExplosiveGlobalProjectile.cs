@@ -16,7 +16,85 @@ namespace Origins.Projectiles {
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
-			switch (entity.type) {
+			return entity.DamageType.CountsAsClass(DamageClasses.Explosive) || GetVanillaExplosiveType(entity) > 0;
+		}
+		public override void SetDefaults(Projectile projectile) {
+			isHoming = false;
+		}
+		public override void AI(Projectile projectile) {
+			if (isHoming && !projectile.minion) {
+				float targetWeight = 300;
+				Vector2 targetPos = default;
+				bool foundTarget = false;
+				for (int i = 0; i < 200; i++) {
+					NPC currentNPC = Main.npc[i];
+					if (currentNPC.CanBeChasedBy(this)) {
+						Vector2 currentPos = currentNPC.Center;
+						float num21 = Math.Abs(projectile.Center.X - currentPos.X) + Math.Abs(projectile.Center.Y - currentPos.Y);
+						if (num21 < targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, currentNPC.position, currentNPC.width, currentNPC.height)) {
+							targetWeight = num21;
+							targetPos = currentPos;
+							foundTarget = true;
+						}
+					}
+				}
+
+				if (foundTarget) {
+
+					float scaleFactor = 16f;
+
+					Vector2 targetVelocity = (targetPos - projectile.Center).SafeNormalize(-Vector2.UnitY) * scaleFactor;
+					projectile.velocity = Vector2.Lerp(projectile.velocity, targetVelocity, 0.083333336f);
+				}
+			}
+		}
+		public override void OnSpawn(Projectile projectile, IEntitySource source) {
+			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
+			if (originPlayer.novaSet && Origins.CanGainHoming[projectile.type]) {
+				isHoming = true;
+			}
+		}
+		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
+			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
+			if (IsExploding(projectile) && originPlayer.explosiveBlastRadius != StatModifier.Default) {
+				StatModifier modifier = originPlayer.explosiveBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+				hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
+			}
+			switch (projectile.type) {
+				case ProjectileID.Bomb:
+				case ProjectileID.StickyBomb:
+				case ProjectileID.Dynamite:
+				case ProjectileID.StickyDynamite:
+				case ProjectileID.BombFish:
+				case ProjectileID.DryBomb:
+				case ProjectileID.WetBomb:
+				case ProjectileID.LavaBomb:
+				case ProjectileID.HoneyBomb:
+				case ProjectileID.ScarabBomb:
+				if (hitbox.Width < 32) {
+					hitbox = default;
+				}
+				break;
+			}
+		}
+		public static bool IsExploding(Projectile projectile) {
+			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {
+				return explodingProjectile.IsExploding();
+			}
+			switch (projectile.type) {
+				default:
+				return projectile.timeLeft <= 3 || projectile.penetrate == 0;
+			}
+		}
+		public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
+			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
+			if (originPlayer.madHand) {
+				target.AddBuff(BuffID.Oiled, 600);
+				target.AddBuff(BuffID.OnFire, 600);
+			}
+		}
+		public static int GetVanillaExplosiveType(Projectile projectile) {
+			switch (projectile.type) {
 				case ProjectileID.Grenade:
 				case ProjectileID.BouncyGrenade:
 				case ProjectileID.StickyGrenade:
@@ -30,6 +108,8 @@ namespace Origins.Projectiles {
 				case ProjectileID.StickyDynamite:
 				case ProjectileID.BombFish:
 				case ProjectileID.MolotovCocktail:
+				return 1;
+
 				case ProjectileID.RocketI:
 				case ProjectileID.RocketII:
 				case ProjectileID.RocketIII:
@@ -82,69 +162,30 @@ namespace Origins.Projectiles {
 				case ProjectileID.LavaSnowmanRocket:
 				case ProjectileID.HoneySnowmanRocket:
 
+				case ProjectileID.RocketFireworkBlue:
+				case ProjectileID.RocketFireworkGreen:
+				case ProjectileID.RocketFireworkRed:
+				case ProjectileID.RocketFireworkYellow:
+
 				case ProjectileID.Celeb2Rocket:
 				case ProjectileID.Celeb2RocketExplosive:
 				case ProjectileID.Celeb2RocketLarge:
 				case ProjectileID.Celeb2RocketExplosiveLarge:
+
+				case ProjectileID.ElectrosphereMissile:
 
 				case ProjectileID.ClusterFragmentsI:
 				case ProjectileID.ClusterFragmentsII:
 				case ProjectileID.ClusterSnowmanFragmentsI:
 				case ProjectileID.ClusterSnowmanFragmentsII:
 				case ProjectileID.HellfireArrow:
-				return true;
-				default:
-				return entity.DamageType.CountsAsClass(DamageClasses.Explosive);
-			}
-		}
-		public override void SetDefaults(Projectile projectile) {
-			isHoming = false;
-		}
-		public override void AI(Projectile projectile) {
-			if (isHoming) {
+				case ProjectileID.Stynger:
+				case ProjectileID.StyngerShrapnel:
+				case ProjectileID.JackOLantern:
+				return 2;
 
-			}
-		}
-		public override void OnSpawn(Projectile projectile, IEntitySource source) {
-			
-		}
-		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
-			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-			if (IsExploding(projectile) && originPlayer.explosiveBlastRadius != StatModifier.Default) {
-				StatModifier modifier = originPlayer.explosiveBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
-				hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
-			}
-			switch (projectile.type) {
-				case ProjectileID.Bomb:
-				case ProjectileID.StickyBomb:
-				case ProjectileID.Dynamite:
-				case ProjectileID.StickyDynamite:
-				case ProjectileID.BombFish:
-				case ProjectileID.DryBomb:
-				case ProjectileID.WetBomb:
-				case ProjectileID.LavaBomb:
-				case ProjectileID.HoneyBomb:
-				case ProjectileID.ScarabBomb:
-				if (hitbox.Width < 32) {
-					hitbox = default;
-				}
-				break;
-			}
-		}
-		public static bool IsExploding(Projectile projectile) {
-			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {
-				return explodingProjectile.IsExploding();
-			}
-			switch (projectile.type) {
 				default:
-				return projectile.timeLeft <= 3 || projectile.penetrate == 0;
-			}
-		}
-		public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
-			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-			if (originPlayer.madHand) {
-				target.AddBuff(BuffID.Oiled, 600);
-				target.AddBuff(BuffID.OnFire, 600);
+				return 0;
 			}
 		}
 	}

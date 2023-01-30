@@ -47,7 +47,9 @@ namespace Origins {
         public static Dictionary<int, (int maxLevel, float velDiffMult)> RasterizeAdjustment { get; private set; }
         static bool[] artifactMinion;
         public static bool[] ArtifactMinion { get => artifactMinion; }
-        public static ModKeybind SetBonusTriggerKey { get; private set; }
+		static bool[] canGainHoming;
+		public static bool[] CanGainHoming { get => canGainHoming; }
+		public static ModKeybind SetBonusTriggerKey { get; private set; }
         public static ModKeybind InspectItemKey { get; private set; }
         #region Armor IDs
         public static int FelnumHeadArmorID { get; private set; }
@@ -270,9 +272,17 @@ namespace Origins {
                 (ushort)ItemID.ChlorophyteSaber, Elements.Earth,
                 (ushort)ItemID.ChlorophyteShotbow, Elements.Earth,
                 (ushort)ItemID.ChlorophyteWarhammer, Elements.Earth);
-            #endregion earth
-            #endregion vanilla weapon elements
-            HelmetGlowMasks = new();
+			#endregion earth
+			#endregion vanilla weapon elements
+			canGainHoming = ProjectileID.Sets.Factory.CreateBoolSet(
+				true,
+				ProjectileID.ScarabBomb,
+				ProjectileID.StyngerShrapnel,
+				ProjectileID.ClusterFragmentsI,
+				ProjectileID.ClusterFragmentsII
+			);
+
+			HelmetGlowMasks = new();
             BreastplateGlowMasks = new();
             LeggingGlowMasks = new();
             TorsoLegLayers = new();
@@ -439,7 +449,9 @@ namespace Origins {
             forceFelnumShockOnShoot = null;
             flatDamageMultiplier = null;
             RasterizeAdjustment = null;
-            celestineBoosters = null;
+			canGainHoming = null;
+			artifactMinion = null;
+			celestineBoosters = null;
             perlinFade0 = null;
             blackHoleShade = null;
             solventShader = null;
@@ -553,7 +565,12 @@ namespace Origins {
                 ItemID.Minishark, 3f/8f
             );
             Array.Resize(ref artifactMinion, ProjectileLoader.ProjectileCount);
-        }
+			int oldCanGainHomingLength = canGainHoming.Length;
+			Array.Resize(ref canGainHoming, ProjectileLoader.ProjectileCount);
+			for (int i = oldCanGainHomingLength; i < ProjectileLoader.ProjectileCount; i++) {
+				canGainHoming[i] = true;
+			}
+		}
         public static class Music {
             public static int Dusk = MusicID.PumpkinMoon;
             public static int Defiled = MusicID.Corruption;

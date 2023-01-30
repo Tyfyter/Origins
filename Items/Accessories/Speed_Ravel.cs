@@ -55,19 +55,6 @@ namespace Origins.Items.Accessories {
             MountData.acceleration = 0.38f;
             MountData.runSpeed = 12f;
         }
-        public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) {
-            OriginPlayer originPlayer = mountedPlayer.GetModPlayer<OriginPlayer>();
-            const float factor = 10f / 12f;
-            if (originPlayer.ceilingRavel) {
-                mountedPlayer.mount._frameCounter -= velocity.X * factor;
-            } else {
-                mountedPlayer.mount._frameCounter += velocity.X * factor;
-                if (originPlayer.collidingX) {
-                    mountedPlayer.mount._frameCounter -= velocity.Y * originPlayer.oldXSign * factor;
-                }
-            }
-            return false;
-        }
     }
     public class Speed_Ravel_Mount_Buff : Ravel_Mount_Buff {
         public override string Texture => "Origins/Buffs/Ravel_Generic_Buff";

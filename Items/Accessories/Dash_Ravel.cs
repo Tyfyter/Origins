@@ -25,12 +25,11 @@ namespace Origins.Items.Accessories {
         }
 		public override void UpdateEquip(Player player) {
 			base.UpdateEquip(player);
-			if (player.mount.Type != Item.shoot) {
-				OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-				if (originPlayer.dashDirection != 0) {
-					ToggleRavel(player);
-					player.velocity.X = originPlayer.dashDirection * 8;
-				}
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			if (originPlayer.dashDirection != 0) {
+				if (player.mount.Type != Item.shoot) ToggleRavel(player);
+				player.velocity.X = originPlayer.dashDirection * 8;
+				originPlayer.dashDelay = 20;
 			}
 		}
 		protected override void UpdateRaveled(Player player) {
