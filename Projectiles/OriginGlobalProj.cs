@@ -23,7 +23,6 @@ namespace Origins.Projectiles {
         //ModProjectile.SetDefaults is run before GlobalProjectiles' SetDefaults, so these can be used from SetDefaults
         public static bool felnumEffectNext = false;
         public static bool viperEffectNext = false;
-        public static bool? explosiveOverrideNext = null;
         public static bool hostileNext = false;
         public static int killLinkNext = -1;
         public static int extraUpdatesNext = -1;
@@ -188,13 +187,6 @@ namespace Origins.Projectiles {
             }
         }
         public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
-            if(projectile.CountsAsClass(DamageClasses.Explosive)) {
-                OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-                if(originPlayer.madHand) {
-                    target.AddBuff(BuffID.Oiled, 600);
-                    target.AddBuff(BuffID.OnFire, 600);
-                }
-            }
 			if (fiberglassLifesteal) {
                 Projectile.NewProjectile(
                     projectile.GetSource_OnHit(target),
@@ -206,37 +198,6 @@ namespace Origins.Projectiles {
                     projectile.owner
                 );
             }
-        }
-        public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
-            if(projectile.CountsAsClass(DamageClasses.Explosive)) {
-                OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-                if(IsExploding(projectile) && originPlayer.explosiveBlastRadius != StatModifier.Default) {
-                    StatModifier modifier = originPlayer.explosiveBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
-                    hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
-                }
-            }
-			switch (projectile.type) {
-                case ProjectileID.Bomb:
-                case ProjectileID.StickyBomb:
-                case ProjectileID.Dynamite:
-                case ProjectileID.StickyDynamite:
-                case ProjectileID.BombFish:
-                case ProjectileID.DryBomb:
-                case ProjectileID.WetBomb:
-                case ProjectileID.LavaBomb:
-                case ProjectileID.HoneyBomb:
-                case ProjectileID.ScarabBomb:
-				if (hitbox.Width < 32) {
-                    hitbox = default;
-				}
-                break;
-            }
-        }
-        public static bool IsExploding(Projectile projectile) {
-			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {
-                return explodingProjectile.IsExploding();
-			}
-            return projectile.timeLeft <= 3 || projectile.penetrate == 0;
         }
 		public static void ClentaminatorAI<TBiome>(Projectile projectile, int dustType, Color color) where TBiome : AltBiome {
 	        if (projectile.owner == Main.myPlayer) {

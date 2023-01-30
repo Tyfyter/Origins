@@ -50,7 +50,8 @@ namespace Origins.Items.Weapons.Magic {
         }
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.DD2SquireSonicBoom);
-            Projectile.extraUpdates = 1;
+			Projectile.DamageType = DamageClass.Magic;
+			Projectile.extraUpdates = 1;
             Projectile.aiStyle = 0;
             Projectile.timeLeft = 200;
         }

@@ -197,7 +197,7 @@ ARMOR:
 (^) Felnum Armor
 (^) Fiberglass Armor
 (^) Myth Armor
-(@, #2) Riptide Armor !!!
+(@, ☻) Riptide Armor !!!
 
 (^) Acrid Armor
 (^) Bleeding Obsidian Armor
@@ -258,8 +258,8 @@ ACCESSORIES:
 (^) Powerflower
 (X) Proactive Protozoa !!!
 (^) Razorwire
-(@2, #2) Rebreather
-(@2, #3) Rebreather Kit
+(☻) Rebreather
+(☻) Rebreather Kit
 (^) Return To Sender*
 (#2, ^2) Sonar Visor*
 (^) Scavenger Bag
@@ -269,7 +269,7 @@ ACCESSORIES:
 (X) Superjump Cape
 (X) Superstar Celebration Gear
 (^) Symbiote Skull
-(#2, ^2) Trap Charm !!!
+(☻) Trap Charm !!!
 (^) Turbo Reel
 (^) Unsought Organ
 (^) Volatile Charm

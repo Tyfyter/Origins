@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
             Item.value = Item.sellPrice(gold: 2);
         }
         public override void UpdateEquip(Player player) {
-            //player.GetModPlayer<OriginPlayer>().rebreather = true;
+            player.GetModPlayer<OriginPlayer>().rebreather = true;
             player.buffImmune[BuffID.Suffocation] = true;
             player.breathMax += 257;
         }

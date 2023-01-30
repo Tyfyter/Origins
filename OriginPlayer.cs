@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Riptide;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
@@ -51,6 +52,7 @@ namespace Origins {
         public bool mimicSet = false;
 		public bool riptideSet = false;
 		public bool riptideLegs = false;
+		public int riptideDashTime = 0;
 		public bool necroSet = false;
 		public float necroSetAmount = 0f;
 		public int mimicSetChoices = 0;
@@ -107,6 +109,10 @@ namespace Origins {
 		public HashSet<Point> preHitBuffs;
 		public bool plasmaPhial = false;
 		public bool turboReel = false;
+		public bool trapCharm = false;
+		public bool rebreather = false;
+		public float rebreatherCount = 0;
+		public bool rebreatherCounting = false;
 		#endregion
 
 		#region explosive stats
@@ -188,7 +194,9 @@ namespace Origins {
         public int oldXSign = 0;
         public bool collidingX = false;
         public HashSet<string> unlockedJournalEntries = new();
-        public override void ResetEffects() {
+		public int dashDirection = 0;
+		public int dashDelay = 0;
+		public override void ResetEffects() {
             oldBonuses = 0;
             if(fiberglassSet||fiberglassDagger)oldBonuses|=1;
             if(felnumSet)oldBonuses|=2;
@@ -280,6 +288,7 @@ namespace Origins {
 			plasmaPhial = false;
 			turboReel = false;
             donorWristband = false;
+			trapCharm = false;
 
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
                 Player.mount.Dismount(Player);
@@ -369,13 +378,66 @@ namespace Origins {
             asylumWhistle = false;
 
 			Player.statManaMax2 += quantumInjectors * Quantum_Injector.mana_per_use;
-        }
+			#region check if a dash should start
+			dashDirection = 0;
+			if (dashDelay <= 0) {
+				const int DashRight = 2;
+				const int DashLeft = 3;
+				if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15) {
+					dashDirection = 1;
+				} else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15) {
+					dashDirection = -1;
+				}
+			} else {
+				dashDelay--;
+			}
+			#endregion
+		}
 		#endregion
 		public const float explosive_defense_factor = 1f;
 		public override void PreUpdateMovement() {
 			if (riptideLegs && Player.wet) {
 				Player.velocity *= 1.0048f;
 				Player.ignoreWater = true;
+			}
+			if (riptideSet && !Player.mount.Active) {
+				Player.dashType = 0;
+				Player.dashTime = 0;
+				const int riptideDashDuration = 12;
+				const float riptideDashSpeed = 9f;
+				if (dashDirection != 0 && (Player.velocity.X * dashDirection < riptideDashSpeed)) {
+					Player.dashDelay = -1;
+					Player.dash = 2;
+					riptideDashTime = riptideDashDuration * dashDirection;
+					Player.timeSinceLastDashStarted = 0;
+					Projectile.NewProjectile(
+						Player.GetSource_Misc("riptide_dash"),
+						Player.Center + new Vector2(Player.width * dashDirection, 0),
+						new Vector2(dashDirection * riptideDashSpeed, 0),
+						Riptide_Dash_P.ID,
+						25,
+						riptideDashSpeed + 3,
+						Player.whoAmI
+					);
+				}
+				if (riptideDashTime != 0) {
+					Player.velocity.X = riptideDashSpeed * Math.Sign(riptideDashTime);
+					riptideDashTime -= Math.Sign(riptideDashTime);
+					dashDelay = 25;
+				}
+			}
+			if (rebreather && Player.breath < Player.breathMax) {
+				if (Player.breathCD == 0 || rebreatherCounting) {
+					rebreatherCounting = true;
+					const float maxCount = 8f;
+					const float maxSpeed = 16f;
+					float speed = Math.Min(Player.velocity.Length() / maxSpeed, 1);
+					if ((rebreatherCount += speed) >= maxCount) {
+						rebreatherCounting = false;
+						rebreatherCount -= maxCount;
+						Player.breath++;
+					}
+				}
 			}
 			if (hookTarget >= 0) {//ropeVel.HasValue&&
                 Player.fallStart = (int)(Player.position.Y / 16f);
@@ -865,6 +927,10 @@ namespace Origins {
         }
 
         public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
+			if (trapCharm && proj.trap) {
+				damage /= 2;
+				Player.buffImmune[BuffID.Poisoned] = true;
+			}
             if(proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
                 /*float damageVal = damage;
                 if(minerSet) {

@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
     public class Trap_Charm : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Trap Charm");
-            Tooltip.SetDefault("Reduces damage recieved from traps");
+            Tooltip.SetDefault("Reduces damage received from traps");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
             Item.rare = ItemRarityID.Green;
         }
         public override void UpdateEquip(Player player) {
-            //player.GetModPlayer<OriginPlayer>().trapCharm = true;
+            player.GetModPlayer<OriginPlayer>().trapCharm = true;
         }
     }
 }
