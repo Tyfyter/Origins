@@ -248,7 +248,7 @@ namespace Origins {
         }
         public static implicit operator AutoCastingAsset<T>(Asset<T> asset) => new(asset);
         public static implicit operator T(AutoCastingAsset<T> asset) => asset.Value;
-    }
+	}
     public struct PlayerShaderSet {
         public int cHead;
         public int cBody;

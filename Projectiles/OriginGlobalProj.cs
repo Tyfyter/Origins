@@ -71,21 +71,65 @@ namespace Origins.Projectiles {
                 case ProjectileID.StickyDynamite:
                 case ProjectileID.BombFish:
                 case ProjectileID.MolotovCocktail:
-                projectile.DamageType = DamageClasses.Explosive;
+                projectile.DamageType = DamageClasses.ThrownExplosive;
                 break;
                 case ProjectileID.RocketI:
                 case ProjectileID.RocketII:
                 case ProjectileID.RocketIII:
                 case ProjectileID.RocketIV:
-                case ProjectileID.ProximityMineI:
+				case ProjectileID.MiniNukeRocketI:
+				case ProjectileID.MiniNukeRocketII:
+				case ProjectileID.ClusterRocketI:
+				case ProjectileID.ClusterRocketII:
+				case ProjectileID.DryRocket:
+				case ProjectileID.WetRocket:
+				case ProjectileID.LavaRocket:
+				case ProjectileID.HoneyRocket:
+
+				case ProjectileID.ProximityMineI:
                 case ProjectileID.ProximityMineII:
                 case ProjectileID.ProximityMineIII:
                 case ProjectileID.ProximityMineIV:
-                case ProjectileID.GrenadeI:
+				case ProjectileID.MiniNukeMineI:
+				case ProjectileID.MiniNukeMineII:
+				case ProjectileID.ClusterMineI:
+				case ProjectileID.ClusterMineII:
+				case ProjectileID.DryMine:
+				case ProjectileID.WetMine:
+				case ProjectileID.LavaMine:
+				case ProjectileID.HoneyMine:
+
+				case ProjectileID.GrenadeI:
                 case ProjectileID.GrenadeII:
                 case ProjectileID.GrenadeIII:
                 case ProjectileID.GrenadeIV:
-                case ProjectileID.HellfireArrow:
+				case ProjectileID.MiniNukeGrenadeI:
+				case ProjectileID.MiniNukeGrenadeII:
+				case ProjectileID.ClusterGrenadeI:
+				case ProjectileID.ClusterGrenadeII:
+				case ProjectileID.DryGrenade:
+				case ProjectileID.WetGrenade:
+				case ProjectileID.LavaGrenade:
+				case ProjectileID.HoneyGrenade:
+
+				case ProjectileID.RocketSnowmanI:
+				case ProjectileID.RocketSnowmanII:
+				case ProjectileID.RocketSnowmanIII:
+				case ProjectileID.RocketSnowmanIV:
+				case ProjectileID.MiniNukeSnowmanRocketI:
+				case ProjectileID.MiniNukeSnowmanRocketII:
+				case ProjectileID.ClusterSnowmanRocketI:
+				case ProjectileID.ClusterSnowmanRocketII:
+				case ProjectileID.DrySnowmanRocket:
+				case ProjectileID.WetSnowmanRocket:
+				case ProjectileID.LavaSnowmanRocket:
+				case ProjectileID.HoneySnowmanRocket:
+
+				case ProjectileID.ClusterFragmentsI:
+				case ProjectileID.ClusterFragmentsII:
+				case ProjectileID.ClusterSnowmanFragmentsI:
+				case ProjectileID.ClusterSnowmanFragmentsII:
+				case ProjectileID.HellfireArrow:
                 projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
                 break;
             }

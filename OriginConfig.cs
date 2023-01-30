@@ -48,5 +48,9 @@ namespace Origins {
 		[Label("Open Journal Entries on Unlock")]
 		[DefaultValue(true)]
 		public bool OpenJournalOnUnlock = true;
+
+		[Label("Animated Ravel Transformation")]
+		[DefaultValue(true)]
+		public bool AnimatedRavel = true;
 	}
 }

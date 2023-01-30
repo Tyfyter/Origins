@@ -91,6 +91,8 @@ namespace Origins.Items.Accessories {
 			Projectile.aiStyle = 0;
 			Projectile.tileCollide = false;
 			Projectile.alpha = 150;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
 		}
 		public float movementFactor {
 			get => Projectile.ai[0];

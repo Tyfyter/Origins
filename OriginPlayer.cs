@@ -54,6 +54,7 @@ namespace Origins {
 		public bool riptideLegs = false;
 		public int riptideDashTime = 0;
 		public bool necroSet = false;
+		public bool novaSet = false;
 		public float necroSetAmount = 0f;
 		public int mimicSetChoices = 0;
         public int setActiveAbility = 0;
@@ -238,6 +239,7 @@ namespace Origins {
 			riptideSet = false;
 			riptideLegs = false;
 			necroSet = false;
+			novaSet = false;
 			if (necroSetAmount > 0) {
 				necroSetAmount -= 1 + necroSetAmount * 0.01f;
 			}
@@ -410,6 +412,9 @@ namespace Origins {
 					Player.dash = 2;
 					riptideDashTime = riptideDashDuration * dashDirection;
 					Player.timeSinceLastDashStarted = 0;
+					if (Player.velocity.Y > 0) {
+						Player.velocity.Y = 0;
+					}
 					Projectile.NewProjectile(
 						Player.GetSource_Misc("riptide_dash"),
 						Player.Center + new Vector2(Player.width * dashDirection, 0),
@@ -841,8 +846,31 @@ namespace Origins {
                         }
                         rot = -rot;
                     }
-                }
-            }
+				}
+				if (novaSet) {
+					Fraction dmg = new Fraction(3, 3);
+					int c = (madHand ? 1 : 0) + (Main.rand.NextBool(4) ? 0 : 1);
+					dmg.D += c;
+					damage *= dmg;
+					double rot = Main.rand.NextBool(2) ? -0.1 : 0.1;
+					Vector2 _position;
+					Vector2 _velocity;
+					int _type;
+					int _damage;
+					float _knockBack;
+					for (int i = c; i-- > 0;) {
+						_position = position;
+						_velocity = velocity.RotatedBy(rot);
+						_type = type;
+						_damage = damage;
+						_knockBack = knockback;
+						if (ItemLoader.Shoot(item, Player, source, _position, _velocity, _type, _damage, _knockBack)) {
+							Projectile.NewProjectile(source, _position, _velocity, _type, _damage, _knockBack, Player.whoAmI);
+						}
+						rot = -rot;
+					}
+				}
+			}
             return true;
         }
         public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {

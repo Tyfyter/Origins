@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dusts;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -30,13 +32,34 @@ namespace Origins.Items.Accessories {
 			originPlayer.vanityRavel = Type;
             const int down = 0;
             bool toggle = player.controlDown && player.releaseDown && player.doubleTapCardinalTimer[down] < 15;
-            if (player.mount.Type == Item.shoot) {
+			bool inOtherRavel = false;
+			if (player.mount.Type == Item.shoot) {
                 UpdateRaveled(player);
-                if (toggle) player.mount.Dismount(player);
-            } else {
-                if (toggle || Ravel_Mount.RavelMounts.Contains(player.mount.Type)) player.mount.SetMount(Item.shoot, player);
-            }
-        }
+			} else {
+				inOtherRavel = Ravel_Mount.RavelMounts.Contains(player.mount.Type);
+			}
+			if (toggle || inOtherRavel) ToggleRavel(player);
+		}
+		public void ToggleRavel(Player player) {
+			bool animated = OriginClientConfig.Instance.AnimatedRavel;
+			if (player.mount.Type == Item.shoot) {
+				if (animated) {
+					player.mount._idleTime = -Ravel_Mount.transformAnimationFrames;
+					player.mount._idleTimeNext = 0;
+				} else {
+					for (int i = 0; i < 40; i++) {
+						Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight).velocity *= 0.4f;
+					}
+					player.mount.Dismount(player);
+				}
+			} else {
+				player.mount.SetMount(Item.shoot, player);
+				player.mount._idleTime = animated ? 0 : Ravel_Mount.transformAnimationFrames;
+				for (int i = 0; i < 40; i++) {
+					Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight).velocity *= 0.4f;
+				}
+			}
+		}
 		public override void UpdateVanity(Player player) {
 			player.GetModPlayer<OriginPlayer>().vanityRavel = Type;
 		}
@@ -60,15 +83,20 @@ namespace Origins.Items.Accessories {
 		}
 	}
     public class Ravel_Mount : ModMount {
+		public const int transformAnimationFrames = 3;
+		public const float transformCounterSpeed = 1.75f;
+		public const float transformCounterMax = 4f;
 		public override string Texture => "Origins/Items/Accessories/Ravel";
         public static int ID { get; private set; } = -1;
-        protected virtual void SetID() {
+		public static AutoCastingAsset<Texture2D> TransformTexture { get; private set; }
+		protected virtual void SetID() {
             MountData.buff = ModContent.BuffType<Ravel_Mount_Buff>();
             ID = Type;
         }
         protected internal static HashSet<int> RavelMounts { get; private set; }
         public override void Unload() {
             RavelMounts = null;
+			TransformTexture = null;
 		}
 		public override void SetStaticDefaults() {
             // Movement
@@ -82,6 +110,7 @@ namespace Origins.Items.Accessories {
             MountData.dashSpeed = 8f; // The speed the mount moves when in the state of dashing.
             MountData.flightTimeMax = 0; // The amount of time in frames a mount can be in the state of flying.
             MountData.heightBoost = -22;
+			MountData.spawnDust = No_Dust.ID;
 
             // Misc
             MountData.fatigueMax = 0;
@@ -90,7 +119,10 @@ namespace Origins.Items.Accessories {
             MountData.totalFrames = 1; // Amount of animation frames for the mount
             MountData.playerYOffsets = new int[] { -22 };
             (RavelMounts ??= new()).Add(Type);
-            SetID();
+			if (!Main.dedServ && TransformTexture.Value is null) {
+				TransformTexture = Mod.Assets.Request<Texture2D>("Items/Accessories/Ravel_Morph");
+			}
+			SetID();
         }
 		public override void UpdateEffects(Player player) {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
@@ -98,19 +130,44 @@ namespace Origins.Items.Accessories {
             originPlayer.ravel = true;
         }
 		public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) {
-            const float factor = 10f / 12f;
-            mountedPlayer.mount._frameCounter += velocity.X * factor;
-            return false;
+			OriginPlayer originPlayer = mountedPlayer.GetModPlayer<OriginPlayer>();
+			const float factor = 10f / 12f;
+			if (originPlayer.ceilingRavel) {
+				mountedPlayer.mount._frameCounter -= velocity.X * factor;
+			} else {
+				mountedPlayer.mount._frameCounter += velocity.X * factor;
+				if (originPlayer.collidingX) {
+					mountedPlayer.mount._frameCounter -= velocity.Y * originPlayer.oldXSign * factor;
+				}
+			}
+			if (mountedPlayer.mount._idleTime < transformAnimationFrames && (mountedPlayer.mount._frameExtraCounter += transformCounterSpeed) >= transformCounterMax) {
+				mountedPlayer.mount._frameExtraCounter -= transformCounterMax;
+				if (mountedPlayer.mount._idleTime == 0 && mountedPlayer.mount._idleTimeNext == 0) {
+					mountedPlayer.mount.Dismount(mountedPlayer);
+				}
+				mountedPlayer.mount._idleTime += 1;
+			}
+			return false;
 		}
 		public override bool Draw(List<DrawData> playerDrawData, int drawType, Player drawPlayer, ref Texture2D texture, ref Texture2D glowTexture, ref Vector2 drawPosition, ref Rectangle frame, ref Color drawColor, ref Color glowColor, ref float rotation, ref SpriteEffects spriteEffects, ref Vector2 drawOrigin, ref float drawScale, float shadow) {
-            //playerDrawData.Clear();
+			//playerDrawData.Clear();
+			DrawData item;
+			int transformFrame = Math.Abs(drawPlayer.mount._idleTime);
+			if (transformFrame < transformAnimationFrames) {
+				texture = TransformTexture;
+				drawOrigin = new Vector2(16, 34);
+				frame = texture.Frame(1, 3, 0, transformFrame);
+				item = new DrawData(texture, drawPosition, frame, drawColor, rotation, drawOrigin, drawScale, 0, 0);
+				playerDrawData.Add(item);
+				return false;
+			}
             rotation = drawPlayer.mount._frameCounter * 0.1f;
 			int vanityRavel = drawPlayer.GetModPlayer<OriginPlayer>().vanityRavel;
 			if (vanityRavel < 0) return false;
 			Main.instance.LoadItem(vanityRavel);
 			texture = Terraria.GameContent.TextureAssets.Item[vanityRavel].Value;
             drawOrigin = new Vector2(12, 12);
-            DrawData item = new DrawData(texture, drawPosition, null, drawColor, rotation, drawOrigin, drawScale, 0, 0);
+            item = new DrawData(texture, drawPosition, null, drawColor, rotation, drawOrigin, drawScale, 0, 0);
             item.shader = Mount.currentShader;
             playerDrawData.Add(item);
             return false;
