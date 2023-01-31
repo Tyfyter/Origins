@@ -3,14 +3,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Volatile_Charm : ModItem {
+	[AutoloadEquip(EquipType.Neck)]
+	public class Volatile_Charm : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Volatile Charm");
             Tooltip.SetDefault("Increases explosive blast radius by 40% and reduces explosive self-damage by 20%");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.YoYoGlove);
+            Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);
             Item.value = Item.sellPrice(gold: 2);
             Item.rare = ItemRarityID.Green;
         }

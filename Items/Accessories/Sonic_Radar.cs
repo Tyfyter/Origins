@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Sonic_Radar : ModItem {
+	public class Sonic_Radar : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Sonic Radar");
             Tooltip.SetDefault("Allows the detection of traps, enemies, and valuables\nEmits a small aura of light");

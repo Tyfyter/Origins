@@ -3,14 +3,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Scavenger_Bag : ModItem {
+	[AutoloadEquip(EquipType.Back)]
+	public class Scavenger_Bag : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Scavenger Bag");
             Tooltip.SetDefault("Increases armor penetration by 5 and attacks tenderize targets\nIncreases your max number of minions by 1\nIncreases your summon damage by 15% and the knockback of your minions");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.Aglet);
+            Item.CloneDefaultsKeepSlots(ItemID.Aglet);
             Item.value = Item.sellPrice(gold: 9);
             Item.rare = ItemRarityID.Yellow;
         }

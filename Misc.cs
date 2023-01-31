@@ -393,8 +393,50 @@ namespace Origins {
             player.cLeinShampoo = cLeinShampoo;
 
         }
-    }
-    public record SpriteBatchState(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix transformMatrix = default);
+	}
+	public struct ItemSlotSet {
+		public sbyte beardSlot;
+		public sbyte backSlot;
+		public sbyte faceSlot;
+		public sbyte neckSlot;
+		public sbyte shieldSlot;
+		public sbyte wingSlot;
+		public sbyte waistSlot;
+		public sbyte shoeSlot;
+		public sbyte frontSlot;
+		public sbyte handOffSlot;
+		public sbyte handOnSlot;
+		public sbyte balloonSlot;
+		public ItemSlotSet(Item item) {
+			beardSlot = item.beardSlot;
+			backSlot = item.backSlot;
+			faceSlot = item.faceSlot;
+			neckSlot = item.neckSlot;
+			shieldSlot = item.shieldSlot;
+			wingSlot = item.wingSlot;
+			waistSlot = item.waistSlot;
+			shoeSlot = item.shoeSlot;
+			frontSlot = item.frontSlot;
+			handOffSlot = item.handOffSlot;
+			handOnSlot = item.handOnSlot;
+			balloonSlot = item.balloonSlot;
+		}
+		public void Apply(Item item) {
+			item.beardSlot = beardSlot;
+			item.backSlot = backSlot;
+			item.faceSlot = faceSlot;
+			item.neckSlot = neckSlot;
+			item.shieldSlot = shieldSlot;
+			item.wingSlot = wingSlot;
+			item.waistSlot = waistSlot;
+			item.shoeSlot = shoeSlot;
+			item.frontSlot = frontSlot;
+			item.handOffSlot = handOffSlot;
+			item.handOnSlot = handOnSlot;
+			item.balloonSlot = balloonSlot;
+		}
+	}
+	public record SpriteBatchState(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix transformMatrix = default);
     public abstract class AnimatedModItem : ModItem {
         public abstract DrawAnimation Animation { get; }
         public virtual Color? GetGlowmaskTint(Player player) => null;
@@ -1369,9 +1411,13 @@ namespace Origins {
                     }
                 }
             }
-        }
-
-        public static bool IsDevName(string name, int dev = 0) {
+		}
+		public static void CloneDefaultsKeepSlots(this Item self, int type) {
+			ItemSlotSet slots = new ItemSlotSet(self);
+			self.CloneDefaults(type);
+			slots.Apply(self);
+		}
+		public static bool IsDevName(string name, int dev = 0) {
             if (dev is 0 or 1) {//Tyfyter
                 return name is "Jennifer" or "Asher";
             } else if (dev is 0 or 2) {//Chee
@@ -1396,7 +1442,7 @@ namespace Origins {
         }
         public static void CloneFrame(this NPC self, int type, int frameHeight) {
             int t = self.type;
-            self.type = NPCID.BigMimicCrimson;
+            self.type = type;
             self.VanillaFindFrame(frameHeight, false, type);
             self.type = t;
         }

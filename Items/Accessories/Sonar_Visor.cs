@@ -3,14 +3,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Sonar_Visor : ModItem {
+	[AutoloadEquip(EquipType.Face)]
+	public class Sonar_Visor : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Sonar Visor");
             Tooltip.SetDefault("Increased projectile speed\nImmunity to Confusion\nAllows you to see tiles at a range");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.Aglet);
+            Item.CloneDefaultsKeepSlots(ItemID.Aglet);
             Item.value = Item.sellPrice(gold: 7);
             Item.rare = ItemRarityID.Yellow;
         }

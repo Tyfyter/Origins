@@ -7,16 +7,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Amebic_Vial : ModItem {
+	[AutoloadEquip(EquipType.Waist)]
+	public class Amebic_Vial : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Amebic Vial");
 			Tooltip.SetDefault("Amebic tentacles will protect you from projectiles");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.YoYoGlove);
-			Item.handOffSlot = -1;
-			Item.handOnSlot = -1;
+			Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);
 			Item.shoot = ModContent.ProjectileType<Amebic_Vial_Tentacle>();
 			Item.rare = ItemRarityID.Expert;
 			Item.expert = true;

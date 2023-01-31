@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
+	[AutoloadEquip(EquipType.Face)]
     public class Advanced_Imaging : ModItem {
         static short glowmask;
         public override void SetStaticDefaults() {
@@ -12,9 +13,7 @@ namespace Origins.Items.Accessories {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.YoYoGlove);
-            Item.handOffSlot = -1;
-            Item.handOnSlot = -1;
+            Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);
             Item.value = Item.sellPrice(gold: 5);
             Item.rare = ItemRarityID.Yellow;
             Item.glowMask = glowmask;

@@ -3,14 +3,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Keepsake_Remains : ModItem {
+	[AutoloadEquip(EquipType.Neck)]
+	public class Keepsake_Remains : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Keepsake Remains");
             Tooltip.SetDefault("Increases armor penetration by 5 and attacks tenderize targets");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.Aglet);
+            Item.CloneDefaultsKeepSlots(ItemID.Aglet);
             Item.value = Item.sellPrice(gold: 3);
             Item.rare = ItemRarityID.Green;
         }

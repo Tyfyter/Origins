@@ -3,14 +3,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Last_Descendent : ModItem {
+	[AutoloadEquip(EquipType.Neck)]
+	public class Last_Descendent : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Last Descendent");
             Tooltip.SetDefault("Increases damage, movement speed, length of invincibility after taking damage\nAdditionally causes stars to fall after taking damage");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.StarVeil);
+            Item.CloneDefaultsKeepSlots(ItemID.StarVeil);
             Item.value = Item.sellPrice(gold: 4);
             Item.rare = ItemRarityID.LightPurple;
             Item.accessory = true;

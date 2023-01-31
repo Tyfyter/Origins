@@ -4,14 +4,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Air_Tank : ModItem {
+	[AutoloadEquip(EquipType.Back)]
+	public class Air_Tank : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Air Tank");
             Tooltip.SetDefault("Extends underwater breathing\nImmunity to ‘Suffocation’");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.YoYoGlove);
+            Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);
             Item.rare = ItemRarityID.LightRed;
             Item.value = Item.sellPrice(gold: 1);
         }

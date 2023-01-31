@@ -3,14 +3,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Locket_Necklace : ModItem {
+	[AutoloadEquip(EquipType.Neck)]
+	public class Locket_Necklace : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Locket Necklace");
             Tooltip.SetDefault("Increases damage and movement speed after taking damage");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.PanicNecklace);
+            Item.CloneDefaultsKeepSlots(ItemID.PanicNecklace);
             Item.value = Item.sellPrice(gold: 2);
             Item.rare = ItemRarityID.Orange;
             Item.accessory = true;
