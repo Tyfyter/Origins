@@ -197,7 +197,7 @@ ARMOR:
 (^) Felnum Armor
 (^) Fiberglass Armor
 (^) Myth Armor
-(@, ☻) Riptide Armor !!!
+(@, ^3) Riptide Armor !!!
 
 (^) Acrid Armor
 (^) Bleeding Obsidian Armor
@@ -228,7 +228,7 @@ ACCESSORIES:
 (#2, ^2) I-WTPA Standard
 (^) Decaying Scale*
 (X) Deep Diving Gear
-(@2, ^3) Destructive Claws !!!
+(#3, ^2) Destructive Claws !!!
 (^) Dim Starlight*
 (^) Donor Wristband
 (^) Exploder Emblem*
@@ -236,18 +236,18 @@ ACCESSORIES:
 (^) Gun Glove
 (^) Handy Helper
 (X) Hazard Charm !!!
-(@2, #2) Headstomperz
+(#2, ^2) Headstomperz
 (^) Helium Tank
 (^) Keepsake Remains
 (X) Laser Tag Vest
 (^) Last Descendent
 (^) Locket Necklace
 (#2, ^2) Lover's Leap !!!
-(@2, ^3) Magic Glove
+(#3, ^2) Magic Glove
 (^) Makeover Choker
 (#3, ^2) Messy Leech
 (#3, ^2) Messy Magma Leech
-(@2, ^3) Missile Arm Cannon
+(#3, ^2) Missile Arm Cannon
 (#3, ^2) Mitosis
 (^) Nitro Crate
 (^) No U Card
@@ -258,8 +258,8 @@ ACCESSORIES:
 (^) Powerflower
 (X) Proactive Protozoa !!!
 (^) Razorwire
-(☻) Rebreather
-(☻) Rebreather Kit
+(^) Rebreather
+(^) Rebreather Kit
 (^) Return To Sender*
 (#2, ^2) Sonar Visor*
 (^) Scavenger Bag
@@ -269,13 +269,13 @@ ACCESSORIES:
 (X) Superjump Cape
 (X) Superstar Celebration Gear
 (^) Symbiote Skull
-(☻) Trap Charm !!!
+(^) Trap Charm
 (^) Turbo Reel
 (^) Unsought Organ
 (^) Volatile Charm
 
 (X) Bouncy Ravel
-(X) Dash Ravel
+(^) Dash Ravel
 (^) Depth Ravel
 (X) Drill Ravel
 (X) Grapple Ravel

@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
     public class IWTPA_Standard : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("I-WTPA Standard");
-            Tooltip.SetDefault("Explosive fuse time reduced");
+            Tooltip.SetDefault("Reduces explosive fuse time");
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {

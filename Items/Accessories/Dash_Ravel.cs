@@ -35,6 +35,13 @@ namespace Origins.Items.Accessories {
 		protected override void UpdateRaveled(Player player) {
             player.blackBelt = true;
         }
+		public override void AddRecipes() {
+			Recipe recipe = CreateRecipe();
+			recipe.AddIngredient(ItemID.Tabi);
+			recipe.AddIngredient(Ravel.ID);
+			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.Register();
+		}
 	}
     public class Dash_Ravel_Mount : Ravel_Mount {
         public override string Texture => "Origins/Items/Accessories/Dash_Ravel";

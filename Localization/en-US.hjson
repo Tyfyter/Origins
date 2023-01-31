@@ -57,7 +57,7 @@
 				LikeBiome: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
 				# LikeBiome_Jungle: The Jungle brings me joy. I'm nearby home and the toxic labyrinth that once was!
 				
-				LoveBiome: Screw the Ilkamin! I stand here proudly in the Temple!
+				LoveBiome: Screw the Clan Leader! I stand here proudly in the Temple!
 				# LoveBiome_Temple: Screw the Ilkamin! I stand here proudly in the Temple!
 				
 				HateBiome: The smell of mushrooms makes me sick, and I've smelled much worse.
@@ -129,10 +129,6 @@
 
 				DAltar: "Defiled altars can usually be found in the defiled wastelands. You will need to be near them to craft some items."
 				RAltar: "Riven altars can usually be found in the riven hive. You will need to be near them to craft some items."
-
-				DSeer1: "Watch out for the defiled seer as it watches over the wastelands! It will be attracted to any noises you make."
-				DSeer2: "When the defiled seer is nearby either flee or conceal yourself from being seen by it. If it spots you it will chase after you!"
-				DSeer3: "When in a chase from the defiled seer, try to out maneuver it or block it off from getting to you."
 
 				DFissure: "Defiled fissures can usually be found in the chasms around defiled areas. The heart will alert the immune system if too many have been destroyed. Defeating the amalgamation will cause meteors to fall from the sky!"
 				RLesion: "Riven lesions can usually be found in the riven hive. Smashing too many will unleash the primordial amoeba. Defeating this foe may cause meteors to fall out of the sky!"
