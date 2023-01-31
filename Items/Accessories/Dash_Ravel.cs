@@ -34,6 +34,7 @@ namespace Origins.Items.Accessories {
 		}
 		protected override void UpdateRaveled(Player player) {
             player.blackBelt = true;
+			player.noKnockback = true;
         }
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
@@ -52,9 +53,9 @@ namespace Origins.Items.Accessories {
         }
         public override void SetStaticDefaults() {
             base.SetStaticDefaults();
-			MountData.acceleration = 0.09f;
-			MountData.runSpeed = 13;
-			MountData.dashSpeed = 8;
+			MountData.acceleration = 0.18f;
+			MountData.runSpeed = 10.7f;
+			MountData.dashSpeed = 10f;
 		}
 		public override void UpdateEffects(Player player) {
 			base.UpdateEffects(player);
@@ -79,22 +80,23 @@ namespace Origins.Items.Accessories {
 	public class Dash_Ravel_P : ModProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dash Ravel");
+			DisplayName.SetDefault("Kinetic Wave");
 			ID = Type;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.DD2SquireSonicBoom);
+			Projectile.damage = 80;
 			Projectile.DamageType = DamageClass.Generic;
 			Projectile.alpha = 0;
 			Projectile.extraUpdates = 0;
 			Projectile.aiStyle = 0;
 			Projectile.timeLeft = 15;
-			Projectile.penetrate = 2;
+			Projectile.penetrate = -1;
+			Projectile.knockBack = 7;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 		}
 		public override void AI() {
-			Projectile.velocity *= 0.97f;
 			Projectile.alpha += 14;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
