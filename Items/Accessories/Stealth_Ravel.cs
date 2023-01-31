@@ -39,19 +39,6 @@ namespace Origins.Items.Accessories {
             MountData.buff = ModContent.BuffType<Stealth_Ravel_Mount_Buff>();
             ID = Type;
         }
-        public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) {
-            OriginPlayer originPlayer = mountedPlayer.GetModPlayer<OriginPlayer>();
-            const float factor = 10f / 12f;
-            if (originPlayer.ceilingRavel) {
-                mountedPlayer.mount._frameCounter -= velocity.X * factor;
-            } else {
-                mountedPlayer.mount._frameCounter += velocity.X * factor;
-                if (originPlayer.collidingX) {
-                    mountedPlayer.mount._frameCounter -= velocity.Y * originPlayer.oldXSign * factor;
-                }
-            }
-            return false;
-        }
     }
     public class Stealth_Ravel_Mount_Buff : Ravel_Mount_Buff {
         public override string Texture => "Origins/Buffs/Ravel_Generic_Buff";
