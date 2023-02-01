@@ -12,7 +12,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             sbyte slot = Item.faceSlot;
-            Item.CloneDefaults(ItemID.ManaFlower);
+            Item.CloneDefaults(ItemID.ArcaneFlower);
             Item.accessory = true;
             Item.faceSlot = slot;
             Item.rare = ItemRarityID.Pink;

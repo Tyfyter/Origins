@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
+    [AutoloadEquip(EquipType.Neck)]
     public class Bomb_Charm : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Bomb Charm");
@@ -10,6 +11,7 @@ namespace Origins.Items.Accessories {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
+            Item.CloneDefaultsKeepSlots(ItemID.Aglet);
             Item.accessory = true;
             Item.value = Item.sellPrice(gold: 1);
             Item.rare = ItemRarityID.Blue;

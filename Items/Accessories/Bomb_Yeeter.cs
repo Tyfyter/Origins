@@ -12,9 +12,7 @@ namespace Origins.Items.Accessories {
         }
         public override void SetDefaults() {
             sbyte handOnSlot = Item.handOnSlot;
-            sbyte handOffSlot = Item.handOffSlot;
             Item.CloneDefaults(ItemID.YoYoGlove);
-            Item.handOffSlot = handOffSlot;
             Item.handOnSlot = handOnSlot;
             Item.value = Item.sellPrice(gold: 2);
             Item.rare = ItemRarityID.Green;

@@ -5,6 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
+    [AutoloadEquip(EquipType.Neck)]
     public class Asylum_Whistle : ModItem, IJournalEntryItem {
         public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
         public string EntryName => "Origins/"+typeof(Asylum_Whistle_Entry).Name;
@@ -14,6 +15,7 @@ namespace Origins.Items.Accessories {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
+            Item.CloneDefaultsKeepSlots(ItemID.Aglet);
             Item.accessory = true;
             Item.rare = ItemRarityID.Orange;
             Item.value = Item.sellPrice(gold: 1);

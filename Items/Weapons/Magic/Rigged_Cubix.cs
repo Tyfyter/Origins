@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.glowMask = glowmask;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			velocity = velocity.RotatedByRandom(0.075f);
+			velocity = velocity.RotatedByRandom(0.15f);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.itemAnimation != 0 && !player.CheckMana(Item, pay:true)) {
