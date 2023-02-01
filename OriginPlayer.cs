@@ -197,6 +197,7 @@ namespace Origins {
         public HashSet<string> unlockedJournalEntries = new();
 		public int dashDirection = 0;
 		public int dashDelay = 0;
+		public int thornsVisualProjType = -1;
 		public override void ResetEffects() {
             oldBonuses = 0;
             if(fiberglassSet||fiberglassDagger)oldBonuses|=1;
@@ -346,8 +347,10 @@ namespace Origins {
             plagueSight = false;
             plagueSightLight = false;
             mountOnly = false;
-            changeSize = false;
+			thornsVisualProjType = -1;
+			changeSize = false;
             minionSubSlots = new float[minionSubSlotValues];
+			#region asylum whistle
 			if (lastMinionAttackTarget != Player.MinionAttackTargetNPC) {
 				if (asylumWhistle) {
                     if (Player.MinionAttackTargetNPC == -1) {
@@ -378,6 +381,7 @@ namespace Origins {
                 }
             }
             asylumWhistle = false;
+			#endregion
 
 			Player.statManaMax2 += quantumInjectors * Quantum_Injector.mana_per_use;
 			#region check if a dash should start
@@ -1145,7 +1149,7 @@ namespace Origins {
                         }
                     }
                 }
-                    for (int i = 0; i < 3; i++) {
+                for (int i = 0; i < 3; i++) {
                     if (i >= targets.Count) break;
                     Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
                     Projectile.NewProjectile(
@@ -1204,6 +1208,17 @@ namespace Origins {
 			preHitBuffs = new();
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				preHitBuffs.Add(new Point(Player.buffType[i], Player.buffTime[i]));
+			}
+			if (thornsVisualProjType >= 0) {
+				Projectile.NewProjectile(
+					Player.GetSource_Misc("thorns_visual"),
+					Player.position,
+					default,
+					thornsVisualProjType,
+					0,
+					0,
+					Player.whoAmI
+				);
 			}
 		}
         public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {

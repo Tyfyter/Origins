@@ -6,10 +6,12 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Air_Tank : ModItem {
-        public override void SetStaticDefaults() {
+		public static sbyte BackSlot { get; private set; }
+		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Air Tank");
             Tooltip.SetDefault("Extends underwater breathing\nImmunity to ‘Suffocation’");
-            SacrificeTotal = 1;
+			BackSlot = Item.backSlot;
+			SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);

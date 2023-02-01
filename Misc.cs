@@ -33,7 +33,8 @@ using Terraria.Localization;
 using ReLogic.Graphics;
 
 namespace Origins {
-    public class LinkedQueue<T> : ICollection<T> {
+	#region classes
+	public class LinkedQueue<T> : ICollection<T> {
         public int Count {
             get { return _items.Count; }
         }
@@ -1051,130 +1052,123 @@ namespace Origins {
         public const int Golden = 53;
         public static readonly IdDictionary Search = IdDictionary.Create(typeof(ChestID), typeof(int));
     }
-    public delegate void hook_DropItem(ItemDropper orig, DropAttemptInfo info, int item, int stack, bool scattered = false);
+	#endregion
+	public delegate void hook_DropItem(ItemDropper orig, DropAttemptInfo info, int item, int stack, bool scattered = false);
     public delegate void ItemDropper(DropAttemptInfo info, int item, int stack, bool scattered = false);
-    public static class OriginExtensions {
-        public static Func<float, int, Vector2> drawPlayerItemPos;
-        public static SoundStyle WithPitch(this SoundStyle soundStyle, float pitch) {
-            soundStyle.Pitch = pitch;
-            return soundStyle;
-        }
-        public static SoundStyle WithPitchVarience(this SoundStyle soundStyle, float pitchVarience) {
-            soundStyle.PitchVariance = pitchVarience;
-            return soundStyle;
-        }
-        public static SoundStyle WithPitchRange(this SoundStyle soundStyle, float min, float max) {
-            //soundStyle.PitchRange = (min, max);
-            return soundStyle with {
-                Pitch = (min + max) / 2,
-                PitchVariance = max - min
-            };
-        }
-        public static SoundStyle WithVolume(this SoundStyle soundStyle, float volume) {
-            soundStyle.Volume = volume;
-            return soundStyle;
-        }
-        public static StatModifier Scale(this StatModifier statModifier, float additive = 1f, float multiplicative = 1f, float flat = 1f, float @base = 1f) {
-            return new StatModifier(
-                (statModifier.Additive - 1) * additive + 1,
-                (statModifier.Multiplicative - 1) * multiplicative + 1,
-                statModifier.Flat * flat,
-                statModifier.Base * @base
-            );
-        }
-        public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
-            spriteBatch.End();
-            spriteBatch.Begin(sortMode, blendState ?? BlendState.AlphaBlend, samplerState ?? SamplerState.LinearClamp, DepthStencilState.None, rasterizerState ?? Main.Rasterizer, effect, transformMatrix ?? Main.GameViewMatrix.TransformationMatrix);
-        }
-        private static FieldInfo _sortMode;
-        internal static FieldInfo sortMode => _sortMode ??= typeof(SpriteBatch).GetField("sortMode", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static FieldInfo _customEffect;
-        internal static FieldInfo customEffect => _customEffect ??= typeof(SpriteBatch).GetField("customEffect", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static FieldInfo _transformMatrix;
-        internal static FieldInfo transformMatrix => _transformMatrix ??= typeof(SpriteBatch).GetField("transformMatrix", BindingFlags.NonPublic | BindingFlags.Instance);
-        public static SpriteBatchState GetState(this SpriteBatch spriteBatch) {
-            return new SpriteBatchState(
-                (SpriteSortMode)sortMode.GetValue(spriteBatch),
-                spriteBatch.GraphicsDevice.BlendState,
-                spriteBatch.GraphicsDevice.SamplerStates[0],
-                spriteBatch.GraphicsDevice.DepthStencilState,
-                spriteBatch.GraphicsDevice.RasterizerState,
-                (Effect)customEffect.GetValue(spriteBatch),
-                (Matrix)transformMatrix.GetValue(spriteBatch)
-            );
-        }
-        public static void Restart(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
-            spriteBatch.End();
-            spriteBatch.Begin(sortMode, blendState ?? spriteBatchState.blendState, samplerState ?? spriteBatchState.samplerState, spriteBatchState.depthStencilState, rasterizerState ?? spriteBatchState.rasterizerState, effect ?? spriteBatchState.effect, transformMatrix ?? spriteBatchState.transformMatrix);
-        }
-        public static int RandomRound(this UnifiedRandom random, float value) {
-            float amount = value % 1;
-            value -= amount;
-            if(amount == 0) return (int)value;
-            if (random.NextFloat() < amount) {
-                value++;
-            }
-            return (int)value;
-        }
-        public static int GetGoreSlot(this Mod mod, string name) {
+	public static class OriginExtensions {
+		public static Func<float, int, Vector2> drawPlayerItemPos;
+		public static SoundStyle WithPitch(this SoundStyle soundStyle, float pitch) {
+			soundStyle.Pitch = pitch;
+			return soundStyle;
+		}
+		public static SoundStyle WithPitchVarience(this SoundStyle soundStyle, float pitchVarience) {
+			soundStyle.PitchVariance = pitchVarience;
+			return soundStyle;
+		}
+		public static SoundStyle WithPitchRange(this SoundStyle soundStyle, float min, float max) {
+			//soundStyle.PitchRange = (min, max);
+			return soundStyle with {
+				Pitch = (min + max) / 2,
+				PitchVariance = max - min
+			};
+		}
+		public static SoundStyle WithVolume(this SoundStyle soundStyle, float volume) {
+			soundStyle.Volume = volume;
+			return soundStyle;
+		}
+		public static StatModifier Scale(this StatModifier statModifier, float additive = 1f, float multiplicative = 1f, float flat = 1f, float @base = 1f) {
+			return new StatModifier(
+				(statModifier.Additive - 1) * additive + 1,
+				(statModifier.Multiplicative - 1) * multiplicative + 1,
+				statModifier.Flat * flat,
+				statModifier.Base * @base
+			);
+		}
+		#region spritebatch
+		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
+			spriteBatch.End();
+			spriteBatch.Begin(sortMode, blendState ?? BlendState.AlphaBlend, samplerState ?? SamplerState.LinearClamp, DepthStencilState.None, rasterizerState ?? Main.Rasterizer, effect, transformMatrix ?? Main.GameViewMatrix.TransformationMatrix);
+		}
+		private static FieldInfo _sortMode;
+		internal static FieldInfo sortMode => _sortMode ??= typeof(SpriteBatch).GetField("sortMode", BindingFlags.NonPublic | BindingFlags.Instance);
+		private static FieldInfo _customEffect;
+		internal static FieldInfo customEffect => _customEffect ??= typeof(SpriteBatch).GetField("customEffect", BindingFlags.NonPublic | BindingFlags.Instance);
+		private static FieldInfo _transformMatrix;
+		internal static FieldInfo transformMatrix => _transformMatrix ??= typeof(SpriteBatch).GetField("transformMatrix", BindingFlags.NonPublic | BindingFlags.Instance);
+		public static SpriteBatchState GetState(this SpriteBatch spriteBatch) {
+			return new SpriteBatchState(
+				(SpriteSortMode)sortMode.GetValue(spriteBatch),
+				spriteBatch.GraphicsDevice.BlendState,
+				spriteBatch.GraphicsDevice.SamplerStates[0],
+				spriteBatch.GraphicsDevice.DepthStencilState,
+				spriteBatch.GraphicsDevice.RasterizerState,
+				(Effect)customEffect.GetValue(spriteBatch),
+				(Matrix)transformMatrix.GetValue(spriteBatch)
+			);
+		}
+		public static void Restart(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
+			spriteBatch.End();
+			spriteBatch.Begin(sortMode, blendState ?? spriteBatchState.blendState, samplerState ?? spriteBatchState.samplerState, spriteBatchState.depthStencilState, rasterizerState ?? spriteBatchState.rasterizerState, effect ?? spriteBatchState.effect, transformMatrix ?? spriteBatchState.transformMatrix);
+		}
+		#endregion
+		public static int RandomRound(this UnifiedRandom random, float value) {
+			float amount = value % 1;
+			value -= amount;
+			if (amount == 0) return (int)value;
+			if (random.NextFloat() < amount) {
+				value++;
+			}
+			return (int)value;
+		}
+		public static int GetGoreSlot(this Mod mod, string name) {
 			if (Main.netMode == NetmodeID.Server) {
-                mod.Logger.Error($"Tried to load gore {mod.Name}/{name} on server");
-                return 0;
+				mod.Logger.Error($"Tried to load gore {mod.Name}/{name} on server");
+				return 0;
 			}
 			if (mod.TryFind(name, out ModGore modGore)) {
-                return modGore.Type;
-            }
-            return mod.TryFind(name.Split('/', 3)[^1], out modGore) ? modGore.Type : 0;
+				return modGore.Type;
+			}
+			return mod.TryFind(name.Split('/', 3)[^1], out modGore) ? modGore.Type : 0;
 		}
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {
-            return drawPlayerItemPos(gravdir, itemtype);
-        }
-        public static Vector2 GetLoSLength(Vector2 pos, Vector2 unit, int maxSteps, out int totalSteps) {
-            return GetLoSLength(pos, new Point(1,1), unit, new Point(1,1), maxSteps, out totalSteps);
-        }
-        public static Vector2 GetLoSLength(Vector2 pos, Point size1, Vector2 unit, Point size2, int maxSteps, out int totalSteps) {
-            Vector2 origin = pos;
-            totalSteps = 0;
-            while (Collision.CanHit(origin, size1.X, size1.Y, pos+unit, size2.X, size2.Y) && totalSteps<maxSteps) {
-                totalSteps++;
-                pos += unit;
-            }
-            return pos;
-        }
-        public static Vector2 Clamp(this Vector2 value, Vector2 min, Vector2 max) {
-            return new Vector2(MathHelper.Clamp(value.X,min.X,max.X), MathHelper.Clamp(value.Y,min.Y,max.Y));
-        }
-        public static Vector2 Clamp(this Vector2 value, Rectangle area) {
-            return new Vector2(MathHelper.Clamp(value.X,area.X,area.Right), MathHelper.Clamp(value.Y,area.Y,area.Bottom));
-        }
-        public static Rectangle Add(this Rectangle a, Vector2 b) {
-            return new Rectangle(a.X+(int)b.X,a.Y+(int)b.Y,a.Width,a.Height);
-        }
-        [Obsolete("Currently buggy, marking as obsolete so I know what uses I need to fix")]
-        public static double AngleDif(double alpha, double beta) {
-            double phi = Math.Abs(beta - alpha) % (Math.PI*2);       // This is either the distance or 360 - distance
-            double distance = ((phi > Math.PI)^(alpha>beta)) ? (Math.PI*2) - phi : phi;
-            return distance;
-        }
-        public static float AngleDif(float alpha, float beta, out int dir) {
-            float phi = Math.Abs(beta - alpha) % MathHelper.TwoPi;       // This is either the distance or 360 - distance
-            dir = ((phi > MathHelper.Pi)^(alpha>beta))?-1:1;
-            float distance = phi > MathHelper.Pi ? MathHelper.TwoPi - phi : phi;
-            return distance;
-        }
-        public static Vector2 RotatedByRandom(this Vector2 vec, double maxRadians, UnifiedRandom rand) {
-            return vec.RotatedBy(rand.NextDouble() * maxRadians - rand.NextDouble() * maxRadians);
-        }
-        public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox) {
-            float xoffset = 10f;
-            float yoffset = 24f;
-            byte stage = 3;
-            if (player.itemAnimation < player.itemAnimationMax * 0.333) {
-                stage = 1;
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {
+			return drawPlayerItemPos(gravdir, itemtype);
+		}
+		#region line of sight
+		public static Vector2 GetLoSLength(Vector2 pos, Vector2 unit, int maxSteps, out int totalSteps) {
+			return GetLoSLength(pos, new Point(1, 1), unit, new Point(1, 1), maxSteps, out totalSteps);
+		}
+		public static Vector2 GetLoSLength(Vector2 pos, Point size1, Vector2 unit, Point size2, int maxSteps, out int totalSteps) {
+			Vector2 origin = pos;
+			totalSteps = 0;
+			while (Collision.CanHit(origin, size1.X, size1.Y, pos + unit, size2.X, size2.Y) && totalSteps < maxSteps) {
+				totalSteps++;
+				pos += unit;
+			}
+			return pos;
+		}
+		#endregion
+		public static Rectangle Add(this Rectangle a, Vector2 b) {
+			return new Rectangle(a.X + (int)b.X, a.Y + (int)b.Y, a.Width, a.Height);
+		}
+		public static float AngleDif(float alpha, float beta, out int dir) {
+			float phi = Math.Abs(beta - alpha) % MathHelper.TwoPi;       // This is either the distance or 360 - distance
+			dir = ((phi > MathHelper.Pi) ^ (alpha > beta)) ? -1 : 1;
+			float distance = phi > MathHelper.Pi ? MathHelper.TwoPi - phi : phi;
+			return distance;
+		}
+		public static Vector2 RotatedByRandom(this Vector2 vec, double maxRadians, UnifiedRandom rand) {
+			return vec.RotatedBy(rand.NextDouble() * maxRadians - rand.NextDouble() * maxRadians);
+		}
+		public static void FixedUseItemHitbox(Item item, Player player, ref Rectangle hitbox, ref bool noHitbox) {
+			float xoffset = 10f;
+			float yoffset = 24f;
+			byte stage = 3;
+			if (player.itemAnimation < player.itemAnimationMax * 0.333) {
+				stage = 1;
 				if (item.width >= 92) xoffset = 38f; else if (item.width >= 64) xoffset = 28f; else if (item.width >= 52) xoffset = 24f; else if (item.width > 32) xoffset = 14f;
 			} else if (player.itemAnimation < player.itemAnimationMax * 0.666) {
-                stage = 2;
+				stage = 2;
 				if (item.width >= 92) xoffset = 38f; else if (item.width >= 64) xoffset = 28f; else if (item.width >= 52) xoffset = 24f; else if (item.width > 32) xoffset = 18f;
 				yoffset = 10f;
 				if (item.height >= 64) yoffset = 14f; else if (item.height >= 52) yoffset = 12f; else if (item.height > 32) yoffset = 8f;
@@ -1186,231 +1180,246 @@ namespace Origins {
 			}
 			hitbox.X = (int)(player.itemLocation.X = player.position.X + player.width * 0.5f + (item.width * 0.5f - xoffset) * player.direction);
 			hitbox.Y = (int)(player.itemLocation.Y = player.position.Y + yoffset + player.mount.PlayerOffsetHitbox);
-            hitbox.Width = (int)(item.width*item.scale);
-            hitbox.Height = (int)(item.height*item.scale);
-		    if (player.direction == -1) hitbox.X -= hitbox.Width;
-		    if (player.gravDir == 1f) hitbox.Y -= hitbox.Height;
-            switch(stage) {
-                case 1:
+			hitbox.Width = (int)(item.width * item.scale);
+			hitbox.Height = (int)(item.height * item.scale);
+			if (player.direction == -1) hitbox.X -= hitbox.Width;
+			if (player.gravDir == 1f) hitbox.Y -= hitbox.Height;
+			switch (stage) {
+				case 1:
 				if (player.direction == -1) hitbox.X -= (int)(hitbox.Width * 1.4 - hitbox.Width);
 				hitbox.Width = (int)(hitbox.Width * 1.4);
 				hitbox.Y += (int)(hitbox.Height * 0.5 * player.gravDir);
 				hitbox.Height = (int)(hitbox.Height * 1.1);
-                break;
-                case 3:
+				break;
+				case 3:
 				if (player.direction == 1) hitbox.X -= (int)(hitbox.Width * 1.2);
 				hitbox.Width *= 2;
 				hitbox.Y -= (int)((hitbox.Height * 1.4 - hitbox.Height) * player.gravDir);
 				hitbox.Height = (int)(hitbox.Height * 1.4);
-                break;
-            }
-        }
-        public static void DrawLine(this SpriteBatch spriteBatch, Color color, Vector2 start, Vector2 end, int thickness = 2) {
-            Rectangle drawRect = new Rectangle(
-                (int)Math.Round(start.X - Main.screenPosition.X),
-                (int)Math.Round(start.Y - Main.screenPosition.Y),
-                (int)Math.Round((end - start).Length()),
-                thickness);
-
-            spriteBatch.Draw(Origins.instance.Assets.Request<Texture2D>("Projectiles/Pixel").Value, drawRect, null, color, (end - start).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool LinearSmoothing(ref float smoothed, float target, float rate) {
-            if(target!=smoothed) {
-                if(Math.Abs(target-smoothed)<rate) {
-                    smoothed = target;
-                } else {
-                    if(target>smoothed) {
-                        smoothed+=rate;
-                    }else if(target<smoothed) {
-                        smoothed-=rate;
-                    }
-                    return false;
-                }
-            }
-            return true;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool LinearSmoothing(ref Vector2 smoothed, Vector2 target, float rate) {
-            if(target!=smoothed) {
-                Vector2 diff = (target-smoothed);
-                if((target-smoothed).Length()<rate) {
-                    smoothed = target;
-                } else {
-                    diff.Normalize();
-                    smoothed+=diff*rate;
-                    return false;
-                }
-            }
-            return true;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool LerpSmoothing(ref float smoothed, float target, float rate, float snap) {
-            if(target!=smoothed) {
-                if(Math.Abs(target-smoothed)<snap) {
-                    smoothed = target;
-                } else {
-                    smoothed = MathHelper.Lerp(smoothed, target, rate);
-                    return false;
-                }
-            }
-            return true;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool LerpSmoothing(ref Vector2 smoothed, Vector2 target, float rate, float snap) {
-            if(target!=smoothed) {
-                Vector2 diff = (target-smoothed);
-                if((target-smoothed).Length()<snap) {
-                    smoothed = target;
-                } else {
-                    smoothed = Vector2.Lerp(smoothed, target, rate);
-                    return false;
-                }
-            }
-            return true;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static bool AngularSmoothing(ref float smoothed, float target, float rate) {
-            if(target!=smoothed) {
-                float diff = GeometryUtils.AngleDif(smoothed, target, out int dir);
-                diff = Math.Abs(diff);
-                float aRate = Math.Abs(rate);
-                if(diff<aRate) {
-                    smoothed = target;
-                } else {
-                    smoothed+=rate*dir;
-                    return false;
-                }
-            }
-            return true;
-        }
-        public static void AngularSmoothing(ref float smoothed, float target, float rate, out bool equal) {
-            equal = true;
-            if(target!=smoothed) {
-                float diff = GeometryUtils.AngleDif(smoothed, target, out int dir);
-                diff = Math.Abs(diff);
-                float aRate = Math.Abs(rate);
-                if(diff<=aRate) {
-                    smoothed = target;
-                } else {
-                    smoothed+=rate*dir;
-                    equal = false;
-                }
-            }
-        }
-        public static Vector2 TakeAverage(this List<Vector2> vectors) {
-            Vector2 sum = default;
-            int count = vectors.Count;
-            for(int i = 0; i < vectors.Count; i++) {
-                sum+=vectors[i];
-            }
-            return count!=0 ? sum/count : sum;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Vector2 Vec2FromPolar(float theta, float magnitude = 1f) {
-            return new Vector2((float)(magnitude*Math.Cos(theta)),(float)(magnitude*Math.Sin(theta)));
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float NormDot(Vector2 a, Vector2 b) {
-            return (Vector2.Normalize(a)*Vector2.Normalize(b)).Sum();
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float NormDotWithPriorityMult(Vector2 a, Vector2 b, float priorityMult) {
-            return (Vector2.Dot(Vector2.Normalize(a), Vector2.Normalize(b)) - 1) * priorityMult + 1;
-        }
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Sum(this Vector2 a) {
-            return a.X+a.Y;
-        }
-        public static Color Desaturate(this Color value, float multiplier) {
-            float R = value.R / 255f;
-            float G = value.G / 255f;
-            float B = value.B / 255f;
-            float median = (Math.Min(Math.Min(R, G), B) + Math.Max(Math.Max(R, G), B)) / 2f;
-            return new Color(MathHelper.Lerp(median, R, multiplier), MathHelper.Lerp(median, G, multiplier), MathHelper.Lerp(median, B, multiplier));
-        }
-        public static T[] BuildArray<T>(int length, params int[] nonNullIndeces) where T : new() {
-            T[] o = new T[length];
-            for(int i = 0; i < nonNullIndeces.Length; i++) {
-                o[nonNullIndeces[i]] = new T();
-            }
-            return o;
-        }
-        public static Vector2 OldPos(this Projectile self, int index) {
-            return index==-1 ?self.position:self.oldPos[index];
-        }
-        public static float OldRot(this Projectile self, int index) {
-            return index==-1 ?self.rotation:self.oldRot[index];
-        }
-        public static Vector2 OldPos(this NPC self, int index) {
-            return index==-1 ?self.position:self.oldPos[index];
-        }
-        public static float OldRot(this NPC self, int index) {
-            return index==-1 ?self.rotation:self.oldRot[index];
-        }
-        public static Recipe AddRecipeGroupWithItem(this Recipe recipe, int recipeGroupId, int showItem, int stack = 1) {
-            if (!RecipeGroup.recipeGroups.ContainsKey(recipeGroupId)) {
-                DefaultInterpolatedStringHandler defaultInterpolatedStringHandler = new DefaultInterpolatedStringHandler(43, 1);
-                defaultInterpolatedStringHandler.AppendLiteral("A recipe group with the ID ");
-                defaultInterpolatedStringHandler.AppendFormatted(recipeGroupId);
-                defaultInterpolatedStringHandler.AppendLiteral(" does not exist.");
-                throw new RecipeException(defaultInterpolatedStringHandler.ToStringAndClear());
-            }
-            recipe.AddIngredient(showItem, stack);
-            recipe.acceptedGroups.Add(recipeGroupId);
-            return recipe;
-        }
-        public static bool IsTileReplacable(int x, int y) {
-            Tile tile = Main.tile[x, y];
-            return !tile.HasTile || (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && WorldGen.CanKillTile(x, y));
+				break;
+			}
 		}
-        public static void SpreadWall(int x, int y, ushort wallType, Dictionary<ushort, bool> replacables) {
-            if (!WorldGen.InWorld(x, y)) {
-                return;
-            }
-            int count = 0;
-            Stack<Point> positions = new Stack<Point>();
-            Stack<Point> nextPositions = new Stack<Point>();
-            HashSet<Point> oldPositions = new HashSet<Point>();
-            void AddPosition(Point newPosition) {
-                if (!oldPositions.Contains(newPosition)) {
-                    nextPositions.Push(newPosition);
-                }
-            }
-            nextPositions.Push(new Point(x, y));
-            while (nextPositions.Count > 0) {
-                while (nextPositions.Count > 0) positions.Push(nextPositions.Pop());
-                while (positions.Count > 0) {
-                    Point position = positions.Pop();
-                    if (!WorldGen.InWorld(position.X, position.Y, 1)) {
-                        continue;
-                    }
-                    oldPositions.Add(position);
-                    Tile tile = Main.tile[position.X, position.Y];
-                    if (tile.WallType != wallType) {
-                        if (!WorldGen.SolidTile(position.X, position.Y)) {
-                            if (tile.WallType == WallID.None) {
-                                continue;
-                            }
-                            count++;
-                            if (count >= WorldGen.maxWallOut2) {
-                                continue;
-                            }
-                            AddPosition(new Point(position.X - 1, position.Y));
-                            AddPosition(new Point(position.X + 1, position.Y));
-                            AddPosition(new Point(position.X, position.Y - 1));
-                            AddPosition(new Point(position.X, position.Y + 1));
-                            AddPosition(new Point(position.X - 1, position.Y - 1));
-                            AddPosition(new Point(position.X + 1, position.Y - 1));
-                            AddPosition(new Point(position.X - 1, position.Y + 1));
-                            AddPosition(new Point(position.X + 1, position.Y + 1));
-                            AddPosition(new Point(position.X - 2, position.Y));
-                            AddPosition(new Point(position.X + 2, position.Y));
-                        }
-                        if(replacables.TryGetValue(tile.WallType, out bool isReplacable) && isReplacable) tile.WallType = wallType;
-                    }
-                }
-            }
+		public static void DrawLine(this SpriteBatch spriteBatch, Color color, Vector2 start, Vector2 end, int thickness = 2) {
+			Rectangle drawRect = new Rectangle(
+				(int)Math.Round(start.X - Main.screenPosition.X),
+				(int)Math.Round(start.Y - Main.screenPosition.Y),
+				(int)Math.Round((end - start).Length()),
+				thickness);
+
+			spriteBatch.Draw(Origins.instance.Assets.Request<Texture2D>("Projectiles/Pixel").Value, drawRect, null, color, (end - start).ToRotation(), Vector2.Zero, SpriteEffects.None, 0);
+		}
+		#region smoothing
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool LinearSmoothing(ref float smoothed, float target, float rate) {
+			if (target != smoothed) {
+				if (Math.Abs(target - smoothed) < rate) {
+					smoothed = target;
+				} else {
+					if (target > smoothed) {
+						smoothed += rate;
+					} else if (target < smoothed) {
+						smoothed -= rate;
+					}
+					return false;
+				}
+			}
+			return true;
+		}
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool LinearSmoothing(ref Vector2 smoothed, Vector2 target, float rate) {
+			if (target != smoothed) {
+				Vector2 diff = (target - smoothed);
+				if ((target - smoothed).Length() < rate) {
+					smoothed = target;
+				} else {
+					diff.Normalize();
+					smoothed += diff * rate;
+					return false;
+				}
+			}
+			return true;
+		}
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool LerpSmoothing(ref float smoothed, float target, float rate, float snap) {
+			if (target != smoothed) {
+				if (Math.Abs(target - smoothed) < snap) {
+					smoothed = target;
+				} else {
+					smoothed = MathHelper.Lerp(smoothed, target, rate);
+					return false;
+				}
+			}
+			return true;
+		}
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool LerpSmoothing(ref Vector2 smoothed, Vector2 target, float rate, float snap) {
+			if (target != smoothed) {
+				Vector2 diff = (target - smoothed);
+				if ((target - smoothed).Length() < snap) {
+					smoothed = target;
+				} else {
+					smoothed = Vector2.Lerp(smoothed, target, rate);
+					return false;
+				}
+			}
+			return true;
+		}
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static bool AngularSmoothing(ref float smoothed, float target, float rate) {
+			if (target != smoothed) {
+				float diff = GeometryUtils.AngleDif(smoothed, target, out int dir);
+				diff = Math.Abs(diff);
+				float aRate = Math.Abs(rate);
+				if (diff < aRate) {
+					smoothed = target;
+				} else {
+					smoothed += rate * dir;
+					return false;
+				}
+			}
+			return true;
+		}
+		public static void AngularSmoothing(ref float smoothed, float target, float rate, out bool equal) {
+			equal = true;
+			if (target != smoothed) {
+				float diff = GeometryUtils.AngleDif(smoothed, target, out int dir);
+				diff = Math.Abs(diff);
+				float aRate = Math.Abs(rate);
+				if (diff <= aRate) {
+					smoothed = target;
+				} else {
+					smoothed += rate * dir;
+					equal = false;
+				}
+			}
+		}
+		#endregion
+		#region vectors
+		public static Vector2 Clamp(this Vector2 value, Vector2 min, Vector2 max) {
+			return new Vector2(MathHelper.Clamp(value.X, min.X, max.X), MathHelper.Clamp(value.Y, min.Y, max.Y));
+		}
+		public static Vector2 Clamp(this Vector2 value, Rectangle area) {
+			return new Vector2(MathHelper.Clamp(value.X, area.X, area.Right), MathHelper.Clamp(value.Y, area.Y, area.Bottom));
+		}
+		public static Vector2 TakeAverage(this List<Vector2> vectors) {
+			Vector2 sum = default;
+			int count = vectors.Count;
+			for (int i = 0; i < vectors.Count; i++) {
+				sum += vectors[i];
+			}
+			return count != 0 ? sum / count : sum;
+		}
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static Vector2 Vec2FromPolar(float theta, float magnitude = 1f) {
+			return new Vector2((float)(magnitude * Math.Cos(theta)), (float)(magnitude * Math.Sin(theta)));
+		}
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float NormDot(Vector2 a, Vector2 b) {
+			return (Vector2.Normalize(a) * Vector2.Normalize(b)).Sum();
+		}
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float NormDotWithPriorityMult(Vector2 a, Vector2 b, float priorityMult) {
+			return (Vector2.Dot(Vector2.Normalize(a), Vector2.Normalize(b)) - 1) * priorityMult + 1;
+		}
+		[MethodImpl(MethodImplOptions.AggressiveInlining)]
+		public static float Sum(this Vector2 a) {
+			return a.X + a.Y;
+		}
+		public static Vector2 WithMaxLength(this Vector2 vector, float length) {
+			if (length <= 0) return Vector2.Zero;
+			float pLength = vector.LengthSquared();
+			return pLength > length * length ? Vector2.Normalize(vector) * length : vector;
+		}
+		#endregion
+		public static Color Desaturate(this Color value, float multiplier) {
+			float R = value.R / 255f;
+			float G = value.G / 255f;
+			float B = value.B / 255f;
+			float median = (Math.Min(Math.Min(R, G), B) + Math.Max(Math.Max(R, G), B)) / 2f;
+			return new Color(MathHelper.Lerp(median, R, multiplier), MathHelper.Lerp(median, G, multiplier), MathHelper.Lerp(median, B, multiplier));
+		}
+		public static T[] BuildArray<T>(int length, params int[] nonNullIndeces) where T : new() {
+			T[] o = new T[length];
+			for (int i = 0; i < nonNullIndeces.Length; i++) {
+				o[nonNullIndeces[i]] = new T();
+			}
+			return o;
+		}
+		public static Vector2 OldPos(this Projectile self, int index) {
+			return index == -1 ? self.position : self.oldPos[index];
+		}
+		public static float OldRot(this Projectile self, int index) {
+			return index == -1 ? self.rotation : self.oldRot[index];
+		}
+		public static Vector2 OldPos(this NPC self, int index) {
+			return index == -1 ? self.position : self.oldPos[index];
+		}
+		public static float OldRot(this NPC self, int index) {
+			return index == -1 ? self.rotation : self.oldRot[index];
+		}
+		public static Recipe AddRecipeGroupWithItem(this Recipe recipe, int recipeGroupId, int showItem, int stack = 1) {
+			if (!RecipeGroup.recipeGroups.ContainsKey(recipeGroupId)) {
+				DefaultInterpolatedStringHandler defaultInterpolatedStringHandler = new DefaultInterpolatedStringHandler(43, 1);
+				defaultInterpolatedStringHandler.AppendLiteral("A recipe group with the ID ");
+				defaultInterpolatedStringHandler.AppendFormatted(recipeGroupId);
+				defaultInterpolatedStringHandler.AppendLiteral(" does not exist.");
+				throw new RecipeException(defaultInterpolatedStringHandler.ToStringAndClear());
+			}
+			recipe.AddIngredient(showItem, stack);
+			recipe.acceptedGroups.Add(recipeGroupId);
+			return recipe;
+		}
+		public static bool IsTileReplacable(int x, int y) {
+			Tile tile = Main.tile[x, y];
+			return !tile.HasTile || (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType] && WorldGen.CanKillTile(x, y));
+		}
+		public static void SpreadWall(int x, int y, ushort wallType, Dictionary<ushort, bool> replacables) {
+			if (!WorldGen.InWorld(x, y)) {
+				return;
+			}
+			int count = 0;
+			Stack<Point> positions = new Stack<Point>();
+			Stack<Point> nextPositions = new Stack<Point>();
+			HashSet<Point> oldPositions = new HashSet<Point>();
+			void AddPosition(Point newPosition) {
+				if (!oldPositions.Contains(newPosition)) {
+					nextPositions.Push(newPosition);
+				}
+			}
+			nextPositions.Push(new Point(x, y));
+			while (nextPositions.Count > 0) {
+				while (nextPositions.Count > 0) positions.Push(nextPositions.Pop());
+				while (positions.Count > 0) {
+					Point position = positions.Pop();
+					if (!WorldGen.InWorld(position.X, position.Y, 1)) {
+						continue;
+					}
+					oldPositions.Add(position);
+					Tile tile = Main.tile[position.X, position.Y];
+					if (tile.WallType != wallType) {
+						if (!WorldGen.SolidTile(position.X, position.Y)) {
+							if (tile.WallType == WallID.None) {
+								continue;
+							}
+							count++;
+							if (count >= WorldGen.maxWallOut2) {
+								continue;
+							}
+							AddPosition(new Point(position.X - 1, position.Y));
+							AddPosition(new Point(position.X + 1, position.Y));
+							AddPosition(new Point(position.X, position.Y - 1));
+							AddPosition(new Point(position.X, position.Y + 1));
+							AddPosition(new Point(position.X - 1, position.Y - 1));
+							AddPosition(new Point(position.X + 1, position.Y - 1));
+							AddPosition(new Point(position.X - 1, position.Y + 1));
+							AddPosition(new Point(position.X + 1, position.Y + 1));
+							AddPosition(new Point(position.X - 2, position.Y));
+							AddPosition(new Point(position.X + 2, position.Y));
+						}
+						if (replacables.TryGetValue(tile.WallType, out bool isReplacable) && isReplacable) tile.WallType = wallType;
+					}
+				}
+			}
 		}
 		public static void CloneDefaultsKeepSlots(this Item self, int type) {
 			ItemSlotSet slots = new ItemSlotSet(self);
@@ -1418,355 +1427,347 @@ namespace Origins {
 			slots.Apply(self);
 		}
 		public static bool IsDevName(string name, int dev = 0) {
-            if (dev is 0 or 1) {//Tyfyter
-                return name is "Jennifer" or "Asher";
-            } else if (dev is 0 or 2) {//Chee
+			if (dev is 0 or 1) {//Tyfyter
+				return name is "Jennifer" or "Asher";
+			} else if (dev is 0 or 2) {//Chee
 
-            }//add more here
-            return false;
-        }
-        public static void SetToType(this Projectile self, int type) {
-            float[] ai = self.ai;
-            Vector2 pos = self.Center;
-            int dmg = self.damage;
-            float kb = self.knockBack;
-            int id = self.identity;
-            int owner = self.owner;
-            self.SetDefaults(type);
-            self.ai = ai;
-            self.Center = pos;
-            self.damage = dmg;
-            self.knockBack = kb;
-            self.identity = id;
-            self.owner = owner;
-        }
-        public static void CloneFrame(this NPC self, int type, int frameHeight) {
-            int t = self.type;
-            self.type = type;
-            self.VanillaFindFrame(frameHeight, false, type);
-            self.type = t;
-        }
-        public static string Get2ndPersonReference(this Player self, string args = "") {
-            return Language.GetTextValue($"Mods.Origins.Words.2ndref{args}{(Main.LocalPlayer.Male ? "male" : "female")}");
-        }
-
-        private static FieldInfo _inext;
-        internal static FieldInfo Inext => _inext ??= typeof(UnifiedRandom).GetField("inext", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static FieldInfo _inextp;
-        internal static FieldInfo Inextp => _inextp ??= typeof(UnifiedRandom).GetField("inextp", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static FieldInfo _seedArray;
-        internal static FieldInfo SeedArray => _seedArray ??= typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic | BindingFlags.Instance);
-        private static FieldInfo _dangerousBiomes;
-        internal static FieldInfo dangerousBiomes => _dangerousBiomes ??= typeof(ShopHelper).GetField("_dangerousBiomes", BindingFlags.NonPublic | BindingFlags.Instance);
-        /*internal static void initExt() {
-            memberwiseClone = typeof(object).GetMethod("MemberwiseClone", BindingFlags.NonPublic|BindingFlags.Instance);
-            inext = typeof(UnifiedRandom).GetField("inext", BindingFlags.NonPublic|BindingFlags.Instance);
-            inextp = typeof(UnifiedRandom).GetField("inextp", BindingFlags.NonPublic|BindingFlags.Instance);
-            SeedArray = typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic|BindingFlags.Instance);
-        }*/
-        internal static void unInitExt() {
-            _inext = null;
-            _inextp = null;
-            _seedArray = null;
-            _dangerousBiomes = null;
-            _defaultCharacterData = null;
-            _spriteCharacters = null;
-            strikethroughFont = null;
-        }
-        public static UnifiedRandom Clone(this UnifiedRandom r) {
-            UnifiedRandom o = new UnifiedRandom();
-            Inext.SetValue(o, (int)Inext.GetValue(r));
-            Inextp.SetValue(o, (int)Inextp.GetValue(r));
-            SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).ToArray());
-            return o;
-        }
-        public static string Stringify(this Recipe r) {
-            ItemID.Search.TryGetName(r.createItem.type, out string resultName);
-            return $"result: {resultName} " +
-                //$"alchemy: {r.alchemy} " +
-                $"required Items: {string.Join(", ",r.requiredItem.Select((i) => { ItemID.Search.TryGetName(i.type, out string name); return name; }))} " +
-                $"required Tiles: {string.Join(", ",r.requiredTile.Select((i) => { TileID.Search.TryGetName(i, out string name); return name; }))}";
-        }
-        public static Item CloneByID(this Item item) {
-            Item v = new Item();
-            v.SetDefaults(item.type);
-            return v;
-        }
-        public static Item ItemFromType(int type) {
-            Item v = new Item();
-            v.SetDefaults(type);
-            return v;
-        }
-        public static T[] WithLength<T>(this T[] input, int length) {
-            T[] output = new T[length];
-            if(length>input.Length) {
-                length = input.Length;
-            }
-            for(int i = 0; i < length; i++) {
-                output[i] = input[i];
-            }
-            return output;
-        }
-        public static Rectangle BoxOf(Vector2 a, Vector2 b, float buffer) {
-            return BoxOf(a,b,new Vector2(buffer));
-        }
-        public static Rectangle BoxOf(Vector2 a, Vector2 b, Vector2 buffer = default) {
-            Vector2 position = Vector2.Min(a,b)-buffer;
-            Vector2 dimensions = (Vector2.Max(a,b)+buffer)-position;
-            return new Rectangle((int)position.X,(int)position.Y,(int)dimensions.X,(int)dimensions.Y);
-        }
-        public static bool CanBeHitBy(this NPC npc, Player player, Item item, bool checkImmortal = true) {
-            if(!npc.active||(checkImmortal&&npc.immortal)||npc.dontTakeDamage) {
-                return false;
-            }
-            bool itemCanHitNPC = ItemLoader.CanHitNPC(item, player, npc)??true;
-            if (!itemCanHitNPC) {
-	            return false;
-            }
-            bool canBeHitByItem = NPCLoader.CanBeHitByItem(npc, player, item)??true;
-            if (!canBeHitByItem) {
-	            return false;
-            }
-            bool playerCanHitNPC = PlayerLoader.CanHitNPC(player, item, npc)??true;
-            if (!playerCanHitNPC) {
-	            return false;
-            }
-            if(npc.friendly) {
-                switch(npc.type) {
-                    case NPCID.Guide:
-                    return player.killGuide;
-                    case NPCID.Clothier:
-                    return player.killClothier;
-                    default:
-                    return false;
-                }
-            }
-            return true;
-        }
-        public static IItemDropRule WithOnFailedConditions(this IItemDropRule rule, IItemDropRule ruleToChain, bool hideLootReport = false) {
-            rule.OnFailedConditions(ruleToChain, hideLootReport);
-            return rule;
-        }
-        public static IItemDropRule WithOnFailedRoll(this IItemDropRule rule, IItemDropRule ruleToChain, bool hideLootReport = false) {
-            rule.OnFailedRoll(ruleToChain, hideLootReport);
-            return rule;
-        }
-        public static IItemDropRule WithOnSuccess(this IItemDropRule rule, IItemDropRule ruleToChain, bool hideLootReport = false) {
-            rule.OnSuccess(ruleToChain, hideLootReport);
-            return rule;
+			}//add more here
+			return false;
+		}
+		public static void SetToType(this Projectile self, int type) {
+			float[] ai = self.ai;
+			Vector2 pos = self.Center;
+			int dmg = self.damage;
+			float kb = self.knockBack;
+			int id = self.identity;
+			int owner = self.owner;
+			self.SetDefaults(type);
+			self.ai = ai;
+			self.Center = pos;
+			self.damage = dmg;
+			self.knockBack = kb;
+			self.identity = id;
+			self.owner = owner;
+		}
+		public static void CloneFrame(this NPC self, int type, int frameHeight) {
+			int t = self.type;
+			self.type = type;
+			self.VanillaFindFrame(frameHeight, false, type);
+			self.type = t;
+		}
+		public static string Get2ndPersonReference(this Player self, string args = "") {
+			return Language.GetTextValue($"Mods.Origins.Words.2ndref{args}{(Main.LocalPlayer.Male ? "male" : "female")}");
+		}
+		#region UnifiedRandom FieldInfos
+		private static FieldInfo _inext;
+		internal static FieldInfo Inext => _inext ??= typeof(UnifiedRandom).GetField("inext", BindingFlags.NonPublic | BindingFlags.Instance);
+		private static FieldInfo _inextp;
+		internal static FieldInfo Inextp => _inextp ??= typeof(UnifiedRandom).GetField("inextp", BindingFlags.NonPublic | BindingFlags.Instance);
+		private static FieldInfo _seedArray;
+		internal static FieldInfo SeedArray => _seedArray ??= typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic | BindingFlags.Instance);
+		#endregion
+		private static FieldInfo _dangerousBiomes;
+		internal static FieldInfo dangerousBiomes => _dangerousBiomes ??= typeof(ShopHelper).GetField("_dangerousBiomes", BindingFlags.NonPublic | BindingFlags.Instance);
+		internal static void initExt() {
+			_idToSlot = (Dictionary<int, Dictionary<EquipType, int>>)typeof(EquipLoader).GetField("idToSlot", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
+		}
+		internal static void unInitExt() {
+			_inext = null;
+			_inextp = null;
+			_seedArray = null;
+			_dangerousBiomes = null;
+			_defaultCharacterData = null;
+			_spriteCharacters = null;
+			strikethroughFont = null;
+			_idToSlot = null;
+		}
+		public static UnifiedRandom Clone(this UnifiedRandom r) {
+			UnifiedRandom o = new UnifiedRandom();
+			Inext.SetValue(o, (int)Inext.GetValue(r));
+			Inextp.SetValue(o, (int)Inextp.GetValue(r));
+			SeedArray.SetValue(o, ((int[])SeedArray.GetValue(r)).ToArray());
+			return o;
+		}
+		public static string Stringify(this Recipe r) {
+			ItemID.Search.TryGetName(r.createItem.type, out string resultName);
+			return $"result: {resultName} " +
+				//$"alchemy: {r.alchemy} " +
+				$"required Items: {string.Join(", ", r.requiredItem.Select((i) => { ItemID.Search.TryGetName(i.type, out string name); return name; }))} " +
+				$"required Tiles: {string.Join(", ", r.requiredTile.Select((i) => { TileID.Search.TryGetName(i, out string name); return name; }))}";
+		}
+		public static T[] WithLength<T>(this T[] input, int length) {
+			T[] output = new T[length];
+			if (length > input.Length) {
+				length = input.Length;
+			}
+			for (int i = 0; i < length; i++) {
+				output[i] = input[i];
+			}
+			return output;
+		}
+		public static Rectangle BoxOf(Vector2 a, Vector2 b, float buffer) {
+			return BoxOf(a, b, new Vector2(buffer));
+		}
+		public static Rectangle BoxOf(Vector2 a, Vector2 b, Vector2 buffer = default) {
+			Vector2 position = Vector2.Min(a, b) - buffer;
+			Vector2 dimensions = (Vector2.Max(a, b) + buffer) - position;
+			return new Rectangle((int)position.X, (int)position.Y, (int)dimensions.X, (int)dimensions.Y);
+		}
+		public static bool CanBeHitBy(this NPC npc, Player player, Item item, bool checkImmortal = true) {
+			if (!npc.active || (checkImmortal && npc.immortal) || npc.dontTakeDamage) {
+				return false;
+			}
+			bool itemCanHitNPC = ItemLoader.CanHitNPC(item, player, npc) ?? true;
+			if (!itemCanHitNPC) {
+				return false;
+			}
+			bool canBeHitByItem = NPCLoader.CanBeHitByItem(npc, player, item) ?? true;
+			if (!canBeHitByItem) {
+				return false;
+			}
+			bool playerCanHitNPC = PlayerLoader.CanHitNPC(player, item, npc) ?? true;
+			if (!playerCanHitNPC) {
+				return false;
+			}
+			if (npc.friendly) {
+				switch (npc.type) {
+					case NPCID.Guide:
+					return player.killGuide;
+					case NPCID.Clothier:
+					return player.killClothier;
+					default:
+					return false;
+				}
+			}
+			return true;
+		}
+		#region drop rules
+		public static IItemDropRule WithOnFailedConditions(this IItemDropRule rule, IItemDropRule ruleToChain, bool hideLootReport = false) {
+			rule.OnFailedConditions(ruleToChain, hideLootReport);
+			return rule;
+		}
+		public static IItemDropRule WithOnFailedRoll(this IItemDropRule rule, IItemDropRule ruleToChain, bool hideLootReport = false) {
+			rule.OnFailedRoll(ruleToChain, hideLootReport);
+			return rule;
+		}
+		public static IItemDropRule WithOnSuccess(this IItemDropRule rule, IItemDropRule ruleToChain, bool hideLootReport = false) {
+			rule.OnSuccess(ruleToChain, hideLootReport);
+			return rule;
 		}
 
-        public static ItemDropAttemptResult ResolveRule(IItemDropRule rule, DropAttemptInfo info) {
-            if (!rule.CanDrop(info)) {
-                ItemDropAttemptResult itemDropAttemptResult = default(ItemDropAttemptResult);
-                itemDropAttemptResult.State = ItemDropAttemptResultState.DoesntFillConditions;
-                ItemDropAttemptResult itemDropAttemptResult2 = itemDropAttemptResult;
-                ResolveRuleChains(rule, info, itemDropAttemptResult2);
-                return itemDropAttemptResult2;
-            }
-            ItemDropAttemptResult itemDropAttemptResult3 = (rule as INestedItemDropRule)?.TryDroppingItem(info, ResolveRule) ?? rule.TryDroppingItem(info);
-            ResolveRuleChains(rule, info, itemDropAttemptResult3);
-            return itemDropAttemptResult3;
-        }
-        private static void ResolveRuleChains(IItemDropRule rule, DropAttemptInfo info, ItemDropAttemptResult parentResult) {
-            ResolveRuleChains(ref info, ref parentResult, rule.ChainedRules);
-        }
-        private static void ResolveRuleChains(ref DropAttemptInfo info, ref ItemDropAttemptResult parentResult, List<IItemDropRuleChainAttempt> ruleChains) {
-            if (ruleChains == null) {
-                return;
-            }
-            for (int i = 0; i < ruleChains.Count; i++) {
-                IItemDropRuleChainAttempt itemDropRuleChainAttempt = ruleChains[i];
-                if (itemDropRuleChainAttempt.CanChainIntoRule(parentResult)) {
-                    ResolveRule(itemDropRuleChainAttempt.RuleToChain, info);
-                }
-            }
-        }
-        public static StatModifier GetInverse(this StatModifier statModifier) {
-            return new StatModifier(1f / statModifier.Multiplicative, 1f / statModifier.Additive, -statModifier.Base, -statModifier.Flat);
-        }
-        public static int GetVersion<T>(this LinkedList<T> ll) {
-            if(LLNodeEnumerator<T>.LLVersion is null)LLNodeEnumerator<T>.LLVersion = typeof(LinkedList<T>).GetField("version", BindingFlags.NonPublic|BindingFlags.Instance);
-            return (int)LLNodeEnumerator<T>.LLVersion.GetValue(ll);
-        }
+		public static ItemDropAttemptResult ResolveRule(IItemDropRule rule, DropAttemptInfo info) {
+			if (!rule.CanDrop(info)) {
+				ItemDropAttemptResult itemDropAttemptResult = default(ItemDropAttemptResult);
+				itemDropAttemptResult.State = ItemDropAttemptResultState.DoesntFillConditions;
+				ItemDropAttemptResult itemDropAttemptResult2 = itemDropAttemptResult;
+				ResolveRuleChains(rule, info, itemDropAttemptResult2);
+				return itemDropAttemptResult2;
+			}
+			ItemDropAttemptResult itemDropAttemptResult3 = (rule as INestedItemDropRule)?.TryDroppingItem(info, ResolveRule) ?? rule.TryDroppingItem(info);
+			ResolveRuleChains(rule, info, itemDropAttemptResult3);
+			return itemDropAttemptResult3;
+		}
+		private static void ResolveRuleChains(IItemDropRule rule, DropAttemptInfo info, ItemDropAttemptResult parentResult) {
+			ResolveRuleChains(ref info, ref parentResult, rule.ChainedRules);
+		}
+		private static void ResolveRuleChains(ref DropAttemptInfo info, ref ItemDropAttemptResult parentResult, List<IItemDropRuleChainAttempt> ruleChains) {
+			if (ruleChains == null) {
+				return;
+			}
+			for (int i = 0; i < ruleChains.Count; i++) {
+				IItemDropRuleChainAttempt itemDropRuleChainAttempt = ruleChains[i];
+				if (itemDropRuleChainAttempt.CanChainIntoRule(parentResult)) {
+					ResolveRule(itemDropRuleChainAttempt.RuleToChain, info);
+				}
+			}
+		}
+		#endregion
+		public static StatModifier GetInverse(this StatModifier statModifier) {
+			return new StatModifier(1f / statModifier.Multiplicative, 1f / statModifier.Additive, -statModifier.Base, -statModifier.Flat);
+		}
+		public static int GetVersion<T>(this LinkedList<T> ll) {
+			if (LLNodeEnumerator<T>.LLVersion is null) LLNodeEnumerator<T>.LLVersion = typeof(LinkedList<T>).GetField("version", BindingFlags.NonPublic | BindingFlags.Instance);
+			return (int)LLNodeEnumerator<T>.LLVersion.GetValue(ll);
+		}
 
-        public static int GetNearestPlayerFrame(Player player) {
-		    float rot = player.itemRotation * player.direction;
-		    if (rot < -0.75){
-			    if (player.gravDir == -1f) {
-				    return 4;
-			    }
-			    return 2;
-		    }
-		    if (rot > 0.6){
-			    if (player.gravDir == -1f) {
-				    return 2;
-			    }
-			    return 4;
-		    }
-		    return 3;
-        }
+		public static int GetNearestPlayerFrame(Player player) {
+			float rot = player.itemRotation * player.direction;
+			if (rot < -0.75) {
+				if (player.gravDir == -1f) {
+					return 4;
+				}
+				return 2;
+			}
+			if (rot > 0.6) {
+				if (player.gravDir == -1f) {
+					return 2;
+				}
+				return 4;
+			}
+			return 3;
+		}
 
-        public static int GetNearestPlayerFrame(float angle, int direction, float gravDir = 1) {
-		    float rot = angle * direction;
-		    if (rot < -0.75){
-			    if (gravDir == -1f) {
-				    return 4;
-			    }
-			    return 2;
-		    }
-		    if (rot > 0.6){
-			    if (gravDir == -1f) {
-				    return 2;
-			    }
-			    return 4;
-		    }
-		    return 3;
-        }
+		public static int GetNearestPlayerFrame(float angle, int direction, float gravDir = 1) {
+			float rot = angle * direction;
+			if (rot < -0.75) {
+				if (gravDir == -1f) {
+					return 4;
+				}
+				return 2;
+			}
+			if (rot > 0.6) {
+				if (gravDir == -1f) {
+					return 2;
+				}
+				return 4;
+			}
+			return 3;
+		}
 
-        public static int GetNearestPlayerFrame(float angle, float gravDir = 1) {
-		    double rot = Math.Sin(angle);
-		    if (rot < -0.15){
-			    if (gravDir == -1f) {
-				    return 4;
-			    }
-			    return 2;
-		    }
-		    if (rot > 0.15){
-			    if (gravDir == -1f) {
-				    return 2;
-			    }
-			    return 4;
-		    }
-		    return 3;
-        }
+		public static int GetNearestPlayerFrame(float angle, float gravDir = 1) {
+			double rot = Math.Sin(angle);
+			if (rot < -0.15) {
+				if (gravDir == -1f) {
+					return 4;
+				}
+				return 2;
+			}
+			if (rot > 0.15) {
+				if (gravDir == -1f) {
+					return 2;
+				}
+				return 4;
+			}
+			return 3;
+		}
 
-        public static bool Contains(this Rectangle area, Vector2 point) {
-            return area.Contains((int)point.X, (int)point.Y);
-        }
-        public static void DrawLightningArc(this SpriteBatch spriteBatch, Vector2[] positions, Texture2D texture = null, float scale = 1f, params (float scale, Color color)[] colors) {
-            if(texture is null) {
-                texture = TextureAssets.Extra[33].Value;
-            }
-            Vector2 size;
-            int colorLength = colors.Length;
-            DelegateMethods.f_1 = 1;
-            for(int colorIndex = 0; colorIndex < colorLength; colorIndex++) {
-                size = new Vector2(scale) * colors[colorIndex].scale;
-                DelegateMethods.c_1 = colors[colorIndex].color;
-                for(int i = positions.Length; --i > 0;) {
-                    Utils.DrawLaser(spriteBatch, texture, positions[i], positions[i - 1], size, DelegateMethods.LightningLaserDraw);
-                }
-            }
-        }
+		public static bool Contains(this Rectangle area, Vector2 point) {
+			return area.Contains((int)point.X, (int)point.Y);
+		}
+		public static void DrawLightningArc(this SpriteBatch spriteBatch, Vector2[] positions, Texture2D texture = null, float scale = 1f, params (float scale, Color color)[] colors) {
+			if (texture is null) {
+				texture = TextureAssets.Extra[33].Value;
+			}
+			Vector2 size;
+			int colorLength = colors.Length;
+			DelegateMethods.f_1 = 1;
+			for (int colorIndex = 0; colorIndex < colorLength; colorIndex++) {
+				size = new Vector2(scale) * colors[colorIndex].scale;
+				DelegateMethods.c_1 = colors[colorIndex].color;
+				for (int i = positions.Length; --i > 0;) {
+					Utils.DrawLaser(spriteBatch, texture, positions[i], positions[i - 1], size, DelegateMethods.LightningLaserDraw);
+				}
+			}
+		}
 
-        public static void DrawLightningArcBetween(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, float sineMult, float precision = 0.1f) {
-            Rectangle screen = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
-            if(!screen.Contains(start) && !screen.Contains(end)){
-                return;
-            }
-            List<Vector2> positions = new List<Vector2>();
-            Vector2 normal = (end - start).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2) * (sineMult + Math.Sign(sineMult));
-            for(float i = 0; i < 1f; i += precision) {
-                positions.Add(Vector2.Lerp(start, end, i) + (normal * (float)Math.Sin(i*Math.PI) * Main.rand.NextFloat(0.75f, 1.25f)));
-            }
-            positions.Add(end);
-            spriteBatch.DrawLightningArc(
-                positions.ToArray(),
-                null,
-                1.333f,
-                (0.15f, new Color(80, 204, 219, 0) * 0.5f),
-                (0.1f, new Color(80, 251, 255, 0) * 0.5f),
-                (0.05f, new Color(200, 255, 255, 0) * 0.5f));
-        }
-        public static Rectangle MoveToWithin(this Rectangle value, Rectangle area) {
-            Rectangle output = value;
-            if(output.Width > area.Width) {
-                output.Width = area.Width;
-            }
-            if(output.Height > area.Height) {
-                output.Height = area.Height;
-            }
-            output.X = Math.Min(Math.Max(output.X, area.X), (area.X + area.Width) - output.Width);
-            output.Y = Math.Min(Math.Max(output.Y, area.Y), (area.Y + area.Height) - output.Height);
-            return output;
-        }
-        public static Vector2 NextVectorIn(this UnifiedRandom random, Rectangle area) {
-            return area.TopLeft() + new Vector2(Main.rand.Next(area.Width), Main.rand.Next(area.Height));
-        }
-        public static void SetActive(this Tile tile, bool active) {
-            tile.HasTile = active;
-        }
-        public static void SetHalfBlock(this Tile tile, bool halfBlock) {
-            tile.IsHalfBlock = halfBlock;
-        }
-        public static void SetSlope(this Tile tile, SlopeType slope) {
-            tile.Slope = slope;
-        }
-        public static void SetLiquidType(this Tile tile, int liquidType) {
-            tile.LiquidType = liquidType;
-        }
-        public static bool HasSolidTile(this Tile tile) {
-            return tile.HasUnactuatedTile && Main.tileSolid[tile.TileType];
-        }
-        public static T SafeGet<T>(this TagCompound self, string key) {
-            return self.TryGet(key, out T output) ? output : default;
-        }
-        public static void DrawTileGlow(this IGlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
-            if (self.GlowTexture.Value is null) {
-                return;
-            }
-            Tile tile = Main.tile[i, j];
-            Vector2 vector = new Vector2(Main.offScreenRange, Main.offScreenRange);
-            if (Main.drawToScreen) {
-                vector = Vector2.Zero;
-            }
-            spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-        }
-        public static void DrawChestGlow(this IGlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
-            if (self.GlowTexture.Value is null) {
-                return;
-            }
-            Tile tile = Main.tile[i, j];
-            Vector2 vector = new Vector2(Main.offScreenRange, Main.offScreenRange);
-            if (Main.drawToScreen) {
-                vector = Vector2.Zero;
-            }
-            Point key = new Point(i, j);
-            if (tile.TileFrameX % 36 != 0) {
-                key.X--;
-            }
-            if (tile.TileFrameY % 36 != 0) {
-                key.Y--;
-            }
-            int frameOffset = Main.chest[Chest.FindChest(key.X, key.Y)].frame * 38;
-            spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY + frameOffset, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
-        }
-        /// <summary>
-        /// checks if a tile is active and is the provided type
-        /// </summary>
-        public static bool TileIsType(this Tile self, int type) {
-            return self.HasTile && self.TileType == type;
-        }
-        public static Point OffsetBy(this Point self, int x = 0, int y = 0) {
-            return new Point(self.X + x, self.Y + y);
-        }
-        public static Vector2 WithMaxLength(this Vector2 vector, float length) {
-            if (length <= 0) return Vector2.Zero;
-            float pLength = vector.LengthSquared();
-            return pLength > length * length ? Vector2.Normalize(vector) * length: vector;
-        }
-        public static byte PackToByte<T>(this (T h, T g, T f, T e, T d, T c, T b, T a) value, Func<T, bool> method) {
-            return (byte)((method(value.h) ? 128 : 0) |
-                (method(value.g) ? 64 : 0) |
-                (method(value.f) ? 32 : 0) |
-                (method(value.e) ? 16 : 0) |
-                (method(value.d) ? 8 : 0) |
-                (method(value.c) ? 4 : 0) |
-                (method(value.b) ? 2 : 0) |
-                (method(value.a) ? 1 : 0));
-        }
-        static FieldInfo _spriteCharacters;
+		public static void DrawLightningArcBetween(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, float sineMult, float precision = 0.1f) {
+			Rectangle screen = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
+			if (!screen.Contains(start) && !screen.Contains(end)) {
+				return;
+			}
+			List<Vector2> positions = new List<Vector2>();
+			Vector2 normal = (end - start).SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2) * (sineMult + Math.Sign(sineMult));
+			for (float i = 0; i < 1f; i += precision) {
+				positions.Add(Vector2.Lerp(start, end, i) + (normal * (float)Math.Sin(i * Math.PI) * Main.rand.NextFloat(0.75f, 1.25f)));
+			}
+			positions.Add(end);
+			spriteBatch.DrawLightningArc(
+				positions.ToArray(),
+				null,
+				1.333f,
+				(0.15f, new Color(80, 204, 219, 0) * 0.5f),
+				(0.1f, new Color(80, 251, 255, 0) * 0.5f),
+				(0.05f, new Color(200, 255, 255, 0) * 0.5f));
+		}
+		public static Rectangle MoveToWithin(this Rectangle value, Rectangle area) {
+			Rectangle output = value;
+			if (output.Width > area.Width) {
+				output.Width = area.Width;
+			}
+			if (output.Height > area.Height) {
+				output.Height = area.Height;
+			}
+			output.X = Math.Min(Math.Max(output.X, area.X), (area.X + area.Width) - output.Width);
+			output.Y = Math.Min(Math.Max(output.Y, area.Y), (area.Y + area.Height) - output.Height);
+			return output;
+		}
+		public static Vector2 NextVectorIn(this UnifiedRandom random, Rectangle area) {
+			return area.TopLeft() + new Vector2(Main.rand.Next(area.Width), Main.rand.Next(area.Height));
+		}
+		#region tiles
+		public static void SetActive(this Tile tile, bool active) {
+			tile.HasTile = active;
+		}
+		public static void SetHalfBlock(this Tile tile, bool halfBlock) {
+			tile.IsHalfBlock = halfBlock;
+		}
+		public static void SetSlope(this Tile tile, SlopeType slope) {
+			tile.Slope = slope;
+		}
+		public static void SetLiquidType(this Tile tile, int liquidType) {
+			tile.LiquidType = liquidType;
+		}
+		public static bool HasSolidTile(this Tile tile) {
+			return tile.HasUnactuatedTile && Main.tileSolid[tile.TileType];
+		}
+		/// <summary>
+		/// checks if a tile is active and is the provided type
+		/// </summary>
+		public static bool TileIsType(this Tile self, int type) {
+			return self.HasTile && self.TileType == type;
+		}
+		#endregion
+		public static T SafeGet<T>(this TagCompound self, string key) {
+			return self.TryGet(key, out T output) ? output : default;
+		}
+		public static void DrawTileGlow(this IGlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
+			if (self.GlowTexture.Value is null) {
+				return;
+			}
+			Tile tile = Main.tile[i, j];
+			Vector2 vector = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen) {
+				vector = Vector2.Zero;
+			}
+			spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+		}
+		public static void DrawChestGlow(this IGlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
+			if (self.GlowTexture.Value is null) {
+				return;
+			}
+			Tile tile = Main.tile[i, j];
+			Vector2 vector = new Vector2(Main.offScreenRange, Main.offScreenRange);
+			if (Main.drawToScreen) {
+				vector = Vector2.Zero;
+			}
+			Point key = new Point(i, j);
+			if (tile.TileFrameX % 36 != 0) {
+				key.X--;
+			}
+			if (tile.TileFrameY % 36 != 0) {
+				key.Y--;
+			}
+			int frameOffset = Main.chest[Chest.FindChest(key.X, key.Y)].frame * 38;
+			spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY + frameOffset, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+		}
+		public static Point OffsetBy(this Point self, int x = 0, int y = 0) {
+			return new Point(self.X + x, self.Y + y);
+		}
+		public static byte PackToByte<T>(this (T h, T g, T f, T e, T d, T c, T b, T a) value, Func<T, bool> method) {
+			return (byte)((method(value.h) ? 128 : 0) |
+				(method(value.g) ? 64 : 0) |
+				(method(value.f) ? 32 : 0) |
+				(method(value.e) ? 16 : 0) |
+				(method(value.d) ? 8 : 0) |
+				(method(value.c) ? 4 : 0) |
+				(method(value.b) ? 2 : 0) |
+				(method(value.a) ? 1 : 0));
+		}
+		static Dictionary<int, Dictionary<EquipType, int>> _idToSlot;
+		public static int GetEquipSlot(int itemType, EquipType equipType) {
+			return _idToSlot[itemType][equipType];
+		}
+		static FieldInfo _spriteCharacters;
         static FieldInfo _SpriteCharacters => _spriteCharacters ??= typeof(DynamicSpriteFont).GetField("_spriteCharacters", BindingFlags.NonPublic | BindingFlags.Instance);
         static FieldInfo _defaultCharacterData;
         static FieldInfo _DefaultCharacterData => _defaultCharacterData ??= typeof(DynamicSpriteFont).GetField("_defaultCharacterData", BindingFlags.NonPublic | BindingFlags.Instance);

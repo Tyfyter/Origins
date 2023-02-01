@@ -5,10 +5,12 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Rebreather : ModItem {
-        public override void SetStaticDefaults() {
+		public static sbyte FaceSlot { get; private set; }
+		public override void SetStaticDefaults() {
             DisplayName.SetDefault("Rebreather");
             Tooltip.SetDefault("Gain more breath as you move in water");
-            SacrificeTotal = 1;
+			FaceSlot = Item.faceSlot;
+			SacrificeTotal = 1;
         }
         public override void SetDefaults() {
             Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);

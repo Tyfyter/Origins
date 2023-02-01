@@ -10,8 +10,10 @@ namespace Origins.Items.Accessories {
             SacrificeTotal = 1;
         }
         public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.YoYoGlove);
-            Item.rare = ItemRarityID.Pink;
+            Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);
+			Item.faceSlot = Rebreather.FaceSlot;
+			Item.backSlot = Air_Tank.BackSlot;
+			Item.rare = ItemRarityID.Pink;
             Item.value = Item.sellPrice(gold: 2);
         }
         public override void UpdateEquip(Player player) {
@@ -19,5 +21,8 @@ namespace Origins.Items.Accessories {
             player.buffImmune[BuffID.Suffocation] = true;
             player.breathMax += 257;
         }
-    }
+		public override void AddRecipes() {
+			
+		}
+	}
 }
