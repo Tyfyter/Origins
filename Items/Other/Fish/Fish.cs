@@ -23,6 +23,15 @@ namespace Origins.Items.Other.Fish {
 			Item.rare = ItemRarityID.Quest;
 		}
 	}
+	public class Duskarp : ModItem {
+		public override void SetStaticDefaults() {
+			SacrificeTotal = 3;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.Ebonkoi);
+			Item.rare = ItemRarityID.Quest;
+		}
+	}
 	public class Tire : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tire");

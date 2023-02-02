@@ -7,8 +7,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Acid_Grenade : ModItem {
         public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acid Grenade");
-			Tooltip.SetDefault("Explodes into acid droplets");
+			DisplayName.SetDefault("Alkaline Grenade");
+			Tooltip.SetDefault("Explodes into brine droplets");
             SacrificeTotal = 99;
         }
 		public override void SetDefaults() {
@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Demolitionist {
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 3);
             recipe.AddIngredient(ItemID.Grenade, 3);
-            recipe.AddIngredient(ModContent.ItemType<Bottled_Acid>());
+            recipe.AddIngredient(ModContent.ItemType<Bottled_Brine>());
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
         }

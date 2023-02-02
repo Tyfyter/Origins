@@ -1,4 +1,5 @@
-﻿using Origins.Tiles;
+﻿using Origins.Items.Other.Consumables;
+using Origins.Tiles;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
@@ -9,23 +10,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
-    public class Eitrite_Bar : ModItem {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Eitrite Bar");
-            SacrificeTotal = 25;
-        }
-        public override void SetDefaults() {
-            Item.value = Item.sellPrice(silver: 81);
-            Item.rare = ItemRarityID.Orange;
-            Item.maxStack = 999;
-        }
-        public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Eitrite_Ore_Item>(), 4);
-            recipe.AddTile(TileID.AdamantiteForge);
-            recipe.Register();
-        }
-    }
     public class Adhesive_Wrap : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Adhesive Wrap");
@@ -140,9 +124,9 @@ namespace Origins.Items.Materials {
             recipe.Register();
         }
     }
-    public class Bottled_Acid : ModItem {
+    public class Bottled_Brine : ModItem {
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Bottled Acid");
+            DisplayName.SetDefault("Bottled Brine");
             SacrificeTotal = 30;
         }
         public override void SetDefaults() {
@@ -153,7 +137,7 @@ namespace Origins.Items.Materials {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ItemID.Bottle);
             recipe.AddIngredient(ItemID.Stinger, 2);
-            //recipe.AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>());
+            recipe.AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>());
             recipe.AddTile(TileID.AlchemyTable);
             recipe.Register();
         }
@@ -295,6 +279,23 @@ namespace Origins.Items.Materials {
             Item.glowMask = glowmask;
         }
     }
+    public class Eitrite_Bar : ModItem {
+        public override void SetStaticDefaults() {
+            DisplayName.SetDefault("Eitrite Bar");
+            SacrificeTotal = 25;
+        }
+        public override void SetDefaults() {
+            Item.value = Item.sellPrice(silver: 81);
+            Item.rare = ItemRarityID.Orange;
+            Item.maxStack = 999;
+        }
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Eitrite_Ore_Item>(), 4);
+            recipe.AddTile(TileID.AdamantiteForge);
+            recipe.Register();
+        }
+    }
     public class Element36_Bundle : ModItem {
         public override void SetStaticDefaults() {
             DisplayName.SetDefault("Element-36 Bundle");
@@ -364,7 +365,7 @@ namespace Origins.Items.Materials {
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.GoldBar, 2);
+            recipe.AddRecipeGroup(ItemID.GoldBar, 2);
             recipe.AddIngredient(ItemID.FragmentVortex, 4);
             //recipe.AddIngredient(ModContent.ItemType<Void_Spark>(), 6);
             recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
@@ -684,7 +685,7 @@ namespace Origins.Items.Materials {
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ItemID.BattlePotion);
             recipe.AddIngredient(ItemID.BottledWater, 1);
-            recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>(), 1);
+            recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
             recipe.AddIngredient(Type);
             recipe.AddTile(TileID.Bottles);
             recipe.Register();

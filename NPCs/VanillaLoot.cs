@@ -132,9 +132,6 @@ namespace Origins.NPCs {
 				case NPCID.Wolf:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tasty_Vanilla_Shake>(), 21));
 				break;
-				case NPCID.RainbowSlime:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<One_Kind_Cookie>(), 20, 1, 2));
-				break;
 				case NPCID.WyvernHead:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Startillery>(), 12));
 				break;

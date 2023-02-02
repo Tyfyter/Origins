@@ -166,6 +166,7 @@ namespace Origins {
 		#endregion
 
 		public int quantumInjectors = 0;
+        public int defiledWill = 0;
 
 		public float statSharePercent = 0f;
 
@@ -1422,10 +1423,12 @@ namespace Origins {
 			packet.Write(Origins.NetMessageType.sync_player);
 			packet.Write((byte)Player.whoAmI);
 			packet.Write((byte)quantumInjectors);
-			packet.Send(toWho, fromWho);
+            packet.Write((byte)defiledWill);
+            packet.Send(toWho, fromWho);
 		}
 		public void ReceivePlayerSync(BinaryReader reader) {
 			quantumInjectors = reader.ReadByte();
+            defiledWill = reader.ReadByte();
 		}
 		public override void FrameEffects() {
             for(int i = 13; i < 18+Player.extraAccessorySlots; i++) {

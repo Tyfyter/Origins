@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -6,10 +7,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-    public class Harpoon : ModItem {
+    public class Explosive_Harpoon : ModItem {
         public static int ID { get; private set; } = -1;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Harpoon");
+            DisplayName.SetDefault("Explosive Harpoon");
             SacrificeTotal = 99;
             ID = Type;
         }
@@ -18,22 +19,30 @@ namespace Origins.Items.Weapons.Ammo {
             Item.DamageType = DamageClass.Ranged;
             Item.consumable = true;
             Item.maxStack = 99;
-            Item.shoot = Harpoon_P.ID;
+            Item.shoot = Explosive_Harpoon_P.ID;
             Item.ammo = Type;
-            Item.value = Item.sellPrice(silver: 25);
+            Item.value = Item.sellPrice(silver: 30);
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddRecipeGroup(RecipeGroupID.IronBar);
+            recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+
+            recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Harpoon>());
+            recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
         }
     }
-    public class Harpoon_P : ModProjectile {
+    public class Explosive_Harpoon_P : ModProjectile {
+        //Now make it blow up
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Harpoon;
 		public static int ID { get; private set; } = -1;
         public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Harpoon");
+            DisplayName.SetDefault("Explosive Harpoon");
             ID = Type;
         }
         public override void SetDefaults() {

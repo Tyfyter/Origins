@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,15 +22,11 @@ namespace Origins.Items.Weapons.Ammo {
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.IronBar);
+            recipe.AddRecipeGroup(RecipeGroupID.IronBar);
             recipe.AddIngredient(ItemID.Gel, 2);
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
-            recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.LeadBar);
-            recipe.AddIngredient(ItemID.Gel, 2);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
+            
             recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Harpoon>());
             recipe.AddIngredient(ItemID.Gel, 2);

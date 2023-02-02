@@ -209,7 +209,7 @@ ARMOR:
 (^) Chromtain Armor
 (#2, ^2) Eyndum Armor
 (X) Nanite Armor
-(#, ^2) Nova Armor
+(^) Nova Armor
 (X) Locus Armor
 ---
 
@@ -762,6 +762,7 @@ CRITTERS AND FISH:
 (#, ^2) Cicada 3301 !!!
 
 (^) Bonehead Jellyfish
+(^) Duskarp
 (^) Prikish
 ---
 
@@ -769,44 +770,40 @@ CRITTERS AND FISH:
 CONSUMABLES:
 ---
 (^) Quantum Injector
-(X) The Defiled Will
+(@5, #3) The Defiled Will
 
 (^) Absorption Potion
-(X) Antisolve Potion
+(^) Antisolve Potion
 (^) Fervor Potion
 (^) Flask of Alkahest
 (^) Flask of Black Bile
-(#, ^2) Focus Potion
-(#, ^2) Nullification Potion (Nullification potion doesn't need a buff graphic, it's a single-instance effect)
+(#2, ^2) Focus Potion
+(#2, ^2) Nullification Potion (Nullification potion doesn't need a buff graphic, it's a single-instance effect)
 (^) Protean Potion
-(#, ^2) Purification Potion !!!
-(@2, #) Regen Burst Potion
-(X) Tuned Greater Healing Potion
-(X) Tuned Greater Mana Potion
-(#, ^2) Voidsight Potion
+(#2, ^2) Purification Potion !!!
+(^) Voidsight Potion
 
 (^) Blue Bovine
 (^) Jam Sandwich
 (^) Krunch Mix*
-(#4, ^2) One of a Kind Cookie
-(#3, ^2) Potato
+(^) Potato
 (^) Soul Spaghetti
 (^) Tasty Vanilla Shake
 
 (^) Nerve Impulse Manipulator*
-(X) Quantum Cell
+(#2, ^2) Quantum Cell
 (^) Suspicious Looking Ice Cream
-(X) The Button
+(#2, ^2) The Button
 
 (^) Crusty Crate
 (^) Pointy Crate
 
 (^) Gooey Water
-(#, ^2) Holiday Hair Dye
-(#, ^2) Invisible Ink
-(#, ^2) Magic Brine Dropper
+(#2, ^2) Holiday Hair Dye
+(#2, ^2) Invisible Ink
+(#2, ^2) Magic Brine Dropper
 (^) White Water
-(#, ^2) Void Lock !!!
+(#2, ^2) Void Lock !!!
 
 (^) Defiled Amalgamation Bag
 (^) Fiberglass Weaver Bag
@@ -821,7 +818,6 @@ MOUNTS & PETS:
 
 (^) Amoeba Toy (Meberoid)
 (^) Suspicious Looking Pebble (Defiled Blight)
-(@, #, %3) Unknown summoning item (Dwarf Dwarf)
 
 (#, ^2) Chew Toy (Chee Toy, also consider implementing soon)
 (X) Familiar Dog Bone (Rufus)
@@ -830,32 +826,29 @@ MOUNTS & PETS:
 
 AMMO:
 ---
-(#, ^2) Bouncy Harpoon
-(#, ^2) Explosive Harpoon
+(#2, ^2) Bouncy Harpoon
+(#2, ^2) Explosive Harpoon
 (^) Flammable Harpoon
-(#, ^2) Glittershot
 (^) Harpoon
 (^) Peatball*
-(#, ^2) Resizable Mine !!!
+(#2, ^2) Resizable Mine !!!
 
 (^) Acid Harpoon
 (^) Alkahest Arrow
 (^) Alkahest Bullet
 (^) Bile Arrow 
 (^) Bile Bullet
-(#, ^2) Bile Dart
+(#3, ^2) Bile Dart
 (^) Cursed Harpoon
 (^) Giant Metal Slug
-(^) Teal Solution
 (^) Thermite Canister
-(^) White Solution
 
-(#, ^2) Odd Rocket
-(X) Scrap
-(#, ^2) Small Missile
-(%3, X) 1:571 Nuke
+(#2, ^2) Scrap
 
-(#, ^2) Starfuze
+(#2, ^2) Starfuze
+
+(^) Gray Solution
+(^) Teal Solution
 ---
 
 UI:
