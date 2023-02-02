@@ -13,13 +13,17 @@ namespace Origins.Tiles.Other {
 			ItemDrop = ItemType<Batholith_Item>();
 			AddMapEntry(new Color(35, 10, 10));
 			mergeID = TileID.Stone;
-			MinPick = 225; //modify to 250 when we've implement post-ml
+			MinPick = 250;
 			MineResist = 2;
+		}
+		public override bool CanExplode(int i, int j) {
+			return false;
 		}
 	}
 	public class Batholith_Item : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Batholith");
+			Tooltip.SetDefault("'Respect your elders'");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

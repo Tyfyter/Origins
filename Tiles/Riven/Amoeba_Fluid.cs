@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Other.Consumables;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -18,7 +19,6 @@ namespace Origins.Tiles.Riven {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			ItemDrop = ItemType<Amoeba_Fluid_Item>();
 			AddMapEntry(new Color(0, 200, 200));
 			MinPick = 10;
 			MineResist = 1f;
@@ -38,6 +38,12 @@ namespace Origins.Tiles.Riven {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FleshBlock);
 			Item.createTile = TileType<Amoeba_Fluid>();
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type, 10);
+			recipe.AddIngredient(ModContent.ItemType<Gooey_Water>());
+			recipe.AddTile(TileID.HeavyWorkBench);
+			recipe.Register();
 		}
 	}
 }

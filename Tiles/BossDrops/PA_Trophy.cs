@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.BossDrops {
-    public class DA_Trophy : ModTile {
+    public class PA_Trophy : ModTile {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
@@ -21,12 +21,12 @@ namespace Origins.Tiles.BossDrops {
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<DA_Trophy_Item>());
+			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<PA_Trophy_Item>());
 		}
 	}
-	public class DA_Trophy_Item : ModItem {
+	public class PA_Trophy_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled Amalgamation Trophy");
+			DisplayName.SetDefault("Primordial Amoeba Trophy");
 		}
 
 		public override void SetDefaults() {
@@ -41,7 +41,7 @@ namespace Origins.Tiles.BossDrops {
 			Item.consumable = true;
 			Item.value = 50000;
 			Item.rare = ItemRarityID.Blue;
-			Item.createTile = ModContent.TileType<DA_Trophy>();
+			Item.createTile = ModContent.TileType<PA_Trophy>();
 		}
 	}
 }

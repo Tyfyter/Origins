@@ -157,6 +157,7 @@ EVENTS:
 (#, %2) Defiled Invasion
 (#, %2) Riven Invasion
 
+(X) Test of Ancients
 (X) Laser Tag
 ---
 
@@ -609,7 +610,7 @@ CLASSLESS WEAPONS:
 
 TILES:
 ---
-(^) Amoeba Fluid
+(#4, ^2) Amoeba Fluid !!!
 (X) Angelic Cloud
 (#3, ^2) Batholith*
 (^) Bleeding Obsidian
@@ -659,6 +660,7 @@ TILES:
 (#, ^2) Riven Torch
 (X) Riven Water Fountain
 
+(X) Elderforge
 (#, ^2) Fabricator !!!
 (X) Omni-Printer
 
@@ -666,36 +668,38 @@ TILES:
 (X) Brineglow Vine
 (^) Defiled Misc Tiles*
 (X) Eden Tree
-(X) Laser Tag Console
+(#2, ^2) Laser Tag Console
 (#2, ^2) Riven Foliage !!!
 (#2, ^2) Riven Lesion !!!
 (#, ^2) Riven Pot !!!
 (^) Riven Tree
 (^) Soulspore
 (^) Wilting Rose
-(X) Wrycoral !!!
+(#, ^2) Wrycoral !!!
 
-(X) A Perfect World
+(#3, ^2) A Perfect World !!!
 
 (X) Ancient Music Box (Brine Pool)
 (X) Ancient Music Box (Defiled Wastelands)
 (X) Ancient Music Box (Riven Hive)
 (X) Music Box (Brine Pool)
+(X) Music Box (Cosmos)
 (X) Music Box (Cubekon Temple)
 (X) Music Box (Dawn)
 (@5, #2-4) Music Box (Defiled Caverns) !!!
 (@5, #2-4) Music Box (Defiled Wastelands) !!!
+(X) Music Box (Fractured Isles)
 (X) Music Box (Dusk)
 (X) Music Box (Riven Hive) !!!
 (X) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Trophy
-(#, @4) Defiled Amalgamation Relic !!!
+(X) Defiled Amalgamation Relic !!!
 (X) Miscreant Trophy
 (X) Miscreant Relic
 (X) Quantux Trophy
 (X) Quantux Relic
-(X) Primordial Amoeba Trophy !!!
+(^) Primordial Amoeba Trophy
 (X) Primordial Amoeba Relic !!!
 ---
 
@@ -727,7 +731,7 @@ MATERIALS:
 (^) Alkahest
 (^) Black Bile
 (^) Bleeding Obsidian Shard
-(^) Bottled Acid
+(^) Bottled Brine
 (^) Brineglow
 (^) Defiled Key
 (^) Eitrite Bar
@@ -749,7 +753,7 @@ MATERIALS:
 (^) Fibron Plating
 (^) Formium Bar
 (^) Formium Scrap
-(#3, ^2) Lunar Token
+(^) Lunar Token
 (#3, ^2) Nova Fragment
 (^) Unpowered Eyndum Core
 ---
@@ -757,9 +761,9 @@ MATERIALS:
 
 CRITTERS AND FISH:
 ---
-(#, ^2) Amoeba Buggy !!!
-(X) Bug
-(#, ^2) Cicada 3301 !!!
+(#3, ^2) Amoeba Buggy !!!
+(#3, ^2) Bug
+(#3, ^2) Cicada 3301 !!!
 
 (^) Bonehead Jellyfish
 (^) Duskarp
@@ -853,6 +857,7 @@ AMMO:
 
 UI:
 ---
+(X) Cosmos Map/Bestiary Backdrop
 (X) Dawn Map/Bestiary Backdrop
 (X) Dawn Icon
 (X) Defiled Map/Bestiary Backdrop
@@ -861,6 +866,7 @@ UI:
 (X) Dusk Icon
 (X) Fiberglass Map/Bestiary Backdrop
 (X) Fiberglass Icon
+(X) Fractured Isles Icon
 (X) Riven Map/Bestiary Backdrop
 (^) Riven Icon
 
@@ -877,12 +883,13 @@ MUSIC:
 (^) Defiled Wastelands
 (^) Defiled Wastelands - Mimic Route
 (O) Fiberglass Caves !!!
+(X) Fractured Isles
 (^) Riven Hive
 (^) The Dusk
 
 (O) Defiled Amalgamation !!!
 (X) Duskord
-(X) Fiberglass Weaver
+(X) Fiberglass Threader !!!
 (X) I.C.A.R.U.S
 (X) Lost Diver
 (X) Miscreant
@@ -895,4 +902,5 @@ MUSIC:
 (X) Crimson Invasion
 (X) Defiled Invasion
 (X) Riven Invasion
+(X) Test of Ancients
 ---

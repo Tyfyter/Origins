@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
 	public class Protozoa_Food : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Protozoa Food");
-			Tooltip.SetDefault("//TODO: add tooltip");
+			Tooltip.SetDefault("+1 minion slot\nSummons an amoeba pellet to chase after enemies and slow them down for every minion slot you have");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

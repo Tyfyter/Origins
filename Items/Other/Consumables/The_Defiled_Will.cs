@@ -8,12 +8,13 @@ namespace Origins.Items.Other.Consumables {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("The Defiled Will");
 			Tooltip.SetDefault("Will you continue the legacy?");
-			SacrificeTotal = 30;
+			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ManaCrystal);
 			Item.rare = ItemRarityID.Gray;
 			Item.UseSound = SoundID.Item139.WithPitch(0.2f);
+			Item.maxStack = 1;
 		}
 		public override bool? UseItem(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

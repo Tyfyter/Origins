@@ -44,7 +44,6 @@ namespace Origins.Items.Accessories {
 				Projectile.alpha -= 15;
 			if (Projectile.alpha < 0)
 				Projectile.alpha = 0;
-			//TODO: add light
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
 			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);

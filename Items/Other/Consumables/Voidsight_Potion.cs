@@ -21,7 +21,7 @@ namespace Origins.Items.Other.Consumables {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.Fireblossom);
 			recipe.AddIngredient(ItemID.NightOwlPotion, 2);
-			//recipe.AddIngredient(ModContent.ItemType<Duskarp>());
+			recipe.AddIngredient(ModContent.ItemType<Duskarp>());
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}

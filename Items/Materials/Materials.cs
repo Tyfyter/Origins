@@ -363,15 +363,6 @@ namespace Origins.Items.Materials {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = CrimsonRarity.ID;
 		}
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddRecipeGroup("GoldBars", 2);
-			recipe.AddIngredient(ItemID.FragmentVortex, 4);
-			//recipe.AddIngredient(ModContent.ItemType<Void_Spark>(), 6);
-			recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
-			recipe.AddTile(TileID.Anvils); //Omni-Printer also not implemented, still maybe a unique forge and dimension
-			recipe.Register();
-		}
 	}
 	public class Felnum_Bar : ModItem {
 		/*
@@ -419,6 +410,7 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Formium_Scrap>(), 6);
+			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.Register();
 		}
 	}
@@ -455,10 +447,9 @@ namespace Origins.Items.Materials {
 			SacrificeTotal = 100;
 		}
 		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.DefenderMedal);
 			Item.maxStack = 999;
-			Item.value = Item.buyPrice(copper: 1);
 			Item.rare = ItemRarityID.Cyan;
-			//Item.IsCurrency = true;
 			Item.glowMask = glowmask;
 		}
 	}
@@ -488,17 +479,14 @@ namespace Origins.Items.Materials {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Nova Fragment");
-			Tooltip.SetDefault("The essence of a dying star in its last moment...");
+			Tooltip.SetDefault("'The essence of a dying star in its final moments...'");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 25;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FragmentSolar);
-			Item.maxStack = 999;
-			Item.value = Item.sellPrice(silver: 20);
-			Item.rare = ItemRarityID.Cyan;
 			Item.glowMask = glowmask;
-			//Item.noGravity = true; This didn't make it float for some reason
+			// TODO: make it ignore gravity
 		}
 	}
 	public class Peat_Moss : ModItem {
