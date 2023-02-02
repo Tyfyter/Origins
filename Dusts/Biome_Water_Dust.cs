@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Dusts {
-    public class White_Water_Dust : ModDust {
+	public class White_Water_Dust : ModDust {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			ID = Type;
@@ -44,7 +44,7 @@ namespace Origins.Dusts {
 				dust.velocity.Y += 0.15f;
 			}
 			return true;
-        }
+		}
 	}
 	public class Gooey_Water_Dust : ModDust {
 		public static int ID { get; private set; } = -1;

@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Vanity.Other {
-    [AutoloadEquip(EquipType.Head)]
+	[AutoloadEquip(EquipType.Head)]
 	public class Cranivore_Beanie : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Cranivore Beanie");

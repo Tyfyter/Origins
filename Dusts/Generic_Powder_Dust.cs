@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Dusts {
-    public class Generic_Powder_Dust : ModDust {
+	public class Generic_Powder_Dust : ModDust {
 		public override void OnSpawn(Dust dust) {
 			//dust.noGravity = true;
 		}
@@ -16,13 +16,13 @@ namespace Origins.Dusts {
 				Lighting.AddLight(dust.position, lightScale * dust.color.ToVector3());
 			}
 			return true;
-        }
-        public override bool MidUpdate(Dust dust) {
+		}
+		public override bool MidUpdate(Dust dust) {
 			dust.velocity.Y -= 0.1f;
 			return false;
-        }
-        public override Color? GetAlpha(Dust dust, Color lightColor) {
+		}
+		public override Color? GetAlpha(Dust dust, Color lightColor) {
 			return lightColor with { A = 25 };
 		}
-    }
+	}
 }

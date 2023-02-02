@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Magic {
-    public class Rigged_Cubix : ModItem {
+	public class Rigged_Cubix : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Rigged Cubix");
@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Magic {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.RubyStaff);
+			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 88;
 			Item.crit = -3;
 			Item.DamageType = DamageClass.Magic;
@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useAnimation = 54;
 			Item.shootSpeed = 14;
 			Item.mana = 4;
-            Item.shoot = ModContent.ProjectileType<Rigged_Cubix_P>();
+			Item.shoot = ModContent.ProjectileType<Rigged_Cubix_P>();
 			Item.value = Item.buyPrice(platinum: 1);
 			Item.rare = ButterscotchRarity.ID;
 			Item.UseSound = null;
@@ -38,14 +38,14 @@ namespace Origins.Items.Weapons.Magic {
 			velocity = velocity.RotatedByRandom(0.5f);
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			if (player.itemAnimation != 0 && !player.CheckMana(Item, pay:true)) {
+			if (player.itemAnimation != 0 && !player.CheckMana(Item, pay: true)) {
 				return false;
 			}
 			SoundEngine.PlaySound(SoundID.Item12, position);
 			return true;
 		}
 	}
-    public class Rigged_Cubix_P : ModProjectile {
+	public class Rigged_Cubix_P : ModProjectile {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Quantum Emission");
 		}
@@ -61,7 +61,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.aiStyle = 0;
 			Projectile.tileCollide = false;
 		}
-        public override void AI() {
+		public override void AI() {
 			Dust.NewDustPerfect(Projectile.Center, DustID.JungleTorch, Projectile.velocity).noGravity = true;
 			Projectile.extraUpdates = 0;
 			if (Projectile.ai[0] > 0) {
@@ -91,5 +91,5 @@ namespace Origins.Items.Weapons.Magic {
 				}
 			}
 		}
-    }
+	}
 }

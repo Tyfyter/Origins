@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
-    public class Spiker_Sword : ModItem {
+	public class Spiker_Sword : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Spiker Sword");
@@ -21,18 +21,18 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useAnimation = 28;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 7.5f;
-            Item.useTurn = true;
+			Item.useTurn = true;
 			Item.value = Item.sellPrice(silver: 40);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 6);
-            recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 3);
-            recipe.AddTile(TileID.Anvils);
-            recipe.Register();
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 6);
+			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 3);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.NightsEdge);
 			recipe.AddIngredient(this);

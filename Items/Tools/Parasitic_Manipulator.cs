@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-    public class Parasitic_Manipulator : ModItem {
+	public class Parasitic_Manipulator : ModItem {
 
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Parasitic Manipulator");

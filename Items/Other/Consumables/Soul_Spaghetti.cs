@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Origins.Items.Materials;
 
 namespace Origins.Items.Other.Consumables {
-    public class Soul_Spaghetti : ModItem {
+	public class Soul_Spaghetti : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Soul Spaghetti");
 			Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'Tastes like noodle with hairs and meats.'");

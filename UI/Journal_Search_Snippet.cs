@@ -31,7 +31,7 @@ namespace Origins.UI {
 				Main.chatRelease = false;
 			}
 			base.Update();
-			if(lastHovered > 0) lastHovered--;
+			if (lastHovered > 0) lastHovered--;
 		}
 		public override void OnHover() {
 			base.OnHover();
@@ -63,7 +63,7 @@ namespace Origins.UI {
 				return true;
 			} else {
 				StringBuilder builder = new StringBuilder();
-				for (int i = (int)(dimensions.Width / FontAssets.MouseText.Value.MeasureString("_").X); i-->0;) {
+				for (int i = (int)(dimensions.Width / FontAssets.MouseText.Value.MeasureString("_").X); i-- > 0;) {
 					builder.Append('_');
 				}
 				ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, builder.ToString(), position, color, 0, Vector2.Zero, new Vector2(scale));

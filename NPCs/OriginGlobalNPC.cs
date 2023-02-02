@@ -19,7 +19,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs {
-    public partial class OriginGlobalNPC : GlobalNPC {
+	public partial class OriginGlobalNPC : GlobalNPC {
 		public override void SetupShop(int type, Chest shop, ref int nextSlot) {
 			bool worldHasWastelands = false;
 			bool worldHasHive = false;
@@ -107,7 +107,7 @@ namespace Origins.NPCs {
 				case NPCID.Cyborg: {
 					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Advanced_Imaging>());
 					break;
-				} 
+				}
 				case NPCID.SkeletonMerchant: {
 					//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Trash_Lid>());
 					break;
@@ -162,7 +162,7 @@ namespace Origins.NPCs {
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				damage += defense * 0.1f;
 				if (crit) {
-                    damage *= 1.3;
+					damage *= 1.3;
 				}
 			}
 			if (tornTime > 0) {
@@ -213,10 +213,10 @@ namespace Origins.NPCs {
 						case ProjectileID.PartyGirlGrenade:
 						case ProjectileID.BouncyDynamite:
 						case ProjectileID.ScarabBomb:
-						if(!Main.masterMode) damage *= new Fraction(5, 2);
+						if (!Main.masterMode) damage *= new Fraction(5, 2);
 						break;
 						default:
-						if(projectile.CountsAsClass(DamageClasses.Explosive)) damage /= Main.masterMode ? 5 : 2;
+						if (projectile.CountsAsClass(DamageClasses.Explosive)) damage /= Main.masterMode ? 5 : 2;
 						break;
 					}
 				}

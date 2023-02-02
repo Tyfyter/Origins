@@ -4,8 +4,8 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Large_Foliage : ModTile {
-		public override void SetStaticDefaults(){
+	public class Defiled_Large_Foliage : ModTile {
+		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = false;
 			Main.tileNoFail[Type] = true;
@@ -19,11 +19,11 @@ namespace Origins.Tiles.Defiled {
 			};
 
 			TileObjectData.addTile(Type);
-            //soundType = SoundID.Grass;
+			//soundType = SoundID.Grass;
 		}
 
-        public override bool Drop(int i, int j){
+		public override bool Drop(int i, int j) {
 			return false;
 		}
-    }
+	}
 }

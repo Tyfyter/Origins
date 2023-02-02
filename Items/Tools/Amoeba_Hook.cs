@@ -22,7 +22,7 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Amoeba_Hook_Projectile : ModProjectile {
-		public override string Texture => "Terraria/Images/Projectile_"+ProjectileID.Hook;
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Hook;
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			ID = Projectile.type;
@@ -67,14 +67,14 @@ namespace Origins.Items.Tools {
 
 				data = new DrawData(TextureAssets.Chain30.Value, center - Main.screenPosition,
 					new Rectangle(0, 0, TextureAssets.Chain30.Value.Width, TextureAssets.Chain30.Value.Height), drawColor, projRotation,
-					new Vector2(TextureAssets.Chain30.Value.Width * 0.5f, TextureAssets.Chain30.Value.Height * 0.5f), new Vector2(0.75f,1), SpriteEffects.None, 0);
+					new Vector2(TextureAssets.Chain30.Value.Width * 0.5f, TextureAssets.Chain30.Value.Height * 0.5f), new Vector2(0.75f, 1), SpriteEffects.None, 0);
 				data.shader = owner.cGrapple;
 				Main.EntitySpriteDraw(data);
 			}
 			return true;
 		}
 		public override void PostAI() {
-			if(Projectile.ai[0] != 2f)return;
+			if (Projectile.ai[0] != 2f) return;
 			Player player = Main.player[Projectile.owner];
 			player.grappling[--player.grapCount] = -1;
 			if (player.whoAmI == Main.myPlayer) {
@@ -84,7 +84,7 @@ namespace Origins.Items.Tools {
 			}
 			player.GetModPlayer<OriginPlayer>().hookTarget = Projectile.whoAmI;
 			if (player.Hitbox.Intersects(Projectile.Hitbox)) {
-				if(Projectile.ai[1] > 0) Projectile.ai[1] = 26;
+				if (Projectile.ai[1] > 0) Projectile.ai[1] = 26;
 			} else {
 				Projectile.ai[1]++;
 			}

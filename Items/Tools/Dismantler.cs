@@ -4,17 +4,17 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-    public class Dismantler : ModItem {
+	public class Dismantler : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dismantler");
 			Tooltip.SetDefault("Very pointy\nAble to mine Hellstone");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.DeathbringerPickaxe);
+			Item.CloneDefaults(ItemID.DeathbringerPickaxe);
 			Item.damage = 14;
 			Item.DamageType = DamageClass.Melee;
-            Item.pick = 75;
+			Item.pick = 75;
 			Item.width = 34;
 			Item.height = 32;
 			Item.useTime = 13;

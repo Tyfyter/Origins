@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
-    public class Turbo_Reel_Quest : Quest {
+	public class Turbo_Reel_Quest : Quest {
 		//backing field for Stage property
 		int stage = 0;
 
@@ -39,9 +39,9 @@ namespace Origins.Questing {
 					UpdateInventoryEvent = (item) => {
 						if (item.type == ItemID.GoldWatch || item.type == ItemID.PlatinumWatch) {
 							hasWatch = true;
-						} else if(item.type == ModContent.ItemType<Adhesive_Wrap>()) {
+						} else if (item.type == ModContent.ItemType<Adhesive_Wrap>()) {
 							adhesiveWraps += item.stack;
-						} else if(item.type == ItemID.Chain) {
+						} else if (item.type == ItemID.Chain) {
 							chains += item.stack;
 						} else if (RecipeGroup.recipeGroups[RecipeGroupID.IronBar].ContainsItem(item.type)) {
 							ironBars += item.stack;
@@ -102,7 +102,7 @@ namespace Origins.Questing {
 					RecipeGroup ironBarGroup = RecipeGroup.recipeGroups[RecipeGroupID.IronBar];
 					ConsumeItems(
 						inventory,
-						((i)=> i.type == ItemID.GoldWatch || i.type == ItemID.PlatinumWatch, 1),
+						((i) => i.type == ItemID.GoldWatch || i.type == ItemID.PlatinumWatch, 1),
 						((i) => i.type == ModContent.ItemType<Adhesive_Wrap>(), adhesiveWrapTarget),
 						((i) => i.type == ItemID.Chain, chainTarget),
 						((i) => ironBarGroup.ContainsItem(i.type), ironBarTarget)

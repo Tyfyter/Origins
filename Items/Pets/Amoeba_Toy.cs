@@ -6,12 +6,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-    public class Amoeba_Toy : ModItem {
+	public class Amoeba_Toy : ModItem {
 		internal static int projectileID = 0;
-        internal static int buffID = 0;
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Amoeba Toy");
-            Tooltip.SetDefault("Summons a Meberoid to light up the day");
+		internal static int buffID = 0;
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Amoeba Toy");
+			Tooltip.SetDefault("Summons a Meberoid to light up the day");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -26,7 +26,7 @@ namespace Origins.Items.Pets {
 			}
 		}
 	}
-    public class Meberoid : ModProjectile {
+	public class Meberoid : ModProjectile {
 		public override string Texture => "Origins/Items/Pets/Meberoid";
 		public override void SetStaticDefaults() {
 			Amoeba_Toy.projectileID = Projectile.type;
@@ -68,7 +68,7 @@ namespace Origins.Items.Pets {
 
 			#region General behavior
 			Vector2 idlePosition = player.Top;
-            idlePosition.X -= 48f*player.direction;
+			idlePosition.X -= 48f * player.direction;
 
 			// Teleport to player if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
@@ -141,11 +141,11 @@ namespace Origins.Items.Pets {
 			Lighting.AddLight(Projectile.Center, Color.Cyan.ToVector3() * 0.5f);// but Lighting.AddLight does
 			#endregion
 		}
-    }
+	}
 }
 
 namespace Origins.Buffs {
-    public class Meberoid_Buff : ModBuff {
+	public class Meberoid_Buff : ModBuff {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Meberoid");
 			Description.SetDefault("The Meberoid will light up the way");

@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-    public class Bled_Out_Staff : ModItem {
+	public class Bled_Out_Staff : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bled Out Staff");
@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Magic {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.RubyStaff);
+			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 47;
 			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.mana = 16;
-            Item.shoot = ModContent.ProjectileType<Bled_Out_Staff_P>();
+			Item.shoot = ModContent.ProjectileType<Bled_Out_Staff_P>();
 			Item.value = Item.sellPrice(silver: 80);
 			Item.rare = ItemRarityID.LightRed;
 			Item.glowMask = glowmask;
@@ -35,17 +35,17 @@ namespace Origins.Items.Weapons.Magic {
 			recipe.Register();
 		}
 	}
-    public class Bled_Out_Staff_P : ModProjectile {
-        public override string Texture => "Terraria/Images/Projectile_125";
-        public override void SetDefaults() {
-            Projectile.CloneDefaults(ProjectileID.DiamondBolt);
-            Projectile.penetrate = 1;
-            Projectile.extraUpdates = 1;
-        }
-        public override void AI() {
-	        Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.GemDiamond, 0f, 0f, 0, new Color(255,0,255), 1f);
-	        dust.noGravity = true;
-	        dust.velocity/=2;
-        }
-    }
+	public class Bled_Out_Staff_P : ModProjectile {
+		public override string Texture => "Terraria/Images/Projectile_125";
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.DiamondBolt);
+			Projectile.penetrate = 1;
+			Projectile.extraUpdates = 1;
+		}
+		public override void AI() {
+			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.GemDiamond, 0f, 0f, 0, new Color(255, 0, 255), 1f);
+			dust.noGravity = true;
+			dust.velocity /= 2;
+		}
+	}
 }

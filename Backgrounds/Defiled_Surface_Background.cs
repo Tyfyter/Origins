@@ -23,7 +23,7 @@ namespace Origins.Backgrounds {
 					if (fades[i] > 1f) {
 						fades[i] = 1f;
 					}
-				}else {
+				} else {
 					fades[i] -= transitionSpeed;
 					if (fades[i] < 0f) {
 						fades[i] = 0f;
@@ -32,11 +32,11 @@ namespace Origins.Backgrounds {
 			}
 		}
 
-        /*public override void FillTextureArray(int[] textureSlots) {
+		/*public override void FillTextureArray(int[] textureSlots) {
 			textureSlots[0] = mod.GetBackgroundSlot("Backgrounds/Defiled_Background");
 			textureSlots[1] = mod.GetBackgroundSlot("Backgrounds/Defiled_Background2");
 			textureSlots[2] = mod.GetBackgroundSlot("Backgrounds/Defiled_Background3");
 			//textureSlots[3] = mod.GetBackgroundSlot("Backgrounds/Void_Background");
 		}*/
-    }
+	}
 }

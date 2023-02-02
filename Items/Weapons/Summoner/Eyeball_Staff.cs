@@ -9,70 +9,70 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Summoner {
-    public class Eyeball_Staff : ModItem {
-        internal static int projectileID = 0;
-        internal static int buffID = 0;
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Eyeball Staff");
-            Tooltip.SetDefault("Summons a Demon Eye to fight for you\nCan summon 2 minions per slot");
-            ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
-            SacrificeTotal = 1;
-        }
-        public override void SetDefaults() {
-            Item.damage = 8;
-            Item.DamageType = DamageClass.Summon;
-            Item.mana = 11;
-            Item.width = 32;
-            Item.height = 32;
-            Item.useTime = 36;
-            Item.useAnimation = 36;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.value = Item.buyPrice(gold: 1);
-            Item.rare = ItemRarityID.Blue;
-            Item.UseSound = SoundID.Item44;
-            Item.buffType = buffID;
-            Item.shoot = projectileID;
-            Item.noMelee = true;
-        }
+	public class Eyeball_Staff : ModItem {
+		internal static int projectileID = 0;
+		internal static int buffID = 0;
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Eyeball Staff");
+			Tooltip.SetDefault("Summons a Demon Eye to fight for you\nCan summon 2 minions per slot");
+			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
+			SacrificeTotal = 1;
+		}
+		public override void SetDefaults() {
+			Item.damage = 8;
+			Item.DamageType = DamageClass.Summon;
+			Item.mana = 11;
+			Item.width = 32;
+			Item.height = 32;
+			Item.useTime = 36;
+			Item.useAnimation = 36;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.value = Item.buyPrice(gold: 1);
+			Item.rare = ItemRarityID.Blue;
+			Item.UseSound = SoundID.Item44;
+			Item.buffType = buffID;
+			Item.shoot = projectileID;
+			Item.noMelee = true;
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-		    if(buffID==0)buffID = ModContent.BuffType<Mini_EOC_Buff>();
-            player.AddBuff(Item.buffType, 2);
-            position = Main.MouseWorld;
-        }
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-            if (buffID == 0) buffID = ModContent.BuffType<Wormy_Buff>();
-            player.AddBuff(buffID, 2);
-            player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
-            return false;
-        }
-    }
+			if (buffID == 0) buffID = ModContent.BuffType<Mini_EOC_Buff>();
+			player.AddBuff(Item.buffType, 2);
+			position = Main.MouseWorld;
+		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			if (buffID == 0) buffID = ModContent.BuffType<Wormy_Buff>();
+			player.AddBuff(buffID, 2);
+			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
+			return false;
+		}
+	}
 }
 namespace Origins.Buffs {
-    public class Mini_EOC_Buff : ModBuff {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Demon Eye");
-            Description.SetDefault("The Demon Eye will fight for you");
-            Main.buffNoSave[Type] = true;
-            Main.buffNoTimeDisplay[Type] = true;
-            Eyeball_Staff.buffID = Type;
-        }
+	public class Mini_EOC_Buff : ModBuff {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Demon Eye");
+			Description.SetDefault("The Demon Eye will fight for you");
+			Main.buffNoSave[Type] = true;
+			Main.buffNoTimeDisplay[Type] = true;
+			Eyeball_Staff.buffID = Type;
+		}
 
-        public override void Update(Player player, ref int buffIndex) {
-            if(player.ownedProjectileCounts[Eyeball_Staff.projectileID] > 0) {
-                player.buffTime[buffIndex] = 18000;
-            } else {
-                player.DelBuff(buffIndex);
-                buffIndex--;
-            }
-        }
-    }
+		public override void Update(Player player, ref int buffIndex) {
+			if (player.ownedProjectileCounts[Eyeball_Staff.projectileID] > 0) {
+				player.buffTime[buffIndex] = 18000;
+			} else {
+				player.DelBuff(buffIndex);
+				buffIndex--;
+			}
+		}
+	}
 }
 
 namespace Origins.Items.Weapons.Summoner.Minions {
-    public class Mini_EOC : ModProjectile {
+	public class Mini_EOC : ModProjectile {
 		public const int frameSpeed = 5;
 		public override void SetStaticDefaults() {
-            Eyeball_Staff.projectileID = Projectile.type;
+			Eyeball_Staff.projectileID = Projectile.type;
 			DisplayName.SetDefault("Gerald");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;
@@ -88,16 +88,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 
 		public sealed override void SetDefaults() {
-            Projectile.DamageType = DamageClass.Summon;
-            Projectile.width = 28;
+			Projectile.DamageType = DamageClass.Summon;
+			Projectile.width = 28;
 			Projectile.height = 28;
 			Projectile.tileCollide = true;
 			Projectile.friendly = true;
 			Projectile.minion = true;
 			Projectile.minionSlots = 0f;
 			Projectile.penetrate = -1;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 12;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 12;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -121,19 +121,19 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (player.HasBuff(Eyeball_Staff.buffID)) {
 				Projectile.timeLeft = 2;
 			}
-            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-            originPlayer.minionSubSlots[0]+=0.5f;
-            int eyeCount = player.ownedProjectileCounts[Eyeball_Staff.projectileID]/2;
-            if(originPlayer.minionSubSlots[0]<=eyeCount) {
-                Projectile.minionSlots = 0.5f;
-            } else {
-                Projectile.minionSlots = 0;
-            }
-            #endregion
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.minionSubSlots[0] += 0.5f;
+			int eyeCount = player.ownedProjectileCounts[Eyeball_Staff.projectileID] / 2;
+			if (originPlayer.minionSubSlots[0] <= eyeCount) {
+				Projectile.minionSlots = 0.5f;
+			} else {
+				Projectile.minionSlots = 0;
+			}
+			#endregion
 
-            #region General behavior
-            Vector2 idlePosition = player.Top+new Vector2(player.direction*-player.width/2, 0);
-            idlePosition.X -= 48f*player.direction;
+			#region General behavior
+			Vector2 idlePosition = player.Top + new Vector2(player.direction * -player.width / 2, 0);
+			idlePosition.X -= 48f * player.direction;
 
 			// Teleport to player if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
@@ -159,85 +159,85 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					else Projectile.velocity.Y += overlapVelocity;
 				}
 			}
-            #endregion
+			#endregion
 
-            #region Find target
+			#region Find target
 			// Starting search distance
 			float targetDist = 2000f;
 			float targetAngle = -2;
 			Vector2 targetCenter = Projectile.Center;
-            int target = -1;
-            void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
-                if (!isPriorityTarget && targetDist > 700f) {
-                    targetDist = 700f;
-                }
-                if (isPriorityTarget && Projectile.ai[1] < 0) foundTarget = true;
-                if (npc.CanBeChasedBy()) {
-                    Vector2 diff = npc.Hitbox.ClosestPointInRect(Projectile.Center) - Projectile.Center;
-                    float dist = diff.Length();
-                    if (dist > targetDist) return;
-                    float dot = NormDotWithPriorityMult(diff, Projectile.velocity, targetPriorityMultiplier);
-                    bool inRange = dist <= targetDist;
-                    bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
-                    if (((dot >= targetAngle && inRange) || !foundTarget) && lineOfSight) {
-                        targetDist = dist;
-                        targetAngle = dot;
-                        targetCenter = npc.Center;
-                        target = npc.whoAmI;
-                        foundTarget = true;
-                    }
-                }
-            }
-            bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
+			int target = -1;
+			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+				if (!isPriorityTarget && targetDist > 700f) {
+					targetDist = 700f;
+				}
+				if (isPriorityTarget && Projectile.ai[1] < 0) foundTarget = true;
+				if (npc.CanBeChasedBy()) {
+					Vector2 diff = npc.Hitbox.ClosestPointInRect(Projectile.Center) - Projectile.Center;
+					float dist = diff.Length();
+					if (dist > targetDist) return;
+					float dot = NormDotWithPriorityMult(diff, Projectile.velocity, targetPriorityMultiplier);
+					bool inRange = dist <= targetDist;
+					bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
+					if (((dot >= targetAngle && inRange) || !foundTarget) && lineOfSight) {
+						targetDist = dist;
+						targetAngle = dot;
+						targetCenter = npc.Center;
+						target = npc.whoAmI;
+						foundTarget = true;
+					}
+				}
+			}
+			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
 
 
 			Projectile.friendly = foundTarget;
-            #endregion
+			#endregion
 
-            #region Movement
-            movement:
-            // Default movement parameters (here for attacking)
-            float speed = 6f+Projectile.localAI[0]/15;
-            float turnSpeed = 1f+Math.Max((Projectile.localAI[0]-15)/30,0);
+			#region Movement
+			movement:
+			// Default movement parameters (here for attacking)
+			float speed = 6f + Projectile.localAI[0] / 15;
+			float turnSpeed = 1f + Math.Max((Projectile.localAI[0] - 15) / 30, 0);
 			float currentSpeed = Projectile.velocity.Length();
-            Projectile.tileCollide = true;
-            if(foundTarget) {
-                Projectile.tileCollide = true;
-                if(Projectile.ai[0] != target) {
-                    Projectile.ai[0] = target;
-                    Projectile.ai[1] = 0;
-                } else {
-                    if(++Projectile.ai[1]>180) {
-                        Projectile.ai[1] = -30;
-                    }
-                }
-                if((int)Math.Ceiling(targetAngle)==-1) {
-                    targetCenter.Y-=16;
-                }
-            } else {
+			Projectile.tileCollide = true;
+			if (foundTarget) {
+				Projectile.tileCollide = true;
+				if (Projectile.ai[0] != target) {
+					Projectile.ai[0] = target;
+					Projectile.ai[1] = 0;
+				} else {
+					if (++Projectile.ai[1] > 180) {
+						Projectile.ai[1] = -30;
+					}
+				}
+				if ((int)Math.Ceiling(targetAngle) == -1) {
+					targetCenter.Y -= 16;
+				}
+			} else {
 				if (distanceToIdlePosition > 640f) {
-                    Projectile.tileCollide = false;
+					Projectile.tileCollide = false;
 					speed = 16f;
 				} else if (distanceToIdlePosition < 64f) {
 					speed = 4f;
-                    turnSpeed = 0;
+					turnSpeed = 0;
 				} else {
 					speed = 6f;
 				}
-                if(!Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, idlePosition, 1, 1)) {
-                    Projectile.tileCollide = false;
-                }
-            }
-            LinearSmoothing(ref currentSpeed, speed, currentSpeed<1?1:0.1f+Projectile.localAI[0]/60f);
-            Vector2 direction = foundTarget?targetCenter - Projectile.Center:vectorToIdlePosition;
+				if (!Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, idlePosition, 1, 1)) {
+					Projectile.tileCollide = false;
+				}
+			}
+			LinearSmoothing(ref currentSpeed, speed, currentSpeed < 1 ? 1 : 0.1f + Projectile.localAI[0] / 60f);
+			Vector2 direction = foundTarget ? targetCenter - Projectile.Center : vectorToIdlePosition;
 			direction.Normalize();
-            Projectile.velocity = Vector2.Normalize(Projectile.velocity+direction*turnSpeed)*currentSpeed;
-            #endregion
+			Projectile.velocity = Vector2.Normalize(Projectile.velocity + direction * turnSpeed) * currentSpeed;
+			#endregion
 
-            #region Animation and visuals
-            // So it will lean slightly towards the direction it's moving
-            Projectile.rotation = (float)Math.Atan(Projectile.velocity.Y/Projectile.velocity.X);
-            Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
+			#region Animation and visuals
+			// So it will lean slightly towards the direction it's moving
+			Projectile.rotation = (float)Math.Atan(Projectile.velocity.Y / Projectile.velocity.X);
+			Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
 
 			// This is a simple "loop through all frames from top to bottom" animation
 			Projectile.frameCounter++;
@@ -248,22 +248,22 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Projectile.frame = 0;
 				}
 			}
-            #endregion
-            if(Projectile.localAI[0]>0)Projectile.localAI[0]--;
+			#endregion
+			if (Projectile.localAI[0] > 0) Projectile.localAI[0]--;
 		}
-        public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            damage+=(int)(Projectile.localAI[0]/6);
-        }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            Vector2 intersect = Rectangle.Intersect(Projectile.Hitbox,target.Hitbox).Center.ToVector2()-Projectile.Hitbox.Center.ToVector2();
-            if(intersect.X!=0&&(Math.Sign(intersect.X)==Math.Sign(Projectile.velocity.X))) {
-                Projectile.velocity.X = -Projectile.velocity.X;
-            }
-            if(intersect.Y!=0&&(Math.Sign(intersect.Y)==Math.Sign(Projectile.velocity.Y))) {
-                Projectile.velocity.Y = -Projectile.velocity.Y;
-            }
-            Projectile.localAI[0]+=20-Projectile.localAI[0]/6;
-            Projectile.ai[1] = 0;
-        }
-    }
+		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+			damage += (int)(Projectile.localAI[0] / 6);
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			Vector2 intersect = Rectangle.Intersect(Projectile.Hitbox, target.Hitbox).Center.ToVector2() - Projectile.Hitbox.Center.ToVector2();
+			if (intersect.X != 0 && (Math.Sign(intersect.X) == Math.Sign(Projectile.velocity.X))) {
+				Projectile.velocity.X = -Projectile.velocity.X;
+			}
+			if (intersect.Y != 0 && (Math.Sign(intersect.Y) == Math.Sign(Projectile.velocity.Y))) {
+				Projectile.velocity.Y = -Projectile.velocity.Y;
+			}
+			Projectile.localAI[0] += 20 - Projectile.localAI[0] / 6;
+			Projectile.ai[1] = 0;
+		}
+	}
 }

@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Antisolve_Potion : ModItem {
+	public class Antisolve_Potion : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Antisolve Potion");
 			Tooltip.SetDefault("Grants immunity to 'Toxic Shock' and 'Torn'");

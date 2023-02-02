@@ -8,32 +8,32 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
-    public class Woodsprite_Staff : ModItem {
+	public class Woodsprite_Staff : ModItem {
 		static short glowmask;
 		internal static int projectileID = 0;
-        internal static int buffID = 0;
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Woodsprite Staff");
-            Tooltip.SetDefault("Summons a woodsprite to fight for you");
+		internal static int buffID = 0;
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Woodsprite Staff");
+			Tooltip.SetDefault("Summons a woodsprite to fight for you");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}
-        public override void SetDefaults() {
-            Item.damage = 3;
+		public override void SetDefaults() {
+			Item.damage = 3;
 			Item.DamageType = DamageClass.Summon;
-            Item.mana = 12;
-            Item.width = 32;
-            Item.height = 32;
-            Item.useTime = 36;
-            Item.useAnimation = 36;
-            Item.useStyle = ItemUseStyleID.Swing;
+			Item.mana = 12;
+			Item.width = 32;
+			Item.height = 32;
+			Item.useTime = 36;
+			Item.useAnimation = 36;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.White;
-            Item.UseSound = SoundID.Item44;
-            buffID = ModContent.BuffType<Woodsprite_Buff>();
-            Item.buffType = buffID;
-            Item.shoot = projectileID;
-            Item.noMelee = true;
+			Item.UseSound = SoundID.Item44;
+			buffID = ModContent.BuffType<Woodsprite_Buff>();
+			Item.buffType = buffID;
+			Item.shoot = projectileID;
+			Item.noMelee = true;
 			Item.glowMask = glowmask;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -44,29 +44,29 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-    public class Woodsprite_Buff : ModBuff {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Woodsprite");
-            Description.SetDefault("The woodsprite will fight for you");
-            Main.buffNoSave[Type] = true;
-            Main.buffNoTimeDisplay[Type] = true;
-        }
+	public class Woodsprite_Buff : ModBuff {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Woodsprite");
+			Description.SetDefault("The woodsprite will fight for you");
+			Main.buffNoSave[Type] = true;
+			Main.buffNoTimeDisplay[Type] = true;
+		}
 
-        public override void Update(Player player, ref int buffIndex) {
-            if(player.ownedProjectileCounts[Woodsprite_Staff.projectileID] > 0) {
-                player.buffTime[buffIndex] = 18000;
-            } else {
-                player.DelBuff(buffIndex);
-                buffIndex--;
-            }
-        }
-    }
+		public override void Update(Player player, ref int buffIndex) {
+			if (player.ownedProjectileCounts[Woodsprite_Staff.projectileID] > 0) {
+				player.buffTime[buffIndex] = 18000;
+			} else {
+				player.DelBuff(buffIndex);
+				buffIndex--;
+			}
+		}
+	}
 }
 
 namespace Origins.Items.Weapons.Summoner.Minions {
-    public class Woodsprite : ModProjectile {
+	public class Woodsprite : ModProjectile {
 		public override void SetStaticDefaults() {
-            Woodsprite_Staff.projectileID = Projectile.type;
+			Woodsprite_Staff.projectileID = Projectile.type;
 			DisplayName.SetDefault("Woodsprite");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;
@@ -90,8 +90,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.minion = true;
 			Projectile.minionSlots = 1f;
 			Projectile.penetrate = -1;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 18;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 18;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -119,7 +119,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			#region General behavior
 			Vector2 idlePosition = player.Top;
-            idlePosition.X -= 48f*player.direction;
+			idlePosition.X -= 48f * player.direction;
 
 			// Teleport to player if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
@@ -151,7 +151,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// Starting search distance
 			float distanceFromTarget = 2000f;
 			Vector2 targetCenter = default;
-            int target = -1;
+			int target = -1;
 			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
 				if (!isPriorityTarget && distanceFromTarget > 700f) {
 					distanceFromTarget = 700f;
@@ -216,7 +216,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			float inertia = 12f;
 
 			if (foundTarget) {
-                Projectile.tileCollide = true;
+				Projectile.tileCollide = true;
 				// Minion has a target: attack (here, fly towards the enemy)
 				if (distanceFromTarget > 40f || !Projectile.Hitbox.Intersects(Main.npc[target].Hitbox)) {
 					// The immediate range around the target (so it doesn't latch onto it when close)
@@ -226,7 +226,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
 				}
 			} else {
-                Projectile.tileCollide = false;
+				Projectile.tileCollide = false;
 				if (distanceToIdlePosition > 600f) {
 					speed = 16f;
 					inertia = 36f;
@@ -269,32 +269,32 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#endregion
 		}
 
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Woodsprite_Lifesteal>(), damage/3, 0, Projectile.owner);
-        }
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Woodsprite_Lifesteal>(), damage / 3, 0, Projectile.owner);
+		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			width -= 2;
 			height -= 8;
 			return true;
 		}
 	}
-    public class Woodsprite_Lifesteal : ModProjectile {
-        public override string Texture => "Origins/Projectiles/Pixel";
-        public override void SetDefaults() {
-            Projectile.timeLeft = 300;
-        }
-        public override void AI() {
-            Player player = Main.player[Projectile.owner];
-            if(player.dead||!player.active)Projectile.Kill();
-            if(player.Hitbox.Contains(Projectile.Center.ToPoint())) {
-                player.statLife+=Projectile.damage;
-                player.HealEffect(Projectile.damage);
-                Projectile.Kill();
-                return;
-            }
-            Vector2 unit = (player.Center - Projectile.Center).SafeNormalize(Projectile.velocity);
-            Projectile.velocity = Vector2.Lerp(Projectile.velocity, unit*8, 0.1f);
-            Dust.NewDustPerfect(Projectile.Center, 110, Vector2.Zero);
-        }
-    }
+	public class Woodsprite_Lifesteal : ModProjectile {
+		public override string Texture => "Origins/Projectiles/Pixel";
+		public override void SetDefaults() {
+			Projectile.timeLeft = 300;
+		}
+		public override void AI() {
+			Player player = Main.player[Projectile.owner];
+			if (player.dead || !player.active) Projectile.Kill();
+			if (player.Hitbox.Contains(Projectile.Center.ToPoint())) {
+				player.statLife += Projectile.damage;
+				player.HealEffect(Projectile.damage);
+				Projectile.Kill();
+				return;
+			}
+			Vector2 unit = (player.Center - Projectile.Center).SafeNormalize(Projectile.velocity);
+			Projectile.velocity = Vector2.Lerp(Projectile.velocity, unit * 8, 0.1f);
+			Dust.NewDustPerfect(Projectile.Center, 110, Vector2.Zero);
+		}
+	}
 }

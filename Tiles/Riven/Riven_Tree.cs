@@ -9,19 +9,19 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
-    public class Riven_Tree : ModTree {
+	public class Riven_Tree : ModTree {
 		private Mod mod => Origins.instance;
 
-        public static Riven_Tree Instance { get; private set; }
+		public static Riven_Tree Instance { get; private set; }
 		public override TreePaintingSettings TreeShaderSettings => new();
 
 		internal static void Load() {
-            Instance = new Riven_Tree();
-        }
+			Instance = new Riven_Tree();
+		}
 
-        internal static void Unload() {
-            Instance = null;
-        }
+		internal static void Unload() {
+			Instance = null;
+		}
 
 		/*public override int CreateDust() {
 			return ModContent.DustType<>();
@@ -51,10 +51,10 @@ namespace Origins.Tiles.Riven {
 		}
 
 		public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
-			
+
 		}
 	}
-    public class Riven_Tree_Sapling : ModTile {
+	public class Riven_Tree_Sapling : ModTile {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
@@ -86,7 +86,7 @@ namespace Origins.Tiles.Riven {
 			//ModTranslation treeName = CreateMapEntryName();
 			//name.SetDefault("Defiled Tree");
 			//AddMapEntry(new Color(200, 200, 200), treeName);
-            //ModContent.GetModTile(ModContent.TileType("Defiled_Tree"));
+			//ModContent.GetModTile(ModContent.TileType("Defiled_Tree"));
 
 			//sapling = true;
 			AdjTiles = new int[] { TileID.Saplings };

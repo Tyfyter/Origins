@@ -11,7 +11,7 @@ using Terraria.DataStructures;
 using Tyfyter.Utils;
 
 namespace Origins.Gores.NPCs {
-    public class R_Effect_Blood1 : ModGore {
+	public class R_Effect_Blood1 : ModGore {
 		public override Color? GetAlpha(Gore gore, Color lightColor) {
 			return new Color(255, 255, 255, 0);
 		}

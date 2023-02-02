@@ -9,29 +9,29 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Water {
-    public class Riven_Water_Style : ModWaterStyle, IGlowingWaterStyle {
-        public override int ChooseWaterfallStyle() => ModContent.GetInstance<Riven_Waterfall_Style>().Slot;
-        public override int GetDropletGore() => GoreID.ChimneySmoke1 + Main.rand.Next(3);
-        public override int GetSplashDust() => 99;
-        public override void LightColorMultiplier(ref float r, ref float g, ref float b) {
-            r = 0.1f;
-            g = 1.05f;
-            b = 1f;
-        }
-        public override Color BiomeHairColor() => new Color(50, 250, 230);
+	public class Riven_Water_Style : ModWaterStyle, IGlowingWaterStyle {
+		public override int ChooseWaterfallStyle() => ModContent.GetInstance<Riven_Waterfall_Style>().Slot;
+		public override int GetDropletGore() => GoreID.ChimneySmoke1 + Main.rand.Next(3);
+		public override int GetSplashDust() => 99;
+		public override void LightColorMultiplier(ref float r, ref float g, ref float b) {
+			r = 0.1f;
+			g = 1.05f;
+			b = 1f;
+		}
+		public override Color BiomeHairColor() => new Color(50, 250, 230);
 
 		public void AddLight(ref Vector3 color, byte liquidAmount) {
-            float mult = liquidAmount > 200 ? 1 : liquidAmount / 200;
+			float mult = liquidAmount > 200 ? 1 : liquidAmount / 200;
 
-            color.Y += 0.9f * mult;
-            color.Z += 1f * mult;
-        }
+			color.Y += 0.9f * mult;
+			color.Z += 1f * mult;
+		}
 	}
-    public class Riven_Waterfall_Style : ModWaterfallStyle {
-        public override void ColorMultiplier(ref float r, ref float g, ref float b, float a) {
-            r = 0.1f;
-            g = 1.05f;
-            b = 1f;
-        }
-    }
+	public class Riven_Waterfall_Style : ModWaterfallStyle {
+		public override void ColorMultiplier(ref float r, ref float g, ref float b, float a) {
+			r = 0.1f;
+			g = 1.05f;
+			b = 1f;
+		}
+	}
 }

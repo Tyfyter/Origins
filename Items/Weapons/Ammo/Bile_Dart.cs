@@ -7,29 +7,29 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-    public class Bile_Dart : ModItem {
+	public class Bile_Dart : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bile Dart");
 			Tooltip.SetDefault("Stuns the target");
-            SacrificeTotal = 99;
-        }
-		public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.CursedDart);
-            Item.maxStack = 999;
-            Item.damage = 9;
-            //Item.shoot = ModContent.ProjectileType<Bile_Dart_P>();
-			Item.shootSpeed = 3f;
-            Item.knockBack = 2.2f;
-            Item.value = Item.sellPrice(copper: 6);
-            Item.rare = ItemRarityID.Orange;
+			SacrificeTotal = 99;
 		}
-        public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type, 100);
-            recipe.AddIngredient(ModContent.ItemType<Black_Bile>());
-            recipe.Register();
-        }
-    }
-    /*public class Bile_Dart_P : ModProjectile {
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.CursedDart);
+			Item.maxStack = 999;
+			Item.damage = 9;
+			//Item.shoot = ModContent.ProjectileType<Bile_Dart_P>();
+			Item.shootSpeed = 3f;
+			Item.knockBack = 2.2f;
+			Item.value = Item.sellPrice(copper: 6);
+			Item.rare = ItemRarityID.Orange;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type, 100);
+			recipe.AddIngredient(ModContent.ItemType<Black_Bile>());
+			recipe.Register();
+		}
+	}
+	/*public class Bile_Dart_P : ModProjectile {
         public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.CursedDart);
         }

@@ -66,7 +66,7 @@ namespace Origins.Items.Accessories {
 			}
 			if (bestWeight > 0) {
 				float dir = (target.Y > player.MountedCenter.Y == target.X > player.MountedCenter.X) ? -1 : 1;
-				Projectile.NewProjectile(player.GetSource_Accessory(Item), player.MountedCenter, (target - player.MountedCenter).SafeNormalize(default).RotatedBy(dir * -1f) * 3.2f, Item.shoot, 1, 0, player.whoAmI, ai1:dir);
+				Projectile.NewProjectile(player.GetSource_Accessory(Item), player.MountedCenter, (target - player.MountedCenter).SafeNormalize(default).RotatedBy(dir * -1f) * 3.2f, Item.shoot, 1, 0, player.whoAmI, ai1: dir);
 				originPlayer.amebicVialCooldown = 120;
 			}
 		}
@@ -124,7 +124,7 @@ namespace Origins.Items.Accessories {
 			Projectile other;
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				other = Main.projectile[i];
-				if (other.active && other.hostile && (Colliding(Projectile.Hitbox, other.Hitbox)??false)) {
+				if (other.active && other.hostile && (Colliding(Projectile.Hitbox, other.Hitbox) ?? false)) {
 					other.velocity = Vector2.Lerp(other.velocity, Projectile.velocity, 0.5f);
 				}
 			}

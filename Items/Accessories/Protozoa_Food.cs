@@ -8,27 +8,27 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
-    public class Protozoa_Food : ModItem {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Protozoa Food");
-            Tooltip.SetDefault("//TODO: add tooltip");
-            SacrificeTotal = 1;
-        }
-        public override void SetDefaults() {
+	public class Protozoa_Food : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Protozoa Food");
+			Tooltip.SetDefault("//TODO: add tooltip");
+			SacrificeTotal = 1;
+		}
+		public override void SetDefaults() {
 			Item.damage = 13;
 			Item.knockBack = 3;
 			Item.useTime = Item.useAnimation = 45;
 			Item.mana = 10;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
 			Item.accessory = true;
-            Item.width = 21;
-            Item.height = 20;
-            Item.rare = ItemRarityID.Master;
-            Item.master = true;
+			Item.width = 21;
+			Item.height = 20;
+			Item.rare = ItemRarityID.Master;
+			Item.master = true;
 			Item.value = Item.sellPrice(gold: 6);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-            player.maxMinions += 1;
+			player.maxMinions += 1;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.protozoaFood = true;
 			originPlayer.protozoaFoodItem = Item;

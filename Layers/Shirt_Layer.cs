@@ -16,19 +16,19 @@ using Terraria.ModLoader;
 namespace Origins.Layers {
 	public class Shirt_Layer : PlayerDrawLayer {
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
-            return drawInfo.drawPlayer.body == Fiberglass_Body.SlotID;
+			return drawInfo.drawPlayer.body == Fiberglass_Body.SlotID;
 		}
 		public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.ArmorLongCoat, PlayerDrawLayers.Torso);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
-            drawInfo.hidesTopSkin = false;
-            drawInfo.drawPlayer.body = 0;
-            PlayerDrawLayers.DrawPlayer_17_Torso(ref drawInfo);
-            PlayerDrawLayers.DrawPlayer_28_ArmOverItem(ref drawInfo);
+			drawInfo.hidesTopSkin = false;
+			drawInfo.drawPlayer.body = 0;
+			PlayerDrawLayers.DrawPlayer_17_Torso(ref drawInfo);
+			PlayerDrawLayers.DrawPlayer_28_ArmOverItem(ref drawInfo);
 
-            //drawInfo.hidesTopSkin = true;
-            drawInfo.drawPlayer.body = Fiberglass_Body.SlotID;
-            //PlayerDrawLayers.DrawPlayer_17_Torso(ref drawInfo);
-            /*Player drawPlayer = drawInfo.drawPlayer;
+			//drawInfo.hidesTopSkin = true;
+			drawInfo.drawPlayer.body = Fiberglass_Body.SlotID;
+			//PlayerDrawLayers.DrawPlayer_17_Torso(ref drawInfo);
+			/*Player drawPlayer = drawInfo.drawPlayer;
             Vector2 Position = drawInfo.Position;
             int skinVariant = drawPlayer.skinVariant;
             DrawData drawData;
@@ -47,6 +47,6 @@ namespace Origins.Layers {
             }
             drawData = new DrawData(TextureAssets.Players[skinVariant, 5].Value, new Vector2((int)(Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2 + drawPlayer.width / 2), (int)(Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + new Vector2(drawPlayer.bodyFrame.Width / 2, drawPlayer.bodyFrame.Height / 2), new Rectangle?(drawPlayer.bodyFrame), drawInfo.colorArmorBody, drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
             drawInfo.DrawDataCache.Add(drawData);*/
-        }
+		}
 	}
 }

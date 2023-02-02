@@ -4,8 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Impact_Golf_Ball : ModItem {
-		public override string Texture => "Terraria/Images/Item_"+ItemID.GolfBallDyedBlack;
+	public class Impact_Golf_Ball : ModItem {
+		public override string Texture => "Terraria/Images/Item_" + ItemID.GolfBallDyedBlack;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GolfBallDyedBlack);
 			Item.damage = 80;
@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return false;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			if(CanDamage()??true)Projectile.Kill();
+			if (CanDamage() ?? true) Projectile.Kill();
 			return true;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {

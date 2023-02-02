@@ -16,13 +16,13 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 
 namespace Origins.UI {
-    public class Quest_Link_Handler : ITagHandler {
+	public class Quest_Link_Handler : ITagHandler {
 		public class Quest_Link_Snippet : TextSnippet {
 			string key;
 			int lastHovered = 0;
 			bool completed;
 			bool inJournal;
-			public Quest_Link_Snippet(string key, Color color = default, bool completed = false, bool inJournal = false) : this(Quest_Registry.GetQuestByKey(key), color, completed, inJournal) {}
+			public Quest_Link_Snippet(string key, Color color = default, bool completed = false, bool inJournal = false) : this(Quest_Registry.GetQuestByKey(key), color, completed, inJournal) { }
 			public Quest_Link_Snippet(Quest quest, Color color = default, bool completed = false, bool inJournal = false) : base() {
 				key = quest.FullName;
 				Text = quest.NameValue;
@@ -33,7 +33,7 @@ namespace Origins.UI {
 			}
 			public override void Update() {
 				base.Update();
-				if(lastHovered > 0) lastHovered--;
+				if (lastHovered > 0) lastHovered--;
 			}
 			public override void OnHover() {
 				base.OnHover();

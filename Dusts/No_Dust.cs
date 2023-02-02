@@ -3,7 +3,7 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Dusts {
-    public class No_Dust : ModDust {
+	public class No_Dust : ModDust {
 		public override string Texture => "Origins/Items/Accessories/Ravel";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {

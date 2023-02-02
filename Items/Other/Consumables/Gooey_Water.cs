@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Gooey_Water : ModItem {
+	public class Gooey_Water : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Gooey Water");
 			Tooltip.SetDefault("Spreads the {$Riven_Hive} to some blocks");

@@ -13,25 +13,25 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Sand : OriginTile, DefiledTile {
+	public class Defiled_Sand : OriginTile, DefiledTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.isDesertBiomeSand[Type] = true;
 			TileID.Sets.Conversion.Sand[Type] = true;
-            TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			/*Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.Sand];
             Main.tileMerge[TileID.Sand][Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.Sand];
             Main.tileMerge[Type][TileID.Sand] = true;*/
-            TileID.Sets.Falling[Type] = true;
+			TileID.Sets.Falling[Type] = true;
 			ItemDrop = ItemType<Defiled_Sand_Item>();
 			AddMapEntry(new Color(175, 175, 175));
 			//SetModTree(Defiled_Tree.Instance);
-            mergeID = TileID.Sand;
+			mergeID = TileID.Sand;
 			AddDefiledTile();
 		}
-        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			if (WorldGen.noTileActions)
 				return true;
 
@@ -53,13 +53,12 @@ namespace Origins.Tiles.Defiled {
 
 				if (Main.netMode == NetmodeID.SinglePlayer) {
 					Main.tile[i, j].ClearTile();
-                    OriginGlobalProj.hostileNext = true;
+					OriginGlobalProj.hostileNext = true;
 					int proj = Projectile.NewProjectile(new EntitySource_TileBreak(i, j), positionX, positionY, 0f, 0.41f, projectileType, 10, 0f, Main.myPlayer);
 					Main.projectile[proj].ai[0] = 1f;
 					Main.projectile[proj].hostile = true;
 					WorldGen.SquareTileFrame(i, j);
-				}
-				else if (Main.netMode == NetmodeID.Server) {
+				} else if (Main.netMode == NetmodeID.Server) {
 					Tile tile0 = Main.tile[i, j];
 					tile0.HasTile = false;
 					bool spawnProj = true;
@@ -91,29 +90,29 @@ namespace Origins.Tiles.Defiled {
 			style = 0;
 			return ModContent.TileType<Defiled_Tree_Sapling>();
 		}*/
-        public override bool CreateDust(int i, int j, ref int type) {
-            type = Defiled_Wastelands.DefaultTileDust;
-            return true;
-        }
-    }
-    public class Defiled_Sand_Item : ModItem {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("{$Defiled} Sand");
-        }
-        public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.SandBlock);
-            Item.createTile = TileType<Defiled_Sand>();
-            Item.ammo = AmmoID.Sand;
+		public override bool CreateDust(int i, int j, ref int type) {
+			type = Defiled_Wastelands.DefaultTileDust;
+			return true;
+		}
+	}
+	public class Defiled_Sand_Item : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("{$Defiled} Sand");
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.SandBlock);
+			Item.createTile = TileType<Defiled_Sand>();
+			Item.ammo = AmmoID.Sand;
 		}
 		public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback) {
-		    type = ProjectileType<Defiled_Sand_Ball>();
-        }
-    }
-    public class Defiled_Sand_Ball : ModProjectile {
+			type = ProjectileType<Defiled_Sand_Ball>();
+		}
+	}
+	public class Defiled_Sand_Ball : ModProjectile {
 		protected override bool CloneNewInstances => true;
-        protected bool falling = true;
+		protected bool falling = true;
 		protected int tileType;
-        bool init = true;
+		bool init = true;
 		protected const int dustType = 51;
 
 		public override void SetStaticDefaults() {
@@ -122,20 +121,20 @@ namespace Origins.Tiles.Defiled {
 		}
 
 		public override void SetDefaults() {
-            Projectile.CloneDefaults(ProjectileID.SandBallGun);
-            Projectile.hostile = false;
+			Projectile.CloneDefaults(ProjectileID.SandBallGun);
+			Projectile.hostile = false;
 			Projectile.knockBack = 6f;
 			Projectile.penetrate = -1;
-            Projectile.aiStyle = 1;
+			Projectile.aiStyle = 1;
 			//Set the tile type to ExampleSand
 			tileType = TileType<Defiled_Sand>();
 		}
 
 		public override void AI() {
-            if(init) {
-                falling = Projectile.hostile;
-                init = false;
-            }
+			if (init) {
+				falling = Projectile.hostile;
+				init = false;
+			}
 			//Change the 5 to determine how much dust will spawn. lower for more, higher for less
 			if (Main.rand.NextBool(5)) {
 				int dust = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, dustType);
@@ -153,11 +152,10 @@ namespace Origins.Tiles.Defiled {
 						Projectile.ai[1] = 60f;
 						Projectile.velocity.Y += 0.2f;
 					}
-				}
-				else
+				} else {
 					Projectile.velocity.Y += 0.41f;
-			}
-			else if (Projectile.ai[0] == 2f) {
+				}
+			} else if (Projectile.ai[0] == 2f) {
 				Projectile.velocity.Y += 0.2f;
 
 				if (Projectile.velocity.X < -0.04f)
@@ -175,19 +173,19 @@ namespace Origins.Tiles.Defiled {
 		}
 
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
-            Vector2 velocity = Projectile.velocity;
+			Vector2 velocity = Projectile.velocity;
 			if (falling)
 				Projectile.velocity = Collision.AnyCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height, true);
 			else
 				Projectile.velocity = Collision.TileCollision(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height, true, true, 1);
-            if(falling) {
+			if (falling) {
 				int tileX = (int)(Projectile.Center.X) / 16;
 				int tileY = (int)(Projectile.Center.Y) / 16;
-                if(Projectile.velocity!=velocity||Main.tile[tileX, tileY + 1].HasTile)Projectile.Kill();
-            }else if(Projectile.velocity!=velocity) {
-                falling = true;
-                Projectile.hostile = true;
-            }
+				if (Projectile.velocity != velocity || Main.tile[tileX, tileY + 1].HasTile) Projectile.Kill();
+			} else if (Projectile.velocity != velocity) {
+				falling = true;
+				Projectile.hostile = true;
+			}
 			return false;
 		}
 
@@ -223,6 +221,6 @@ namespace Origins.Tiles.Defiled {
 			}
 		}
 
-        public override bool? CanDamage() => Projectile.localAI[1] != -1f ? null : false;
-    }
+		public override bool? CanDamage() => Projectile.localAI[1] != -1f ? null : false;
+	}
 }

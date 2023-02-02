@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Magic {
-    public class Infusion : ModItem {
+	public class Infusion : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Infusion");
@@ -24,17 +24,17 @@ namespace Origins.Items.Weapons.Magic {
 			Item.damage = 4;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Item.mana = 3;
-            Item.noMelee = true;
-            Item.noUseGraphic = false;
+			Item.noMelee = true;
+			Item.noUseGraphic = false;
 			Item.width = 30;
 			Item.height = 36;
 			Item.useTime = 9;
 			Item.useAnimation = 9;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
-            Item.shoot = ModContent.ProjectileType<Infusion_P>();
-            Item.shootSpeed = 16f;
-            Item.useTurn = false;
+			Item.shoot = ModContent.ProjectileType<Infusion_P>();
+			Item.shootSpeed = 16f;
+			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitchRange(0.9f, 1f);
@@ -56,8 +56,8 @@ namespace Origins.Items.Weapons.Magic {
 			velocity = velocity.RotatedByRandom(0.075f);
 		}
 	}
-    public class Infusion_P : ModProjectile {
-        public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
+	public class Infusion_P : ModProjectile {
+		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 		PolarVec2 embedPos;
 		float embedRotation;
 		const int embed_duration = 600;
@@ -67,7 +67,7 @@ namespace Origins.Items.Weapons.Magic {
 			DisplayName.SetDefault("Infusion Spike");
 		}
 		public override void SetDefaults() {
-            Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
+			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 15;
@@ -83,7 +83,7 @@ namespace Origins.Items.Weapons.Magic {
 				NPC target = Main.npc[EmbedTarget];
 				Projectile.Center = target.Center + (Vector2)embedPos.RotatedBy(target.rotation);
 				Projectile.rotation = embedRotation + target.rotation;
-				if(Projectile.numUpdates == 0 && EmbedTime > 10) OriginGlobalNPC.AddInfusionSpike(target, Projectile.whoAmI);
+				if (Projectile.numUpdates == 0 && EmbedTime > 10) OriginGlobalNPC.AddInfusionSpike(target, Projectile.whoAmI);
 				if (!target.active) {
 					EmbedTime = embed_duration + 1;
 				}

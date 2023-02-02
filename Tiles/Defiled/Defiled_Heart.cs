@@ -7,65 +7,65 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Heart : ModTile {
-        public static int ID { get; private set; }
+	public class Defiled_Heart : ModTile {
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;
-            Main.tileHammer[Type] = true;
-            Main.tileLighted[Type] = true;
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
-            TileObjectData.newTile.Width = 4;
+			Main.tileHammer[Type] = true;
+			Main.tileLighted[Type] = true;
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x4);
+			TileObjectData.newTile.Width = 4;
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 16, 16, 16 };
 			TileObjectData.newTile.Origin = new Point16(1, 2);
-            TileObjectData.newTile.AnchorWall = false;
-            TileObjectData.newTile.AnchorTop = AnchorData.Empty;
-            TileObjectData.newTile.AnchorLeft = AnchorData.Empty;
-            TileObjectData.newTile.AnchorRight = AnchorData.Empty;
-            TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
+			TileObjectData.newTile.AnchorWall = false;
+			TileObjectData.newTile.AnchorTop = AnchorData.Empty;
+			TileObjectData.newTile.AnchorLeft = AnchorData.Empty;
+			TileObjectData.newTile.AnchorRight = AnchorData.Empty;
+			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.addTile(Type);
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("{$Defiled} Heart");
 			AddMapEntry(new Color(50, 50, 50), name);
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.ShadowOrbs };
-            ID = Type;
-            HitSound = Origins.Sounds.DefiledIdle;
-        }
+			ID = Type;
+			HitSound = Origins.Sounds.DefiledIdle;
+		}
 		public override bool CanExplode(int i, int j) {
 			return false;
 		}
 		public override bool CreateDust(int i, int j, ref int type) {
-            type = Defiled_Wastelands.DefaultTileDust;
-            return true;
-        }
-        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-            r = g = b = 0.3f;
-        }
-        public override void PlaceInWorld(int i, int j, Item item) {
-            if (Main.netMode == NetmodeID.MultiplayerClient) {
+			type = Defiled_Wastelands.DefaultTileDust;
+			return true;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			r = g = b = 0.3f;
+		}
+		public override void PlaceInWorld(int i, int j, Item item) {
+			if (Main.netMode == NetmodeID.MultiplayerClient) {
 
-            }
-            ModContent.GetInstance<OriginSystem>().Defiled_Hearts.Add(new Point(i, j));
-        }
-    }
-    public class Defiled_Heart_Item : ModItem {
-        public override string Texture => "Origins/Tiles/Defiled/Defiled_Heart";
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("{$Defiled} Heart (Debugging Item)");
-        }
-        public override void SetDefaults() {
-            Item.width = 26;
-            Item.height = 22;
-            Item.maxStack = 99;
-            Item.useTurn = true;
-            Item.autoReuse = true;
-            Item.useAnimation = 15;
-            Item.useTime = 10;
-            Item.useStyle = ItemUseStyleID.Swing;
-            Item.consumable = true;
-            Item.value = 500;
-            Item.createTile = ModContent.TileType<Defiled_Heart>();
-        }
-    }
+			}
+			ModContent.GetInstance<OriginSystem>().Defiled_Hearts.Add(new Point(i, j));
+		}
+	}
+	public class Defiled_Heart_Item : ModItem {
+		public override string Texture => "Origins/Tiles/Defiled/Defiled_Heart";
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("{$Defiled} Heart (Debugging Item)");
+		}
+		public override void SetDefaults() {
+			Item.width = 26;
+			Item.height = 22;
+			Item.maxStack = 99;
+			Item.useTurn = true;
+			Item.autoReuse = true;
+			Item.useAnimation = 15;
+			Item.useTime = 10;
+			Item.useStyle = ItemUseStyleID.Swing;
+			Item.consumable = true;
+			Item.value = 500;
+			Item.createTile = ModContent.TileType<Defiled_Heart>();
+		}
+	}
 }

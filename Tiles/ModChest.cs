@@ -15,9 +15,9 @@ using Terraria.Enums;
 using Terraria.Localization;
 
 namespace Origins.Tiles {
-    public abstract class ModChest : ModTile {
-        public int keyItem { get; protected set; } = -1;
-        public override void SetStaticDefaults() {
+	public abstract class ModChest : ModTile {
+		public int keyItem { get; protected set; } = -1;
+		public override void SetStaticDefaults() {
 			Main.tileSpelunker[Type] = true;
 			Main.tileContainer[Type] = true;
 			TileID.Sets.BasicChest[Type] = true;
@@ -43,10 +43,10 @@ namespace Origins.Tiles {
 
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
-        public override bool IsLockedChest(int i, int j) => Main.tile[i, j].TileFrameX >= 36;
+		public override bool IsLockedChest(int i, int j) => Main.tile[i, j].TileFrameX >= 36;
 
 		public override bool UnlockChest(int i, int j, ref short frameXAdjustment, ref int dustType, ref bool manual) {
-            //frameXAdjustment = 36;
+			//frameXAdjustment = 36;
 			dustType = this.DustType;
 			return true;
 		}
@@ -64,9 +64,9 @@ namespace Origins.Tiles {
 			int chest = Chest.FindChest(left, top);
 			if (chest < 0) {
 				return Language.GetTextValue("LegacyChestType.0");
-			}else if (Main.chest[chest].name == "") {
+			} else if (Main.chest[chest].name == "") {
 				return name;
-			}else {
+			} else {
 				return name + ": " + Main.chest[chest].name;
 			}
 		}
@@ -163,10 +163,10 @@ namespace Origins.Tiles {
 			if (chestIndex < 0) {
 				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
 			} else {
-                player.cursorItemIconText = Main.chest[chestIndex].name.Length > 0 ? Main.chest[chestIndex].name : ContainerName.GetDefault();
+				player.cursorItemIconText = Main.chest[chestIndex].name.Length > 0 ? Main.chest[chestIndex].name : ContainerName.GetDefault();
 				if (player.cursorItemIconText.Equals(ContainerName.GetDefault())) {
-					if (IsLockedChest(left,top))player.cursorItemIconID = keyItem;
-                    else player.cursorItemIconID = ChestDrop;
+					if (IsLockedChest(left, top)) player.cursorItemIconID = keyItem;
+					else player.cursorItemIconID = ChestDrop;
 					player.cursorItemIconText = "";
 				}
 			}
@@ -182,5 +182,5 @@ namespace Origins.Tiles {
 				player.cursorItemIconID = 0;
 			}
 		}
-    }
+	}
 }

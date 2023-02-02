@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class White_Water : ModItem {
+	public class White_Water : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("White Water");
 			Tooltip.SetDefault("Spreads the {$Defiled_Wastelands} to some blocks");

@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Melee {
-    public class Knee_Slapper : ModItem {
+	public class Knee_Slapper : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Knee Slapper");
@@ -19,17 +19,17 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetDefaults() {
 			Item.damage = 45;
 			Item.DamageType = DamageClass.Melee;
-            Item.noMelee = true;
-            Item.noUseGraphic = true;
+			Item.noMelee = true;
+			Item.noUseGraphic = true;
 			Item.width = 30;
 			Item.height = 36;
 			Item.useTime = 17;
 			Item.useAnimation = 17;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
-            Item.shoot = ModContent.ProjectileType<Knee_Slapper_P>();
+			Item.shoot = ModContent.ProjectileType<Knee_Slapper_P>();
 			Item.shootSpeed = 16f;
-            Item.useTurn = true;
+			Item.useTurn = true;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item1;
@@ -43,9 +43,9 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 	}
-    public class Knee_Slapper_P : ModProjectile {
+	public class Knee_Slapper_P : ModProjectile {
 		static bool lastSlapDir = false;
-        public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
+		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 		public List<PolarVec2> nodes;
 		PolarVec2 GetSwingStartOffset => new PolarVec2(0, Projectile.ai[1] - Projectile.direction * 0.35f);
 		public override void SetStaticDefaults() {

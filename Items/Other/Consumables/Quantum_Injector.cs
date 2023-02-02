@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Quantum_Injector : ModItem {
+	public class Quantum_Injector : ModItem {
 		public const int mana_per_use = 10;
 		public const int max_uses = 20;
 		public override void SetStaticDefaults() {

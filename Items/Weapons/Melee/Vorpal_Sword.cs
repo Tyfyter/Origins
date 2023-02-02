@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Melee {
-    public class Vorpal_Sword : ModItem {
+	public class Vorpal_Sword : ModItem {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override void SetStaticDefaults() {
@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shootSpeed = 12;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 0f;
-            Item.useTurn = false;
+			Item.useTurn = false;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
@@ -220,7 +220,7 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-			OriginGlobalNPC.InflictTorn(target, 20, targetSeverity:0.6f);
+			OriginGlobalNPC.InflictTorn(target, 20, targetSeverity: 0.6f);
 		}
 		public override void CutTiles() {
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;

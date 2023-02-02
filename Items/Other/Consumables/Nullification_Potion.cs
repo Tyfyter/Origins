@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Nullification_Potion : ModItem {
+	public class Nullification_Potion : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Nullification Potion");
 			Tooltip.SetDefault("Crashes your game"); //Removes all current harmful effects

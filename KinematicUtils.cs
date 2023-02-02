@@ -38,7 +38,7 @@ namespace Tyfyter.Utils {
 
 					jointAngles[0] = (float)(atan - angle0);
 					jointAngles[1] = (float)(Math.PI - angle1);
-                    if (mirrored) {
+					if (mirrored) {
 						float diffAngle = diff.ToRotation();
 						jointAngles[0] = diffAngle - (jointAngles[0] - diffAngle);
 						jointAngles[1] = -jointAngles[1];

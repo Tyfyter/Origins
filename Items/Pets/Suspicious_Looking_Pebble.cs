@@ -6,12 +6,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Pets {
-    public class Suspicious_Looking_Pebble : ModItem {
+	public class Suspicious_Looking_Pebble : ModItem {
 		internal static int projectileID = 0;
-        internal static int buffID = 0;
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Suspicious Looking Pebble");
-            Tooltip.SetDefault("Summons a {$Defiled} blight to light your way");
+		internal static int buffID = 0;
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Suspicious Looking Pebble");
+			Tooltip.SetDefault("Summons a {$Defiled} blight to light your way");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -26,7 +26,7 @@ namespace Origins.Items.Pets {
 			}
 		}
 	}
-    public class Defiled_Blight_P : ModProjectile {
+	public class Defiled_Blight_P : ModProjectile {
 		public override string Texture => "Origins/Items/Pets/Defiled_Blight";
 		public override void SetStaticDefaults() {
 			Suspicious_Looking_Pebble.projectileID = Projectile.type;
@@ -67,7 +67,7 @@ namespace Origins.Items.Pets {
 
 			#region General behavior
 			Vector2 idlePosition = player.Top;
-            idlePosition.X -= 48f*player.direction;
+			idlePosition.X -= 48f * player.direction;
 
 			// Teleport to player if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
@@ -140,11 +140,11 @@ namespace Origins.Items.Pets {
 			Lighting.AddLight(Projectile.Center, Color.White.ToVector3() * 0.45f);
 			#endregion
 		}
-    }
+	}
 }
 
 namespace Origins.Buffs {
-    public class Defiled_Blight_Buff : ModBuff {
+	public class Defiled_Blight_Buff : ModBuff {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Blight");
 			Description.SetDefault("The {$Defiled} Blight will light your way");

@@ -41,8 +41,8 @@ namespace Origins.Questing {
 		public virtual string GetJournalPage() {
 			return "";
 		}
-		public virtual void SaveData(TagCompound tag) {}
-		public virtual void LoadData(TagCompound tag) {}
+		public virtual void SaveData(TagCompound tag) { }
+		public virtual void LoadData(TagCompound tag) { }
 		#region events
 		public Action<NPC> KillEnemyEvent { get; protected set; }
 		public Action PreUpdateInventoryEvent { get; protected set; }

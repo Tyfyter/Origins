@@ -26,11 +26,11 @@ namespace Origins.World.BiomeData {
 			originPlayer.ZoneBrine = OriginSystem.brineTiles > Brine_Pool.NeededTiles;
 			return originPlayer.ZoneBrine;
 		}
-        public const int NeededTiles = 250;
-        public const int ShaderTileCount = 75;
-        public static class SpawnRates {
-        }
-        public static class Gen {
+		public const int NeededTiles = 250;
+		public const int ShaderTileCount = 75;
+		public static class SpawnRates {
+		}
+		public static class Gen {
 			public static Point BrineStart(int i, int j, float sizeMult = 1f) {
 				ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();
 				ushort stoneWallID = WallID.BlueDungeonSlab;//(ushort)ModContent.WallType<Riven_Flesh_Wall>();
@@ -60,7 +60,7 @@ namespace Origins.World.BiomeData {
 							Main.tile[x, y].TileType = TileID.Ash;
 							break;
 							default:
-                            if (Main.tileContainer[Main.tile[x, y].TileType]) {
+							if (Main.tileContainer[Main.tile[x, y].TileType]) {
 								break;
 							}
 							OriginSystem.RemoveTree(x, y - 1);
@@ -71,7 +71,7 @@ namespace Origins.World.BiomeData {
 								}
 								Main.tile[x, y].SetActive(false);
 								//if (y > j2 - (sizeMult * 32)) {
-									Main.tile[x, y].LiquidAmount = 255;
+								Main.tile[x, y].LiquidAmount = 255;
 								//}
 							}
 							break;
@@ -105,7 +105,7 @@ namespace Origins.World.BiomeData {
 						float j3 = (Math.Min(j2 - c, y) + (j2 - c) * 2) / 3f;
 						float sq = Math.Max(Math.Abs(y - j3) * 1.5f, Math.Abs(x - i2));
 						float pyth = ((y - j3) * (y - j3) * 1.5f) + (x - i2) * (x - i2);
-						float diff = (float)Math.Sqrt((sq * sq + (pyth * 3)) * 0.25f * (GenRunners.GetWallDistOffset((x>i2?c:-c)) * 0.0105358686257562662057044079516f + 1));
+						float diff = (float)Math.Sqrt((sq * sq + (pyth * 3)) * 0.25f * (GenRunners.GetWallDistOffset((x > i2 ? c : -c)) * 0.0105358686257562662057044079516f + 1));
 						if (diff > size * sizeMult) {
 							continue;
 						}
@@ -123,9 +123,9 @@ namespace Origins.World.BiomeData {
 							Main.tile[x, y].TileType = TileID.Ash;
 							break;
 							default:
-                            if (Main.tileContainer[Main.tile[x, y].TileType]) {
+							if (Main.tileContainer[Main.tile[x, y].TileType]) {
 								break;
-                            }
+							}
 							if (y > worldSurfaceHigh || (Main.tile[x, y].HasTile && Main.tileSolid[Main.tile[x, y].TileType])) {
 								Main.tile[x, y].ResetToType(stoneID);
 								change = true;
@@ -134,7 +134,7 @@ namespace Origins.World.BiomeData {
 								if (Main.tileContainer[Main.tile[x, y - 1].TileType]) {
 									break;
 								}
-								if(Main.tile[x, y].HasTile)change = true;
+								if (Main.tile[x, y].HasTile) change = true;
 								Main.tile[x, y].SetActive(false);
 								OriginSystem.RemoveTree(x, y - 1);
 								if (y > worldSurfaceHigh) {
@@ -142,22 +142,22 @@ namespace Origins.World.BiomeData {
 								}
 							}
 							if (y < worldSurfaceHigh && Main.tile[x, y].HasTile && change) {
-                                if (x>i2) {//right side
-                                    if (x>maxX) {
+								if (x > i2) {//right side
+									if (x > maxX) {
 										maxX = x;
-                                    }
-                                    if (y <= topRight.Y) {
+									}
+									if (y <= topRight.Y) {
 										topRight = new Vector2(x, y);
-                                    }
-                                } else {//left side
-                                    if (x<minX) {
+									}
+								} else {//left side
+									if (x < minX) {
 										minX = x;
-                                    }
-                                    if (y < topLeft.Y) {
+									}
+									if (y < topLeft.Y) {
 										topLeft = new Vector2(x, y);
-                                    }
-                                }
-                            }
+									}
+								}
+							}
 							break;
 						}
 						switch (Main.tile[x, y].WallType) {
@@ -175,16 +175,16 @@ namespace Origins.World.BiomeData {
 							}
 							break;
 						}
-                        if (change) {
+						if (change) {
 							changed++;
-                        }
-                    }
-					if (y < worldSurfaceHigh) {
-						size-=0.03f;
+						}
 					}
-                    if (changed < 23 * sizeMult + 10) {
+					if (y < worldSurfaceHigh) {
+						size -= 0.03f;
+					}
+					if (changed < 23 * sizeMult + 10) {
 						break;
-                    }
+					}
 				}
 				int top = (int)Math.Max(topLeft.Y, topRight.Y);
 				float slope = (topLeft.Y - topRight.Y) / (topRight.X - topLeft.X);
@@ -192,9 +192,9 @@ namespace Origins.World.BiomeData {
 				int prog = 0;
 				for (int x = minX; x < maxX; x++) {
 					minY = top - slope * prog + GenRunners.GetWallDistOffset(x + top) * 0.4f;
-                    if (x>=topLeft.X && x<=topRight.X) {
+					if (x >= topLeft.X && x <= topRight.X) {
 						prog++;
-                    }
+					}
 					for (int y = (int)(worldSurfaceHigh + 1); y >= minY; y--) {
 						Main.tile[x, y].WallType = stoneWallID;
 					}
@@ -203,5 +203,5 @@ namespace Origins.World.BiomeData {
 				return new Point(i2, j2);
 			}
 		}
-    }
+	}
 }

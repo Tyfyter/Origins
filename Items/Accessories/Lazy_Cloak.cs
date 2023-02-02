@@ -8,19 +8,19 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Lazy_Cloak : ModItem {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Lazy Cloak");
-            Tooltip.SetDefault("Chases after marked enemies\n'It just doesn't want to do all the work'");
-            SacrificeTotal = 1;
-        }
-        public override void SetDefaults() {
-            Item.damage = 30;
-            Item.DamageType = DamageClass.Summon;
-            Item.width = 32;
-            Item.height = 32;
-            Item.useTime = 36;
-            Item.useAnimation = 36;
+	public class Lazy_Cloak : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Lazy Cloak");
+			Tooltip.SetDefault("Chases after marked enemies\n'It just doesn't want to do all the work'");
+			SacrificeTotal = 1;
+		}
+		public override void SetDefaults() {
+			Item.damage = 30;
+			Item.DamageType = DamageClass.Summon;
+			Item.width = 32;
+			Item.height = 32;
+			Item.useTime = 36;
+			Item.useAnimation = 36;
 			Item.shoot = ModContent.ProjectileType<Lazy_Cloak_P>();
 			Item.value = Item.sellPrice(gold: 6);
 			Item.rare = ItemRarityID.Master;
@@ -29,7 +29,7 @@ namespace Origins.Items.Accessories {
 			Item.accessory = true;
 			Item.canBePlacedInVanityRegardlessOfConditions = true;
 			Item.master = true;
-        }
+		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			Item.backSlot = -1;
 			Item.frontSlot = -1;
@@ -45,12 +45,12 @@ namespace Origins.Items.Accessories {
 			Item.backSlot = 5;
 			Item.frontSlot = 3;
 		}
-    }
-    public class Lazy_Cloak_P : ModProjectile {
+	}
+	public class Lazy_Cloak_P : ModProjectile {
 		public const int frameSpeed = 5;
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-            Eyeball_Staff.projectileID = Projectile.type;
+			Eyeball_Staff.projectileID = Projectile.type;
 			DisplayName.SetDefault("Lazy Cloak");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 2;
@@ -73,8 +73,8 @@ namespace Origins.Items.Accessories {
 			Projectile.minion = true;
 			Projectile.minionSlots = 0f;
 			Projectile.penetrate = -1;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 12;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 12;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -245,7 +245,7 @@ namespace Origins.Items.Accessories {
 	}
 }
 namespace Origins.Buffs {
-    public class Lazy_Cloak_Buff : ModBuff {
+	public class Lazy_Cloak_Buff : ModBuff {
 		public override string Texture => "Origins/Buffs/Lazy_Cloak_Buff";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {

@@ -15,7 +15,7 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 
 namespace Origins.UI {
-    public class Journal_Link_Handler : ITagHandler {
+	public class Journal_Link_Handler : ITagHandler {
 		public class Journal_Link_Snippet : TextSnippet {
 			string key;
 			int lastHovered = 0;
@@ -27,7 +27,7 @@ namespace Origins.UI {
 			}
 			public override void Update() {
 				base.Update();
-				if(lastHovered > 0) lastHovered--;
+				if (lastHovered > 0) lastHovered--;
 			}
 			public override void OnHover() {
 				base.OnHover();

@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-    public class Snatcher : ModItem {
+	public class Snatcher : ModItem {
 
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Snatcher");

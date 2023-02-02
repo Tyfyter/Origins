@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Jam_Sandwich : ModItem {
+	public class Jam_Sandwich : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Jam Sandwich");
 			Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'What kind of jam is this?'");

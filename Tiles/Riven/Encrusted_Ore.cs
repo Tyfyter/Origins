@@ -8,43 +8,43 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Encrusted_Ore : OriginTile, IGlowingModTile, IComplexMineDamageTile {
-        public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
-        public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
-        public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly)+2)*0.5f;
-        public override void SetStaticDefaults() {
-            Main.tileSolid[Type] = true;
+	public class Encrusted_Ore : OriginTile, IGlowingModTile, IComplexMineDamageTile {
+		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
+		public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
+		public override void SetStaticDefaults() {
+			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-            Main.tileLighted[Type] = true;
-            TileID.Sets.Ore[Type] = true;
+			Main.tileLighted[Type] = true;
+			TileID.Sets.Ore[Type] = true;
 			ItemDrop = ItemType<Encrusted_Ore_Item>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Encrusted Ore");
 			AddMapEntry(new Color(40, 148, 207), name);
-            mergeID = TileID.Crimtane;
+			mergeID = TileID.Crimtane;
 		}
-        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
-            r = 0.02f * GlowValue;
-            g = 0.15f * GlowValue;
-            b = 0.2f * GlowValue;
-        }
-        public void MinePower(int i, int j, int minePower, ref int damage) {
-            if (minePower >= 55 || j <= Main.worldSurface) {
-                damage += (int)(minePower / MineResist);
-            }
-        }
-        public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-            this.DrawTileGlow(i, j, spriteBatch);
-        }
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			r = 0.02f * GlowValue;
+			g = 0.15f * GlowValue;
+			b = 0.2f * GlowValue;
+		}
+		public void MinePower(int i, int j, int minePower, ref int damage) {
+			if (minePower >= 55 || j <= Main.worldSurface) {
+				damage += (int)(minePower / MineResist);
+			}
+		}
+		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+			this.DrawTileGlow(i, j, spriteBatch);
+		}
 	}
 	[LegacyName("Infested_Ore_Item")]
 	public class Encrusted_Ore_Item : ModItem {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Encrusted Ore");
-        }
-        public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.CrimtaneOre);
-            Item.createTile = TileType<Encrusted_Ore>();
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Encrusted Ore");
 		}
-    }
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.CrimtaneOre);
+			Item.createTile = TileType<Encrusted_Ore>();
+		}
+	}
 }

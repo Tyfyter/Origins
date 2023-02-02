@@ -10,28 +10,28 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
-    public class Tendon_Tear : ModItem {
-        public override void SetStaticDefaults() {
+	public class Tendon_Tear : ModItem {
+		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tendon Tear");
 			Tooltip.SetDefault("'Snap. Crackle. Pop'");
-            SacrificeTotal = 1;
-        }
-		public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.Musket);
-            Item.damage = 18;
-            Item.crit = -2;
-            Item.useAnimation = 38;
-            Item.useTime = 38;
-            Item.width = 86;
-            Item.height = 22;
+			SacrificeTotal = 1;
 		}
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-            int i = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.Musket);
+			Item.damage = 18;
+			Item.crit = -2;
+			Item.useAnimation = 38;
+			Item.useTime = 38;
+			Item.width = 86;
+			Item.height = 22;
+		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			int i = Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 			float len = velocity.Length() * Main.projectile[i].MaxUpdates;
 
-			Projectile.NewProjectile(source, position, velocity, Tendon_Tear_Swing.ID, damage, knockback, player.whoAmI, ai0:-(728 / len), ai1:i);
-            return false;
-        }
+			Projectile.NewProjectile(source, position, velocity, Tendon_Tear_Swing.ID, damage, knockback, player.whoAmI, ai0: -(728 / len), ai1: i);
+			return false;
+		}
 	}
 	public class Tendon_Tear_Swing : ModProjectile, IWhipProjectile {
 		public static int ID { get; private set; } = -1;
@@ -63,7 +63,7 @@ namespace Origins.Items.Weapons.Ranged {
 			set => Projectile.ai[0] = value;
 		}
 		public override void AI() {
-			
+
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2; // Without PiOver2, the rotation would be off by 90 degrees counterclockwise.
 			if (Projectile.ai[1] >= 0 && Projectile.ai[1] < Main.maxProjectiles) {
 				Projectile ownerProj = Main.projectile[(int)Projectile.ai[1]];

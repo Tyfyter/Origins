@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Salt_Flask : ModItem {
+	public class Salt_Flask : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Flask of Alkahest");
 			Tooltip.SetDefault("Melee and Whip attacks tenderize targets");//for some reason Whip is capitalized in the vanilla ones

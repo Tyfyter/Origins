@@ -4,18 +4,18 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-    public class Brick_Breaker : ModItem {
+	public class Brick_Breaker : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Brick Breaker");
 			Tooltip.SetDefault("Very pointy");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.DeathbringerPickaxe);
+			Item.CloneDefaults(ItemID.DeathbringerPickaxe);
 			Item.damage = 14;
 			Item.DamageType = DamageClass.Melee;
-            Item.pick = 0;
-            Item.hammer = 60;
+			Item.pick = 0;
+			Item.hammer = 60;
 			Item.width = 34;
 			Item.height = 34;
 			Item.useTime = 17;

@@ -46,7 +46,7 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override Color? GetAlpha(Projectile projectile, Color lightColor) {
-			if(isRespawned) return new Color(175, 225, 255, 128);
+			if (isRespawned) return new Color(175, 225, 255, 128);
 			return null;
 		}
 	}

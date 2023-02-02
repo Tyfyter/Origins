@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
-    public class Parasitic_Influence : ModItem {
+	public class Parasitic_Influence : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Parasitic Influence");
 			Tooltip.SetDefault("Chance to randomly strike nearby enemies");

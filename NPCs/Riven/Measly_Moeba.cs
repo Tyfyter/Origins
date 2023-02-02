@@ -7,26 +7,26 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Measly_Moeba : Glowing_Mod_NPC {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Measly Moeba");
-            Main.npcFrameCount[Type] = 4;
-            SpawnModBiomes = new int[] {
-                ModContent.GetInstance<Riven_Hive>().Type
-            };
-        }
-        public override void SetDefaults() {
-            NPC.CloneDefaults(NPCID.BloodJelly);
-            NPC.aiStyle = 0;
-            NPC.lifeMax = 34;
-            NPC.defense = 4;
-            NPC.damage = 25;
-            NPC.width = 20;
-            NPC.height = 20;
-            NPC.frame.Height = 22;
+	public class Measly_Moeba : Glowing_Mod_NPC {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Measly Moeba");
+			Main.npcFrameCount[Type] = 4;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Riven_Hive>().Type
+			};
+		}
+		public override void SetDefaults() {
+			NPC.CloneDefaults(NPCID.BloodJelly);
+			NPC.aiStyle = 0;
+			NPC.lifeMax = 34;
+			NPC.defense = 4;
+			NPC.damage = 25;
+			NPC.width = 20;
+			NPC.height = 20;
+			NPC.frame.Height = 22;
 			NPC.alpha = 100;
 			NPC.value = 20;
-        }
+		}
 		public override void AI() {
 			if (NPC.direction == 0) {
 				NPC.TargetClosest();
@@ -115,19 +115,19 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement(""),
-            });
-        }
-        public override void FindFrame(int frameHeight) {
-		    NPC.spriteDirection = NPC.direction;
-		    NPC.frameCounter += 0.5;
-		    if (NPC.frameCounter >= 24.0){
-			    NPC.frameCounter = 0.0;
-		    }
-		    NPC.frame.Y = 24 * (int)(NPC.frameCounter / 6.0);
-        }
-        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				new FlavorTextBestiaryInfoElement(""),
+			});
+		}
+		public override void FindFrame(int frameHeight) {
+			NPC.spriteDirection = NPC.direction;
+			NPC.frameCounter += 0.5;
+			if (NPC.frameCounter >= 24.0) {
+				NPC.frameCounter = 0.0;
+			}
+			NPC.frame.Y = 24 * (int)(NPC.frameCounter / 6.0);
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 
 		}
 		public override void HitEffect(int hitDirection, double damage) {

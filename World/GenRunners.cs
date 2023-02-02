@@ -10,380 +10,379 @@ using static Origins.World.AdjID;
 using static Terraria.WorldGen;
 
 namespace Origins.World {
-    public class GenRunners{
-        public static Point SpikeRunner(int i, int j, int type, Vector2 speed, int size, float twist = 0, bool randomtwist = false) {
-            float x = i;
-            float y = j;
-            while(size>0) {
-                WorldGen.TileRunner((int)x, (int)y, size, 2, type, speedX:speed.X, speedY:speed.Y, addTile: true, overRide:true);
-                x+=speed.X;
-                y+=speed.Y;
-                if(twist!=0) {
-                    if(randomtwist) {
-                        twist+=WorldGen.genRand.NextFloat(-0.2f,0.2f);
-                    }
-                    speed = speed.RotatedBy(twist);
-                }
-                size--;
-                if(speed.Length()>size*0.75f) {
-                    speed.Normalize();
-                    speed*=size*0.75f;
-                }
-            }
-            return new Point((int)x,(int)y);
-        }
-        internal static int duskLeft;
-        internal static int duskRight;
-        internal static int duskTop;
-        internal static int duskBottom;
-        public static void HellRunner(int i, int j, double strength, int steps, int type, bool addTile = false, float speedX = 0f, float speedY = 0f, bool noYChange = false, bool overRide = true) {
-	        double num = strength;
-	        float num2 = steps;
-	        Vector2 vector = default(Vector2);
-	        vector.X = i;
-	        vector.Y = j;
-	        Vector2 vector2 = default(Vector2);
-	        vector2.X = (float)WorldGen.genRand.Next(-10, 11) * 0.1f;
-	        vector2.Y = (float)WorldGen.genRand.Next(-10, 11) * 0.1f;
-	        if (speedX != 0f || speedY != 0f) {
-		        vector2.X = speedX;
-		        vector2.Y = speedY;
-	        }
-	        bool flag = type == 368;
-	        bool flag2 = type == 367;
-	        while (num > 0.0 && num2 > 0f) {
-		        if (vector.Y < 0f && num2 > 0f && type == 59) {
-			        num2 = 0f;
-		        }
-		        num = strength * (double)(num2 / (float)steps);
-		        num2 -= 1f;
-		        duskLeft = (int)((double)vector.X - num * 0.5);
-		        duskRight = (int)((double)vector.X + num * 0.5);
-		        duskTop = (int)((double)vector.Y - num * 0.5);
-		        duskBottom = (int)((double)vector.Y + num * 0.5);
-		        if (duskLeft < 1) {
-			        duskLeft = 1;
-		        }
-		        if (duskRight > Main.maxTilesX - 1) {
-			        duskRight = Main.maxTilesX - 1;
-		        }
-		        if (duskTop < Main.maxTilesY-200) {
-			        duskTop = Main.maxTilesY-200;
-		        }
-		        if (duskBottom > Main.maxTilesY - 1) {
-			        duskBottom = Main.maxTilesY - 1;
-		        }
-                int tilesSinceSpike = 0;
-                Point? spike = null;
-		        for (int k = duskLeft; k < duskRight; k++) {
-                    spike = null;
-			        for (int l = duskBottom; l > duskTop; l--) {
-				        if (!((Math.Abs(k - vector.X) + Math.Abs(l - vector.Y)) < strength * 0.5)){
-					        continue;
-				        }
-                        if(Main.tile[k, l].TileType == TileID.Pots) {
-                            Main.tile[k, l].TileType = 0;
-                            Main.tile[k, l].SetActive(false);
-                            continue;
-                        }
-                        if(Main.tile[k, l].TileType == type) {
-                            continue;
-                        }
-                        if(Main.tile[k, l].LiquidAmount != 0) {
-					        Tile tile = Main.tile[k, l];
-						    tile.TileType = (ushort)type;
-					        tile.HasTile = true;
-					        tile.LiquidAmount = 0;
-							tile.LiquidType = 1;
-                            //WorldGen.paintTile(k, l, 29);
-                            Main.tile[k+1, l].SetSlope(SlopeType.Solid);
-                            Main.tile[k-1, l].SetSlope(SlopeType.Solid);
-        if(l<Main.maxTilesY)Main.tile[k, l+1].SetSlope(SlopeType.Solid);
-                            Main.tile[k, l-1].SetSlope(SlopeType.Solid);
-                            if(Main.tile[k, l-1].LiquidAmount != 0)continue;
-                            spike = new Point(k,l);
-                            continue;
-                        }
-				        if ((Main.tile[k, l].HasTile) || Main.tile[k, l].WallType == WallID.ObsidianBrickUnsafe || Main.tile[k, l].WallType == WallID.HellstoneBrickUnsafe) {
-					        Tile tile = Main.tile[k, l];
-					        if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
-                                if(tile.TileType == TileID.ObsidianBrick || tile.TileType == TileID.HellstoneBrick || tile.WallType != 0 || (!Main.tileSolid[tile.TileType] && tile.TileType != TileID.Containers && tile.TileType != TileID.Containers2)) {
-                                    tile.WallType = 0;
-                                    bool tileleft = Main.tile[k-1, l].TileType==type&&Main.tile[k-1, l].HasTile;
-                                    if(!tileleft && Main.tile[k, l-1].TileType != TileID.Containers && Main.tile[k, l-1].TileType != TileID.Containers2) {
-                                        tile.TileType = 0;
-                                        tile.HasTile = false;
-                                        continue;
-                                    }
-                                }
-						        tile.TileType = (ushort)type;
-					            tile.HasTile = true;
-					            //tile.liquid = 0;
-					            //tile.lava(lava: false);
-                                //WorldGen.paintTile(k, l, 29);
-					        }
-				        }
-			        }
-                    if(spike.HasValue) {
-                        int l = spike.Value.Y;
-                        if(WorldGen.genRand.Next(0, 10+OriginSystem.HellSpikes.Count)<=tilesSinceSpike/5) {
-                            Origins.instance.Logger.Info("Adding spike @ "+k+", "+l);
-                            OriginSystem.HellSpikes.Add((new Point(k, l), WorldGen.genRand.Next(5,10)+tilesSinceSpike/5));
-                            //WorldGen.paintTile(k, l, 11);
-                            tilesSinceSpike = -7;
-                        } else {
-                            tilesSinceSpike++;
-                        }
-                    }
-		        }
-		        vector += vector2;
-		        if (num > 50.0) {
-			        vector += vector2;
-			        num2 -= 1f;
-			        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-			        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-			        if (num > 100.0) {
-				        vector += vector2;
-				        num2 -= 1f;
-				        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-				        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-				        if (num > 150.0) {
-					        vector += vector2;
-					        num2 -= 1f;
-					        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-					        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-					        if (num > 200.0) {
-						        vector += vector2;
-						        num2 -= 1f;
-						        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-						        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-						        if (num > 250.0) {
-							        vector += vector2;
-							        num2 -= 1f;
-							        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-							        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-							        if (num > 300.0) {
-								        vector += vector2;
-								        num2 -= 1f;
-								        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-								        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-								        if (num > 400.0) {
-									        vector += vector2;
-									        num2 -= 1f;
-									        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-									        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-									        if (num > 500.0) {
-										        vector += vector2;
-										        num2 -= 1f;
-										        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-										        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-										        if (num > 600.0) {
-											        vector += vector2;
-											        num2 -= 1f;
-											        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-											        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-											        if (num > 700.0) {
-												        vector += vector2;
-												        num2 -= 1f;
-												        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-												        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-												        if (num > 800.0) {
-													        vector += vector2;
-													        num2 -= 1f;
-													        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-													        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-													        if (num > 900.0) {
-														        vector += vector2;
-														        num2 -= 1f;
-														        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-														        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-													        }
-												        }
-											        }
-										        }
-									        }
-								        }
-							        }
-						        }
-					        }
-				        }
-			        }
-		        }
-		        vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-		        if (vector2.X > 1f) {
-			        vector2.X = 1f;
-		        }
-		        if (vector2.X < -1f) {
-			        vector2.X = -1f;
-		        }
-		        if (!noYChange) {
-			        vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
-			        if (vector2.Y > 1f) {
-				        vector2.Y = 1f;
-			        }
-			        if (vector2.Y < -1f) {
-				        vector2.Y = -1f;
-			        }
-		        }
-		        else if (type != 59 && num < 3.0) {
-			        if (vector2.Y > 1f) {
-				        vector2.Y = 1f;
-			        }
-			        if (vector2.Y < -1f) {
-				        vector2.Y = -1f;
-			        }
-		        }
-		        if (type == 59 && !noYChange) {
-			        if ((double)vector2.Y > 0.5) {
-				        vector2.Y = 0.5f;
-			        }
-			        if ((double)vector2.Y < -0.5) {
-				        vector2.Y = -0.5f;
-			        }
-			        if ((double)vector.Y < Main.rockLayer + 100.0) {
-				        vector2.Y = 1f;
-			        }
-			        if (vector.Y > (float)(Main.maxTilesY - 300)) {
-				        vector2.Y = -1f;
-			        }
-		        }
-	        }
-        }
-        public static void SmoothSpikeRunner(int i, int j, double strength, int type, Vector2 speed, double decay = 0, float twist = 0, bool randomtwist = false, bool forcesmooth = true, double cutoffStrength = 0.0){
-	        double strengthLeft = strength;
-	        Vector2 pos = new Vector2(i,j);
-            Tile tile;
-            if(randomtwist)twist = Math.Abs(twist);
-            int X0 = int.MaxValue;
-            int X1 = 0;
-            int Y0 = int.MaxValue;
-            int Y1 = 0;
-            while (strengthLeft > cutoffStrength) {
-		        strengthLeft-=decay;
-		        int minX = (int)(pos.X - strengthLeft * 0.5);
-		        int maxX = (int)(pos.X + strengthLeft * 0.5);
-		        int minY = (int)(pos.Y - strengthLeft * 0.5);
-		        int maxY = (int)(pos.Y + strengthLeft * 0.5);
-		        if (minX < 1) {
-			        minX = 1;
-		        }
-		        if (maxX > Main.maxTilesX - 1) {
-			        maxX = Main.maxTilesX - 1;
-		        }
-		        if (minY < 1) {
-			        minY = 1;
-		        }
-		        if (maxY > Main.maxTilesY - 1) {
-			        maxY = Main.maxTilesY - 1;
-		        }
-		        for (int l = minX; l < maxX; l++) {
-			        for (int k = minY; k < maxY; k++) {
-				        if ((Math.Pow(Math.Abs(l - pos.X), 2) + Math.Pow(Math.Abs(k - pos.Y), 2)) > Math.Pow(strength, 2)) {//if (!((Math.Abs(l - pos.X) + Math.Abs(k - pos.Y)) < strength)) {
-					        continue;
-				        }
-					    tile = Main.tile[l, k];
-					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
+	public class GenRunners {
+		public static Point SpikeRunner(int i, int j, int type, Vector2 speed, int size, float twist = 0, bool randomtwist = false) {
+			float x = i;
+			float y = j;
+			while (size > 0) {
+				WorldGen.TileRunner((int)x, (int)y, size, 2, type, speedX: speed.X, speedY: speed.Y, addTile: true, overRide: true);
+				x += speed.X;
+				y += speed.Y;
+				if (twist != 0) {
+					if (randomtwist) {
+						twist += WorldGen.genRand.NextFloat(-0.2f, 0.2f);
+					}
+					speed = speed.RotatedBy(twist);
+				}
+				size--;
+				if (speed.Length() > size * 0.75f) {
+					speed.Normalize();
+					speed *= size * 0.75f;
+				}
+			}
+			return new Point((int)x, (int)y);
+		}
+		internal static int duskLeft;
+		internal static int duskRight;
+		internal static int duskTop;
+		internal static int duskBottom;
+		public static void HellRunner(int i, int j, double strength, int steps, int type, bool addTile = false, float speedX = 0f, float speedY = 0f, bool noYChange = false, bool overRide = true) {
+			double num = strength;
+			float num2 = steps;
+			Vector2 vector = default(Vector2);
+			vector.X = i;
+			vector.Y = j;
+			Vector2 vector2 = default(Vector2);
+			vector2.X = (float)WorldGen.genRand.Next(-10, 11) * 0.1f;
+			vector2.Y = (float)WorldGen.genRand.Next(-10, 11) * 0.1f;
+			if (speedX != 0f || speedY != 0f) {
+				vector2.X = speedX;
+				vector2.Y = speedY;
+			}
+			bool flag = type == 368;
+			bool flag2 = type == 367;
+			while (num > 0.0 && num2 > 0f) {
+				if (vector.Y < 0f && num2 > 0f && type == 59) {
+					num2 = 0f;
+				}
+				num = strength * (double)(num2 / (float)steps);
+				num2 -= 1f;
+				duskLeft = (int)((double)vector.X - num * 0.5);
+				duskRight = (int)((double)vector.X + num * 0.5);
+				duskTop = (int)((double)vector.Y - num * 0.5);
+				duskBottom = (int)((double)vector.Y + num * 0.5);
+				if (duskLeft < 1) {
+					duskLeft = 1;
+				}
+				if (duskRight > Main.maxTilesX - 1) {
+					duskRight = Main.maxTilesX - 1;
+				}
+				if (duskTop < Main.maxTilesY - 200) {
+					duskTop = Main.maxTilesY - 200;
+				}
+				if (duskBottom > Main.maxTilesY - 1) {
+					duskBottom = Main.maxTilesY - 1;
+				}
+				int tilesSinceSpike = 0;
+				Point? spike = null;
+				for (int k = duskLeft; k < duskRight; k++) {
+					spike = null;
+					for (int l = duskBottom; l > duskTop; l--) {
+						if (!((Math.Abs(k - vector.X) + Math.Abs(l - vector.Y)) < strength * 0.5)) {
+							continue;
+						}
+						if (Main.tile[k, l].TileType == TileID.Pots) {
+							Main.tile[k, l].TileType = 0;
+							Main.tile[k, l].SetActive(false);
+							continue;
+						}
+						if (Main.tile[k, l].TileType == type) {
+							continue;
+						}
+						if (Main.tile[k, l].LiquidAmount != 0) {
+							Tile tile = Main.tile[k, l];
 							tile.TileType = (ushort)type;
-					        Main.tile[l, k].SetActive(true);
-					        Main.tile[l, k].LiquidAmount = 0;
-					        Main.tile[l, k].SetLiquidType(1);
-                            WorldGen.SquareTileFrame(l,k);
-                            if(l>X1) {
-                                X1 = l;
-                            }else if(l<X0) {
-                                X0 = l;
-                            }
-                            if(k>Y1) {
-                                Y1 = k;
-                            }else if(k<Y0) {
-                                Y0 = k;
-                            }
-					    }
-			        }
-		        }
-                if(forcesmooth&&speed.Length()>strengthLeft*0.75) {
-                    speed.Normalize();
-                    speed*=(float)strengthLeft;
-                }
-		        pos += speed;
-                if(randomtwist||twist!=0.0) {
-                    speed = randomtwist?speed.RotatedBy(WorldGen.genRand.NextFloat(-twist,twist)):speed.RotatedBy(twist);
-                }
-	        }
-            float r = speed.ToRotation();
-            for(int l = X0; l < X1; l++) {
-                for(int k = Y0; k < Y1; k++) {
-                    AutoSlopeForSpike(l, k);
-                }
-            }
-            NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1-X0, Y1-Y1);
-        }
-        //take that, Heisenberg
-        public static (Vector2 position, Vector2 velocity) VeinRunner(int i, int j, double strength, Vector2 speed, double length, float twist = 0, bool randomtwist = false){
-	        Vector2 pos = new Vector2(i,j);
-            Tile tile;
-            if(randomtwist)twist = Math.Abs(twist);
-            int X0 = int.MaxValue;
-            int X1 = 0;
-            int Y0 = int.MaxValue;
-            int Y1 = 0;
-            strength = Math.Pow(strength, 2);
-            double decay = speed.Length();
-            while (length > 0) {
-		        length-=decay;
-		        int minX = (int)(pos.X - strength * 0.5);
-		        int maxX = (int)(pos.X + strength * 0.5);
-		        int minY = (int)(pos.Y - strength * 0.5);
-		        int maxY = (int)(pos.Y + strength * 0.5);
-		        if (minX < 1) {
-			        minX = 1;
-		        }
-		        if (maxX > Main.maxTilesX - 1) {
-			        maxX = Main.maxTilesX - 1;
-		        }
-		        if (minY < 1) {
-			        minY = 1;
-		        }
-		        if (maxY > Main.maxTilesY - 1) {
-			        maxY = Main.maxTilesY - 1;
-		        }
+							tile.HasTile = true;
+							tile.LiquidAmount = 0;
+							tile.LiquidType = 1;
+							//WorldGen.paintTile(k, l, 29);
+							Main.tile[k + 1, l].SetSlope(SlopeType.Solid);
+							Main.tile[k - 1, l].SetSlope(SlopeType.Solid);
+							if (l < Main.maxTilesY) Main.tile[k, l + 1].SetSlope(SlopeType.Solid);
+							Main.tile[k, l - 1].SetSlope(SlopeType.Solid);
+							if (Main.tile[k, l - 1].LiquidAmount != 0) continue;
+							spike = new Point(k, l);
+							continue;
+						}
+						if ((Main.tile[k, l].HasTile) || Main.tile[k, l].WallType == WallID.ObsidianBrickUnsafe || Main.tile[k, l].WallType == WallID.HellstoneBrickUnsafe) {
+							Tile tile = Main.tile[k, l];
+							if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
+								if (tile.TileType == TileID.ObsidianBrick || tile.TileType == TileID.HellstoneBrick || tile.WallType != 0 || (!Main.tileSolid[tile.TileType] && tile.TileType != TileID.Containers && tile.TileType != TileID.Containers2)) {
+									tile.WallType = 0;
+									bool tileleft = Main.tile[k - 1, l].TileType == type && Main.tile[k - 1, l].HasTile;
+									if (!tileleft && Main.tile[k, l - 1].TileType != TileID.Containers && Main.tile[k, l - 1].TileType != TileID.Containers2) {
+										tile.TileType = 0;
+										tile.HasTile = false;
+										continue;
+									}
+								}
+								tile.TileType = (ushort)type;
+								tile.HasTile = true;
+								//tile.liquid = 0;
+								//tile.lava(lava: false);
+								//WorldGen.paintTile(k, l, 29);
+							}
+						}
+					}
+					if (spike.HasValue) {
+						int l = spike.Value.Y;
+						if (WorldGen.genRand.Next(0, 10 + OriginSystem.HellSpikes.Count) <= tilesSinceSpike / 5) {
+							Origins.instance.Logger.Info("Adding spike @ " + k + ", " + l);
+							OriginSystem.HellSpikes.Add((new Point(k, l), WorldGen.genRand.Next(5, 10) + tilesSinceSpike / 5));
+							//WorldGen.paintTile(k, l, 11);
+							tilesSinceSpike = -7;
+						} else {
+							tilesSinceSpike++;
+						}
+					}
+				}
+				vector += vector2;
+				if (num > 50.0) {
+					vector += vector2;
+					num2 -= 1f;
+					vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+					vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+					if (num > 100.0) {
+						vector += vector2;
+						num2 -= 1f;
+						vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+						vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+						if (num > 150.0) {
+							vector += vector2;
+							num2 -= 1f;
+							vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+							vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+							if (num > 200.0) {
+								vector += vector2;
+								num2 -= 1f;
+								vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+								vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+								if (num > 250.0) {
+									vector += vector2;
+									num2 -= 1f;
+									vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+									vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+									if (num > 300.0) {
+										vector += vector2;
+										num2 -= 1f;
+										vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+										vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+										if (num > 400.0) {
+											vector += vector2;
+											num2 -= 1f;
+											vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+											vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+											if (num > 500.0) {
+												vector += vector2;
+												num2 -= 1f;
+												vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+												vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+												if (num > 600.0) {
+													vector += vector2;
+													num2 -= 1f;
+													vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+													vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+													if (num > 700.0) {
+														vector += vector2;
+														num2 -= 1f;
+														vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+														vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+														if (num > 800.0) {
+															vector += vector2;
+															num2 -= 1f;
+															vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+															vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+															if (num > 900.0) {
+																vector += vector2;
+																num2 -= 1f;
+																vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+																vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				vector2.X += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+				if (vector2.X > 1f) {
+					vector2.X = 1f;
+				}
+				if (vector2.X < -1f) {
+					vector2.X = -1f;
+				}
+				if (!noYChange) {
+					vector2.Y += (float)WorldGen.genRand.Next(-10, 11) * 0.05f;
+					if (vector2.Y > 1f) {
+						vector2.Y = 1f;
+					}
+					if (vector2.Y < -1f) {
+						vector2.Y = -1f;
+					}
+				} else if (type != 59 && num < 3.0) {
+					if (vector2.Y > 1f) {
+						vector2.Y = 1f;
+					}
+					if (vector2.Y < -1f) {
+						vector2.Y = -1f;
+					}
+				}
+				if (type == 59 && !noYChange) {
+					if ((double)vector2.Y > 0.5) {
+						vector2.Y = 0.5f;
+					}
+					if ((double)vector2.Y < -0.5) {
+						vector2.Y = -0.5f;
+					}
+					if ((double)vector.Y < Main.rockLayer + 100.0) {
+						vector2.Y = 1f;
+					}
+					if (vector.Y > (float)(Main.maxTilesY - 300)) {
+						vector2.Y = -1f;
+					}
+				}
+			}
+		}
+		public static void SmoothSpikeRunner(int i, int j, double strength, int type, Vector2 speed, double decay = 0, float twist = 0, bool randomtwist = false, bool forcesmooth = true, double cutoffStrength = 0.0) {
+			double strengthLeft = strength;
+			Vector2 pos = new Vector2(i, j);
+			Tile tile;
+			if (randomtwist) twist = Math.Abs(twist);
+			int X0 = int.MaxValue;
+			int X1 = 0;
+			int Y0 = int.MaxValue;
+			int Y1 = 0;
+			while (strengthLeft > cutoffStrength) {
+				strengthLeft -= decay;
+				int minX = (int)(pos.X - strengthLeft * 0.5);
+				int maxX = (int)(pos.X + strengthLeft * 0.5);
+				int minY = (int)(pos.Y - strengthLeft * 0.5);
+				int maxY = (int)(pos.Y + strengthLeft * 0.5);
+				if (minX < 1) {
+					minX = 1;
+				}
+				if (maxX > Main.maxTilesX - 1) {
+					maxX = Main.maxTilesX - 1;
+				}
+				if (minY < 1) {
+					minY = 1;
+				}
+				if (maxY > Main.maxTilesY - 1) {
+					maxY = Main.maxTilesY - 1;
+				}
+				for (int l = minX; l < maxX; l++) {
+					for (int k = minY; k < maxY; k++) {
+						if ((Math.Pow(Math.Abs(l - pos.X), 2) + Math.Pow(Math.Abs(k - pos.Y), 2)) > Math.Pow(strength, 2)) {//if (!((Math.Abs(l - pos.X) + Math.Abs(k - pos.Y)) < strength)) {
+							continue;
+						}
+						tile = Main.tile[l, k];
+						if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
+							tile.TileType = (ushort)type;
+							Main.tile[l, k].SetActive(true);
+							Main.tile[l, k].LiquidAmount = 0;
+							Main.tile[l, k].SetLiquidType(1);
+							WorldGen.SquareTileFrame(l, k);
+							if (l > X1) {
+								X1 = l;
+							} else if (l < X0) {
+								X0 = l;
+							}
+							if (k > Y1) {
+								Y1 = k;
+							} else if (k < Y0) {
+								Y0 = k;
+							}
+						}
+					}
+				}
+				if (forcesmooth && speed.Length() > strengthLeft * 0.75) {
+					speed.Normalize();
+					speed *= (float)strengthLeft;
+				}
+				pos += speed;
+				if (randomtwist || twist != 0.0) {
+					speed = randomtwist ? speed.RotatedBy(WorldGen.genRand.NextFloat(-twist, twist)) : speed.RotatedBy(twist);
+				}
+			}
+			float r = speed.ToRotation();
+			for (int l = X0; l < X1; l++) {
+				for (int k = Y0; k < Y1; k++) {
+					AutoSlopeForSpike(l, k);
+				}
+			}
+			NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
+		}
+		//take that, Heisenberg
+		public static (Vector2 position, Vector2 velocity) VeinRunner(int i, int j, double strength, Vector2 speed, double length, float twist = 0, bool randomtwist = false) {
+			Vector2 pos = new Vector2(i, j);
+			Tile tile;
+			if (randomtwist) twist = Math.Abs(twist);
+			int X0 = int.MaxValue;
+			int X1 = 0;
+			int Y0 = int.MaxValue;
+			int Y1 = 0;
+			strength = Math.Pow(strength, 2);
+			double decay = speed.Length();
+			while (length > 0) {
+				length -= decay;
+				int minX = (int)(pos.X - strength * 0.5);
+				int maxX = (int)(pos.X + strength * 0.5);
+				int minY = (int)(pos.Y - strength * 0.5);
+				int maxY = (int)(pos.Y + strength * 0.5);
+				if (minX < 1) {
+					minX = 1;
+				}
+				if (maxX > Main.maxTilesX - 1) {
+					maxX = Main.maxTilesX - 1;
+				}
+				if (minY < 1) {
+					minY = 1;
+				}
+				if (maxY > Main.maxTilesY - 1) {
+					maxY = Main.maxTilesY - 1;
+				}
 #if DEBUG
 				//Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.AmberGemspark;
 #endif
-		        for (int l = minX; l < maxX; l++) {
-			        for (int k = minY; k < maxY; k++) {
-				        if ((Math.Pow(Math.Abs(l - pos.X), 2) + Math.Pow(Math.Abs(k - pos.Y), 2)) > strength) {//if (!((Math.Abs(l - pos.X) + Math.Abs(k - pos.Y)) < strength)) {
-					        continue;
-				        }
-					    tile = Main.tile[l, k];
-					    if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]){
-					        Main.tile[l, k].SetActive(false);
-                            //WorldGen.SquareTileFrame(l,k);
-                            if(l>X1) {
-                                X1 = l;
-                            }else if(l<X0) {
-                                X0 = l;
-                            }
-                            if(k>Y1) {
-                                Y1 = k;
-                            }else if(k<Y0) {
-                                Y0 = k;
-                            }
-					    }
-			        }
-		        }
-		        pos += speed;
-                if(randomtwist||twist!=0.0) {
-                    speed = randomtwist?speed.RotatedBy(WorldGen.genRand.NextFloat(-twist,twist)):speed.RotatedBy(twist);
-                }
-	        }
+				for (int l = minX; l < maxX; l++) {
+					for (int k = minY; k < maxY; k++) {
+						if ((Math.Pow(Math.Abs(l - pos.X), 2) + Math.Pow(Math.Abs(k - pos.Y), 2)) > strength) {//if (!((Math.Abs(l - pos.X) + Math.Abs(k - pos.Y)) < strength)) {
+							continue;
+						}
+						tile = Main.tile[l, k];
+						if (TileID.Sets.CanBeClearedDuringGeneration[tile.TileType]) {
+							Main.tile[l, k].SetActive(false);
+							//WorldGen.SquareTileFrame(l,k);
+							if (l > X1) {
+								X1 = l;
+							} else if (l < X0) {
+								X0 = l;
+							}
+							if (k > Y1) {
+								Y1 = k;
+							} else if (k < Y0) {
+								Y0 = k;
+							}
+						}
+					}
+				}
+				pos += speed;
+				if (randomtwist || twist != 0.0) {
+					speed = randomtwist ? speed.RotatedBy(WorldGen.genRand.NextFloat(-twist, twist)) : speed.RotatedBy(twist);
+				}
+			}
 #if DEBUG
 			//Main.tile[(int)pos.X, (int)pos.Y].wall = WallID.EmeraldGemspark;
 #endif
 			WorldGen.RangeFrame(X0, Y0, X1, Y1);
-			NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1-X0, Y1-Y1);
-            return (pos, speed);
-        }
+			NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
+			return (pos, speed);
+		}
 		public static (Vector2 position, Vector2 velocity) WalledVeinRunner(int i, int j, double strength, Vector2 speed, double length, ushort wallBlockType, float wallThickness, float twist = 0, bool randomtwist = false, int wallType = -1) {
 			Vector2 pos = new Vector2(i, j);
 			Tile tile;
@@ -396,8 +395,8 @@ namespace Origins.World {
 			strength = Math.Pow(strength, 2);
 			wallThickness *= wallThickness;
 			double decay = speed.Length();
-			bool hasWall = wallType!=-1;
-			ushort _wallType = hasWall?(ushort)wallType:(ushort)0;
+			bool hasWall = wallType != -1;
+			ushort _wallType = hasWall ? (ushort)wallType : (ushort)0;
 			while (length > 0) {
 				length -= decay;
 				int minX = (int)(pos.X - (strength + wallThickness) * 0.5);
@@ -519,15 +518,15 @@ namespace Origins.World {
 							continue;
 						}
 						Tile tile = Main.tile[k, l];
-						if (tile.TileType==TileID.Cloud||tile.TileType==TileID.Dirt||tile.TileType==TileID.Grass||tile.TileType==TileID.Stone||tile.TileType==TileID.RainCloud||tile.TileType==TileID.Stone) {
+						if (tile.TileType == TileID.Cloud || tile.TileType == TileID.Dirt || tile.TileType == TileID.Grass || tile.TileType == TileID.Stone || tile.TileType == TileID.RainCloud || tile.TileType == TileID.Stone) {
 							tile.TileType = (ushort)type;
-                            if(!tile.HasTile&&OriginSystem.GetAdjTileCount(k,l)>3) {
-                                tile.HasTile = true;
-                            }
-                            SquareTileFrame(k,l);
-					        if (Main.netMode == NetmodeID.Server) {
-						        NetMessage.SendTileSquare(-1, k, l, 1);
-					        }
+							if (!tile.HasTile && OriginSystem.GetAdjTileCount(k, l) > 3) {
+								tile.HasTile = true;
+							}
+							SquareTileFrame(k, l);
+							if (Main.netMode == NetmodeID.Server) {
+								NetMessage.SendTileSquare(-1, k, l, 1);
+							}
 						}
 					}
 				}
@@ -548,112 +547,112 @@ namespace Origins.World {
 				}
 			}
 		}
-        public static void AutoSlope(int i, int j, bool resetSlope = false) {
-            byte adj = 0;
+		public static void AutoSlope(int i, int j, bool resetSlope = false) {
+			byte adj = 0;
 			Tile tile = Main.tile[i, j];
-            if(resetSlope) {
-                tile.IsHalfBlock = false;
-                tile.Slope = SlopeID.None;
-            }
-            if(Main.tile[i-1, j-1].HasTile)adj|=tl;
-            if(Main.tile[i, j-1].HasTile)  adj|=t;
-            if(Main.tile[i+1, j-1].HasTile)adj|=tr;
-            if(Main.tile[i-1, j].HasTile)  adj|=l;
-            if(Main.tile[i+1, j].HasTile)  adj|=r;
-            if(Main.tile[i-1, j+1].HasTile)adj|=bl;
-            if(Main.tile[i, j+1].HasTile)  adj|=b;
-            if(Main.tile[i+1, j+1].HasTile)adj|=br;
-            bool sloped = true;
-            retry:
-            switch(adj) {
-                case bl|b|br:
-                tile.IsHalfBlock = true;
-                break;
-                case t|l:
-                tile.Slope = SlopeType.SlopeUpLeft;
-                break;
-                case t|r:
-                tile.Slope = SlopeType.SlopeUpRight;
-                break;
-                case b|l:
-                tile.Slope = SlopeType.SlopeDownLeft;
-                break;
-                case b|r:
-                tile.Slope = SlopeType.SlopeDownRight;
-                break;
-                default:
-                if(sloped) {
-                    sloped = false;
-                    adj&=t|l|r|b;
-                    goto retry;
-                }
-                break;
-            }
-        }
-        public static void AutoSlopeForSpike(int i, int j) {
-            byte adj = 0;
+			if (resetSlope) {
+				tile.IsHalfBlock = false;
+				tile.Slope = SlopeID.None;
+			}
+			if (Main.tile[i - 1, j - 1].HasTile) adj |= tl;
+			if (Main.tile[i, j - 1].HasTile) adj |= t;
+			if (Main.tile[i + 1, j - 1].HasTile) adj |= tr;
+			if (Main.tile[i - 1, j].HasTile) adj |= l;
+			if (Main.tile[i + 1, j].HasTile) adj |= r;
+			if (Main.tile[i - 1, j + 1].HasTile) adj |= bl;
+			if (Main.tile[i, j + 1].HasTile) adj |= b;
+			if (Main.tile[i + 1, j + 1].HasTile) adj |= br;
+			bool sloped = true;
+			retry:
+			switch (adj) {
+				case bl | b | br:
+				tile.IsHalfBlock = true;
+				break;
+				case t | l:
+				tile.Slope = SlopeType.SlopeUpLeft;
+				break;
+				case t | r:
+				tile.Slope = SlopeType.SlopeUpRight;
+				break;
+				case b | l:
+				tile.Slope = SlopeType.SlopeDownLeft;
+				break;
+				case b | r:
+				tile.Slope = SlopeType.SlopeDownRight;
+				break;
+				default:
+				if (sloped) {
+					sloped = false;
+					adj &= t | l | r | b;
+					goto retry;
+				}
+				break;
+			}
+		}
+		public static void AutoSlopeForSpike(int i, int j) {
+			byte adj = 0;
 			Tile tile = Main.tile[i, j];
-            tile.IsHalfBlock = false;
-            tile.Slope = SlopeID.None;
-            if(Main.tile[i-1, j-1].HasTile)adj|=tl;
-            if(Main.tile[i, j-1].HasTile)  adj|=t;
-            if(Main.tile[i+1, j-1].HasTile)adj|=tr;
-            if(Main.tile[i-1, j].HasTile)  adj|=l;
-            if(Main.tile[i+1, j].HasTile)  adj|=r;
-            if(Main.tile[i-1, j+1].HasTile)adj|=bl;
-            if(Main.tile[i, j+1].HasTile)  adj|=b;
-            if(Main.tile[i+1, j+1].HasTile)adj|=br;
-            bool sloped = true;
-            retry:
-            switch(adj) {
-                case bl|b|br:
-                tile.IsHalfBlock = true;
-                break;
-                case t|l:
-                tile.Slope = SlopeType.SlopeUpLeft;
-                break;
-                case t|r:
-                tile.Slope = SlopeType.SlopeUpRight;
-                break;
-                case b|l:
-                tile.Slope = SlopeType.SlopeDownLeft;
-                break;
-                case b|r:
-                tile.Slope = SlopeType.SlopeDownRight;
-                break;
-                case b|bl:
-                tile.Slope = SlopeType.SlopeDownRight;
-                break;
-                case b|br:
-                tile.Slope = SlopeType.SlopeDownLeft;
-                break;
-                case t|tl:
-                tile.Slope = SlopeType.SlopeUpRight;
-                break;
-                case t|tr:
-                tile.Slope = SlopeType.SlopeUpLeft;
-                break;
-                case l|tl:
-                tile.Slope = SlopeType.SlopeDownLeft;
-                break;
-                case l|bl:
-                tile.Slope = SlopeType.SlopeUpLeft;
-                break;
-                case r|tr:
-                tile.Slope = SlopeType.SlopeDownRight;
-                break;
-                case r|br:
-                tile.Slope = SlopeType.SlopeDownLeft;
-                break;
-                default:
-                if(sloped) {
-                    sloped = false;
-                    adj&=t|l|r|b;
-                    goto retry;
-                }
-                break;
-            }
-        }
+			tile.IsHalfBlock = false;
+			tile.Slope = SlopeID.None;
+			if (Main.tile[i - 1, j - 1].HasTile) adj |= tl;
+			if (Main.tile[i, j - 1].HasTile) adj |= t;
+			if (Main.tile[i + 1, j - 1].HasTile) adj |= tr;
+			if (Main.tile[i - 1, j].HasTile) adj |= l;
+			if (Main.tile[i + 1, j].HasTile) adj |= r;
+			if (Main.tile[i - 1, j + 1].HasTile) adj |= bl;
+			if (Main.tile[i, j + 1].HasTile) adj |= b;
+			if (Main.tile[i + 1, j + 1].HasTile) adj |= br;
+			bool sloped = true;
+			retry:
+			switch (adj) {
+				case bl | b | br:
+				tile.IsHalfBlock = true;
+				break;
+				case t | l:
+				tile.Slope = SlopeType.SlopeUpLeft;
+				break;
+				case t | r:
+				tile.Slope = SlopeType.SlopeUpRight;
+				break;
+				case b | l:
+				tile.Slope = SlopeType.SlopeDownLeft;
+				break;
+				case b | r:
+				tile.Slope = SlopeType.SlopeDownRight;
+				break;
+				case b | bl:
+				tile.Slope = SlopeType.SlopeDownRight;
+				break;
+				case b | br:
+				tile.Slope = SlopeType.SlopeDownLeft;
+				break;
+				case t | tl:
+				tile.Slope = SlopeType.SlopeUpRight;
+				break;
+				case t | tr:
+				tile.Slope = SlopeType.SlopeUpLeft;
+				break;
+				case l | tl:
+				tile.Slope = SlopeType.SlopeDownLeft;
+				break;
+				case l | bl:
+				tile.Slope = SlopeType.SlopeUpLeft;
+				break;
+				case r | tr:
+				tile.Slope = SlopeType.SlopeDownRight;
+				break;
+				case r | br:
+				tile.Slope = SlopeType.SlopeDownLeft;
+				break;
+				default:
+				if (sloped) {
+					sloped = false;
+					adj &= t | l | r | b;
+					goto retry;
+				}
+				break;
+			}
+		}
 		/// <summary>
 		/// When I wrote this code, only God knew how it worked, that fact has not changed
 		/// </summary>
@@ -663,33 +662,33 @@ namespace Origins.World {
 			float x = value * 0.4f;
 			float halfx = x * 0.5f;
 			float quarx = x * 0.5f;
-            if (value < 0) {
+			if (value < 0) {
 				float nx0 = (float)-Math.Min(Math.Pow(-halfx % 3, halfx % 5), 2);
 				halfx += 0.5f;
 				float nx1;
 				if (halfx < 0) {
 					nx1 = (float)-Math.Min(Math.Pow(-halfx % 3, halfx % 5), 2);
-				}else{
+				} else {
 					nx1 = (float)Math.Min(Math.Pow(halfx % 3, halfx % 5), 2);
 				}
 				float nx2 = nx0 * (float)(-Math.Min(Math.Pow(-quarx % 3, quarx % 5), 2) + 0.5f);
 				return nx0 - nx2 + nx1;
-            }
+			}
 			float fx0 = (float)Math.Min(Math.Pow(halfx % 3, halfx % 5), 2);
 			halfx += 0.5f;
 			float fx1 = (float)Math.Min(Math.Pow(halfx % 3, halfx % 5), 2);
 			float fx2 = fx0 * (float)(Math.Min(Math.Pow(quarx % 3, quarx % 5), 2) + 0.5f);
 			return fx0 - fx2 + fx1;
 		}
-    }
-    public static class AdjID {
-        public const byte tl = 1;
-        public const byte t =  2;
-        public const byte tr = 4;
-        public const byte l =  8;
-        public const byte r =  16;
-        public const byte bl = 32;
-        public const byte b =  64;
-        public const byte br = 128;
-    }
+	}
+	public static class AdjID {
+		public const byte tl = 1;
+		public const byte t = 2;
+		public const byte tr = 4;
+		public const byte l = 8;
+		public const byte r = 16;
+		public const byte bl = 32;
+		public const byte b = 64;
+		public const byte br = 128;
+	}
 }

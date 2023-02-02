@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.UI;
 
 namespace Origins.UI {
-    public class Mimic_Selection_UI : UIState {
+	public class Mimic_Selection_UI : UIState {
 		public float StartX => Main.screenWidth - 64 - 14 - 142;
 		public float StartY => (174 + (!Main.mapFullscreen && Main.mapStyle == 1 ? 204 : 0)) + (1 * 56) * 0.85f;
 		public string GetAbilityTooltip(int level, int choice) {
@@ -27,9 +27,9 @@ namespace Origins.UI {
 
 				case 1:
 				switch (choice) {
-					case 0: 
+					case 0:
 					return "INJE%t: Help y0ur enemies d1scover their inner-$elves";
-					
+
 					case 1:
 					return "D3fILE: We welc0me all, there !s alw@ys room";
 
@@ -82,7 +82,7 @@ namespace Origins.UI {
 						if (!glow && Main.mouseLeft && Main.mouseLeftRelease) {
 							originPlayer.SetMimicSetChoice(level, i + 1);
 							SoundEngine.PlaySound(SoundID.MenuTick);
-						}else if(glow && Main.mouseRight && Main.mouseRightRelease) {
+						} else if (glow && Main.mouseRight && Main.mouseRightRelease) {
 							originPlayer.SetMimicSetChoice(level, 0);
 							SoundEngine.PlaySound(SoundID.MenuTick);
 						}

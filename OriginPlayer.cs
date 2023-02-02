@@ -32,24 +32,24 @@ using Terraria.ModLoader.IO;
 using static Origins.OriginExtensions;
 
 namespace Origins {
-    public class OriginPlayer : ModPlayer {
+	public class OriginPlayer : ModPlayer {
 		#region variables and defaults
 		public const float rivenMaxMult = 0.3f;
-        public float rivenMult => (1f-rivenMaxMult)+Math.Max((Player.statLife/(float)Player.statLifeMax2)*(rivenMaxMult*2), rivenMaxMult);
-        
-        #region armor/set bonuses
-        public bool fiberglassSet = false;
-        public bool cryostenSet = false;
-        public bool cryostenHelmet = false;
-        public bool felnumSet = false;
-        public float felnumShock = 0;
-        public float oldFelnumShock = 0;
-        public bool minerSet = false;
-        public bool defiledSet = false;
-        public bool rivenSet = false;
-        public bool riftSet = false;
-        public bool eyndumSet = false;
-        public bool mimicSet = false;
+		public float rivenMult => (1f - rivenMaxMult) + Math.Max((Player.statLife / (float)Player.statLifeMax2) * (rivenMaxMult * 2), rivenMaxMult);
+
+		#region armor/set bonuses
+		public bool fiberglassSet = false;
+		public bool cryostenSet = false;
+		public bool cryostenHelmet = false;
+		public bool felnumSet = false;
+		public float felnumShock = 0;
+		public float oldFelnumShock = 0;
+		public bool minerSet = false;
+		public bool defiledSet = false;
+		public bool rivenSet = false;
+		public bool riftSet = false;
+		public bool eyndumSet = false;
+		public bool mimicSet = false;
 		public bool riptideSet = false;
 		public bool riptideLegs = false;
 		public int riptideDashTime = 0;
@@ -57,56 +57,56 @@ namespace Origins {
 		public bool novaSet = false;
 		public float necroSetAmount = 0f;
 		public int mimicSetChoices = 0;
-        public int setActiveAbility = 0;
-        public int setAbilityCooldown = 0;
+		public int setActiveAbility = 0;
+		public int setAbilityCooldown = 0;
 		#endregion armor/set bonuses
 
 		#region accessories
 		public bool bombHandlingDevice = false;
-        public bool destructiveClaws = false;
-        public bool dimStarlight = false;
-        public int dimStarlightCooldown = 0;
-        public bool madHand = false;
-        public bool fiberglassDagger = false;
-        public bool advancedImaging = false;
-        public bool rasterize = false;
-        public bool decayingScale = false;
-        public bool lazyCloakVisible = false;
-        public bool amebicVialVisible = false;
-        public byte amebicVialCooldown = 0;
-        public bool entangledEnergy = false;
-        public bool asylumWhistle = false;
-        public int asylumWhistleTarget = -1;
+		public bool destructiveClaws = false;
+		public bool dimStarlight = false;
+		public int dimStarlightCooldown = 0;
+		public bool madHand = false;
+		public bool fiberglassDagger = false;
+		public bool advancedImaging = false;
+		public bool rasterize = false;
+		public bool decayingScale = false;
+		public bool lazyCloakVisible = false;
+		public bool amebicVialVisible = false;
+		public byte amebicVialCooldown = 0;
+		public bool entangledEnergy = false;
+		public bool asylumWhistle = false;
+		public int asylumWhistleTarget = -1;
 		public bool mitosis = false;
-        public Item mitosisItem = null;
-        public int mitosisCooldown = 0;
-        public bool reshapingChunk = false;
-        public float mysteriousSprayMult = 1;
-        public bool protozoaFood = false;
-        public int protozoaFoodCooldown = 0;
-        public Item protozoaFoodItem = null;
-        public bool symbioteSkull = false;
-        public byte parasiticInfluenceCooldown = 0;
-        public bool gunGlove = false;
-        public Item gunGloveItem = null;
-        public int gunGloveCooldown = 0;
-        public bool guardedHeart = false;
-        public bool razorwire = false;
-        public Item razorwireItem = null;
-        public bool unsoughtOrgan = false;
-        public Item unsoughtOrganItem = null;
-        public bool spiritShard = false;
-        public bool ravel = false;
-        public bool ravelEquipped = false;
-        public bool spiderRavel = false;
-        public bool ceilingRavel = false;
+		public Item mitosisItem = null;
+		public int mitosisCooldown = 0;
+		public bool reshapingChunk = false;
+		public float mysteriousSprayMult = 1;
+		public bool protozoaFood = false;
+		public int protozoaFoodCooldown = 0;
+		public Item protozoaFoodItem = null;
+		public bool symbioteSkull = false;
+		public byte parasiticInfluenceCooldown = 0;
+		public bool gunGlove = false;
+		public Item gunGloveItem = null;
+		public int gunGloveCooldown = 0;
+		public bool guardedHeart = false;
+		public bool razorwire = false;
+		public Item razorwireItem = null;
+		public bool unsoughtOrgan = false;
+		public Item unsoughtOrganItem = null;
+		public bool spiritShard = false;
+		public bool ravel = false;
+		public bool ravelEquipped = false;
+		public bool spiderRavel = false;
+		public bool ceilingRavel = false;
 		public int spiderRavelTime;
 		public int vanityRavel;
 		public bool heliumTank = false;
 		public bool heliumTankHit = false;
 		public bool messyLeech = false;
 		public bool noU = false;
-        public bool donorWristband = false;
+		public bool donorWristband = false;
 		public HashSet<Point> preHitBuffs;
 		public bool plasmaPhial = false;
 		public bool turboReel = false;
@@ -119,8 +119,8 @@ namespace Origins {
 		#region explosive stats
 		public StatModifier explosiveProjectileSpeed = StatModifier.Default;
 		public StatModifier explosiveThrowSpeed = StatModifier.Default;
-        public StatModifier explosiveSelfDamage = StatModifier.Default;
-        public StatModifier explosiveBlastRadius = StatModifier.Default;
+		public StatModifier explosiveSelfDamage = StatModifier.Default;
+		public StatModifier explosiveBlastRadius = StatModifier.Default;
 		#endregion
 
 		#region summon stats
@@ -130,114 +130,114 @@ namespace Origins {
 
 		#region biomes
 		public bool ZoneVoid { get; internal set; } = false;
-        public float ZoneVoidProgress = 0;
-        public float ZoneVoidProgressSmoothed = 0;
+		public float ZoneVoidProgress = 0;
+		public float ZoneVoidProgressSmoothed = 0;
 
-        public float ZoneDefiledProgress = 0;
-        public float ZoneDefiledProgressSmoothed = 0;
+		public float ZoneDefiledProgress = 0;
+		public float ZoneDefiledProgressSmoothed = 0;
 
-        public float ZoneRivenProgress = 0;
-        public float ZoneRivenProgressSmoothed = 0;
+		public float ZoneRivenProgress = 0;
+		public float ZoneRivenProgressSmoothed = 0;
 
-        public bool ZoneBrine { get; internal set; } = false;
-        public float ZoneBrineProgress = 0;
-        public float ZoneBrineProgressSmoothed = 0;
+		public bool ZoneBrine { get; internal set; } = false;
+		public float ZoneBrineProgress = 0;
+		public float ZoneBrineProgressSmoothed = 0;
 
-        public bool ZoneFiberglass { get; internal set; } = false;
-        public float ZoneFiberglassProgress = 0;
-        public float ZoneFiberglassProgressSmoothed = 0;
-        #endregion
+		public bool ZoneFiberglass { get; internal set; } = false;
+		public float ZoneFiberglassProgress = 0;
+		public float ZoneFiberglassProgressSmoothed = 0;
+		#endregion
 
-        #region buffs
-        public int rapidSpawnFrames = 0;
-        public int rasterizedTime = 0;
-        public bool toxicShock = false;
-        public bool tornDebuff = false;
-        public bool flaskBile = false;
-        public bool flaskSalt = false;
-        public int tornTime = 0;
-        public int tornTargetTime = 180;
-        public float tornTarget = 0.7f;
-        #endregion
+		#region buffs
+		public int rapidSpawnFrames = 0;
+		public int rasterizedTime = 0;
+		public bool toxicShock = false;
+		public bool tornDebuff = false;
+		public bool flaskBile = false;
+		public bool flaskSalt = false;
+		public int tornTime = 0;
+		public int tornTargetTime = 180;
+		public float tornTarget = 0.7f;
+		#endregion
 
-        #region keybinds
-        public bool controlTriggerSetBonus = false;
-        public bool releaseTriggerSetBonus = false;
+		#region keybinds
+		public bool controlTriggerSetBonus = false;
+		public bool releaseTriggerSetBonus = false;
 		#endregion
 
 		public int quantumInjectors = 0;
-        public int defiledWill = 0;
+		public int defiledWill = 0;
 
 		public float statSharePercent = 0f;
 
-        public bool journalUnlocked = false;
-        public Item journalDye = null;
+		public bool journalUnlocked = false;
+		public Item journalDye = null;
 
-        public bool itemLayerWrench = false;
-        public bool plagueSight = false;
-        public bool plagueSightLight = false;
+		public bool itemLayerWrench = false;
+		public bool plagueSight = false;
+		public bool plagueSightLight = false;
 
-        public Ref<Item> eyndumCore = null;
+		public Ref<Item> eyndumCore = null;
 
-        internal static bool ItemChecking = false;
-        public int cryostenLifeRegenCount = 0;
-        internal byte oldBonuses = 0;
-        public const int minionSubSlotValues = 3;
-        public float[] minionSubSlots = new float[minionSubSlotValues];
-        public int wormHeadIndex = -1;
-        public int heldProjectile = -1;
-        public int lastMinionAttackTarget = -1;
-        public int hookTarget = -1;
-        bool rivenWet = false;
-        public bool mountOnly = false;
-        public bool changeSize = false;
-        public int targetWidth;
-        public int targetHeight;
-        public int oldXSign = 0;
-        public bool collidingX = false;
-        public HashSet<string> unlockedJournalEntries = new();
+		internal static bool ItemChecking = false;
+		public int cryostenLifeRegenCount = 0;
+		internal byte oldBonuses = 0;
+		public const int minionSubSlotValues = 3;
+		public float[] minionSubSlots = new float[minionSubSlotValues];
+		public int wormHeadIndex = -1;
+		public int heldProjectile = -1;
+		public int lastMinionAttackTarget = -1;
+		public int hookTarget = -1;
+		bool rivenWet = false;
+		public bool mountOnly = false;
+		public bool changeSize = false;
+		public int targetWidth;
+		public int targetHeight;
+		public int oldXSign = 0;
+		public bool collidingX = false;
+		public HashSet<string> unlockedJournalEntries = new();
 		public int dashDirection = 0;
 		public int dashDelay = 0;
 		public int thornsVisualProjType = -1;
 		public override void ResetEffects() {
-            oldBonuses = 0;
-            if(fiberglassSet||fiberglassDagger)oldBonuses|=1;
-            if(felnumSet)oldBonuses|=2;
-            fiberglassSet = false;
-            cryostenSet = false;
-            cryostenHelmet = false;
-            oldFelnumShock = felnumShock;
-            if (!felnumSet) {
-                felnumShock = 0;
-            } else {
-                if(felnumShock > Player.statLifeMax2) {
-                    if(Main.rand.NextBool(20)) {
-                        Vector2 pos = new Vector2(Main.rand.Next(4, Player.width-4), Main.rand.Next(4, Player.height-4));
-                        Projectile proj = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.position + pos, Main.rand.NextVector2CircularEdge(3,3), Felnum_Shock_Leader.ID, (int)(felnumShock*0.1f), 0, Player.whoAmI, pos.X, pos.Y);
-                        if(proj.ModProjectile is Felnum_Shock_Leader shock) {
-                            shock.Parent = Player;
-                            shock.OnStrike += () => felnumShock *= 0.9f;
-                        }
-                    }
-                    felnumShock -= (felnumShock - Player.statLifeMax2) / Player.statLifeMax2 * 5 + 1;
-                }
-            }
-            if (donorWristband) {
-                float healLogic  = (1 - 0.375f) / (Player.pStone ? 0.75f : 1);
+			oldBonuses = 0;
+			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
+			if (felnumSet) oldBonuses |= 2;
+			fiberglassSet = false;
+			cryostenSet = false;
+			cryostenHelmet = false;
+			oldFelnumShock = felnumShock;
+			if (!felnumSet) {
+				felnumShock = 0;
+			} else {
+				if (felnumShock > Player.statLifeMax2) {
+					if (Main.rand.NextBool(20)) {
+						Vector2 pos = new Vector2(Main.rand.Next(4, Player.width - 4), Main.rand.Next(4, Player.height - 4));
+						Projectile proj = Projectile.NewProjectileDirect(Player.GetSource_FromThis(), Player.position + pos, Main.rand.NextVector2CircularEdge(3, 3), Felnum_Shock_Leader.ID, (int)(felnumShock * 0.1f), 0, Player.whoAmI, pos.X, pos.Y);
+						if (proj.ModProjectile is Felnum_Shock_Leader shock) {
+							shock.Parent = Player;
+							shock.OnStrike += () => felnumShock *= 0.9f;
+						}
+					}
+					felnumShock -= (felnumShock - Player.statLifeMax2) / Player.statLifeMax2 * 5 + 1;
+				}
+			}
+			if (donorWristband) {
+				float healLogic = (1 - 0.375f) / (Player.pStone ? 0.75f : 1);
 
-                Player.potionDelayTime = (int)(Player.potionDelayTime * healLogic);
-                Player.restorationDelayTime = (int)(Player.restorationDelayTime * healLogic);
-                Player.mushroomDelayTime = (int)(Player.mushroomDelayTime * healLogic);
-            }
+				Player.potionDelayTime = (int)(Player.potionDelayTime * healLogic);
+				Player.restorationDelayTime = (int)(Player.restorationDelayTime * healLogic);
+				Player.mushroomDelayTime = (int)(Player.mushroomDelayTime * healLogic);
+			}
 
-            felnumSet = false;
-            minerSet = false;
-            defiledSet = false;
-            reshapingChunk = false;
-            rivenSet = false;
-            riftSet = false;
-            eyndumSet = false;
-            mimicSet = false;
+			felnumSet = false;
+			minerSet = false;
+			defiledSet = false;
+			reshapingChunk = false;
+			rivenSet = false;
+			riftSet = false;
+			eyndumSet = false;
+			mimicSet = false;
 			riptideSet = false;
 			riptideLegs = false;
 			necroSet = false;
@@ -247,141 +247,141 @@ namespace Origins {
 			}
 			setActiveAbility = 0;
 
-            if (setAbilityCooldown > 0) {
-                setAbilityCooldown--;
-                if (setAbilityCooldown == 0) {
-                    SoundEngine.PlaySound(SoundID.MaxMana.WithPitch(-1).WithVolume(0.5f));
-                    for (int i = 0; i < 5; i++) {
-                        int dust = Dust.NewDust(Player.position, Player.width, Player.height, DustID.PortalBoltTrail, 0f, 0f, 255, Color.Black, (float)Main.rand.Next(20, 26) * 0.1f);
-                        Main.dust[dust].noLight = true;
-                        Main.dust[dust].noGravity = true;
-                        Main.dust[dust].velocity *= 0.5f;
-                    }
-                }
+			if (setAbilityCooldown > 0) {
+				setAbilityCooldown--;
+				if (setAbilityCooldown == 0) {
+					SoundEngine.PlaySound(SoundID.MaxMana.WithPitch(-1).WithVolume(0.5f));
+					for (int i = 0; i < 5; i++) {
+						int dust = Dust.NewDust(Player.position, Player.width, Player.height, DustID.PortalBoltTrail, 0f, 0f, 255, Color.Black, (float)Main.rand.Next(20, 26) * 0.1f);
+						Main.dust[dust].noLight = true;
+						Main.dust[dust].noGravity = true;
+						Main.dust[dust].velocity *= 0.5f;
+					}
+				}
 			}
 
-            bombHandlingDevice = false;
-            destructiveClaws = false;
-            dimStarlight = false;
-            madHand = false;
-            fiberglassDagger = false;
-            advancedImaging = false;
-            rasterize = false;
-            decayingScale = false;
-            lazyCloakVisible = false;
-            amebicVialVisible = false;
-            mitosis = false;
-            mitosisItem = null;
-            entangledEnergy = false;
-            mysteriousSprayMult = 1;
-            protozoaFood = false;
-            protozoaFoodItem = null;
-            symbioteSkull = false;
-            toxicShock = false;
-            gunGlove = false;
-            gunGloveItem = null;
-            razorwire = false;
-            razorwireItem = null;
-            unsoughtOrgan = false;
-            unsoughtOrganItem = null;
-            spiritShard = false;
-            ravel = false;
+			bombHandlingDevice = false;
+			destructiveClaws = false;
+			dimStarlight = false;
+			madHand = false;
+			fiberglassDagger = false;
+			advancedImaging = false;
+			rasterize = false;
+			decayingScale = false;
+			lazyCloakVisible = false;
+			amebicVialVisible = false;
+			mitosis = false;
+			mitosisItem = null;
+			entangledEnergy = false;
+			mysteriousSprayMult = 1;
+			protozoaFood = false;
+			protozoaFoodItem = null;
+			symbioteSkull = false;
+			toxicShock = false;
+			gunGlove = false;
+			gunGloveItem = null;
+			razorwire = false;
+			razorwireItem = null;
+			unsoughtOrgan = false;
+			unsoughtOrganItem = null;
+			spiritShard = false;
+			ravel = false;
 			heliumTank = false;
 			messyLeech = false;
 			noU = false;
 			plasmaPhial = false;
 			turboReel = false;
-            donorWristband = false;
+			donorWristband = false;
 			trapCharm = false;
 
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
-                Player.mount.Dismount(Player);
+				Player.mount.Dismount(Player);
 			}
-            ravelEquipped = false;
-            spiderRavel = false;
+			ravelEquipped = false;
+			spiderRavel = false;
 			if (spiderRavelTime > 0) spiderRavelTime--;
 			vanityRavel = -1;
 
 			flaskBile = false;
-            flaskSalt = false;
+			flaskSalt = false;
 
 			explosiveProjectileSpeed = StatModifier.Default;
 			explosiveThrowSpeed = StatModifier.Default;
-            explosiveSelfDamage = StatModifier.Default;
-            explosiveBlastRadius = StatModifier.Default;
+			explosiveSelfDamage = StatModifier.Default;
+			explosiveBlastRadius = StatModifier.Default;
 
 			artifactDamage = StatModifier.Default;
 			artifactManaCost = 1f;
 
 			statSharePercent = 0f;
-            if (cryostenLifeRegenCount>0)
-                cryostenLifeRegenCount--;
-            
-            if (dimStarlightCooldown>0)
-                dimStarlightCooldown--;
-            if (amebicVialCooldown > 0)
-                amebicVialCooldown--;
-            if (protozoaFoodCooldown > 0)
-                protozoaFoodCooldown--;
-            if (parasiticInfluenceCooldown > 0)
-                parasiticInfluenceCooldown--;
-            if (gunGloveCooldown > 0)
-                gunGloveCooldown--;
-            if (mitosisCooldown > 0)
-                mitosisCooldown--;
+			if (cryostenLifeRegenCount > 0)
+				cryostenLifeRegenCount--;
 
-            if (rapidSpawnFrames>0)
-                rapidSpawnFrames--;
-            if (!tornDebuff && tornTime > 0 && --tornTime <= 0) {
-                tornTargetTime = 180;
-                tornTarget = 0.7f;
-            }
-            tornDebuff = false;
-            int rasterized = Player.FindBuffIndex(Rasterized_Debuff.ID);
-            if (rasterized >= 0) {
-                rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 8), Player.buffTime[rasterized] - 1);
-            }
-			if (Player.breath > Player.breathMax) {
-                Player.breath = Player.breathMax;
+			if (dimStarlightCooldown > 0)
+				dimStarlightCooldown--;
+			if (amebicVialCooldown > 0)
+				amebicVialCooldown--;
+			if (protozoaFoodCooldown > 0)
+				protozoaFoodCooldown--;
+			if (parasiticInfluenceCooldown > 0)
+				parasiticInfluenceCooldown--;
+			if (gunGloveCooldown > 0)
+				gunGloveCooldown--;
+			if (mitosisCooldown > 0)
+				mitosisCooldown--;
+
+			if (rapidSpawnFrames > 0)
+				rapidSpawnFrames--;
+			if (!tornDebuff && tornTime > 0 && --tornTime <= 0) {
+				tornTargetTime = 180;
+				tornTarget = 0.7f;
 			}
-            Player.breathMax = 200;
-            plagueSight = false;
-            plagueSightLight = false;
-            mountOnly = false;
+			tornDebuff = false;
+			int rasterized = Player.FindBuffIndex(Rasterized_Debuff.ID);
+			if (rasterized >= 0) {
+				rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 8), Player.buffTime[rasterized] - 1);
+			}
+			if (Player.breath > Player.breathMax) {
+				Player.breath = Player.breathMax;
+			}
+			Player.breathMax = 200;
+			plagueSight = false;
+			plagueSightLight = false;
+			mountOnly = false;
 			thornsVisualProjType = -1;
 			changeSize = false;
-            minionSubSlots = new float[minionSubSlotValues];
+			minionSubSlots = new float[minionSubSlotValues];
 			#region asylum whistle
 			if (lastMinionAttackTarget != Player.MinionAttackTargetNPC) {
 				if (asylumWhistle) {
-                    if (Player.MinionAttackTargetNPC == -1) {
-                        Player.MinionAttackTargetNPC = asylumWhistleTarget;
+					if (Player.MinionAttackTargetNPC == -1) {
+						Player.MinionAttackTargetNPC = asylumWhistleTarget;
 					} else {
-                        asylumWhistleTarget = lastMinionAttackTarget;
+						asylumWhistleTarget = lastMinionAttackTarget;
 					}
 				}
-                lastMinionAttackTarget = Player.MinionAttackTargetNPC;
-            }
+				lastMinionAttackTarget = Player.MinionAttackTargetNPC;
+			}
 			if (!asylumWhistle) {
-                asylumWhistleTarget = -1;
-			} else if(asylumWhistleTarget > -1) {
-                NPC possibleTarget = Main.npc[asylumWhistleTarget];
-                if (!possibleTarget.CanBeChasedBy() || possibleTarget.Hitbox.Distance(Player.Center) > 3000f) {
-                    asylumWhistleTarget = -1;
-                } else if(Player.HeldItem.CountsAsClass(DamageClass.Summon)) {
-                    Vector2 center = possibleTarget.Center;
-                    float count = Player.miscCounter / 60f;
-                    float offset = MathHelper.TwoPi / 3f;
-                    for (int i = 0; i < 3; i++) {
-                        int dust = Dust.NewDust(center, 0, 0, DustID.WitherLightning, 0f, 0f, 100, default(Color), 0.35f);
-                        Main.dust[dust].noGravity = true;
-                        Main.dust[dust].velocity = Vector2.Zero;
-                        Main.dust[dust].noLight = true;
-                        Main.dust[dust].position = center + (count * MathHelper.TwoPi + offset * i).ToRotationVector2() * 6f;
-                    }
-                }
-            }
-            asylumWhistle = false;
+				asylumWhistleTarget = -1;
+			} else if (asylumWhistleTarget > -1) {
+				NPC possibleTarget = Main.npc[asylumWhistleTarget];
+				if (!possibleTarget.CanBeChasedBy() || possibleTarget.Hitbox.Distance(Player.Center) > 3000f) {
+					asylumWhistleTarget = -1;
+				} else if (Player.HeldItem.CountsAsClass(DamageClass.Summon)) {
+					Vector2 center = possibleTarget.Center;
+					float count = Player.miscCounter / 60f;
+					float offset = MathHelper.TwoPi / 3f;
+					for (int i = 0; i < 3; i++) {
+						int dust = Dust.NewDust(center, 0, 0, DustID.WitherLightning, 0f, 0f, 100, default(Color), 0.35f);
+						Main.dust[dust].noGravity = true;
+						Main.dust[dust].velocity = Vector2.Zero;
+						Main.dust[dust].noLight = true;
+						Main.dust[dust].position = center + (count * MathHelper.TwoPi + offset * i).ToRotationVector2() * 6f;
+					}
+				}
+			}
+			asylumWhistle = false;
 			#endregion
 
 			Player.statManaMax2 += quantumInjectors * Quantum_Injector.mana_per_use;
@@ -450,45 +450,45 @@ namespace Origins {
 				}
 			}
 			if (hookTarget >= 0) {//ropeVel.HasValue&&
-                Player.fallStart = (int)(Player.position.Y / 16f);
-                Projectile projectile = Main.projectile[hookTarget];
+				Player.fallStart = (int)(Player.position.Y / 16f);
+				Projectile projectile = Main.projectile[hookTarget];
 				if (projectile.type == Amoeba_Hook_Projectile.ID) {
-                    Vector2 diff = Player.Center - projectile.Center;
-                    Vector2 normDiff = diff.SafeNormalize(default);
-                    float dot = Vector2.Dot(normDiff, Player.velocity.SafeNormalize(default));
-                    Player.velocity = Vector2.Lerp(normDiff * -16, Player.velocity, 0.85f + dot * 0.1f);
+					Vector2 diff = Player.Center - projectile.Center;
+					Vector2 normDiff = diff.SafeNormalize(default);
+					float dot = Vector2.Dot(normDiff, Player.velocity.SafeNormalize(default));
+					Player.velocity = Vector2.Lerp(normDiff * -16, Player.velocity, 0.85f + dot * 0.1f);
 					if (diff.LengthSquared() > 64) {
-                        Player.GoingDownWithGrapple = true;
+						Player.GoingDownWithGrapple = true;
 					}
-                    Player.RefreshMovementAbilities();
-                }
-            }
-            if (changeSize) {
-                Player.position.X -= (targetWidth - Player.width) / 2;
-                Player.position.Y -= targetHeight - Player.height;
-                Player.width = targetWidth;
-                Player.height = targetHeight;
-            }
-            oldXSign = Math.Sign(Player.velocity.X);
-            //endCustomMovement:
-            hookTarget = -1;
-        }
+					Player.RefreshMovementAbilities();
+				}
+			}
+			if (changeSize) {
+				Player.position.X -= (targetWidth - Player.width) / 2;
+				Player.position.Y -= targetHeight - Player.height;
+				Player.width = targetWidth;
+				Player.height = targetHeight;
+			}
+			oldXSign = Math.Sign(Player.velocity.X);
+			//endCustomMovement:
+			hookTarget = -1;
+		}
 		public override void PreUpdate() {
-            if (rivenWet) {
-                Player.gravity = 0.25f;
-            }
+			if (rivenWet) {
+				Player.gravity = 0.25f;
+			}
 			if (ravel && spiderRavel) {
-                ceilingRavel = false;
+				ceilingRavel = false;
 				if (collidingX) {
-                    Player.gravity = 0;
-                    Player.velocity.Y *= 0.9f;
-                    if (Player.controlUp) {
-                        Player.velocity.Y -= 0.35f;
-                    }
-                    if (Player.controlDown) {
-                        Player.velocity.Y += 0.35f;
-                    }
-                } else {
+					Player.gravity = 0;
+					Player.velocity.Y *= 0.9f;
+					if (Player.controlUp) {
+						Player.velocity.Y -= 0.35f;
+					}
+					if (Player.controlDown) {
+						Player.velocity.Y += 0.35f;
+					}
+				} else {
 					bool colliding = false;
 					float halfSpiderWidth = Player.width / 2 - 1;
 					float halfSpiderHeight = Player.height / 2 + 4;
@@ -519,108 +519,108 @@ namespace Origins {
 						Collision.StepUp(ref Player.position, ref Player.velocity, Player.width, Player.height, ref Player.stepSpeed, ref Player.gfxOffY, -1, true);
 					}
 				}
-            }
-        }
+			}
+		}
 		public override void PostUpdate() {
-            heldProjectile = -1;
-            if (rasterizedTime > 0) {
-                Player.velocity = Vector2.Lerp(Player.velocity, Player.oldVelocity, rasterizedTime * 0.06f);
-                Player.position = Vector2.Lerp(Player.position, Player.oldPosition, rasterizedTime * 0.06f);
-            }
-            Player.oldVelocity = Player.velocity;
-            rivenWet = false;
-            if (Player.wet && !(Player.lavaWet || Player.honeyWet) && LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle) is Riven_Water_Style) {
-                rivenWet = true;
-                int duration = 30;
-                int targetTime = 1440;
-                float targetSeverity = 0f;
-                bool hadTorn = Player.HasBuff(Torn_Buff.ID);
-                Player.AddBuff(Torn_Buff.ID, duration);
-                if (hadTorn || targetSeverity < tornTarget) {
-                    tornTargetTime = targetTime;
-                    tornTarget = targetSeverity;
-                }
-                Player.velocity.X *= 0.975f;
-            }
-        }
-        public override void PostUpdateMiscEffects() {
-            if(cryostenHelmet) {
-                if (Player.statLife != Player.statLifeMax2 && (int)Main.time % (cryostenLifeRegenCount > 0 ? 5 : 15) == 0) {
-                    for (int i = 0; i < 10; i++) {
-                        int num6 = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Frost);
-                        Main.dust[num6].noGravity = true;
-                        Main.dust[num6].velocity *= 0.75f;
-                        int num7 = Main.rand.Next(-40, 41);
-                        int num8 = Main.rand.Next(-40, 41);
-                        Main.dust[num6].position.X += num7;
-                        Main.dust[num6].position.Y += num8;
-                        Main.dust[num6].velocity.X = -num7 * 0.075f;
-                        Main.dust[num6].velocity.Y = -num8 * 0.075f;
-                    }
-                }
-            }
-			if (protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions) {
-                Item item = protozoaFoodItem;
-                int damage = Player.GetWeaponDamage(item);
-                Projectile.NewProjectileDirect(
-                    Player.GetSource_Accessory(item),
-                    Player.Center,
-                    OriginExtensions.Vec2FromPolar(Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi), Main.rand.NextFloat(1, 8)),
-                    Mini_Protozoa_P.ID,
-                    damage,
-                    Player.GetWeaponKnockback(item),
-                    Player.whoAmI
-                ).originalDamage = damage;
-                protozoaFoodCooldown = item.useTime;
-            }
-			if (statSharePercent != 0f) {
-                foreach (DamageClass damageClass in DamageClasses.All) {
-					if (damageClass == DamageClass.Generic) {
-                        continue;
+			heldProjectile = -1;
+			if (rasterizedTime > 0) {
+				Player.velocity = Vector2.Lerp(Player.velocity, Player.oldVelocity, rasterizedTime * 0.06f);
+				Player.position = Vector2.Lerp(Player.position, Player.oldPosition, rasterizedTime * 0.06f);
+			}
+			Player.oldVelocity = Player.velocity;
+			rivenWet = false;
+			if (Player.wet && !(Player.lavaWet || Player.honeyWet) && LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle) is Riven_Water_Style) {
+				rivenWet = true;
+				int duration = 30;
+				int targetTime = 1440;
+				float targetSeverity = 0f;
+				bool hadTorn = Player.HasBuff(Torn_Buff.ID);
+				Player.AddBuff(Torn_Buff.ID, duration);
+				if (hadTorn || targetSeverity < tornTarget) {
+					tornTargetTime = targetTime;
+					tornTarget = targetSeverity;
+				}
+				Player.velocity.X *= 0.975f;
+			}
+		}
+		public override void PostUpdateMiscEffects() {
+			if (cryostenHelmet) {
+				if (Player.statLife != Player.statLifeMax2 && (int)Main.time % (cryostenLifeRegenCount > 0 ? 5 : 15) == 0) {
+					for (int i = 0; i < 10; i++) {
+						int num6 = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Frost);
+						Main.dust[num6].noGravity = true;
+						Main.dust[num6].velocity *= 0.75f;
+						int num7 = Main.rand.Next(-40, 41);
+						int num8 = Main.rand.Next(-40, 41);
+						Main.dust[num6].position.X += num7;
+						Main.dust[num6].position.Y += num8;
+						Main.dust[num6].velocity.X = -num7 * 0.075f;
+						Main.dust[num6].velocity.Y = -num8 * 0.075f;
 					}
-                    Player.GetArmorPenetration(DamageClass.Generic) += Player.GetArmorPenetration(damageClass) * statSharePercent;
-                    Player.GetArmorPenetration(damageClass) -= Player.GetArmorPenetration(damageClass) * statSharePercent;
+				}
+			}
+			if (protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions) {
+				Item item = protozoaFoodItem;
+				int damage = Player.GetWeaponDamage(item);
+				Projectile.NewProjectileDirect(
+					Player.GetSource_Accessory(item),
+					Player.Center,
+					OriginExtensions.Vec2FromPolar(Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi), Main.rand.NextFloat(1, 8)),
+					Mini_Protozoa_P.ID,
+					damage,
+					Player.GetWeaponKnockback(item),
+					Player.whoAmI
+				).originalDamage = damage;
+				protozoaFoodCooldown = item.useTime;
+			}
+			if (statSharePercent != 0f) {
+				foreach (DamageClass damageClass in DamageClasses.All) {
+					if (damageClass == DamageClass.Generic) {
+						continue;
+					}
+					Player.GetArmorPenetration(DamageClass.Generic) += Player.GetArmorPenetration(damageClass) * statSharePercent;
+					Player.GetArmorPenetration(damageClass) -= Player.GetArmorPenetration(damageClass) * statSharePercent;
 
-                    Player.GetDamage(DamageClass.Generic) = Player.GetDamage(DamageClass.Generic).CombineWith(Player.GetDamage(damageClass).Scale(statSharePercent));
-                    Player.GetDamage(damageClass) = Player.GetDamage(damageClass).Scale(1f - statSharePercent);
+					Player.GetDamage(DamageClass.Generic) = Player.GetDamage(DamageClass.Generic).CombineWith(Player.GetDamage(damageClass).Scale(statSharePercent));
+					Player.GetDamage(damageClass) = Player.GetDamage(damageClass).Scale(1f - statSharePercent);
 
-                    Player.GetAttackSpeed(DamageClass.Generic) += (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
-                    Player.GetAttackSpeed(damageClass) -= (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
+					Player.GetAttackSpeed(DamageClass.Generic) += (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
+					Player.GetAttackSpeed(damageClass) -= (Player.GetAttackSpeed(damageClass) - 1) * statSharePercent;
 
-                    float crit = Player.GetCritChance(damageClass) * statSharePercent;
-                    Player.GetCritChance(DamageClass.Generic) += crit;
-                    Player.GetCritChance(damageClass) -= crit;
-                }
-            }
-            if (hookTarget >= 0) {
-                Projectile projectile = Main.projectile[hookTarget];
-                if (projectile.type == Amoeba_Hook_Projectile.ID) {
-                    if (projectile.ai[1] < 5 || Player.controlJump || (Player.Center - projectile.Center).LengthSquared() > 2304) {
-                        Player.GoingDownWithGrapple = true;
-                    }
-                }
-            }
-        }
-        public override void PostUpdateEquips() {
-            if (eyndumSet) {
-                ApplyEyndumSetBuffs();
-                if (eyndumCore?.Value?.ModItem is ModItem equippedCore) {
-                    equippedCore.UpdateEquip(Player);
-                }
-            }
-            Player.buffImmune[Rasterized_Debuff.ID] = Player.buffImmune[BuffID.Cursed];
+					float crit = Player.GetCritChance(damageClass) * statSharePercent;
+					Player.GetCritChance(DamageClass.Generic) += crit;
+					Player.GetCritChance(damageClass) -= crit;
+				}
+			}
+			if (hookTarget >= 0) {
+				Projectile projectile = Main.projectile[hookTarget];
+				if (projectile.type == Amoeba_Hook_Projectile.ID) {
+					if (projectile.ai[1] < 5 || Player.controlJump || (Player.Center - projectile.Center).LengthSquared() > 2304) {
+						Player.GoingDownWithGrapple = true;
+					}
+				}
+			}
+		}
+		public override void PostUpdateEquips() {
+			if (eyndumSet) {
+				ApplyEyndumSetBuffs();
+				if (eyndumCore?.Value?.ModItem is ModItem equippedCore) {
+					equippedCore.UpdateEquip(Player);
+				}
+			}
+			Player.buffImmune[Rasterized_Debuff.ID] = Player.buffImmune[BuffID.Cursed];
 			if (tornDebuff) {
 				if (tornTime < tornTargetTime) {
-                    tornTime++;
+					tornTime++;
 				}
 			}
 			if (tornTime > 0) {
-                Player.statLifeMax2 = (int)(Player.statLifeMax2 * (1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime))));
+				Player.statLifeMax2 = (int)(Player.statLifeMax2 * (1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime))));
 				if (Player.statLifeMax2 <= 0) {
-                    Player.KillMe(PlayerDeathReason.ByOther(0), 1, 0);
+					Player.KillMe(PlayerDeathReason.ByOther(0), 1, 0);
 				}
-            }
-        }
+			}
+		}
 		public override void UpdateDyes() {
 			if (Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
 				for (int i = Player.SupportedSlotsArmor; i < Player.SupportedSlotsArmor + Player.SupportedSlotsAccs; i++) {
@@ -635,111 +635,111 @@ namespace Origins {
 			}
 		}
 		public override void PostUpdateBuffs() {
-            if (Player.whoAmI == Main.myPlayer) {
-                foreach (var quest in Quest_Registry.Quests) {
-                    if (!quest.SaveToWorld && quest.PreUpdateInventoryEvent is not null) {
-                        quest.PreUpdateInventoryEvent();
-                    }
-                }
-            }
-        }
+			if (Player.whoAmI == Main.myPlayer) {
+				foreach (var quest in Quest_Registry.Quests) {
+					if (!quest.SaveToWorld && quest.PreUpdateInventoryEvent is not null) {
+						quest.PreUpdateInventoryEvent();
+					}
+				}
+			}
+		}
 		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
-            tornTime = 0;
-            tornTargetTime = 180;
-            tornTarget = 0.7f;
-        }
+			tornTime = 0;
+			tornTargetTime = 180;
+			tornTarget = 0.7f;
+		}
 		public override void UpdateVisibleVanityAccessories() {
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet) {
-            releaseTriggerSetBonus = !controlTriggerSetBonus;
-            controlTriggerSetBonus = Origins.SetBonusTriggerKey.Current;
+			releaseTriggerSetBonus = !controlTriggerSetBonus;
+			controlTriggerSetBonus = Origins.SetBonusTriggerKey.Current;
 			if (controlTriggerSetBonus && releaseTriggerSetBonus) {
-                TriggerSetBonus();
+				TriggerSetBonus();
 			}
-        }
-        public void ApplyEyndumSetBuffs() {
-            #region movement
-            float speedMult = (Player.moveSpeed - 1) * 0.5f;
-            Player.runAcceleration += (Player.runAcceleration / Player.moveSpeed) * speedMult;
-            Player.maxRunSpeed += (Player.maxRunSpeed / Player.moveSpeed) * speedMult;
-            Player.extraFall += Player.extraFall / 2;
-            Player.wingTimeMax += Player.wingTimeMax / 2;
-            Player.jumpSpeedBoost += Player.jumpSpeedBoost * 0.5f;
-            if (Player.spikedBoots == 1) Player.spikedBoots = 2;
-            #endregion
-            #region defense
-            Player.statLifeMax2 += (Player.statLifeMax2 - Player.statLifeMax) / 2;
-            Player.statDefense += Player.statDefense / 2;
-            Player.endurance += Player.endurance * 0.5f;
-            Player.lifeRegen += Player.lifeRegen / 2;
-            Player.thorns += Player.thorns * 0.5f;
-            Player.lavaMax += Player.lavaMax / 2;
-            #endregion
-            #region damage
+		}
+		public void ApplyEyndumSetBuffs() {
+			#region movement
+			float speedMult = (Player.moveSpeed - 1) * 0.5f;
+			Player.runAcceleration += (Player.runAcceleration / Player.moveSpeed) * speedMult;
+			Player.maxRunSpeed += (Player.maxRunSpeed / Player.moveSpeed) * speedMult;
+			Player.extraFall += Player.extraFall / 2;
+			Player.wingTimeMax += Player.wingTimeMax / 2;
+			Player.jumpSpeedBoost += Player.jumpSpeedBoost * 0.5f;
+			if (Player.spikedBoots == 1) Player.spikedBoots = 2;
+			#endregion
+			#region defense
+			Player.statLifeMax2 += (Player.statLifeMax2 - Player.statLifeMax) / 2;
+			Player.statDefense += Player.statDefense / 2;
+			Player.endurance += Player.endurance * 0.5f;
+			Player.lifeRegen += Player.lifeRegen / 2;
+			Player.thorns += Player.thorns * 0.5f;
+			Player.lavaMax += Player.lavaMax / 2;
+			#endregion
+			#region damage
 			foreach (DamageClass damageClass in DamageClasses.All) {
-                Player.GetArmorPenetration(damageClass) += Player.GetArmorPenetration(damageClass) * 0.5f;
+				Player.GetArmorPenetration(damageClass) += Player.GetArmorPenetration(damageClass) * 0.5f;
 
-                Player.GetDamage(damageClass) = Player.GetDamage(damageClass).Scale(1.5f);
+				Player.GetDamage(damageClass) = Player.GetDamage(damageClass).Scale(1.5f);
 
-                Player.GetAttackSpeed(damageClass) += (Player.GetAttackSpeed(damageClass) - 1) * 0.5f;
-            }
-
-            Player.arrowDamage = Player.arrowDamage.Scale(1.5f);
-            Player.bulletDamage = Player.bulletDamage.Scale(1.5f);
-            Player.rocketDamage = Player.rocketDamage.Scale(1.5f);
-
-            explosiveBlastRadius = explosiveBlastRadius.Scale(1.5f);
-
-            //explosiveDamage += (explosiveDamage - 1) * 0.5f;
-            //explosiveThrowSpeed += (explosiveThrowSpeed - 1) * 0.5f;
-            //explosiveSelfDamage += (explosiveSelfDamage - 1) * 0.5f;
-            #endregion
-            #region resources
-            Player.statManaMax2 += (Player.statManaMax2 - Player.statManaMax) / 2;
-            Player.manaCost += (Player.manaCost - 1) * 0.5f;
-            Player.maxMinions += (Player.maxMinions - 1) / 2;
-            Player.maxTurrets += (Player.maxTurrets - 1) / 2;
-            Player.manaRegenBonus += Player.manaRegenBonus / 2;
-            Player.manaRegenDelayBonus += Player.manaRegenDelayBonus / 2;
-            #endregion
-            #region utility
-            Player.wallSpeed += (Player.wallSpeed - 1) * 0.5f;
-            Player.tileSpeed += (Player.tileSpeed - 1) * 0.5f;
-            Player.pickSpeed *= (Player.pickSpeed - 1) * 0.5f;
-            Player.aggro += Player.aggro / 2;
-            Player.blockRange += Player.blockRange / 2;
-            #endregion
-        }
-        public void TriggerSetBonus() {
-            if (setAbilityCooldown > 0) return;
-			switch (setActiveAbility) {
-                case 1: {
-                        Vector2 speed = Vector2.Normalize(Main.MouseWorld - Player.MountedCenter) * 14;
-                        int type = ModContent.ProjectileType<Infusion_P>();
-						for (int i = -5; i < 6; i++) {
-                            Projectile.NewProjectile(Player.GetSource_FromThis(), Player.MountedCenter + speed.RotatedBy(MathHelper.PiOver2) * i * 0.25f + speed * (5 - Math.Abs(i)) * 0.75f, speed, type, 40, 7, Player.whoAmI);
-                        }
-                        setAbilityCooldown = 30;
-                        if(Player.manaRegenDelay < 60) Player.manaRegenDelay = 60;
-				}
-                break;
-                case 2: {
-                    if (Player.CheckMana((int)(40 * Player.manaCost), true)) {
-                        setAbilityCooldown = 1800;
-                        Player.AddBuff(Mimic_Buff.ID, 600);
-                        Player.AddBuff(BuffID.Heartreach, 30);
-                    }
-                }
-                break;
-                case 3:
-                break;
-                default:
-                break;
+				Player.GetAttackSpeed(damageClass) += (Player.GetAttackSpeed(damageClass) - 1) * 0.5f;
 			}
-        }
-        public override void UpdateLifeRegen() {
-            if(cryostenHelmet)Player.lifeRegenCount+=cryostenLifeRegenCount>0 ? 180 : 1;
-        }
+
+			Player.arrowDamage = Player.arrowDamage.Scale(1.5f);
+			Player.bulletDamage = Player.bulletDamage.Scale(1.5f);
+			Player.rocketDamage = Player.rocketDamage.Scale(1.5f);
+
+			explosiveBlastRadius = explosiveBlastRadius.Scale(1.5f);
+
+			//explosiveDamage += (explosiveDamage - 1) * 0.5f;
+			//explosiveThrowSpeed += (explosiveThrowSpeed - 1) * 0.5f;
+			//explosiveSelfDamage += (explosiveSelfDamage - 1) * 0.5f;
+			#endregion
+			#region resources
+			Player.statManaMax2 += (Player.statManaMax2 - Player.statManaMax) / 2;
+			Player.manaCost += (Player.manaCost - 1) * 0.5f;
+			Player.maxMinions += (Player.maxMinions - 1) / 2;
+			Player.maxTurrets += (Player.maxTurrets - 1) / 2;
+			Player.manaRegenBonus += Player.manaRegenBonus / 2;
+			Player.manaRegenDelayBonus += Player.manaRegenDelayBonus / 2;
+			#endregion
+			#region utility
+			Player.wallSpeed += (Player.wallSpeed - 1) * 0.5f;
+			Player.tileSpeed += (Player.tileSpeed - 1) * 0.5f;
+			Player.pickSpeed *= (Player.pickSpeed - 1) * 0.5f;
+			Player.aggro += Player.aggro / 2;
+			Player.blockRange += Player.blockRange / 2;
+			#endregion
+		}
+		public void TriggerSetBonus() {
+			if (setAbilityCooldown > 0) return;
+			switch (setActiveAbility) {
+				case 1: {
+					Vector2 speed = Vector2.Normalize(Main.MouseWorld - Player.MountedCenter) * 14;
+					int type = ModContent.ProjectileType<Infusion_P>();
+					for (int i = -5; i < 6; i++) {
+						Projectile.NewProjectile(Player.GetSource_FromThis(), Player.MountedCenter + speed.RotatedBy(MathHelper.PiOver2) * i * 0.25f + speed * (5 - Math.Abs(i)) * 0.75f, speed, type, 40, 7, Player.whoAmI);
+					}
+					setAbilityCooldown = 30;
+					if (Player.manaRegenDelay < 60) Player.manaRegenDelay = 60;
+				}
+				break;
+				case 2: {
+					if (Player.CheckMana((int)(40 * Player.manaCost), true)) {
+						setAbilityCooldown = 1800;
+						Player.AddBuff(Mimic_Buff.ID, 600);
+						Player.AddBuff(BuffID.Heartreach, 30);
+					}
+				}
+				break;
+				case 3:
+				break;
+				default:
+				break;
+			}
+		}
+		public override void UpdateLifeRegen() {
+			if (cryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 180 : 1;
+		}
 		public override void UpdateBadLifeRegen() {
 			if (plasmaPhial && Player.bleed) {
 				Player.lifeRegen -= 12;
@@ -752,105 +752,105 @@ namespace Origins {
 			}
 		}
 		public override bool? CanAutoReuseItem(Item item) {
-            if (destructiveClaws && item.CountsAsClass(DamageClasses.Explosive)) return true;
+			if (destructiveClaws && item.CountsAsClass(DamageClasses.Explosive)) return true;
 			return null;
 		}
 		public override void MeleeEffects(Item item, Rectangle hitbox) {
-            if (flaskBile) {
-                Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.BloodWater, newColor:Color.Black);
-            } else if (flaskSalt) {
-                Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.GoldFlame, newColor: Color.Lime);
-            }
+			if (flaskBile) {
+				Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.BloodWater, newColor: Color.Black);
+			} else if (flaskSalt) {
+				Dust.NewDust(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.GoldFlame, newColor: Color.Lime);
+			}
 			if (gunGlove && gunGloveCooldown <= 0) {
-                if (Player.PickAmmo(gunGloveItem, out int projToShoot, out float speed, out int damage, out float knockback, out int usedAmmoItemId, ItemID.Sets.gunProj[gunGloveItem.type])) {
+				if (Player.PickAmmo(gunGloveItem, out int projToShoot, out float speed, out int damage, out float knockback, out int usedAmmoItemId, ItemID.Sets.gunProj[gunGloveItem.type])) {
 					int manaCost = Player.GetManaCost(gunGloveItem);
 					if (CombinedHooks.CanShoot(Player, gunGloveItem) && Player.CheckMana(manaCost, true)) {
 						if (manaCost > 0) {
 							Player.manaRegenDelay = (int)Player.maxRegenDelay;
 						}
-                        Vector2 position = Player.itemLocation;
-                        Vector2 velocity = Vec2FromPolar(Player.direction == 1 ? Player.itemRotation : Player.itemRotation + MathHelper.Pi, speed);
-                            
-                        CombinedHooks.ModifyShootStats(Player, gunGloveItem, ref position, ref velocity, ref projToShoot, ref damage, ref knockback);
-                        EntitySource_ItemUse_WithAmmo source = (EntitySource_ItemUse_WithAmmo)Player.GetSource_ItemUse_WithPotentialAmmo(gunGloveItem, usedAmmoItemId);
+						Vector2 position = Player.itemLocation;
+						Vector2 velocity = Vec2FromPolar(Player.direction == 1 ? Player.itemRotation : Player.itemRotation + MathHelper.Pi, speed);
+
+						CombinedHooks.ModifyShootStats(Player, gunGloveItem, ref position, ref velocity, ref projToShoot, ref damage, ref knockback);
+						EntitySource_ItemUse_WithAmmo source = (EntitySource_ItemUse_WithAmmo)Player.GetSource_ItemUse_WithPotentialAmmo(gunGloveItem, usedAmmoItemId);
 						if (CombinedHooks.Shoot(Player, gunGloveItem, source, position, velocity, projToShoot, damage, knockback)) {
-                            Projectile.NewProjectile(source, position, velocity, projToShoot, damage, knockback, Player.whoAmI);
-                            SoundEngine.PlaySound(gunGloveItem.UseSound, position);
-                        }
+							Projectile.NewProjectile(source, position, velocity, projToShoot, damage, knockback, Player.whoAmI);
+							SoundEngine.PlaySound(gunGloveItem.UseSound, position);
+						}
 					}
-                    gunGloveCooldown = CombinedHooks.TotalUseTime(gunGloveItem.useTime, Player, gunGloveItem);
-                }
+					gunGloveCooldown = CombinedHooks.TotalUseTime(gunGloveItem.useTime, Player, gunGloveItem);
+				}
 			}
-        }
+		}
 		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
-            //enemyDefense = NPC.GetDefense;
-            if(felnumShock>29) {
-                damage+=(int)(felnumShock/15);
-                felnumShock = 0;
-                SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), target.Center);
+			//enemyDefense = NPC.GetDefense;
+			if (felnumShock > 29) {
+				damage += (int)(felnumShock / 15);
+				felnumShock = 0;
+				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), target.Center);
 			}
 			if (item.CountsAsClass(DamageClasses.Explosive)) {
 				damage -= (int)Math.Max((target.defense - Player.GetWeaponArmorPenetration(item)) * (explosive_defense_factor - 0.5f), 0);
 			}
-            if (messyLeech) {
-                /*if (NPC.Defiled) {
+			if (messyLeech) {
+				/*if (NPC.Defiled) {
                     NPC.lifeRegen = 0;
                 }*/
-                target.AddBuff(BuffID.Bleeding, 480);
-            }
+				target.AddBuff(BuffID.Bleeding, 480);
+			}
 		}
-        public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-            if (advancedImaging) {
-                velocity *= 1.38f;
-            }
-            if (item.CountsAsClass(DamageClasses.Explosive)) {
+		public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			if (advancedImaging) {
+				velocity *= 1.38f;
+			}
+			if (item.CountsAsClass(DamageClasses.Explosive)) {
 				StatModifier velocityModifier = explosiveProjectileSpeed;
-                if (item.useAmmo == 0 && item.CountsAsClass(DamageClass.Throwing)) {
+				if (item.useAmmo == 0 && item.CountsAsClass(DamageClass.Throwing)) {
 					velocityModifier = velocityModifier.CombineWith(explosiveThrowSpeed);
-                }
+				}
 				float baseSpeed = velocity.Length();
 				velocity *= velocityModifier.ApplyTo(baseSpeed) / baseSpeed;
-            }
-            if (item.shoot > ProjectileID.None && felnumShock > 29) {
-                Projectile p = new();
-                p.SetDefaults(type);
-                OriginGlobalProj.felnumEffectNext = true;
-                if (
-                    (p.CountsAsClass(DamageClass.Melee) || 
-                    p.CountsAsClass(DamageClass.Summon) ||
-                    ProjectileID.Sets.IsAWhip[type] ||
-                    Origins.DamageModOnHit[type] ||
-                    p.aiStyle == ProjAIStyleID.WaterJet) &&
-                    !Origins.ForceFelnumShockOnShoot[type]) return;
-                damage += (int)(felnumShock / 15);
-                felnumShock = 0;
-                SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
-            }
-        }
+			}
+			if (item.shoot > ProjectileID.None && felnumShock > 29) {
+				Projectile p = new();
+				p.SetDefaults(type);
+				OriginGlobalProj.felnumEffectNext = true;
+				if (
+					(p.CountsAsClass(DamageClass.Melee) ||
+					p.CountsAsClass(DamageClass.Summon) ||
+					ProjectileID.Sets.IsAWhip[type] ||
+					Origins.DamageModOnHit[type] ||
+					p.aiStyle == ProjAIStyleID.WaterJet) &&
+					!Origins.ForceFelnumShockOnShoot[type]) return;
+				damage += (int)(felnumShock / 15);
+				felnumShock = 0;
+				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), position);
+			}
+		}
 		public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-            if(item.CountsAsClass(DamageClasses.Explosive)) {
-                if(riftSet) {
-                    Fraction dmg = new Fraction(2, 2);
-                    int c = (madHand ? 1 : 0) + (Main.rand.NextBool(2)? 1 : 0);
-                    dmg.D+=c;
-                    damage *= dmg;
-                    double rot = Main.rand.NextBool(2)?-0.1:0.1;
-                    Vector2 _position;
-                    Vector2 _velocity;
-                    int _type;
-                    int _damage;
-                    float _knockBack;
-                    for(int i = c; i-->0;) {
-                        _position = position;
-                        _velocity = velocity.RotatedBy(rot);
-                        _type = type;
-                        _damage = damage;
-                        _knockBack = knockback;
-                        if(ItemLoader.Shoot(item, Player, source, _position, _velocity, _type, _damage, _knockBack)) {
-                            Projectile.NewProjectile(source, _position, _velocity, _type, _damage, _knockBack, Player.whoAmI);
-                        }
-                        rot = -rot;
-                    }
+			if (item.CountsAsClass(DamageClasses.Explosive)) {
+				if (riftSet) {
+					Fraction dmg = new Fraction(2, 2);
+					int c = (madHand ? 1 : 0) + (Main.rand.NextBool(2) ? 1 : 0);
+					dmg.D += c;
+					damage *= dmg;
+					double rot = Main.rand.NextBool(2) ? -0.1 : 0.1;
+					Vector2 _position;
+					Vector2 _velocity;
+					int _type;
+					int _damage;
+					float _knockBack;
+					for (int i = c; i-- > 0;) {
+						_position = position;
+						_velocity = velocity.RotatedBy(rot);
+						_type = type;
+						_damage = damage;
+						_knockBack = knockback;
+						if (ItemLoader.Shoot(item, Player, source, _position, _velocity, _type, _damage, _knockBack)) {
+							Projectile.NewProjectile(source, _position, _velocity, _type, _damage, _knockBack, Player.whoAmI);
+						}
+						rot = -rot;
+					}
 				}
 				if (novaSet) {
 					Fraction dmg = new Fraction(3, 3);
@@ -876,96 +876,96 @@ namespace Origins {
 					}
 				}
 			}
-            return true;
-        }
-        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-            if(Origins.DamageModOnHit[proj.type]) {
-                bool shouldReplace = Origins.ExplosiveBaseDamage.TryGetValue(proj.type, out int dam);
-                float baseDamage = Player.GetTotalDamage(proj.DamageType).ApplyTo(shouldReplace ? dam : damage);
-                damage = shouldReplace ? Main.DamageVar(baseDamage) : (int)baseDamage;
-            }
-            if((proj.CountsAsClass(DamageClass.Melee) || proj.CountsAsClass(DamageClass.Summon) || ProjectileID.Sets.IsAWhip[proj.type]) && felnumShock > 29) {
-                damage+=(int)(felnumShock / 15);
-                felnumShock = 0;
-                SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), proj.Center);
-            }
-            if(proj.minion&&rivenSet) {
-                damage = (int)(damage*rivenMult);
+			return true;
+		}
+		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+			if (Origins.DamageModOnHit[proj.type]) {
+				bool shouldReplace = Origins.ExplosiveBaseDamage.TryGetValue(proj.type, out int dam);
+				float baseDamage = Player.GetTotalDamage(proj.DamageType).ApplyTo(shouldReplace ? dam : damage);
+				damage = shouldReplace ? Main.DamageVar(baseDamage) : (int)baseDamage;
+			}
+			if ((proj.CountsAsClass(DamageClass.Melee) || proj.CountsAsClass(DamageClass.Summon) || ProjectileID.Sets.IsAWhip[proj.type]) && felnumShock > 29) {
+				damage += (int)(felnumShock / 15);
+				felnumShock = 0;
+				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), proj.Center);
+			}
+			if (proj.minion && rivenSet) {
+				damage = (int)(damage * rivenMult);
 			}
 			if (proj.CountsAsClass(DamageClasses.Explosive)) {
 				damage -= (int)Math.Max((target.defense - proj.ArmorPenetration) * (explosive_defense_factor - 0.5f), 0);
 			}
 		}
-        public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
-            OnHitNPCGeneral(item, target, damage, knockback, crit);
-            if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
-                Projectile.NewProjectile(
-                    Player.GetSource_OnHit(target),
-                    target.Center,
-                    default,
-                    ModContent.ProjectileType<Entangled_Energy_Lifesteal>(),
-                    0,
-                    0,
-                    Player.whoAmI,
-                    ai1:damage / 10
-                );
-            }
+		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
+			OnHitNPCGeneral(item, target, damage, knockback, crit);
+			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
+				Projectile.NewProjectile(
+					Player.GetSource_OnHit(target),
+					target.Center,
+					default,
+					ModContent.ProjectileType<Entangled_Energy_Lifesteal>(),
+					0,
+					0,
+					Player.whoAmI,
+					ai1: damage / 10
+				);
+			}
 			if (item.CountsAsClass(DamageClass.Melee)) {//flasks
-                if (flaskBile) {
-                    target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
-                }
-                if (flaskSalt) {
-                    OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f);
-                }
-            }
-        }
-        public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
-            OnHitNPCGeneral(proj, target, damage, knockback, crit);
+				if (flaskBile) {
+					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
+				}
+				if (flaskSalt) {
+					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f);
+				}
+			}
+		}
+		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
+			OnHitNPCGeneral(proj, target, damage, knockback, crit);
 			if (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) {//flasks
-                if (flaskBile) {
-                    target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
-                }
-                if (flaskSalt) {
-                    OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f);
-                }
-            }
-        }
-        public void OnHitNPCGeneral(Entity entity, NPC target, int damage, float knockback, bool crit) {
-            Entity sourceEntity = entity is Projectile ? entity: Player;
-            if (crit) {
-                if (dimStarlight && dimStarlightCooldown < 1) {
-                    Item.NewItem(sourceEntity.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
-                    dimStarlightCooldown = 300;
-                }
-            }
-            if (rasterize) {
-                target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
-            }
-            if (symbioteSkull) {
-                OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.9f);
-            }
-            if (decayingScale) {
-                target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
-            }
+				if (flaskBile) {
+					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
+				}
+				if (flaskSalt) {
+					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f);
+				}
+			}
+		}
+		public void OnHitNPCGeneral(Entity entity, NPC target, int damage, float knockback, bool crit) {
+			Entity sourceEntity = entity is Projectile ? entity : Player;
+			if (crit) {
+				if (dimStarlight && dimStarlightCooldown < 1) {
+					Item.NewItem(sourceEntity.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
+					dimStarlightCooldown = 300;
+				}
+			}
+			if (rasterize) {
+				target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
+			}
+			if (symbioteSkull) {
+				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.9f);
+			}
+			if (decayingScale) {
+				target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
+			}
 			if (target.life <= 0) {
-                foreach (var quest in Quest_Registry.Quests) {
-                    if (!quest.SaveToWorld && quest.KillEnemyEvent is not null) {
-                        quest.KillEnemyEvent(target);
-                    }
-                }
+				foreach (var quest in Quest_Registry.Quests) {
+					if (!quest.SaveToWorld && quest.KillEnemyEvent is not null) {
+						quest.KillEnemyEvent(target);
+					}
+				}
 				if (necroSet) {
 					necroSetAmount += target.lifeMax;
 				}
-            }
-        }
+			}
+		}
 
-        public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
+		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
 			if (trapCharm && proj.trap) {
 				damage /= 2;
 				Player.buffImmune[BuffID.Poisoned] = true;
 			}
-            if(proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
-                /*float damageVal = damage;
+			if (proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
+				/*float damageVal = damage;
                 if(minerSet) {
                     explosiveSelfDamage-=0.2f;
                     float inverseDamage = Player.GetDamage(DamageClasses.Explosive).ApplyTo(damage);
@@ -974,11 +974,11 @@ namespace Origins {
                     //damage-=damage/5;
                 }
                 damage = (int)(damageVal * explosiveSelfDamage);*/
-            }
-        }
-        public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
-            if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
-                damage.Flat += Player.statDefense / 2;
+			}
+		}
+		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
+			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
+				damage.Flat += Player.statDefense / 2;
 			}
 			if (Origins.ArtifactMinion[item.shoot]) damage = damage.CombineWith(artifactDamage);
 			damage.Base *= Origins.FlatDamageMultiplier[item.type];
@@ -989,71 +989,71 @@ namespace Origins {
 				Player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
 			}
 			if (preHitBuffs is not null)
-			for (int i = 0; i < Player.MaxBuffs; i++) {
-				if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
-					int buffType = Player.buffType[i];
-                    if (noU) {
-                        bool immune = npc.buffImmune[buffType];
-                        npc.buffImmune[buffType] = false;
-                        npc.AddBuff(buffType, Player.buffTime[i]);
-                        npc.buffImmune[buffType] = immune;
+				for (int i = 0; i < Player.MaxBuffs; i++) {
+					if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
+						int buffType = Player.buffType[i];
+						if (noU) {
+							bool immune = npc.buffImmune[buffType];
+							npc.buffImmune[buffType] = false;
+							npc.AddBuff(buffType, Player.buffTime[i]);
+							npc.buffImmune[buffType] = immune;
 
-                        Player.DelBuff(i--);
-                    } else if (plasmaPhial) {
-                        if (Main.debuff[buffType]) {
-                            Player.buffTime[i] /= 2;
-                        }
-                    } else if (donorWristband) {
-                        if (Main.debuff[buffType]) {
-                            Player.buffTime[i] -= (int)(Player.buffTime[i] * 0.375f);
-                        }
-                    }
+							Player.DelBuff(i--);
+						} else if (plasmaPhial) {
+							if (Main.debuff[buffType]) {
+								Player.buffTime[i] /= 2;
+							}
+						} else if (donorWristband) {
+							if (Main.debuff[buffType]) {
+								Player.buffTime[i] -= (int)(Player.buffTime[i] * 0.375f);
+							}
+						}
+					}
 				}
-			}
 			MeleeCollisionNPCData.knockbackMult = 1f;
 		}
 		public override void OnHitByProjectile(Projectile proj, int damage, bool crit) {
 			if (preHitBuffs is not null)
-			for (int i = 0; i < Player.MaxBuffs; i++) {
-				if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
-					int buffType = Player.buffType[i];
-					if (plasmaPhial) {
-						if (Main.debuff[buffType]) {
-							Player.buffTime[i] /= 2;
-						}
-					} else if (donorWristband) {
-						if (Main.debuff[buffType]) {
-							Player.buffTime[i] -= (int)(Player.buffTime[i] * 0.375f);
+				for (int i = 0; i < Player.MaxBuffs; i++) {
+					if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
+						int buffType = Player.buffType[i];
+						if (plasmaPhial) {
+							if (Main.debuff[buffType]) {
+								Player.buffTime[i] /= 2;
+							}
+						} else if (donorWristband) {
+							if (Main.debuff[buffType]) {
+								Player.buffTime[i] -= (int)(Player.buffTime[i] * 0.375f);
+							}
 						}
 					}
 				}
-			}
 		}
 		/// <param name="target">the potential target</param>
 		/// <param name="targetPriorityMultiplier"></param>
 		/// <param name="isPriorityTarget">whether or not this npc is a "priority" target (i.e. a manually selected target)</param>
 		/// <param name="foundTarget">whether or not a target has already been found</param>
 		public delegate void Minion_Selector(NPC target, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget);
-        public bool GetMinionTarget(Minion_Selector selector) {
-            bool foundTarget = false;
-            if (Player.MinionAttackTargetNPC > -1) selector(Main.npc[Player.MinionAttackTargetNPC], 1f, true, ref foundTarget);
-            if (asylumWhistleTarget > -1) selector(Main.npc[asylumWhistleTarget], 1f, true, ref foundTarget);
-            if (!foundTarget) {
-                for (int i = 0; i < Main.maxNPCs; i++) {
-                    selector(Main.npc[i], 1f, false, ref foundTarget);
-                }
-            }
-            return foundTarget;
+		public bool GetMinionTarget(Minion_Selector selector) {
+			bool foundTarget = false;
+			if (Player.MinionAttackTargetNPC > -1) selector(Main.npc[Player.MinionAttackTargetNPC], 1f, true, ref foundTarget);
+			if (asylumWhistleTarget > -1) selector(Main.npc[asylumWhistleTarget], 1f, true, ref foundTarget);
+			if (!foundTarget) {
+				for (int i = 0; i < Main.maxNPCs; i++) {
+					selector(Main.npc[i], 1f, false, ref foundTarget);
+				}
+			}
+			return foundTarget;
 		}
-        #endregion
-        internal static FieldInfo _sourcePlayerIndex;
-        static FieldInfo SourcePlayerIndex => _sourcePlayerIndex ??= typeof(PlayerDeathReason).GetField("_sourcePlayerIndex", BindingFlags.Instance | BindingFlags.NonPublic);
-        internal static FieldInfo _sourceProjectileIndex;
-        static FieldInfo SourceProjectileIndex => _sourceProjectileIndex ??= typeof(PlayerDeathReason).GetField("_sourceProjectileIndex", BindingFlags.Instance | BindingFlags.NonPublic);
-        public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter) {
-            if(Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(9)<3) {
-                crit = true;
-            }
+		#endregion
+		internal static FieldInfo _sourcePlayerIndex;
+		static FieldInfo SourcePlayerIndex => _sourcePlayerIndex ??= typeof(PlayerDeathReason).GetField("_sourcePlayerIndex", BindingFlags.Instance | BindingFlags.NonPublic);
+		internal static FieldInfo _sourceProjectileIndex;
+		static FieldInfo SourceProjectileIndex => _sourceProjectileIndex ??= typeof(PlayerDeathReason).GetField("_sourceProjectileIndex", BindingFlags.Instance | BindingFlags.NonPublic);
+		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter) {
+			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(9) < 3) {
+				crit = true;
+			}
 			heliumTankHit = false;
 			if (heliumTank && playSound) {
 				if (!Player.stoned && !Player.frostArmor && !Player.boneArmor) {
@@ -1062,52 +1062,52 @@ namespace Origins {
 				}
 			}
 			if ((int)SourcePlayerIndex.GetValue(damageSource) == Player.whoAmI) {
-                Projectile sourceProjectile = Main.projectile[(int)SourceProjectileIndex.GetValue(damageSource)];
-                if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
-                    float damageVal = damage;
-                    if (minerSet) {
-                        explosiveSelfDamage -= 0.2f;
-                        float inverseDamage = Player.GetDamage(DamageClasses.Explosive).ApplyTo(damage);
-                        damageVal -= inverseDamage - damage;
-                        if (damageVal < 0) {
-                            damageVal = 0;
-                        }
-                        //damage = (int)(damage/explosiveDamage);
-                        //damage-=damage/5;
-                    }
-                    damage = (int)explosiveSelfDamage.ApplyTo(damageVal);
+				Projectile sourceProjectile = Main.projectile[(int)SourceProjectileIndex.GetValue(damageSource)];
+				if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
+					float damageVal = damage;
+					if (minerSet) {
+						explosiveSelfDamage -= 0.2f;
+						float inverseDamage = Player.GetDamage(DamageClasses.Explosive).ApplyTo(damage);
+						damageVal -= inverseDamage - damage;
+						if (damageVal < 0) {
+							damageVal = 0;
+						}
+						//damage = (int)(damage/explosiveDamage);
+						//damage-=damage/5;
+					}
+					damage = (int)explosiveSelfDamage.ApplyTo(damageVal);
 					if (Math.Sign(damage) != Math.Sign(damageVal)) {
 						damage = 0;
 					}
-                }
-            }
-            if(defiledSet) {
-                float manaDamage = damage;
-                float costMult = 3;
-                float costMult2 = reshapingChunk ? 0.25f : 0.15f;
-                float costMult3 = (float)Math.Pow(reshapingChunk ? 0.25f : 0.15f, Player.manaCost);
-                if (Player.magicCuffs) {
-                    costMult = 1;
-                    Player.magicCuffs = false;
-                }
-                if (Player.statMana < manaDamage*costMult*costMult2) {
-                    manaDamage = Player.statMana / (costMult * costMult2);
-                }
-                if (manaDamage * costMult * costMult2 >= 1f) {
-                    Player.ManaEffect((int)-(manaDamage * costMult * costMult2));
-                }
-                Player.CheckMana((int)Math.Floor(manaDamage * costMult * costMult2), true);
-                damage = (int)(damage - (manaDamage * costMult3));
-                Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Buff>(), 50);
-            }else if (reshapingChunk) {
-                damage -= damage / 20;
-            }
-			if (toxicShock) {
-                damage += Player.statDefense / 10;
+				}
 			}
-            return damage > 0;
-        }
-        public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter) {
+			if (defiledSet) {
+				float manaDamage = damage;
+				float costMult = 3;
+				float costMult2 = reshapingChunk ? 0.25f : 0.15f;
+				float costMult3 = (float)Math.Pow(reshapingChunk ? 0.25f : 0.15f, Player.manaCost);
+				if (Player.magicCuffs) {
+					costMult = 1;
+					Player.magicCuffs = false;
+				}
+				if (Player.statMana < manaDamage * costMult * costMult2) {
+					manaDamage = Player.statMana / (costMult * costMult2);
+				}
+				if (manaDamage * costMult * costMult2 >= 1f) {
+					Player.ManaEffect((int)-(manaDamage * costMult * costMult2));
+				}
+				Player.CheckMana((int)Math.Floor(manaDamage * costMult * costMult2), true);
+				damage = (int)(damage - (manaDamage * costMult3));
+				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Buff>(), 50);
+			} else if (reshapingChunk) {
+				damage -= damage / 20;
+			}
+			if (toxicShock) {
+				damage += Player.statDefense / 10;
+			}
+			return damage > 0;
+		}
+		public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter) {
 			if (heliumTankHit) {
 				if ((Player.wereWolf || Player.forceWerewolf) && !Player.hideWolf) {
 					SoundEngine.PlaySound(SoundID.NPCHit6.WithPitch(1), Player.position);
@@ -1119,92 +1119,92 @@ namespace Origins {
 				}
 				Player.eyeHelper.BlinkBecausePlayerGotHurt();
 			}
-            if(guardedHeart) {
-                Player.AddBuff(Guarded_Heart_Buff.ID, 60 * 8);
-            }
+			if (guardedHeart) {
+				Player.AddBuff(Guarded_Heart_Buff.ID, 60 * 8);
+			}
 			if (razorwire) {
-                const float maxDist = 240 * 240;
-                double totalDamage = damage * 0.67f;
-                List<(int id, float weight)> targets = new();
-                NPC npc;
-                for (int i = 0; i < Main.maxNPCs; i++) {
-                    npc = Main.npc[i];
-                    if (npc.active && npc.damage > 0 && !npc.friendly) {
-                        Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
-                        Vector2 diff = currentPos - Player.MountedCenter;
-                        float dist = diff.LengthSquared();
-                        if (dist > maxDist) continue;
-                        float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
+				const float maxDist = 240 * 240;
+				double totalDamage = damage * 0.67f;
+				List<(int id, float weight)> targets = new();
+				NPC npc;
+				for (int i = 0; i < Main.maxNPCs; i++) {
+					npc = Main.npc[i];
+					if (npc.active && npc.damage > 0 && !npc.friendly) {
+						Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
+						Vector2 diff = currentPos - Player.MountedCenter;
+						float dist = diff.LengthSquared();
+						if (dist > maxDist) continue;
+						float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
 						if (totalDamage / 3 > npc.life) {
-                            currentWeight = 0;
+							currentWeight = 0;
 						}
 						if (targets.Count >= 3) {
-                            for (int j = 0; j < 3; j++) {
-                                if (targets[j].weight < currentWeight) {
-                                    targets.Insert(j, (i, currentWeight));
-                                    break;
-                                }
-                            }
+							for (int j = 0; j < 3; j++) {
+								if (targets[j].weight < currentWeight) {
+									targets.Insert(j, (i, currentWeight));
+									break;
+								}
+							}
 						} else {
-                            targets.Add((i, currentWeight));
-                        }
-                    }
-                }
-                for (int i = 0; i < 3; i++) {
-                    if (i >= targets.Count) break;
-                    Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
-                    Projectile.NewProjectile(
-                        Player.GetSource_Accessory(razorwireItem),
-                        Player.MountedCenter,
-                        (currentPos - Player.MountedCenter).WithMaxLength(12),
-                        razorwireItem.shoot,
-                        (int)(totalDamage / targets.Count) + 1,
-                        10,
-                        Player.whoAmI
-                    );
-                }
-            }
-            if (unsoughtOrgan) {
-                const float maxDist = 240 * 240;
-                double totalDamage = damage * 0.5f;
-                List<(int id, float weight)> targets = new();
-                NPC npc;
-                for (int i = 0; i < Main.maxNPCs; i++) {
-                    npc = Main.npc[i];
-                    if (npc.active && npc.damage > 0 && !npc.friendly) {
-                        Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
-                        Vector2 diff = currentPos - Player.MountedCenter;
-                        float dist = diff.LengthSquared();
-                        if (dist > maxDist) continue;
-                        float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
-                        if (totalDamage / 3 > npc.life) {
-                            currentWeight = 0;
-                        }
-                        if (targets.Count >= 3) {
-                            for (int j = 0; j < 3; j++) {
-                                if (targets[j].weight < currentWeight) {
-                                    targets.Insert(j, (i, currentWeight));
-                                    break;
-                                }
-                            }
-                        } else {
-                            targets.Add((i, currentWeight));
-                        }
-                    }
-                }
-                for (int i = 0; i < 3; i++) {
-                    if (i >= targets.Count) break;
-                    Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
-                    Projectile.NewProjectile(
-                        Player.GetSource_Accessory(unsoughtOrganItem),
-                        Player.MountedCenter,
-                        (currentPos - Player.MountedCenter).WithMaxLength(12),
-                        unsoughtOrganItem.shoot,
-                        (int)(totalDamage / targets.Count) + 1,
-                        10,
-                        Player.whoAmI
-                    );
-                }
+							targets.Add((i, currentWeight));
+						}
+					}
+				}
+				for (int i = 0; i < 3; i++) {
+					if (i >= targets.Count) break;
+					Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
+					Projectile.NewProjectile(
+						Player.GetSource_Accessory(razorwireItem),
+						Player.MountedCenter,
+						(currentPos - Player.MountedCenter).WithMaxLength(12),
+						razorwireItem.shoot,
+						(int)(totalDamage / targets.Count) + 1,
+						10,
+						Player.whoAmI
+					);
+				}
+			}
+			if (unsoughtOrgan) {
+				const float maxDist = 240 * 240;
+				double totalDamage = damage * 0.5f;
+				List<(int id, float weight)> targets = new();
+				NPC npc;
+				for (int i = 0; i < Main.maxNPCs; i++) {
+					npc = Main.npc[i];
+					if (npc.active && npc.damage > 0 && !npc.friendly) {
+						Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
+						Vector2 diff = currentPos - Player.MountedCenter;
+						float dist = diff.LengthSquared();
+						if (dist > maxDist) continue;
+						float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
+						if (totalDamage / 3 > npc.life) {
+							currentWeight = 0;
+						}
+						if (targets.Count >= 3) {
+							for (int j = 0; j < 3; j++) {
+								if (targets[j].weight < currentWeight) {
+									targets.Insert(j, (i, currentWeight));
+									break;
+								}
+							}
+						} else {
+							targets.Add((i, currentWeight));
+						}
+					}
+				}
+				for (int i = 0; i < 3; i++) {
+					if (i >= targets.Count) break;
+					Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
+					Projectile.NewProjectile(
+						Player.GetSource_Accessory(unsoughtOrganItem),
+						Player.MountedCenter,
+						(currentPos - Player.MountedCenter).WithMaxLength(12),
+						unsoughtOrganItem.shoot,
+						(int)(totalDamage / targets.Count) + 1,
+						10,
+						Player.whoAmI
+					);
+				}
 			}
 			preHitBuffs = new();
 			for (int i = 0; i < Player.MaxBuffs; i++) {
@@ -1222,199 +1222,199 @@ namespace Origins {
 				);
 			}
 		}
-        public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
-            if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {
-                OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
-                if (originWorld.peatSold < 999) {
-                    if (item.stack >= 999 - originWorld.peatSold) {
-                        item.stack -= 999 - originWorld.peatSold;
-                        originWorld.peatSold = 999;
-                        int nextSlot = 0;
-                        for (; ++nextSlot < shopInventory.Length && !shopInventory[nextSlot].IsAir;);
-                        if (nextSlot < shopInventory.Length) shopInventory[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
-                        if (nextSlot < shopInventory.Length) shopInventory[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
-                        if (nextSlot < shopInventory.Length) shopInventory[nextSlot].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
-                    } else {
-                        originWorld.peatSold += item.stack;
-                        item.TurnToAir();
-                    }
-                }
-            }
-        }
-        public bool DisplayJournalTooltip(IJournalEntryItem journalItem) {
+		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
+			if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {
+				OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
+				if (originWorld.peatSold < 999) {
+					if (item.stack >= 999 - originWorld.peatSold) {
+						item.stack -= 999 - originWorld.peatSold;
+						originWorld.peatSold = 999;
+						int nextSlot = 0;
+						for (; ++nextSlot < shopInventory.Length && !shopInventory[nextSlot].IsAir;) ;
+						if (nextSlot < shopInventory.Length) shopInventory[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
+						if (nextSlot < shopInventory.Length) shopInventory[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
+						if (nextSlot < shopInventory.Length) shopInventory[nextSlot].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
+					} else {
+						originWorld.peatSold += item.stack;
+						item.TurnToAir();
+					}
+				}
+			}
+		}
+		public bool DisplayJournalTooltip(IJournalEntryItem journalItem) {
 			if (!journalUnlocked) {
-                return true;
+				return true;
 			}
-            bool unlockedEntry = unlockedJournalEntries.Contains(journalItem.EntryName);
+			bool unlockedEntry = unlockedJournalEntries.Contains(journalItem.EntryName);
 			if (Origins.InspectItemKey.JustPressed) {
-                if (!unlockedEntry) unlockedJournalEntries.Add(journalItem.EntryName);
+				if (!unlockedEntry) unlockedJournalEntries.Add(journalItem.EntryName);
 				if (OriginClientConfig.Instance.OpenJournalOnUnlock) {
-                    Origins.OpenJournalEntry(journalItem.EntryName);
-                }
-                return false;
+					Origins.OpenJournalEntry(journalItem.EntryName);
+				}
+				return false;
 			}
-            return !unlockedEntry;
-        }
-        public static void InflictTorn(Player player, int duration, int targetTime = 180, float targetSeverity = 0.7f) {
-            player.AddBuff(Torn_Buff.ID, duration);
-            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-            if (targetSeverity < originPlayer.tornTarget) {
-                originPlayer.tornTargetTime = targetTime;
-                originPlayer.tornTarget = targetSeverity;
-            }
-        }
+			return !unlockedEntry;
+		}
+		public static void InflictTorn(Player player, int duration, int targetTime = 180, float targetSeverity = 0.7f) {
+			player.AddBuff(Torn_Buff.ID, duration);
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			if (targetSeverity < originPlayer.tornTarget) {
+				originPlayer.tornTargetTime = targetTime;
+				originPlayer.tornTarget = targetSeverity;
+			}
+		}
 
-        public override void LoadData(TagCompound tag) {
-            if (tag.SafeGet<Item>("EyndumCore") is Item eyndumCoreItem) {
-                eyndumCore = new Ref<Item>(eyndumCoreItem);
-            }
-            if (tag.SafeGet<int>("MimicSetSelection") is int mimicSetSelection) {
-                mimicSetChoices = mimicSetSelection;
-            }
-            if (tag.SafeGet<Item>("JournalDye") is Item journalDyeItem) {
-                journalDye = journalDyeItem;
-            }
-            if (tag.SafeGet<List<string>>("UnlockedJournalEntries") is List<string> journalEntries) {
-                unlockedJournalEntries = journalEntries.ToHashSet();
-            }
-            if (tag.ContainsKey("journalUnlocked")) {
-                journalUnlocked = tag.Get<bool>("journalUnlocked");
-            }
-            questsTag = tag.SafeGet<TagCompound>("Quests");
-        }
-        TagCompound questsTag;
-        public override void OnEnterWorld(Player player) {
-            questsTag ??= new TagCompound();
-            TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? new TagCompound();
-            foreach (var quest in Quest_Registry.Quests) {
-                if (!quest.SaveToWorld) {
-                    quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
-				} else {
-                    quest.LoadData(worldQuestsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
-                }
-            }
-        }
-		public override void SaveData(TagCompound tag) {
-            if (eyndumCore is not null) {
-                tag.Add("EyndumCore", eyndumCore.Value);
-            }
-            tag.Add("MimicSetSelection", mimicSetChoices);
-            tag.Add("journalUnlocked", journalUnlocked);
-            if (journalDye is not null) {
-                tag.Add("JournalDye", journalDye);
-            }
-            if (unlockedJournalEntries is not null) {
-                tag.Add("UnlockedJournalEntries", unlockedJournalEntries.ToList());
-            }
-            TagCompound questsTag = new TagCompound();
-            foreach (var quest in Quest_Registry.Quests) {
-                if (!quest.SaveToWorld) {
-                    TagCompound questTag = new TagCompound();
-                    quest.SaveData(questTag);
-                    if (questTag.Count > 0) questsTag.Add(quest.FullName, questTag);
-                }
-            }
-            if (questsTag.Count > 0) {
-                tag.Add("Quests", questsTag);
+		public override void LoadData(TagCompound tag) {
+			if (tag.SafeGet<Item>("EyndumCore") is Item eyndumCoreItem) {
+				eyndumCore = new Ref<Item>(eyndumCoreItem);
 			}
-        }
+			if (tag.SafeGet<int>("MimicSetSelection") is int mimicSetSelection) {
+				mimicSetChoices = mimicSetSelection;
+			}
+			if (tag.SafeGet<Item>("JournalDye") is Item journalDyeItem) {
+				journalDye = journalDyeItem;
+			}
+			if (tag.SafeGet<List<string>>("UnlockedJournalEntries") is List<string> journalEntries) {
+				unlockedJournalEntries = journalEntries.ToHashSet();
+			}
+			if (tag.ContainsKey("journalUnlocked")) {
+				journalUnlocked = tag.Get<bool>("journalUnlocked");
+			}
+			questsTag = tag.SafeGet<TagCompound>("Quests");
+		}
+		TagCompound questsTag;
+		public override void OnEnterWorld(Player player) {
+			questsTag ??= new TagCompound();
+			TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? new TagCompound();
+			foreach (var quest in Quest_Registry.Quests) {
+				if (!quest.SaveToWorld) {
+					quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+				} else {
+					quest.LoadData(worldQuestsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+				}
+			}
+		}
+		public override void SaveData(TagCompound tag) {
+			if (eyndumCore is not null) {
+				tag.Add("EyndumCore", eyndumCore.Value);
+			}
+			tag.Add("MimicSetSelection", mimicSetChoices);
+			tag.Add("journalUnlocked", journalUnlocked);
+			if (journalDye is not null) {
+				tag.Add("JournalDye", journalDye);
+			}
+			if (unlockedJournalEntries is not null) {
+				tag.Add("UnlockedJournalEntries", unlockedJournalEntries.ToList());
+			}
+			TagCompound questsTag = new TagCompound();
+			foreach (var quest in Quest_Registry.Quests) {
+				if (!quest.SaveToWorld) {
+					TagCompound questTag = new TagCompound();
+					quest.SaveData(questTag);
+					if (questTag.Count > 0) questsTag.Add(quest.FullName, questTag);
+				}
+			}
+			if (questsTag.Count > 0) {
+				tag.Add("Quests", questsTag);
+			}
+		}
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
-            bool zoneDefiled = Player.InModBiome<Defiled_Wastelands>();
-            bool zoneRiven = Player.InModBiome<Riven_Hive>();
-            bool junk = (itemDrop >= ItemID.OldShoe && itemDrop < ItemID.MinecartTrack);
+			bool zoneDefiled = Player.InModBiome<Defiled_Wastelands>();
+			bool zoneRiven = Player.InModBiome<Riven_Hive>();
+			bool junk = (itemDrop >= ItemID.OldShoe && itemDrop < ItemID.MinecartTrack);
 			if (zoneDefiled && zoneDefiled) {
 				if (Main.rand.NextBool()) {
-                    zoneDefiled = false;
-                } else {
-                    zoneRiven = false;
+					zoneDefiled = false;
+				} else {
+					zoneRiven = false;
 				}
 			}
-            if (zoneDefiled) {
-                if (attempt.crate) {
-                    if (attempt.rare && !(attempt.veryrare || attempt.legendary)) {
-                        itemDrop = ModContent.ItemType<Chunky_Crate>();
-                    }
-                } else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
-                    itemDrop = ModContent.ItemType<Knee_Slapper>();
-                } else if (attempt.uncommon && !attempt.rare) {
-                    itemDrop = ModContent.ItemType<Prikish>();
-                }
-            } else if (zoneRiven) {
-                if (attempt.crate) {
-                    if (attempt.rare && !(attempt.veryrare || attempt.legendary)) {
-                        itemDrop = ModContent.ItemType<Crusty_Crate>();
-                    }
-                } else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
-                    itemDrop = ModContent.ItemType<Knee_Slapper>();
-                } else if (attempt.uncommon && !attempt.rare) {
-                    itemDrop = ModContent.ItemType<Prikish>();
-                }
-                if (Main.rand.NextBool(4)) {
-                    if (junk) {
-                        itemDrop = ModContent.ItemType<Tire>();
-                    }
-                }
-            }
-        }
+			if (zoneDefiled) {
+				if (attempt.crate) {
+					if (attempt.rare && !(attempt.veryrare || attempt.legendary)) {
+						itemDrop = ModContent.ItemType<Chunky_Crate>();
+					}
+				} else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
+					itemDrop = ModContent.ItemType<Knee_Slapper>();
+				} else if (attempt.uncommon && !attempt.rare) {
+					itemDrop = ModContent.ItemType<Prikish>();
+				}
+			} else if (zoneRiven) {
+				if (attempt.crate) {
+					if (attempt.rare && !(attempt.veryrare || attempt.legendary)) {
+						itemDrop = ModContent.ItemType<Crusty_Crate>();
+					}
+				} else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
+					itemDrop = ModContent.ItemType<Knee_Slapper>();
+				} else if (attempt.uncommon && !attempt.rare) {
+					itemDrop = ModContent.ItemType<Prikish>();
+				}
+				if (Main.rand.NextBool(4)) {
+					if (junk) {
+						itemDrop = ModContent.ItemType<Tire>();
+					}
+				}
+			}
+		}
 		public override bool CanUseItem(Item item) {
-            if (ravel) {
-                return false;
-            }
-            return true;
+			if (ravel) {
+				return false;
+			}
+			return true;
 		}
 		public override bool PreItemCheck() {
-            collidingX = oldXSign != 0 && Player.velocity.X == 0;
-            ItemChecking = true;
-            return true;
-        }
-        public override void PostItemCheck() {
-            ItemChecking = false;
-        }
+			collidingX = oldXSign != 0 && Player.velocity.X == 0;
+			ItemChecking = true;
+			return true;
+		}
+		public override void PostItemCheck() {
+			ItemChecking = false;
+		}
 		public override void HideDrawLayers(PlayerDrawSet drawInfo) {
-            Item item = drawInfo.heldItem;
-            if (
-                (
-                    drawInfo.drawPlayer.ItemAnimationActive && (
-                        (item.useStyle == ItemUseStyleID.Shoot && item.ModItem is ICustomDrawItem) || 
-                        (item.useStyle == ItemUseStyleID.Swing && item.ModItem is AnimatedModItem)
-                    )
-                ) ||
-                Origins.isDrawingShadyDupes) PlayerDrawLayers.HeldItem.Hide();
+			Item item = drawInfo.heldItem;
+			if (
+				(
+					drawInfo.drawPlayer.ItemAnimationActive && (
+						(item.useStyle == ItemUseStyleID.Shoot && item.ModItem is ICustomDrawItem) ||
+						(item.useStyle == ItemUseStyleID.Swing && item.ModItem is AnimatedModItem)
+					)
+				) ||
+				Origins.isDrawingShadyDupes) PlayerDrawLayers.HeldItem.Hide();
 			if (mountOnly && !drawInfo.headOnlyRender) {
 				for (int i = 0; i < PlayerDrawLayerLoader.DrawOrder.Count; i++) {
-                    PlayerDrawLayer layer = PlayerDrawLayerLoader.DrawOrder[i];
-                    if (layer != PlayerDrawLayers.MountFront && layer != PlayerDrawLayers.MountBack) {
-                        layer.Hide();
-                    }
+					PlayerDrawLayer layer = PlayerDrawLayerLoader.DrawOrder[i];
+					if (layer != PlayerDrawLayers.MountFront && layer != PlayerDrawLayers.MountBack) {
+						layer.Hide();
+					}
 				}
-            }
+			}
 		}
 		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
-            if (plagueSight) drawInfo.colorEyes = IsDevName(Player.name, 1) ? new Color(43, 185, 255) : Color.Gold;
+			if (plagueSight) drawInfo.colorEyes = IsDevName(Player.name, 1) ? new Color(43, 185, 255) : Color.Gold;
 			if (mysteriousSprayMult != 1f) {
-                float lightSaturationMult = (float)Math.Pow(mysteriousSprayMult, 2f);
-                float saturationMult = 1f - (float)Math.Pow(1f - mysteriousSprayMult, 1.5f);
-                drawInfo.colorArmorHead = OriginExtensions.Desaturate(drawInfo.colorArmorHead, lightSaturationMult);
-                drawInfo.colorArmorBody = OriginExtensions.Desaturate(drawInfo.colorArmorBody, lightSaturationMult);
-                drawInfo.colorArmorLegs = OriginExtensions.Desaturate(drawInfo.colorArmorLegs, lightSaturationMult);
-                drawInfo.floatingTubeColor = OriginExtensions.Desaturate(drawInfo.floatingTubeColor, lightSaturationMult);
-                drawInfo.itemColor = OriginExtensions.Desaturate(drawInfo.itemColor, lightSaturationMult);
+				float lightSaturationMult = (float)Math.Pow(mysteriousSprayMult, 2f);
+				float saturationMult = 1f - (float)Math.Pow(1f - mysteriousSprayMult, 1.5f);
+				drawInfo.colorArmorHead = OriginExtensions.Desaturate(drawInfo.colorArmorHead, lightSaturationMult);
+				drawInfo.colorArmorBody = OriginExtensions.Desaturate(drawInfo.colorArmorBody, lightSaturationMult);
+				drawInfo.colorArmorLegs = OriginExtensions.Desaturate(drawInfo.colorArmorLegs, lightSaturationMult);
+				drawInfo.floatingTubeColor = OriginExtensions.Desaturate(drawInfo.floatingTubeColor, lightSaturationMult);
+				drawInfo.itemColor = OriginExtensions.Desaturate(drawInfo.itemColor, lightSaturationMult);
 
-                drawInfo.headGlowColor = OriginExtensions.Desaturate(drawInfo.headGlowColor, saturationMult);
-                drawInfo.armGlowColor = OriginExtensions.Desaturate(drawInfo.armGlowColor, saturationMult);
-                drawInfo.bodyGlowColor = OriginExtensions.Desaturate(drawInfo.bodyGlowColor, saturationMult);
-                drawInfo.legsGlowColor = OriginExtensions.Desaturate(drawInfo.legsGlowColor, saturationMult);
+				drawInfo.headGlowColor = OriginExtensions.Desaturate(drawInfo.headGlowColor, saturationMult);
+				drawInfo.armGlowColor = OriginExtensions.Desaturate(drawInfo.armGlowColor, saturationMult);
+				drawInfo.bodyGlowColor = OriginExtensions.Desaturate(drawInfo.bodyGlowColor, saturationMult);
+				drawInfo.legsGlowColor = OriginExtensions.Desaturate(drawInfo.legsGlowColor, saturationMult);
 
-                drawInfo.colorElectricity = OriginExtensions.Desaturate(drawInfo.colorElectricity, saturationMult);
-                drawInfo.ArkhalisColor = OriginExtensions.Desaturate(drawInfo.ArkhalisColor, saturationMult);
+				drawInfo.colorElectricity = OriginExtensions.Desaturate(drawInfo.colorElectricity, saturationMult);
+				drawInfo.ArkhalisColor = OriginExtensions.Desaturate(drawInfo.ArkhalisColor, saturationMult);
 
-                drawInfo.colorHair = OriginExtensions.Desaturate(drawInfo.colorHair, saturationMult);
-                drawInfo.colorHead = OriginExtensions.Desaturate(drawInfo.colorHead, saturationMult);
-                drawInfo.colorEyes = Color.Lerp(drawInfo.colorEyes, Color.White, 1f - saturationMult);
-                drawInfo.colorEyeWhites = Color.Lerp(drawInfo.colorEyeWhites, Color.Black, 1f - saturationMult);
-                drawInfo.colorBodySkin = OriginExtensions.Desaturate(drawInfo.colorBodySkin, saturationMult);
+				drawInfo.colorHair = OriginExtensions.Desaturate(drawInfo.colorHair, saturationMult);
+				drawInfo.colorHead = OriginExtensions.Desaturate(drawInfo.colorHead, saturationMult);
+				drawInfo.colorEyes = Color.Lerp(drawInfo.colorEyes, Color.White, 1f - saturationMult);
+				drawInfo.colorEyeWhites = Color.Lerp(drawInfo.colorEyeWhites, Color.Black, 1f - saturationMult);
+				drawInfo.colorBodySkin = OriginExtensions.Desaturate(drawInfo.colorBodySkin, saturationMult);
 
-            }
+			}
 		}
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
 			//return;
@@ -1423,23 +1423,23 @@ namespace Origins {
 			packet.Write(Origins.NetMessageType.sync_player);
 			packet.Write((byte)Player.whoAmI);
 			packet.Write((byte)quantumInjectors);
-            packet.Write((byte)defiledWill);
-            packet.Send(toWho, fromWho);
+			packet.Write((byte)defiledWill);
+			packet.Send(toWho, fromWho);
 		}
 		public void ReceivePlayerSync(BinaryReader reader) {
 			quantumInjectors = reader.ReadByte();
-            defiledWill = reader.ReadByte();
+			defiledWill = reader.ReadByte();
 		}
 		public override void FrameEffects() {
-            for(int i = 13; i < 18+Player.extraAccessorySlots; i++) {
-                if(Player.armor[i].type==Plague_Texan_Sight.ID)Plague_Texan_Sight.ApplyVisuals(Player);
-            }
-        }
-        public void SetMimicSetChoice(int level, int choice) {
-            mimicSetChoices = (mimicSetChoices & ~(3 << level * 2)) | ((choice & 3) << level * 2);
-        }
-        public int GetMimicSetChoice(int level) {
-            return (mimicSetChoices >> level * 2) & 3;
-        }
-    }
+			for (int i = 13; i < 18 + Player.extraAccessorySlots; i++) {
+				if (Player.armor[i].type == Plague_Texan_Sight.ID) Plague_Texan_Sight.ApplyVisuals(Player);
+			}
+		}
+		public void SetMimicSetChoice(int level, int choice) {
+			mimicSetChoices = (mimicSetChoices & ~(3 << level * 2)) | ((choice & 3) << level * 2);
+		}
+		public int GetMimicSetChoice(int level) {
+			return (mimicSetChoices >> level * 2) & 3;
+		}
+	}
 }

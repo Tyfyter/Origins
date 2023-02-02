@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Nerve_Impulse_Manipulator : ModItem {
+	public class Nerve_Impulse_Manipulator : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Nerve Impulse Manipulator");
 			Tooltip.SetDefault("Summons the {$Defiled} Amalgamation");

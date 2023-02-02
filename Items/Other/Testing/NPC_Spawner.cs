@@ -38,7 +38,7 @@ namespace Origins.Items.Other.Testing {
 		public override bool CanPickup(Player player) => false;
 		public override void Update(ref float gravity, ref float maxFallSpeed) {
 			if (Item.timeSinceItemSpawned > 15) {
-				if(Item.stack < NPCLoader.NPCCount) NPC.NewNPC(new EntitySource_Misc("PlayerDropItemCheck"), (int)Item.position.X, (int)Item.position.Y, Item.stack);
+				if (Item.stack < NPCLoader.NPCCount) NPC.NewNPC(new EntitySource_Misc("PlayerDropItemCheck"), (int)Item.position.X, (int)Item.position.Y, Item.stack);
 				Item.active = false;
 			}
 		}

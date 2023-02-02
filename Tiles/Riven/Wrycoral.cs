@@ -16,6 +16,6 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-    public class Wrycoral : OriginTile, DefiledTile {
+	public class Wrycoral : OriginTile, DefiledTile {
 	}
 }

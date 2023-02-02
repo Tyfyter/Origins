@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Potato : ModItem {
+	public class Potato : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Potato");
 			Tooltip.SetDefault("{$CommonItemTooltip.MinorStats}\nIt's a potato...");

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
 namespace Origins {
-    [Label("Settings")]
+	[Label("Settings")]
 	public class OriginConfig : ModConfig {
 		public static OriginConfig Instance;
 		public override ConfigScope Mode => ConfigScope.ServerSide;

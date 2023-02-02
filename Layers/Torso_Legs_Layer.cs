@@ -19,14 +19,14 @@ namespace Origins.Layers {
 		}
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Torso);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
-            Player drawPlayer = drawInfo.drawPlayer;
-            Texture2D texture = Origins.TorsoLegLayers[drawPlayer.body];
+			Player drawPlayer = drawInfo.drawPlayer;
+			Texture2D texture = Origins.TorsoLegLayers[drawPlayer.body];
 
-            Vector2 Position = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.legPosition + drawInfo.legVect;
-            Rectangle? Frame = new Rectangle?(drawPlayer.legFrame);
-            DrawData item = new DrawData(texture, Position, Frame, drawInfo.colorArmorLegs, drawPlayer.legRotation, drawInfo.legVect, 1f, drawInfo.playerEffect, 0);
-            item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
-            drawInfo.DrawDataCache.Add(item);
-        }
+			Vector2 Position = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.legPosition + drawInfo.legVect;
+			Rectangle? Frame = new Rectangle?(drawPlayer.legFrame);
+			DrawData item = new DrawData(texture, Position, Frame, drawInfo.colorArmorLegs, drawPlayer.legRotation, drawInfo.legVect, 1f, drawInfo.playerEffect, 0);
+			item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
+			drawInfo.DrawDataCache.Add(item);
+		}
 	}
 }

@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Sus_Ice_Cream : ModItem {
+	public class Sus_Ice_Cream : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Suspicious Looking Ice Cream");
 			Tooltip.SetDefault("Summons the Primordial Amoeba");

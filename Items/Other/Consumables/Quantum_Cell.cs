@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Quantum_Cell : ModItem {
+	public class Quantum_Cell : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Quantum Cell");
 			Tooltip.SetDefault("Used at the Cubekon Altar");

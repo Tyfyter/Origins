@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Summoner {
-    public class Maelstrom_Incantation : ModItem {
+	public class Maelstrom_Incantation : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Maelstrom Incantation");
 			Tooltip.SetDefault("5 summon tag damage\nDirectly struck enemies will shock nearby enemies when hit by minions\n{$CommonItemTooltip.Whips}\nReceives 50% higher damage bonuses");
@@ -92,7 +92,7 @@ namespace Origins.Items.Weapons.Summoner {
 					owner.direction = Math.Sign(Projectile.velocity.X);
 					owner.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation - MathHelper.PiOver2);
 					if (age == (int)Projectile.ai[0]) {
-						
+
 						Projectile.NewProjectile(
 							Projectile.GetSource_FromThis(),
 							Projectile.position,
@@ -167,7 +167,7 @@ namespace Origins.Items.Weapons.Summoner {
 			if (Projectile.ai[0] > 0) {
 				if (lifespan - Projectile.timeLeft > Projectile.ai[0]) return null;
 			} else {
-				if(Projectile.ai[0] < -16) return null;
+				if (Projectile.ai[0] < -16) return null;
 			}
 			return false;
 		}

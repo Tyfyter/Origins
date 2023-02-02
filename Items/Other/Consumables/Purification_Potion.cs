@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Purification_Potion : ModItem {
+	public class Purification_Potion : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Purification Potion");
 			Tooltip.SetDefault("Grants immunity to being assimilated");

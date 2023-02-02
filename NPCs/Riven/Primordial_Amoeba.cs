@@ -24,80 +24,80 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    [AutoloadBossHead]
-    public class Primordial_Amoeba : ModNPC {
+	[AutoloadBossHead]
+	public class Primordial_Amoeba : ModNPC {
 		public override string BossHeadTexture => "Origins/UI/BossMap/Map_Icon_DA";
 		internal static int npcIndex;
-        public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
+		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		internal static IItemDropRule normalDropRule;
 		public override void Unload() {
 			normalDropRule = null;
 		}
 		public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Primordial Amoeba");
-            NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
-                SpecificallyImmuneTo = new int[] {
-                    BuffID.Confused
-	            }
-            };
-            NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
-            NPCID.Sets.CantTakeLunchMoney[Type] = true;
-        }
-        public override void SetDefaults() {
-            NPC.CloneDefaults(NPCID.Zombie);
-            NPC.boss = true;
-            NPC.BossBar = ModContent.GetInstance<Boss_Bar_PA>();
-            NPC.aiStyle = NPCAIStyleID.None;
-            NPC.lifeMax = 1800;
-            NPC.defense = 14;
-            NPC.damage = 23;
-            NPC.width = 144;
-            NPC.height = 148;
-            NPC.friendly = false;
-            NPC.HitSound = Origins.Sounds.PowerUp.WithPitchRange(0f, 0.25f);
-            NPC.DeathSound = Origins.Sounds.EnergyRipple.WithPitchRange(-1f, -0.75f);
-            NPC.noGravity = true;
+			DisplayName.SetDefault("Primordial Amoeba");
+			NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
+				SpecificallyImmuneTo = new int[] {
+					BuffID.Confused
+				}
+			};
+			NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
+			NPCID.Sets.CantTakeLunchMoney[Type] = true;
+		}
+		public override void SetDefaults() {
+			NPC.CloneDefaults(NPCID.Zombie);
+			NPC.boss = true;
+			NPC.BossBar = ModContent.GetInstance<Boss_Bar_PA>();
+			NPC.aiStyle = NPCAIStyleID.None;
+			NPC.lifeMax = 1800;
+			NPC.defense = 14;
+			NPC.damage = 23;
+			NPC.width = 144;
+			NPC.height = 148;
+			NPC.friendly = false;
+			NPC.HitSound = Origins.Sounds.PowerUp.WithPitchRange(0f, 0.25f);
+			NPC.DeathSound = Origins.Sounds.EnergyRipple.WithPitchRange(-1f, -0.75f);
+			NPC.noGravity = true;
 			NPC.noTileCollide = true;
 			NPC.npcSlots = 200;
-            Music = Origins.Music.RivenBoss;
-            NPC.knockBackResist = 0f;// actually a multiplier
+			Music = Origins.Music.RivenBoss;
+			NPC.knockBackResist = 0f;// actually a multiplier
 			NPC.value = Item.buyPrice(gold: 5);
 		}
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
 			switch (DifficultyMult) {
-                case 1:
-                NPC.lifeMax = (int)(1800 * bossLifeScale);
+				case 1:
+				NPC.lifeMax = (int)(1800 * bossLifeScale);
 				NPC.damage = 23;
 				break;
 
-                case 2:
-                NPC.lifeMax = (int)(2700 * bossLifeScale) / 2;
+				case 2:
+				NPC.lifeMax = (int)(2700 * bossLifeScale) / 2;
 				NPC.damage = 36;
 				break;
 
-                case 3:
-                NPC.lifeMax = (int)(3600 * bossLifeScale) / 3;
+				case 3:
+				NPC.lifeMax = (int)(3600 * bossLifeScale) / 3;
 				NPC.damage = 49;
 				break;
-            }
+			}
 		}
 
-        public override void OnSpawn(IEntitySource source) {
-            if (Main.netMode == NetmodeID.Server) {
-                ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", NPC.GetTypeNetName()), new Color(222, 222, 222));
-            } else {
-                if (Main.netMode == NetmodeID.SinglePlayer) {
-                    Main.NewText(Language.GetTextValue("Announcement.HasAwoken", NPC.TypeName), 222, 222, 222);
-                }
-                SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(-1));
-            }
-        }
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                new FlavorTextBestiaryInfoElement("A murderous super-organism just trying to kill you."),
-            });
+		public override void OnSpawn(IEntitySource source) {
+			if (Main.netMode == NetmodeID.Server) {
+				ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", NPC.GetTypeNetName()), new Color(222, 222, 222));
+			} else {
+				if (Main.netMode == NetmodeID.SinglePlayer) {
+					Main.NewText(Language.GetTextValue("Announcement.HasAwoken", NPC.TypeName), 222, 222, 222);
+				}
+				SoundEngine.PlaySound(Origins.Sounds.EnergyRipple.WithPitch(-1));
+			}
 		}
-        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				new FlavorTextBestiaryInfoElement("A murderous super-organism just trying to kill you."),
+			});
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 
 			normalDropRule = new LeadingSuccessRule();
 
@@ -352,7 +352,7 @@ namespace Origins.NPCs.Riven {
 			return false;
 		}
 		public override void OnKill() {
-            NPC.downedBoss2 = true;
+			NPC.downedBoss2 = true;
 			int tentacleID = Primordial_Amoeba_Tentacle.ID;
 			int tentacleCount = 0;
 			for (int i = 0; i < 200; i++) {
@@ -366,25 +366,25 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
-            Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
-            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(NPC.GetSource_OnHurt(projectile), Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
-        }
-        public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
-            int halfWidth = NPC.width / 2;
-            int baseX = player.direction > 0 ? 0 : halfWidth;
-            for(int i = Main.rand.Next(3); i-->0;)Gore.NewGore(NPC.GetSource_OnHurt(player), NPC.position+new Vector2(baseX + Main.rand.Next(halfWidth),Main.rand.Next(NPC.height)), new Vector2(knockback*player.direction, -0.1f*knockback), Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
-        }
-        public override void HitEffect(int hitDirection, double damage) {
-            if(NPC.life < 0) {
-                for(int i = 0; i < 6; i++)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
-                for(int i = 0; i < 10; i++)Gore.NewGore(NPC.GetSource_Death(), NPC.position+new Vector2(Main.rand.Next(NPC.width),Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Meat" + Main.rand.Next(1,4)));
-            }
-        }
+			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
+			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_OnHurt(projectile), Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
+		}
+		public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
+			int halfWidth = NPC.width / 2;
+			int baseX = player.direction > 0 ? 0 : halfWidth;
+			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_OnHurt(player), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), new Vector2(knockback * player.direction, -0.1f * knockback), Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
+		}
+		public override void HitEffect(int hitDirection, double damage) {
+			if (NPC.life < 0) {
+				for (int i = 0; i < 6; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
+				for (int i = 0; i < 10; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Meat" + Main.rand.Next(1, 4)));
+			}
+		}
 	}
-    public class Primordial_Amoeba_Tentacle : ModNPC {
+	public class Primordial_Amoeba_Tentacle : ModNPC {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Flagellash_P";
 		public static int ID { get; private set; }
-        public override void SetStaticDefaults() {
+		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Primordial Amoeba");
 			NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
 				SpecificallyImmuneTo = new int[] {
@@ -428,7 +428,7 @@ namespace Origins.NPCs.Riven {
 		public override void OnSpawn(IEntitySource source) {
 			int hitboxID = Primordial_Amoeba_Tentacle_Hitbox.ID;
 			for (int i = 0; i < 14; i++) {
-				 NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, hitboxID, NPC.whoAmI, NPC.whoAmI, (i + 1) / 15f);
+				NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, hitboxID, NPC.whoAmI, NPC.whoAmI, (i + 1) / 15f);
 			}
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
@@ -714,8 +714,8 @@ namespace Origins.NPCs.Riven {
 		}
 	}
 	public class Boss_Bar_PA : ModBossBar {
-        public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
-            return Asset<Texture2D>.Empty;
-        }
+		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
+			return Asset<Texture2D>.Empty;
+		}
 	}
 }

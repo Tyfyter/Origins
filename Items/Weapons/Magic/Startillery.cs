@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-    public class Startillery : ModItem {
+	public class Startillery : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Startillery");
 			Tooltip.SetDefault("Fires an arcing starshot that explodes on impact");
@@ -15,18 +15,18 @@ namespace Origins.Items.Weapons.Magic {
 			Item.damage = 48;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Item.mana = 12;
-            Item.noUseGraphic = true;
+			Item.noUseGraphic = true;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.knockBack = 6;
-            Item.shoot = ModContent.ProjectileType<Starshot>();
-            Item.shootSpeed = 16f;
+			Item.shoot = ModContent.ProjectileType<Starshot>();
+			Item.shootSpeed = 16f;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = Origins.Sounds.DeepBoom.WithPitchRange(1f, 1.3f);
 		}
 	}
-    public class Starshot : ModProjectile {
+	public class Starshot : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_288";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Starshot");

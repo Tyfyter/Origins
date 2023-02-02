@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.LootBags {
-    public class Fiberglass_Weaver_Bag : ModItem {
+	public class Fiberglass_Weaver_Bag : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Treasure Bag (Fiberglass Weaver)");
 		}

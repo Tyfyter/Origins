@@ -10,7 +10,7 @@ using Terraria.ModLoader.Default;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Items.Accessories {
-    public class Handy_Helper : ModItem {
+	public class Handy_Helper : ModItem {
 		bool bothGloves = false;
 		bool noGloves = false;
 		public override void SetStaticDefaults() {
@@ -85,7 +85,7 @@ namespace Origins.Items.Accessories {
 					1,
 					player.GetWeaponKnockback(Item),
 					player.whoAmI,
-					ai1:dir
+					ai1: dir
 				);
 				originPlayer.amebicVialCooldown = 100;
 			}
@@ -176,7 +176,7 @@ namespace Origins.Items.Accessories {
 				if (dropped.ModItem is Handy_Helper helper) {
 					if (helper.bothGloves) {
 						helper.bothGloves = false;
-					}else if (!helper.noGloves) {
+					} else if (!helper.noGloves) {
 						helper.noGloves = true;
 					} else {
 						dropped.SetDefaults(ModContent.ItemType<Amebic_Vial>());
@@ -247,7 +247,7 @@ namespace Origins.Items.Accessories {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Handy Tentacle");
-			if (ModContent.RequestIfExists<Texture2D>("Origins/Items/Accessories/Handy_Helper_P", out var gloveTexture)) 
+			if (ModContent.RequestIfExists<Texture2D>("Origins/Items/Accessories/Handy_Helper_P", out var gloveTexture))
 				GloveTexture = gloveTexture;
 			ID = Type;
 		}

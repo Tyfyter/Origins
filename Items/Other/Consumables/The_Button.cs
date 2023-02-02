@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class The_Button : ModItem {
+	public class The_Button : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("The Button");
 			Tooltip.SetDefault("Summons I.C.A.R.U.S");

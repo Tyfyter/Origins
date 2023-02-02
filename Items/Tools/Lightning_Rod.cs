@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-    public class Lightning_Rod : ModItem {
+	public class Lightning_Rod : ModItem {
 
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Lightning Rod");
@@ -36,7 +36,7 @@ namespace Origins.Items.Tools {
 				(damage.Additive - 1) * factor + 1,
 				(damage.Multiplicative - 1) * factor + 1,
 				0,
-				(damage.Flat  + damage.Base) * factor
+				(damage.Flat + damage.Base) * factor
 			);
 		}
 		public override void AddRecipes() {
@@ -159,8 +159,7 @@ namespace Origins.Items.Tools {
 					if (playerToProjectile.Y > 0f) {
 						playerToProjectile.Y *= 1f + positionInverseMultiplier;
 						playerToProjectile.X *= 1f - positionInverseMultiplier;
-					}
-					else {
+					} else {
 						absVelocitySum = Math.Abs(Projectile.velocity.X) / 3f;
 						if (absVelocitySum > 1f) {
 							absVelocitySum = 1f;

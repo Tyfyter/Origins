@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.LootBags {
-    public class Primordial_Amoeba_Bag : ModItem {
+	public class Primordial_Amoeba_Bag : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Treasure Bag (Primordial Amoeba)");
 		}

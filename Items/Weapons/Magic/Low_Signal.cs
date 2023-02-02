@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-    public class Low_Signal : ModItem {
+	public class Low_Signal : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Low Signal");
@@ -20,17 +20,17 @@ namespace Origins.Items.Weapons.Magic {
 			Item.damage = 40;
 			Item.DamageType = DamageClass.Magic;
 			Item.mana = 9;
-            Item.noMelee = true;
-            Item.noUseGraphic = false;
+			Item.noMelee = true;
+			Item.noUseGraphic = false;
 			Item.width = 30;
 			Item.height = 36;
 			Item.useTime = 46;
 			Item.useAnimation = 46;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
-            Item.shoot = ModContent.ProjectileType<Low_Signal_P>();
-            Item.shootSpeed = 14f;
-            Item.useTurn = false;
+			Item.shoot = ModContent.ProjectileType<Low_Signal_P>();
+			Item.shootSpeed = 14f;
+			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f);
@@ -38,8 +38,8 @@ namespace Origins.Items.Weapons.Magic {
 			Item.glowMask = glowmask;
 		}
 	}
-    public class Low_Signal_P : ModProjectile {
-        public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
+	public class Low_Signal_P : ModProjectile {
+		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Nerve Signal");
 		}
@@ -55,7 +55,7 @@ namespace Origins.Items.Weapons.Magic {
 			}
 		}
 		public override void SetDefaults() {
-            Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
+			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.timeLeft = 40;
 			Projectile.usesLocalNPCImmunity = true;

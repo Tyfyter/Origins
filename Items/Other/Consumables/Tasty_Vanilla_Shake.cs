@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Tasty_Vanilla_Shake : ModItem {
+	public class Tasty_Vanilla_Shake : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Vanilla Shake");
 			Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}");

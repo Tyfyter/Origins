@@ -4,7 +4,7 @@ using Terraria.Localization;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
-    public class Blue_Bovine_Quest : Quest {
+	public class Blue_Bovine_Quest : Quest {
 		//backing field for Stage property
 		int stage = 0;
 		int progress = 0;
@@ -62,14 +62,14 @@ namespace Origins.Questing {
 					if (Origins.npcChatQuestSelected) {// - if the player has already inquired about a quest -
 						Stage = 1;// - set stage to 1 (kill harpies)
 					} else {// - otherwise -
-						// - set npc chat text to "start" text and mark that the player has inquired about a quest
+							// - set npc chat text to "start" text and mark that the player has inquired about a quest
 						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Merchant.Blue_Bovine.Start", Main.LocalPlayer.Get2ndPersonReference("casual"));
 						Origins.npcChatQuestSelected = true;// (npcChatQuestSelected is reset to false when the player closes the dialogue box)
 					}
 					break;
 				}
 				case 2: {// - stage 2 (killed enough harpies) - 
-					// - set npc chat text to "complete" text and quest stage to 3 (completed)
+						 // - set npc chat text to "complete" text and quest stage to 3 (completed)
 					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Merchant.Blue_Bovine.Complete");
 					Stage = 3;
 					break;

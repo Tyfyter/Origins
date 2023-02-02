@@ -61,15 +61,15 @@ namespace Origins.World.BiomeData {
 			FissureDropRule = null;
 		}
 		public const int NeededTiles = 200;
-        public const int ShaderTileCount = 75;
+		public const int ShaderTileCount = 75;
 		public const short DefaultTileDust = DustID.Titanium;
 		//public static SpawnConditionBestiaryInfoElement BestiaryIcon = new SpawnConditionBestiaryInfoElement("Bestiary_Biomes.Ocean", 28, "Images/MapBG11");
 		public static class SpawnRates {
-            public const float Cyclops = 1;
-            public const float Mite = 1;
-            public const float Brute = 0.6f;
-            public const float Flyer = 0.6f;
-            public const float Worm = 0.6f;
+			public const float Cyclops = 1;
+			public const float Mite = 1;
+			public const float Brute = 0.6f;
+			public const float Flyer = 0.6f;
+			public const float Worm = 0.6f;
 			public const float Mimic = 0.1f;
 			public const float Bident = 0.2f;
 			public const float Tripod = 0.3f;
@@ -89,7 +89,7 @@ namespace Origins.World.BiomeData {
 				int startCount = genRand.Next(4, 9);
 				float maxSpread = 3f / startCount;
 				Vector2 vel;
-				for (int count = startCount; count>0; count--) {
+				for (int count = startCount; count > 0; count--) {
 					vel = Vector2.UnitX.RotatedBy((MathHelper.TwoPi * (count / (float)startCount)) + genRand.NextFloat(-maxSpread, maxSpread));
 					veins.Enqueue((0, (startVec + vel * 16, vel)));
 				}
@@ -101,13 +101,13 @@ namespace Origins.World.BiomeData {
 					current = veins.Dequeue();
 					int endChance = genRand.Next(1, 5) + genRand.Next(0, 4) + genRand.Next(0, 4);
 					int selector = genRand.Next(4);
-                    if (endChance <= current.generation) {
+					if (endChance <= current.generation) {
 						if (genRand.Next(veins.Count) < 6 - fisureCheckSpots.Count) {
 							selector = 3;
 						}
-                    }else if (selector == 3 && genRand.Next(veins.Count) > 6 - fisureCheckSpots.Count) {
+					} else if (selector == 3 && genRand.Next(veins.Count) > 6 - fisureCheckSpots.Count) {
 						selector = genRand.Next(3);
-                    }
+					}
 					switch (selector) {
 						case 0:
 						case 1: {
@@ -194,9 +194,9 @@ namespace Origins.World.BiomeData {
 							break;
 						}//vein & cave
 					}
-                }
+				}
 				ushort fissureID = (ushort)ModContent.TileType<Defiled_Fissure>();
-                while (fisureCount < 6 && fisureCheckSpots.Count > 0) {
+				while (fisureCount < 6 && fisureCheckSpots.Count > 0) {
 					int ch = genRand.Next(fisureCheckSpots.Count);
 					for (int o = 0; o > -5; o = o > 0 ? -o : -o + 1) {
 						Point p = fisureCheckSpots[ch].ToPoint();
@@ -223,7 +223,7 @@ namespace Origins.World.BiomeData {
 					fisureCheckSpots.RemoveAt(ch);
 				}
 				ushort defiledAltar = (ushort)ModContent.TileType<Defiled_Altar>();
-				for (int i0 = genRand.Next(10, 15); i0-->0;) {
+				for (int i0 = genRand.Next(10, 15); i0-- > 0;) {
 					int tries = 0;
 					bool placed = false;
 					while (!placed && ++tries < 10000) {
@@ -293,9 +293,9 @@ namespace Origins.World.BiomeData {
 						if (diff > 16 * sizeMult) {
 							continue;
 						}
-                        if (Math.Cos(diff*0.7f)<=0.1f) {
+						if (Math.Cos(diff * 0.7f) <= 0.1f) {
 							Main.tile[x, y].ResetToType(stoneID);
-                        } else {
+						} else {
 							Tile tile0 = Main.tile[x, y];
 							tile0.HasTile = false;
 						}
@@ -306,9 +306,9 @@ namespace Origins.World.BiomeData {
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
 				for (int x = (int)Math.Floor(i - size); x < (int)Math.Ceiling(i + size); x++) {
 					for (int y = (int)Math.Ceiling(j + size); y >= (int)Math.Floor(j - size); y--) {
-                        if (Main.tile[x, y].HasTile && Main.tileSolid[Main.tile[x, y].TileType]) {
+						if (Main.tile[x, y].HasTile && Main.tileSolid[Main.tile[x, y].TileType]) {
 							continue;
-                        }
+						}
 						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
 						if (diff > size + thickness || diff < size - thickness) {
 							continue;
@@ -364,8 +364,8 @@ namespace Origins.World.BiomeData {
 							if (dist > strength) {
 								double d = Math.Sqrt(dist);
 								if (!openAir && d < baseStrength + basewallThickness && OriginExtensions.IsTileReplacable(l, k) && tile.WallType != _wallType) {
-									
-                                    if (!Main.tileContainer[tile.TileType]) {
+
+									if (!Main.tileContainer[tile.TileType]) {
 										tile.HasTile = true;
 										tile.ResetToType(wallBlockType);
 									}
@@ -426,14 +426,14 @@ namespace Origins.World.BiomeData {
 				return (pos, speed);
 			}
 		}
-		
+
 		public static void CheckFissure(int i, int j, int type) {
 			if (destroyObject) {
 				return;
 			}
-            int x = Main.tile[i, j].TileFrameX != 0 ? i - 1 : i;
-            int y = Main.tile[i, j].TileFrameY != 0 && Main.tile[i, j].TileFrameY != 36 ? j - 1 : j;
-            for (int k = 0; k < 2; k++) {
+			int x = Main.tile[i, j].TileFrameX != 0 ? i - 1 : i;
+			int y = Main.tile[i, j].TileFrameY != 0 && Main.tile[i, j].TileFrameY != 36 ? j - 1 : j;
+			for (int k = 0; k < 2; k++) {
 				for (int l = 0; l < 2; l++) {
 					Tile tile = Main.tile[x + k, y + l];
 					if (tile != null && (!tile.HasUnactuatedTile || tile.TileType != type)) {
@@ -509,7 +509,7 @@ namespace Origins.World.BiomeData {
 					break;
 				}*/
 				shadowOrbSmashed = true;
-				
+
 				//this projectile handles the rest
 				Projectile.NewProjectile(GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Defiled_Wastelands_Signal>(), 0, 0, Main.myPlayer, ai0: 1, ai1: player);
 

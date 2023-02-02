@@ -42,12 +42,12 @@ namespace Origins.Items.Other.Testing {
 			return true;
 		}
 		public override bool? UseItem(Player player)/* Suggestion: Return null instead of false */ {
-			if(Main.myPlayer == player.whoAmI){
-				if(player.altFunctionUse == 2) {
-					if(player.controlSmart) {
-						mode = (mode + modeCount - 1)%modeCount;
+			if (Main.myPlayer == player.whoAmI) {
+				if (player.altFunctionUse == 2) {
+					if (player.controlSmart) {
+						mode = (mode + modeCount - 1) % modeCount;
 					} else {
-						mode = (mode + 1)%modeCount;
+						mode = (mode + 1) % modeCount;
 					}
 					arm = null;
 					switch (mode) {

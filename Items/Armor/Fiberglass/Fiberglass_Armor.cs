@@ -4,7 +4,7 @@ using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Armor.Fiberglass {
-    [AutoloadEquip(EquipType.Head)]
+	[AutoloadEquip(EquipType.Head)]
 	public class Fiberglass_Helmet : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Helmet");
@@ -13,22 +13,22 @@ namespace Origins.Items.Armor.Fiberglass {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-            Item.defense = 5;
+			Item.defense = 5;
 			Item.value = Item.sellPrice(silver: 75);
 		}
-        public override bool IsArmorSet(Item head, Item body, Item legs) {
-            return body.type == ModContent.ItemType<Fiberglass_Body>() && legs.type == ModContent.ItemType<Fiberglass_Legs>();
-        }
-        public override void UpdateArmorSet(Player player) {
-            player.setBonus = "Weapon damage increased by 4";
+		public override bool IsArmorSet(Item head, Item body, Item legs) {
+			return body.type == ModContent.ItemType<Fiberglass_Body>() && legs.type == ModContent.ItemType<Fiberglass_Legs>();
+		}
+		public override void UpdateArmorSet(Player player) {
+			player.setBonus = "Weapon damage increased by 4";
 			player.GetDamage(DamageClass.Default).Flat += 4;
 			player.GetDamage(DamageClass.Generic).Flat += 4;
 			//player.GetModPlayer<OriginPlayer>().fiberglassSet = true;
-            int inv = player.FindBuffIndex(BuffID.Invisibility);
-            if(inv>-1)player.buffTime[inv]++;
-        }
+			int inv = player.FindBuffIndex(BuffID.Invisibility);
+			if (inv > -1) player.buffTime[inv]++;
+		}
 	}
-    [AutoloadEquip(EquipType.Body)]
+	[AutoloadEquip(EquipType.Body)]
 	public class Fiberglass_Body : ModItem {
 		public static int SlotID { get; private set; }
 		public override void SetStaticDefaults() {
@@ -40,11 +40,11 @@ namespace Origins.Items.Armor.Fiberglass {
 			SlotID = Item.bodySlot;
 		}
 		public override void SetDefaults() {
-            Item.defense = 6;
+			Item.defense = 6;
 			Item.value = Item.sellPrice(silver: 60);
 		}
 	}
-    [AutoloadEquip(EquipType.Legs)]
+	[AutoloadEquip(EquipType.Legs)]
 	public class Fiberglass_Legs : ModItem {
 		public static int SlotID { get; private set; }
 		public override void SetStaticDefaults() {
@@ -56,7 +56,7 @@ namespace Origins.Items.Armor.Fiberglass {
 			SlotID = Item.legSlot;
 		}
 		public override void SetDefaults() {
-            Item.defense = 5;
+			Item.defense = 5;
 			Item.value = Item.sellPrice(silver: 45);
 		}
 	}

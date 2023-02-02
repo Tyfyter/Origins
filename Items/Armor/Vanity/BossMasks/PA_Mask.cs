@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Vanity.BossMasks {
-    [AutoloadEquip(EquipType.Head)]
+	[AutoloadEquip(EquipType.Head)]
 	public class PA_Mask : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Primordial Amoeba Mask");

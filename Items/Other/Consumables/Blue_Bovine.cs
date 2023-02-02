@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Blue_Bovine : ModItem {
+	public class Blue_Bovine : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Blue Bovine");
 			Tooltip.SetDefault("'Blue Bovine allows flight and slow fall!'");

@@ -107,14 +107,14 @@ namespace Tyfyter.Utils {
 				{ 1, 1, 3 }
 				})[num58, num59] - 1;
 			}
-			bool upLeft = (mergeDirections&128)!=0;
+			bool upLeft = (mergeDirections & 128) != 0;
 			const byte up = 64;
-			bool upRight = (mergeDirections &32) != 0;
+			bool upRight = (mergeDirections & 32) != 0;
 			const byte left = 16;
 			const byte right = 8;
-			bool downLeft = (mergeDirections &4) != 0;
+			bool downLeft = (mergeDirections & 4) != 0;
 			const byte down = 2;
-			bool downRight = (mergeDirections &1) != 0;
+			bool downRight = (mergeDirections & 1) != 0;
 			switch (mergeDirections) {
 				case up | down | left | right: {
 					if (!upLeft && !upRight) {
@@ -193,7 +193,8 @@ namespace Tyfyter.Utils {
 							break;
 						}
 					}
-				}break;
+				}
+				break;
 				case down | left | right: {
 					switch (frameOption) {
 						case 0:
@@ -209,7 +210,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 0;
 						break;
 					}
-				}break;
+				}
+				break;
 				case up | left | right: {
 					switch (frameOption) {
 						case 0:
@@ -225,7 +227,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 36;
 						break;
 					}
-				}break;
+				}
+				break;
 				case up | down | right: {
 					switch (frameOption) {
 						case 0:
@@ -241,7 +244,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 36;
 						break;
 					}
-				}break;
+				}
+				break;
 				case up | down | left: {
 					switch (frameOption) {
 						case 0:
@@ -257,7 +261,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 36;
 						break;
 					}
-				}break;
+				}
+				break;
 				case down | right: {
 					switch (frameOption) {
 						case 0:
@@ -273,7 +278,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 54;
 						break;
 					}
-				}break;
+				}
+				break;
 				case down | left: {
 					switch (frameOption) {
 						case 0:
@@ -289,7 +295,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 54;
 						break;
 					}
-				}break;
+				}
+				break;
 				case up | right: {
 					switch (frameOption) {
 						case 0:
@@ -305,7 +312,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 72;
 						break;
 					}
-				}break;
+				}
+				break;
 				case up | left: {
 					switch (frameOption) {
 						case 0:
@@ -321,7 +329,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 72;
 						break;
 					}
-				}break;
+				}
+				break;
 				case up | down: {
 					switch (frameOption) {
 						case 0:
@@ -337,7 +346,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 36;
 						break;
 					}
-				}break;
+				}
+				break;
 				case left | right: {
 					switch (frameOption) {
 						case 0:
@@ -353,7 +363,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 72;
 						break;
 					}
-				}break;
+				}
+				break;
 				case down: {
 					switch (frameOption) {
 						case 0:
@@ -369,7 +380,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 0;
 						break;
 					}
-				}break;
+				}
+				break;
 				case up: {
 					switch (frameOption) {
 						case 0:
@@ -385,7 +397,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 54;
 						break;
 					}
-				}break;
+				}
+				break;
 				case right: {
 					switch (frameOption) {
 						case 0:
@@ -401,7 +414,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 36;
 						break;
 					}
-				}break;
+				}
+				break;
 				case left: {
 					switch (frameOption) {
 						case 0:
@@ -417,7 +431,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 36;
 						break;
 					}
-				}break;
+				}
+				break;
 				case 0: {
 					switch (frameOption) {
 						case 0:
@@ -433,7 +448,8 @@ namespace Tyfyter.Utils {
 						tile.TileFrameY = 54;
 						break;
 					}
-				}break;
+				}
+				break;
 			}
 			if (tile.TileFrameX != frameX && tile.TileFrameY != frameY) {
 				WorldGen.tileReframeCount++;

@@ -10,11 +10,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
-namespace Origins.Tiles.Defiled
-{
+namespace Origins.Tiles.Defiled {
 	public class Defiled_Tree : ModTree {
 		private Mod mod => Origins.instance;
-        public static Defiled_Tree Instance { get; private set; }
+		public static Defiled_Tree Instance { get; private set; }
 		public override TreePaintingSettings TreeShaderSettings => new();
 		public override void SetStaticDefaults() {
 			GrowsOnTileId = new int[] {
@@ -24,19 +23,19 @@ namespace Origins.Tiles.Defiled
 			};
 		}
 		internal static void Load() {
-            Instance = new Defiled_Tree();
-        }
+			Instance = new Defiled_Tree();
+		}
 
-        internal static void Unload() {
-            Instance = null;
-        }
+		internal static void Unload() {
+			Instance = null;
+		}
 
 		/*public override int CreateDust() {
 			return ModContent.DustType<>();
 		}*/
 
 		public override int TreeLeaf() {
-			return mod.GetGoreSlot($"Gores/NPCs/DF_Effect_{(Main.rand.NextBool()?"Medium":"Small")}{Main.rand.Next(3)+1}");//adds one because sprites use 1-based indices
+			return mod.GetGoreSlot($"Gores/NPCs/DF_Effect_{(Main.rand.NextBool() ? "Medium" : "Small")}{Main.rand.Next(3) + 1}");//adds one because sprites use 1-based indices
 		}
 
 		public override int SaplingGrowthType(ref int style) {
@@ -60,10 +59,10 @@ namespace Origins.Tiles.Defiled
 		}
 
 		public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
-			
+
 		}
 	}
-    public class Defiled_Tree_Sapling : ModTile {
+	public class Defiled_Tree_Sapling : ModTile {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileNoAttach[Type] = true;

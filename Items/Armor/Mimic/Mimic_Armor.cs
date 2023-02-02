@@ -4,7 +4,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Mimic {
-    [AutoloadEquip(EquipType.Head)]
+	[AutoloadEquip(EquipType.Head)]
 	public class Mimic_Helmet : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Mimic Helmet");
@@ -70,7 +70,7 @@ namespace Origins.Items.Armor.Mimic {
 					originPlayer.explosiveSelfDamage -= defiledPercentage;
 					//originPlayer.explosiveBlastRadius += 0.5f * defiledPercentage;
 					if (defiledPercentage == 1) {
-					player.GetModPlayer<OriginPlayer>().riftSet = true;
+						player.GetModPlayer<OriginPlayer>().riftSet = true;
 					}
 					break;
 				}

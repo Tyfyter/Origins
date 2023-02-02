@@ -8,34 +8,34 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
-    public class Brainy_Staff : ModItem {
-        internal static int projectileID = 0;
-        internal static int buffID = 0;
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Brainy Staff");
-            Tooltip.SetDefault("Summons a mini Brain of Cthulhu to fight for you");
+	public class Brainy_Staff : ModItem {
+		internal static int projectileID = 0;
+		internal static int buffID = 0;
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Brainy Staff");
+			Tooltip.SetDefault("Summons a mini Brain of Cthulhu to fight for you");
 			SacrificeTotal = 1;
 		}
-        public override void SetDefaults() {
-            Item.damage = 10;
+		public override void SetDefaults() {
+			Item.damage = 10;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 16;
-            Item.width = 32;
-            Item.height = 32;
-            Item.useTime = 36;
-            Item.useAnimation = 36;
-            Item.useStyle = ItemUseStyleID.Swing;
+			Item.width = 32;
+			Item.height = 32;
+			Item.useTime = 36;
+			Item.useAnimation = 36;
+			Item.useStyle = ItemUseStyleID.Swing;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
-            Item.UseSound = SoundID.Item44;
-            Item.buffType = buffID;
-            Item.shoot = projectileID;
-            Item.noMelee = true;
-        }
+			Item.UseSound = SoundID.Item44;
+			Item.buffType = buffID;
+			Item.shoot = projectileID;
+			Item.noMelee = true;
+		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (buffID==0)buffID = ModContent.BuffType<Brainy_Buff>();
-            player.AddBuff(Item.buffType, 2);
-            position = Main.MouseWorld;
+			if (buffID == 0) buffID = ModContent.BuffType<Brainy_Buff>();
+			player.AddBuff(Item.buffType, 2);
+			position = Main.MouseWorld;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (buffID == 0) buffID = ModContent.BuffType<Wormy_Buff>();
@@ -46,31 +46,31 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 }
 namespace Origins.Buffs {
-    public class Brainy_Buff : ModBuff {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Mini Brain of Cthulhu");
-            Description.SetDefault("The Brain of Cthulhu will fight for you");
-            Main.buffNoSave[Type] = true;
-            Main.buffNoTimeDisplay[Type] = true;
-            Brainy_Staff.buffID = Type;
-        }
+	public class Brainy_Buff : ModBuff {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Mini Brain of Cthulhu");
+			Description.SetDefault("The Brain of Cthulhu will fight for you");
+			Main.buffNoSave[Type] = true;
+			Main.buffNoTimeDisplay[Type] = true;
+			Brainy_Staff.buffID = Type;
+		}
 
-        public override void Update(Player player, ref int buffIndex) {
-            if(player.ownedProjectileCounts[Brainy_Staff.projectileID] > 0) {
-                player.buffTime[buffIndex] = 18000;
-            } else {
-                player.DelBuff(buffIndex);
-                buffIndex--;
-            }
-        }
-    }
+		public override void Update(Player player, ref int buffIndex) {
+			if (player.ownedProjectileCounts[Brainy_Staff.projectileID] > 0) {
+				player.buffTime[buffIndex] = 18000;
+			} else {
+				player.DelBuff(buffIndex);
+				buffIndex--;
+			}
+		}
+	}
 }
 
 namespace Origins.Items.Weapons.Summoner.Minions {
-    public class Mini_BOC : ModProjectile {
+	public class Mini_BOC : ModProjectile {
 		public const int frameSpeed = 4;
 		public override void SetStaticDefaults() {
-            Brainy_Staff.projectileID = Projectile.type;
+			Brainy_Staff.projectileID = Projectile.type;
 			DisplayName.SetDefault("Brainchild");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;
@@ -94,8 +94,8 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile.minion = true;
 			Projectile.minionSlots = 2f;
 			Projectile.penetrate = -1;
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 14;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 14;
 		}
 
 		// Here you can decide if your minion breaks things like grass or pots
@@ -123,7 +123,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			#region General behavior
 			Vector2 idlePosition = player.Top;
-            idlePosition.X -= 48f*player.direction;
+			idlePosition.X -= 48f * player.direction;
 
 			// Teleport to player if distance is too big
 			Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
@@ -155,7 +155,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// Starting search distance
 			float distanceFromTarget = 2000f;
 			Vector2 targetCenter = Projectile.position;
-            int target = -1;
+			int target = -1;
 			void targetingAlgorithm(NPC npc, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
 				if (!isPriorityTarget && distanceFromTarget > 700f) {
 					distanceFromTarget = 700f;
@@ -188,17 +188,17 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			float inertia = 16f;
 
 			if (foundTarget) {
-                Projectile.tileCollide = true;
+				Projectile.tileCollide = true;
 				// Minion has a target: attack (here, fly towards the enemy)
 				//if (distanceFromTarget > 40f || !projectile.Hitbox.Intersects(Main.npc[target].Hitbox)) {
-					// The immediate range around the target (so it doesn't latch onto it when close)
-					Vector2 direction = targetCenter - Projectile.Center;
-					direction.Normalize();
-					direction *= speed;
-					Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
+				// The immediate range around the target (so it doesn't latch onto it when close)
+				Vector2 direction = targetCenter - Projectile.Center;
+				direction.Normalize();
+				direction *= speed;
+				Projectile.velocity = (Projectile.velocity * (inertia - 1) + direction) / inertia;
 				//}
 			} else {
-                Projectile.tileCollide = false;
+				Projectile.tileCollide = false;
 				if (distanceToIdlePosition > 600f) {
 					speed = 24f;
 					inertia = 36f;
@@ -237,10 +237,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			#endregion
 		}
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            if(Main.rand.Next(10)<3&&(target.Center-Main.player[Projectile.owner].Center).Length()<480) {
-                target.AddBuff(BuffID.Confused, 60);
-            }
-        }
-    }
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			if (Main.rand.Next(10) < 3 && (target.Center - Main.player[Projectile.owner].Center).Length() < 480) {
+				target.AddBuff(BuffID.Confused, 60);
+			}
+		}
+	}
 }

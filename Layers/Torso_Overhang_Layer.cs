@@ -19,17 +19,17 @@ namespace Origins.Layers {
 		}
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Leggings);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
-            Player drawPlayer = drawInfo.drawPlayer;
-            AutoCastingAsset<Texture2D> texture = TextureAssets.ArmorBodyComposite[Origins.PlagueTexanJacketID];
+			Player drawPlayer = drawInfo.drawPlayer;
+			AutoCastingAsset<Texture2D> texture = TextureAssets.ArmorBodyComposite[Origins.PlagueTexanJacketID];
 
-            Vector2 Position = new Vector2(((int)(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f)), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + drawInfo.bodyVect;
-            Rectangle Frame = drawPlayer.bodyFrame;
-            Position.Y += Frame.Height - 2;
-            Frame.Y += Frame.Height - 2;
-            Frame.Height = 2;
-            DrawData item = new DrawData(texture, Position, Frame, Color.White, drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
-            item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
-            drawInfo.DrawDataCache.Add(item);
-        }
+			Vector2 Position = new Vector2(((int)(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f)), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + drawInfo.bodyVect;
+			Rectangle Frame = drawPlayer.bodyFrame;
+			Position.Y += Frame.Height - 2;
+			Frame.Y += Frame.Height - 2;
+			Frame.Height = 2;
+			DrawData item = new DrawData(texture, Position, Frame, Color.White, drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
+			item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
+			drawInfo.DrawDataCache.Add(item);
+		}
 	}
 }

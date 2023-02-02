@@ -12,7 +12,7 @@ namespace Origins.Journal {
 			return Entries.Values.Where((e) => e.TextKey == key).FirstOrDefault();
 		}
 
-		public void Load(Mod mod) {}
+		public void Load(Mod mod) { }
 
 		public void Unload() {
 			Entries = null;

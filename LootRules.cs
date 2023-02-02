@@ -27,7 +27,7 @@ namespace Origins.LootConditions {
 						rule.condition = new IsWorldEvil(OriginSystem.evil_crimson);
 					} else if (rule.condition is Conditions.IsCorruptionAndNotExpert) {
 						rule.condition = new IsWorldEvilAndNotExpert(OriginSystem.evil_corruption);
-						if(onCorruptRule is not null) onCorruptRule(rule, true);
+						if (onCorruptRule is not null) onCorruptRule(rule, true);
 					} else if (rule.condition is Conditions.IsCrimsonAndNotExpert) {
 						rule.condition = new IsWorldEvilAndNotExpert(OriginSystem.evil_crimson);
 					}

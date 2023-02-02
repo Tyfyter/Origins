@@ -35,25 +35,25 @@ using ReLogic.Graphics;
 namespace Origins {
 	#region classes
 	public class LinkedQueue<T> : ICollection<T> {
-        public int Count {
-            get { return _items.Count; }
-        }
+		public int Count {
+			get { return _items.Count; }
+		}
 
-        public void Enqueue(T item) {
-            _items.AddLast(item);
-        }
+		public void Enqueue(T item) {
+			_items.AddLast(item);
+		}
 
-        public T Dequeue() {
-            if(_items.First is null)
-                throw new InvalidOperationException("Queue empty.");
+		public T Dequeue() {
+			if (_items.First is null)
+				throw new InvalidOperationException("Queue empty.");
 
-            var item = _items.First.Value;
-            _items.RemoveFirst();
+			var item = _items.First.Value;
+			_items.RemoveFirst();
 
-            return item;
-        }
-        //convenient shorthand that's incompatible with the vs debugger
-        /*# region shorthand
+			return item;
+		}
+		//convenient shorthand that's incompatible with the vs debugger
+		/*# region shorthand
         /// <summary>
         /// shorthand for Dequeue
         /// </summary>
@@ -70,330 +70,330 @@ namespace Origins {
             set => Enqueue(value);
         }
         # endregion*/
-        public bool Remove(T item) {
-            return _items.Remove(item);
-        }
+		public bool Remove(T item) {
+			return _items.Remove(item);
+		}
 
-        public void RemoveAt(int index) {
-            _items.Remove(GetNodeEnumerator().Skip(index).First());
-        }
+		public void RemoveAt(int index) {
+			_items.Remove(GetNodeEnumerator().Skip(index).First());
+		}
 
-        public IEnumerable<T> GetEnumerator() {
-            while(Count > 0) yield return Dequeue();
-        }
+		public IEnumerable<T> GetEnumerator() {
+			while (Count > 0) yield return Dequeue();
+		}
 
-        public IEnumerable<LinkedListNode<T>> GetNodeEnumerator() {
-            IEnumerator<LinkedListNode<T>> enumerator = new LLNodeEnumerator<T>(_items);
-            yield return enumerator.Current;
-            while(enumerator.MoveNext()) yield return enumerator.Current;
-        }
+		public IEnumerable<LinkedListNode<T>> GetNodeEnumerator() {
+			IEnumerator<LinkedListNode<T>> enumerator = new LLNodeEnumerator<T>(_items);
+			yield return enumerator.Current;
+			while (enumerator.MoveNext()) yield return enumerator.Current;
+		}
 
-        public T[] ToArray() {
-            return _items.ToArray();
-        }
-        #region ICollection implementation
-        [Obsolete("Use Enqueue")]
-        public void Add(T item) {
-            Enqueue(item);
-        }
+		public T[] ToArray() {
+			return _items.ToArray();
+		}
+		#region ICollection implementation
+		[Obsolete("Use Enqueue")]
+		public void Add(T item) {
+			Enqueue(item);
+		}
 
-        public void Clear() {
-            _items.Clear();
-        }
+		public void Clear() {
+			_items.Clear();
+		}
 
-        public bool Contains(T item) {
-            return _items.Contains(item);
-        }
+		public bool Contains(T item) {
+			return _items.Contains(item);
+		}
 
-        public void CopyTo(T[] array, int arrayIndex) {
-            _items.CopyTo(array, arrayIndex);
-        }
+		public void CopyTo(T[] array, int arrayIndex) {
+			_items.CopyTo(array, arrayIndex);
+		}
 
-        [Obsolete]
-        IEnumerator<T> IEnumerable<T>.GetEnumerator() {
-            throw new NotImplementedException();
-        }
+		[Obsolete]
+		IEnumerator<T> IEnumerable<T>.GetEnumerator() {
+			throw new NotImplementedException();
+		}
 
-        [Obsolete]
-        IEnumerator IEnumerable.GetEnumerator() {
-            throw new NotImplementedException();
-        }
+		[Obsolete]
+		IEnumerator IEnumerable.GetEnumerator() {
+			throw new NotImplementedException();
+		}
 
-        public bool IsReadOnly => false;
-        #endregion
-        private LinkedList<T> _items = new LinkedList<T>();
-    }
-    public struct LLNodeEnumerator<T> : IEnumerator<LinkedListNode<T>>{
-        internal static FieldInfo LLVersion;
-        private LinkedList<T> list;
-        private LinkedListNode<T> current;
-        private readonly int version;
-        public LLNodeEnumerator(LinkedList<T> list) {
-            this.list = list;
-            version = list.GetVersion();
-            current = list.First;
-        }
-
-        public LinkedListNode<T> Current => current;
-
-        object IEnumerator.Current => current;
-
-        public void Dispose() {}
-
-        public bool MoveNext() {
-            VersionCheck();
-            current = current.Next;
-            return !(current is null);
-        }
-
-        public void Reset() {
-            VersionCheck();
-            current = list.First;
-        }
-        void VersionCheck() {
-            if (version != list.GetVersion()) {
-                throw new InvalidOperationException("Collection has been modified");
-            }
-        }
-    }
-    /// <summary>
-    /// Because it's a little more convenient than an extension method for every number type
-    /// </summary>
-    public struct Fraction {
-        public static Fraction Half => new Fraction(1, 2);
-        public static Fraction Third => new Fraction(1, 3);
-        public static Fraction Quarter => new Fraction(1, 4);
-        public static Fraction Fifth => new Fraction(1, 5);
-        public static Fraction Sixth => new Fraction(1, 6);
-        public int numerator;
-        public int denominator;
-        public int N {get=>numerator;set=>numerator=value;}
-        public int D {get=>denominator;set=>denominator=value;}
-        public Fraction(int numerator, int denominator) {
-            this.numerator = numerator;
-            this.denominator = denominator;
-        }
-        public static Fraction operator +(Fraction f1, Fraction f2) {
-            return new Fraction((f1.N * f2.D) + (f2.N * f1.D), f1.D*f2.D);
-        }
-        public static Fraction operator -(Fraction f1, Fraction f2) {
-            return new Fraction((f1.N * f2.D) - (f2.N * f1.D), f1.D*f2.D);
-        }
-        public static Fraction operator *(Fraction f1, Fraction f2) {
-            return new Fraction(f1.N * f2.N, f1.D * f2.D);
-        }
-        public static Fraction operator /(Fraction f1, Fraction f2) {
-            return new Fraction(f1.N * f2.D, f1.D * f2.N);
-        }
-        public static Fraction operator *(Fraction frac, int i) {
-            return new Fraction(frac.N * i, frac.D);
-        }
-        public static int operator *(int i, Fraction frac) {
-            return (i * frac.N) / frac.D;
-        }
-        public static Fraction operator /(Fraction frac, int i) {
-            return new Fraction(frac.N, frac.D*i);
-        }
-        public static int operator /(int i, Fraction frac) {
-            return (i * frac.D) / frac.N;
-        }
-        public static explicit operator float(Fraction frac) {
-            return frac.N/(float)frac.D;
-        }
-        public static explicit operator double(Fraction frac) {
-            return frac.N/(double)frac.D;
-        }
-        public override string ToString() {
-            return N+"/"+D;
-        }
-    }
-    public struct ConvertableFieldInfo<T> {
-        FieldInfo fieldInfo;
-        object obj;
-        public ConvertableFieldInfo(FieldInfo fieldInfo, object obj = null) {
-            this.fieldInfo = fieldInfo;
-            this.obj = obj;
-            if (!typeof(T).IsAssignableFrom(fieldInfo.FieldType)) {
-                throw new InvalidCastException($"field {fieldInfo.Name} of type {fieldInfo.FieldType} cannot be converted to {typeof(T)}");
-            }
-        }
-        public static explicit operator T(ConvertableFieldInfo<T> convertableFieldInfo) {
-            return (T)convertableFieldInfo.fieldInfo.GetValue(convertableFieldInfo.obj);
-        }
-    }
-    public class DrawAnimationManual : DrawAnimation {
-	    public DrawAnimationManual(int frameCount) {
-		    Frame = 0;
-		    FrameCounter = 0;
-		    FrameCount = frameCount;
-            TicksPerFrame = -1;
-	    }
-
-	    public override void Update() {}
-
-	    public override Rectangle GetFrame(Texture2D texture, int frameCounterOverride = -1) {
-            if(TicksPerFrame==-1)FrameCounter = 0;
-			if (frameCounterOverride != -1) {
-                return texture.Frame(FrameCount, 1, (frameCounterOverride / TicksPerFrame)%FrameCount, 0);
-			}
-		    return texture.Frame(FrameCount, 1, Frame, 0);
-	    }
-    }
-    public struct AutoCastingAsset<T> where T : class {
-        public bool IsLoaded => asset?.IsLoaded ?? false;
-        public T Value => asset?.Value;
-
-        readonly Asset<T> asset;
-        AutoCastingAsset(Asset<T> asset) {
-            this.asset = asset;
-        }
-        public static implicit operator AutoCastingAsset<T>(Asset<T> asset) => new(asset);
-        public static implicit operator T(AutoCastingAsset<T> asset) => asset.Value;
+		public bool IsReadOnly => false;
+		#endregion
+		private LinkedList<T> _items = new LinkedList<T>();
 	}
-    public struct PlayerShaderSet {
-        public int cHead;
-        public int cBody;
-        public int cLegs;
-        public int cHandOn;
-        public int cHandOff;
-        public int cBack;
-        public int cFront;
-        public int cShoe;
-        public int cWaist;
-        public int cShield;
-        public int cNeck;
-        public int cFace;
-        public int cFaceHead;
-        public int cFaceFlower;
-        public int cBalloon;
-        public int cWings;
-        public int cBalloonFront;
-        public int cCarpet;
-        public int cFloatingTube;
-        public int cBackpack;
-        public int cTail;
-        public int cShieldFallback;
-        public int cGrapple;
-        public int cMount;
-        public int cMinecart;
-        public int cPet;
-        public int cLight;
-        public int cYorai;
-        public int cPortalbeStool;
-        public int cUnicornHorn;
-        public int cAngelHalo;
-        public int cBeard;
-        public int cMinion;
-        public int cLeinShampoo;
-        public PlayerShaderSet(Player player) {
-            cHead = player.cHead;
-            cBody = player.cBody;
-            cLegs = player.cLegs;
-            cHandOn = player.cHandOn;
-            cHandOff = player.cHandOff;
-            cBack = player.cBack;
-            cFront = player.cFront;
-            cShoe = player.cShoe;
-            cWaist = player.cWaist;
-            cShield = player.cShield;
-            cNeck = player.cNeck;
-            cFace = player.cFace;
-            cFaceHead = player.cFaceHead;
-            cFaceFlower = player.cFaceFlower;
-            cBalloon = player.cBalloon;
-            cWings = player.cWings;
-            cBalloonFront = player.cBalloonFront;
-            cCarpet = player.cCarpet;
-            cFloatingTube = player.cFloatingTube;
-            cBackpack = player.cBackpack;
-            cTail = player.cTail;
-            cShieldFallback = player.cShieldFallback;
-            cGrapple = player.cGrapple;
-            cMount = player.cMount;
-            cMinecart = player.cMinecart;
-            cPet = player.cPet;
-            cLight = player.cLight;
-            cYorai = player.cYorai;
-            cPortalbeStool = player.cPortalbeStool;
-            cUnicornHorn = player.cUnicornHorn;
-            cAngelHalo = player.cAngelHalo;
-            cBeard = player.cBeard;
-            cMinion = player.cMinion;
-            cLeinShampoo = player.cLeinShampoo;
-        }
-        public PlayerShaderSet(int shader) {
-            cHead = shader;
-            cBody = shader;
-            cLegs = shader;
-            cHandOn = shader;
-            cHandOff = shader;
-            cBack = shader;
-            cFront = shader;
-            cShoe = shader;
-            cWaist = shader;
-            cShield = shader;
-            cNeck = shader;
-            cFace = shader;
-            cFaceHead = shader;
-            cFaceFlower = shader;
-            cBalloon = shader;
-            cWings = shader;
-            cBalloonFront = shader;
-            cCarpet = shader;
-            cFloatingTube = shader;
-            cBackpack = shader;
-            cTail = shader;
-            cShieldFallback = shader;
-            cGrapple = shader;
-            cMount = shader;
-            cMinecart = shader;
-            cPet = shader;
-            cLight = shader;
-            cYorai = shader;
-            cPortalbeStool = shader;
-            cUnicornHorn = shader;
-            cAngelHalo = shader;
-            cBeard = shader;
-            cMinion = shader;
-            cLeinShampoo = shader;
-        }
-        public void Apply(Player player) {
-            player.cHead = cHead;
-            player.cBody = cBody;
-            player.cLegs = cLegs;
-            player.cHandOn = cHandOn;
-            player.cHandOff = cHandOff;
-            player.cBack = cBack;
-            player.cFront = cFront;
-            player.cShoe = cShoe;
-            player.cWaist = cWaist;
-            player.cShield = cShield;
-            player.cNeck = cNeck;
-            player.cFace = cFace;
-            player.cFaceHead = cFaceHead;
-            player.cFaceFlower = cFaceFlower;
-            player.cBalloon = cBalloon;
-            player.cWings = cWings;
-            player.cBalloonFront = cBalloonFront;
-            player.cCarpet = cCarpet;
-            player.cFloatingTube = cFloatingTube;
-            player.cBackpack = cBackpack;
-            player.cTail = cTail;
-            player.cShieldFallback = cShieldFallback;
-            player.cGrapple = cGrapple;
-            player.cMount = cMount;
-            player.cMinecart = cMinecart;
-            player.cPet = cPet;
-            player.cLight = cLight;
-            player.cYorai = cYorai;
-            player.cPortalbeStool = cPortalbeStool;
-            player.cUnicornHorn = cUnicornHorn;
-            player.cAngelHalo = cAngelHalo;
-            player.cBeard = cBeard;
-            player.cMinion = cMinion;
-            player.cLeinShampoo = cLeinShampoo;
+	public struct LLNodeEnumerator<T> : IEnumerator<LinkedListNode<T>> {
+		internal static FieldInfo LLVersion;
+		private LinkedList<T> list;
+		private LinkedListNode<T> current;
+		private readonly int version;
+		public LLNodeEnumerator(LinkedList<T> list) {
+			this.list = list;
+			version = list.GetVersion();
+			current = list.First;
+		}
 
-        }
+		public LinkedListNode<T> Current => current;
+
+		object IEnumerator.Current => current;
+
+		public void Dispose() { }
+
+		public bool MoveNext() {
+			VersionCheck();
+			current = current.Next;
+			return !(current is null);
+		}
+
+		public void Reset() {
+			VersionCheck();
+			current = list.First;
+		}
+		void VersionCheck() {
+			if (version != list.GetVersion()) {
+				throw new InvalidOperationException("Collection has been modified");
+			}
+		}
+	}
+	/// <summary>
+	/// Because it's a little more convenient than an extension method for every number type
+	/// </summary>
+	public struct Fraction {
+		public static Fraction Half => new Fraction(1, 2);
+		public static Fraction Third => new Fraction(1, 3);
+		public static Fraction Quarter => new Fraction(1, 4);
+		public static Fraction Fifth => new Fraction(1, 5);
+		public static Fraction Sixth => new Fraction(1, 6);
+		public int numerator;
+		public int denominator;
+		public int N { get => numerator; set => numerator = value; }
+		public int D { get => denominator; set => denominator = value; }
+		public Fraction(int numerator, int denominator) {
+			this.numerator = numerator;
+			this.denominator = denominator;
+		}
+		public static Fraction operator +(Fraction f1, Fraction f2) {
+			return new Fraction((f1.N * f2.D) + (f2.N * f1.D), f1.D * f2.D);
+		}
+		public static Fraction operator -(Fraction f1, Fraction f2) {
+			return new Fraction((f1.N * f2.D) - (f2.N * f1.D), f1.D * f2.D);
+		}
+		public static Fraction operator *(Fraction f1, Fraction f2) {
+			return new Fraction(f1.N * f2.N, f1.D * f2.D);
+		}
+		public static Fraction operator /(Fraction f1, Fraction f2) {
+			return new Fraction(f1.N * f2.D, f1.D * f2.N);
+		}
+		public static Fraction operator *(Fraction frac, int i) {
+			return new Fraction(frac.N * i, frac.D);
+		}
+		public static int operator *(int i, Fraction frac) {
+			return (i * frac.N) / frac.D;
+		}
+		public static Fraction operator /(Fraction frac, int i) {
+			return new Fraction(frac.N, frac.D * i);
+		}
+		public static int operator /(int i, Fraction frac) {
+			return (i * frac.D) / frac.N;
+		}
+		public static explicit operator float(Fraction frac) {
+			return frac.N / (float)frac.D;
+		}
+		public static explicit operator double(Fraction frac) {
+			return frac.N / (double)frac.D;
+		}
+		public override string ToString() {
+			return N + "/" + D;
+		}
+	}
+	public struct ConvertableFieldInfo<T> {
+		FieldInfo fieldInfo;
+		object obj;
+		public ConvertableFieldInfo(FieldInfo fieldInfo, object obj = null) {
+			this.fieldInfo = fieldInfo;
+			this.obj = obj;
+			if (!typeof(T).IsAssignableFrom(fieldInfo.FieldType)) {
+				throw new InvalidCastException($"field {fieldInfo.Name} of type {fieldInfo.FieldType} cannot be converted to {typeof(T)}");
+			}
+		}
+		public static explicit operator T(ConvertableFieldInfo<T> convertableFieldInfo) {
+			return (T)convertableFieldInfo.fieldInfo.GetValue(convertableFieldInfo.obj);
+		}
+	}
+	public class DrawAnimationManual : DrawAnimation {
+		public DrawAnimationManual(int frameCount) {
+			Frame = 0;
+			FrameCounter = 0;
+			FrameCount = frameCount;
+			TicksPerFrame = -1;
+		}
+
+		public override void Update() { }
+
+		public override Rectangle GetFrame(Texture2D texture, int frameCounterOverride = -1) {
+			if (TicksPerFrame == -1) FrameCounter = 0;
+			if (frameCounterOverride != -1) {
+				return texture.Frame(FrameCount, 1, (frameCounterOverride / TicksPerFrame) % FrameCount, 0);
+			}
+			return texture.Frame(FrameCount, 1, Frame, 0);
+		}
+	}
+	public struct AutoCastingAsset<T> where T : class {
+		public bool IsLoaded => asset?.IsLoaded ?? false;
+		public T Value => asset?.Value;
+
+		readonly Asset<T> asset;
+		AutoCastingAsset(Asset<T> asset) {
+			this.asset = asset;
+		}
+		public static implicit operator AutoCastingAsset<T>(Asset<T> asset) => new(asset);
+		public static implicit operator T(AutoCastingAsset<T> asset) => asset.Value;
+	}
+	public struct PlayerShaderSet {
+		public int cHead;
+		public int cBody;
+		public int cLegs;
+		public int cHandOn;
+		public int cHandOff;
+		public int cBack;
+		public int cFront;
+		public int cShoe;
+		public int cWaist;
+		public int cShield;
+		public int cNeck;
+		public int cFace;
+		public int cFaceHead;
+		public int cFaceFlower;
+		public int cBalloon;
+		public int cWings;
+		public int cBalloonFront;
+		public int cCarpet;
+		public int cFloatingTube;
+		public int cBackpack;
+		public int cTail;
+		public int cShieldFallback;
+		public int cGrapple;
+		public int cMount;
+		public int cMinecart;
+		public int cPet;
+		public int cLight;
+		public int cYorai;
+		public int cPortalbeStool;
+		public int cUnicornHorn;
+		public int cAngelHalo;
+		public int cBeard;
+		public int cMinion;
+		public int cLeinShampoo;
+		public PlayerShaderSet(Player player) {
+			cHead = player.cHead;
+			cBody = player.cBody;
+			cLegs = player.cLegs;
+			cHandOn = player.cHandOn;
+			cHandOff = player.cHandOff;
+			cBack = player.cBack;
+			cFront = player.cFront;
+			cShoe = player.cShoe;
+			cWaist = player.cWaist;
+			cShield = player.cShield;
+			cNeck = player.cNeck;
+			cFace = player.cFace;
+			cFaceHead = player.cFaceHead;
+			cFaceFlower = player.cFaceFlower;
+			cBalloon = player.cBalloon;
+			cWings = player.cWings;
+			cBalloonFront = player.cBalloonFront;
+			cCarpet = player.cCarpet;
+			cFloatingTube = player.cFloatingTube;
+			cBackpack = player.cBackpack;
+			cTail = player.cTail;
+			cShieldFallback = player.cShieldFallback;
+			cGrapple = player.cGrapple;
+			cMount = player.cMount;
+			cMinecart = player.cMinecart;
+			cPet = player.cPet;
+			cLight = player.cLight;
+			cYorai = player.cYorai;
+			cPortalbeStool = player.cPortalbeStool;
+			cUnicornHorn = player.cUnicornHorn;
+			cAngelHalo = player.cAngelHalo;
+			cBeard = player.cBeard;
+			cMinion = player.cMinion;
+			cLeinShampoo = player.cLeinShampoo;
+		}
+		public PlayerShaderSet(int shader) {
+			cHead = shader;
+			cBody = shader;
+			cLegs = shader;
+			cHandOn = shader;
+			cHandOff = shader;
+			cBack = shader;
+			cFront = shader;
+			cShoe = shader;
+			cWaist = shader;
+			cShield = shader;
+			cNeck = shader;
+			cFace = shader;
+			cFaceHead = shader;
+			cFaceFlower = shader;
+			cBalloon = shader;
+			cWings = shader;
+			cBalloonFront = shader;
+			cCarpet = shader;
+			cFloatingTube = shader;
+			cBackpack = shader;
+			cTail = shader;
+			cShieldFallback = shader;
+			cGrapple = shader;
+			cMount = shader;
+			cMinecart = shader;
+			cPet = shader;
+			cLight = shader;
+			cYorai = shader;
+			cPortalbeStool = shader;
+			cUnicornHorn = shader;
+			cAngelHalo = shader;
+			cBeard = shader;
+			cMinion = shader;
+			cLeinShampoo = shader;
+		}
+		public void Apply(Player player) {
+			player.cHead = cHead;
+			player.cBody = cBody;
+			player.cLegs = cLegs;
+			player.cHandOn = cHandOn;
+			player.cHandOff = cHandOff;
+			player.cBack = cBack;
+			player.cFront = cFront;
+			player.cShoe = cShoe;
+			player.cWaist = cWaist;
+			player.cShield = cShield;
+			player.cNeck = cNeck;
+			player.cFace = cFace;
+			player.cFaceHead = cFaceHead;
+			player.cFaceFlower = cFaceFlower;
+			player.cBalloon = cBalloon;
+			player.cWings = cWings;
+			player.cBalloonFront = cBalloonFront;
+			player.cCarpet = cCarpet;
+			player.cFloatingTube = cFloatingTube;
+			player.cBackpack = cBackpack;
+			player.cTail = cTail;
+			player.cShieldFallback = cShieldFallback;
+			player.cGrapple = cGrapple;
+			player.cMount = cMount;
+			player.cMinecart = cMinecart;
+			player.cPet = cPet;
+			player.cLight = cLight;
+			player.cYorai = cYorai;
+			player.cPortalbeStool = cPortalbeStool;
+			player.cUnicornHorn = cUnicornHorn;
+			player.cAngelHalo = cAngelHalo;
+			player.cBeard = cBeard;
+			player.cMinion = cMinion;
+			player.cLeinShampoo = cLeinShampoo;
+
+		}
 	}
 	public struct ItemSlotSet {
 		public sbyte beardSlot;
@@ -438,74 +438,74 @@ namespace Origins {
 		}
 	}
 	public record SpriteBatchState(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix transformMatrix = default);
-    public abstract class AnimatedModItem : ModItem {
-        public abstract DrawAnimation Animation { get; }
-        public virtual Color? GetGlowmaskTint(Player player) => null;
-        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
-            Texture2D texture = TextureAssets.Item[Item.type].Value;
-            spriteBatch.Draw(texture, Item.position-Main.screenPosition, Animation.GetFrame(texture), lightColor, 0f, default(Vector2), scale, SpriteEffects.None, 0f);
-            return false;
-        }
-    }
-    public interface ICustomDrawItem {
-        void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin);
-    }
-    public interface IAltTileCollideNPC {
-        int CollisionType { get; }
-    }
-    public interface ICustomCollisionNPC {
-        bool IsSandshark => false;
-        void PreUpdateCollision();
-        void PostUpdateCollision();
-    }
-    public interface IMeleeCollisionDataNPC {
-        void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult);
-    }
-    interface IComplexMineDamageTile {
-        void MinePower(int i, int j, int minePower, ref int damage) {
+	public abstract class AnimatedModItem : ModItem {
+		public abstract DrawAnimation Animation { get; }
+		public virtual Color? GetGlowmaskTint(Player player) => null;
+		public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI) {
+			Texture2D texture = TextureAssets.Item[Item.type].Value;
+			spriteBatch.Draw(texture, Item.position - Main.screenPosition, Animation.GetFrame(texture), lightColor, 0f, default(Vector2), scale, SpriteEffects.None, 0f);
+			return false;
+		}
+	}
+	public interface ICustomDrawItem {
+		void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin);
+	}
+	public interface IAltTileCollideNPC {
+		int CollisionType { get; }
+	}
+	public interface ICustomCollisionNPC {
+		bool IsSandshark => false;
+		void PreUpdateCollision();
+		void PostUpdateCollision();
+	}
+	public interface IMeleeCollisionDataNPC {
+		void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult);
+	}
+	interface IComplexMineDamageTile {
+		void MinePower(int i, int j, int minePower, ref int damage) {
 			damage += (int)(1.2f * minePower);
 		}
-    }
-    public interface IWhipProjectile {
-        void GetWhipSettings(out float timeToFlyOut, out int segments, out float rangeMultiplier);
 	}
-    public static class MeleeCollisionNPCData {
-        public static float knockbackMult = 1f;
-    }
-    public interface IElementalItem {
-        ushort Element { get; }
-    }
-    public interface IElementalProjectile {
-        ushort Element { get; }
-    }
-    public interface IGlowingWaterStyle {
-        public void AddLight(ref Vector3 color, byte liquidAmount);
-    }
-    public interface IShadedProjectile {
-        public int Shader { get; }
-    }
-    interface IIsExplodingProjectile {
-        bool IsExploding();
-    }
-    interface ICustomRespawnArtifact {
-        void Respawn();
-    }
-    public static class Elements {
-        public const ushort Fire = 1;
-        public const ushort Earth = 2;
-        public const ushort Acid = 4;
-        public const ushort Ice = 8;
-        public const ushort Fiberglass = 16;
-    }
-    public static class SlopeID {
-        public const byte None = 0;
-        public const byte BottomLeft = 1;
-        public const byte BottomRight = 2;
-        public const byte TopLeft = 3;
-        public const byte TopRight = 4;
-    }
-    public static class NPCAIStyleID {
-        ///<summary>
+	public interface IWhipProjectile {
+		void GetWhipSettings(out float timeToFlyOut, out int segments, out float rangeMultiplier);
+	}
+	public static class MeleeCollisionNPCData {
+		public static float knockbackMult = 1f;
+	}
+	public interface IElementalItem {
+		ushort Element { get; }
+	}
+	public interface IElementalProjectile {
+		ushort Element { get; }
+	}
+	public interface IGlowingWaterStyle {
+		public void AddLight(ref Vector3 color, byte liquidAmount);
+	}
+	public interface IShadedProjectile {
+		public int Shader { get; }
+	}
+	interface IIsExplodingProjectile {
+		bool IsExploding();
+	}
+	interface ICustomRespawnArtifact {
+		void Respawn();
+	}
+	public static class Elements {
+		public const ushort Fire = 1;
+		public const ushort Earth = 2;
+		public const ushort Acid = 4;
+		public const ushort Ice = 8;
+		public const ushort Fiberglass = 16;
+	}
+	public static class SlopeID {
+		public const byte None = 0;
+		public const byte BottomLeft = 1;
+		public const byte BottomRight = 2;
+		public const byte TopLeft = 3;
+		public const byte TopRight = 4;
+	}
+	public static class NPCAIStyleID {
+		///<summary>
 		///Doesn't move.
 		///</summary>
 		public const int None = 0;
@@ -994,67 +994,67 @@ namespace Origins {
 		///</summary>
 		public const int Queen_Slime = 121;
 		public const int Pirate_Curse = 122;
-    }
-    public static class ChestID {
-        public const int Normal = 0;
-        public const int Gold = 1;
-        public const int LockedGold = 2;
-        public const int Shadow = 3;
-        public const int LockedShadow = 4;
-        public const int Barrel = 5;
-        public const int TrashCan = 6;
-        public const int Ebonwood = 7;
-        public const int RichMahogany = 8;
-        public const int Pearlwood = 9;
-        public const int Ivy = 10;
-        public const int Ice = 11;
-        public const int LivingWood = 12;
-        public const int Skyware = 13;
-        public const int Shadewood = 14;
-        public const int Web = 15;
-        public const int Lihzahrd = 16;
-        public const int Water = 17;
-        public const int Jungle = 18;
-        public const int Corruption = 19;
-        public const int Crimson = 20;
-        public const int Hallow = 21;
-        public const int Frozen = 22;
-        public const int LockedJungle = 23;
-        public const int LockedCorruption = 24;
-        public const int LockedCrimson = 25;
-        public const int LockedHallow = 26;
-        public const int LockedFrozen = 27;
-        public const int Dynasty = 28;
-        public const int Honey = 29;
-        public const int Steampunk = 30;
-        public const int Palm = 31;
-        public const int Mushroom = 32;
-        public const int Boreal = 33;
-        public const int Slime = 34;
-        public const int GreenDungeon = 35;
-        public const int LockedGreenDungeon = 36;
-        public const int PinkDungeon = 37;
-        public const int LockedPinkDungeon = 38;
-        public const int BlueDungeon = 39;
-        public const int LockedBlueDungeon = 40;
-        public const int Bone = 41;
-        public const int Cactus = 42;
-        public const int Flesh = 43;
-        public const int Obsidian = 44;
-        public const int Pumpkin = 45;
-        public const int Spooky = 46;
-        public const int Glass = 47;
-        public const int Martian = 48;
-        public const int Meteorite = 49;
-        public const int Granite = 50;
-        public const int Marble = 51;
-        public const int Crystal = 52;
-        public const int Golden = 53;
-        public static readonly IdDictionary Search = IdDictionary.Create(typeof(ChestID), typeof(int));
-    }
+	}
+	public static class ChestID {
+		public const int Normal = 0;
+		public const int Gold = 1;
+		public const int LockedGold = 2;
+		public const int Shadow = 3;
+		public const int LockedShadow = 4;
+		public const int Barrel = 5;
+		public const int TrashCan = 6;
+		public const int Ebonwood = 7;
+		public const int RichMahogany = 8;
+		public const int Pearlwood = 9;
+		public const int Ivy = 10;
+		public const int Ice = 11;
+		public const int LivingWood = 12;
+		public const int Skyware = 13;
+		public const int Shadewood = 14;
+		public const int Web = 15;
+		public const int Lihzahrd = 16;
+		public const int Water = 17;
+		public const int Jungle = 18;
+		public const int Corruption = 19;
+		public const int Crimson = 20;
+		public const int Hallow = 21;
+		public const int Frozen = 22;
+		public const int LockedJungle = 23;
+		public const int LockedCorruption = 24;
+		public const int LockedCrimson = 25;
+		public const int LockedHallow = 26;
+		public const int LockedFrozen = 27;
+		public const int Dynasty = 28;
+		public const int Honey = 29;
+		public const int Steampunk = 30;
+		public const int Palm = 31;
+		public const int Mushroom = 32;
+		public const int Boreal = 33;
+		public const int Slime = 34;
+		public const int GreenDungeon = 35;
+		public const int LockedGreenDungeon = 36;
+		public const int PinkDungeon = 37;
+		public const int LockedPinkDungeon = 38;
+		public const int BlueDungeon = 39;
+		public const int LockedBlueDungeon = 40;
+		public const int Bone = 41;
+		public const int Cactus = 42;
+		public const int Flesh = 43;
+		public const int Obsidian = 44;
+		public const int Pumpkin = 45;
+		public const int Spooky = 46;
+		public const int Glass = 47;
+		public const int Martian = 48;
+		public const int Meteorite = 49;
+		public const int Granite = 50;
+		public const int Marble = 51;
+		public const int Crystal = 52;
+		public const int Golden = 53;
+		public static readonly IdDictionary Search = IdDictionary.Create(typeof(ChestID), typeof(int));
+	}
 	#endregion
 	public delegate void hook_DropItem(ItemDropper orig, DropAttemptInfo info, int item, int stack, bool scattered = false);
-    public delegate void ItemDropper(DropAttemptInfo info, int item, int stack, bool scattered = false);
+	public delegate void ItemDropper(DropAttemptInfo info, int item, int stack, bool scattered = false);
 	public static class OriginExtensions {
 		public static Func<float, int, Vector2> drawPlayerItemPos;
 		public static SoundStyle WithPitch(this SoundStyle soundStyle, float pitch) {
@@ -1768,24 +1768,24 @@ namespace Origins {
 			return _idToSlot[itemType][equipType];
 		}
 		static FieldInfo _spriteCharacters;
-        static FieldInfo _SpriteCharacters => _spriteCharacters ??= typeof(DynamicSpriteFont).GetField("_spriteCharacters", BindingFlags.NonPublic | BindingFlags.Instance);
-        static FieldInfo _defaultCharacterData;
-        static FieldInfo _DefaultCharacterData => _defaultCharacterData ??= typeof(DynamicSpriteFont).GetField("_defaultCharacterData", BindingFlags.NonPublic | BindingFlags.Instance);
-        static DynamicSpriteFont strikethroughFont;
-        public static DynamicSpriteFont StrikethroughFont {
-            get {
-                if (strikethroughFont is null) {
-                    if (FontAssets.MouseText.IsLoaded) {
-                        DynamicSpriteFont baseFont = FontAssets.MouseText.Value;
-                        strikethroughFont = new DynamicSpriteFont(-2, baseFont.LineSpacing, baseFont.DefaultCharacter);
-                        _SpriteCharacters.SetValue(strikethroughFont, _SpriteCharacters.GetValue(baseFont));
-                        _DefaultCharacterData.SetValue(strikethroughFont, _DefaultCharacterData.GetValue(baseFont));
-                    } else {
-                        return FontAssets.MouseText.Value;
-                    }
-                }
-                return strikethroughFont;
-            }
-        }
-    }
+		static FieldInfo _SpriteCharacters => _spriteCharacters ??= typeof(DynamicSpriteFont).GetField("_spriteCharacters", BindingFlags.NonPublic | BindingFlags.Instance);
+		static FieldInfo _defaultCharacterData;
+		static FieldInfo _DefaultCharacterData => _defaultCharacterData ??= typeof(DynamicSpriteFont).GetField("_defaultCharacterData", BindingFlags.NonPublic | BindingFlags.Instance);
+		static DynamicSpriteFont strikethroughFont;
+		public static DynamicSpriteFont StrikethroughFont {
+			get {
+				if (strikethroughFont is null) {
+					if (FontAssets.MouseText.IsLoaded) {
+						DynamicSpriteFont baseFont = FontAssets.MouseText.Value;
+						strikethroughFont = new DynamicSpriteFont(-2, baseFont.LineSpacing, baseFont.DefaultCharacter);
+						_SpriteCharacters.SetValue(strikethroughFont, _SpriteCharacters.GetValue(baseFont));
+						_DefaultCharacterData.SetValue(strikethroughFont, _DefaultCharacterData.GetValue(baseFont));
+					} else {
+						return FontAssets.MouseText.Value;
+					}
+				}
+				return strikethroughFont;
+			}
+		}
+	}
 }

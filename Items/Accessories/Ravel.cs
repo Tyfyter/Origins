@@ -9,32 +9,32 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Ravel : ModItem {
-        public static int ID { get; private set; } = -1;
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Ravel");
-            Tooltip.SetDefault("Double tap down to transform into a small, rolling ball");
-            SacrificeTotal = 1;
-            ID = Type;
-        }
+	public class Ravel : ModItem {
+		public static int ID { get; private set; } = -1;
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Ravel");
+			Tooltip.SetDefault("Double tap down to transform into a small, rolling ball");
+			SacrificeTotal = 1;
+			ID = Type;
+		}
 		public override void SetDefaults() {
-            Item.width = 24;
-            Item.height = 24;
-            Item.accessory = true;
-            Item.rare = ItemRarityID.Pink;
-            Item.value = Item.sellPrice(gold: 8);
-            Item.shoot = ModContent.MountType<Ravel_Mount>();//can't use mountType because that'd make it fit in the mount slot
+			Item.width = 24;
+			Item.height = 24;
+			Item.accessory = true;
+			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 8);
+			Item.shoot = ModContent.MountType<Ravel_Mount>();//can't use mountType because that'd make it fit in the mount slot
 			Item.canBePlacedInVanityRegardlessOfConditions = true;
-        }
-        public override void UpdateEquip(Player player) {
+		}
+		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ravelEquipped = true;
 			originPlayer.vanityRavel = Type;
-            const int down = 0;
-            bool toggle = player.controlDown && player.releaseDown && player.doubleTapCardinalTimer[down] < 15;
+			const int down = 0;
+			bool toggle = player.controlDown && player.releaseDown && player.doubleTapCardinalTimer[down] < 15;
 			bool inOtherRavel = false;
 			if (player.mount.Type == Item.shoot) {
-                UpdateRaveled(player);
+				UpdateRaveled(player);
 			} else {
 				inOtherRavel = Ravel_Mount.RavelMounts.Contains(player.mount.Type);
 			}
@@ -64,10 +64,10 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().vanityRavel = Type;
 		}
 		protected virtual void UpdateRaveled(Player player) {
-            player.blackBelt = true;
-        }
+			player.blackBelt = true;
+		}
 		public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player) {
-            return incomingItem.ModItem is not Ravel || equippedItem.ModItem is not Ravel;
+			return incomingItem.ModItem is not Ravel || equippedItem.ModItem is not Ravel;
 		}
 		public override bool CanEquipAccessory(Player player, int slot, bool modded) {
 			if (slot > Player.InitialAccSlotCount + player.extraAccessorySlots + 3) {
@@ -82,53 +82,53 @@ namespace Origins.Items.Accessories {
 			return true;
 		}
 	}
-    public class Ravel_Mount : ModMount {
+	public class Ravel_Mount : ModMount {
 		public const int transformAnimationFrames = 3;
 		public const float transformCounterSpeed = 1.75f;
 		public const float transformCounterMax = 4f;
 		public override string Texture => "Origins/Items/Accessories/Ravel";
-        public static int ID { get; private set; } = -1;
+		public static int ID { get; private set; } = -1;
 		public static AutoCastingAsset<Texture2D> TransformTexture { get; private set; }
 		protected virtual void SetID() {
-            MountData.buff = ModContent.BuffType<Ravel_Mount_Buff>();
-            ID = Type;
-        }
-        protected internal static HashSet<int> RavelMounts { get; private set; }
-        public override void Unload() {
-            RavelMounts = null;
+			MountData.buff = ModContent.BuffType<Ravel_Mount_Buff>();
+			ID = Type;
+		}
+		protected internal static HashSet<int> RavelMounts { get; private set; }
+		public override void Unload() {
+			RavelMounts = null;
 			TransformTexture = null;
 		}
 		public override void SetStaticDefaults() {
-            // Movement
-            MountData.jumpHeight = 8; // How high the mount can jump.
-            MountData.acceleration = 0.19f; // The rate at which the mount speeds up.
-            MountData.jumpSpeed = 8f; // The rate at which the player and mount ascend towards (negative y velocity) the jump height when the jump button is pressed.
-            MountData.blockExtraJumps = true; // Determines whether or not you can use a double jump (like cloud in a bottle) while in the mount.
-            MountData.constantJump = false; // Allows you to hold the jump button down.
-            MountData.fallDamage = 0.5f; // Fall damage multiplier.
-            MountData.runSpeed = 8f; // The speed of the mount
-            MountData.dashSpeed = 8f; // The speed the mount moves when in the state of dashing.
-            MountData.flightTimeMax = 0; // The amount of time in frames a mount can be in the state of flying.
-            MountData.heightBoost = -22;
+			// Movement
+			MountData.jumpHeight = 8; // How high the mount can jump.
+			MountData.acceleration = 0.19f; // The rate at which the mount speeds up.
+			MountData.jumpSpeed = 8f; // The rate at which the player and mount ascend towards (negative y velocity) the jump height when the jump button is pressed.
+			MountData.blockExtraJumps = true; // Determines whether or not you can use a double jump (like cloud in a bottle) while in the mount.
+			MountData.constantJump = false; // Allows you to hold the jump button down.
+			MountData.fallDamage = 0.5f; // Fall damage multiplier.
+			MountData.runSpeed = 8f; // The speed of the mount
+			MountData.dashSpeed = 8f; // The speed the mount moves when in the state of dashing.
+			MountData.flightTimeMax = 0; // The amount of time in frames a mount can be in the state of flying.
+			MountData.heightBoost = -22;
 			MountData.spawnDust = No_Dust.ID;
 
-            // Misc
-            MountData.fatigueMax = 0;
-            //MountData.buff = Ravel_Mount_Buff.ID; // The ID number of the buff assigned to the mount.
+			// Misc
+			MountData.fatigueMax = 0;
+			//MountData.buff = Ravel_Mount_Buff.ID; // The ID number of the buff assigned to the mount.
 
-            MountData.totalFrames = 1; // Amount of animation frames for the mount
-            MountData.playerYOffsets = new int[] { -22 };
-            (RavelMounts ??= new()).Add(Type);
+			MountData.totalFrames = 1; // Amount of animation frames for the mount
+			MountData.playerYOffsets = new int[] { -22 };
+			(RavelMounts ??= new()).Add(Type);
 			if (!Main.dedServ && TransformTexture.Value is null) {
 				TransformTexture = Mod.Assets.Request<Texture2D>("Items/Accessories/Ravel_Morph");
 			}
 			SetID();
-        }
+		}
 		public override void UpdateEffects(Player player) {
-            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-            originPlayer.mountOnly = true;
-            originPlayer.ravel = true;
-        }
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.mountOnly = true;
+			originPlayer.ravel = true;
+		}
 		public override bool UpdateFrame(Player mountedPlayer, int state, Vector2 velocity) {
 			OriginPlayer originPlayer = mountedPlayer.GetModPlayer<OriginPlayer>();
 			const float factor = 10f / 12f;
@@ -161,36 +161,36 @@ namespace Origins.Items.Accessories {
 				playerDrawData.Add(item);
 				return false;
 			}
-            rotation = drawPlayer.mount._frameCounter * 0.1f;
+			rotation = drawPlayer.mount._frameCounter * 0.1f;
 			int vanityRavel = drawPlayer.GetModPlayer<OriginPlayer>().vanityRavel;
 			if (vanityRavel < 0) return false;
 			Main.instance.LoadItem(vanityRavel);
 			texture = Terraria.GameContent.TextureAssets.Item[vanityRavel].Value;
-            drawOrigin = new Vector2(12, 12);
-            item = new DrawData(texture, drawPosition, null, drawColor, rotation, drawOrigin, drawScale, 0, 0);
-            item.shader = Mount.currentShader;
-            playerDrawData.Add(item);
-            return false;
+			drawOrigin = new Vector2(12, 12);
+			item = new DrawData(texture, drawPosition, null, drawColor, rotation, drawOrigin, drawScale, 0, 0);
+			item.shader = Mount.currentShader;
+			playerDrawData.Add(item);
+			return false;
 		}
-    }
-    public class Ravel_Mount_Buff : ModBuff {
-        public override string Texture => "Origins/Buffs/Ravel_Generic_Buff";
-        protected virtual int MountID => ModContent.MountType<Ravel_Mount>();
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Ravel");
-            Description.SetDefault("10% chance to dodge");
+	}
+	public class Ravel_Mount_Buff : ModBuff {
+		public override string Texture => "Origins/Buffs/Ravel_Generic_Buff";
+		protected virtual int MountID => ModContent.MountType<Ravel_Mount>();
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Ravel");
+			Description.SetDefault("10% chance to dodge");
 
-            BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
-                mountID = MountID
-            };
-            Main.buffNoTimeDisplay[Type] = true;
-            Main.buffNoSave[Type] = true;
-        }
-        public override void Update(Player player, ref int buffIndex) {
-            OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-            originPlayer.changeSize = true;
-            originPlayer.targetWidth = 20;
-            originPlayer.targetHeight = 20;
-        }
+			BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
+				mountID = MountID
+			};
+			Main.buffNoTimeDisplay[Type] = true;
+			Main.buffNoSave[Type] = true;
+		}
+		public override void Update(Player player, ref int buffIndex) {
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.changeSize = true;
+			originPlayer.targetWidth = 20;
+			originPlayer.targetHeight = 20;
+		}
 	}
 }

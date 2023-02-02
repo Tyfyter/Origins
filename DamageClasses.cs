@@ -90,8 +90,8 @@ namespace Origins {
 			this.name = name;
 		}
 		internal static ExplosivePlus CreateAndRegister(DamageClass other) {
-			ExplosivePlus newClass = new(other, "ExplosivePlus"+other.FullName);
-			typeof(ILoadable).GetMethod("Load").Invoke(newClass, new object[]{ Origins.instance });
+			ExplosivePlus newClass = new(other, "ExplosivePlus" + other.FullName);
+			typeof(ILoadable).GetMethod("Load").Invoke(newClass, new object[] { Origins.instance });
 			if (newClass.ClassName.GetDefault() is null) {
 				newClass.ClassName.SetDefault("Explosive + " + other.FullName);
 			}
@@ -108,7 +108,7 @@ namespace Origins {
 			return damageClass == DamageClasses.Explosive || damageClass == other || other.GetEffectInheritance(damageClass);
 		}
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
-			if(damageClass == Generic || damageClass == DamageClasses.Explosive || damageClass == other) {
+			if (damageClass == Generic || damageClass == DamageClasses.Explosive || damageClass == other) {
 				return StatInheritanceData.Full;
 			}
 			return other.GetModifierInheritance(damageClass);

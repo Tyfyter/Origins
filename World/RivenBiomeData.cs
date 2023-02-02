@@ -29,7 +29,7 @@ using static Origins.OriginExtensions;
 using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
-    public class Riven_Hive : ModBiome {
+	public class Riven_Hive : ModBiome {
 		public static IItemDropRule FirstLesionDropRule;
 		public static IItemDropRule LesionDropRule;
 		public override int Music => Origins.Music.Riven;
@@ -42,7 +42,7 @@ namespace Origins.World.BiomeData {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (NeededTiles - ShaderTileCount), ShaderTileCount) / ShaderTileCount;
 			LinearSmoothing(ref originPlayer.ZoneRivenProgressSmoothed, originPlayer.ZoneRivenProgress, OriginSystem.biomeShaderSmoothing * 0.1f);
-			
+
 			return OriginSystem.rivenTiles > NeededTiles;
 		}
 		public override void SpecialVisuals(Player player, bool isActive) {
@@ -154,7 +154,7 @@ namespace Origins.World.BiomeData {
 									tile.TileType = fleshBlockType;
 								}
 								//WorldGen.SquareTileFrame(l, k);
-								if(compY > j || tile.WallType != WallID.None) tile.WallType = fleshWallType;
+								if (compY > j || tile.WallType != WallID.None) tile.WallType = fleshWallType;
 								if (x > X1) {
 									X1 = x;
 								} else if (x < X0) {
@@ -173,7 +173,7 @@ namespace Origins.World.BiomeData {
 						}
 					}
 					pos += (Vector2)speed;
-					if(OriginExtensions.LinearSmoothing(ref speed.Theta, targetTwist + MathHelper.PiOver2, 0.05f)) targetTwist = genRand.NextFloat(-0.5f, 0.5f);
+					if (OriginExtensions.LinearSmoothing(ref speed.Theta, targetTwist + MathHelper.PiOver2, 0.05f)) targetTwist = genRand.NextFloat(-0.5f, 0.5f);
 					strength *= decay;
 					speed.R = (float)Math.Min(speed.R, (float)Math.Sqrt(strength));
 					decay -= 0.01f;
@@ -227,7 +227,7 @@ namespace Origins.World.BiomeData {
 							genRand.NextFloat(12, 24),
 							fleshBlockType,//fleshBlockType
 							6,
-							wallType:fleshWallType
+							wallType: fleshWallType
 						).position;
 						HiveCave_Old((int)pos.X, (int)pos.Y, 0.5f);
 						break;
@@ -248,7 +248,7 @@ namespace Origins.World.BiomeData {
 				if (j2 > Main.worldSurface) {
 					j2 = (int)Main.worldSurface;
 				}
-				for (; !SolidTile(i, j2); j2++) {}
+				for (; !SolidTile(i, j2); j2++) { }
 				Vector2 position = new Vector2(i, j2);
 				for (int x = i - 30; x < i + 30; x++) {
 					for (int y = j2 - 25; y < j2 + 15; y++) {
@@ -348,7 +348,7 @@ namespace Origins.World.BiomeData {
 					}
 				}
 				List<Point> validLesionPlacementSpots = new List<Point>();
-                while (lesionPlacementSpots.Count>0) {
+				while (lesionPlacementSpots.Count > 0) {
 					Point current = lesionPlacementSpots.Dequeue();
 					if (!Main.tile[current.X, current.Y].HasTile && !Main.tile[current.X, current.Y - 1].HasTile && Main.tile[current.X, current.Y + 1].HasTile) {
 						if (!Main.tile[current.X - 1, current.Y].HasTile && !Main.tile[current.X - 1, current.Y - 1].HasTile && Main.tile[current.X - 1, current.Y + 1].HasTile) {
@@ -358,11 +358,11 @@ namespace Origins.World.BiomeData {
 							validLesionPlacementSpots.Add(new Point(current.X, current.Y));
 						}
 					}
-                }
-                for (int index = 0; index < 4; index++) {
-                    if (validLesionPlacementSpots.Count < 1 || lesionCount > 18) {
+				}
+				for (int index = 0; index < 4; index++) {
+					if (validLesionPlacementSpots.Count < 1 || lesionCount > 18) {
 						break;
-                    }
+					}
 					Point current = genRand.Next(validLesionPlacementSpots);
 
 					Place2x2(current.X, current.Y, lesionID, 0);
@@ -379,9 +379,9 @@ namespace Origins.World.BiomeData {
 			if (destroyObject) {
 				return;
 			}
-            int x = Main.tile[i, j].TileFrameX != 0 ? i - 1 : i;
-            int y = Main.tile[i, j].TileFrameY != 0 && Main.tile[i, j].TileFrameY != 36 ? j - 1 : j;
-            for (int k = 0; k < 2; k++) {
+			int x = Main.tile[i, j].TileFrameX != 0 ? i - 1 : i;
+			int y = Main.tile[i, j].TileFrameY != 0 && Main.tile[i, j].TileFrameY != 36 ? j - 1 : j;
+			for (int k = 0; k < 2; k++) {
 				for (int l = 0; l < 2; l++) {
 					Tile tile = Main.tile[x + k, y + l];
 					if (tile != null && (!tile.HasUnactuatedTile || tile.TileType != type)) {
@@ -465,7 +465,7 @@ namespace Origins.World.BiomeData {
 					}
 					if (Main.netMode == NetmodeID.SinglePlayer) {
 						Main.NewText(localizedText.ToString(), 50, byte.MaxValue, 130);
-					}else if (Main.netMode == NetmodeID.Server) {
+					} else if (Main.netMode == NetmodeID.Server) {
 						ChatHelper.BroadcastChatMessage(NetworkText.FromKey(localizedText.Key), new Color(50, 255, 130));
 					}
 					AchievementsHelper.NotifyProgressionEvent(7);
@@ -544,7 +544,7 @@ namespace Origins.World.BiomeData {
 		public class Riven_Hive_Generation_Pass : EvilBiomeGenerationPass {
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
 				int y = (int)worldSurface - 50;
-				for (; !Main.tile[evilBiomePosition, y].HasSolidTile(); y++);
+				for (; !Main.tile[evilBiomePosition, y].HasSolidTile(); y++) ;
 				Riven_Hive.Gen.StartHive(evilBiomePosition, y);
 			}
 

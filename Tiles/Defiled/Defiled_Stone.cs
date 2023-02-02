@@ -6,13 +6,13 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-    public class Defiled_Stone : OriginTile, DefiledTile {
+	public class Defiled_Stone : OriginTile, DefiledTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-            TileID.Sets.Stone[Type] = true;
-            TileID.Sets.Conversion.Stone[Type] = true;
-            TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
+			TileID.Sets.Stone[Type] = true;
+			TileID.Sets.Conversion.Stone[Type] = true;
+			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			/*Main.tileMergeDirt[Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.Stone];
             Main.tileMerge[Type][TileID.Stone] = true;
@@ -22,24 +22,24 @@ namespace Origins.Tiles.Defiled {
 			ItemDrop = ItemType<Defiled_Stone_Item>();
 			AddMapEntry(new Color(200, 200, 200));
 			//SetModTree(Defiled_Tree.Instance);
-            mergeID = TileID.Stone;
-            MinPick = 65;
-            MineResist = 2;
-            AddDefiledTile();
-            HitSound = Origins.Sounds.DefiledIdle;
-        }
-        public override bool CreateDust(int i, int j, ref int type) {
-            type = Defiled_Wastelands.DefaultTileDust;
-            return true;
-        }
-    }
-    public class Defiled_Stone_Item : ModItem {
-        public override void SetStaticDefaults() {
-            DisplayName.SetDefault("{$Defiled} Stone");
-        }
-        public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.StoneBlock);
-            Item.createTile = TileType<Defiled_Stone>();
+			mergeID = TileID.Stone;
+			MinPick = 65;
+			MineResist = 2;
+			AddDefiledTile();
+			HitSound = Origins.Sounds.DefiledIdle;
 		}
-    }
+		public override bool CreateDust(int i, int j, ref int type) {
+			type = Defiled_Wastelands.DefaultTileDust;
+			return true;
+		}
+	}
+	public class Defiled_Stone_Item : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("{$Defiled} Stone");
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.StoneBlock);
+			Item.createTile = TileType<Defiled_Stone>();
+		}
+	}
 }

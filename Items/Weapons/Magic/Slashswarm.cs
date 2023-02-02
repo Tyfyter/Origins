@@ -5,32 +5,32 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-    public class Slashswarm : ModItem {
-        static short glowmask;
-        public override void SetStaticDefaults() {
+	public class Slashswarm : ModItem {
+		static short glowmask;
+		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Slashswarm");
-            glowmask = Origins.AddGlowMask(this, "");
-            SacrificeTotal = 1;
-        }
+			glowmask = Origins.AddGlowMask(this, "");
+			SacrificeTotal = 1;
+		}
 		public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.CrystalStorm);
+			Item.CloneDefaults(ItemID.CrystalStorm);
 			Item.damage = 16;
 			Item.width = 20;
 			Item.height = 22;
 			Item.useTime = 8;
 			Item.useAnimation = 24;
-            Item.shoot = ModContent.ProjectileType<Slashswarm_P>();
-            Item.shootSpeed = 8.75f;
-            Item.mana = 16;
-            Item.knockBack = 0f;
+			Item.shoot = ModContent.ProjectileType<Slashswarm_P>();
+			Item.shootSpeed = 8.75f;
+			Item.mana = 16;
+			Item.knockBack = 0f;
 			Item.value = Item.buyPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.reuseDelay = 8;
 			Item.glowMask = glowmask;
-        }
-    }
-    public class Slashswarm_P : ModProjectile {
+		}
+	}
+	public class Slashswarm_P : ModProjectile {
 		public static int ID { get; private set; } = -1;
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Amoeba_Bubble";
 		public override string GlowTexture => Texture;
@@ -39,14 +39,14 @@ namespace Origins.Items.Weapons.Magic {
 			Main.projFrames[Projectile.type] = 4;
 			ID = Type;
 		}
-        public override void SetDefaults() {
-            Projectile.CloneDefaults(ProjectileID.Grenade);
-            Projectile.aiStyle = 0;
-            Projectile.penetrate = 5;
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.Grenade);
+			Projectile.aiStyle = 0;
+			Projectile.penetrate = 5;
 			Projectile.width = 30;
 			Projectile.height = 30;
-            Projectile.ignoreWater = true;
-            Projectile.timeLeft = 180;
+			Projectile.ignoreWater = true;
+			Projectile.timeLeft = 180;
 			Projectile.scale = 0.75f;
 			Projectile.alpha = 150;
 		}

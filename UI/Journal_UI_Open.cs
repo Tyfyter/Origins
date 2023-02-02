@@ -192,8 +192,8 @@ namespace Origins.UI {
 
 				case Journal_UI_Mode.Search_Page: {
 					//if (!tabLayout) {
-						Rectangle bounds = baseElement.GetDimensions().ToRectangle();
-						pages = new TextSnippet[][]{
+					Rectangle bounds = baseElement.GetDimensions().ToRectangle();
+					pages = new TextSnippet[][]{
 							new TextSnippet[] {
 								new Journal_Search_Snippet(
 									new CalculatedStyle(bounds.X + xMargin,
@@ -226,7 +226,7 @@ namespace Origins.UI {
 						}
 					}
 					for (int i = 0; i < activeQuests.Count; i++) {
-						currentPage.Add(new Quest_Link_Handler.Quest_Link_Snippet(activeQuests[i], Color.Black, inJournal:true));
+						currentPage.Add(new Quest_Link_Handler.Quest_Link_Snippet(activeQuests[i], Color.Black, inJournal: true));
 						currentPage.Add(new TextSnippet("\n"));
 						if (++lineCount > 16) {
 							snippetPages.Add(currentPage.ToArray());
@@ -268,7 +268,7 @@ namespace Origins.UI {
 			Regex itemTagRegex = new Regex("(?<=\\[i:)\\S+?(?=:|])");
 			Match currentMatch = itemTagRegex.Match(outputText);
 			int tries = 1000;
-			while (currentMatch is not null && tries-->0) {
+			while (currentMatch is not null && tries-- > 0) {
 				if (ModContent.TryFind(currentMatch.Value, out ModItem item)) {
 					outputText = itemTagRegex.Replace(outputText, item.Type + "", 1, currentMatch.Index);
 				} else if (ItemID.Search.TryGetId(currentMatch.Value, out int id)) {
@@ -370,10 +370,10 @@ namespace Origins.UI {
 			timeSinceSwitch++;
 			spriteBatch.Draw(PageTexture, bounds, Color.White);
 			switch (mode) {
-				case Journal_UI_Mode.Quest_Page: 
+				case Journal_UI_Mode.Quest_Page:
 				case Journal_UI_Mode.Normal_Page: {
 					int pageCount = pages?.Length ?? 0;
-					spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp, effect:currentEffect?.Shader);
+					spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp, effect: currentEffect?.Shader);
 					/*
 					ChatManager.DrawColorCodedString(spriteBatch,
 							FontAssets.MouseText.Value,
@@ -709,7 +709,7 @@ namespace Origins.UI {
 					}
 					break;
 				}
-				case Journal_UI_Mode.Search_Page:{
+				case Journal_UI_Mode.Search_Page: {
 					int pageCount = pages?.Length ?? 0;
 					spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp, effect: currentEffect?.Shader);
 					/*
@@ -1050,7 +1050,7 @@ namespace Origins.UI {
 					break;
 				}
 			}
-			
+
 			spriteBatch.Restart(spriteBatchState);
 		}
 		static string loremIpsum =

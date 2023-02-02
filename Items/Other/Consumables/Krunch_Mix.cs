@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Krunch_Mix : ModItem {
+	public class Krunch_Mix : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Krunch Mix");
 			Tooltip.SetDefault("{$CommonItemTooltip.MinorStats} and further increased regeneration\n'Taste the graynbow'");

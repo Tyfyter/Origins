@@ -33,10 +33,10 @@ namespace Origins {
 			if (!Main.dedServ && ModLoader.TryGetMod("Wikithis", out wikiThis)) {
 				//WikiThis.Call("AddModURL", Origins.instance, "tyfyter.github.io/OriginsWiki");
 				WikiThis.Call(
-					"DelegateWiki", 
-					Origins.instance.Name, 
-					(Func<object, object, bool>) WikiPageExists,
-					(Func<object, object, bool>) OpenWikiPage
+					"DelegateWiki",
+					Origins.instance.Name,
+					(Func<object, object, bool>)WikiPageExists,
+					(Func<object, object, bool>)OpenWikiPage
 				);
 				Origins.instance.Logger.Info("Added Wikithis integration");
 				wikiSiteMap = new HashSet<string>();

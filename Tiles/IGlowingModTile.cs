@@ -9,8 +9,8 @@ using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles {
-    public interface IGlowingModTile {
-        AutoCastingAsset<Texture2D> GlowTexture { get; }
-        Color GlowColor { get; }
-    }
+	public interface IGlowingModTile {
+		AutoCastingAsset<Texture2D> GlowTexture { get; }
+		Color GlowColor { get; }
+	}
 }

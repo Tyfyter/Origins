@@ -15,10 +15,10 @@ using Terraria.ModLoader.Default;
 using Terraria.Utilities;
 
 namespace Origins.NPCs.TownNPCs {
-    [AutoloadHead]
-    public class Acid_Freak : ModNPC {
+	[AutoloadHead]
+	public class Acid_Freak : ModNPC {
 		public override void SetStaticDefaults() {
-            DisplayName.SetDefault("Acid Freak");
+			DisplayName.SetDefault("Acid Freak");
 			Main.npcFrameCount[Type] = 23; // The amount of frames the NPC has, walk frame count (15) + ExtraFramesCount
 
 			NPCID.Sets.ExtraFramesCount[Type] = 8; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
@@ -49,11 +49,11 @@ namespace Origins.NPCs.TownNPCs {
 				.SetNPCAffection(NPCID.Dryad, AffectionLevel.Like)
 				.SetNPCAffection(NPCID.BestiaryGirl, AffectionLevel.Dislike)
 				.SetNPCAffection(NPCID.Truffle, AffectionLevel.Hate)
-				//.SetNPCAffection(NPCID.Dryad, AffectionLevel.Hate)// Defiled Envoy
+			//.SetNPCAffection(NPCID.Dryad, AffectionLevel.Hate)// Defiled Envoy
 			; // < Mind the semicolon!
 		}
-        public override void SetDefaults() {
-            NPC.CloneDefaults(NPCID.WitchDoctor);
+		public override void SetDefaults() {
+			NPC.CloneDefaults(NPCID.WitchDoctor);
 			NPC.townNPC = true;
 			NPC.friendly = true;
 			AnimationType = NPCID.BestiaryGirl;
@@ -88,7 +88,7 @@ namespace Origins.NPCs.TownNPCs {
 			}
 			if (BirthdayParty.PartyIsUp) {
 				chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionParty", Main.npc[otherNPC].GivenName));
-				
+
 				otherNPC = NPC.FindFirstNPC(NPCID.Demolitionist);
 				if (otherNPC >= 0) {
 					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionPartyDemolitionist", Main.npc[otherNPC].GivenName));
@@ -201,7 +201,7 @@ namespace Origins.NPCs.TownNPCs {
 				return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Acid_Freak");
 
 			//if (npc.altTexture == 1)
-				//return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Acid_Freak_Party");
+			//return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Acid_Freak_Party");
 
 			return ModContent.Request<Texture2D>("Origins/NPCs/TownNPCs/Acid_Freak");
 		}

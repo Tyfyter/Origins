@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Other {
-    public class Potato_Tile : ModTile {
+	public class Potato_Tile : ModTile {
 
 		public override void SetStaticDefaults() {
 			// Properties

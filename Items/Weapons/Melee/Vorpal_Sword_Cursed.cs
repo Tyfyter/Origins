@@ -15,7 +15,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Melee {
-    public class Vorpal_Sword_Cursed : ModItem {
+	public class Vorpal_Sword_Cursed : ModItem {
 		static short glowmask;
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shootSpeed = 12;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 0f;
-            Item.useTurn = false;
+			Item.useTurn = false;
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = CursedRarity.ID;
 			Item.UseSound = SoundID.Item1;
@@ -198,7 +198,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
 			Item.autoReuse = false;
-			if(times > 0) {
+			if (times > 0) {
 				player.controlUseItem = true;
 				Item.autoReuse = true;
 			}
@@ -262,7 +262,7 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-			OriginGlobalNPC.InflictTorn(target, 60, targetSeverity:0.65f);
+			OriginGlobalNPC.InflictTorn(target, 60, targetSeverity: 0.65f);
 		}
 		public override void CutTiles() {
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;

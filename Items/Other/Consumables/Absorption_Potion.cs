@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-    public class Absorption_Potion : ModItem {
+	public class Absorption_Potion : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Absorption Potion");
 			Tooltip.SetDefault("Full protection from explosive self-damage");

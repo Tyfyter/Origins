@@ -2,7 +2,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
-    public class Fiberglass_Sword : ModItem, IElementalItem {
+	public class Fiberglass_Sword : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Fiberglass Sword");
@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 2;
 			Item.autoReuse = true;
-            Item.useTurn = true;
+			Item.useTurn = true;
 			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item1;
 		}
