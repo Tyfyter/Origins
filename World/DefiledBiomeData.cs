@@ -597,6 +597,12 @@ namespace Origins.World.BiomeData {
 			get {
 				AltMaterialContext context = new AltMaterialContext();
 				context.SetEvilHerb(ModContent.ItemType<Wilting_Rose_Item>());
+				context.SetEvilBar(ModContent.ItemType<Defiled_Bar>());
+				context.SetEvilOre(ModContent.ItemType<Defiled_Ore_Item>());
+				context.SetVileInnard(ModContent.ItemType<Strange_String>());
+				context.SetVileComponent(ModContent.ItemType<Black_Bile>());
+				context.SetEvilBossDrop(ModContent.ItemType<Undead_Chunk>());
+				context.SetEvilSword(ModContent.ItemType<Spiker_Sword>());
 				return context;
 			}
 		}

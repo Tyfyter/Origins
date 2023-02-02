@@ -7,7 +7,7 @@ namespace Origins.Items.Other.Consumables {
 	public class Nullification_Potion : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Nullification Potion");
-			Tooltip.SetDefault("Crashes your game"); //Removes all current harmful effects
+			Tooltip.SetDefault("Removes all current harmful effects");
 			SacrificeTotal = 20;
 		}
 		public override void SetDefaults() {
@@ -24,11 +24,12 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override bool? UseItem(Player player) {
 			//debuff removal
-			for (int i = 0; i < BuffLoader.BuffCount;) {
+			for (int i = 0; i < BuffLoader.BuffCount; i++) {
 				if (Main.debuff[i] && !BuffID.Sets.NurseCannotRemoveDebuff[i]) {
 					player.buffImmune[i] = true;
 				}
 			}
+			player.buffImmune[BuffID.Suffocation] = true; // 
 			return null;
 		}
 	}

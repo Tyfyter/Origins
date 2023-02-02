@@ -365,7 +365,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddRecipeGroup("AltLibrary:GoldBars", 2);
+			recipe.AddRecipeGroup("GoldBars", 2);
 			recipe.AddIngredient(ItemID.FragmentVortex, 4);
 			//recipe.AddIngredient(ModContent.ItemType<Void_Spark>(), 6);
 			recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);

@@ -4,5 +4,5 @@ displayName = Origins
 
 buildIgnore = *.csproj, *.xcf, *.user, obj\*, bin\*, .vs\*, Items\Weapons\Felnum\Tier2\Tolruk_Glow_Old\*, Sounds\Music\*, Old_Sprites\*, Items\Armor\Vanity\Terlet\PlagueCowboy(Old)\*
 includePDB = false
-sortAfter = CalamityMod, WingSlot
+sortAfter = CalamityMod, WingSlot, AltLibrary
 modReferences = AltLibrary
