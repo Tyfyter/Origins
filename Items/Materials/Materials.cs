@@ -481,12 +481,13 @@ namespace Origins.Items.Materials {
 			DisplayName.SetDefault("Nova Fragment");
 			Tooltip.SetDefault("'The essence of a dying star in its final moments...'");
 			glowmask = Origins.AddGlowMask(this);
+			ItemID.Sets.ItemNoGravity[Type] = true;
+			ItemID.Sets.ItemIconPulse[Type] = true;
 			SacrificeTotal = 25;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FragmentSolar);
 			Item.glowMask = glowmask;
-			// TODO: make it ignore gravity
 		}
 	}
 	public class Peat_Moss : ModItem {
