@@ -15,14 +15,12 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
+			Item.DefaultToAccessory(24, 20);
 			Item.damage = 13;
 			Item.knockBack = 3;
 			Item.useTime = Item.useAnimation = 45;
 			Item.mana = 10;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
-			Item.accessory = true;
-			Item.width = 21;
-			Item.height = 20;
 			Item.rare = ItemRarityID.Master;
 			Item.master = true;
 			Item.value = Item.sellPrice(gold: 6);

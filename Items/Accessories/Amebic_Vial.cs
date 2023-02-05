@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);
+			Item.DefaultToAccessory(24, 26);
 			Item.shoot = ModContent.ProjectileType<Amebic_Vial_Tentacle>();
 			Item.rare = ItemRarityID.Expert;
 			Item.expert = true;

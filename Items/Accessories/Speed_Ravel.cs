@@ -13,9 +13,7 @@ namespace Origins.Items.Accessories {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			Item.width = 24;
-			Item.height = 24;
-			Item.accessory = true;
+			Item.DefaultToAccessory();
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 8);
 			Item.shoot = ModContent.MountType<Speed_Ravel_Mount>();

@@ -100,7 +100,7 @@ namespace Origins.Items.Pets {
 			#region General behavior
 			Vector2 idlePosition = player.Bottom;
 			idlePosition.X -= 48f * player.direction;
-			idlePosition.Y -= 12f * Projectile.scale;
+			idlePosition.Y -= 16f * Projectile.scale;
 
 			// Teleport to player if distance is too big
 			Vector2 vectorToIdlePosition = (idlePosition + new Vector2(6 * player.direction, 0)) - Projectile.Center;
@@ -119,7 +119,7 @@ namespace Origins.Items.Pets {
 						});
 					// Whenever you deal with non-regular events that change the behavior or position drastically, make sure to only run the code on the owner of the projectile,
 					// and then set netUpdate to true
-					Projectile.position = idlePosition;
+					Projectile.Center = idlePosition;
 					Projectile.velocity *= 0.1f;
 					Projectile.netUpdate = true;
 					Projectile.soundDelay = 2;

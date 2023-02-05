@@ -15,10 +15,9 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
+			Item.DefaultToAccessory(32, 36);
 			Item.damage = 30;
 			Item.DamageType = DamageClass.Summon;
-			Item.width = 32;
-			Item.height = 32;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.shoot = ModContent.ProjectileType<Lazy_Cloak_P>();
@@ -26,7 +25,6 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Master;
 			Item.backSlot = 5;
 			Item.frontSlot = 3;
-			Item.accessory = true;
 			Item.canBePlacedInVanityRegardlessOfConditions = true;
 			Item.master = true;
 		}

@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaultsKeepSlots(ItemID.PanicNecklace);
+			Item.DefaultToAccessory(30, 32);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Orange;
 			Item.accessory = true;

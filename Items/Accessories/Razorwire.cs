@@ -10,7 +10,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.accessory = true;
+			Item.DefaultToAccessory(28, 28);
 			Item.rare = ItemRarityID.Green;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.shoot = ProjectileID.BulletHighVelocity;

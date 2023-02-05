@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);
+			Item.DefaultToAccessory(38, 20);
 			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = ItemRarityID.Orange;
 		}

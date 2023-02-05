@@ -11,9 +11,6 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WarriorEmblem);
-			Item.accessory = true;
-			Item.width = 28;
-			Item.height = 28;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 		}

@@ -10,7 +10,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);
+			Item.DefaultToAccessory(30, 34);
 			Item.faceSlot = Rebreather.FaceSlot;
 			Item.backSlot = Air_Tank.BackSlot;
 			Item.rare = ItemRarityID.Pink;

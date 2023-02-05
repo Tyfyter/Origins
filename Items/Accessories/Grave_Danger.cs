@@ -11,9 +11,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			sbyte slot = Item.shieldSlot;
-			Item.CloneDefaults(ItemID.ObsidianShield);
-			Item.shieldSlot = slot;
+			Item.DefaultToAccessory(36, 42);
 			Item.defense = 5;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;

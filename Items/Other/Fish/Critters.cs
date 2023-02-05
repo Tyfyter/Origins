@@ -1,7 +1,9 @@
-﻿using Terraria;
+﻿using Origins.NPCs.Critters;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+//what is this? bees according to California?
 namespace Origins.Items.Other.Fish {
 	public class Amoeba_Buggy_Item : ModItem {
 		public override void SetStaticDefaults() {
@@ -10,7 +12,7 @@ namespace Origins.Items.Other.Fish {
 			SacrificeTotal = 5;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.FairyCritterBlue);
+			Item.DefaultToCapturedCritter(ModContent.NPCType<Amoeba_Buggy>());
 		}
 		// TODO: Needs critter behavior
 	}
@@ -21,7 +23,7 @@ namespace Origins.Items.Other.Fish {
 			SacrificeTotal = 5;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.GoldWaterStrider);
+			Item.DefaultToCapturedCritter(ModContent.NPCType<Bug>());
 		}
 		// TODO: Needs critter behavior
 	}
@@ -32,7 +34,7 @@ namespace Origins.Items.Other.Fish {
 			SacrificeTotal = 5;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.FairyCritterBlue);
+			Item.DefaultToCapturedCritter(ModContent.NPCType<Cicada_3301>());
 		}
 		// TODO: Needs critter behavior
 	}

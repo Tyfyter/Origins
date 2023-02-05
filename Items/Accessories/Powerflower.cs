@@ -11,10 +11,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			sbyte slot = Item.faceSlot;
-			Item.CloneDefaults(ItemID.ArcaneFlower);
-			Item.accessory = true;
-			Item.faceSlot = slot;
+			Item.DefaultToAccessory(32, 28);
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 3);
 		}

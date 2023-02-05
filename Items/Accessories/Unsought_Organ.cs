@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);
+			Item.DefaultToAccessory(28, 26);
 			Item.rare = ItemRarityID.LightPurple;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.shoot = ModContent.ProjectileType<Unsought_Organ_P>();

@@ -13,7 +13,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);
+			Item.DefaultToAccessory(24, 22);
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 1);
 		}

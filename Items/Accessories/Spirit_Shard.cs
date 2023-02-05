@@ -10,7 +10,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Aglet);
+			Item.DefaultToAccessory(16, 16);
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void UpdateEquip(Player player) {

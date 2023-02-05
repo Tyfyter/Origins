@@ -18,9 +18,7 @@ namespace Origins.Items.Accessories {
 			ID = Type;
 		}
 		public override void SetDefaults() {
-			Item.width = 24;
-			Item.height = 24;
-			Item.accessory = true;
+			Item.DefaultToAccessory();
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 8);
 			Item.shoot = ModContent.MountType<Ravel_Mount>();//can't use mountType because that'd make it fit in the mount slot

@@ -11,9 +11,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			sbyte slot = Item.shieldSlot;
-			Item.CloneDefaults(ItemID.ObsidianShield);
-			Item.shieldSlot = slot;
+			Item.DefaultToAccessory(36, 38);
 			Item.defense = 3;
 			Item.shoot = ProjectileID.BulletHighVelocity;
 			Item.value = Item.sellPrice(gold: 3);

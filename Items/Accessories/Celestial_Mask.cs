@@ -11,10 +11,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			sbyte slot = Item.faceSlot;
-			Item.CloneDefaults(ItemID.Aglet);
-			Item.neckSlot = -1;
-			Item.faceSlot = slot;
+			Item.DefaultToAccessory(22, 24);
 			Item.value = Item.sellPrice(gold: 18);
 			Item.rare = ItemRarityID.Yellow;
 		}

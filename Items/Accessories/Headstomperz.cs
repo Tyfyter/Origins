@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaultsKeepSlots(ItemID.HermesBoots);
+			Item.DefaultToAccessory(24, 22);
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.LightRed;
 		}

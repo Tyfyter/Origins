@@ -10,7 +10,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Aglet);
+			Item.DefaultToAccessory(28, 34);
 			Item.value = Item.sellPrice(silver: 20);
 			Item.rare = ItemRarityID.Blue;
 		}

@@ -10,8 +10,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.WormScarf);
-			Item.neckSlot = -1;
+			Item.DefaultToAccessory(20, 20);
 			Item.rare = ItemRarityID.Expert;
 			Item.value = Item.sellPrice(gold: 2);
 		}

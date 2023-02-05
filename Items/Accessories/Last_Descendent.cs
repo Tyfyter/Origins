@@ -11,7 +11,8 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaultsKeepSlots(ItemID.StarVeil);
+			Item.DefaultToAccessory(26, 26);
+			Item.neckSlot = ArmorIDs.Neck.StarVeil;
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.LightPurple;
 			Item.accessory = true;

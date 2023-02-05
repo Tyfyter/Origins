@@ -15,9 +15,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.YoYoGlove);
-			Item.handOffSlot = -1;
-			Item.handOnSlot = -1;
+			Item.DefaultToAccessory(34, 26);
 			Item.damage = 20;
 			Item.DamageType = DamageClass.Melee;
 			Item.knockBack = 3;

@@ -12,7 +12,7 @@ namespace Origins.Items.Accessories {
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);
+			Item.DefaultToAccessory(38, 20);
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.LightRed;
 

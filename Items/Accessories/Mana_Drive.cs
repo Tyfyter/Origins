@@ -10,7 +10,7 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaultsKeepSlots(ItemID.YoYoGlove);
+			Item.DefaultToAccessory(30, 28);
 			Item.value = Item.sellPrice(gold: 10);
 			Item.rare = ButterscotchRarity.ID;
 		}
