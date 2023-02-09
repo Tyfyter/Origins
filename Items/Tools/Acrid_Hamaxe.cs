@@ -8,6 +8,7 @@ namespace Origins.Items.Tools {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Hamaxe");
+			Tooltip.SetDefault("Increased mining speed when submerged");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}

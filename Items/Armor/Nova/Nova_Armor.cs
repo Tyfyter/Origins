@@ -1,12 +1,10 @@
-using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
-using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Nova {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Nova_Helmet : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Nova Faceshield");
@@ -36,9 +34,9 @@ namespace Origins.Items.Armor.Nova {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ObsidianHelm);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 12);
-			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.AddIngredient(ItemID.LunarBar, 8);
+			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 10);
+			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.Register();
 		}
 	}
@@ -62,9 +60,9 @@ namespace Origins.Items.Armor.Nova {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ObsidianShirt);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 36);
-			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.AddIngredient(ItemID.LunarBar, 16);
+			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 20);
+			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.Register();
 		}
 	}
@@ -90,9 +88,9 @@ namespace Origins.Items.Armor.Nova {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ObsidianPants);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 24);
-			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.AddIngredient(ItemID.LunarBar, 12);
+			recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 15);
+			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.Register();
 		}
 	}

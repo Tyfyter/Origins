@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Arrow : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bile Arrow");
-			Tooltip.SetDefault("Stuns enemies");
+			Tooltip.SetDefault("Stuns the target");
 			SacrificeTotal = 99;
 		}
 		public override void SetDefaults() {

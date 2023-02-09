@@ -1,20 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Weapons.Ammo;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
-	//extends harpoon gun so it doesn't have to have redundant overrides for CanShoot, CanConsumeAmmo, etc.
-	public class Acrid_Impaler : Harpoon_Gun {
+    //extends harpoon gun so it doesn't have to have redundant overrides for CanShoot, CanConsumeAmmo, etc.
+    public class Acrid_Impaler : Harpoon_Gun {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Impaler");
 			Tooltip.SetDefault("Uses harpoons as ammo\n85.7% chance not to consume ammo");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 17;
+			Item.damage = 33;
 			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 4;
 			Item.useStyle = ItemUseStyleID.Shoot;
@@ -28,8 +27,8 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.shoot = Harpoon_P.ID;
 			Item.shootSpeed = 14.75f;
 			Item.UseSound = SoundID.Item11;
-			Item.value = Item.buyPrice(silver: 54);
-			Item.rare = ItemRarityID.Green;
+			Item.value = Item.buyPrice(silver: 50);
+			Item.rare = ItemRarityID.LightRed;
 			Item.autoReuse = true;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);

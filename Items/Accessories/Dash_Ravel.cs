@@ -7,11 +7,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Dash_Ravel : Ravel {
+    public class Dash_Ravel : Ravel {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dash Ravel");
-			Tooltip.SetDefault("Double tap down to transform into a small, rolling ball that moves very fast");
+			Tooltip.SetDefault("Double tap down to transform into a small, rolling ball that damages enemies as it moves\nDouble tap a direction to dash and instantly morph");
 			SacrificeTotal = 1;
 			ID = Type;
 		}

@@ -105,7 +105,7 @@ namespace Origins.Items.Armor.Acrid {
 	public class Acrid_Helm : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Helm");
-			Tooltip.SetDefault("10% increased melee damag and speed\nEffect stronger when submerged\nEmit a small aura of light");
+			Tooltip.SetDefault("10% increased melee damage and speed\nEffect stronger when submerged\nEmit a small aura of light");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Helm_Head_Glow");
 			}

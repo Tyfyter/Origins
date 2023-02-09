@@ -417,7 +417,7 @@ MELEE WEAPONS:
 (^) Vorpal Sword
 
 (X) Origins Biome Keybrand
-(#, ^2) Crystal Cutter
+(^) Crystal Cutters
 (^) Knee Slapper
 (#, ^2) Nematoclaw*
 (#, ^2) Scale Saw
