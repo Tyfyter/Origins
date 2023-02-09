@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.width = 58;
 			Item.height = 22;
 			Item.useAmmo = Harpoon.ID;
-			Item.shoot = ProjectileID.Harpoon;
+			Item.shoot = Harpoon_P.ID;
 			Item.shootSpeed = 14.75f;
 			Item.UseSound = SoundID.Item11;
 			Item.value = Item.buyPrice(silver: 54);
@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.autoReuse = true;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
-		bool consume = false;
+		protected bool consume = false;
 		public override bool CanShoot(Player player) {
 			consume = true;
 			return true;
