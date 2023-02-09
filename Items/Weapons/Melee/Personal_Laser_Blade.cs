@@ -8,19 +8,20 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	//[AutoloadEquip(EquipType.HandsOn)] needs HandsOn sprite for this to work
     public class Personal_Laser_Blade : ModItem, IElementalItem {
-		public const int max_charge = 60;
+		public const int max_charge = 75;
 		public ushort Element => Elements.Fire;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Personal Laser Blade");
-			Tooltip.SetDefault("'Be careful, it's hot'");
+			Tooltip.SetDefault("Time your swings for more powerful blows\n'Be careful, it's hot'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 101;
+			Item.damage = 67;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 42;
 			Item.height = 42;
+			Item.crit = 10;
 			Item.useTime = 1;
 			Item.useAnimation = 30;
 			Item.noMelee = true;
@@ -62,7 +63,7 @@ namespace Origins.Items.Weapons.Melee {
 							player.position,
 							player.width,
 							player.height,
-							DustID.ManaRegeneration
+							DustID.GoldFlame
 						);
 					}
 				}
@@ -95,6 +96,9 @@ namespace Origins.Items.Weapons.Melee {
 			} else {
 				Projectile.ai[0] = sizeValue;
 			}
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			if (Main.rand.NextBool()) target.AddBuff(BuffID.OnFire, 600);
 		}
 	}
 }
