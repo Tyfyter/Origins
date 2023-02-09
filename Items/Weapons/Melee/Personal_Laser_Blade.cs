@@ -1,12 +1,14 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
-	//[AutoloadEquip(EquipType.HandsOn)]
+	//[AutoloadEquip(EquipType.HandsOn)] needs HandsOn sprite for this to work
     public class Personal_Laser_Blade : ModItem, IElementalItem {
+		public const int max_charge = 60;
 		public ushort Element => Elements.Fire;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Personal Laser Blade");
@@ -23,7 +25,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useAnimation = 30;
 			Item.noMelee = true;
 			Item.shoot = Personal_Laser_Blade_P.ID;
-			Item.shootSpeed = 6;
+			Item.shootSpeed = 3f;
 			Item.knockBack = 1;
 			Item.autoReuse = false;
 			Item.useTurn = false;
@@ -40,7 +42,33 @@ namespace Origins.Items.Weapons.Melee {
 			recipe.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			velocity = OriginExtensions.Vec2FromPolar(player.direction == 1 ? player.itemRotation : player.itemRotation + MathHelper.Pi, velocity.Length());
+			ref int laserBladeCharge = ref player.GetModPlayer<OriginPlayer>().laserBladeCharge;
+			velocity = OriginExtensions.Vec2FromPolar(
+				player.direction == 1 ? player.itemRotation : player.itemRotation + MathHelper.Pi,
+				velocity.Length() * (1 + (laserBladeCharge / (float)max_charge))
+			);
+			damage += (laserBladeCharge * damage) / max_charge;
+			if (player.ItemAnimationEndingOrEnded) {
+				laserBladeCharge = 0;
+			}
+		}
+		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
+			ref int laserBladeCharge = ref player.GetModPlayer<OriginPlayer>().laserBladeCharge;
+			if (laserBladeCharge < max_charge) {
+				laserBladeCharge = Math.Min(laserBladeCharge + 2, max_charge + 1);// increments by 2 since it's decrementing by 1 at the same rate
+				if (laserBladeCharge >= max_charge) {
+					for (int i = 0; i < 20; i++) {
+						Dust.NewDust(
+							player.position,
+							player.width,
+							player.height,
+							DustID.ManaRegeneration
+						);
+					}
+				}
+			} else {
+				laserBladeCharge = max_charge + 1;
+			}
 		}
 		public override void UseItemFrame(Player player) {
 			player.handon = Item.handOnSlot;

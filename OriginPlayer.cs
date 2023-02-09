@@ -165,6 +165,10 @@ namespace Origins {
 		public bool releaseTriggerSetBonus = false;
 		#endregion
 
+		#region other items
+		public int laserBladeCharge = 0;
+		#endregion
+
 		public int quantumInjectors = 0;
 		public int defiledWill = 0;
 
@@ -329,6 +333,8 @@ namespace Origins {
 				gunGloveCooldown--;
 			if (mitosisCooldown > 0)
 				mitosisCooldown--;
+
+			if (laserBladeCharge > 0 && !Player.ItemAnimationActive) laserBladeCharge--;
 
 			if (rapidSpawnFrames > 0)
 				rapidSpawnFrames--;
