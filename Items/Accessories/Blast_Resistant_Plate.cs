@@ -11,11 +11,11 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 28);
+			Item.defense = 3;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
-			player.statDefense += 3;
 			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.2f;
 		}
 		public override void AddRecipes() {
