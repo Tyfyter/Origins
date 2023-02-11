@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Items.Other.Consumables;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -23,15 +24,14 @@ namespace Origins.Items.Weapons.Magic {
 			Item.mana = 8;
 			Item.shoot = ModContent.ProjectileType<Hot_Potato_P>();
 			Item.value = Item.sellPrice(silver: 30);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Book);
 			recipe.AddIngredient(ItemID.FallenStar);
-			recipe.AddIngredient(ItemID.WandofSparking);
-			recipe.AddTile(TileID.WorkBenches);
-			//recipe.Register();
+			recipe.AddIngredient(ItemID.HellstoneBar, 8);
+			recipe.AddIngredient(ModContent.ItemType<Potato>());
+			recipe.AddTile(TileID.Anvils);
 		}
 	}
 	public class Hot_Potato_P : ModProjectile {

@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	public class Messy_Leech : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Messy Leech");
-			Tooltip.SetDefault("Melee attacks inflict Bleeding\nPrevents Defiled enemies from regenerating");
+			Tooltip.SetDefault("All attacks inflict Bleeding\nPrevents Defiled enemies from regenerating");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

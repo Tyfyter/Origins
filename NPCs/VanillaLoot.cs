@@ -144,6 +144,11 @@ namespace Origins.NPCs {
 				case NPCID.AnglerFish:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rebreather>(), 10));
 				break;
+				case NPCID.BloodCrawler:
+				case NPCID.BloodCrawlerWall:
+				case NPCID.FaceMonster:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Explosive_Artery>(), 100));
+				break;
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
 				r is LeadingConditionRule conditionRule &&

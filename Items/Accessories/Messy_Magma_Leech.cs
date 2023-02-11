@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	public class Messy_Magma_Leech : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Messy Magma Leech");
-			Tooltip.SetDefault("Melee attacks inflict Bleeding and set enemies ablaze\nPrevents Defiled enemies from regenerating");
+			Tooltip.SetDefault("All attacks inflict Bleeding and set enemies ablaze\nPrevents Defiled enemies from regenerating");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -15,7 +15,9 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().messyMagmaLeech = true;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.messyLeech = true;
+			player.magmaStone = true;
 		}
 	}
 }

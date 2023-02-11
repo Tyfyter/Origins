@@ -212,11 +212,16 @@ ARMOR:
 (X) Nanite Armor
 (^) Nova Armor
 (X) Locus Armor
+
+(X) Chlorophye Crown
+(X) Chlorophyte Visage
+(X) Hallowed Visage
 ---
 
 
 ACCESSORIES:
 ---
+(X) ACME Crate
 (^) Advanced Imaging*
 (^) Air Tank*
 (^) Blast-Resistant Plate*
@@ -229,12 +234,14 @@ ACCESSORIES:
 (#2, ^2) I-WTPA Standard
 (^) Decaying Scale*
 (X) Deep Diving Gear
-(☻) Destructive Claws !!!
+(^) Destructive Claws
 (^) Dim Starlight*
 (^) Donor Wristband
 (^) Exploder Emblem*
+(#2, ^2) Explosive Artery !!!
 (#2, ^2) Grave Danger
 (^) Gun Glove
+(X) Haggard Artery
 (^) Handy Helper
 (X) Hazard Charm !!!
 (#2, ^2) Headstomperz
@@ -245,9 +252,10 @@ ACCESSORIES:
 (^) Locket Necklace
 (#2, ^2) Lover's Leap !!!
 (#3, ^2) Magic Glove
+(#2, ^2) Magic Tripwire
 (^) Makeover Choker
-(#3, ^2) Messy Leech
-(#3, ^2) Messy Magma Leech
+(#3, ^2) Messy Leech !!!
+(#3, ^2) Messy Magma Leech !!!
 (#3, ^2) Missile Arm Cannon
 (#3, ^2) Mitosis
 (^) Nitro Crate
@@ -351,6 +359,7 @@ VANITY:
 UTILITIES:
 ---
 (^) Amoeba Hook
+(X) Chunky Hook
 (#, ^2) Nano Hook
 (#, ^2) Quantum Hook
 
@@ -453,6 +462,7 @@ RANGED WEAPONS:
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun
+(X) Dart Crossbow
 (^) Dragon's Breath (replanning soon)
 (^) Firespit
 (^) Incision
@@ -481,7 +491,7 @@ MAGIC WEAPONS:
 ---
 (^) Beginner's Tome
 (^) Cryostike
-(#, ^2) Hot Potato !!!
+(#2, ^2) Hot Potato !!!
 (^) Infusion
 (^) Low Signal
 (^) Magnus
@@ -500,7 +510,7 @@ MAGIC WEAPONS:
 (^) Haunted Vase
 (X) Lunarfire
 (#, ^2) Phantom Fury
-(☻) Pike of Deepneus
+(^) Pike of Deepneus
 (X) Shocktrain
 (X) Spectra
 (X) Steam Blaster
@@ -603,6 +613,7 @@ EXPLOSIVE WEAPONS:
 
 CLASSLESS WEAPONS:
 ---
+(X) Bleeding Obsidian Kunai
 (^) Fiberglass Shard
 (X) Potato Launcher !!!
 ---
@@ -665,9 +676,9 @@ TILES:
 (X) Omni-Printer
 
 (^) Acetabularia
-(X) Brineglow Vine
+(X) Brineglow Vine !!!
 (^) Defiled Misc Tiles*
-(X) Eden Tree
+(#2, ^2) Eden Tree
 (#2, ^2) Laser Tag Console
 (#2, ^2) Riven Foliage !!!
 (#2, ^2) Riven Lesion !!!
@@ -823,7 +834,7 @@ MOUNTS & PETS:
 (^) Amoeba Toy (Meberoid)
 (^) Suspicious Looking Pebble (Defiled Blight)
 
-(#, ^2) Chew Toy (Chee Toy, also consider implementing soon)
+(#, ^2) Chew Toy (Chee Toy)
 (X) Familiar Dog Bone (Rufus)
 ---
 

@@ -343,7 +343,8 @@ namespace Origins {
 				(CHANGE_QUEUE, ChestID.Gold, 0b1101),
 				(ENQUEUE, ModContent.ItemType<Nitro_Crate>(), 1f),
 				/*(CHANGE_QUEUE, ChestID.Gold, DeadmansChest),
-                (ENQUEUE, ModContent.ItemType<Trap_Charm>(), 1f),*/
+				(ENQUEUE, ModContent.ItemType<Magic_Tripwire>(), 1f),
+				(ENQUEUE, ModContent.ItemType<Trap_Charm>(), 1f), */
 				(CHANGE_QUEUE, ChestID.LockedGold, 0f),
 				(ENQUEUE, ModContent.ItemType<Tones_Of_Agony>(), 1f),
 				(ENQUEUE, ModContent.ItemType<Asylum_Whistle>(), 1f),

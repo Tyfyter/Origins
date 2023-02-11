@@ -2,36 +2,54 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Pike_of_Deepneus : ModItem {
-		public const int baseDamage = 34;
+    public class Pike_of_Deepneus : ModItem {
+		public const int baseDamage = 64;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Pike of Deepneus");
+			Tooltip.SetDefault("Time your throws for more powerful blows\n'Like so deep dude'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 75;
+			Item.damage = 140;
 			Item.DamageType = DamageClass.Magic;
 			Item.shoot = ModContent.ProjectileType<Pike_of_Deepneus_P>();
-			Item.knockBack = 7;
-			Item.shootSpeed = 8;
-			Item.mana = 8;
+			Item.knockBack = 8;
+			Item.shootSpeed = 48f;
+			Item.mana = 16;
 			Item.useStyle = -1;
-			Item.useTime = 13;
-			Item.useAnimation = 13;
+			Item.useTime = 39;
+			Item.useAnimation = 39;
 			Item.channel = true;
 			Item.noUseGraphic = true;
 			Item.autoReuse = true;
 			Item.reuseDelay = 7;
+			Item.rare = ItemRarityID.Pink;
+			Item.UseSound = SoundID.Item69;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.HellstoneBar, 16);
+			recipe.AddIngredient(ItemID.AdamantiteBar, 16);
+			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 14);
+			recipe.AddIngredient(ModContent.ItemType<Power_Core>(), 2);
+			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
+			recipe.Register();
+
+			recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.HellstoneBar, 16);
+			recipe.AddIngredient(ItemID.TitaniumBar, 16);
+			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 14);
+			recipe.AddIngredient(ModContent.ItemType<Power_Core>(), 2);
+			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
+			recipe.Register();
 		}
 		public override void UseItemFrame(Player player) {
 			float rotation = player.itemRotation - MathHelper.PiOver2 - Math.Max((player.itemAnimation / (float)player.itemAnimationMax) * 3 - 2, 0) * (MathHelper.PiOver2 * 0.85f) * player.direction;
@@ -87,8 +105,15 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.aiStyle = 0;
 			Projectile.alpha = 0;
 			Projectile.tileCollide = false;
+			Projectile.penetrate = 1;
+		}
+		public override void Kill(int timeLeft) {
+			SoundEngine.PlaySound(SoundID.Item167, Projectile.position);
 		}
 		public override void AI() {
+			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.Torch, 0, 0, 255, default, 2f);
+			dust.noGravity = true;
+			dust.fadeIn = 1.5f;
 			if (Projectile.ai[0] != 0) {
 				Player player = Main.player[Projectile.owner];
 				if (Projectile.owner == Main.myPlayer) {
@@ -119,7 +144,7 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.rotation = player.itemRotation;
 				Projectile.Center = player.MountedCenter
 					+ OriginExtensions.Vec2FromPolar(player.itemRotation - Math.Max((player.itemAnimation / (float)player.itemAnimationMax) * 3 - 2, 0) * (MathHelper.PiOver2 * 0.85f) * player.direction, 16)
-					+ Projectile.velocity.SafeNormalize(default) * 48;
+					+ Projectile.velocity.SafeNormalize(default) * 36;
 			} else {
 				Projectile.hide = false;
 				Projectile.tileCollide = true;
