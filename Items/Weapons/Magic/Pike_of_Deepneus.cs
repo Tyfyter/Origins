@@ -18,41 +18,34 @@ namespace Origins.Items.Weapons.Magic {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 140;
+			Item.damage = 160;
 			Item.DamageType = DamageClass.Magic;
 			Item.shoot = ModContent.ProjectileType<Pike_of_Deepneus_P>();
 			Item.knockBack = 8;
-			Item.shootSpeed = 48f;
+			Item.shootSpeed = 24f;
 			Item.mana = 16;
 			Item.useStyle = -1;
-			Item.useTime = 39;
-			Item.useAnimation = 39;
+			Item.useTime = 17;
+			Item.useAnimation = 17;
 			Item.channel = true;
 			Item.noUseGraphic = true;
 			Item.autoReuse = true;
-			Item.reuseDelay = 7;
+			Item.reuseDelay = 29;
 			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 3);
 			Item.UseSound = SoundID.Item69;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.HellstoneBar, 16);
-			recipe.AddIngredient(ItemID.AdamantiteBar, 16);
-			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 14);
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>(), 2);
-			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
-			recipe.Register();
-
-			recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.HellstoneBar, 16);
-			recipe.AddIngredient(ItemID.TitaniumBar, 16);
+			recipe.AddRecipeGroup("HellBars", 16);
+			recipe.AddRecipeGroup("AdamantiteBars", 16);
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 14);
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>(), 2);
 			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
 			recipe.Register();
 		}
 		public override void UseItemFrame(Player player) {
-			float rotation = player.itemRotation - MathHelper.PiOver2 - Math.Max((player.itemAnimation / (float)player.itemAnimationMax) * 3 - 2, 0) * (MathHelper.PiOver2 * 0.85f) * player.direction;
+			float rotation = player.itemRotation - MathHelper.PiOver2 - GetArmDrawAngle(player);
 			player.SetCompositeArmFront(
 				true,
 				Player.CompositeArmStretchAmount.Full,
@@ -86,6 +79,10 @@ namespace Origins.Items.Weapons.Magic {
 			);
 			return false;
 		}
+
+		internal static float GetArmDrawAngle(Player player) {
+			return Math.Max((player.itemAnimation / (float)player.itemAnimationMax) * 6 - 5, 0) * (MathHelper.PiOver2 * 0.85f) * player.direction;
+		}
 	}
 	public class Pike_of_Deepneus_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Pike_of_Deepneus";
@@ -102,6 +99,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Daybreak);
 			Projectile.width = Projectile.height = 32;
+			Projectile.extraUpdates = 3;
 			Projectile.aiStyle = 0;
 			Projectile.alpha = 0;
 			Projectile.tileCollide = false;
@@ -127,9 +125,9 @@ namespace Origins.Items.Weapons.Magic {
 						}
 						Projectile.velocity = newVel;
 						if (Projectile.ai[1] < 1) {
-							Projectile.ai[1] += 1 / Projectile.ai[0];
+							Projectile.ai[1] += 1 / (Projectile.ai[0] * 2);
 						}
-						player.reuseDelay -= (int)(player.reuseDelay * Projectile.ai[1]);
+						player.reuseDelay -= (int)(player.reuseDelay * Projectile.ai[1] * 0.5f);
 					} else {
 						Projectile.ai[0] = 0;
 						Projectile.velocity *= 1 + Projectile.ai[1] * 0.5f;
@@ -137,13 +135,14 @@ namespace Origins.Items.Weapons.Magic {
 					}
 				}
 				player.itemRotation = Projectile.velocity.ToRotation();
-				player.itemAnimation = (int)(player.itemAnimationMax * (1 + Projectile.ai[1] * 0.25f));
+				player.itemAnimation = (int)(player.itemAnimationMax * (1 + Projectile.ai[1] * 0.15f));
 				player.itemTime = player.itemTimeMax = player.itemAnimation;
 				player.heldProj = Projectile.whoAmI;
 				player.ChangeDir(Projectile.direction = Math.Sign(Projectile.velocity.X));
 				Projectile.rotation = player.itemRotation;
 				Projectile.Center = player.MountedCenter
-					+ OriginExtensions.Vec2FromPolar(player.itemRotation - Math.Max((player.itemAnimation / (float)player.itemAnimationMax) * 3 - 2, 0) * (MathHelper.PiOver2 * 0.85f) * player.direction, 16)
+					+ new Vector2(player.direction * -4, -6)
+					+ OriginExtensions.Vec2FromPolar(player.itemRotation - Pike_of_Deepneus.GetArmDrawAngle(player), 16)
 					+ Projectile.velocity.SafeNormalize(default) * 36;
 			} else {
 				Projectile.hide = false;
@@ -157,7 +156,7 @@ namespace Origins.Items.Weapons.Magic {
 			return null;
 		}
 		public override void ModifyDamageScaling(ref float damageScale) {
-			damageScale *= 1 + Projectile.ai[1];
+			damageScale *= 0.34f + Projectile.ai[1] * Projectile.ai[1] * 0.66f;
 		}
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
 			knockback *= 1 + Projectile.ai[1] * 0.65f;
@@ -187,13 +186,13 @@ namespace Origins.Items.Weapons.Magic {
 			if (GlowTexture.IsLoaded) {
 				Main.EntitySpriteDraw(
 					GlowTexture,
-					Projectile.Center - Main.screenPosition,
+					position,
 					null,
 					Color.White,
-					Projectile.rotation + (0 * Projectile.direction),
-					new Vector2(30 + 25 * Projectile.direction, 9),
-					Projectile.scale,
-					Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
+					rotation,
+					origin,
+					scale,
+					spriteEffects,
 					0
 				);
 			}
