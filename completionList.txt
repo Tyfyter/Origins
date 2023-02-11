@@ -229,7 +229,7 @@ ACCESSORIES:
 (#2, ^2) I-WTPA Standard
 (^) Decaying Scale*
 (X) Deep Diving Gear
-(#3, ^2) Destructive Claws !!!
+(☻) Destructive Claws !!!
 (^) Dim Starlight*
 (^) Donor Wristband
 (^) Exploder Emblem*
@@ -416,7 +416,7 @@ MELEE WEAPONS:
 (^) Tyrfing
 (^) Vorpal Sword
 
-(X) Origins Biome Keybrand
+(X) Origins Biome Keybrands
 (^) Crystal Cutters
 (^) Knee Slapper
 (#, ^2) Nematoclaw*
@@ -500,7 +500,7 @@ MAGIC WEAPONS:
 (^) Haunted Vase
 (X) Lunarfire
 (#, ^2) Phantom Fury
-(#, ^2) Pike of Deepneus
+(☻) Pike of Deepneus
 (X) Shocktrain
 (X) Spectra
 (X) Steam Blaster
