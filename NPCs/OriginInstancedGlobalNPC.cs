@@ -62,8 +62,16 @@ namespace Origins.NPCs {
 					shrapnelCount = 0;
 				}
 			}
+			if (Main.rand.NextBool(10) && npc.HasBuff(BuffID.Bleeding)) {
+				Dust dust10 = Dust.NewDustDirect(npc.position, npc.width, npc.height, 5);
+				dust10.velocity.Y += 0.5f;
+				dust10.velocity *= 0.25f;
+			}
 		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
+			if (npc.lifeRegen > 0 && npc.HasBuff(BuffID.Bleeding)) {
+				npc.lifeRegen = 0;
+			}
 			if (amebolizeDebuff) {
 				if (npc.lifeRegen > 0) {
 					npc.lifeRegen = 0;

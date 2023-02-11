@@ -31,7 +31,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 		}
 		public override void UpdateLifeRegen(ref int damage) {
-			if (NPC.life > 20) {
+			if (NPC.life > 20 && !NPC.HasBuff(BuffID.Bleeding)) {
 				NPC.lifeRegen += 75 / (NPC.life / 20);
 			}
 		}

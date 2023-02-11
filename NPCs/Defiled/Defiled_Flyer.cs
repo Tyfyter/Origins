@@ -47,7 +47,7 @@ namespace Origins.NPCs.Defiled {
 		public override void UpdateLifeRegen(ref int damage) {
 			if (NPC.life < NPC.lifeMax && Mana > 0) {
 				int factor = 57 / ((NPC.life / 10) + 1);
-				NPC.lifeRegen += factor;
+				if (!NPC.HasBuff(BuffID.Bleeding)) NPC.lifeRegen += factor;
 				Mana -= factor / 180f;// 1 mana for every 1 health regenerated
 			}
 		}

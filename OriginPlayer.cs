@@ -69,7 +69,6 @@ namespace Origins {
 		public bool madHand = false;
 		public bool fiberglassDagger = false;
 		public bool advancedImaging = false;
-		public bool rasterize = false;
 		public bool decayingScale = false;
 		public bool lazyCloakVisible = false;
 		public bool amebicVialVisible = false;
@@ -114,6 +113,9 @@ namespace Origins {
 		public bool rebreather = false;
 		public float rebreatherCount = 0;
 		public bool rebreatherCounting = false;
+		public bool explosiveArtery = false;
+		public int explosiveArteryCount = 0;
+		public Item explosiveArteryItem = null;
 		#endregion
 
 		#region explosive stats
@@ -270,7 +272,6 @@ namespace Origins {
 			madHand = false;
 			fiberglassDagger = false;
 			advancedImaging = false;
-			rasterize = false;
 			decayingScale = false;
 			lazyCloakVisible = false;
 			amebicVialVisible = false;
@@ -305,6 +306,13 @@ namespace Origins {
 			spiderRavel = false;
 			if (spiderRavelTime > 0) spiderRavelTime--;
 			vanityRavel = -1;
+
+			if (explosiveArtery) {
+				explosiveArtery = false;
+			} else {
+				explosiveArteryCount = -1;
+			}
+			explosiveArteryItem = null;
 
 			flaskBile = false;
 			flaskSalt = false;
@@ -626,6 +634,36 @@ namespace Origins {
 					Player.KillMe(PlayerDeathReason.ByOther(0), 1, 0);
 				}
 			}
+			if (explosiveArtery) {
+				if (explosiveArteryCount == -1) {
+					explosiveArteryCount = CombinedHooks.TotalUseTime(explosiveArteryItem.useTime, Player, explosiveArteryItem);
+				}
+				if (explosiveArteryCount > 0) {
+					explosiveArteryCount--;
+				} else {
+					const float maxDist = 512 * 512;
+					for (int i = 0; i < Main.maxNPCs; i++) {
+						NPC currentTarget = Main.npc[i];
+						if (Main.rand.NextBool(explosiveArteryItem.useAnimation, explosiveArteryItem.reuseDelay)) {
+							if (currentTarget.CanBeChasedBy() && currentTarget.HasBuff(BuffID.Bleeding)) {
+								Vector2 diff = currentTarget.Center - Player.MountedCenter;
+								if (diff.LengthSquared() < maxDist) {
+									Projectile.NewProjectileDirect(
+										Player.GetSource_Accessory(explosiveArteryItem),
+										currentTarget.Center,
+										new Vector2(Math.Sign(diff.X), 0),
+										explosiveArteryItem.shoot,
+										Player.GetWeaponDamage(explosiveArteryItem),
+										Player.GetWeaponKnockback(explosiveArteryItem),
+										Player.whoAmI
+									);
+								}
+							}
+						}
+					}
+					explosiveArteryCount = -1;
+				}
+			}
 		}
 		public override void UpdateDyes() {
 			if (Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
@@ -798,12 +836,6 @@ namespace Origins {
 			if (item.CountsAsClass(DamageClasses.Explosive)) {
 				damage -= (int)Math.Max((target.defense - Player.GetWeaponArmorPenetration(item)) * (explosive_defense_factor - 0.5f), 0);
 			}
-			if (messyLeech) {
-				/*if (NPC.Defiled) {
-                    NPC.lifeRegen = 0;
-                }*/
-				target.AddBuff(BuffID.Bleeding, 480);
-			}
 		}
 		public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (advancedImaging) {
@@ -944,14 +976,14 @@ namespace Origins {
 					dimStarlightCooldown = 300;
 				}
 			}
-			if (rasterize) {
-				target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration);
-			}
 			if (symbioteSkull) {
 				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.9f);
 			}
 			if (decayingScale) {
 				target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
+			}
+			if (messyLeech) {
+				target.AddBuff(BuffID.Bleeding, 480);
 			}
 			if (target.life <= 0) {
 				foreach (var quest in Quest_Registry.Quests) {

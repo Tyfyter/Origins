@@ -15,8 +15,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void UpdateEquip(Player player) {
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.messyLeech = true;
+			player.GetModPlayer<OriginPlayer>().messyLeech = true;
 			player.magmaStone = true;
 		}
 	}

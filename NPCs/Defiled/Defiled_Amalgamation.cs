@@ -459,7 +459,7 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public override void UpdateLifeRegen(ref int damage) {
-			if ((int)NPC.ai[0] != 3) {
+			if ((int)NPC.ai[0] != 3 && !NPC.HasBuff(BuffID.Bleeding)) {
 				int tickSize = NPC.lifeMax / (10 - DifficultyMult * 2);
 				int threshold = (((NPC.life - 1) / tickSize) + 1) * tickSize;
 				if (NPC.life < threshold) {
