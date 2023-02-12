@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -42,6 +43,11 @@ namespace Origins.NPCs.Defiled {
 		float Mana {
 			get;
 			set;
+		}
+		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) {
+			PlayerDeathReason reason = new PlayerDeathReason();
+			reason.SourceCustomReason = target.name + " was absolutely destroyed by a Defiled Tripod";
+			reason.SourceCustomReason = target.name + " got rekt by a Defiled Tripod";
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
 			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 70);

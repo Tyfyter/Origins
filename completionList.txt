@@ -48,14 +48,17 @@ BOSSES AND MINI-BOSSES:
 ($, ^2/3) Fiberglass Weaver !!!
 (#4, $, ^2) Primordial Amoeba !!!
 
+(X) Lost Diver
 (X) Miscreant
 (X) Scrapper
 
+(%3) Dawn boss
 (X) Duskord
+(X) Logic Brane
 (X) Severus, the Dark One
 
 (%3) Origins final boss
-(#, $, ^2) I.C.A.R.U.S
+(@5, #, $) I.C.A.R.U.S
 (#, $, ^2) Quantux
 ---
 
@@ -432,7 +435,7 @@ MELEE WEAPONS:
 (#, ^2) Scale Saw
 (^) Telephone Pole*
 
-(^) Personal Laser Blade*
+(@2/5, ^3) Personal Laser Blade*
 (X) Pile Bunker
 
 (%3, X) Celestial Point
@@ -498,8 +501,6 @@ MAGIC WEAPONS:
 (^) Slashswarm
 (^) Tones of Agony
 
-(^) Bled Out Staff
-(^) Amber of Embers
 (X) Communion
 (^) Dismay
 (#, ^2) Innermost Manifest !!!
@@ -508,6 +509,8 @@ MAGIC WEAPONS:
 (^) Splashid
 (^) Startillery
 
+(^) Amber of Embers
+(^) Bled Out Staff
 (^) Haunted Vase
 (X) Lunarfire
 (#, ^2) Phantom Fury
@@ -579,37 +582,27 @@ EXPLOSIVE WEAPONS:
 (^) Peatball*
 (#, ^2) Potato Mine !!!
 
-(^) Bomboomstick
-(#2, ^2) Boomphracken
-(^) Happy Bomb
-(#, ^2) Klangjet
-(#, ^2) Mortar Shell
-(^) Shrapnel Bomb
-(#3, ^2) Thermite Launcher
-
-(#, %2, ^2) Abrasion Blaster
-(%3, ^) Ace Shrapnel
 (#, ^2) Acid Bomb
 (^) Acid Grenade
-(^) Black Hole Bomb
-(#, ^2) Crystal Bomb
-(^) Crystal Grenade
-(X) Grenade Lawnchair
-(X) Grenado
-(X) Mine Flayer
-(#, ^2) Nade O' Plenty
-(#, ^2) Nuclear Arm*
-(X, %2) Overhead Missile Cannon
-(X) Omni-Directional Claymore
+(@5, ^3) Bomboomstick
+(#2, ^2) Boomphracken
+(^) Happy Bomb
+(^) Thermite Launcher
 
-(%3, X) Big Bang
-(%3, X) Big Bomba
-(X) Black Hole Bomb Launcher
-(%3, X) Catalyst
-(@, ^3) Caustica
-(@, #) Flakjack
-(@, ^3) Missile Minigun
-(@2, #) Starburst
+(@5, #2) Abrasion Blaster
+(@5, #) Ace Shrapnel
+(^) Crystal Bomb
+(^) Crystal Grenade
+(#2, ^2) Grenado
+(#2, ^2) Mine Flayer
+(#2, ^2) Nuclear Arm*
+(#2, ^2) Omni-Directional Claymore
+(#, ^2) Shrapnel Bomb
+
+(^) Black Hole Bomb
+(@5, ^3) Caustica
+(#2, ^2) Flakjack
+(@5, #) Starburst
 ---
 
 
@@ -767,7 +760,7 @@ MATERIALS:
 (^) Element-36 Bundle
 (X) Ethereal Ash
 (^) Eyndum Bar
-(^) Fibron Plating
+(@5, ^3) Fibron Plating
 (^) Formium Bar
 (^) Formium Scrap
 (^) Lunar Token

@@ -108,6 +108,14 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void Kill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Item167, Projectile.position);
+
+			Dust dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30), 1f);
+			dust.noGravity = false;
+			dust.velocity *= 8f;
+
+			dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.Firework_Yellow, 0, 0, 255, default, 4f);
+			dust.noGravity = false;
+			dust.velocity *= 8f;
 		}
 		public override void AI() {
 			Dust dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30), 0.6f);

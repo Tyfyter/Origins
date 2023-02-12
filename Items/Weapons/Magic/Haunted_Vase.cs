@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.shoot = ModContent.ProjectileType<Haunted_Vase_P>();
 			Item.shootSpeed *= 1.5f;
 			Item.value = Item.buyPrice(gold: 5);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Yellow;
 
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {

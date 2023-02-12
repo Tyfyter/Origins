@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using Origins.Tiles.Dusk;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
@@ -34,7 +35,7 @@ namespace Origins.Items.Armor.Rift {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.ObsidianHelm);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 12);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 2);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
@@ -63,7 +64,7 @@ namespace Origins.Items.Armor.Rift {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.ObsidianShirt);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 36);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 4);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
@@ -90,7 +91,7 @@ namespace Origins.Items.Armor.Rift {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.ObsidianPants);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 24);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 3);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}

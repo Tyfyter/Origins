@@ -1,4 +1,5 @@
-﻿using Origins.Tiles.Other;
+﻿using Origins.Items.Weapons.Magic;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,11 +34,11 @@ namespace Origins.Items.Other.Consumables {
 			return true;
 		}
 		public override void AddRecipes() {
-			//Recipe recipe = Recipe.Create(ModContent.ItemType<Hot_Potato>());
-			//recipe.AddIngredient(ItemID.HellstoneBar, 14);
-			//recipe.AddIngredient(this);
-			//recipe.AddTile(TileID.DemonAltar);
-			//recipe.Register();
+			Recipe recipe = Recipe.Create(ModContent.ItemType<Hot_Potato>());
+			recipe.AddIngredient(ItemID.HellstoneBar, 14);
+			recipe.AddIngredient(this);
+			recipe.AddTile(TileID.DemonAltar);
+			recipe.Register();
 
 			//recipe = Recipe.Create(ModContent.ItemType<Potato_Mine>(), 15);
 			//recipe.AddIngredient(ItemID.ExplosivePowder);

@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Flamelash);
-			Item.damage = 31;
+			Item.damage = 70;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.useAnimation = 11;
 			Item.useTime = 11;
@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Magic {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.Amber, 8);
 			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 4);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 10);
+			recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 10);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

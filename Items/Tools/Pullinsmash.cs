@@ -31,7 +31,7 @@ namespace Origins.Items.Tools {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 10);
-			recipe.AddIngredient(ModContent.ItemType<Riven_Sample>(), 5);
+			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 5);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

@@ -1,13 +1,13 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ranged;
+using Origins.Tiles.Dusk;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Boomphracken : ModItem {
+    public class Boomphracken : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Boomphracken");
@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
-			Item.damage = 48;
+			Item.damage = 68;
 			Item.width = 56;
 			Item.height = 28;
 			Item.useTime = 57;
@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 10f;
 			Item.shootSpeed = 24f;
 			Item.value = Item.sellPrice(gold: 20);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Yellow;
 			Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.25f);
 			Item.autoReuse = true;
 
@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.IllegalGunParts, 5);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 60);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 8);
 			recipe.AddIngredient(ModContent.ItemType<Hallowed_Cleaver>());
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();

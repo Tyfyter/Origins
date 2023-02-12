@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 12);
-			recipe.AddIngredient(ModContent.ItemType<Riven_Sample>(), 5);
+			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 5);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

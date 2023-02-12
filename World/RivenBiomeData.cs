@@ -539,7 +539,7 @@ namespace Origins.World.BiomeData {
 				context.SetEvilOre(ModContent.ItemType<Encrusted_Ore_Item>());
 				context.SetVileInnard(ModContent.ItemType<Bud_Barnacle>());
 				context.SetVileComponent(ModContent.ItemType<Alkahest>());
-				context.SetEvilBossDrop(ModContent.ItemType<Riven_Sample>());
+				context.SetEvilBossDrop(ModContent.ItemType<Riven_Carapace>());
 				context.SetEvilSword(ModContent.ItemType<Vorpal_Sword>()); //Already had one lol
 				return context;
 			}

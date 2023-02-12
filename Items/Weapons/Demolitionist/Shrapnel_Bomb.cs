@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Items.Weapons.Ammo;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,6 +21,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 13f;
 			Item.value = Item.sellPrice(silver: 8);
 			Item.rare = ItemRarityID.Pink;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type, 2);
+			recipe.AddIngredient(ItemID.Bomb, 2);
+			recipe.AddIngredient(ModContent.ItemType<Scrap>());
+			recipe.Register();
 		}
 	}
 	public class Shrapnel_Bomb_P : ModProjectile {

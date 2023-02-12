@@ -106,20 +106,21 @@ namespace Origins.Items.Materials {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bleeding Obsidian Shard");
+			Tooltip.SetDefault("'Weakens those who touch it'");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 48;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Lime;
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Bleeding_Obsidian_Item>());
-			recipe.AddIngredient(this, 6);
+			recipe.AddIngredient(this, 8);
 			recipe.Register();
 
-			recipe = Recipe.Create(Type, 6);
+			recipe = Recipe.Create(Type, 8);
 			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>());
 			recipe.Register();
 		}
@@ -559,7 +560,7 @@ namespace Origins.Items.Materials {
 			Item.glowMask = glowmask;
 		}
 	}
-	public class Riven_Sample : ModItem {
+	public class Riven_Carapace : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Riven} Carapace");

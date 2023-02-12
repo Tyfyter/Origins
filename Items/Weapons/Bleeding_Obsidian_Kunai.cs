@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.NPCs;
+using Origins.Tiles.Dusk;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,7 +15,7 @@ namespace Origins.Items.Weapons {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
-			Item.damage = 40;
+			Item.damage = 60;
 			Item.useTime = 7;
 			Item.useAnimation = 7;
 			Item.shootSpeed = 13;
@@ -22,12 +23,12 @@ namespace Origins.Items.Weapons {
 			Item.consumable = false;
 			Item.maxStack = 8;
 			Item.shoot = ModContent.ProjectileType<Bleeding_Obsidian_Kunai_P>();
-			Item.value = Item.sellPrice(silver: 40);
-			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 1);
+			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 2);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 17);
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 2);
 			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 4);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.Register();

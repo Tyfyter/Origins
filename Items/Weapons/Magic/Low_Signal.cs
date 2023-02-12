@@ -69,6 +69,10 @@ namespace Origins.Items.Weapons.Magic {
 		public override void AI() {
 			Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, default, newColor: Color.White, Scale: 0.5f + (float)Math.Sin(Projectile.timeLeft * 0.1f) * 0.15f);
 		}
+		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) {
+				PlayerDeathReason reason = new PlayerDeathReason();
+				reason.SourceCustomReason = target.name + " watched defiled spikes come out of their body";
+		}
 		public override void Kill(int timeLeft) {
 			int[] immune = Projectile.localNPCImmunity.ToArray();
 			Projectile.NewProjectileDirect(

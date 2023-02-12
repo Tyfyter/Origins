@@ -1,11 +1,11 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+using Origins.Tiles.Dusk;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Bled_Out_Staff : ModItem {
+    public class Bled_Out_Staff : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bled Out Staff");
@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
-			Item.damage = 47;
+			Item.damage = 80;
 			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
 			Item.width = 42;
@@ -25,13 +25,13 @@ namespace Origins.Items.Weapons.Magic {
 			Item.mana = 16;
 			Item.shoot = ModContent.ProjectileType<Bled_Out_Staff_P>();
 			Item.value = Item.sellPrice(silver: 80);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Yellow;
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddRecipeGroup("Origins:Gem Staves", 1);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 45);
+			recipe.AddRecipeGroup("Origins:Gem Staves");
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 6);
 			recipe.Register();
 		}
 	}

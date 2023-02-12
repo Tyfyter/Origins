@@ -60,6 +60,7 @@ namespace Origins {
 		}
 		public static int GemStaffRecipeGroupID { get; private set; }
 		public static int DeathweedRecipeGroupID { get; private set; }
+		public static int ShadowScaleRecipeGroupID { get; private set; }
 		public static int CursedFlameRecipeGroupID { get; private set; }
 		public override void AddRecipeGroups() {
 			RecipeGroup group = new RecipeGroup(() => $"{Lang.misc[37].Value} Gem Staff", new int[] {
@@ -77,6 +78,13 @@ namespace Origins {
 				ModContent.ItemType<Wrycoral_Item>()
 			});
 			DeathweedRecipeGroupID = RecipeGroup.RegisterGroup("Deathweed", group);
+			group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.ShadowScale), new int[] {
+				ItemID.ShadowScale,
+				ItemID.TissueSample,
+				ModContent.ItemType<Undead_Chunk>(),
+				ModContent.ItemType<Riven_Carapace>()
+			});
+			ShadowScaleRecipeGroupID = RecipeGroup.RegisterGroup("Shadow Scale", group);
 			group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.CursedFlame), new int[] {
 				ItemID.CursedFlame,
 				ItemID.Ichor,
