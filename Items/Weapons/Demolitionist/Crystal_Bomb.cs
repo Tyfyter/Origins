@@ -32,50 +32,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
-		#region blend mode testing
-		/*public override bool AltFunctionUse(Player player) {
-            return true;
-        }*/
-		/*public override bool CanUseItem(Player player) {
-            if(player.altFunctionUse==2) {
-                if(player.controlUp) {
-                    Crystal_Grenade_P.blendState.ColorSourceBlend++;
-                    Crystal_Grenade_P.blendState.ColorSourceBlend = (Blend)((int)Crystal_Grenade_P.blendState.ColorSourceBlend%13);
-                    Main.NewText(Crystal_Grenade_P.blendState.ColorSourceBlend);
-                }
-                if(player.controlLeft) {
-                    Crystal_Grenade_P.blendState.AlphaSourceBlend++;
-                    Crystal_Grenade_P.blendState.AlphaSourceBlend = (Blend)((int)Crystal_Grenade_P.blendState.AlphaSourceBlend%13);
-                    Main.NewText(Crystal_Grenade_P.blendState.AlphaSourceBlend);
-                }
-                if(player.controlDown) {
-                    Crystal_Grenade_P.blendState.ColorDestinationBlend++;
-                    Crystal_Grenade_P.blendState.ColorDestinationBlend = (Blend)((int)Crystal_Grenade_P.blendState.ColorDestinationBlend%13);
-                    Main.NewText(Crystal_Grenade_P.blendState.ColorDestinationBlend);
-                }
-                if(player.controlRight) {
-                    Crystal_Grenade_P.blendState.AlphaDestinationBlend++;
-                    Crystal_Grenade_P.blendState.AlphaDestinationBlend = (Blend)((int)Crystal_Grenade_P.blendState.AlphaDestinationBlend%13);
-                    Main.NewText(Crystal_Grenade_P.blendState.AlphaDestinationBlend);
-                }
-                item.shoot = ProjectileID.None;
-                item.consumable = false;
-                return true;
-            }
-            item.shoot = ModContent.ProjectileType<Crystal_Grenade_P>();
-            item.consumable = true;
-            return base.CanUseItem(player);
-        }*/
-		#endregion
 	}
 	public class Crystal_Bomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Crystal_Bomb";
-		public static BlendState blendState => new BlendState() {
-			ColorSourceBlend = Blend.SourceAlpha,
-			AlphaSourceBlend = Blend.One,
-			ColorDestinationBlend = Blend.InverseSourceAlpha,
-			AlphaDestinationBlend = Blend.InverseSourceAlpha,
-		};
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Bomb");
 		}
@@ -103,21 +62,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			float rot = TwoPi / count;
 			for (int i = count; i > 0; i--) {
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(rot * i, 6) + Main.rand.NextVector2Unit()) + (Projectile.velocity / 12), t, Projectile.damage / 4, 6, Projectile.owner);
-			}
-		}
-		public override void PostDraw(Color lightColor) {
-			Texture2D lightMap = new Texture2D(Main.spriteBatch.GraphicsDevice, 10, 10);
-			Color[] lightData = new Color[100];
-			Vector2 pos = Projectile.position;
-			Vector3 col;
-			for (int x = 0; x < 10; x++) {
-				pos.X += 2;
-				for (int y = 0; y < 10; y++) {
-					pos.Y += 2;
-					col = Lighting.GetSubLight(pos);
-					lightData[(y * 10) + x] = new Color(((col.X + col.Y + col.Z) / 1.5f - 0.66f) * Min(Projectile.timeLeft / 85f, 1), 0, 0);
-				}
-				pos.Y -= 20;
 			}
 		}
 	}

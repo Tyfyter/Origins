@@ -70,8 +70,9 @@ namespace Origins.Items.Weapons.Magic {
 			Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, default, newColor: Color.White, Scale: 0.5f + (float)Math.Sin(Projectile.timeLeft * 0.1f) * 0.15f);
 		}
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) {
-				PlayerDeathReason reason = new PlayerDeathReason();
-				reason.SourceCustomReason = target.name + " watched defiled spikes come out of their body";
+			// sort of oddly phrased, and if there's a remotely simple way to add custom death reasons for projectiles this isn't it
+			// as seen with this functionally identical code the reason is never actually used
+			PlayerDeathReason reason = PlayerDeathReason.ByCustomReason(target.name + " watched defiled spikes come out of their body");
 		}
 		public override void Kill(int timeLeft) {
 			int[] immune = Projectile.localNPCImmunity.ToArray();

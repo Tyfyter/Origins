@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -76,8 +77,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		const float cohesion = 0.1f;
 
 		const double chaos = Math.PI;
-
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.BoneGloveProj;
+		int dustStyle;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Shrapnel");
 			//Origins.ExplosiveProjectiles[Projectile.type] = true;
@@ -91,9 +92,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.width = Projectile.height = 10;
 			Projectile.timeLeft = 240;
 			Projectile.ignoreWater = true;
+			if (Shrapnel_Dust.DustIDs is not null) dustStyle = Main.rand.Next(Shrapnel_Dust.DustIDs);
 		}
 		public override void AI() {
-			Dust.NewDustPerfect(Projectile.Center, 1, Vector2.Zero).noGravity = true;
+			Dust.NewDustPerfect(Projectile.Center, dustStyle, Vector2.Zero);
 			if (Projectile.ai[0] >= 0) {
 				Projectile center = Main.projectile[(int)Projectile.ai[0]];
 				if (!center.active) {
@@ -113,6 +115,35 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (target.life <= 0 && Projectile.ai[1] < 5) {
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Ace_Shrapnel_P>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 8 - Projectile.ai[1], Projectile.ai[1]);
 			}
+		}
+	}
+	public class Shrapnel_Dust : ModDust {
+		public static List<int> DustIDs { get; private set; }
+		public override void SetStaticDefaults() {
+			if (DustIDs is null) DustIDs = new(3);
+			DustIDs.Add(Type);
+		}
+		public override void Unload() {
+			DustIDs = null;
+		}
+		public override void OnSpawn(Dust dust) {
+			dust.noGravity = true;
+			dust.frame = new Rectangle(0, 0, 14, 10);
+		}
+		public override Color? GetAlpha(Dust dust, Color lightColor) {
+			return Color.Lerp(lightColor, new Color(255, 255, 255, 128), 0.5f);
+		}
+	}
+	public class Shrapnel_Dust_2 : Shrapnel_Dust {
+		public override void OnSpawn(Dust dust) {
+			dust.noGravity = true;
+			dust.frame = new Rectangle(0, 0, 8, 8);
+		}
+	}
+	public class Shrapnel_Dust_3 : Shrapnel_Dust {
+		public override void OnSpawn(Dust dust) {
+			dust.noGravity = true;
+			dust.frame = new Rectangle(0, 0, 12, 12);
 		}
 	}
 }
