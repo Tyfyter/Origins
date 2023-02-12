@@ -5,23 +5,22 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dawn {
-	public class Eden_Wood : OriginTile {
+	public class Angelic_Cloud : OriginTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			ItemDrop = ItemType<Eden_Wood_Item>();
-			AddMapEntry(new Color(150, 40, 40));
-			mergeID = TileID.WoodBlock;
+			ItemDrop = ItemType<Angelic_Cloud_Item>();
+			AddMapEntry(new Color(150, 150, 20));
+			mergeID = TileID.Cloud;
 		}
 	}
-	public class Eden_Wood_Item : ModItem {
+	public class Angelic_Cloud_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Eden Wood");
-			Tooltip.SetDefault("'A wood too sacred to chop'");
+			DisplayName.SetDefault("Angelic Cloud");
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Wood);
-			Item.createTile = TileType<Eden_Wood>();
+			Item.CloneDefaults(ItemID.Cloud);
+			Item.createTile = TileType<Angelic_Cloud>();
 		}
 	}
 }

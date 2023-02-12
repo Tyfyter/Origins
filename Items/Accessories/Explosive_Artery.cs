@@ -1,12 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Explosive_Artery : ModItem {
+    public class Explosive_Artery : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Explosive Artery");
 			Tooltip.SetDefault("Nearby bleeding enemies occasionally explode\n'Explosions happen near me 'cause I'm that cool!'");
@@ -14,7 +13,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);
-			Item.damage = 80;
+			Item.damage = 40;
 			Item.DamageType = DamageClasses.Explosive;
 			Item.knockBack = 4;
 			Item.useTime = 6;
@@ -53,8 +52,8 @@ namespace Origins.Items.Accessories {
 					Projectile.position,
 					Projectile.width,
 					Projectile.height,
-					DustID.Torch,
-					Scale: 2.5f
+					DustID.Blood,
+					Scale: 1.8f
 				);
 			}
 			Gore.NewGoreDirect(Projectile.GetSource_FromThis(), new Vector2(Projectile.Center.X, Projectile.Center.Y), default, Main.rand.Next(61, 64)).velocity += Vector2.One;

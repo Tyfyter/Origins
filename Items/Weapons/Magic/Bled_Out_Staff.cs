@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.mana = 16;
 			Item.shoot = ModContent.ProjectileType<Bled_Out_Staff_P>();
 			Item.value = Item.sellPrice(silver: 80);
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Pink;
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {

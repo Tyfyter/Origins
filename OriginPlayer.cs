@@ -836,6 +836,9 @@ namespace Origins {
 			if (item.CountsAsClass(DamageClasses.Explosive)) {
 				damage -= (int)Math.Max((target.defense - Player.GetWeaponArmorPenetration(item)) * (explosive_defense_factor - 0.5f), 0);
 			}
+			if (target.HasBuff(BuffID.Bleeding)) {
+				//NPC.liferegen = -1;
+            }
 		}
 		public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (advancedImaging) {

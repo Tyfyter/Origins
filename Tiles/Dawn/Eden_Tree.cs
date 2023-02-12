@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Tiles.Riven;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
@@ -24,10 +23,6 @@ namespace Origins.Tiles.Dawn {
 			Instance = null;
 		}
 
-		/*public override int CreateDust() {
-			return ModContent.DustType<>();
-		}*/
-
 		public override int DropWood() {
 			return ModContent.ItemType<Eden_Wood_Item>();
 		}
@@ -38,8 +33,7 @@ namespace Origins.Tiles.Dawn {
 
 		public override void SetStaticDefaults() {
 			GrowsOnTileId = new int[] {
-				ModContent.TileType<Riven_Flesh>(), //temporary
-				ModContent.TileType<Riven_Grass>()
+				ModContent.TileType<Genesis_Grass>()
 			};
 		}
 
@@ -69,7 +63,7 @@ namespace Origins.Tiles.Dawn {
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
 			TileObjectData.newTile.CoordinateWidth = 16;
 			TileObjectData.newTile.CoordinatePadding = 2;
-			TileObjectData.newTile.AnchorValidTiles = new[] { ModContent.TileType<Riven_Flesh>() }; //temporary
+			TileObjectData.newTile.AnchorValidTiles = new[] { ModContent.TileType<Genesis_Grass>() };
 			TileObjectData.newTile.StyleHorizontal = true;
 			TileObjectData.newTile.DrawFlipHorizontal = true;
 			TileObjectData.newTile.WaterPlacement = LiquidPlacement.NotAllowed;

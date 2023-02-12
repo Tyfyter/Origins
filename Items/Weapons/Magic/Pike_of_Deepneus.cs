@@ -104,14 +104,20 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.alpha = 0;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = 1;
+			Projectile.ArmorPenetration = 40;
 		}
 		public override void Kill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Item167, Projectile.position);
 		}
 		public override void AI() {
-			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.Torch, 0, 0, 255, default, 2f);
-			dust.noGravity = true;
-			dust.fadeIn = 1.5f;
+			Dust dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30), 0.6f);
+			dust.noGravity = false;
+			dust.velocity *= 8f;
+
+			dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.Firework_Yellow, 0, 0, 50, default, 0.6f);
+			dust.noGravity = false;
+			dust.velocity *= 4f;
+
 			if (Projectile.ai[0] != 0) {
 				Player player = Main.player[Projectile.owner];
 				if (Projectile.owner == Main.myPlayer) {

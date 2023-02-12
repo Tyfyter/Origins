@@ -203,12 +203,12 @@ ARMOR:
 (^) Acrid Armor
 (^) Bleeding Obsidian Armor
 
-(^) Necromancer Armor
+(@5, ^3) Necromancer Armor
 (X) Blast Armor
 
 (X) Ascendant Armor
 (^) Chromtain Armor
-(#2, ^2) Eyndum Armor
+(@5, #2) Eyndum Armor
 (X) Nanite Armor
 (^) Nova Armor
 (X) Locus Armor
@@ -500,6 +500,7 @@ MAGIC WEAPONS:
 
 (^) Bled Out Staff
 (^) Amber of Embers
+(X) Communion
 (^) Dismay
 (#, ^2) Innermost Manifest !!!
 (#, ^2) Meltdown
@@ -540,6 +541,7 @@ SUMMONER WEAPONS:
 (@5, #) Envenomed Frenzy*
 (#, ^2) Forsaken Desire
 (X) Mildew Whip
+(X) Ziptie
 
 (X) Controller/Patrol Bot Controller
 (X) Core of Cogs
@@ -613,16 +615,16 @@ EXPLOSIVE WEAPONS:
 
 CLASSLESS WEAPONS:
 ---
-(X) Bleeding Obsidian Kunai
+(^) Bleeding Obsidian Kunai
 (^) Fiberglass Shard
-(X) Potato Launcher !!!
+(#2, ^2) Potato Launcher !!!
 ---
 
 
 TILES:
 ---
 (#4, ^2) Amoeba Fluid !!!
-(X) Angelic Cloud
+(^) Angelic Cloud
 (#3, ^2) Batholith*
 (^) Bleeding Obsidian
 (X) Cubekon Altar
@@ -632,13 +634,15 @@ TILES:
 (^) Defiled Stone*
 (@5, ^3) Dusk Stone
 (^) Dusklight
+(^) Eden Wood
 (^) Eitrite Ore
 (@5, ^3) Encrusted Ore !!!
 (^) Felnum Ore
 (^) Fiberglass
+(#4, ^2) Genesis Grass
 (#, ^2) Geyser Core
 (^) Hardened Defiled Sand
-(X) Harmony Brick
+(#4, ^2) Harmony Brick
 (^) Lost Ore
 (X) Mildew
 (#2, ^2) Peat Moss* !!!
@@ -648,14 +652,16 @@ TILES:
 (^) White Ice
 (X) Defiled Cactus
 (X) Riven Cactus
+(^) Riven Grass
 
 (X) Batholith Wall
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
+(^) Eden Wood Wall
 (#, ^2) Fiberglass Wall
-(X) Harmony Brick Wall
+(^) Harmony Brick Wall
 (^) Spug Flesh Wall
-(X) Sulphur Stone Wall
+(#, ^2) Sulphur Stone Wall
 
 (X) Acid Chest
 (#, ^2) Alkahest Torch
