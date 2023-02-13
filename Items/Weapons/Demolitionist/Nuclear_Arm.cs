@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,6 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaultsKeepSlots(ItemID.TerraBlade);
 			Item.noUseGraphic = true;
+			Item.noMelee = true;
 			Item.damage = 44;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
 			Item.useStyle = ItemUseStyleID.Shoot;
@@ -75,6 +77,22 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
+			Rectangle projHitbox = Projectile.Hitbox;
+			ProjectileLoader.ModifyDamageHitbox(Projectile, ref projHitbox);
+			if (Projectile.owner == Main.myPlayer) {
+				Player player = Main.LocalPlayer;
+				if (player.active && !player.dead && !player.immune) {
+					Rectangle playerHitbox = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
+					if (projHitbox.Intersects(playerHitbox)) {
+						player.Hurt(
+							Terraria.DataStructures.PlayerDeathReason.ByProjectile(Main.myPlayer, Projectile.whoAmI),
+							Main.DamageVar(Projectile.damage, 0f - player.luck),
+							Math.Sign(player.Center.X - Projectile.Center.X),
+							true
+						);
+					}
+				}
+			}
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;
 			Projectile.width = 14;
