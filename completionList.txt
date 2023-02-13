@@ -568,29 +568,29 @@ EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
 (^) Bloombomb
-(#, ^2) Bombardment !!!
+(#2, ^2) Bombardment !!!
 (#2, ^2) Bomb Launcher !!!
-(#, ^2) Brainade !!!
-(#, ^2) Defiled Spirit !!!
-(#, ^2) Floaty Bomb !!!
+(#2, ^2) Brainade !!!
+(#3, ^2) Defiled Spirit !!!
+(#3, ^2) Floaty Bomb !!!
 (^) Hand Grenade Launcher
-(#, ^2) Hellfire Bomb !!!
-(#, ^2) Hellfire Grenade !!!
+(#3, ^2) Hellfire Bomb !!!
+(#3, ^2) Hellfire Grenade !!!
 (^) Impact Explosives
 (^) Lightning Grenade
-(#, ^2) Outbreak Bomb !!!
+(#2, ^2) Outbreak Bomb !!!
 (^) Peatball*
-(#, ^2) Potato Mine !!!
+(#3, ^2) Potato Mine !!!
 
-(#, ^2) Acid Bomb
-(^) Acid Grenade
-(@5, ^3) Bomboomstick
+(^) Alkaline Bomb
+(^) Alkaline Grenade
 (#2, ^2) Boomphracken
 (^) Happy Bomb
 (^) Thermite Launcher
 
-(@5, #2) Abrasion Blaster
-(@5, #) Ace Shrapnel
+(#2, ^2) Abrasion Blaster
+(#2, ^2) Ace Shrapnel
+(@5, ^3) Bomboomstick
 (^) Crystal Bomb
 (^) Crystal Grenade
 (#2, ^2) Grenado

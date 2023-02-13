@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Summoner;
 using System;
 using System.IO;
@@ -58,7 +59,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
-			//npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
 			npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsExpert(), ModContent.ItemType<Bone_Latcher>(), 38));
 		}
 		public override void AI() {

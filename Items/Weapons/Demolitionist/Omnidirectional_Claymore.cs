@@ -8,7 +8,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Omnidirectional_Claymore : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Omni-Directional Claymore");
-			Tooltip.SetDefault("Explodes when enemies cross its aser\nCan aim in different directions");
+			Tooltip.SetDefault("Explodes when enemies cross its laser\nCan aim in different directions");
 			SacrificeTotal = 5;
 		}
 		public override void SetDefaults() {

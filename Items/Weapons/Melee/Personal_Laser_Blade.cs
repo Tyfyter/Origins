@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.autoReuse = false;
 			Item.useTurn = false;
 			Item.rare = ItemRarityID.Pink;
-			Item.UseSound = SoundID.Item1;
+			Item.UseSound = SoundID.Item45;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

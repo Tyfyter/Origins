@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Items.Weapons.Ammo;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.Audio;
@@ -9,7 +10,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Abrasion_Blaster : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Abrasion Blaster");
-			Tooltip.SetDefault("Shots can destroy tiles");
+			Tooltip.SetDefault("Shots can destroy tiles\nUses scrap as ammo");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -20,10 +21,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useAnimation = 32;
 			Item.useTime = 16;
 			Item.shoot = ModContent.ProjectileType<Dreikan_Shot>();
+			Item.ammo = ModContent.ItemType<Scrap>();
 			Item.reuseDelay = 6;
 			Item.autoReuse = true;
 			Item.value = Item.sellPrice(gold: 5);
-			Item.rare = CrimsonRarity.ID;
+			Item.rare = ItemRarityID.LightPurple;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (type == ProjectileID.Bullet) type = Item.shoot;

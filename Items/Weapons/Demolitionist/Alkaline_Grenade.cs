@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Acid_Grenade : ModItem {
+	public class Alkaline_Grenade : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Alkaline Grenade");
 			Tooltip.SetDefault("Explodes into brine droplets");
@@ -13,13 +13,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 30;
+			Item.damage = 60;
 			Item.value *= 14;
 			Item.shoot = ModContent.ProjectileType<Acid_Grenade_P>();
-			Item.shootSpeed *= 1.5f;
-			Item.knockBack = 5f;
 			Item.ammo = ItemID.Grenade;
-			Item.value = Item.sellPrice(silver: 2);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
@@ -31,7 +28,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Acid_Grenade_P : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Demolitionist/Acid_Grenade";
+		public override string Texture => "Origins/Items/Weapons/Demolitionist/Alkaline_Grenade";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.timeLeft = 135;

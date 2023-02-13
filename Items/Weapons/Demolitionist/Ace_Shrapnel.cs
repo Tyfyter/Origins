@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Weapons.Ammo;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -12,7 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Ace Shrapnel");
-			Tooltip.SetDefault("Not implemented the way spriter dev wants it");
+			Tooltip.SetDefault("Not implemented the way spriter dev wants it\nUses scrap as ammo");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -25,8 +26,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useAnimation = 28;
 			Item.shootSpeed /= 1;
 			Item.shoot = ModContent.ProjectileType<Ace_Shrapnel_P>();
+			Item.ammo = ModContent.ItemType<Scrap>();
 			Item.value = Item.sellPrice(gold: 2);
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.LightPurple;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			type -= ModContent.ProjectileType<Ace_Shrapnel_P>();

@@ -24,7 +24,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed *= 1.5f;
 			Item.knockBack = 5f;
 			Item.ammo = ItemID.Grenade;
-			Item.value = Item.sellPrice(silver: 5);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {

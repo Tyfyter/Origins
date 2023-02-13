@@ -68,7 +68,7 @@ namespace Origins.NPCs {
 							//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Mortar_Shell>());
 						}
 						if (ModContent.GetInstance<OriginSystem>().peatSold >= 75) {
-							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Acid_Grenade>());
+							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Alkaline_Grenade>());
 						}
 						if (ModContent.GetInstance<OriginSystem>().peatSold >= 100) {
 							//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Acid_Bomb>());

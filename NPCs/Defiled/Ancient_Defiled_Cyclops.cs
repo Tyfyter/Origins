@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
 using System;
 using Terraria;
@@ -28,7 +29,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
-			//npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ancient_Kruncher>()));
 		}
 		public override void AI() {

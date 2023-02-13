@@ -15,16 +15,17 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaultsKeepSlots(ItemID.TerraBlade);
+			Item.damage = 120;
 			Item.noUseGraphic = true;
 			Item.noMelee = true;
-			Item.damage = 44;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
 			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useTime = 28;
-			Item.useAnimation = 28;
+			Item.useTime = 37;
+			Item.useAnimation = 37;
 			Item.knockBack = 4f;
 			Item.shoot = ModContent.ProjectileType<Nuclear_Arm_P>();
 			Item.shootSpeed = 5;
+			Item.UseSound = SoundID.Item45;
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.buyPrice(gold: 2);
 		}
@@ -53,7 +54,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.RocketI);
-			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 1;
 			Projectile.usesLocalNPCImmunity = true;
