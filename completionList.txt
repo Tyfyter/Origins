@@ -18,6 +18,7 @@ $3: Needs sound (SFX/music is composed but not implemented)
 %: Insufficient planning (item-functionality/NPC-behavior misunderstood)
 %2: Insufficient planning (item-functionality/NPC-behavior absent from planner or wiki)
 %3: Insufficient planning (entirely unplanned and needing concept)
+%4: Insufficient planning (too similar to vanilla counterpart)
 
 ^: Completed (entirely completed)
 ^2: Partial completion (sprites completed)
@@ -852,7 +853,7 @@ AMMO:
 (^) Alkahest Bullet
 (^) Bile Arrow 
 (^) Bile Bullet
-(#3, ^2) Bile Dart
+(#3, ^2, %4) Bile Dart
 (^) Cursed Harpoon
 (^) Giant Metal Slug
 (^) Thermite Canister

@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.CloneDefaults(ItemID.CursedDart);
 			Item.maxStack = 999;
 			Item.damage = 9;
-			//Item.shoot = ModContent.ProjectileType<Bile_Dart_P>();
+			Item.shoot = ModContent.ProjectileType<Bile_Dart_P>();
 			Item.shootSpeed = 3f;
 			Item.knockBack = 2.2f;
 			Item.value = Item.sellPrice(copper: 6);
@@ -29,10 +29,24 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.Register();
 		}
 	}
-	/*public class Bile_Dart_P : ModProjectile {
-        public override void SetDefaults() {
+	public class Bile_Dart_P : ModProjectile {
+		public override string Texture => "Origins/Items/Weapons/Ammo/Bile_Dart";
+		public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.CursedDart);
         }
+		public override void AI() {
+			Projectile.localAI[0] += 1f;
+			if (Projectile.localAI[0] > 3f)
+				Projectile.alpha = 0;
+
+			if (Projectile.ai[0] >= 20f) {
+				Projectile.ai[0] = 20f;
+				Projectile.velocity.Y += 0.075f;
+			}
+		}
+		public override Color? GetAlpha(Color lightColor) {
+			return Projectile.alpha == 0 ? new Color(255, 255, 255, 200) : Color.Transparent;
+		}
 		public override void Kill(int timeLeft) {
             Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
             SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
@@ -41,5 +55,5 @@ namespace Origins.Items.Weapons.Ammo {
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 20);
         }
-    }*/
+    }
 }
