@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Ammo {
 			}
 			int auraProjIndex = (int)Projectile.ai[1] - 1;
 			if (auraProjIndex < 0) {
-				Projectile.ai[1] = Projectile.NewProjectile(
+				if (Projectile.owner == Main.myPlayer) Projectile.ai[1] = Projectile.NewProjectile(
 					Projectile.GetSource_FromAI(),
 					Projectile.position,
 					default,
@@ -67,6 +67,7 @@ namespace Origins.Items.Weapons.Ammo {
 				Projectile auraProj = Main.projectile[auraProjIndex];
 				if (auraProj.active && auraProj.type == Bile_Dart_Aura.ID) {
 					auraProj.Center = Projectile.Center;
+					auraProj.rotation = Projectile.rotation;
 				} else {
 					Projectile.ai[1] = 0;
 				}
@@ -81,7 +82,7 @@ namespace Origins.Items.Weapons.Ammo {
             SoundEngine.PlaySound(SoundID.NPCHit22.WithVolume(0.5f), Projectile.position);
         }
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-            target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 20);
+            target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 30);
         }
 	}
 	public class Bile_Dart_Aura : ModProjectile {
@@ -100,6 +101,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.tileCollide = false;
+			Projectile.scale = 1.5f;
 		}
 		public override void Load() {
 			if (Main.dedServ) return;
@@ -134,13 +136,14 @@ namespace Origins.Items.Weapons.Ammo {
 				Projectile ownerProj = Main.projectile[auraProj];
 				if (ownerProj.active) {
 					Projectile.Center = ownerProj.Center;
+					Projectile.rotation = ownerProj.rotation;
 				} else {
 					Projectile.Kill();
 				}
 			}
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 10);
+			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 20);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			anyActive = true;
@@ -152,12 +155,17 @@ namespace Origins.Items.Weapons.Ammo {
 				if (proj.active && proj.type == ID) {
 					spriteBatch.Draw(
 						TextureAssets.Projectile[ID].Value,
-						proj.position - Main.screenPosition,
+						proj.Center - Main.screenPosition,
+						null,
 						new Color(
 							MathHelper.Clamp(proj.velocity.X / 16 + 8, 0, 1),
 							MathHelper.Clamp(proj.velocity.Y / 16 + 8, 0, 1),
-						0f)
-					);
+						0f),
+						0,
+						new Vector2(36),
+						proj.scale,
+						0,
+					0);
 				}
 			}
 		}
@@ -165,35 +173,6 @@ namespace Origins.Items.Weapons.Ammo {
 		static void DrawAura(SpriteBatch spriteBatch) {
 			Main.LocalPlayer.ManageSpecialBiomeVisuals("Origins:MaskedRasterizeFilter", anyActive, Main.LocalPlayer.Center);
 			Filters.Scene["Origins:MaskedRasterizeFilter"].GetShader().UseImage(AuraTarget.RenderTarget, 1);
-			return;
-			//if (!anyActive) return;
-			SpriteBatchState oldState = spriteBatch.GetState();
-			spriteBatch.Restart(
-				SpriteSortMode.Immediate,
-				rasterizerState: RasterizerState.CullNone,
-				depthStencilState: DepthStencilState.Default
-			);
-			/*Effect effect = GameShaders.Misc["Origins:MaskedRasterize"].Shader;
-			effect.Parameters["uImageSize0"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
-			effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
-			effect.Parameters["uOffset"].SetValue(Vector2.Zero);
-			effect.Parameters["uWorldPosition"].SetValue(Main.screenPosition);
-			effect.Parameters["uImageSize1"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
-			Main.graphics.GraphicsDevice.Textures[1] = AuraTarget.RenderTarget;
-			Main.graphics.GraphicsDevice.Textures[2] = Origins.cellNoiseTexture;*/
-
-			/*effect.CurrentTechnique.Passes[0].Apply();
-			spriteBatch.Draw(
-				,
-				Vector2.Zero,
-				Color.White
-			);
-			spriteBatch.Draw(
-				AuraTarget.RenderTarget,
-				Vector2.Zero,
-				Color.Green
-			);*/
-			spriteBatch.Restart(oldState);
 		}
 	}
 
