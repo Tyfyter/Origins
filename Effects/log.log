@@ -1,7 +1,9 @@
-Description file detected: 6
+Description file detected: 8
 * AmebicProtection.fx
 * BiomeShade.fx
 * BlackHole.fx
+* MaskedRasterize.fx
+* MaskedRasterizeFilter.fx
 * PerlinFade.fx
 * Rasterize.fx
 * Solvent.fx
@@ -29,6 +31,14 @@ Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
 File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BlackHole.fx
 .Done!
 Start compiling font content file: BlackHole.xnb ..Done!
+
+Start loading description file: MaskedRasterize.fx ..Done!
+Start compiling font..Done!
+Start compiling font content file: MaskedRasterize.xnb ..Done!
+
+Start loading description file: MaskedRasterizeFilter.fx ..Done!
+Start compiling font..Done!
+Start compiling font content file: MaskedRasterizeFilter.xnb ..Done!
 
 Start loading description file: PerlinFade.fx ..Done!
 Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\PerlinFade.fx: warning X3081: potentially unintended use of a comma expression in a variable initializer

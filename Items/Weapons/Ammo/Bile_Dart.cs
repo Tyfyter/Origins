@@ -1,8 +1,13 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Graphics;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -31,6 +36,9 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class Bile_Dart_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Ammo/Bile_Dart";
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Bile Dart");
+		}
 		public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.CursedDart);
         }
@@ -42,6 +50,26 @@ namespace Origins.Items.Weapons.Ammo {
 			if (Projectile.ai[0] >= 20f) {
 				Projectile.ai[0] = 20f;
 				Projectile.velocity.Y += 0.075f;
+			}
+			int auraProjIndex = (int)Projectile.ai[1] - 1;
+			if (auraProjIndex < 0) {
+				Projectile.ai[1] = Projectile.NewProjectile(
+					Projectile.GetSource_FromAI(),
+					Projectile.position,
+					default,
+					Bile_Dart_Aura.ID,
+					Projectile.damage / 10,
+					0,
+					Projectile.owner,
+					Projectile.whoAmI
+				) + 1;
+			} else {
+				Projectile auraProj = Main.projectile[auraProjIndex];
+				if (auraProj.active && auraProj.type == Bile_Dart_Aura.ID) {
+					auraProj.Center = Projectile.Center;
+				} else {
+					Projectile.ai[1] = 0;
+				}
 			}
 		}
 		public override Color? GetAlpha(Color lightColor) {
@@ -55,5 +83,118 @@ namespace Origins.Items.Weapons.Ammo {
         public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
             target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 20);
         }
-    }
+	}
+	public class Bile_Dart_Aura : ModProjectile {
+		internal static bool anyActive;
+		public static ScreenTarget AuraTarget { get; private set; }
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Bile Dart Aura");
+			ID = Type;
+		}
+		public override void SetDefaults() {
+			Projectile.hide = false;
+			Projectile.width = Projectile.height = 72;
+			Projectile.friendly = true;
+			Projectile.penetrate = -1;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
+			Projectile.tileCollide = false;
+		}
+		public override void Load() {
+			if (Main.dedServ) return;
+			AuraTarget = new(
+				MaskAura,
+				() => {
+					if (anyActive) {
+						anyActive = false;
+						return Lighting.NotRetro;
+					} else {
+						return false;
+					}
+				},
+				0
+			);
+			On.Terraria.Main.DrawInfernoRings += Main_DrawInfernoRings;
+		}
+
+		private void Main_DrawInfernoRings(On.Terraria.Main.orig_DrawInfernoRings orig, Main self) {
+			orig(self);
+			if (Lighting.NotRetro) DrawAura(Main.spriteBatch);
+		}
+
+		public override void Unload() {
+			AuraTarget = null;
+		}
+		public override void AI() {
+			int auraProj = (int)Projectile.ai[0];
+			if (auraProj < 0) {
+				Projectile.Kill();
+			} else {
+				Projectile ownerProj = Main.projectile[auraProj];
+				if (ownerProj.active) {
+					Projectile.Center = ownerProj.Center;
+				} else {
+					Projectile.Kill();
+				}
+			}
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 10);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			anyActive = true;
+			return false;
+		}
+		static void MaskAura(SpriteBatch spriteBatch) {
+			for (int i = 0; i < Main.maxProjectiles; i++) {
+				Projectile proj = Main.projectile[i];
+				if (proj.active && proj.type == ID) {
+					spriteBatch.Draw(
+						TextureAssets.Projectile[ID].Value,
+						proj.position - Main.screenPosition,
+						new Color(
+							MathHelper.Clamp(proj.velocity.X / 16 + 8, 0, 1),
+							MathHelper.Clamp(proj.velocity.Y / 16 + 8, 0, 1),
+						0f)
+					);
+				}
+			}
+		}
+
+		static void DrawAura(SpriteBatch spriteBatch) {
+			Main.LocalPlayer.ManageSpecialBiomeVisuals("Origins:MaskedRasterizeFilter", anyActive, Main.LocalPlayer.Center);
+			Filters.Scene["Origins:MaskedRasterizeFilter"].GetShader().UseImage(AuraTarget.RenderTarget, 1);
+			return;
+			//if (!anyActive) return;
+			SpriteBatchState oldState = spriteBatch.GetState();
+			spriteBatch.Restart(
+				SpriteSortMode.Immediate,
+				rasterizerState: RasterizerState.CullNone,
+				depthStencilState: DepthStencilState.Default
+			);
+			/*Effect effect = GameShaders.Misc["Origins:MaskedRasterize"].Shader;
+			effect.Parameters["uImageSize0"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
+			effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
+			effect.Parameters["uOffset"].SetValue(Vector2.Zero);
+			effect.Parameters["uWorldPosition"].SetValue(Main.screenPosition);
+			effect.Parameters["uImageSize1"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
+			Main.graphics.GraphicsDevice.Textures[1] = AuraTarget.RenderTarget;
+			Main.graphics.GraphicsDevice.Textures[2] = Origins.cellNoiseTexture;*/
+
+			/*effect.CurrentTechnique.Passes[0].Apply();
+			spriteBatch.Draw(
+				,
+				Vector2.Zero,
+				Color.White
+			);
+			spriteBatch.Draw(
+				AuraTarget.RenderTarget,
+				Vector2.Zero,
+				Color.Green
+			);*/
+			spriteBatch.Restart(oldState);
+		}
+	}
+
 }

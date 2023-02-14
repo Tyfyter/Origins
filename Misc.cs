@@ -1085,9 +1085,17 @@ namespace Origins {
 			);
 		}
 		#region spritebatch
-		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
+		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();
-			spriteBatch.Begin(sortMode, blendState ?? BlendState.AlphaBlend, samplerState ?? SamplerState.LinearClamp, DepthStencilState.None, rasterizerState ?? Main.Rasterizer, effect, transformMatrix ?? Main.GameViewMatrix.TransformationMatrix);
+			spriteBatch.Begin(
+				sortMode,
+				blendState ?? BlendState.AlphaBlend,
+				samplerState ?? SamplerState.LinearClamp,
+				depthStencilState ?? DepthStencilState.None,
+				rasterizerState ?? Main.Rasterizer,
+				effect,
+				transformMatrix ?? Main.GameViewMatrix.TransformationMatrix
+			);
 		}
 		private static FieldInfo _sortMode;
 		internal static FieldInfo sortMode => _sortMode ??= typeof(SpriteBatch).GetField("sortMode", BindingFlags.NonPublic | BindingFlags.Instance);

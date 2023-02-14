@@ -86,7 +86,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					if (projHitbox.Intersects(playerHitbox)) {
 						player.Hurt(
 							Terraria.DataStructures.PlayerDeathReason.ByProjectile(Main.myPlayer, Projectile.whoAmI),
-							Main.DamageVar(Projectile.damage, 0f - player.luck),
+							Main.DamageVar(Projectile.damage, -player.luck),
 							Math.Sign(player.Center.X - Projectile.Center.X),
 							true
 						);
