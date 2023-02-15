@@ -25,11 +25,11 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override bool CanUseItem(Player player) {
 			if (player.altFunctionUse == 2) {
-				Item.createTile = -1;
-				Item.buffType = BuffID.WellFed;
-			} else {
 				Item.createTile = ModContent.TileType<Potato_Tile>();
 				Item.buffType = 0;
+			} else {
+				Item.createTile = -1;
+				Item.buffType = BuffID.WellFed;
 			}
 			return true;
 		}

@@ -1,8 +1,7 @@
-Description file detected: 8
+Description file detected: 7
 * AmebicProtection.fx
 * BiomeShade.fx
 * BlackHole.fx
-* MaskedRasterize.fx
 * MaskedRasterizeFilter.fx
 * PerlinFade.fx
 * Rasterize.fx
@@ -31,10 +30,6 @@ Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
 File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BlackHole.fx
 .Done!
 Start compiling font content file: BlackHole.xnb ..Done!
-
-Start loading description file: MaskedRasterize.fx ..Done!
-Start compiling font..Done!
-Start compiling font content file: MaskedRasterize.xnb ..Done!
 
 Start loading description file: MaskedRasterizeFilter.fx ..Done!
 Start compiling font..Done!

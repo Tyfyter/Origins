@@ -122,6 +122,7 @@ namespace Origins.Items.Weapons.Ammo {
 
 		private void Main_DrawInfernoRings(On.Terraria.Main.orig_DrawInfernoRings orig, Main self) {
 			orig(self);
+			if (Main.dedServ) return;
 			if (Lighting.NotRetro) DrawAura(Main.spriteBatch);
 		}
 
@@ -150,6 +151,7 @@ namespace Origins.Items.Weapons.Ammo {
 			return false;
 		}
 		static void MaskAura(SpriteBatch spriteBatch) {
+			if (Main.dedServ) return;
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				Projectile proj = Main.projectile[i];
 				if (proj.active && proj.type == ID) {
@@ -171,6 +173,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 
 		static void DrawAura(SpriteBatch spriteBatch) {
+			if (Main.dedServ) return;
 			Main.LocalPlayer.ManageSpecialBiomeVisuals("Origins:MaskedRasterizeFilter", anyActive, Main.LocalPlayer.Center);
 			Filters.Scene["Origins:MaskedRasterizeFilter"].GetShader().UseImage(AuraTarget.RenderTarget, 1);
 		}
