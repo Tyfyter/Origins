@@ -16,6 +16,8 @@ using System.Text.RegularExpressions;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.World.BiomeData;
+using Origins.Tiles.Defiled;
+using Origins.Items.Materials;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -64,6 +66,13 @@ namespace Origins {
 			if (ModLoader.TryGetMod("EpikV2", out instance.epikV2)) {
 				EpikV2.Call("AddModEvilBiome", ModContent.GetInstance<Defiled_Wastelands>());
 				EpikV2.Call("AddModEvilBiome", ModContent.GetInstance<Riven_Hive>());
+				/*EpikV2.Call("AddBiomeKey",
+					ModContent.ItemType<Defiled_Biome_Keybrand>(),
+					ModContent.ItemType<Defiled_Key>(),
+					ModContent.TileType<Defiled_Dungeon_Chest>(),
+					36,
+					ItemID.CorruptionKey
+				);*///just here so it can eventually be used
 			}
 		}
 		public static bool WikiPageExists(object obj, object id) {
