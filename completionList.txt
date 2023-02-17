@@ -205,10 +205,14 @@ ARMOR:
 (@, ^3) Riptide Armor !!!
 
 (^) Acrid Armor
-(^) Bleeding Obsidian Armor
+(X) Amber Exploder Armor
+(X) Cell Armor
+(X) Ruby Ranger Armor
 
-(@5, ^3) Necromancer Armor
 (X) Blast Armor
+(^) Bleeding Obsidian Armor
+(@5, ^3) Necromancer Armor
+(X) Sapphire Mediator Armor
 
 (X) Ascendant Armor
 (^) Chromtain Armor
@@ -233,6 +237,7 @@ ACCESSORIES:
 (^) Bomb Handling Device*
 (^) Celestial Starlight
 (^) Celestial Stone Mask
+(X) Cirrhosis' Abhorrence
 (^) Comb
 (^) Coologne
 (#2, ^2) I-WTPA Standard
@@ -243,6 +248,7 @@ ACCESSORIES:
 (^) Donor Wristband
 (^) Exploder Emblem*
 (#2, ^2) Explosive Artery !!!
+(X) Focus Crystal
 (#2, ^2) Grave Danger
 (^) Gun Glove
 (X) Haggard Artery
@@ -254,6 +260,7 @@ ACCESSORIES:
 (X) Laser Tag Vest
 (^) Last Descendent
 (^) Locket Necklace
+(X) Lousy Liver
 (#2, ^2) Lover's Leap !!!
 (#3, ^2) Magic Glove
 (#2, ^2) Magic Tripwire
@@ -270,10 +277,14 @@ ACCESSORIES:
 (^) Pneumatic Bomb Thrower*
 (^) Powerflower
 (X) Proactive Protozoa !!!
+(X) Rage Quilt
 (^) Razorwire
 (^) Rebreather
 (^) Rebreather Kit
+(X) Resin Shield
 (^) Return To Sender*
+(X) Rope of Sharing
+(X) Ruby Reticle
 (#2, ^2) Sonar Visor*
 (^) Scavenger Bag
 (@5, #2) Sonic Radar
@@ -282,6 +293,7 @@ ACCESSORIES:
 (X) Superjump Cape
 (X) Superstar Celebration Gear
 (^) Symbiote Skull
+(X) Tainted Flesh
 (^) Trap Charm
 (^) Turbo Reel
 (^) Unsought Organ
@@ -516,6 +528,7 @@ MAGIC WEAPONS:
 (X) Lunarfire
 (#, ^2) Phantom Fury
 (^) Pike of Deepneus
+(X) Sapphire Shunter
 (X) Shocktrain
 (X) Spectra
 (X) Steam Blaster
@@ -621,6 +634,7 @@ TILES:
 (^) Angelic Cloud
 (#3, ^2) Batholith*
 (^) Bleeding Obsidian
+(X) Carburite
 (X) Cubekon Altar
 (^) Defiled Grass*
 (^) Defiled Sand
@@ -744,6 +758,7 @@ MATERIALS:
 (^) Bleeding Obsidian Shard
 (^) Bottled Brine
 (^) Brineglow
+(X) Chambersite
 (^) Defiled Key
 (^) Eitrite Bar
 (^) Illegal Explosive Parts
