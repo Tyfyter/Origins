@@ -42,6 +42,8 @@ BOSSES AND MINI-BOSSES:
 (#, ^2) Defiled Spawnswarmer
 (X) Discombobulator
 (#, ^2) Grand Corruptor
+(X) Hive Mind
+(X) Holy Enlightener
 (#, ^2) Ichor Storm
 (X) Super Brainz
 
@@ -53,7 +55,7 @@ BOSSES AND MINI-BOSSES:
 (X) Miscreant
 (X) Scrapper
 
-(%3) Dawn boss
+(%2) Deacon
 (X) Duskord
 (X) Logic Brane
 (X) Severus, the Dark One
@@ -102,6 +104,7 @@ ENEMY NPCS:
 (#, ^2) Barnacleback !!!
 (X) Buckethead Zombie !!!
 (#, ^2) Chunky Slime !!!
+(X) Cleaver
 (#, ^2) Cranivore !!!
 (#, %2) Crimbrain
 (X) Defiled Wisp !!!
@@ -118,6 +121,7 @@ ENEMY NPCS:
 (X) Amebeye
 (^) Amebic Mummy
 (^) Amoeba Bugger
+(X) Angel
 (X) Angel of Death
 (^) Barnacle Mound
 (X) Brine Moccasin
@@ -126,6 +130,8 @@ ENEMY NPCS:
 (X) Defiled Reaper !!!
 (@5, ^3/4) Defiled Tripod
 (^) Flagellant
+(X) Holy Governor
+(X) Holy Warrior
 (#, ^2) Mildew Creeper
 (#2?, ^2) Mitoworm !!!
 (@5, #3) Riven Mimic !!!
@@ -142,6 +148,7 @@ ENEMY NPCS:
 (@2/3, #) Electromancer
 (@2/3, #) Etherealizer
 (@2, #) Illusionary
+(X) Prosperer
 (X) Soulpine
 (X) Sploder
 (X) Tiny Skeleton Sniper
@@ -275,6 +282,7 @@ ACCESSORIES:
 (^) Parasitic Influence*
 (^) Plasma Phial
 (^) Pneumatic Bomb Thrower*
+(X) Potato Battery
 (^) Powerflower
 (X) Proactive Protozoa !!!
 (X) Rage Quilt
@@ -307,6 +315,7 @@ ACCESSORIES:
 (^) Ninja Ravel
 (^) Ravel
 (X) Scroll Ravel
+(X) Sigil of the Machine
 (X) Slick Ravel
 (^) Speed Ravel
 (^) Spider Ravel
@@ -441,10 +450,11 @@ MELEE WEAPONS:
 (^) Tyrfing
 (^) Vorpal Sword
 
-(X) Origins Biome Keybrands
 (^) Crystal Cutters
+(X) Depth Charge
 (^) Knee Slapper
 (#, ^2) Nematoclaw*
+(X) Origins Biome Keybrands !!!
 (#, ^2) Scale Saw
 (^) Telephone Pole*
 
@@ -475,6 +485,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler
 (X) Adamantite Harpoon Gun
+(X) Boat Rocker
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun
@@ -514,6 +525,7 @@ MAGIC WEAPONS:
 (^) Slashswarm
 (^) Tones of Agony
 
+(X) Brineshower
 (X) Communion
 (^) Dismay
 (#, ^2) Innermost Manifest !!!
@@ -555,8 +567,8 @@ SUMMONER WEAPONS:
 
 (@2, #) Back-Up Mag
 (^) Bomb Artifact
-(@5, #) Envenomed Frenzy*
 (#, ^2) Forsaken Desire
+(X) Mildew Incantation
 (X) Mildew Whip
 (X) Ziptie
 
@@ -599,6 +611,7 @@ EXPLOSIVE WEAPONS:
 (^) Alkaline Bomb
 (^) Alkaline Grenade
 (#2, ^2) Boomphracken
+(X) Cavitation Cannon
 (^) Happy Bomb
 (^) Thermite Launcher
 
@@ -677,10 +690,15 @@ TILES:
 (X) Brine Water Fountain
 (X) Cubekon Chest
 (X) Cubekon Node
+(X) Dawn Dungeon Chest
 (#3?, ^2) Defiled Dungeon Chest !!!
+(X) Desert Dungeon Chest
 (X) Defiled Water Fountain
+(X) Dusk Dungeon Chest
 (#, ^2) Living Alkahest
 (#, ^2) Living Bile
+(X) Mushroom Dungeon Chest
+(X) Ocean Dungeon Chest
 (#3?, ^2) Riven Dungeon Chest !!!
 (#, ^2) Riven Torch
 (X) Riven Water Fountain
@@ -758,10 +776,16 @@ MATERIALS:
 (^) Bleeding Obsidian Shard
 (^) Bottled Brine
 (^) Brineglow
-(X) Chambersite
+(^) Chambersite
+(^) Dawn Key
 (^) Defiled Key
+(^) Desert Key
+(^) Dusk Key
 (^) Eitrite Bar
+(^) Hell Key
 (^) Illegal Explosive Parts
+(^) Mushroom Key
+(^) Ocean Key
 (^) Riven Key
 
 (^) Aetherite Bar
@@ -832,6 +856,7 @@ CONSUMABLES:
 (#2, ^2) Holiday Hair Dye
 (#2, ^2) Invisible Ink
 (#2, ^2) Magic Brine Dropper
+(#2, ^2) Pandora's Box
 (^) White Water
 (#2, ^2) Void Lock !!!
 
@@ -847,6 +872,7 @@ MOUNTS & PETS:
 (^) Chromatic Scale (Rainbow Pangolin)
 
 (^) Amoeba Toy (Meberoid)
+(@2, #2) Rusty Cross Necklace (Guardian Angel)
 (^) Suspicious Looking Pebble (Defiled Blight)
 
 (#, ^2) Chew Toy (Chee Toy)

@@ -211,6 +211,18 @@ namespace Origins.Items.Materials {
 			Item.rare = ItemRarityID.Pink;
 		}
 	}
+	public class Chambersite : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Chambersite");
+			Tooltip.SetDefault("'Loses all of its color when exposed to light'");
+			SacrificeTotal = 25;
+		}
+		public override void SetDefaults() {
+			Item.maxStack = 999;
+			Item.value = Item.buyPrice(silver: 20);
+			Item.rare = ItemRarityID.Blue;
+		}
+	}
 	public class Chromtain_Bar : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Chromtain Bar");
@@ -253,9 +265,33 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
+	public class Dawn_Key : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Dawn Key");
+			SacrificeTotal = 1;
+		}
+		public override void SetDefaults() {
+			Item.width = 14;
+			Item.height = 20;
+			Item.maxStack = 99;
+			Item.rare = ItemRarityID.Yellow;
+		}
+	}
 	public class Defiled_Key : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Key");
+			SacrificeTotal = 1;
+		}
+		public override void SetDefaults() {
+			Item.width = 14;
+			Item.height = 20;
+			Item.maxStack = 99;
+			Item.rare = ItemRarityID.Yellow;
+		}
+	}
+	public class Desert_Key : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Desert Key");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -278,6 +314,18 @@ namespace Origins.Items.Materials {
 			Item.value = Item.buyPrice(silver: 80);
 			Item.rare = ItemRarityID.Yellow;
 			Item.glowMask = glowmask;
+		}
+	}
+	public class Dusk_Key : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Dusk Key");
+			SacrificeTotal = 1;
+		}
+		public override void SetDefaults() {
+			Item.width = 14;
+			Item.height = 20;
+			Item.maxStack = 99;
+			Item.rare = ItemRarityID.Yellow;
 		}
 	}
 	public class Eitrite_Bar : ModItem {
@@ -426,6 +474,18 @@ namespace Origins.Items.Materials {
 			Item.rare = ItemRarityID.Purple;
 		}
 	}
+	public class Hell_Key : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Hell Key");
+			SacrificeTotal = 1;
+		}
+		public override void SetDefaults() {
+			Item.width = 14;
+			Item.height = 20;
+			Item.maxStack = 99;
+			Item.rare = ItemRarityID.Yellow;
+		}
+	}
 	public class Illegal_Explosive_Parts : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Illegal Explosive Parts");
@@ -476,6 +536,18 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
+	public class Mushroom_Key : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Mushroom Key");
+			SacrificeTotal = 1;
+		}
+		public override void SetDefaults() {
+			Item.width = 14;
+			Item.height = 20;
+			Item.maxStack = 99;
+			Item.rare = ItemRarityID.Yellow;
+		}
+	}
 	public class Nova_Fragment : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
@@ -489,6 +561,18 @@ namespace Origins.Items.Materials {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FragmentSolar);
 			Item.glowMask = glowmask;
+		}
+	}
+	public class Ocean_Key : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Ocean Key");
+			SacrificeTotal = 1;
+		}
+		public override void SetDefaults() {
+			Item.width = 14;
+			Item.height = 20;
+			Item.maxStack = 99;
+			Item.rare = ItemRarityID.Yellow;
 		}
 	}
 	public class Peat_Moss : ModItem {
