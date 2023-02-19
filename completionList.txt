@@ -565,7 +565,6 @@ SUMMONER WEAPONS:
 (^) Teardown
 (^) Woodsprite Staff
 
-(@2, #) Back-Up Mag
 (^) Bomb Artifact
 (#, ^2) Forsaken Desire
 (X) Mildew Incantation
@@ -581,12 +580,9 @@ SUMMONER WEAPONS:
 (X) Queen's Call
 (X) Ribatar
 (X) Seraphim Song
-(X) SMART Wrench
-(#, ^2) The Project (might remove)
+(@2, #2) SMART Wrench
 
-(X) Flame of the Phoenix
-(#, ^2) Nanoswarmer
-(X) Stardust Crown
+NO POST ML SUMMONER CONTENT YET.
 ---
 
 
@@ -779,7 +775,6 @@ MATERIALS:
 (^) Chambersite
 (^) Dawn Key
 (^) Defiled Key
-(^) Desert Key
 (^) Dusk Key
 (^) Eitrite Bar
 (^) Hell Key

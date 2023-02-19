@@ -72,9 +72,9 @@ namespace Origins.NPCs {
 				case NPCID.VampireBat:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bat_Hide>(), 3, 1, 3));
 				break;
-				/*case NPCID.SkeletonSniper:
+				case NPCID.SkeletonSniper: //Tiny skeleton sniper
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tiny_Sniper>(), 24));
-                break;*/
+                break;
 				case NPCID.Snatcher:
 				case NPCID.JungleSlime:
 				case NPCID.SpikedJungleSlime:
@@ -83,35 +83,32 @@ namespace Origins.NPCs {
 				case NPCID.GiantMossHornet:
 				case NPCID.LittleMossHornet:
 				case NPCID.TinyMossHornet:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Peat_Moss>(), 3));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Peat_Moss>(), 2));
 				break;
 				case NPCID.AngryBones:
 				case NPCID.AngryBonesBig:
 				case NPCID.AngryBonesBigMuscle:
 				case NPCID.AngryBonesBigHelmet:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolt_Gun>(), 41));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 41));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolt_Gun>(), 50));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 50));
 				break;
-				case NPCID.RedDevil:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Amber_Of_Embers>(), 15));
+				case NPCID.EaterofWorldsHead: // Optiphage
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotting_Worm_Staff>(), 50));
 				break;
-				case NPCID.EaterofWorldsHead:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotting_Worm_Staff>(), 43));
-				break;
-				case NPCID.BrainofCthulhu:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brainy_Staff>(), 20));
+				case NPCID.BrainofCthulhu: //crimbrain
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brainy_Staff>(), 50));
 				break;
 				case NPCID.DemonEye:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Eyeball_Staff>(), 60));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Eyeball_Staff>(), 63));
 				break;
 				case NPCID.SkeletronPrime:
 				case NPCID.TheDestroyer:
 				case NPCID.Retinazer:
 				case NPCID.Spazmatism:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Busted_Servo>(), 1, 8, 37));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Power_Core>(), 4, 1, 2));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotor>(), 2, 5, 22));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_Power_Up>(), 106));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Power_Core>(), 1, 1, 2));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotor>(), 1, 5, 22));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_Power_Up>(), 50));
 				break;
 				case NPCID.GoblinArcher:
 				case NPCID.GoblinPeon:
@@ -120,7 +117,7 @@ namespace Origins.NPCs {
 				case NPCID.GoblinWarrior:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Harpoon_Gun>(), 200));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Harpoon>(), 2, 1, 2));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 50));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 34));
 				break;
 				case NPCID.Zombie:
 				case NPCID.Harpy:
@@ -139,10 +136,10 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Happy_Bomb>(), 10, 7, 21));
 				break;
 				case NPCID.PurpleSlime:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plasma_Phial>(), 6));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plasma_Phial>(), 2));
 				break;
 				case NPCID.AnglerFish:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rebreather>(), 10));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rebreather>(), 20));
 				break;
 				case NPCID.BloodCrawler:
 				case NPCID.BloodCrawlerWall:
@@ -206,7 +203,12 @@ namespace Origins.NPCs {
 					conditionalRule.condition = new LootConditions.SoulOfNight();
 				}
 			}
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Dawn_Key>(), 2500, 1, 1, new LootConditions.Dawn_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Defiled_Key>(), 2500, 1, 1, new LootConditions.Defiled_Key_Condition()));
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Dusk_Key>(), 2500, 1, 1, new LootConditions.Dusk_Key_Condition()));
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Hell_Key>(), 2500, 1, 1, new LootConditions.Hell_Key_Condition()));
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Mushroom_Key>(), 2500, 1, 1, new LootConditions.Mushroom_Key_Condition()));
+			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Ocean_Key>(), 2500, 1, 1, new LootConditions.Ocean_Key_Condition()));
 			globalLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Riven_Key>(), 2500, 1, 1, new LootConditions.Riven_Key_Condition()));
 		}
 

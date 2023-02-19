@@ -106,9 +106,74 @@ namespace Origins.LootConditions {
 			};
 		}
 	}
+	public class Dawn_Key_Condition : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>(); //Dawn
+		}
+
+		public bool CanShowItemDropInUI() {
+			return true;
+		}
+
+		public string GetConditionDescription() {
+			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+		}
+	}
 	public class Defiled_Key_Condition : IItemDropRuleCondition {
 		public bool CanDrop(DropAttemptInfo info) {
 			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>();
+		}
+
+		public bool CanShowItemDropInUI() {
+			return true;
+		}
+
+		public string GetConditionDescription() {
+			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+		}
+	}
+	public class Dusk_Key_Condition : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>(); //Dusk
+		}
+
+		public bool CanShowItemDropInUI() {
+			return true;
+		}
+
+		public string GetConditionDescription() {
+			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+		}
+	}
+	public class Hell_Key_Condition : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.ZoneUnderworldHeight;
+		}
+
+		public bool CanShowItemDropInUI() {
+			return true;
+		}
+
+		public string GetConditionDescription() {
+			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+		}
+	}
+	public class Mushroom_Key_Condition : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.ZoneGlowshroom;
+		}
+
+		public bool CanShowItemDropInUI() {
+			return true;
+		}
+
+		public string GetConditionDescription() {
+			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
+		}
+	}
+	public class Ocean_Key_Condition : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.ZoneBeach;
 		}
 
 		public bool CanShowItemDropInUI() {

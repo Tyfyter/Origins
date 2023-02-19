@@ -289,18 +289,6 @@ namespace Origins.Items.Materials {
 			Item.rare = ItemRarityID.Yellow;
 		}
 	}
-	public class Desert_Key : ModItem {
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Desert Key");
-			SacrificeTotal = 1;
-		}
-		public override void SetDefaults() {
-			Item.width = 14;
-			Item.height = 20;
-			Item.maxStack = 99;
-			Item.rare = ItemRarityID.Yellow;
-		}
-	}
 	public class Dream_Vapor : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
