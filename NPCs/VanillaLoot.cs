@@ -27,42 +27,6 @@ namespace Origins.NPCs {
 		internal static int woFEmblemsCount = 4;
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
 			List<IItemDropRule> dropRules = npcLoot.Get(false);
-			var def = new IsWorldEvil(OriginSystem.evil_wastelands);
-			var riv = new IsWorldEvil(OriginSystem.evil_riven);
-			var defExp = new IsWorldEvilAndNotExpert(OriginSystem.evil_wastelands);
-			var rivExp = new IsWorldEvilAndNotExpert(OriginSystem.evil_riven);
-			LootFixers.WorldEvilFixer(dropRules, (rule, isExpert) => {
-				switch (rule.itemId) {
-					case ItemID.DemoniteOre:
-					npcLoot.Add(ItemDropRule.ByCondition(
-						isExpert ? defExp : def,
-						ModContent.ItemType<Defiled_Ore_Item>(),
-						rule.chanceDenominator,
-						rule.amountDroppedMinimum,
-						rule.amountDroppedMaximum,
-						rule.chanceNumerator
-					));
-					npcLoot.Add(ItemDropRule.ByCondition(
-						isExpert ? rivExp : riv,
-						ModContent.ItemType<Encrusted_Ore_Item>(),
-						rule.chanceDenominator,
-						rule.amountDroppedMinimum,
-						rule.amountDroppedMaximum,
-						rule.chanceNumerator
-					));
-					break;
-					case ItemID.CorruptSeeds:
-					npcLoot.Add(ItemDropRule.ByCondition(
-						isExpert ? defExp : def,
-						ModContent.ItemType<Defiled_Grass_Seeds>(),
-						rule.chanceDenominator,
-						rule.amountDroppedMinimum,
-						rule.amountDroppedMaximum,
-						rule.chanceNumerator
-					));
-					break;
-				}
-			});
 			switch (npc.type) {
 				case NPCID.CaveBat:
 				case NPCID.GiantBat:

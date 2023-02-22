@@ -204,42 +204,6 @@ namespace Origins.Items {
         }//*/
 		public override void ModifyItemLoot(Item item, ItemLoot itemLoot) {
 			List<IItemDropRule> dropRules = itemLoot.Get(false);
-			var def = new IsWorldEvil(OriginSystem.evil_wastelands);
-			var riv = new IsWorldEvil(OriginSystem.evil_riven);
-			var defExp = new IsWorldEvilAndNotExpert(OriginSystem.evil_wastelands);
-			var rivExp = new IsWorldEvilAndNotExpert(OriginSystem.evil_riven);
-			LootFixers.WorldEvilFixer(dropRules, (rule, isExpert) => {
-				switch (rule.itemId) {
-					case ItemID.DemoniteOre:
-					itemLoot.Add(ItemDropRule.ByCondition(
-						isExpert ? defExp : def,
-						ModContent.ItemType<Defiled_Ore_Item>(),
-						rule.chanceDenominator,
-						rule.amountDroppedMinimum,
-						rule.amountDroppedMaximum,
-						rule.chanceNumerator
-					));
-					itemLoot.Add(ItemDropRule.ByCondition(
-						isExpert ? rivExp : riv,
-						ModContent.ItemType<Encrusted_Ore_Item>(),
-						rule.chanceDenominator,
-						rule.amountDroppedMinimum,
-						rule.amountDroppedMaximum,
-						rule.chanceNumerator
-					));
-					break;
-					case ItemID.CorruptSeeds:
-					itemLoot.Add(ItemDropRule.ByCondition(
-						isExpert ? defExp : def,
-						ModContent.ItemType<Defiled_Grass_Seeds>(),
-						rule.chanceDenominator,
-						rule.amountDroppedMinimum,
-						rule.amountDroppedMaximum,
-						rule.chanceNumerator
-					));
-					break;
-				}
-			});
 			switch (item.type) {
 				case ItemID.WallOfFleshBossBag:
 				IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
