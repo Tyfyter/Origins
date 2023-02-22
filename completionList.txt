@@ -218,7 +218,7 @@ ARMOR:
 
 (X) Blast Armor
 (^) Bleeding Obsidian Armor
-(@5, ^3) Necromancer Armor
+(@5?, ^3) Necromancer Armor
 (X) Sapphire Mediator Armor
 
 (X) Ascendant Armor
@@ -227,6 +227,7 @@ ARMOR:
 (X) Nanite Armor
 (^) Nova Armor
 (X) Locus Armor
+(@, #) Phoenix Skin Armor
 
 (X) Chlorophye Crown
 (X) Chlorophyte Visage
@@ -254,9 +255,9 @@ ACCESSORIES:
 (^) Dim Starlight*
 (^) Donor Wristband
 (^) Exploder Emblem*
-(#2, ^2) Explosive Artery !!!
+(☻) Explosive Artery !!!
 (X) Focus Crystal
-(#2, ^2) Grave Danger
+(☻) Grave Danger
 (^) Gun Glove
 (X) Haggard Artery
 (^) Handy Helper
@@ -272,8 +273,8 @@ ACCESSORIES:
 (#3, ^2) Magic Glove
 (#2, ^2) Magic Tripwire
 (^) Makeover Choker
-(#3, ^2) Messy Leech !!!
-(#3, ^2) Messy Magma Leech !!!
+(☻) Messy Leech !!!
+(☻) Messy Magma Leech !!!
 (#3, ^2) Missile Arm Cannon
 (#3, ^2) Mitosis
 (^) Nitro Crate
