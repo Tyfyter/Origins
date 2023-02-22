@@ -116,6 +116,7 @@ namespace Origins {
 		public bool explosiveArtery = false;
 		public int explosiveArteryCount = 0;
 		public Item explosiveArteryItem = null;
+		public bool graveDanger = false;
 		#endregion
 
 		#region explosive stats
@@ -205,6 +206,7 @@ namespace Origins {
 		public int dashDirection = 0;
 		public int dashDelay = 0;
 		public int thornsVisualProjType = -1;
+		public int timeSinceLastDeath = -1;
 		public override void ResetEffects() {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
@@ -313,6 +315,7 @@ namespace Origins {
 				explosiveArteryCount = -1;
 			}
 			explosiveArteryItem = null;
+			graveDanger = false;
 
 			flaskBile = false;
 			flaskSalt = false;
@@ -365,6 +368,7 @@ namespace Origins {
 			thornsVisualProjType = -1;
 			changeSize = false;
 			minionSubSlots = new float[minionSubSlotValues];
+			if (timeSinceLastDeath < int.MaxValue) timeSinceLastDeath++;
 			#region asylum whistle
 			if (lastMinionAttackTarget != Player.MinionAttackTargetNPC) {
 				if (asylumWhistle) {
@@ -557,6 +561,56 @@ namespace Origins {
 				Player.velocity.X *= 0.975f;
 			}
 		}
+		public override void PostUpdateEquips() {
+			if (eyndumSet) {
+				ApplyEyndumSetBuffs();
+				if (eyndumCore?.Value?.ModItem is ModItem equippedCore) {
+					equippedCore.UpdateEquip(Player);
+				}
+			}
+			Player.buffImmune[Rasterized_Debuff.ID] = Player.buffImmune[BuffID.Cursed];
+			if (tornDebuff) {
+				if (tornTime < tornTargetTime) {
+					tornTime++;
+				}
+			}
+			if (tornTime > 0) {
+				Player.statLifeMax2 = (int)(Player.statLifeMax2 * (1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime))));
+				if (Player.statLifeMax2 <= 0) {
+					Player.KillMe(PlayerDeathReason.ByOther(0), 1, 0);
+				}
+			}
+			if (explosiveArtery) {
+				if (explosiveArteryCount == -1) {
+					explosiveArteryCount = CombinedHooks.TotalUseTime(explosiveArteryItem.useTime, Player, explosiveArteryItem);
+				}
+				if (explosiveArteryCount > 0) {
+					explosiveArteryCount--;
+				} else {
+					const float maxDist = 512 * 512;
+					for (int i = 0; i < Main.maxNPCs; i++) {
+						NPC currentTarget = Main.npc[i];
+						if (Main.rand.NextBool(explosiveArteryItem.useAnimation, explosiveArteryItem.reuseDelay)) {
+							if (currentTarget.CanBeChasedBy() && currentTarget.HasBuff(BuffID.Bleeding)) {
+								Vector2 diff = currentTarget.Center - Player.MountedCenter;
+								if (diff.LengthSquared() < maxDist) {
+									Projectile.NewProjectileDirect(
+										Player.GetSource_Accessory(explosiveArteryItem),
+										currentTarget.Center,
+										new Vector2(Math.Sign(diff.X), 0),
+										explosiveArteryItem.shoot,
+										Player.GetWeaponDamage(explosiveArteryItem),
+										Player.GetWeaponKnockback(explosiveArteryItem),
+										Player.whoAmI
+									);
+								}
+							}
+						}
+					}
+					explosiveArteryCount = -1;
+				}
+			}
+		}
 		public override void PostUpdateMiscEffects() {
 			if (cryostenHelmet) {
 				if (Player.statLife != Player.statLifeMax2 && (int)Main.time % (cryostenLifeRegenCount > 0 ? 5 : 15) == 0) {
@@ -614,56 +668,25 @@ namespace Origins {
 					}
 				}
 			}
-		}
-		public override void PostUpdateEquips() {
-			if (eyndumSet) {
-				ApplyEyndumSetBuffs();
-				if (eyndumCore?.Value?.ModItem is ModItem equippedCore) {
-					equippedCore.UpdateEquip(Player);
-				}
-			}
-			Player.buffImmune[Rasterized_Debuff.ID] = Player.buffImmune[BuffID.Cursed];
-			if (tornDebuff) {
-				if (tornTime < tornTargetTime) {
-					tornTime++;
-				}
-			}
-			if (tornTime > 0) {
-				Player.statLifeMax2 = (int)(Player.statLifeMax2 * (1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime))));
-				if (Player.statLifeMax2 <= 0) {
-					Player.KillMe(PlayerDeathReason.ByOther(0), 1, 0);
-				}
-			}
-			if (explosiveArtery) {
-				if (explosiveArteryCount == -1) {
-					explosiveArteryCount = CombinedHooks.TotalUseTime(explosiveArteryItem.useTime, Player, explosiveArteryItem);
-				}
-				if (explosiveArteryCount > 0) {
-					explosiveArteryCount--;
-				} else {
-					const float maxDist = 512 * 512;
-					for (int i = 0; i < Main.maxNPCs; i++) {
-						NPC currentTarget = Main.npc[i];
-						if (Main.rand.NextBool(explosiveArteryItem.useAnimation, explosiveArteryItem.reuseDelay)) {
-							if (currentTarget.CanBeChasedBy() && currentTarget.HasBuff(BuffID.Bleeding)) {
-								Vector2 diff = currentTarget.Center - Player.MountedCenter;
-								if (diff.LengthSquared() < maxDist) {
-									Projectile.NewProjectileDirect(
-										Player.GetSource_Accessory(explosiveArteryItem),
-										currentTarget.Center,
-										new Vector2(Math.Sign(diff.X), 0),
-										explosiveArteryItem.shoot,
-										Player.GetWeaponDamage(explosiveArteryItem),
-										Player.GetWeaponKnockback(explosiveArteryItem),
-										Player.whoAmI
-									);
-								}
-							}
+			if (graveDanger) {
+				if (Player.difficulty != 2) {
+					//1 minute (3600 ticks), decays over the latter 45 seconds (2700 ticks)
+					float factor = Math.Min((3600 - timeSinceLastDeath) / 2700f, 1);
+					if (factor > 0) {
+						Player.statDefense += (int)Math.Ceiling(Player.statDefense * factor * 0.25f);
+						if (Main.rand.NextFloat(1.25f) < factor + 0.1f) {
+							Dust dust = Dust.NewDustDirect(Player.position - new Vector2(8, 0), Player.width + 16, Player.height, DustID.Smoke, newColor: new Color(0.1f, 0.1f, 0.2f));
+							dust.velocity *= 0.4f;
+							dust.alpha = 150;
 						}
 					}
-					explosiveArteryCount = -1;
+				} else {
+					Player.endurance += 0.15f;
 				}
 			}
+		}
+		public override void UpdateDead() {
+			timeSinceLastDeath = -1;
 		}
 		public override void UpdateDyes() {
 			if (Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
@@ -1322,6 +1345,9 @@ namespace Origins {
 				journalUnlocked = tag.Get<bool>("journalUnlocked");
 			}
 			questsTag = tag.SafeGet<TagCompound>("Quests");
+			if (tag.SafeGet<int>("TimeSinceLastDeath") is int timeSinceLastDeath) {
+				this.timeSinceLastDeath = timeSinceLastDeath;
+			}
 		}
 		TagCompound questsTag;
 		public override void OnEnterWorld(Player player) {
@@ -1358,6 +1384,7 @@ namespace Origins {
 			if (questsTag.Count > 0) {
 				tag.Add("Quests", questsTag);
 			}
+			tag.Add("TimeSinceLastDeath", timeSinceLastDeath);
 		}
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
 			bool zoneDefiled = Player.InModBiome<Defiled_Wastelands>();
@@ -1390,10 +1417,15 @@ namespace Origins {
 				} else if (attempt.uncommon && !attempt.rare) {
 					itemDrop = ModContent.ItemType<Prikish>();
 				}
+			}
+			if (junk) {
 				if (Main.rand.NextBool(4)) {
-					if (junk) {
-						itemDrop = ModContent.ItemType<Tire>();
-					}
+					itemDrop = ModContent.ItemType<Tire>();
+				}
+			}
+			if (Player.ZoneJungle && attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary)) {
+				if (Main.rand.NextBool(10)) {
+					itemDrop = ModContent.ItemType<Messy_Leech>();
 				}
 			}
 		}
