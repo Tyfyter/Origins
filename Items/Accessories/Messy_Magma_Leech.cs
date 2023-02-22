@@ -20,8 +20,8 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Messy_Leech>());
 			recipe.AddIngredient(ItemID.MagmaStone);
+			recipe.AddIngredient(ModContent.ItemType<Messy_Leech>());
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}

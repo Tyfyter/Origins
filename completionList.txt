@@ -218,16 +218,16 @@ ARMOR:
 
 (X) Blast Armor
 (^) Bleeding Obsidian Armor
-(@5?, ^3) Necromancer Armor
+(@5, ^3) Necromancer Armor
 (X) Sapphire Mediator Armor
 
 (X) Ascendant Armor
 (^) Chromtain Armor
 (@5, #2) Eyndum Armor
+(X) Locus Armor
 (X) Nanite Armor
 (^) Nova Armor
-(X) Locus Armor
-(@, #) Phoenix Skin Armor
+(X) Phoenix Skin Armor
 
 (X) Chlorophye Crown
 (X) Chlorophyte Visage
@@ -248,21 +248,21 @@ ACCESSORIES:
 (X) Cirrhosis' Abhorrence
 (^) Comb
 (^) Coologne
-(#2, ^2) I-WTPA Standard
+(#2, ^2) I-WTPA Standard !!!
 (^) Decaying Scale*
 (X) Deep Diving Gear
 (^) Destructive Claws
 (^) Dim Starlight*
 (^) Donor Wristband
 (^) Exploder Emblem*
-(☻) Explosive Artery !!!
+(^) Explosive Artery
 (X) Focus Crystal
-(☻) Grave Danger
+(☻) Grave Danger !!!
 (^) Gun Glove
 (X) Haggard Artery
 (^) Handy Helper
-(X) Hazard Charm !!!
-(#2, ^2) Headstomperz
+(X) Hazard Charm
+(#2, ^2) Headstomperz !!!
 (^) Helium Tank
 (^) Keepsake Remains
 (X) Laser Tag Vest
@@ -270,12 +270,12 @@ ACCESSORIES:
 (^) Locket Necklace
 (X) Lousy Liver
 (#2, ^2) Lover's Leap !!!
-(#3, ^2) Magic Glove
-(#2, ^2) Magic Tripwire
+(^) Magic Glove
+(#2, ^2) Magic Tripwire !!!
 (^) Makeover Choker
-(☻) Messy Leech !!!
-(☻) Messy Magma Leech !!!
-(#3, ^2) Missile Arm Cannon
+(^) Messy Leech
+(^) Messy Magma Leech
+(^) Missile Arm Cannon
 (#3, ^2) Mitosis
 (^) Nitro Crate
 (^) No U Card
@@ -285,7 +285,7 @@ ACCESSORIES:
 (^) Pneumatic Bomb Thrower*
 (X) Potato Battery
 (^) Powerflower
-(X) Proactive Protozoa !!!
+(X) Proactive Protozoa
 (X) Rage Quilt
 (^) Razorwire
 (^) Rebreather
@@ -296,7 +296,7 @@ ACCESSORIES:
 (X) Ruby Reticle
 (#2, ^2) Sonar Visor*
 (^) Scavenger Bag
-(@5, #2) Sonic Radar
+(@5, #2) Sonic Radar !!!
 (^) Shield of Retribution
 (X) Super Party Hat
 (X) Superjump Cape
@@ -328,7 +328,7 @@ ACCESSORIES:
 (#2, ^2) Eccentric Stone
 (^) Spirit Shard
 (^) Stone Mask
-(X) Timbre of Hell !!!
+(X) Timbre of Hell
 (#, ^2) Tripod Nip
 
 (^) Amebic Vial

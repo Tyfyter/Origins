@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Melee {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 67;
+			Item.damage = 104;
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 42;

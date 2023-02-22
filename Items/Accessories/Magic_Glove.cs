@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	public class Magic_Glove : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Magic Glove");
-			Tooltip.SetDefault("5% reduced mana usage\nAutomatically use mana potions when needed\nShoots random magic as you swing\n'May require magical capability'");
+			Tooltip.SetDefault("8% reduced mana usage\nAutomatically use mana potions when needed\nShoots random magic as you swing\n'May require magical capability'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -27,7 +27,7 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.gunGlove = true;
 			originPlayer.gunGloveItem = Item;
-			player.manaCost -= 0.05f;
+			player.manaCost -= 0.08f;
 			player.manaFlower = true;
 		}
 		public override void AddRecipes() {
