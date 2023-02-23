@@ -600,7 +600,7 @@ namespace Origins {
 		}
 		public override object Call(params object[] args) {
 			return args[0] switch {
-				"get_explosive_classes_dict" => DamageClasses.ExplosiveVersion,
+				"get_explosive_classes_dict" or "GetExplosiveClassesDict" => DamageClasses.ExplosiveVersion,
 				_ => base.Call(args),
 			};
 		}

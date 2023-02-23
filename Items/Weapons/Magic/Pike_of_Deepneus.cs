@@ -98,6 +98,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Daybreak);
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.width = Projectile.height = 32;
 			Projectile.extraUpdates = 3;
 			Projectile.aiStyle = 0;

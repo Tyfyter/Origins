@@ -346,7 +346,7 @@ namespace Origins.Projectiles {
 			magicTripwireRange[ProjectileID.WetBomb] = 12;
 			magicTripwireRange[ProjectileID.LavaBomb] = 12;
 			magicTripwireRange[ProjectileID.HoneyBomb] = 12;
-			magicTripwireRange[ProjectileID.ScarabBomb] = 32;
+			magicTripwireRange[ProjectileID.ScarabBomb] = 0;
 			magicTripwireRange[ProjectileID.MolotovCocktail] = 64;
 
 			magicTripwireRange[ProjectileID.RocketI] = 32;
