@@ -12,6 +12,8 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 24);
+			Item.damage = 30;
+			Item.knockBack = 2;
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.LightRed;
 			Item.accessory = true;
@@ -24,7 +26,12 @@ namespace Origins.Items.Accessories {
 			recipe.Register();
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().loversLeap = true;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			player.accRunSpeed = 6f;
+			player.rocketBoots = player.vanityRocketBoots = 2;
+			originPlayer.guardedHeart = true;
+			originPlayer.loversLeap = true;
+			originPlayer.loversLeapItem = Item;
 		}
 	}
 }

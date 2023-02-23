@@ -117,6 +117,11 @@ namespace Origins {
 		public int explosiveArteryCount = 0;
 		public Item explosiveArteryItem = null;
 		public bool graveDanger = false;
+		public bool loversLeap = false;
+		public Item loversLeapItem = null;
+		public int loversLeapDashTime = 0;
+		public int loversLeapDashDirection = 0;
+		public float loversLeapDashSpeed = 0;
 		#endregion
 
 		#region explosive stats
@@ -201,9 +206,12 @@ namespace Origins {
 		public int targetWidth;
 		public int targetHeight;
 		public int oldXSign = 0;
+		public int oldYSign = 0;
 		public bool collidingX = false;
+		public bool collidingY = false;
 		public HashSet<string> unlockedJournalEntries = new();
 		public int dashDirection = 0;
+		public int dashDirectionY = 0;
 		public int dashDelay = 0;
 		public int thornsVisualProjType = -1;
 		public int timeSinceLastDeath = -1;
@@ -316,6 +324,7 @@ namespace Origins {
 			}
 			explosiveArteryItem = null;
 			graveDanger = false;
+			loversLeap = false;
 
 			flaskBile = false;
 			flaskSalt = false;
@@ -405,13 +414,20 @@ namespace Origins {
 			Player.statManaMax2 += quantumInjectors * Quantum_Injector.mana_per_use;
 			#region check if a dash should start
 			dashDirection = 0;
+			dashDirectionY = 0;
 			if (dashDelay <= 0) {
+				const int DashDown = 0;
+				const int DashUp = 1;
 				const int DashRight = 2;
 				const int DashLeft = 3;
 				if (Player.controlRight && Player.releaseRight && Player.doubleTapCardinalTimer[DashRight] < 15) {
 					dashDirection = 1;
 				} else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15) {
 					dashDirection = -1;
+				} else if (Player.controlUp && Player.releaseUp && Player.doubleTapCardinalTimer[DashUp] < 15) {
+					dashDirectionY = -1;
+				} else if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15) {
+					dashDirectionY = 1;
 				}
 			} else {
 				dashDelay--;
@@ -454,6 +470,124 @@ namespace Origins {
 					dashDelay = 25;
 				}
 			}
+			if (loversLeap) {
+				Player.dashType = 0;
+				Player.dashTime = 0;
+				const int loversLeapDuration = 6;
+				const float loversLeapSpeed = 12f;
+				if (collidingX || collidingY) {
+					if ((dashDirection != 0 && (Player.velocity.X * dashDirection < loversLeapSpeed)) || (dashDirectionY != 0 && (Player.velocity.Y * dashDirectionY < loversLeapSpeed))) {
+						//Player.dashDelay = -1;
+						//Player.dash = 2;
+						loversLeapDashTime = loversLeapDuration;
+						loversLeapDashSpeed = loversLeapSpeed;
+						Player.timeSinceLastDashStarted = 0;
+						if (dashDirectionY == -1) {
+							loversLeapDashDirection = 0;
+						} else if (dashDirectionY == 1) {
+							loversLeapDashDirection = 1;
+						} else if (dashDirection == 1) {
+							loversLeapDashDirection = 2;
+						} else if (dashDirection == -1) {
+							loversLeapDashDirection = 3;
+						}
+					}
+				}
+				if (loversLeapDashTime > 0) {
+					if (loversLeapDashTime > 1) {
+						switch (loversLeapDashDirection) {
+							case 0:
+							Player.velocity.Y = -loversLeapDashSpeed;
+							break;
+							case 1:
+							Player.velocity.Y = loversLeapDashSpeed;
+							break;
+							case 2:
+							Player.velocity.X = loversLeapDashSpeed;
+							break;
+							case 3:
+							Player.velocity.X = -loversLeapDashSpeed;
+							break;
+						}
+						loversLeapDashTime--;
+						dashDelay = 30;
+					}
+					if ((loversLeapDashTime == 1 || loversLeapDashDirection == 2 || loversLeapDashDirection == 3) && loversLeapDashSpeed > 0) {
+						bool bounce = false;
+						bool canBounce = true;
+						if (Math.Abs(Player.velocity.X) > Math.Abs(Player.velocity.Y)) {
+							loversLeapDashDirection = Math.Sign(Player.velocity.X) == 1 ? 2 : 3;
+						} else {
+							loversLeapDashDirection = Math.Sign(Player.velocity.Y) == 1 ? 1 : 0;
+						}
+						Rectangle loversLeapHitbox = default;
+						int hitDirection = 0;
+						switch (loversLeapDashDirection) {
+							case 0:
+							canBounce = false;
+							break;
+							case 1:
+							loversLeapHitbox = Player.Hitbox;
+							loversLeapHitbox.Inflate(4, 4);
+							loversLeapHitbox.Offset(0, 8);
+							break;
+							case 2:
+							loversLeapHitbox = new Rectangle((int)(Player.position.X + Player.width), (int)(Player.position.Y - 4), 8, Player.height + 8);
+							hitDirection = 1;
+							break;
+							case 3:
+							loversLeapHitbox = new Rectangle((int)(Player.position.X - 8), (int)(Player.position.Y - 4), 8, Player.height + 8);
+							hitDirection = -1;
+							break;
+						}
+						if (canBounce) {
+							int baseDamage = Player.GetWeaponDamage(loversLeapItem);
+							float baseKnockback = Player.GetWeaponKnockback(loversLeapItem);
+							int crit = Player.GetWeaponCrit(loversLeapItem);
+							for (int i = 0; i < Main.maxNPCs; i++) {
+								NPC npc = Main.npc[i];
+								if (npc.active && !npc.dontTakeDamage) {
+									if (!npc.friendly || (npc.type == NPCID.Guide && Player.killGuide) || (npc.type == NPCID.Clothier && Player.killClothier)) {
+										if (loversLeapHitbox.Intersects(npc.Hitbox)) {
+											bounce = true;
+											int damage = baseDamage;
+											int bannerBuff = Item.NPCtoBanner(Main.npc[i].BannerID());
+											if (bannerBuff > 0 && Player.HasNPCBannerBuff(bannerBuff)) {
+												ItemID.BannerEffect bannerEffect = ItemID.Sets.BannerStrength[Item.BannerToItem(bannerBuff)];
+												damage = (int)(Main.expertMode ? damage * bannerEffect.ExpertDamageDealt : damage * bannerEffect.NormalDamageDealt);
+											}
+											damage = Main.DamageVar(damage, Player.luck) + npc.checkArmorPenetration(Player.GetWeaponArmorPenetration(loversLeapItem));
+											npc.StrikeNPC(damage, baseKnockback, hitDirection, Main.rand.Next(1, 101) <= crit);
+										}
+									}
+								}
+							}
+							if (bounce) {
+								loversLeapDashDirection ^= 1;
+								loversLeapDashTime = 2;
+								loversLeapDashSpeed = Math.Min(loversLeapDashSpeed - 0.5f, 9f);
+							}
+							switch (loversLeapDashDirection) {
+								case 2:
+								case 3:
+								if (bounce) {
+									Player.velocity.Y -= 4;
+									loversLeapDashSpeed -= 2f;
+								}
+								break;
+								case 0:
+								case 1:
+								if (collidingX || collidingY) {
+									loversLeapDashTime = 0;
+								}
+								break;
+							}
+						}
+					} else if(loversLeapDashTime == 1) {
+						loversLeapDashTime = 0;
+					}
+				}
+			}
 			if (rebreather && Player.breath < Player.breathMax) {
 				if (Player.breathCD == 0 || rebreatherCounting) {
 					rebreatherCounting = true;
@@ -488,6 +622,7 @@ namespace Origins {
 				Player.height = targetHeight;
 			}
 			oldXSign = Math.Sign(Player.velocity.X);
+			oldYSign = Math.Sign(Player.velocity.Y);
 			//endCustomMovement:
 			hookTarget = -1;
 		}
@@ -1437,6 +1572,7 @@ namespace Origins {
 		}
 		public override bool PreItemCheck() {
 			collidingX = oldXSign != 0 && Player.velocity.X == 0;
+			collidingY = oldYSign != 0 && Player.velocity.Y == 0;
 			ItemChecking = true;
 			return true;
 		}
