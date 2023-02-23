@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.damage = 40;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.useTime = 3;
+			Item.useTime = 4;
 			Item.useAnimation = 36;
 			Item.knockBack = 4f;
 			Item.useAmmo = ModContent.ItemType<Resizable_Mine>();
@@ -25,6 +25,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed = 9;
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.buyPrice(gold: 2);
+			Item.reuseDelay = 60;
+			Item.autoReuse = false;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
