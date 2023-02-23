@@ -29,6 +29,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Acid_Bomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Alkaline_Bomb";
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Alkaline Bomb");
+			Origins.MagicTripwireRange[Type] = 32;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
 			Projectile.timeLeft = 135;
