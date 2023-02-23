@@ -35,6 +35,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Impact_Grenade";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Impact Grenade");
+			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);

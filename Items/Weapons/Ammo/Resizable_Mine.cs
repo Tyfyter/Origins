@@ -13,6 +13,8 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
 			Item.damage = 20;
+			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
+			Item.ammo = Type;
 			Item.shootSpeed = 4f;
             Item.knockBack = 3f;
 			Item.value = Item.sellPrice(silver: 4, copper: 65);
@@ -22,8 +24,9 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Resizable_Mine_P : ModProjectile {
         //public override string Texture => "Origins/Items/Weapons/Ammo/Resizable_Mine_P";
         public override void SetDefaults() {
-            Projectile.CloneDefaults(ProjectileID.Landmine);
+            Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.timeLeft = 420;
-        }
+			//AIType = ProjectileID.ProximityMineI;
+		}
     }
 }

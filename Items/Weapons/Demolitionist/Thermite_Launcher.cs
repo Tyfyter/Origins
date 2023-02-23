@@ -44,6 +44,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Projectiles/Ammo/Thermite_Canister_P";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Thermite Canister");
+			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);

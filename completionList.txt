@@ -248,7 +248,7 @@ ACCESSORIES:
 (X) Cirrhosis' Abhorrence
 (^) Comb
 (^) Coologne
-(#2, ^2) I-WTPA Standard !!!
+(☻) I-WTPA Standard !!!
 (^) Decaying Scale*
 (X) Deep Diving Gear
 (^) Destructive Claws
@@ -269,9 +269,9 @@ ACCESSORIES:
 (^) Last Descendent
 (^) Locket Necklace
 (X) Lousy Liver
-(#2, ^2) Lover's Leap !!!
+(☻) Lover's Leap !!!
 (^) Magic Glove
-(#2, ^2) Magic Tripwire !!!
+(☻) Magic Tripwire !!!
 (^) Makeover Choker
 (^) Messy Leech
 (^) Messy Magma Leech

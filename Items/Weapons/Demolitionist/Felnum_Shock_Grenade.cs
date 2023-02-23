@@ -35,6 +35,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Felnum_Shock_Grenade_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Felnum_Shock_Grenade";
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Felnum Shock Grenade");
+			Origins.MagicTripwireRange[Type] = 32;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.timeLeft = 135;

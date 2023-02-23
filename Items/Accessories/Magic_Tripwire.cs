@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().magicTripwire = true;
+			player.GetModPlayer<OriginPlayer>().magicTripwire = true;
 		}
 	}
 }

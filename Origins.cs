@@ -9,6 +9,7 @@ using Origins.Items.Armor.Rift;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
+using Origins.Projectiles;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.UI;
@@ -49,6 +50,8 @@ namespace Origins {
 		public static bool[] ArtifactMinion { get => artifactMinion; }
 		static bool[] canGainHoming;
 		public static bool[] CanGainHoming { get => canGainHoming; }
+		static int[] magicTripwireRange;
+		public static int[] MagicTripwireRange { get => magicTripwireRange; }
 		public static ModKeybind SetBonusTriggerKey { get; private set; }
 		public static ModKeybind InspectItemKey { get; private set; }
 		#region Armor IDs
@@ -572,6 +575,8 @@ namespace Origins {
 			for (int i = oldCanGainHomingLength; i < ProjectileLoader.ProjectileCount; i++) {
 				canGainHoming[i] = true;
 			}
+			magicTripwireRange = ProjectileID.Sets.Factory.CreateIntSet(0);
+			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange);
 		}
 		public static class Music {
 			public static int Dusk = MusicID.PumpkinMoon;

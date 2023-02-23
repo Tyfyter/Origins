@@ -37,6 +37,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Bloombomb";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bloombomb");
+			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bomb);

@@ -485,6 +485,7 @@ namespace Origins {
 		public int Shader { get; }
 	}
 	interface IIsExplodingProjectile {
+		void Explode(int delay = 0);
 		bool IsExploding();
 	}
 	interface ICustomRespawnArtifact {

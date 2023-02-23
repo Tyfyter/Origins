@@ -79,6 +79,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		};
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Crystal Grenade");
+			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);

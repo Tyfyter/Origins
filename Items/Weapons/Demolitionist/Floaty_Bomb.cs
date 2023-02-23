@@ -31,11 +31,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Floaty_Bomb";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Floaty Bomb");
+			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 135;
+		}
+		public override void AI() {
+			Projectile.velocity.Y -= 0.1f;
 		}
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.Bomb;

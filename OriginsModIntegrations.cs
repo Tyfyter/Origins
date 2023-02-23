@@ -28,6 +28,8 @@ namespace Origins {
 		public static Mod EpikV2 { get => instance.epikV2; set => instance.epikV2 = value; }
 		Asset<Texture2D> phaseIndicator;
 		public static Asset<Texture2D> PhaseIndicator { get => instance.phaseIndicator; set => instance.phaseIndicator = value; }
+		Mod herosMod;
+		public static Mod HEROsMod { get => instance.herosMod; set => instance.herosMod = value; }
 		static string WikiURL => "https://tyfyter.github.io/OriginsWiki";
 		static HashSet<string> wikiSiteMap;
 		public void Load(Mod mod) {
@@ -73,6 +75,14 @@ namespace Origins {
 					36,
 					ItemID.CorruptionKey
 				);*///just here so it can eventually be used
+			}
+			if (ModLoader.TryGetMod("HEROsMod", out instance.herosMod)) {
+				HEROsMod.Call(
+					"AddItemCategory",
+					"Explosive",
+					"Weapons",
+					(Predicate<Item>)((Item i) => i.CountsAsClass<Explosive>())
+				);
 			}
 		}
 		public static bool WikiPageExists(object obj, object id) {

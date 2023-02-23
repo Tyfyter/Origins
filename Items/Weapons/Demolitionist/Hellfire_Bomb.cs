@@ -29,6 +29,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Hellfire_Bomb";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Hellfire Bomb");
+			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bomb);

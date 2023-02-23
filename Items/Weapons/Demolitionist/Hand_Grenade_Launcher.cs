@@ -85,6 +85,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		Vector2 oldVelocity;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Awe Grenade");
+			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);

@@ -122,6 +122,8 @@ namespace Origins {
 		public int loversLeapDashTime = 0;
 		public int loversLeapDashDirection = 0;
 		public float loversLeapDashSpeed = 0;
+		public bool iwtpaStandard = false;
+		public bool magicTripwire = false;
 		#endregion
 
 		#region explosive stats
@@ -325,6 +327,8 @@ namespace Origins {
 			explosiveArteryItem = null;
 			graveDanger = false;
 			loversLeap = false;
+			iwtpaStandard = false;
+			magicTripwire = false;
 
 			flaskBile = false;
 			flaskSalt = false;
@@ -1115,6 +1119,12 @@ namespace Origins {
 				}
 				if (flaskSalt) {
 					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f);
+				}
+			}
+			if (item.CountsAsClass(DamageClasses.Explosive)) {
+				if (madHand) {
+					target.AddBuff(BuffID.Oiled, 600);
+					target.AddBuff(BuffID.OnFire, 600);
 				}
 			}
 		}
