@@ -107,6 +107,7 @@ ENEMY NPCS:
 (X) Cleaver
 (#, ^2) Cranivore !!!
 (#, %2) Crimbrain
+(X) Defiled Ekko !!!
 (X) Defiled Wisp !!!
 (^) Fiberglass Enemies
 (^) Measly Moeba
@@ -126,6 +127,7 @@ ENEMY NPCS:
 (^) Barnacle Mound
 (X) Brine Moccasin
 (#, ^2) Carpalfish*
+(X) Defiled Asphyxiator !!!
 (@5, #3, %2) Defiled Mimic
 (X) Defiled Reaper !!!
 (@5, ^3/4) Defiled Tripod
@@ -237,7 +239,7 @@ ARMOR:
 
 ACCESSORIES:
 ---
-(X) ACME Crate
+(#, ^2) ACME Crate !!!
 (^) Advanced Imaging*
 (^) Air Tank*
 (^) Blast-Resistant Plate*
@@ -256,19 +258,19 @@ ACCESSORIES:
 (^) Donor Wristband
 (^) Exploder Emblem*
 (^) Explosive Artery
-(X) Focus Crystal
+(#, ^2) Focus Crystal !!!
 (^) Grave Danger
 (^) Gun Glove
-(X) Haggard Artery
+(#, ^2) Haggard Artery !!!
 (^) Handy Helper
-(X) Hazard Charm
+(#, ^2) Hazard Charm !!!
 (#2, ^2) Headstomperz !!!
 (^) Helium Tank
 (^) Keepsake Remains
-(X) Laser Tag Vest
+(@2, #) Laser Tag Vest !!!
 (^) Last Descendent
 (^) Locket Necklace
-(X) Lousy Liver
+(#, ^2) Lousy Liver !!!
 (^) Lover's Leap
 (^) Magic Glove
 (^) Magic Tripwire
@@ -283,7 +285,7 @@ ACCESSORIES:
 (^) Parasitic Influence*
 (^) Plasma Phial
 (^) Pneumatic Bomb Thrower*
-(X) Potato Battery
+(#, ^2) Potato Battery !!!
 (^) Powerflower
 (X) Proactive Protozoa
 (X) Rage Quilt
@@ -293,7 +295,7 @@ ACCESSORIES:
 (X) Resin Shield
 (^) Return To Sender*
 (X) Rope of Sharing
-(X) Ruby Reticle
+(#, ^2) Ruby Reticle !!!
 (#2, ^2) Sonar Visor*
 (^) Scavenger Bag
 (@5, #2) Sonic Radar !!!
