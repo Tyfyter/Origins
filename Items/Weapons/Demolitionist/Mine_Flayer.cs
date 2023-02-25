@@ -27,6 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.buyPrice(gold: 2);
 			Item.reuseDelay = 60;
 			Item.autoReuse = false;
+			Item.UseSound = SoundID.Item61;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

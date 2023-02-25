@@ -122,7 +122,7 @@ ENEMY NPCS:
 (X) Amebeye
 (^) Amebic Mummy
 (^) Amoeba Bugger
-(X) Angel
+(@, #) Angel
 (X) Angel of Death
 (^) Barnacle Mound
 (X) Brine Moccasin
@@ -457,11 +457,11 @@ MELEE WEAPONS:
 (X) Depth Charge
 (^) Knee Slapper
 (#, ^2) Nematoclaw*
-(X) Origins Biome Keybrands !!!
+(@, #) Origins Biome Keybrands !!!
 (#, ^2) Scale Saw
 (^) Telephone Pole*
 
-(@2/5, ^3) Personal Laser Blade*
+(^) Personal Laser Blade*
 (X) Pile Bunker
 
 (%3, X) Celestial Point
@@ -594,10 +594,10 @@ EXPLOSIVE WEAPONS:
 (^) Ameballoon
 (^) Bloombomb
 (#2, ^2) Bombardment !!!
-(#2, ^2) Bomb Launcher !!!
+(#4, ^2) Bomb Launcher !!!
 (#2, ^2) Brainade !!!
 (#3, ^2) Defiled Spirit !!!
-(#3, ^2) Floaty Bomb !!!
+(^) Floaty Bomb
 (^) Hand Grenade Launcher
 (#3, ^2) Hellfire Bomb !!!
 (#3, ^2) Hellfire Grenade !!!
@@ -620,8 +620,8 @@ EXPLOSIVE WEAPONS:
 (^) Crystal Bomb
 (^) Crystal Grenade
 (#2, ^2) Grenado
-(#2, ^2) Mine Flayer
-(#2, ^2) Nuclear Arm*
+(#3, ^2) Mine Flayer
+(^) Nuclear Arm*
 (#2, ^2) Omni-Directional Claymore
 (#, ^2) Shrapnel Bomb
 

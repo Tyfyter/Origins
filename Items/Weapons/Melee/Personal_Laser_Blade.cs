@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
-	//[AutoloadEquip(EquipType.HandsOn)] needs HandsOn sprite for this to work
+	[AutoloadEquip(EquipType.HandsOn)]
     public class Personal_Laser_Blade : ModItem, IElementalItem {
 		public const int max_charge = 75;
 		public ushort Element => Elements.Fire;
