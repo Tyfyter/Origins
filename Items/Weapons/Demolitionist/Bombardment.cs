@@ -22,9 +22,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed = 9;
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.buyPrice(silver: 49);
+			Item.UseSound = null;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			velocity = velocity.RotatedByRandom(0.15f);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
 		}
 	}
 }

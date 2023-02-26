@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -67,7 +68,7 @@ namespace Origins.Projectiles {
 				if (tripped) {
 					magicTripwireTripped = true;
 				} else if (magicTripwireTripped) {
-					Explode(projectile);
+					Explode(projectile, detonationStyle: Origins.MagicTripwireDetonationStyle[projectile.type]);
 				}
 			}
 		}
@@ -115,107 +116,122 @@ namespace Origins.Projectiles {
 				return projectile.timeLeft <= 3 || projectile.penetrate == 0;
 			}
 		}
-		public static void Explode(Projectile projectile, int delay = 0) {
+		public static void Explode(Projectile projectile, int delay = 0, int detonationStyle = -1) {
 			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {
 				explodingProjectile.Explode(delay);
 			} else {
-				switch (projectile.type) {
-					case ProjectileID.Grenade:
-					case ProjectileID.BouncyGrenade:
-					case ProjectileID.StickyGrenade:
-					case ProjectileID.PartyGirlGrenade:
-					case ProjectileID.Beenade:
-					case ProjectileID.Bomb:
-					case ProjectileID.BouncyBomb:
-					case ProjectileID.StickyBomb:
-					case ProjectileID.Dynamite:
-					case ProjectileID.BouncyDynamite:
-					case ProjectileID.StickyDynamite:
-					case ProjectileID.BombFish:
-					case ProjectileID.DryBomb:
-					case ProjectileID.WetBomb:
-					case ProjectileID.LavaBomb:
-					case ProjectileID.HoneyBomb:
-					case ProjectileID.ScarabBomb:
-					case ProjectileID.MolotovCocktail:
+				if (detonationStyle == -1) {
+					switch (projectile.type) {
+						case ProjectileID.Grenade:
+						case ProjectileID.BouncyGrenade:
+						case ProjectileID.StickyGrenade:
+						case ProjectileID.PartyGirlGrenade:
+						case ProjectileID.Beenade:
+						case ProjectileID.Bomb:
+						case ProjectileID.BouncyBomb:
+						case ProjectileID.StickyBomb:
+						case ProjectileID.Dynamite:
+						case ProjectileID.BouncyDynamite:
+						case ProjectileID.StickyDynamite:
+						case ProjectileID.BombFish:
+						case ProjectileID.DryBomb:
+						case ProjectileID.WetBomb:
+						case ProjectileID.LavaBomb:
+						case ProjectileID.HoneyBomb:
+						case ProjectileID.ScarabBomb:
+						case ProjectileID.MolotovCocktail:
+						detonationStyle = 1;
+						break;
+
+						case ProjectileID.RocketI:
+						case ProjectileID.RocketII:
+						case ProjectileID.RocketIII:
+						case ProjectileID.RocketIV:
+						case ProjectileID.MiniNukeRocketI:
+						case ProjectileID.MiniNukeRocketII:
+						case ProjectileID.ClusterRocketI:
+						case ProjectileID.ClusterRocketII:
+						case ProjectileID.DryRocket:
+						case ProjectileID.WetRocket:
+						case ProjectileID.LavaRocket:
+						case ProjectileID.HoneyRocket:
+
+						case ProjectileID.ProximityMineI:
+						case ProjectileID.ProximityMineII:
+						case ProjectileID.ProximityMineIII:
+						case ProjectileID.ProximityMineIV:
+						case ProjectileID.MiniNukeMineI:
+						case ProjectileID.MiniNukeMineII:
+						case ProjectileID.ClusterMineI:
+						case ProjectileID.ClusterMineII:
+						case ProjectileID.DryMine:
+						case ProjectileID.WetMine:
+						case ProjectileID.LavaMine:
+						case ProjectileID.HoneyMine:
+
+						case ProjectileID.GrenadeI:
+						case ProjectileID.GrenadeII:
+						case ProjectileID.GrenadeIII:
+						case ProjectileID.GrenadeIV:
+						case ProjectileID.MiniNukeGrenadeI:
+						case ProjectileID.MiniNukeGrenadeII:
+						case ProjectileID.ClusterGrenadeI:
+						case ProjectileID.ClusterGrenadeII:
+						case ProjectileID.DryGrenade:
+						case ProjectileID.WetGrenade:
+						case ProjectileID.LavaGrenade:
+						case ProjectileID.HoneyGrenade:
+						detonationStyle = 2;
+						break;
+
+						case ProjectileID.RocketSnowmanI:
+						case ProjectileID.RocketSnowmanII:
+						case ProjectileID.RocketSnowmanIII:
+						case ProjectileID.RocketSnowmanIV:
+						case ProjectileID.MiniNukeSnowmanRocketI:
+						case ProjectileID.MiniNukeSnowmanRocketII:
+						case ProjectileID.ClusterSnowmanRocketI:
+						case ProjectileID.ClusterSnowmanRocketII:
+						case ProjectileID.DrySnowmanRocket:
+						case ProjectileID.WetSnowmanRocket:
+						case ProjectileID.LavaSnowmanRocket:
+						case ProjectileID.HoneySnowmanRocket:
+
+						case ProjectileID.RocketFireworkBlue:
+						case ProjectileID.RocketFireworkGreen:
+						case ProjectileID.RocketFireworkRed:
+						case ProjectileID.RocketFireworkYellow:
+
+						case ProjectileID.Celeb2Rocket:
+						case ProjectileID.Celeb2RocketExplosive:
+						case ProjectileID.Celeb2RocketLarge:
+						case ProjectileID.Celeb2RocketExplosiveLarge:
+
+						case ProjectileID.ElectrosphereMissile:
+
+						case ProjectileID.ClusterFragmentsI:
+						case ProjectileID.ClusterFragmentsII:
+						case ProjectileID.ClusterSnowmanFragmentsI:
+						case ProjectileID.ClusterSnowmanFragmentsII:
+						case ProjectileID.HellfireArrow:
+						case ProjectileID.Stynger:
+						case ProjectileID.StyngerShrapnel:
+						case ProjectileID.JackOLantern:
+						default:
+						detonationStyle = 0;
+						break;
+					}
+				}
+				switch (detonationStyle) {
+					case 1:
 					delay += 3;
 					goto default;
 
-					case ProjectileID.RocketI:
-					case ProjectileID.RocketII:
-					case ProjectileID.RocketIII:
-					case ProjectileID.RocketIV:
-					case ProjectileID.MiniNukeRocketI:
-					case ProjectileID.MiniNukeRocketII:
-					case ProjectileID.ClusterRocketI:
-					case ProjectileID.ClusterRocketII:
-					case ProjectileID.DryRocket:
-					case ProjectileID.WetRocket:
-					case ProjectileID.LavaRocket:
-					case ProjectileID.HoneyRocket:
-
-					case ProjectileID.ProximityMineI:
-					case ProjectileID.ProximityMineII:
-					case ProjectileID.ProximityMineIII:
-					case ProjectileID.ProximityMineIV:
-					case ProjectileID.MiniNukeMineI:
-					case ProjectileID.MiniNukeMineII:
-					case ProjectileID.ClusterMineI:
-					case ProjectileID.ClusterMineII:
-					case ProjectileID.DryMine:
-					case ProjectileID.WetMine:
-					case ProjectileID.LavaMine:
-					case ProjectileID.HoneyMine:
-
-					case ProjectileID.GrenadeI:
-					case ProjectileID.GrenadeII:
-					case ProjectileID.GrenadeIII:
-					case ProjectileID.GrenadeIV:
-					case ProjectileID.MiniNukeGrenadeI:
-					case ProjectileID.MiniNukeGrenadeII:
-					case ProjectileID.ClusterGrenadeI:
-					case ProjectileID.ClusterGrenadeII:
-					case ProjectileID.DryGrenade:
-					case ProjectileID.WetGrenade:
-					case ProjectileID.LavaGrenade:
-					case ProjectileID.HoneyGrenade:
+					case 2:
 					projectile.velocity = Vector2.Zero;
 					delay += 3;
 					goto default;
 
-					case ProjectileID.RocketSnowmanI:
-					case ProjectileID.RocketSnowmanII:
-					case ProjectileID.RocketSnowmanIII:
-					case ProjectileID.RocketSnowmanIV:
-					case ProjectileID.MiniNukeSnowmanRocketI:
-					case ProjectileID.MiniNukeSnowmanRocketII:
-					case ProjectileID.ClusterSnowmanRocketI:
-					case ProjectileID.ClusterSnowmanRocketII:
-					case ProjectileID.DrySnowmanRocket:
-					case ProjectileID.WetSnowmanRocket:
-					case ProjectileID.LavaSnowmanRocket:
-					case ProjectileID.HoneySnowmanRocket:
-
-					case ProjectileID.RocketFireworkBlue:
-					case ProjectileID.RocketFireworkGreen:
-					case ProjectileID.RocketFireworkRed:
-					case ProjectileID.RocketFireworkYellow:
-
-					case ProjectileID.Celeb2Rocket:
-					case ProjectileID.Celeb2RocketExplosive:
-					case ProjectileID.Celeb2RocketLarge:
-					case ProjectileID.Celeb2RocketExplosiveLarge:
-
-					case ProjectileID.ElectrosphereMissile:
-
-					case ProjectileID.ClusterFragmentsI:
-					case ProjectileID.ClusterFragmentsII:
-					case ProjectileID.ClusterSnowmanFragmentsI:
-					case ProjectileID.ClusterSnowmanFragmentsII:
-					case ProjectileID.HellfireArrow:
-					case ProjectileID.Stynger:
-					case ProjectileID.StyngerShrapnel:
-					case ProjectileID.JackOLantern:
 					default:
 					if (projectile.timeLeft > delay) projectile.timeLeft = delay;
 					break;
@@ -329,7 +345,7 @@ namespace Origins.Projectiles {
 				return 0;
 			}
 		}
-		internal static void SetupMagicTripwireRanges(int[] magicTripwireRange) {
+		internal static void SetupMagicTripwireRanges(int[] magicTripwireRange, int[] magicTripwireDetonationStyle) {
 			magicTripwireRange[ProjectileID.Grenade] = 32;
 			magicTripwireRange[ProjectileID.BouncyGrenade] = 32;
 			magicTripwireRange[ProjectileID.StickyGrenade] = 32;
@@ -416,6 +432,189 @@ namespace Origins.Projectiles {
 			magicTripwireRange[ProjectileID.HellfireArrow] = 8;
 			magicTripwireRange[ProjectileID.Stynger] = 12;
 			magicTripwireRange[ProjectileID.JackOLantern] = 32;
+
+			
+			magicTripwireDetonationStyle[ProjectileID.RocketSnowmanI] = 0;
+			magicTripwireDetonationStyle[ProjectileID.RocketSnowmanII] = 0;
+			magicTripwireDetonationStyle[ProjectileID.RocketSnowmanIII] = 0;
+			magicTripwireDetonationStyle[ProjectileID.RocketSnowmanIV] = 0;
+			magicTripwireDetonationStyle[ProjectileID.MiniNukeSnowmanRocketI] = 0;
+			magicTripwireDetonationStyle[ProjectileID.MiniNukeSnowmanRocketII] = 0;
+			magicTripwireDetonationStyle[ProjectileID.ClusterSnowmanRocketI] = 0;
+			magicTripwireDetonationStyle[ProjectileID.ClusterSnowmanRocketII] = 0;
+			magicTripwireDetonationStyle[ProjectileID.DrySnowmanRocket] = 0;
+			magicTripwireDetonationStyle[ProjectileID.WetSnowmanRocket] = 0;
+			magicTripwireDetonationStyle[ProjectileID.LavaSnowmanRocket] = 0;
+			magicTripwireDetonationStyle[ProjectileID.HoneySnowmanRocket] = 0;
+
+			magicTripwireDetonationStyle[ProjectileID.RocketFireworkBlue] = 0;
+			magicTripwireDetonationStyle[ProjectileID.RocketFireworkGreen] = 0;
+			magicTripwireDetonationStyle[ProjectileID.RocketFireworkRed] = 0;
+			magicTripwireDetonationStyle[ProjectileID.RocketFireworkYellow] = 0;
+
+			magicTripwireDetonationStyle[ProjectileID.Celeb2Rocket] = 0;
+			magicTripwireDetonationStyle[ProjectileID.Celeb2RocketExplosive] = 0;
+			magicTripwireDetonationStyle[ProjectileID.Celeb2RocketLarge] = 0;
+			magicTripwireDetonationStyle[ProjectileID.Celeb2RocketExplosiveLarge] = 0;
+
+			magicTripwireDetonationStyle[ProjectileID.ElectrosphereMissile] = 0;
+
+			magicTripwireDetonationStyle[ProjectileID.ClusterFragmentsI] = 0;
+			magicTripwireDetonationStyle[ProjectileID.ClusterFragmentsII] = 0;
+			magicTripwireDetonationStyle[ProjectileID.ClusterSnowmanFragmentsI] = 0;
+			magicTripwireDetonationStyle[ProjectileID.ClusterSnowmanFragmentsII] = 0;
+			magicTripwireDetonationStyle[ProjectileID.HellfireArrow] = 0;
+			magicTripwireDetonationStyle[ProjectileID.Stynger] = 0;
+			magicTripwireDetonationStyle[ProjectileID.StyngerShrapnel] = 0;
+			magicTripwireDetonationStyle[ProjectileID.JackOLantern] = 0;
+
+			magicTripwireDetonationStyle[ProjectileID.Grenade] = 1;
+			magicTripwireDetonationStyle[ProjectileID.BouncyGrenade] = 1;
+			magicTripwireDetonationStyle[ProjectileID.StickyGrenade] = 1;
+			magicTripwireDetonationStyle[ProjectileID.PartyGirlGrenade] = 1;
+			magicTripwireDetonationStyle[ProjectileID.Beenade] = 1;
+			magicTripwireDetonationStyle[ProjectileID.Bomb] = 1;
+			magicTripwireDetonationStyle[ProjectileID.BouncyBomb] = 1;
+			magicTripwireDetonationStyle[ProjectileID.StickyBomb] = 1;
+			magicTripwireDetonationStyle[ProjectileID.Dynamite] = 1;
+			magicTripwireDetonationStyle[ProjectileID.BouncyDynamite] = 1;
+			magicTripwireDetonationStyle[ProjectileID.StickyDynamite] = 1;
+			magicTripwireDetonationStyle[ProjectileID.BombFish] = 1;
+			magicTripwireDetonationStyle[ProjectileID.DryBomb] = 1;
+			magicTripwireDetonationStyle[ProjectileID.WetBomb] = 1;
+			magicTripwireDetonationStyle[ProjectileID.LavaBomb] = 1;
+			magicTripwireDetonationStyle[ProjectileID.HoneyBomb] = 1;
+			magicTripwireDetonationStyle[ProjectileID.ScarabBomb] = 1;
+			magicTripwireDetonationStyle[ProjectileID.MolotovCocktail] = 1;
+			
+			magicTripwireDetonationStyle[ProjectileID.RocketI] = 2;
+			magicTripwireDetonationStyle[ProjectileID.RocketII] = 2;
+			magicTripwireDetonationStyle[ProjectileID.RocketIII] = 2;
+			magicTripwireDetonationStyle[ProjectileID.RocketIV] = 2;
+			magicTripwireDetonationStyle[ProjectileID.MiniNukeRocketI] = 2;
+			magicTripwireDetonationStyle[ProjectileID.MiniNukeRocketII] = 2;
+			magicTripwireDetonationStyle[ProjectileID.ClusterRocketI] = 2;
+			magicTripwireDetonationStyle[ProjectileID.ClusterRocketII] = 2;
+			magicTripwireDetonationStyle[ProjectileID.DryRocket] = 2;
+			magicTripwireDetonationStyle[ProjectileID.WetRocket] = 2;
+			magicTripwireDetonationStyle[ProjectileID.LavaRocket] = 2;
+			magicTripwireDetonationStyle[ProjectileID.HoneyRocket] = 2;
+
+			magicTripwireDetonationStyle[ProjectileID.ProximityMineI] = 2;
+			magicTripwireDetonationStyle[ProjectileID.ProximityMineII] = 2;
+			magicTripwireDetonationStyle[ProjectileID.ProximityMineIII] = 2;
+			magicTripwireDetonationStyle[ProjectileID.ProximityMineIV] = 2;
+			magicTripwireDetonationStyle[ProjectileID.MiniNukeMineI] = 2;
+			magicTripwireDetonationStyle[ProjectileID.MiniNukeMineII] = 2;
+			magicTripwireDetonationStyle[ProjectileID.ClusterMineI] = 2;
+			magicTripwireDetonationStyle[ProjectileID.ClusterMineII] = 2;
+			magicTripwireDetonationStyle[ProjectileID.DryMine] = 2;
+			magicTripwireDetonationStyle[ProjectileID.WetMine] = 2;
+			magicTripwireDetonationStyle[ProjectileID.LavaMine] = 2;
+			magicTripwireDetonationStyle[ProjectileID.HoneyMine] = 2;
+
+			magicTripwireDetonationStyle[ProjectileID.GrenadeI] = 2;
+			magicTripwireDetonationStyle[ProjectileID.GrenadeII] = 2;
+			magicTripwireDetonationStyle[ProjectileID.GrenadeIII] = 2;
+			magicTripwireDetonationStyle[ProjectileID.GrenadeIV] = 2;
+			magicTripwireDetonationStyle[ProjectileID.MiniNukeGrenadeI] = 2;
+			magicTripwireDetonationStyle[ProjectileID.MiniNukeGrenadeII] = 2;
+			magicTripwireDetonationStyle[ProjectileID.ClusterGrenadeI] = 2;
+			magicTripwireDetonationStyle[ProjectileID.ClusterGrenadeII] = 2;
+			magicTripwireDetonationStyle[ProjectileID.DryGrenade] = 2;
+			magicTripwireDetonationStyle[ProjectileID.WetGrenade] = 2;
+			magicTripwireDetonationStyle[ProjectileID.LavaGrenade] = 2;
+			magicTripwireDetonationStyle[ProjectileID.HoneyGrenade] = 2;
+		}
+		public static void ExplosionVisual(Projectile projectile, bool applyHitboxModifiers, bool adjustDustAmount = false, SoundStyle? sound = null, float dustAmount = 1f, bool debugOutline = false) {
+			if (applyHitboxModifiers) {
+				Rectangle hitbox = projectile.Hitbox;
+				float baseWidth = hitbox.Width;
+				ProjectileLoader.ModifyDamageHitbox(projectile, ref hitbox);
+				if (adjustDustAmount) dustAmount *= hitbox.Width / baseWidth;
+				ExplosionVisual(hitbox, sound, dustAmount, debugOutline);
+			} else {
+				ExplosionVisual(projectile.Hitbox, sound, dustAmount, debugOutline);
+			}
+		}
+		public static void ExplosionVisual(Rectangle area, SoundStyle? sound = null, float dustAmount = 1f, bool debugOutline = false) {
+			Vector2 center = area.Center.ToVector2();
+			if (sound.HasValue) {
+				SoundEngine.PlaySound(in sound, center);
+			}
+			Vector2 topLeft = area.TopLeft();
+			for (int i = 0; i < 30 * dustAmount; i++) {
+				Dust.NewDustDirect(
+					topLeft,
+					area.Width,
+					area.Height,
+					DustID.Smoke,
+					0f,
+					0f,
+					100,
+					default(Color),
+					1.5f
+				).velocity *= 1.4f;
+			}
+			for (int i = 0; i < 20 * dustAmount; i++) {
+				Dust dust = Dust.NewDustDirect(
+					topLeft,
+					area.Width,
+					area.Height,
+					DustID.Torch,
+					0f,
+					0f,
+					100,
+					default(Color),
+					3.5f
+				);
+				dust.noGravity = true;
+				dust.velocity *= 7f;
+				Dust.NewDustDirect(
+					topLeft,
+					area.Width,
+					area.Height,
+					DustID.Torch,
+					0f,
+					0f,
+					100,
+					default(Color),
+					1.5f
+				).velocity *= 3f;
+			}
+			for (int i = 0; i < 2; i++) {
+				float velocityMult = 0.4f * (i + 1);
+				Gore gore = Gore.NewGoreDirect(null, center, default(Vector2), Main.rand.Next(61, 64));
+				gore.velocity *= velocityMult;
+				gore.velocity.X += 1f;
+				gore.velocity.Y += 1f;
+				gore = Gore.NewGoreDirect(null, center, default(Vector2), Main.rand.Next(61, 64));
+				gore.velocity *= velocityMult;
+				gore.velocity.X -= 1f;
+				gore.velocity.Y += 1f;
+				gore = Gore.NewGoreDirect(null, center, default(Vector2), Main.rand.Next(61, 64));
+				gore.velocity *= velocityMult;
+				gore.velocity.X += 1f;
+				gore.velocity.Y -= 1f;
+				gore = Gore.NewGoreDirect(null, center, default(Vector2), Main.rand.Next(61, 64));
+				gore.velocity *= velocityMult;
+				gore.velocity.X -= 1f;
+				gore.velocity.Y -= 1f;
+			}
+			if (debugOutline) {
+				for (int i = 0; i < area.Width; i += 2) {
+					Dust.NewDustPerfect(topLeft + new Vector2(i * 2, 0), 6, Vector2.Zero);
+				}
+				for (int i = 0; i < area.Height; i += 2) {
+					Dust.NewDustPerfect(topLeft + new Vector2(0, i * 2), 6, Vector2.Zero);
+				}
+				for (int i = 0; i < area.Width; i += 2) {
+					Dust.NewDustPerfect(topLeft + new Vector2(i * 2, area.Height), 6, Vector2.Zero);
+				}
+				for (int i = 0; i < area.Height; i += 2) {
+					Dust.NewDustPerfect(topLeft + new Vector2(area.Width, i * 2), 6, Vector2.Zero);
+				}
+			}
 		}
 	}
 }

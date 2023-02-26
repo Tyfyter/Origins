@@ -1,3 +1,4 @@
+using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -23,19 +24,20 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class Resizable_Mine_P : ModProjectile {
 		//public override string Texture => "Origins/Items/Weapons/Ammo/Resizable_Mine_P";
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Resizable Mine");
+			Origins.MagicTripwireRange[Type] = 40;
+		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.timeLeft = 420;
 			Projectile.scale = 0.5f;
 			Projectile.penetrate = 1;
-			Origins.MagicTripwireRange[Type] = 96;
 			//AIType = ProjectileID.ProximityMineI;
 		}
 		public override bool PreKill(int timeLeft) {
-			Projectile.type = ProjectileID.Grenade;
-			return true;
-		}
-		public override void Kill(int timeLeft) {
+			//Projectile.type = ProjectileID.RocketI;
+			Projectile.penetrate = -1;
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;
 			Projectile.width = 96;
@@ -43,6 +45,8 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
+			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound:SoundID.Item62);
+			return false;
 		}
 	}
 }

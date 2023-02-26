@@ -52,6 +52,8 @@ namespace Origins {
 		public static bool[] CanGainHoming { get => canGainHoming; }
 		static int[] magicTripwireRange;
 		public static int[] MagicTripwireRange { get => magicTripwireRange; }
+		static int[] magicTripwireDetonationStyle;
+		public static int[] MagicTripwireDetonationStyle { get => magicTripwireDetonationStyle; }
 		public static ModKeybind SetBonusTriggerKey { get; private set; }
 		public static ModKeybind InspectItemKey { get; private set; }
 		#region Armor IDs
@@ -576,7 +578,8 @@ namespace Origins {
 				canGainHoming[i] = true;
 			}
 			magicTripwireRange = ProjectileID.Sets.Factory.CreateIntSet(0);
-			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange);
+			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
+			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
 		}
 		public static class Music {
 			public static int Dusk = MusicID.PumpkinMoon;
