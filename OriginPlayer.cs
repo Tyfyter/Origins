@@ -124,6 +124,8 @@ namespace Origins {
 		public float loversLeapDashSpeed = 0;
 		public bool iwtpaStandard = false;
 		public bool magicTripwire = false;
+		public int lousyLiverCount = 0;
+		public int lousyLiverDebuff = 0;
 		#endregion
 
 		#region explosive stats
@@ -329,6 +331,7 @@ namespace Origins {
 			loversLeap = false;
 			iwtpaStandard = false;
 			magicTripwire = false;
+			lousyLiverCount = 0;
 
 			flaskBile = false;
 			flaskSalt = false;
@@ -748,6 +751,29 @@ namespace Origins {
 					}
 					explosiveArteryCount = -1;
 				}
+			}
+			if (lousyLiverCount > 0) {
+				const float maxDist = 256 * 256;
+				List<(NPC target, float dist)> targets = new(lousyLiverCount);
+				for (int i = 0; i < Main.maxNPCs; i++) {
+					NPC currentTarget = Main.npc[i];
+					if (currentTarget.CanBeChasedBy()) {
+						float dist = (currentTarget.Center - Player.MountedCenter).LengthSquared();
+						if (dist < maxDist) {
+							int index = Math.Min(targets.Count, lousyLiverCount) + 1;
+							for (;index-->0;) {
+								if (index == 0 || targets[index - 1].dist < dist) {
+									targets.Insert(index, (currentTarget, dist));
+									break;
+								}
+							}
+						}
+					}
+				}
+				for (int i = 0; i < Math.Min(targets.Count, lousyLiverCount); i++) {
+					targets[i].target.AddBuff(lousyLiverDebuff, 10);
+				}
+				explosiveArteryCount = -1;
 			}
 		}
 		public override void PostUpdateMiscEffects() {
