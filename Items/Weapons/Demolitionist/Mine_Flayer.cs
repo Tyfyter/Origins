@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			recipe.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			velocity = velocity.RotatedByRandom(0.15f);
+			velocity = OriginExtensions.Vec2FromPolar(player.direction == 1 ? player.itemRotation : player.itemRotation + MathHelper.Pi, velocity.Length());
 		}
 	}
 }
