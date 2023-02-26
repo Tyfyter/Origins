@@ -458,7 +458,7 @@ MELEE WEAPONS:
 (X) Depth Charge
 (^) Knee Slapper
 (#, ^2) Nematoclaw*
-(@, #) Origins Biome Keybrands !!!
+(%, @, #) Origins Biome Keybrands !!!
 (#, ^2) Scale Saw
 (^) Telephone Pole*
 
