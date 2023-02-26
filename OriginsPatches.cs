@@ -9,6 +9,7 @@ using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
+using Origins.Walls;
 using Origins.World.BiomeData;
 using ReLogic.Graphics;
 using System;
@@ -166,7 +167,8 @@ namespace Origins {
                     return false;
                 })
             );*/
-			IL.Terraria.WorldGen.PlantAlch += WorldGen_PlantAlch;
+			IL.Terraria.WorldGen.PlantAlch += WorldGen_PlantAlchIL;
+			On.Terraria.WorldGen.PlantAlch += WorldGen_PlantAlch;
 			On.Terraria.WorldGen.ShakeTree += WorldGen_ShakeTree;
 			HookEndpointManager.Add(
 				typeof(MC).GetMethod("ResizeArrays", BindingFlags.NonPublic | BindingFlags.Static),
@@ -380,7 +382,7 @@ namespace Origins {
 			}
 		}
 
-		private void WorldGen_PlantAlch(ILContext il) {
+		private void WorldGen_PlantAlchIL(ILContext il) {
 			ILCursor c = new ILCursor(il);
 			if (!c.TryGotoNext(
 				moveType: MoveType.Before,
@@ -435,8 +437,54 @@ namespace Origins {
 				}
 			}
 		}
+		private void WorldGen_PlantAlch(On.Terraria.WorldGen.orig_PlantAlch orig) {
+			orig();
+			//if (!WorldGen.genRand.NextBool(10)) return;
+			int x = WorldGen.genRand.Next(20, Main.maxTilesX - 20);
+			int y = WorldGen.genRand.Next((int)Main.worldSurface - 250, Main.UnderworldLayer);
+			while (y < Main.maxTilesY - 20 && (Main.tile[x, y].HasTile || Main.tile[x, y].WallType == WallID.None)) {
+				y++;
+			}
+			int wallType = MC.WallType<Riven_Flesh_Wall>();
+			while (y > 20 && !Main.tile[x, y - 1].HasTile && Main.tile[x, y - 1].WallType == wallType) {
+				y--;
+			}
+			Tile tile = Framing.GetTileSafely(x, y);
+			if (tile.WallType == MC.WallType<Riven_Flesh_Wall>()) {
+				Tile left = Framing.GetTileSafely(x - 1, y);
+				Tile right = Framing.GetTileSafely(x + 1, y);
+				Tile up = Framing.GetTileSafely(x, y - 1);
+				static int GetConnections(Tile tile, int dir) {
+					if (tile.HasTile) {
+						if (tile.TileType == MC.TileType<Wrycoral>()) return 2;
+						if (tile.TileType == MC.TileType<Riven_Flesh>()) {
+							switch (tile.BlockType) {
+								case BlockType.Solid:
+								return 1;
+								case BlockType.HalfBlock:
+								return dir == 2 ? 1 : 0;
+								case BlockType.SlopeDownLeft:
+								return dir == 1 ? 0 : 1;
+								case BlockType.SlopeDownRight:
+								return dir == 0 ? 0 : 1;
+								case BlockType.SlopeUpLeft:
+								return dir == 2 ? 1 : 0;
+								case BlockType.SlopeUpRight:
+								return dir == 1 ? 1 : 0;
+							}
+						}
+					}
+					return 0;
+				}
+				int connections = GetConnections(left, 0) + GetConnections(right, 1) + GetConnections(up, 2);
+				if (Main.rand.Next(connections) > (connections / 3)) {
+					tile.ResetToType((ushort)MC.TileType<Wrycoral>());
+					WorldGen.SquareTileFrame(x, y);
+				}
+			}
+		}
 		public static bool PlaceCustomAlch(int x, int y, int style) {
-			if (Main.tile[x, y + 1].BlockType != BlockType.Solid) {
+			if (Framing.GetTileSafely(x, y + 1).BlockType != BlockType.Solid) {
 				return false;
 			}
 			Tile tile = Framing.GetTileSafely(x, y);
@@ -446,11 +494,6 @@ namespace Origins {
 				tile.TileType = wiltedRose;
 				tile.TileFrameX = 0;
 				tile.TileFrameY = 0;
-				return true;
-			}
-			if (TileObject.CanPlace(x, y, MC.TileType<Wrycoral>(), Main.rand.Next(2), 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
-				TileObject.Place(objectData);
-				//Main.LocalPlayer.Teleport(new(x * 16, y * 16));// && Main.rand.NextBool(2, 5)
 				return true;
 			}
 			return false;

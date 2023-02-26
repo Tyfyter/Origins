@@ -82,6 +82,11 @@ namespace Origins.Items.Other.Testing {
 			Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
 			Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
 			switch (packedMode) {
+				case 12 | p0:
+				parameters.Enqueue(Player.tileTargetX);
+				parameters.Enqueue(Player.tileTargetY);
+				Apply();
+				break;
 				case 11 | p0:
 				parameters.Enqueue(Player.tileTargetX);
 				parameters.Enqueue(Player.tileTargetY);
@@ -189,6 +194,8 @@ namespace Origins.Items.Other.Testing {
 			double mousePackedDouble = (Main.MouseScreen.X / 16d + (Main.screenWidth / 16d) * Main.MouseScreen.Y / 16d) / 16d;
 			Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
 			switch (packedMode) {
+				case 12 | p0:
+				return "place custom alch plant";
 				case 11 | p0:
 				return "start fiberglass undergrowth";
 				case 10 | p0:
@@ -448,6 +455,10 @@ namespace Origins.Items.Other.Testing {
 				}
 				case 11: {
 					Fiberglass_Undergrowth.Gen.FiberglassStart((int)parameters.Dequeue(), (int)parameters.Dequeue());
+					break;
+				}
+				case 12: {
+					Origins.PlaceCustomAlch((int)parameters.Dequeue(), (int)parameters.Dequeue(), 0);
 					break;
 				}
 			}
