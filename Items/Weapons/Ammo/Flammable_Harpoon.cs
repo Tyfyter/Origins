@@ -21,15 +21,15 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 26);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar);
-			recipe.AddIngredient(ItemID.Gel, 2);
+			Recipe recipe = Recipe.Create(Type, 8);
+			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 8);
+			recipe.AddIngredient(ItemID.Gel);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
-			recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Harpoon>());
-			recipe.AddIngredient(ItemID.Gel, 2);
+			recipe = Recipe.Create(Type, 8);
+			recipe.AddIngredient(ModContent.ItemType<Harpoon>(), 8);
+			recipe.AddIngredient(ItemID.Gel);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

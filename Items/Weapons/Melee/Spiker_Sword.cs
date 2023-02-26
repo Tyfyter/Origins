@@ -8,7 +8,7 @@ namespace Origins.Items.Weapons.Melee {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Spiker Sword");
-			Tooltip.SetDefault("Very pointy");
+			Tooltip.SetDefault("'Very pointy'");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}

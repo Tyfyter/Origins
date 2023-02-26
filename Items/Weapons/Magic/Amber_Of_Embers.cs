@@ -34,8 +34,8 @@ namespace Origins.Items.Weapons.Magic {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.Amber, 8);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 4);
-			recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 10);
+			recipe.AddIngredient(ItemID.FallenStar, 10);
+			//recipe.AddIngredient(ModContent.ItemType<Carburite>(), 18);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

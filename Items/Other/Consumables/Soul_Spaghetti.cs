@@ -7,7 +7,7 @@ namespace Origins.Items.Other.Consumables {
 	public class Soul_Spaghetti : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Soul Spaghetti");
-			Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'Tastes like noodle with hairs and meats.'");
+			Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'Tastes like noodle with hairs and meats'");
 			SacrificeTotal = 5;
 		}
 		public override void SetDefaults() {
@@ -21,7 +21,8 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Strange_String>(), 8);
+			recipe.AddIngredient(ItemID.BowlofSoup);
+			recipe.AddIngredient(ModContent.ItemType<Strange_String>(), 10);
 			recipe.AddTile(TileID.CookingPots);
 			recipe.Register();
 		}

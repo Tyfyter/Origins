@@ -20,10 +20,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
-			Item.width = 78;
-			Item.height = 30;
 			Item.damage = 23;
-			Item.value /= 2;
 			Item.useTime = (int)(Item.useTime * 1.15);
 			Item.useAnimation = (int)(Item.useAnimation * 1.15);
 			Item.shoot = ProjectileID.Bomb;
@@ -38,23 +35,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
-				if (type == ModContent.ProjectileType<Felnum_Shock_Grenade_P>()) {
-					damage -= 23;
-					damage += (damage - 16) * 2;
-					type = ModContent.ProjectileType<Awe_Bomb_P>();
-					velocity *= 1.15f;
-					knockback *= 3; Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
-					return false;
-				}
-				if (type == ModContent.ProjectileType<Impact_Grenade_P>()) {
-					type = ModContent.ProjectileType<Impact_Grenade_Blast>();
+				if (type == ModContent.ProjectileType<Impact_Bomb_P>()) {
+					type = ModContent.ProjectileType<Impact_Bomb_Blast>();
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
 					SoundEngine.PlaySound(SoundID.Item14.WithPitchRange(1, 1), position);
 					damage *= 10;
 					knockback *= 3; Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 					return false;
 				}
-				if (type == ModContent.ProjectileType<Acid_Grenade_P>()) {
+				if (type == ModContent.ProjectileType<Acid_Bomb_P>()) {
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
 					type = ModContent.ProjectileType<Acid_Shot>();
 					damage -= 20;
@@ -63,7 +52,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					}
 					return false;
 				}
-				if (type == ModContent.ProjectileType<Crystal_Grenade_P>()) {
+				if (type == ModContent.ProjectileType<Crystal_Bomb_P>()) {
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
 					type = ModContent.ProjectileType<Crystal_Grenade_Shard>();
 					damage -= 10;
@@ -75,7 +64,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					return false;
 				}
 			}
-			if (type == ModContent.ProjectileType<Acid_Grenade_P>()) {
+			if (type == ModContent.ProjectileType<Acid_Bomb_P>()) {
 				damage -= 15;
 			}
 			return true;

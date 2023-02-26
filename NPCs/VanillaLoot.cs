@@ -110,6 +110,9 @@ namespace Origins.NPCs {
 				case NPCID.FaceMonster:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Explosive_Artery>(), 100));
 				break;
+				case NPCID.UndeadMiner:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IWTPA_Standard>(), 4));
+				break;
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
 				r is LeadingConditionRule conditionRule &&

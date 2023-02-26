@@ -9,7 +9,7 @@ namespace Origins.Items.Other.Consumables {
 	public class Sus_Ice_Cream : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Suspicious Looking Ice Cream");
-			Tooltip.SetDefault("Summons the Primordial Amoeba");
+			Tooltip.SetDefault("Summons the Primordial Amoeba\n'This ice cream will eat YOU'");
 
 			SacrificeTotal = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;

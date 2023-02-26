@@ -63,7 +63,7 @@ namespace Origins.Items.Armor.Necromancer {
 	public class Necromancer_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Necromancer Breastplate");
-			Tooltip.SetDefault("+1 minion slot\n15% increased summoning attack speed");
+			Tooltip.SetDefault("15% increased summoning attack speed\n+1 minion slot");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

@@ -6,7 +6,7 @@ namespace Origins.Items.Weapons.Demolitionist {
     public class Brainade : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Brainade");
-			Tooltip.SetDefault("Explodes into a bloody mess");
+			Tooltip.SetDefault("Explodes into a bloody mess\n'Mind blown'");
 			SacrificeTotal = 99;
 
 		}

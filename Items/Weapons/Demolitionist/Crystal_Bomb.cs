@@ -26,9 +26,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 5);
+			Recipe recipe = Recipe.Create(Type, 2);
+			recipe.AddIngredient(ItemID.Bomb, 2);
 			recipe.AddIngredient(ItemID.CrystalShard);
-			recipe.AddIngredient(ItemID.Grenade, 5);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

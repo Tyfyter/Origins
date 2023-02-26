@@ -19,8 +19,8 @@ namespace Origins.Items.Other.Consumables {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.BottledWater);
-			recipe.AddIngredient(ItemID.BombFish);
-			recipe.AddIngredient(ItemID.FallenStar);
+			recipe.AddIngredient(ItemID.FallenStar, 4);
+			recipe.AddIngredient(ItemID.PurificationPowder, 10);
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}

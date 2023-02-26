@@ -47,7 +47,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient<Defiled_Powder>(30);
+			recipe.AddIngredient<Dreadful_Powder>(30);
 			recipe.AddIngredient<Strange_String>(15);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.Register();

@@ -22,16 +22,17 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.shoot = Cursed_Harpoon_P.ID;
 			Item.ammo = Harpoon.ID;
 			Item.value = Item.sellPrice(silver: 30);
+			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar);
+			Recipe recipe = Recipe.Create(Type, 5);
+			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
 			recipe.AddIngredient(ItemID.CursedFlame);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
-			recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Harpoon>());
+			recipe = Recipe.Create(Type, 5);
+			recipe.AddIngredient(ModContent.ItemType<Harpoon>(), 5);
 			recipe.AddIngredient(ItemID.CursedFlame);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();

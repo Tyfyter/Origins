@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
+	[AutoloadEquip(EquipType.HandsOn)]
 	public class Razorwire : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Razorwire");

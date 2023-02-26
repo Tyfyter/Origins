@@ -63,7 +63,7 @@ namespace Origins.Items.Armor.Cryosten {
 	public class Cryosten_Greaves : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Cryosten Greaves");
-			Tooltip.SetDefault("5% increased movement speed\nincreased movement speed on ice");
+			Tooltip.SetDefault("5% increased movement speed\nIncreased movement speed on ice");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

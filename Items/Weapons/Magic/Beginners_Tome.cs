@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.mana = 8;
 			Item.shoot = ModContent.ProjectileType<Beginner_Spell>();
 			Item.value = Item.sellPrice(silver: 30);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

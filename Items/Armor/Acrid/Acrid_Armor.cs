@@ -259,7 +259,6 @@ namespace Origins.Items.Armor.Acrid {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 26);
 			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 30);
-			recipe.AddIngredient(ModContent.ItemType<Air_Tank>());
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

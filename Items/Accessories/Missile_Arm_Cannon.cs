@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	//[AutoloadEquip(EquipType.HandsOn)]
+	[AutoloadEquip(EquipType.HandsOn)]
 	public class Missile_Armcannon : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Missile Armcannon");

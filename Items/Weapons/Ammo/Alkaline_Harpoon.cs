@@ -4,11 +4,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-	public class Acid_Harpoon : ModItem {
-		public override string Texture => "Origins/Items/Weapons/Ammo/Acid_Harpoon";
+	public class Alkaline_Harpoon : ModItem {
+		public override string Texture => "Origins/Items/Weapons/Ammo/Alkaline_Harpoon";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acid Harpoon");
+			DisplayName.SetDefault("Alkaline Harpoon");
 			SacrificeTotal = 99;
 			ID = Type;
 		}
@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Harpoon;
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acid Harpoon");
+			DisplayName.SetDefault("Alkaline Harpoon");
 			ID = Type;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {

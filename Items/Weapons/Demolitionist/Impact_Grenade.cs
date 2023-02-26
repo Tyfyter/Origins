@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 10f;
 			Item.ammo = ItemID.Grenade;
 			Item.value = Item.sellPrice(copper: 35);
-			Item.rare = ItemRarityID.Blue;
+			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
-			Item.damage = 54;
+			Item.damage = 110;
 			Item.DamageType = DamageClass.Melee;
 			Item.noUseGraphic = false;
 			Item.noMelee = false;
@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.knockBack = 14f;
 			Item.shoot = ProjectileID.None;
 			Item.value = Item.buyPrice(gold: 2);
-			Item.rare = ItemRarityID.LightRed;
+			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

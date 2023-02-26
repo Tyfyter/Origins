@@ -1,10 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Ninja_Ravel : Ravel {
+    public class Ninja_Ravel : Ravel {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Ninja Ravel");

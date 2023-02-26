@@ -7,7 +7,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Krakram : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Krakram");
-			Tooltip.SetDefault("Very pointy");
+			Tooltip.SetDefault("'Very pointy'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

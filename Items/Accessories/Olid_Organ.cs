@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	public class Olid_Organ : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Olid Organ");
-			Tooltip.SetDefault("5% increased damage and critical strike chance\nAttacks inflict 'Toxic Shock' and 'Solvent' on enemies\nEnemies are less likely to target you");
+			Tooltip.SetDefault("5% increased damage and critical strike chance\nAll attacks inflict Toxic Shock\nEnemies are less likely to target you");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

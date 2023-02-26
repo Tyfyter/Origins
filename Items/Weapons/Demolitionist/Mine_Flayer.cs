@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
-			Item.damage = 40;
+			Item.damage = 60;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTime = 4;
@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.buyPrice(gold: 2);
 			Item.reuseDelay = 60;
 			Item.autoReuse = false;
-			Item.UseSound = SoundID.Item61;
+			Item.UseSound = null;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -39,6 +39,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			velocity = OriginExtensions.Vec2FromPolar(player.direction == 1 ? player.itemRotation : player.itemRotation + MathHelper.Pi, velocity.Length());
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
 		}
 	}
 }

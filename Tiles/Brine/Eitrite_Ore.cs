@@ -29,7 +29,7 @@ namespace Origins.Tiles.Brine {
 	public class Eitrite_Ore_Item : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Eitrite Ore");
-			Tooltip.SetDefault("'So acidic it could be used as a power source'");
+			Tooltip.SetDefault("'So alkaline-concentrated it could be used as a power source'");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TitaniumOre);

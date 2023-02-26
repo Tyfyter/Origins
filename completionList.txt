@@ -270,7 +270,7 @@ ACCESSORIES:
 (@2, #) Laser Tag Vest !!!
 (^) Last Descendent
 (^) Locket Necklace
-(#2, ^2) Lousy Liver !!!
+(^) Lousy Liver
 (^) Lover's Leap
 (^) Magic Glove
 (^) Magic Tripwire
@@ -594,7 +594,7 @@ EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
 (^) Bloombomb
-(#2, ^2) Bombardment !!!
+(#3, ^2) Bombardment !!!
 (#4, ^2) Bomb Launcher !!!
 (#2, ^2) Brainade !!!
 (#3, ^2) Defiled Spirit !!!
@@ -621,7 +621,7 @@ EXPLOSIVE WEAPONS:
 (^) Crystal Bomb
 (^) Crystal Grenade
 (#2, ^2) Grenado
-(#3, ^2) Mine Flayer
+(#4, ^2) Mine Flayer !!!
 (^) Nuclear Arm*
 (#2, ^2) Omni-Directional Claymore
 (#, ^2) Shrapnel Bomb
@@ -755,7 +755,7 @@ MATERIALS:
 (^) Bat Hide
 (^) Bud Barnacle
 (^) Defiled Bar*
-(^) Defiled Powder
+(^) Dreadful Powder
 (^) Encrusted Bar
 (^) Felnum Bar
 (^) Magic Hair Treatment Gel
@@ -814,9 +814,11 @@ CRITTERS AND FISH:
 (#3, ^2) Bug
 (#3, ^2) Cicada 3301 !!!
 
+(X) Bilemouth !!!
 (^) Bonehead Jellyfish
 (^) Duskarp
 (^) Prikish
+(X) Tearapiranha !!!
 ---
 
 
@@ -886,19 +888,19 @@ AMMO:
 (^) Flammable Harpoon
 (^) Harpoon
 (^) Peatball*
-(#2, ^2) Resizable Mine !!!
+(^) Resizable Mine
 
-(^) Acid Harpoon
 (^) Alkahest Arrow
 (^) Alkahest Bullet
+(^) Alkaline Harpoon
 (^) Bile Arrow 
 (^) Bile Bullet
-(#3, ^2, %4) Bile Dart
+(^) Bile Dart
 (^) Cursed Harpoon
 (^) Giant Metal Slug
 (^) Thermite Canister
 
-(#2, ^2) Scrap
+(^) Scrap
 
 (#2, ^2) Starfuze
 

@@ -79,8 +79,8 @@ namespace Origins.Items.Materials {
 
 		}
 		public override void SetDefaults() {
-			Item.value = Item.sellPrice(copper: 4);
 			Item.maxStack = 999;
+			Item.rare = ItemRarityID.Gray;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.Leather);
@@ -92,7 +92,7 @@ namespace Origins.Items.Materials {
 	public class Black_Bile : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Black Bile");
-			Tooltip.SetDefault("So depressing it makes the party girl cry");
+			Tooltip.SetDefault("'So depressing it makes the party girl cry'");
 			SacrificeTotal = 25;
 
 		}
@@ -319,6 +319,7 @@ namespace Origins.Items.Materials {
 	public class Eitrite_Bar : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Eitrite Bar");
+			Tooltip.SetDefault("'So alkaline-concentrated it could be used as a power source'");
 			SacrificeTotal = 25;
 		}
 		public override void SetDefaults() {
@@ -330,6 +331,20 @@ namespace Origins.Items.Materials {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Eitrite_Ore_Item>(), 4);
 			recipe.AddTile(TileID.AdamantiteForge);
+			recipe.Register();
+
+			recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.TitaniumBar);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2);
+			recipe.AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>());
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+
+			recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.AdamantiteBar);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2);
+			recipe.AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>());
+			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
 	}
@@ -392,7 +407,7 @@ namespace Origins.Items.Materials {
 	public class Eyndum_Bar : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Eyndum Bar");
-			Tooltip.SetDefault("'Half-life' means nothing when used in the same sentence");
+			Tooltip.SetDefault("'\"Half-life\" means nothing when used in the same sentence'");
 			SacrificeTotal = 25;
 		}
 		public override void SetDefaults() {

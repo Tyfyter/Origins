@@ -11,7 +11,7 @@ namespace Origins.Items.Other.Consumables {
 	public class Gooey_Water : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Gooey Water");
-			Tooltip.SetDefault("Spreads the {$Riven_Hive} to some blocks");
+			Tooltip.SetDefault("Spreads the Riven to some blocks");
 			SacrificeTotal = 99;
 		}
 		public override void SetDefaults() {

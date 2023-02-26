@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	public class Last_Descendent : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Last Descendent");
-			Tooltip.SetDefault("Increases damage, movement speed, length of invincibility after taking damage\nAdditionally causes stars to fall after taking damage");
+			Tooltip.SetDefault("Increases damage, movement speed, and length of invincibility after taking damage\nAdditionally causes stars to fall after taking damage");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

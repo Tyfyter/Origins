@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+using Origins.Tiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Felnum_Shock_Grenade : ModItem {
+    public class Felnum_Shock_Grenade : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Shock Grenade");
 			Tooltip.SetDefault("'Quite shocking'");
@@ -23,9 +23,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 70);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>());
-			recipe.AddIngredient(ItemID.Grenade, 70);
+			Recipe recipe = Recipe.Create(Type, 6);
+			recipe.AddIngredient(ItemID.Grenade, 6);
+			recipe.AddIngredient(ModContent.ItemType<Felnum_Ore_Item>());
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
