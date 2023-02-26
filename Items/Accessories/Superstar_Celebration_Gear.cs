@@ -4,6 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Superstar_Celebration_Gear : ModItem {
+		public override string Texture => "Terraria/Images/Confuse";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Superstar Celebration Gear");
 			Tooltip.SetDefault("Improvements to all stats and stars will fall from the sky during a party\nAllows the holder to quadruple jump\n8% reduced mana cost\nAutomatically use mana potions when needed");

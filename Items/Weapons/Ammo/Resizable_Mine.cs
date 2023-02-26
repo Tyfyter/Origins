@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Pink;
 		}
 	}
-	public class Resizable_Mine_P : ModProjectile {
+	public class Resizable_Mine_P : ModProjectile, IIsExplodingProjectile {
 		//public override string Texture => "Origins/Items/Weapons/Ammo/Resizable_Mine_P";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Resizable Mine");
@@ -48,5 +48,6 @@ namespace Origins.Items.Weapons.Ammo {
 			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound:SoundID.Item62);
 			return false;
 		}
+		public bool IsExploding() => Projectile.penetrate == -1;
 	}
 }
