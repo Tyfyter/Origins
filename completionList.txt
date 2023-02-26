@@ -231,15 +231,15 @@ ARMOR:
 (^) Nova Armor
 (X) Phoenix Skin Armor
 
-(X) Chlorophye Crown
-(X) Chlorophyte Visage
-(X) Hallowed Visage
+(#, ^2) Chlorophye Crown !!!
+(#, ^2) Chlorophyte Visage !!!
+(#, ^2) Hallowed Visage !!!
 ---
 
 
 ACCESSORIES:
 ---
-(#, ^2) ACME Crate !!!
+(^) ACME Crate
 (^) Advanced Imaging*
 (^) Air Tank*
 (^) Blast-Resistant Plate*
@@ -247,7 +247,7 @@ ACCESSORIES:
 (^) Bomb Handling Device*
 (^) Celestial Starlight
 (^) Celestial Stone Mask
-(X) Cirrhosis' Abhorrence
+(#2, ^2) Cirrhosis' Abhorrence !!!
 (^) Comb
 (^) Coologne
 (^) I-WTPA Standard
@@ -270,7 +270,7 @@ ACCESSORIES:
 (@2, #) Laser Tag Vest !!!
 (^) Last Descendent
 (^) Locket Necklace
-(#, ^2) Lousy Liver !!!
+(#2, ^2) Lousy Liver !!!
 (^) Lover's Leap
 (^) Magic Glove
 (^) Magic Tripwire
@@ -288,23 +288,24 @@ ACCESSORIES:
 (#, ^2) Potato Battery !!!
 (^) Powerflower
 (X) Proactive Protozoa
-(X) Rage Quilt
+(@, #) Rage Quilt !!!
 (^) Razorwire
 (^) Rebreather
 (^) Rebreather Kit
-(X) Resin Shield
+(#2, ^2) Resin Shield !!!
 (^) Return To Sender*
-(X) Rope of Sharing
+(#2, ^2) Rope of Sharing !!!
 (#, ^2) Ruby Reticle !!!
 (#2, ^2) Sonar Visor*
 (^) Scavenger Bag
+(#2, ^2) Solar Panel !!!
 (@5, #2) Sonic Radar !!!
 (^) Shield of Retribution
-(X) Super Party Hat
-(X) Superjump Cape
-(X) Superstar Celebration Gear
+(#2, ^2) Super Party Hat !!!
+(^) Superjump Cape
+(#2, ^2) Superstar Celebration Gear !!!
 (^) Symbiote Skull
-(X) Tainted Flesh
+(#2, ^2) Tainted Flesh !!!
 (^) Trap Charm
 (^) Turbo Reel
 (^) Unsought Organ
