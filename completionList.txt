@@ -49,9 +49,9 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver !!!
-(#4, $, ^2) Primordial Amoeba !!!
+(#4, $, ^2) Primordial Amoeba !!! (replanning soon)
 
-(X) Lost Diver
+(#, ^2) Lost Diver !!!
 (X) Miscreant
 (X) Scrapper
 
@@ -489,7 +489,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler
 (X) Adamantite Harpoon Gun
-(X) Boat Rocker
+(#, ^2) Boat Rocker !!!
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun
@@ -676,6 +676,7 @@ TILES:
 (^) Riven Grass
 
 (X) Batholith Wall
+(X) Chambersite Gemspark Wall
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (^) Eden Wood Wall
@@ -688,6 +689,13 @@ TILES:
 (#, ^2) Alkahest Torch
 (#, ^2) Bile Torch
 (X) Brine Water Fountain
+(X) Chambersite Gem Lock
+(X) Chambersite Gemspark
+(#, ^2) Chambersite Gemstone !!!
+(#, ^2) Chambersite Gemstone (Corruption) !!!
+(#, ^2) Chambersite Gemstone (Crimson) !!!
+(#, ^2) Chambersite Gemstone (Defiled) !!!
+(#, ^2) Chambersite Gemstone (Riven) !!!
 (X) Cubekon Chest
 (X) Cubekon Node
 (X) Dawn Dungeon Chest
@@ -805,6 +813,8 @@ MATERIALS:
 (^) Lunar Token
 (#3, ^2) Nova Fragment
 (^) Unpowered Eyndum Core
+
+(X) Large Chambersite
 ---
 
 
