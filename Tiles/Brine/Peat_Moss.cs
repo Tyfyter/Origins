@@ -5,29 +5,24 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
-	public class Sulphur_Stone : OriginTile {
+	public class Peat_Moss : OriginTile {
 		public override void SetStaticDefaults() {
+			Main.tileMergeDirt[Type] = true;
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			ItemDrop = ItemType<Sulphur_Stone_Item>();
-			AddMapEntry(new Color(18, 73, 56));
-			mergeID = TileID.Stone;
-			MinPick = 110;
-			//HitSound = SoundID.digstone;
-		}
-		public override bool CanExplode(int i, int j) {
-			return false;
+			ItemDrop = ItemType<Peat_Moss_Item>();
+			AddMapEntry(new Color(18, 160, 56));
+			HitSound = SoundID.Dig;
 		}
 	}
-	public class Sulphur_Stone_Item : ModItem {
+	public class Peat_Moss_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Sulphur Stone");
+			DisplayName.SetDefault("Peat Moss");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.createTile = TileType<Sulphur_Stone>();
+			Item.createTile = TileType<Peat_Moss>();
 		}
 	}
 }

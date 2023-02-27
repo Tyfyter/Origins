@@ -270,6 +270,7 @@ namespace Origins.World.BiomeData {
 				ushort stoneWallID = (ushort)ModContent.WallType<Defiled_Stone_Wall>();
 				for (int x = (int)Math.Floor(i - (28 * sizeMult + 5)); x < (int)Math.Ceiling(i + (28 * sizeMult + 5)); x++) {
 					for (int y = (int)Math.Ceiling(j + (28 * sizeMult + 4)); y >= (int)Math.Floor(j - (28 * sizeMult + 4)); y--) {
+						if (Main.tile[x, y].HasTile && !WorldGen.CanKillTile(x, y)) continue;
 						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
 						if (diff > 35 * sizeMult) {
 							continue;
@@ -293,6 +294,7 @@ namespace Origins.World.BiomeData {
 						if (diff > 16 * sizeMult) {
 							continue;
 						}
+						if (Main.tile[x, y].HasTile && !WorldGen.CanKillTile(x, y)) continue;
 						if (Math.Cos(diff * 0.7f) <= 0.1f) {
 							Main.tile[x, y].ResetToType(stoneID);
 						} else {
@@ -309,6 +311,7 @@ namespace Origins.World.BiomeData {
 						if (Main.tile[x, y].HasTile && Main.tileSolid[Main.tile[x, y].TileType]) {
 							continue;
 						}
+						if (Main.tile[x, y].HasTile && !WorldGen.CanKillTile(x, y)) continue;
 						float diff = (float)Math.Sqrt((((y - j) * (y - j)) + (x - i) * (x - i)) * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1));
 						if (diff > size + thickness || diff < size - thickness) {
 							continue;
@@ -365,7 +368,7 @@ namespace Origins.World.BiomeData {
 								double d = Math.Sqrt(dist);
 								if (!openAir && d < baseStrength + basewallThickness && OriginExtensions.IsTileReplacable(l, k) && tile.WallType != _wallType) {
 
-									if (!Main.tileContainer[tile.TileType]) {
+									if (!WorldGen.IsAContainer(tile)) {
 										tile.HasTile = true;
 										tile.ResetToType(wallBlockType);
 									}

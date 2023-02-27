@@ -128,7 +128,7 @@ namespace Origins {
 					int X = WorldGen.genRand.Next(JungleX - 100, JungleX + 100);
 					int Y;
 					for (Y = (int)WorldGen.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
-					Y += WorldGen.genRand.Next(100, 200);
+					Y += WorldGen.genRand.Next(100, 125);
 					Mod.Logger.Info("BrineGen:" + X + ", " + Y);
 					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
 					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);

@@ -18,6 +18,7 @@ namespace Origins.Items.Other.Testing {
 		const int modeCount = 20;
 		long packedMode => (long)mode | ((long)parameters.Count << 32);
 		LinkedQueue<object> parameters = new LinkedQueue<object>();
+		Vector2 basePosition;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Worldgen Testing Item");
 			Tooltip.SetDefault("");
@@ -82,10 +83,21 @@ namespace Origins.Items.Other.Testing {
 			Tile mouseTile = Framing.GetTileSafely(Player.tileTargetX, Player.tileTargetY);
 			Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
 			switch (packedMode) {
-				case 12 | p0:
+				case 13 | p0:
 				parameters.Enqueue(Player.tileTargetX);
 				parameters.Enqueue(Player.tileTargetY);
 				Apply();
+				break;
+				case 12 | p0:
+				parameters.Enqueue(Player.tileTargetX);
+				parameters.Enqueue(Player.tileTargetY);
+				basePosition = new Vector2(Player.tileTargetX, Player.tileTargetY);
+				break;
+				case 12 | p2:
+				parameters.Enqueue((new Vector2(Player.tileTargetX, Player.tileTargetY) - basePosition).Length() / 35f);
+				break;
+				case 12 | p3:
+				parameters.Enqueue((new Vector2(Player.tileTargetX, Player.tileTargetY) - basePosition) / 10f);
 				break;
 				case 11 | p0:
 				parameters.Enqueue(Player.tileTargetX);
@@ -194,8 +206,14 @@ namespace Origins.Items.Other.Testing {
 			double mousePackedDouble = (Main.MouseScreen.X / 16d + (Main.screenWidth / 16d) * Main.MouseScreen.Y / 16d) / 16d;
 			Vector2 diffFromPlayer = Main.MouseWorld - Main.LocalPlayer.MountedCenter;
 			switch (packedMode) {
+				case 13 | p0:
+				return $"place brine pool start: {Player.tileTargetX}, {Player.tileTargetY}";
 				case 12 | p0:
-				return "place custom alch plant";
+				return $"place brine cave start: {Player.tileTargetX}, {Player.tileTargetY}";
+				case 12 | p2:
+				return $"brine cave scale: {(new Vector2(Player.tileTargetX, Player.tileTargetY) - basePosition).Length() / 35f}";
+				case 12 | p3:
+				return $"brine cave stretch: {(new Vector2(Player.tileTargetX, Player.tileTargetY) - basePosition) / 10f}";
 				case 11 | p0:
 				return "start fiberglass undergrowth";
 				case 10 | p0:
@@ -324,7 +342,7 @@ namespace Origins.Items.Other.Testing {
 				World.BiomeData.Riven_Hive.Gen.HiveCave_Old((int)parameters.Dequeue(), (int)parameters.Dequeue());
 				break;
 				case 4:
-				World.BiomeData.Brine_Pool.Gen.BrineStart((int)parameters.Dequeue(), (int)parameters.Dequeue());
+				World.BiomeData.Brine_Pool.Gen.BrineStart_Old((int)parameters.Dequeue(), (int)parameters.Dequeue());
 				break;
 				case 5:
 				World.BiomeData.Defiled_Wastelands.Gen.StartDefiled((int)parameters.Dequeue(), (int)parameters.Dequeue());
@@ -458,7 +476,16 @@ namespace Origins.Items.Other.Testing {
 					break;
 				}
 				case 12: {
-					Origins.PlaceCustomAlch((int)parameters.Dequeue(), (int)parameters.Dequeue(), 0);
+					Brine_Pool.Gen.SmallCave(
+						(int)parameters.Dequeue(),
+						(int)parameters.Dequeue(),
+						(float)parameters.Dequeue(),
+						(Vector2)parameters.Dequeue()
+					);
+					break;
+				}
+				case 13: {
+					Brine_Pool.Gen.BrineStart((int)parameters.Dequeue(), (int)parameters.Dequeue());
 					break;
 				}
 			}

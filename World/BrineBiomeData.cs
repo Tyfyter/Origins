@@ -3,6 +3,7 @@ using Origins.Tiles.Brine;
 using Origins.Walls;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Bestiary;
@@ -31,7 +32,102 @@ namespace Origins.World.BiomeData {
 		public static class SpawnRates {
 		}
 		public static class Gen {
-			public static Point BrineStart(int i, int j, float sizeMult = 1f) {
+			//start ~100 tiles below surface
+			public static void BrineStart(int i, int j) {
+				float angle0 = genRand.NextFloat(MathHelper.TwoPi);
+				List<Vector2> cells = new();
+				for (float angle1 = genRand.NextFloat(6f, 8f); angle1 > 0; angle1 -= genRand.NextFloat(0.5f, 0.7f)) {
+					float totalAngle = angle0 + angle1;
+					float length = genRand.NextFloat(24f, 48f);
+					genCave:
+					Vector2 offset = OriginExtensions.Vec2FromPolar(totalAngle, length);
+					Vector2 pos = new(i + offset.X, j + offset.Y);
+					const float intolerance = 16;
+					if (!cells.Any((v) => (v - pos).LengthSquared() < intolerance * intolerance)) {
+						SmallCave(
+							pos.X, pos.Y,
+							genRand.NextFloat(1.1f, 1.2f),
+							OriginExtensions.Vec2FromPolar(totalAngle, MathF.Pow(genRand.NextFloat(0.25f, 1f), 1.5f))
+						);
+						cells.Add(pos);
+					}
+
+
+					if (length < 50) {
+						length += 24;
+						totalAngle += (genRand.NextBool() ? 1 : -1) * genRand.NextFloat(0.6f, 1.2f);
+						goto genCave;
+					}
+				}
+				SmallCave(
+					i, j,
+					genRand.NextFloat(1.4f, 1.6f),
+					OriginExtensions.Vec2FromPolar(genRand.NextFloat(MathHelper.TwoPi), MathF.Pow(genRand.NextFloat(0.25f, 0.7f), 1.5f) * 1.5f)
+				);
+				ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();
+				ushort stoneWallID = (ushort)ModContent.WallType<Sulphur_Stone_Wall>();
+				Tile tile;
+				for (int x = (int)MathF.Floor(i - 55); x < (int)MathF.Ceiling(i + 55); x++) {
+					for (int y = (int)MathF.Ceiling(j - 55); y < (int)MathF.Floor(j + 55); y++) {
+						tile = Framing.GetTileSafely(x, y);
+						if (tile.HasTile && !WorldGen.CanKillTile(x, y)) continue;
+						Vector2 diff = new(y - j, x - i);
+						float distSQ = diff.LengthSquared() * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1);
+						float dist = (float)Math.Sqrt(distSQ);
+						if (dist > 55) {
+							continue;
+						}
+						if (tile.WallType != stoneWallID) {
+							tile.ResetToType(stoneID);
+						}
+						tile.WallType = stoneWallID;
+					}
+				}
+				int cellCount = cells.Count;
+				for (int i0 = genRand.Next((int)(cellCount * 0.8f), cellCount); i0 > 0; i0--) {
+					//choose random direction
+					//walk from center of cell in that direction until hit block
+					//directional ore runner that returns ore count
+					//do it again if low total ore in cell and random chance
+					//remove cell from list
+				}
+			}
+			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
+				ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();
+				ushort mossID = (ushort)ModContent.TileType<Peat_Moss>();
+				ushort stoneWallID = (ushort)ModContent.WallType<Sulphur_Stone_Wall>();
+				float stretchScale = stretch.Length();
+				Vector2 stretchNorm = stretch / stretchScale;
+				float totalSize = 20 * sizeMult * (stretchScale + 1);
+				Tile tile;
+				for (int x = (int)Math.Floor(i - totalSize); x < (int)Math.Ceiling(i + totalSize); x++) {
+					for (int y = (int)Math.Ceiling(j - totalSize); y < (int)Math.Floor(j + totalSize); y++) {
+						tile = Framing.GetTileSafely(x, y);
+						if (tile.HasTile && !WorldGen.CanKillTile(x, y)) continue;
+						Vector2 diff = new(y - j, x - i);
+						float distSQ = diff.LengthSquared() * (GenRunners.GetWallDistOffset((float)Math.Atan2(y - j, x - i) * 4 + x + y) * 0.0316076058772687986171132238548f + 1);
+						float dist = (float)Math.Sqrt(distSQ);
+						dist *= Math.Abs(Vector2.Dot(diff.SafeNormalize(default), stretchNorm) * stretchScale) + 1;
+						if (dist > 20 * sizeMult) {
+							continue;
+						}
+						if (tile.WallType != stoneWallID) {
+							tile.ResetToType(stoneID);
+						}
+						tile.WallType = stoneWallID;
+						if (dist < 20 * sizeMult - 10f) {
+							tile.HasTile = false;
+						}else if (dist < 20 * sizeMult - 9f) {
+							tile.ResetToType(genRand.NextBool(5) ? TileID.Mud : mossID);
+						} else if (dist < 20 * sizeMult - 7f) {
+							tile.ResetToType(genRand.NextBool(5) ? mossID : TileID.Mud);
+						}
+						tile.LiquidType = LiquidID.Water;
+						tile.LiquidAmount = 255;
+					}
+				}
+			}
+			public static Point BrineStart_Old(int i, int j, float sizeMult = 1f) {
 				ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();
 				ushort stoneWallID = WallID.BlueDungeonSlab;//(ushort)ModContent.WallType<Riven_Flesh_Wall>();
 				int i2 = i + (int)(genRand.Next(-22, 22) * sizeMult);

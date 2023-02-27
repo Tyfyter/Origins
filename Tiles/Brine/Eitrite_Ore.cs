@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
-	public class Eitrite_Ore : OriginTile {
+	public class Eitrite_Ore : OriginTile, IComplexMineDamageTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
