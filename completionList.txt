@@ -594,8 +594,8 @@ EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
 (^) Bloombomb
-(#3, ^2) Bombardment !!!
-(#3, ^2) Bomb Launcher !!!
+(^) Bombardment
+(^) Bomb Launcher (needs to be balanced)
 (#2, ^2) Brainade !!!
 (#3, ^2) Defiled Spirit !!!
 (^) Floaty Bomb

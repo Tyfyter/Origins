@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Demolitionist {
     public class Bombardment : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bombardment");
-			Tooltip.SetDefault("Releases a barrage of mines");
+			Tooltip.SetDefault("Fires a barrage of floating mines");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -27,30 +27,27 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.reuseDelay = 60;
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			velocity = velocity.RotatedByRandom(0.15f);
+			type = Item.shoot;
+			velocity = velocity.RotatedByRandom(0.3f);
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
 		}
 	}
 	public class Bombardment_P : ModProjectile, IIsExplodingProjectile {
-		public override string Texture => "Origins/Items/Weapons/Ammo/Resizable_Mine_P";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Floating Mine");
 			Origins.MagicTripwireRange[Type] = 30;
 		}
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.Grenade);
+			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.timeLeft = 420;
-			Projectile.scale = 0.3f;
+			Projectile.scale = 0.75f;
 			Projectile.penetrate = 1;
 			Projectile.aiStyle = 0;
-			//AIType = ProjectileID.ProximityMineI;
 		}
 		public override void AI() {
-			Projectile.velocity *= 0.95f;
-			//Projectile.noGravity = true; Not intuitive enough
+			Projectile.velocity *= 0.96f;
 		}
 		public override bool PreKill(int timeLeft) {
-			//Projectile.type = ProjectileID.RocketI;
 			Projectile.penetrate = -1;
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;

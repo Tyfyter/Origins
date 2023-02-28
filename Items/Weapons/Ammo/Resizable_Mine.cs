@@ -23,7 +23,6 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public class Resizable_Mine_P : ModProjectile, IIsExplodingProjectile {
-		//public override string Texture => "Origins/Items/Weapons/Ammo/Resizable_Mine_P";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Resizable Mine");
 			Origins.MagicTripwireRange[Type] = 40;
@@ -33,10 +32,8 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.timeLeft = 420;
 			Projectile.scale = 0.5f;
 			Projectile.penetrate = 1;
-			//AIType = ProjectileID.ProximityMineI;
 		}
 		public override bool PreKill(int timeLeft) {
-			//Projectile.type = ProjectileID.RocketI;
 			Projectile.penetrate = -1;
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;

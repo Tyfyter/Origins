@@ -20,13 +20,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
-			Item.damage = 10;
-			Item.useTime = 32;
-			Item.useAnimation = 32;
+			Item.damage = 2;
+			Item.useTime = 40;
+			Item.useAnimation = 40;
 			Item.shoot = ProjectileID.Bomb;
 			Item.useAmmo = ItemID.Bomb;
 			Item.knockBack = 1.6f;
-			Item.shootSpeed = 4f;
+			Item.shootSpeed = 6f;
 			Item.value = Item.sellPrice(silver: 80);
 			Item.rare = ItemRarityID.Green;
 		}
@@ -114,7 +114,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.aiStyle = 0;
 			Projectile.timeLeft = duration;
 			Projectile.width = Projectile.height = 160;
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = duration;
 			Projectile.tileCollide = false;
@@ -167,7 +167,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.aiStyle = 0;
 			Projectile.timeLeft = 8;
 			Projectile.width = Projectile.height = 5;
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 1;
 			Projectile.tileCollide = false;
 			if (Main.netMode != NetmodeID.Server && !TextureAssets.Projectile[694].IsLoaded) {
 				Main.instance.LoadProjectile(694);
