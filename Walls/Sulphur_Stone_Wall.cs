@@ -12,6 +12,13 @@ namespace Origins.Walls {
 			Origins.WallHammerRequirement[Type] = 70;
 			AddMapEntry(new Color(6, 26, 19));
 		}
+		public override void RandomUpdate(int i, int j) {
+			Tile tile = Framing.GetTileSafely(i, j);
+			if (tile.LiquidAmount == 0 || (tile.LiquidAmount < 255 && tile.LiquidType == LiquidID.Water)) {
+				tile.LiquidAmount = 255;
+				tile.LiquidType = LiquidID.Water;
+			}
+		}
 	}
 	public class Sulphur_Stone_Wall_Safe : Defiled_Stone_Wall {
 		public override string Texture => "Origins/Walls/Sulphur_Stone_Wall";

@@ -477,6 +477,66 @@ namespace Origins.World {
 			NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
 			return (pos, speed);
 		}
+		public static (Vector2 position, Vector2 velocity) OpeningRunner(int i, int j, double strength, double strengthGrowth, Vector2 speed, double length, bool[] validTiles = null) {
+			if (validTiles is null) validTiles = TileID.Sets.CanBeClearedDuringGeneration.ToArray();
+			Vector2 pos = new Vector2(i, j);
+			Tile tile;
+			int X0 = int.MaxValue;
+			int X1 = 0;
+			int Y0 = int.MaxValue;
+			int Y1 = 0;
+			strength = Math.Pow(strength, 2);
+			double decay = speed.Length();
+			int clearedCount = 1;
+			while (clearedCount > 0 && length > 0) {
+				length -= decay;
+				int minX = (int)(pos.X - strength * 0.5);
+				int maxX = (int)(pos.X + strength * 0.5);
+				int minY = (int)(pos.Y - strength * 0.5);
+				int maxY = (int)(pos.Y + strength * 0.5);
+				if (minX < 1) {
+					minX = 1;
+				}
+				if (maxX > Main.maxTilesX - 1) {
+					maxX = Main.maxTilesX - 1;
+				}
+				if (minY < 1) {
+					minY = 1;
+				}
+				if (maxY > Main.maxTilesY - 1) {
+					maxY = Main.maxTilesY - 1;
+				}
+				clearedCount = 0;
+				for (int l = minX; l < maxX; l++) {
+					for (int k = minY; k < maxY; k++) {
+						if ((Math.Pow(Math.Abs(l - pos.X), 2) + Math.Pow(Math.Abs(k - pos.Y), 2)) > strength) {//if (!((Math.Abs(l - pos.X) + Math.Abs(k - pos.Y)) < strength)) {
+							continue;
+						}
+						tile = Main.tile[l, k];
+						if (tile.HasTile && validTiles[tile.TileType] && WorldGen.CanKillTile(l, k)) {
+							tile.HasTile = false;
+							clearedCount++;
+							//WorldGen.SquareTileFrame(l,k);
+							if (l > X1) {
+								X1 = l;
+							} else if (l < X0) {
+								X0 = l;
+							}
+							if (k > Y1) {
+								Y1 = k;
+							} else if (k < Y0) {
+								Y0 = k;
+							}
+						}
+					}
+				}
+				pos += speed;
+				strength += decay * strengthGrowth;
+			}
+			WorldGen.RangeFrame(X0, Y0, X1, Y1);
+			NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
+			return (pos, speed);
+		}
 		public static void FelnumRunner(int i, int j, double strength, int steps, int type, float speedX = 0f, float speedY = 0f) {
 			double currStrength = strength;
 			float step = steps;

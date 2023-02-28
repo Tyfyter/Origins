@@ -14,11 +14,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
-			Item.damage *= 3;//Needs nerf in accordance to Peatball.html;
+			Item.damage = 17;
 			Item.useTime = (int)(Item.useTime * 0.75);
 			Item.useAnimation = (int)(Item.useAnimation * 0.75);
 			Item.shoot = ModContent.ProjectileType<Peatball_P>();
-			Item.shootSpeed *= 1.35f;
+			Item.shootSpeed = 7;
 			Item.knockBack *= 2;
 			Item.value = Item.sellPrice(copper: 75);
 			Item.rare = ItemRarityID.Blue;

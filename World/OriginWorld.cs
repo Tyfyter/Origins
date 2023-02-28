@@ -69,6 +69,7 @@ namespace Origins {
 		Point fiberglassMax;
 		HashSet<Point> fiberglassFrameSet;
 		Task fiberglassFrameTask;
+		Point brineCenter;
 
 		public bool taxCollectorWearsPartyhat;
 		public static int MimicSetLevel {

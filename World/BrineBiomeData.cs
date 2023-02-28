@@ -5,12 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
+using Terraria.Utilities;
 using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
@@ -35,33 +33,34 @@ namespace Origins.World.BiomeData {
 			//start ~100 tiles below surface
 			public static void BrineStart(int i, int j) {
 				float angle0 = genRand.NextFloat(MathHelper.TwoPi);
+				float scale = 1f;
 				List<Vector2> cells = new();
 				for (float angle1 = genRand.NextFloat(6f, 8f); angle1 > 0; angle1 -= genRand.NextFloat(0.5f, 0.7f)) {
 					float totalAngle = angle0 + angle1;
-					float length = genRand.NextFloat(24f, 48f);
+					float length = genRand.NextFloat(24f, 48f) * scale;
 					genCave:
-					Vector2 offset = OriginExtensions.Vec2FromPolar(totalAngle, length);
+					Vector2 offset = OriginExtensions.Vec2FromPolar(totalAngle, length * scale);
 					Vector2 pos = new(i + offset.X, j + offset.Y);
 					const float intolerance = 16;
 					if (!cells.Any((v) => (v - pos).LengthSquared() < intolerance * intolerance)) {
 						SmallCave(
 							pos.X, pos.Y,
-							genRand.NextFloat(1.1f, 1.2f),
+							genRand.NextFloat(1.1f, 1.2f) * scale,
 							OriginExtensions.Vec2FromPolar(totalAngle, MathF.Pow(genRand.NextFloat(0.25f, 1f), 1.5f))
 						);
 						cells.Add(pos);
 					}
 
 
-					if (length < 50) {
-						length += 24;
+					if (length < 50 * scale) {
+						length += 24 * scale;
 						totalAngle += (genRand.NextBool() ? 1 : -1) * genRand.NextFloat(0.6f, 1.2f);
 						goto genCave;
 					}
 				}
 				SmallCave(
 					i, j,
-					genRand.NextFloat(1.4f, 1.6f),
+					genRand.NextFloat(1.4f, 1.6f) * scale,
 					OriginExtensions.Vec2FromPolar(genRand.NextFloat(MathHelper.TwoPi), MathF.Pow(genRand.NextFloat(0.25f, 0.7f), 1.5f) * 1.5f)
 				);
 				ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();
@@ -83,14 +82,102 @@ namespace Origins.World.BiomeData {
 						tile.WallType = stoneWallID;
 					}
 				}
+				ushort mossID = (ushort)ModContent.TileType<Peat_Moss>();
+				ushort oreID = (ushort)ModContent.TileType<Eitrite_Ore>();
 				int cellCount = cells.Count;
+				List<Vector2> cellsForOre = cells.ToList();
 				for (int i0 = genRand.Next((int)(cellCount * 0.8f), cellCount); i0 > 0; i0--) {
-					//choose random direction
-					//walk from center of cell in that direction until hit block
+					float oreAngle = genRand.NextFloat(MathHelper.TwoPi);
+					Vector2 step = OriginExtensions.Vec2FromPolar(oreAngle, 1);
+					Vector2 pos = genRand.Next(cellsForOre);
+					cellsForOre.Remove(pos);
+					Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
+					while (!currentTile.HasTile) {
+						pos += step;
+						currentTile = Framing.GetTileSafely(pos.ToPoint());
+					}
+					if (currentTile.TileType == mossID && currentTile.TileType == TileID.Mud) {
+						OreRunner((int)pos.X, (int)pos.Y, 8, 4, oreID);
+					}
 					//directional ore runner that returns ore count
 					//do it again if low total ore in cell and random chance
-					//remove cell from list
 				}
+				List<Vector2> cellsForConnections = cells.ToList();
+				for (int i0 = genRand.Next((int)(cellCount * 0.4f), (int)(cellCount * 0.8f)); i0 > 0; i0--) {
+					Vector2 currentCell = genRand.Next(cellsForConnections);
+					cellsForConnections.Remove(currentCell);
+					Vector2 targetCell = genRand.Next(cellsForConnections.Where(v0 => {
+						Vector2 potentialDiff = v0 - currentCell;
+						float potentialLength = potentialDiff.Length();
+						potentialDiff /= potentialLength;
+						return !cellsForConnections.Any(
+							v1 => {
+								Vector2 otherDiff = v1 - currentCell;
+								float otherLength = otherDiff.Length();
+								otherDiff /= otherLength;
+								return potentialLength > otherLength && Vector2.Dot(potentialDiff, otherDiff) > 0.15f;
+							}
+						);
+					}).ToList());
+					Vector2 diff = targetCell - currentCell;
+					float length = diff.Length();
+					diff /= length;
+					Vector2 pos = currentCell;
+					Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
+					while (!currentTile.HasTile) {
+						pos += diff;
+						currentTile = Framing.GetTileSafely(pos.ToPoint());
+					}
+					int wallThickness = 0;
+					while (currentTile.HasTile) {
+						pos += diff;
+						currentTile = Framing.GetTileSafely(pos.ToPoint());
+						wallThickness++;
+					}
+					GenRunners.WalledVeinRunner(
+						(int)pos.X, (int)pos.Y,
+						genRand.NextFloat(1.8f, 3),
+						-diff.RotatedByRandom(0.1f),
+						wallThickness * genRand.NextFloat(0.8f, 1f),
+						stoneID,
+						1,
+						wallType: stoneWallID
+					);
+				}
+				int lowestScore = int.MaxValue; 
+				Vector2 surfaceConnection = genRand.Next(cells.Where(v => v.Y < j).Select(
+						v => {
+							Vector2 v0 = v;
+							while (Framing.GetTileSafely(v0.ToPoint()).WallType == stoneWallID) {
+								v0.Y--;
+							}
+							int tileCount = 0;
+							Tile currentTile = Framing.GetTileSafely(v0.ToPoint());
+							while (currentTile.HasTile || currentTile.WallType != WallID.None) {
+								v0.Y--;
+								tileCount++;
+								currentTile = Framing.GetTileSafely(v0.ToPoint());
+							}
+							if (lowestScore > tileCount) lowestScore = tileCount;
+							return new Tuple<Vector2, int>(v, tileCount);
+						}
+					).Where(v => v.Item2 < lowestScore + 25).OrderBy(v => v.Item2).Take(3).Select(v => v.Item1).ToArray()
+				);
+				bool[] validTiles = TileID.Sets.CanBeClearedDuringGeneration.ToArray();
+				validTiles[stoneID] = true;
+				validTiles[mossID] = true;
+				validTiles[TileID.Mud] = true;
+				while (!Framing.GetTileSafely(surfaceConnection.ToPoint()).HasTile) {
+					surfaceConnection.Y--;
+				}
+				GenRunners.OpeningRunner(
+					(int)surfaceConnection.X, (int)surfaceConnection.Y,
+					genRand.NextFloat(4, 6),
+					genRand.NextFloat(0.95f, 1.2f),
+					-Vector2.UnitY.RotatedByRandom(0.15f),
+					75,
+					validTiles
+				);
 			}
 			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
 				ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();
@@ -117,7 +204,7 @@ namespace Origins.World.BiomeData {
 						tile.WallType = stoneWallID;
 						if (dist < 20 * sizeMult - 10f) {
 							tile.HasTile = false;
-						}else if (dist < 20 * sizeMult - 9f) {
+						} else if (dist < 20 * sizeMult - 9f) {
 							tile.ResetToType(genRand.NextBool(5) ? TileID.Mud : mossID);
 						} else if (dist < 20 * sizeMult - 7f) {
 							tile.ResetToType(genRand.NextBool(5) ? mossID : TileID.Mud);

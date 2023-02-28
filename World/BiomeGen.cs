@@ -136,6 +136,7 @@ namespace Origins {
 					//WorldGen.digTunnel(X, Y, 3, 0, 30, 6, true);
 					//WorldGen.digTunnel(X, Y, 0, 90, 25, 50, true);
 					Brine_Pool.Gen.BrineStart(X, Y);
+					brineCenter = new(X, Y);
 					//}
 				}));
 				tasks.Insert(genIndex + 1, new PassLegacy("Fiberglass Undergrowth", delegate (GenerationProgress progress, GameConfiguration _) {
