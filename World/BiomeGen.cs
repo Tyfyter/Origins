@@ -143,17 +143,19 @@ namespace Origins {
 					Mod.Logger.Info("Fiberglass Undergrowth");
 					progress.Message = "Undergrowing Fiberglass";
 					//for (int i = 0; i < Main.maxTilesX / 5000; i++) {
-					int X = WorldGen.genRand.Next(JungleX - 100, JungleX + 100);
-					int Y;
-					for (Y = (int)WorldGen.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
-					Y += WorldGen.genRand.Next(250, 350);
-					Mod.Logger.Info("FiberglassGen:" + X + ", " + Y);
-					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
-					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);
-					//WorldGen.digTunnel(X, 500, 5, 5, 10, 10, true);
-					//WorldGen.digTunnel(X, Y, 3, 0, 30, 6, true);
-					//WorldGen.digTunnel(X, Y, 0, 90, 25, 50, true);
-					Fiberglass_Undergrowth.Gen.FiberglassStart(X, Y);
+					bool placed = false;
+					int tries = 0;
+					while (!placed) {
+						int X = WorldGen.genRand.Next(JungleX - 100, JungleX + 100);
+						int Y;
+						for (Y = (int)WorldGen.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
+						Y += WorldGen.genRand.Next(250, 350);
+						if (structures.CanPlace(new Rectangle(X - 32, Y - 32, 64, 64), 16) || ++tries > 1000) {
+							Mod.Logger.Info("FiberglassGen:" + X + ", " + Y);
+							Fiberglass_Undergrowth.Gen.FiberglassStart(X, Y);
+							placed = true;
+						}
+					}
 					//}
 				}));
 

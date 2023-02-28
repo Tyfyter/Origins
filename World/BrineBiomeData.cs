@@ -9,6 +9,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
+using Terraria.WorldBuilding;
 using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
@@ -30,8 +31,12 @@ namespace Origins.World.BiomeData {
 		public static class SpawnRates {
 		}
 		public static class Gen {
-			//start ~100 tiles below surface
+			static int minGenX, maxGenX, minGenY, maxGenY;
 			public static void BrineStart(int i, int j) {
+				minGenX = int.MaxValue;
+				maxGenX = int.MinValue;
+				minGenY = int.MaxValue;
+				maxGenY = int.MinValue;
 				float angle0 = genRand.NextFloat(MathHelper.TwoPi);
 				float scale = 1f;
 				List<Vector2> cells = new();
@@ -103,6 +108,7 @@ namespace Origins.World.BiomeData {
 					//do it again if low total ore in cell and random chance
 				}
 				List<Vector2> cellsForConnections = cells.ToList();
+				HashSet<(Vector2 a, Vector2 b)> connections = new HashSet<(Vector2 a, Vector2 b)>();
 				for (int i0 = genRand.Next((int)(cellCount * 0.4f), (int)(cellCount * 0.8f)); i0 > 0; i0--) {
 					Vector2 currentCell = genRand.Next(cellsForConnections);
 					cellsForConnections.Remove(currentCell);
@@ -134,6 +140,7 @@ namespace Origins.World.BiomeData {
 						currentTile = Framing.GetTileSafely(pos.ToPoint());
 						wallThickness++;
 					}
+					connections.Add((currentCell, targetCell));
 					GenRunners.WalledVeinRunner(
 						(int)pos.X, (int)pos.Y,
 						genRand.NextFloat(1.8f, 3),
@@ -163,6 +170,47 @@ namespace Origins.World.BiomeData {
 						}
 					).Where(v => v.Item2 < lowestScore + 25).OrderBy(v => v.Item2).Take(3).Select(v => v.Item1).ToArray()
 				);
+				// make sure the surface cell has 
+				{
+					Vector2 targetCell = genRand.Next(cells.Where(v0 => {
+						if (v0 == surfaceConnection || connections.Contains((surfaceConnection, v0)) || connections.Contains((v0, surfaceConnection))) return false;
+						Vector2 potentialDiff = v0 - surfaceConnection;
+						float potentialLength = potentialDiff.Length();
+						potentialDiff /= potentialLength;
+						return !cells.Any(
+							v1 => {
+								Vector2 otherDiff = v1 - surfaceConnection;
+								float otherLength = otherDiff.Length();
+								otherDiff /= otherLength;
+								return potentialLength > otherLength && Vector2.Dot(potentialDiff, otherDiff) > 0.15f;
+							}
+						);
+					}).ToList());
+					Vector2 diff = targetCell - surfaceConnection;
+					float length = diff.Length();
+					diff /= length;
+					Vector2 pos = surfaceConnection;
+					Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
+					while (!currentTile.HasTile) {
+						pos += diff;
+						currentTile = Framing.GetTileSafely(pos.ToPoint());
+					}
+					int wallThickness = 0;
+					while (currentTile.HasTile) {
+						pos += diff;
+						currentTile = Framing.GetTileSafely(pos.ToPoint());
+						wallThickness++;
+					}
+					GenRunners.WalledVeinRunner(
+						(int)pos.X, (int)pos.Y,
+						genRand.NextFloat(1.8f, 3),
+						-diff.RotatedByRandom(0.1f),
+						wallThickness * genRand.NextFloat(0.8f, 1f),
+						stoneID,
+						1,
+						wallType: stoneWallID
+					);
+				}
 				bool[] validTiles = TileID.Sets.CanBeClearedDuringGeneration.ToArray();
 				validTiles[stoneID] = true;
 				validTiles[mossID] = true;
@@ -178,6 +226,7 @@ namespace Origins.World.BiomeData {
 					75,
 					validTiles
 				);
+				structures.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, minGenX - minGenY), 6);
 			}
 			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
 				ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();
@@ -211,6 +260,18 @@ namespace Origins.World.BiomeData {
 						}
 						tile.LiquidType = LiquidID.Water;
 						tile.LiquidAmount = 255;
+						if (x > maxGenX) {
+							maxGenX = x;
+						}
+						if (x < minGenX) {
+							minGenX = x;
+						}
+						if (y > maxGenY) {
+							maxGenY = y;
+						}
+						if (y < minGenY) {
+							minGenY = y;
+						}
 					}
 				}
 			}
