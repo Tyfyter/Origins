@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Magic {
 		public ushort Element => Elements.Acid;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Splashid");
-			Tooltip.SetDefault("Shoots a flurry of acid droplets");
+			Tooltip.SetDefault("Shoots a flurry of brine droplets");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}

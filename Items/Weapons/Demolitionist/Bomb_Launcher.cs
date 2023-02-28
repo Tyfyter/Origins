@@ -20,12 +20,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
-			Item.damage = 23;
-			Item.useTime = (int)(Item.useTime * 1.15);
-			Item.useAnimation = (int)(Item.useAnimation * 1.15);
+			Item.damage = 10;
+			Item.useTime = 32;
+			Item.useAnimation = 32;
 			Item.shoot = ProjectileID.Bomb;
 			Item.useAmmo = ItemID.Bomb;
-			Item.knockBack = 2f;
+			Item.knockBack = 1.6f;
 			Item.shootSpeed = 4f;
 			Item.value = Item.sellPrice(silver: 80);
 			Item.rare = ItemRarityID.Green;

@@ -48,6 +48,7 @@ namespace Origins.Items {
 				case ItemID.LavaBomb:
 				case ItemID.HoneyBomb:
 				case ItemID.ScarabBomb:
+				item.ammo = ItemID.Bomb;
 				item.DamageType = DamageClasses.ThrownExplosive;
 				break;
 				case ItemID.RocketLauncher:
