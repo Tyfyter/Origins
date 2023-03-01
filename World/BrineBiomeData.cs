@@ -22,9 +22,7 @@ namespace Origins.World.BiomeData {
 			BestiaryBackground = null;
 		}
 		public override bool IsBiomeActive(Player player) {
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.ZoneBrine = OriginSystem.brineTiles > Brine_Pool.NeededTiles;
-			return originPlayer.ZoneBrine;
+			return OriginSystem.brineTiles > Brine_Pool.NeededTiles;
 		}
 		public const int NeededTiles = 250;
 		public const int ShaderTileCount = 75;

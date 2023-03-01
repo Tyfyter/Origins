@@ -82,7 +82,7 @@ namespace Origins {
 			On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.DrawPlayerInternal += LegacyPlayerRenderer_DrawPlayerInternal;
 			On.Terraria.Projectile.GetWhipSettings += Projectile_GetWhipSettings;
 			On.Terraria.Recipe.Condition.RecipeAvailable += (On.Terraria.Recipe.Condition.orig_RecipeAvailable orig, Recipe.Condition self, Recipe recipe) => {
-				if (self == Recipe.Condition.NearWater && Main.LocalPlayer.GetModPlayer<OriginPlayer>().ZoneBrine) {
+				if (self == Recipe.Condition.NearWater && Main.LocalPlayer.InModBiome<Brine_Pool>()) {
 					return false;
 				}
 				return orig(self, recipe);

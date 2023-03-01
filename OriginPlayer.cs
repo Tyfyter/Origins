@@ -151,7 +151,6 @@ namespace Origins {
 		public float ZoneRivenProgress = 0;
 		public float ZoneRivenProgressSmoothed = 0;
 
-		public bool ZoneBrine { get; internal set; } = false;
 		public float ZoneBrineProgress = 0;
 		public float ZoneBrineProgressSmoothed = 0;
 
@@ -179,6 +178,7 @@ namespace Origins {
 
 		#region other items
 		public int laserBladeCharge = 0;
+		public bool boatRockerAltUse = false;
 		#endregion
 
 		public int quantumInjectors = 0;
@@ -335,6 +335,8 @@ namespace Origins {
 
 			flaskBile = false;
 			flaskSalt = false;
+
+			boatRockerAltUse = false;
 
 			explosiveProjectileSpeed = StatModifier.Default;
 			explosiveThrowSpeed = StatModifier.Default;
