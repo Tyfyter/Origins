@@ -34,7 +34,6 @@ namespace Origins.World.BiomeData {
 		public static IItemDropRule LesionDropRule;
 		public override int Music => Origins.Music.Riven;
 		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Riven_Water_Style>();
-		// turns out if a biome doesn't have a background it's treated as if its water style has no priority
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Riven_Surface_Background>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => ModContent.GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;

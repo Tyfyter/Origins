@@ -250,6 +250,34 @@ namespace Origins {
 		public static implicit operator AutoCastingAsset<T>(Asset<T> asset) => new(asset);
 		public static implicit operator T(AutoCastingAsset<T> asset) => asset.Value;
 	}
+	public struct UnorderedTuple<T> : IEquatable<UnorderedTuple<T>> {
+		readonly T a;
+		readonly T b;
+		public UnorderedTuple(T a, T b) {
+			this.a = a;
+			this.b = b;
+		}
+		public bool Equals(UnorderedTuple<T> other) {
+			return other == this;
+		}
+		public override bool Equals(object obj) {
+			return obj is UnorderedTuple<T> other && Equals(other);
+		}
+		public static bool operator ==(UnorderedTuple<T> a, UnorderedTuple<T> b) {
+			return (EqualityComparer<T>.Default.Equals(a.a, b.a) && EqualityComparer<T>.Default.Equals(a.b, b.b))
+				|| (EqualityComparer<T>.Default.Equals(a.a, b.b) && EqualityComparer<T>.Default.Equals(a.b, b.a));
+		}
+		public static bool operator !=(UnorderedTuple<T> a, UnorderedTuple<T> b) {
+			return (!EqualityComparer<T>.Default.Equals(a.a, b.a) || !EqualityComparer<T>.Default.Equals(a.b, b.b))
+				&& (!EqualityComparer<T>.Default.Equals(a.a, b.b) || !EqualityComparer<T>.Default.Equals(a.b, b.a));
+		}
+		public static implicit operator UnorderedTuple<T>((T a, T b) v){
+			return new(v.a, v.b);
+		}
+		public override int GetHashCode() {
+			return a.GetHashCode() + b.GetHashCode();
+		}
+	}
 	public struct PlayerShaderSet {
 		public int cHead;
 		public int cBody;
@@ -1779,6 +1807,30 @@ namespace Origins {
 		static Dictionary<int, Dictionary<EquipType, int>> _idToSlot;
 		public static int GetEquipSlot(int itemType, EquipType equipType) {
 			return _idToSlot[itemType][equipType];
+		}
+		public static bool WaterCollision(Vector2 Position, int Width, int Height) {
+			int minX = Utils.Clamp((int)(Position.X / 16f) - 1, 0, Main.maxTilesX - 1);
+			int maxX = Utils.Clamp((int)((Position.X + Width) / 16f) + 2, 0, Main.maxTilesX - 1);
+			int minY = Utils.Clamp((int)(Position.Y / 16f) - 1, 0, Main.maxTilesY - 1);
+			int maxY = Utils.Clamp((int)((Position.Y + Height) / 16f) + 2, 0, Main.maxTilesY - 1);
+			Vector2 pos = default;
+			Tile tile;
+			for (int i = minX; i < maxX; i++) {
+				for (int j = minY; j < maxY; j++) {
+					tile = Framing.GetTileSafely(i, j);
+					if (tile.LiquidAmount > 0 && tile.LiquidType == LiquidID.Water) {
+						pos.X = i * 16;
+						pos.Y = j * 16;
+						float airAmount = (256 - tile.LiquidAmount) / 32f;
+						pos.Y += airAmount * 2f;
+						int surfaceOffset = 16 - (int)(airAmount * 2f);
+						if (Position.X + Width > pos.X && Position.X < pos.X + 16f && Position.Y + Height > pos.Y && Position.Y < pos.Y + surfaceOffset) {
+							return true;
+						}
+					}
+				}
+			}
+			return false;
 		}
 		static FieldInfo _spriteCharacters;
 		static FieldInfo _SpriteCharacters => _spriteCharacters ??= typeof(DynamicSpriteFont).GetField("_spriteCharacters", BindingFlags.NonPublic | BindingFlags.Instance);

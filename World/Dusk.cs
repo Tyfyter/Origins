@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using Terraria.Graphics.Effects;
 using static Origins.OriginExtensions;
 
-namespace Origins.World {
+namespace Origins.World.BiomeData {
 	public class Dusk : ModBiome {
 		public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 		public override int Music => Origins.Music.Dusk;

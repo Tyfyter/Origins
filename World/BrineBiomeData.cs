@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Backgrounds;
 using Origins.Tiles.Brine;
 using Origins.Walls;
+using Origins.Water;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ using static Terraria.WorldGen;
 namespace Origins.World.BiomeData {
 	public class Brine_Pool : ModBiome {
 		public static SpawnConditionBestiaryInfoElement BestiaryBackground { get; private set; }
+		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Brine_Water_Style>();
 		public override void Load() {
 			BestiaryBackground = new SpawnConditionBestiaryInfoElement("Mods.Origins.Bestiary_Biomes.Brine_Pool", 0, "Images/MapBG1");
 		}
@@ -38,6 +41,7 @@ namespace Origins.World.BiomeData {
 				float angle0 = genRand.NextFloat(MathHelper.TwoPi);
 				float scale = 1f;
 				List<Vector2> cells = new();
+				HashSet<Vector2> outerCells = new();
 				for (float angle1 = genRand.NextFloat(6f, 8f); angle1 > 0; angle1 -= genRand.NextFloat(0.5f, 0.7f)) {
 					float totalAngle = angle0 + angle1;
 					float length = genRand.NextFloat(24f, 48f) * scale;
@@ -60,6 +64,7 @@ namespace Origins.World.BiomeData {
 						totalAngle += (genRand.NextBool() ? 1 : -1) * genRand.NextFloat(0.6f, 1.2f);
 						goto genCave;
 					}
+					outerCells.Add(pos);
 				}
 				SmallCave(
 					i, j,
@@ -89,24 +94,45 @@ namespace Origins.World.BiomeData {
 				ushort oreID = (ushort)ModContent.TileType<Eitrite_Ore>();
 				int cellCount = cells.Count;
 				List<Vector2> cellsForOre = cells.ToList();
-				for (int i0 = genRand.Next((int)(cellCount * 0.8f), cellCount); i0 > 0; i0--) {
-					float oreAngle = genRand.NextFloat(MathHelper.TwoPi);
-					Vector2 step = OriginExtensions.Vec2FromPolar(oreAngle, 1);
-					Vector2 pos = genRand.Next(cellsForOre);
-					cellsForOre.Remove(pos);
-					Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
-					while (!currentTile.HasTile) {
-						pos += step;
-						currentTile = Framing.GetTileSafely(pos.ToPoint());
+				bool[] validOreTiles = TileID.Sets.Factory.CreateBoolSet(stoneID, TileID.Mud, mossID);
+				bool[] canBeClearedDuringOreRunner = TileID.Sets.CanBeClearedDuringOreRunner; 
+				try {
+					TileID.Sets.CanBeClearedDuringOreRunner = validOreTiles;
+					for (int i0 = genRand.Next((int)(cellCount * 0.8f), cellCount); i0 > 0; i0--) {
+						float oreAngle;
+						Vector2 pos = genRand.Next(cellsForOre);
+						cellsForOre.Remove(pos);
+						if (outerCells.Contains(pos)) {
+							float centerAngle = (new Vector2(i, j) - pos).ToRotation();
+							oreAngle = genRand.NextFloat(centerAngle - MathHelper.PiOver2, centerAngle + MathHelper.PiOver2);
+						} else {
+							oreAngle = genRand.NextFloat(MathHelper.TwoPi);
+						}
+						Vector2 step = OriginExtensions.Vec2FromPolar(oreAngle, 1);
+						Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
+						while (!currentTile.HasTile) {
+							pos += step;
+							currentTile = Framing.GetTileSafely(pos.ToPoint());
+						}
+						int stepCount = 0;
+						Vector2 endPos = pos;
+						while (currentTile.HasTile && stepCount < 5) {
+							endPos += step;
+							stepCount++;
+							currentTile = Framing.GetTileSafely(pos.ToPoint());
+						}
+						pos = (pos + endPos) / 2;
+						if (currentTile.TileType == mossID || currentTile.TileType == TileID.Mud) {
+							//TODO directional ore runner that returns ore count
+							//TODO do it again if low total ore in cell and random chance
+							OreRunner((int)pos.X, (int)pos.Y, 4, 4, oreID);
+						}
 					}
-					if (currentTile.TileType == mossID && currentTile.TileType == TileID.Mud) {
-						OreRunner((int)pos.X, (int)pos.Y, 8, 4, oreID);
-					}
-					//directional ore runner that returns ore count
-					//do it again if low total ore in cell and random chance
+				} finally {
+					TileID.Sets.CanBeClearedDuringOreRunner = canBeClearedDuringOreRunner;
 				}
 				List<Vector2> cellsForConnections = cells.ToList();
-				HashSet<(Vector2 a, Vector2 b)> connections = new HashSet<(Vector2 a, Vector2 b)>();
+				HashSet<UnorderedTuple<Vector2>> connections = new();
 				for (int i0 = genRand.Next((int)(cellCount * 0.4f), (int)(cellCount * 0.8f)); i0 > 0; i0--) {
 					Vector2 currentCell = genRand.Next(cellsForConnections);
 					cellsForConnections.Remove(currentCell);
@@ -116,6 +142,7 @@ namespace Origins.World.BiomeData {
 						potentialDiff /= potentialLength;
 						return !cellsForConnections.Any(
 							v1 => {
+								if (v1 == v0) return false;
 								Vector2 otherDiff = v1 - currentCell;
 								float otherLength = otherDiff.Length();
 								otherDiff /= otherLength;
@@ -170,20 +197,22 @@ namespace Origins.World.BiomeData {
 				);
 				// make sure the surface cell has 
 				{
-					Vector2 targetCell = genRand.Next(cells.Where(v0 => {
-						if (v0 == surfaceConnection || connections.Contains((surfaceConnection, v0)) || connections.Contains((v0, surfaceConnection))) return false;
+					List<Vector2> validOthers = cells.Where(v0 => {
+						if (v0 == surfaceConnection || connections.Contains((surfaceConnection, v0))) return false;
 						Vector2 potentialDiff = v0 - surfaceConnection;
 						float potentialLength = potentialDiff.Length();
 						potentialDiff /= potentialLength;
 						return !cells.Any(
 							v1 => {
+								if (v1 == v0) return false;
 								Vector2 otherDiff = v1 - surfaceConnection;
 								float otherLength = otherDiff.Length();
 								otherDiff /= otherLength;
 								return potentialLength > otherLength && Vector2.Dot(potentialDiff, otherDiff) > 0.15f;
 							}
 						);
-					}).ToList());
+					}).ToList();
+					Vector2 targetCell = genRand.Next(validOthers);
 					Vector2 diff = targetCell - surfaceConnection;
 					float length = diff.Length();
 					diff /= length;
@@ -224,7 +253,7 @@ namespace Origins.World.BiomeData {
 					75,
 					validTiles
 				);
-				structures.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, minGenX - minGenY), 6);
+				if (structures is not null) structures.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, minGenX - minGenY), 6);
 			}
 			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
 				ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();

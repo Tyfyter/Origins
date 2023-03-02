@@ -48,7 +48,7 @@ namespace Origins.LootConditions {
 	}
 	public class Dusk_Key_Condition : IItemDropRuleCondition {
 		public bool CanDrop(DropAttemptInfo info) {
-			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Defiled_Wastelands>(); //TODO: Dusk
+			return info.npc.value > 0f && Main.hardMode && !info.IsInSimulation && info.player.InModBiome<Dusk>();
 		}
 		public bool CanShowItemDropInUI() => Main.hardMode;
 		public string GetConditionDescription() {

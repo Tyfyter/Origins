@@ -219,6 +219,7 @@ namespace Origins {
 		public int dashDelay = 0;
 		public int thornsVisualProjType = -1;
 		public int timeSinceLastDeath = -1;
+		public int oldBreath = 200;
 		public override void ResetEffects() {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
@@ -296,7 +297,10 @@ namespace Origins {
 			protozoaFood = false;
 			protozoaFoodItem = null;
 			symbioteSkull = false;
-			toxicShock = false;
+			if (toxicShock) {
+				if (Player.breath > oldBreath) Player.breath = oldBreath;
+				toxicShock = false;
+			}
 			gunGlove = false;
 			gunGloveItem = null;
 			razorwire = false;
@@ -419,6 +423,7 @@ namespace Origins {
 			}
 			asylumWhistle = false;
 			#endregion
+			oldBreath = Player.breath;
 
 			Player.statManaMax2 += quantumInjectors * Quantum_Injector.mana_per_use;
 			#region check if a dash should start
@@ -691,18 +696,23 @@ namespace Origins {
 			}
 			Player.oldVelocity = Player.velocity;
 			rivenWet = false;
-			if (Player.wet && !(Player.lavaWet || Player.honeyWet) && LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle) is Riven_Water_Style) {
-				rivenWet = true;
-				int duration = 30;
-				int targetTime = 1440;
-				float targetSeverity = 0f;
-				bool hadTorn = Player.HasBuff(Torn_Buff.ID);
-				Player.AddBuff(Torn_Buff.ID, duration);
-				if (hadTorn || targetSeverity < tornTarget) {
-					tornTargetTime = targetTime;
-					tornTarget = targetSeverity;
+			if ((Player.wet || WaterCollision(Player.position, Player.width, Player.height)) && !(Player.lavaWet || Player.honeyWet)) {
+				ModWaterStyle waterStyle = LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle);
+				if (waterStyle is Riven_Water_Style) {
+					rivenWet = true;
+					int duration = 30;
+					int targetTime = 1440;
+					float targetSeverity = 0f;
+					bool hadTorn = Player.HasBuff(Torn_Buff.ID);
+					Player.AddBuff(Torn_Buff.ID, duration);
+					if (hadTorn || targetSeverity < tornTarget) {
+						tornTargetTime = targetTime;
+						tornTarget = targetSeverity;
+					}
+					Player.velocity.X *= 0.975f;
+				} else if (waterStyle is Brine_Water_Style) {
+					Player.AddBuff(Toxic_Shock_Debuff.ID, 30);
 				}
-				Player.velocity.X *= 0.975f;
 			}
 		}
 		public override void PostUpdateEquips() {
