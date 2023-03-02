@@ -220,6 +220,7 @@ ARMOR:
 
 (X) Blast Armor
 (^) Bleeding Obsidian Armor
+(X) Eden Armor
 (@5, ^3) Necromancer Armor
 (X) Sapphire Mediator Armor
 
@@ -242,6 +243,7 @@ ACCESSORIES:
 (^) ACME Crate
 (^) Advanced Imaging*
 (^) Air Tank*
+(#, ^2) ATACS !!!
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
@@ -256,6 +258,7 @@ ACCESSORIES:
 (^) Destructive Claws
 (^) Dim Starlight*
 (^) Donor Wristband
+(#2, ^2) Dryad's Inheritance !!!
 (^) Exploder Emblem*
 (^) Explosive Artery
 (#, ^2) Focus Crystal !!!
@@ -264,6 +267,7 @@ ACCESSORIES:
 (#, ^2) Haggard Artery !!!
 (^) Handy Helper
 (#, ^2) Hazard Charm !!!
+(X) Headphones !!!
 (#2, ^2) Headstomperz !!!
 (^) Helium Tank
 (^) Keepsake Remains
@@ -287,6 +291,7 @@ ACCESSORIES:
 (^) Pneumatic Bomb Thrower*
 (#, ^2) Potato Battery !!!
 (^) Powerflower
+(#, ^2) Priority Mail !!!
 (X) Proactive Protozoa
 (@, #) Rage Quilt !!!
 (^) Razorwire
@@ -301,6 +306,7 @@ ACCESSORIES:
 (#2, ^2) Solar Panel !!!
 (@5, #2) Sonic Radar !!!
 (^) Shield of Retribution
+(#, ^2) Strange Computer !!!
 (#2, ^2) Super Party Hat !!!
 (^) Superjump Cape
 (#2, ^2) Superstar Celebration Gear !!!
@@ -347,6 +353,8 @@ ACCESSORIES:
 (^) Mysterious Spray
 (^) Protozoa Food
 (X) Scrap Compactor
+(X) Scribe of the Meat God !!!
+(X) Third Eye
 
 (^) Agility Core
 (^) Combat Core
@@ -454,6 +462,7 @@ MELEE WEAPONS:
 (^) Tyrfing
 (^) Vorpal Sword
 
+(X) Amenonuhoko !!!
 (^) Crystal Cutters
 (X) Depth Charge
 (^) Knee Slapper
@@ -489,7 +498,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler
 (X) Adamantite Harpoon Gun
-(#, ^2) Boat Rocker !!!
+(#3, ^2) Boat Rocker !!!
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun
@@ -505,6 +514,7 @@ RANGED WEAPONS:
 (X) Titanium Harpoon Gun
 (@5, ^3) Vipershot
 
+(X) Disciple Maker
 (^) Dreikan
 (^) Laser Tag Gun
 (X) Serpentine
@@ -534,12 +544,15 @@ MAGIC WEAPONS:
 (^) Dismay
 (#, ^2) Innermost Manifest !!!
 (#, ^2) Meltdown
+(X) Missing File
 (^) Seam Beam
+(X) Sonorous Shredder
 (^) Splashid
 (^) Startillery
 
 (^) Amber of Embers
 (^) Bled Out Staff
+(X) Divine Lite
 (^) Haunted Vase
 (X) Lunarfire
 (#, ^2) Phantom Fury
@@ -569,6 +582,7 @@ SUMMONER WEAPONS:
 (^) Teardown
 (^) Woodsprite Staff
 
+(X) Amoeba Zapper
 (^) Bomb Artifact
 (#, ^2) Forsaken Desire
 (X) Mildew Incantation
@@ -621,6 +635,7 @@ EXPLOSIVE WEAPONS:
 (^) Crystal Bomb
 (^) Crystal Grenade
 (#2, ^2) Grenado
+(X) Holy Hand Grenade
 (#4, ^2) Mine Flayer !!!
 (^) Nuclear Arm*
 (#2, ^2) Omni-Directional Claymore
