@@ -18,7 +18,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.GetAttackSpeed(DamageClass.Melee) += 0.15f;
 			player.GetDamage(DamageClass.Generic) += 0.1f;
-			player.GetCritChance(DamageClass.Generic) += 0.04f;
+			player.GetCritChance(DamageClass.Generic) += 4f;
 			player.lifeRegen += 4;
 			player.statDefense += 8;
 			player.pickSpeed += 0.25f;

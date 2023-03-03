@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.aggro -= 275;
 			player.GetDamage(DamageClass.Generic) *= 1.05f;
-			player.GetCritChance(DamageClass.Generic) *= 1.05f;
+			player.GetCritChance(DamageClass.Generic) += 5f;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.unsoughtOrgan = true;
 			originPlayer.unsoughtOrganItem = Item;

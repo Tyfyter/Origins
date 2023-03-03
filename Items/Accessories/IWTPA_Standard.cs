@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().iwtpaStandard = true;
+			player.GetModPlayer<OriginPlayer>().explosiveFuseTime *= 0.666f;
 		}
 	}
 }

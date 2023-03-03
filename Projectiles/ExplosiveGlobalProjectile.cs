@@ -77,8 +77,8 @@ namespace Origins.Projectiles {
 			if (originPlayer.novaSet && Origins.CanGainHoming[projectile.type]) {
 				isHoming = true;
 			}
-			if (originPlayer.iwtpaStandard) {
-				projectile.timeLeft -= projectile.timeLeft / 3;
+			if (originPlayer.explosiveFuseTime != StatModifier.Default) {
+				projectile.timeLeft = (int)(originPlayer.explosiveFuseTime.ApplyTo(projectile.timeLeft));
 			}
 			if (originPlayer.magicTripwire) {
 				magicTripwire = true;

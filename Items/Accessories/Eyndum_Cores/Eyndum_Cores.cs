@@ -54,7 +54,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Generic) *= 1.24f;
-			player.GetCritChance(DamageClass.Generic) += 1.1f;
+			player.GetCritChance(DamageClass.Generic) += 1.1f;///???
 			player.GetKnockback(DamageClass.Generic) += 2;
 		}
 	}

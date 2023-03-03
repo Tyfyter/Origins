@@ -122,7 +122,6 @@ namespace Origins {
 		public int loversLeapDashTime = 0;
 		public int loversLeapDashDirection = 0;
 		public float loversLeapDashSpeed = 0;
-		public bool iwtpaStandard = false;
 		public bool magicTripwire = false;
 		public int lousyLiverCount = 0;
 		public int lousyLiverDebuff = 0;
@@ -133,6 +132,7 @@ namespace Origins {
 		public StatModifier explosiveThrowSpeed = StatModifier.Default;
 		public StatModifier explosiveSelfDamage = StatModifier.Default;
 		public StatModifier explosiveBlastRadius = StatModifier.Default;
+		public StatModifier explosiveFuseTime = StatModifier.Default;
 		#endregion
 
 		#region summon stats
@@ -333,7 +333,6 @@ namespace Origins {
 			explosiveArteryItem = null;
 			graveDanger = false;
 			loversLeap = false;
-			iwtpaStandard = false;
 			magicTripwire = false;
 			lousyLiverCount = 0;
 
@@ -346,6 +345,7 @@ namespace Origins {
 			explosiveThrowSpeed = StatModifier.Default;
 			explosiveSelfDamage = StatModifier.Default;
 			explosiveBlastRadius = StatModifier.Default;
+			explosiveFuseTime = StatModifier.Default;
 
 			artifactDamage = StatModifier.Default;
 			artifactManaCost = 1f;
