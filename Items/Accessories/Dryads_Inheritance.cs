@@ -12,7 +12,6 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 26);
-			Item.neckSlot = ArmorIDs.Neck.StarVeil;
 			Item.value = Item.sellPrice(gold: 8);
 			Item.rare = ItemRarityID.Lime;
 			Item.accessory = true;
