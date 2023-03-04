@@ -14,6 +14,9 @@
     <Reference Include="AltLibrary">
       <HintPath>..\ModAssemblies\AltLibrary_v1.0.4.6.dll</HintPath>
     </Reference>
+    <Reference Include="ThoriumMod">
+      <HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
     <Exec Command="cd $(ProjectDir)\effects&#xD;&#xA;CheckFXCompile.exe" />

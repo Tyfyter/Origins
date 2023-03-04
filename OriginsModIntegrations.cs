@@ -18,6 +18,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.World.BiomeData;
 using Origins.Tiles.Defiled;
 using Origins.Items.Materials;
+using MonoMod.RuntimeDetour.HookGen;
+using ThoriumMod.Items;
+using System.Reflection;
+using ThoriumMod.Projectiles.Bard;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -30,6 +34,8 @@ namespace Origins {
 		public static Asset<Texture2D> PhaseIndicator { get => instance.phaseIndicator; set => instance.phaseIndicator = value; }
 		Mod herosMod;
 		public static Mod HEROsMod { get => instance.herosMod; set => instance.herosMod = value; }
+		Mod thorium;
+		public static Mod Thorium { get => instance.thorium; set => instance.thorium = value; }
 		static string WikiURL => "https://tyfyter.github.io/OriginsWiki";
 		static HashSet<string> wikiSiteMap;
 		public void Load(Mod mod) {
@@ -59,6 +65,9 @@ namespace Origins {
 						}
 				};
 				client.DownloadStringAsync(new Uri(WikiURL + "/sitemap.xml"));
+			}
+			if (ModLoader.TryGetMod("ThoriumMod", out instance.thorium)) {
+				LoadThorium();
 			}
 		}
 		public static void LateLoad() {
@@ -123,8 +132,63 @@ namespace Origins {
 			instance = null;
 			wikiSiteMap = null;
 		}
+		[JITWhenModsEnabled("ThoriumMod")]
+		void LoadThorium() {
+			HookEndpointManager.Add(
+				typeof(BardItem).GetMethod("SetDefaults", BindingFlags.Public | BindingFlags.Instance),
+				(Action<Action<BardItem>, BardItem>)((orig, self) => {
+					orig(self);
+					if (self is IBardDamageClassOverride classOverride) {
+						self.Item.DamageType = classOverride.DamageType;
+					}
+				})
+			);
+			HookEndpointManager.Add(
+				typeof(BardProjectile).GetMethod("SetDefaults", BindingFlags.Public | BindingFlags.Instance),
+				(Action<Action<BardProjectile>, BardProjectile>)((orig, self) => {
+					orig(self);
+					if (self is IBardDamageClassOverride classOverride) {
+						self.Projectile.DamageType = classOverride.DamageType;
+					}
+				})
+			);
+		}
 	}
 	public interface ICustomWikiDestination {
 		string WikiPageName { get; }
+	}
+	[ExtendsFromMod("ThoriumMod")]
+	public class OriginsThoriumPlayer : ModPlayer {
+		public bool altEmpowerment = false;
+		public override void ResetEffects() {
+			altEmpowerment = false;
+		}
+	}
+	[ExtendsFromMod("ThoriumMod")]
+	public class OriginsThoriumGlobalNPC : GlobalNPC {
+		public override bool InstancePerEntity => true;
+		int sonorousShredderHitCount = 0;
+		int sonorousShredderHitTime = 0;
+		public override void ResetEffects(NPC npc) {
+			if(sonorousShredderHitTime > 0) {
+				if (--sonorousShredderHitTime <= 0) {
+					sonorousShredderHitCount = 0;
+				}
+			}
+		}
+		public bool SonorousShredderHit() {
+			if (sonorousShredderHitCount < 4) {
+				sonorousShredderHitCount++;
+				sonorousShredderHitTime = 300;
+				return false;
+			} else {
+				sonorousShredderHitCount = 0;
+				sonorousShredderHitTime = 0;
+				return true;
+			}
+		}
+	}
+	public interface IBardDamageClassOverride {
+		DamageClass DamageType { get; }
 	}
 }

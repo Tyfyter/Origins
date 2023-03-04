@@ -22,7 +22,6 @@ namespace Origins.Layers {
 		public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.HeldItem, PlayerDrawLayers.ArmOverItem);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 			Player drawPlayer = drawInfo.drawPlayer;
-			float num77 = drawPlayer.itemRotation + MathHelper.PiOver4 * drawPlayer.direction;
 			Item item = drawPlayer.inventory[drawPlayer.selectedItem];
 			if (item?.ModItem is null) {
 				return;

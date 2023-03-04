@@ -6,3 +6,4 @@ buildIgnore = *.csproj, *.xcf, *.user, obj\*, bin\*, .vs\*, Items\Weapons\Felnum
 includePDB = false
 sortAfter = CalamityMod, WingSlot, AltLibrary
 modReferences = AltLibrary
+weakReferences = ThoriumMod

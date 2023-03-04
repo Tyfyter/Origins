@@ -386,6 +386,9 @@ namespace Origins {
 				Volume = 0.4f,
 				PitchRange = (0.9f, 1.1f)
 			};
+			Sounds.RivenBass = new SoundStyle("Origins/Sounds/Custom/RivenBass", SoundType.Sound) {
+				MaxInstances = 0
+			};
 			//OriginExtensions.initClone();
 			Music.Dusk = MusicID.Eerie;
 			Music.Defiled = MusicID.Corruption;
@@ -600,6 +603,7 @@ namespace Origins {
 			public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;
 			public static SoundStyle DefiledKill = SoundID.NPCDeath1;
 			public static SoundStyle PowerUp = SoundID.Item4;
+			public static SoundStyle RivenBass = SoundID.Item4;
 		}
 		public override object Call(params object[] args) {
 			return args[0] switch {
