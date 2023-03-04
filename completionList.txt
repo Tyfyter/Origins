@@ -39,6 +39,7 @@ X: No progress
 
 BOSSES AND MINI-BOSSES:
 ---
+(X) Chambersite Sentinel !!!
 (#, ^2) Defiled Spawnswarmer
 (X) Discombobulator
 (#, ^2) Grand Corruptor
@@ -220,6 +221,7 @@ ARMOR:
 
 (X) Blast Armor
 (^) Bleeding Obsidian Armor
+(X) Chambersite Armor !!!
 (X) Eden Armor
 (@5, ^3) Necromancer Armor
 (X) Sapphire Mediator Armor
@@ -232,9 +234,9 @@ ARMOR:
 (^) Nova Armor
 (X) Phoenix Skin Armor
 
-(#, ^2) Chlorophye Crown !!!
-(#, ^2) Chlorophyte Visage !!!
-(#, ^2) Hallowed Visage !!!
+(^) Chlorophye Crown
+(^) Chlorophyte Visage
+(^) Hallowed Visage
 ---
 
 
@@ -243,7 +245,7 @@ ACCESSORIES:
 (^) ACME Crate
 (^) Advanced Imaging*
 (^) Air Tank*
-(#, ^2) ATACS !!!
+(#2, ^2) ATACS !!!
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
@@ -267,7 +269,7 @@ ACCESSORIES:
 (#, ^2) Haggard Artery !!!
 (^) Handy Helper
 (#, ^2) Hazard Charm !!!
-(X) Headphones !!!
+(#2, ^2) Headphones !!!
 (#2, ^2) Headstomperz !!!
 (^) Helium Tank
 (^) Keepsake Remains
@@ -287,11 +289,12 @@ ACCESSORIES:
 (^) No U Card
 (^) Olid Organ*
 (^) Parasitic Influence*
+(X) Pincushion !!!
 (^) Plasma Phial
 (^) Pneumatic Bomb Thrower*
-(#, ^2) Potato Battery !!!
+(#2, ^2) Potato Battery !!!
 (^) Powerflower
-(#, ^2) Priority Mail !!!
+(#2, ^2) Priority Mail !!!
 (X) Proactive Protozoa
 (@, #) Rage Quilt !!!
 (^) Razorwire
@@ -306,7 +309,7 @@ ACCESSORIES:
 (#2, ^2) Solar Panel !!!
 (@5, #2) Sonic Radar !!!
 (^) Shield of Retribution
-(#, ^2) Strange Computer !!!
+(#2, ^2) Strange Computer !!!
 (#2, ^2) Super Party Hat !!!
 (^) Superjump Cape
 (#2, ^2) Superstar Celebration Gear !!!
@@ -353,8 +356,8 @@ ACCESSORIES:
 (^) Mysterious Spray
 (^) Protozoa Food
 (X) Scrap Compactor
-(X) Scribe of the Meat God !!!
-(X) Third Eye
+(#2, ^2) Scribe of the Meat God !!!
+(#2, ^2) Third Eye
 
 (^) Agility Core
 (^) Combat Core
@@ -544,9 +547,9 @@ MAGIC WEAPONS:
 (^) Dismay
 (#, ^2) Innermost Manifest !!!
 (#, ^2) Meltdown
-(X) Missing File
+(#2, ^2) Missing File
 (^) Seam Beam
-(X) Sonorous Shredder
+(#2, ^2/4) Sonorous Shredder
 (^) Splashid
 (^) Startillery
 
