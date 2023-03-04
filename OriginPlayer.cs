@@ -1635,8 +1635,8 @@ namespace Origins {
 						(item.useStyle == ItemUseStyleID.Shoot && item.ModItem is ICustomDrawItem) ||
 						(item.useStyle == ItemUseStyleID.Swing && item.ModItem is AnimatedModItem)
 					)
-				) ||
-				Origins.isDrawingShadyDupes) PlayerDrawLayers.HeldItem.Hide();
+				)) PlayerDrawLayers.HeldItem.Hide();
+
 			if (mountOnly && !drawInfo.headOnlyRender) {
 				for (int i = 0; i < PlayerDrawLayerLoader.DrawOrder.Count; i++) {
 					PlayerDrawLayer layer = PlayerDrawLayerLoader.DrawOrder[i];
@@ -1647,6 +1647,7 @@ namespace Origins {
 			}
 		}
 		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
+
 			if (plagueSight) drawInfo.colorEyes = IsDevName(Player.name, 1) ? new Color(43, 185, 255) : Color.Gold;
 			if (mysteriousSprayMult != 1f) {
 				float lightSaturationMult = (float)Math.Pow(mysteriousSprayMult, 2f);

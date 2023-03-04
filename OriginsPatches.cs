@@ -612,7 +612,6 @@ namespace Origins {
 				orig(proj, out timeToFlyOut, out segments, out rangeMultiplier);
 			}
 		}
-		internal static bool isDrawingShadyDupes = false;
 		private void LegacyPlayerRenderer_DrawPlayerInternal(On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.orig_DrawPlayerInternal orig, Terraria.Graphics.Renderers.LegacyPlayerRenderer self, Camera camera, Player drawPlayer, Vector2 position, float rotation, Vector2 rotationOrigin, float shadow, float alpha, float scale, bool headOnly) {
 			bool shaded = false;
 			try {
@@ -625,23 +624,20 @@ namespace Origins {
 
 					const float offset = 2;
 					int itemAnimation = drawPlayer.itemAnimation;
-					drawPlayer.itemAnimation = 0;
-					isDrawingShadyDupes = true;
 					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(offset, 0));
-					orig(self, camera, drawPlayer, position + new Vector2(offset, 0), rotation, rotationOrigin, shadow, alpha, scale, headOnly);
+					orig(self, camera, drawPlayer, position + new Vector2(offset, 0), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
 
 					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(-offset, 0));
-					orig(self, camera, drawPlayer, position + new Vector2(-offset, 0), rotation, rotationOrigin, shadow, alpha, scale, headOnly);
+					orig(self, camera, drawPlayer, position + new Vector2(-offset, 0), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
 
 					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(0, offset));
-					orig(self, camera, drawPlayer, position + new Vector2(0, offset), rotation, rotationOrigin, shadow, alpha, scale, headOnly);
+					orig(self, camera, drawPlayer, position + new Vector2(0, offset), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
 
 					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(0, -offset));
-					orig(self, camera, drawPlayer, position + new Vector2(0, -offset), rotation, rotationOrigin, shadow, alpha, scale, headOnly);
+					orig(self, camera, drawPlayer, position + new Vector2(0, -offset), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
 					shaderSet.Apply(drawPlayer);
 					drawPlayer.hairDye = playerHairDye;
 					drawPlayer.itemAnimation = itemAnimation;
-					isDrawingShadyDupes = false;
 				}
 				int rasterizedTime = originPlayer.rasterizedTime;
 				if (rasterizedTime > 0) {
@@ -655,7 +651,6 @@ namespace Origins {
 				}
 				orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);
 			} finally {
-				isDrawingShadyDupes = false;
 				if (shaded) {
 					Main.spriteBatch.Restart();
 				}
