@@ -6,7 +6,7 @@ using ThoriumMod.Empowerments;
 using ThoriumMod.Items;
 using ThoriumMod.Projectiles.Bard;
 
-namespace Origins.Items.Weapons.Magic {
+namespace Origins.Items.Weapons.Demolitionist {
 	[ExtendsFromMod("ThoriumMod")]
 	public class Sonorous_Shredder : BardItem, IBardDamageClassOverride {
 		public DamageClass DamageType => DamageClasses.ExplosiveVersion[ThoriumDamageBase<BardDamage>.Instance];
@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Sonorous_Shredder_Projectile : BardProjectile, IBardDamageClassOverride {
 		public DamageClass DamageType => DamageClasses.ExplosiveVersion[ThoriumDamageBase<BardDamage>.Instance];
 		public override BardInstrumentType InstrumentType => BardInstrumentType.String;
-		public override string Texture => "Origins/Items/Weapons/Magic/Sonorous_Shredder";
+		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
 		public override void SetBardDefaults() {
 			Projectile.width = 16;
 			Projectile.height = 16;
@@ -79,7 +79,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Sonorous_Shredder_Explosion : BardProjectile, IBardDamageClassOverride {
 		public DamageClass DamageType => DamageClasses.ExplosiveVersion[ThoriumDamageBase<BardDamage>.Instance];
 		public override BardInstrumentType InstrumentType => BardInstrumentType.Percussion;
-		public override string Texture => "Origins/Items/Weapons/Magic/Sonorous_Shredder";
+		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
 		public override void SetBardDefaults() {
 			Projectile.width = 96;
 			Projectile.height = 96;

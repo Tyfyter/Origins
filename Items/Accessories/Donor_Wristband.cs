@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	public class Donor_Wristband : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Donor Wristband");
-			Tooltip.SetDefault("Increased life regeneration\nDebuff and healing potion cooldown durations reduced by 37.5%\n'It's not much, but you should still be recognized for saving lives'");
+			Tooltip.SetDefault("Increased life regeneration\nDebuff and healing potion cooldown durations reduced by 37.5%");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

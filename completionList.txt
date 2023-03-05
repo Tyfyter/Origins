@@ -137,7 +137,6 @@ ENEMY NPCS:
 (#, ^2) Mildew Creeper
 (#2?, ^2) Mitoworm !!!
 (@5, #3) Riven Mimic !!!
-(#, ^2) Scalron (replanning soon)
 (X) Sea Dragon
 (X) Shattered Ghoul
 (X) Torn Ghoul
@@ -249,6 +248,7 @@ ACCESSORIES:
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
+(#2, ^2) Brine-Leafed Cloved !!!
 (^) Celestial Starlight
 (^) Celestial Stone Mask
 (#2, ^2) Cirrhosis' Abhorrence !!!
@@ -465,13 +465,12 @@ MELEE WEAPONS:
 (^) Tyrfing
 (^) Vorpal Sword
 
-(X) Amenonuhoko !!!
+(#2, ^2) Amenonuhoko !!!
 (^) Crystal Cutters
-(X) Depth Charge
+(#, ^2) Depth Charge !!!
 (^) Knee Slapper
-(#, ^2) Nematoclaw*
+(^) Nematoclaw*
 (%, @, #) Origins Biome Keybrands !!!
-(#, ^2) Scale Saw
 (^) Telephone Pole*
 
 (^) Personal Laser Blade*
