@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 4;
 			Item.shoot = ModContent.ProjectileType<Amenonuhoko_P>();
-			Item.shootSpeed = 15f;
+			Item.shootSpeed = 5f;
 			Item.useTurn = false;
 			Item.value = Item.buyPrice(silver: 50);
 			Item.rare = ItemRarityID.LightRed;
@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class Amenonuhoko_P : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Melee/Amenonuhoko";
+		public override string Texture => base.Texture;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Amenonuhoko");
 		}
@@ -68,14 +68,14 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (!projOwner.frozen) {
 				if (movementFactor == 0f) {
-					movementFactor = 2.5f;
+					movementFactor = 1.5f;
 					if (Projectile.timeLeft == 24) Projectile.timeLeft = projOwner.itemAnimationMax - 1;
 					Projectile.netUpdate = true;
 				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2) {
-					movementFactor -= 2.1f;
+					movementFactor -= 1.1f;
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
-					movementFactor += 2.3f;
+					movementFactor += 1.3f;
 				}
 			}
 			Projectile.position += Projectile.velocity * movementFactor;
@@ -91,10 +91,10 @@ namespace Origins.Items.Weapons.Melee {
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
 				Projectile.Center - Main.screenPosition + Projectile.velocity * 5,
-				new Rectangle(0, 0, 100, 98),
+				null,
 				lightColor,
 				Projectile.rotation,
-				new Vector2(50 + 39 * Projectile.spriteDirection, 9),
+				new Vector2(39 + 34 * Projectile.spriteDirection, 7),
 				Projectile.scale,
 				Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
 			0);

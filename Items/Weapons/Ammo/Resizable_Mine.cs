@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound:SoundID.Item62);
+			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
 			return false;
 		}
 		public bool IsExploding() => Projectile.penetrate == -1;

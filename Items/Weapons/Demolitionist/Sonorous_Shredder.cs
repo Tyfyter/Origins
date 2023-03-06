@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.Projectiles;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using ThoriumMod;
@@ -40,6 +41,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			} else {
 				empPool.Remove(EmpowermentLoader.EmpowermentType<FlightTime>());
 			}
+			base.ModifyEmpowermentPool(player, target, empPool);
 		}
 	}
 	[ExtendsFromMod("ThoriumMod")]
@@ -76,7 +78,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	[ExtendsFromMod("ThoriumMod")]
-	public class Sonorous_Shredder_Explosion : BardProjectile, IBardDamageClassOverride {
+	public class Sonorous_Shredder_Explosion : BardProjectile, IBardDamageClassOverride, IIsExplodingProjectile {
 		public DamageClass DamageType => DamageClasses.ExplosiveVersion[ThoriumDamageBase<BardDamage>.Instance];
 		public override BardInstrumentType InstrumentType => BardInstrumentType.Percussion;
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
@@ -86,7 +88,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.friendly = true;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
-			Projectile.timeLeft = 15;
+			Projectile.timeLeft = 5;
 		}
+		public override void AI() {
+			if (Projectile.ai[0] == 0) {
+				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound:SoundID.Item14);
+				Projectile.ai[0] = 1;
+			}
+		}
+		public void Explode(int delay = 0) {}
+		public bool IsExploding() => true;
 	}
 }
