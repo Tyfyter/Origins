@@ -1,0 +1,89 @@
+using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
+using Origins.Items.Other.Consumables;
+using Origins.NPCs;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Origins.Items.Weapons.Magic {
+	public class Innermost_Manifest : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Innermost Manifest");
+			Tooltip.SetDefault("");
+			SacrificeTotal = 1;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.RubyStaff);
+			Item.damage = 16;
+			Item.DamageType = DamageClass.Magic;
+			Item.noMelee = true;
+			Item.width = 28;
+			Item.height = 30;
+			Item.useTime = 20;
+			Item.useAnimation = 20;
+			Item.mana = 8;
+			Item.shoot = ModContent.ProjectileType<Innermost_Manifest_P>();
+			Item.value = Item.sellPrice(silver: 30);
+			Item.rare = ItemRarityID.Orange;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.SpellTome);
+			recipe.AddIngredient(ModContent.ItemType<Alkahest>(), 20);
+			recipe.AddIngredient(ItemID.SoulofNight, 15);
+			recipe.AddTile(TileID.Bookcases);
+		}
+	}
+	public class Innermost_Manifest_P : ModProjectile {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Innermost Manifest");
+			Main.projFrames[Type] = 2;
+		}
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.RubyBolt);
+			Projectile.extraUpdates = 1;
+			Projectile.penetrate = 25;
+			Projectile.hide = true;
+			Projectile.alpha = 0;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 60;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			Projectile.ai[0] = -1;
+		}
+		public override void AI() {
+			if (Projectile.ai[0] >= 0) {
+				NPC embedTarget = Main.npc[(int)Projectile.ai[0]];
+				if (embedTarget.active) {
+					Projectile.Center = embedTarget.Center;
+				} else {
+					Projectile.Kill();
+				}
+			} else {
+				Projectile.rotation = Projectile.velocity.ToRotation();
+				if (++Projectile.frameCounter >= 5) {
+					Projectile.frame ^= 1;
+					Projectile.frameCounter = 0;
+				}
+			}
+		}
+		public override bool? CanHitNPC(NPC target) {
+			return Projectile.ai[0] >= 0 ? target.whoAmI == (int)Projectile.ai[0] : null;
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			if (Projectile.ai[0] < 0) {
+				Projectile.ai[0] = target.whoAmI;
+				Projectile.ArmorPenetration += target.defense * 4;
+				Projectile.damage /= 4;
+				Projectile.knockBack = 0;
+			}
+			OriginGlobalNPC.InflictTorn(target, 60, 120, 0.5f);
+		}
+		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
+			behindNPCs.Add(index);
+		}
+	}
+}

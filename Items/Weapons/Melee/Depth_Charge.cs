@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Melee {
 			ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
 		}
 		public override void SetDefaults() {
-			Item.damage = 45;
+			Item.damage = 75;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.MeleeNoSpeed];
 			Item.channel = true;
 			Item.noMelee = true;

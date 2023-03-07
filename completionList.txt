@@ -52,7 +52,7 @@ BOSSES AND MINI-BOSSES:
 ($, ^2/3) Fiberglass Weaver !!!
 (#4, $, ^2) Primordial Amoeba !!! (replanning soon)
 
-(#, ^2) Lost Diver !!!
+(%, ^2) Lost Diver !!! (also missing some item sprites if it uses the items)
 (X) Miscreant
 (X) Scrapper
 
