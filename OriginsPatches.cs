@@ -186,8 +186,13 @@ namespace Origins {
 			};
 			On.Terraria.Main.DrawNPCChatButtons += Main_DrawNPCChatButtons;
 			On.Terraria.Player.SetTalkNPC += Player_SetTalkNPC;
+			On.Terraria.Item.CanFillEmptyAmmoSlot += (orig, self) => {
+				if (self.ammo == ItemID.Grenade || self.ammo == ItemID.Bomb || self.ammo == ItemID.Dynamite) {
+					return false;
+				}
+				return orig(self);
+			};
 		}
-
 		private void Player_SetTalkNPC(On.Terraria.Player.orig_SetTalkNPC orig, Player self, int npcIndex, bool fromNet) {
 			orig(self, npcIndex, fromNet);
 			if (npcIndex == -1) {
