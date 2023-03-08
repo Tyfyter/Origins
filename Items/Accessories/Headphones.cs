@@ -9,7 +9,7 @@ namespace Origins.Items.Accessories {
 	public class Headphones : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Headphones");
-			Tooltip.SetDefault("Tagging an enemy guarantees a critical strike on next hit\nApplies to teammates\n'Callouts guys!'");
+			Tooltip.SetDefault("Tagging an enemy gives +25% critical strike on next hit\nApplies to teammates\n'Callouts guys!'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -18,7 +18,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().headPhones = true;
+			player.GetModPlayer<OriginPlayer>().summonTagForceCrit = true;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();

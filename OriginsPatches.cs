@@ -4,9 +4,11 @@ using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour.HookGen;
+using Origins.Buffs;
 using Origins.Items.Materials;
 using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
+using Origins.Questing;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Origins.Walls;
@@ -128,7 +130,7 @@ namespace Origins {
 
 			On.Terraria.GameContent.ShopHelper.IsPlayerInEvilBiomes += (On.Terraria.GameContent.ShopHelper.orig_IsPlayerInEvilBiomes orig, ShopHelper self, Player player) => {
 				bool retValue = false;
-				IShoppingBiome[] orig_dangerousBiomes = (IShoppingBiome[])dangerousBiomes.GetValue(self);
+				IShoppingBiome[] orig_dangerousBiomes = dangerousBiomes.GetValue(self);
 				try {
 					IShoppingBiome[] _dangerousBiomes;
 					if (Main.npc[player.talkNPC].type == MC.NPCType<Acid_Freak>()) {
@@ -142,7 +144,6 @@ namespace Origins {
 					retValue = orig(self, player);
 				} finally {
 					dangerousBiomes.SetValue(self, orig_dangerousBiomes);
-
 				}
 				return retValue;
 			};
@@ -192,6 +193,12 @@ namespace Origins {
 				}
 				return orig(self);
 			};
+			On.Terraria.NPC.AddBuff += (orig, self, type, time, quiet) => {
+				orig(self, type, time, quiet);
+				if (!quiet && type != Headphones_Buff.ID && BuffID.Sets.IsAnNPCWhipDebuff[type] && Main.LocalPlayer.GetModPlayer<OriginPlayer>().summonTagForceCrit) {
+					orig(self, Headphones_Buff.ID, 300, quiet);
+				}
+			};
 		}
 		private void Player_SetTalkNPC(On.Terraria.Player.orig_SetTalkNPC orig, Player self, int npcIndex, bool fromNet) {
 			orig(self, npcIndex, fromNet);
@@ -210,10 +217,10 @@ namespace Origins {
 		public static bool npcChatQuestSelected = false;
 		private void Main_DrawNPCChatButtons(On.Terraria.Main.orig_DrawNPCChatButtons orig, int superColor, Color chatColor, int numLines, string focusText, string focusText3) {
 			Player player = Main.LocalPlayer;
-			Questing.Quest quest = null;
-			List<Questing.Quest> startableQuests = new();
+			Quest quest = null;
+			List<Quest> startableQuests = new();
 			NPC talkNPC = Main.npc[player.talkNPC];
-			foreach (var currentQuest in Questing.Quest_Registry.Quests) {
+			foreach (var currentQuest in Quest_Registry.Quests) {
 				if (currentQuest.HasDialogue(talkNPC)) {
 					quest = currentQuest;
 					break;
@@ -283,7 +290,7 @@ namespace Origins {
 				}
 			}
 		}
-		void DrawQuestList(List<Questing.Quest> quests, float y, int superColor) {
+		void DrawQuestList(List<Quest> quests, float y, int superColor) {
 			Player player = Main.LocalPlayer;
 			int maxWidth = TextureAssets.ChatBack.Width();
 			DynamicSpriteFont font = FontAssets.MouseText.Value;
@@ -298,7 +305,7 @@ namespace Origins {
 			Vector2 backSize = ChatManager.GetStringSize(font, backTextValue, backScale);
 			maxWidth -= (int)(backSize.X + 30);
 
-			foreach (Questing.Quest quest in quests) {
+			foreach (Quest quest in quests) {
 				if (selectedSpecificQuest && index != npcChatQuestIndexSelected) continue;
 				Vector2 position = new Vector2(x, y);
 				string textValue = quest.GetDialogue();

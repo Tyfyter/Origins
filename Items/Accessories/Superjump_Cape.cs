@@ -8,7 +8,7 @@ namespace Origins.Items.Accessories {
 		public static sbyte BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Super-Jump Cape");
-			Tooltip.SetDefault("Allows for a super high jump whilst negating all fall damage");
+			Tooltip.SetDefault("Allows for a super high jump and negates fall damage");
 			BackSlot = Item.backSlot;
 			SacrificeTotal = 1;
 		}

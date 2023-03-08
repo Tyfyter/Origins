@@ -6,8 +6,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Brine_Leafed_Clover : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Brine-leafed Clover");
-			Tooltip.SetDefault("Increases the liklihood of favorable outcomes based on how many leaves it has");
+			DisplayName.SetDefault("Brine-Leaf Clover");
+			Tooltip.SetDefault("Increases the likelihood of favorable outcomes based on how many leaves it has");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Melee {
 			ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
 		}
 		public override void SetDefaults() {
-			Item.damage = 75;
+			Item.damage = 55;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.MeleeNoSpeed];
 			Item.channel = true;
 			Item.noMelee = true;
@@ -56,8 +56,8 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Sunfury);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
-			Projectile.width = 32;
-			Projectile.height = 32;
+			Projectile.width = 36;
+			Projectile.height = 36;
 			Projectile.penetrate = -1;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
@@ -93,8 +93,8 @@ namespace Origins.Items.Weapons.Melee {
 					Projectile.Center,
 					default,
 					ModContent.ProjectileType<Depth_Charge_Explosion>(),
-					Projectile.damage,
-					Projectile.knockBack,
+					Projectile.damage * 2,
+					Projectile.knockBack * 2,
 					Projectile.owner
 				);
 				Vector2 chainDrawPosition = Projectile.Center;
@@ -139,6 +139,22 @@ namespace Origins.Items.Weapons.Melee {
 			if (Projectile.ai[0] == 0) {
 				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
 				Projectile.ai[0] = 1;
+			}
+			if (Projectile.owner == Main.myPlayer) {
+				Player player = Main.LocalPlayer;
+				if (player.active && !player.dead && !player.immune) {
+					Rectangle projHitbox = Projectile.Hitbox;
+					ProjectileLoader.ModifyDamageHitbox(Projectile, ref projHitbox);
+					Rectangle playerHitbox = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
+					if (projHitbox.Intersects(playerHitbox)) {
+						player.Hurt(
+							PlayerDeathReason.ByProjectile(Main.myPlayer, Projectile.whoAmI),
+							Main.DamageVar(Projectile.damage, -player.luck),
+							Math.Sign(player.Center.X - Projectile.Center.X),
+							true
+						);
+					}
+				}
 			}
 		}
 		public void Explode(int delay = 0) { }

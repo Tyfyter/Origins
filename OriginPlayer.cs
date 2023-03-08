@@ -125,6 +125,7 @@ namespace Origins {
 		public bool magicTripwire = false;
 		public int lousyLiverCount = 0;
 		public int lousyLiverDebuff = 0;
+		public bool summonTagForceCrit = false;
 		#endregion
 
 		#region explosive stats
@@ -335,6 +336,7 @@ namespace Origins {
 			loversLeap = false;
 			magicTripwire = false;
 			lousyLiverCount = 0;
+			summonTagForceCrit = false;
 
 			flaskBile = false;
 			flaskSalt = false;
@@ -1293,10 +1295,10 @@ namespace Origins {
 			return foundTarget;
 		}
 		#endregion
-		internal static FieldInfo _sourcePlayerIndex;
-		static FieldInfo SourcePlayerIndex => _sourcePlayerIndex ??= typeof(PlayerDeathReason).GetField("_sourcePlayerIndex", BindingFlags.Instance | BindingFlags.NonPublic);
-		internal static FieldInfo _sourceProjectileIndex;
-		static FieldInfo SourceProjectileIndex => _sourceProjectileIndex ??= typeof(PlayerDeathReason).GetField("_sourceProjectileIndex", BindingFlags.Instance | BindingFlags.NonPublic);
+		internal static FastFieldInfo<PlayerDeathReason, int> _sourcePlayerIndex;
+		static FastFieldInfo<PlayerDeathReason, int> SourcePlayerIndex => _sourcePlayerIndex ??= new("_sourcePlayerIndex", BindingFlags.NonPublic);
+		internal static FastFieldInfo<PlayerDeathReason, int> _sourceProjectileIndex;
+		static FastFieldInfo<PlayerDeathReason, int> SourceProjectileIndex => _sourceProjectileIndex ??= new("_sourceProjectileIndex", BindingFlags.NonPublic);
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter) {
 			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(9) < 3) {
 				crit = true;
@@ -1308,8 +1310,8 @@ namespace Origins {
 					playSound = false;
 				}
 			}
-			if ((int)SourcePlayerIndex.GetValue(damageSource) == Player.whoAmI) {
-				Projectile sourceProjectile = Main.projectile[(int)SourceProjectileIndex.GetValue(damageSource)];
+			if (SourcePlayerIndex.GetValue(damageSource) == Player.whoAmI) {
+				Projectile sourceProjectile = Main.projectile[SourceProjectileIndex.GetValue(damageSource)];
 				if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
 					float damageVal = damage;
 					if (minerSet) {

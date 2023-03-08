@@ -21,7 +21,7 @@ namespace Origins {
 		public static DamageClass SummonMagicSpeed => summonMagicSpeed ??= ModContent.GetInstance<Summon_Magic_Speed>();
 		static FieldInfo _damageClasses;
 		static FieldInfo _DamageClasses => _damageClasses ??= typeof(DamageClassLoader).GetField("DamageClasses", BindingFlags.Static | BindingFlags.NonPublic);
-		public static List<DamageClass> All => (List<DamageClass>)(_DamageClasses.GetValue(null));
+		public static List<DamageClass> All => (List<DamageClass>)_DamageClasses.GetValue(null);
 		public void Load(Mod mod) {
 			List<DamageClass> damageClasses = All;
 			int len = damageClasses.Count;

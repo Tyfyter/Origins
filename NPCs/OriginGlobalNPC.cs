@@ -176,22 +176,28 @@ namespace Origins.NPCs {
 		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
 			if (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]) {
 				float damageBoost = 0;
-				if (npc.HasBuff(Flagellash_Buff_0.ID)) {
-					damageBoost += 2.7f;
-				}
-				if (npc.HasBuff(Flagellash_Buff_1.ID)) {
-					damageBoost += 2.65f;
-				}
-				if (npc.HasBuff(Flagellash_Buff_2.ID)) {
-					damageBoost += 2.65f;
-				}
-				if (npc.HasBuff(Maelstrom_Buff_Damage.ID)) {
-					damageBoost += npc.HasBuff(Maelstrom_Buff_Zap.ID) ? 7f : 5f;
+				for (int i = 0; i < npc.buffType.Length; i++) {
+					if (npc.buffTime[i] <= 0) continue;
+					int buffType = npc.buffType[i];
+					if (buffType == Flagellash_Buff_0.ID) {
+						damageBoost += 2.7f;
+					} else if (buffType == Flagellash_Buff_1.ID) {
+						damageBoost += 2.65f;
+					} else if (buffType == Flagellash_Buff_2.ID) {
+						damageBoost += 2.65f;
+					} else if (buffType == Maelstrom_Buff_Damage.ID) {
+						damageBoost += npc.HasBuff(Maelstrom_Buff_Zap.ID) ? 7f : 5f;
+					}
 				}
 				if (amebolizeDebuff) {
 					damageBoost += 5f;
 				}
 				damage += Main.rand.RandomRound(damageBoost);
+			}
+			int forceCritBuff = npc.FindBuffIndex(Headphones_Buff.ID);
+			if (forceCritBuff >= 0) {
+				crit |= Main.rand.NextBool(4);
+				npc.DelBuff(forceCritBuff);
 			}
 			if (Main.expertMode) {
 				if (npc.type >= NPCID.EaterofWorldsHead && npc.type <= NPCID.EaterofWorldsTail) {

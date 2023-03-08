@@ -78,11 +78,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-			Rectangle projHitbox = Projectile.Hitbox;
-			ProjectileLoader.ModifyDamageHitbox(Projectile, ref projHitbox);
 			if (Projectile.owner == Main.myPlayer) {
 				Player player = Main.LocalPlayer;
 				if (player.active && !player.dead && !player.immune) {
+					Rectangle projHitbox = Projectile.Hitbox;
+					ProjectileLoader.ModifyDamageHitbox(Projectile, ref projHitbox);
 					Rectangle playerHitbox = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
 					if (projHitbox.Intersects(playerHitbox)) {
 						player.Hurt(

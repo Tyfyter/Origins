@@ -31,6 +31,8 @@ using Terraria.ModLoader.Exceptions;
 using ReLogic.Reflection;
 using Terraria.Localization;
 using ReLogic.Graphics;
+using System.Reflection.Emit;
+using Terraria.GameContent.Personalities;
 
 namespace Origins {
 	#region classes
@@ -207,18 +209,109 @@ namespace Origins {
 			return N + "/" + D;
 		}
 	}
-	public struct ConvertableFieldInfo<T> {
-		FieldInfo fieldInfo;
-		object obj;
-		public ConvertableFieldInfo(FieldInfo fieldInfo, object obj = null) {
-			this.fieldInfo = fieldInfo;
-			this.obj = obj;
-			if (!typeof(T).IsAssignableFrom(fieldInfo.FieldType)) {
-				throw new InvalidCastException($"field {fieldInfo.Name} of type {fieldInfo.FieldType} cannot be converted to {typeof(T)}");
+	public class FastFieldInfo<TParent, T> {
+		public readonly FieldInfo field;
+		Func<TParent, T> getter;
+		Action<TParent, T> setter;
+		public FastFieldInfo(string name, BindingFlags bindingFlags, bool init = false) {
+			field = typeof(TParent).GetField(name, bindingFlags | BindingFlags.Instance);
+			if (field is null) throw new InvalidOperationException($"No such instance field {name} exists");
+			if (init) {
+				getter = CreateGetter();
+				setter = CreateSetter();
 			}
 		}
-		public static explicit operator T(ConvertableFieldInfo<T> convertableFieldInfo) {
-			return (T)convertableFieldInfo.fieldInfo.GetValue(convertableFieldInfo.obj);
+		public FastFieldInfo(FieldInfo field, bool init = false) {
+			if (field.IsStatic) throw new InvalidOperationException($"field {field.Name} is static");
+			this.field = field;
+			if (init) {
+				getter = CreateGetter();
+				setter = CreateSetter();
+			}
+		}
+		public T GetValue(TParent parent) {
+			return (getter ??= CreateGetter())(parent);
+		}
+		public void SetValue(TParent parent, T value) {
+			(setter ??= CreateSetter())(parent, value);
+		}
+		private Func<TParent, T> CreateGetter() {
+			if (field.FieldType != typeof(T)) throw new InvalidOperationException($"type of {field.Name} does not match provided type {typeof(T)}");
+			string methodName = field.ReflectedType.FullName + ".get_" + field.Name;
+			DynamicMethod getterMethod = new DynamicMethod(methodName, typeof(T), new Type[] { typeof(TParent) }, true);
+			ILGenerator gen = getterMethod.GetILGenerator();
+
+			gen.Emit(OpCodes.Ldarg_0);
+			gen.Emit(OpCodes.Ldfld, field);
+			gen.Emit(OpCodes.Ret);
+
+			return (Func<TParent, T>)getterMethod.CreateDelegate(typeof(Func<TParent, T>));
+		}
+		private Action<TParent, T> CreateSetter() {
+			if (field.FieldType != typeof(T)) throw new InvalidOperationException($"type of {field.Name} does not match provided type {typeof(T)}");
+			string methodName = field.ReflectedType.FullName + ".set_" + field.Name;
+			DynamicMethod setterMethod = new DynamicMethod(methodName, null, new Type[] { typeof(TParent), typeof(T) }, true);
+			ILGenerator gen = setterMethod.GetILGenerator();
+
+			gen.Emit(OpCodes.Ldarg_0);
+			gen.Emit(OpCodes.Ldarg_1);
+			gen.Emit(OpCodes.Stfld, field);
+			gen.Emit(OpCodes.Ret);
+
+			return (Action<TParent, T>)setterMethod.CreateDelegate(typeof(Action<TParent, T>));
+		}
+	}
+	public class FastStaticFieldInfo<TParent, T> {
+		public readonly FieldInfo field;
+		Func<T> getter;
+		Action<T> setter;
+		public FastStaticFieldInfo(string name, BindingFlags bindingFlags, bool init = false) {
+			field = typeof(TParent).GetField(name, bindingFlags | BindingFlags.Static);
+			if (field is null) throw new InvalidOperationException($"No such static field {name} exists");
+			if (init) {
+				getter = CreateGetter();
+				setter = CreateSetter();
+			}
+		}
+		public FastStaticFieldInfo(FieldInfo field, bool init = false) {
+			if (!field.IsStatic) throw new InvalidOperationException($"field {field.Name} is not static");
+			this.field = field;
+			if (init) {
+				getter = CreateGetter();
+				setter = CreateSetter();
+			}
+		}
+		public T GetValue() {
+			return (getter ??= CreateGetter())();
+		}
+		public void SetValue(T value) {
+			(setter ??= CreateSetter())(value);
+		}
+		private Func<T> CreateGetter() {
+			if (field.FieldType != typeof(T)) throw new InvalidOperationException($"type of {field.Name} does not match provided type {typeof(T)}");
+			string methodName = field.ReflectedType.FullName + ".get_" + field.Name;
+			DynamicMethod getterMethod = new DynamicMethod(methodName, typeof(T), new Type[] {  }, true);
+			ILGenerator gen = getterMethod.GetILGenerator();
+
+			gen.Emit(OpCodes.Ldsfld, field);
+			gen.Emit(OpCodes.Ret);
+
+			return (Func<T>)getterMethod.CreateDelegate(typeof(Func<T>));
+		}
+		private Action<T> CreateSetter() {
+			if (field.FieldType != typeof(T)) throw new InvalidOperationException($"type of {field.Name} does not match provided type {typeof(T)}");
+			string methodName = field.ReflectedType.FullName + ".set_" + field.Name;
+			DynamicMethod setterMethod = new DynamicMethod(methodName, null, new Type[] { typeof(T) }, true);
+			ILGenerator gen = setterMethod.GetILGenerator();
+
+			gen.Emit(OpCodes.Ldarg_0);
+			gen.Emit(OpCodes.Stsfld, field);
+			gen.Emit(OpCodes.Ret);
+
+			return (Action<T>)setterMethod.CreateDelegate(typeof(Action<T>));
+		}
+		public static explicit operator T(FastStaticFieldInfo<TParent, T> fastFieldInfo) {
+			return fastFieldInfo.GetValue();
 		}
 	}
 	public class DrawAnimationManual : DrawAnimation {
@@ -1130,21 +1223,21 @@ namespace Origins {
 				transformMatrix ?? Main.GameViewMatrix.TransformationMatrix
 			);
 		}
-		private static FieldInfo _sortMode;
-		internal static FieldInfo sortMode => _sortMode ??= typeof(SpriteBatch).GetField("sortMode", BindingFlags.NonPublic | BindingFlags.Instance);
-		private static FieldInfo _customEffect;
-		internal static FieldInfo customEffect => _customEffect ??= typeof(SpriteBatch).GetField("customEffect", BindingFlags.NonPublic | BindingFlags.Instance);
-		private static FieldInfo _transformMatrix;
-		internal static FieldInfo transformMatrix => _transformMatrix ??= typeof(SpriteBatch).GetField("transformMatrix", BindingFlags.NonPublic | BindingFlags.Instance);
+		private static FastFieldInfo<SpriteBatch, SpriteSortMode> _sortMode;
+		internal static FastFieldInfo<SpriteBatch, SpriteSortMode> sortMode => _sortMode ??= new("sortMode", BindingFlags.NonPublic);
+		private static FastFieldInfo<SpriteBatch, Effect> _customEffect;
+		internal static FastFieldInfo<SpriteBatch, Effect> customEffect => _customEffect ??= new("customEffect", BindingFlags.NonPublic);
+		private static FastFieldInfo<SpriteBatch, Matrix> _transformMatrix;
+		internal static FastFieldInfo<SpriteBatch, Matrix> transformMatrix => _transformMatrix ??= new("transformMatrix", BindingFlags.NonPublic);
 		public static SpriteBatchState GetState(this SpriteBatch spriteBatch) {
 			return new SpriteBatchState(
-				(SpriteSortMode)sortMode.GetValue(spriteBatch),
+				sortMode.GetValue(spriteBatch),
 				spriteBatch.GraphicsDevice.BlendState,
 				spriteBatch.GraphicsDevice.SamplerStates[0],
 				spriteBatch.GraphicsDevice.DepthStencilState,
 				spriteBatch.GraphicsDevice.RasterizerState,
-				(Effect)customEffect.GetValue(spriteBatch),
-				(Matrix)transformMatrix.GetValue(spriteBatch)
+				customEffect.GetValue(spriteBatch),
+				transformMatrix.GetValue(spriteBatch)
 			);
 		}
 		public static void Restart(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
@@ -1507,8 +1600,8 @@ namespace Origins {
 		private static FieldInfo _seedArray;
 		internal static FieldInfo SeedArray => _seedArray ??= typeof(UnifiedRandom).GetField("SeedArray", BindingFlags.NonPublic | BindingFlags.Instance);
 		#endregion
-		private static FieldInfo _dangerousBiomes;
-		internal static FieldInfo dangerousBiomes => _dangerousBiomes ??= typeof(ShopHelper).GetField("_dangerousBiomes", BindingFlags.NonPublic | BindingFlags.Instance);
+		private static FastFieldInfo<ShopHelper, IShoppingBiome[]> _dangerousBiomes;
+		internal static FastFieldInfo<ShopHelper, IShoppingBiome[]> dangerousBiomes => _dangerousBiomes ??= new("_dangerousBiomes", BindingFlags.NonPublic);
 		internal static void initExt() {
 			_idToSlot = (Dictionary<int, Dictionary<EquipType, int>>)typeof(EquipLoader).GetField("idToSlot", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
 		}

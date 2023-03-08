@@ -248,7 +248,7 @@ ACCESSORIES:
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
-(#2, ^2) Brine-Leafed Cloved !!!
+(#2, @4 (only has fully intact sprite)) Brine-Leaf Clover !!!
 (^) Celestial Starlight
 (^) Celestial Stone Mask
 (#2, ^2) Cirrhosis' Abhorrence !!!
@@ -266,11 +266,11 @@ ACCESSORIES:
 (#, ^2) Focus Crystal !!!
 (^) Grave Danger
 (^) Gun Glove
-(#, ^2) Haggard Artery !!!
+(☻) Haggard Artery !!!
 (^) Handy Helper
-(#, ^2) Hazard Charm !!!
-(#2, ^2) Headphones !!!
-(#2, ^2) Headstomperz !!!
+(☻) Hazard Charm !!!
+(☻) Headphones !!!
+(?) Headstomperz !!! (functionality seems redundant with lover's leap, were those plans meant to be for this?)
 (^) Helium Tank
 (^) Keepsake Remains
 (@2, #) Laser Tag Vest !!!
@@ -337,7 +337,7 @@ ACCESSORIES:
 (X) Versatile Ravel
 
 (^) Asylum Whistle
-(#2, ^2) Eccentric Stone
+(☻) Eccentric Stone
 (^) Spirit Shard
 (^) Stone Mask
 (X) Timbre of Hell
