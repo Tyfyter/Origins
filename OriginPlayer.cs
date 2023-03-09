@@ -126,6 +126,9 @@ namespace Origins {
 		public int lousyLiverCount = 0;
 		public int lousyLiverDebuff = 0;
 		public bool summonTagForceCrit = false;
+		public bool rubyReticle = false;
+		public bool focusCrystal = false;
+		public int focusCrystalTime = 0;
 		#endregion
 
 		#region explosive stats
@@ -337,6 +340,17 @@ namespace Origins {
 			magicTripwire = false;
 			lousyLiverCount = 0;
 			summonTagForceCrit = false;
+			rubyReticle = false;
+			if (focusCrystal) {
+				focusCrystal = false;
+				if (Math.Abs(Player.velocity.X) < 0.05f && Math.Abs(Player.velocity.Y) < 0.05f) {
+					focusCrystalTime = Math.Min(focusCrystalTime + 1, 180);
+				} else {
+					focusCrystalTime = Math.Max(focusCrystalTime - 2, 0);
+				}
+			} else {
+				focusCrystalTime = 0;
+			}
 
 			flaskBile = false;
 			flaskSalt = false;
@@ -894,8 +908,6 @@ namespace Origins {
 			tornTargetTime = 180;
 			tornTarget = 0.7f;
 		}
-		public override void UpdateVisibleVanityAccessories() {
-		}
 		public override void ProcessTriggers(TriggersSet triggersSet) {
 			releaseTriggerSetBonus = !controlTriggerSetBonus;
 			controlTriggerSetBonus = Origins.SetBonusTriggerKey.Current;
@@ -985,6 +997,12 @@ namespace Origins {
 		}
 		public override void UpdateLifeRegen() {
 			if (cryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 180 : 1;
+			if (focusCrystal) {
+				float factor = Player.dpsDamage / 200f;
+				int rounded = (int)factor;
+				Player.lifeRegenCount += rounded;
+				Player.lifeRegenTime += (int)((factor - rounded) * 50);
+			}
 		}
 		public override void UpdateBadLifeRegen() {
 			if (plasmaPhial && Player.bleed) {
@@ -1230,8 +1248,16 @@ namespace Origins {
 				damage.Flat += Player.statDefense / 2;
 			}
 			if (Origins.ArtifactMinion[item.shoot]) damage = damage.CombineWith(artifactDamage);
+			if (focusCrystal) {
+				damage *= 1 + (focusCrystalTime / 360f);
+			}
 			damage.Base *= Origins.FlatDamageMultiplier[item.type];
 			damage.Flat *= Origins.FlatDamageMultiplier[item.type];
+		}
+		public override void ModifyWeaponCrit(Item item, ref float crit) {
+			if (rubyReticle) {
+				crit += Player.GetWeaponDamage(item) * 0.15f;
+			}
 		}
 		public override void OnHitByNPC(NPC npc, int damage, bool crit) {
 			if (!Player.noKnockback && damage != 0) {
