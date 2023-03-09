@@ -1,18 +1,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
 using Origins.Projectiles;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
-	public class Depth_Charge : ModItem {
+    public class Depth_Charge : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Depth Charge");
 			SacrificeTotal = 1;
@@ -32,8 +29,8 @@ namespace Origins.Items.Weapons.Melee {
 			Item.knockBack = 4;
 			Item.shoot = ModContent.ProjectileType<Depth_Charge_P>();
 			Item.shootSpeed = 8f;
-			Item.value = Item.buyPrice(silver: 30);
-			Item.rare = ItemRarityID.Blue;
+			Item.value = Item.buyPrice(silver: 50);
+			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item1;
 		}
 	}

@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	public class Focus_Crystal : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Focus Crystal");
-			Tooltip.SetDefault("Critical strike chance is increased by 15% of weapon damage");
+			Tooltip.SetDefault("Life regeneration is boosted from dealing damage\nCritical strike chance is increased by 15% of weapon damage\nBase damage increased while standing still");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -18,7 +18,7 @@ namespace Origins.Items.Accessories {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Ruby_Reticle>());
 			recipe.AddIngredient(ItemID.ShinyStone);
-			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
 		public override void UpdateEquip(Player player) {
