@@ -233,7 +233,7 @@ ARMOR:
 (^) Nova Armor
 (X) Phoenix Skin Armor
 
-(^) Chlorophye Crown
+(^) Chlorophyte Crown
 (^) Chlorophyte Visage
 (^) Hallowed Visage
 ---

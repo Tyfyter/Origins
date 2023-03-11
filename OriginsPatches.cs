@@ -5,6 +5,7 @@ using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour.HookGen;
 using Origins.Buffs;
+using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
@@ -199,6 +200,31 @@ namespace Origins {
 					orig(self, Headphones_Buff.ID, 300, quiet);
 				}
 			};
+			On.Terraria.Player.RollLuck += Player_RollLuck;
+		}
+
+		private int Player_RollLuck(On.Terraria.Player.orig_RollLuck orig, Player self, int range) {
+			OriginPlayer originPlayer = self.GetModPlayer<OriginPlayer>();
+			int roll = orig(self, range);
+			int rerollCount = OriginExtensions.RandomRound(Main.rand, originPlayer.brineClover / 4f);
+			if (rerollCount > 0 && range > 1) {
+				Item brineCloverItem = originPlayer.brineCloverItem;
+				bool wilt = false;
+				while (rerollCount > 0) {
+					int newRoll = orig(self, range);
+					if (newRoll < roll) {
+						roll = newRoll;
+						if (newRoll == 0 && range >= 20) wilt = true;
+					}
+					rerollCount--;
+				}
+				if (wilt) {
+					int prefix = brineCloverItem.prefix;
+					brineCloverItem.SetDefaults((brineCloverItem.ModItem as Brine_Leafed_Clover)?.NextLowerTier ?? 0);
+					brineCloverItem.Prefix(prefix);
+				}
+			}
+			return roll;
 		}
 		private void Player_SetTalkNPC(On.Terraria.Player.orig_SetTalkNPC orig, Player self, int npcIndex, bool fromNet) {
 			orig(self, npcIndex, fromNet);

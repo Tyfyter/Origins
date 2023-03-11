@@ -129,6 +129,8 @@ namespace Origins {
 		public bool rubyReticle = false;
 		public bool focusCrystal = false;
 		public int focusCrystalTime = 0;
+		public int brineClover = 0;
+		public Item brineCloverItem = null;
 		#endregion
 
 		#region explosive stats
@@ -351,6 +353,8 @@ namespace Origins {
 			} else {
 				focusCrystalTime = 0;
 			}
+			brineClover = 0;
+			brineCloverItem = null;
 
 			flaskBile = false;
 			flaskSalt = false;
