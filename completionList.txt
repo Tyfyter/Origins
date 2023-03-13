@@ -248,7 +248,7 @@ ACCESSORIES:
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
-(#2, ^2) Brine-Leaf Clover !!!
+(#3, ^2) Brine-Leafed Clover !!!
 (^) Celestial Starlight
 (^) Celestial Stone Mask
 (#2, ^2) Cirrhosis' Abhorrence !!!

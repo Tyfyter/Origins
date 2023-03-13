@@ -6,6 +6,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <LangVersion>preview</LangVersion>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
@@ -13,6 +14,9 @@
   <ItemGroup>
     <Reference Include="AltLibrary">
       <HintPath>..\ModAssemblies\AltLibrary_v1.0.4.6.dll</HintPath>
+    </Reference>
+    <Reference Include="Origins">
+      <HintPath>..\ModAssemblies\Origins_v0.4.9.dll</HintPath>
     </Reference>
     <Reference Include="ThoriumMod">
       <HintPath>..\ModAssemblies\ThoriumMod.dll</HintPath>
