@@ -136,7 +136,7 @@ namespace Origins {
 		void LoadThorium() {
 			HookEndpointManager.Add(
 				typeof(BardItem).GetMethod("SetDefaults", BindingFlags.Public | BindingFlags.Instance),
-				(Action<Action<BardItem>, BardItem>)((orig, self) => {
+				(Action<Action<BardItem>, BardItem>)([JITWhenModsEnabled("ThoriumMod")](orig, self) => {
 					orig(self);
 					if (self is IBardDamageClassOverride classOverride) {
 						self.Item.DamageType = classOverride.DamageType;
@@ -145,7 +145,7 @@ namespace Origins {
 			);
 			HookEndpointManager.Add(
 				typeof(BardProjectile).GetMethod("SetDefaults", BindingFlags.Public | BindingFlags.Instance),
-				(Action<Action<BardProjectile>, BardProjectile>)((orig, self) => {
+				(Action<Action<BardProjectile>, BardProjectile>)([JITWhenModsEnabled("ThoriumMod")](orig, self) => {
 					orig(self);
 					if (self is IBardDamageClassOverride classOverride) {
 						self.Projectile.DamageType = classOverride.DamageType;
