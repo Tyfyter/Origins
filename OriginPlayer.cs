@@ -131,6 +131,9 @@ namespace Origins {
 		public int focusCrystalTime = 0;
 		public int brineClover = 0;
 		public Item brineCloverItem = null;
+		public bool potatoBattery = false;
+		public bool hasPotatOS = false;
+		public int[] potatOSQuoteCooldown;
 		#endregion
 
 		#region explosive stats
@@ -355,6 +358,12 @@ namespace Origins {
 			}
 			brineClover = 0;
 			brineCloverItem = null;
+			potatoBattery = false;
+			hasPotatOS = false;
+			potatOSQuoteCooldown ??= new int[(int)Potato_Battery.QuoteType.Count];
+			for (int i = 0; i < (int)Potato_Battery.QuoteType.Count; i++) {
+				if (potatOSQuoteCooldown[i] > 0) potatOSQuoteCooldown[i]--;
+			}
 
 			flaskBile = false;
 			flaskSalt = false;
@@ -911,6 +920,9 @@ namespace Origins {
 			tornTime = 0;
 			tornTargetTime = 180;
 			tornTarget = 0.7f;
+			if (hasPotatOS) {
+				Potato_Battery.PlayRandomMessage(Potato_Battery.QuoteType.Death, potatOSQuoteCooldown, Player.Top);
+			}
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet) {
 			releaseTriggerSetBonus = !controlTriggerSetBonus;
@@ -1227,6 +1239,14 @@ namespace Origins {
 				if (necroSet) {
 					necroSetAmount += target.lifeMax;
 				}
+			}
+			if (hasPotatOS && Main.rand.NextBool(10)) {
+				Potato_Battery.PlayRandomMessage(
+					Potato_Battery.QuoteType.Combat,
+					potatOSQuoteCooldown,
+					Player.Top,
+					new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
+				);
 			}
 		}
 

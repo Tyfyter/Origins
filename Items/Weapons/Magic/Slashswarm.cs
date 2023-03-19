@@ -41,6 +41,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 5;
 			Projectile.width = 30;
@@ -115,6 +116,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
+			Projectile.DamageType = DamageClass.Magic;
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = 2;
 			Projectile.width = 30;

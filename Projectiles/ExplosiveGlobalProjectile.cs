@@ -44,7 +44,7 @@ namespace Origins.Projectiles {
 
 				if (foundTarget) {
 
-					float scaleFactor = 16f;
+					float scaleFactor = 16f * Origins.HomingEffectivenessMultiplier[projectile.type];
 
 					Vector2 targetVelocity = (targetPos - projectile.Center).SafeNormalize(-Vector2.UnitY) * scaleFactor;
 					projectile.velocity = Vector2.Lerp(projectile.velocity, targetVelocity, 0.083333336f);
@@ -74,7 +74,7 @@ namespace Origins.Projectiles {
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
 			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-			if (originPlayer.novaSet && Origins.CanGainHoming[projectile.type]) {
+			if (originPlayer.novaSet && Origins.HomingEffectivenessMultiplier[projectile.type] != 0) {
 				isHoming = true;
 			}
 			if (originPlayer.explosiveFuseTime != StatModifier.Default) {

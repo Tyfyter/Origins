@@ -48,8 +48,8 @@ namespace Origins {
 		public static Dictionary<int, (int maxLevel, float velDiffMult)> RasterizeAdjustment { get; private set; }
 		static bool[] artifactMinion;
 		public static bool[] ArtifactMinion { get => artifactMinion; }
-		static bool[] canGainHoming;
-		public static bool[] CanGainHoming { get => canGainHoming; }
+		static float[] homingEffectivenessMultiplier;
+		public static float[] HomingEffectivenessMultiplier { get => homingEffectivenessMultiplier; }
 		static int[] magicTripwireRange;
 		public static int[] MagicTripwireRange { get => magicTripwireRange; }
 		static int[] magicTripwireDetonationStyle;
@@ -279,12 +279,30 @@ namespace Origins {
 				(ushort)ItemID.ChlorophyteWarhammer, Elements.Earth);
 			#endregion earth
 			#endregion vanilla weapon elements
-			canGainHoming = ProjectileID.Sets.Factory.CreateBoolSet(
-				true,
-				ProjectileID.ScarabBomb,
-				ProjectileID.StyngerShrapnel,
-				ProjectileID.ClusterFragmentsI,
-				ProjectileID.ClusterFragmentsII
+			homingEffectivenessMultiplier = ProjectileID.Sets.Factory.CreateFloatSet(
+				1f,
+				ProjectileID.ScarabBomb, 0f,
+				ProjectileID.StyngerShrapnel, 0f,
+				ProjectileID.ClusterFragmentsI, 0f,
+				ProjectileID.ClusterFragmentsII, 0f,
+				ProjectileID.BloodCloudMoving, 0f,
+				ProjectileID.RainCloudMoving, 0f,
+				ProjectileID.RainCloudRaining, 0f,
+				ProjectileID.PrincessWeapon, 0f,
+				ProjectileID.ClingerStaff, 0f,
+				ProjectileID.VilethornBase, 0f,
+				ProjectileID.VilethornTip, 0f,
+				ProjectileID.CrystalVileShardShaft, 0f,
+				ProjectileID.CrystalVileShardHead, 0f,
+				ProjectileID.NettleBurstLeft, 0f,
+				ProjectileID.NettleBurstRight, 0f,
+				ProjectileID.NettleBurstEnd, 0f,
+				ProjectileID.MedusaHead, 0f,
+				ProjectileID.PrincessWeapon, 0f,
+				ProjectileID.MagnetSphereBolt, 0f,
+				ProjectileID.InfernoFriendlyBlast, 0f,
+				ProjectileID.LastPrism, 2f,
+				ProjectileID.LastPrismLaser, 2f
 			);
 
 			HelmetGlowMasks = new();
@@ -460,7 +478,7 @@ namespace Origins {
 			forceFelnumShockOnShoot = null;
 			flatDamageMultiplier = null;
 			RasterizeAdjustment = null;
-			canGainHoming = null;
+			homingEffectivenessMultiplier = null;
 			artifactMinion = null;
 			celestineBoosters = null;
 			perlinFade0 = null;
@@ -575,10 +593,10 @@ namespace Origins {
 				ItemID.Minishark, 3f / 8f
 			);
 			Array.Resize(ref artifactMinion, ProjectileLoader.ProjectileCount);
-			int oldCanGainHomingLength = canGainHoming.Length;
-			Array.Resize(ref canGainHoming, ProjectileLoader.ProjectileCount);
+			int oldCanGainHomingLength = homingEffectivenessMultiplier.Length;
+			Array.Resize(ref homingEffectivenessMultiplier, ProjectileLoader.ProjectileCount);
 			for (int i = oldCanGainHomingLength; i < ProjectileLoader.ProjectileCount; i++) {
-				canGainHoming[i] = true;
+				homingEffectivenessMultiplier[i] = 1f;
 			}
 			magicTripwireRange = ProjectileID.Sets.Factory.CreateIntSet(0);
 			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
