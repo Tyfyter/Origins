@@ -6,7 +6,7 @@ namespace Origins.Items.Tools {
 	public class Felnum_Hamaxe : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Hamaxe");
-			Tooltip.SetDefault("Its strikes sound like thunder");
+			Tooltip.SetDefault("'Its strikes sound like thunder'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

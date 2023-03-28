@@ -57,7 +57,6 @@ namespace Origins.Items.Weapons.Ammo {
 			DisplayName.SetDefault("Thermite Canister");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 199;
-			//Tooltip.SetDefault();
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RocketI);
@@ -83,8 +82,8 @@ namespace Origins.Items.Weapons.Ammo {
 	public class White_Solution : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Gray Solution");
+			Tooltip.SetDefault("Spreads the Defiled");
 			SacrificeTotal = 99;
-			//Tooltip.SetDefault();
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GreenSolution);
@@ -105,8 +104,8 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Teal_Solution : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Teal Solution");
+			Tooltip.SetDefault("Spreads the Riven");
 			SacrificeTotal = 99;
-			//Tooltip.SetDefault();
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GreenSolution);

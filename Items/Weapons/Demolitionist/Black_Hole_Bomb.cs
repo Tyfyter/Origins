@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Black_Hole_Bomb : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Black Hole Bomb");
-			Tooltip.SetDefault("'Operator of the device will be completely unaffected by its DESTRUCTIVE EFFECTS'");
+			Tooltip.SetDefault("'Implode. Explode'");
 			SacrificeTotal = 99;
 		}
 		public override void SetDefaults() {

@@ -7,7 +7,7 @@ namespace Origins.Items.Tools {
 	public class Dismantler : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dismantler");
-			Tooltip.SetDefault("Very pointy\nAble to mine Hellstone");
+			Tooltip.SetDefault("Able to mine Hellstone\n'Very pointy'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

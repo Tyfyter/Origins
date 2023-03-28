@@ -21,7 +21,6 @@ namespace Origins.Items.Other.Testing {
 		Vector2 basePosition;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Worldgen Testing Item");
-			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults() {
 			//item.name = "jfdjfrbh";

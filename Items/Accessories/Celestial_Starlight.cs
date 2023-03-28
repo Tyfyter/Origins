@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	public class Celestial_Starlight : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Celestial Starlight");
-			Tooltip.SetDefault("Increases pickup range for mana\nChance for mana stars to fall from critical hits");
+			Tooltip.SetDefault("Increases pickup range for mana stars\nChance for mana stars to fall from critical hits");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

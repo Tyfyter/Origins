@@ -9,7 +9,7 @@ namespace Origins.Items.Accessories {
 	public class Headphones : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Headphones");
-			Tooltip.SetDefault("Tagging an enemy gives +25% critical strike on next hit\nApplies to teammates\n'Callouts guys!'");
+			Tooltip.SetDefault("Tagging an enemy increases the chance of a critical strike by 25% on next hit\nApplies to teammates\n'Callouts guys!'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

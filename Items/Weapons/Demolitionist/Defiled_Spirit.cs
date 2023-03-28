@@ -8,7 +8,6 @@ namespace Origins.Items.Weapons.Demolitionist {
     public class Defiled_Spirit : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Defiled Spirit");
-			Tooltip.SetDefault("'Throw it like you wanna'");
 			SacrificeTotal = 99;
 		}
 		public override void SetDefaults() {

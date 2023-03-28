@@ -7,7 +7,6 @@ namespace Origins.Items.Armor.Vanity.BossMasks {
 	public class DA_Mask : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Amalgamation Mask");
-			Tooltip.SetDefault("");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Vanity/BossMasks/DA_Mask_Head_Glow");
 			}

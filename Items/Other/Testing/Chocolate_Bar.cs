@@ -26,7 +26,6 @@ namespace Origins.Items.Other.Testing {
 		const int modeCount = 10;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Animation Testing Item");
-			Tooltip.SetDefault("");
 		}
 		public override void SetDefaults() {
 			//item.name = "jfdjfrbh";

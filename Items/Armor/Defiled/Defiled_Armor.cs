@@ -64,7 +64,7 @@ namespace Origins.Items.Armor.Defiled {
 	public class Defiled_Greaves : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Greaves");
-			Tooltip.SetDefault("5% increased movement speed");
+			Tooltip.SetDefault("Increased movement speed");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -73,7 +73,7 @@ namespace Origins.Items.Armor.Defiled {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.moveSpeed += 0.05f;
+			player.moveSpeed += 0.06f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

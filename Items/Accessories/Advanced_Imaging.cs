@@ -8,7 +8,7 @@ namespace Origins.Items.Accessories {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Advanced Imaging");
-			Tooltip.SetDefault("Increased projectile speed\nImmunity to Confusion\n\'The future is now\'");
+			Tooltip.SetDefault("Increased projectile speed\nImmunity to Confusion");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}

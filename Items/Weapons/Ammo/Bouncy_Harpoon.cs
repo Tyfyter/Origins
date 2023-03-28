@@ -10,7 +10,6 @@ namespace Origins.Items.Weapons.Ammo {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bouncy Harpoon");
-			Tooltip.SetDefault("'Let's bounce'");
 			SacrificeTotal = 99;
 			ID = Type;
 		}

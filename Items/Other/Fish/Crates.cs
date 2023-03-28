@@ -13,7 +13,7 @@ namespace Origins.Items.Other.Fish {
 	public class Chunky_Crate : Fishing_Crate_Item {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Chunky Crate");
-			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}\n'No, this is Patrick.'");
+			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 			ItemID.Sets.IsFishingCrate[Type] = true;
 			SacrificeTotal = 5;
 		}

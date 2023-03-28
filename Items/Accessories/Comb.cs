@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	public class Comb : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Comb");
-			Tooltip.SetDefault("3% increased damage\n'Every hero needs an iconic haircut'");
+			Tooltip.SetDefault("3% increased damage");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

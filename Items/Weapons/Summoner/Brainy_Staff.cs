@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Brainy Staff");
-			Tooltip.SetDefault("Summons a mini Brain of Cthulhu to fight for you");
+			Tooltip.SetDefault("Summons a mini crimbrain to fight for you");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -48,8 +48,8 @@ namespace Origins.Items.Weapons.Summoner {
 namespace Origins.Buffs {
 	public class Brainy_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mini Brain of Cthulhu");
-			Description.SetDefault("The Brain of Cthulhu will fight for you");
+			DisplayName.SetDefault("Crimbrain");
+			Description.SetDefault("The crimbrain will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Brainy_Staff.buffID = Type;

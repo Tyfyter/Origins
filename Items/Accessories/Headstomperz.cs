@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	public class Headstomperz : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Headstomperz");
-			Tooltip.SetDefault("Double tap movement keys to launch yourself forward damaging and piercing any enemies in the way");
+			Tooltip.SetDefault("Double tap movement keys to launch yourself forward damaging and piercing any enemies in the way"); //I think we removed it?
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

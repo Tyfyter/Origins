@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Caustica");
-			Tooltip.SetDefault("Shoots a flurry of chaotic sparkles\nDeveloper item");
+			Tooltip.SetDefault("Releases a flurry of chaotic sparkles\nDeveloper item");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

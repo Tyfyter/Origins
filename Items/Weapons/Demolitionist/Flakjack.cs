@@ -9,7 +9,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Flakjack : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Flakjack");
-			Tooltip.SetDefault("'Has a little kick to it'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

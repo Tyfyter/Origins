@@ -6,7 +6,7 @@ namespace Origins.Items.Tools {
 	public class Felnum_Pickaxe : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Pickaxe");
-			Tooltip.SetDefault("Its strikes sound like thunder\nAble to mine Hellstone");
+			Tooltip.SetDefault("Able to mine Hellstone\n'Its strikes sound like thunder'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

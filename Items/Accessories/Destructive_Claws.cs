@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	public class Destructive_Claws : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Destructive Claws");
-			Tooltip.SetDefault("30% increased explosive throwing velocity\nIncreases attack speed of thrown explosives\nEnables autouse for all explosive weapons");
+			Tooltip.SetDefault("25% increased explosive throwing velocity\nIncreases attack speed of thrown explosives\nEnables autouse for all explosive weapons");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			player.GetAttackSpeed(DamageClasses.Explosive) += 0.1f;
 			originPlayer.destructiveClaws = true;
-			originPlayer.explosiveThrowSpeed += 0.3f;
+			originPlayer.explosiveThrowSpeed += 0.25f;
 		}
 	}
 }

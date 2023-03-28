@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Eyeball Staff");
-			Tooltip.SetDefault("Summons a Demon Eye to fight for you\nCan summon 2 minions per slot");
+			Tooltip.SetDefault("Summons a demon eye to fight for you");
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
 			SacrificeTotal = 1;
 		}
@@ -51,7 +51,7 @@ namespace Origins.Buffs {
 	public class Mini_EOC_Buff : ModBuff {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Demon Eye");
-			Description.SetDefault("The Demon Eye will fight for you");
+			Description.SetDefault("The demon eye will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Eyeball_Staff.buffID = Type;
