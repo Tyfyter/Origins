@@ -494,8 +494,9 @@ namespace Origins {
 					Player.dash = 2;
 					riptideDashTime = riptideDashDuration * dashDirection;
 					Player.timeSinceLastDashStarted = 0;
-					if (Player.velocity.Y > 0) {
-						Player.velocity.Y = 0;
+					int gravDir = Math.Sign(Player.gravity);
+					if (Player.velocity.Y * gravDir > Player.gravity * gravDir) {
+						Player.velocity.Y = Player.gravity;
 					}
 					Projectile.NewProjectile(
 						Player.GetSource_Misc("riptide_dash"),

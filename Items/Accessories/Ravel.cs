@@ -42,7 +42,6 @@ namespace Origins.Items.Accessories {
 			bool animated = OriginClientConfig.Instance.AnimatedRavel;
 			if (player.mount.Type == Item.shoot) {
 				if (animated) {
-					Lighting.AddLight(player.Center, 0.9f, 0.9f, 0.9f);
 					player.mount._idleTime = -Ravel_Mount.transformAnimationFrames;
 					player.mount._idleTimeNext = 0;
 				} else {
@@ -54,8 +53,10 @@ namespace Origins.Items.Accessories {
 			} else {
 				player.mount.SetMount(Item.shoot, player);
 				player.mount._idleTime = animated ? 0 : Ravel_Mount.transformAnimationFrames;
-				for (int i = 0; i < 40; i++) {
-					Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight).velocity *= 0.4f;
+				if (!animated) {
+					for (int i = 0; i < 40; i++) {
+						Dust.NewDustDirect(player.position, player.width, player.height, DustID.AncientLight).velocity *= 0.4f;
+					}
 				}
 			}
 		}
@@ -156,7 +157,7 @@ namespace Origins.Items.Accessories {
 				texture = TransformTexture;
 				drawOrigin = new Vector2(16, 34);
 				frame = texture.Frame(1, 3, 0, transformFrame);
-				item = new DrawData(texture, drawPosition, frame, drawColor, rotation, drawOrigin, drawScale, 0, 0);
+				item = new DrawData(texture, drawPosition, frame, Color.Lerp(drawColor, new Color(225, 225, 225, 225), 0.75f), rotation, drawOrigin, drawScale, 0, 0);
 				playerDrawData.Add(item);
 				return false;
 			}
