@@ -287,6 +287,7 @@ namespace Origins.NPCs {
 				if (Main.invasionType <= 0) pool[0] = 0;
 
 				pool.Add(ModContent.NPCType<Defiled_Cyclops>(), Defiled_Wastelands.SpawnRates.Cyclops);
+				pool.Add(ModContent.NPCType<Chunky_Slime>(), Defiled_Wastelands.SpawnRates.ChunkSlime);
 
 				if (NPC.downedBoss1 || NPC.downedBoss2 || NPC.downedBoss3 || NPC.downedQueenBee || NPC.downedDeerclops || Main.hardMode) pool.Add(ModContent.NPCType<Ancient_Defiled_Cyclops>(), Defiled_Wastelands.SpawnRates.AncientCyclops);
 
@@ -339,6 +340,7 @@ namespace Origins.NPCs {
 				if (Main.invasionType <= 0) pool[0] = 0;
 
 				pool.Add(ModContent.NPCType<Riven_Fighter>(), Riven_Hive.SpawnRates.Fighter);
+				pool.Add(ModContent.NPCType<Amebic_Slime>(), Riven_Hive.SpawnRates.AmebSlime);
 
 				if (spawnInfo.Water) pool.Add(ModContent.NPCType<Measly_Moeba>(), Riven_Hive.SpawnRates.Moeba);
 

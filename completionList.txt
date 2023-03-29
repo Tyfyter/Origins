@@ -100,11 +100,11 @@ OTHER:
 
 ENEMY NPCS:
 ---
-(#, ^2) Amebic Slime !!!
+(#3, ^2) Amebic Slime !!!
 (^) Ancient Cyclops
 (#, ^2) Barnacleback !!!
-(X) Buckethead Zombie !!!
-(#, ^2) Chunky Slime !!!
+(#3, ^2) Buckethead Zombie !!!
+(#3, ^2) Chunky Slime !!!
 (X) Cleaver
 (#, ^2) Cranivore !!!
 (#, %2) Crimbrain
@@ -211,7 +211,7 @@ ARMOR:
 (^) Felnum Armor
 (^) Fiberglass Armor
 (^) Myth Armor
-(@, ^3) Riptide Armor !!!
+(^) Riptide Armor
 
 (^) Acrid Armor
 (X) Amber Exploder Armor

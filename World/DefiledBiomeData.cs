@@ -65,6 +65,7 @@ namespace Origins.World.BiomeData {
 		public const short DefaultTileDust = DustID.Titanium;
 		//public static SpawnConditionBestiaryInfoElement BestiaryIcon = new SpawnConditionBestiaryInfoElement("Bestiary_Biomes.Ocean", 28, "Images/MapBG11");
 		public static class SpawnRates {
+			public const float ChunkSlime = 1;
 			public const float Cyclops = 1;
 			public const float Mite = 1;
 			public const float Brute = 0.6f;

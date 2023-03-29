@@ -42,6 +42,7 @@ namespace Origins.Items.Accessories {
 			bool animated = OriginClientConfig.Instance.AnimatedRavel;
 			if (player.mount.Type == Item.shoot) {
 				if (animated) {
+					Lighting.AddLight(player.Center, 0.9f, 0.9f, 0.9f);
 					player.mount._idleTime = -Ravel_Mount.transformAnimationFrames;
 					player.mount._idleTimeNext = 0;
 				} else {

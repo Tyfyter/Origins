@@ -68,6 +68,7 @@ namespace Origins.World.BiomeData {
 		public const int NeededTiles = 200;
 		public const int ShaderTileCount = 25;
 		public static class SpawnRates {
+			public const float AmebSlime = 1;
 			public const float Fighter = 1;
 			public const float Mummy = 1;
 			public const float Barnacle = 0.5f;

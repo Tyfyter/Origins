@@ -20,7 +20,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.dimStarlight = true;
-			float light = 0.1f + (originPlayer.dimStarlightCooldown / 1000f);
+			float light = 0.2f + (originPlayer.dimStarlightCooldown / 1000f);
 			Lighting.AddLight(player.Center, light, light, light);
 		}
 	}

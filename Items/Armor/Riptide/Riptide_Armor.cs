@@ -185,8 +185,8 @@ namespace Origins.Items.Armor.Riptide {
 			const int backset = 0;
 			if (min + backset < positions.Length) for (int n = 0; n < 4; n++) {
 					offset += velocity;
-					if (Main.rand.NextBool(3)) Dust.NewDust(positions[min + backset] + offset, Projectile.width, Projectile.height, DustID.Torch);
-					if (Main.rand.NextBool(3)) Dust.NewDust(positions[min + backset] - offset, Projectile.width, Projectile.height, DustID.Torch);
+					if (Main.rand.NextBool(3)) Dust.NewDust(positions[min + backset] + offset, Projectile.width, Projectile.height, DustID.Water);
+					if (Main.rand.NextBool(3)) Dust.NewDust(positions[min + backset] - offset, Projectile.width, Projectile.height, DustID.Water);
 				}
 			return false;
 		}
