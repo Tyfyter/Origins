@@ -2,6 +2,7 @@
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Summoner;
+using Origins.World.BiomeData;
 using System;
 using System.IO;
 using Terraria;
@@ -15,6 +16,9 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Chunky Slime");
 			Main.npcFrameCount[NPC.type] = 2;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Crimslime);
@@ -27,6 +31,9 @@ namespace Origins.NPCs.Defiled {
 			NPC.friendly = false;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 40;
+		}
+		public override void FindFrame(int frameHeight) {
+			NPC.CloneFrame(NPCID.Crimslime, frameHeight);
 		}
 		static int MaxMana => 50;
 		static int MaxManaDrain => 10;
@@ -49,9 +56,9 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("A slime desaturated of its color due to contact with black bile. It now spends the rest of its days to the {$Defiled} will."),
-			});
+			bestiaryEntry.AddTags(
+				new FlavorTextBestiaryInfoElement("A slime desaturated of its color due to contact with black bile. It now spends the rest of its days to the {$Defiled} will.")
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 2, 4));

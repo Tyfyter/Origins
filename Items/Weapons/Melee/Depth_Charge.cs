@@ -137,7 +137,7 @@ namespace Origins.Items.Weapons.Melee {
 				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
 				Projectile.ai[0] = 1;
 			}
-			if (Projectile.owner == Main.myPlayer) {
+			if (Projectile.owner == Main.myPlayer && Projectile.ai[1] == 0) {
 				Player player = Main.LocalPlayer;
 				if (player.active && !player.dead && !player.immune) {
 					Rectangle projHitbox = Projectile.Hitbox;
@@ -150,6 +150,7 @@ namespace Origins.Items.Weapons.Melee {
 							Math.Sign(player.Center.X - Projectile.Center.X),
 							true
 						);
+						Projectile.ai[1] = 1;
 					}
 				}
 			}

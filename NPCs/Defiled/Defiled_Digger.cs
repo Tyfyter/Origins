@@ -7,6 +7,7 @@ using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Materials;
 using Terraria.GameContent.Bestiary;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.World.BiomeData;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Digger_Head : Defiled_Digger {
@@ -94,12 +95,24 @@ namespace Origins.NPCs.Defiled {
 	}
 
 	internal class Defiled_Digger_Body : Defiled_Digger {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
+			});
+		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerBody);
 		}
 	}
 
 	internal class Defiled_Digger_Tail : Defiled_Digger {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
+			});
+		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerTail);
 		}
@@ -108,6 +121,9 @@ namespace Origins.NPCs.Defiled {
 	public abstract class Defiled_Digger : ModNPC {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Digger");
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			};
 		}
 
 		public override void AI() {

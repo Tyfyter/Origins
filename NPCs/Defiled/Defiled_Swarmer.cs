@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
+using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -16,6 +17,9 @@ namespace Origins.NPCs.Defiled {
 			DisplayName.SetDefault("{$Defiled} Swarmer");
 			Main.npcFrameCount[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);

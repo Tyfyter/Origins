@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Ranged;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -12,6 +13,9 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Mimic");
 			Main.npcFrameCount[NPC.type] = 14;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			};
 		}
 		public override void SetDefaults() {
 			NPC.width = 28;

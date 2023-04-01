@@ -42,6 +42,9 @@ namespace Origins.NPCs.Riven {
 			};
 			NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Riven_Hive>().Type
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -614,6 +617,9 @@ namespace Origins.NPCs.Riven {
 			NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			ID = Type;
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
+			});
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.PlanterasHook);

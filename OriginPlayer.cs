@@ -134,6 +134,16 @@ namespace Origins {
 		public bool potatoBattery = false;
 		public bool hasPotatOS = false;
 		public int[] potatOSQuoteCooldown;
+		public bool resinShield = false;
+		public int resinShieldCooldown = 0;
+		public bool ResinShield {
+			get => resinShield;
+			set => resinShield = value && resinShieldCooldown <= 0;
+		}
+		public bool thirdEyeActive = false;
+		public int thirdEyeTime = 0;
+		public int thirdEyeUseTime = 0;
+		public int thirdEyeResetTime = 0;
 		#endregion
 
 		#region explosive stats
@@ -363,6 +373,13 @@ namespace Origins {
 			potatOSQuoteCooldown ??= new int[(int)Potato_Battery.QuoteType.Count];
 			for (int i = 0; i < (int)Potato_Battery.QuoteType.Count; i++) {
 				if (potatOSQuoteCooldown[i] > 0) potatOSQuoteCooldown[i]--;
+			}
+			if (resinShieldCooldown > 0) resinShieldCooldown--;
+			resinShield = false;
+			if (thirdEyeTime < thirdEyeUseTime) {
+				if (thirdEyeTime > 0 && !thirdEyeActive) thirdEyeTime--;
+			} else if (++thirdEyeTime >= thirdEyeResetTime) {
+				thirdEyeTime = 0;
 			}
 
 			flaskBile = false;
@@ -1375,6 +1392,15 @@ namespace Origins {
 						//damage = (int)(damage/explosiveDamage);
 						//damage-=damage/5;
 					}
+					if (resinShield) {
+						explosiveSelfDamage = new StatModifier();
+						resinShieldCooldown = (int)explosiveFuseTime.Scale(5).ApplyTo(600);
+						if (Player.shield == Resin_Shield.ShieldID) {
+							for (int i = Main.rand.Next(4, 8); i-->0;) {
+								Dust.NewDust(Player.MountedCenter + new Vector2(12 * Player.direction - 6, -12), 8, 32, DustID.GemAmber, Player.direction * 2, Alpha: 100);
+							}
+						}
+					}
 					damage = (int)explosiveSelfDamage.ApplyTo(damageVal);
 					if (Math.Sign(damage) != Math.Sign(damageVal)) {
 						damage = 0;
@@ -1725,6 +1751,9 @@ namespace Origins {
 				drawInfo.colorEyeWhites = Color.Lerp(drawInfo.colorEyeWhites, Color.Black, 1f - saturationMult);
 				drawInfo.colorBodySkin = OriginExtensions.Desaturate(drawInfo.colorBodySkin, saturationMult);
 
+			}
+			if (drawInfo.drawPlayer.shield == Resin_Shield.ShieldID && resinShieldCooldown > 0) {
+				drawInfo.drawPlayer.shield = (sbyte)Resin_Shield.InactiveShieldID;
 			}
 		}
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {

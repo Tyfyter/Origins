@@ -9,6 +9,7 @@ using Origins.LootConditions;
 using Origins.Projectiles.Enemies;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Defiled;
+using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
 using Terraria;
@@ -62,6 +63,9 @@ namespace Origins.NPCs.Defiled {
 			NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			ID = Type;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);

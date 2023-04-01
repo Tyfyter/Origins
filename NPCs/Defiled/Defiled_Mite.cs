@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using System;
 using System.IO;
 using Terraria;
@@ -16,6 +17,9 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Mite");
 			Main.npcFrameCount[NPC.type] = 4;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);

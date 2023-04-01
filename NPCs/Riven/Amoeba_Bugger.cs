@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -12,6 +13,9 @@ namespace Origins.NPCs.Riven {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Amoeba Bugger");
 			Main.npcFrameCount[NPC.type] = 2;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Riven_Hive>().Type
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);

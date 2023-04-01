@@ -2,6 +2,7 @@
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.World.BiomeData;
 using System;
 using System.IO;
 using Terraria;
@@ -17,6 +18,9 @@ namespace Origins.NPCs.Defiled {
 			DisplayName.SetDefault("{$Defiled} Phantom");
 			//Origins.AddGlowMask(NPC. "NPCs/Defiled/Defiled_Flyer_Glow");
 			Main.npcFrameCount[NPC.type] = 4;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);

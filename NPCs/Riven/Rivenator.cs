@@ -56,12 +56,24 @@ namespace Origins.NPCs.Riven {
 	}
 
 	internal class Rivenator_Body : Rivenator {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
+			});
+		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerBody);
 		}
 	}
 
 	internal class Rivenator_Tail : Rivenator {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
+			});
+		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerTail);
 		}

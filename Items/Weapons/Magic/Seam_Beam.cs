@@ -78,7 +78,6 @@ namespace Origins.Items.Weapons.Magic {
 			unit.Normalize();
 			DrawLaser(Main.spriteBatch, Projectile.Center, unit, 1, new Vector2(1f, 0.55f), maxDist: (_targetPos - Projectile.Center).Length());
 			return false;
-
 		}
 		/// <summary>
 		/// line check size
@@ -148,9 +147,6 @@ namespace Origins.Items.Weapons.Magic {
 			Dust.NewDustPerfect(origin + (perpUnit * Main.rand.NextFloat(-4, 4)), DustID.BlueTorch, unit * 5).noGravity = true;
 		}
 
-		/// <summary>
-		/// Change the way of collision check of the projectile
-		/// </summary>
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			Player p = Main.player[Projectile.owner];
 			Vector2 unit = (Main.player[Projectile.owner].MountedCenter - _targetPos);

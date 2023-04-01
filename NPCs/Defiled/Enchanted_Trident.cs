@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.World.BiomeData;
+using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -9,6 +10,9 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Profaned Bident");
 			Main.npcFrameCount[NPC.type] = 3;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CursedHammer);

@@ -52,7 +52,7 @@ BOSSES AND MINI-BOSSES:
 ($, ^2/3) Fiberglass Weaver !!!
 (#4, $, ^2) Primordial Amoeba !!! (replanning soon)
 
-(%?, ^2) Lost Diver !!! (it uses almost all of its drops. What besides the item/projectile/use sprites are necessary?)
+(%?, ^2) Lost Diver !!! (Just needs the item/projectile/use sprites)
 (X) Miscreant
 (X) Scrapper
 
@@ -100,11 +100,11 @@ OTHER:
 
 ENEMY NPCS:
 ---
-(#3, ^2) Amebic Slime !!!
+(☻) Amebic Slime !!!
 (^) Ancient Cyclops
 (#, ^2) Barnacleback !!!
-(#3, ^2) Buckethead Zombie !!!
-(#3, ^2) Chunky Slime !!!
+(☻) Buckethead Zombie !!!
+(☻) Chunky Slime !!!
 (X) Cleaver
 (#, ^2) Cranivore !!!
 (#, %2) Crimbrain
@@ -292,7 +292,7 @@ ACCESSORIES:
 (X) Pincushion !!!
 (^) Plasma Phial
 (^) Pneumatic Bomb Thrower*
-(#2, ^2) Potato Battery !!!
+(☻) Potato Battery !!!
 (^) Powerflower
 (#2, ^2) Priority Mail !!!
 (X) Proactive Protozoa
@@ -300,7 +300,7 @@ ACCESSORIES:
 (^) Razorwire
 (^) Rebreather
 (^) Rebreather Kit
-(#2, ^2) Resin Shield !!!
+(☻) Resin Shield !!!
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing !!!
 (^) Ruby Reticle
@@ -357,7 +357,7 @@ ACCESSORIES:
 (^) Protozoa Food
 (X) Scrap Compactor
 (#2, ^2) Scribe of the Meat God !!!
-(#2, ^2) Third Eye
+(☻) Third Eye
 
 (^) Agility Core
 (^) Combat Core

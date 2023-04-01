@@ -24,7 +24,7 @@ namespace Origins.Projectiles {
 			isHoming = false;
 		}
 		public override void AI(Projectile projectile) {
-			if (isHoming && !projectile.minion) {
+			if (isHoming && projectile.friendly) {
 				float targetWeight = 4.5f;
 				Vector2 targetDiff = default;
 				bool foundTarget = false;

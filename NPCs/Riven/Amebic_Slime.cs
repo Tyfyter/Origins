@@ -1,4 +1,5 @@
 ﻿using Origins.Items.Weapons.Demolitionist;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -10,6 +11,9 @@ namespace Origins.NPCs.Riven {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Amebic Slime");
 			Main.npcFrameCount[NPC.type] = 2;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Riven_Hive>().Type
+			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Crimslime);
@@ -22,9 +26,12 @@ namespace Origins.NPCs.Riven {
 			NPC.friendly = false;
 			NPC.value = 40;
 		}
+		public override void FindFrame(int frameHeight) {
+			NPC.CloneFrame(NPCID.Crimslime, frameHeight);
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("With its visocity unchanged, it behaves like most slimes... the only difference is that it tends to easily digest whatever it absorbs."),
+				new FlavorTextBestiaryInfoElement("With its viscosity unchanged, it behaves like most slimes... the only difference is that it tends to easily digest whatever it absorbs."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
