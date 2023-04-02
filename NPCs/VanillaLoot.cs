@@ -151,6 +151,9 @@ namespace Origins.NPCs {
 				case NPCID.TheGroom:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Comb>(), 10));
 				break;
+				case NPCID.MoonLordCore:
+				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Third_Eye>(), 4));
+				break;
 				default:
 				break;
 			}
