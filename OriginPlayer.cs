@@ -124,7 +124,7 @@ namespace Origins {
 		public float loversLeapDashSpeed = 0;
 		public bool magicTripwire = false;
 		public int lousyLiverCount = 0;
-		public int lousyLiverDebuff = 0;
+		public List<(int id, int duration)> lousyLiverDebuffs = new();
 		public bool summonTagForceCrit = false;
 		public bool rubyReticle = false;
 		public bool taintedFlesh = false;
@@ -356,6 +356,7 @@ namespace Origins {
 			loversLeap = false;
 			magicTripwire = false;
 			lousyLiverCount = 0;
+			if (lousyLiverDebuffs.Count > 0) lousyLiverDebuffs.Clear();
 			summonTagForceCrit = false;
 			rubyReticle = false;
 			if (focusCrystal) {
@@ -832,7 +833,9 @@ namespace Origins {
 					}
 				}
 				for (int i = 0; i < Math.Min(targets.Count, lousyLiverCount); i++) {
-					targets[i].target.AddBuff(lousyLiverDebuff, 10);
+					for (int j = 0; j < lousyLiverDebuffs.Count; j++) {
+						targets[i].target.AddBuff(lousyLiverDebuffs[j].id, lousyLiverDebuffs[j].duration);
+					}
 				}
 				explosiveArteryCount = -1;
 			}
@@ -945,7 +948,9 @@ namespace Origins {
 			}
 			if (taintedFlesh) {
 				tornTarget -= 0.1f; //does this work?
-            }
+				//nope, that's for the torn effect on the player and this wouldn't be anywhere near the right place anyway,
+				//but I think I can manage to make tainted flesh actually work
+			}
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet) {
 			releaseTriggerSetBonus = !controlTriggerSetBonus;

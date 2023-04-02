@@ -17,7 +17,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.lousyLiverCount = 4;
-			originPlayer.lousyLiverDebuff = Buffs.Rasterized_Debuff.ID;
+			originPlayer.lousyLiverDebuffs.Add((Lousy_Liver_Debuff.ID, 10));
 		}
 	}
 	public class Lousy_Liver_Debuff : ModBuff {

@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.Buffs;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -24,7 +25,9 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.lousyLiverCount = 5;
-			originPlayer.lousyLiverDebuff = Buffs.Rasterized_Debuff.ID;       //, BuffID.OnFire, BuffID.Bleeding;
+			originPlayer.lousyLiverDebuffs.Add((Lousy_Liver_Debuff.ID, 9));
+			originPlayer.lousyLiverDebuffs.Add((BuffID.OnFire, 15));
+			originPlayer.lousyLiverDebuffs.Add((BuffID.Bleeding, 15));
 		}
 	}
 }
