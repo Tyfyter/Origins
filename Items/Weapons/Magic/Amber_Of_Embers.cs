@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.Tiles.Dusk;
+using Origins.Tiles.Other;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -35,7 +36,7 @@ namespace Origins.Items.Weapons.Magic {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.Amber, 8);
 			recipe.AddIngredient(ItemID.FallenStar, 10);
-			//recipe.AddIngredient(ModContent.ItemType<Carburite>(), 18);
+			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 18);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

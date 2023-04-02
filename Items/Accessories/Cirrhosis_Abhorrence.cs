@@ -10,11 +10,21 @@ namespace Origins.Items.Accessories {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
+			Item.DefaultToAccessory(26, 22);
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 2);
 		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ModContent.ItemType<Lousy_Liver>());
+			recipe.AddIngredient(ModContent.ItemType<Messy_Magma_Leech>());
+			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.Register();
+		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().cirrHosis = true;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.lousyLiverCount = 5;
+			originPlayer.lousyLiverDebuff = Buffs.Rasterized_Debuff.ID;       //, BuffID.OnFire, BuffID.Bleeding;
 		}
 	}
 }

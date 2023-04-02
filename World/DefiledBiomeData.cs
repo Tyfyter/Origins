@@ -96,17 +96,17 @@ namespace Origins.World.BiomeData {
 				}
 				(int generation, (Vector2 position, Vector2 velocity) data) current;
 				(int generation, (Vector2 position, Vector2 velocity) data) next;
-				List<Vector2> fisureCheckSpots = new List<Vector2>();
+				List<Vector2> fissureCheckSpots = new List<Vector2>();
 				Vector2 airCheckVec;
 				while (veins.Count > 0) {
 					current = veins.Dequeue();
 					int endChance = genRand.Next(1, 5) + genRand.Next(0, 4) + genRand.Next(0, 4);
 					int selector = genRand.Next(4);
 					if (endChance <= current.generation) {
-						if (genRand.Next(veins.Count) < 6 - fisureCheckSpots.Count) {
+						if (genRand.Next(veins.Count) < 6 - fissureCheckSpots.Count) {
 							selector = 3;
 						}
-					} else if (selector == 3 && genRand.Next(veins.Count) > 6 - fisureCheckSpots.Count) {
+					} else if (selector == 3 && genRand.Next(veins.Count) > 6 - fissureCheckSpots.Count) {
 						selector = genRand.Next(3);
 					}
 					switch (selector) {
@@ -191,16 +191,16 @@ namespace Origins.World.BiomeData {
 								DefiledCave(next.data.position.X, next.data.position.Y, size);
 							}
 							DefiledRib(next.data.position.X, next.data.position.Y, size * 30, 0.75f);
-							fisureCheckSpots.Add(next.data.position);
+							fissureCheckSpots.Add(next.data.position);
 							break;
 						}//vein & cave
 					}
 				}
 				ushort fissureID = (ushort)ModContent.TileType<Defiled_Fissure>();
-				while (fisureCount < 6 && fisureCheckSpots.Count > 0) {
-					int ch = genRand.Next(fisureCheckSpots.Count);
+				while (fisureCount < 6 && fissureCheckSpots.Count > 0) {
+					int ch = genRand.Next(fissureCheckSpots.Count);
 					for (int o = 0; o > -5; o = o > 0 ? -o : -o + 1) {
-						Point p = fisureCheckSpots[ch].ToPoint();
+						Point p = fissureCheckSpots[ch].ToPoint();
 						int loop = 0;
 						for (; !Main.tile[p.X + o - 1, p.Y + 1].HasTile || !Main.tile[p.X + o, p.Y + 1].HasTile; p.Y++) {
 							if (++loop > 10) {
@@ -221,7 +221,7 @@ namespace Origins.World.BiomeData {
 							break;
 						}
 					}
-					fisureCheckSpots.RemoveAt(ch);
+					fissureCheckSpots.RemoveAt(ch);
 				}
 				ushort defiledAltar = (ushort)ModContent.TileType<Defiled_Altar>();
 				for (int i0 = genRand.Next(10, 15); i0-- > 0;) {

@@ -76,5 +76,8 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.ai[1] = Projectile.ai[0];
 			Projectile.ai[0] = target.whoAmI;
 		}
+		public override void AI() {
+			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Torch);
+		}
 	}
 }

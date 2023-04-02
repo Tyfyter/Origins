@@ -36,7 +36,7 @@ namespace Origins.Items.Accessories {
 			originPlayer.thirdEyeResetTime = Item.reuseDelay;
 			ref int thirdEyeTime = ref originPlayer.thirdEyeTime;
 			if (thirdEyeTime < Item.useTime) {
-				const int max_dist = 1000 * 1000;
+				const int max_dist = 2500 * 2500;
 				Vector2 startPoint = GetEyePos(player);
 				Vector2 targetPos = default;
 				float targetWeight = 0;

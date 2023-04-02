@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.Tiles.Other;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -37,7 +38,7 @@ namespace Origins.Items.Accessories {
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.Amber, 6);
 			recipe.AddIngredient(ItemID.ObsidianShield);
-			//recipe.AddIngredient(ModContent.ItemType<Carburite>(), 12);
+			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 12);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}

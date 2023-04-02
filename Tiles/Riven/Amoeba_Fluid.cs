@@ -21,7 +21,7 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			AddMapEntry(new Color(0, 200, 200));
 			MinPick = 10;
-			MineResist = 1f;
+			MineResist = 8f;
 			HitSound = SoundID.NPCHit13;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {

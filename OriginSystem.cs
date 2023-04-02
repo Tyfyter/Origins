@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Projectiles;
+using Origins.Tiles.Other;
 using Origins.UI;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,27 @@ namespace Origins {
 			recipe.AddIngredient(ItemID.SpelunkerPotion);
 			recipe.AddIngredient(ItemID.Glowstick, 200);
 			recipe.AddTile(TileID.WorkBenches);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.CrystalNinjaHelmet);
+			recipe.AddIngredient(ItemID.CrystalShard, 30);
+			recipe.AddIngredient(ItemID.SoulofNight, 5);
+			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 15);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.CrystalNinjaChestplate);
+			recipe.AddIngredient(ItemID.CrystalShard, 60);
+			recipe.AddIngredient(ItemID.SoulofNight, 7);
+			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 30);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.CrystalNinjaLeggings);
+			recipe.AddIngredient(ItemID.CrystalShard, 45);
+			recipe.AddIngredient(ItemID.SoulofNight, 3);
+			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 23);
+			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 			//this hook is supposed to be used for adding recipes,
 			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff

@@ -15,7 +15,7 @@ namespace Origins.Tiles.Brine {
 			AddMapEntry(new Color(18, 73, 56));
 			mergeID = TileID.Stone;
 			MinPick = 195;
-			//HitSound = SoundID.digstone;
+			HitSound = SoundID.Dig;
 		}
 		public override bool CanExplode(int i, int j) {
 			return false;

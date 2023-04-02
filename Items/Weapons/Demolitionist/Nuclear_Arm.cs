@@ -67,6 +67,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.frame = (Projectile.frame + 1) % 4;
 				Projectile.frameCounter = 0;
 			}
+			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Torch);
 		}
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.RocketI;

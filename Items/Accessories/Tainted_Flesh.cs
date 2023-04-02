@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 4);
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().taintedFlesh = true;
+			player.GetModPlayer<OriginPlayer>().taintedFlesh = true;
 		}
 	}
 }

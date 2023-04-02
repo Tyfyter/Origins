@@ -14,7 +14,7 @@ namespace Origins.NPCs.Defiled {
 		public const float speedMult = 1f;
 		bool attacking = false;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled Cyclops");
+			DisplayName.SetDefault("{$Defiled} Cyclops");
 			Main.npcFrameCount[Type] = 7;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Defiled_Wastelands>().Type

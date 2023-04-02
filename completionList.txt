@@ -100,11 +100,11 @@ OTHER:
 
 ENEMY NPCS:
 ---
-(☻) Amebic Slime !!!
+(^) Amebic Slime
 (^) Ancient Cyclops
 (#, ^2) Barnacleback !!!
-(☻) Buckethead Zombie !!!
-(☻) Chunky Slime !!!
+(#3, ^2) Buckethead Zombie !!!
+(^) Chunky Slime
 (X) Cleaver
 (#, ^2) Cranivore !!!
 (#, %2) Crimbrain
@@ -270,7 +270,6 @@ ACCESSORIES:
 (^) Handy Helper
 (^) Hazard Charm
 (^) Headphones
-(?) Headstomperz !!! (try to make it unique, if you can't we'll scrap it)
 (^) Helium Tank
 (^) Keepsake Remains
 (@2, #) Laser Tag Vest !!!
@@ -292,7 +291,7 @@ ACCESSORIES:
 (X) Pincushion !!!
 (^) Plasma Phial
 (^) Pneumatic Bomb Thrower*
-(☻) Potato Battery !!!
+(^) Potato Battery
 (^) Powerflower
 (#2, ^2) Priority Mail !!!
 (X) Proactive Protozoa
@@ -300,7 +299,7 @@ ACCESSORIES:
 (^) Razorwire
 (^) Rebreather
 (^) Rebreather Kit
-(☻) Resin Shield !!!
+(^) Resin Shield
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing !!!
 (^) Ruby Reticle
@@ -314,7 +313,7 @@ ACCESSORIES:
 (^) Superjump Cape
 (#2, ^2) Superstar Celebration Gear !!!
 (^) Symbiote Skull
-(#2, ^2) Tainted Flesh !!!
+(☻) Tainted Flesh !!!
 (^) Trap Charm
 (^) Turbo Reel
 (^) Unsought Organ
@@ -357,7 +356,7 @@ ACCESSORIES:
 (^) Protozoa Food
 (X) Scrap Compactor
 (#2, ^2) Scribe of the Meat God !!!
-(☻) Third Eye
+(^) Third Eye
 
 (^) Agility Core
 (^) Combat Core
@@ -534,7 +533,7 @@ MAGIC WEAPONS:
 ---
 (^) Beginner's Tome
 (^) Cryostike
-(#2, ^2) Hot Potato !!!
+(^) Hot Potato
 (^) Infusion
 (^) Low Signal
 (^) Magnus
@@ -611,7 +610,7 @@ EXPLOSIVE WEAPONS:
 (^) Bloombomb
 (^) Bombardment
 (^) Bomb Launcher (needs to be balanced)
-(#2, ^2) Brainade !!!
+(^) Brainade
 (#3, ^2) Defiled Spirit !!!
 (^) Floaty Bomb
 (^) Hand Grenade Launcher
@@ -779,6 +778,7 @@ MATERIALS:
 (^) Bark
 (^) Bat Hide
 (^) Bud Barnacle
+(^) Carburite
 (^) Defiled Bar*
 (^) Dreadful Powder
 (^) Encrusted Bar

@@ -53,7 +53,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled Amalgamation");
+			DisplayName.SetDefault("{$Defiled} Amalgamation");
 			Main.npcFrameCount[NPC.type] = 8;
 			NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
 				SpecificallyImmuneTo = new int[] {

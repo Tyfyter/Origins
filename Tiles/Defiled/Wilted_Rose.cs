@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Metadata;
@@ -15,7 +10,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-	public class Wilted_Rose : OriginTile, DefiledTile {
+    public class Wilted_Rose : OriginTile, DefiledTile {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
 
 		public override void SetStaticDefaults() {

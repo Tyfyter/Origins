@@ -127,6 +127,7 @@ namespace Origins {
 		public int lousyLiverDebuff = 0;
 		public bool summonTagForceCrit = false;
 		public bool rubyReticle = false;
+		public bool taintedFlesh = false;
 		public bool focusCrystal = false;
 		public int focusCrystalTime = 0;
 		public int brineClover = 0;
@@ -316,6 +317,7 @@ namespace Origins {
 			protozoaFood = false;
 			protozoaFoodItem = null;
 			symbioteSkull = false;
+			taintedFlesh = false;
 			if (toxicShock) {
 				if (Player.breath > oldBreath) Player.breath = oldBreath;
 				toxicShock = false;
@@ -941,6 +943,9 @@ namespace Origins {
 			if (hasPotatOS) {
 				Potato_Battery.PlayRandomMessage(Potato_Battery.QuoteType.Death, potatOSQuoteCooldown, Player.Top);
 			}
+			if (taintedFlesh) {
+				tornTarget -= 0.1f; //does this work?
+            }
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet) {
 			releaseTriggerSetBonus = !controlTriggerSetBonus;
