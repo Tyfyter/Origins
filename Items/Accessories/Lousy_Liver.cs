@@ -27,7 +27,8 @@ namespace Origins.Items.Accessories {
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
-			npc.GetGlobalNPC<NPCs.OriginGlobalNPC>().rasterizedTime = 8;
+			ref int rasterizedTime = ref npc.GetGlobalNPC<NPCs.OriginGlobalNPC>().rasterizedTime;
+			if (rasterizedTime < 8) rasterizedTime = 8;
 		}
 	}
 }

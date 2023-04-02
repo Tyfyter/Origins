@@ -130,7 +130,16 @@ namespace Origins.NPCs {
 				npc.velocity = Vector2.Zero;
 				return false;
 			}
-			if (rasterizedTime > 0) {
+			if (rasterizedTime > 0 && npc.oldPosition != default) {
+				if (npc.velocity.Y == 0) {
+					switch (npc.aiStyle) {
+						case NPCAIStyleID.Slime:
+						case NPCAIStyleID.King_Slime:
+						case NPCAIStyleID.Queen_Slime:
+						npc.oldVelocity.Y = 0;
+						break;
+					}
+				}
 				npc.velocity = Vector2.Lerp(npc.velocity, npc.oldVelocity, rasterizedTime * 0.0625f * 0.5f);
 				npc.position = Vector2.Lerp(npc.position, npc.oldPosition, rasterizedTime * 0.0625f * 0.5f);
 			}
