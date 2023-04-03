@@ -179,15 +179,18 @@ namespace Origins.Items.Armor.Riptide {
 					Projectile.scale,
 					Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 					0);
+				if (Main.rand.NextBool(3)) Dust.NewDust(positions[i], Projectile.width, Projectile.height, DustID.Water, Projectile.velocity.X);
 			}
 			Vector2 offset = Vector2.Zero;
 			Vector2 velocity = (Vector2)new PolarVec2(8, Projectile.rotation + MathHelper.PiOver2);
 			const int backset = 0;
-			if (min + backset < positions.Length) for (int n = 0; n < 4; n++) {
+			if (min + backset < positions.Length) {
+				for (int n = 0; n < 4; n++) {
 					offset += velocity;
-					if (Main.rand.NextBool(3)) Dust.NewDust(positions[min + backset] + offset, Projectile.width, Projectile.height, DustID.Water);
-					if (Main.rand.NextBool(3)) Dust.NewDust(positions[min + backset] - offset, Projectile.width, Projectile.height, DustID.Water);
+					if (Main.rand.NextBool(3)) Dust.NewDust(positions[min + backset] + offset, Projectile.width, Projectile.height, DustID.Water, Projectile.velocity.X);
+					if (Main.rand.NextBool(3)) Dust.NewDust(positions[min + backset] - offset, Projectile.width, Projectile.height, DustID.Water, Projectile.velocity.X);
 				}
+			}
 			return false;
 		}
 	}
