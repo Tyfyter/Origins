@@ -61,7 +61,12 @@ namespace Origins.Items.Weapons.Melee {
 			if (Projectile.ai[0] != ai_state_spinning) Projectile.penetrate = 0;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			if (Projectile.ai[0] != ai_state_spinning) Projectile.penetrate = 0;
+			if (Projectile.ai[0] != ai_state_spinning) {
+				Projectile.penetrate = 0;
+				Projectile.position = Vector2.Lerp(Projectile.position, Projectile.oldPosition + oldVelocity, 0.5f);
+				Projectile.velocity = Vector2.Zero;
+				Projectile.tileCollide = false;
+			}
 			return true;
 		}
 		public override bool PreDrawExtras() {
