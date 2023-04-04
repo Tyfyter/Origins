@@ -103,7 +103,7 @@ ENEMY NPCS:
 (^) Amebic Slime
 (^) Ancient Cyclops
 (#, ^2) Barnacleback !!!
-(#3?, ^2) Buckethead Zombie !!!
+(^) Buckethead Zombie
 (^) Chunky Slime
 (X) Cleaver
 (#, ^2) Cranivore !!!
@@ -251,7 +251,7 @@ ACCESSORIES:
 (#3, ^2) Brine-Leafed Clover !!!
 (^) Celestial Starlight
 (^) Celestial Stone Mask
-(#2, ^2) Cirrhosis' Abhorrence !!!
+(^) Cirrhosis' Abhorrence
 (^) Comb
 (^) Coologne
 (^) I-WTPA Standard
@@ -313,7 +313,7 @@ ACCESSORIES:
 (^) Superjump Cape
 (#2, ^2) Superstar Celebration Gear !!!
 (^) Symbiote Skull
-(☻) Tainted Flesh !!!
+(#2, ^2) Tainted Flesh !!!
 (^) Trap Charm
 (^) Turbo Reel
 (^) Unsought Organ
