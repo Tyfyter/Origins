@@ -10,6 +10,7 @@ using Origins.Items.Materials;
 using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
 using Origins.Questing;
+using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Origins.Walls;
@@ -532,6 +533,14 @@ namespace Origins {
 				tile.TileType = wiltedRose;
 				tile.TileFrameX = 0;
 				tile.TileFrameY = 0;
+				return true;
+			}
+			ushort brineClover = (ushort)MC.TileType<Brine_Leaf_Clover_Tile>();
+			if (TileObject.CanPlace(x, y, brineClover, 0, 0, out TileObject objectData, false)) {
+				objectData.style = 0;
+				objectData.alternate = 0;
+				objectData.random = 0;
+				TileObject.Place(objectData);
 				return true;
 			}
 			return false;

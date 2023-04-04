@@ -179,7 +179,7 @@ namespace Origins.Items.Armor.Riptide {
 					Projectile.scale,
 					Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
 					0);
-				if (Main.rand.NextBool(3)) Dust.NewDust(positions[i], Projectile.width, Projectile.height, DustID.Water, Projectile.velocity.X);
+				if (Main.rand.NextBool(3)) Dust.NewDust(positions[i], Projectile.width, Projectile.height, DustID.Water, Projectile.velocity.X * 0.75f);
 			}
 			Vector2 offset = Vector2.Zero;
 			Vector2 velocity = (Vector2)new PolarVec2(8, Projectile.rotation + MathHelper.PiOver2);

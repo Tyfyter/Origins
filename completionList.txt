@@ -103,7 +103,7 @@ ENEMY NPCS:
 (^) Amebic Slime
 (^) Ancient Cyclops
 (#, ^2) Barnacleback !!!
-(#3, ^2) Buckethead Zombie !!!
+(#3?, ^2) Buckethead Zombie !!!
 (^) Chunky Slime
 (X) Cleaver
 (#, ^2) Cranivore !!!
