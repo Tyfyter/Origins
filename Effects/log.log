@@ -1,4 +1,4 @@
-Description file detected: 7
+Description file detected: 8
 * AmebicProtection.fx
 * BiomeShade.fx
 * BlackHole.fx
@@ -6,6 +6,7 @@ Description file detected: 7
 * PerlinFade.fx
 * Rasterize.fx
 * Solvent.fx
+* TileOutline.fx
 
 Start loading description file: AmebicProtection.fx ..Done!
 Start compiling font..Done!
@@ -49,4 +50,8 @@ Start compiling font content file: Rasterize.xnb ..Done!
 Start loading description file: Solvent.fx ..Done!
 Start compiling font..Done!
 Start compiling font content file: Solvent.xnb ..Done!
+
+Start loading description file: TileOutline.fx ..Done!
+Start compiling font..Done!
+Start compiling font content file: TileOutline.xnb ..Done!
 

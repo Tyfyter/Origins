@@ -80,6 +80,7 @@ namespace Origins {
 		public static MiscShaderData rasterizeShader;
 		public static ArmorShaderData amebicProtectionShader;
 		public static HairShaderData amebicProtectionHairShader;
+		public static ArmorShaderData tileOutlineShader;
 		public static int amebicProtectionShaderID;
 		public static int amebicProtectionHairShaderID;
 		public static AutoCastingAsset<Texture2D> cellNoiseTexture;
@@ -339,6 +340,10 @@ namespace Origins {
 				amebicProtectionHairShader = new HairShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/AmebicProtection", AssetRequestMode.ImmediateLoad).Value), "AmebicProtection");
 				GameShaders.Hair.BindShader(MC.ItemType<Amebic_Vial>(), amebicProtectionHairShader);
 				amebicProtectionHairShaderID = GameShaders.Hair.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
+
+				tileOutlineShader = new ArmorShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/TileOutline", AssetRequestMode.ImmediateLoad).Value), "TileOutline");
+				GameShaders.Armor.BindShader(MC.ItemType<Sonar_Visor>(), tileOutlineShader);
+				//amebicProtectionShaderID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
 				//Filters.Scene["Origins:ZoneDusk"].GetShader().UseOpacity(0.35f);
 				//Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.
 				//Filters.Scene["BlackHole"] = new Filter(new ScreenShaderData(screenRef, "BlackHole"), EffectPriority.VeryHigh);
@@ -486,6 +491,8 @@ namespace Origins {
 			solventShader = null;
 			rasterizeShader = null;
 			amebicProtectionShader = null;
+			amebicProtectionHairShader = null;
+			tileOutlineShader = null;
 			cellNoiseTexture = null;
 			Journal_UI_Button.Texture = null;
 			Journal_UI_Open.BackTexture = null;

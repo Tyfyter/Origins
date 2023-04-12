@@ -202,6 +202,7 @@ namespace Origins {
 				}
 			};
 			On.Terraria.Player.RollLuck += Player_RollLuck;
+			On.Terraria.GameContent.Drawing.TileDrawing.Draw += TileDrawing_Draw;
 		}
 
 		private int Player_RollLuck(On.Terraria.Player.orig_RollLuck orig, Player self, int range) {
@@ -420,7 +421,7 @@ namespace Origins {
 				npcChatQuestListFocus = hoveredIndex;
 			}
 		}
-
+		#region plants
 		private void WorldGen_PlantAlchIL(ILContext il) {
 			ILCursor c = new ILCursor(il);
 			if (!c.TryGotoNext(
@@ -627,6 +628,7 @@ namespace Origins {
 			if (genRand.NextBool(15) && (treeType == TreeTypes.Crimson || treeType == TreeTypes.PalmCrimson)) return false;
 			return true;
 		}
+		#endregion
 		private void TileLightScanner_GetTileLight(On.Terraria.Graphics.Light.TileLightScanner.orig_GetTileLight orig, Terraria.Graphics.Light.TileLightScanner self, int x, int y, out Vector3 outputColor) {
 			orig(self, x, y, out outputColor);
 			Tile tile = Main.tile[x, y];
@@ -787,5 +789,19 @@ namespace Origins {
 			orig(clearCounts);
 		}
 		#endregion
+		private void TileDrawing_Draw(On.Terraria.GameContent.Drawing.TileDrawing.orig_Draw orig, Terraria.GameContent.Drawing.TileDrawing self, bool solidLayer, bool forRenderTargets, bool intoRenderTargets, int waterStyleOverride) {
+			orig(self, solidLayer, forRenderTargets, intoRenderTargets, waterStyleOverride);
+			if (solidLayer) {
+				tileOutlineShader.Shader.Parameters["uImageSize0"].SetValue(Main.ScreenSize.ToVector2());
+				tileOutlineShader.Shader.Parameters["uScale"].SetValue(24);
+				tileOutlineShader.Shader.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects / 60f);
+				SpriteBatchState state = Main.spriteBatch.GetState();
+				Main.spriteBatch.Restart(state with {
+					effect = tileOutlineShader.Shader
+				});
+				orig(self, solidLayer, forRenderTargets, intoRenderTargets, waterStyleOverride);
+				Main.spriteBatch.Restart(state);
+			}
+		}
 	}
 }
