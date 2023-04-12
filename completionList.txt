@@ -313,7 +313,7 @@ ACCESSORIES:
 (^) Superjump Cape
 (#2, ^2) Superstar Celebration Gear !!!
 (^) Symbiote Skull
-(#2, ^2) Tainted Flesh !!!
+(☻) Tainted Flesh !!!
 (^) Trap Charm
 (^) Turbo Reel
 (^) Unsought Organ

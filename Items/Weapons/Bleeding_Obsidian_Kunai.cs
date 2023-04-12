@@ -58,7 +58,7 @@ namespace Origins.Items.Weapons {
 			target.AddBuff(BuffID.CursedInferno, 300);
 			target.AddBuff(BuffID.Ichor, 300);
 			target.AddBuff(BuffID.OnFire, 300);
-			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.9f);
+			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.9f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) {
 			target.AddBuff(BuffID.Bleeding, 300);

@@ -70,7 +70,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-			OriginGlobalNPC.InflictTorn(target, 300);
+			OriginGlobalNPC.InflictTorn(target, 300, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 
 		public override bool PreDraw(ref Color lightColor) {

@@ -946,11 +946,6 @@ namespace Origins {
 			if (hasPotatOS) {
 				Potato_Battery.PlayRandomMessage(Potato_Battery.QuoteType.Death, potatOSQuoteCooldown, Player.Top);
 			}
-			if (taintedFlesh) {
-				tornTarget -= 0.1f; //does this work?
-				//nope, that's for the torn effect on the player and this wouldn't be anywhere near the right place anyway,
-				//but I think I can manage to make tainted flesh actually work
-			}
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet) {
 			releaseTriggerSetBonus = !controlTriggerSetBonus;
@@ -1220,7 +1215,7 @@ namespace Origins {
 					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
 				}
 				if (flaskSalt) {
-					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f);
+					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f, this);
 				}
 			}
 			if (item.CountsAsClass(DamageClasses.Explosive)) {
@@ -1237,7 +1232,7 @@ namespace Origins {
 					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
 				}
 				if (flaskSalt) {
-					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f);
+					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f, this);
 				}
 			}
 		}
@@ -1250,7 +1245,7 @@ namespace Origins {
 				}
 			}
 			if (symbioteSkull) {
-				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.9f);
+				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.9f, this);
 			}
 			if (decayingScale) {
 				target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);

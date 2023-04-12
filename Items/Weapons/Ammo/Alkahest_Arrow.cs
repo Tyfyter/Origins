@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Ammo {
 			SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.33f);
+			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.33f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 	}
 }
