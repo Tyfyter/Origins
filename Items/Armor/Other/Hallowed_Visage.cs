@@ -41,4 +41,11 @@ namespace Origins.Items.Armor.Other {
 			recipe.Register();
 		}
 	}
+	[AutoloadEquip(EquipType.Head)]
+	public class Ancient_Hallowed_Visage : Hallowed_Visage {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			DisplayName.SetDefault("Ancient Hallowed Visage");
+		}
+	}
 }
