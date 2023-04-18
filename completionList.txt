@@ -39,7 +39,7 @@ X: No progress
 
 BOSSES AND MINI-BOSSES:
 ---
-(X) Chambersite Sentinel !!!
+(#, ^2) Chambersite Sentinel !!!
 (#, ^2) Defiled Spawnswarmer
 (X) Discombobulator
 (#, ^2) Grand Corruptor
@@ -105,11 +105,11 @@ ENEMY NPCS:
 (#, ^2) Barnacleback !!!
 (^) Buckethead Zombie
 (^) Chunky Slime
-(X) Cleaver
+(#, ^2(use flagellash sprites)) Cleaver !!!
 (#, ^2) Cranivore !!!
-(#, %2) Crimbrain
-(X) Defiled Ekko !!!
-(X) Defiled Wisp !!!
+(#, ^2) Crimbrain !!!
+(#, ^2) Defiled Ekko !!!
+(#, ^2) Defiled Wisp !!!
 (^) Fiberglass Enemies
 (^) Measly Moeba
 (#, ^2) Optiphage !!!
@@ -233,6 +233,7 @@ ARMOR:
 (^) Nova Armor
 (X) Phoenix Skin Armor
 
+(^) Ancient Hallowed Visage
 (^) Chlorophyte Crown
 (^) Chlorophyte Visage
 (^) Hallowed Visage
@@ -313,7 +314,7 @@ ACCESSORIES:
 (^) Superjump Cape
 (#2, ^2) Superstar Celebration Gear !!!
 (^) Symbiote Skull
-(☻) Tainted Flesh !!!
+(^) Tainted Flesh
 (^) Trap Charm
 (^) Turbo Reel
 (^) Unsought Organ

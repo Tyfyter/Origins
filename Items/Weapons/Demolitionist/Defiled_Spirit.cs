@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
 using Terraria;
 using Terraria.Audio;
@@ -14,7 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
-			Item.damage = 14;
+			Item.damage = 13;
 			Item.useTime = 28;
 			Item.useAnimation = 28;
 			Item.shoot = ModContent.ProjectileType<Defiled_Spirit_P>();

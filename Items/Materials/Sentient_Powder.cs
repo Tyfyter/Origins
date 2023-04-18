@@ -12,6 +12,7 @@ namespace Origins.Items.Materials {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Sentient Powder");
+			Tooltip.SetDefault("Spreads the Riven");
 			SacrificeTotal = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.VilePowder];
 			glowmask = Origins.AddGlowMask(this);
 		}

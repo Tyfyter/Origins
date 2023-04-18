@@ -28,7 +28,7 @@ namespace Origins.Items.Armor.Riptide {
 			return body.type == ModContent.ItemType<Riptide_Breastplate>() && legs.type == ModContent.ItemType<Riptide_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "5% increased magic damage when submerged or in rain\nGrants the ability to dash which releases a tidal wave upon dashing";
+			player.setBonus = "5% increased magic damage when submerged or in rain\nGrants the ability to dash which releases a tidal wave";
 			player.GetModPlayer<OriginPlayer>().riptideSet = true;
 			if (player.wet) {//TODO: rain
 				player.GetDamage(DamageClass.Magic) += 0.05f;
