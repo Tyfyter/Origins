@@ -7,6 +7,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Rift;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
+using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
@@ -342,7 +343,10 @@ namespace Origins {
 				amebicProtectionHairShaderID = GameShaders.Hair.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
 
 				tileOutlineShader = new ArmorShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/TileOutline", AssetRequestMode.ImmediateLoad).Value), "TileOutline");
-				GameShaders.Armor.BindShader(MC.ItemType<Sonar_Visor>(), tileOutlineShader);
+				GameShaders.Armor.BindShader(MC.ItemType<High_Contrast_Dye>(), tileOutlineShader);
+				tileOutlineShader.Shader.Parameters["uImageSize0"].SetValue(Main.ScreenSize.ToVector2());
+				tileOutlineShader.Shader.Parameters["uScale"].SetValue(2);
+				tileOutlineShader.Shader.Parameters["uColor"].SetValue(new Vector3(1f, 1f, 1f));
 				//amebicProtectionShaderID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
 				//Filters.Scene["Origins:ZoneDusk"].GetShader().UseOpacity(0.35f);
 				//Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.

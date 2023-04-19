@@ -35,6 +35,7 @@ namespace Origins.NPCs.Defiled {
 		float time = 0;
 		int trappedTime = 0;
 		int roars = 0;
+		int armFrame = 0;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public static int TripleDashCD {
 			get {
@@ -460,6 +461,7 @@ namespace Origins.NPCs.Defiled {
 			} else if (++NPC.frameCounter > 7) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + frameHeight) % (frameHeight * 3) + frameHeight * 4, 122, frameHeight);
 				NPC.frameCounter = 0;
+				armFrame = (armFrame + 1) % 3;
 			}
 		}
 		public override void UpdateLifeRegen(ref int damage) {
@@ -514,9 +516,10 @@ namespace Origins.NPCs.Defiled {
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			drawColor *= (255 - NPC.alpha) / 255f;
 			bool dir = NPC.spriteDirection == 1;
+			Rectangle armsFrame = new Rectangle(0, armFrame * 96, 30, 94);
 			Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("NPCs/Defiled/Defiled_Amalgamation_RA").Value,
 				NPC.Center - new Vector2(-46 * NPC.spriteDirection, 12) * NPC.scale - screenPos,
-				null,
+				armsFrame,
 				drawColor,
 				rightArmRot * NPC.spriteDirection,
 				new Vector2(dir ? 7 : 23, 19),
@@ -526,7 +529,7 @@ namespace Origins.NPCs.Defiled {
 
 			Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("NPCs/Defiled/Defiled_Amalgamation_LA").Value,
 				NPC.Center - new Vector2(36 * NPC.spriteDirection, 0) * NPC.scale - screenPos,
-				null,
+				armsFrame,
 				drawColor,
 				-leftArmRot * NPC.spriteDirection,
 				new Vector2(dir ? 23 : 7, 19),

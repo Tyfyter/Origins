@@ -1,6 +1,7 @@
 ﻿using Microsoft.CSharp.RuntimeBinder;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using MonoMod.RuntimeDetour.HookGen;
@@ -25,6 +26,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Personalities;
 using Terraria.GameInput;
@@ -203,6 +205,7 @@ namespace Origins {
 			};
 			On.Terraria.Player.RollLuck += Player_RollLuck;
 			On.Terraria.GameContent.Drawing.TileDrawing.Draw += TileDrawing_Draw;
+			On.Terraria.GameContent.Drawing.TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
 		}
 
 		private int Player_RollLuck(On.Terraria.Player.orig_RollLuck orig, Player self, int range) {
@@ -789,19 +792,92 @@ namespace Origins {
 			orig(clearCounts);
 		}
 		#endregion
-		private void TileDrawing_Draw(On.Terraria.GameContent.Drawing.TileDrawing.orig_Draw orig, Terraria.GameContent.Drawing.TileDrawing self, bool solidLayer, bool forRenderTargets, bool intoRenderTargets, int waterStyleOverride) {
+		static bool sonarDrawing = false;
+		static bool sonarDrawingNonSolid = false;
+		private void TileDrawing_Draw(On.Terraria.GameContent.Drawing.TileDrawing.orig_Draw orig, TileDrawing self, bool solidLayer, bool forRenderTargets, bool intoRenderTargets, int waterStyleOverride) {
+			sonarDrawing = false;
+			sonarDrawingNonSolid = false;
 			orig(self, solidLayer, forRenderTargets, intoRenderTargets, waterStyleOverride);
-			if (solidLayer) {
+			if (!Main.gamePaused && Main.instance.IsActive && Main.LocalPlayer.GetModPlayer<OriginPlayer>().sonarVisor) {//solidLayer && 
+				sonarDrawing = true;
+				sonarDrawingNonSolid = !solidLayer;
 				tileOutlineShader.Shader.Parameters["uImageSize0"].SetValue(Main.ScreenSize.ToVector2());
-				tileOutlineShader.Shader.Parameters["uScale"].SetValue(24);
-				tileOutlineShader.Shader.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects / 60f);
+				//tileOutlineShader.Shader.Parameters["uScale"].SetValue(2);
+				//tileOutlineShader.Shader.Parameters["uColor"].SetValue(new Vector3(1f, 1f, 1f));//new Vector4(0.5f, 0.0625f, 0f, 0f)
 				SpriteBatchState state = Main.spriteBatch.GetState();
 				Main.spriteBatch.Restart(state with {
 					effect = tileOutlineShader.Shader
 				});
 				orig(self, solidLayer, forRenderTargets, intoRenderTargets, waterStyleOverride);
 				Main.spriteBatch.Restart(state);
+				sonarDrawing = false;
+				sonarDrawingNonSolid = false;
 			}
+		}
+		private Color TileDrawing_DrawTiles_GetLightOverride(On.Terraria.GameContent.Drawing.TileDrawing.orig_DrawTiles_GetLightOverride orig, TileDrawing self, int j, int i, Tile tileCache, ushort typeCache, short tileFrameX, short tileFrameY, Color tileLight) {
+			if (sonarDrawing) {
+				if (TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer)) {
+					return new Color(255, 50, 50);
+				} else if (Main.tileSolid[typeCache]) {
+					if (Main.IsTileSpelunkable(i, j)) {
+						return new Color(200, 170, 100);
+					}
+					return new Color(255, 255, 255);
+				} else {
+					return new Color(0, 0, 0, 0);
+				}
+			} else {
+				return orig(self, i, j, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
+			}
+		}
+
+		private void TileDrawing_DrawSingleTile(ILContext il) {
+			ILCursor c = new ILCursor(il);
+			FieldReference tileLight = null;
+			if (c.TryGotoNext(o => o.MatchStfld<TileDrawInfo>("tileLight") && o.MatchStfld(out tileLight))) {
+				if (c.TryGotoNext(MoveType.After, o => o.MatchRet()) && c.TryGotoNext(MoveType.AfterLabel)) {
+					ILLabel label = c.DefineLabel();
+					//if (!sonarDrawing) {
+					//c.Emit(OpCodes.Ldsfld, typeof(Origins).GetField("sonarDrawing", BindingFlags.NonPublic | BindingFlags.Static));
+					//c.Emit(OpCodes.Brfalse, label);
+
+					c.Emit(OpCodes.Ldarg_0);
+					c.Emit(OpCodes.Ldarg_S, il.Method.Parameters[6]);
+					c.Emit(OpCodes.Ldarg_S, il.Method.Parameters[7]);
+					c.Emit(OpCodes.Ldarg_0);
+					c.Emit(OpCodes.Ldfld, tileLight);
+					c.EmitDelegate((Func<int, int, Color, Color>)((int tileX, int tileY, Color _tileLight) => {
+						if (!sonarDrawing) {
+							return _tileLight;
+						}
+						if (TileDrawing.IsTileDangerous(tileX, tileY, Main.LocalPlayer)) {
+							return new Color(255, 50, 50);
+						} else if (Main.IsTileSpelunkable(tileX, tileY)) {
+							return new Color(200, 170, 0);
+						} else if (Main.tileSolid[Main.tile[tileX, tileY].TileType]){
+							return new Color(200, 200, 200);
+						} else {
+							return new Color(0, 0, 0, 0);
+						}
+					}));
+					c.Emit(OpCodes.Stfld, tileLight);
+					//c.MarkLabel(label);
+					//}
+				}
+			}
+		}
+		
+
+		private void _TileDrawing_DrawSingleTile(On.Terraria.GameContent.Drawing.TileDrawing.orig_DrawSingleTile orig, TileDrawing self, TileDrawInfo drawData, bool solidLayer, int waterStyleOverride, Vector2 screenPosition, Vector2 screenOffset, int tileX, int tileY) {
+
+			if (TileDrawing.IsTileDangerous(tileX, tileY, Main.LocalPlayer)) {
+				drawData.tileLight = new Color(255, 50, 50);
+			} else if (Main.IsTileSpelunkable(tileX, tileY)) {
+				drawData.tileLight = new Color(200, 170, 0);
+			} else {
+				drawData.tileLight = new Color(200, 200, 200);
+			}
+			orig(self, drawData, solidLayer, waterStyleOverride, screenPosition, screenOffset, tileX, tileY);
 		}
 	}
 }

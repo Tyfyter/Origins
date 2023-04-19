@@ -16,7 +16,9 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().sonarVisor = true;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.advancedImaging = true;
+			originPlayer.sonarVisor = true;
 			player.buffImmune[BuffID.Confused] = true;
 		}
 		public override void AddRecipes() {

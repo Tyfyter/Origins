@@ -145,6 +145,7 @@ namespace Origins {
 		public int thirdEyeTime = 0;
 		public int thirdEyeUseTime = 0;
 		public int thirdEyeResetTime = 0;
+		public bool sonarVisor = false;
 		#endregion
 
 		#region explosive stats
@@ -384,6 +385,7 @@ namespace Origins {
 			} else if (++thirdEyeTime >= thirdEyeResetTime) {
 				thirdEyeTime = 0;
 			}
+			sonarVisor = false;
 
 			flaskBile = false;
 			flaskSalt = false;

@@ -139,8 +139,12 @@ namespace Origins {
 			}
 		}
 		public override void ModifyLightingBrightness(ref float scale) {
-			if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().plagueSightLight) {
+			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+			if (originPlayer.plagueSightLight) {
 				scale *= 1.03f;
+			}
+			if (originPlayer.sonarVisor) {
+				scale *= 0.9f;
 			}
 		}
 		public override void UpdateUI(GameTime gameTime) {
