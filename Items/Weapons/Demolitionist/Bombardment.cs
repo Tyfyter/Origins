@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useTime = 6;
 			Item.useAnimation = 36;
 			Item.knockBack = 4f;
-			Item.useAmmo = ModContent.ItemType<Resizable_Mine>();
+			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>(); // How does one utilize multiple ammo types?
 			Item.shoot = ModContent.ProjectileType<Bombardment_P>();
 			Item.shootSpeed = 9;
 			Item.rare = ItemRarityID.Blue;

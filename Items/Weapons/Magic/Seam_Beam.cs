@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetDefaults() {
 			Item.damage = 42;
 			Item.DamageType = DamageClass.Magic;
-			Item.mana = 22;
+			Item.mana = 19;
 			Item.shoot = ModContent.ProjectileType<Seam_Beam_Beam>();
 			Item.shootSpeed = 0f;
 			Item.useTime = Item.useAnimation = 20;

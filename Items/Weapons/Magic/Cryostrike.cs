@@ -17,8 +17,8 @@ namespace Origins.Items.Weapons.Magic {
 			Item.damage = 16;
 			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
-			Item.width = 28;
-			Item.height = 30;
+			Item.width = 48;
+			Item.height = 48;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.mana = 10;

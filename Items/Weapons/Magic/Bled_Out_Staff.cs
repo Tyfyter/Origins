@@ -6,11 +6,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
     public class Bled_Out_Staff : ModItem {
-		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bled Out Staff");
 			Item.staff[Item.type] = true;
-			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -26,7 +24,6 @@ namespace Origins.Items.Weapons.Magic {
 			Item.shoot = ModContent.ProjectileType<Bled_Out_Staff_P>();
 			Item.value = Item.sellPrice(silver: 80);
 			Item.rare = ItemRarityID.Yellow;
-			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

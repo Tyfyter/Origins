@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
-			Item.damage = 60;
+			Item.damage = 52;
 			Item.useTime = 7;
 			Item.useAnimation = 7;
 			Item.shootSpeed = 13;
@@ -43,6 +43,7 @@ namespace Origins.Items.Weapons {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PoisonDart);
+			Projectile.penetrate = 1;
 			Projectile.hostile = false;
 			Projectile.friendly = true;
 			Projectile.trap = false;

@@ -14,7 +14,7 @@ namespace Origins.Tiles.Brine {
 			ItemDrop = ItemType<Sulphur_Stone_Item>();
 			AddMapEntry(new Color(18, 73, 56));
 			mergeID = TileID.Stone;
-			MinPick = 195;
+			MinPick = 200;
 			HitSound = SoundID.Dig;
 		}
 		public override bool CanExplode(int i, int j) {

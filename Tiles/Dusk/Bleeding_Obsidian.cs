@@ -14,7 +14,7 @@ namespace Origins.Tiles.Dusk {
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			ItemDrop = ItemType<Bleeding_Obsidian_Shard>();
 			AddMapEntry(new Color(57, 10, 75));
-			MinPick = 210;
+			MinPick = 190;
 			MineResist = 8;
 		}
 		public override bool Drop(int i, int j) {

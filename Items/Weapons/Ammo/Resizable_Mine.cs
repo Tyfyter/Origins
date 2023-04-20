@@ -4,9 +4,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-	public class Resizable_Mine : ModItem {
+	public class Resizable_Mine_Two : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Resizable Mine");
+			DisplayName.SetDefault("Resizable Mine Mk. II");
 			Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
 			SacrificeTotal = 99;
 		}
@@ -19,7 +19,79 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.shootSpeed = 4f;
             Item.knockBack = 3f;
 			Item.value = Item.sellPrice(silver: 4, copper: 65);
+			Item.rare = ItemRarityID.Green;
+		}
+	}
+	public class Resizable_Mine_One : Resizable_Mine_Two {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Resizable Mine Mk. I");
+			Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
+			SacrificeTotal = 99;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.Grenade);
+			Item.maxStack = 999;
+			Item.damage = 10;
+			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
+			Item.ammo = Type;
+			Item.shootSpeed = 3.7f;
+			Item.knockBack = 2f;
+			Item.value = Item.sellPrice(silver: 2, copper: 33);
+			Item.rare = ItemRarityID.White;
+		}
+	}
+	public class Resizable_Mine_Three : Resizable_Mine_Two {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Resizable Mine Mk. III");
+			Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
+			SacrificeTotal = 99;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.Grenade);
+			Item.maxStack = 999;
+			Item.damage = 33;
+			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
+			Item.ammo = Type;
+			Item.shootSpeed = 4.4f;
+			Item.knockBack = 3.6f;
+			Item.value = Item.sellPrice(silver: 8, copper: 80);
 			Item.rare = ItemRarityID.Pink;
+		}
+	}
+	public class Resizable_Mine_Four : Resizable_Mine_Two {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Resizable Mine Mk. IV");
+			Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
+			SacrificeTotal = 99;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.Grenade);
+			Item.maxStack = 999;
+			Item.damage = 45;
+			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
+			Item.ammo = Type;
+			Item.shootSpeed = 4.8f;
+			Item.knockBack = 4.3f;
+			Item.value = Item.sellPrice(silver: 13);
+			Item.rare = ItemRarityID.Yellow;
+		}
+	}
+	public class Resizable_Mine_Five : Resizable_Mine_Two {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Resizable Mine Mk. V");
+			Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
+			SacrificeTotal = 99;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.Grenade);
+			Item.maxStack = 999;
+			Item.damage = 58;
+			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
+			Item.ammo = Type;
+			Item.shootSpeed = 5.2f;
+			Item.knockBack = 4.8f;
+			Item.value = Item.sellPrice(silver: 26);
+			Item.rare = ItemRarityID.Cyan;
 		}
 	}
 	public class Resizable_Mine_P : ModProjectile, IIsExplodingProjectile {

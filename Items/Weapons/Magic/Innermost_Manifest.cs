@@ -17,13 +17,13 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
-			Item.damage = 16;
+			Item.damage = 8;
 			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
 			Item.width = 28;
 			Item.height = 30;
-			Item.useTime = 20;
-			Item.useAnimation = 20;
+			Item.useTime = 15;
+			Item.useAnimation = 15;
 			Item.mana = 8;
 			Item.shoot = ModContent.ProjectileType<Innermost_Manifest_P>();
 			Item.value = Item.sellPrice(silver: 30);
@@ -45,7 +45,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.RubyBolt);
 			Projectile.extraUpdates = 1;
-			Projectile.penetrate = 25;
+			Projectile.penetrate = 10;
 			Projectile.hide = true;
 			Projectile.alpha = 0;
 			Projectile.usesLocalNPCImmunity = true;
@@ -55,6 +55,9 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.ai[0] = -1;
 		}
 		public override void AI() {
+			Dust dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.Ichor, 0, 0, 255, new Color(220, 220, 200), 0.8f);
+			dust.noGravity = false;
+			dust.velocity *= 1.2f;
 			if (Projectile.ai[0] >= 0) {
 				NPC embedTarget = Main.npc[(int)Projectile.ai[0]];
 				if (embedTarget.active) {
@@ -76,11 +79,11 @@ namespace Origins.Items.Weapons.Magic {
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
 			if (Projectile.ai[0] < 0) {
 				Projectile.ai[0] = target.whoAmI;
-				Projectile.ArmorPenetration += target.defense * 4;
-				Projectile.damage /= 4;
+				Projectile.ArmorPenetration = (target.defense + 2);
+				Projectile.damage = 2;
 				Projectile.knockBack = 0;
 			}
-			OriginGlobalNPC.InflictTorn(target, 60, 120, 0.5f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 60, 120, 0.75f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			behindNPCs.Add(index);

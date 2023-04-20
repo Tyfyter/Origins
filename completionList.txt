@@ -89,6 +89,7 @@ VANILLA MODIFICATIONS:
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
 (^) Explosive Defense Punishment (increased affliction from defense)
 (^) Harpoon (new weapon to introduce sub-class)*
+(X) Proximity Mine Launcher to use R-Mines !!!
 ---
 
 
@@ -215,11 +216,11 @@ ARMOR:
 
 (^) Acrid Armor
 (X) Amber Exploder Armor
+(^) Bleeding Obsidian Armor
 (X) Cell Armor
 (X) Ruby Ranger Armor
 
 (X) Blast Armor
-(^) Bleeding Obsidian Armor
 (X) Chambersite Armor !!!
 (X) Eden Armor
 (@5, ^3) Necromancer Armor
@@ -266,6 +267,7 @@ ACCESSORIES:
 (^) Explosive Artery
 (^) Focus Crystal
 (^) Grave Danger
+(X) Grenade Tube !!!
 (^) Gun Glove
 (^) Haggard Artery
 (^) Handy Helper
@@ -304,7 +306,7 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing !!!
 (^) Ruby Reticle
-(☻) Sonar Visor*
+(#3, ^2) Sonar Visor* !!!
 (^) Scavenger Bag
 (#2, ^2) Solar Panel !!!
 (@5, #2) Sonic Radar !!!
@@ -466,6 +468,7 @@ MELEE WEAPONS:
 (^) Vorpal Sword
 
 (#2, ^2) Amenonuhoko !!!
+(X) Amoebash
 (^) Crystal Cutters
 (^) Depth Charge
 (^) Knee Slapper
@@ -473,6 +476,8 @@ MELEE WEAPONS:
 (%, @, #) Origins Biome Keybrands !!!
 (^) Telephone Pole*
 
+(X) Chiton Kursarigama
+(X) Gospel
 (^) Personal Laser Blade*
 (X) Pile Bunker
 
@@ -520,6 +525,7 @@ RANGED WEAPONS:
 (^) Dreikan
 (^) Laser Tag Gun
 (X) Serpentine
+(X) Shroomshot
 (X) Skewr
 
 (X) Fulcrum
@@ -541,19 +547,21 @@ MAGIC WEAPONS:
 (^) Slashswarm
 (^) Tones of Agony
 
+(^) Bled Out Staff
 (X) Brineshower
 (X) Communion
 (^) Dismay
-(#3, ^2) Innermost Manifest !!! (kinda broken??)
+(^) Innermost Manifest
 (#, ^2) Meltdown
 (#2, ^2) Missing File
 (^) Seam Beam
+(X) Shinedown
 (^) Splashid
 (^) Startillery
 
 (^) Amber of Embers
-(^) Bled Out Staff
 (X) Divine Lite
+(X) Ghost Trap
 (^) Haunted Vase
 (X) Lunarfire
 (#, ^2) Phantom Fury
@@ -592,6 +600,7 @@ SUMMONER WEAPONS:
 
 (X) Controller/Patrol Bot Controller
 (X) Core of Cogs
+(X) Culltivator
 (X) Doom Incantation
 (X) Ego
 (@2/3, #) Fiber Optic Whip
@@ -916,7 +925,8 @@ AMMO:
 (^) Flammable Harpoon
 (^) Harpoon
 (^) Peatball*
-(^) Resizable Mine
+(@, #3) Resizable Mine Mk. 1 !!!
+(@, #3) Resizable Mine Mk. 2
 
 (^) Alkahest Arrow
 (^) Alkahest Bullet
@@ -926,10 +936,13 @@ AMMO:
 (^) Bile Dart
 (^) Cursed Harpoon
 (^) Giant Metal Slug
+(@, #3) Resizable Mine Mk. 3
 (^) Thermite Canister
 
+(@, #3) Resizable Mine Mk. 4
 (^) Scrap
 
+(@, #3) Resizable Mine Mk. 5
 (#2, ^2) Starfuze
 
 (^) Gray Solution
