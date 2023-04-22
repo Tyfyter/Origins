@@ -229,7 +229,7 @@ namespace Origins.Buffs {
 	public class Teardown_Buff : ModBuff {
 		public override string Texture => "Origins/Buffs/Exoskeleton_Buff";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Teardown");
+			DisplayName.SetDefault("Flying Exoskeleton");
 			Description.SetDefault("The Flying Exoskeleton will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

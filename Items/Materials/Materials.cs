@@ -34,17 +34,6 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Aetherite_Bar : ModItem {
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Aetherite Bar");
-			SacrificeTotal = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = 999;
-			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = ItemRarityID.Yellow;
-		}
-	}
 	public class Alkahest : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Alkahest");
@@ -112,7 +101,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
-			Item.rare = ItemRarityID.Lime;
+			Item.rare = ItemRarityID.LightRed;
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
@@ -289,21 +278,6 @@ namespace Origins.Items.Materials {
 			Item.rare = ItemRarityID.Yellow;
 		}
 	}
-	public class Dream_Vapor : ModItem {
-		static short glowmask;
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dream Vapor");
-			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 25;
-		}
-		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Ectoplasm);
-			Item.maxStack = 99;
-			Item.value = Item.buyPrice(silver: 80);
-			Item.rare = ItemRarityID.Yellow;
-			Item.glowMask = glowmask;
-		}
-	}
 	public class Dusk_Key : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dusk Key");
@@ -366,18 +340,6 @@ namespace Origins.Items.Materials {
 			recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
 			recipe.AddTile(TileID.Anvils); //Omni-Printer also not implemented
 			recipe.Register();
-		}
-	}
-	public class Empyrite : ModItem {
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Empyrite");
-			SacrificeTotal = 25;
-		}
-		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Ectoplasm);
-			Item.maxStack = 999;
-			Item.value = Item.buyPrice(silver: 50);
-			Item.rare = ItemRarityID.Yellow;
 		}
 	}
 	[LegacyName("Infested_Bar")]
@@ -855,17 +817,6 @@ namespace Origins.Items.Materials {
 			recipe.AddIngredient(this, 30);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.Register();
-		}
-	}
-	public class Unity_Shard : ModItem {
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Unity Shard");
-			SacrificeTotal = 1;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = 999;
-			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = ItemRarityID.Yellow;
 		}
 	}
 	public class Unpowered_Eyndum_Core : ModItem {

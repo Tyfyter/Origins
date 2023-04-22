@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 10f;
 			Item.shootSpeed = 24f;
 			Item.value = Item.sellPrice(gold: 20);
-			Item.rare = ItemRarityID.Yellow;
+			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.25f);
 			Item.autoReuse = true;
 

@@ -74,6 +74,20 @@ namespace Origins {
 			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 23);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.StylistKilLaKillScissorsIWish);
+			recipe.AddIngredient(ItemID.SilverBar, 2);
+			recipe.AddIngredient(ModContent.ItemType<Magic_Hair_Spray>(), 5);
+			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 4);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.StylistKilLaKillScissorsIWish);
+			recipe.AddIngredient(ItemID.TungstenBar, 2);
+			recipe.AddIngredient(ModContent.ItemType<Magic_Hair_Spray>(), 5);
+			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 4);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 			//this hook is supposed to be used for adding recipes,
 			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
 			Origins.instance.LateLoad();

@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
-			Item.damage = 80;
+			Item.damage = 45;
 			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
 			Item.width = 42;
@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.mana = 16;
 			Item.shoot = ModContent.ProjectileType<Bled_Out_Staff_P>();
 			Item.value = Item.sellPrice(silver: 80);
-			Item.rare = ItemRarityID.Yellow;
+			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

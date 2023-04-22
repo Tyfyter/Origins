@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
-			Item.damage = 20;
+			Item.damage = 22;
 			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
 			Item.ammo = Type;
 			Item.shootSpeed = 4f;
@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
-			Item.damage = 10;
+			Item.damage = 14;
 			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
 			Item.ammo = Type;
 			Item.shootSpeed = 3.7f;
@@ -49,7 +49,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
-			Item.damage = 33;
+			Item.damage = 31;
 			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
 			Item.ammo = Type;
 			Item.shootSpeed = 4.4f;
@@ -85,7 +85,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
-			Item.damage = 58;
+			Item.damage = 50;
 			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
 			Item.ammo = Type;
 			Item.shootSpeed = 5.2f;

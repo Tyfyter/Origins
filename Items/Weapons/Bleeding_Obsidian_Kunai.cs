@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons {
 			Item.maxStack = 8;
 			Item.shoot = ModContent.ProjectileType<Bleeding_Obsidian_Kunai_P>();
 			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = ItemRarityID.Yellow;
+			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,6 +25,14 @@ namespace Origins.Items.Weapons.Melee {
 			Item.rare = ItemRarityID.LightRed;
 			Item.autoReuse = true;
 			Item.value = Item.buyPrice(gold: 1);
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.CrystalShard, 14);
+			recipe.AddIngredient(ModContent.ItemType<Magic_Hair_Spray>(), 5);
+			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 4);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 		}
 	}
 	public class Crystal_Cutters_P : ModProjectile {
