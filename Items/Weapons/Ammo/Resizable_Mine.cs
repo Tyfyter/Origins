@@ -4,24 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-	public class Resizable_Mine_Two : ModItem {
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Resizable Mine Mk. II");
-			Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
-			SacrificeTotal = 99;
-		}
-		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Grenade);
-			Item.maxStack = 999;
-			Item.damage = 22;
-			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
-			Item.ammo = Type;
-			Item.shootSpeed = 4f;
-            Item.knockBack = 3f;
-			Item.value = Item.sellPrice(silver: 4, copper: 65);
-			Item.rare = ItemRarityID.Green;
-		}
-	}
 	public class Resizable_Mine_One : Resizable_Mine_Two {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Resizable Mine Mk. I");
@@ -40,6 +22,24 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.White;
 		}
 	}
+	public class Resizable_Mine_Two : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Resizable Mine Mk. II");
+			Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
+			SacrificeTotal = 99;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.Grenade);
+			Item.maxStack = 999;
+			Item.damage = 22;
+			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
+			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
+			Item.shootSpeed = 4f;
+            Item.knockBack = 3f;
+			Item.value = Item.sellPrice(silver: 4, copper: 65);
+			Item.rare = ItemRarityID.Green;
+		}
+	}
 	public class Resizable_Mine_Three : Resizable_Mine_Two {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Resizable Mine Mk. III");
@@ -51,7 +51,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = 999;
 			Item.damage = 31;
 			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
-			Item.ammo = Type;
+			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4.4f;
 			Item.knockBack = 3.6f;
 			Item.value = Item.sellPrice(silver: 8, copper: 80);
@@ -69,7 +69,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = 999;
 			Item.damage = 45;
 			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
-			Item.ammo = Type;
+			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4.8f;
 			Item.knockBack = 4.3f;
 			Item.value = Item.sellPrice(silver: 13);
@@ -87,7 +87,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = 999;
 			Item.damage = 50;
 			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
-			Item.ammo = Type;
+			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 5.2f;
 			Item.knockBack = 4.8f;
 			Item.value = Item.sellPrice(silver: 26);
