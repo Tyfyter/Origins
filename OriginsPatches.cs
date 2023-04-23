@@ -816,11 +816,22 @@ namespace Origins {
 		}
 		private Color TileDrawing_DrawTiles_GetLightOverride(On.Terraria.GameContent.Drawing.TileDrawing.orig_DrawTiles_GetLightOverride orig, TileDrawing self, int j, int i, Tile tileCache, ushort typeCache, short tileFrameX, short tileFrameY, Color tileLight) {
 			if (sonarDrawing) {
-				if (TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer)) {
-					return new Color(255, 50, 50);
-				} else if (Main.tileSolid[typeCache]) {
+				bool solid = Main.tileSolid[typeCache];
+				if (solid || sonarDrawingNonSolid) {
+					if (TileDrawing.IsTileDangerous(i, j, Main.LocalPlayer)) {
+						return new Color(255, 50, 50);
+					}
+					if (!solid) {
+						return new Color(0, 0, 0, 0);
+					}
 					if (Main.IsTileSpelunkable(i, j)) {
 						return new Color(200, 170, 100);
+					}
+					if (_IsSolidForSonar(Framing.GetTileSafely(i - 1, j))
+						&& _IsSolidForSonar(Framing.GetTileSafely(i, j-1))
+						&& _IsSolidForSonar(Framing.GetTileSafely(i + 1, j))
+						&& _IsSolidForSonar(Framing.GetTileSafely(i, j + 1))) {
+						return new Color(0, 0, 0, 0);
 					}
 					return new Color(255, 255, 255);
 				} else {
@@ -829,6 +840,9 @@ namespace Origins {
 			} else {
 				return orig(self, i, j, tileCache, typeCache, tileFrameX, tileFrameY, tileLight);
 			}
+		}
+		static bool _IsSolidForSonar(Tile tile) {
+			return tile.HasTile && Main.tileSolid[tile.TileType] && tile.BlockType == BlockType.Solid;
 		}
 
 		private void TileDrawing_DrawSingleTile(ILContext il) {
