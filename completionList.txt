@@ -305,7 +305,7 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing !!!
 (^) Ruby Reticle
-(#3, ^2) Sonar Visor* !!!
+(☻) Sonar Visor* !!!
 (^) Scavenger Bag
 (#2, ^2) Solar Panel !!!
 (@5, #2) Sonic Radar !!!
