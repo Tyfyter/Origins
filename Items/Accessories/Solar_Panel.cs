@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 6);
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().solarPanel = true;
+			player.GetModPlayer<OriginPlayer>().solarPanel = true;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();

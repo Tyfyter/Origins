@@ -32,6 +32,7 @@ X: No progress
 ☻: Pending review
 ♦: I don't think I did this as planned, pending review anyway
 ?: requesting explanation
+♠: pure combination item (effects are all present on other items, can be implemented by combining effects (if they're all implemented))
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -247,11 +248,11 @@ ACCESSORIES:
 (^) ACME Crate
 (^) Advanced Imaging*
 (^) Air Tank*
-(#2, ^2) ATACS !!!
+(#2, ^2, ♠) ATACS !!!
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
-(#3, ^2) Brine-Leafed Clover !!!
+(#3?, ^2) Brine-Leafed Clover !!!
 (^) Celestial Starlight
 (^) Celestial Stone Mask
 (^) Cirrhosis' Abhorrence
@@ -307,8 +308,8 @@ ACCESSORIES:
 (^) Ruby Reticle
 (☻) Sonar Visor* !!!
 (^) Scavenger Bag
-(#2, ^2) Solar Panel !!!
-(@5, #2) Sonic Radar !!!
+(☻) Solar Panel !!!
+(@5, ☻) Sonic Radar !!!
 (^) Shield of Retribution
 (#2, ^2) Strange Computer !!!
 (^) Superjump Cape

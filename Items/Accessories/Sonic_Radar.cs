@@ -15,8 +15,9 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().sonicRadar = true;
 			player.dangerSense = true;
+			player.findTreasure = true;
+			player.detectCreature = true;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
