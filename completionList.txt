@@ -133,6 +133,7 @@ ENEMY NPCS:
 (X) Defiled Reaper
 (@5, ^3/4) Defiled Tripod
 (^) Flagellant
+(#, ^2) Hoarder !!!
 (X) Holy Governor
 (X) Holy Warrior
 (X) King Crab !!!
@@ -143,7 +144,6 @@ ENEMY NPCS:
 (X) Sea Dragon !!!
 (X) Shattered Ghoul
 (X) Torn Ghoul
-(#, ^2) Vent Hopper !!!
 
 (X) Annihilator
 (X) Clockwork
@@ -306,10 +306,10 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing !!!
 (^) Ruby Reticle
-(☻) Sonar Visor* !!!
+(^) Sonar Visor*
 (^) Scavenger Bag
-(☻) Solar Panel !!!
-(@5, ☻) Sonic Radar !!!
+(^) Solar Panel
+(^) Sonic Radar
 (^) Shield of Retribution
 (#2, ^2) Strange Computer !!!
 (^) Superjump Cape
@@ -714,6 +714,7 @@ TILES:
 (#, ^2) Alkahest Torch
 (#, ^2) Bile Torch
 (X) Brine Water Fountain
+(X) Cancer Block
 (X) Chambersite Gem Lock
 (X) Chambersite Gemspark
 (#, ^2) Chambersite Gemstone !!!
@@ -732,13 +733,17 @@ TILES:
 (#, ^2) Living Bile
 (X) Mushroom Dungeon Chest
 (X) Ocean Dungeon Chest
+(X) Residue Block
 (#3?, ^2) Riven Dungeon Chest !!!
 (#, ^2) Riven Torch
 (X) Riven Water Fountain
 
+(X) Cleansing Station
+(X) Defiled Waste Organ
 (X) Elderforge
 (#, ^2) Fabricator !!!
 (X) Omni-Printer
+(X) Riven Flesh Shredder
 
 (^) Acetabularia
 (X) Brineglow Vine !!!
@@ -750,6 +755,7 @@ TILES:
 (#, ^2) Riven Pot !!!
 (^) Riven Tree
 (^) Soulspore
+(X) Star Cannon Cannon
 (^) Wilting Rose
 (#, ^2) Wrycoral !!!
 
