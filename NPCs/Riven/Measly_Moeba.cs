@@ -1,10 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Armor.Encrusted;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Items.Armor.Encrusted.Encrusted2_Mask;
 
 namespace Origins.NPCs.Riven {
 	public class Measly_Moeba : Glowing_Mod_NPC {
@@ -128,7 +131,9 @@ namespace Origins.NPCs.Riven {
 			NPC.frame.Y = 24 * (int)(NPC.frameCounter / 6.0);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Mask>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Coat>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Pants>(), 525));
 		}
 		public override void HitEffect(int hitDirection, double damage) {
 			if (NPC.life < 0) {

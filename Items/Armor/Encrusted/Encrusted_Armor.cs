@@ -96,4 +96,25 @@ namespace Origins.Items.Armor.Encrusted {
 			recipe.Register();
 		}
 	}
+	[AutoloadEquip(EquipType.Head)]
+	public class Encrusted2_Mask : Encrusted_Mask {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			DisplayName.SetDefault("Ancient Encrusted Mask");
+		}
+		[AutoloadEquip(EquipType.Body)]
+		public class Encrusted2_Coat : Encrusted_Coat {
+			public override void SetStaticDefaults() {
+				base.SetStaticDefaults();
+				DisplayName.SetDefault("Ancient Encrusted Coat");
+			}
+		}
+		[AutoloadEquip(EquipType.Legs)]
+		public class Encrusted2_Pants : Encrusted_Pants {
+			public override void SetStaticDefaults() {
+				base.SetStaticDefaults();
+				DisplayName.SetDefault("Ancient Encrusted Pants");
+			}
+		}
+	}
 }

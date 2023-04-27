@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
@@ -8,6 +9,7 @@ using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 
 namespace Origins.NPCs.Defiled {
 	public class Ancient_Defiled_Cyclops : ModNPC, IMeleeCollisionDataNPC {
@@ -35,6 +37,9 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ancient_Kruncher>()));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 14));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 14));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 14));
 		}
 		public override void AI() {
 			NPC.TargetClosest();

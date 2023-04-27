@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Armor.Encrusted;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
@@ -7,6 +8,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Items.Armor.Encrusted.Encrusted2_Mask;
 
 namespace Origins.NPCs.Riven {
 	public class Flagellant : Glowing_Mod_NPC {
@@ -43,6 +45,9 @@ namespace Origins.NPCs.Riven {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 17));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Flagellash>(), 25));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Mask>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Coat>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Pants>(), 525));
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
 			OriginPlayer.InflictTorn(target, 1800, 180, 0.47f);

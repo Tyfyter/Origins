@@ -128,6 +128,7 @@ namespace Origins {
 		public bool summonTagForceCrit = false;
 		public bool rubyReticle = false;
 		public bool taintedFlesh = false;
+		public bool taintedFlesh2 = false;
 		public bool focusCrystal = false;
 		public int focusCrystalTime = 0;
 		public int brineClover = 0;
@@ -320,6 +321,7 @@ namespace Origins {
 			protozoaFoodItem = null;
 			symbioteSkull = false;
 			taintedFlesh = false;
+			taintedFlesh2 = false;
 			if (toxicShock) {
 				if (Player.breath > oldBreath) Player.breath = oldBreath;
 				toxicShock = false;

@@ -208,6 +208,8 @@ NPC DIALOGUE:
 
 ARMOR:
 ---
+(^) Ancient Defiled Armor
+(^) Ancient Encrusted Armor
 (^) Cryosten Armor*
 (^) Defiled Armor*
 (^) Encrusted Armor
@@ -266,6 +268,7 @@ ACCESSORIES:
 (#2, ^2) Dryad's Inheritance !!!
 (^) Exploder Emblem*
 (^) Explosive Artery
+(^) Fleshy Figurine
 (^) Focus Crystal
 (^) Grave Danger
 (X) Grenade Tube !!!

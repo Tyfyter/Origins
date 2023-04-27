@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	public class Sonar_Visor : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Sonar Visor");
-			Tooltip.SetDefault("Increased projectile speed\nImmunity to Confusion\nAllows you to see tiles at a range");
+			Tooltip.SetDefault("Increased projectile speed\nImmunity to Confusion\nAllows you to see the outermost tiles");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {

@@ -125,6 +125,9 @@ namespace Origins.NPCs {
 				if (source.taintedFlesh) {
 					targetSeverity *= 0.9f;
 				}
+				if (source.taintedFlesh2) {
+					targetSeverity *= 0.81f;
+				}
 			}
 			bool hadTorn = npc.HasBuff(Torn_Buff.ID);
 			npc.AddBuff(Torn_Buff.ID, duration);

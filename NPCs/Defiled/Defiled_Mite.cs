@@ -1,12 +1,17 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Armor.Defiled;
+using Origins.Items.Materials;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Mite : ModNPC {
@@ -58,6 +63,13 @@ namespace Origins.NPCs.Defiled {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				new FlavorTextBestiaryInfoElement("Dweller of the {$Defiled} Caverns. Hard to spot as it does not move until prey draws near."),
 			});
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Helmet>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Breastplate>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 525));
 		}
 		public override bool PreAI() {
 			if (NPC.HasPlayerTarget && Main.rand.NextBool(600)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1.1f, 1.5f), NPC.Center);

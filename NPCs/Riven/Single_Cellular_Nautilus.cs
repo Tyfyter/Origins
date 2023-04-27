@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Armor.Encrusted;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using System;
@@ -7,6 +8,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Items.Armor.Encrusted.Encrusted2_Mask;
 
 namespace Origins.NPCs.Riven {
 	public class Single_Cellular_Nautilus : Glowing_Mod_NPC {
@@ -39,11 +41,14 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement(""),
+				new FlavorTextBestiaryInfoElement("This Riven-infested nautilus has grown accustomed to the amebic water's viscosity making it very agile on land. The sharpness of its shell is an added danger."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Mask>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Coat>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Pants>(), 525));
 		}
 		public override void HitEffect(int hitDirection, double damage) {
 			//spawn gore if npc is dead after being hit

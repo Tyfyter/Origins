@@ -83,6 +83,27 @@ namespace Origins.Items.Armor.Defiled {
 			recipe.Register();
 		}
 	}
+	[AutoloadEquip(EquipType.Head)]
+	public class Defiled2_Helmet : Defiled_Helmet {
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			DisplayName.SetDefault("Ancient {$Defiled} Helmet");
+		}
+		[AutoloadEquip(EquipType.Body)]
+		public class Defiled2_Breastplate : Defiled_Breastplate {
+			public override void SetStaticDefaults() {
+				base.SetStaticDefaults();
+				DisplayName.SetDefault("Ancient {$Defiled} Breastplate");
+			}
+		}
+		[AutoloadEquip(EquipType.Legs)]
+		public class Defiled2_Greaves : Defiled_Greaves {
+			public override void SetStaticDefaults() {
+				base.SetStaticDefaults();
+				DisplayName.SetDefault("Ancient {$Defiled} Greaves");
+			}
+		}
+	}
 }
 namespace Origins.Buffs {
 	public class Defiled_Exhaustion_Buff : ModBuff {
