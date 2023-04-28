@@ -32,6 +32,10 @@ namespace Origins.NPCs {
 				break;
 			}
 			switch (type) {
+				case NPCID.Clothier: {
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Pincushion>());
+					}
+					break;
 				case NPCID.GoblinTinkerer: {
 					if (ModContent.GetInstance<Turbo_Reel_Quest>().Completed) {
 						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Turbo_Reel>());
@@ -76,7 +80,7 @@ namespace Origins.NPCs {
 						if (ModContent.GetInstance<OriginSystem>().peatSold >= 120) {
 							//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Nade_O_Plenty>());
 						}
-						if (ModContent.GetInstance<OriginSystem>().peatSold >= 999) {
+						if (ModContent.GetInstance<OriginSystem>().peatSold >= 999 && !Main.hardMode) {
 							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Caustica>());
 						}
 					}

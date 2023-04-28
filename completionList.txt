@@ -228,7 +228,7 @@ ARMOR:
 (X) Chambersite Armor !!!
 (X) Eden Armor
 (@5, ^3) Necromancer Armor
-(X) Sapphire Mediator Armor
+(#2, ^2) Sapphire Mediator Armor
 
 (X) Ascendant Armor
 (^) Chromtain Armor
@@ -268,10 +268,10 @@ ACCESSORIES:
 (#2, ^2) Dryad's Inheritance !!!
 (^) Exploder Emblem*
 (^) Explosive Artery
-(^) Fleshy Figurine
+(#3, ^2) Fleshy Figurine !!!
 (^) Focus Crystal
 (^) Grave Danger
-(X) Grenade Tube !!!
+(#2, ^2) Grenade Tube !!!
 (^) Gun Glove
 (^) Haggard Artery
 (^) Handy Helper
@@ -295,7 +295,7 @@ ACCESSORIES:
 (^) No U Card
 (^) Olid Organ*
 (^) Parasitic Influence*
-(X) Pincushion !!!
+(#2, ^2) Pincushion !!!
 (^) Plasma Phial
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery
