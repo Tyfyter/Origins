@@ -17,7 +17,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddRecipeGroup("Origins:CursedFlames", 5);
+			recipe.AddRecipeGroup("Cursed Flames", 5);
 			recipe.AddIngredient(ItemID.Ruby, 16);
 			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 24);
 			recipe.AddTile(TileID.MythrilAnvil);

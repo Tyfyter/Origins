@@ -135,7 +135,7 @@ namespace Origins {
 				ModContent.ItemType<Alkahest>(),
 				ModContent.ItemType<Black_Bile>()
 			});
-			CursedFlameRecipeGroupID = RecipeGroup.RegisterGroup("CursedFlames", group);
+			CursedFlameRecipeGroupID = RecipeGroup.RegisterGroup("Cursed Flames", group);
 		}
 		public override void PostAddRecipes() {
 			int l = Main.recipe.Length;
