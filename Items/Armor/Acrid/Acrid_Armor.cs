@@ -36,11 +36,10 @@ namespace Origins.Items.Armor.Acrid {
 			return body.type == ModContent.ItemType<Acrid_Breastplate>() && legs.type == ModContent.ItemType<Acrid_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Immunity to 'Toxic Shock', 'Solvent', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
+			player.setBonus = "Immunity to 'Toxic Shock', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
 			player.buffImmune[BuffID.Poisoned] = true;
 			player.buffImmune[BuffID.Venom] = true;
 			//player.buffImmune[BuffID.ToxicShock] = true;
-			//player.buffImmune[BuffID.Solvent] = true;
 			player.breathMax += 63;
 			if (Main.GameUpdateCount % 4 != 0) {
 				player.ignoreWater = true;

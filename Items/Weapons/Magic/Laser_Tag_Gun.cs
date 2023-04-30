@@ -95,10 +95,10 @@ namespace Origins.Items.Weapons.Magic {
 			} catch (Exception) { }
 		}
 		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-			if (crit) damage *= 199;
+			if (crit) damage *= 123;
 		}
 		public override void ModifyHitPvp(Player target, ref int damage, ref bool crit) {
-			if (crit) damage *= 199;
+			if (crit) damage *= 123;
 		}
 		public override void OnHitPvp(Player target, int damage, bool crit) {
 			target.AddBuff(BuffID.Cursed, 600);

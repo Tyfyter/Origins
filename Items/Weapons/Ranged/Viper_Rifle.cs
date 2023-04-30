@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.DataStructures;
@@ -9,13 +10,13 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("HNO-3 \"Viper\"");
-			Tooltip.SetDefault("Has a chance to inflict \"Solvent\", increasing critical damage\nDeals critical damage on otherwise afflicted enemies");
+			Tooltip.SetDefault("Has a chance to inflict \"Toxic Shock\"\nDeals critical damage on otherwise afflicted enemies");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
-			Item.damage = 48;
-			Item.crit = 5;
+			Item.damage = 60;
+			Item.crit = 9;
 			Item.knockBack = 6.75f;
 			Item.useAnimation = Item.useTime = 27;
 			Item.width = 114;
@@ -25,6 +26,12 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = Origins.Sounds.HeavyCannon;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 26);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-6, 0);
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {

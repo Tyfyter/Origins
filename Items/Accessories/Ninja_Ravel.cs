@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
 		}
 		protected override void UpdateRaveled(Player player) {
 			player.GetModPlayer<OriginPlayer>().spiderRavel = true;
-			player.aggro -= 250;
+			player.aggro -= 400;
 			player.blackBelt = true;
 		}
 		public override void AddRecipes() {

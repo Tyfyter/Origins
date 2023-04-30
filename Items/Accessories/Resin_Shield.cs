@@ -10,7 +10,7 @@ namespace Origins.Items.Accessories {
 		public static int InactiveShieldID { get; private set; }
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Resin Shield");
-			Tooltip.SetDefault("Blocks all self-damage on next hit\n10 second cooldown\n'A shield to withstand the test of time'");
+			Tooltip.SetDefault("Grants immunity to knockback\nGrants immunity to fire blocks\nBlocks all self-damage on next hit\n5 second cooldown\n'A shield to withstand the test of time'");
 			SacrificeTotal = 1;
 			ShieldID = Item.shieldSlot;
 		}

@@ -90,7 +90,7 @@ namespace Origins.Items {
 			return 0.3f;
 		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
-			useTimeMult += 0.06f;
+			useTimeMult -= 0.06f;
 		}
 	}
 	public class Esoteric_Prefix : ModPrefix {
@@ -131,7 +131,7 @@ namespace Origins.Items {
 			return 1f;
 		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
-			useTimeMult += 0.1f;
+			useTimeMult -= 0.1f;
 			shootSpeedMult += 0.1f;
 		}
 	}
@@ -172,7 +172,7 @@ namespace Origins.Items {
 		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult += 0.1f;
-			useTimeMult += 0.05f;
+			useTimeMult -= 0.05f;
 			critBonus += 2;
 			shootSpeedMult += 0.1f;
 			//blastRadiusMult += 0.1f;
@@ -242,7 +242,7 @@ namespace Origins.Items {
 		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult -= 0.15f;
-			useTimeMult += 0.1f;
+			useTimeMult -= 0.1f;
 			shootSpeedMult += 0.2f;
 			//blastRadiusMult += 0.1f;
 		}
@@ -257,7 +257,7 @@ namespace Origins.Items {
 		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult += 0.15f;
-			useTimeMult -= 0.2f;
+			useTimeMult += 0.2f;
 			shootSpeedMult -= 0.1f;
 			knockbackMult += 0.15f;
 			//blastRadiusMult += 0.25f;
@@ -286,7 +286,7 @@ namespace Origins.Items {
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult += 0.1f;
 			critBonus += 5;
-			useTimeMult += 0.1f;
+			useTimeMult -= 0.1f;
 			shootSpeedMult += 0.15f;
 			knockbackMult += 0.15f;
 			//blastRadiusMult += 0.25f;

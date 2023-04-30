@@ -8,7 +8,7 @@ namespace Origins.Items.Accessories {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Stealth Ravel");
-			Tooltip.SetDefault("Double tap down to transform into a small, rolling ball\nEnemies are less likely to target you when raveled");
+			Tooltip.SetDefault("Double tap down to transform into a small, rolling ball\nEnemies are unable to target you when raveled");
 			SacrificeTotal = 1;
 			ID = Type;
 		}
@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
 			Item.shoot = ModContent.MountType<Stealth_Ravel_Mount>();
 		}
 		protected override void UpdateRaveled(Player player) {
-			player.aggro -= 400;
+			player.aggro -= 9999;
 			player.blackBelt = true;
 		}
 		public override void AddRecipes() {

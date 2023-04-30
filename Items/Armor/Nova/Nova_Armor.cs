@@ -26,7 +26,7 @@ namespace Origins.Items.Armor.Nova {
 			return body.type == ModContent.ItemType<Nova_Breastplate>() && legs.type == ModContent.ItemType<Nova_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Greatly incrreased explosive blast radius\nExplosive projectiles have a chance to be duplicated\nExplosives home to nearby enemies";
+			player.setBonus = "Greatly increased explosive blast radius\nExplosive projectiles have a chance to be duplicated\nExplosives home to nearby enemies";
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.explosiveBlastRadius.Base += 32;
 			originPlayer.explosiveBlastRadius *= 1.5f;

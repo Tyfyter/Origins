@@ -83,7 +83,7 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 2);
+			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.CopperOre, 3);
 			recipe.AddIngredient(ModContent.ItemType<Potato>());
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
