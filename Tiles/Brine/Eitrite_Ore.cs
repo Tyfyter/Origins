@@ -15,7 +15,8 @@ namespace Origins.Tiles.Brine {
 			name.SetDefault("Eitrite Ore");
 			AddMapEntry(new Color(79, 86, 207));
 			mergeID = TileID.Mud;
-			//HitSound = SoundID.digstone;
+			MinPick = 150;
+			HitSound = SoundID.Dig;
 		}
 		public override bool CanExplode(int i, int j) {
 			return false;
