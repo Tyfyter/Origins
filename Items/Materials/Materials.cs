@@ -540,15 +540,15 @@ namespace Origins.Items.Materials {
 			Item.rare = ItemRarityID.Yellow;
 		}
 	}
-	[LegacyName("Peat_Moss")]
-	public class Peat_Moss_Item : ModItem {
+	[LegacyName("Peat_Moss_Item")]
+	public class Peat_Moss : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Peat Moss");
 			Tooltip.SetDefault("The Demolitionist might find this interesting...");
 			SacrificeTotal = 99;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(ModContent.TileType<Peat_Moss>());
+			Item.DefaultToPlaceableTile(ModContent.TileType<Peat_Moss_Tile>());
 			Item.maxStack = 999;
 			Item.value = Item.buyPrice(silver: 3);
 			Item.rare = ItemRarityID.Green;
