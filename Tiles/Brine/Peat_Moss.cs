@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,26 +15,6 @@ namespace Origins.Tiles.Brine {
 			ItemDrop = ItemType<Peat_Moss_Item>();
 			AddMapEntry(new Color(18, 160, 56));
 			HitSound = SoundID.Dig;
-		}
-	}
-	public class Peat_Moss_Item : ModItem {
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Peat Moss");
-			Tooltip.SetDefault("The Demolitionist might find this interesting...");
-			SacrificeTotal = 99;
-		}
-		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.createTile = TileType<Peat_Moss>();
-			Item.maxStack = 999;
-			Item.value = Item.buyPrice(silver: 3);
-			Item.rare = ItemRarityID.Green;
-		}
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.ExplosivePowder);
-			recipe.AddIngredient(this, 3);
-			recipe.AddTile(TileID.GlassKiln);
-			recipe.Register();
 		}
 	}
 }

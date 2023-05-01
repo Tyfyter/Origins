@@ -39,7 +39,7 @@ namespace Origins.UI {
 			Vector2 origin = new Vector2(15, 15);
 			Color white = Color.White;
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
-			int journalShader = originPlayer.journalDye.dye;
+			int journalShader = originPlayer?.journalDye?.dye??0;
 			if (rectangle.Contains(Main.MouseScreen) && !PlayerInput.IgnoreMouseInterface) {
 				Main.LocalPlayer.mouseInterface = true;
 				flag = true;
