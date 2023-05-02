@@ -217,6 +217,7 @@ ARMOR:
 (^) Fiberglass Armor
 (^) Myth Armor
 (^) Riptide Armor
+(X) Tendon Armor !!!
 
 (^) Acrid Armor
 (#2, ^2) Amber Exploder Armor
@@ -329,6 +330,7 @@ ACCESSORIES:
 (X) Drill Ravel
 (X) Grapple Ravel
 (^) Ninja Ravel
+(X) Ornament of Metamorphosis
 (^) Ravel
 (X) Scroll Ravel
 (X) Sigil of the Machine
@@ -336,6 +338,7 @@ ACCESSORIES:
 (^) Speed Ravel
 (^) Spider Ravel
 (^) Stealth Ravel
+(X) Strange Feather
 (X) Thrust Ravel
 (X) Versatile Ravel
 
@@ -491,11 +494,13 @@ MELEE WEAPONS:
 RANGED WEAPONS:
 ---
 (^) Ancient Kruncher
+(X) Bloodletter !!!
 (^) Bolt Gun
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
 (^) Harpoon Gun
 (^) Longbone
+(X) Magma Grappler !!!
 (^) Riven Splitter
 (^) Sleetfire
 (^) Tendon Tear
@@ -880,6 +885,8 @@ CONSUMABLES:
 (^) Voidsight Potion
 
 (^) Blue Bovine
+(X) Brine Cheese
+(X) Irish Cheddar
 (^) Jam Sandwich
 (^) Krunch Mix*
 (^) Potato

@@ -47,6 +47,7 @@ namespace Origins {
 		public bool minerSet = false;
 		public bool defiledSet = false;
 		public bool rivenSet = false;
+		public bool rivenSetBoost = false;
 		public bool riftSet = false;
 		public bool eyndumSet = false;
 		public bool mimicSet = false;
@@ -279,6 +280,7 @@ namespace Origins {
 			defiledSet = false;
 			reshapingChunk = false;
 			rivenSet = false;
+			rivenSetBoost = false;
 			riftSet = false;
 			eyndumSet = false;
 			mimicSet = false;

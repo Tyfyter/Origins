@@ -88,6 +88,44 @@ namespace Origins {
 			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.BloodButcherer);
+			recipe.AddIngredient(ItemID.CrimtaneBar, 6);
+			recipe.AddIngredient(ItemID.TissueSample, 3);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.TheRottedFork);
+			recipe.AddIngredient(ItemID.CrimtaneBar, 9);
+			recipe.AddIngredient(ItemID.TissueSample, 5);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.TheUndertaker);
+			recipe.AddIngredient(ItemID.CrimtaneBar, 6);
+			recipe.AddIngredient(ItemID.TissueSample, 4);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.CrimsonRod);
+			recipe.AddIngredient(ItemID.CrimtaneBar, 10);
+			recipe.AddIngredient(ItemID.TissueSample, 6);
+			recipe.AddRecipeGroup("Origins:Gem Staves");
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.Vilethorn);
+			recipe.AddIngredient(ItemID.DemoniteBar, 10);
+			recipe.AddIngredient(ItemID.ShadowScale, 6);
+			recipe.AddRecipeGroup("Origins:Gem Staves");
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.BallOHurt);
+			recipe.AddIngredient(ItemID.DemoniteBar, 10);
+			recipe.AddIngredient(ItemID.ShadowScale, 5);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 			//this hook is supposed to be used for adding recipes,
 			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
 			Origins.instance.LateLoad();
