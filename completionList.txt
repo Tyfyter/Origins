@@ -51,7 +51,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver !!!
-(#4, $, ^2) Primordial Amoeba !!! (replanning soon)
+(X) Riven Cracker !!!
 
 (%?, ^2) Lost Diver !!! (Just needs the item/projectile/use sprites)
 (X) Miscreant
@@ -215,8 +215,10 @@ ARMOR:
 (^) Encrusted Armor
 (^) Felnum Armor
 (^) Fiberglass Armor
+(X) Lost Armor !!!
 (^) Myth Armor
 (^) Riptide Armor
+(X) Soulhide Armor !!!
 (X) Tendon Armor !!!
 
 (^) Acrid Armor
@@ -494,13 +496,13 @@ MELEE WEAPONS:
 RANGED WEAPONS:
 ---
 (^) Ancient Kruncher
-(X) Bloodletter !!!
+(#2, ^2) Bloodletter
 (^) Bolt Gun
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
 (^) Harpoon Gun
 (^) Longbone
-(X) Magma Grappler !!!
+(^) Magma Grappler
 (^) Riven Splitter
 (^) Sleetfire
 (^) Tendon Tear
@@ -860,11 +862,11 @@ CRITTERS AND FISH:
 (#3, ^2) Bug
 (#3, ^2) Cicada 3301 !!!
 
-(X) Bilemouth !!!
+(^) Bilemouth
 (^) Bonehead Jellyfish
 (^) Duskarp
 (^) Prikish
-(X) Tearapiranha !!!
+(^) Tearracuda
 ---
 
 
@@ -885,7 +887,7 @@ CONSUMABLES:
 (^) Voidsight Potion
 
 (^) Blue Bovine
-(X) Brine Cheese
+(#3 (needs drop during april fools), ^2) Brine Cheese
 (X) Irish Cheddar
 (^) Jam Sandwich
 (^) Krunch Mix*

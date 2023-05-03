@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Ranged {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 30;
+			Item.damage = 38;
 			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 4;
 			Item.useStyle = ItemUseStyleID.Shoot;

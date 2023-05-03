@@ -42,7 +42,7 @@ namespace Origins.Items.Other.Fish {
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useAnimation = 15;
 			Item.useTime = 10;
-			Item.maxStack = 9990;
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.Gray;
 			Item.autoReuse = true;
 			Item.consumable = true;
@@ -54,6 +54,36 @@ namespace Origins.Items.Other.Fish {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>(), 3);
 			recipe.AddIngredient(this);
 			recipe.AddTile(TileID.HeavyWorkBench);
+			recipe.Register();
+		}
+	}
+	public class Tearracuda : ModItem {
+		public override void SetStaticDefaults() {
+			SacrificeTotal = 3;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.Hemopiranha);
+			Item.rare = ItemRarityID.Blue;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(ItemID.SeafoodDinner);
+			recipe.AddIngredient(this, 2);
+			recipe.AddTile(TileID.CookingPots);
+			recipe.Register();
+		}
+	}
+	public class Bilemouth : ModItem {
+		public override void SetStaticDefaults() {
+			SacrificeTotal = 3;
+		}
+		public override void SetDefaults() {
+			Item.CloneDefaults(ItemID.Hemopiranha);
+			Item.rare = ItemRarityID.Blue;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(ItemID.SeafoodDinner);
+			recipe.AddIngredient(this, 2);
+			recipe.AddTile(TileID.CookingPots);
 			recipe.Register();
 		}
 	}

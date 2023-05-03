@@ -113,6 +113,9 @@ namespace Origins.NPCs {
 				case NPCID.UndeadMiner:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IWTPA_Standard>(), 4));
 				break;
+				case NPCID.SporeSkeleton:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Irish_Cheddar>(), 3));
+				break;
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
 				r is LeadingConditionRule conditionRule &&

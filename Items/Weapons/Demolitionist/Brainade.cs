@@ -107,6 +107,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
 			if (Projectile.timeLeft > 168 && (Projectile.ai[1] % 1 + 1) % 1 == 0.5f) Projectile.penetrate++;
 			target.AddBuff(BuffID.Confused, 180);
+			target.AddBuff(BuffID.Bleeding, 180);
 			Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, DustID.Blood, 0, 0, 100, new Color(255, 0, 0), 1.25f * Projectile.scale);
 			dust.noGravity = false;
 			dust.noLight = true;

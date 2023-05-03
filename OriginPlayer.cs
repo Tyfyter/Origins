@@ -1793,6 +1793,15 @@ namespace Origins {
 					itemDrop = ModContent.ItemType<Messy_Leech>();
 				}
 			}
+			if (zoneRiven && attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary)) {
+				if (Main.rand.NextBool(5)) {
+					itemDrop = ModContent.ItemType<Tearracuda>();
+				} else if (zoneDefiled && attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary)) {
+					if (Main.rand.NextBool(5)) {
+						itemDrop = ModContent.ItemType<Bilemouth>();
+					}
+				}
+			}
 		}
 		public override bool CanUseItem(Item item) {
 			if (ravel) {

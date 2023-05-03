@@ -20,7 +20,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.BottledWater);
-			//recipe.AddIngredient(ModContent.ItemType<Bilemouth>());
+			recipe.AddIngredient(ModContent.ItemType<Bilemouth>());
 			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
