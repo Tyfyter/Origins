@@ -1769,8 +1769,8 @@ namespace Origins {
 					}
 				} else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
 					itemDrop = ModContent.ItemType<Knee_Slapper>();
-				} else if (attempt.uncommon && !attempt.rare) {
-					itemDrop = ModContent.ItemType<Prikish>();
+				} else if (attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary) && Main.rand.NextBool(5)) {
+					itemDrop = ModContent.ItemType<Bilemouth>();
 				}
 			} else if (zoneRiven) {
 				if (attempt.crate) {
@@ -1779,8 +1779,8 @@ namespace Origins {
 					}
 				} else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
 					itemDrop = ModContent.ItemType<Knee_Slapper>();
-				} else if (attempt.uncommon && !attempt.rare) {
-					itemDrop = ModContent.ItemType<Prikish>();
+				} else if (attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary) && Main.rand.NextBool(5)) {
+					itemDrop = ModContent.ItemType<Tearracuda>();
 				}
 			}
 			if (junk) {
@@ -1791,15 +1791,6 @@ namespace Origins {
 			if (Player.ZoneJungle && attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary)) {
 				if (Main.rand.NextBool(10)) {
 					itemDrop = ModContent.ItemType<Messy_Leech>();
-				}
-			}
-			if (zoneRiven && attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary)) {
-				if (Main.rand.NextBool(5)) {
-					itemDrop = ModContent.ItemType<Tearracuda>();
-				}
-			} else if (zoneDefiled && attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary)) {
-				if (Main.rand.NextBool(5)) {
-					itemDrop = ModContent.ItemType<Bilemouth>();
 				}
 			}
 		}
