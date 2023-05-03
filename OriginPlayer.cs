@@ -1769,8 +1769,13 @@ namespace Origins {
 					}
 				} else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
 					itemDrop = ModContent.ItemType<Knee_Slapper>();
-				} else if (attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary) && Main.rand.NextBool(5)) {
-					itemDrop = ModContent.ItemType<Bilemouth>();
+				} else if (attempt.uncommon) {
+					int prikish = ModContent.ItemType<Prikish>();
+					if (attempt.questFish == prikish) {
+						itemDrop = prikish;
+					} else {
+						itemDrop = ModContent.ItemType<Bilemouth>();
+					}
 				}
 			} else if (zoneRiven) {
 				if (attempt.crate) {
@@ -1779,7 +1784,7 @@ namespace Origins {
 					}
 				} else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
 					itemDrop = ModContent.ItemType<Knee_Slapper>();
-				} else if (attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary) && Main.rand.NextBool(5)) {
+				} else if (attempt.uncommon) {
 					itemDrop = ModContent.ItemType<Tearracuda>();
 				}
 			}

@@ -9,11 +9,17 @@
 			SoulOfNight: Drops in Underground evil biomes
 		}
 		FishQuest: {
-			Prikish:
-			'''
-			It's more poky than your average puffer and more deadly! It's not toxic so don't worry, but it can get through your head!
-			It's the Defiled we're talking about here! I want you to go and find that fish bubbling around in the Wastelands and bring it back to me!
-			'''
+			Prikish: {
+				Description:
+				'''
+				It's more poky than your average puffer and more deadly! It's not toxic so don't worry, but it can get through your head!
+				It's the Defiled we're talking about here! I want you to go and find that fish bubbling around in the Wastelands and bring it back to me!
+				'''
+				Location:
+				'''
+				Caught in {$Defiled_Wastelands}
+				'''
+			}
 			Bonehead_Jellyfish:
 			'''
 			They have bony heads because of how much they hit walls. Careful when touching it, the slime will dissolve your hands!

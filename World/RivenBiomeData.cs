@@ -540,7 +540,7 @@ namespace Origins.World.BiomeData {
 				context.SetVileInnard(ModContent.ItemType<Bud_Barnacle>());
 				context.SetVileComponent(ModContent.ItemType<Alkahest>());
 				context.SetEvilBossDrop(ModContent.ItemType<Riven_Carapace>());
-				context.SetEvilSword(ModContent.ItemType<Vorpal_Sword>()); //Already had one lol
+				context.SetEvilSword(ModContent.ItemType<Vorpal_Sword>());
 				return context;
 			}
 		}
@@ -552,6 +552,7 @@ namespace Origins.World.BiomeData {
 				int y = (int)worldSurface - 50;
 				for (; !Main.tile[evilBiomePosition, y].HasSolidTile(); y++) ;
 				Riven_Hive.Gen.StartHive(evilBiomePosition, y);
+				OriginSystem.instance.hasDefiled = true;
 			}
 
 			public override void PostGenerateEvil() { }

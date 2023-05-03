@@ -40,14 +40,22 @@ namespace Origins {
 			get {
 				switch (AltLibrary.Common.Systems.WorldBiomeManager.WorldEvil) {
 					case "Origins/Defiled_Wastelands_Alt_Biome":
+					hasDefiled = true;
 					return evil_wastelands;
+
 					case "Origins/Riven_Hive_Alt_Biome":
+					hasRiven = true;
 					return evil_riven;
+
 					default:
 					return WorldGen.crimson ? evil_crimson : evil_corruption;
 				}
 			}
 		}
+		internal bool hasDefiled = false;
+		public bool HasDefiledWastelands => instance.hasDefiled;
+		internal bool hasRiven = false;
+		public bool HasRivenHive => instance.hasRiven;
 		private static double? _worldSurfaceLow;
 		public static double worldSurfaceLow => _worldSurfaceLow ?? Main.worldSurface - 165;
 		public static byte WorldEvil => instance.worldEvil;
@@ -93,6 +101,8 @@ namespace Origins {
 			}
 			if (tag.ContainsKey("worldSurfaceLow")) _worldSurfaceLow = tag.GetDouble("worldSurfaceLow");
 			if (tag.ContainsKey("defiledHearts")) Defiled_Hearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint).ToList();
+			tag.TryGet("hasDefiled", out hasDefiled);
+			tag.TryGet("hasRiven", out hasRiven);
 
 			defiledResurgenceTiles = new List<(int, int)>() { };
 			defiledAltResurgenceTiles = new List<(int, int, ushort)>() { };
@@ -102,6 +112,8 @@ namespace Origins {
 		public override void SaveWorldData(TagCompound tag) {
 			tag.Add("peatSold", peatSold);
 			tag.Add("worldEvil", worldEvil);
+			tag.Add("hasDefiled", hasDefiled);
+			tag.Add("hasRiven", hasRiven);
 			tag.Add("defiledHearts", Defiled_Hearts.Select(Utils.ToVector2).ToList());
 			if (_worldSurfaceLow.HasValue) {
 				tag.Add("worldSurfaceLow", _worldSurfaceLow);

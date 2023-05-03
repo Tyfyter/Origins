@@ -36,7 +36,9 @@ namespace Origins.Items.Weapons.Melee {
 			Item.value = Item.buyPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
-			Item.ArmorPenetration = 9999;
+			// lowered from 9999 so it's still greater than any vanilla defense except DG & Crawltipede but can be slightly less than World Cracker's
+			// could still be put into a "Storm Ruler" sort of situation if we make it available before or during the fight
+			Item.ArmorPenetration = 150;
 			Item.UseSound = null;
 		}
 		public override void AddRecipes() {

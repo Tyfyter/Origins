@@ -628,6 +628,7 @@ namespace Origins.World.BiomeData {
 
 				Defiled_Wastelands.Gen.StartDefiled(start.X, start.Y);
 				defiledHearts.Push(start);
+				OriginSystem.instance.hasDefiled = true;
 			}
 
 			public override void PostGenerateEvil() {

@@ -1,16 +1,26 @@
 ﻿using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Fish {
 	public class Prikish : ModItem {
 		public override void SetStaticDefaults() {
-			SacrificeTotal = 3;
+			SacrificeTotal = 2;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Ebonkoi);
-			Item.rare = ItemRarityID.Blue;
+			Item.DefaultToQuestFish();
+		}
+		public override bool IsAnglerQuestAvailable() {
+			return OriginSystem.WorldEvil == OriginSystem.evil_wastelands;
+		}
+		public override bool IsQuestFish() => true;
+		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
+			// How the angler describes the fish to the player.
+			description = Language.GetTextValue("Mods.Origins.FishQuest.Prikish.Description");
+			// What it says on the bottom of the angler's text box of how to catch the fish.
+			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Prikish.Location");
 		}
 	}
 	public class Bonehead_Jellyfish : ModItem {
