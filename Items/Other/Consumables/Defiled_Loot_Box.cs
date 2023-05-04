@@ -14,10 +14,8 @@ namespace Origins.Items.Other.Consumables {
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
-			//itemGroup = ContentSamples.CreativeHelper.ItemGroup.BossBags;
+			itemGroup = ContentSamples.CreativeHelper.ItemGroup.GoodieBags;
 		}
-		public override bool CanRightClick() {
-			return true;
-		}
+		public override bool CanRightClick() => true;
 	}
 }
