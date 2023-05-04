@@ -549,6 +549,8 @@ namespace Origins.World.BiomeData {
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
 			//DisplayName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
+			Description.SetDefault(Language.GetTextValue("A desaturated and bleak environment that is actually a living organism growing its body."));
+			GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
 			GenPassName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
 			BiomeGrass = ModContent.TileType<Defiled_Grass>();
 			SeedType = ModContent.ItemType<Defiled_Grass_Seeds>();

@@ -106,6 +106,7 @@ ENEMY NPCS:
 (^) Ancient Cyclops
 (#, ^2) Barnacleback !!!
 (^) Buckethead Zombie
+(X) Cellarkeep
 (^) Chunky Slime
 (#, ^2(use flagellash sprites)) Cleaver !!!
 (#, ^2) Cranivore !!!
@@ -417,6 +418,7 @@ UTILITIES:
 
 (#, ^2) Black Light
 (#, ^2) Impenetrable Trashcan Lid !!!
+(X) Indestructible Saddle
 ---
 
 
@@ -477,6 +479,7 @@ MELEE WEAPONS:
 (X) Amoebash
 (^) Crystal Cutters
 (^) Depth Charge
+(X) Fair In Square
 (^) Knee Slapper
 (^) Nematoclaw*
 (%, @, #) Origins Biome Keybrands !!!
@@ -504,6 +507,7 @@ RANGED WEAPONS:
 (^) Longbone
 (^) Magma Grappler
 (^) Riven Splitter
+(X) Shardcannon !!!
 (^) Sleetfire
 (^) Tendon Tear
 (^) The Kruncher
@@ -626,6 +630,7 @@ NO POST ML SUMMONER CONTENT YET.
 EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
+(X) Bang Snap !!!
 (^) Bloombomb
 (^) Bombardment
 (^) Bomb Launcher (needs to be balanced)
@@ -888,7 +893,7 @@ CONSUMABLES:
 
 (^) Blue Bovine
 (#3 (needs drop during april fools), ^2) Brine Cheese
-(X) Irish Cheddar
+(^) Irish Cheddar
 (^) Jam Sandwich
 (^) Krunch Mix*
 (^) Potato
@@ -900,12 +905,17 @@ CONSUMABLES:
 (^) Suspicious Looking Ice Cream
 (#2, ^2) The Button
 
+(#2, ^2) Corruption Loot Box
+(#2, ^2) Crimson Loot Box
 (^) Crusty Crate
+(#2, ^2) Defiled Loot Box
 (^) Pointy Crate
+(#2, ^2) Riven Loot Box
 
 (^) Gooey Water
 (#2, ^2) Holiday Hair Dye
 (#2, ^2) Invisible Ink
+(X) Lottery Ticket
 (#2, ^2) Magic Brine Dropper
 (#2, ^2) Pandora's Box
 (^) White Water
@@ -976,6 +986,8 @@ UI:
 (X) Fractured Isles Icon
 (X) Riven Map/Bestiary Backdrop
 (^) Riven Icon
+
+(#, ^2) Assimilation UI !!!
 
 (@5, ^3) 30x30 Origins Icon
 (#, ^2) Origins Mod Browser Logo

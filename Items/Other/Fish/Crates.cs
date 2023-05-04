@@ -2,15 +2,14 @@
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Creative;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Items.Other.Fish {
-	#region chunky crate
-	public class Chunky_Crate : Fishing_Crate_Item {
+    #region chunky crate
+    public class Chunky_Crate : Fishing_Crate_Item {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Chunky Crate");
 			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");

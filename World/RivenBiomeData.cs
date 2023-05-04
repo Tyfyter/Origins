@@ -7,8 +7,10 @@ using Origins.Items.Materials;
 using Origins.Items.Other.Testing;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Ammo;
+using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
+using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.Riven;
 using Origins.Tiles.Riven;
 using Origins.Walls;
@@ -55,7 +57,8 @@ namespace Origins.World.BiomeData {
 
 			LesionDropRule = new OneFromRulesRule(1,
 				FirstLesionDropRule,
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<NPC_Spawner>(), 1, NPCID.Bee, NPCID.Bee), //probably magic weapon
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Amebolize_Incantation>()),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Slashswarm>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Riverang>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Amoeba_Toy>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Parasitic_Influence>())
@@ -493,6 +496,7 @@ namespace Origins.World.BiomeData {
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
 			//DisplayName.SetDefault(Language.GetTextValue("Mods.Origins.Generic.Riven_Hive"));
+			Description.SetDefault(Language.GetTextValue("A flourishing and beautiful ecosystem soon to replace the status quo dominated by a now sentient amoeba"));
 			GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
 			BiomeGrass = ModContent.TileType<Riven_Grass>();
 			SeedType = ModContent.ItemType<Riven_Grass_Seeds>();
