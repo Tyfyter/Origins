@@ -19,11 +19,11 @@ namespace Origins.Items.Other.Consumables {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override bool CanUseItem(Player player) {
-			return player.InModBiome<Riven_Hive>() && !NPC.AnyNPCs(ModContent.NPCType<Primordial_Amoeba>());
+			return player.InModBiome<Riven_Hive>() && !NPC.AnyNPCs(ModContent.NPCType<Riven_Fighter>());
 		}
 		public override bool? UseItem(Player player) {
 			if (player.whoAmI == Main.myPlayer) {
-				NPC.SpawnOnPlayer(Main.myPlayer, ModContent.NPCType<Primordial_Amoeba>());
+				NPC.SpawnOnPlayer(Main.myPlayer, ModContent.NPCType<Riven_Fighter>());
 			}
 			return true;
 		}

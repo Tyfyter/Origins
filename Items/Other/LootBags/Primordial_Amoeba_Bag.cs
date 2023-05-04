@@ -15,7 +15,7 @@ namespace Origins.Items.Other.LootBags {
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			IItemDropRuleCondition master = new Conditions.IsMasterMode();
-			itemLoot.Add(Primordial_Amoeba.normalDropRule);
+			//itemLoot.Add(Primordial_Amoeba.normalDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Amebic_Vial>()));
 			//itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Protozoa_Food>()));
 			itemLoot.Add(ItemDropRule.Coins(Item.buyPrice(gold: 3), false));

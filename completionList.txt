@@ -218,8 +218,8 @@ ARMOR:
 (X) Lost Armor !!!
 (^) Myth Armor
 (^) Riptide Armor
-(X) Soulhide Armor !!!
-(X) Tendon Armor !!!
+(#3, ^2) Soulhide Armor !!!
+(#4, ^2) Tendon Armor !!!
 
 (^) Acrid Armor
 (#2, ^2) Amber Exploder Armor
@@ -385,7 +385,7 @@ VANITY:
 (X) Lost Diver Head
 (X) Miscreant Mask
 (X) Quantux Mask
-(^) Primordial Amoeba Mask
+(X) World Cracker Mask
 (X) Scrapper Head
 (X) Severus' Hat
 
@@ -791,8 +791,8 @@ TILES:
 (X) Miscreant Relic
 (X) Quantux Trophy
 (X) Quantux Relic
-(^) Primordial Amoeba Trophy
-(X) Primordial Amoeba Relic !!!
+(X) World Cracker Trophy
+(X) World Cracker Relic !!!
 ---
 
 
@@ -913,7 +913,7 @@ CONSUMABLES:
 
 (^) Defiled Amalgamation Bag
 (^) Fiberglass Weaver Bag
-(^) Primordial Amoeba Bag
+(X) World Cracker Bag
 ---
 
 MOUNTS & PETS:
@@ -1001,7 +1001,7 @@ MUSIC:
 (X) Lost Diver
 (X) Miscreant
 (X) Quantux
-(O) Primordial Amoeba !!!
+(O) World Cracker !!!
 (X) Scrapper
 (X) Severus
 

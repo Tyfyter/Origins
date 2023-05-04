@@ -56,6 +56,7 @@ namespace Origins {
 		public int riptideDashTime = 0;
 		public bool necroSet = false;
 		public bool novaSet = false;
+		public bool tendonSet = false;
 		public float necroSetAmount = 0f;
 		public int mimicSetChoices = 0;
 		public int setActiveAbility = 0;
@@ -288,6 +289,7 @@ namespace Origins {
 			riptideLegs = false;
 			necroSet = false;
 			novaSet = false;
+			tendonSet = false;
 			if (necroSetAmount > 0) {
 				necroSetAmount -= 1 + necroSetAmount * 0.01f;
 			}
@@ -953,6 +955,11 @@ namespace Origins {
 						Main.dust[num6].velocity.Y = -num8 * 0.075f;
 					}
 				}
+			}
+			if (tendonSet) {
+				Player.moveSpeed = (Player.moveSpeed * (Player.statLife / 300)) + 1;
+				Player.jumpSpeed = (Player.jumpSpeed * (Player.statLife / 350)) + 1;
+				Player.runAcceleration = (Player.runAcceleration * (Player.statLife / 250)) + 1;
 			}
 			if (protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions) {
 				Item item = protozoaFoodItem;

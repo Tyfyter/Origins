@@ -129,7 +129,7 @@ namespace Origins.NPCs {
 					targetSeverity *= 0.81f;
 				}
 				if (source.rivenSetBoost) {
-					targetSeverity -= 0.08f;
+					targetSeverity -= 0.15f;
 				}
 			}
 			bool hadTorn = npc.HasBuff(Torn_Buff.ID);
