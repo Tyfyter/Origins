@@ -957,9 +957,9 @@ namespace Origins {
 				}
 			}
 			if (tendonSet) {
-				Player.moveSpeed *= Math.Min((Player.statLife / 300) + 1, 1.65f);
-				Player.jumpSpeedBoost += Math.Min(Player.statLife / 100, 4);
-				Player.runAcceleration *= Math.Min((Player.statLife / 250) + 1, 1.65f);
+				Player.moveSpeed *= Math.Min((Player.statLife / 167) + 1, 1.85f);
+				Player.jumpSpeedBoost += Math.Min(Player.statLife / 167, 5);
+				Player.runAcceleration *= Math.Min((Player.statLife / 167) + 1, 1.85f);
 			}
 			if (protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions) {
 				Item item = protozoaFoodItem;

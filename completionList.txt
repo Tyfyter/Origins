@@ -220,7 +220,7 @@ ARMOR:
 (^) Myth Armor
 (^) Riptide Armor
 (#3, ^2) Soulhide Armor !!!
-(#4, ^2) Tendon Armor !!!
+(^) Tendon Armor
 
 (^) Acrid Armor
 (#2, ^2) Amber Exploder Armor

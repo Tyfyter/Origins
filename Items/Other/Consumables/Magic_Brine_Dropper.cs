@@ -10,6 +10,7 @@ namespace Origins.Items.Other.Consumables {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = 999;
 			Item.value = Item.sellPrice(copper: 40);
 			Item.rare = ItemRarityID.White;
 		}
