@@ -7,12 +7,12 @@ namespace Origins.Items.Other.Consumables {
 	public class Magic_Brine_Dropper : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Magic Brine Dropper");
-			SacrificeTotal = 1;
+			SacrificeTotal = 20;
 		}
 		public override void SetDefaults() {
-			Item.maxStack = 999;
 			Item.value = Item.sellPrice(copper: 40);
-			Item.rare = ItemRarityID.White;
+			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 999;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

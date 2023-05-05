@@ -344,10 +344,10 @@ namespace Origins {
 				(CHANGE_QUEUE, ChestID.LivingWood, 0f),
 				(ENQUEUE, ModContent.ItemType<Woodsprite_Staff>(), 1f),
 				(CHANGE_QUEUE, ChestID.LockedShadow, 0f),
-				(ENQUEUE, ModContent.ItemType<Boiler>(), 1f),
-				(ENQUEUE, ModContent.ItemType<Firespit>(), 1f),
-				(ENQUEUE, ModContent.ItemType<Dragons_Breath>(), 1f),
-				(ENQUEUE, ModContent.ItemType<Hand_Grenade_Launcher>(), 1f),
+				(ENQUEUE, ModContent.ItemType<Boiler>(), 0.5f),
+				(ENQUEUE, ModContent.ItemType<Firespit>(), 0.5f),
+				(ENQUEUE, ModContent.ItemType<Dragons_Breath>(), 0.5f),
+				(ENQUEUE, ModContent.ItemType<Hand_Grenade_Launcher>(), 0.5f),
 				(CHANGE_QUEUE, ChestID.Ice, 0f),
 				(ENQUEUE, ModContent.ItemType<Cryostrike>(), 1f),
 				(CHANGE_QUEUE, ChestID.Gold, 0b0101),
@@ -358,7 +358,7 @@ namespace Origins {
 				(ENQUEUE, ModContent.ItemType<Nitro_Crate>(), 1f),
 				/*(CHANGE_QUEUE, ChestID.Gold, DeadmansChest),
 				(ENQUEUE, ModContent.ItemType<Magic_Tripwire>(), 1f),
-				(ENQUEUE, ModContent.ItemType<Trap_Charm>(), 1f), */
+				(ENQUEUE, ModContent.ItemType<Trap_Charm>(), 1f),*/
 				(CHANGE_QUEUE, ChestID.LockedGold, 0f),
 				(ENQUEUE, ModContent.ItemType<Tones_Of_Agony>(), 1f),
 				(ENQUEUE, ModContent.ItemType<Asylum_Whistle>(), 1f),
