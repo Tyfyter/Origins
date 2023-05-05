@@ -957,7 +957,7 @@ namespace Origins {
 				}
 			}
 			if (tendonSet) {
-				Player.moveSpeed *= Math.Min((Player.statLife / 167) + 1, 1.85f);
+				Player.moveSpeed *= Math.Min((Player.statLife / 167) + 1, 1.65f);
 				Player.jumpSpeedBoost += Math.Min(Player.statLife / 167, 5);
 				Player.runAcceleration *= Math.Min((Player.statLife / 167) + 1, 1.85f);
 			}

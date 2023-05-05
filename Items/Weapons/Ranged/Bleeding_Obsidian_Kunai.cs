@@ -6,7 +6,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons {
+namespace Origins.Items.Weapons.Ranged {
     public class Bleeding_Obsidian_Kunai : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bleeding Obsidian Kunai");
@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
-			Item.damage = 52;
+			Item.damage = 38;
 			Item.useTime = 7;
 			Item.useAnimation = 7;
 			Item.shootSpeed = 13;
