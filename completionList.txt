@@ -40,7 +40,7 @@ X: No progress
 
 BOSSES AND MINI-BOSSES:
 ---
-(#, ^2) Chambersite Sentinel !!!
+(#, ^2) Chambersite Sentinel
 (#, ^2) Defiled Spawnswarmer
 (X) Discombobulator
 (#, ^2) Grand Corruptor
@@ -50,10 +50,10 @@ BOSSES AND MINI-BOSSES:
 (X) Super Brainz
 
 (^) Defiled Amalgamation*
-($, ^2/3) Fiberglass Weaver !!!
+($, ^2/3) Fiberglass Weaver
 (X) Riven Cracker !!!
 
-(%?, ^2) Lost Diver !!! (Just needs the item/projectile/use sprites)
+(%?, ^2) Lost Diver (Just needs the item/projectile/use sprites)
 (X) Miscreant
 (X) Scrapper
 
@@ -127,22 +127,22 @@ ENEMY NPCS:
 (^) Amoeba Bugger
 (@, #) Angel
 (^) Barnacle Mound
-(X) Brine Moccasin !!!
-(@5, #) Carpalfish* !!!
+(X) Brine Moccasin
+(@5, #) Carpalfish*
 (X) Defiled Asphyxiator
 (@5, #3, %2) Defiled Mimic
 (X) Defiled Reaper
 (@5, ^3/4) Defiled Tripod
 (^) Flagellant
-(#, ^2) Hoarder !!!
+(#, ^2) Hoarder
 (X) Holy Governor
 (X) Holy Warrior
-(X) King Crab !!!
-(#, ^2) Mildew Creeper !!!
+(X) King Crab
+(#, ^2) Mildew Creeper
 (#2?, ^2) Mitoworm
-(X) Peat Lobber !!!
+(X) Peat Lobber
 (@5, #3) Riven Mimic
-(X) Sea Dragon !!!
+(X) Sea Dragon
 (X) Shattered Ghoul
 (X) Torn Ghoul
 
@@ -229,7 +229,7 @@ ARMOR:
 (X) Ruby Ranger Armor
 
 (X) Blast Armor
-(X) Chambersite Armor !!!
+(X) Chambersite Armor
 (X) Eden Armor
 (@5, ^3) Necromancer Armor
 (#2, ^2) Sapphire Mediator Armor
@@ -254,11 +254,11 @@ ACCESSORIES:
 (^) ACME Crate
 (^) Advanced Imaging*
 (^) Air Tank*
-(#2, ^2, ♠) ATACS !!!
+(#2, ^2, ♠) ATACS
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
-(#3?, ^2) Brine-Leafed Clover !!!
+(^) Brine-Leafed Clover
 (^) Celestial Starlight
 (^) Celestial Stone Mask
 (^) Cirrhosis' Abhorrence
@@ -269,13 +269,13 @@ ACCESSORIES:
 (^) Destructive Claws
 (^) Dim Starlight*
 (^) Donor Wristband
-(#2, ^2) Dryad's Inheritance !!!
+(#2, ^2) Dryad's Inheritance
 (^) Exploder Emblem*
 (^) Explosive Artery
-(#3, ^2) Fleshy Figurine !!!
+(^) Fleshy Figurine
 (^) Focus Crystal
 (^) Grave Danger
-(#2, ^2) Grenade Tube !!!
+(#2, ^2) Grenade Tube
 (^) Gun Glove
 (^) Haggard Artery
 (^) Handy Helper
@@ -283,7 +283,7 @@ ACCESSORIES:
 (^) Headphones
 (^) Helium Tank
 (^) Keepsake Remains
-(@2, #) Laser Tag Vest !!!
+(@2, #) Laser Tag Vest
 (^) Last Descendent
 (^) Locket Necklace
 (^) Lousy Liver
@@ -306,19 +306,19 @@ ACCESSORIES:
 (^) Powerflower
 (#2, ^2) Priority Mail !!!
 (X) Proactive Protozoa
-(@2, #) Rage Quilt !!!
+(@2, #) Rage Quilt
 (^) Razorwire
 (^) Rebreather
 (^) Resin Shield
 (^) Return To Sender*
-(#2, ^2) Rope of Sharing !!!
+(#2, ^2) Rope of Sharing
 (^) Ruby Reticle
 (^) Sonar Visor*
 (^) Scavenger Bag
 (^) Solar Panel
 (^) Sonic Radar
 (^) Shield of Retribution
-(#2, ^2) Strange Computer !!!
+(#2, ^2) Strange Computer
 (^) Superjump Cape
 (^) Symbiote Skull
 (^) Tainted Flesh
@@ -417,7 +417,7 @@ UTILITIES:
 (X) Strange Backpack
 
 (#, ^2) Black Light
-(#, ^2) Impenetrable Trashcan Lid !!!
+(#, ^2) Impenetrable Trashcan Lid
 (X) Indestructible Saddle
 ---
 
@@ -475,14 +475,14 @@ MELEE WEAPONS:
 (^) Tyrfing
 (^) Vorpal Sword
 
-(#2, ^2) Amenonuhoko !!!
+(#2, ^2) Amenonuhoko
 (X) Amoebash
 (^) Crystal Cutters
 (^) Depth Charge
 (X) Fair In Square
 (^) Knee Slapper
 (^) Nematoclaw*
-(%, @, #) Origins Biome Keybrands !!!
+(%, @, #) Origins Biome Keybrands
 (^) Telephone Pole*
 
 (X) Chiton Kursarigama
@@ -499,7 +499,7 @@ MELEE WEAPONS:
 RANGED WEAPONS:
 ---
 (^) Ancient Kruncher
-(#2, ^2) Bloodletter
+(#2, ^2) Bloodletter !!!
 (^) Bolt Gun
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
@@ -517,7 +517,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler
 (X) Adamantite Harpoon Gun
-(#3, ^2) Boat Rocker !!!
+(#3, ^2) Boat Rocker
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun
@@ -635,7 +635,7 @@ EXPLOSIVE WEAPONS:
 (^) Bombardment
 (^) Bomb Launcher (needs to be balanced)
 (^) Brainade
-(#3, ^2) Defiled Spirit !!!
+(^) Defiled Spirit
 (^) Floaty Bomb
 (^) Hand Grenade Launcher
 (#3, ^2) Hellfire Bomb !!!
@@ -661,7 +661,7 @@ EXPLOSIVE WEAPONS:
 (^) Crystal Grenade
 (#2, ^2) Grenado
 (X) Holy Hand Grenade
-(#4, ^2) Mine Flayer !!!
+(#4, ^2) Mine Flayer
 (^) Nuclear Arm*
 (#2, ^2) Omni-Directional Claymore
 (#, ^2) Shrapnel Bomb
@@ -697,7 +697,7 @@ TILES:
 (^) Dusklight
 (^) Eden Wood
 (^) Eitrite Ore
-(@5, ^3) Encrusted Ore !!!
+(^) Encrusted Ore
 (^) Felnum Ore
 (^) Fiberglass
 (#4, ^2) Genesis Grass
@@ -706,7 +706,7 @@ TILES:
 (#4, ^2) Harmony Brick
 (^) Lost Ore
 (X) Mildew
-(#2, ^2) Peat Moss* !!!
+(^) Peat Moss*
 (^) Riven Grass
 (^) Spug Flesh
 (@5, ^3) Sulphur Stone
@@ -732,15 +732,15 @@ TILES:
 (X) Cancer Block
 (X) Chambersite Gem Lock
 (X) Chambersite Gemspark
-(#, ^2) Chambersite Gemstone !!!
-(#, ^2) Chambersite Gemstone (Corruption) !!!
-(#, ^2) Chambersite Gemstone (Crimson) !!!
-(#, ^2) Chambersite Gemstone (Defiled) !!!
-(#, ^2) Chambersite Gemstone (Riven) !!!
+(#, ^2) Chambersite Gemstone
+(#, ^2) Chambersite Gemstone (Corruption)
+(#, ^2) Chambersite Gemstone (Crimson)
+(#, ^2) Chambersite Gemstone (Defiled)
+(#, ^2) Chambersite Gemstone (Riven)
 (X) Cubekon Chest
 (X) Cubekon Node
 (X) Dawn Dungeon Chest
-(#3?, ^2) Defiled Dungeon Chest !!!
+(^) Defiled Dungeon Chest
 (X) Desert Dungeon Chest
 (X) Defiled Water Fountain
 (X) Dusk Dungeon Chest
@@ -749,14 +749,14 @@ TILES:
 (X) Mushroom Dungeon Chest
 (X) Ocean Dungeon Chest
 (X) Residue Block
-(#3?, ^2) Riven Dungeon Chest !!!
+(^) Riven Dungeon Chest
 (#, ^2) Riven Torch
 (X) Riven Water Fountain
 
 (X) Cleansing Station
 (X) Defiled Waste Organ
 (X) Elderforge
-(#, ^2) Fabricator !!!
+(#, ^2) Fabricator
 (X) Omni-Printer
 (X) Riven Flesh Shredder
 
@@ -772,13 +772,15 @@ TILES:
 (^) Soulspore
 (X) Star Cannon Cannon
 (^) Wilting Rose
-(#, ^2) Wrycoral !!!
+(^) Wrycoral
 
-(#3, ^2) A Perfect World !!!
+(#3, ^2) A Perfect World
 
 (X) Ancient Music Box (Brine Pool)
 (X) Ancient Music Box (Defiled Wastelands)
 (X) Ancient Music Box (Riven Hive)
+(X) Music Box (Abstract)
+(X) Music Box (Riven Dancer 2081)
 (X) Music Box (Brine Pool)
 (X) Music Box (Cosmos)
 (X) Music Box (Cubekon Temple)
@@ -791,13 +793,13 @@ TILES:
 (X) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Trophy
-(X) Defiled Amalgamation Relic !!!
+(X) Defiled Amalgamation Relic
 (X) Miscreant Trophy
 (X) Miscreant Relic
 (X) Quantux Trophy
 (X) Quantux Relic
 (X) World Cracker Trophy
-(X) World Cracker Relic !!!
+(X) World Cracker Relic
 ---
 
 
@@ -888,7 +890,7 @@ CONSUMABLES:
 (#2, ^2) Focus Potion
 (#2, ^2) Nullification Potion (Nullification potion doesn't need a buff graphic, it's a single-instance effect)
 (^) Protean Potion
-(#2, ^2) Purification Potion !!!
+(#2, ^2) Purification Potion (replanning soon)
 (^) Voidsight Potion
 
 (^) Blue Bovine
@@ -919,7 +921,7 @@ CONSUMABLES:
 (#2, ^2) Magic Brine Dropper
 (#2, ^2) Pandora's Box
 (^) White Water
-(#2, ^2) Void Lock !!!
+(#2, ^2) Void Lock
 
 (^) Defiled Amalgamation Bag
 (^) Fiberglass Weaver Bag
@@ -928,7 +930,7 @@ CONSUMABLES:
 
 MOUNTS & PETS:
 ---
-(X) Ever-Watchful Eye (Juvenile Amalgamation) !!!
+(X) Ever-Watchful Eye (Juvenile Amalgamation)
 (^) Strange Power-Up (Platformer Mech)
 (^) Chromatic Scale (Rainbow Pangolin)
 
@@ -995,25 +997,25 @@ UI:
 
 MUSIC:
 ---
-(O) Brine Pool !!!
+(O) Brine Pool
 (^) Cubekon Temple
 (X) Dawn
-(X) Defiled Caverns !!!
+(X) Defiled Caverns
 (^) Defiled Wastelands
 (^) Defiled Wastelands - Mimic Route
-(O) Fiberglass Caves !!!
+(O) Fiberglass Caves
 (X) Fractured Isles
 (^) Riven Hive
 (^) The Dusk
 
-(O) Defiled Amalgamation !!!
+(O) Defiled Amalgamation
 (X) Duskord
-(X) Fiberglass Threader !!!
+(X) Fiberglass Threader
 (X) I.C.A.R.U.S
 (X) Lost Diver
 (X) Miscreant
 (X) Quantux
-(O) World Cracker !!!
+(O) World Cracker
 (X) Scrapper
 (X) Severus
 
