@@ -4,16 +4,13 @@ using Origins.Buffs;
 using Origins.Projectiles.Weapons;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs {
-	public partial class OriginGlobalNPC : GlobalNPC {
+    public partial class OriginGlobalNPC : GlobalNPC {
 		protected override bool CloneNewInstances => true;
 		public override bool InstancePerEntity => true;
 		internal int shrapnelCount = 0;
@@ -63,7 +60,7 @@ namespace Origins.NPCs {
 				}
 			}
 			if (Main.rand.NextBool(10) && npc.HasBuff(BuffID.Bleeding)) {
-				Dust dust10 = Dust.NewDustDirect(npc.position, npc.width, npc.height, 5);
+				Dust dust10 = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Blood);
 				dust10.velocity.Y += 0.5f;
 				dust10.velocity *= 0.25f;
 			}

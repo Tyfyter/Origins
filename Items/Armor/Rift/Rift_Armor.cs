@@ -1,5 +1,5 @@
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
 using Origins.Tiles.Dusk;
 using ReLogic.Content;
 using Terraria;
@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Rift {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Rift_Helmet : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bleeding Obsidian Hardee");
@@ -29,8 +29,18 @@ namespace Origins.Items.Armor.Rift {
 			return body.type == ModContent.ItemType<Rift_Breastplate>() && legs.type == ModContent.ItemType<Rift_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
+			if (Main.rand.NextBool(5)) {
+				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.RedTorch, 0, 0, 100, new Color(255, 60, 30));
+				dust.noGravity = true;
+			}
 			player.setBonus = "Explosive projectiles have a chance to be duplicated";
 			player.GetModPlayer<OriginPlayer>().riftSet = true;
+		}
+		public override void UpdateVanitySet(Player player) {
+			if (Main.rand.NextBool(5)) {
+				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.RedTorch, 0, 0, 100, new Color(255, 60, 30));
+				dust.noGravity = true;
+			}
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

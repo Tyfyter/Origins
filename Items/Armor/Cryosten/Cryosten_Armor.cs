@@ -21,11 +21,23 @@ namespace Origins.Items.Armor.Cryosten {
 			return body.type == ModContent.ItemType<Cryosten_Breastplate>() && legs.type == ModContent.ItemType<Cryosten_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
+			if (Main.rand.NextBool(5)) {
+				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Snow);
+				dust.noGravity = true;
+				dust.velocity *= 0.1f;
+			}
 			player.setBonus = "Life restoration from hearts increased. Resistance to Chilled, Frozen, and Frostburn";
 			player.GetModPlayer<OriginPlayer>().cryostenSet = true;
 			if (player.HasBuff(BuffID.Chilled)) player.buffTime[player.FindBuffIndex(BuffID.Chilled)]--;
 			if (player.HasBuff(BuffID.Frozen)) player.buffTime[player.FindBuffIndex(BuffID.Frozen)]--;
 			if (player.HasBuff(BuffID.Frostburn)) player.buffTime[player.FindBuffIndex(BuffID.Frostburn)]--;
+		}
+		public override void UpdateVanitySet(Player player) {
+			if (Main.rand.NextBool(5)) {
+				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Snow);
+				dust.noGravity = true;
+				dust.velocity *= 0.1f;
+			}
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

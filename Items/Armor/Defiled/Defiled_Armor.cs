@@ -1,3 +1,5 @@
+using Microsoft.Xna.Framework;
+using Origins.Dusts;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -22,7 +24,7 @@ namespace Origins.Items.Armor.Defiled {
 		public override void UpdateEquip(Player player) {
 			player.manaRegen += 2;
 		}
-		public override bool IsArmorSet(Item head, Item body, Item legs) {
+        public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Defiled_Breastplate>() && legs.type == ModContent.ItemType<Defiled_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
@@ -89,11 +91,16 @@ namespace Origins.Items.Armor.Defiled {
 			base.SetStaticDefaults();
 			DisplayName.SetDefault("Ancient {$Defiled} Helmet");
 		}
+		public override void AddRecipes() {
+		}
+		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
 		[AutoloadEquip(EquipType.Body)]
 		public class Defiled2_Breastplate : Defiled_Breastplate {
 			public override void SetStaticDefaults() {
 				base.SetStaticDefaults();
 				DisplayName.SetDefault("Ancient {$Defiled} Breastplate");
+			}
+			public override void AddRecipes() {
 			}
 		}
 		[AutoloadEquip(EquipType.Legs)]
@@ -101,6 +108,8 @@ namespace Origins.Items.Armor.Defiled {
 			public override void SetStaticDefaults() {
 				base.SetStaticDefaults();
 				DisplayName.SetDefault("Ancient {$Defiled} Greaves");
+			}
+			public override void AddRecipes() {
 			}
 		}
 	}

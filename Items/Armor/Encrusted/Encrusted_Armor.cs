@@ -102,12 +102,18 @@ namespace Origins.Items.Armor.Encrusted {
 			base.SetStaticDefaults();
 			DisplayName.SetDefault("Ancient Encrusted Mask");
 		}
+		public override void AddRecipes() {
+		}
+		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
 		[AutoloadEquip(EquipType.Body)]
 		public class Encrusted2_Coat : Encrusted_Coat {
 			public override void SetStaticDefaults() {
 				base.SetStaticDefaults();
 				DisplayName.SetDefault("Ancient Encrusted Coat");
 			}
+			public override void AddRecipes() {
+			}
+			public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
 		}
 		[AutoloadEquip(EquipType.Legs)]
 		public class Encrusted2_Pants : Encrusted_Pants {
@@ -115,6 +121,9 @@ namespace Origins.Items.Armor.Encrusted {
 				base.SetStaticDefaults();
 				DisplayName.SetDefault("Ancient Encrusted Pants");
 			}
+			public override void AddRecipes() {
+			}
+			public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
 		}
 	}
 }

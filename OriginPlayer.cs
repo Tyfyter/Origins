@@ -57,6 +57,7 @@ namespace Origins {
 		public bool necroSet = false;
 		public bool novaSet = false;
 		public bool tendonSet = false;
+		public bool acridSet = false;
 		public float necroSetAmount = 0f;
 		public int mimicSetChoices = 0;
 		public int setActiveAbility = 0;
@@ -290,6 +291,7 @@ namespace Origins {
 			necroSet = false;
 			novaSet = false;
 			tendonSet = false;
+			acridSet = false;
 			if (necroSetAmount > 0) {
 				necroSetAmount -= 1 + necroSetAmount * 0.01f;
 			}
@@ -957,9 +959,9 @@ namespace Origins {
 				}
 			}
 			if (tendonSet) {
-				Player.moveSpeed *= Math.Min((Player.statLife / 167) + 1, 1.65f);
-				Player.jumpSpeedBoost += Math.Min(Player.statLife / 167, 5);
-				Player.runAcceleration *= Math.Min((Player.statLife / 167) + 1, 1.85f);
+				Player.moveSpeed *= 5f;
+				Player.jumpSpeedBoost *= 5f;
+				Player.runAcceleration *= 5f;
 			}
 			if (protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions) {
 				Item item = protozoaFoodItem;
@@ -1201,8 +1203,11 @@ namespace Origins {
 				damage -= (int)Math.Max((target.defense - Player.GetWeaponArmorPenetration(item)) * (explosive_defense_factor - 0.5f), 0);
 			}
 			if (target.HasBuff(BuffID.Bleeding)) {
-				//NPC.liferegen = -1;
-            }
+				target.lifeRegen -= 1;
+			}
+			if (acridSet) {
+				target.AddBuff(Toxic_Shock_Debuff.ID, 300);
+			}
 		}
 		public override void ModifyShootStats(Item item, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (advancedImaging) {

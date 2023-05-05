@@ -135,6 +135,12 @@ namespace Origins {
 			recipe.AddIngredient(ItemID.Coal);
 			recipe.AddIngredient(ItemID.Wood);
 			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.LesserHealingPotion, 2);
+			recipe.AddIngredient(ItemID.Bottle, 2);
+			recipe.AddIngredient(ModContent.ItemType<Tree_Sap>());
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
 			//this hook is supposed to be used for adding recipes,
 			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
 			Origins.instance.LateLoad();

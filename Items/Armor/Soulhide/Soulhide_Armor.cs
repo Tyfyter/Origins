@@ -24,12 +24,22 @@ namespace Origins.Items.Armor.Soulhide {
 			return body.type == ModContent.ItemType<Soulhide_Coat>() && legs.type == ModContent.ItemType<Soulhide_Guards>();
 		}
 		public override void UpdateArmorSet(Player player) {
+			if (Main.rand.NextBool(6)) {
+				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Shadowflame);
+				dust.velocity *= 0.1f;
+			}
 			player.setBonus = "Nearby enemies are afflicted 'Shadowflame' and 'Weak'";
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.lousyLiverCount = 48;
 			originPlayer.lousyLiverDebuffs.Add((Soulhide_Debuff.ID, 10));
 		}
-		public override void AddRecipes() {
+        public override void UpdateVanitySet(Player player) {
+			if (Main.rand.NextBool(6)) {
+				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Shadowflame);
+				dust.velocity *= 0.1f;
+			}
+		}
+        public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.DemoniteOre, 8);
 			recipe.AddIngredient(ItemID.RottenChunk, 16);

@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Accessories;
+using Origins.Buffs;
 using Origins.Items.Materials;
 using System;
 using Terraria;
@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Acrid {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Acrid_Dome : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Acrid Dome");
@@ -36,10 +36,11 @@ namespace Origins.Items.Armor.Acrid {
 			return body.type == ModContent.ItemType<Acrid_Breastplate>() && legs.type == ModContent.ItemType<Acrid_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Immunity to 'Toxic Shock', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
+			player.GetModPlayer<OriginPlayer>().acridSet = true;
+			player.setBonus = "All attacks inflict 'Toxic Shock'\nImmunity to 'Toxic Shock', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
 			player.buffImmune[BuffID.Poisoned] = true;
 			player.buffImmune[BuffID.Venom] = true;
-			//player.buffImmune[BuffID.ToxicShock] = true;
+			player.buffImmune[Toxic_Shock_Debuff.ID] = true;
 			player.breathMax += 63;
 			if (Main.GameUpdateCount % 4 != 0) {
 				player.ignoreWater = true;
@@ -82,11 +83,11 @@ namespace Origins.Items.Armor.Acrid {
 			return body.type == ModContent.ItemType<Acrid_Breastplate>() && legs.type == ModContent.ItemType<Acrid_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Immunity to 'Toxic Shock', 'Solvent', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
+			player.GetModPlayer<OriginPlayer>().acridSet = true;
+			player.setBonus = "All attacks inflict 'Toxic Shock'\nImmunity to 'Toxic Shock', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
 			player.buffImmune[BuffID.Poisoned] = true;
 			player.buffImmune[BuffID.Venom] = true;
-			//player.buffImmune[BuffID.ToxicShock] = true;
-			//player.buffImmune[BuffID.Solvent] = true;
+			player.buffImmune[Toxic_Shock_Debuff.ID] = true;
 			player.breathMax += 63;
 			if (Main.GameUpdateCount % 4 != 0) {
 				player.ignoreWater = true;
@@ -129,11 +130,11 @@ namespace Origins.Items.Armor.Acrid {
 			return body.type == ModContent.ItemType<Acrid_Breastplate>() && legs.type == ModContent.ItemType<Acrid_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Immunity to 'Toxic Shock', 'Solvent', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
+			player.GetModPlayer<OriginPlayer>().acridSet = true;
+			player.setBonus = "All attacks inflict 'Toxic Shock'\nImmunity to 'Toxic Shock', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
 			player.buffImmune[BuffID.Poisoned] = true;
 			player.buffImmune[BuffID.Venom] = true;
-			//player.buffImmune[BuffID.ToxicShock] = true;
-			//player.buffImmune[BuffID.Solvent] = true;
+			player.buffImmune[Toxic_Shock_Debuff.ID] = true;
 			player.breathMax += 63;
 			if (Main.GameUpdateCount % 4 != 0) {
 				player.ignoreWater = true;
@@ -176,11 +177,11 @@ namespace Origins.Items.Armor.Acrid {
 			return body.type == ModContent.ItemType<Acrid_Breastplate>() && legs.type == ModContent.ItemType<Acrid_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Immunity to 'Toxic Shock', 'Solvent', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
+			player.GetModPlayer<OriginPlayer>().acridSet = true;
+			player.setBonus = "All attacks inflict 'Toxic Shock'\nImmunity to 'Toxic Shock', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
 			player.buffImmune[BuffID.Poisoned] = true;
 			player.buffImmune[BuffID.Venom] = true;
-			//player.buffImmune[BuffID.ToxicShock] = true;
-			//player.buffImmune[BuffID.Solvent] = true;
+			player.buffImmune[Toxic_Shock_Debuff.ID] = true;
 			player.breathMax += 63;
 			if (Main.GameUpdateCount % 4 != 0) {
 				player.ignoreWater = true;
@@ -221,11 +222,11 @@ namespace Origins.Items.Armor.Acrid {
 			return body.type == ModContent.ItemType<Acrid_Breastplate>() && legs.type == ModContent.ItemType<Acrid_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Immunity to 'Toxic Shock', 'Solvent', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
+			player.GetModPlayer<OriginPlayer>().acridSet = true;
+			player.setBonus = "All attacks inflict 'Toxic Shock'\nImmunity to 'Toxic Shock', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
 			player.buffImmune[BuffID.Poisoned] = true;
 			player.buffImmune[BuffID.Venom] = true;
-			//player.buffImmune[BuffID.ToxicShock] = true;
-			//player.buffImmune[BuffID.Solvent] = true;
+			player.buffImmune[Toxic_Shock_Debuff.ID] = true;
 			player.breathMax += 63;
 			if (Main.GameUpdateCount % 4 != 0) {
 				player.ignoreWater = true;
