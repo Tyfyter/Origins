@@ -28,18 +28,13 @@ namespace Origins.Items.Armor.Riptide {
 			return body.type == ModContent.ItemType<Riptide_Breastplate>() && legs.type == ModContent.ItemType<Riptide_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			if (Main.rand.NextBool(2)) {
-				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.WaterCandle, 0, 1, 255, new Color(255, 150, 30), 1f);
-				dust.noGravity = true;
-				dust.velocity *= 1.2f;
-			}
 			player.setBonus = "5% increased magic damage when submerged or in rain\nGrants the ability to dash which releases a tidal wave";
 			player.GetModPlayer<OriginPlayer>().riptideSet = true;
 			if (player.wet) {//TODO: rain
 				player.GetDamage(DamageClass.Magic) += 0.05f;
 			}
 		}
-		public override void UpdateVanitySet(Player player) {
+		public override void ArmorSetShadows(Player player) {
 			if (Main.rand.NextBool(2)) {
 				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.WaterCandle, 0, 1, 255, new Color(255, 150, 30), 1f);
 				dust.noGravity = true;

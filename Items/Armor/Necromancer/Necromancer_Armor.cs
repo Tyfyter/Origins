@@ -25,11 +25,6 @@ namespace Origins.Items.Armor.Necromancer {
 			return body.type == ModContent.ItemType<Necromancer_Breastplate>() && legs.type == ModContent.ItemType<Necromancer_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			if (Main.rand.NextBool(1)) {
-				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Blood, 0, 0, 165, new Color(80, 50, 50));
-				dust.noGravity = true;
-				dust.scale *= 1.02f;
-			}
 			player.setBonus = "Slain enemies provide a temporary boost to all stats\nMana usage is halved when in a Graveyard and artifact minions cost half as much\nEnemies spawn more frequently\n+3 minion slots";
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.artifactManaCost *= 0.5f;
@@ -56,12 +51,19 @@ namespace Origins.Items.Armor.Necromancer {
 
 			player.maxMinions += 3;
 		}
-		public override void UpdateVanitySet(Player player) {
-			if (Main.rand.NextBool(1)) {
+		public override void ArmorSetShadows(Player player) {
+			//player.armorEffectDrawOutlines = true;
+			//player.armorEffectDrawOutlinesForbidden = true;
+			//player.armorEffectDrawShadow = true;
+			player.armorEffectDrawShadowLokis = true;
+			player.armorEffectDrawShadowSubtle = true;
+			/*if (Main.rand.NextBool(1)) {
 				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.Blood, 0, 0, 165, new Color(80, 50, 50));
 				dust.noGravity = true;
 				dust.scale *= 1.02f;
-			}
+			}*/
+		}
+		public override void UpdateVanitySet(Player player) {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

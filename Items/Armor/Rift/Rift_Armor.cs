@@ -29,14 +29,10 @@ namespace Origins.Items.Armor.Rift {
 			return body.type == ModContent.ItemType<Rift_Breastplate>() && legs.type == ModContent.ItemType<Rift_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			if (Main.rand.NextBool(5)) {
-				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.RedTorch, 0, 0, 100, new Color(255, 60, 30));
-				dust.noGravity = true;
-			}
 			player.setBonus = "Explosive projectiles have a chance to be duplicated";
 			player.GetModPlayer<OriginPlayer>().riftSet = true;
 		}
-		public override void UpdateVanitySet(Player player) {
+		public override void ArmorSetShadows(Player player) {
 			if (Main.rand.NextBool(5)) {
 				Dust dust = Dust.NewDustDirect(player.position, player.width, player.height, DustID.RedTorch, 0, 0, 100, new Color(255, 60, 30));
 				dust.noGravity = true;
