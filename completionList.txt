@@ -109,9 +109,9 @@ ENEMY NPCS:
 (X) Cellarkeep
 (^) Chunky Slime
 (#, ^2(use flagellash sprites)) Cleaver !!!
-(#, ^2) Cranivore !!!
-(#, ^2) Crimbrain !!!
-(#, ^2) Defiled Ekko !!!
+(#2, ^2) Cranivore !!!
+(#2, ^2) Crimbrain !!!
+(#2, ^2) Defiled Ekko !!!
 (#, ^2) Defiled Wisp !!!
 (^) Fiberglass Enemies
 (^) Measly Moeba
@@ -395,9 +395,8 @@ VANITY:
 (^) Cranivore Beanie
 (X) Decay Protector Set
 (X) Gore Protector Set
-(X) Sandals
 (X) Steampunk Mechanist Set
-(X) Sunflower Sandals
+(^) Sunflower Sandals
 (X) Well-Gelled Hero's Hair
 
 (^) Tyfyter's Set
