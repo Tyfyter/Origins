@@ -25,9 +25,7 @@ namespace Origins.Items.Armor.Soulhide {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = "Nearby enemies are afflicted 'Shadowflame' and 'Weak'";
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.lousyLiverCount = 48;
-			originPlayer.lousyLiverDebuffs.Add((Soulhide_Debuff.ID, 10));
+			player.GetModPlayer<OriginPlayer>().soulhideSet = true;
 		}
         public override void ArmorSetShadows(Player player) {
 			if (Main.rand.NextBool(6)) {

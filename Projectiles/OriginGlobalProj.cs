@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.NPCs;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -75,13 +76,19 @@ namespace Origins.Projectiles {
 					itemUseSource.Entity is Player player && player.GetModPlayer<OriginPlayer>().entangledEnergy) {
 					fiberglassLifesteal = true;
 				}
-			} else if (source is EntitySource_Parent source_Parent && source_Parent.Entity is Projectile parentProjectile) {
-				if (parentProjectile.type == ModContent.ProjectileType<Amoeba_Bubble>()) {
-					isFromMitosis = true;
-					projectile.alpha = 100;
-					if (projectile.minion) {
-						mitosisTimeLeft = 300;
-						projectile.minionSlots = 0;
+			} else if (source is EntitySource_Parent source_Parent) {
+				if (source_Parent.Entity is Projectile parentProjectile) {
+					if (parentProjectile.type == ModContent.ProjectileType<Amoeba_Bubble>()) {
+						isFromMitosis = true;
+						projectile.alpha = 100;
+						if (projectile.minion) {
+							mitosisTimeLeft = 300;
+							projectile.minionSlots = 0;
+						}
+					}
+				}else if (source is EntitySource_Parent parentSource) {
+					if (parentSource.Entity is NPC parentNPC && parentNPC.GetGlobalNPC<OriginGlobalNPC>().soulhideWeakenedDebuff) {
+						projectile.damage = (int)(projectile.damage * (1f - OriginGlobalNPC.soulhideWeakenAmount));
 					}
 				}
 			}

@@ -59,6 +59,7 @@ namespace Origins {
 		public bool tendonSet = false;
 		public bool acridSet = false;
 		public float necroSetAmount = 0f;
+		public bool soulhideSet = false;
 		public int mimicSetChoices = 0;
 		public int setActiveAbility = 0;
 		public int setAbilityCooldown = 0;
@@ -295,6 +296,7 @@ namespace Origins {
 			if (necroSetAmount > 0) {
 				necroSetAmount -= 1 + necroSetAmount * 0.01f;
 			}
+			soulhideSet = false;
 			setActiveAbility = 0;
 
 			if (setAbilityCooldown > 0) {
@@ -824,6 +826,39 @@ namespace Origins {
 						}
 					}
 					explosiveArteryCount = -1;
+				}
+			}
+			if (soulhideSet) {
+				const float maxDistTiles = 10f * 16;
+				const float maxDistTiles2 = 15f * 16;
+				for (int i = 0; i < Main.maxNPCs; i++) {
+					NPC currentTarget = Main.npc[i];
+					if (currentTarget.CanBeChasedBy()) {
+						float distSquared = (currentTarget.Center - Player.MountedCenter).LengthSquared();
+						if (distSquared < maxDistTiles * maxDistTiles) {
+							currentTarget.AddBuff(Weak_Shadowflame_Debuff.ID, 5);
+						}
+						if (distSquared < maxDistTiles2 * maxDistTiles2) {
+							currentTarget.AddBuff(Soulhide_Weakened_Debuff.ID, 5);
+							if (Main.rand.NextBool(6)) {
+								Vector2 pos = Main.rand.NextVector2FromRectangle(currentTarget.Hitbox);
+								Vector2 dir = (Player.MountedCenter - pos).SafeNormalize(default) * 4;
+								Dust dust = Dust.NewDustPerfect(
+									pos,
+									DustID.Shadowflame,
+									dir,
+									120,
+									Color.Red,
+									1.25f
+								);
+								dust.noGravity = true;
+								if (Main.rand.NextBool(4)) {
+									dust.noGravity = false;
+									dust.scale *= 0.5f;
+								}
+							}
+						}
+					}
 				}
 			}
 			if (lousyLiverCount > 0) {

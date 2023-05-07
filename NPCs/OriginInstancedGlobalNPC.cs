@@ -5,6 +5,7 @@ using Origins.Projectiles.Weapons;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -26,6 +27,10 @@ namespace Origins.NPCs {
 		float tornTarget = 0.7f;
 		public bool slowDebuff = false;
 		public bool oldSlowDebuff = false;
+		public bool weakShadowflameDebuff = false;
+		public bool soulhideWeakenedDebuff = false;
+		public const float soulhideWeakenAmount = 0.15f;
+		public bool weakenedOnSpawn = false;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
@@ -52,6 +57,8 @@ namespace Origins.NPCs {
 			}
 			oldSlowDebuff = slowDebuff;
 			slowDebuff = false;
+			weakShadowflameDebuff = false;
+			soulhideWeakenedDebuff = false;
 		}
 		public override void AI(NPC npc) {
 			if (shrapnelTime > 0) {
@@ -65,6 +72,28 @@ namespace Origins.NPCs {
 				dust10.velocity *= 0.25f;
 			}
 		}
+		public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit) {
+			if (weakenedOnSpawn) return;
+			if (soulhideWeakenedDebuff) {
+				damage = (int)(damage * (1f - soulhideWeakenAmount));
+			}
+		}
+		public override void ModifyHitNPC(NPC npc, NPC target, ref int damage, ref float knockback, ref bool crit) {
+			if (weakenedOnSpawn) return;
+			if (soulhideWeakenedDebuff) {
+				damage = (int)(damage * (1f - soulhideWeakenAmount));
+			}
+		}
+		public override void OnSpawn(NPC npc, IEntitySource source) {
+			if (source is EntitySource_Parent parentSource) {
+				if (parentSource.Entity is NPC parentNPC) {
+					if ((!npc.chaseable || npc.lifeMax <= 5) && parentNPC.GetGlobalNPC<OriginGlobalNPC>().soulhideWeakenedDebuff) {
+						npc.damage = (int)(npc.damage * (1f - soulhideWeakenAmount));
+						weakenedOnSpawn = true;
+					}
+				}
+			}
+		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (npc.lifeRegen > 0 && npc.HasBuff(BuffID.Bleeding)) {
 				npc.lifeRegen = 0;
@@ -74,6 +103,24 @@ namespace Origins.NPCs {
 					npc.lifeRegen = 0;
 				}
 				npc.lifeRegen -= 4;
+			}
+			if (weakShadowflameDebuff) {
+				if (npc.lifeRegen > 0) {
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 15;
+				damage += 1;
+				if(Main.rand.Next(5) < 3) {
+					Dust dust = Dust.NewDustDirect(new Vector2(npc.position.X - 2f, npc.position.Y - 2f), npc.width + 4, npc.height + 4, DustID.Shadowflame, npc.velocity.X * 0.3f, npc.velocity.Y * 0.3f, 220, Color.White, 1.75f);
+					dust.noGravity = true;
+					dust.velocity *= 0.75f;
+					dust.velocity.X *= 0.75f;
+					dust.velocity.Y -= 1f;
+					if (Main.rand.NextBool(4)) {
+						dust.noGravity = false;
+						dust.scale *= 0.5f;
+					}
+				}
 			}
 		}
 		public static void AddInfusionSpike(NPC npc, int projectileID) {
