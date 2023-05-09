@@ -13,24 +13,15 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.MonsterLasagna);
 			Item.holdStyle = ItemHoldStyleID.None;
 			Item.scale = 0.6f;
-			Item.buffType = Brine_Cheese_Buff.ID;
+			Item.buffType = BuffID.WellFed3;
 			Item.buffTime = 60 * 60 * 12;
 			Item.value = Item.sellPrice(copper: 1);
 			Item.rare = ItemRarityID.Gray;
 		}
-	}
-	public class Brine_Cheese_Buff : ModBuff {
-		public override string Texture => "Origins/Buffs/Food/Brine_Cheese_Buff";
-		public static int ID { get; private set; } = -1;
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Brine Cheese");
-			Description.SetDefault("Quite brave");
-			ID = Type;
-		}
-		public override void Update(Player player, ref int buffIndex) {
-			player.AddBuff(BuffID.WellFed3, 60);
-			player.AddBuff(BuffID.Rabies, 180);
-			player.AddBuff(BuffID.Tipsy, 60);
+		public override bool ConsumeItem(Player player) {
+			player.AddBuff(BuffID.Rabies, Item.buffTime + 120);
+			player.AddBuff(BuffID.Tipsy, Item.buffTime);
+			return true;
 		}
 	}
 }

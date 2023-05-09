@@ -13,10 +13,14 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.MonsterLasagna);
 			Item.holdStyle = ItemHoldStyleID.None;
 			Item.scale = 0.6f;
-			Item.buffType = Irish_Cheddar_Buff.ID;
+			Item.buffType = BuffID.WellFed;
 			Item.buffTime = 60 * 60 * 12;
 			Item.value = Item.sellPrice(silver: 20);
 			Item.rare = ItemRarityID.Blue;
+		}
+		public override bool ConsumeItem(Player player) {
+			player.AddBuff(Irish_Cheddar_Buff.ID, Item.buffTime);
+			return true;
 		}
 	}
 	public class Irish_Cheddar_Buff : ModBuff {
@@ -28,7 +32,6 @@ namespace Origins.Items.Other.Consumables {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			player.AddBuff(BuffID.WellFed, 10);
 			player.GetCritChance(DamageClass.Generic) += 0.08f;
 		}
 	}

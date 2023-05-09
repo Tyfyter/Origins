@@ -12,10 +12,14 @@ namespace Origins.Items.Other.Consumables {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.MonsterLasagna);
 			Item.holdStyle = ItemHoldStyleID.None;
-			Item.buffType = Honey_Bread_Buff.ID;
+			Item.buffType = BuffID.WellFed3;
 			Item.buffTime = 60 * 60 * 15;
 			Item.value = Item.sellPrice(silver: 10);
 			Item.rare = ItemRarityID.White;
+		}
+		public override bool ConsumeItem(Player player) {
+			player.AddBuff(BuffID.Honey, Item.buffTime);
+			return true;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Honey_Bread>());
@@ -23,19 +27,6 @@ namespace Origins.Items.Other.Consumables {
 			recipe.AddIngredient(this);
 			recipe.AddTile(TileID.CookingPots);
 			recipe.Register();
-		}
-	}
-	public class Honey_Bread_Buff : ModBuff {
-		public override string Texture => "Origins/Buffs/Food/Honey_Bread_Buff";
-		public static int ID { get; private set; } = -1;
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Honey Wheat Bread");
-			Description.SetDefault("Mmmmm...");
-			ID = Type;
-		}
-		public override void Update(Player player, ref int buffIndex) {
-			player.AddBuff(BuffID.WellFed3, 60);
-			player.AddBuff(BuffID.Honey, 60);
 		}
 	}
 }

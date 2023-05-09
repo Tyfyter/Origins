@@ -18,9 +18,9 @@ namespace Origins.Items.Other.Consumables {
 			Item.value = Item.sellPrice(silver: 20);
 			Item.rare = ItemRarityID.Orange;
 		}
-		public override bool? UseItem(Player player) {
+		public override bool ConsumeItem(Player player) {
 			player.AddBuff(BuffID.Regeneration, Item.buffTime);
-			return null;
+			return true;
 		}
 	}
 }
