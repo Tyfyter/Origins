@@ -1176,6 +1176,24 @@ namespace Origins {
 		public const int Marble = 51;
 		public const int Crystal = 52;
 		public const int Golden = 53;
+
+		public const int Crystal2 = 56 + 0;
+		public const int Golden2 = 56 + 1;
+		public const int Spider = 56 + 2;
+		public const int Lesion = 56 + 3;
+		public const int DeadMan = 56 + 4;
+		public const int Solar = 56 + 5;
+		public const int Vortex = 56 + 6;
+		public const int Nebula = 56 + 7;
+		public const int Stardust = 56 + 8;
+		public const int Golf = 56 + 9;
+		public const int Sandstone = 56 + 10;
+		public const int Bamboo = 56 + 11;
+		public const int Desert = 56 + 12;
+		public const int LockedDesert = 56 + 13;
+		public const int Reef = 56 + 14;
+		public const int Baloon = 56 + 15;
+		public const int AshWood = 56 + 16;
 		public static readonly IdDictionary Search = IdDictionary.Create(typeof(ChestID), typeof(int));
 	}
 	#endregion

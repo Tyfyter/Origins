@@ -305,7 +305,7 @@ namespace Origins {
 			queuedKillTiles.Enqueue((i, j));
 		}
 		public override void PostWorldGen() {
-			ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(56,
+			ChestLootCache[] chestLoots = OriginExtensions.BuildArray<ChestLootCache>(56 + 17,
 				ChestID.Normal,
 				ChestID.Gold,
 				ChestID.LockedGold,
@@ -317,7 +317,9 @@ namespace Origins {
 				ChestID.Lihzahrd,
 				ChestID.Water,
 				ChestID.Granite,
-				ChestID.Marble
+				ChestID.Marble,
+				ChestID.DeadMan,
+				ChestID.Sandstone
 			);
 			Chest chest;
 			int lootType;
@@ -325,41 +327,56 @@ namespace Origins {
 			bool noLoot = true;
 			for (int i = 0; i < Main.chest.Length; i++) {
 				chest = Main.chest[i];
-				if (chest != null && Main.tile[chest.x, chest.y].TileType == TileID.Containers) {
-					cache = chestLoots[Main.tile[chest.x, chest.y].TileFrameX / 36];
-					if (cache is null) continue;
-					lootType = chest.item[0].type;
-					cache.AddLoot(lootType, i);
-					noLoot = false;
+				if (chest != null) {
+					int tileType = Main.tile[chest.x, chest.y].TileType;
+					if (tileType == TileID.Containers) {
+						cache = chestLoots[Main.tile[chest.x, chest.y].TileFrameX / 36];
+						if (cache is null) continue;
+						lootType = chest.item[0].type;
+						cache.AddLoot(lootType, i);
+						noLoot = false;
+					}else if (tileType == TileID.Containers2) {
+						cache = chestLoots[Main.tile[chest.x, chest.y].TileFrameX / 36 + 56];
+						if (cache is null) continue;
+						lootType = chest.item[0].type;
+						cache.AddLoot(lootType, i);
+						noLoot = false;
+					}
 				}
 			}
 			if (noLoot) return;
 			ApplyWeightedLootQueue(chestLoots,
-				(CHANGE_QUEUE, ChestID.Normal, 0f),
+				(CHANGE_QUEUE, ChestID.Normal, 0b0000),
 				(ENQUEUE, ModContent.ItemType<Cyah_Nara>(), 1f),
 				//example:
 				//(SWITCH_MODE, MODE_ADD, 1f),
 				//(ENQUEUE, ItemID.Sashimi, 0.5f),
 				//(SWITCH_MODE, MODE_REPLACE, 1f),
-				(CHANGE_QUEUE, ChestID.LivingWood, 0f),
+				(CHANGE_QUEUE, ChestID.LivingWood, 0b0000),
 				(ENQUEUE, ModContent.ItemType<Woodsprite_Staff>(), 1f),
-				(CHANGE_QUEUE, ChestID.LockedShadow, 0f),
+
+				(CHANGE_QUEUE, ChestID.LockedShadow, 0b0000),
 				(ENQUEUE, ModContent.ItemType<Boiler>(), 0.5f),
 				(ENQUEUE, ModContent.ItemType<Firespit>(), 0.5f),
 				(ENQUEUE, ModContent.ItemType<Dragons_Breath>(), 0.5f),
 				(ENQUEUE, ModContent.ItemType<Hand_Grenade_Launcher>(), 0.5f),
-				(CHANGE_QUEUE, ChestID.Ice, 0f),
+
+				(CHANGE_QUEUE, ChestID.Ice, 0b0000),
 				(ENQUEUE, ModContent.ItemType<Cryostrike>(), 1f),
+
 				(CHANGE_QUEUE, ChestID.Gold, 0b0101),
 				(ENQUEUE, ModContent.ItemType<Bomb_Charm>(), 1f),
 				(ENQUEUE, ModContent.ItemType<Beginners_Tome>(), 1f),
 				(ENQUEUE, ModContent.ItemType<Rope_Of_Sharing>(), 1f),
+
 				(CHANGE_QUEUE, ChestID.Gold, 0b1101),
 				(ENQUEUE, ModContent.ItemType<Nitro_Crate>(), 1f),
-				/*(CHANGE_QUEUE, ChestID.Gold, DeadmansChest),
+
+				(CHANGE_QUEUE, ChestID.DeadMan, 0b0000),
 				(ENQUEUE, ModContent.ItemType<Magic_Tripwire>(), 1f),
-				(ENQUEUE, ModContent.ItemType<Trap_Charm>(), 1f),*/
-				(CHANGE_QUEUE, ChestID.LockedGold, 0f),
+				(ENQUEUE, ModContent.ItemType<Trap_Charm>(), 1f),
+
+				(CHANGE_QUEUE, ChestID.LockedGold, 0b0000),
 				(ENQUEUE, ModContent.ItemType<Tones_Of_Agony>(), 1f),
 				(ENQUEUE, ModContent.ItemType<Asylum_Whistle>(), 1f),
 				(ENQUEUE, ModContent.ItemType<Bomb_Launcher>(), 1f),
