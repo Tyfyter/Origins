@@ -1,4 +1,5 @@
-﻿using Origins.Items.Weapons.Magic;
+﻿using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Magic;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
@@ -40,11 +41,11 @@ namespace Origins.Items.Other.Consumables {
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.Register();
 
-			//recipe = Recipe.Create(ModContent.ItemType<Potato_Mine>(), 15);
-			//recipe.AddIngredient(ItemID.ExplosivePowder);
-			//recipe.AddIngredient(this);
-			//recipe.AddTile(TileID.WorkBenches);
-			//recipe.Register();
+			Recipe.Create(ModContent.ItemType<Potato_Mine>(), 15);
+			recipe.AddIngredient(ItemID.ExplosivePowder);
+			recipe.AddIngredient(this);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.Register();
 		}
 	}
 }

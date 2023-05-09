@@ -14,7 +14,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.CultistBossBag);
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Sonorous_Shredder>(), 20));
+			//itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Sonorous_Shredder>(), 20)); doesnt work unless thorium enabled...
 			//itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<RD2081_Music_Box>(), 50));
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {

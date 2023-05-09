@@ -1,5 +1,4 @@
-﻿using Origins.Buffs;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -21,7 +20,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 	}
 	public class Brine_Cheese_Buff : ModBuff {
-		public override string Texture => "Origins/Buffs/Brine_Cheese_Buff";
+		public override string Texture => "Origins/Buffs/Food/Brine_Cheese_Buff";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Brine Cheese");

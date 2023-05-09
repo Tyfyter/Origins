@@ -667,12 +667,13 @@ EXPLOSIVE WEAPONS:
 (#4, ^2) Mine Flayer
 (^) Nuclear Arm*
 (#2, ^2) Omni-Directional Claymore
-(X) Rocodile
+(#3(obtain help), ^2) Rocodile
 (#, ^2) Shrapnel Bomb
 
 (^) Black Hole Bomb
 (@5, ^3) Caustica
 (#2, ^2) Flakjack
+(@, ^3) Missile Minigun
 (@5, #) Starburst
 ---
 
@@ -898,9 +899,9 @@ CONSUMABLES:
 (^) Voidsight Potion
 
 (^) Blue Bovine
-(X) Bread
+(^) Bread
 (#3 (needs drop during april fools), ^2) Brine Cheese
-(X) Honey Wheat Bread
+(^) Honey Wheat Bread
 (^) Irish Cheddar
 (^) Jam Sandwich
 (^) Krunch Mix*

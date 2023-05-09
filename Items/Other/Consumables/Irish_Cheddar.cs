@@ -20,7 +20,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 	}
 	public class Irish_Cheddar_Buff : ModBuff {
-		public override string Texture => "Origins/Buffs/Irish_Cheddar_Buff";
+		public override string Texture => "Origins/Buffs/Food/Irish_Cheddar_Buff";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Irish Cheddar");
