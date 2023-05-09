@@ -16,8 +16,8 @@ namespace Origins.Items.Armor.Nova {
 		}
 		public override void SetDefaults() {
 			Item.defense = 8;
-			Item.value = Item.buyPrice(gold: 2);
-			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 2);
+			Item.rare = ItemRarityID.Red;
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed += 0.5f;
@@ -52,11 +52,11 @@ namespace Origins.Items.Armor.Nova {
 		}
 		public override void SetDefaults() {
 			Item.defense = 22;
-			Item.value = Item.buyPrice(gold: 2);
-			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 2);
+			Item.rare = ItemRarityID.Red;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.60f;
+			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.6f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -78,13 +78,12 @@ namespace Origins.Items.Armor.Nova {
 		}
 		public override void SetDefaults() {
 			Item.defense = 18;
-			Item.value = Item.buyPrice(gold: 2);
-			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 2);
+			Item.rare = ItemRarityID.Red;
 		}
 		public override void UpdateEquip(Player player) {
 			player.moveSpeed += 0.15f;
 			player.accRunSpeed += 0.15f;
-			player.runAcceleration += 0.02f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

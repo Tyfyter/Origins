@@ -15,6 +15,13 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = ItemRarityID.Orange;
 		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.FeralClaws);
+			recipe.AddIngredient(ModContent.ItemType<Bomb_Yeeter>());
+			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.Register();
+		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			player.GetAttackSpeed(DamageClasses.Explosive) += 0.1f;

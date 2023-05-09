@@ -219,7 +219,7 @@ ARMOR:
 (X) Lost Armor !!!
 (^) Myth Armor
 (^) Riptide Armor
-(#3, ^2) Soulhide Armor !!!
+(^) Soulhide Armor
 (^) Tendon Armor
 
 (^) Acrid Armor
@@ -255,9 +255,11 @@ ACCESSORIES:
 (^) Advanced Imaging*
 (^) Air Tank*
 (#2, ^2, ♠) ATACS
+(X) Automated Returns Handler
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
+(X) Boomerang Magnet
 (^) Brine-Leafed Clover
 (^) Celestial Starlight
 (^) Celestial Stone Mask
@@ -294,7 +296,6 @@ ACCESSORIES:
 (^) Messy Leech
 (^) Messy Magma Leech
 (^) Missile Arm Cannon
-(#3, ^2) Mitosis
 (^) Nitro Crate
 (^) No U Card
 (^) Olid Organ*
@@ -306,6 +307,7 @@ ACCESSORIES:
 (^) Powerflower
 (#2, ^2) Priority Mail !!!
 (X) Proactive Protozoa
+(X) Protomind
 (@2, #) Rage Quilt
 (^) Razorwire
 (^) Rebreather
@@ -319,6 +321,7 @@ ACCESSORIES:
 (^) Sonic Radar
 (^) Shield of Retribution
 (#2, ^2) Strange Computer
+(X) Super Turbo Reel
 (^) Superjump Cape
 (^) Symbiote Skull
 (^) Tainted Flesh
@@ -656,6 +659,7 @@ EXPLOSIVE WEAPONS:
 (#2, ^2) Abrasion Blaster
 (#2, ^2) Ace Shrapnel
 (@5, ^3) Bomboomstick
+(X) Chlorodynamite !!!
 (^) Crystal Bomb
 (^) Crystal Grenade
 (#2, ^2) Grenado
@@ -663,6 +667,7 @@ EXPLOSIVE WEAPONS:
 (#4, ^2) Mine Flayer
 (^) Nuclear Arm*
 (#2, ^2) Omni-Directional Claymore
+(X) Rocodile
 (#, ^2) Shrapnel Bomb
 
 (^) Black Hole Bomb
@@ -893,7 +898,9 @@ CONSUMABLES:
 (^) Voidsight Potion
 
 (^) Blue Bovine
+(X) Bread
 (#3 (needs drop during april fools), ^2) Brine Cheese
+(X) Honey Wheat Bread
 (^) Irish Cheddar
 (^) Jam Sandwich
 (^) Krunch Mix*
@@ -934,6 +941,7 @@ MOUNTS & PETS:
 (^) Chromatic Scale (Rainbow Pangolin)
 
 (^) Amoeba Toy (Meberoid)
+(%2) Mitosis (???)
 (@2, #2) Rusty Cross Necklace (Guardian Angel)
 (^) Suspicious Looking Pebble (Defiled Blight)
 

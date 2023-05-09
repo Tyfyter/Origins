@@ -1,4 +1,5 @@
 using Origins.Projectiles;
+using Origins.Tiles.Dusk;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -21,6 +22,13 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 2, copper: 33);
 			Item.rare = ItemRarityID.White;
 		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type, 50);
+			recipe.AddIngredient(ItemID.ExplosivePowder, 25);
+			recipe.AddIngredient(ItemID.Wood, 50);
+			recipe.AddTile(TileID.WorkBenches);
+			recipe.Register();
+		}
 	}
 	public class Resizable_Mine_Two : ModItem {
 		public override void SetStaticDefaults() {
@@ -38,6 +46,13 @@ namespace Origins.Items.Weapons.Ammo {
             Item.knockBack = 3f;
 			Item.value = Item.sellPrice(silver: 4, copper: 65);
 			Item.rare = ItemRarityID.Green;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type, 50);
+			recipe.AddIngredient(ItemID.ExplosivePowder, 25);
+			recipe.AddIngredient(ItemID.IronOre, 50);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 		}
 	}
 	public class Resizable_Mine_Three : Resizable_Mine_Two {
@@ -57,6 +72,13 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 8, copper: 80);
 			Item.rare = ItemRarityID.Pink;
 		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type, 50);
+			recipe.AddIngredient(ItemID.ExplosivePowder, 25);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 50);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+		}
 	}
 	public class Resizable_Mine_Four : Resizable_Mine_Two {
 		public override void SetStaticDefaults() {
@@ -75,6 +97,13 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 13);
 			Item.rare = ItemRarityID.Yellow;
 		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type, 50);
+			recipe.AddIngredient(ItemID.ExplosivePowder, 25);
+			recipe.AddIngredient(ItemID.ChlorophyteOre, 50);
+			recipe.AddTile(TileID.MythrilAnvil);
+			recipe.Register();
+		}
 	}
 	public class Resizable_Mine_Five : Resizable_Mine_Two {
 		public override void SetStaticDefaults() {
@@ -92,6 +121,13 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.knockBack = 4.8f;
 			Item.value = Item.sellPrice(silver: 26);
 			Item.rare = ItemRarityID.Cyan;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type, 50);
+			recipe.AddIngredient(ItemID.ExplosivePowder, 25);
+			recipe.AddIngredient(ItemID.LunarOre, 50);
+			recipe.AddTile(TileID.LunarCraftingStation);
+			recipe.Register();
 		}
 	}
 	public class Resizable_Mine_P : ModProjectile, IIsExplodingProjectile {

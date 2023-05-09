@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using Origins.Items.Weapons.Demolitionist;
+using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,6 +14,8 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.CultistBossBag);
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Sonorous_Shredder>(), 20));
+			//itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<RD2081_Music_Box>(), 50));
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
 			itemGroup = ContentSamples.CreativeHelper.ItemGroup.GoodieBags;

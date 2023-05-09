@@ -67,6 +67,8 @@ namespace Origins.NPCs {
 				break;
 				case NPCID.SkeletronPrime:
 				case NPCID.TheDestroyer:
+				case NPCID.TheDestroyerBody:
+				case NPCID.TheDestroyerTail:
 				case NPCID.Retinazer:
 				case NPCID.Spazmatism:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Busted_Servo>(), 1, 8, 37));
@@ -97,7 +99,7 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Startillery>(), 12));
 				break;
 				case NPCID.Clown:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Happy_Bomb>(), 10, 7, 21));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Happy_Bomb>(), 1, 7, 21));
 				break;
 				case NPCID.PurpleSlime:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plasma_Phial>(), 2));
@@ -108,13 +110,16 @@ namespace Origins.NPCs {
 				case NPCID.BloodCrawler:
 				case NPCID.BloodCrawlerWall:
 				case NPCID.FaceMonster:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Explosive_Artery>(), 100));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Explosive_Artery>(), 87));
 				break;
 				case NPCID.UndeadMiner:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IWTPA_Standard>(), 4));
 				break;
 				case NPCID.SporeSkeleton:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Irish_Cheddar>(), 3));
+				break;
+				case NPCID.GiantTortoise:
+				//npcLoot.Add(ItemDropRule.ByCondition(condition: DownedPlantera,ModContent.ItemType<Rocodile>(), 15));
 				break;
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
@@ -152,7 +157,7 @@ namespace Origins.NPCs {
 				}
 				break;
 				case NPCID.TheGroom:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Comb>(), 10));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Comb>()));
 				break;
 				case NPCID.MoonLordCore:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Third_Eye>(), 4));

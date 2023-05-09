@@ -28,8 +28,8 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 2);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 4);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 6);
+			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 12);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.Register();
 		}

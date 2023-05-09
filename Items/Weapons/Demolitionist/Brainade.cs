@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,6 +19,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Brainade_P>();
 			Item.ammo = ItemID.Grenade;
 			Item.rare = ItemRarityID.Blue;
+			Item.maxStack = 999;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 50);
