@@ -41,7 +41,7 @@ namespace Origins.Items.Other.Consumables {
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.Register();
 
-			Recipe.Create(ModContent.ItemType<Potato_Mine>(), 15);
+			recipe = Recipe.Create(ModContent.ItemType<Potato_Mine>(), 15);
 			recipe.AddIngredient(ItemID.ExplosivePowder);
 			recipe.AddIngredient(this);
 			recipe.AddTile(TileID.WorkBenches);
