@@ -38,6 +38,7 @@ namespace Origins.NPCs {
 				break;
 				case NPCID.SkeletonSniper: //Tiny skeleton sniper
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tiny_Sniper>(), 24));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 5));
                 break;
 				case NPCID.Snatcher:
 				case NPCID.JungleSlime:
@@ -117,9 +118,38 @@ namespace Origins.NPCs {
 				break;
 				case NPCID.SporeSkeleton:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Irish_Cheddar>(), 3));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 5));
 				break;
 				case NPCID.GiantTortoise:
 				//npcLoot.Add(ItemDropRule.ByCondition(condition: DownedPlantera,ModContent.ItemType<Rocodile>(), 15));
+				break;
+				case NPCID.Skeleton:
+				case NPCID.SkeletonAlien:
+				case NPCID.SkeletonArcher:
+				case NPCID.SkeletonAstonaut:
+				case NPCID.SkeletonCommando:
+				case NPCID.SkeletonMerchant:
+				case NPCID.SkeletonTopHat:
+				case NPCID.ArmoredSkeleton:
+				case NPCID.BigHeadacheSkeleton:
+				case NPCID.BigMisassembledSkeleton:
+				case NPCID.BigPantlessSkeleton:
+				case NPCID.BigSkeleton:
+				case NPCID.BoneThrowingSkeleton:
+				case NPCID.BoneThrowingSkeleton2:
+				case NPCID.BoneThrowingSkeleton3:
+				case NPCID.BoneThrowingSkeleton4:
+				case NPCID.GreekSkeleton:
+				case NPCID.HeadacheSkeleton:
+				case NPCID.HeavySkeleton:
+				case NPCID.MisassembledSkeleton:
+				case NPCID.PantlessSkeleton:
+				case NPCID.SmallHeadacheSkeleton:
+				case NPCID.SmallMisassembledSkeleton:
+				case NPCID.SmallPantlessSkeleton:
+				case NPCID.SmallSkeleton:
+				case NPCID.TacticalSkeleton:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 5));
 				break;
 				case NPCID.WallofFlesh:
 				IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>

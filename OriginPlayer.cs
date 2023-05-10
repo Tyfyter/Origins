@@ -113,6 +113,7 @@ namespace Origins {
 		public HashSet<Point> preHitBuffs;
 		public bool plasmaPhial = false;
 		public bool turboReel = false;
+		public bool turboReel2 = false;
 		public bool trapCharm = false;
 		public bool rebreather = false;
 		public float rebreatherCount = 0;
@@ -347,6 +348,7 @@ namespace Origins {
 			noU = false;
 			plasmaPhial = false;
 			turboReel = false;
+			turboReel2 = false;
 			donorWristband = false;
 			trapCharm = false;
 

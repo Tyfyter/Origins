@@ -38,6 +38,9 @@ namespace Origins.Projectiles {
 					if (projectile.aiStyle == 13 && originPlayer.turboReel) {
 						projectile.extraUpdates++;
 					}
+					if (projectile.aiStyle == 13 && originPlayer.turboReel2) {
+						projectile.extraUpdates += 2;
+					}
 					isRetracting = true;
 				}
 			} else if (projectile.aiStyle == 13) {

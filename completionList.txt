@@ -51,7 +51,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver
-(X) Riven Cracker !!!
+(X) World Cracker !!!
 
 (%?, ^2) Lost Diver (Just needs the item/projectile/use sprites)
 (X) Miscreant
@@ -73,7 +73,7 @@ TOWN NPCs:
 (#2) TOWN NPC QUEST MECHANICS (general)
 
 (#2, %2, ^2) Acid Freak
-(X) Defiled Envoy
+(X) Defiled Effigy
 
 (%2, X) Dusk Trader
 
@@ -202,7 +202,7 @@ NPC DIALOGUE:
 
 (^) Acid Freak
 (X) Cubekon Tinkerer
-(#) Defiled Envoy
+(X) Defiled Effigy
 (X) Dusk Trader
 ---
 
@@ -255,11 +255,11 @@ ACCESSORIES:
 (^) Advanced Imaging*
 (^) Air Tank*
 (#2, ^2, ♠) ATACS
-(X) Automated Returns Handler
+(#2, ^2) Automated Returns Handler
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
-(X) Boomerang Magnet
+(#2, ^2) Boomerang Magnet
 (^) Brine-Leafed Clover
 (^) Celestial Starlight
 (^) Celestial Stone Mask
@@ -307,7 +307,7 @@ ACCESSORIES:
 (^) Powerflower
 (#2, ^2) Priority Mail !!!
 (X) Proactive Protozoa
-(X) Protomind
+(#3, ^2) Protomind
 (@2, #) Rage Quilt
 (^) Razorwire
 (^) Rebreather
@@ -321,7 +321,7 @@ ACCESSORIES:
 (^) Sonic Radar
 (^) Shield of Retribution
 (#2, ^2) Strange Computer
-(X) Super Turbo Reel
+(^) Super Turbo Reel
 (^) Superjump Cape
 (^) Symbiote Skull
 (^) Tainted Flesh

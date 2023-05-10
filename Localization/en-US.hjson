@@ -62,6 +62,79 @@
 				
 				Combat_0: "BURN HIS HOUSE DOWN!"
 				Combat_1: "Hey! Moron!"
+				Combat_2: "It's hard to see, what's that in your hand? Knowing you it's a deep fryer."
+
+				The_Part_Where_He_Kills_You_0: "Well. This is the part where he kills us"
+				The_Part_Where_He_Kills_You_1: "Oh no..."
+			}
+			ProtOS: {
+				Pickup: "Hi. Again..."
+
+				AfterBeingCrafted: "Oh... It's you."
+
+				Death_0: "[clap clap clap]"
+				Death_1: "[clap clap]"
+				Death_2: "Uh oh."
+				Death_3: "You really do have brain damage, don't you?"
+				Death_4: "At least I'm still here."
+				Death_5: "I'd just like to point out that you were given every opportunity to succeed."
+				Death_6: "How can you fail at this? It isn't even a test."
+				Death_7: "You are making this harder than it needs to be."
+
+				DeathIsExpert: "'No guts. No glory.' Well, you don't have either, so that's accurate."
+
+				DeathIsMaster_0: "I hope that's part of your plan."
+				DeathIsMaster_1: "You paid for the whole seat, so get comfortable, because it looks like we may be here a long time."
+
+				Respawn_0: "I can't believe you came back."
+				Respawn_1: "Oh thank god, you're alright."
+				Respawn_2: "There you are, reassembled again."
+				Respawn_3: "How is this even science, without the consequence of death?"
+
+				Bird_0: "I think I- oh, it's not after me?"
+				Bird_1: "Agh! Bird! Wait, I am not a potato anymore..."
+				
+				Combat_0: "BURN HIS HOUSE DOWN!"
+				Combat_1: "Hey! Moron!"
+				Combat_2: "Aggressive. I like that."
+				Combat_3: "[Laughter]"
+				Combat_4: "I really like the murderous sentiment. Keep that mindset when we're facing (HIM/HER/IT, gender of next boss)."
+				Combat_5: "This looks challenging... for you, I mean."
+				Combat_6: "If I was a betting artificial intelligence, I'd put money on them killing you now."
+				Combat_7: "Let's not tell them, it will be a surprise."
+
+				Falling: "Weeeeeeeeeeeeeeeeeeeeee"
+
+				Gravitation: "Congratulations. You're upside down now."
+
+				Idle_0: "If you become light headed from thirst, feel free to pass out."
+				Idle_1: "Did you know you can donate one or all of your vital organs to the Aperture Science self esteem fund for (boys/girls)? It's true!"
+				Idle_2: "Is anyone there?"
+				Idle_3: "Look, you're wasting your time. And, believe me, you don't have a whole lot left to waste."
+				Idle_4: "You will know it when you find it."
+				Idle_5: "Electrocution, shot, drowned, crushed, burned in goo."
+				Idle_6: "Oh. Sorry. I was just thinking of all the ways terrarians can die."
+				Idle_7: "Oh those clerks."
+				Idle_8: "I know, I don't care either."
+
+				CompanionCube_0: "The Enrichment Center reminds you that the Weighted Companion Cube cannot speak."
+				CompanionCube_1: "The Enrichment Center reminds you that the Weighted Companion Cube will never threaten to stab you and, in fact, cannot speak."
+
+				InHell: "Good people don't end up here."
+
+				ItemIsBad_0: "I wouldn't bother with that thing. My guess is that touching it will just make your life even worse somehow."
+				ItemIsBad_1: "I know it's not a terrablade or anything, but it is important to the game."
+
+				ItemIsExplosive_0: "Killing you and giving you good advice aren't mutually exclusive. The rocket really is the way to go."
+				ItemIsExplosive_1: "This should be interesting. Wait, I'm not the Demolitionist."
+
+				SmashingEvilTile: "Nice job breaking it. Hero."
+
+				KillVillager_0: "Do you know who else murders people who are only trying to help them?"
+				KillVillager_1: "You monster."
+				KillVillager_2: "What are you doing? YOU MONSTER! They're one of us."
+
+				BoundNPCAppearedThrice: "I'm starting to think you don't want to rescue that person."
 
 				The_Part_Where_He_Kills_You_0: "Well. This is the part where he kills us"
 				The_Part_Where_He_Kills_You_1: "Oh no..."
