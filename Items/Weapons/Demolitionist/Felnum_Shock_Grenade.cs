@@ -1,5 +1,5 @@
 using Microsoft.Xna.Framework;
-using Origins.Tiles;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

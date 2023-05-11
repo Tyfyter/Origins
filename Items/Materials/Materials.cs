@@ -1,8 +1,8 @@
 ﻿using Origins.Items.Other.Consumables;
-using Origins.Tiles;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.DataStructures;
@@ -10,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
-	public class Adhesive_Wrap : ModItem {
+    public class Adhesive_Wrap : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Adhesive Wrap");
 			SacrificeTotal = 25;
@@ -513,7 +513,7 @@ namespace Origins.Items.Materials {
 			Item.rare = ItemRarityID.Yellow;
 		}
 	}
-	public class Nova_Fragment : ModItem {
+	public class FragmentNova : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Nova Fragment");
@@ -526,6 +526,15 @@ namespace Origins.Items.Materials {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FragmentSolar);
 			Item.glowMask = glowmask;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.FragmentSolar);
+			recipe.AddIngredient(ItemID.FragmentVortex);
+			recipe.AddIngredient(ItemID.FragmentNebula);
+			recipe.AddIngredient(ItemID.FragmentStardust);
+			recipe.AddTile(TileID.LunarCraftingStation);
+			recipe.Register();
 		}
 	}
 	public class Ocean_Key : ModItem {

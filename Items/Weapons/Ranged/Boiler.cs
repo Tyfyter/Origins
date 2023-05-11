@@ -29,6 +29,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
 			Item.glowMask = glowmask;
+			Item.consumeAmmoOnFirstShotOnly = true;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {

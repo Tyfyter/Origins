@@ -261,17 +261,20 @@ ACCESSORIES:
 (^) Bomb Handling Device*
 (#2, ^2) Boomerang Magnet
 (^) Brine-Leafed Clover
+(X) C.F.H.E.S.
 (^) Celestial Starlight
 (^) Celestial Stone Mask
 (^) Cirrhosis' Abhorrence
 (^) Comb
 (^) Coologne
 (^) I-WTPA Standard
+(^) Danger Barrel
 (^) Decaying Scale*
 (^) Destructive Claws
 (^) Dim Starlight*
 (^) Donor Wristband
 (#2, ^2) Dryad's Inheritance
+(#2, ^2) Dysfunctional Endless Explosives Bag
 (^) Exploder Emblem*
 (^) Explosive Artery
 (^) Fleshy Figurine
@@ -466,6 +469,7 @@ TOOLS:
 
 MELEE WEAPONS:
 ---
+(#3(obtain helpo, ^2) Baseball Bat !!!
 (^) Cyah Nara
 (^) Decimator
 (^) Felnum Spear
@@ -495,6 +499,7 @@ MELEE WEAPONS:
 (%3, X) Celestial Point
 (X) Chromtain Smasher
 (%3, ^) Eyndum Scar
+(#2, ^2) The Bird
 ---
 
 
@@ -537,6 +542,7 @@ RANGED WEAPONS:
 
 (X) Disciple Maker
 (^) Dreikan
+(X) EAC Thunder
 (^) Laser Tag Gun
 (X) Serpentine
 (X) Shroomshot
@@ -632,12 +638,13 @@ NO POST ML SUMMONER CONTENT YET.
 EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
-(X) Bang Snap !!!
+(#3(obtain help, ^2) Bang Snap !!!
 (^) Bloombomb
 (^) Bombardment
 (^) Bomb Launcher (needs to be balanced)
 (^) Brainade
 (^) Defiled Spirit
+(#3(needs flash shader), ^2) Flashbang !!!
 (^) Floaty Bomb
 (^) Hand Grenade Launcher
 (#3, ^2) Hellfire Bomb !!!
@@ -650,6 +657,7 @@ EXPLOSIVE WEAPONS:
 
 (^) Alkaline Bomb
 (^) Alkaline Grenade
+(X) Big Surprise
 (#2, ^2) Boomphracken
 (X) Cavitation Cannon
 (^) Happy Bomb
@@ -658,17 +666,19 @@ EXPLOSIVE WEAPONS:
 
 (#2, ^2) Abrasion Blaster
 (#2, ^2) Ace Shrapnel
-(@5, ^3) Bomboomstick
-(X) Chlorodynamite !!!
+(#3(make use anim longer), ^2) Bomboomstick
+(#2, ^2) Chlorodynamite !!!
 (^) Crystal Bomb
 (^) Crystal Grenade
-(#2, ^2) Grenado
+(#2, ^2) Grenado (replanning soon)
 (X) Holy Hand Grenade
-(#4, ^2) Mine Flayer
+(^) Mine Flayer
 (^) Nuclear Arm*
 (#2, ^2) Omni-Directional Claymore
 (#3(obtain help), ^2) Rocodile
+(X) Self-Destruct
 (#, ^2) Shrapnel Bomb
+(X) Starforge
 
 (^) Black Hole Bomb
 (@5, ^3) Caustica
@@ -763,6 +773,7 @@ TILES:
 (X) Elderforge
 (#, ^2) Fabricator
 (X) Omni-Printer
+(X) Qube Generator
 (X) Riven Flesh Shredder
 
 (^) Acetabularia
@@ -898,14 +909,20 @@ CONSUMABLES:
 (#2, ^2) Purification Potion (replanning soon)
 (^) Voidsight Potion
 
+(X) Bileberry
 (^) Blue Bovine
 (^) Bread
 (#3 (needs drop during april fools), ^2) Brine Cheese
 (^) Honey Wheat Bread
 (^) Irish Cheddar
 (^) Jam Sandwich
+(X) Jelly Schanpps
 (^) Krunch Mix*
+(X) Pawpaw
+(X) Periven
 (^) Potato
+(X) Prickly Pear
+(X) Shattered Stout
 (^) Soul Spaghetti
 (^) Tasty Vanilla Shake
 
@@ -921,12 +938,13 @@ CONSUMABLES:
 (^) Pointy Crate
 (#2, ^2) Riven Loot Box
 
+(#2, ^2) Ace in the Hole
+(X) Gift of Giving
 (^) Gooey Water
 (#2, ^2) Holiday Hair Dye
 (#2, ^2) Invisible Ink
 (X) Lottery Ticket
 (#2, ^2) Magic Brine Dropper
-(#2, ^2) Pandora's Box
 (^) White Water
 (#2, ^2) Void Lock
 
@@ -942,7 +960,7 @@ MOUNTS & PETS:
 (^) Chromatic Scale (Rainbow Pangolin)
 
 (^) Amoeba Toy (Meberoid)
-(%2) Mitosis (???)
+(X) Eutrophic Cell (Gel Pod)
 (@2, #2) Rusty Cross Necklace (Guardian Angel)
 (^) Suspicious Looking Pebble (Defiled Blight)
 

@@ -13,6 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bomboomstick");
+			Tooltip.SetDefault("Fires a cluster of three to five grenades");
 			if (!Main.dedServ) {
 				UseTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Bomboomstick_Use");
 			}
@@ -20,9 +21,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Boomstick);
+			Item.damage = 43;
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.useAmmo = ItemID.Grenade;
-			Item.value = Item.sellPrice(gold: 2);
-			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 4, silver: 32);
+			Item.rare = ItemRarityID.Lime;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -53,7 +56,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			drawInfo.DrawDataCache.Add(new DrawData(
 				UseTexture,
 				pos,
-				new Rectangle(0, 24 * (frame), 96, 22),
+				new Rectangle(0, 24 * (frame), 70, 22),
 				Item.GetAlpha(lightColor),
 				itemRotation,
 				drawOrigin,

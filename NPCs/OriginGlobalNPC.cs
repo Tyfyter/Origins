@@ -59,17 +59,17 @@ namespace Origins.NPCs {
 						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Peatball>());
 					}
 					if (ModContent.GetInstance<OriginSystem>().peatSold >= 10) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Flashbang>());
 					}
 					if (ModContent.GetInstance<OriginSystem>().peatSold >= 20) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
 					}
 					if (ModContent.GetInstance<OriginSystem>().peatSold >= 35) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
 					}
 					if (Main.hardMode) {
 						if (ModContent.GetInstance<OriginSystem>().peatSold >= 50) {
-							//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Mortar_Shell>());
+							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
 						}
 						if (ModContent.GetInstance<OriginSystem>().peatSold >= 75) {
 							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Alkaline_Grenade>());
@@ -78,7 +78,7 @@ namespace Origins.NPCs {
 							//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Acid_Bomb>());
 						}
 						if (ModContent.GetInstance<OriginSystem>().peatSold >= 120) {
-							//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Nade_O_Plenty>());
+							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Alkaline_Bomb>());
 						}
 						if (ModContent.GetInstance<OriginSystem>().peatSold >= 999 && !Main.hardMode) {
 							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Caustica>());

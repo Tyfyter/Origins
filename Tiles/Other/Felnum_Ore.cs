@@ -1,17 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Origins.Tiles {
-	//current sprites are just recolored orichalcum ore
-	public class Felnum_Ore : OriginTile {
+namespace Origins.Tiles.Other {
+    public class Felnum_Ore : OriginTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -41,6 +36,14 @@ namespace Origins.Tiles {
 			Item.CloneDefaults(ItemID.DemoniteOre);
 			Item.createTile = TileType<Felnum_Ore>();
 			Item.rare = ItemRarityID.Green;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type, 50);
+			recipe.AddIngredient(ItemID.CopperOre);
+			recipe.AddIngredient(ItemID.FallenStar, 12);
+			recipe.AddIngredient(ItemID.SpellTome);
+			recipe.AddTile(TileID.CrystalBall);
+			recipe.Register();
 		}
 	}
 }

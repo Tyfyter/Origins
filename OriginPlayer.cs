@@ -108,6 +108,7 @@ namespace Origins {
 		public bool heliumTank = false;
 		public bool heliumTankHit = false;
 		public bool messyLeech = false;
+		public bool magmaLeech = false;
 		public bool noU = false;
 		public bool donorWristband = false;
 		public HashSet<Point> preHitBuffs;
@@ -153,6 +154,7 @@ namespace Origins {
 		public int thirdEyeResetTime = 0;
 		public bool sonarVisor = false;
 		public bool solarPanel = false;
+		public bool dangerBarrel = false;
 		#endregion
 
 		#region explosive stats
@@ -345,12 +347,14 @@ namespace Origins {
 			ravel = false;
 			heliumTank = false;
 			messyLeech = false;
+			magmaLeech = false;
 			noU = false;
 			plasmaPhial = false;
 			turboReel = false;
 			turboReel2 = false;
 			donorWristband = false;
 			trapCharm = false;
+			dangerBarrel = false;
 
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
 				Player.mount.Dismount(Player);
@@ -1399,6 +1403,13 @@ namespace Origins {
 			}
 			if (messyLeech) {
 				target.AddBuff(BuffID.Bleeding, 480);
+			}
+			if (magmaLeech) {
+				target.AddBuff(BuffID.Bleeding, 480);
+				target.AddBuff(BuffID.OnFire, Main.rand.Next(119, 361));
+			}
+			if (dangerBarrel) { //needs a check for explosive weapon
+				target.AddBuff(BuffID.OnFire, Main.rand.Next(119, 361));
 			}
 			if (target.life <= 0) {
 				foreach (var quest in Quest_Registry.Quests) {

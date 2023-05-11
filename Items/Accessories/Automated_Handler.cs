@@ -3,10 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
+	[AutoloadEquip(EquipType.Back)]
 	public class Automated_Handler : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Automated Returns Handler");
-			Tooltip.SetDefault("Allows the ability to climb walls and dash\nGreatly increased movement speed and return speed for harpoon guns\nGives a chance to dodge attacks");
+			Tooltip.SetDefault("Allows the ability to climb walls and dash\nGreatly increased movement speed and return speed for grapple hooks and harpoon guns\nGives a chance to dodge attacks");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -15,8 +16,6 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
-			/*player.moveSpeed += 0.15f;
-			player.runAcceleration += 0.75f;*/
 			player.hasMagiluminescence = true;
 			player.GetModPlayer<OriginPlayer>().turboReel2 = true;
 

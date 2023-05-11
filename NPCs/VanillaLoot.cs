@@ -10,6 +10,7 @@ using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World;
 using System;

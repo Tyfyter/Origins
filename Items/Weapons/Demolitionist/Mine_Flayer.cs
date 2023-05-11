@@ -6,10 +6,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Mine_Flayer : ModItem {
+	public class Mine_Flayer : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Mine Flayer");
-			Tooltip.SetDefault("Releases a barrage of mines when swung");
+			Tooltip.SetDefault("Releases a barrage of mines when swung\n16.7% chance not to consume ammo");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -28,6 +28,22 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.reuseDelay = 60;
 			Item.autoReuse = false;
 			Item.UseSound = null;
+		}
+		protected bool consume = false;
+		public override bool CanShoot(Player player) {
+			consume = true;
+			return true;
+		}
+		public override bool CanConsumeAmmo(Item ammo, Player player) {
+			consume = false;
+			return true;
+		}
+		public override void OnConsumeAmmo(Item ammo, Player player) {
+			if (!Main.rand.NextBool(1,6)) {
+				ammo.stack++;
+			} else {
+				consume = true;
+			}
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

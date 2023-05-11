@@ -18,6 +18,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value *= 5;
 			Item.shoot = ModContent.ProjectileType<Brainade_P>();
 			Item.ammo = ItemID.Grenade;
+			Item.value = Item.sellPrice(copper: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.maxStack = 999;
 		}
