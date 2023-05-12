@@ -454,6 +454,7 @@ TOOLS:
 (^) Rivenator
 (^) Snatcher
 (^) Stabsmash
+(X) Strainer !!!
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
@@ -507,6 +508,7 @@ RANGED WEAPONS:
 ---
 (^) Ancient Kruncher
 (#2, ^2) Bloodletter !!!
+(X) Blotopus !!!
 (^) Bolt Gun
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
@@ -564,6 +566,7 @@ MAGIC WEAPONS:
 (^) Infusion
 (^) Low Signal
 (^) Magnus
+(X) Manasynk !!!
 (^) Slashswarm
 (^) Tones of Agony
 
@@ -608,6 +611,7 @@ SUMMONER WEAPONS:
 (#, ^2) Forest Staff !!!
 (^) Maelstrom Incantation
 (#, ^2) Ocean Amulet !!!
+(X) Ocotoral Staff !!!
 (^) Rotted Worm Staff
 (^) Teardown
 (^) Woodsprite Staff
