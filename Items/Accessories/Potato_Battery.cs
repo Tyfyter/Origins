@@ -54,30 +54,8 @@ namespace Origins.Items.Accessories {
 			if (cooldownCounter[(int)QuoteType.Bird] <= 0) {
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					NPC npc = Main.npc[i];
-					if (npc.active) {
-						switch (npc.type) {
-							case NPCID.Bird:
-							case NPCID.BirdBlue:
-							case NPCID.BirdRed:
-							case NPCID.GoldBird:
-							case NPCID.Duck:
-							case NPCID.Duck2:
-							case NPCID.DuckWhite:
-							case NPCID.DuckWhite2:
-							case NPCID.Grebe:
-							case NPCID.Grebe2:
-							case NPCID.Owl:
-							case NPCID.Penguin:
-							case NPCID.PenguinBlack:
-							case NPCID.CorruptPenguin:
-							case NPCID.CrimsonPenguin:
-							case NPCID.Seagull:
-							case NPCID.Seagull2:
-							if (npc.DistanceSQ(Item.Center) < 160 * 160) {
-								PlayRandomMessage(QuoteType.Bird, cooldownCounter, Item.Top);
-							}
-							break;
-						}
+					if (npc.active && IsBird(npc.type) && npc.DistanceSQ(Item.Center) < 160 * 160) {
+						PlayRandomMessage(QuoteType.Bird, cooldownCounter, Item.Top);
 					}
 				}
 			}
@@ -149,6 +127,31 @@ namespace Origins.Items.Accessories {
 				Color = new Color(242, 250, 255)
 			}, position);
 			SoundEngine.PlaySound(SoundID.LucyTheAxeTalk, position);
+		}
+		public static bool IsBird(int npcType) {
+			switch (npcType) {
+				case NPCID.Bird:
+				case NPCID.BirdBlue:
+				case NPCID.BirdRed:
+				case NPCID.GoldBird:
+				case NPCID.Duck:
+				case NPCID.Duck2:
+				case NPCID.DuckWhite:
+				case NPCID.DuckWhite2:
+				case NPCID.Grebe:
+				case NPCID.Grebe2:
+				case NPCID.Owl:
+				case NPCID.Penguin:
+				case NPCID.PenguinBlack:
+				case NPCID.CorruptPenguin:
+				case NPCID.CrimsonPenguin:
+				case NPCID.Seagull:
+				case NPCID.Seagull2:
+				return true;
+
+				default:
+				return false;
+			}
 		}
 		public enum QuoteType {
 			Pickup,

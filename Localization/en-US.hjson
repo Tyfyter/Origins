@@ -70,7 +70,7 @@
 			ProtOS: {
 				Pickup: "Hi. Again..."
 
-				AfterBeingCrafted: "Oh... It's you."
+				Craft: "Oh... It's you."
 
 				Death_0: "[clap clap clap]"
 				Death_1: "[clap clap]"
@@ -80,11 +80,11 @@
 				Death_5: "I'd just like to point out that you were given every opportunity to succeed."
 				Death_6: "How can you fail at this? It isn't even a test."
 				Death_7: "You are making this harder than it needs to be."
-
-				DeathIsExpert: "'No guts. No glory.' Well, you don't have either, so that's accurate."
-
-				DeathIsMaster_0: "I hope that's part of your plan."
-				DeathIsMaster_1: "You paid for the whole seat, so get comfortable, because it looks like we may be here a long time."
+				
+				Death_Expert_0: "'No guts. No glory.' Well, you don't have either, so that's accurate."
+				
+				Death_Master_0: "I hope that's part of your plan."
+				Death_Master_1: "You paid for the whole seat, so get comfortable, because it looks like we may be here a long time."
 
 				Respawn_0: "I can't believe you came back."
 				Respawn_1: "Oh thank god, you're alright."

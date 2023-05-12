@@ -141,7 +141,10 @@ namespace Origins {
 		public Item brineCloverItem = null;
 		public bool potatoBattery = false;
 		public bool hasPotatOS = false;
+		public Item protomindItem = null;
+		public bool hasProtOS = false;
 		public int[] potatOSQuoteCooldown;
+		public int[] protOSQuoteCooldown;
 		public bool resinShield = false;
 		public int resinShieldCooldown = 0;
 		public bool ResinShield {
@@ -250,6 +253,7 @@ namespace Origins {
 		public int thornsVisualProjType = -1;
 		public int timeSinceLastDeath = -1;
 		public int oldBreath = 200;
+		public float oldGravDir = 0;
 		public override void ResetEffects() {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
@@ -391,9 +395,15 @@ namespace Origins {
 			brineCloverItem = null;
 			potatoBattery = false;
 			hasPotatOS = false;
+			protomindItem = null;
+			hasProtOS = false;
 			potatOSQuoteCooldown ??= new int[(int)Potato_Battery.QuoteType.Count];
 			for (int i = 0; i < (int)Potato_Battery.QuoteType.Count; i++) {
 				if (potatOSQuoteCooldown[i] > 0) potatOSQuoteCooldown[i]--;
+			}
+			protOSQuoteCooldown ??= new int[(int)Protomind.QuoteType.Count];
+			for (int i = 0; i < (int)Protomind.QuoteType.Count; i++) {
+				if (protOSQuoteCooldown[i] > 0) protOSQuoteCooldown[i]--;
 			}
 			if (resinShieldCooldown > 0) resinShieldCooldown--;
 			resinShield = false;
@@ -1061,6 +1071,30 @@ namespace Origins {
 					Player.endurance += 0.15f;
 				}
 			}
+			if (hasProtOS) {
+				if (!Player.noFallDmg && Player.equippedWings == null) {
+					float distance = (Player.position.Y / 16 - Player.fallStart) * Player.gravDir;
+					float extraFall = Player.extraFall;
+					float mult = 10f;
+					if (Player.stoned) {
+						extraFall = 2;
+						mult = 20;
+					}
+					if ((distance - extraFall) * mult * (1 - Player.endurance) > Player.statLife) {
+						Protomind.PlayRandomMessage(Protomind.QuoteType.Falling, protOSQuoteCooldown, Player.Top);
+					}
+				}
+			}
+			if (hasProtOS && Player.gravDir != oldGravDir) {
+				Protomind.PlayRandomMessage(Protomind.QuoteType.Respawn, protOSQuoteCooldown, Player.Top);
+			}
+			oldGravDir = Player.gravDir;
+		}
+		public override void OnRespawn(Player player) {
+			oldGravDir = Player.gravDir;
+			if (hasProtOS) {
+				Protomind.PlayRandomMessage(Protomind.QuoteType.Respawn, protOSQuoteCooldown, Player.Top);
+			}
 		}
 		public override void UpdateDead() {
 			timeSinceLastDeath = -1;
@@ -1093,6 +1127,9 @@ namespace Origins {
 			tornTarget = 0.7f;
 			if (hasPotatOS) {
 				Potato_Battery.PlayRandomMessage(Potato_Battery.QuoteType.Death, potatOSQuoteCooldown, Player.Top);
+			}
+			if (hasProtOS) {
+				Protomind.PlayRandomMessage(Protomind.QuoteType.Death, protOSQuoteCooldown, Player.Top);
 			}
 		}
 		public override void ProcessTriggers(TriggersSet triggersSet) {
@@ -1429,6 +1466,14 @@ namespace Origins {
 					new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
 				);
 			}
+			if (hasProtOS && Main.rand.NextBool(10)) {
+				Protomind.PlayRandomMessage(
+					Protomind.QuoteType.Combat,
+					protOSQuoteCooldown,
+					Player.Top,
+					new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
+				);
+			}
 		}
 
 		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
@@ -1531,6 +1576,44 @@ namespace Origins {
 		internal static FastFieldInfo<PlayerDeathReason, int> _sourceProjectileIndex;
 		static FastFieldInfo<PlayerDeathReason, int> SourceProjectileIndex => _sourceProjectileIndex ??= new("_sourceProjectileIndex", BindingFlags.NonPublic);
 		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter) {
+			if (Player.whoAmI == Main.myPlayer && !(protomindItem?.IsAir??true)) {
+				for (int i = 0; i < 200; i++) {
+					if (!Main.npc[i].active || Main.npc[i].friendly) {
+						continue;
+					}
+					int num2 = 300 + damage * 2;
+					if (Main.rand.Next(500) < num2) {
+						float dist = (Main.npc[i].Center - Player.Center).Length();
+						float chance = Main.rand.Next(200 + damage / 2, 301 + damage * 2);
+						if (chance > 500f) {
+							chance = 500f + (chance - 500f) * 0.75f;
+						}
+						if (chance > 700f) {
+							chance = 700f + (chance - 700f) * 0.5f;
+						}
+						if (chance > 900f) {
+							chance = 900f + (chance - 900f) * 0.25f;
+						}
+						if (dist < chance) {
+							float num4 = Main.rand.Next(90 + damage / 3, 300 + damage / 2);
+							Main.npc[i].AddBuff(BuffID.Confused, (int)num4);
+						}
+					}
+				}
+				Projectile.NewProjectile(
+					Player.GetSource_Accessory(protomindItem),
+					Player.Center + new Vector2(Main.rand.Next(-40, 40), Main.rand.Next(-60, -20)),
+					Player.velocity * 0.3f,
+					protomindItem.shoot,
+					0,
+					0f,
+					Player.whoAmI
+				);
+				if (Main.rand.NextBool(6) && Player.FindBuffIndex(BuffID.BrainOfConfusionBuff) == -1) {
+					Player.BrainOfConfusionDodge();
+					return false;
+				}
+			}
 			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(9) < 3) {
 				crit = true;
 			}

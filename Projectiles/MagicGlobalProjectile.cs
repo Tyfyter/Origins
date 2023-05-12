@@ -56,8 +56,12 @@ namespace Origins.Projectiles {
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
 			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-			if (originPlayer.potatoBattery && Origins.HomingEffectivenessMultiplier[projectile.type] != 0) {
-				isHoming = true;
+			if (Origins.HomingEffectivenessMultiplier[projectile.type] != 0) {
+				if (!(originPlayer?.protomindItem?.IsAir??true)) {
+					isHoming = true;
+				} else if (originPlayer.potatoBattery) {
+					isHoming = true;
+				}
 			}
 		}
 	}
