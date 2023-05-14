@@ -25,22 +25,21 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 3);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 3);
-			recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
+			Recipe recipe = Recipe.Create(Type, 4);
+			recipe.AddIngredient(ItemID.ExplosivePowder);
+			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
-			recipe = Recipe.Create(Type, 3);
-			recipe.AddIngredient(ModContent.ItemType<Harpoon>(), 3);
-			recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
+			recipe = Recipe.Create(Type, 4);
+			recipe.AddIngredient(ItemID.ExplosivePowder);
+			recipe.AddIngredient(ModContent.ItemType<Harpoon>(), 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
 	}
-	public class Explosive_Harpoon_P : ModProjectile {
-		//Now make it blow up
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Harpoon;
+	public class Explosive_Harpoon_P : Harpoon_P {
+		//TODO: I can implement this using depth charge's code
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Explosive Harpoon");

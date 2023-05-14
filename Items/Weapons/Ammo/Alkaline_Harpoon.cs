@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.DamageType = DamageClass.Ranged;
 			Item.consumable = true;
 			Item.maxStack = 99;
-			Item.shoot = Acid_Harpoon_P.ID;
+			Item.shoot = Alkaline_Harpoon_P.ID;
 			Item.ammo = Harpoon.ID;
 			Item.value = Item.sellPrice(silver: 28);
 		}
@@ -35,8 +35,7 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.Register();
 		}
 	}
-	public class Acid_Harpoon_P : Harpoon_P {
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Harpoon;
+	public class Alkaline_Harpoon_P : Harpoon_P {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Alkaline Harpoon");

@@ -41,16 +41,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Thermite_Canister_P : ModProjectile {
-		public override string Texture => "Origins/Projectiles/Ammo/Thermite_Canister_P";
+		public override string Texture => "Origins/Items/Weapons/Ammo/Thermite_Canister";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Thermite Canister");
+			DisplayName.SetDefault("Thermite Canistah");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
-			Projectile.width = 16;
-			Projectile.height = 16;
-			Projectile.friendly = true;
+			Projectile.width = 28;
+			Projectile.height = 28;
+			Projectile.friendly = false;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 900;
 			//projectile.aiStyle = 14;

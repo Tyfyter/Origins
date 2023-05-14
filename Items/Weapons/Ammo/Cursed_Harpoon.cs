@@ -39,7 +39,6 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public class Cursed_Harpoon_P : Harpoon_P {
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Harpoon;
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Cursed Harpoon");

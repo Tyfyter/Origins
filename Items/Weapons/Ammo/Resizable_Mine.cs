@@ -23,9 +23,9 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.White;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 50);
-			recipe.AddIngredient(ItemID.ExplosivePowder, 25);
-			recipe.AddIngredient(ItemID.Wood, 50);
+			Recipe recipe = Recipe.Create(Type, 2);
+			recipe.AddIngredient(ItemID.ExplosivePowder);
+			recipe.AddIngredient(ItemID.Wood, 2);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
 		}
@@ -48,9 +48,9 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 50);
-			recipe.AddIngredient(ItemID.ExplosivePowder, 25);
-			recipe.AddIngredient(ItemID.IronOre, 50);
+			Recipe recipe = Recipe.Create(Type, 2);
+			recipe.AddIngredient(ItemID.ExplosivePowder);
+			recipe.AddIngredient(ItemID.IronOre, 2);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
@@ -73,9 +73,9 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 50);
-			recipe.AddIngredient(ItemID.ExplosivePowder, 25);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 50);
+			Recipe recipe = Recipe.Create(Type, 2);
+			recipe.AddIngredient(ItemID.ExplosivePowder);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 2);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
@@ -98,9 +98,9 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 50);
-			recipe.AddIngredient(ItemID.ExplosivePowder, 25);
-			recipe.AddIngredient(ItemID.ChlorophyteOre, 50);
+			Recipe recipe = Recipe.Create(Type, 2);
+			recipe.AddIngredient(ItemID.ExplosivePowder);
+			recipe.AddIngredient(ItemID.ChlorophyteOre, 2);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
@@ -123,9 +123,9 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Cyan;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 50);
-			recipe.AddIngredient(ItemID.ExplosivePowder, 25);
-			recipe.AddIngredient(ItemID.LunarOre, 50);
+			Recipe recipe = Recipe.Create(Type, 2);
+			recipe.AddIngredient(ItemID.ExplosivePowder);
+			recipe.AddIngredient(ItemID.LunarOre, 2);
 			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.Register();
 		}

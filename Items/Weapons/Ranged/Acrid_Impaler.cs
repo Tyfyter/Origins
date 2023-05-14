@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (type == Item.shoot) {
-				type = Acid_Harpoon_P.ID;
+				type = Alkaline_Harpoon_P.ID;
 			}
 		}
 	}

@@ -30,7 +30,6 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public class Harpoon_P : ModProjectile {
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Harpoon;
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Harpoon");

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dusts;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
@@ -21,11 +22,11 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 3);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
+			Recipe recipe = Recipe.Create(Type, 10);
 			recipe.AddIngredient(ItemID.IronBar);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
-			recipe = Recipe.Create(Type);
+			recipe = Recipe.Create(Type, 10);
 			recipe.AddIngredient(ItemID.LeadBar);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
@@ -67,14 +68,16 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 3, copper: 2);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Fireblossom, 3);
-			recipe.AddIngredient(ItemID.IronBar);
+			Recipe recipe = Recipe.Create(Type, 4);
+			recipe.AddIngredient(ItemID.Fireblossom, 2);
+			recipe.AddIngredient(ItemID.IronBar, 2);
+			recipe.AddIngredient(ModContent.ItemType<Silicon>());
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
-			recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Fireblossom, 3);
-			recipe.AddIngredient(ItemID.LeadBar);
+			recipe = Recipe.Create(Type, 4);
+			recipe.AddIngredient(ItemID.Fireblossom, 2);
+			recipe.AddIngredient(ItemID.LeadBar, 2);
+			recipe.AddIngredient(ModContent.ItemType<Silicon>());
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

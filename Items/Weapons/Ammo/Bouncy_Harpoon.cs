@@ -37,9 +37,8 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.Register();
 		}
 	}
-	public class Bouncy_Harpoon_P : ModProjectile {
+	public class Bouncy_Harpoon_P : Harpoon_P {
 		//Now make it bounce
-		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Harpoon;
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bouncy Harpoon");

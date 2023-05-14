@@ -51,7 +51,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver
-(X) World Cracker !!!
+(#, ^2) World Cracker !!!
 
 (%?, ^2) Lost Diver (Just needs the item/projectile/use sprites)
 (X) Miscreant
@@ -500,6 +500,7 @@ MELEE WEAPONS:
 (%3, X) Celestial Point
 (X) Chromtain Smasher
 (%3, ^) Eyndum Scar
+(X) Rocket Lance
 (#2, ^2) The Bird
 ---
 
