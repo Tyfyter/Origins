@@ -3,7 +3,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Items.Materials;
 
-namespace Origins.Items.Other.Consumables {
+namespace Origins.Items.Other.Consumables.Food {
 	public class Soul_Spaghetti : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Soul Spaghetti");

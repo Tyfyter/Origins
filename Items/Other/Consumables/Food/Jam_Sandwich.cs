@@ -2,7 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Other.Consumables {
+namespace Origins.Items.Other.Consumables.Food {
 	public class Jam_Sandwich : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Jam Sandwich");

@@ -26,20 +26,34 @@ namespace Origins.Items.Other.Fish {
 	public class Bonehead_Jellyfish : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bonehead Jellyfish");
-			SacrificeTotal = 3;
+			SacrificeTotal = 2;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Ebonkoi);
-			Item.rare = ItemRarityID.Blue;
+			Item.DefaultToQuestFish();
+		}
+		public override bool IsAnglerQuestAvailable() {
+			return OriginSystem.WorldEvil == OriginSystem.evil_riven;
+		}
+		public override bool IsQuestFish() => true;
+		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
+			description = Language.GetTextValue("Mods.Origins.FishQuest.Bonehead.Description");
+			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Bonehead.Location");
 		}
 	}
 	public class Duskarp : ModItem {
 		public override void SetStaticDefaults() {
-			SacrificeTotal = 3;
+			SacrificeTotal = 2;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.Ebonkoi);
-			Item.rare = ItemRarityID.Blue;
+			Item.DefaultToQuestFish();
+		}
+		public override bool IsAnglerQuestAvailable() {
+			return false; //OriginSystem.WorldEvil == OriginSystem.dusk;
+		}
+		public override bool IsQuestFish() => true;
+		public override void AnglerQuestChat(ref string description, ref string catchLocation) {
+			description = Language.GetTextValue("Mods.Origins.FishQuest.Duskarp.Description");
+			catchLocation = Language.GetTextValue("Mods.Origins.FishQuest.Duskarp.Location");
 		}
 	}
 	public class Tire : ModItem {

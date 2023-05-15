@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.consumable = true;
 			Item.maxStack = 99;
 			Item.shoot = Bouncy_Harpoon_P.ID;
-			Item.ammo = Type;
+			Item.ammo = Harpoon.ID;
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 		}
@@ -38,20 +38,14 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public class Bouncy_Harpoon_P : Harpoon_P {
-		//Now make it bounce
-		public static int ID { get; private set; } = -1;
+		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bouncy Harpoon");
 			ID = Type;
 		}
-		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.Harpoon);
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
-		}
 		public override void OnSpawn(IEntitySource source) {
 			if (Projectile.ai[1] == 1) {
-				Projectile.penetrate = 2;
+				Projectile.penetrate = 12;
 			}
 		}
 		public override void AI() {
@@ -73,5 +67,10 @@ namespace Origins.Items.Weapons.Ammo {
 				Projectile.penetrate--;
 			}
 		}
-	}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			Projectile.velocity.Y = -Projectile.oldVelocity.Y;
+			Projectile.velocity.X = Projectile.oldVelocity.X;
+			return true;
+        }
+    }
 }

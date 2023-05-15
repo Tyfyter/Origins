@@ -914,19 +914,19 @@ CONSUMABLES:
 (#2, ^2) Purification Potion (replanning soon)
 (^) Voidsight Potion
 
-(X) Bileberry
+(^) Bileberry
 (^) Blue Bovine
 (^) Bread
 (#3 (needs drop during april fools), ^2) Brine Cheese
 (^) Honey Wheat Bread
 (^) Irish Cheddar
 (^) Jam Sandwich
-(X) Jelly Schanpps
+(X) Jelly Schnapps
 (^) Krunch Mix*
-(X) Pawpaw
+(^) Pawpaw
 (X) Periven
 (^) Potato
-(X) Prickly Pear
+(^) Prickly Pear
 (X) Shattered Stout
 (^) Soul Spaghetti
 (^) Tasty Vanilla Shake
@@ -976,8 +976,8 @@ MOUNTS & PETS:
 
 AMMO:
 ---
-(#2, ^2) Bouncy Harpoon
-(#2, ^2) Explosive Harpoon
+(#3, ^2) Bouncy Harpoon
+(#3, ^2) Explosive Harpoon
 (^) Flammable Harpoon
 (^) Harpoon
 (^) Peatball*
@@ -992,13 +992,13 @@ AMMO:
 (^) Bile Dart
 (^) Cursed Harpoon
 (^) Giant Metal Slug
-(@, ^3) Resizable Mine Mk. 3
+(^) Resizable Mine Mk. 3
 (^) Thermite Canister
 
-(@, ^3) Resizable Mine Mk. 4
+(^) Resizable Mine Mk. 4
 (^) Scrap
 
-(@, ^3) Resizable Mine Mk. 5
+(^) Resizable Mine Mk. 5
 (#2, ^2) Starfuze
 
 (^) Gray Solution

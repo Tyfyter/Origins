@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+using Origins.Projectiles;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -7,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-	public class Explosive_Harpoon : ModItem {
+    public class Explosive_Harpoon : ModItem {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Explosive Harpoon");
@@ -20,7 +21,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.consumable = true;
 			Item.maxStack = 99;
 			Item.shoot = Explosive_Harpoon_P.ID;
-			Item.ammo = Type;
+			Item.ammo = Harpoon.ID;
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Green;
 		}
@@ -39,21 +40,10 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public class Explosive_Harpoon_P : Harpoon_P {
-		//TODO: I can implement this using depth charge's code
-		public static int ID { get; private set; } = -1;
+		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Explosive Harpoon");
 			ID = Type;
-		}
-		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.Harpoon);
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
-		}
-		public override void OnSpawn(IEntitySource source) {
-			if (Projectile.ai[1] == 1) {
-				Projectile.penetrate = 2;
-			}
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 1 && Projectile.penetrate >= 0) {
@@ -74,5 +64,55 @@ namespace Origins.Items.Weapons.Ammo {
 				Projectile.penetrate--;
 			}
 		}
+		public override void Kill(int timeLeft) {
+			if (Projectile.penetrate >= 0) {
+				Projectile.NewProjectile(
+					Projectile.GetSource_Death(),
+					Projectile.Center,
+					default,
+					ModContent.ProjectileType<Explosive_Harpoon_Explosion>(),
+					Projectile.damage * (int)2.7,
+					Projectile.knockBack * 2,
+					Projectile.owner
+				);
+			}
+		}
+	}
+	public class Explosive_Harpoon_Explosion : ModProjectile, IIsExplodingProjectile {
+		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Projectile.width = 36;
+			Projectile.height = 36;
+			Projectile.friendly = false;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 5;
+		}
+		public override void AI() {
+			if (Projectile.ai[0] == 0) {
+				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
+				Projectile.ai[0] = 1;
+			}
+			if (Projectile.owner == Main.myPlayer && Projectile.ai[1] == 0) {
+				Player player = Main.LocalPlayer;
+				if (player.active && !player.dead && !player.immune) {
+					Rectangle projHitbox = Projectile.Hitbox;
+					ProjectileLoader.ModifyDamageHitbox(Projectile, ref projHitbox);
+					Rectangle playerHitbox = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
+					if (projHitbox.Intersects(playerHitbox)) {
+						player.Hurt(
+							PlayerDeathReason.ByProjectile(Main.myPlayer, Projectile.whoAmI),
+							Main.DamageVar(Projectile.damage, -player.luck),
+							Math.Sign(player.Center.X - Projectile.Center.X),
+							true
+						);
+						Projectile.ai[1] = 1;
+					}
+				}
+			}
+		}
+		public void Explode(int delay = 0) { }
+		public bool IsExploding() => true;
 	}
 }

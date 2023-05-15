@@ -5,7 +5,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
 	public class Alkaline_Harpoon : ModItem {
-		public override string Texture => "Origins/Items/Weapons/Ammo/Alkaline_Harpoon";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Alkaline Harpoon");
@@ -20,6 +19,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.shoot = Alkaline_Harpoon_P.ID;
 			Item.ammo = Harpoon.ID;
 			Item.value = Item.sellPrice(silver: 28);
+			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 8);

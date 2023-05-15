@@ -5,7 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Other.Consumables {
+namespace Origins.Items.Other.Consumables.Food {
 	public class Potato : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Potato");

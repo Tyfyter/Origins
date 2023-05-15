@@ -35,13 +35,13 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public class Flammable_Harpoon_P : Harpoon_P {
-		public static int ID { get; private set; } = -1;
+		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Flammable Harpoon");
 			ID = Type;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-			target.AddBuff(BuffID.OnFire, Main.rand.Next(270, 360));
+			target.AddBuff(BuffID.OnFire, Main.rand.Next(269, 361));
 		}
 	}
 }
