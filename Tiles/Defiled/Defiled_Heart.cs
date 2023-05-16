@@ -8,6 +8,7 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Heart : ModTile {
+		public int heartBroken = 0;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
@@ -48,7 +49,10 @@ namespace Origins.Tiles.Defiled {
 			}
 			ModContent.GetInstance<OriginSystem>().Defiled_Hearts.Add(new Point(i, j));
 		}
-	}
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
+			heartBroken++;
+        }
+    }
 	public class Defiled_Heart_Item : ModItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Heart";
 		public override void SetStaticDefaults() {

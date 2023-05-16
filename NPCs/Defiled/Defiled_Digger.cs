@@ -29,7 +29,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("Effective deterrent for any sub-terranean threat."),
+				new FlavorTextBestiaryInfoElement("An effective deterrent for any sub-terranean threat in the Caverns."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

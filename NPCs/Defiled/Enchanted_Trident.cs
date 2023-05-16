@@ -32,7 +32,12 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("Forged by the {$Defiled}. This weapon is a machination of its curiosity."),
+				/*if (heartBroken <= 1) {
+				new FlavorTextBestiaryInfoElement(""A weapon directly forged by the {$Defiled}. This weapon is a machination of its curiosity, and a true testament to how intelligent it is.");
+				} else {
+				new FlavorTextBestiaryInfoElement("A weapon directly forged by the {$Defiled}. This weapon is a machination of its curiosity.");
+				}*/
+				new FlavorTextBestiaryInfoElement("A weapon directly forged by the {$Defiled}. This weapon is a machination of its curiosity."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

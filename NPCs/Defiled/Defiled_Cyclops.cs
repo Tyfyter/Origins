@@ -60,7 +60,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("The face of the {$Defiled}. A deadly unit that handles the smallest threats."),
+				new FlavorTextBestiaryInfoElement("The face of the {$Defiled}. A deadly antibody that handles the smallest threats."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

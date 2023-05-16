@@ -30,6 +30,7 @@ namespace Origins.NPCs {
 		public bool oldSlowDebuff = false;
 		public bool weakShadowflameDebuff = false;
 		public bool soulhideWeakenedDebuff = false;
+		public bool defiledCreature = false;
 		public const float soulhideWeakenAmount = 0.15f;
 		public bool weakenedOnSpawn = false;
 		public override void ResetEffects(NPC npc) {
@@ -64,6 +65,23 @@ namespace Origins.NPCs {
 				npc.damage += 0;
 				npc.defense += 0;
 				npc.velocity *= 1f;
+			}
+			if (defiledCreature) {
+				/*if  (BuffID.Electrified or BuffID.DryadsWardDebuff) {
+					damageRecieved x2
+                }*/
+				NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
+					SpecificallyImmuneTo = new int[] {
+					BuffID.OnFire,
+					BuffID.Poisoned,
+					BuffID.Venom,
+					BuffID.Weak,
+					BuffID.CursedInferno,
+					BuffID.Frostburn,
+					BuffID.ShadowFlame,
+					BuffID.Daybreak
+					}
+				};
 			}
 			oldSlowDebuff = slowDebuff;
 			slowDebuff = false;

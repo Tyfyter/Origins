@@ -55,6 +55,11 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				/*if (heartBroken <= 1) {
+				new FlavorTextBestiaryInfoElement("Please just be my friend... I even tried to look like you. Am I beautiful?");
+				} else {
+				new FlavorTextBestiaryInfoElement("An attempt for the Defiled to copy the abilities of the Terrarian, this being serves as a huge threat to anything that is cleasning the Defiled.");
+				}*/
 				new FlavorTextBestiaryInfoElement("An attempt for the Defiled to copy the abilities of the Terrarian, this being serves as a huge threat to anything that is cleasning the Defiled."),
 			});
 		}

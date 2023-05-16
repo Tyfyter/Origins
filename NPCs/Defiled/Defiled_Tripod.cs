@@ -70,7 +70,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("Fast and hard-hitting, the Tripod is the last defense of the {$Defiled}. It is the last thing any traveler would want to encounter."),
+				new FlavorTextBestiaryInfoElement("Fast and hard-hitting, the Tripod is the last defense of the {$Defiled} before more extreme measures are taken. It is the last thing any traveler would want to encounter."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
