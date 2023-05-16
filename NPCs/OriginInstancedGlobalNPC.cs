@@ -58,13 +58,7 @@ namespace Origins.NPCs {
 				npc.velocity *= 0.7f;
 			}
 			if (barnacleBuff) {
-				npc.damage *= (int)1.7f;
-                npc.defense *= (int)1.25f;
-				npc.velocity *= 1.01f;
-            } else {
-				npc.damage += 0;
-				npc.defense += 0;
-				npc.velocity *= 1f;
+				barnacleBuff = false;
 			}
 			if (defiledCreature) {
 				/*if  (BuffID.Electrified or BuffID.DryadsWardDebuff) {

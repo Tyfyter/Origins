@@ -46,7 +46,6 @@ namespace Origins.NPCs.Riven {
 			const float maxDistTiles = 45f * 16;
 			const float maxDistTiles2 = 60f * 16;
 			for (int i = 0; i < Main.maxNPCs; i++) {
-				if (i == NPC.whoAmI) continue;
 				NPC currentTarget = Main.npc[i];
 				if (currentTarget.CanBeChasedBy()) {
 					float distSquared = (currentTarget.Center - NPC.Center).LengthSquared();
