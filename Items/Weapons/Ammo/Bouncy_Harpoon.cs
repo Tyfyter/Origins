@@ -44,12 +44,13 @@ namespace Origins.Items.Weapons.Ammo {
 			ID = Type;
 		}
 		public override void OnSpawn(IEntitySource source) {
+			Projectile.penetrate = 17;
 			if (Projectile.ai[1] == 1) {
-				Projectile.penetrate = 12;
+				Projectile.maxPenetrate = 1;
 			}
 		}
 		public override void AI() {
-			if (Projectile.ai[0] == 1 && Projectile.penetrate >= 0) {
+			if (Projectile.ai[0] == 1 && Projectile.maxPenetrate == 1) {
 				Projectile.aiStyle = 1;
 				Projectile.velocity = Projectile.oldVelocity;
 				Projectile.tileCollide = true;
@@ -67,10 +68,14 @@ namespace Origins.Items.Weapons.Ammo {
 				Projectile.penetrate--;
 			}
 		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			Projectile.penetrate = Projectile.maxPenetrate == 1 ? 2 : -1;
+		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			Projectile.velocity.Y = -Projectile.oldVelocity.Y;
-			Projectile.velocity.X = Projectile.oldVelocity.X;
-			return true;
-        }
-    }
+			if (--Projectile.penetrate <= 1) return true;
+			Projectile.velocity = oldVelocity *
+				new Vector2(Projectile.velocity.X == oldVelocity.X ? 1 : -1, Projectile.velocity.Y == oldVelocity.Y ? 1 : -1);
+			return false;
+		}
+	}
 }
