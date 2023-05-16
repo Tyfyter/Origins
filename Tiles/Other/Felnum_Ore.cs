@@ -1,8 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Journal;
 using System;
 using Terraria;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Items.Materials.Felnum_Bar;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
@@ -28,7 +31,9 @@ namespace Origins.Tiles.Other {
 			b = 0.1f + (0.3f * v);
 		}
 	}
-	public class Felnum_Ore_Item : ModItem {
+	public class Felnum_Ore_Item : ModItem, IJournalEntryItem {
+		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
+		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Ore");
 		}
@@ -45,5 +50,9 @@ namespace Origins.Tiles.Other {
 			recipe.AddTile(TileID.CrystalBall);
 			recipe.Register();
 		}
+	}
+	public class Felnum_Mat_Entry : JournalEntry {
+		public override string TextKey => "Felnum";
+		public override ArmorShaderData TextShader => null;
 	}
 }

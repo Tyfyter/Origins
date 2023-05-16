@@ -1,4 +1,5 @@
 ﻿using Origins.Items.Other.Consumables;
+using Origins.Journal;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
@@ -6,6 +7,7 @@ using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -378,12 +380,9 @@ namespace Origins.Items.Materials {
 			Item.rare = CrimsonRarity.ID;
 		}
 	}
-	public class Felnum_Bar : ModItem {
-		/*
-         * brown color in its natural form
-         * tinted a lighter gold-brown when hardened
-         * exhibits a property named "electrical greed" where it grows hard blue crystals from anywhere it would lose electrons, to effectively "reclaim" them, even if it already has a strong negative charge
-         */
+	public class Felnum_Bar : ModItem, IJournalEntryItem {
+		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
+		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Felnum Bar");
 			SacrificeTotal = 25;

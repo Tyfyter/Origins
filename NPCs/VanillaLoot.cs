@@ -223,11 +223,11 @@ namespace Origins.NPCs {
 		}
 
 		static void GenFelnumOre() {
-			string text = "The clouds have been blessed with Felnum.";
+			string text = "The clouds have been blessed with Felnum!";
 			if (Main.netMode == NetmodeID.SinglePlayer) {
-				Main.NewText(text, Colors.RarityPurple);
+				Main.NewText(text, Colors.RarityGreen);
 			} else if (Main.netMode == NetmodeID.Server) {
-				ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), Colors.RarityPurple);
+				ChatHelper.BroadcastChatMessage(NetworkText.FromLiteral(text), Colors.RarityGreen);
 			}
 			if (!Main.gameMenu && Main.netMode != NetmodeID.MultiplayerClient) {
 				int x = 0, y = 0;

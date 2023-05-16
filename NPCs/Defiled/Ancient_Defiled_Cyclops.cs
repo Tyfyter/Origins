@@ -6,6 +6,7 @@ using Origins.Items.Weapons.Ranged;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -32,6 +33,11 @@ namespace Origins.NPCs.Defiled {
 			NPC.height = 120;
 			NPC.friendly = false;
 			NPC.value = 10000;
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				new FlavorTextBestiaryInfoElement("An older design of the Defiled Cyclops before the {$Defiled} improved upon it. The unique composition of Defiled Matter is apparent as it adopts a more leathery outer-layer."),
+			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
