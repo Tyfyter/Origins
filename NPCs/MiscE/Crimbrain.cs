@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -35,7 +34,6 @@ namespace Origins.NPCs.MiscE {
 			
 		}
 		public override void AI() {
-			if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.1f), NPC.Center);
 			NPC.FaceTarget();
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;

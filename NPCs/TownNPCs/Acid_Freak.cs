@@ -56,6 +56,8 @@ namespace Origins.NPCs.TownNPCs {
 			NPC.CloneDefaults(NPCID.WitchDoctor);
 			NPC.townNPC = true;
 			NPC.friendly = true;
+			NPC.HitSound = SoundID.NPCHit26;
+			NPC.DeathSound = SoundID.NPCDeath29;
 			AnimationType = NPCID.BestiaryGirl;
 		}
 		public override bool PreAI() {

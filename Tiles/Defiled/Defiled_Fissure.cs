@@ -54,8 +54,11 @@ namespace Origins.Tiles.Defiled {
 			Projectile.NewProjectile(WorldGen.GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0: 0, ai1: Main.myPlayer);
 			return false;
 		}
+        public override void NearbyEffects(int i, int j, bool closer) {
+			//Projectile.NewProjectile(spawnSource: this, new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0: 0, ai1: Main.myPlayer);
+		}
 
-		public override void NumDust(int i, int j, bool fail, ref int num) {
+        public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
 		}
 

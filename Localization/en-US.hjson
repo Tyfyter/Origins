@@ -17,7 +17,7 @@
 				'''
 				Location:
 				'''
-				Caught in the {$Defiled_Wastelands}
+				Caught in {$Defiled_Wastelands}
 				'''
 			}
 			Bonehead_Jellyfish: {
@@ -28,7 +28,7 @@
 				'''
 				Location:
 				'''
-				Caught in the {$Riven_Hive}
+				Caught in {$Riven_Hive}
 				'''
 			}
 			Duskarp: {
@@ -39,7 +39,7 @@
 				'''
 				Location:
 				'''
-				Caught in the {$Dusk}
+				Caught in {$Dusk}
 				'''
 			}
 		}
@@ -155,6 +155,18 @@
 
 				The_Part_Where_He_Kills_You_0: "Well. This is the part where he kills us"
 				The_Part_Where_He_Kills_You_1: "Oh no..."
+			}
+			WitheringDefiled: {
+				Idle_0: "Want to be my friend..?"
+				Idle_1: "Come play with me..."
+				Idle_2: "Please be my friend..."
+				Idle_3: "Don't leave me..."
+				Idle_4: "Stop running- away..."
+
+				Death_0: "Noo..."
+				Death_1: "Why..."
+				Death_2: "IT HURTS!"
+				Death_3: "Please..."
 			}
 		}
 		TownNPCMood: {

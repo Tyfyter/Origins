@@ -40,7 +40,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
-			NPC.value = 10000;
+			NPC.value = 5000;
 		}
 		static int MaxMana => 160;
 		static int MaxManaDrain => 32;

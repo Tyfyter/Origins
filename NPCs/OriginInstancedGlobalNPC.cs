@@ -26,6 +26,7 @@ namespace Origins.NPCs {
 		int tornTargetTime = 180;
 		float tornTarget = 0.7f;
 		public bool slowDebuff = false;
+		public bool barnacleBuff = false;
 		public bool oldSlowDebuff = false;
 		public bool weakShadowflameDebuff = false;
 		public bool soulhideWeakenedDebuff = false;
@@ -54,6 +55,15 @@ namespace Origins.NPCs {
 			tornDebuff = false;
 			if (oldSlowDebuff && !slowDebuff) {
 				npc.velocity *= 0.7f;
+			}
+			if (barnacleBuff) {
+				npc.damage *= (int)1.7f;
+                npc.defense *= (int)1.25f;
+				npc.velocity *= 1.01f;
+            } else {
+				npc.damage += 0;
+				npc.defense += 0;
+				npc.velocity *= 1f;
 			}
 			oldSlowDebuff = slowDebuff;
 			slowDebuff = false;

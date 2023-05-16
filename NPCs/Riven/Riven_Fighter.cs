@@ -27,6 +27,8 @@ namespace Origins.NPCs.Riven {
 			NPC.width = 36;
 			NPC.height = 40;
 			NPC.friendly = false;
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
 			NPC.value = 90;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

@@ -150,6 +150,9 @@ namespace Origins.NPCs {
 			if (slowDebuff) {
 				npc.position = Vector2.Lerp(npc.oldPosition, npc.position, 0.7f);
 			}
+			if (barnacleBuff) {
+				npc.position = Vector2.Lerp(npc.oldPosition, npc.position, 1.01f);
+			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				if (toxicShockTime < Toxic_Shock_Debuff.stun_duration) {
 					toxicShockTime++;

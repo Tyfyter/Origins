@@ -104,12 +104,12 @@ ENEMY NPCS:
 ---
 (^) Amebic Slime
 (^) Ancient Cyclops
-(#, ^2) Barnacleback !!!
+(^) Barnacleback
 (^) Buckethead Zombie
 (X) Cellarkeep
 (^) Chunky Slime
-(#, ^2(use flagellash sprites)) Cleaver !!!
-(#2, ^2) Cranivore !!!
+(#4, ^2) Cleaver !!!
+(^) Cranivore
 (#2, ^2) Crimbrain !!!
 (#2, ^2) Defiled Ekko !!!
 (#, ^2) Defiled Wisp !!!
@@ -976,8 +976,8 @@ MOUNTS & PETS:
 
 AMMO:
 ---
-(#3, ^2) Bouncy Harpoon
-(#3, ^2) Explosive Harpoon
+(^) Bouncy Harpoon
+(^) Explosive Harpoon
 (^) Flammable Harpoon
 (^) Harpoon
 (^) Peatball*

@@ -26,8 +26,8 @@ namespace Origins.NPCs.Riven {
 			NPC.width = 28;
 			NPC.height = 26;
 			NPC.friendly = false;
-			NPC.HitSound = Origins.Sounds.DefiledHurt;
-			NPC.DeathSound = Origins.Sounds.DefiledKill;
+			NPC.HitSound = SoundID.NPCHit13;
+			NPC.DeathSound = SoundID.NPCDeath16;
 			NPC.noGravity = true;
 			NPC.npcSlots = 0.25f;
 		}
@@ -46,7 +46,7 @@ namespace Origins.NPCs.Riven {
 			if (NPC.velocity.HasNaNs()) NPC.velocity = default;
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 			NPC.spriteDirection = NPC.direction;
-			if (++NPC.frameCounter > 5) {
+			if (++NPC.frameCounter > 2) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + 28) % 56, 32, 26);
 				NPC.frameCounter = 0;
 			}

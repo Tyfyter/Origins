@@ -59,6 +59,10 @@ namespace Origins.NPCs.MiscE {
 				if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);
 				NPC.spriteDirection = NPC.direction;
 				NPC.hide = false;
+				if (++NPC.frameCounter > 5) {
+					NPC.frame = new Rectangle(0, (NPC.frame.Y + 34) % 68, 18, 34);
+					NPC.frameCounter = 0;
+				}
 			}
 		}
 		public override bool? CanHitNPC(NPC target) {
