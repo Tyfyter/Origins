@@ -20,7 +20,8 @@
 				Caught in the {$Defiled_Wastelands}
 				'''
 			}
-			Bonehead_Jellyfish:
+			Bonehead_Jellyfish: {
+				Description:
 				'''
 				They have bony heads because of how much they hit walls. Careful when touching it, the slime will dissolve your hands!
 				Go get me that jellyfish in the Hive and be careful!
@@ -30,7 +31,8 @@
 				Caught in the {$Riven_Hive}
 				'''
 			}
-			Duskarp:
+			Duskarp: {
+				Description:
 				'''
 				Down in the gloomy depths of the underworld is a very dark place known as the "Dusk". I heard there's a type of fish native to the Dusk known as "Duskarp".
 				Now, I haven't heard much about them, but I do know that they can really nip at anything that looms over the purple lava, so watch your hands!
@@ -40,6 +42,7 @@
 				Caught in the {$Dusk}
 				'''
 			}
+		}
 		Dialogue: {
 			Acid_Freak: {
 				StandardDialogue1: My wares are usually of high salinity. Watch yourself {0}.

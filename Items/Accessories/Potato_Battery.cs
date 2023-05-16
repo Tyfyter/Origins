@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Food;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;

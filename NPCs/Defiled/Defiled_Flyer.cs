@@ -2,6 +2,7 @@
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using System;

@@ -1,4 +1,5 @@
 ﻿using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;

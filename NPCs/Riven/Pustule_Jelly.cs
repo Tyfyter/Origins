@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;

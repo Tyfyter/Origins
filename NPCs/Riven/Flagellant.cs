@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Armor.Encrusted;
 using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
 using Terraria;

@@ -1,6 +1,7 @@
 ﻿using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;

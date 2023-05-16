@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Consumables.Food;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -35,7 +36,7 @@ namespace Origins.Items.Weapons {
 		}
 	}
 	public class Potato_P : ModProjectile {
-		public override string Texture => "Origins/Items/Other/Consumables/Potato";
+		public override string Texture => "Origins/Items/Other/Consumables/Food/Potato";
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Potato");
 		}
