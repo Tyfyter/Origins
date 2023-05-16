@@ -13,6 +13,7 @@ using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -120,6 +121,10 @@ namespace Origins.NPCs {
 			}
 		}
 		public override bool PreAI(NPC npc) {
+			if (npc.oldPosition == default && npc.oldVelocity == default && npc.position.LengthSquared() > 16) {
+				npc.oldPosition = npc.position;
+			}
+			preAIVelocity = npc.velocity;
 			if (shockTime > 0) {
 				npc.noGravity = true;
 				npc.velocity = Vector2.Zero;
@@ -170,6 +175,13 @@ namespace Origins.NPCs {
 			}
 			if (infusionSpikes is object) infusionSpikes.Clear();
 			return true;
+		}
+		public override void PostAI(NPC npc) {
+			if (barnacleBuff) {
+				if (Math.Abs(preAIVelocity.Y) <= 0.075f && npc.velocity.Y < preAIVelocity.Y) {
+					npc.velocity.Y *= 1.2f;//
+				}
+			}
 		}
 		public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot) {
 			if (npc.HasBuff(Impaled_Debuff.ID) || npc.HasBuff(Stunned_Debuff.ID)) return false;

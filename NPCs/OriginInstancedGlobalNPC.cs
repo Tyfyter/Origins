@@ -33,6 +33,7 @@ namespace Origins.NPCs {
 		public bool defiledCreature = false;
 		public const float soulhideWeakenAmount = 0.15f;
 		public bool weakenedOnSpawn = false;
+		public Vector2 preAIVelocity = default;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
