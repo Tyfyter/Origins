@@ -32,16 +32,18 @@ namespace Origins.NPCs.Riven {
 			NPC.spriteDirection = Main.rand.NextBool() ? 1 : -1;
 			NPC.ai[3] = NPC.whoAmI;
 			NPC.realLife = NPC.whoAmI;
-			int current = 0;
+			int current = NPC.whoAmI;
 			int last = NPC.whoAmI;
 			int type = ModContent.NPCType<Rivenator_Body>();
 			for (int k = 0; k < 17; k++) {
 				current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
 				Main.npc[current].ai[3] = NPC.whoAmI;
 				Main.npc[current].realLife = NPC.whoAmI;
+
 				Main.npc[current].ai[1] = last;
 				Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
 				Main.npc[last].ai[0] = current;
+
 				NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
 				last = current;
 			}

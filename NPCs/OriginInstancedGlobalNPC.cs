@@ -99,11 +99,17 @@ namespace Origins.NPCs {
 			if (soulhideWeakenedDebuff) {
 				damage = (int)(damage * (1f - soulhideWeakenAmount));
 			}
+			if (barnacleBuff) {
+				damage = (int)(damage * 1.7f);
+			}
 		}
 		public override void ModifyHitNPC(NPC npc, NPC target, ref int damage, ref float knockback, ref bool crit) {
 			if (weakenedOnSpawn) return;
 			if (soulhideWeakenedDebuff) {
 				damage = (int)(damage * (1f - soulhideWeakenAmount));
+			}
+			if (barnacleBuff) {
+				damage = (int)(damage * 1.7f);
 			}
 		}
 		public override void OnSpawn(NPC npc, IEntitySource source) {
