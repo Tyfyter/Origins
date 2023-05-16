@@ -57,16 +57,9 @@ namespace Origins.NPCs {
 				npc.velocity *= 0.7f;
 			}
 			if (barnacleBuff) {
-				npc.damage *= (int)1.7f;//rounds to 1, effectively doing nothing
-                npc.defense *= (int)1.25f;//rounds to 1, effectively doing nothing
-				// neither of these are reset regularly so it'd exponentially stack until an overflow finally brought the stat to 0
 				npc.velocity *= 1.01f;
-            } else {
-				// all of these add 0 or multiply by 1, which does nothing since none of them are poorly designed properties that change when set to their current value
-				npc.damage += 0;
-				npc.defense += 0;
-				npc.velocity *= 1f;
-			}
+				barnacleBuff = false;
+            }
 			oldSlowDebuff = slowDebuff;
 			slowDebuff = false;
 			weakShadowflameDebuff = false;
@@ -88,6 +81,9 @@ namespace Origins.NPCs {
 			if (weakenedOnSpawn) return;
 			if (soulhideWeakenedDebuff) {
 				damage = (int)(damage * (1f - soulhideWeakenAmount));
+			}
+			if (barnacleBuff) {
+				damage = (int)(damage * 1.7f);//rounds to 1, effectively doing nothing
 			}
 		}
 		public override void ModifyHitNPC(NPC npc, NPC target, ref int damage, ref float knockback, ref bool crit) {
