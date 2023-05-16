@@ -1,5 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
+using Origins.Items.Weapons;
+using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Ranged;
 using Origins.Journal;
 using Origins.LootConditions;
 using Origins.Questing;
@@ -206,36 +210,77 @@ namespace Origins.Items {
 		public override void ModifyItemLoot(Item item, ItemLoot itemLoot) {
 			List<IItemDropRule> dropRules = itemLoot.Get(false);
 			switch (item.type) {
-				case ItemID.WallOfFleshBossBag:
-				IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
-				r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
-				dropRule.dropIds.Contains(ItemID.WarriorEmblem));
-				if (rules.Any()) {
-					OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
-					if (rule is not null) {
-						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-						rule.dropIds[^1] = ModContent.ItemType<Exploder_Emblem>();
+				case ItemID.WallOfFleshBossBag: {
+					IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
+					r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
+					dropRule.dropIds.Contains(ItemID.WarriorEmblem));
+					if (rules.Any()) {
+						OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
+						if (rule is not null) {
+							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
+							rule.dropIds[^1] = ModContent.ItemType<Exploder_Emblem>();
+						} else {
+							Origins.instance.Logger.Warn("Emblem drop rule not present on WoF bag");
+						}
 					} else {
-						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF bag");
 					}
-				} else {
-					Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
-				}
-				rules = dropRules.Where((r) =>
-				r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
-				dropRule.dropIds.Contains(ItemID.BreakerBlade));
-				if (rules.Any()) {
-					OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
-					if (rule is not null) {
-						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-						rule.dropIds[^1] = ModContent.ItemType<Weapons.Demolitionist.Thermite_Launcher>();
+					rules = dropRules.Where((r) =>
+					r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
+					dropRule.dropIds.Contains(ItemID.BreakerBlade));
+					if (rules.Any()) {
+						OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
+						if (rule is not null) {
+							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
+							rule.dropIds[^1] = ModContent.ItemType<Thermite_Launcher>();
+						} else {
+							Origins.instance.Logger.Warn("Weapon drop rule not present on WoF bag");
+						}
 					} else {
-						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+						Origins.instance.Logger.Warn("Weapon drop rule not present on WoF bag");
 					}
-				} else {
-					Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+					break;
 				}
-				break;
+				case ItemID.LockBox: {
+					IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
+					r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
+					dropRule.dropIds.Contains(ItemID.Muramasa));
+					if (rules.Any()) {
+						OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
+						if (rule is not null) {
+							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 4);
+							rule.dropIds[^4] = ModContent.ItemType<Tones_Of_Agony>();
+							rule.dropIds[^3] = ModContent.ItemType<Asylum_Whistle>();
+							rule.dropIds[^2] = ModContent.ItemType<Bomb_Launcher>();
+							rule.dropIds[^1] = ModContent.ItemType<Bomb_Yeeter>();
+						} else {
+							Origins.instance.Logger.Warn("Main drop rule not present on Lock Box");
+						}
+					} else {
+						Origins.instance.Logger.Warn("Main drop rule not present on Lock Box");
+					}
+					break;
+				}
+				case ItemID.ObsidianLockbox: {
+					IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
+					r is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
+					dropRule.dropIds.Contains(ItemID.DarkLance));
+					if (rules.Any()) {
+						OneFromOptionsNotScaledWithLuckDropRule rule = rules.First() as OneFromOptionsNotScaledWithLuckDropRule;
+						if (rule is not null) {
+							Array.Resize(ref rule.dropIds, rule.dropIds.Length + 4);
+							rule.dropIds[^4] = ModContent.ItemType<Boiler>();
+							rule.dropIds[^3] = ModContent.ItemType<Firespit>();
+							rule.dropIds[^2] = ModContent.ItemType<Dragons_Breath>();
+							rule.dropIds[^1] = ModContent.ItemType<Hand_Grenade_Launcher>();
+						} else {
+							Origins.instance.Logger.Warn("Main drop rule not present on Obsidian Lock Box");
+						}
+					} else {
+						Origins.instance.Logger.Warn("Main drop rule not present on Obsidian Lock Box");
+					}
+					break;
+				}
 			}
 		}
 		public override bool PreDrawTooltipLine(Item item, DrawableTooltipLine line, ref int yOffset) {
