@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Journal;
 using Origins.NPCs;
 using System.Collections.Generic;
 using Terraria;
@@ -12,7 +13,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Melee {
-	public class Vorpal_Sword : ModItem {
+	public class Vorpal_Sword : ModItem, IJournalEntryItem {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override void SetStaticDefaults() {

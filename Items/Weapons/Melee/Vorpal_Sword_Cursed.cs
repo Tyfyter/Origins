@@ -15,7 +15,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Melee {
-	public class Vorpal_Sword_Cursed : ModItem {
+	public class Vorpal_Sword_Cursed : ModItem, IJournalEntryItem {
 		static short glowmask;
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
