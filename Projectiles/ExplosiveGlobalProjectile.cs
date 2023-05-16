@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace Origins.Projectiles {
 	//separate global for organization, might also make non-artifact projectiles less laggy than the alternative
@@ -106,6 +108,16 @@ namespace Origins.Projectiles {
 				}
 				break;
 			}
+		}
+		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
+			bitWriter.WriteBit(isHoming);
+			bitWriter.WriteBit(magicTripwire);
+			bitWriter.WriteBit(magicTripwireTripped);
+		}
+		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
+			isHoming = bitReader.ReadBit();
+			magicTripwire = bitReader.ReadBit();
+			magicTripwireTripped = bitReader.ReadBit();
 		}
 		public static bool IsExploding(Projectile projectile) {
 			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Weapons.Ammo;
+using Origins.Projectiles;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -8,7 +10,7 @@ namespace Origins.Items.Weapons.Ranged {
     public class Bloodletter : Harpoon_Gun {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Bloodletter");
-			Tooltip.SetDefault("Uses harpoons as ammo\n83.3% chance not to consume ammo");
+			Tooltip.SetDefault("Uses harpoons as ammo\n80% chance not to consume ammo");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -39,14 +41,14 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override void OnConsumeAmmo(Item ammo, Player player) {
-			if (!Main.rand.NextBool(6)) {
+			if (!Main.rand.NextBool(5)) {
 				ammo.stack++;
 			} else {
 				consume = true;
 			}
 		}
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit) {
-			target.AddBuff(BuffID.Bleeding, 300);
+		public override void ModifyShotProjectile(Projectile projectile, EntitySource_ItemUse_WithAmmo source) {
+			projectile.GetGlobalProjectile<HarpoonGlobalProjectile>().bloodletter = true;
 		}
 	}
 }

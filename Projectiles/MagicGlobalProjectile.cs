@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Tyfyter.Utils;
 
 namespace Origins.Projectiles {
@@ -63,6 +65,12 @@ namespace Origins.Projectiles {
 					isHoming = true;
 				}
 			}
+		}
+		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
+			bitWriter.WriteBit(isHoming);
+		}
+		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
+			isHoming = bitReader.ReadBit();
 		}
 	}
 }

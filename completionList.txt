@@ -508,7 +508,7 @@ MELEE WEAPONS:
 RANGED WEAPONS:
 ---
 (^) Ancient Kruncher
-(#2, ^2) Bloodletter !!!
+(☻) Bloodletter !!!
 (X) Blotopus !!!
 (^) Bolt Gun
 (^) Fiberglass Bow

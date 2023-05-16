@@ -1,12 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
+using Tyfyter.Utils;
 
 namespace Origins.Projectiles {
 	//separate global for organization, might also make non-artifact projectiles less laggy than the alternative
@@ -14,6 +17,7 @@ namespace Origins.Projectiles {
 		bool isRetracting = false;
 		bool slamming = false;
 		bool justHit = false;
+		public bool bloodletter = false;
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
@@ -46,7 +50,7 @@ namespace Origins.Projectiles {
 			} else if (projectile.aiStyle == 13) {
 				if (slamming) {
 					Vector2 oldDiff = (projectile.oldPosition - projectile.Size * 0.5f) - player.MountedCenter;
-					Tyfyter.Utils.PolarVec2 polarDiff = (Tyfyter.Utils.PolarVec2)(projectile.Center - player.MountedCenter);
+					PolarVec2 polarDiff = (PolarVec2)(projectile.Center - player.MountedCenter);
 					polarDiff.R = oldDiff.Length();
 					Vector2 diff = (Vector2)polarDiff;
 					projectile.Center = player.MountedCenter + diff;
@@ -63,12 +67,43 @@ namespace Origins.Projectiles {
 					slamming = true;
 				}
 			}
+			if (bloodletter) {
+				float targetWeight = 4.5f;
+				Vector2 targetDiff = default;
+				bool foundTarget = false;
+				for (int i = 0; i < 200; i++) {
+					NPC currentNPC = Main.npc[i];
+					if (currentNPC.CanBeChasedBy(projectile) && currentNPC.HasBuff(BuffID.Bleeding)) {
+						Vector2 currentDiff = currentNPC.Center - projectile.Center;
+						float dist = currentDiff.Length();
+						currentDiff /= dist;
+						float weight = Vector2.Dot(projectile.velocity, currentDiff) * (300f / (dist + 100));
+						if (weight > targetWeight && Collision.CanHit(projectile.position, projectile.width, projectile.height, currentNPC.position, currentNPC.width, currentNPC.height)) {
+							targetWeight = weight;
+							targetDiff = currentDiff;
+							foundTarget = true;
+						}
+					}
+				}
+
+				if (foundTarget) {
+					PolarVec2 velocity = (PolarVec2)projectile.velocity;
+					OriginExtensions.AngularSmoothing(
+						ref velocity.Theta,
+						targetDiff.ToRotation(),
+						0.003f + velocity.R * 0.0015f * Origins.HomingEffectivenessMultiplier[projectile.type]
+					);
+					projectile.velocity = (Vector2)velocity;
+				}
+			}
 		}
 		public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
 			justHit = true;
+			if (bloodletter) target.AddBuff(BuffID.Bleeding, 300);
 		}
 		public override void OnHitPvp(Projectile projectile, Player target, int damage, bool crit) {
 			justHit = true;
+			if (bloodletter) target.AddBuff(BuffID.Bleeding, 300);
 		}
 		public override bool? Colliding(Projectile projectile, Rectangle projHitbox, Rectangle targetHitbox) {
 			if (slamming) {
@@ -79,6 +114,18 @@ namespace Origins.Projectiles {
 				}
 			}
 			return null;
+		}
+		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
+			bitWriter.WriteBit(isRetracting);
+			bitWriter.WriteBit(slamming);
+			bitWriter.WriteBit(justHit);
+			bitWriter.WriteBit(bloodletter);
+		}
+		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
+			isRetracting = bitReader.ReadBit();
+			slamming = bitReader.ReadBit();
+			justHit = bitReader.ReadBit();
+			bloodletter = bitReader.ReadBit();
 		}
 	}
 }
