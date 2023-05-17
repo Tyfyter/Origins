@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Ranged {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 24;
+			Item.damage = 21;
 			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 4;
 			Item.useStyle = ItemUseStyleID.Shoot;
@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.shootSpeed = 15.25f;
 			Item.UseSound = SoundID.Item11;
 			Item.value = Item.buyPrice(gold: 1, silver: 30);
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Blue;
 			Item.autoReuse = true;
 		}
 		public override void AddRecipes() {

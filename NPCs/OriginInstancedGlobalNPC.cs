@@ -205,8 +205,8 @@ namespace Origins.NPCs {
 					targetSeverity -= 0.15f;
 				}
 			}
-			bool hadTorn = npc.HasBuff(Torn_Buff.ID);
-			npc.AddBuff(Torn_Buff.ID, duration);
+			bool hadTorn = npc.HasBuff(Torn_Debuff.ID);
+			npc.AddBuff(Torn_Debuff.ID, duration);
 			OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
 			if (!hadTorn || targetSeverity < globalNPC.tornTarget) {
 				globalNPC.tornTargetTime = targetTime;

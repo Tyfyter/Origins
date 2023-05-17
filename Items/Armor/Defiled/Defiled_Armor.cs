@@ -115,7 +115,7 @@ namespace Origins.Items.Armor.Defiled {
 	}
 }
 namespace Origins.Buffs {
-	public class Defiled_Exhaustion_Buff : ModBuff {
+	public class Defiled_Exhaustion_Debuff : ModBuff {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Exhaustion");
 		}

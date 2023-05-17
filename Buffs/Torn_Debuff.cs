@@ -8,7 +8,7 @@ using Terraria.GameContent;
 using Microsoft.Xna.Framework;
 
 namespace Origins.Buffs {
-	public class Torn_Buff : ModBuff {
+	public class Torn_Debuff : ModBuff {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Torn");

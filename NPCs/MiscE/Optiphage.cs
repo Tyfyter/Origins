@@ -9,13 +9,13 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-    public class Cranivore : ModNPC {
+    public class Optiphage : ModNPC {
 		public static new AutoCastingAsset<Texture2D> HeadTexture { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cranivore");
+			DisplayName.SetDefault("Optiphage");
 			Main.npcFrameCount[Type] = 2;
 			if (!Main.dedServ) {
-				HeadTexture = Mod.Assets.Request<Texture2D>("NPCs/MiscE/Cranivore_Head");
+				HeadTexture = Mod.Assets.Request<Texture2D>("NPCs/MiscE/Optiphage_Head");
 			}
 		}
 		public override void Unload() {
@@ -24,23 +24,23 @@ namespace Origins.NPCs.MiscE {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DemonEye);
 			NPC.aiStyle = 85;
-			NPC.lifeMax = 28;
-			NPC.defense = 5;
-			NPC.damage = 16;
-			NPC.width = 32;
-			NPC.height = 32;
+			NPC.lifeMax = 14;
+			NPC.defense = 2;
+			NPC.damage = 14;
+			NPC.width = 16;
+			NPC.height = 16;
 			NPC.friendly = false;
 			NPC.noGravity = true;
 			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
-			NPC.value = 56;
+			NPC.value = 34;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("An uncommon lifeform known to be in the second stage of the Eater life cycle. This creature prefers to start its meals by the head."),
+				new FlavorTextBestiaryInfoElement("This Eater is in its first stage of the Eater life cycle. It goes straight for the eyes of its victims in hopes that it can prompt its own eye to grow in."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 3));
+			npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 5));
 		}
 		public override void AI() {
 			if (NPC.aiStyle == NPCAIStyleID.Star_Cell) {
@@ -49,8 +49,8 @@ namespace Origins.NPCs.MiscE {
 					NPC.aiStyle = NPCAIStyleID.Demon_Eye;
 				}else if (NPC.ai[0] == 1f) {
 					Player targetPlayer = Main.player[NPC.target];
-					NPC.Top = targetPlayer.Top;
-					targetPlayer.AddBuff(Buffs.Cranivore_Debuff.ID, 5);
+					NPC.BottomRight = targetPlayer.Center;
+					targetPlayer.AddBuff(Buffs.Optiphage_Debuff.ID, 5);
 				}
 			} else {
 				NPCAimedTarget target = NPC.GetTargetData();
@@ -60,7 +60,7 @@ namespace Origins.NPCs.MiscE {
 				NPC.spriteDirection = NPC.direction;
 				NPC.hide = false;
 				if (++NPC.frameCounter > 5) {
-					NPC.frame = new Rectangle(0, (NPC.frame.Y + 34) % 68, 18, 34);
+					NPC.frame = new Rectangle(0, (NPC.frame.Y + 30) % 60, 16, 30);
 					NPC.frameCounter = 0;
 				}
 			}

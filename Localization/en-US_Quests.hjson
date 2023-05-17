@@ -17,6 +17,22 @@
 					Start:"Hey {0}, I've had a bit of a vendetta against those harpies. Go and get twelve of 'em for me eh? I'll give you a nice reward if you do!"
 					Complete:"Thank you. Those feather-ridden sky-folk were disrupting me from getting an important commodity! I'll offer you this new item at a discounted price for your services!"
 				}
+				Lottery_Ticket: {
+					Name:"Stray of Luck"
+					Journal:
+					'''
+					{$Mods.Origins.Quests.Merchant.Lottery_Ticket.Name}
+					Client: Merchant
+					
+					'{$Mods.Origins.Quests.Merchant.Lottery_Ticket.Start}'
+					
+					- [qs{3}:Slay {2} of any Doctor Bones, Nymph,
+					or Tim enemies ({1}/{2})]
+					Unlocks: [i:Origins/Lottery_Ticket]
+					'''
+					Start:"Do you know why <Name of world> isn’t allowed to sell lottery tickets? Neither do I. Maybe you can convince the gods of fortune to shine a brighter light on us by killing some rare enemies, eh?"
+					Complete:"Ah! Thanks, {0}! Because of you we can gamble now! I'm gonna be rich, you'll see me on the MegaPlatinum!"
+				}
 			}
 			Party_Girl:{
 				Tax_Collector_Hat: {

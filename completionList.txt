@@ -115,7 +115,7 @@ ENEMY NPCS:
 (#, ^2) Defiled Wisp !!!
 (^) Fiberglass Enemies
 (^) Measly Moeba
-(#, ^2) Optiphage !!!
+(^) Optiphage
 (^) Pre-H Defiled Enemies
 (^) Riven Protoform
 (#, ^2) Scanner Scout
@@ -948,7 +948,7 @@ CONSUMABLES:
 (^) Gooey Water
 (#2, ^2) Holiday Hair Dye
 (#2, ^2) Invisible Ink
-(X) Lottery Ticket
+(#2, ^2) Lottery Ticket !!!
 (#2, ^2) Magic Brine Dropper
 (^) White Water
 (#2, ^2) Void Lock

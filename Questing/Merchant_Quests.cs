@@ -100,4 +100,90 @@ namespace Origins.Questing {
 			progress = tag.SafeGet<int>("Progress");
 		}
 	}
+	public class Lottery_Ticket_Quest : Quest {
+		int stage = 0;
+		int progress = 0;
+		const int target = 10;
+		public override int Stage {
+			get => stage;
+			set {
+				stage = value;
+				KillEnemyEvent = null;
+				switch (stage) {
+					case 1:
+						KillEnemyEvent = (npc) => {
+							if (npc.type == NPCID.DoctorBones || npc.type == NPCID.Nymph || npc.type == NPCID.Tim) {
+								if (++progress >= target) {
+									Stage = 2;
+								}
+							}
+						};
+						break;
+				}
+			}
+		}
+		public override bool Started => Stage > 0;
+		public override bool Completed => Stage > 2;
+		public override bool HasStartDialogue(NPC npc) {
+			return npc.type == NPCID.Merchant && Stage == 0;
+		}
+		public override bool HasDialogue(NPC npc) {
+			if (npc.type != NPCID.Merchant) return false;
+			switch (Stage) {
+				case 2:
+					return true;
+			}
+			return false;
+		}
+		public override string GetDialogue() {
+			switch (Stage) {
+				case 2:
+					return "Complete Quest";
+
+				default:
+					if (Origins.npcChatQuestSelected) {
+						return "Accept";
+					}
+					return Language.GetTextValue(NameKey);
+			}
+		}
+		public override void OnDialogue() {
+			switch (stage) {
+				case 0: {
+						if (Origins.npcChatQuestSelected) {
+							Stage = 1;
+						} else {
+							Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Merchant.Lottery_Ticket.Start", Main.LocalPlayer.Get2ndPersonReference("casual"));
+							Origins.npcChatQuestSelected = true;
+						}
+						break;
+					}
+				case 2: {
+						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Merchant.Lottery_Ticket.Complete");
+						Stage = 3;
+						break;
+					}
+			}
+		}
+		public override string GetJournalPage() {
+			return Language.GetTextValue(
+				"Mods.Origins.Quests.Merchant.Lottery_Ticket.Journal",
+				Main.LocalPlayer.Get2ndPersonReference("casual"),
+				progress,
+				target,
+				StageTagOption(progress >= target)
+			);
+		}
+		public override void SetStaticDefaults() {
+			NameKey = "Mods.Origins.Quests.Merchant.Lottery_Ticket.Name";
+		}
+		public override void SaveData(TagCompound tag) {
+			tag.Add("Stage", Stage);
+			tag.Add("Progress", progress);
+		}
+		public override void LoadData(TagCompound tag) {
+			Stage = tag.SafeGet<int>("Stage");
+			progress = tag.SafeGet<int>("Progress");
+		}
+	}
 }

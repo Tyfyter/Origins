@@ -2,28 +2,71 @@
 	Origins: {
 		Journal: {
 			Name:{
+				Black_Bile: Black Bile
 				Felnum: Felnum Ore
 			}
 			Indicator:{
 				Whispers:"You hear whispers nearby..."
 				Other:"Detailed description available."
 			}
+			Alkahest:
+			'''
+			Alkahest (title)
+			[i:Origins/Alkahest] (enlarge to span top of page, working on custom image)
+
+			Overview: 
+			 - Alkahest is an extremely-concentrated alkaline solution that is notable for being capable of breaking down any composite material. Alkahest is the primary chemical used by the Primordial Amoeba to break down the Terrarian world into energy. Alkahest is a very rare resource despite being widely available within the Riven Hive due to the fact that the Primordial Amoeba is the only being capable of synthesizing the chemical, making it highly sought after by merchants.
+			
+			Characteristics: 
+			 - Contrary to the bright blue-green coloration of the Primordial Amoeba, Alkahest takes on a bright, almost straw-colored yellow color. Alkahest also has almost no viscosity as well and is very reflective.
+			
+			Origins: 
+			 - As previously mentioned, Alkahest first appeared on Terraria due to the Primordial Amoeba that naturally synthesizes it to digest all matter for nutrition. There is no known way to synthesize Alkahest artificially.
+			
+			Chemistry:
+			 - Alkahest has a wide range of applications including general waste removal, energy generation, heat generation, and other purposes. Alkahest is most commonly used for combat and alchemy, due to how easily capable of dissolving matter it is.
+			
+			History: 
+			 - Alkahest is a relatively newer material that has sprouted into the mix thanks to some early Terrarian history. Before the Primordial Amoeba became a keystone species for the Riven Hive, it was like any other single-cellular organism. When Cthulhu’s invasion on Terraria’s inhabitants came to a conclusion after his lower half was severed, his blood was said to spill into the caverns of the world, corrupting the very pool of water that the Primordial Amoeba resided. As part of its prompted, rapid evolution, the Amoeba gained the ability for Alkahest synthesis and used it to shape the surrounding environment.
+			'''
+
+			Black_Bile:
+			'''
+			Black Bile (title)
+			[i:Origins/Black_Bile] (enlarge to span top of page, working on custom image)
+
+			Overview: 
+			 - Black Bile is a semi-solid material that sublimates at a really low temperature like that of the Defiled Wastelands, in which case Black Bile is only observed as a heavy gas. Black Bike is mostly known to be the waste by-product produced by the Defiled entity during the creation of Defiled Matter and Defiled Mana. It’s also known to significantly increase the risk of cancer and depression when in contact.
+			
+			Characteristics: 
+			 - Black Bile in its semi-solid form takes on a dark mulberry-like color and possesses little-to-no resistance to forces applied to it. It also is inherently slippery to grasp, making extraction of the material prove difficult. In its gaseous form, Black Bile completely absorbs almost all light casted onto it and appears to prevent separation into multiple clouds of gas as much as possible. It is also extremely resistant to being set aflame and not reactive to anything, making it quite stable.
+			
+			Origins: 
+			 - As previously stated, Black Bile is the waste by-product of Defiled Matter and Mana generation in the specific process known as “refactoring defiledization”.
+			
+			Chemistry:
+			 - Black Bile is quite a versatile material offering applications in combat, medicine, and crafting. It’s main use is for combat, due to its deadly and volatile nature. Black Bile is known to have a strange reaction with Terraria’s nitrogen-rich air, causing the atmosphere to be desaturated of color. 
+			
+			History: 
+			 - Black Bile is a relatively new material due to the recent introduction of the Defiled in Terraria. Unlike the other evils, the Defiled entity was not naturally from Terraria. Black Bile has been an important material used by the Defiled ever since as the Defiled uses it to aid in constructing its various structures. 
+			'''
+
 			Felnum:
 			'''
-			Felnum (title)
+			Felnum
 			[i:Origins/Felnum_Ore_Item] [i:Origins/Felnum_Bar] (enlarge to span top of page)
 
 			Overview: 
-			 - Felnum is mostly known for its "eletrical greed" in that it builds up a crystallic material known as "Felnum Crust" to trap electrons that try to escape despite already having a strong negative charge. Felnum can be found in the floating isles of Terraria where it saps the static electricity culminating in the clouds. It is said that lightning would strike all the time during thunderstorms if it weren't for felnum.
+			 - Felnum is mostly known for its "eletrical greed" in that it builds up a crystallic material known as "felnum crust" to trap electrons that try to escape despite already having a strong negative charge. Felnum can be found in the floating isles of Terraria where it saps the static electricity culminating in the clouds. It is said that lightning would strike all the time during thunderstorms if it weren't for felnum.
 			
 			Characteristics: 
-			 - Felnum in its unrefined state adopts a similar appearance to that of copper ore, and then fades into a desaturated gold-brown color when hardened. It has a very prominent luster, moreso than copper. It's also quite strong and not quite as malleable. It's also worse at thermal conductivity than its copper equivalent.
+			 - Felnum in its unrefined state adopts a similar appearance to that of copper ore, and then fades into a desaturated gold-brown color when hardened. It has a very prominent luster, isn’t too malleable, and possesses a worse thermal conductivity than its copper equivalent.
 			
 			Origins: 
-			 - Felnum's development on Terraria is due to a high presence of mana throughout the world. It manifests due to the nearby presence of mana particles with the combination of the appropriate elements also present. The greatest way to manifest Felnum is to transmute Copper Ore [i:Terraria/Copper_Ore_Item] by blessing it at a Crystal Ball [i:Terraria/Crystal_Ball_Item].
+			 - Felnum's development on Terraria is due to a high presence of mana throughout the world. It manifests due the high presence of mana particles in conjunction with the appropriate elements in the area. The greatest way to manifest Felnum is to transmute Copper Ore [i:Terraria/Copper_Ore_Item] by blessing it at a Crystal Ball [i:Terraria/Crystal_Ball_Item].
 			
 			Chemistry:
-			 - Felnum is mostly used as a capacitor when it is not being combined with other materials. It can be used best in battery-technology applications where a power source is necessary. Aside from its applications, Felnum can be further blessed in Valkyrum [i:Origins/Valkyrum_Bar] by combining it with Ectoplasm [i:Terraria/Ectoplasm] released by Dungeon Spirits [i:Terraria/Dungeon_Spirit]. Based on early analysis, Felnum could likely be used in applications of providing energy in the form of electrolytes.
+			 - Felnum is mostly used as a capacitor when it is not being combined with other materials. It can be used best in battery-technology applications where a power source is necessary. Aside from its applications, Felnum can be further blessed into Valkyrum [i:Origins/Valkyrum_Bar] by combining it with Ectoplasm [i:Terraria/Ectoplasm] released by Dungeon Spirits [i:Terraria/Dungeon_Spirit]. Based on early analysis, Felnum could likely be used in applications of providing energy in the form of electrolytes.
 			
 			History: 
 			 - Felnum is an artificial metal material conjured by the wizards of the Bastile (dungeon). Its sole purpose was to prevent lightning strikes from rapidly striking the lands of Terraria during thunderstorms to allow for the development of villages. Felnum's presence can greatly harm Terraria if not applied carefully as thunderstorms are just a way for Terraria to naturally combat manifested evils on the surface.

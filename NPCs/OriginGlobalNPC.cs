@@ -51,7 +51,10 @@ namespace Origins.NPCs {
 					if (ModContent.GetInstance<Blue_Bovine_Quest>().Completed) {
 						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Blue_Bovine>());
 					}
-					break;
+						if (ModContent.GetInstance<Lottery_Ticket_Quest>().Completed) {
+							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Lottery_Ticket>());
+						}
+						break;
 				}
 				case NPCID.Demolitionist: {
 					if (ModContent.GetInstance<OriginSystem>().peatSold >= 0 && !Main.hardMode) {

@@ -783,8 +783,8 @@ namespace Origins {
 					int duration = 30;
 					int targetTime = 1440;
 					float targetSeverity = 0f;
-					bool hadTorn = Player.HasBuff(Torn_Buff.ID);
-					Player.AddBuff(Torn_Buff.ID, duration);
+					bool hadTorn = Player.HasBuff(Torn_Debuff.ID);
+					Player.AddBuff(Torn_Debuff.ID, duration);
 					if (hadTorn || targetSeverity < tornTarget) {
 						tornTargetTime = targetTime;
 						tornTarget = targetSeverity;
@@ -1670,7 +1670,7 @@ namespace Origins {
 				}
 				Player.CheckMana((int)Math.Floor(manaDamage * costMult * costMult2), true);
 				damage = (int)(damage - (manaDamage * costMult3));
-				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Buff>(), 50);
+				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
 			} else if (reshapingChunk) {
 				damage -= damage / 20;
 			}
@@ -1828,7 +1828,7 @@ namespace Origins {
 			return !unlockedEntry;
 		}
 		public static void InflictTorn(Player player, int duration, int targetTime = 180, float targetSeverity = 0.7f) {
-			player.AddBuff(Torn_Buff.ID, duration);
+			player.AddBuff(Torn_Debuff.ID, duration);
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (targetSeverity < originPlayer.tornTarget) {
 				originPlayer.tornTargetTime = targetTime;

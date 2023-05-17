@@ -36,7 +36,9 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Alkahest : ModItem {
+	public class Alkahest : ModItem, IJournalEntryItem {
+		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
+		public string EntryName => "Origins/" + typeof(Alkahest_Mat_Entry).Name;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Alkahest");
 			Tooltip.SetDefault("'Don't touch it'");
@@ -46,6 +48,10 @@ namespace Origins.Items.Materials {
 			Item.maxStack = 99;
 			Item.value = Item.sellPrice(silver: 9);
 			Item.rare = ItemRarityID.Orange;
+		}
+		public class Alkahest_Mat_Entry : JournalEntry {
+			public override string TextKey => "Alkahest";
+			public override ArmorShaderData TextShader => null;
 		}
 	}
 	public class Bark : ModItem {
@@ -80,7 +86,9 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Black_Bile : ModItem {
+	public class Black_Bile : ModItem, IJournalEntryItem {
+		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
+		public string EntryName => "Origins/" + typeof(Black_Bile_Entry).Name;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Black Bile");
 			Tooltip.SetDefault("'So depressing it makes the party girl cry'");
@@ -91,6 +99,10 @@ namespace Origins.Items.Materials {
 			Item.maxStack = 99;
 			Item.value = Item.sellPrice(silver: 10);
 			Item.rare = ItemRarityID.Orange;
+		}
+		public class Black_Bile_Entry : JournalEntry {
+			public override string TextKey => "Black_Bile";
+			public override ArmorShaderData TextShader => null;
 		}
 	}
 	public class Bleeding_Obsidian_Shard : ModItem {
