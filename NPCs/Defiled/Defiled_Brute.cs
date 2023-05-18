@@ -148,7 +148,7 @@ namespace Origins.NPCs.Defiled {
             npcRect = new Rectangle((int)npc.position.X+(flip?70:52), (int)npc.position.Y, 56, npc.height);* /
         }*/
 		public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>(), 1);
+			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
 		}
 		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);

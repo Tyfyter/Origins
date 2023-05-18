@@ -39,7 +39,7 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled2_Greaves>(), 525));
 		}
 		public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>(), 1);
+			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
 		}
 		public override void OnSpawn(IEntitySource source) {
 			NPC.spriteDirection = Main.rand.NextBool() ? 1 : -1;

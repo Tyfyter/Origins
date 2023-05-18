@@ -482,7 +482,7 @@ namespace Origins.NPCs.Defiled {
 		public override void OnKill() {
 			NPC.downedBoss2 = true;
 			if (releasedWisps < 5)
-				NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>(), 1);
+				NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
 			releasedWisps++;
 		}
 		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {

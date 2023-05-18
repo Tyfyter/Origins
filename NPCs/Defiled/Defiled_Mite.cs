@@ -105,7 +105,7 @@ namespace Origins.NPCs.Defiled {
 			return NPC.aiStyle != NPCAIStyleID.None;
 		}
 		public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>(), 1);
+			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.frame = new Rectangle(0, 28 * (frame & 12) / 4, 32, 26);

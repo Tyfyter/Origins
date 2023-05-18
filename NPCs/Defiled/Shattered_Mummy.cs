@@ -80,7 +80,7 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>(), 1);
+			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
 		}
 		public override void HitEffect(int hitDirection, double damage) {
 			//spawn gore if npc is dead after being hit
