@@ -3,13 +3,21 @@
 		Journal: {
 			Name:{
 				Black_Bile: Black Bile
+				Cubekon_Tinkerer: Cubekon Tinkerer
+				District_Attorney: Defiled Amalgamation
 				Felnum: Felnum Ore
 				Lost_Ore: Lost Ore
+				The_Defiled: The Defiled
+				The_Riven: The Riven
+				The_Terrarian: The Terrarian
 			}
 			Indicator:{
 				Whispers:"You hear whispers nearby..."
 				Other:"Detailed description available."
 			}
+
+			// Material Descriptions vv
+
 			Alkahest:
 			'''
 			Alkahest (title)
@@ -94,8 +102,11 @@
 			 - Lost Ore's primary use is to serve as a readily available metal material to integrate into newly generated Defiled Matter. It is responsible for giving Defiled Matter its smooth, metallic appearance, which is a sign of the Matter's toughness. Lost Ore can alternatively be used as refined material, but the means of refining it are unknown as is its appearance. The main way to utilize Lost Ore's capabilities is to combine it with a live Defiled host, i. e. Undead Chunks [i:Origins/Undead_Chunk].
 			
 			History: 
-			 - Lost Ore wasn't always available to the Defiled, at least not initially. The Defiled had to spread enough to reach the caverns of Terraria in order to discover the natural ore that reside there. After discovering a particular vein of Iron Ore [i:Terraria/Iron_Ore_Item], it absorbed it and integrated it into its current production of Defiled Matter. However, the entity found that Iron was too heavy and too conductive to its liking and thus reconfigured Iron's characteristics to be more favorable; the result was Lost Ore.
+			 - Lost Ore wasn't always available to the Defiled, at least not initially. The Defiled had to spread enough to reach the caverns of Terraria in order to discover the natural ore that resides there. After discovering a particular vein of Iron Ore [i:Terraria/Iron_Ore_Item], it absorbed it and integrated it into its current production of Defiled Matter. However, the entity found that Iron was too heavy and too conductive for its liking and thus reconfigured Iron's characteristics to be more favorable; the result was Lost Ore.
 			'''
+
+
+			// Lore Accessories vv
 
 			Asylum_Whistle:
 			'''
@@ -169,6 +180,95 @@
 			Hmmph! Ah, it’s a bust! I can’t get it. It’s stuck with the ground! Being this sharp, I would’ve figured it could slide right out! This would be too dangerous for the parasite to consume!
 
 			The leak had been neglected, and so came the Riven.
+			'''
+
+
+			// NPCs, Enemies, and Bosses vv
+
+			Cubekon_Tinkerer:
+			'''
+			""
+
+			Overview:
+			 - is the mentor of the mechanic before she discovered the Cubekons where she was promptly captured by Quantux. Spent her seemingly 'forever' time inside the Cubekon Matrix, learning about everything they know and taking notes about the most important things. She became the Cubekon Tinkerer after she was released now full of ideas. resposible for ICARUS, and created it to be the final line of defense just before she was captured
+			
+			Origins:
+			 - cubekon tinkerer's origins are unknown other than that she resided in the same kingdom as the Mechanic
+
+			Contributions:
+			 - aiding the Terrarian, ICARUS, mech bosses (aid)
+			'''
+
+			District_Attorney:
+			'''
+			"That creature... it's seems so... distraught?"
+
+			"I mean, if you had the collective conciousness of every being warped to the Defiled, wouldn't you be so hostile?"
+
+			"I wouldn't say *every* being. The Defiled is still quite small compared to the other three evils out there."
+
+			"The Amalgamation is the oldest known being in the Defiled's possession, it has went through so many chunks that I hardly doubt it even has one memory of itself."
+
+
+			Overview:
+			 - The Defiled Amalgamation is the oldest known entity in the Defiled's hold as evident with its uniquely large size. The creature is known to prevent intruders from reaching the caverns of the Defiled Wastelands.
+
+			Characteristics:
+			 - The Amalgamation adopts the same desaturated, misfigured appearance like any other Defiled creature, however, its size is surely a unique characteristic that not many other anti-bodies can share. It also bears a prominent avian physiology, moreso than Defiled Phantoms. Behaviorally, the Amalgamation is very volatile and sporadic. It also can be quite territorial and regularly guards the entrances to the Defiled Caverns on the surface.
+			
+			Origins:
+			 - The Defiled Amalgamation's original form is not known, but it could likely be assumed that it was once a bird based on its physiology. Aside from that, it went through a the same process like any other creature being assimilated to the Defiled will that being "refactoring defiledization”.
+
+			Speculation:
+			 - It is known that the Defiled Amalgamation contains the memories of many different beings assimilated to the Defiled. It could likely be assumed that the Amalgamation is seen as a higher entity than the other creatures that wander the wastes, but a heirarchy has not been confirmed to be present.
+			'''
+
+			Zoologist:
+			'''
+			"Well, long ago my dad was this kinda wizard who knew Severus, and I remember he was really upset about how evil he became so he took it upon himself to end the chaos... but, he disappeared. I've been looking for him ever since I was a little girl. I wish I could help out with Severus, but I am just not cut out for that kinda thing. Especially since he could just curse me more."
+
+			Overview:
+			 - 
+			
+			Origins:
+			 - golfer and Zoologist are related. Her parents are name of wizard related to severus and the mother is unknown. The wizard loved their mother so much, but something bad happened.
+
+			Contributions:
+			 - aiding the Terrarian
+			'''
+
+
+			// Non-Physical Lores vv
+
+			The_Defiled:
+			'''
+			"This, the entire thing is a living entity. The creatures we saw during our expedition were merely its immune system reacting to our presence."
+			
+			"Wait what? That thing is a living creature?! No wonder its so unlike the other evils!"
+
+			"Not just that, <Name of Mechanic>, my readings also indicate that it doesn’t even originate from Terraria either."
+
+			"It's an alien like those Martians?"
+
+			"Mhm, although it seems to have come from Hell unlike the other three evils which were directly tied into the splitting of Cthulhu’s lower half."
+
+			"Huh, what else did you gather?"
+
+			Overview:
+			 - 
+
+			Characteristics:
+			 - defiled is quite a hot environment due to the concentration of the atmosphere caused by a unique chemical reaction with black bile. This allows black bile to consistently be in its gaseous form even when the temperature drops to barely acceptable limits. the defiled is very desaturated of color from this. the geography also seems to shift consistently and appears similar to the disfigured entities that roam the wastelands. Giant spikes appear all over the surface as if the defiled is trying to protect itself from an entity large enough to consume it
+			'''
+
+			The_Riven:
+			'''
+			
+			'''
+
+			The_Terrarian:
+			'''
+			"The Terrarian, its voice. A godlike entity so close yet so far to the inhabitants of Terraria. This one lives without purpose, but it would be foolish to not address it. They were created directly from the world by the Order of Dryads before they were nearly left extinct from Cthulhu’s hand. The Terrarian is differe, you see, they possess many abilities that make them the ultimate life form. The ability to respawn is one such ability that many creatures cannot recreate besides the most powerful."
 			'''
 		}
 	}

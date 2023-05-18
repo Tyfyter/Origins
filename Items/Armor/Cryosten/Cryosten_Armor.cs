@@ -47,7 +47,7 @@ namespace Origins.Items.Armor.Cryosten {
 	public class Cryosten_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Cryosten Breastplate");
-			Tooltip.SetDefault("20% increased maximum health");
+			Tooltip.SetDefault("12% increased maximum life");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -55,7 +55,7 @@ namespace Origins.Items.Armor.Cryosten {
 			Item.value = Item.buyPrice(silver: 35);
 		}
 		public override void UpdateEquip(Player player) {
-			player.statLifeMax2 += player.statLifeMax2 / 5;
+			player.statLifeMax2 += (int)(player.statLifeMax2 * 0.12);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

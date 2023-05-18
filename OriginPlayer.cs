@@ -780,7 +780,24 @@ namespace Origins {
 				ModWaterStyle waterStyle = LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle);
 				if (waterStyle is Riven_Water_Style) {
 					rivenWet = true;
-					int duration = 30;
+					/*if (GameModeData.ExpertMode) {
+						int duration = 432;
+						int targetTime = 1440;
+						float targetSeverity = 0f;
+					} else if (GameModeData.MasterMode) {
+						int duration = 676;
+						int targetTime = 1440;
+						float targetSeverity = 0f;
+					} else if (GameModeData.NormalMode) {
+						int duration = 188;
+						int targetTime = 1440;
+						float targetSeverity = 0f;
+					} else if (GameModeData.Creative) {
+						int duration = 188;
+						int targetTime = 1440;
+						float targetSeverity = 0.08f;
+					}*/
+					int duration = 188;
 					int targetTime = 1440;
 					float targetSeverity = 0f;
 					bool hadTorn = Player.HasBuff(Torn_Debuff.ID);
@@ -789,9 +806,9 @@ namespace Origins {
 						tornTargetTime = targetTime;
 						tornTarget = targetSeverity;
 					}
-					Player.velocity.X *= 0.975f;
+					Player.velocity *= 0.95f;
 				} else if (waterStyle is Brine_Water_Style) {
-					Player.AddBuff(Toxic_Shock_Debuff.ID, 30);
+					Player.AddBuff(Toxic_Shock_Debuff.ID, 300);
 				}
 			}
 		}

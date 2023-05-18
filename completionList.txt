@@ -216,7 +216,7 @@ ARMOR:
 (^) Encrusted Armor
 (^) Felnum Armor
 (^) Fiberglass Armor
-(#2, ^2) Lost Armor !!!
+(@, ^3) Lost Armor !!!
 (^) Myth Armor
 (^) Riptide Armor
 (^) Soulhide Armor
@@ -727,6 +727,7 @@ TILES:
 (^) Lost Ore
 (X) Mildew
 (^) Peat Moss*
+(X) Primordial Permafrost !!!
 (^) Riven Grass
 (^) Spug Flesh
 (@5, ^3) Sulphur Stone

@@ -497,7 +497,7 @@ namespace Origins.World.BiomeData {
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
 			//DisplayName.SetDefault(Language.GetTextValue("Mods.Origins.Generic.Riven_Hive"));
-			Description.SetDefault(Language.GetTextValue("A flourishing and beautiful ecosystem soon to replace the status quo dominated by a now sentient amoeba"));
+			Description.SetDefault(Language.GetTextValue("A flourishing and beautiful ecosystem soon to replace the status quo dominated by a now sentient amoeba."));
 			GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
 			BiomeGrass = ModContent.TileType<Riven_Grass>();
 			SeedType = ModContent.ItemType<Riven_Grass_Seeds>();

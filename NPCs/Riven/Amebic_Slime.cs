@@ -7,7 +7,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Amebic_Slime : ModNPC {
+    public class Amebic_Slime : Glowing_Mod_NPC {
+		public override string GlowTexturePath => Texture;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Amebic Slime");
 			Main.npcFrameCount[NPC.type] = 2;

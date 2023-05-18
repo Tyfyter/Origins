@@ -1,5 +1,6 @@
 using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -24,8 +25,8 @@ namespace Origins.Items.Armor.Lost {
 			return body.type == ModContent.ItemType<Lost_Breastplate>() && legs.type == ModContent.ItemType<Lost_Pants>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "The devs are trying their best";
-			//player.GetModPlayer<OriginPlayer>().lostSet = true;
+			player.setBonus = "Greatly increased maximum life";
+			player.statLifeMax2 += (int)(player.statLifeMax2 * 0.25);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

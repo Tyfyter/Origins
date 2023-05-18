@@ -1,15 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Water {
-	public class Riven_Water_Style : ModWaterStyle, IGlowingWaterStyle {
+    public class Riven_Water_Style : ModWaterStyle, IGlowingWaterStyle {
 		public override int ChooseWaterfallStyle() => ModContent.GetInstance<Riven_Waterfall_Style>().Slot;
 		public override int GetDropletGore() => GoreID.ChimneySmoke1 + Main.rand.Next(3);
 		public override int GetSplashDust() => 99;
