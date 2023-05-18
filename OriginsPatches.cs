@@ -206,6 +206,7 @@ namespace Origins {
 			On.Terraria.Player.RollLuck += Player_RollLuck;
 			On.Terraria.GameContent.Drawing.TileDrawing.Draw += TileDrawing_Draw;
 			On.Terraria.GameContent.Drawing.TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
+			IL.Terraria.NPC.StrikeNPC += NPC_StrikeNPC;
 		}
 
 		private int Player_RollLuck(On.Terraria.Player.orig_RollLuck orig, Player self, int range) {
@@ -231,6 +232,7 @@ namespace Origins {
 			}
 			return roll;
 		}
+		#region quests
 		private void Player_SetTalkNPC(On.Terraria.Player.orig_SetTalkNPC orig, Player self, int npcIndex, bool fromNet) {
 			orig(self, npcIndex, fromNet);
 			if (npcIndex == -1) {
@@ -424,6 +426,7 @@ namespace Origins {
 				npcChatQuestListFocus = hoveredIndex;
 			}
 		}
+		#endregion quests
 		#region plants
 		private void WorldGen_PlantAlchIL(ILContext il) {
 			ILCursor c = new ILCursor(il);
@@ -664,51 +667,6 @@ namespace Origins {
 				orig(proj, out timeToFlyOut, out segments, out rangeMultiplier);
 			}
 		}
-		private void LegacyPlayerRenderer_DrawPlayerInternal(On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.orig_DrawPlayerInternal orig, Terraria.Graphics.Renderers.LegacyPlayerRenderer self, Camera camera, Player drawPlayer, Vector2 position, float rotation, Vector2 rotationOrigin, float shadow, float alpha, float scale, bool headOnly) {
-			bool shaded = false;
-			try {
-				OriginPlayer originPlayer = drawPlayer.GetModPlayer<OriginPlayer>();
-				if (originPlayer.amebicVialVisible) {
-					PlayerShaderSet shaderSet = new PlayerShaderSet(drawPlayer);
-					new PlayerShaderSet(amebicProtectionShaderID).Apply(drawPlayer);
-					int playerHairDye = drawPlayer.hairDye;
-					drawPlayer.hairDye = amebicProtectionHairShaderID;
-
-					const float offset = 2;
-					int itemAnimation = drawPlayer.itemAnimation;
-					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(offset, 0));
-					orig(self, camera, drawPlayer, position + new Vector2(offset, 0), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
-
-					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(-offset, 0));
-					orig(self, camera, drawPlayer, position + new Vector2(-offset, 0), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
-
-					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(0, offset));
-					orig(self, camera, drawPlayer, position + new Vector2(0, offset), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
-
-					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(0, -offset));
-					orig(self, camera, drawPlayer, position + new Vector2(0, -offset), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
-					shaderSet.Apply(drawPlayer);
-					drawPlayer.hairDye = playerHairDye;
-					drawPlayer.itemAnimation = itemAnimation;
-				}
-				int rasterizedTime = originPlayer.rasterizedTime;
-				if (rasterizedTime > 0) {
-					shaded = true;
-					rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
-					rasterizeShader.Shader.Parameters["uOffset"].SetValue(drawPlayer.velocity.WithMaxLength(4) * 0.0625f * rasterizedTime);
-					rasterizeShader.Shader.Parameters["uWorldPosition"].SetValue(drawPlayer.position);
-					rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(40, 1120, 0));
-					Main.graphics.GraphicsDevice.Textures[1] = cellNoiseTexture;
-					Main.spriteBatch.Restart(SpriteSortMode.Immediate, effect: rasterizeShader.Shader);
-				}
-				orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);
-			} finally {
-				if (shaded) {
-					Main.spriteBatch.Restart();
-				}
-			}
-		}
-
 		private string Lang_GetDryadWorldStatusDialog(On.Terraria.Lang.orig_GetDryadWorldStatusDialog orig) {
 			const int good = 1;
 			const int evil = 2;
@@ -792,6 +750,52 @@ namespace Origins {
 			orig(clearCounts);
 		}
 		#endregion
+		#region graphics
+		private void LegacyPlayerRenderer_DrawPlayerInternal(On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.orig_DrawPlayerInternal orig, Terraria.Graphics.Renderers.LegacyPlayerRenderer self, Camera camera, Player drawPlayer, Vector2 position, float rotation, Vector2 rotationOrigin, float shadow, float alpha, float scale, bool headOnly) {
+			bool shaded = false;
+			try {
+				OriginPlayer originPlayer = drawPlayer.GetModPlayer<OriginPlayer>();
+				if (originPlayer.amebicVialVisible) {
+					PlayerShaderSet shaderSet = new PlayerShaderSet(drawPlayer);
+					new PlayerShaderSet(amebicProtectionShaderID).Apply(drawPlayer);
+					int playerHairDye = drawPlayer.hairDye;
+					drawPlayer.hairDye = amebicProtectionHairShaderID;
+
+					const float offset = 2;
+					int itemAnimation = drawPlayer.itemAnimation;
+					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(offset, 0));
+					orig(self, camera, drawPlayer, position + new Vector2(offset, 0), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
+
+					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(-offset, 0));
+					orig(self, camera, drawPlayer, position + new Vector2(-offset, 0), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
+
+					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(0, offset));
+					orig(self, camera, drawPlayer, position + new Vector2(0, offset), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
+
+					amebicProtectionShader.Shader.Parameters["uOffset"].SetValue(new Vector2(0, -offset));
+					orig(self, camera, drawPlayer, position + new Vector2(0, -offset), rotation, rotationOrigin, 0.01f, alpha, scale, headOnly);
+					shaderSet.Apply(drawPlayer);
+					drawPlayer.hairDye = playerHairDye;
+					drawPlayer.itemAnimation = itemAnimation;
+				}
+				int rasterizedTime = originPlayer.rasterizedTime;
+				if (rasterizedTime > 0) {
+					shaded = true;
+					rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
+					rasterizeShader.Shader.Parameters["uOffset"].SetValue(drawPlayer.velocity.WithMaxLength(4) * 0.0625f * rasterizedTime);
+					rasterizeShader.Shader.Parameters["uWorldPosition"].SetValue(drawPlayer.position);
+					rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(40, 1120, 0));
+					Main.graphics.GraphicsDevice.Textures[1] = cellNoiseTexture;
+					Main.spriteBatch.Restart(SpriteSortMode.Immediate, effect: rasterizeShader.Shader);
+				}
+				orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);
+			} finally {
+				if (shaded) {
+					Main.spriteBatch.Restart();
+				}
+			}
+		}
+
 		static bool sonarDrawing = false;
 		static bool sonarDrawingNonSolid = false;
 		private void TileDrawing_Draw(On.Terraria.GameContent.Drawing.TileDrawing.orig_Draw orig, TileDrawing self, bool solidLayer, bool forRenderTargets, bool intoRenderTargets, int waterStyleOverride) {
@@ -893,5 +897,6 @@ namespace Origins {
 			}
 			orig(self, drawData, solidLayer, waterStyleOverride, screenPosition, screenOffset, tileX, tileY);
 		}
+		#endregion graphics
 	}
 }
