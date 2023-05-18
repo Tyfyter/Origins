@@ -8,6 +8,8 @@ using MonoMod.RuntimeDetour.HookGen;
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.NPCs;
+using Origins.NPCs.MiscE;
 using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
 using Origins.Questing;
@@ -208,7 +210,28 @@ namespace Origins {
 			On.Terraria.GameContent.Drawing.TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
 			IL.Terraria.NPC.StrikeNPC += NPC_StrikeNPC;
 		}
-
+		#region combat
+		delegate void _ModifyNPCDefense(NPC npc, ref int defense);
+		private static void NPC_StrikeNPC(ILContext il) {
+			ILCursor c = new(il);
+			if (c.TryGotoNext(op => op.MatchLdarg(0), op => op.MatchLdfld<NPC>("ichor"), op => op.MatchBrfalse(out _))) {
+				c.Emit(OpCodes.Ldarg_0);
+				c.Emit(OpCodes.Ldloca_S, (byte)2);
+				c.EmitDelegate<_ModifyNPCDefense>(ModifyNPCDefense);
+			}
+		}
+		public static void ModifyNPCDefense(NPC npc, ref int defense) {
+			if (npc.ichor && CrimsonGlobalNPC.NPCTypes.Contains(npc.type)) {
+				defense += 5;
+			}
+			if (npc.GetGlobalNPC<OriginGlobalNPC>().barnacleBuff) {
+				defense += (int)(defense * 0.25f);
+			}
+			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
+				defense -= (int)(defense * 0.2f);
+			}
+		}
+		#endregion combat
 		private int Player_RollLuck(On.Terraria.Player.orig_RollLuck orig, Player self, int range) {
 			OriginPlayer originPlayer = self.GetModPlayer<OriginPlayer>();
 			int roll = orig(self, range);
