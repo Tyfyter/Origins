@@ -22,6 +22,7 @@ using MonoMod.RuntimeDetour.HookGen;
 using ThoriumMod.Items;
 using System.Reflection;
 using ThoriumMod.Projectiles.Bard;
+using Origins.NPCs.MiscE;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -152,6 +153,18 @@ namespace Origins {
 					}
 				})
 			);
+			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.TheInnocent>());
+			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.FrostWormHead>());
+			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.FrostWormBody>());
+			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.FrostWormTail>());
+			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.SnowEater>());
+
+			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.TheStarved>());
+			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.HorrificCharger>());
+			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.VileFloater>());
+			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.ChilledSpitter>());
+			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Freezer>());
+			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.SoulCorrupter>());
 		}
 	}
 	public interface ICustomWikiDestination {
