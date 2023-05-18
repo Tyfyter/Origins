@@ -26,7 +26,7 @@ using Terraria.Utilities;
 
 namespace Origins.NPCs.Defiled {
 	[AutoloadBossHead]
-	public class Defiled_Amalgamation : ModNPC {
+	public class Defiled_Amalgamation : ModNPC, IDefiledEnemy {
 		public override string Texture => "Origins/NPCs/Defiled/Defiled_Amalgamation_Body";
 		public override string BossHeadTexture => "Origins/UI/BossMap/Map_Icon_DA";
 		public static bool spawnDA = false;
@@ -87,6 +87,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.knockBackResist = 0;// actually a multiplier
 			NPC.value = Item.buyPrice(gold: 5);
 		}
+		public bool ForceSyncMana => false;
+		public float Mana { get => 1; set { } }
 		public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
 			switch (DifficultyMult) {
 				case 1:
@@ -469,21 +471,23 @@ namespace Origins.NPCs.Defiled {
 				armFrame = (armFrame + 1) % 3;
 			}
 		}
-		public override void UpdateLifeRegen(ref int damage) {
-			if ((int)NPC.ai[0] != 3 && !NPC.HasBuff(BuffID.Bleeding)) {
+		public void Regenerate(out int lifeRegen) {
+			lifeRegen = 0;
+			if ((int)NPC.ai[0] != 3) {
 				int tickSize = NPC.lifeMax / (10 - DifficultyMult * 2);
 				int threshold = (((NPC.life - 1) / tickSize) + 1) * tickSize;
 				if (NPC.life < threshold) {
-					NPC.lifeRegen += 6 + (DifficultyMult * 2);
+					lifeRegen = 6 + (DifficultyMult * 2);
 				}
 			}
 		}
-		int releasedWisps = 0;
 		public override void OnKill() {
 			NPC.downedBoss2 = true;
-			if (releasedWisps < 5)
-				NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
-			releasedWisps++;
+		}
+		public void SpawnWisp(NPC npc) {
+			for (int releasedWisps = 0; releasedWisps < 5; releasedWisps++) {
+				NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
+			}
 		}
 		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
 			switch ((int)NPC.ai[0]) {

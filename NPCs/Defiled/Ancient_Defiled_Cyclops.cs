@@ -13,7 +13,7 @@ using Terraria.ModLoader;
 using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 
 namespace Origins.NPCs.Defiled {
-	public class Ancient_Defiled_Cyclops : ModNPC, IMeleeCollisionDataNPC {
+	public class Ancient_Defiled_Cyclops : ModNPC, IMeleeCollisionDataNPC, IDefiledEnemy {
 		public const float speedMult = 1f;
 		bool attacking = false;
 		public override void SetStaticDefaults() {
@@ -34,6 +34,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.friendly = false;
 			NPC.value = 10000;
 		}
+		public bool ForceSyncMana => false;
+		public float Mana { get; set; }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				new FlavorTextBestiaryInfoElement("An older design of the Defiled Cyclops before the {$Defiled} improved upon it. The unique composition of Defiled Matter is apparent as it adopts a more leathery outer-layer."),
@@ -85,9 +87,6 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void PostAI() {
 			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X *= speedMult;
-		}
-		public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
 		}
 
 		public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {

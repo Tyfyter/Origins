@@ -8,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Mimic : ModNPC {
+	public class Defiled_Mimic : ModNPC, IDefiledEnemy {
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.BigMimicCorruption;// remove when sprite is complete
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Mimic");
@@ -30,6 +30,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.knockBackResist = 0.1f;
 			NPC.rarity = 5;
 		}
+		public bool ForceSyncMana => false;
+		public float Mana { get; set; }
 		public override void FindFrame(int frameHeight) {
 			NPC.CloneFrame(NPCID.BigMimicCorruption, frameHeight);
 		}
@@ -43,9 +45,6 @@ namespace Origins.NPCs.Defiled {
 			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
-		}
-		public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
 		}
 		public override void HitEffect(int hitDirection, double damage) {
 			//spawn gore if npc is dead after being hit

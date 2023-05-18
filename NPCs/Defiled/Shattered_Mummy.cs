@@ -10,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Shattered_Mummy : ModNPC {
+	public class Shattered_Mummy : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Shattered Mummy");
 			Main.npcFrameCount[NPC.type] = 4;
@@ -30,25 +30,16 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 700;
 		}
-		static int MaxMana => 100;
-		static int MaxManaDrain => 20;
-		float Mana {
-			get;
-			set;
-		}
+		public int MaxMana => 100;
+		public int MaxManaDrain => 20;
+		public float Mana { get; set; }
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
-			int maxDrain = (int)Math.Min(MaxMana - Mana, MaxManaDrain);
-			int manaDrain = Math.Min(maxDrain, target.statMana);
-			target.statMana -= manaDrain;
-			Mana += manaDrain;
-			if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
+			this.DrainMana(target);
 		}
-		public override void UpdateLifeRegen(ref int damage) {
-			if (NPC.life < NPC.lifeMax && Mana > 0) {
-				int factor = Main.rand.RandomRound((180f / NPC.life) * 8);
-				if (!NPC.HasBuff(BuffID.Bleeding)) NPC.lifeRegen += factor;
-				Mana -= factor / 180f;// 2 mana for every 3 health regenerated
-			}
+		public void Regenerate(out int lifeRegen) {
+			int factor = Main.rand.RandomRound((180f / NPC.life) * 8);
+			lifeRegen = factor;
+			Mana -= factor / 180f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -78,9 +69,6 @@ namespace Origins.NPCs.Defiled {
 				//reset frameCounter so this doesn't trigger every frame after the first time
 				NPC.frameCounter = 0;
 			}
-		}
-		public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
 		}
 		public override void HitEffect(int hitDirection, double damage) {
 			//spawn gore if npc is dead after being hit

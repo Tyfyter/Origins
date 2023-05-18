@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Cyclops : ModNPC {
+    public class Defiled_Cyclops : ModNPC, IDefiledEnemy {
 		public const float speedMult = 1f;
 		bool attacking = false;
 		public override void SetStaticDefaults() {
@@ -37,25 +37,16 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 90;
 		}
-		static int MaxMana => 50;
-		static int MaxManaDrain => 10;
-		float Mana {
-			get;
-			set;
-		}
+		public int MaxMana => 50;
+		public int MaxManaDrain => 10;
+		public float Mana { get; set; }
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
-			int maxDrain = (int)Math.Min(MaxMana - Mana, MaxManaDrain);
-			int manaDrain = Math.Min(maxDrain, target.statMana);
-			target.statMana -= manaDrain;
-			Mana += manaDrain;
-			if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
+			this.DrainMana(target);
 		}
-		public override void UpdateLifeRegen(ref int damage) {
-			if (NPC.life < NPC.lifeMax && Mana > 0) {
-				int factor = 48 / ((NPC.life / 10) + 1);
-				if (!NPC.HasBuff(BuffID.Bleeding)) NPC.lifeRegen += factor;
-				Mana -= factor / 120f;// 1 mana for every 1 health regenerated
-			}
+		public void Regenerate(out int lifeRegen) {
+			int factor = 48 / ((NPC.life / 10) + 1);
+			lifeRegen = factor;
+			Mana -= factor / 120f;// 1 mana for every 1 health regenerated
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -88,9 +79,6 @@ namespace Origins.NPCs.Defiled {
 			/*if(!attacking) {
                 npc.Hitbox = new Rectangle((int)npc.position.X+(npc.oldDirection == 1 ? 70 : 52), (int)npc.position.Y, 56, npc.height);
             }*/
-		}
-        public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
 		}
         public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);

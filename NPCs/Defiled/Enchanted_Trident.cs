@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Enchanted_Trident : ModNPC {
+	public class Enchanted_Trident : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Profaned Bident");
 			Main.npcFrameCount[NPC.type] = 3;
@@ -25,6 +25,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.knockBackResist = 0.35f;
 			NPC.value = 1000;
 		}
+		public bool ForceSyncMana => false;
+		public float Mana { get; set; }
 		public override void AI() {
 			if (NPC.ai[0] == 2) {
 				NPC.ai[1] += 0.25f;

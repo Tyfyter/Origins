@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Brute : ModNPC {
+	public class Defiled_Brute : ModNPC, IDefiledEnemy {
 		public const float speedMult = 0.75f;
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;
@@ -38,25 +38,16 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);
 			NPC.value = 103;
 		}
-		static int MaxMana => 200;
-		static int MaxManaDrain => 24;
-		float Mana {
-			get;
-			set;
-		}
+		public int MaxMana => 200;
+		public int MaxManaDrain => 24;
+		public float Mana { get; set; }
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
-			int maxDrain = (int)Math.Min(MaxMana - Mana, MaxManaDrain);
-			int manaDrain = Math.Min(maxDrain, target.statMana);
-			target.statMana -= manaDrain;
-			Mana += manaDrain;
-			if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
+			this.DrainMana(target);
 		}
-		public override void UpdateLifeRegen(ref int damage) {
-			if (NPC.life < NPC.lifeMax && Mana > 0) {
-				int factor = 37 / ((NPC.life / 40) + 2);
-				if (!NPC.HasBuff(BuffID.Bleeding)) NPC.lifeRegen += factor;
-				Mana -= factor / 90f;// 3 mana for every 2 health regenerated
-			}
+		public void Regenerate(out int lifeRegen) {
+			int factor = 37 / ((NPC.life / 40) + 2);
+			lifeRegen = factor;
+			Mana -= factor / 90f;// 3 mana for every 2 health regenerated
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -147,9 +138,6 @@ namespace Origins.NPCs.Defiled {
             }
             npcRect = new Rectangle((int)npc.position.X+(flip?70:52), (int)npc.position.Y, 56, npc.height);* /
         }*/
-		public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
-		}
 		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
 			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
@@ -164,12 +152,6 @@ namespace Origins.NPCs.Defiled {
 				for (int i = 0; i < 6; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
 				for (int i = 0; i < 10; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4)));
 			}
-		}
-		public override void SendExtraAI(BinaryWriter writer) {
-			writer.Write(Mana);
-		}
-		public override void ReceiveExtraAI(BinaryReader reader) {
-			Mana = reader.ReadSingle();
 		}
 	}
 }

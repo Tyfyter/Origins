@@ -12,7 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-    public class Chunky_Slime : ModNPC {
+    public class Chunky_Slime : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Chunky Slime");
 			Main.npcFrameCount[NPC.type] = 2;
@@ -35,25 +35,16 @@ namespace Origins.NPCs.Defiled {
 		public override void FindFrame(int frameHeight) {
 			NPC.CloneFrame(NPCID.Crimslime, frameHeight);
 		}
-		static int MaxMana => 50;
-		static int MaxManaDrain => 10;
-		float Mana {
-			get;
-			set;
-		}
+		public int MaxMana => 50;
+		public int MaxManaDrain => 10;
+		public float Mana { get; set; }
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
-			int maxDrain = (int)Math.Min(MaxMana - Mana, MaxManaDrain);
-			int manaDrain = Math.Min(maxDrain, target.statMana);
-			target.statMana -= manaDrain;
-			Mana += manaDrain;
-			if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
+			this.DrainMana(target);
 		}
-		public override void UpdateLifeRegen(ref int damage) {
-			if (NPC.life < NPC.lifeMax && Mana > 0) {
-				int factor = 48 / ((NPC.life / 10) + 1);
-				if (!NPC.HasBuff(BuffID.Bleeding)) NPC.lifeRegen += factor;
-				Mana -= factor / 120f;// 1 mana for every 1 health regenerated
-			}
+		public void Regenerate(ref int lifeRegen) {
+			int factor = 48 / ((NPC.life / 10) + 1);
+			lifeRegen = factor;
+			Mana -= factor / 120f;// 1 mana for every 1 health regenerated
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
@@ -63,20 +54,11 @@ namespace Origins.NPCs.Defiled {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 2, 4));
 		}
-		public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
-		}
 		public override void HitEffect(int hitDirection, double damage) {
 			if (NPC.life < 0) {
 				for (int i = 0; i < 3; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
 				for (int i = 0; i < 6; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4)));
 			}
-		}
-		public override void SendExtraAI(BinaryWriter writer) {
-			writer.Write(Mana);
-		}
-		public override void ReceiveExtraAI(BinaryReader reader) {
-			Mana = reader.ReadSingle();
 		}
 	}
 }

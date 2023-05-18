@@ -12,7 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Swarmer : ModNPC {
+	public class Defiled_Swarmer : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Swarmer");
 			Main.npcFrameCount[Type] = 3;
@@ -34,9 +34,13 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 		}
-		public override void UpdateLifeRegen(ref int damage) {
-			if (NPC.life > 20 && !NPC.HasBuff(BuffID.Bleeding)) {
-				NPC.lifeRegen += 75 / (NPC.life / 20);
+		public bool ForceSyncMana => false;
+		public float Mana { get => 1; set { } }
+		public void Regenerate(out int lifeRegen) {
+			if (NPC.life > 20) {
+				lifeRegen = 75 / (NPC.life / 20);
+			} else {
+				lifeRegen = 0;
 			}
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
@@ -61,8 +65,10 @@ namespace Origins.NPCs.Defiled {
 				NPC.frameCounter = 0;
 			}
 		}
-		public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
+		public void SpawnWisp(NPC npc) {
+			if (Main.masterMode || (Main.expertMode && Main.rand.NextBool())) {
+				NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
+			}
 		}
 		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);

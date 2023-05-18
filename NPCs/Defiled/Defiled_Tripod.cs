@@ -15,7 +15,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Tripod : ModNPC, ICustomCollisionNPC {
+	public class Defiled_Tripod : ModNPC, ICustomCollisionNPC, IDefiledEnemy {
 		public const float horizontalSpeed = 3.2f;
 		public const float horizontalAirSpeed = 2f;
 		public const float verticalSpeed = 4f;
@@ -42,31 +42,23 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 5000;
 		}
-		static int MaxMana => 160;
-		static int MaxManaDrain => 32;
-		float Mana {
-			get;
-			set;
-		}
+		public int MaxMana => 160;
+		public int MaxManaDrain => 32;
+		public float Mana { get; set; }
 		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) {
 			PlayerDeathReason reason = new PlayerDeathReason();
 			reason.SourceCustomReason = target.name + " was absolutely destroyed by a Defiled Tripod";
 			reason.SourceCustomReason = target.name + " got rekt by a Defiled Tripod";
+			//reason is never referenced by anything connected to displaying the death reason, so these currently do nothing
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
 			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 70);
-			int maxDrain = (int)Math.Min(MaxMana - Mana, MaxManaDrain);
-			int manaDrain = Math.Min(maxDrain, target.statMana);
-			target.statMana -= manaDrain;
-			Mana += manaDrain;
-			if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
+			this.DrainMana(target);
 		}
-		public override void UpdateLifeRegen(ref int damage) {
-			if (NPC.life < NPC.lifeMax && Mana > 0) {
-				int factor = 20;
-				if (!NPC.HasBuff(BuffID.Bleeding)) NPC.lifeRegen += factor;
-				Mana -= factor / 60f;// 2 mana for every 1 health regenerated
-			}
+		public void Regenerate(out int lifeRegen) {
+			int factor = 20;
+			lifeRegen = factor;
+			Mana -= factor / 60f;// 2 mana for every 1 health regenerated
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -164,9 +156,6 @@ namespace Origins.NPCs.Defiled {
 					SoundEngine.PlaySound(SoundID.MenuTick.WithPitchRange(-0.2f, 0.2f).WithVolume(Main.rand.NextFloat(0.7f, 0.95f)), stepPos);
 				}
 			}
-		}
-		public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
 		}
 		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);

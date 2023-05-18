@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Mite : ModNPC {
+	public class Defiled_Mite : ModNPC, IDefiledEnemy {
 		internal const int spawnCheckDistance = 15;
 		public const int aggroRange = 128;
 		byte frame = 0;
@@ -39,25 +39,16 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 20;
 		}
-		static int MaxMana => 16;
-		static int MaxManaDrain => 8;
-		float Mana {
-			get;
-			set;
-		}
+		public int MaxMana => 16;
+		public int MaxManaDrain => 8;
+		public float Mana { get; set; }
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
-			int maxDrain = (int)Math.Min(MaxMana - Mana, MaxManaDrain);
-			int manaDrain = Math.Min(maxDrain, target.statMana);
-			target.statMana -= manaDrain;
-			Mana += manaDrain;
-			if (target.manaRegenDelay < 10) target.manaRegenDelay = 10;
+			this.DrainMana(target);
 		}
-		public override void UpdateLifeRegen(ref int damage) {
-			if (NPC.life < NPC.lifeMax && Mana > 0) {
-				int factor = 64;
-				if (!NPC.HasBuff(BuffID.Bleeding)) NPC.lifeRegen += factor;
-				Mana -= factor / 120f;// 1 mana for every 1 health regenerated
-			}
+		public void Regenerate(out int lifeRegen) {
+			int factor = 64;
+			lifeRegen = factor;
+			Mana -= factor / 120f;// 1 mana for every 1 health regenerated
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -103,9 +94,6 @@ namespace Origins.NPCs.Defiled {
 				if (anger == 1) anger = 0;
 			}
 			return NPC.aiStyle != NPCAIStyleID.None;
-		}
-		public override void OnKill() {
-			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>());
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.frame = new Rectangle(0, 28 * (frame & 12) / 4, 32, 26);
