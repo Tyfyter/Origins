@@ -165,6 +165,17 @@ namespace Origins {
 			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.ChilledSpitter>());
 			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Freezer>());
 			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.SoulCorrupter>());
+
+			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.LivingHemorrhage>());
+			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Clot>());
+			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Coolmera>());
+			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.FrozenFace>());
+
+			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.BlisterPod>());
+			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Blister>());
+			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Coldling>());
+			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.FrozenGross>());
+			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.EpiDermon>());
 		}
 	}
 	public interface ICustomWikiDestination {

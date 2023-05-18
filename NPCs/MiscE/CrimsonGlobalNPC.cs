@@ -44,6 +44,12 @@ namespace Origins.NPCs.MiscE {
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return NPCTypes.Contains(entity.type);
 		}
+		public override void ResetEffects(NPC npc) {
+			int confusionIndex = npc.FindBuffIndex(BuffID.Confused);
+			if (confusionIndex > -1 && Main.rand.NextBool()) {
+				npc.buffTime[confusionIndex]--;
+			}
+		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (npc.poisoned) {
 				npc.lifeRegen += 2;
