@@ -11,7 +11,7 @@ namespace Origins.Items.Armor.Encrusted {
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Encrusted Mask");
-			Tooltip.SetDefault("+8% weapon speed");
+			Tooltip.SetDefault("6% increased weapon speed");
 			GlowMask = Origins.AddGlowMask("Armor/Encrusted/Encrusted_Mask_Head_Glow");
 			SacrificeTotal = 1;
 		}
@@ -21,7 +21,7 @@ namespace Origins.Items.Armor.Encrusted {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetAttackSpeed(DamageClass.Generic) += 0.08f;
+			player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
 		}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
 			glowMask = GlowMask;
@@ -47,7 +47,7 @@ namespace Origins.Items.Armor.Encrusted {
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Encrusted Coat");
-			Tooltip.SetDefault("+8% weapon speed");
+			Tooltip.SetDefault("6% increased weapon speed");
 			GlowMask = Origins.AddGlowMask("Armor/Encrusted/Encrusted_Coat_Body_Glow");
 			Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Encrusted/Encrusted_Coat_Body_Glow");
 			SacrificeTotal = 1;
@@ -58,7 +58,7 @@ namespace Origins.Items.Armor.Encrusted {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetAttackSpeed(DamageClass.Generic) += 0.08f;
+			player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
 		}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
 			glowMask = GlowMask;
@@ -77,7 +77,7 @@ namespace Origins.Items.Armor.Encrusted {
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Encrusted Pants");
-			Tooltip.SetDefault("+8% weapon speed");
+			Tooltip.SetDefault("6% increased weapon speed");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -86,7 +86,7 @@ namespace Origins.Items.Armor.Encrusted {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetAttackSpeed(DamageClass.Generic) += 0.08f;
+			player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

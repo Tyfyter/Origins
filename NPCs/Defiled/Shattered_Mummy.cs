@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using System;
 using System.IO;
 using Terraria;
@@ -55,6 +56,7 @@ namespace Origins.NPCs.Defiled {
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 10));
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Megaphone, 100));
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Blindfold, 100));
@@ -76,6 +78,9 @@ namespace Origins.NPCs.Defiled {
 				//reset frameCounter so this doesn't trigger every frame after the first time
 				NPC.frameCounter = 0;
 			}
+		}
+		public override void OnKill() {
+			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>(), 1);
 		}
 		public override void HitEffect(int hitDirection, double damage) {
 			//spawn gore if npc is dead after being hit

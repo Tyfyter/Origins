@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
 using System;
 using System.IO;
@@ -14,9 +12,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Ekko : ModNPC {
+    public class Defiled_Ekko : ModNPC {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Cyclops");
+			DisplayName.SetDefault("{$Defiled} Ekko");
+			Main.npcFrameCount[NPC.type] = 14;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Defiled_Wastelands>().Type
 			};
@@ -27,11 +26,12 @@ namespace Origins.NPCs.Defiled {
 			NPC.lifeMax = 200;
 			NPC.defense = 26;
 			NPC.damage = 20;
-			NPC.width = 36;
-			NPC.height = 54;
+			NPC.width = 26;
+			NPC.height = 42;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
+			AnimationType = NPCID.Merchant;
 		}
 		static int MaxMana => 50;
 		static int MaxManaDrain => 10;
@@ -65,7 +65,6 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Defiled_Spirit>(), 10));
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);
@@ -74,6 +73,13 @@ namespace Origins.NPCs.Defiled {
 				NPC.FaceTarget();
 				NPC.spriteDirection = NPC.direction;
 			}
+			if (++NPC.frameCounter > 7) {
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + 56) % 784, 36, 56);
+				NPC.frameCounter = 0;
+			}
+		}
+		public override void OnKill() {
+			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>(), 1);
 		}
 		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);

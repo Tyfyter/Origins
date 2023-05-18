@@ -4,6 +4,7 @@
 			Name:{
 				Black_Bile: Black Bile
 				Felnum: Felnum Ore
+				Lost_Ore: Lost Ore
 			}
 			Indicator:{
 				Whispers:"You hear whispers nearby..."
@@ -73,6 +74,27 @@
 			
 			Symbolism:
 			 - Felnum is seen as blessing or a curse depending on who you ask due to its history. To the Order of Dryads that once lived in Terraria, it is seen as a grave mistake to restoring balance in the world. To the settlers of the surface, it can be seen as a blessing shielding them from the destructive thunderstorms.
+			'''
+
+			Lost_Ore:
+			'''
+			Lost Ore (title)
+			[i:Origins/Lost_Ore_Item] [i:Origins/Defiled_Bar] (enlarge to span top of page)
+
+			Overview: 
+			 - Lost Ore is the primary metal material used by the Defiled entity to create the compound known as "Defiled Matter". Lost Ore is not a material directly tied in with the Defiled, and thus is impossible to be assimilated from. It is quite a versatile material, but cannot be utilized like many other metal materials available due to its mysterious properties.
+			
+			Characteristics: 
+			 - Lost Ore, being derived from Iron Ore [i:Terraria/Iron_Ore_Item], shares little in common. Lost Ore is certainly lighter, more reflective, less dense, and significantly less conductive. It takes on a bright white coloration and is also very magnetic to allow for easy movement by the Defiled's means.
+			
+			Origins: 
+			 - Lost Ore occurs commonly in the Defiled Caverns and elsewhere in the world where the Defiled plans to propogate. In this case, Lost Ore serves as a catalyst to the Defiled's spread across the world. It additionally likes to keep Lost Ore in numerous reserves underground in hopes that they will not be tampered with. By extracting Lost Ore, an individual could slow the spread of the Defiled.
+			
+			Chemistry:
+			 - Lost Ore's primary use is to serve as a readily available metal material to integrate into newly generated Defiled Matter. It is responsible for giving Defiled Matter its smooth, metallic appearance, which is a sign of the Matter's toughness. Lost Ore can alternatively be used as refined material, but the means of refining it are unknown as is its appearance. The main way to utilize Lost Ore's capabilities is to combine it with a live Defiled host, i. e. Undead Chunks [i:Origins/Undead_Chunk].
+			
+			History: 
+			 - Lost Ore wasn't always available to the Defiled, at least not initially. The Defiled had to spread enough to reach the caverns of Terraria in order to discover the natural ore that reside there. After discovering a particular vein of Iron Ore [i:Terraria/Iron_Ore_Item], it absorbed it and integrated it into its current production of Defiled Matter. However, the entity found that Iron was too heavy and too conductive to its liking and thus reconfigured Iron's characteristics to be more favorable; the result was Lost Ore.
 			'''
 
 			Asylum_Whistle:

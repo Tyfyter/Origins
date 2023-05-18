@@ -33,6 +33,25 @@ namespace Origins.Tiles.Defiled {
 			ID = Type;
 			HitSound = Origins.Sounds.DefiledIdle;
 		}
+		public override void AnimateTile(ref int frame, ref int frameCounter) {
+			if (++frameCounter >= 9) {
+				frameCounter = 0;
+				frame = ++frame % 4;
+			}
+		}
+		public override void AnimateIndividualTile(int type, int i, int j, ref int frameXOffset, ref int frameYOffset) {
+			// Tweak the frame drawn by x position so tiles next to each other are off-sync and look much more interesting
+			int uniqueAnimationFrame = Main.tileFrame[Type] + i;
+			if (i % 2 == 0)
+				uniqueAnimationFrame += 3;
+			if (i % 3 == 0)
+				uniqueAnimationFrame += 3;
+			if (i % 4 == 0)
+				uniqueAnimationFrame += 3;
+			uniqueAnimationFrame %= 4;
+
+			frameYOffset = uniqueAnimationFrame * AnimationFrameHeight;
+		}
 		public override bool CanExplode(int i, int j) {
 			return false;
 		}

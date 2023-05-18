@@ -1,10 +1,9 @@
-using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Tendon {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Tendon_Helmet : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Tendon Helmet");

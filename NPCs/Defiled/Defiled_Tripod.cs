@@ -74,6 +74,7 @@ namespace Origins.NPCs.Defiled {
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Vitamins, 100));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
 		}
@@ -163,6 +164,9 @@ namespace Origins.NPCs.Defiled {
 					SoundEngine.PlaySound(SoundID.MenuTick.WithPitchRange(-0.2f, 0.2f).WithVolume(Main.rand.NextFloat(0.7f, 0.95f)), stepPos);
 				}
 			}
+		}
+		public override void OnKill() {
+			NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X, (int)NPC.position.Y, ModContent.NPCType<Defiled_Wisp>(), 1);
 		}
 		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);

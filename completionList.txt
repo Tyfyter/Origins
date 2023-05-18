@@ -110,9 +110,9 @@ ENEMY NPCS:
 (^) Chunky Slime
 (#4, ^2) Cleaver !!!
 (^) Cranivore
-(#2, ^2) Crimbrain !!!
+(^) Crimbrain
 (#2, ^2) Defiled Ekko !!!
-(#, ^2) Defiled Wisp !!!
+(^) Defiled Wisp
 (^) Fiberglass Enemies
 (^) Measly Moeba
 (^) Optiphage
@@ -180,7 +180,7 @@ EVENTS:
 
 STATUS EFFECTS:
 ---
-(#, ^2) Assimilation
+(#, ^2) Assimilation !!!
 (X) Celestial Flames
 (#3, ^2) Defiled Exhaustion
 (X) Ionizing Radiation
@@ -216,7 +216,7 @@ ARMOR:
 (^) Encrusted Armor
 (^) Felnum Armor
 (^) Fiberglass Armor
-(X) Lost Armor !!!
+(#2, ^2) Lost Armor !!!
 (^) Myth Armor
 (^) Riptide Armor
 (^) Soulhide Armor

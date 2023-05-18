@@ -798,6 +798,7 @@ namespace Origins.Items.Materials {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Undead Chunk");
+			//Tooltip.SetDefault("'I'm still alive ya'know'");
 			glowmask = Origins.AddGlowMask(this);
 			SacrificeTotal = 25;
 		}
