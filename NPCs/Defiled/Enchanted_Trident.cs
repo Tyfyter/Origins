@@ -32,6 +32,7 @@ namespace Origins.NPCs.Defiled {
 				NPC.ai[1] += 0.25f;
 			}
 		}
+		public void SpawnWisp(NPC npc) { }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				/*if (heartBroken <= 1) {
