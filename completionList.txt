@@ -912,7 +912,7 @@ CONSUMABLES:
 (#2, ^2) Focus Potion
 (#2, ^2) Nullification Potion (Nullification potion doesn't need a buff graphic, it's a single-instance effect)
 (^) Protean Potion
-(#2, ^2) Purification Potion (replanning soon)
+(@5, ^3) Purification Potion !!!
 (^) Voidsight Potion
 
 (^) Bileberry
