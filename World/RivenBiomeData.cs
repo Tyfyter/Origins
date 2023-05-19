@@ -136,6 +136,7 @@ namespace Origins.World.BiomeData {
 								if (d < baseStrength + wallThickness && OriginExtensions.IsTileReplacable(x, y)) {
 									if (tile.WallType != fleshWallType) {
 										if (compY > j || (tile.HasTile && Main.tileSolid[tile.TileType])) {
+											SpreadRivenGrass(x, y);
 											tile.HasTile = true;
 											tile.TileType = fleshBlockType;
 											tile.WallType = fleshWallType;
@@ -377,6 +378,39 @@ namespace Origins.World.BiomeData {
 					validLesionPlacementSpots.Remove(current.OffsetBy(1));
 				}
 				return new Point(i2, j2);
+			}
+			public static void SpreadRivenGrass(int i, int j) {
+				const int maxDepth = 150;
+				ushort grassType = (ushort)ModContent.TileType<Riven_Grass>();
+				Stack<(int x, int y, int depth)> stack = new();
+				stack.Push((i, j, 0));
+				while (stack.Count > 0) {
+					(int x, int y, int depth) = stack.Pop();
+					Tile tile = Framing.GetTileSafely(x, y);
+					if (tile.HasTile && tile.TileType == TileID.Grass) {
+						tile.TileType = grassType;
+						if (depth < maxDepth) {
+							stack.Push((x + 1, y, depth + 1));
+							stack.Push((x - 1, y, depth + 1));
+							stack.Push((x, y + 1, depth + 1));
+							stack.Push((x, y - 1, depth + 1));
+						}
+					}
+					
+					for (int c = 0; c < 7; c++) {
+						tile = Framing.GetTileSafely(x, --y);
+						if (tile.HasTile) {
+							if (tile.TileType == TileID.Grass) {
+								if (depth < maxDepth) {
+									stack.Push((x, y, depth + 1));
+								}
+								break;
+							} else if(Main.tileSolid[tile.TileType]) {
+								break;
+							}
+						}
+					}
+				}
 			}
 		}
 		public static void CheckLesion(int i, int j, int type) {
