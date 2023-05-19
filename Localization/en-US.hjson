@@ -219,6 +219,9 @@
 			Journal: Journal
 			Quests: Quests
 		}
+		DeathMessage: {
+			Torn: "{0} beezechurgered"
+		}
 		Generic: {
 			Riven_Hive: "{$Riven} Hive"
 			Riven: Riven

@@ -209,7 +209,14 @@ namespace Origins {
 			On.Terraria.GameContent.Drawing.TileDrawing.Draw += TileDrawing_Draw;
 			On.Terraria.GameContent.Drawing.TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
 			IL.Terraria.NPC.StrikeNPC += NPC_StrikeNPC;
+			On.Terraria.DataStructures.PlayerDeathReason.GetDeathText += PlayerDeathReason_GetDeathText;
+			On.Terraria.Player.KillMe += Player_KillMe;// should have no effect, but is necessary for custom death text somehow
 		}
+
+		private void Player_KillMe(On.Terraria.Player.orig_KillMe orig, Player self, PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp) {
+			orig(self, damageSource, dmg, hitDirection, pvp);
+		}
+
 		#region combat
 		delegate void _ModifyNPCDefense(NPC npc, ref int defense);
 		private static void NPC_StrikeNPC(ILContext il) {
@@ -230,6 +237,19 @@ namespace Origins {
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				defense -= (int)(defense * 0.2f);
 			}
+		}
+		private NetworkText PlayerDeathReason_GetDeathText(On.Terraria.DataStructures.PlayerDeathReason.orig_GetDeathText orig, PlayerDeathReason self, string deadPlayerName) {
+			if (self is KeyedPlayerDeathReason keyedReason) {
+				return NetworkText.FromKey(
+					keyedReason.Key,
+					deadPlayerName,
+					keyedReason.SourcePlayerIndex > -1 ? NetworkText.FromLiteral(Main.player[keyedReason.SourcePlayerIndex].name) : NetworkText.Empty,
+					Lang.GetItemName(keyedReason.SourceItemType),
+					keyedReason.SourceNPCIndex > -1 ? Main.npc[keyedReason.SourceNPCIndex].GetGivenOrTypeNetName() : NetworkText.Empty,
+					keyedReason.SourceProjectileIndex > -1 ? NetworkText.FromKey(Lang.GetProjectileName(Main.projectile[keyedReason.SourceProjectileIndex].type).Key) : NetworkText.Empty
+				);
+			}
+			return orig(self, deadPlayerName);
 		}
 		#endregion combat
 		private int Player_RollLuck(On.Terraria.Player.orig_RollLuck orig, Player self, int range) {

@@ -867,7 +867,9 @@ namespace Origins {
 			if (tornTime > 0) {
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * (1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime))));
 				if (Player.statLifeMax2 <= 0) {
-					Player.KillMe(PlayerDeathReason.ByOther(0), 1, 0);
+					Player.KillMe(new KeyedPlayerDeathReason() {
+						Key = "Mods.Origins.DeathMessage.Torn"
+					}, 1, 0);
 				}
 			}
 			if (explosiveArtery) {

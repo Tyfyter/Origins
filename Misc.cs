@@ -371,6 +371,9 @@ namespace Origins {
 			return a.GetHashCode() + b.GetHashCode();
 		}
 	}
+	public class KeyedPlayerDeathReason : PlayerDeathReason {
+		public string Key { get; init; }
+	}
 	public struct PlayerShaderSet {
 		public int cHead;
 		public int cBody;
