@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-	public class CorruptGlobalNPC : GlobalNPC {
+    public class CorruptGlobalNPC : GlobalNPC {
 		public static HashSet<int> NPCTypes { get; private set; }
 		public override void Load() {
 			NPCTypes = new() {
@@ -47,6 +43,20 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return NPCTypes.Contains(entity.type);
+		}
+		public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit) {
+			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
+			if (npc.type == ModContent.NPCType<Optiphage>() || npc.type == ModContent.NPCType<Cranivore>()) {
+				originPlayer.cassimilationCurrent += 0.01f;
+			} else if (npc.type == NPCID.EaterofSouls) {
+				originPlayer.cassimilationCurrent += 0.03f;
+			} else if (npc.type == NPCID.DevourerHead || npc.type == NPCID.DevourerBody || npc.type == NPCID.DevourerTail) {
+				originPlayer.cassimilationCurrent += 0.06f;
+			} else if (npc.type == NPCID.Corruptor || npc.type == NPCID.Clinger) {
+				originPlayer.cassimilationCurrent += 0.11f;
+			} else if (npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsTail) {
+				originPlayer.cassimilationCurrent += 0.13f;
+			}
 		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (npc.poisoned) {

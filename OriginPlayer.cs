@@ -12,6 +12,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
 using Origins.NPCs;
+using Origins.NPCs.Defiled;
 using Origins.Projectiles;
 using Origins.Projectiles.Misc;
 using Origins.Questing;
@@ -36,6 +37,14 @@ namespace Origins {
 		#region variables and defaults
 		public const float rivenMaxMult = 0.3f;
 		public float rivenMult => (1f - rivenMaxMult) + Math.Max((Player.statLife / (float)Player.statLifeMax2) * (rivenMaxMult * 2), rivenMaxMult);
+		public float cassimilationTotal = 1f;
+		public float cassimilationCurrent = 0; // corruption
+		public float crassimilationTotal = 1f;
+		public float crassimilationCurrent = 0; // crimson
+		public float dassimilationTotal = 1f;
+		public float dassimilationCurrent = 0; // defiled
+		public float rassimilationTotal = 1f;
+		public float rassimilationCurrent = 0; // riven
 
 		#region armor/set bonuses
 		public bool fiberglassSet = false;
@@ -721,6 +730,35 @@ namespace Origins {
 			hookTarget = -1;
 		}
 		public override void PreUpdate() {
+			if (cassimilationCurrent >= cassimilationTotal) {
+				Player.KillMe(PlayerDeathReason.ByOther(ModContent.BuffType<Corrupt_Assimilation_Debuff>()), 40, 0);
+				cassimilationCurrent = 0;
+				crassimilationCurrent = 0;
+				dassimilationCurrent = 0;
+				rassimilationCurrent = 0;
+			} else if (crassimilationCurrent >= crassimilationTotal) {
+				Player.KillMe(PlayerDeathReason.ByOther(ModContent.BuffType<Crimson_Assimilation_Debuff>()), 40, 0);
+				cassimilationCurrent = 0;
+				crassimilationCurrent = 0;
+				dassimilationCurrent = 0;
+				rassimilationCurrent = 0;
+			} else if (dassimilationCurrent >= dassimilationTotal) {
+				Player.KillMe(PlayerDeathReason.ByOther(ModContent.BuffType<Defiled_Assimilation_Debuff>()), 40, 0);
+				cassimilationCurrent = 0;
+				crassimilationCurrent = 0;
+				dassimilationCurrent = 0;
+				rassimilationCurrent = 0;
+			} else if (rassimilationCurrent >= rassimilationTotal) {
+				Player.KillMe(PlayerDeathReason.ByOther(ModContent.BuffType<Riven_Assimilation_Debuff>()), 40, 0);
+				cassimilationCurrent = 0;
+				crassimilationCurrent = 0;
+				dassimilationCurrent = 0;
+				rassimilationCurrent = 0;
+			}
+			if (cassimilationCurrent > 0.01f) Player.AddBuff(ModContent.BuffType<Corrupt_Assimilation_Debuff>(), 300);
+			if (crassimilationCurrent > 0.01f) Player.AddBuff(ModContent.BuffType<Crimson_Assimilation_Debuff>(), 300);
+			if (dassimilationCurrent > 0.01f) Player.AddBuff(ModContent.BuffType<Defiled_Assimilation_Debuff>(), 300);
+			if (rassimilationCurrent > 0.01f) Player.AddBuff(ModContent.BuffType<Riven_Assimilation_Debuff>(), 300);
 			if (rivenWet) {
 				Player.gravity = 0.25f;
 			}
@@ -807,6 +845,7 @@ namespace Origins {
 						tornTarget = targetSeverity;
 					}
 					Player.velocity *= 0.95f;
+					rassimilationCurrent += 0.001f; // This value x60 for every second, remember 100% is the max assimilation. This should be 6% every second resulting in 16.67 seconds of total time to play in Riven Water
 				} else if (waterStyle is Brine_Water_Style) {
 					Player.AddBuff(Toxic_Shock_Debuff.ID, 300);
 				}

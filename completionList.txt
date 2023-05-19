@@ -180,7 +180,7 @@ EVENTS:
 
 STATUS EFFECTS:
 ---
-(#, ^2) Assimilation !!!
+(#3, ^2) Assimilation !!!
 (X) Celestial Flames
 (#3, ^2) Defiled Exhaustion
 (X) Ionizing Radiation

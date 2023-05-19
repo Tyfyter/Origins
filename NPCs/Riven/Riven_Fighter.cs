@@ -98,5 +98,9 @@ namespace Origins.NPCs.Riven {
 			NPC.frame = new Rectangle(0, 160, 36, 40);
 			NPC.frameCounter = 0;
 		}
+		public override void OnHitPlayer(Player target, int damage, bool crit) {
+			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
+			originPlayer.rassimilationCurrent += 0.01f;
+		}
 	}
 }

@@ -14,13 +14,13 @@ namespace Origins.Items.Weapons {
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.GrenadeLauncher);
+			Item.CloneDefaults(ItemID.FlintlockPistol);
 			Item.damage = 25;
 			Item.useTime = 32;
 			Item.useAnimation = 32;
 			Item.CountsAsClass(DamageClass.Generic);
-			Item.shoot = ModContent.ProjectileType<Potato_P>();
 			Item.useAmmo = ModContent.ItemType<Potato>();
+			Item.shoot = ModContent.ProjectileType<Potato_P>();
 			Item.knockBack = 2f;
 			Item.shootSpeed = 12f;
 			Item.autoReuse = true;

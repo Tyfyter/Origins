@@ -69,7 +69,11 @@ namespace Origins.NPCs.Defiled {
 				damage += totalDPS / 3;
 			}
 		}
-		public override void OnKill(NPC npc) {
+        public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit) {
+			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
+			originPlayer.dassimilationCurrent += 0.01f;
+		}
+        public override void OnKill(NPC npc) {
 			if (npc.ModNPC is IDefiledEnemy defiledEnemy) {
 				defiledEnemy.SpawnWisp(npc);
 			}

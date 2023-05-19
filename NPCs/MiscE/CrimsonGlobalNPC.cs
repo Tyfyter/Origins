@@ -44,6 +44,16 @@ namespace Origins.NPCs.MiscE {
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return NPCTypes.Contains(entity.type);
 		}
+		public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit) {
+			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
+			if (npc.type == NPCID.Creeper) {
+				originPlayer.crassimilationCurrent += 0.01f;
+			} else if (npc.type == ModContent.NPCType<Crimbrain>()) {
+				originPlayer.crassimilationCurrent += 0.07f;
+			} else if (npc.type == NPCID.BrainofCthulhu) {
+				originPlayer.crassimilationCurrent += 0.12f;
+			}
+		}
 		public override void ResetEffects(NPC npc) {
 			int confusionIndex = npc.FindBuffIndex(BuffID.Confused);
 			if (confusionIndex > -1 && Main.rand.NextBool()) {

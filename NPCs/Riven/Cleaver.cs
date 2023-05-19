@@ -104,6 +104,8 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
 			OriginPlayer.InflictTorn(target, 300, 180, 0.9f);
+			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
+			originPlayer.rassimilationCurrent += 0.06f;
 		}
 	}
 }
