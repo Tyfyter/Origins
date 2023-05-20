@@ -81,7 +81,7 @@ namespace Origins.NPCs.Riven {
 		}
 	}
 
-	public abstract class Rivenator : Glowing_Mod_NPC {
+	public abstract class Rivenator : Glowing_Mod_NPC, IRivenEnemy {
 		public override string GlowTexturePath => Texture;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Mitoworm");
@@ -109,8 +109,6 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
 			OriginPlayer.InflictTorn(target, 480, 180, 0.67f);
-			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
-			originPlayer.rassimilationCurrent += 0.06f;
 		}
 	}
 }

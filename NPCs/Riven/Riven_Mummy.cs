@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Riven_Mummy : Glowing_Mod_NPC {
+	public class Riven_Mummy : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Amebic Mummy");
 			Main.npcFrameCount[NPC.type] = 16;

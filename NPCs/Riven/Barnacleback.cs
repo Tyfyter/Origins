@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 using static Origins.Items.Armor.Encrusted.Encrusted2_Mask;
 
 namespace Origins.NPCs.Riven {
-	public class Barnacleback : ModNPC {
+	public class Barnacleback : ModNPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Barnacle Back");
 			Main.npcFrameCount[NPC.type] = 3;

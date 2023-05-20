@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 using static Origins.Items.Armor.Encrusted.Encrusted2_Mask;
 
 namespace Origins.NPCs.Riven {
-	public class Flagellant : Glowing_Mod_NPC {
+	public class Flagellant : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Flagellant");
 			Main.npcFrameCount[NPC.type] = 4;
@@ -52,8 +52,6 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
 			OriginPlayer.InflictTorn(target, 1800, 180, 0.47f);
-			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
-			originPlayer.rassimilationCurrent += 0.03f;
 		}
 		public override void HitEffect(int hitDirection, double damage) {
 			if (NPC.life < 0) {

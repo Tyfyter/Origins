@@ -12,6 +12,15 @@ using Terraria.ModLoader.IO;
 
 namespace Origins.NPCs.Defiled {
 	public class DefiledGlobalNPC : GlobalNPC {
+		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
+		public override void Load() {
+			AssimilationAmounts = new() {
+				[-1] = 0.01f,
+			};
+		}
+		public override void Unload() {
+			AssimilationAmounts = null;
+		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return entity.ModNPC is IDefiledEnemy;
 		}
@@ -64,14 +73,17 @@ namespace Origins.NPCs.Defiled {
 			}
 			if (npc.dryadBane) {
 				const float baseDPS = 2;
-				int totalDPS = (int)(baseDPS * CorruptGlobalNPC.CalcDryadDPSMult());
+				int totalDPS = (int)(baseDPS * BiomeNPCGlobals.CalcDryadDPSMult());
 				npc.lifeRegen -= 2 * totalDPS;
 				damage += totalDPS / 3;
 			}
 		}
         public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit) {
-			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
-			originPlayer.dassimilationCurrent += 0.01f;
+			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
+				target.GetModPlayer<OriginPlayer>().DefiledAssimilation += amount.GetValue(npc, target);
+			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+				target.GetModPlayer<OriginPlayer>().DefiledAssimilation += amount.GetValue(npc, target);
+			}
 		}
         public override void OnKill(NPC npc) {
 			if (npc.ModNPC is IDefiledEnemy defiledEnemy) {

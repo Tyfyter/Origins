@@ -6,6 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.MiscE {
     public class CorruptGlobalNPC : GlobalNPC {
 		public static HashSet<int> NPCTypes { get; private set; }
+		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
 		public override void Load() {
 			NPCTypes = new() {
 				NPCID.EaterofSouls,
@@ -18,8 +19,10 @@ namespace Origins.NPCs.MiscE {
 				NPCID.EaterofWorldsHead,
 				NPCID.EaterofWorldsBody,
 				NPCID.EaterofWorldsTail,
+				NPCID.VileSpitEaterOfWorlds,
 
 				NPCID.Corruptor,
+				NPCID.VileSpit,
 				NPCID.CorruptSlime,
 				NPCID.Slimeling,
 				NPCID.Slimer,
@@ -37,25 +40,34 @@ namespace Origins.NPCs.MiscE {
 
 				NPCID.PigronCorruption,
 			};
+			AssimilationAmounts = new() {
+				[NPCID.EaterofSouls] = 0.03f,
+				[NPCID.DevourerHead] = 0.06f,
+				[NPCID.DevourerBody] = 0.04f,
+				[NPCID.DevourerTail] = 0.04f,
+				[NPCID.Corruptor] = 0.09f,
+				[NPCID.VileSpit] = 0.14f,
+				[NPCID.Clinger] = 0.11f,
+				[NPCID.EaterofWorldsHead] = 0.14f,
+				[NPCID.EaterofWorldsBody] = 0.11f,
+				[NPCID.EaterofWorldsTail] = 0.11f,
+				[NPCID.VileSpitEaterOfWorlds] = 0.14f,
+				[ModContent.NPCType<Optiphage>()] = 0.01f,
+				[ModContent.NPCType<Cranivore>()] = 0.01f,
+			};
 		}
 		public override void Unload() {
 			NPCTypes = null;
+			AssimilationAmounts = null;
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return NPCTypes.Contains(entity.type);
 		}
 		public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit) {
-			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
-			if (npc.type == ModContent.NPCType<Optiphage>() || npc.type == ModContent.NPCType<Cranivore>()) {
-				originPlayer.cassimilationCurrent += 0.01f;
-			} else if (npc.type == NPCID.EaterofSouls) {
-				originPlayer.cassimilationCurrent += 0.03f;
-			} else if (npc.type == NPCID.DevourerHead || npc.type == NPCID.DevourerBody || npc.type == NPCID.DevourerTail) {
-				originPlayer.cassimilationCurrent += 0.06f;
-			} else if (npc.type == NPCID.Corruptor || npc.type == NPCID.Clinger) {
-				originPlayer.cassimilationCurrent += 0.11f;
-			} else if (npc.type == NPCID.EaterofWorldsHead || npc.type == NPCID.EaterofWorldsBody || npc.type == NPCID.EaterofWorldsTail) {
-				originPlayer.cassimilationCurrent += 0.13f;
+			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
+				target.GetModPlayer<OriginPlayer>().CorruptionAssimilation += amount.GetValue(npc, target);
+			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+				target.GetModPlayer<OriginPlayer>().CorruptionAssimilation += amount.GetValue(npc, target);
 			}
 		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
@@ -84,50 +96,10 @@ namespace Origins.NPCs.MiscE {
 			}
 			if (npc.dryadBane) {
 				const float baseDPS = 2;
-				int totalDPS = (int)(baseDPS * CalcDryadDPSMult());
+				int totalDPS = (int)(baseDPS * BiomeNPCGlobals.CalcDryadDPSMult());
 				npc.lifeRegen -= 2 * totalDPS;
 				damage += totalDPS / 3;
 			}
-		}
-		public static float CalcDryadDPSMult() {
-			float damageMult = 1f;
-			if (NPC.downedBoss1) {
-				damageMult += 0.1f;
-			}
-			if (NPC.downedBoss2) {
-				damageMult += 0.1f;
-			}
-			if (NPC.downedBoss3) {
-				damageMult += 0.1f;
-			}
-			if (NPC.downedQueenBee) {
-				damageMult += 0.1f;
-			}
-			if (Main.hardMode) {
-				damageMult += 0.4f;
-			}
-			if (NPC.downedMechBoss1) {
-				damageMult += 0.15f;
-			}
-			if (NPC.downedMechBoss2) {
-				damageMult += 0.15f;
-			}
-			if (NPC.downedMechBoss3) {
-				damageMult += 0.15f;
-			}
-			if (NPC.downedPlantBoss) {
-				damageMult += 0.15f;
-			}
-			if (NPC.downedGolemBoss) {
-				damageMult += 0.15f;
-			}
-			if (NPC.downedAncientCultist) {
-				damageMult += 0.15f;
-			}
-			if (Main.expertMode) {
-				damageMult *= Main.GameModeInfo.TownNPCDamageMultiplier;
-			}
-			return damageMult;
 		}
 	}
 }

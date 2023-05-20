@@ -7,7 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Amebic_Slime : Glowing_Mod_NPC {
+    public class Amebic_Slime : Glowing_Mod_NPC, IRivenEnemy {
 		public override string GlowTexturePath => Texture;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Amebic Slime");
@@ -41,8 +41,6 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
 			OriginPlayer.InflictTorn(target, 180, 180, 0.9f);
-			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
-			originPlayer.rassimilationCurrent += 0.02f;
 		}
 		public override void HitEffect(int hitDirection, double damage) {
 			if (NPC.life < 0) {

@@ -22,6 +22,9 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 140;
 		}
+		public override int MaxManaDrain => 18;
+		public override float Mana { get; set; }
+		public override bool ForceSyncMana => true;
 		public override void UpdateLifeRegen(ref int damage) {
 			if (NPC.life > 20) {
 				NPC.lifeRegen += 24 / (NPC.life / 20);
@@ -108,6 +111,10 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerBody);
 		}
+		public override float Mana {
+			get => (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana;
+			set => (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana = value;
+		}
 	}
 
 	internal class Defiled_Digger_Tail : Defiled_Digger {
@@ -120,9 +127,17 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerTail);
 		}
+		public override float Mana {
+			get => (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana;
+			set => (Main.npc[(int)NPC.ai[3]].ModNPC as IDefiledEnemy).Mana = value;
+		}
 	}
 
-	public abstract class Defiled_Digger : ModNPC {
+	public abstract class Defiled_Digger : ModNPC, IDefiledEnemy {
+		public int MaxMana => 40;
+		public virtual int MaxManaDrain => 10;
+		public abstract float Mana { get; set; }
+		public virtual bool ForceSyncMana => false;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Digger");
 			SpawnModBiomes = new int[] {

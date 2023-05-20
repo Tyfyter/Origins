@@ -6,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Cleaver_Head : Cleaver {
+    public class Cleaver_Head : Cleaver, IRivenEnemy {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
 			NPC.lifeMax = 60;
@@ -104,8 +104,6 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
 			OriginPlayer.InflictTorn(target, 300, 180, 0.9f);
-			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
-			originPlayer.rassimilationCurrent += 0.06f;
 		}
 	}
 }

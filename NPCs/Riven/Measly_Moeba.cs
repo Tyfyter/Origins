@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 using static Origins.Items.Armor.Encrusted.Encrusted2_Mask;
 
 namespace Origins.NPCs.Riven {
-	public class Measly_Moeba : Glowing_Mod_NPC {
+	public class Measly_Moeba : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Measly Moeba");
 			Main.npcFrameCount[Type] = 4;

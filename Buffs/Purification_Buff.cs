@@ -17,10 +17,10 @@ namespace Origins.Buffs {
 			player.buffImmune[ModContent.BuffType<Riven_Assimilation_Debuff>()] = true;
 
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.cassimilationCurrent -= Math.Min(1f, 0f);
-			originPlayer.crassimilationCurrent -= Math.Min(1f, 0f);
-			originPlayer.dassimilationCurrent -= Math.Min(1f, 0f);
-			originPlayer.rassimilationCurrent -= Math.Min(1f, 0f);
+			originPlayer.CorruptionAssimilation = 0;
+			originPlayer.CrimsonAssimilation = 0;
+			originPlayer.DefiledAssimilation = 0;
+			originPlayer.RivenAssimilation = 0;
 		}
 	}
 }

@@ -159,12 +159,18 @@ namespace Origins {
 			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.FrostWormTail>());
 			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.SnowEater>());
 
+			CorruptGlobalNPC.AssimilationAmounts.Add(ModContent.NPCType<ThoriumMod.NPCs.TheInnocent>(), 0.02f);
+			CorruptGlobalNPC.AssimilationAmounts.Add(ModContent.NPCType<ThoriumMod.NPCs.SnowEater>(), 0.03f);
+
 			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.TheStarved>());
 			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.HorrificCharger>());
 			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.VileFloater>());
 			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.ChilledSpitter>());
 			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Freezer>());
 			CorruptGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.SoulCorrupter>());
+
+			CorruptGlobalNPC.AssimilationAmounts.Add(ModContent.NPCType<ThoriumMod.NPCs.TheStarved>(), 0.10f);
+			CorruptGlobalNPC.AssimilationAmounts.Add(ModContent.NPCType<ThoriumMod.NPCs.Freezer>(), 0.09f);
 
 			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.LivingHemorrhage>());
 			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Clot>());
@@ -176,6 +182,8 @@ namespace Origins {
 			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.Coldling>());
 			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.FrozenGross>());
 			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.EpiDermon>());
+
+			CrimsonGlobalNPC.AssimilationAmounts.Add(ModContent.NPCType<ThoriumMod.NPCs.Blister>(), 0.01f);
 		}
 	}
 	public interface ICustomWikiDestination {

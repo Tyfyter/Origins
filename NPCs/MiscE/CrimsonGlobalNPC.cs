@@ -10,6 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.MiscE {
 	public class CrimsonGlobalNPC : GlobalNPC {
 		public static HashSet<int> NPCTypes { get; private set; }
+		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
 		public override void Load() {
 			NPCTypes = new() {
 				NPCID.BloodCrawler,
@@ -37,21 +38,24 @@ namespace Origins.NPCs.MiscE {
 
 				NPCID.PigronCrimson,
 			};
+			AssimilationAmounts = new() {
+				[NPCID.BrainofCthulhu] = 0.12f,
+				[NPCID.Creeper] = 0.01f,
+				[ModContent.NPCType<Crimbrain>()] = 0.07f
+			};
 		}
 		public override void Unload() {
 			NPCTypes = null;
+			AssimilationAmounts = null;
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return NPCTypes.Contains(entity.type);
 		}
 		public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit) {
-			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
-			if (npc.type == NPCID.Creeper) {
-				originPlayer.crassimilationCurrent += 0.01f;
-			} else if (npc.type == ModContent.NPCType<Crimbrain>()) {
-				originPlayer.crassimilationCurrent += 0.07f;
-			} else if (npc.type == NPCID.BrainofCthulhu) {
-				originPlayer.crassimilationCurrent += 0.12f;
+			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
+				target.GetModPlayer<OriginPlayer>().CrimsonAssimilation += amount.GetValue(npc, target);
+			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {
+				target.GetModPlayer<OriginPlayer>().CrimsonAssimilation += amount.GetValue(npc, target);
 			}
 		}
 		public override void ResetEffects(NPC npc) {
@@ -87,7 +91,7 @@ namespace Origins.NPCs.MiscE {
 			}
 			if (npc.dryadBane) {
 				const float baseDPS = 2;
-				int totalDPS = (int)(baseDPS * CorruptGlobalNPC.CalcDryadDPSMult());
+				int totalDPS = (int)(baseDPS * BiomeNPCGlobals.CalcDryadDPSMult());
 				npc.lifeRegen -= 2 * totalDPS;
 				damage += totalDPS / 3;
 			}

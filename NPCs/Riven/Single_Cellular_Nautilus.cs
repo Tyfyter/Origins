@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using static Origins.Items.Armor.Encrusted.Encrusted2_Mask;
 
 namespace Origins.NPCs.Riven {
-	public class Single_Cellular_Nautilus : Glowing_Mod_NPC {
+	public class Single_Cellular_Nautilus : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Single-Cellular Nautilus");
 			Main.npcFrameCount[NPC.type] = 3;

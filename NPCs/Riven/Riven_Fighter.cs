@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 using static Origins.Items.Armor.Encrusted.Encrusted2_Mask;
 
 namespace Origins.NPCs.Riven {
-	public class Riven_Fighter : Glowing_Mod_NPC {
+	public class Riven_Fighter : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Riven Protoform");
 			Main.npcFrameCount[NPC.type] = 5;
@@ -97,10 +97,6 @@ namespace Origins.NPCs.Riven {
 			}
 			NPC.frame = new Rectangle(0, 160, 36, 40);
 			NPC.frameCounter = 0;
-		}
-		public override void OnHitPlayer(Player target, int damage, bool crit) {
-			OriginPlayer originPlayer = target.GetModPlayer<OriginPlayer>();
-			originPlayer.rassimilationCurrent += 0.01f;
 		}
 	}
 }
