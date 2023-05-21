@@ -45,12 +45,6 @@ namespace Origins.NPCs.Defiled {
 		public int MaxMana => 160;
 		public int MaxManaDrain => 32;
 		public float Mana { get; set; }
-		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) {
-			PlayerDeathReason reason = new PlayerDeathReason();
-			reason.SourceCustomReason = target.name + " was absolutely destroyed by a Defiled Tripod";
-			reason.SourceCustomReason = target.name + " got rekt by a Defiled Tripod";
-			//reason is never referenced by anything connected to displaying the death reason, so these currently do nothing
-		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
 			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 70);
 			this.DrainMana(target);

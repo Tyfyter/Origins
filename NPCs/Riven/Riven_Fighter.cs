@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Armor.Encrusted;
+using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Terraria;
@@ -7,10 +7,10 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Armor.Encrusted.Encrusted2_Mask;
+using static Origins.Items.Armor.Riven.Riven2_Mask;
 
 namespace Origins.NPCs.Riven {
-	public class Riven_Fighter : Glowing_Mod_NPC, IRivenEnemy {
+    public class Riven_Fighter : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Riven Protoform");
 			Main.npcFrameCount[NPC.type] = 5;
@@ -38,9 +38,9 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Mask>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Coat>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Pants>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Mask>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Coat>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 525));
 		}
 		public override bool PreAI() {
 			NPC.ai[0] += Main.rand.NextFloat(0, 1);

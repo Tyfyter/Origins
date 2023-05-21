@@ -23,7 +23,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DungeonSpirit);
 			NPC.aiStyle = NPCAIStyleID.Demon_Eye;
-			NPC.lifeMax = 20;
+			NPC.lifeMax = 12;
 			NPC.defense = 2;
 			NPC.damage = 10;
 			NPC.width = 22;

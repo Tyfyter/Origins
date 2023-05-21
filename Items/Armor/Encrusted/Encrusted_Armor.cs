@@ -11,17 +11,17 @@ namespace Origins.Items.Armor.Encrusted {
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Encrusted Mask");
-			Tooltip.SetDefault("6% increased weapon speed");
+			Tooltip.SetDefault("Increases minion damage by 10%");
 			GlowMask = Origins.AddGlowMask("Armor/Encrusted/Encrusted_Mask_Head_Glow");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 6;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.defense = 3;
+			Item.value = Item.buyPrice(silver: 75);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
+			player.GetDamage(DamageClass.Summon) += 0.1f;
 		}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
 			glowMask = GlowMask;
@@ -31,8 +31,8 @@ namespace Origins.Items.Armor.Encrusted {
 			return body.type == ModContent.ItemType<Encrusted_Coat>() && legs.type == ModContent.ItemType<Encrusted_Pants>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "+15% torn severity";
-			player.GetModPlayer<OriginPlayer>().rivenSetBoost = true;
+			player.setBonus = "Increases minion damage by up to 30% when over half health";
+			player.GetDamage(DamageClass.Summon) *= player.GetModPlayer<OriginPlayer>().rivenMult;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -47,18 +47,18 @@ namespace Origins.Items.Armor.Encrusted {
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Encrusted Coat");
-			Tooltip.SetDefault("6% increased weapon speed");
+			Tooltip.SetDefault("Increases your max number of minions by 1");
 			GlowMask = Origins.AddGlowMask("Armor/Encrusted/Encrusted_Coat_Body_Glow");
 			Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Encrusted/Encrusted_Coat_Body_Glow");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 7;
-			Item.value = Item.sellPrice(silver: 80);
+			Item.defense = 4;
+			Item.value = Item.buyPrice(silver: 60);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
+			player.maxMinions++;
 		}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
 			glowMask = GlowMask;
@@ -74,19 +74,18 @@ namespace Origins.Items.Armor.Encrusted {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Encrusted_Pants : ModItem {
-		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Encrusted Pants");
-			Tooltip.SetDefault("6% increased weapon speed");
+			Tooltip.SetDefault("Increases jump height");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 6;
-			Item.value = Item.sellPrice(silver: 60);
+			Item.defense = 3;
+			Item.value = Item.buyPrice(silver: 45);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
+			player.jumpSpeedBoost += 1f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -94,36 +93,6 @@ namespace Origins.Items.Armor.Encrusted {
 			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 15);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
-		}
-	}
-	[AutoloadEquip(EquipType.Head)]
-	public class Encrusted2_Mask : Encrusted_Mask {
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			DisplayName.SetDefault("Ancient Encrusted Mask");
-		}
-		public override void AddRecipes() {
-		}
-		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
-		[AutoloadEquip(EquipType.Body)]
-		public class Encrusted2_Coat : Encrusted_Coat {
-			public override void SetStaticDefaults() {
-				base.SetStaticDefaults();
-				DisplayName.SetDefault("Ancient Encrusted Coat");
-			}
-			public override void AddRecipes() {
-			}
-			public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
-		}
-		[AutoloadEquip(EquipType.Legs)]
-		public class Encrusted2_Pants : Encrusted_Pants {
-			public override void SetStaticDefaults() {
-				base.SetStaticDefaults();
-				DisplayName.SetDefault("Ancient Encrusted Pants");
-			}
-			public override void AddRecipes() {
-			}
-			public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
 		}
 	}
 }

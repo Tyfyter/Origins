@@ -1,9 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
@@ -24,7 +26,10 @@ namespace Origins.Buffs {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Corruption"
 				}, 40, 0);
 			}
-			// custom effects per percent in else if chain
+			player.GetDamage(DamageClass.Generic) -= Math.Min(percent / 2, 0);
+			player.GetAttackSpeed(DamageClass.Generic) -= Math.Min(percent / 2, 0);
+			player.GetCritChance(DamageClass.Generic) -= Math.Min(percent / 2, 0);
+			player.GetKnockback(DamageClass.Generic) -= Math.Min(percent / 2, 0);
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().CorruptionAssimilation;
@@ -54,12 +59,19 @@ namespace Origins.Buffs {
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().CrimsonAssimilation;
+			int buffChosen = Main.rand.Next(0, 2);
 			if (percent >= OriginPlayer.assimilation_max) {
 				player.KillMe(new KeyedPlayerDeathReason() {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Crimson"
 				}, 40, 0);
 			}
-			// custom effects per percent in else if chain
+			if (Main.rand.NextFloat(200) < percent) {
+				if (buffChosen == 0) {
+					player.AddBuff(BuffID.Confused, Main.rand.Next(59, 241) * (1 + (int)percent));
+				} else if (buffChosen == 1) {
+					player.AddBuff(BuffID.Bleeding, Main.rand.Next(119, 241) * (1 + (int)percent));
+				}
+			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().CrimsonAssimilation;
@@ -94,7 +106,12 @@ namespace Origins.Buffs {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Defiled"
 				}, 40, 0);
 			}
-			// custom effects per percent in else if chain
+			if (percent >= 0.33) {
+				player.AddBuff(BuffID.Weak, 10);
+            }
+			if (percent >= 0.66) {
+				player.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 10);
+			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().DefiledAssimilation;
@@ -129,7 +146,7 @@ namespace Origins.Buffs {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Riven"
 				}, 40, 0);
 			}
-			// custom effects per percent in else if chain
+			//OriginPlayer.InflictTorn(player, 60, 1800, 1 - percent);
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().RivenAssimilation;

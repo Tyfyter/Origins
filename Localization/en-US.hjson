@@ -97,6 +97,8 @@
 				Death_5: "I'd just like to point out that you were given every opportunity to succeed."
 				Death_6: "How can you fail at this? It isn't even a test."
 				Death_7: "You are making this harder than it needs to be."
+
+				Self_Damage: "ProtOS convinced {0} that the rocket really is the way to go."
 				
 				Death_Expert_0: "'No guts. No glory.' Well, you don't have either, so that's accurate."
 				
@@ -220,7 +222,30 @@
 			Quests: Quests
 		}
 		DeathMessage: {
-			Torn: "{0} beezechurgered"
+			Assimilation: {
+				Corruption: "{0} became a shell of their former self by the Corruption."
+				Crimson: "{0} was consumed by the Crimson's lies."
+				Defiled: "{0} was warped to the Defiled Will."
+				Riven: "{0} became one with the Riven Hive's ecosystem."
+			}
+			Barnacle_Mound: "{0} cannot watch where they are going."
+
+			Defiled_Mite: "{0} cannot watch where they are going."
+
+			Self_Damage_0: "{0} got a little too excited."
+			Self_Damage_1: "{0} mishandled some explosives."
+			Self_Damage_2: "{0} claims 'it was just an accident.'"
+			Self_Damage_3: "{0} got carried away."
+			Self_Damage_4: "{0} really let themselves go."
+
+			Torn_0: "{0} watched their body dissolve."
+			Torn_1: "{0} likes to play in amebic gel."
+			Torn_2: "{0} became primordial food for the Primordial Amoeba."
+			Torn_3: "{0} got digested."
+			Torn_4: "{0} got dissolved."
+
+			Tripod_0: "{0} forgot the tripod nip."
+			Tripod_1: "{0} got rekt by a Defiled Tripod."
 		}
 		Generic: {
 			Riven_Hive: "{$Riven} Hive"
@@ -249,6 +274,13 @@
 				Acid_Freak: {
 					InteractionWimd: It fucken WIMDY!
 				}
+			}
+			DeathMessage: {
+			Torn_0: "{0} beezechurgered."
+			Torn_1: "{0} realized there's no such thing as a 'riven pool party.'"
+			Torn_2: "{0} learned Terrarian anatomy faster than they teach in school."
+			Torn_3: "{0} enjoys being vored." // oh god no
+			Torn_4: "{0} was compelled by the Primordial Amoeba to 'Split apart, lost one.'"
 			}
 		}
 		AltBiomeName: {

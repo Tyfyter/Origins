@@ -1,12 +1,18 @@
-namespace Origins.Items.Armor.Encrusted {
+using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Origins.Items.Armor.Riven {
 	[AutoloadEquip(EquipType.Head)]
-	public class Encrusted_Mask : ModItem {
+	public class Riven_Mask : ModItem {
 		public const float lightMagnitude = 0.3f;
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Encrusted Mask");
-			Tooltip.SetDefault("Increases minion damage by 10%");
-			GlowMask = Origins.AddGlowMask("Armor/Encrusted/Encrusted_Mask_Head_Glow");
+			DisplayName.SetDefault("Riven Mask");
+			Tooltip.SetDefault("6% increased weapon speed");
+			GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Mask_Head_Glow");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -15,18 +21,18 @@ namespace Origins.Items.Armor.Encrusted {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetDamage(DamageClass.Summon) += 0.1f;
+			player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
 		}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
 			glowMask = GlowMask;
 			glowMaskColor = Color.White;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
-			return body.type == ModContent.ItemType<Encrusted_Coat>() && legs.type == ModContent.ItemType<Encrusted_Pants>();
+			return body.type == ModContent.ItemType<Riven_Coat>() && legs.type == ModContent.ItemType<Riven_Pants>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Increases minion damage by up to 30% when over half health";
-			player.GetDamage(DamageClass.Summon) *= player.GetModPlayer<OriginPlayer>().rivenMult;
+			player.setBonus = "+15% torn severity";
+			player.GetModPlayer<OriginPlayer>().rivenSetBoost = true;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -37,13 +43,13 @@ namespace Origins.Items.Armor.Encrusted {
 		}
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Encrusted_Coat : ModItem {
+	public class Riven_Coat : ModItem {
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Encrusted Coat");
-			Tooltip.SetDefault("Increases your max number of minions by 1");
-			GlowMask = Origins.AddGlowMask("Armor/Encrusted/Encrusted_Coat_Body_Glow");
-			Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Encrusted/Encrusted_Coat_Body_Glow");
+			DisplayName.SetDefault("Riven Coat");
+			Tooltip.SetDefault("6% increased weapon speed");
+			GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Coat_Body_Glow");
+			Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Riven/Riven_Coat_Body_Glow");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -52,7 +58,7 @@ namespace Origins.Items.Armor.Encrusted {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.maxMinions++;
+			player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
 		}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
 			glowMask = GlowMask;
@@ -67,11 +73,10 @@ namespace Origins.Items.Armor.Encrusted {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Encrusted_Pants : ModItem {
-		public static short GlowMask = -1;
+	public class Riven_Pants : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Encrusted Pants");
-			Tooltip.SetDefault("Increases jump height");
+			DisplayName.SetDefault("Riven Pants");
+			Tooltip.SetDefault("6% increased weapon speed");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -80,7 +85,7 @@ namespace Origins.Items.Armor.Encrusted {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.jumpSpeedBoost += 1f;
+			player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -91,24 +96,33 @@ namespace Origins.Items.Armor.Encrusted {
 		}
 	}
 	[AutoloadEquip(EquipType.Head)]
-	public class Encrusted2_Mask : Encrusted_Mask {
+	public class Riven2_Mask : Riven_Mask {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			DisplayName.SetDefault("Ancient Encrusted Mask");
+			DisplayName.SetDefault("Ancient Riven Mask");
 		}
+		public override void AddRecipes() {
+		}
+		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
 		[AutoloadEquip(EquipType.Body)]
-		public class Encrusted2_Coat : Encrusted_Coat {
+		public class Riven2_Coat : Riven_Coat {
 			public override void SetStaticDefaults() {
 				base.SetStaticDefaults();
-				DisplayName.SetDefault("Ancient Encrusted Coat");
+				DisplayName.SetDefault("Ancient Riven Coat");
 			}
+			public override void AddRecipes() {
+			}
+			public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
 		}
 		[AutoloadEquip(EquipType.Legs)]
-		public class Encrusted2_Pants : Encrusted_Pants {
+		public class Riven2_Pants : Riven_Pants {
 			public override void SetStaticDefaults() {
 				base.SetStaticDefaults();
-				DisplayName.SetDefault("Ancient Encrusted Pants");
+				DisplayName.SetDefault("Ancient Riven Pants");
 			}
+			public override void AddRecipes() {
+			}
+			public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
 		}
 	}
 }

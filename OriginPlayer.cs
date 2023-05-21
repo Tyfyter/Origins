@@ -79,7 +79,7 @@ namespace Origins {
 		public float felnumShock = 0;
 		public float oldFelnumShock = 0;
 		public bool minerSet = false;
-		public bool defiledSet = false;
+		public bool lostSet = false;
 		public bool rivenSet = false;
 		public bool rivenSetBoost = false;
 		public bool riftSet = false;
@@ -321,7 +321,7 @@ namespace Origins {
 
 			felnumSet = false;
 			minerSet = false;
-			defiledSet = false;
+			lostSet = false;
 			reshapingChunk = false;
 			rivenSet = false;
 			rivenSetBoost = false;
@@ -1723,7 +1723,7 @@ namespace Origins {
 					}
 				}
 			}
-			if (defiledSet) {
+			if (lostSet) {
 				float manaDamage = damage;
 				float costMult = 3;
 				float costMult2 = reshapingChunk ? 0.25f : 0.15f;

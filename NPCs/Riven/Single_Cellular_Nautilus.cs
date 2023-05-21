@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Armor.Encrusted;
+using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using System;
@@ -8,10 +8,10 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Armor.Encrusted.Encrusted2_Mask;
+using static Origins.Items.Armor.Riven.Riven2_Mask;
 
 namespace Origins.NPCs.Riven {
-	public class Single_Cellular_Nautilus : Glowing_Mod_NPC, IRivenEnemy {
+    public class Single_Cellular_Nautilus : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Single-Cellular Nautilus");
 			Main.npcFrameCount[NPC.type] = 3;
@@ -46,9 +46,9 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Mask>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Coat>(), 525));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Encrusted2_Pants>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Mask>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Coat>(), 525));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 525));
 		}
 		public override void HitEffect(int hitDirection, double damage) {
 			//spawn gore if npc is dead after being hit

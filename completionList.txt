@@ -216,9 +216,10 @@ ARMOR:
 (^) Encrusted Armor
 (^) Felnum Armor
 (^) Fiberglass Armor
-(@, ^3) Lost Armor !!!
+(^) Lost Armor
 (^) Myth Armor
 (^) Riptide Armor
+(^) Riven Armor
 (^) Soulhide Armor
 (^) Tendon Armor
 
@@ -454,7 +455,7 @@ TOOLS:
 (^) Rivenator
 (^) Snatcher
 (^) Stabsmash
-(X) Strainer !!!
+(#, ^2) Strainer !!!
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
@@ -508,7 +509,7 @@ MELEE WEAPONS:
 RANGED WEAPONS:
 ---
 (^) Ancient Kruncher
-(☻) Bloodletter !!!
+(^) Bloodletter
 (X) Blotopus !!!
 (^) Bolt Gun
 (^) Fiberglass Bow
@@ -1021,8 +1022,6 @@ UI:
 (X) Riven Map/Bestiary Backdrop
 (^) Riven Icon
 
-(#, ^2) Assimilation UI !!!
-
 (@5, ^3) 30x30 Origins Icon
 (#, ^2) Origins Mod Browser Logo
 ---
@@ -1040,7 +1039,7 @@ MUSIC:
 (^) Riven Hive
 (^) The Dusk
 
-(O) Defiled Amalgamation
+(^) Defiled Amalgamation
 (X) Duskord
 (X) Fiberglass Threader
 (X) I.C.A.R.U.S

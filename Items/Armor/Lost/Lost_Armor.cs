@@ -1,32 +1,33 @@
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
-using System;
+using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Lost {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Lost_Helm : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Lost Helm");
-			Tooltip.SetDefault("5% increased critical strike chance");
+			Tooltip.SetDefault("Increased mana regeneration rate");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 6;
+			Item.defense = 3;
 			Item.value = Item.buyPrice(silver: 75);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetCritChance(DamageClass.Generic) += 0.05f;
+			player.manaRegen += 2;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Lost_Breastplate>() && legs.type == ModContent.ItemType<Lost_Pants>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Greatly increased maximum life";
-			player.statLifeMax2 += (int)(player.statLifeMax2 * 0.25);
+			player.setBonus = "15% of damage taken is redirected to mana";
+			player.GetModPlayer<OriginPlayer>().lostSet = true;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -40,16 +41,21 @@ namespace Origins.Items.Armor.Lost {
 	public class Lost_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Lost Breastplate");
-			Tooltip.SetDefault("3% increased damage");
+			Tooltip.SetDefault("15% increased magic damage");
+			if (Main.netMode != NetmodeID.Server) {
+				if (Mod.RequestAssetIfExists("Items/Armor/Lost/Lost_Breastplate_Cloth_Legs", out Asset<Texture2D> asset)) {
+					Origins.TorsoLegLayers.Add(Item.bodySlot, asset);
+				}
+			}
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 7;
+			Item.defense = 4;
 			Item.value = Item.buyPrice(silver: 60);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetDamage(DamageClass.Generic) += 0.03f;
+			player.GetAttackSpeed(DamageClass.Magic) += 0.15f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -63,16 +69,16 @@ namespace Origins.Items.Armor.Lost {
 	public class Lost_Pants : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Lost Pants");
-			Tooltip.SetDefault("6% increased weapon speed");
+			Tooltip.SetDefault("Increased movement speed");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 6;
+			Item.defense = 3;
 			Item.value = Item.buyPrice(silver: 45);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetAttackSpeed(DamageClass.Generic) += 0.06f;
+			player.moveSpeed += 0.06f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -80,6 +86,19 @@ namespace Origins.Items.Armor.Lost {
 			recipe.AddIngredient(ModContent.ItemType<Strange_String>(), 22);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
+		}
+	}
+}
+namespace Origins.Buffs {
+	public class Defiled_Exhaustion_Debuff : ModBuff {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("{$Defiled} Exhaustion");
+		}
+		public override void Update(Player player, ref int buffIndex) {
+			player.manaRegenBuff = false;
+			player.manaRegen = 0;
+			player.manaRegenCount = 0;
+			player.manaRegenBonus = 0;
 		}
 	}
 }

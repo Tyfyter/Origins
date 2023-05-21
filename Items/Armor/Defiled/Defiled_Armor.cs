@@ -1,16 +1,15 @@
 using Microsoft.Xna.Framework;
-using Origins.Dusts;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Defiled {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Defiled_Helmet : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Helmet");
-			Tooltip.SetDefault("Increased mana regeneration rate");
+			Tooltip.SetDefault("5% increased critical strike chance");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Defiled/Defiled_Helmet_Head_Glow");
 			}
@@ -22,14 +21,15 @@ namespace Origins.Items.Armor.Defiled {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.manaRegen += 2;
+			player.setBonus = "Greatly increased maximum life";
+			player.statLifeMax2 += (int)(player.statLifeMax2 * 0.25);
 		}
         public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Defiled_Breastplate>() && legs.type == ModContent.ItemType<Defiled_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = "15% of damage taken is redirected to mana";
-			player.GetModPlayer<OriginPlayer>().defiledSet = true;
+			player.GetModPlayer<OriginPlayer>().lostSet = true;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -43,7 +43,7 @@ namespace Origins.Items.Armor.Defiled {
 	public class Defiled_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Breastplate");
-			Tooltip.SetDefault("15% increased magic damage");
+			Tooltip.SetDefault("3% increased damage");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -52,7 +52,7 @@ namespace Origins.Items.Armor.Defiled {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetAttackSpeed(DamageClass.Magic) += 0.15f;
+			player.GetDamage(DamageClass.Generic) += 0.03f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -66,7 +66,7 @@ namespace Origins.Items.Armor.Defiled {
 	public class Defiled_Greaves : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("{$Defiled} Greaves");
-			Tooltip.SetDefault("Increased movement speed");
+			Tooltip.SetDefault("3% increased damage");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
@@ -75,7 +75,7 @@ namespace Origins.Items.Armor.Defiled {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.moveSpeed += 0.06f;
+			player.GetDamage(DamageClass.Generic) += 0.03f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -111,19 +111,6 @@ namespace Origins.Items.Armor.Defiled {
 			}
 			public override void AddRecipes() {
 			}
-		}
-	}
-}
-namespace Origins.Buffs {
-	public class Defiled_Exhaustion_Debuff : ModBuff {
-		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Exhaustion");
-		}
-		public override void Update(Player player, ref int buffIndex) {
-			player.manaRegenBuff = false;
-			player.manaRegen = 0;
-			player.manaRegenCount = 0;
-			player.manaRegenBonus = 0;
 		}
 	}
 }
