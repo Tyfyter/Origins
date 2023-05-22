@@ -510,7 +510,7 @@ RANGED WEAPONS:
 ---
 (^) Ancient Kruncher
 (^) Bloodletter
-(X) Blotopus !!!
+(^) Blotopus
 (^) Bolt Gun
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
@@ -691,6 +691,7 @@ EXPLOSIVE WEAPONS:
 (#2, ^2) Flakjack
 (@, ^3) Missile Minigun
 (@5, #) Starburst
+(X) Supernova
 ---
 
 

@@ -6,7 +6,7 @@ namespace Origins.Items.Other.Consumables.Food {
     public class Pawpaw : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Pawpaw");
-			Tooltip.SetDefault("{$CommonItemTooltip.MinorStats}\n'Despite the name, it has nothing to do with cats or dogs'");
+			Tooltip.SetDefault("{$CommonItemTooltip.MinorStats}");
 			SacrificeTotal = 5;
 		}
 		public override void SetDefaults() {

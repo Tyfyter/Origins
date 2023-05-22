@@ -2010,7 +2010,7 @@ namespace Origins {
 				if (Main.rand.NextBool(10)) {
 					itemDrop = ModContent.ItemType<Messy_Leech>();
 				}
-			}
+			} // Blotopus here
 		}
 		public override bool CanUseItem(Item item) {
 			if (ravel) {
