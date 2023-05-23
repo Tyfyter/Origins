@@ -300,6 +300,7 @@ ACCESSORIES:
 (^) Messy Leech
 (^) Messy Magma Leech
 (^) Missile Arm Cannon
+(#, ^2) Mojo Injection !!!
 (^) Nitro Crate
 (^) No U Card
 (^) Olid Organ*
@@ -357,7 +358,7 @@ ACCESSORIES:
 (^) Spirit Shard
 (^) Stone Mask
 (X) Timbre of Hell
-(#, ^2) Tripod Nip
+(^) Tripod Nip
 
 (^) Amebic Vial
 (^) Fiberglass Dagger
@@ -908,13 +909,15 @@ CONSUMABLES:
 
 (^) Absorption Potion
 (^) Antisolve Potion
+(^) Captured Mojo
 (^) Fervor Potion
 (^) Flask of Alkahest
 (^) Flask of Black Bile
 (#2, ^2) Focus Potion
+(#, ^2) Mojo Flask !!!
 (#2, ^2) Nullification Potion (Nullification potion doesn't need a buff graphic, it's a single-instance effect)
 (^) Protean Potion
-(@5, ^3) Purification Potion !!!
+(^) Purification Potion
 (^) Voidsight Potion
 
 (^) Bileberry
@@ -924,13 +927,13 @@ CONSUMABLES:
 (^) Honey Wheat Bread
 (^) Irish Cheddar
 (^) Jam Sandwich
-(X) Jelly Schnapps
+(^) Jelly Schnapps
 (^) Krunch Mix*
-(^) Pawpaw
-(X) Periven
+(^) Pawpaw                                  dont forget to implement the evil fruit tree shake drops
+(^) Periven
 (^) Potato
 (^) Prickly Pear
-(X) Shattered Stout
+(^) Shattered Stout
 (^) Soul Spaghetti
 (^) Tasty Vanilla Shake
 

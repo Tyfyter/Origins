@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return true;
 		}
 		public override void OnConsumeAmmo(Item ammo, Player player) {
-			if (!Main.rand.NextBool(1,6)) {
+			if (!Main.rand.NextBool(5,6)) {
 				ammo.stack++;
 			} else {
 				consume = true;

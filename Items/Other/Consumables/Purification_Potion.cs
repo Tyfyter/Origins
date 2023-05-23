@@ -14,14 +14,15 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.WrathPotion);
 			Item.buffType = Purification_Buff.ID;
 			Item.buffTime = 60 * 60 * 6;
+			Item.value = Item.sellPrice(silver: 2);
 		}
-		/*public override void AddRecipes() {                  recipe pending
+		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.BottledWater);
-			recipe.AddIngredient(ItemID.FallenStar, 4);
-			recipe.AddIngredient(ItemID.PurificationPowder, 10);
+			recipe.AddIngredient(ItemID.Ectoplasm);
+			recipe.AddIngredient(ItemID.Moonglow);
+			//recipe.AddIngredient(ModContent.ItemType<Mojo_Flask_4>();
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
-		}*/
+		}
 	}
 }

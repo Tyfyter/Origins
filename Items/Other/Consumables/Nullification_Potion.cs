@@ -29,7 +29,7 @@ namespace Origins.Items.Other.Consumables {
 					player.buffImmune[i] = true;
 				}
 			}
-			player.buffImmune[BuffID.Suffocation] = true; // 
+			player.buffImmune[BuffID.Suffocation] = true;
 			return null;
 		}
 	}

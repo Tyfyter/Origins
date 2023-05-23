@@ -40,12 +40,6 @@ namespace Origins.Items.Other.Consumables.Food {
 			recipe.AddIngredient(this);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.Register();
-
-			recipe = Recipe.Create(ModContent.ItemType<Potato_Mine>(), 15);
-			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(this);
-			recipe.AddTile(TileID.WorkBenches);
-			recipe.Register();
 		}
 	}
 }

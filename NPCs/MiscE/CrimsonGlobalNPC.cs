@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-	public class CrimsonGlobalNPC : GlobalNPC {
+    public class CrimsonGlobalNPC : GlobalNPC {
 		public static HashSet<int> NPCTypes { get; private set; }
 		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
 		public override void Load() {
@@ -41,7 +37,8 @@ namespace Origins.NPCs.MiscE {
 			AssimilationAmounts = new() {
 				[NPCID.BrainofCthulhu] = 0.12f,
 				[NPCID.Creeper] = 0.01f,
-				[ModContent.NPCType<Crimbrain>()] = 0.07f
+				[ModContent.NPCType<Crimbrain>()] = 0.07f,
+				[NPCID.IchorSticker] = 0.06f // for projectile
 			};
 		}
 		public override void Unload() {

@@ -1,5 +1,4 @@
-﻿using Origins.Items.Other.Consumables;
-using Origins.Items.Other.Consumables.Food;
+﻿using Origins.Items.Other.Consumables.Food;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
@@ -20,7 +19,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.White;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
+			Recipe recipe = Recipe.Create(Type, 15);
 			recipe.AddIngredient(ItemID.ExplosivePowder);
 			recipe.AddIngredient(ModContent.ItemType<Potato>());
 			recipe.Register();

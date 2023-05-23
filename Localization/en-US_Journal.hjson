@@ -3,6 +3,7 @@
 		Journal: {
 			Name:{
 				Black_Bile: Black Bile
+				Captured_Mojo: Mojo
 				Cubekon_Tinkerer: Cubekon Tinkerer
 				District_Attorney: Defiled Amalgamation
 				Felnum: Felnum Ore
@@ -10,6 +11,7 @@
 				The_Defiled: The Defiled
 				The_Riven: The Riven
 				The_Terrarian: The Terrarian
+				Tripod_Nip: Tripod Nip
 			}
 			Indicator:{
 				Whispers:"You hear whispers nearby..."
@@ -105,6 +107,27 @@
 			 - Lost Ore wasn't always available to the Defiled, at least not initially. The Defiled had to spread enough to reach the caverns of Terraria in order to discover the natural ore that resides there. After discovering a particular vein of Iron Ore [i:Terraria/Iron_Ore_Item], it absorbed it and integrated it into its current production of Defiled Matter. However, the entity found that Iron was too heavy and too conductive for its liking and thus reconfigured Iron's characteristics to be more favorable; the result was Lost Ore.
 			'''
 
+			Captured_Mojo:
+			'''
+			Mojo (title)
+			[i:Origins/Captured_Mojo] (enlarge to span top of page, working on custom image)
+
+			Overview: 
+			 - only a rare type of plant is capable of capturing Mojo that randomly wanders the world. The Dryad doesn't speak much of this rare plant, likely for good reason. Touching Mojo feels extremely refreshing and saturating as it is said to make you younger. Could possibly explain why the Dryad is so old! 
+			
+			Characteristics: 
+			 - Contrary to the bright blue-green coloration of the Primordial Amoeba, Alkahest takes on a bright, almost straw-colored yellow color. Alkahest also has almost no viscosity as well and is very reflective.
+			
+			Origins: 
+			 - As previously mentioned, Alkahest first appeared on Terraria due to the Primordial Amoeba that naturally synthesizes it to digest all matter for nutrition. There is no known way to synthesize Alkahest artificially.
+			
+			Chemistry:
+			 - Alkahest has a wide range of applications including general waste removal, energy generation, heat generation, and other purposes. Alkahest is most commonly used for combat and alchemy, due to how easily capable of dissolving matter it is.
+			
+			History: 
+			 - Alkahest is a relatively newer material that has sprouted into the mix thanks to some early Terrarian history. Before the Primordial Amoeba became a keystone species for the Riven Hive, it was like any other single-cellular organism. When Cthulhu’s invasion on Terraria’s inhabitants came to a conclusion after his lower half was severed, his blood was said to spill into the caverns of the world, corrupting the very pool of water that the Primordial Amoeba resided. As part of its prompted, rapid evolution, the Amoeba gained the ability for Alkahest synthesis and used it to shape the surrounding environment.
+			'''
+
 
 			// Lore Accessories vv
 
@@ -169,6 +192,14 @@
 			So, they call themselves the Cuboids, but they’re a part of the Cubekon race, just to clarify… after looking into their data, they seem to be from another world and are somehow trapped here for some reason. My question is, with this wealth of technological advance, why haven’t they gotten out of here yet? Not even I know that. What I do know is what’s inside of them.
 
 			The Cuboids seem to be entirely mechanical in nature with a brain made out of these weird green cubes, which I’ll just call ‘qubes’ for now. These ‘qubes’ act like a power source and data storage membrane in one. How I know that is because they make branch out in a very symmetric way all over the body of these Cuboids. There’s also a lot of other machinery in here that I can only assume allows these things to move since I recently discovered that they have a consciousness, but that’s a bit complicated…
+			'''
+
+			Tripod_Nip:
+			'''
+			Post-Operation Log 448 ||
+			<Name of Cubekon Tinkerer> Mares
+			
+			I figured it would’ve been obvious, the tripods are the the most prominent predator in the wastelands. I’ve observed them behind the scenes, they always seem to go after my decoys first and make sure work that they were destroyed, and then immediately go after the substance. The drug has interesting effects on tripods that I haven’t seen in any other antibody; I found that the tripods would do one of the following actions when tripod nip was introduced: 1) rub their bodies all over it like some kind of cat, 2) dance excitedly, or 3) absorb it with some kind of appendage made of black bile and then make a run for it. I also went ahead to test the effects of the drug on rather unfortunate Defiled Cyclops [i:Origins/Defiled_Cyclops] and before it could even dispose of can, it was promptly absorbed by a tripod making a mad dash at it. It was a hilarious sight to see to the extent I broke out in laughter. Ever since that day, I’ve been too afraid to return to the wastes to do anymore testing. I'm sure if you had to chop of your leg from being side-swiped by a Defiled Tripod you were just laughing at, you'd be pretty traumatized too. And, <Name of Mechanic> really wonders why I set the darn place off limits... and specifically had to tell her not to feed the tripods no matter how adorable they are.
 			'''
 
 			Vorpal_Sword:

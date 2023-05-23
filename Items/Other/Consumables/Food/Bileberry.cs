@@ -15,7 +15,7 @@ namespace Origins.Items.Other.Consumables.Food {
 			Item.buffType = BuffID.WellFed;
 			Item.buffTime = 60 * 60 * 5;
 		}
-		/*public override void AddRecipes() {
+		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Shattered_Stout>());
 			recipe.AddIngredient(ItemID.Bottle);
 			recipe.AddIngredient(this);
@@ -23,7 +23,7 @@ namespace Origins.Items.Other.Consumables.Food {
 			recipe.AddTile(TileID.CookingPots);
 			recipe.Register();
 			
-			recipe = Recipe.Create(ItemID.FruitJuice));
+			/*recipe = Recipe.Create(ItemID.FruitJuice));
 			recipe.AddIngredient(ItemID.Bottle);
 			recipe.AddIngredient(this, 2); we need to create a new recipe group including origins' fruits
 			recipe.AddTile(TileID.CookingPots);
@@ -33,7 +33,7 @@ namespace Origins.Items.Other.Consumables.Food {
 			recipe.AddIngredient(ItemID.Bowl);
 			recipe.AddIngredient(this, 3); we need to create a new recipe group including origins' fruits
 			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
-		}*/
+			recipe.Register();*/
+		}
 	}
 }
