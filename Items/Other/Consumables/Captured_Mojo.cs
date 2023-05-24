@@ -32,12 +32,12 @@ namespace Origins.Items.Other.Consumables {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			player.buffImmune[ModContent.BuffType<Corrupt_Assimilation_Debuff>()] = true;
-			player.buffImmune[ModContent.BuffType<Crimson_Assimilation_Debuff>()] = true;
-			player.buffImmune[ModContent.BuffType<Defiled_Assimilation_Debuff>()] = true;
-			player.buffImmune[ModContent.BuffType<Riven_Assimilation_Debuff>()] = true;
-
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.corruptionAssimilationDebuffMult = 0;
+			originPlayer.crimsonAssimilationDebuffMult = 0;
+			originPlayer.defiledAssimilationDebuffMult = 0;
+			originPlayer.rivenAssimilationDebuffMult = 0;
+
 			originPlayer.CorruptionAssimilation -= Math.Min(0.00333f, originPlayer.CorruptionAssimilation);
 			originPlayer.CrimsonAssimilation -= Math.Min(0.00333f, originPlayer.CrimsonAssimilation);
 			originPlayer.DefiledAssimilation -= Math.Min(0.00333f, originPlayer.DefiledAssimilation);

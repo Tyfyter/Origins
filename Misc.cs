@@ -332,6 +332,21 @@ namespace Origins {
 			return texture.Frame(FrameCount, 1, Frame, 0);
 		}
 	}
+	public class DrawAnimationDelegated : DrawAnimation {
+		Func<Texture2D, Rectangle> frame;
+		public DrawAnimationDelegated(Func<Texture2D, Rectangle> frameMethod) {
+			Frame = 0;
+			FrameCounter = 0;
+			FrameCount = 1;
+			TicksPerFrame = -1;
+			frame = frameMethod;
+		}
+		public override void Update() { }
+		public override Rectangle GetFrame(Texture2D texture, int frameCounterOverride = -1) {
+			if (TicksPerFrame == -1) FrameCounter = 0;
+			return frame(texture);
+		}
+	}
 	public struct AutoCastingAsset<T> where T : class {
 		public bool IsLoaded => asset?.IsLoaded ?? false;
 		public T Value => asset?.Value;

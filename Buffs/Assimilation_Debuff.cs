@@ -20,7 +20,8 @@ namespace Origins.Buffs {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().CorruptionAssimilation;
+			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+			float percent = originPlayer.CorruptionAssimilation * originPlayer.corruptionAssimilationDebuffMult;
 			if (percent >= OriginPlayer.assimilation_max) {
 				player.KillMe(new KeyedPlayerDeathReason() {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Corruption"
@@ -58,7 +59,8 @@ namespace Origins.Buffs {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().CrimsonAssimilation;
+			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+			float percent = originPlayer.CrimsonAssimilation * originPlayer.crimsonAssimilationDebuffMult;
 			int buffChosen = Main.rand.Next(0, 2);
 			if (percent >= OriginPlayer.assimilation_max) {
 				player.KillMe(new KeyedPlayerDeathReason() {
@@ -100,7 +102,8 @@ namespace Origins.Buffs {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().DefiledAssimilation;
+			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+			float percent = originPlayer.DefiledAssimilation * originPlayer.defiledAssimilationDebuffMult;
 			if (percent >= OriginPlayer.assimilation_max) {
 				player.KillMe(new KeyedPlayerDeathReason() {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Defiled"
@@ -140,7 +143,8 @@ namespace Origins.Buffs {
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {
-			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().RivenAssimilation;
+			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+			float percent = originPlayer.RivenAssimilation * originPlayer.rivenAssimilationDebuffMult;
 			if (percent >= OriginPlayer.assimilation_max) {
 				player.KillMe(new KeyedPlayerDeathReason() {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Riven"

@@ -34,41 +34,28 @@ namespace Origins.Items.Weapons.Ranged {
 		public override Vector2? HoldoutOffset() {
 			return Vector2.Zero;
 		}
-		protected bool consume = false;
-		public override bool CanShoot(Player player) {
-			consume = true;
-			return true;
-		}
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
-			consume = false;
-			return true;
+			return !Main.rand.NextBool(5);
 		}
-		public override void OnConsumeAmmo(Item ammo, Player player) {
-			if (!Main.rand.NextBool(4, 5)) {
-				ammo.stack++;
-			} else {
-				consume = true;
-			}
+	}
+	public class Blotopus_P : ModProjectile {
+		public override string Texture => "Origins/Items/Weapons/Ranged/Blotopus_P";
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Bloody Needle");
 		}
-		public class Blotopus_P : ModProjectile {
-			public override string Texture => "Origins/Items/Weapons/Ranged/Blotopus_P";
-			public override void SetStaticDefaults() {
-				DisplayName.SetDefault("Bloody Needle");
-			}
-			public override void SetDefaults() {
-				Projectile.CloneDefaults(ProjectileID.Bullet);
-				Projectile.width = 26;
-				Projectile.height = 4;
-				Projectile.friendly = true;
-				Projectile.penetrate = 1;
-				Projectile.timeLeft = 300;
-			}
-			public override void AI() {
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.Bullet);
+			Projectile.width = 26;
+			Projectile.height = 4;
+			Projectile.friendly = true;
+			Projectile.penetrate = 1;
+			Projectile.timeLeft = 300;
+		}
+		public override void AI() {
 
-			}
-			public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
-				target.AddBuff(BuffID.Bleeding, Main.rand.Next(119, 241));
-			}
+		}
+		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+			target.AddBuff(BuffID.Bleeding, Main.rand.Next(119, 241));
 		}
 	}
 }

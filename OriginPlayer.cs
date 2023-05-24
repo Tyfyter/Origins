@@ -69,6 +69,10 @@ namespace Origins {
 				rivenAssimilation = value;
 			}
 		}
+		public float corruptionAssimilationDebuffMult = 1f;
+		public float crimsonAssimilationDebuffMult = 1f;
+		public float defiledAssimilationDebuffMult = 1f;
+		public float rivenAssimilationDebuffMult = 1f;
 		#endregion assimilation
 
 		#region armor/set bonuses
@@ -246,6 +250,7 @@ namespace Origins {
 		#region other items
 		public int laserBladeCharge = 0;
 		public bool boatRockerAltUse = false;
+		public int mojoFlaskCount = 5;
 		#endregion
 
 		public int quantumInjectors = 0;
@@ -453,6 +458,11 @@ namespace Origins {
 			flaskSalt = false;
 
 			boatRockerAltUse = false;
+
+			corruptionAssimilationDebuffMult = 1f;
+			crimsonAssimilationDebuffMult = 1f;
+			defiledAssimilationDebuffMult = 1f;
+			rivenAssimilationDebuffMult = 1f;
 
 			explosiveProjectileSpeed = StatModifier.Default;
 			explosiveThrowSpeed = StatModifier.Default;
@@ -876,7 +886,7 @@ namespace Origins {
 				Player.statLifeMax2 = (int)(Player.statLifeMax2 * (1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime))));
 				if (Player.statLifeMax2 <= 0) {
 					Player.KillMe(new KeyedPlayerDeathReason() {
-						Key = "Mods.Origins.DeathMessage.Torn"
+						Key = "Mods.Origins.DeathMessage.Torn_" + Main.rand.Next(5)
 					}, 1, 0);
 				}
 			}

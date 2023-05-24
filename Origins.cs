@@ -87,7 +87,7 @@ namespace Origins {
 		public static AutoCastingAsset<Texture2D> cellNoiseTexture;
 		public static AutoCastingAsset<Texture2D> eyndumCoreUITexture;
 		public static AutoCastingAsset<Texture2D> eyndumCoreTexture;
-
+		public override uint ExtraPlayerBuffSlots => 4;
 		public Origins() {
 			instance = this;
 			celestineBoosters = new int[3];
