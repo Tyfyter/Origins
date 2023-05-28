@@ -1,0 +1,27 @@
+﻿using System;
+using Terraria;
+using Terraria.ID;
+using Terraria.ModLoader;
+
+namespace Origins.Items.Accessories {
+	public class Mojo_Injection : ModItem {
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Mojo Injection");
+			Tooltip.SetDefault("Slowly reduces assimilation");
+			SacrificeTotal = 1;
+		}
+		public override void SetDefaults() {
+			Item.DefaultToAccessory(16, 26);
+			Item.rare = ItemRarityID.Orange;
+			Item.value = Item.sellPrice(gold: 6);
+		}
+		public override void UpdateAccessory(Player player, bool hideVisual) {
+			const float healing = 0.0000666f;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.CorruptionAssimilation -= Math.Min(healing, originPlayer.CorruptionAssimilation);
+			originPlayer.CrimsonAssimilation -= Math.Min(healing, originPlayer.CrimsonAssimilation);
+			originPlayer.DefiledAssimilation -= Math.Min(healing, originPlayer.DefiledAssimilation);
+			originPlayer.RivenAssimilation -= Math.Min(healing, originPlayer.RivenAssimilation);
+		}
+	}
+}

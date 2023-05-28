@@ -33,7 +33,7 @@ using Terraria.ModLoader.IO;
 using static Origins.OriginExtensions;
 
 namespace Origins {
-	public class OriginPlayer : ModPlayer {
+	public partial class OriginPlayer : ModPlayer {
 		#region variables and defaults
 		public const float rivenMaxMult = 0.3f;
 		public float rivenMult => (1f - rivenMaxMult) + Math.Max((Player.statLife / (float)Player.statLifeMax2) * (rivenMaxMult * 2), rivenMaxMult);
@@ -1198,7 +1198,7 @@ namespace Origins {
 		public override void PostUpdateBuffs() {
 			if (Player.whoAmI == Main.myPlayer) {
 				foreach (var quest in Quest_Registry.Quests) {
-					if (!quest.SaveToWorld && quest.PreUpdateInventoryEvent is not null) {
+					if (quest.PreUpdateInventoryEvent is not null) {
 						quest.PreUpdateInventoryEvent();
 					}
 				}
@@ -1530,7 +1530,7 @@ namespace Origins {
 			}
 			if (target.life <= 0) {
 				foreach (var quest in Quest_Registry.Quests) {
-					if (!quest.SaveToWorld && quest.KillEnemyEvent is not null) {
+					if (quest.KillEnemyEvent is not null) {
 						quest.KillEnemyEvent(target);
 					}
 				}
@@ -1948,6 +1948,7 @@ namespace Origins {
 					quest.LoadData(worldQuestsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
 				}
 			}
+			netInitialized = false;
 		}
 		public override void SaveData(TagCompound tag) {
 			if (eyndumCore is not null) {
@@ -2086,20 +2087,6 @@ namespace Origins {
 			if (drawInfo.drawPlayer.shield == Resin_Shield.ShieldID && resinShieldCooldown > 0) {
 				drawInfo.drawPlayer.shield = (sbyte)Resin_Shield.InactiveShieldID;
 			}
-		}
-		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
-			//return;
-			if (Main.netMode == NetmodeID.SinglePlayer) return;
-			ModPacket packet = Mod.GetPacket();
-			packet.Write(Origins.NetMessageType.sync_player);
-			packet.Write((byte)Player.whoAmI);
-			packet.Write((byte)quantumInjectors);
-			packet.Write((byte)defiledWill);
-			packet.Send(toWho, fromWho);
-		}
-		public void ReceivePlayerSync(BinaryReader reader) {
-			quantumInjectors = reader.ReadByte();
-			defiledWill = reader.ReadByte();
 		}
 		public override void FrameEffects() {
 			for (int i = 13; i < 18 + Player.extraAccessorySlots; i++) {

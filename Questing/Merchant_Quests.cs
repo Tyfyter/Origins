@@ -20,6 +20,7 @@ namespace Origins.Questing {
 					case 1:
 					KillEnemyEvent = (npc) => { // when the player kills something - 
 						if (npc.type == NPCID.Harpy) {// - if it's a harpy -
+							ShouldSync = true;
 							if (++progress >= target) { // - increment "progress", if the resulting value is at least "target" - 
 								Stage = 2; // - set stage to 2 (killed enough harpies)
 							}
@@ -72,6 +73,7 @@ namespace Origins.Questing {
 						 // - set npc chat text to "complete" text and quest stage to 3 (completed)
 					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Merchant.Blue_Bovine.Complete");
 					Stage = 3;
+					ShouldSync = true;
 					break;
 				}
 			}
@@ -111,14 +113,15 @@ namespace Origins.Questing {
 				KillEnemyEvent = null;
 				switch (stage) {
 					case 1:
-						KillEnemyEvent = (npc) => {
-							if (npc.type == NPCID.DoctorBones || npc.type == NPCID.Nymph || npc.type == NPCID.Tim) {
-								if (++progress >= target) {
-									Stage = 2;
-								}
+					KillEnemyEvent = (npc) => {
+						if (npc.type == NPCID.DoctorBones || npc.type == NPCID.Nymph || npc.type == NPCID.Tim) {
+							ShouldSync = true;
+							if (++progress >= target) {
+								Stage = 2;
 							}
-						};
-						break;
+						}
+					};
+					break;
 				}
 			}
 		}
@@ -131,38 +134,39 @@ namespace Origins.Questing {
 			if (npc.type != NPCID.Merchant) return false;
 			switch (Stage) {
 				case 2:
-					return true;
+				return true;
 			}
 			return false;
 		}
 		public override string GetDialogue() {
 			switch (Stage) {
 				case 2:
-					return "Complete Quest";
+				return "Complete Quest";
 
 				default:
-					if (Origins.npcChatQuestSelected) {
-						return "Accept";
-					}
-					return Language.GetTextValue(NameKey);
+				if (Origins.npcChatQuestSelected) {
+					return "Accept";
+				}
+				return Language.GetTextValue(NameKey);
 			}
 		}
 		public override void OnDialogue() {
 			switch (stage) {
 				case 0: {
-						if (Origins.npcChatQuestSelected) {
-							Stage = 1;
-						} else {
-							Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Merchant.Lottery_Ticket.Start", Main.LocalPlayer.Get2ndPersonReference("casual"));
-							Origins.npcChatQuestSelected = true;
-						}
-						break;
+					if (Origins.npcChatQuestSelected) {
+						Stage = 1;
+					} else {
+						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Merchant.Lottery_Ticket.Start", Main.LocalPlayer.Get2ndPersonReference("casual"));
+						Origins.npcChatQuestSelected = true;
 					}
+					break;
+				}
 				case 2: {
-						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Merchant.Lottery_Ticket.Complete");
-						Stage = 3;
-						break;
-					}
+					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Merchant.Lottery_Ticket.Complete");
+					Stage = 3;
+					ShouldSync = true;
+					break;
+				}
 			}
 		}
 		public override string GetJournalPage() {

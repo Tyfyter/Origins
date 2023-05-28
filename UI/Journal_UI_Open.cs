@@ -354,7 +354,7 @@ namespace Origins.UI {
 					} else if (tabMode == lastMode) {
 						position.X -= pixelSize * Math.Max(12 - timeSinceSwitch * 3, 0);
 					}
-					if (!PlayerInput.IgnoreMouseInterface && new Rectangle((int)position.X, (int)position.Y, (int)(pixelSize * 70), (int)(pixelSize * 30)).Contains(Main.MouseScreen)) {
+					if (!PlayerInput.IgnoreMouseInterface && new Rectangle((int)position.X, (int)position.Y, (int)(pixelSize * 40), (int)(pixelSize * 30)).Contains(Main.MouseScreen)) {
 						active = true;
 						Main.LocalPlayer.mouseInterface = true;
 						if (Main.mouseLeft && Main.mouseLeftRelease) {

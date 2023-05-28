@@ -35,7 +35,7 @@ namespace Origins.Buffs {
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().CorruptionAssimilation;
 
-			string text = $"{percent:P0}";
+			string text = $"{percent * 100:#0}%";
 			Color color = new Color(new Vector4(Main.buffAlpha[buffIndex]));
 			spriteBatch.DrawString(
 				FontAssets.ItemStack.Value,
@@ -78,7 +78,7 @@ namespace Origins.Buffs {
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().CrimsonAssimilation;
 
-			string text = $"{percent:P0}";
+			string text = $"{percent * 100:#0}%";
 			Color color = new Color(new Vector4(Main.buffAlpha[buffIndex]));
 			spriteBatch.DrawString(
 				FontAssets.ItemStack.Value,
@@ -119,7 +119,7 @@ namespace Origins.Buffs {
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().DefiledAssimilation;
 
-			string text = $"{percent:P0}";
+			string text = $"{percent * 100:#0}%";
 			Color color = new Color(new Vector4(Main.buffAlpha[buffIndex]));
 			spriteBatch.DrawString(
 				FontAssets.ItemStack.Value,
@@ -155,7 +155,7 @@ namespace Origins.Buffs {
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().RivenAssimilation;
 
-			string text = $"{percent:P0}";
+			string text = $"{percent * 100:#0}%";
 			Color color = new Color(new Vector4(Main.buffAlpha[buffIndex]));
 			spriteBatch.DrawString(
 				FontAssets.ItemStack.Value,

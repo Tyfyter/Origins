@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Projectiles;
+using Origins.Questing;
 using Origins.Tiles.Other;
 using Origins.UI;
 using System.Collections.Generic;
@@ -146,6 +147,11 @@ namespace Origins {
 			Origins.instance.LateLoad();
 		}
 		public override void PostUpdateInput() {
+		}
+		public override void PostUpdateTime() {
+			foreach (var quest in Quest_Registry.NetQuests) {
+				quest.CheckSync();
+			}
 		}
 		public static int GemStaffRecipeGroupID { get; private set; }
 		public static int DeathweedRecipeGroupID { get; private set; }

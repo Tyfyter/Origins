@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Graphics.Shaders;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -20,6 +22,7 @@ namespace Origins.Questing {
 		public string NameKey { get; protected set; }
 		public string NameValue => Language.GetTextValue(NameKey);
 		public virtual int Stage { get; set; }
+		public bool ShouldSync { get; protected set; }
 		public virtual bool HasStartDialogue(NPC npc) {
 			return false;
 		}
@@ -52,11 +55,15 @@ namespace Origins.Questing {
 			SetStaticDefaults();
 		}
 		protected sealed override void Register() {
+			if (SaveToWorld && Mod.Side != ModSide.Both) {
+				throw new Exception($"The Quest \"{NameValue}\" is saved to the world but not in a \"Both\" side mod, this is not allowed as it would break networking");
+			}
 			ModTypeLookup<Quest>.Register(this);
 			NameKey ??= $"Mods.{FullName}";
 			Quest_Registry.RegisterQuest(this);
 		}
 		public int Type { get; internal set; }
+		public int NetID { get; internal set; } = -1;
 		public static string StageTagOption(bool completed) => completed ? "/completed" : "";
 		public static void ConsumeItems(Item[] inventory, params (Predicate<Item> match, int count)[] items) {
 			for (int j = 0; j < inventory.Length; j++) {
@@ -75,5 +82,21 @@ namespace Origins.Questing {
 				}
 			}
 		}
+		public void CheckSync() {
+			if (ShouldSync) {
+				Sync();
+			}
+		}
+		public void Sync(int toClient = -1, int ignoreClient = -1) {
+			if (Main.netMode == NetmodeID.SinglePlayer) return;
+			ModPacket packet = Origins.instance.GetPacket();
+			packet.Write(Origins.NetMessageType.sync_quest);
+			packet.Write(Type);
+			SendSync(packet);
+			packet.Send(toClient, ignoreClient);
+			ShouldSync = false;
+		}
+		public virtual void SendSync(BinaryWriter writer) { }
+		public virtual void ReceiveSync(BinaryReader reader) { }
 	}
 }

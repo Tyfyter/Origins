@@ -109,6 +109,7 @@ namespace Origins.Questing {
 					);
 					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Complete");
 					Stage = 2;
+					ShouldSync = true;
 					break;
 				}
 			}
@@ -380,6 +381,7 @@ namespace Origins.Questing {
 					);
 					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Complete");
 					Stage = 2;
+					ShouldSync = true;
 					break;
 				}
 			}

@@ -108,7 +108,7 @@ ENEMY NPCS:
 (^) Buckethead Zombie
 (X) Cellarkeep
 (^) Chunky Slime
-(#4, ^2) Cleaver !!!
+(☻) Cleaver !!!
 (^) Cranivore
 (^) Crimbrain
 (#2, ^2) Defiled Ekko !!!

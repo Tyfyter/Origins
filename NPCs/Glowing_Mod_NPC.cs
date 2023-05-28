@@ -12,10 +12,24 @@ using Terraria.ModLoader;
 namespace Origins.NPCs {
 	public abstract class Glowing_Mod_NPC : ModNPC {
 		public virtual string GlowTexturePath => Texture + "_Glow";
+		//public virtual bool DrawOverTiles => false;
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			if (GlowTexture is not null) {
+				Tile tile = Framing.GetTileSafely(NPC.TopLeft.ToTileCoordinates());
+				if (!tile.HasTile || !Main.tileBlockLight[tile.TileType]) goto success;
+
+				tile = Framing.GetTileSafely(NPC.TopRight.ToTileCoordinates());
+				if (!tile.HasTile || !Main.tileBlockLight[tile.TileType]) goto success;
+
+				tile = Framing.GetTileSafely(NPC.BottomLeft.ToTileCoordinates());
+				if (!tile.HasTile || !Main.tileBlockLight[tile.TileType]) goto success;
+
+				tile = Framing.GetTileSafely(NPC.BottomRight.ToTileCoordinates());
+				if (!tile.HasTile || !Main.tileBlockLight[tile.TileType]) goto success;
+				return;
+				success:
 				SpriteEffects spriteEffects = SpriteEffects.None;
 				if (NPC.spriteDirection == 1) {
 					spriteEffects = SpriteEffects.FlipHorizontally;

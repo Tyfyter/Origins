@@ -1500,6 +1500,9 @@ namespace Origins {
 			float pLength = vector.LengthSquared();
 			return pLength > length * length ? Vector2.Normalize(vector) * length : vector;
 		}
+		public static Vector2 LerpEquals(ref Vector2 value, Vector2 value2, float amount) {
+			return value = Vector2.Lerp(value, value2, amount);
+		}
 		#endregion
 		public static Color Desaturate(this Color value, float multiplier) {
 			float R = value.R / 255f;

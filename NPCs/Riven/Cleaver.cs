@@ -9,6 +9,7 @@ namespace Origins.NPCs.Riven {
     public class Cleaver_Head : Cleaver, IRivenEnemy {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
+			NPC.width = NPC.height = 12;
 			NPC.lifeMax = 60;
 			NPC.defense = 7;
 			NPC.damage = 23;
@@ -54,7 +55,7 @@ namespace Origins.NPCs.Riven {
 		}
 	}
 
-	internal class Cleaver_Body : Rivenator {
+	internal class Cleaver_Body : Cleaver {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
@@ -63,10 +64,11 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerBody);
+			NPC.width = NPC.height = 12;
 		}
 	}
 
-	internal class Cleaver_Tail : Rivenator {
+	internal class Cleaver_Tail : Cleaver {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
@@ -75,6 +77,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerTail);
+			NPC.width = NPC.height = 12;
 		}
 	}
 
@@ -91,16 +94,29 @@ namespace Origins.NPCs.Riven {
 			if (NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;
 		}
 		public override void HitEffect(int hitDirection, double damage) {
-			if (NPC.life < 0) {
-				NPC current = Main.npc[NPC.realLife > -1 ? NPC.realLife : NPC.whoAmI];
+			NPC current = Main.npc[NPC.realLife > -1 ? NPC.realLife : NPC.whoAmI];
+			if (current.life < 0) {
+				int skip = Main.rand.Next(2);
 				while (current.ai[0] != 0) {
-					deathEffect(current);
+					if (++skip >= 2){
+						deathEffect(current);
+						skip = 0;
+					}
 					current = Main.npc[(int)current.ai[0]];
 				}
 			}
 		}
 		protected static void deathEffect(NPC npc) {
-			for (int i = 0; i < 5; i++) Gore.NewGore(npc.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
+			OriginExtensions.LerpEquals(
+				ref Gore.NewGoreDirect(
+					npc.GetSource_Death(),
+					npc.position,
+					npc.velocity,
+					Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+				).velocity,
+				npc.velocity,
+				0.5f
+			);
 		}
 		public override void OnHitPlayer(Player target, int damage, bool crit) {
 			OriginPlayer.InflictTorn(target, 300, 180, 0.9f);

@@ -9,9 +9,10 @@ namespace Origins.Questing {
 	public class Quest_Registry : ILoadable {
 		public static Dictionary<string, int> QuestIDs { get; internal set; }
 		public static List<Quest> Quests { get; internal set; }
+		public static List<Quest> NetQuests { get; internal set; }
 		/// <summary>
 		/// </summary>
-		/// <exception cref="System.Collections.Generic.KeyNotFoundException">
+		/// <exception cref="KeyNotFoundException">
 		/// The key does not exist in QuestIDs.
 		/// </exception>
 		public static Quest GetQuestByKey(string key) => QuestIDs.TryGetValue(key, out int type) ? Quests[type] : throw new KeyNotFoundException($"The given key '{key}' was not present in the dictionary.");
@@ -21,6 +22,11 @@ namespace Origins.Questing {
 			quest.Type = Quests.Count;
 			QuestIDs.Add(quest.FullName, quest.Type);
 			Quests.Add(quest);
+
+			if (quest.SaveToWorld) {
+				quest.NetID = NetQuests.Count;
+				NetQuests.Add(quest);
+			}
 		}
 		static void Setup() {
 			if (QuestIDs is null) QuestIDs = new Dictionary<string, int>();

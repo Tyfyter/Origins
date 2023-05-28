@@ -37,7 +37,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.consumable = false;
 		}
 		public override bool CanUseItem(Player player) {
-			if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().mojoFlaskCount > 0) {
+			if (player.GetModPlayer<OriginPlayer>().mojoFlaskCount > 0) {
 				player.potionDelayTime = 5 * 60;
 				return true;
 			}
