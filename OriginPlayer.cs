@@ -502,6 +502,8 @@ namespace Origins {
 			int rasterized = Player.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
 				rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 8), Player.buffTime[rasterized] - 1);
+			} else {
+				rasterizedTime = 0;
 			}
 			if (Player.breath > Player.breathMax) {
 				Player.breath = Player.breathMax;

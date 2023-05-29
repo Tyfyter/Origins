@@ -39,12 +39,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 
 			Vector2 pos = new Vector2((int)(drawInfo.ItemLocation.X - Main.screenPosition.X + itemCenter.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
 
-			int frame = 0;
+			int frame;
 			switch (drawPlayer.itemAnimationMax - drawPlayer.itemAnimation) {
+				case 4:
 				case 3:
 				frame = 1;
 				break;
-				case 4:
+				case 5:
 				case 2:
 				frame = 2;
 				break;
@@ -56,7 +57,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			drawInfo.DrawDataCache.Add(new DrawData(
 				UseTexture,
 				pos,
-				new Rectangle(0, 24 * (frame), 70, 22),
+				new Rectangle(0, 24 * frame, 70, 22),
 				Item.GetAlpha(lightColor),
 				itemRotation,
 				drawOrigin,

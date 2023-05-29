@@ -31,6 +31,7 @@ namespace Origins.Questing {
 		static void Setup() {
 			if (QuestIDs is null) QuestIDs = new Dictionary<string, int>();
 			if (Quests is null) Quests = new List<Quest>();
+			if (NetQuests is null) NetQuests = new List<Quest>();
 		}
 		public void Load(Mod mod) {
 			Setup();
@@ -39,6 +40,7 @@ namespace Origins.Questing {
 		public void Unload() {
 			QuestIDs = null;
 			Quests = null;
+			NetQuests = null;
 		}
 	}
 }
