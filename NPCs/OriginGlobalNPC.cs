@@ -104,7 +104,6 @@ namespace Origins.NPCs {
 				}
 				case NPCID.Dryad: {
 					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Mojo_Flask>());
-					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Captured_Mojo>());
 					if (Main.player[Main.myPlayer].ZoneGraveyard) {
 						if (!worldHasWastelands) {
 							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Defiled_Grass_Seeds>());

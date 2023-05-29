@@ -12,11 +12,11 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);
-			Item.rare = ItemRarityID.Orange;
-			Item.value = Item.sellPrice(gold: 6);
+			Item.rare = ItemRarityID.LightRed;
+			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
-			const float healing = 0.0000666f;
+			const float healing = 0.0000444f;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.CorruptionAssimilation -= Math.Min(healing, originPlayer.CorruptionAssimilation);
 			originPlayer.CrimsonAssimilation -= Math.Min(healing, originPlayer.CrimsonAssimilation);
