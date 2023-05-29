@@ -27,6 +27,7 @@ using Terraria.Utilities;
 namespace Origins.NPCs.Defiled {
 	[AutoloadBossHead]
 	public class Defiled_Amalgamation : ModNPC, IDefiledEnemy {
+
 		public override string Texture => "Origins/NPCs/Defiled/Defiled_Amalgamation_Body";
 		public override string BossHeadTexture => "Origins/UI/BossMap/Map_Icon_DA";
 		public static bool spawnDA = false;
@@ -153,6 +154,12 @@ namespace Origins.NPCs.Defiled {
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Mysterious_Spray>(), 4));
 		}
+		const int state_single_dash = 1;
+		const int state_projectiles = 2;
+		const int state_triple_dash = 3;
+		const int state_sidestep_dash = 4;
+		const int state_summon_roar = 5;
+		int AIState { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
 		public override void AI() {
 			NPC.TargetClosest();
 			if (NPC.HasPlayerTarget && Main.player[NPC.target].active && !Main.player[NPC.target].dead) {
@@ -167,7 +174,7 @@ namespace Origins.NPCs.Defiled {
 				int tickSize = NPC.lifeMax / tickCount;
 				float currentTick = (NPC.life / tickSize);
 
-				switch ((int)NPC.ai[0]) {
+				switch (AIState) {
 					//default state, uses default case so that negative values can be used for which action was taken last
 					default: {
 						CheckTrappedCollision();
@@ -187,20 +194,20 @@ namespace Origins.NPCs.Defiled {
 						OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), (Math.Abs(NPC.velocity.Y) > 16 ? 4 : 0.4f) * accelerationMult);
 						OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed, speed), (Math.Abs(NPC.velocity.X) > 16 ? 4 : 0.4f) * accelerationMult);
 
-						if (NPC.ai[0] <= 0) {
+						if (AIState <= 0) {
 							NPC.ai[1] += 0.75f + (0.25f * difficultyMult);
 							NPC.ai[1] += 0.5f * (difficultyMult - 1) * (1f - (currentTick / tickCount));
 							if (NPC.ai[1] > 300) {
 								WeightedRandom<int> rand = new(
 									Main.rand,
 									new Tuple<int, double>[] {
-									new(1, 1f),
-									new(2, 0.9f),
-									new(3, 0.35f),
-									new(4, 0.45f + (0.05f * difficultyMult))
+									new(state_single_dash, 1f),
+									new(state_projectiles, 0.9f),
+									new(state_triple_dash, 0.35f),
+									new(state_sidestep_dash, 0.45f + (0.05f * difficultyMult))
 									}
 								);
-								int lastUsedAttack = (-1) - (int)NPC.ai[0];
+								int lastUsedAttack = (-1) - AIState;
 
 								if (lastUsedAttack >= 0) {
 									rand.elements[lastUsedAttack] = new(rand.elements[lastUsedAttack].Item1, rand.elements[lastUsedAttack].Item2 / 3f);
@@ -212,7 +219,7 @@ namespace Origins.NPCs.Defiled {
 									rand.elements[2] = new(rand.elements[2].Item1, rand.elements[2].Item2 / 3f);
 								}
 
-								NPC.ai[0] = rand.Get();
+								AIState = rand.Get();
 								NPC.ai[2] = target.MountedCenter.X;
 								NPC.ai[3] = target.MountedCenter.Y;
 								NPC.ai[1] = 0;
@@ -221,14 +228,14 @@ namespace Origins.NPCs.Defiled {
 								int roarHP = NPC.lifeMax / (roarCount + 1);
 
 								if (roarCount - roars > NPC.life / roarHP) {
-									NPC.ai[0] = 5;
+									AIState = 5;
 									roars++;
 								}
 
-								if (NPC.ai[0] == 1) {
+								if (AIState == state_single_dash) {
 									SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-0.9f), NPC.Center);
 								}
-								if (NPC.ai[0] == 4) {
+								if (AIState == state_sidestep_dash) {
 									SoundEngine.PlaySound(Origins.Sounds.DefiledHurt.WithPitch(-0.5f), NPC.Center);
 								}
 							}
@@ -237,7 +244,7 @@ namespace Origins.NPCs.Defiled {
 					break;
 
 					//single dash
-					case 1: {
+					case state_single_dash: {
 						NPC.ai[1]++;
 						NPC.velocity = NPC.oldVelocity;
 						if (NPC.ai[1] < 20) {
@@ -253,14 +260,14 @@ namespace Origins.NPCs.Defiled {
 							NPC.velocity *= 0.99f;
 							NPC.oldVelocity = NPC.velocity;
 						} else if (NPC.ai[1] > 80) {
-							NPC.ai[0] = -1;
+							AIState = -state_single_dash;
 							NPC.ai[1] = 0;
 						}
 					}
 					break;
 
 					//projectile spray
-					case 2: {
+					case state_projectiles: {
 						CheckTrappedCollision();
 						NPC.ai[1] += Main.rand.NextFloat(0.9f, 1f);
 						float targetHeight = 96 + (float)(Math.Sin(++time * 0.02f) + 0.5f) * 32;
@@ -304,7 +311,7 @@ namespace Origins.NPCs.Defiled {
 							break;
 							default:
 							if (NPC.ai[1] > 100) {
-								NPC.ai[0] = -2;
+								AIState = -state_projectiles;
 								NPC.ai[1] = 0;
 							}
 							break;
@@ -313,7 +320,7 @@ namespace Origins.NPCs.Defiled {
 					break;
 
 					//triple dash and downtime after
-					case 3: {
+					case state_triple_dash: {
 						NPC.ai[1]++;
 						int cycleLength = 100 - (difficultyMult * 4);
 						int dashLength = 60 - (difficultyMult * 2);
@@ -345,7 +352,7 @@ namespace Origins.NPCs.Defiled {
 								rightArmTarget = 0;
 								armSpeed *= 3;
 							} else {
-								NPC.ai[0] = -3;
+								AIState = -state_triple_dash;
 								NPC.ai[1] = 0;
 							}
 						}
@@ -353,7 +360,7 @@ namespace Origins.NPCs.Defiled {
 					break;
 
 					//"sidestep" dash
-					case 4: {
+					case state_sidestep_dash: {
 						if ((int)NPC.ai[1] == 0) {
 							NPC.ai[2] = target.MountedCenter.X - Math.Sign(NPC.Center.X - target.MountedCenter.X) * 288;
 							NPC.ai[3] = target.MountedCenter.Y - 128;
@@ -368,7 +375,7 @@ namespace Origins.NPCs.Defiled {
 						OriginExtensions.LinearSmoothing(ref NPC.velocity.Y, Math.Clamp(-diffY, -speed, speed), 0.4f);
 						OriginExtensions.LinearSmoothing(ref NPC.velocity.X, Math.Clamp(-diffX, -speed * 4, speed * 4), 2.4f);
 						if (Math.Abs(diffX) < 64 || NPC.ai[1] > 25) {
-							NPC.ai[0] = -4;
+							AIState = -state_sidestep_dash;
 							NPC.ai[1] = 160 + (difficultyMult * 40);
 						}
 						NPC.noTileCollide = true;
@@ -376,7 +383,7 @@ namespace Origins.NPCs.Defiled {
 					break;
 
 					//"beckoning roar"
-					case 5: {
+					case state_summon_roar: {
 						NPC.ai[1]++;
 						NPC.velocity *= 0.9f;
 						if (NPC.ai[1] < 40) {
@@ -384,7 +391,7 @@ namespace Origins.NPCs.Defiled {
 							rightArmTarget = 0;
 							armSpeed *= 0.5f;
 						} else if (NPC.ai[1] > 60) {
-							NPC.ai[0] = 0;
+							AIState = 0;
 							NPC.ai[1] = -40 + (difficultyMult * 20);
 						} else if (NPC.ai[1] >= 45) {
 							NPC.velocity = new Vector2(0, -4);
@@ -445,7 +452,7 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public override bool? CanFallThroughPlatforms() {
-			if ((int)NPC.ai[0] == 3) {
+			if (AIState == state_triple_dash) {
 				int cycleLength = 100 - (DifficultyMult * 4);
 				int dashLength = 60 - (DifficultyMult * 2);
 				int activeLength = cycleLength * 2 + dashLength;
@@ -463,7 +470,7 @@ namespace Origins.NPCs.Defiled {
 			int cycleLength = 100 - (DifficultyMult * 4);
 			int dashLength = 60 - (DifficultyMult * 2);
 			int activeLength = cycleLength * 2 + dashLength;
-			if ((int)NPC.ai[0] == 3 && NPC.ai[1] > activeLength) {
+			if (AIState == state_triple_dash && NPC.ai[1] > activeLength) {
 				NPC.frame = new Rectangle(0, (frameHeight * (int)(Math.Pow((NPC.ai[1] - activeLength) / TripleDashCD, 3) * 5) + frameHeight * 7) % (frameHeight * 8), 122, frameHeight);
 			} else if (++NPC.frameCounter > 7) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + frameHeight) % (frameHeight * 3) + frameHeight * 4, 122, frameHeight);
@@ -473,7 +480,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public void Regenerate(out int lifeRegen) {
 			lifeRegen = 0;
-			if ((int)NPC.ai[0] != 3) {
+			if (AIState != state_triple_dash) {
 				int tickSize = NPC.lifeMax / (10 - DifficultyMult * 2);
 				int threshold = (((NPC.life - 1) / tickSize) + 1) * tickSize;
 				if (NPC.life < threshold) {
@@ -490,7 +497,7 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-			switch ((int)NPC.ai[0]) {
+			switch (AIState) {
 				case 2:
 				case 3:
 				break;
