@@ -108,7 +108,7 @@ ENEMY NPCS:
 (^) Buckethead Zombie
 (X) Cellarkeep
 (^) Chunky Slime
-(☻) Cleaver !!!
+(^) Cleaver
 (^) Cranivore
 (^) Crimbrain
 (#2, ^2) Defiled Ekko !!!
@@ -300,7 +300,7 @@ ACCESSORIES:
 (^) Messy Leech
 (^) Messy Magma Leech
 (^) Missile Arm Cannon
-(#, ^2) Mojo Injection !!!
+(^) Mojo Injection
 (^) Nitro Crate
 (^) No U Card
 (^) Olid Organ*
@@ -777,7 +777,7 @@ TILES:
 (#, ^2) Riven Torch
 (X) Riven Water Fountain
 
-(X) Cleansing Station
+(#, ^2) Cleansing Station !!!
 (X) Defiled Waste Organ
 (X) Elderforge
 (#, ^2) Fabricator
@@ -909,12 +909,11 @@ CONSUMABLES:
 
 (^) Absorption Potion
 (^) Antisolve Potion
-(^) Captured Mojo
 (^) Fervor Potion
 (^) Flask of Alkahest
 (^) Flask of Black Bile
 (#2, ^2) Focus Potion
-(#, ^2) Mojo Flask !!!
+(^) Mojo Flask
 (#2, ^2) Nullification Potion (Nullification potion doesn't need a buff graphic, it's a single-instance effect)
 (^) Protean Potion
 (^) Purification Potion

@@ -20,7 +20,7 @@ namespace Origins.Items.Other.Consumables {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.Ectoplasm);
 			recipe.AddIngredient(ItemID.Moonglow);
-			//recipe.AddIngredient(ModContent.ItemType<Mojo_Flask_4>();
+			recipe.AddIngredient(ModContent.ItemType<Mojo_Flask>());
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}

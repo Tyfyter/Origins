@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
-using Origins.Items.Materials;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -10,11 +8,11 @@ using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
 namespace Origins.Items.Other.Consumables {
-	public class Mojo_Flask : ModItem {
+    public class Mojo_Flask : ModItem {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Mojo Flask");
-			Tooltip.SetDefault("");
+			Tooltip.SetDefault("Mitigates all assimilation by 20% each for five uses");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationDelegated(GetFrame));
 			SacrificeTotal = 1;
 			ID = Type;
@@ -33,7 +31,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.useTime = 15;
 			Item.useAnimation = 15;
 			Item.healLife = 0;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.buyPrice(gold: 2);
 			Item.consumable = false;
 		}
 		public override bool CanUseItem(Player player) {
@@ -46,10 +44,10 @@ namespace Origins.Items.Other.Consumables {
 		public override bool? UseItem(Player player) {
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 			originPlayer.mojoFlaskCount--;
-			originPlayer.CorruptionAssimilation -= Math.Min(0.2f, originPlayer.CorruptionAssimilation);
-			originPlayer.CrimsonAssimilation -= Math.Min(0.2f, originPlayer.CrimsonAssimilation);
-			originPlayer.DefiledAssimilation -= Math.Min(0.2f, originPlayer.DefiledAssimilation);
-			originPlayer.RivenAssimilation -= Math.Min(0.2f, originPlayer.RivenAssimilation);
+			originPlayer.CorruptionAssimilation -= Math.Min(0.16f, originPlayer.CorruptionAssimilation);
+			originPlayer.CrimsonAssimilation -= Math.Min(0.16f, originPlayer.CrimsonAssimilation);
+			originPlayer.DefiledAssimilation -= Math.Min(0.16f, originPlayer.DefiledAssimilation);
+			originPlayer.RivenAssimilation -= Math.Min(0.16f, originPlayer.RivenAssimilation);
 			return true;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
