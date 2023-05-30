@@ -346,13 +346,13 @@ namespace Origins {
 			}
 			if (noLoot) return;
 			ApplyWeightedLootQueue(chestLoots,
+				/*example:
+				(SWITCH_MODE, MODE_ADD, 1f),
+				(ENQUEUE, ItemID.Sashimi, 0.5f),
+				(SWITCH_MODE, MODE_REPLACE, 1f),*/
 				(CHANGE_QUEUE, ChestID.Normal, 0b0000),
 				(ENQUEUE, ModContent.ItemType<Cyah_Nara>(), 1f),
 				//(ENQUEUE, ModContent.ItemType<Bang_Snap>(), 1f), 50 - 186 per chest
-				//example:
-				//(SWITCH_MODE, MODE_ADD, 1f),
-				//(ENQUEUE, ItemID.Sashimi, 0.5f),
-				//(SWITCH_MODE, MODE_REPLACE, 1f),
 				(CHANGE_QUEUE, ChestID.LivingWood, 0b0000),
 				(ENQUEUE, ModContent.ItemType<Woodsprite_Staff>(), 1f),
 

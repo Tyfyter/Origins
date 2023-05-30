@@ -569,7 +569,7 @@ MAGIC WEAPONS:
 (^) Infusion
 (^) Low Signal
 (^) Magnus
-(X) Manasynk !!!
+(#, ^2) Manasynk !!!
 (^) Slashswarm
 (^) Tones of Agony
 
@@ -614,7 +614,7 @@ SUMMONER WEAPONS:
 (#, ^2) Forest Staff !!!
 (^) Maelstrom Incantation
 (#, ^2) Ocean Amulet !!!
-(X) Ocotoral Staff !!!
+(#, ^2) Ocotoral Bud !!!
 (^) Rotted Worm Staff
 (^) Teardown
 (^) Woodsprite Staff
@@ -730,7 +730,7 @@ TILES:
 (^) Lost Ore
 (X) Mildew
 (^) Peat Moss*
-(X) Primordial Permafrost !!!
+(#, ^2) Primordial Permafrost !!!
 (^) Riven Grass
 (^) Spug Flesh
 (@5, ^3) Sulphur Stone
@@ -777,7 +777,7 @@ TILES:
 (#, ^2) Riven Torch
 (X) Riven Water Fountain
 
-(#, ^2) Cleansing Station !!!
+(^) Cleansing Station
 (X) Defiled Waste Organ
 (X) Elderforge
 (#, ^2) Fabricator
