@@ -44,14 +44,15 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bullet);
-			Projectile.width = 26;
-			Projectile.height = 4;
+			Projectile.width = 6;
+			Projectile.height = 6;
 			Projectile.friendly = true;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 300;
+			Projectile.alpha = 0;
 		}
 		public override void AI() {
-
+			Projectile.rotation -= MathHelper.PiOver2;
 		}
 		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
 			target.AddBuff(BuffID.Bleeding, Main.rand.Next(119, 241));
