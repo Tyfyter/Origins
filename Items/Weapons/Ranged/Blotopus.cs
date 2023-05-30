@@ -25,10 +25,9 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item2;
 			Item.autoReuse = true;
-
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (type == AmmoID.Bullet) type = Item.shoot;
+			if (type == ProjectileID.Bullet) type = Item.shoot;
 			velocity = velocity.RotatedByRandom(0.1f);
 		}
 		public override Vector2? HoldoutOffset() {
