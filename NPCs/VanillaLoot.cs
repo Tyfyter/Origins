@@ -123,7 +123,7 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 5));
 				break;
 				case NPCID.GiantTortoise:
-				//npcLoot.Add(ItemDropRule.ByCondition(condition: DownedPlantera,ModContent.ItemType<Rocodile>(), 15));
+				npcLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Rocodile>(), 17, 1, 1, new LootConditions.DownedPlantera()));
 				break;
 				case NPCID.Skeleton:
 				case NPCID.SkeletonAlien:

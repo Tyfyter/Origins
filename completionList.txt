@@ -651,7 +651,7 @@ EXPLOSIVE WEAPONS:
 (^) Bomb Launcher (needs to be balanced)
 (^) Brainade
 (^) Defiled Spirit
-(#3(needs flash shader), ^2) Flashbang !!!
+(#4, ^2) Flashbang !!!
 (^) Floaty Bomb
 (^) Hand Grenade Launcher
 (#3, ^2) Hellfire Bomb !!!
@@ -673,7 +673,7 @@ EXPLOSIVE WEAPONS:
 
 (#2, ^2) Abrasion Blaster
 (#2, ^2) Ace Shrapnel
-(#3(make use anim longer), ^2) Bomboomstick
+(^) Bomboomstick
 (#2, ^2) Chlorodynamite !!!
 (^) Crystal Bomb
 (^) Crystal Grenade
@@ -682,7 +682,7 @@ EXPLOSIVE WEAPONS:
 (^) Mine Flayer
 (^) Nuclear Arm*
 (#2, ^2) Omni-Directional Claymore
-(#3(obtain help), ^2) Rocodile
+(^) Rocodile
 (X) Self-Destruct
 (#, ^2) Shrapnel Bomb
 (X) Starforge

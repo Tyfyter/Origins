@@ -9,6 +9,7 @@
 		}
 		ItemDropConditions: {
 			SoulOfNight: Drops in Underground evil biomes
+			DownedPlantBoss: Found after defeating Plantera
 		}
 		FishQuest: {
 			Prikish: {

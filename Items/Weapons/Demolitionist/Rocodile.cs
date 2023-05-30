@@ -45,7 +45,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.scale = 0.75f;
 		}
 		public override void AI() {
-			Projectile.rotation = Projectile.velocity.ToRotation();
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 			float dist = 641;
 			if (dist < 641) Projectile.velocity = (Projectile.velocity + new Vector2(force, 0).SafeNormalize(Vector2.Zero) * Projectile.velocity.Length());
 			int num248 = Dust.NewDust(Projectile.Center - Projectile.velocity * 0.5f - new Vector2(0, 4), 0, 0, DustID.Torch, 0f, 0f, 100);

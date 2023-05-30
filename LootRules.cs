@@ -91,6 +91,15 @@ namespace Origins.LootConditions {
 			return Language.GetTextValue("Bestiary_ItemDropConditions.DesertKeyCondition");
 		}
 	}
+	public class DownedPlantera : IItemDropRuleCondition {
+		public bool CanDrop(DropAttemptInfo info) {
+			return NPC.downedPlantBoss;
+		}
+		public bool CanShowItemDropInUI() => Main.hardMode;
+		public string GetConditionDescription() {
+			return Language.GetTextValue("Mods.Origins.ItemDropConditions.DownedPlantBoss");
+		}
+	}
 	public class SoulOfNight : IItemDropRuleCondition, IProvideItemConditionDescription {
 		public bool CanDrop(DropAttemptInfo info) {
 			if (Conditions.SoulOfWhateverConditionCanDrop(info)) {

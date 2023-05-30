@@ -41,14 +41,19 @@ namespace Origins.Items.Weapons.Demolitionist {
 
 			int frame;
 			switch (drawPlayer.itemAnimationMax - drawPlayer.itemAnimation) {
-				case 4:
-				case 3:
-				frame = 1;
-				break;
+				case 7:
+				case 6:
 				case 5:
+				case 4:
+					frame = 1;
+					break;
+
+				case 9:
+				case 8:
+				case 3:
 				case 2:
-				frame = 2;
-				break;
+					frame = 2;
+					break;
 				default:
 				frame = 0;
 				break;
