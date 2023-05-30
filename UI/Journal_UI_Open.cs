@@ -137,7 +137,7 @@ namespace Origins.UI {
 						}
 						currentText.Append(words[j]);
 					}
-					currentPage.Add(new TextSnippet(currentText.ToString(), snippetColor));
+					currentPage.Add(new TextSnippet(currentText.ToString(), snippetColor, snippetScale));
 					currentText.Clear();
 					if (lines.Length > lineNum && realLine) {
 						cursor.Y += font.LineSpacing * num3 * baseScale.Y;

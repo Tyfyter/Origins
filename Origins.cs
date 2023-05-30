@@ -384,6 +384,9 @@ namespace Origins {
 				"queststage",
 				"qs"
 			});
+			ChatManager.Register<Header_Snippet_Handler>(new string[]{
+				"header"
+			});
 			SetBonusTriggerKey = KeybindLoader.RegisterKeybind(this, "Trigger Set Bonus", Keys.Q.ToString());
 			InspectItemKey = KeybindLoader.RegisterKeybind(this, "Inspect Item", "Mouse3");
 			Sounds.MultiWhip = new SoundStyle("Terraria/Sounds/Item_153", SoundType.Sound) {
