@@ -83,14 +83,14 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.DD2SquireSonicBoom);
-			Projectile.damage = 80;
+			Projectile.damage = 137;
 			Projectile.DamageType = DamageClass.Generic;
 			Projectile.alpha = 0;
 			Projectile.extraUpdates = 0;
 			Projectile.aiStyle = 0;
 			Projectile.timeLeft = 15;
 			Projectile.penetrate = -1;
-			Projectile.knockBack = 7;
+			Projectile.knockBack = 14;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 		}

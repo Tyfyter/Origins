@@ -342,7 +342,7 @@ ACCESSORIES:
 (X) Grapple Ravel
 (^) Ninja Ravel
 (X) Ornament of Metamorphosis
-(^) Ravel
+(#2, ^2) Ravel                                     (new plans)
 (X) Scroll Ravel
 (X) Sigil of the Machine
 (X) Slick Ravel
@@ -519,7 +519,7 @@ RANGED WEAPONS:
 (^) Longbone
 (^) Magma Grappler
 (^) Riven Splitter
-(X) Shardcannon !!!
+(#, ^2) Shardcannon !!!
 (^) Sleetfire
 (^) Tendon Tear
 (^) The Kruncher
