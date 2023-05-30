@@ -32,7 +32,7 @@ namespace Origins.Tiles.Other {
 			//spriteBatch.Draw(VineTexture, new Vector2((i + 12) * 16, (j + 12) * 16) - Main.screenPosition, new Rectangle(curr.TileFrameX * 18, curr.TileFrameY * 18, 16, 16), Lighting.GetColor(i, j));
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			OriginSystem originWorld = OriginSystem.instance;
+			OriginSystem originWorld = OriginSystem.Instance;
 			originWorld.AddFiberglassFrameTile(i, j);
 			return true;
 		}

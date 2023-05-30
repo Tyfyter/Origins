@@ -53,12 +53,12 @@ namespace Origins {
 			}
 		}
 		internal bool hasDefiled = false;
-		public bool HasDefiledWastelands => instance.hasDefiled;
+		public bool HasDefiledWastelands => Instance.hasDefiled;
 		internal bool hasRiven = false;
-		public bool HasRivenHive => instance.hasRiven;
+		public bool HasRivenHive => Instance.hasRiven;
 		private static double? _worldSurfaceLow;
 		public static double worldSurfaceLow => _worldSurfaceLow ?? Main.worldSurface - 165;
-		public static byte WorldEvil => instance.worldEvil;
+		public static byte WorldEvil => Instance.worldEvil;
 		public static bool DefiledResurgenceActive => Main.hardMode && !NPC.downedPlantBoss;//true;
 		public const byte evil_corruption = 0b0001;//1
 		public const byte evil_crimson = 0b0010;//2
@@ -78,6 +78,8 @@ namespace Origins {
 		HashSet<Point> fiberglassFrameSet;
 		Task fiberglassFrameTask;
 		Point brineCenter;
+		public bool forceThunderstorm = false;
+		public int forceThunderstormDelay = 0;
 
 		public bool taxCollectorWearsPartyhat;
 		public static int MimicSetLevel {
@@ -93,7 +95,9 @@ namespace Origins {
 		public List<Point> Defiled_Hearts { get; set; } = new List<Point>();
 		private List<Point> _abandonedBombs;
 		public List<Point> AbandonedBombs => _abandonedBombs ??= new List<Point>();
-
+		public override void OnWorldUnload() {
+			forceThunderstorm = false;
+		}
 		public override void LoadWorldData(TagCompound tag) {
 			Mod.Logger.Info("LoadWorldData called on netmode " + Main.netMode);
 			if (tag.ContainsKey("peatSold")) {
@@ -103,6 +107,7 @@ namespace Origins {
 			if (tag.ContainsKey("defiledHearts")) Defiled_Hearts = tag.Get<List<Vector2>>("defiledHearts").Select(Utils.ToPoint).ToList();
 			tag.TryGet("hasDefiled", out hasDefiled);
 			tag.TryGet("hasRiven", out hasRiven);
+			tag.TryGet("forceThunderstorm", out forceThunderstorm);
 
 			defiledResurgenceTiles = new List<(int, int)>() { };
 			defiledAltResurgenceTiles = new List<(int, int, ushort)>() { };
@@ -114,6 +119,7 @@ namespace Origins {
 			tag.Add("worldEvil", worldEvil);
 			tag.Add("hasDefiled", hasDefiled);
 			tag.Add("hasRiven", hasRiven);
+			tag.Add("forceThunderstorm", forceThunderstorm);
 			tag.Add("defiledHearts", Defiled_Hearts.Select(Utils.ToVector2).ToList());
 			if (_worldSurfaceLow.HasValue) {
 				tag.Add("worldSurfaceLow", _worldSurfaceLow);

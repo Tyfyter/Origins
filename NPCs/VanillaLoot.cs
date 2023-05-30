@@ -201,7 +201,10 @@ namespace Origins.NPCs {
 		public override void OnKill(NPC npc) {
 			switch (npc.type) {
 				case NPCID.SkeletronHead:
-				if (!NPC.downedBoss3) GenFelnumOre();
+				if (!NPC.downedBoss3) {
+					GenFelnumOre();
+					OriginSystem.Instance.forceThunderstormDelay = Main.rand.Next(600, (int)(Main.dayLength / 2));
+				}
 				break;
 				default:
 				break;

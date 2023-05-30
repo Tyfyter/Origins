@@ -150,7 +150,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			if (distanceToIdlePosition > 1000f) {
 				Projectile.ai[1]++;
 				if (Projectile.ai[1] > 3600f) {
-					OriginSystem.instance.AbandonedBombs.Add(Projectile.Center.ToTileCoordinates());
+					OriginSystem.Instance.AbandonedBombs.Add(Projectile.Center.ToTileCoordinates());
 					Projectile.active = false;
 				}
 				if (Main.myPlayer == player.whoAmI && distanceToIdlePosition > 2000f) {

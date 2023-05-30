@@ -4,8 +4,10 @@ using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Tiles.Other;
 using Origins.UI;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -14,18 +16,17 @@ using static Tyfyter.Utils.UITools;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
-		public static OriginSystem instance { get; private set; }
+		public static OriginSystem Instance => ModContent.GetInstance<OriginSystem>();
 		public UserInterface setBonusUI;
 		public UserInterfaceWithDefaultState journalUI;
 		public override void Load() {
-			instance = this;
 			setBonusUI = new UserInterface();
 			journalUI = new UserInterfaceWithDefaultState() {
 				DefaultUIState = new Journal_UI_Button()
 			};
 		}
 		public override void Unload() {
-			instance = null;
+
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.MiningHelmet);
@@ -279,6 +280,32 @@ namespace Origins {
 				if (Main.projectile[i].TryGetGlobalProjectile(out OriginGlobalProj global) && global.isFromMitosis) {
 					Main.player[Main.projectile[i].owner].ownedProjectileCounts[Main.projectile[i].type]--;
 				}
+			}
+		}
+		FastStaticFieldInfo<Main, float> _minWind;
+		FastStaticFieldInfo<Main, float> _maxWind;
+		public override void PreUpdateEntities() {
+			if (!NPC.downedBoss3 && Main.raining) {
+				float minWind = Math.Abs((float)(_minWind ??= new("_minWind", BindingFlags.NonPublic, true))) - 0.001f;
+				Main.windSpeedTarget = MathHelper.Clamp(Main.windSpeedTarget, -minWind, minWind);
+			} else if (forceThunderstorm) {
+				float maxWind = Math.Abs((float)(_maxWind ??= new("_maxWind", BindingFlags.NonPublic, true)));
+				if (Main.IsItRaining && Math.Abs(Main.windSpeedTarget) >= MathHelper.Lerp(maxWind, 0.8f, 0.5f)) {
+					forceThunderstorm = false;
+				} else {
+					if (!Main.IsItRaining && Main.rand.NextBool(6)) {
+						Main.numClouds += 1;
+						if (Main.numClouds > 100) {
+							Main.StartRain();
+						}
+					}
+					if (Math.Abs(Main.windSpeedTarget) < maxWind && Main.rand.NextBool(4)) {
+						Main.windSpeedTarget += Main.rand.Next(5, 26) * 0.001f * (Main.windSpeedTarget < 0 ? -1 : 1);
+						Main.windSpeedTarget = MathHelper.Clamp(Main.windSpeedTarget, -0.8f, 0.8f);
+					}
+				}
+			}else if (forceThunderstormDelay > 0) {
+				if (--forceThunderstormDelay <= 0) forceThunderstorm = true;
 			}
 		}
 	}

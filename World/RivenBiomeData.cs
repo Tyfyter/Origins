@@ -591,7 +591,7 @@ namespace Origins.World.BiomeData {
 				int y = (int)worldSurface - 50;
 				for (; !Main.tile[evilBiomePosition, y].HasSolidTile(); y++) ;
 				Riven_Hive.Gen.StartHive(evilBiomePosition, y);
-				OriginSystem.instance.hasDefiled = true;
+				OriginSystem.Instance.hasDefiled = true;
 			}
 
 			public override void PostGenerateEvil() { }

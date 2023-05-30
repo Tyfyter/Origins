@@ -630,7 +630,7 @@ namespace Origins.World.BiomeData {
 
 				Defiled_Wastelands.Gen.StartDefiled(start.X, start.Y);
 				defiledHearts.Push(start);
-				OriginSystem.instance.hasDefiled = true;
+				OriginSystem.Instance.hasDefiled = true;
 			}
 
 			public override void PostGenerateEvil() {
@@ -645,7 +645,7 @@ namespace Origins.World.BiomeData {
 					}
 					TileObject.CanPlace(heart.X, heart.Y, (ushort)ModContent.TileType<Defiled_Heart>(), 0, 1, out var data);
 					TileObject.Place(data);
-					OriginSystem.instance.Defiled_Hearts.Add(heart);
+					OriginSystem.Instance.Defiled_Hearts.Add(heart);
 				}
 			}
 		}

@@ -15,7 +15,7 @@ namespace Origins.Questing {
 					if (self.IsABestiaryIconDummy) {
 						return false;
 					}
-					return BirthdayParty.PartyIsUp && (OriginSystem.instance?.taxCollectorWearsPartyhat ?? false);
+					return BirthdayParty.PartyIsUp && (OriginSystem.Instance?.taxCollectorWearsPartyhat ?? false);
 				}
 				return orig(self);
 			};
@@ -32,7 +32,7 @@ namespace Origins.Questing {
 				UpdateInventoryEvent = null;
 				switch (stage) {
 					case 1:
-					if (OriginSystem.instance?.taxCollectorWearsPartyhat ?? false) {// in case someone somehow 
+					if (OriginSystem.Instance?.taxCollectorWearsPartyhat ?? false) {// in case someone somehow 
 						Stage = 2;
 					}
 					break;
