@@ -21,7 +21,8 @@ float2 uLegacyArmorSheetSize;
 
 float4 BlackHole(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0{
 	coords-=float2(0.5,0.5);
-	return float4(uColor.r,uColor.g,uColor.b,uOpacity-pow(length(coords)/uScale,max(uSaturation,0)));
+	float factor = uOpacity - pow(length(coords) / uScale, max(uSaturation, 0));
+	return float4(uColor.r * factor, uColor.g * factor, uColor.b * factor, factor);
 }
 
 technique Technique1{

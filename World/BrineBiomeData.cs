@@ -208,35 +208,40 @@ namespace Origins.World.BiomeData {
 								Vector2 otherDiff = v1 - surfaceConnection;
 								float otherLength = otherDiff.Length();
 								otherDiff /= otherLength;
-								return potentialLength > otherLength && Vector2.Dot(potentialDiff, otherDiff) > 0.15f;
+								float dot = Vector2.Dot(potentialDiff, otherDiff);
+								return potentialLength > otherLength && dot > 0.15f;
 							}
 						);
 					}).ToList();
-					Vector2 targetCell = genRand.Next(validOthers);
-					Vector2 diff = targetCell - surfaceConnection;
-					float length = diff.Length();
-					diff /= length;
-					Vector2 pos = surfaceConnection;
-					Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
-					while (!currentTile.HasTile) {
-						pos += diff;
-						currentTile = Framing.GetTileSafely(pos.ToPoint());
+					if (validOthers.Count > 0) {
+						Vector2 targetCell = genRand.Next(validOthers);
+						Vector2 diff = targetCell - surfaceConnection;
+						float length = diff.Length();
+						diff /= length;
+						Vector2 pos = surfaceConnection;
+						Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
+						while (!currentTile.HasTile) {
+							pos += diff;
+							currentTile = Framing.GetTileSafely(pos.ToPoint());
+						}
+						int wallThickness = 0;
+						while (currentTile.HasTile) {
+							pos += diff;
+							currentTile = Framing.GetTileSafely(pos.ToPoint());
+							wallThickness++;
+						}
+						GenRunners.WalledVeinRunner(
+							(int)pos.X, (int)pos.Y,
+							genRand.NextFloat(1.8f, 3),
+							-diff.RotatedByRandom(0.1f),
+							wallThickness * genRand.NextFloat(0.8f, 1f),
+							stoneID,
+							1,
+							wallType: stoneWallID
+						);
+					} else {
+						Origins.instance.Logger.Warn("No brine pool surface connection generated, connection may have already been generated");
 					}
-					int wallThickness = 0;
-					while (currentTile.HasTile) {
-						pos += diff;
-						currentTile = Framing.GetTileSafely(pos.ToPoint());
-						wallThickness++;
-					}
-					GenRunners.WalledVeinRunner(
-						(int)pos.X, (int)pos.Y,
-						genRand.NextFloat(1.8f, 3),
-						-diff.RotatedByRandom(0.1f),
-						wallThickness * genRand.NextFloat(0.8f, 1f),
-						stoneID,
-						1,
-						wallType: stoneWallID
-					);
 				}
 				bool[] validTiles = TileID.Sets.CanBeClearedDuringGeneration.ToArray();
 				validTiles[stoneID] = true;

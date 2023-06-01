@@ -34,7 +34,10 @@ namespace Origins.World.BiomeData {
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.ZoneDefiledProgress = Math.Min(OriginSystem.defiledTiles - (Defiled_Wastelands.NeededTiles - Defiled_Wastelands.ShaderTileCount), Defiled_Wastelands.ShaderTileCount) / Defiled_Wastelands.ShaderTileCount;
+			originPlayer.ZoneDefiledProgress = (Math.Min(
+				OriginSystem.defiledTiles - (Defiled_Wastelands.NeededTiles - Defiled_Wastelands.ShaderTileCount),
+				Defiled_Wastelands.ShaderTileCount
+			) / Defiled_Wastelands.ShaderTileCount) * 0.9f;
 			LinearSmoothing(ref originPlayer.ZoneDefiledProgressSmoothed, originPlayer.ZoneDefiledProgress, OriginSystem.biomeShaderSmoothing);
 
 			return OriginSystem.defiledTiles > Defiled_Wastelands.NeededTiles;
@@ -244,7 +247,7 @@ namespace Origins.World.BiomeData {
 						placed = Framing.GetTileSafely(x, y).TileIsType(defiledAltar);
 					}
 				}
-				ushort defiledPot = (ushort)ModContent.TileType<Defiled_Pot>();
+				/*ushort defiledPot = (ushort)ModContent.TileType<Defiled_Pot>();
 				int placedPots = 0;
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
 					int x = (int)i + genRand.Next(-100, 101);
@@ -263,7 +266,7 @@ namespace Origins.World.BiomeData {
 					if (Framing.GetTileSafely(x, y).TileIsType(defiledPot)) placedPots++;
 				}
 				Origins.instance.Logger.Info($"Placed {placedPots} defiled pots");
-				Origins.instance.Logger.Info($"Generated {{$Defiled_Wastelands}} with {fisureCount} fissures");
+				Origins.instance.Logger.Info($"Generated {{$Defiled_Wastelands}} with {fisureCount} fissures");*/
 				//Main.NewText($"Generated Defiled Wastelands with {fisureCount} fissures");
 			}
 			public static void DefiledCave(float i, float j, float sizeMult = 1f) {
@@ -567,7 +570,7 @@ namespace Origins.World.BiomeData {
 			MimicType = ModContent.NPCType<Defiled_Mimic>();
 
 			WallContext = new WallContext()
-				.AddReplacement<Walls.Defiled_Stone_Wall>(
+				.AddReplacement<Defiled_Stone_Wall>(
 					WallID.Stone,
 					WallID.CaveUnsafe,
 					WallID.Cave2Unsafe,
@@ -587,12 +590,12 @@ namespace Origins.World.BiomeData {
 					WallID.CrimsonUnsafe2,
 					WallID.CrimsonUnsafe3,
 					WallID.CrimsonUnsafe4
-				).AddReplacement<Walls.Defiled_Sandstone_Wall>(
+				).AddReplacement<Defiled_Sandstone_Wall>(
 					WallID.Sandstone,
 					WallID.CorruptSandstone,
 					WallID.CrimsonSandstone,
 					WallID.HallowSandstone
-				).AddReplacement<Walls.Hardened_Defiled_Sand_Wall>(
+				).AddReplacement<Hardened_Defiled_Sand_Wall>(
 					WallID.HardenedSand,
 					WallID.CorruptHardenedSand,
 					WallID.CrimsonHardenedSand,
@@ -620,6 +623,18 @@ namespace Origins.World.BiomeData {
 		public class Defiled_Wastelands_Generation_Pass : EvilBiomeGenerationPass {
 			Stack<Point> defiledHearts = new Stack<Point>() { };
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
+				for (int offset = 0; offset < 150; offset = offset > 0 ? (-offset) : ((-offset) + 1)) {
+					for (int j = (int)OriginSystem.worldSurfaceLow; j < Main.maxTilesY; j++) {
+						Tile tile = Framing.GetTileSafely(evilBiomePosition + offset, j);
+						if (!tile.HasTile) continue;
+						if (tile.TileType == TileID.JungleGrass) break;
+						evilBiomePosition += offset;
+						evilBiomePosition += evilBiomePositionWestBound;
+						evilBiomePosition += evilBiomePositionEastBound;
+						goto positioned;
+					}
+				}
+				positioned:
 				defiledWastelandsWestEdge ??= new();
 				defiledWastelandsEastEdge ??= new();
 				defiledWastelandsWestEdge.Add(evilBiomePositionWestBound);

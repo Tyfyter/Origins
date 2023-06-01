@@ -55,6 +55,8 @@ namespace Origins {
 		public static int[] MagicTripwireRange { get => magicTripwireRange; }
 		static int[] magicTripwireDetonationStyle;
 		public static int[] MagicTripwireDetonationStyle { get => magicTripwireDetonationStyle; }
+		public static Dictionary<int, (ushort potType, int minStyle, int maxStyle)> PotType { get; private set; }
+		public static Dictionary<int, (ushort pileType, int minStyle, int maxStyle)> PileType { get; private set; }
 		public static ModKeybind SetBonusTriggerKey { get; private set; }
 		public static ModKeybind InspectItemKey { get; private set; }
 		#region Armor IDs
@@ -306,6 +308,8 @@ namespace Origins {
 				ProjectileID.LastPrism, 2f,
 				ProjectileID.LastPrismLaser, 2f
 			);
+			PotType = new();
+			PileType = new();
 
 			HelmetGlowMasks = new();
 			BreastplateGlowMasks = new();
@@ -491,6 +495,8 @@ namespace Origins {
 			flatDamageMultiplier = null;
 			RasterizeAdjustment = null;
 			homingEffectivenessMultiplier = null;
+			PotType = null;
+			PileType = null;
 			artifactMinion = null;
 			celestineBoosters = null;
 			perlinFade0 = null;

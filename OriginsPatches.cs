@@ -211,8 +211,9 @@ namespace Origins {
 			IL.Terraria.NPC.StrikeNPC += NPC_StrikeNPC;
 			On.Terraria.DataStructures.PlayerDeathReason.GetDeathText += PlayerDeathReason_GetDeathText;
 			On.Terraria.Player.KillMe += Player_KillMe;// should have no effect, but is necessary for custom death text somehow
+			On.Terraria.WorldGen.PlacePot += WorldGen_PlacePot;
+			On.Terraria.WorldGen.PlaceSmallPile += WorldGen_PlaceSmallPile;
 		}
-
 		private void Player_KillMe(On.Terraria.Player.orig_KillMe orig, Player self, PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp) {
 			orig(self, damageSource, dmg, hitDirection, pvp);
 		}
@@ -793,6 +794,22 @@ namespace Origins {
 			orig(clearCounts);
 		}
 		#endregion
+		#region worldgen
+		private bool WorldGen_PlacePot(On.Terraria.WorldGen.orig_PlacePot orig, int x, int y, ushort type, int style) {
+			Tile placedOn = Framing.GetTileSafely(x, y + 1);
+			if (PotType.TryGetValue(placedOn.TileType, out var potData)) {
+				return orig(x, y, potData.potType, WorldGen.genRand.Next(potData.minStyle, potData.maxStyle));
+			}
+			return orig(x, y, type, style);
+		}
+		private bool WorldGen_PlaceSmallPile(On.Terraria.WorldGen.orig_PlaceSmallPile orig, int i, int j, int X, int Y, ushort type) {
+			Tile placedOn = Framing.GetTileSafely(i, j + 1);
+			if (PileType.TryGetValue(placedOn.TileType, out var pileData)) {
+				return orig(i, j, WorldGen.genRand.Next(pileData.minStyle, pileData.maxStyle), 0, pileData.pileType);
+			}
+			return orig(i, j, X, Y, type);
+		}
+		#endregion worldgen
 		#region graphics
 		private void LegacyPlayerRenderer_DrawPlayerInternal(On.Terraria.Graphics.Renderers.LegacyPlayerRenderer.orig_DrawPlayerInternal orig, Terraria.Graphics.Renderers.LegacyPlayerRenderer self, Camera camera, Player drawPlayer, Vector2 position, float rotation, Vector2 rotationOrigin, float shadow, float alpha, float scale, bool headOnly) {
 			bool shaded = false;

@@ -68,16 +68,27 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AI() {
 			Lighting.AddLight(Projectile.Center, new Vector3(1, 1, 1));
 		}
-        public override void PostDraw(Color lightColor) {
+        public override bool PreDraw(ref Color lightColor) {
+			const float scale = 2f;
 			Main.spriteBatch.Restart(SpriteSortMode.Immediate);
-			DrawData data = new DrawData(Mod.Assets.Request<Texture2D>("Projectiles/Pixel").Value, Projectile.Center - Main.screenPosition, new Rectangle(0, 0, 1, 1), new Color(255, 255, 255, 100), 0, new Vector2(0.5f, 0.5f), new Vector2(160, 160) * (Projectile.scale - 0.1f), SpriteEffects.None, 0);
+			DrawData data = new DrawData(
+				Mod.Assets.Request<Texture2D>("Projectiles/Pixel").Value,
+				Projectile.Center - Main.screenPosition,
+				new Rectangle(0, 0, 1, 1),
+				new Color(0, 0, 0, 255),
+				0, new Vector2(0.5f, 0.5f),
+				new Vector2(160, 160) * scale,
+				SpriteEffects.None,
+			0);
+			float percent = Projectile.timeLeft / 10f;
 			Origins.blackHoleShade.UseOpacity(0.985f);
-			Origins.blackHoleShade.UseSaturation(3f + 1f);
+			Origins.blackHoleShade.UseSaturation(0f + percent);
 			Origins.blackHoleShade.UseColor(1, 1, 1);
-			Origins.blackHoleShade.Shader.Parameters["uScale"].SetValue(0.7f);
+			Origins.blackHoleShade.Shader.Parameters["uScale"].SetValue(0.5f);
 			Origins.blackHoleShade.Apply(data);
 			Main.EntitySpriteDraw(data);
 			Main.spriteBatch.Restart();
+			return false;
 		}
     }
 }
