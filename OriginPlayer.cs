@@ -92,6 +92,7 @@ namespace Origins {
 		public bool riptideSet = false;
 		public bool riptideLegs = false;
 		public int riptideDashTime = 0;
+		public int meatDashTime = 0;
 		public bool necroSet = false;
 		public bool novaSet = false;
 		public bool tendonSet = false;
@@ -197,6 +198,7 @@ namespace Origins {
 		public bool solarPanel = false;
 		public bool dangerBarrel = false;
 		public bool pincushion = false;
+		public bool meatScribe = false;
 		#endregion
 
 		#region explosive stats
@@ -279,6 +281,7 @@ namespace Origins {
 		public int hookTarget = -1;
 		bool rivenWet = false;
 		public bool mountOnly = false;
+		public bool hideAllLayers = false;
 		public bool changeSize = false;
 		public int targetWidth;
 		public int targetHeight;
@@ -400,6 +403,7 @@ namespace Origins {
 			trapCharm = false;
 			dangerBarrel = false;
 			pincushion = false;
+			meatScribe = false;
 
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
 				Player.mount.Dismount(Player);
@@ -514,6 +518,7 @@ namespace Origins {
 			plagueSight = false;
 			plagueSightLight = false;
 			mountOnly = false;
+			hideAllLayers = false;
 			thornsVisualProjType = -1;
 			changeSize = false;
 			minionSubSlots = new float[minionSubSlotValues];
@@ -610,6 +615,29 @@ namespace Origins {
 					Player.velocity.X = riptideDashSpeed * Math.Sign(riptideDashTime);
 					riptideDashTime -= Math.Sign(riptideDashTime);
 					dashDelay = 25;
+				}
+			}
+			if (meatScribe) {
+				Player.dashType = 0;
+				Player.dashTime = 0;
+				const float meatDashSpeed = 5f;
+				if (dashDirection != 0 && (Player.velocity.X * dashDirection < meatDashSpeed)) {
+					Player.dashDelay = -1;
+					Player.dash = 2;
+					Player.timeSinceLastDashStarted = 0;
+					int gravDir = Math.Sign(Player.gravity);
+					if (Player.velocity.Y * gravDir > Player.gravity * gravDir) {
+						Player.velocity.Y = Player.gravity;
+					}
+					Projectile.NewProjectile(
+						Player.GetSource_Misc("meat"),
+						Player.Center + new Vector2(Player.width * dashDirection, 0),
+						new Vector2(dashDirection * meatDashSpeed, 0),
+						Scribe_Of_Meat_P.ID,
+						25,
+						meatDashSpeed + 3,
+						Player.whoAmI
+					);
 				}
 			}
 			if (loversLeap) {
@@ -2058,6 +2086,11 @@ namespace Origins {
 					if (layer != PlayerDrawLayers.MountFront && layer != PlayerDrawLayers.MountBack) {
 						layer.Hide();
 					}
+				}
+			}
+			if (hideAllLayers) {
+				foreach (var layer in PlayerDrawLayerLoader.Layers) {
+					layer.Hide();
 				}
 			}
 		}
