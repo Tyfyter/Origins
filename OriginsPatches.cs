@@ -214,6 +214,15 @@ namespace Origins {
 			On.Terraria.WorldGen.PlacePot += WorldGen_PlacePot;
 			On.Terraria.WorldGen.PlaceSmallPile += WorldGen_PlaceSmallPile;
 			On.Terraria.Projectile.ExplodeTiles += Projectile_ExplodeTiles;
+			IL.Terraria.Collision.HurtTiles += (il) => {
+				ILCursor c = new(il);
+				if (c.TryGotoNext(MoveType.Before, op => op.MatchCall<WorldGen>("KillTile"))) {
+					c.Emit(OpCodes.Ldloc_S, (byte)9);
+					c.EmitDelegate<Action<int>>((type) => {
+						if (type == TileID.CrimsonThorns) hurtCollisionCrimsonVine = true;
+					});
+				}
+			};
 		}
 
 		private void Player_KillMe(On.Terraria.Player.orig_KillMe orig, Player self, PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp) {
@@ -259,6 +268,7 @@ namespace Origins {
 			orig(self, compareSpot, radius, minI, maxI, minJ, maxJ, wallSplode);
 		}
 		#endregion combat
+		internal static bool hurtCollisionCrimsonVine;
 		private int Player_RollLuck(On.Terraria.Player.orig_RollLuck orig, Player self, int range) {
 			OriginPlayer originPlayer = self.GetModPlayer<OriginPlayer>();
 			int roll = orig(self, range);

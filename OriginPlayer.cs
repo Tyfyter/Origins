@@ -583,6 +583,7 @@ namespace Origins {
 		#endregion
 		public const float explosive_defense_factor = 1f;
 		public override void PreUpdateMovement() {
+			Origins.hurtCollisionCrimsonVine = false;
 			if (riptideLegs && Player.wet) {
 				Player.velocity *= 1.0048f;
 				Player.ignoreWater = true;
@@ -1904,6 +1905,10 @@ namespace Origins {
 					0,
 					Player.whoAmI
 				);
+			}
+			if (Origins.hurtCollisionCrimsonVine) {
+				Origins.hurtCollisionCrimsonVine = false;
+				CrimsonAssimilation += 0.07f;
 			}
 		}
 		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
