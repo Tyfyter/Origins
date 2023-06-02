@@ -213,7 +213,9 @@ namespace Origins {
 			On.Terraria.Player.KillMe += Player_KillMe;// should have no effect, but is necessary for custom death text somehow
 			On.Terraria.WorldGen.PlacePot += WorldGen_PlacePot;
 			On.Terraria.WorldGen.PlaceSmallPile += WorldGen_PlaceSmallPile;
+			On.Terraria.Projectile.ExplodeTiles += Projectile_ExplodeTiles;
 		}
+
 		private void Player_KillMe(On.Terraria.Player.orig_KillMe orig, Player self, PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp) {
 			orig(self, damageSource, dmg, hitDirection, pvp);
 		}
@@ -251,6 +253,10 @@ namespace Origins {
 				);
 			}
 			return orig(self, deadPlayerName);
+		}
+		private void Projectile_ExplodeTiles(On.Terraria.Projectile.orig_ExplodeTiles orig, Projectile self, Vector2 compareSpot, int radius, int minI, int maxI, int minJ, int maxJ, bool wallSplode) {
+			if (self.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global) && global.noTileSplode) return;
+			orig(self, compareSpot, radius, minI, maxI, minJ, maxJ, wallSplode);
 		}
 		#endregion combat
 		private int Player_RollLuck(On.Terraria.Player.orig_RollLuck orig, Player self, int range) {

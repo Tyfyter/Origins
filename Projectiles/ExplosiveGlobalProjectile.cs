@@ -15,9 +15,10 @@ using Terraria.ModLoader.IO;
 namespace Origins.Projectiles {
 	//separate global for organization, might also make non-artifact projectiles less laggy than the alternative
 	public class ExplosiveGlobalProjectile : GlobalProjectile {
-		bool isHoming = false;
-		bool magicTripwire = false;
-		bool magicTripwireTripped = false;
+		public bool isHoming = false;
+		public bool magicTripwire = false;
+		public bool magicTripwireTripped = false;
+		public bool noTileSplode = false;
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
@@ -85,6 +86,9 @@ namespace Origins.Projectiles {
 			if (originPlayer.magicTripwire) {
 				magicTripwire = true;
 			}
+			if (originPlayer.pincushion) {
+				noTileSplode = true;
+			}
 		}
 		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
 			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
@@ -113,11 +117,13 @@ namespace Origins.Projectiles {
 			bitWriter.WriteBit(isHoming);
 			bitWriter.WriteBit(magicTripwire);
 			bitWriter.WriteBit(magicTripwireTripped);
+			bitWriter.WriteBit(noTileSplode);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			isHoming = bitReader.ReadBit();
 			magicTripwire = bitReader.ReadBit();
 			magicTripwireTripped = bitReader.ReadBit();
+			noTileSplode = bitReader.ReadBit();
 		}
 		public static bool IsExploding(Projectile projectile) {
 			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {

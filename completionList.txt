@@ -305,7 +305,7 @@ ACCESSORIES:
 (^) No U Card
 (^) Olid Organ*
 (^) Parasitic Influence*
-(#2, ^2) Pincushion !!!
+(☻) Pincushion !!!
 (^) Plasma Phial
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery

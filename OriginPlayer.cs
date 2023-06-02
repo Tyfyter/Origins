@@ -196,6 +196,7 @@ namespace Origins {
 		public bool sonarVisor = false;
 		public bool solarPanel = false;
 		public bool dangerBarrel = false;
+		public bool pincushion = false;
 		#endregion
 
 		#region explosive stats
@@ -398,6 +399,7 @@ namespace Origins {
 			donorWristband = false;
 			trapCharm = false;
 			dangerBarrel = false;
+			pincushion = false;
 
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
 				Player.mount.Dismount(Player);

@@ -16,7 +16,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 1);
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().pinCushion = true;
+			player.GetModPlayer<OriginPlayer>().pincushion = true;
 		}
 	}
 }
