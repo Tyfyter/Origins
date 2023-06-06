@@ -1908,7 +1908,7 @@ namespace Origins {
 			}
 			if (Origins.hurtCollisionCrimsonVine) {
 				Origins.hurtCollisionCrimsonVine = false;
-				CrimsonAssimilation += 0.07f;
+				CrimsonAssimilation += 0.03f;
 			}
 		}
 		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
