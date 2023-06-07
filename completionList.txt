@@ -472,7 +472,7 @@ TOOLS:
 
 MELEE WEAPONS:
 ---
-(#3(obtain helpo, ^2) Baseball Bat !!!
+(☻) Baseball Bat !!!
 (^) Cyah Nara
 (^) Decimator
 (^) Felnum Spear

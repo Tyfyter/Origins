@@ -19,6 +19,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Default;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
@@ -120,6 +121,12 @@ namespace Origins.NPCs {
 				}
 				case NPCID.SkeletonMerchant: {
 					//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Trash_Lid>());
+					break;
+				}
+				case NPCID.Golfer: {
+					if (AprilFools.CheckAprilFools()) {
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Baseball_Bat>());
+					}
 					break;
 				}
 			}

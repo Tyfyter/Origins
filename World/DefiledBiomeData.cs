@@ -624,13 +624,14 @@ namespace Origins.World.BiomeData {
 			Stack<Point> defiledHearts = new Stack<Point>() { };
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
 				for (int offset = 0; offset < 150; offset = offset > 0 ? (-offset) : ((-offset) + 1)) {
+					if (false && (evilBiomePositionWestBound + offset < 0 || evilBiomePositionEastBound + offset > Main.maxTilesX)) continue;
 					for (int j = (int)OriginSystem.worldSurfaceLow; j < Main.maxTilesY; j++) {
 						Tile tile = Framing.GetTileSafely(evilBiomePosition + offset, j);
 						if (!tile.HasTile) continue;
 						if (tile.TileType == TileID.JungleGrass) break;
 						evilBiomePosition += offset;
-						evilBiomePosition += evilBiomePositionWestBound;
-						evilBiomePosition += evilBiomePositionEastBound;
+						evilBiomePositionWestBound += offset;
+						evilBiomePositionEastBound += offset;
 						goto positioned;
 					}
 				}
