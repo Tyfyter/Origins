@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riptide;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
@@ -1910,6 +1911,10 @@ namespace Origins {
 				Origins.hurtCollisionCrimsonVine = false;
 				CrimsonAssimilation += 0.03f;
 			}
+		}
+		public override bool CanSellItem(NPC vendor, Item[] shopInventory, Item item) {
+			if (item.prefix == ModContent.PrefixType<Imperfect_Prefix>()) return false;
+			return true;
 		}
 		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
 			if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {

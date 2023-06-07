@@ -1,8 +1,17 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Origins.Items {
-    public class Heavy_Cal_Prefix : ModPrefix {
+	public interface IOnSpawnProjectilePrefix {
+		void OnProjectileSpawn(Projectile projectile, IEntitySource source);
+	}
+	public interface IExtraTooltipLinesPrefix {
+		void ModifyTooltips(Item item, List<TooltipLine> tooltips);
+	}
+	public class Heavy_Cal_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Ranged;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Heavy Caliber");
@@ -113,9 +122,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Unbounded");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult += 0.1f;
 			critBonus += 2;
@@ -127,9 +134,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Eased");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			useTimeMult -= 0.1f;
 			shootSpeedMult += 0.1f;
@@ -140,9 +145,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Loaded");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult += 0.05f;
 			knockbackMult += 0.1f;
@@ -154,9 +157,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Penetrative");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult += 0.05f;
 			critBonus += 5;
@@ -167,9 +168,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Catastrophic");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult += 0.1f;
 			useTimeMult -= 0.05f;
@@ -183,9 +182,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Persuasive");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			knockbackMult += 0.1f;
 			//blastRadiusMult += 0.15f;
@@ -196,9 +193,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Dud");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult -= 0.1f;
 			shootSpeedMult -= 0.1f;
@@ -211,9 +206,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Wimpy");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			shootSpeedMult -= 0.1f;
 			knockbackMult -= 0.1f;
@@ -225,9 +218,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Betraying");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			//selfDamageMult += 0.5f;
 		}
@@ -237,9 +228,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Lightweight");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult -= 0.15f;
 			useTimeMult -= 0.1f;
@@ -252,9 +241,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Heavy-Duty");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult += 0.15f;
 			useTimeMult += 0.2f;
@@ -268,9 +255,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Safe");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			//selfDamageMult -= 0.2f;
 		}
@@ -280,9 +265,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Guileless");
 		}
-		public override float RollChance(Item item) {
-			return 1f;
-		}
+		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult += 0.1f;
 			critBonus += 5;
@@ -290,6 +273,40 @@ namespace Origins.Items {
 			shootSpeedMult += 0.15f;
 			knockbackMult += 0.15f;
 			//blastRadiusMult += 0.25f;
+		}
+	}
+	public class Imperfect_Prefix : ModPrefix, IOnSpawnProjectilePrefix, IExtraTooltipLinesPrefix {
+		public override PrefixCategory Category => PrefixCategory.Ranged;
+		public override void SetStaticDefaults() {
+			DisplayName.SetDefault("Imperfect");
+		}
+		public override float RollChance(Item item) => 0f;
+		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
+			damageMult -= 0.1f;
+			critBonus -= 4;
+			useTimeMult += 0.1f;
+			knockbackMult -= 0.15f;
+		}
+		public void OnProjectileSpawn(Projectile projectile, IEntitySource source) {
+			projectile.velocity = projectile.velocity.RotatedByRandom(MathHelper.ToRadians(10f));
+		}
+
+		public void ModifyTooltips(Item item, List<TooltipLine> tooltips) {
+			for (int i = 0; i < tooltips.Count; i++) {
+				if (tooltips[i].Name == "Price") {
+					tooltips[i].Text = "Cannot sell";
+					tooltips[i].OverrideColor = Color.Gray;
+					break;
+				}
+			}
+			tooltips.Insert(tooltips.FindLastIndex(line => line.IsModifier) + 1, new TooltipLine(
+				Mod,
+				"PrefixSpread",
+				"+10° Spread"
+				) {
+				IsModifier = true,
+				IsModifierBad = true
+			});
 		}
 	}
 }

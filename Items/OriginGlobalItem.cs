@@ -142,6 +142,9 @@ namespace Origins.Items {
 			} catch (Exception e) {
 				Mod.Logger.Error(e);
 			}
+			if (PrefixLoader.GetPrefix(item.prefix) is IExtraTooltipLinesPrefix extraTooltipLinesPrefix) {
+				extraTooltipLinesPrefix.ModifyTooltips(item, tooltips);
+			}
 			if (item.ModItem is IJournalEntryItem journalItem) {
 				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().DisplayJournalTooltip(journalItem)) {
 					tooltips.Add(new TooltipLine(Mod, "JournalIndicator", Language.GetTextValue(journalItem.IndicatorKey)));

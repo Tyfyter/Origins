@@ -1,6 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs;
@@ -32,6 +33,7 @@ namespace Origins.Projectiles {
 		public bool hasUsedMitosis = false;
 		public int mitosisTimeLeft = 3600;
 		public bool fiberglassLifesteal = false;
+		public int prefix;
 		public override void SetDefaults(Projectile projectile) {
 			if (hostileNext) {
 				projectile.hostile = true;
@@ -76,6 +78,12 @@ namespace Origins.Projectiles {
 					itemUseSource.Entity is Player player && player.GetModPlayer<OriginPlayer>().entangledEnergy) {
 					fiberglassLifesteal = true;
 				}
+				prefix = itemUseSource.Item.prefix;
+				ModPrefix projPrefix = PrefixLoader.GetPrefix(prefix);
+
+				if (projPrefix is IOnSpawnProjectilePrefix spawnPrefix) {
+					spawnPrefix.OnProjectileSpawn(projectile, source);
+				}
 			} else if (source is EntitySource_Parent source_Parent) {
 				if (source_Parent.Entity is Projectile parentProjectile) {
 					if (parentProjectile.type == ModContent.ProjectileType<Amoeba_Bubble>()) {
@@ -86,8 +94,16 @@ namespace Origins.Projectiles {
 							projectile.minionSlots = 0;
 						}
 					}
-				}else if (source is EntitySource_Parent parentSource) {
-					if (parentSource.Entity is NPC parentNPC && parentNPC.GetGlobalNPC<OriginGlobalNPC>().soulhideWeakenedDebuff) {
+					OriginGlobalProj parentGlobalProjectile = parentProjectile.GetGlobalProjectile<OriginGlobalProj>();
+					prefix = parentGlobalProjectile.prefix;
+
+					ModPrefix projPrefix = PrefixLoader.GetPrefix(prefix);
+
+					if (projPrefix is IOnSpawnProjectilePrefix spawnPrefix) {
+						spawnPrefix.OnProjectileSpawn(projectile, source);
+					}
+				} else if (source_Parent.Entity is NPC parentNPC) {
+					if (parentNPC.GetGlobalNPC<OriginGlobalNPC>().soulhideWeakenedDebuff) {
 						projectile.damage = (int)(projectile.damage * (1f - OriginGlobalNPC.soulhideWeakenAmount));
 					}
 				}
