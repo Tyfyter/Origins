@@ -129,6 +129,12 @@ namespace Origins.NPCs {
 					}
 					break;
 				}
+				case NPCID.ArmsDealer: {
+					if (ModContent.GetInstance<Shardcannon_Quest>().Completed) {
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Items.Weapons.Ranged.Shardcannon>());
+					}
+					break;
+				}
 			}
 		}
 		public override bool PreAI(NPC npc) {

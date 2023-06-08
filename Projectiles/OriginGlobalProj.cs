@@ -4,25 +4,29 @@ using Origins.Buffs;
 using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Ranged;
 using Origins.NPCs;
+using Origins.Questing;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace Origins.Projectiles {
 	public class OriginGlobalProj : GlobalProjectile {
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
+		public int fromItemType = -1;
 		//bool init = true;
 		public bool felnumEffect = false;
 		public bool viperEffect = false;
 		public bool ownerSafe = false;
 		public int killLink = -1;
 		public float godHunterEffect = 0f;
-		//ModProjectile.SetDefaults is run before GlobalProjectiles' SetDefaults, so these can be used from SetDefaults
 		public static bool felnumEffectNext = false;
 		public static bool viperEffectNext = false;
 		public static bool hostileNext = false;
@@ -84,6 +88,8 @@ namespace Origins.Projectiles {
 				if (projPrefix is IOnSpawnProjectilePrefix spawnPrefix) {
 					spawnPrefix.OnProjectileSpawn(projectile, source);
 				}
+
+				fromItemType = itemUseSource.Item.type;
 			} else if (source is EntitySource_Parent source_Parent) {
 				if (source_Parent.Entity is Projectile parentProjectile) {
 					if (parentProjectile.type == ModContent.ProjectileType<Amoeba_Bubble>()) {
@@ -198,6 +204,17 @@ namespace Origins.Projectiles {
 					projectile.owner
 				);
 			}
+			if (target.life <= 0 && prefix == ModContent.PrefixType<Imperfect_Prefix>()) {
+				if (fromItemType == ModContent.ItemType<Shardcannon>()) {
+					ModContent.GetInstance<Shardcannon_Quest>().UpdateKillCount();
+				}
+			}
+		}
+		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
+			binaryWriter.Write(prefix);
+		}
+		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
+			prefix = binaryReader.ReadInt32();
 		}
 		public static void ClentaminatorAI<TBiome>(Projectile projectile, int dustType, Color color) where TBiome : AltBiome {
 			if (projectile.owner == Main.myPlayer) {

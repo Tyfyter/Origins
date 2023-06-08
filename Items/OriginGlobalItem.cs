@@ -142,14 +142,20 @@ namespace Origins.Items {
 			} catch (Exception e) {
 				Mod.Logger.Error(e);
 			}
-			if (PrefixLoader.GetPrefix(item.prefix) is IExtraTooltipLinesPrefix extraTooltipLinesPrefix) {
-				extraTooltipLinesPrefix.ModifyTooltips(item, tooltips);
+			if (PrefixLoader.GetPrefix(item.prefix) is IModifyTooltipsPrefix modifyTooltipsPrefix) {
+				modifyTooltipsPrefix.ModifyTooltips(item, tooltips);
 			}
 			if (item.ModItem is IJournalEntryItem journalItem) {
 				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().DisplayJournalTooltip(journalItem)) {
 					tooltips.Add(new TooltipLine(Mod, "JournalIndicator", Language.GetTextValue(journalItem.IndicatorKey)));
 				}
 			}
+		}
+		public override bool PreReforge(Item item) {
+			if (PrefixLoader.GetPrefix(item.prefix) is IPreReforgePrefix preReforgePrefix) {
+				return preReforgePrefix.PreReforge(item);
+			}
+			return true;
 		}
 		public override void UpdateInventory(Item item, Player player) {
 			if (player.whoAmI == Main.myPlayer) {

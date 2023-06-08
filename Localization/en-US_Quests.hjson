@@ -109,6 +109,23 @@
 					Complete:"missingno"
 				}
 			}
+			Arms_Dealer: {
+				Shardcannon: {
+					Name:"A Few Holes"
+					Journal:
+					'''
+					{$Mods.Origins.Quests.Arms_Dealer.Shardcannon.Name}
+					Client: Arms Dealer
+					
+					'{$Mods.Origins.Quests.Arms_Dealer.Shardcannon.Start}'
+					
+					- [qs{2}:Slay {1} Enemies with the Imperfect Shardcannon ({0}/{1})]
+					Unlocks: [i:Origins/Shardcannon]
+					'''
+					Start:"Hey buddy, I’ve been workin’ on a little something that needs a qualified gunner to use. Would you be interested? I would do it myself, but my neighbors wouldn’t like it, heh…"
+					Complete:""
+				}
+			}
 		}
 	}
 }

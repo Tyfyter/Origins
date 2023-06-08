@@ -291,6 +291,7 @@ namespace Origins {
 		public bool collidingX = false;
 		public bool collidingY = false;
 		public HashSet<string> unlockedJournalEntries = new();
+		public HashSet<string> startedQuests = new();
 		public int dashDirection = 0;
 		public int dashDirectionY = 0;
 		public int dashDelay = 0;
@@ -1971,6 +1972,9 @@ namespace Origins {
 			if (tag.SafeGet<List<string>>("UnlockedJournalEntries") is List<string> journalEntries) {
 				unlockedJournalEntries = journalEntries.ToHashSet();
 			}
+			if (tag.SafeGet<List<string>>("UnlockedQuests") is List<string> quests) {
+				startedQuests = quests.ToHashSet();
+			}
 			if (tag.ContainsKey("journalUnlocked")) {
 				journalUnlocked = tag.Get<bool>("journalUnlocked");
 			}
@@ -1983,6 +1987,7 @@ namespace Origins {
 		public override void OnEnterWorld(Player player) {
 			questsTag ??= new TagCompound();
 			TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? new TagCompound();
+			Origins.instance.Logger.Debug(worldQuestsTag.ToString());
 			foreach (var quest in Quest_Registry.Quests) {
 				if (!quest.SaveToWorld) {
 					quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
@@ -2003,6 +2008,9 @@ namespace Origins {
 			}
 			if (unlockedJournalEntries is not null) {
 				tag.Add("UnlockedJournalEntries", unlockedJournalEntries.ToList());
+			}
+			if (startedQuests is not null) {
+				tag.Add("UnlockedQuests", startedQuests.ToList());
 			}
 			TagCompound questsTag = new TagCompound();
 			foreach (var quest in Quest_Registry.Quests) {
