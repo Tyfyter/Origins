@@ -519,7 +519,7 @@ RANGED WEAPONS:
 (^) Longbone
 (^) Magma Grappler
 (^) Riven Splitter
-(#, ^2) Shardcannon !!!
+(☻) Shardcannon !!!
 (^) Sleetfire
 (^) Tendon Tear
 (^) The Kruncher
@@ -569,7 +569,7 @@ MAGIC WEAPONS:
 (^) Infusion
 (^) Low Signal
 (^) Magnus
-(#, ^2) Manasynk !!!
+(☻) Manasynk !!!
 (^) Slashswarm
 (^) Tones of Agony
 
