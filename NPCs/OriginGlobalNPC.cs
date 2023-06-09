@@ -17,12 +17,29 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Default;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
+		public static ShoppingSettings ShopHelper_GetShoppingSettings(On.Terraria.GameContent.ShopHelper.orig_GetShoppingSettings orig, ShopHelper self, Player player, NPC npc) {
+			ShoppingSettings settings = orig(self, player, npc);
+			float discount = 0;
+			switch (npc.type) {
+				case NPCID.BestiaryGirl:
+				if (ModContent.GetInstance<Discount_1_Quest>().Completed) {
+					discount += 0.03f;
+				}
+				if (ModContent.GetInstance<Discount_2_Quest>().Completed) {
+					discount += 0.03f;
+				}
+				break;
+			}
+			settings.PriceAdjustment *= 1 - discount;
+			return settings;
+		}
 		public override void SetupShop(int type, Chest shop, ref int nextSlot) {
 			bool worldHasWastelands = false;
 			bool worldHasHive = false;
@@ -104,7 +121,9 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Dryad: {
-					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Mojo_Flask>());
+					if (ModContent.GetInstance<Cleansing_Station_Quest>().Completed) {
+						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Mojo_Flask>());
+					}
 					if (Main.player[Main.myPlayer].ZoneGraveyard) {
 						if (!worldHasWastelands) {
 							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Defiled_Grass_Seeds>());

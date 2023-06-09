@@ -126,6 +126,56 @@
 					Complete:""
 				}
 			}
+			Zoologist: {
+				Discount_1_Quest: {
+					Name:"Save the Critters!"
+					Journal:
+					'''
+					{$Mods.Origins.Quests.Zoologist.Discount_1_Quest.Name}
+					Client: Zoologist
+					
+					'{$Mods.Origins.Quests.Zoologist.Discount_1_Quest.Start}'
+					
+					- [qs{2}: Obtain any {1} critters ({0}/{1})]
+					- [qs{3}: Give critters to {4}]
+					Reward: 3% discount
+					'''
+					Start:"Heya! Can you do me a favor? Could yah get any ten critters and bring ‘em back to me? Yah? Thank yah, hun! Oh and I’ll give you some discounts for being nice!"
+					Complete:"missingno"
+				}
+				Discount_2_Quest: {
+					Name:"Not Au-some…"
+					Journal:
+					'''
+					{$Mods.Origins.Quests.Zoologist.Discount_2_Quest.Name}
+					Client: Zoologist
+					
+					'{$Mods.Origins.Quests.Zoologist.Discount_2_Quest.Start}'
+					
+					- [qs{0}: Catch Golden Squirrel]
+					- [qs{1}: Give squirrel to {2}]
+					Reward: 3% discount
+					'''
+					Start:"This is getting out of hand! I’ve been hearin’ that gold squirrels sell big and are even bein’ a part of people’s meals ‘found here! Put an end to this and retrieve me one!"
+					Complete:"missingno"
+				}
+				Eccentric_Stone_Quest: {
+					Name:"Under the Starlight"
+					Journal:
+					'''
+					{$Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Name}
+					Client: Zoologist
+					
+					'{$Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Start}'
+					
+					- [qs{2}: Obtain {1} Enchanted Nightcrawlers ({0}/{1})]
+					- [qs{3}: Give Enchanted Nightcrawlers to {4}]
+					Reward: [i:Origins/Eccentric_Stone]
+					'''
+					Start:"I’m definitely a weird one, heheh. But, that’s a whole ‘nother can ‘o worms. Get it? Can ‘o worms? Can you please give me ten enchanted nightcrawlers? It’s for something important."
+					Complete:"missingno"
+				}
+			}
 		}
 	}
 }

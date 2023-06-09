@@ -223,6 +223,7 @@ namespace Origins {
 					});
 				}
 			};
+			On.Terraria.GameContent.ShopHelper.GetShoppingSettings += OriginGlobalNPC.ShopHelper_GetShoppingSettings;
 		}
 
 		private void Player_KillMe(On.Terraria.Player.orig_KillMe orig, Player self, PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp) {

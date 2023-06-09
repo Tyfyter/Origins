@@ -218,7 +218,7 @@ namespace Origins.Projectiles {
 		}
 		public static void ClentaminatorAI<TBiome>(Projectile projectile, int dustType, Color color) where TBiome : AltBiome {
 			if (projectile.owner == Main.myPlayer) {
-				AltLibrary.Core.ALConvert.Convert<TBiome>((int)(projectile.Center.X) / 16, (int)(projectile.Center.Y) / 16, 2);
+				AltLibrary.Core.ALConvert.SimulateSolution<TBiome>(projectile);
 			}
 			if (projectile.timeLeft > 133) {
 				projectile.timeLeft = 133;
