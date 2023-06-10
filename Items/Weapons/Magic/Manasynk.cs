@@ -135,7 +135,7 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.rotation,
 				new Vector2(36, 6),
 				Projectile.scale,
-				Projectile.direction < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,
+				Projectile.direction < 0 ? SpriteEffects.FlipVertically : SpriteEffects.None,
 			0);
 			return false;
 		}
