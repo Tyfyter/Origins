@@ -199,7 +199,8 @@ namespace Origins {
 		public bool solarPanel = false;
 		public bool dangerBarrel = false;
 		public bool pincushion = false;
-		public bool meatScribe = false;
+		public Item meatScribeItem = null;
+		public int meatDashCooldown = 0;
 		#endregion
 
 		#region explosive stats
@@ -405,7 +406,21 @@ namespace Origins {
 			trapCharm = false;
 			dangerBarrel = false;
 			pincushion = false;
-			meatScribe = false;
+			meatScribeItem = null;
+			if (meatDashCooldown > 0) {
+				if (--meatDashCooldown <= 0) {
+					for (int i = 0; i < 8; i++) {
+						Dust.NewDust(
+							Player.position,
+							Player.width,
+							Player.height,
+							DustID.t_Flesh,
+							Scale: 1.5f
+						);
+					}
+					SoundEngine.PlaySound(SoundID.NPCDeath13.WithVolumeScale(0.75f), Player.position);
+				}
+			}
 
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
 				Player.mount.Dismount(Player);
@@ -620,10 +635,10 @@ namespace Origins {
 					dashDelay = 25;
 				}
 			}
-			if (meatScribe) {
+			if (meatScribeItem is not null && meatDashCooldown <= 0) {
 				Player.dashType = 0;
 				Player.dashTime = 0;
-				const float meatDashSpeed = 5f;
+				const float meatDashSpeed = 7f / Scribe_Of_Meat_P.max_updates;
 				if (dashDirection != 0 && (Player.velocity.X * dashDirection < meatDashSpeed)) {
 					Player.dashDelay = -1;
 					Player.dash = 2;
@@ -636,11 +651,14 @@ namespace Origins {
 						Player.GetSource_Misc("meat"),
 						Player.Center + new Vector2(Player.width * dashDirection, 0),
 						new Vector2(dashDirection * meatDashSpeed, 0),
-						Scribe_Of_Meat_P.ID,
-						25,
-						meatDashSpeed + 3,
+						meatScribeItem.shoot,
+						meatScribeItem.damage,
+						meatDashSpeed * Scribe_Of_Meat_P.max_updates + meatScribeItem.knockBack,
 						Player.whoAmI
 					);
+					SoundEngine.PlaySound(SoundID.NPCDeath10.WithVolumeScale(0.75f), Player.position);
+					dashDelay = Scribe_Of_Meat_P.dash_duration + 6;
+					meatDashCooldown = 120 + Scribe_Of_Meat_P.dash_duration;
 				}
 			}
 			if (loversLeap) {

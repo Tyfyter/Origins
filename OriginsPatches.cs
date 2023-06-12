@@ -886,9 +886,7 @@ namespace Origins {
 				//tileOutlineShader.Shader.Parameters["uScale"].SetValue(2);
 				//tileOutlineShader.Shader.Parameters["uColor"].SetValue(new Vector3(1f, 1f, 1f));//new Vector4(0.5f, 0.0625f, 0f, 0f)
 				SpriteBatchState state = Main.spriteBatch.GetState();
-				Main.spriteBatch.Restart(state with {
-					effect = tileOutlineShader.Shader
-				});
+				Main.spriteBatch.Restart(state, effect: tileOutlineShader.Shader);
 				orig(self, solidLayer, forRenderTargets, intoRenderTargets, waterStyleOverride);
 				Main.spriteBatch.Restart(state);
 				sonarDrawing = false;

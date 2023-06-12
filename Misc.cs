@@ -1219,6 +1219,7 @@ namespace Origins {
 	public delegate void ItemDropper(DropAttemptInfo info, int item, int stack, bool scattered = false);
 	public static class OriginExtensions {
 		public static Func<float, int, Vector2> drawPlayerItemPos;
+		#region sound
 		public static SoundStyle WithPitch(this SoundStyle soundStyle, float pitch) {
 			soundStyle.Pitch = pitch;
 			return soundStyle;
@@ -1238,6 +1239,7 @@ namespace Origins {
 			soundStyle.Volume = volume;
 			return soundStyle;
 		}
+		#endregion sound
 		public static StatModifier Scale(this StatModifier statModifier, float additive = 1f, float multiplicative = 1f, float flat = 1f, float @base = 1f) {
 			return new StatModifier(
 				(statModifier.Additive - 1) * additive + 1,
@@ -1276,9 +1278,9 @@ namespace Origins {
 				transformMatrix.GetValue(spriteBatch)
 			);
 		}
-		public static void Restart(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
+		public static void Restart(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode? sortMode = null, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
 			spriteBatch.End();
-			spriteBatch.Begin(sortMode, blendState ?? spriteBatchState.blendState, samplerState ?? spriteBatchState.samplerState, spriteBatchState.depthStencilState, rasterizerState ?? spriteBatchState.rasterizerState, effect ?? spriteBatchState.effect, transformMatrix ?? spriteBatchState.transformMatrix);
+			spriteBatch.Begin(sortMode ?? spriteBatchState.sortMode, blendState ?? spriteBatchState.blendState, samplerState ?? spriteBatchState.samplerState, spriteBatchState.depthStencilState, rasterizerState ?? spriteBatchState.rasterizerState, effect ?? spriteBatchState.effect, transformMatrix ?? spriteBatchState.transformMatrix);
 		}
 		#endregion
 		public static int RandomRound(this UnifiedRandom random, float value) {

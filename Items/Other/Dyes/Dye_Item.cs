@@ -26,9 +26,7 @@ namespace Origins.Items.Other.Dyes {
 				return true;
 			}
 			lastState = spriteBatch.GetState();
-			Main.spriteBatch.Restart(lastState with {
-				sortMode = SpriteSortMode.Immediate
-			});
+			Main.spriteBatch.Restart(lastState, SpriteSortMode.Immediate);
 
 			DrawData data = new DrawData {
 				texture = TextureAssets.Item[Item.type].Value,
@@ -53,10 +51,7 @@ namespace Origins.Items.Other.Dyes {
 				return true;
 			}
 			lastState = spriteBatch.GetState();
-			Main.spriteBatch.Restart(lastState with {
-				sortMode = SpriteSortMode.Immediate,
-				samplerState = SamplerState.AnisotropicWrap
-			});
+			Main.spriteBatch.Restart(lastState, SpriteSortMode.Immediate, samplerState: SamplerState.AnisotropicWrap);
 
 			DrawData data = new DrawData {
 				texture = TextureAssets.Item[Item.type].Value,
