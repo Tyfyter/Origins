@@ -38,6 +38,7 @@ namespace Origins.Tiles.Riven {
 	public class Primordial_Permafrost_Item : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Primordial Permafrost");
+			Tooltip.SetDefault("A dangerous single-celled organism frozen...");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

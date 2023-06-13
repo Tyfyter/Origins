@@ -373,7 +373,7 @@ ACCESSORIES:
 (^) Mysterious Spray
 (^) Protozoa Food
 (X) Scrap Compactor
-(#3(just need mini-hungries and probably should be super strong), ^2) Scribe of the Meat God !!!
+(#3, ^2) Scribe of the Meat God !!!
 (^) Third Eye
 
 (^) Agility Core
@@ -472,7 +472,7 @@ TOOLS:
 
 MELEE WEAPONS:
 ---
-(☻) Baseball Bat !!!
+(^) Baseball Bat
 (^) Cyah Nara
 (^) Decimator
 (^) Felnum Spear
@@ -519,7 +519,7 @@ RANGED WEAPONS:
 (^) Longbone
 (^) Magma Grappler
 (^) Riven Splitter
-(☻) Shardcannon !!!
+(^) Shardcannon
 (^) Sleetfire
 (^) Tendon Tear
 (^) The Kruncher
@@ -569,7 +569,7 @@ MAGIC WEAPONS:
 (^) Infusion
 (^) Low Signal
 (^) Magnus
-(☻) Manasynk !!!
+(#3, ^2) Manasynk !!!
 (^) Slashswarm
 (^) Tones of Agony
 
@@ -730,7 +730,7 @@ TILES:
 (^) Lost Ore
 (X) Mildew
 (^) Peat Moss*
-(#, ^2) Primordial Permafrost !!!
+(^) Primordial Permafrost
 (^) Riven Grass
 (^) Spug Flesh
 (@5, ^3) Sulphur Stone
