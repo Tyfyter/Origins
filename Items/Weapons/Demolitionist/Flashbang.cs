@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 30;
+			Item.damage = 26;
 			Item.knockBack = 0;
 			Item.crit += 16;
 			Item.shootSpeed *= 2;

@@ -19,10 +19,9 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.crit = 9;
 			Item.knockBack = 6.75f;
 			Item.useAnimation = Item.useTime = 27;
-			Item.width = 114;
-			Item.height = 40;
+			Item.width = 100;
+			Item.height = 28;
 			Item.autoReuse = false;
-			Item.scale = 0.75f;
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = Origins.Sounds.HeavyCannon;

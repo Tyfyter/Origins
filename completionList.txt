@@ -543,7 +543,7 @@ RANGED WEAPONS:
 (X) Spray 'N Pray
 (^) Tiny Sniper
 (X) Titanium Harpoon Gun
-(@5, ^3) Vipershot
+(^) Vipershot
 
 (X) Disciple Maker
 (^) Dreikan
@@ -739,15 +739,15 @@ TILES:
 (X) Riven Cactus
 (^) Riven Grass
 
-(X) Batholith Wall
-(X) Chambersite Gemspark Wall
+(#, ^2) Batholith Wall
+(#, ^2) Chambersite Gemspark Wall
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (^) Eden Wood Wall
 (#, ^2) Fiberglass Wall
 (^) Harmony Brick Wall
 (^) Spug Flesh Wall
-(#, ^2) Sulphur Stone Wall
+(^) Sulphur Stone Wall
 
 (X) Acid Chest
 (#, ^2) Alkahest Torch
@@ -755,7 +755,7 @@ TILES:
 (X) Brine Water Fountain
 (X) Cancer Block
 (X) Chambersite Gem Lock
-(X) Chambersite Gemspark
+(#, ^2) Chambersite Gemspark
 (#, ^2) Chambersite Gemstone
 (#, ^2) Chambersite Gemstone (Corruption)
 (#, ^2) Chambersite Gemstone (Crimson)
@@ -766,7 +766,7 @@ TILES:
 (X) Dawn Dungeon Chest
 (^) Defiled Dungeon Chest
 (X) Desert Dungeon Chest
-(X) Defiled Water Fountain
+(#, ^2) Defiled Water Fountain
 (X) Dusk Dungeon Chest
 (#, ^2) Living Alkahest
 (#, ^2) Living Bile

@@ -21,8 +21,7 @@ namespace Origins.Items.Other.Consumables {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.BottledWater);
 			recipe.AddIngredient(ModContent.ItemType<Tearracuda>());
-			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wrycoral_Item>(), 20);
-			recipe.AddRecipeGroup(OriginSystem.DeathweedRecipeGroupID);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wrycoral_Item>());
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}
