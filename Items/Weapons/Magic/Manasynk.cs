@@ -44,6 +44,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.RubyBolt);
+			Projectile.timeLeft = 180;
 			Projectile.aiStyle = 0;
 			Projectile.extraUpdates = 1;
 			Projectile.penetrate = 10;
@@ -61,7 +62,7 @@ namespace Origins.Items.Weapons.Magic {
 				if (embedTarget.active) {
 					Projectile.Center = embedTarget.Center + (Vector2)embedPos.RotatedBy(embedTarget.rotation);
 				} else {
-					Projectile.ai[1] *= 2f;
+					Projectile.ai[1] *= 2f; //double stolen mana if target dies
 					Projectile.Kill();
 				}
 				if (++Projectile.frameCounter >= 4) {
@@ -71,6 +72,7 @@ namespace Origins.Items.Weapons.Magic {
 					}
 				}
 			} else {
+				if (Projectile.timeLeft < 140) Projectile.velocity.Y += 0.04f;
 				Projectile.rotation = Projectile.velocity.ToRotation();
 				if (++Projectile.frameCounter >= 6) {
 					Projectile.frameCounter = 0;
@@ -99,12 +101,13 @@ namespace Origins.Items.Weapons.Magic {
 			}
 		}
 		public override void Kill(int timeLeft) {
+			const float manaStealFactor = 0.5f;
 			if (Projectile.ai[1] > 0) {
 				Item.NewItem(
 					Projectile.GetSource_Death(),
 					Projectile.Center,
 					ModContent.ItemType<Manasynk_Pickup>(),
-					(int)Projectile.ai[1]
+					(int)(Projectile.ai[1] * manaStealFactor)
 				);
 				NPC embedTarget = Main.npc[(int)Projectile.ai[0]];
 				ParticleOrchestrator.RequestParticleSpawn(
@@ -121,6 +124,24 @@ namespace Origins.Items.Weapons.Magic {
 						sparkleParticle.ColorTint = new Color(new Vector3(0.169f, 0.725f, 1f) * strength);
 						sparkleParticle.Velocity += embedTarget.velocity;
 						sparkleParticle.AccelerationPerFrame -= embedTarget.velocity / 60;
+					}
+				}
+			} else {
+				ParticleOrchestrator.RequestParticleSpawn(
+					false,
+					ParticleOrchestraType.RainbowRodHit,
+					new ParticleOrchestraSettings() {
+						PositionInWorld = Projectile.Center
+					}
+				);
+				Vector2 velocity = Projectile.oldVelocity * 0.25f;
+				for (int i = 0; i < 6 * 2; i++) {
+					Terraria.Graphics.Renderers.IParticle iParticle = Main.ParticleSystem_World_OverPlayers.Particles[^(i + 1)];
+					if (iParticle is Terraria.Graphics.Renderers.PrettySparkleParticle sparkleParticle) {
+						float strength = (sparkleParticle.ColorTint.R / 255f + sparkleParticle.ColorTint.G / 255f + sparkleParticle.ColorTint.B / 255f) / 3;
+						sparkleParticle.ColorTint = new Color(new Vector3(0.169f, 0.725f, 1f) * strength);
+						sparkleParticle.Velocity += velocity;
+						sparkleParticle.AccelerationPerFrame -= velocity / 60;
 					}
 				}
 			}
