@@ -568,7 +568,8 @@ namespace Origins.World.BiomeData {
 					WallID.CrimsonUnsafe2,
 					WallID.CrimsonUnsafe3,
 					WallID.CrimsonUnsafe4
-				);
+				)
+				.AddReplacement<Chambersite_Riven_Flesh_Wall>((ushort)ModContent.WallType<Chambersite_Stone_Wall>());
 		}
 		public override AltMaterialContext MaterialContext {
 			get {

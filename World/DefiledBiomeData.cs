@@ -600,7 +600,8 @@ namespace Origins.World.BiomeData {
 					WallID.CorruptHardenedSand,
 					WallID.CrimsonHardenedSand,
 					WallID.HallowHardenedSand
-				);
+				)
+				.AddReplacement<Chambersite_Defiled_Stone_Wall>((ushort)ModContent.WallType<Chambersite_Stone_Wall>());
 		}
 		public override AltMaterialContext MaterialContext {
 			get {

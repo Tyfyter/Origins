@@ -33,6 +33,7 @@ using Terraria.Localization;
 using ReLogic.Graphics;
 using System.Reflection.Emit;
 using Terraria.GameContent.Personalities;
+using Terraria.Map;
 
 namespace Origins {
 	#region classes
@@ -261,12 +262,15 @@ namespace Origins {
 			return (Action<TParent, T>)setterMethod.CreateDelegate(typeof(Action<TParent, T>));
 		}
 	}
-	public class FastStaticFieldInfo<TParent, T> {
+	public class FastStaticFieldInfo<TParent, T> : FastStaticFieldInfo<T> {
+		public FastStaticFieldInfo(string name, BindingFlags bindingFlags, bool init = false) : base(typeof(TParent), name, bindingFlags, init) {}
+	}
+	public class FastStaticFieldInfo<T> {
 		public readonly FieldInfo field;
 		Func<T> getter;
 		Action<T> setter;
-		public FastStaticFieldInfo(string name, BindingFlags bindingFlags, bool init = false) {
-			field = typeof(TParent).GetField(name, bindingFlags | BindingFlags.Static);
+		public FastStaticFieldInfo(Type type, string name, BindingFlags bindingFlags, bool init = false) {
+			field = type.GetField(name, bindingFlags | BindingFlags.Static);
 			if (field is null) throw new InvalidOperationException($"No such static field {name} exists");
 			if (init) {
 				getter = CreateGetter();
@@ -310,7 +314,7 @@ namespace Origins {
 
 			return (Action<T>)setterMethod.CreateDelegate(typeof(Action<T>));
 		}
-		public static explicit operator T(FastStaticFieldInfo<TParent, T> fastFieldInfo) {
+		public static explicit operator T(FastStaticFieldInfo<T> fastFieldInfo) {
 			return fastFieldInfo.GetValue();
 		}
 	}
@@ -1646,6 +1650,66 @@ namespace Origins {
 		internal static void initExt() {
 			_idToSlot = (Dictionary<int, Dictionary<EquipType, int>>)typeof(EquipLoader).GetField("idToSlot", BindingFlags.NonPublic | BindingFlags.Static).GetValue(null);
 		}
+		private static FastStaticFieldInfo<Color[]> _colorLookup;
+		private static FastStaticFieldInfo<Color[]> MapColorLookup => _colorLookup ??= new(typeof(MapHelper), "colorLookup", BindingFlags.NonPublic);
+		public static Color GetTileMapColor(int type) {
+			return MapColorLookup.GetValue()[type];
+		}
+		public static Color GetWallMapColor(int type) {
+			return MapColorLookup.GetValue()[MapHelper.wallLookup[type]];
+		}
+		public static Dictionary<int, int> GetAltLibraryDataLookup(AltLibraryFieldType fieldType, AltLibraryLookupType lookupType) {
+			Dictionary<AltLibraryLookupType, Func<Dictionary<int, int>>> dict = null;
+			switch (fieldType) {
+				case AltLibraryFieldType.Tile:
+				dict = tileLookups ??= new();
+				break;
+				case AltLibraryFieldType.Wall:
+				dict = wallLookups ??= new();
+				break;
+			}
+			if (dict.TryGetValue(lookupType, out var method)) {
+				return method();
+			}
+			altLibraryDataFields ??= new();
+			if (!altLibraryDataFields.TryGetValue(fieldType, out FieldInfo field)) {
+				var t1 = typeof(AltLibrary.Core.ALConvert).Assembly.GetType("AltLibrary.Core.Baking.ALConvertInheritanceData");
+				string fieldName = fieldType.ToString().ToLower() + "ParentageData";
+				field = t1.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Static);
+				altLibraryDataFields.Add(fieldType, field);
+			}
+			altLibraryDataLookups ??= new();
+			if (!altLibraryDataLookups.TryGetValue(lookupType, out FieldInfo lookup)) {
+				lookup = typeof(AltLibrary.Core.ALConvert).Assembly.GetType("AltLibrary.Core.Baking.BlockParentageData").GetField(lookupType.ToString(), BindingFlags.Public | BindingFlags.Instance);
+				altLibraryDataLookups.Add(lookupType, lookup);
+			}
+			DynamicMethod getterMethod = new DynamicMethod($"_get_{fieldType}_{lookupType}", typeof(Dictionary<int, int>), Array.Empty<Type>(), true);
+			ILGenerator gen = getterMethod.GetILGenerator();
+
+			gen.Emit(OpCodes.Ldsfld, field);
+			gen.Emit(OpCodes.Ldfld, lookup);
+			gen.Emit(OpCodes.Ret);
+
+			method = getterMethod.CreateDelegate<Func<Dictionary<int, int>>>();
+			dict.Add(lookupType, method);
+			return method();
+		}
+		static Dictionary<AltLibraryFieldType, FieldInfo> altLibraryDataFields;
+		static Dictionary<AltLibraryLookupType, FieldInfo> altLibraryDataLookups;
+		static Dictionary<AltLibraryLookupType, Func<Dictionary<int, int>>> tileLookups;
+		static Dictionary<AltLibraryLookupType, Func<Dictionary<int, int>>> wallLookups;
+		public enum AltLibraryFieldType {
+			Tile,
+			Wall
+		}
+		public enum AltLibraryLookupType {
+			Parent,
+			ForestConversion,
+			HallowConversion,
+			CorruptionConversion,
+			CrimsonConversion,
+			MushroomConversion
+		}
 		internal static void unInitExt() {
 			_inext = null;
 			_inextp = null;
@@ -1655,6 +1719,7 @@ namespace Origins {
 			_spriteCharacters = null;
 			strikethroughFont = null;
 			_idToSlot = null;
+			_colorLookup = null;
 		}
 		public static UnifiedRandom Clone(this UnifiedRandom r) {
 			UnifiedRandom o = new UnifiedRandom();
