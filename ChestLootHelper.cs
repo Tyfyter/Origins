@@ -82,7 +82,8 @@ namespace Tyfyter.Utils {
 		public enum LootQueueAction {
 			ENQUEUE,
 			CHANGE_QUEUE,
-			SWITCH_MODE
+			SWITCH_MODE,
+			SET_COUNT_RANGE
 		}
 		public static class LootQueueMode {
 			public const int MODE_REPLACE = 0;

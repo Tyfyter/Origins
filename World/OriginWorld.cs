@@ -358,7 +358,9 @@ namespace Origins {
 				(SWITCH_MODE, MODE_REPLACE, 1f),*/
 				(CHANGE_QUEUE, ChestID.Normal, 0b0000),
 				(ENQUEUE, ModContent.ItemType<Cyah_Nara>(), 1f),
-				//(ENQUEUE, ModContent.ItemType<Bang_Snap>(), 1f), 50 - 186 per chest
+				(SET_COUNT_RANGE, 50, 186),
+				(ENQUEUE, ModContent.ItemType<Bang_Snap>(), 1f),
+				(SET_COUNT_RANGE, 1, 1),
 				(CHANGE_QUEUE, ChestID.LivingWood, 0b0000),
 				(ENQUEUE, ModContent.ItemType<Woodsprite_Staff>(), 1f),
 
@@ -459,6 +461,7 @@ namespace Origins {
 			WeightedRandom<int> random;
 			(int param, float weight, int mode) newLootType;
 			int queueMode = MODE_REPLACE;
+			(int min, int max) countRange = (1, 1);
 
 			int actionIndex = 0;
 			void filterCache() {
@@ -529,6 +532,9 @@ namespace Origins {
 				case SWITCH_MODE:
 				queueMode = actions[actionIndex].param;
 				break;
+				case SET_COUNT_RANGE:
+				countRange = (actions[actionIndex].param, (int)actions[actionIndex].weight);
+				break;
 				case ENQUEUE:
 				throw new ArgumentException("the first action in ApplyLootQueue must not be ENQUEUE", nameof(actions));
 			}
@@ -577,6 +583,7 @@ namespace Origins {
 						if (--actionCount > 0) items.Enqueue(newLootType);
 					}
 					chest.item[targetIndex].SetDefaults(newLootType.param);
+					chest.item[targetIndex].stack = WorldGen.genRand.Next(countRange.min, countRange.max + 1);
 					chest.item[targetIndex].Prefix(-1);
 					cache[lootType].Remove(chestIndex);
 					random = cache.GetWeightedRandom();
