@@ -9,6 +9,7 @@ namespace Origins.Tiles.Brine {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			Main.tileOreFinderPriority[Type] = 666;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			ItemDrop = ItemType<Eitrite_Ore_Item>();
 			ModTranslation name = CreateMapEntryName();

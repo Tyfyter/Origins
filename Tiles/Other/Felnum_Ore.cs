@@ -15,6 +15,7 @@ namespace Origins.Tiles.Other {
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			Main.tileMergeDirt[Type] = false;
+			Main.tileOreFinderPriority[Type] = 450;
 			ItemDrop = ItemType<Felnum_Ore_Item>();
 			ModTranslation name = CreateMapEntryName();
 			name.SetDefault("Felnum Ore");

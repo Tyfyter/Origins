@@ -16,6 +16,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
+			Main.tileOreFinderPriority[Type] = 320;
 			TileID.Sets.Ore[Type] = true;
 			ItemDrop = ItemType<Encrusted_Ore_Item>();
 			ModTranslation name = CreateMapEntryName();
