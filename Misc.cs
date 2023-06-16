@@ -1656,6 +1656,7 @@ namespace Origins {
 			return MapColorLookup.GetValue()[type];
 		}
 		public static Color GetWallMapColor(int type) {
+			if (Main.netMode == NetmodeID.Server) return Color.Transparent;
 			return MapColorLookup.GetValue()[MapHelper.wallLookup[type]];
 		}
 		public static Dictionary<int, int> GetAltLibraryDataLookup(AltLibraryFieldType fieldType, AltLibraryLookupType lookupType) {
