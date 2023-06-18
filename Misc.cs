@@ -1885,6 +1885,7 @@ namespace Origins {
 		public static bool Contains(this Rectangle area, Vector2 point) {
 			return area.Contains((int)point.X, (int)point.Y);
 		}
+		#region drawing
 		public static void DrawLightningArc(this SpriteBatch spriteBatch, Vector2[] positions, Texture2D texture = null, float scale = 1f, params (float scale, Color color)[] colors) {
 			if (texture is null) {
 				texture = TextureAssets.Extra[33].Value;
@@ -1900,7 +1901,6 @@ namespace Origins {
 				}
 			}
 		}
-
 		public static void DrawLightningArcBetween(this SpriteBatch spriteBatch, Vector2 start, Vector2 end, float sineMult, float precision = 0.1f) {
 			Rectangle screen = new Rectangle(0, 0, Main.screenWidth, Main.screenHeight);
 			if (!screen.Contains(start) && !screen.Contains(end)) {
@@ -1920,6 +1920,33 @@ namespace Origins {
 				(0.1f, new Color(80, 251, 255, 0) * 0.5f),
 				(0.05f, new Color(200, 255, 255, 0) * 0.5f));
 		}
+		public static void DrawGrappleChain(Vector2 startPos, Vector2 endPos, Texture2D texture, Rectangle[] frames, Color lightColor, bool useX = false, int dye = 0, Action<Vector2> action = null) {
+			Vector2 center = endPos;
+			Vector2 distToProj = startPos - endPos;
+			float projRotation = distToProj.ToRotation() - (useX ? 0 : MathHelper.PiOver2);
+			float distance = distToProj.Length();
+			distToProj.Normalize();
+			int frame = 0;
+			while (distance > 8f && !float.IsNaN(distance)) {
+				center += distToProj * (useX ? frames[frame].Width : frames[frame].Height);
+				distance = (startPos - center).Length();
+				Color drawColor = lightColor;
+				if (action is not null) action(center);
+				DrawData data = new DrawData(texture,
+					center - Main.screenPosition,
+					frames[frame],
+					drawColor,
+					projRotation,
+					frames[frame].Size() * 0.5f,
+					Vector2.One,
+					SpriteEffects.None, 
+				0);
+				data.shader = dye;
+				Main.EntitySpriteDraw(data);
+				if (frame >= frames.Length) frame = 0;
+			}
+		}
+		#endregion drawing
 		public static Rectangle MoveToWithin(this Rectangle value, Rectangle area) {
 			Rectangle output = value;
 			if (output.Width > area.Width) {
