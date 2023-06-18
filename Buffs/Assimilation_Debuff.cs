@@ -69,9 +69,9 @@ namespace Origins.Buffs {
 			}
 			if (Main.rand.NextFloat(200) < percent) {
 				if (buffChosen == 0) {
-					player.AddBuff(BuffID.Confused, Main.rand.Next(59, 241) * (1 + (int)percent));
+					player.AddBuff(BuffID.Confused, Main.rand.Next(24, 69) * (1 + (int)percent));
 				} else if (buffChosen == 1) {
-					player.AddBuff(BuffID.Bleeding, Main.rand.Next(119, 241) * (1 + (int)percent));
+					player.AddBuff(BuffID.Bleeding, Main.rand.Next(48, 138) * (1 + (int)percent));
 				}
 			}
 		}
@@ -114,6 +114,9 @@ namespace Origins.Buffs {
             }
 			if (percent >= 0.66) {
 				player.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 10);
+			}
+			if (percent >= 0.99) {
+				player.AddBuff(BuffID.BrokenArmor, 10);
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {

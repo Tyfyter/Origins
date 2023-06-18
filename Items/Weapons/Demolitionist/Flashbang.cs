@@ -24,6 +24,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(copper: 15);
 			Item.maxStack = 999;
 		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type, 5);
+			recipe.AddIngredient(ItemID.FallenStar);
+			recipe.AddIngredient(ItemID.Grenade, 5);
+			recipe.Register();
+		}
 	}
 	public class Flashbang_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Flashbang";

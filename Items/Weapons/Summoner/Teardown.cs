@@ -23,8 +23,8 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.damage = 11;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 18;
-			Item.width = 32;
-			Item.height = 32;
+			Item.width = 58;
+			Item.height = 68;
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.Swing;

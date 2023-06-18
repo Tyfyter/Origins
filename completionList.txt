@@ -223,10 +223,10 @@ ARMOR:
 (^) Soulhide Armor
 (^) Tendon Armor
 
+(X) Abysswalker Armor
 (^) Acrid Armor
 (#2, ^2) Amber Exploder Armor
 (^) Bleeding Obsidian Armor
-(X) Cell Armor
 (X) Ruby Ranger Armor
 
 (X) Blast Armor
@@ -574,7 +574,7 @@ MAGIC WEAPONS:
 (^) Tones of Agony
 
 (^) Bled Out Staff
-(X) Brineshower
+(^) Chemical Laser
 (X) Communion
 (^) Dismay
 (^) Innermost Manifest
@@ -645,7 +645,7 @@ NO POST ML SUMMONER CONTENT YET.
 EXPLOSIVE WEAPONS:
 ---
 (^) Ameballoon
-(#3(obtain help, ^2) Bang Snap !!!
+(^) Bang Snap
 (^) Bloombomb
 (^) Bombardment
 (^) Bomb Launcher (needs to be balanced)

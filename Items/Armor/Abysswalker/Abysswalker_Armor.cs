@@ -1,29 +1,26 @@
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Armor.Mimic {
-	[AutoloadEquip(EquipType.Head)]
-	public class Mimic_Helmet : ModItem {
+namespace Origins.Items.Armor.Abysswalker {
+    [AutoloadEquip(EquipType.Head)]
+	public class Abysswalker_Hood : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mimic Helmet");
-			Tooltip.SetDefault("Slightly increased explosive velocity\nMade from an unknown material");
-			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Mimic/Mimic_Helmet_Head_Glow");
-			}
+			DisplayName.SetDefault("Abysswalker's Hood");
+			Tooltip.SetDefault("+20 max life");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
-			Item.value = Item.buyPrice(gold: 4);
+			Item.value = Item.buyPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed += 0.1f;
+			player.statLifeMax2 += 20;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
-			return body.type == ModContent.ItemType<Mimic_Breastplate>() && legs.type == ModContent.ItemType<Mimic_Greaves>();
+			return body.type == ModContent.ItemType<Abysswalker_Cloak>() && legs.type == ModContent.ItemType<Abysswalker_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
@@ -31,7 +28,7 @@ namespace Origins.Items.Armor.Mimic {
 
 			float defiledPercentage = 1f; //OriginSystem.totalDefiled / (float)WorldGen.totalSolid;
 
-			player.setBonus = $"Not yet fully implemented\nSpread {Language.GetText("The_Defiled_Wastelands")} to unlock more abilities\nCurrent percentage: {defiledPercentage:P1}, ";
+			player.setBonus = $"Not yet fully implemented\nIncreases max assimilation by 50%\nGain different abilities depending on accrued assimilation amounts from each evil";
 			Origins.SetMimicSetUI();
 
 			int mimicSetLevel = OriginSystem.MimicSetLevel;
@@ -99,60 +96,66 @@ namespace Origins.Items.Armor.Mimic {
 			}
 		}
 		public override void AddRecipes() {
-			/*Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 15);
-			//recipe.AddIngredient(ModContent.ItemType<>(), 10);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();*/
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.SoulofNight, 4);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed, 8);
+			recipe.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.Vertebrae, 13);
+			recipe.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ModContent.ItemType<Undead_Chunk>(), 15);
+			recipe.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Alkahest>(), 10);
+			recipe.AddTile(TileID.DemonAltar);
+			recipe.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Mimic_Breastplate : ModItem {
+	public class Abysswalker_Cloak : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mimic Breastplate");
-			Tooltip.SetDefault("Increased life regeneration\nMade from an unknown material");
+			DisplayName.SetDefault("Abysswalker's Cloak");
+			Tooltip.SetDefault("Increased life regeneration");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 11;
-			Item.value = Item.buyPrice(gold: 4);
+			Item.value = Item.buyPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
 			player.lifeRegenCount += 2;
 		}
 		public override void AddRecipes() {
-			/*Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
-			//recipe.AddIngredient(ModContent.ItemType<>(), 20);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();*/
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.SoulofNight, 4);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed, 24);
+			recipe.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.Vertebrae, 39);
+			recipe.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ModContent.ItemType<Undead_Chunk>(), 45);
+			recipe.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Alkahest>(), 30);
+			recipe.AddTile(TileID.DemonAltar);
+			recipe.Register();
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Mimic_Greaves : ModItem {
+	public class Abysswalker_Greaves : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mimic Greaves");
-			Tooltip.SetDefault("10% increased explosive damage\nMade from an unknown material");
+			DisplayName.SetDefault("Abysswalker's Greaves");
+			Tooltip.SetDefault("Increased movement speed");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 8;
-			Item.value = Item.buyPrice(gold: 4);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetDamage(DamageClasses.Explosive) += 0.1f;
+			player.moveSpeed += 0.15f;
 		}
 		public override void AddRecipes() {
-			/*Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 20);
-			//recipe.AddIngredient(ModContent.ItemType<>(), 15);
-			recipe.SetResult(this);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();*/
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.SoulofNight, 4);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ItemID.Deathweed, 16);
+			recipe.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.Vertebrae, 26);
+			recipe.AddRecipeGroupWithItem(OriginSystem.ShadowScaleRecipeGroupID, showItem: ModContent.ItemType<Undead_Chunk>(), 30);
+			recipe.AddRecipeGroupWithItem(OriginSystem.CursedFlameRecipeGroupID, showItem: ModContent.ItemType<Alkahest>(), 20);
+			recipe.AddTile(TileID.DemonAltar);
+			recipe.Register();
 		}
 	}
 }

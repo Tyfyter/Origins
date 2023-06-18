@@ -17,8 +17,8 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.CloneDefaults(ItemID.Gatligator);
 			Item.damage = 60;
 			Item.crit = 9;
-			Item.knockBack = 6.75f;
-			Item.useAnimation = Item.useTime = 27;
+			Item.knockBack = 7.75f;
+			Item.useAnimation = Item.useTime = 23;
 			Item.width = 100;
 			Item.height = 28;
 			Item.autoReuse = false;
