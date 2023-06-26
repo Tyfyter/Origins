@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
 			Item.damage = 14;
-			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
+			Item.shoot = 1;
 			Item.ammo = Type;
 			Item.shootSpeed = 3.7f;
 			Item.knockBack = 2f;
@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
 			Item.damage = 22;
-			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
+			Item.shoot = 2;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4f;
             Item.knockBack = 3f;
@@ -65,7 +65,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
 			Item.damage = 31;
-			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
+			Item.shoot = 3;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4.4f;
 			Item.knockBack = 3.6f;
@@ -90,7 +90,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
 			Item.damage = 45;
-			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
+			Item.shoot = 4;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4.8f;
 			Item.knockBack = 4.3f;
@@ -115,7 +115,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
 			Item.damage = 50;
-			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
+			Item.shoot = 5;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 5.2f;
 			Item.knockBack = 4.8f;
@@ -130,7 +130,8 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.Register();
 		}
 	}
-	public class Resizable_Mine_P : ModProjectile, IIsExplodingProjectile {
+	public abstract class Resizable_Mine_P<TextureItem> : ModProjectile, IIsExplodingProjectile {
+		public override string Texture => (typeof(TextureItem).Namespace + "." + typeof(TextureItem).Name).Replace('.', '/');
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Resizable Mine");
 			Origins.MagicTripwireRange[Type] = 40;
@@ -155,4 +156,9 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public bool IsExploding() => Projectile.penetrate == -1;
 	}
+	public class Resizable_Mine_P_1 : Resizable_Mine_P<Resizable_Mine_One> { }
+	public class Resizable_Mine_P_2 : Resizable_Mine_P<Resizable_Mine_Two> { }
+	public class Resizable_Mine_P_3 : Resizable_Mine_P<Resizable_Mine_Three> { }
+	public class Resizable_Mine_P_4 : Resizable_Mine_P<Resizable_Mine_Four> { }
+	public class Resizable_Mine_P_5 : Resizable_Mine_P<Resizable_Mine_Five> { }
 }

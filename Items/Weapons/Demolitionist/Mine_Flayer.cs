@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useAnimation = 36;
 			Item.knockBack = 4f;
 			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
-			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P>();
+			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P_1>();
 			Item.shootSpeed = 9;
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.buyPrice(gold: 2);
@@ -56,6 +56,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			velocity = OriginExtensions.Vec2FromPolar(player.direction == 1 ? player.itemRotation : player.itemRotation + MathHelper.Pi, velocity.Length());
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
+			type += Item.shoot - 1;
 		}
 	}
 }
