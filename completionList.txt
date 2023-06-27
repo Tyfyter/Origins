@@ -456,7 +456,7 @@ TOOLS:
 (^) Rivenator
 (^) Snatcher
 (^) Stabsmash
-(#, ^2) Strainer !!!
+(☻) Strainer !!!
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
