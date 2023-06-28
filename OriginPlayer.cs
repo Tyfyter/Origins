@@ -201,6 +201,7 @@ namespace Origins {
 		public bool pincushion = false;
 		public Item meatScribeItem = null;
 		public int meatDashCooldown = 0;
+		public Item lotteryTicketItem = null;
 		#endregion
 
 		#region explosive stats
@@ -421,6 +422,7 @@ namespace Origins {
 					SoundEngine.PlaySound(SoundID.NPCDeath13.WithVolumeScale(0.75f), Player.position);
 				}
 			}
+			lotteryTicketItem = null;
 
 			if (!ravelEquipped && Player.mount.Active && Ravel_Mount.RavelMounts.Contains(Player.mount.Type)) {
 				Player.mount.Dismount(Player);

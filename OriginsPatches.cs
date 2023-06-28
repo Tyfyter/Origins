@@ -270,8 +270,18 @@ namespace Origins {
 		}
 		#endregion combat
 		internal static bool hurtCollisionCrimsonVine;
+		internal static bool rollingLotteryTicket;
 		private int Player_RollLuck(On.Terraria.Player.orig_RollLuck orig, Player self, int range) {
 			OriginPlayer originPlayer = self.GetModPlayer<OriginPlayer>();
+			if (!rollingLotteryTicket && range > 25 && originPlayer.lotteryTicketItem is not null) {
+				rollingLotteryTicket = true;
+				if (self.RollLuck(2 + range / 25) == 0) {
+					originPlayer.lotteryTicketItem.TurnToAir();
+					rollingLotteryTicket = false;
+					return 0;
+				}
+			}
+			rollingLotteryTicket = false;
 			int roll = orig(self, range);
 			int rerollCount = OriginExtensions.RandomRound(Main.rand, originPlayer.brineClover / 4f);
 			if (rerollCount > 0 && range > 1) {

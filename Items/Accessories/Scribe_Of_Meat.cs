@@ -171,25 +171,26 @@ namespace Origins.Items.Accessories {
 			int Jankify(int a, int b, float c) {
 				return (int)((Projectile.timeLeft % a - Projectile.timeLeft % b) / c);
 			}
-			(Texture2D, Rectangle?, Vector2, Vector2?)[] textures = new (Texture2D, Rectangle?, Vector2, Vector2?)[] {
-				(projTexture, projTexture.Frame(verticalFrames: 2, frameY: Projectile.frame % 2), new Vector2(0, 0), null),
-				(Texture2, null, new Vector2(13, -17 + Jankify(48, 24, 24 / 2) - 2), null),
-				(Texture2, null, new Vector2(11, 17 + Jankify(54, 27, 27 / 2) - 2), null),
+			(Texture2D texture, Rectangle? frame, Vector2 position, float rotation, Vector2? origin)[] textures = new (Texture2D, Rectangle?, Vector2, float, Vector2?)[] {
+				(projTexture, projTexture.Frame(verticalFrames: 2, frameY: Projectile.frame % 2), new Vector2(0, 0), 0, null),
+				(Texture2, null, new Vector2(13, -17 + Jankify(48, 24, 24 / 2) - 2), 0, null),
+				(Texture2, null, new Vector2(11, 17 + Jankify(54, 27, 27 / 2) - 2), 0, null),
 				(Texture3,
 					Texture3.Value.Frame(verticalFrames: 2, frameY: (Projectile.frame / 2) % 2),
 					new Vector2(Jankify(80, 30, 15) + 15, Jankify(60, 30, 15) - 2),
+					Projectile.frame + (Projectile.frameCounter / 7f),// would normally be 0, just spins here to be an example
 					null
 				),
 			};
 			Main.spriteBatch.Restart(state, samplerState:SamplerState.PointWrap);
 			for (int i = 0; i < textures.Length; i++) {
-				(Texture2D texture, Rectangle? frame, Vector2 position, Vector2? origin) = textures[i];
+				(Texture2D texture, Rectangle? frame, Vector2 position, float rotation, Vector2? origin) = textures[i];
 				Main.EntitySpriteDraw(
 					texture,
 					Projectile.Center + (position * new Vector2(Math.Sign(Projectile.velocity.X), 1)) - Main.screenPosition,
 					frame,
 					lightColor,
-					Projectile.rotation,
+					Projectile.rotation + rotation,
 					origin ?? ((frame?.Size() ?? texture.Size()) * 0.5f),
 					Projectile.scale,
 					Projectile.velocity.X < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None,

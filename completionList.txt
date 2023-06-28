@@ -10,6 +10,7 @@
 #2: Needs code (partial implementation. Includes code of a re-used mechanic)
 #3: Needs code (needs changing to pre-existing code and/or needs to be finalized | Undecided plans)
 #4: Has bug
+#5: Code complete other than graphical code, for which it needs design
 
 $: Needs sound (music not composed)
 $2: Needs sound (SFX not yet composed/implemented)
@@ -373,7 +374,7 @@ ACCESSORIES:
 (^) Mysterious Spray
 (^) Protozoa Food
 (X) Scrap Compactor
-(#3, ^2) Scribe of the Meat God !!!
+(#5) Scribe of the Meat God !!!
 (^) Third Eye
 
 (^) Agility Core
@@ -953,7 +954,7 @@ CONSUMABLES:
 (^) Gooey Water
 (#2, ^2) Holiday Hair Dye
 (#2, ^2) Invisible Ink
-(#2, ^2) Lottery Ticket !!!
+(☻) Lottery Ticket !!!
 (#2, ^2) Magic Brine Dropper
 (^) White Water
 (#2, ^2) Void Lock
