@@ -374,7 +374,7 @@ ACCESSORIES:
 (^) Mysterious Spray
 (^) Protozoa Food
 (X) Scrap Compactor
-(#5) Scribe of the Meat God !!!
+(☻) Scribe of the Meat God !!!
 (^) Third Eye
 
 (^) Agility Core

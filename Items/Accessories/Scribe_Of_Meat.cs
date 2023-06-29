@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -35,6 +36,7 @@ namespace Origins.Items.Accessories {
 		public static AutoCastingAsset<Texture2D> Texture4 { get; private set; }
 		public static AutoCastingAsset<Texture2D> Texture5 { get; private set; }
 		public static int ID { get; private set; }
+		Vector2[] hungries;
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Scribe of the Meat God");
 			if (!Main.dedServ) {
@@ -168,26 +170,49 @@ namespace Origins.Items.Accessories {
 		public override bool PreDraw(ref Color lightColor) {
 			SpriteBatchState state = Main.spriteBatch.GetState();
 			Texture2D projTexture = TextureAssets.Projectile[Projectile.type].Value;
+			Vector2 dirVect = new Vector2(Math.Sign(Projectile.velocity.X), 1);
 			int Jankify(int a, int b, float c) {
 				return (int)((Projectile.timeLeft % a - Projectile.timeLeft % b) / c);
 			}
-			(Texture2D texture, Rectangle? frame, Vector2 position, float rotation, Vector2? origin)[] textures = new (Texture2D, Rectangle?, Vector2, float, Vector2?)[] {
+			if (hungries is null) {
+				hungries = new Vector2[Main.rand.Next(2, 4)];
+				for (int i = 0; i < hungries.Length; i++) {
+					hungries[i] = new Vector2(Main.rand.Next(28, 40), ((56 / hungries.Length) * i - 14) + Main.rand.Next(-3, 4) * 2);
+				}
+			}
+			List<(Texture2D texture, Rectangle? frame, Vector2 position, float rotation, Vector2? origin)> textures = new List<(Texture2D, Rectangle?, Vector2, float, Vector2?)> {
 				(projTexture, projTexture.Frame(verticalFrames: 2, frameY: Projectile.frame % 2), new Vector2(0, 0), 0, null),
 				(Texture2, null, new Vector2(13, -17 + Jankify(48, 24, 24 / 2) - 2), 0, null),
 				(Texture2, null, new Vector2(11, 17 + Jankify(54, 27, 27 / 2) - 2), 0, null),
 				(Texture3,
 					Texture3.Value.Frame(verticalFrames: 2, frameY: (Projectile.frame / 2) % 2),
 					new Vector2(Jankify(80, 30, 15) + 15, Jankify(60, 30, 15) - 2),
-					Projectile.frame + (Projectile.frameCounter / 7f),// would normally be 0, just spins here to be an example
+					0,
 					null
 				),
 			};
+			for (int i = 0; i < hungries.Length; i++) {
+				Vector2 hungryPos = hungries[i] + new Vector2(0, Jankify(18 + i, 9 + i, 4.5f + i));
+				Vector2 basePos = new Vector2(8, hungries[i].Y);
+				textures.Insert(0, (Texture4,
+					new Rectangle(0, 0, (int)hungryPos.X - 8, 6),
+					basePos,
+					((hungryPos - basePos) * dirVect).ToRotation(),
+					new Vector2(0, 3)
+				));
+				textures.Add((Texture5,
+					Texture5.Value.Frame(verticalFrames: 2, frameY: (Projectile.frame + ((Projectile.frameCounter + i * 3) / 7)) % 2),
+					hungryPos,
+					0,
+					null
+				));
+			}
 			Main.spriteBatch.Restart(state, samplerState:SamplerState.PointWrap);
-			for (int i = 0; i < textures.Length; i++) {
+			for (int i = 0; i < textures.Count; i++) {
 				(Texture2D texture, Rectangle? frame, Vector2 position, float rotation, Vector2? origin) = textures[i];
 				Main.EntitySpriteDraw(
 					texture,
-					Projectile.Center + (position * new Vector2(Math.Sign(Projectile.velocity.X), 1)) - Main.screenPosition,
+					Projectile.Center + (position * dirVect) - Main.screenPosition,
 					frame,
 					lightColor,
 					Projectile.rotation + rotation,
