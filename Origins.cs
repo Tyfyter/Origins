@@ -14,11 +14,13 @@ using Origins.Projectiles;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.UI;
+using Origins.Tiles.MusicBoxes;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -424,9 +426,9 @@ namespace Origins {
 				MaxInstances = 0
 			};
 			//OriginExtensions.initClone();
-			Music.Dusk = MusicID.Eerie;
-			Music.Defiled = MusicID.Corruption;
-			Music.UndergroundDefiled = MusicID.UndergroundCorruption;
+			Music.Dusk = AddMusic(MusicID.Eerie);
+			MusicLoader.AddMusicBox(this, Music.Defiled = AddMusic(MusicID.Corruption), MC.ItemType<Music_Box_DW_Item>(), MC.TileType<Music_Box_DW>());
+			MusicLoader.AddMusicBox(this, Music.UndergroundDefiled = AddMusic(MusicID.UndergroundCorruption), MC.ItemType<Music_Box_DC_Item>(), MC.TileType<Music_Box_DC>());
 			ApplyPatches();
 		}
 		public override void PostSetupContent() {

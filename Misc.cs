@@ -638,6 +638,24 @@ namespace Origins {
 	interface ICustomRespawnArtifact {
 		void Respawn();
 	}
+	public class MirroredAudioTrack : IAudioTrack {
+		CueAudioTrack baseTrack;
+		CueAudioTrack BaseTrack => baseTrack ??= new CueAudioTrack(AudioSystem.SoundBank, "Music_" + id);
+		static LegacyAudioSystem AudioSystem => Main.audioSystem as LegacyAudioSystem;
+		int id;
+		public MirroredAudioTrack(int id) => this.id = id;
+		public bool IsPlaying => BaseTrack.IsPlaying;
+		public bool IsStopped => BaseTrack.IsStopped;
+		public bool IsPaused => BaseTrack.IsPaused;
+		public void Stop(AudioStopOptions options) => BaseTrack.Stop(options);
+		public void Play() => BaseTrack.Play();
+		public void Pause() => BaseTrack.Pause();
+		public void SetVariable(string variableName, float value) => BaseTrack.SetVariable(variableName, value);
+		public void Resume() => BaseTrack.Resume();
+		public void Reuse() => BaseTrack.Reuse();
+		public void Update() => BaseTrack.Update();
+		public void Dispose() => BaseTrack.Dispose();
+	}
 	public static class Elements {
 		public const ushort Fire = 1;
 		public const ushort Earth = 2;
@@ -1243,6 +1261,25 @@ namespace Origins {
 			soundStyle.Volume = volume;
 			return soundStyle;
 		}
+		internal static int AddMusic(int baseId) {
+			ReserveMusicID ??= typeof(MusicLoader).GetMethod("ReserveMusicID", BindingFlags.NonPublic | BindingFlags.Static).CreateDelegate<Func<int>>();
+			int id = ReserveMusicID();
+			musicRedirections ??= new();
+			musicRedirections[id] = baseId;
+			return id;
+		}
+		public sealed class MusicRedirector : ModType {
+			public override void SetupContent() {
+				if (Main.audioSystem is LegacyAudioSystem audioSystem) {
+					foreach (var item in musicRedirections) {
+						audioSystem.AudioTracks[item.Key] = new MirroredAudioTrack(item.Value);
+					}
+				}
+			}
+			protected override void Register() {}
+		}
+		internal static Dictionary<int, int> musicRedirections;
+		internal static Func<int> ReserveMusicID;
 		#endregion sound
 		public static StatModifier Scale(this StatModifier statModifier, float additive = 1f, float multiplicative = 1f, float flat = 1f, float @base = 1f) {
 			return new StatModifier(
