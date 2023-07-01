@@ -1,28 +1,23 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
-using Origins.Items.Other.Consumables;
-using Origins.NPCs;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Drawing;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Manasynk : ModItem {
+    public class Manasynk : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Manasynk");
 			Tooltip.SetDefault("");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.RubyStaff);
+			Item.CloneDefaults(ItemID.Snowball);
 			Item.damage = 8;
 			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
@@ -30,7 +25,9 @@ namespace Origins.Items.Weapons.Magic {
 			Item.height = 30;
 			Item.useTime = 15;
 			Item.useAnimation = 15;
-			Item.mana = 8;
+			Item.mana = 7;
+			Item.consumable = false;
+			Item.autoReuse = true;
 			Item.shoot = ModContent.ProjectileType<Manasynk_P>();
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Orange;

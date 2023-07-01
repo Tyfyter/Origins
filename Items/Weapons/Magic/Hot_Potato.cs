@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
 using Terraria;
 using Terraria.DataStructures;
@@ -7,14 +6,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Hot_Potato : ModItem {
+    public class Hot_Potato : ModItem {
 		public override void SetStaticDefaults() {
 			DisplayName.SetDefault("Hot Potato");
 			Tooltip.SetDefault("'Be careful, it's hot'");
 			SacrificeTotal = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.RubyStaff);
+			Item.CloneDefaults(ItemID.Snowball);
+			Item.maxStack = 1;
 			Item.damage = 16;
 			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
@@ -22,6 +22,8 @@ namespace Origins.Items.Weapons.Magic {
 			Item.height = 30;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
+			Item.consumable = false;
+			Item.autoReuse = true;
 			Item.mana = 8;
 			Item.shoot = ModContent.ProjectileType<Hot_Potato_P>();
 			Item.value = Item.sellPrice(silver: 30);

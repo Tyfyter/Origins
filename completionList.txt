@@ -374,7 +374,7 @@ ACCESSORIES:
 (^) Mysterious Spray
 (^) Protozoa Food
 (X) Scrap Compactor
-(☻) Scribe of the Meat God !!!
+(#4, ^2) Scribe of the Meat God !!!
 (^) Third Eye
 
 (^) Agility Core
@@ -457,7 +457,7 @@ TOOLS:
 (^) Rivenator
 (^) Snatcher
 (^) Stabsmash
-(☻) Strainer !!!
+(#4, ^2) Strainer !!!
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
@@ -570,7 +570,7 @@ MAGIC WEAPONS:
 (^) Infusion
 (^) Low Signal
 (^) Magnus
-(#3, ^2) Manasynk !!!
+(^) Manasynk
 (^) Slashswarm
 (^) Tones of Agony
 
@@ -690,7 +690,7 @@ EXPLOSIVE WEAPONS:
 
 (^) Black Hole Bomb
 (@5, ^3) Caustica
-(#2, ^2) Flakjack
+(^) Flakjack
 (@, ^3) Missile Minigun
 (@5, #) Starburst
 (X) Supernova
@@ -954,7 +954,7 @@ CONSUMABLES:
 (^) Gooey Water
 (#2, ^2) Holiday Hair Dye
 (#2, ^2) Invisible Ink
-(☻) Lottery Ticket !!!
+(^) Lottery Ticket
 (#2, ^2) Magic Brine Dropper
 (^) White Water
 (#2, ^2) Void Lock

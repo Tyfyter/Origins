@@ -20,8 +20,8 @@ namespace Origins.Items.Weapons.Melee {
 			Item.width = 104;
 			Item.height = 110;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.useTime = 25;
-			Item.useAnimation = 18;
+			Item.useTime = 40;
+			Item.useAnimation = 40;
 			Item.knockBack = 14f;
 			Item.shoot = ProjectileID.None;
 			Item.value = Item.buyPrice(gold: 2);
