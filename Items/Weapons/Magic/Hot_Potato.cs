@@ -22,12 +22,20 @@ namespace Origins.Items.Weapons.Magic {
 			Item.height = 30;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
-			Item.consumable = false;
+			Item.consumable = true;
 			Item.autoReuse = true;
 			Item.mana = 8;
 			Item.shoot = ModContent.ProjectileType<Hot_Potato_P>();
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Orange;
+		}
+		public override bool ConsumeItem(Player player) => false;
+		public override bool? CanBeChosenAsAmmo(Item weapon, Player player) {
+			return player.CheckMana(Item, pay: false);
+		}
+		public override bool CanBeConsumedAsAmmo(Item weapon, Player player) {
+			player.CheckMana(Item, pay: true);
+			return false;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -18,6 +19,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
+			Item.maxStack = 1;
 			Item.damage = 8;
 			Item.DamageType = DamageClass.Magic;
 			Item.noMelee = true;
@@ -26,11 +28,19 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useTime = 15;
 			Item.useAnimation = 15;
 			Item.mana = 7;
-			Item.consumable = false;
+			Item.consumable = true;
 			Item.autoReuse = true;
 			Item.shoot = ModContent.ProjectileType<Manasynk_P>();
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Orange;
+		}
+		public override bool ConsumeItem(Player player) => false;
+		public override bool? CanBeChosenAsAmmo(Item weapon, Player player) {
+			return player.CheckMana(Item, pay: false);
+		}
+		public override bool CanBeConsumedAsAmmo(Item weapon, Player player) {
+			player.CheckMana(Item, pay: true);
+			return false;
 		}
 	}
 	public class Manasynk_P : ModProjectile {

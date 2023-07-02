@@ -28,8 +28,8 @@ namespace Origins.Items.Accessories {
 		}
 	}
 	public class Scribe_Of_Meat_P : ModProjectile {
-		public const int max_updates = 2;
-		public const int dash_duration = 80;
+		public const int max_updates = 4;
+		public const int dash_duration = 30;
 		public override string Texture => "Origins/Items/Accessories/Scribe_Of_Meat_Use";
 		public static AutoCastingAsset<Texture2D> Texture2 { get; private set; }
 		public static AutoCastingAsset<Texture2D> Texture3 { get; private set; }
@@ -74,10 +74,13 @@ namespace Origins.Items.Accessories {
 			Player owner = Main.player[Projectile.owner];
 			owner.Center = Projectile.Center;
 			owner.velocity = Projectile.velocity;
-			owner.mount.Dismount(owner);
-			owner.GetModPlayer<OriginPlayer>().hideAllLayers = true;
-			owner.endurance += (1 - owner.endurance) * 0.5f;
-			if (++Projectile.frameCounter >= 7) {
+			if (Projectile.numUpdates == 0) {
+				owner.mount.Dismount(owner);
+				owner.GetModPlayer<OriginPlayer>().hideAllLayers = true;
+				owner.endurance += (1 - owner.endurance) * 0.5f;
+				owner.statDefense += 8;
+			}
+			if (++Projectile.frameCounter >= 14) {
 				Projectile.frameCounter = 0;
 				Projectile.frame++;
 			}
@@ -201,7 +204,7 @@ namespace Origins.Items.Accessories {
 					new Vector2(0, 3)
 				));
 				textures.Add((Texture5,
-					Texture5.Value.Frame(verticalFrames: 2, frameY: (Projectile.frame + ((Projectile.frameCounter + i * 3) / 7)) % 2),
+					Texture5.Value.Frame(verticalFrames: 2, frameY: (Projectile.frame + ((Projectile.frameCounter + i * 5) / 14)) % 2),
 					hungryPos,
 					0,
 					null

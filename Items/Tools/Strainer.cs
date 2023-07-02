@@ -30,6 +30,7 @@ namespace Origins.Items.Tools {
 			Item.noUseGraphic = true;
 			Item.shoot = ModContent.ProjectileType<Strainer_P>();
 			Item.shootSpeed = 16;
+			Item.tileBoost = 7;
 		}
 	}
 	public class Strainer_P : ModProjectile {
@@ -68,8 +69,22 @@ namespace Origins.Items.Tools {
 			if (Main.myPlayer == Projectile.owner) {
 				// This code must only be ran on the client of the projectile owner
 				if (player.channel) {
-					PolarVec2 offset = (PolarVec2)(Main.MouseWorld - playerCenter);
-					offset.R = MathHelper.Clamp(offset.R, player.HeldItem.shootSpeed * Projectile.scale + 26, 160);
+					PolarVec2 offset;
+					if (Main.SmartCursorIsUsed && player.IsTargetTileInItemRange(player.HeldItem) && Main.tile[Player.tileTargetX, Player.tileTargetY].HasTile) {
+						offset = (PolarVec2)(new Vector2(Player.tileTargetX, Player.tileTargetY).ToWorldCoordinates() - playerCenter);
+						offset.R = MathHelper.Max(offset.R - 8, player.HeldItem.shootSpeed * Projectile.scale + 26);
+					} else {
+						float tileBoost = player.HeldItem.tileBoost;
+						Vector2 tileRange = new Vector2(Player.tileRangeX + tileBoost, Player.tileRangeY + tileBoost) * 16;
+						Vector2 mouseOffset = Main.MouseWorld - playerCenter;
+
+						if (GeometryUtils.GetIntersectionPoints(Vector2.Zero, mouseOffset, -tileRange, tileRange, out var intersections)) {
+							offset = (PolarVec2)intersections[0];
+						} else {
+							offset = (PolarVec2)mouseOffset;
+						}
+						offset.R = MathHelper.Max(offset.R - 8, player.HeldItem.shootSpeed * Projectile.scale + 26);
+					}
 					// Calculate a normalized vector from player to mouse and multiply by holdoutDistance to determine resulting holdoutOffset
 					Vector2 holdoutOffset = (Vector2)offset;
 					if (holdoutOffset.X != Projectile.velocity.X || holdoutOffset.Y != Projectile.velocity.Y) {

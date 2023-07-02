@@ -640,8 +640,9 @@ namespace Origins {
 			if (meatScribeItem is not null && meatDashCooldown <= 0) {
 				Player.dashType = 0;
 				Player.dashTime = 0;
-				const float meatDashSpeed = 7f / Scribe_Of_Meat_P.max_updates;
-				if (dashDirection != 0 && (Player.velocity.X * dashDirection < meatDashSpeed)) {
+				const float meatDashTotalSpeed = 12f;
+				const float meatDashSpeed = meatDashTotalSpeed / Scribe_Of_Meat_P.max_updates;
+				if (dashDirection != 0 && (Player.velocity.X * dashDirection < meatDashTotalSpeed)) {
 					Player.dashDelay = -1;
 					Player.dash = 2;
 					Player.timeSinceLastDashStarted = 0;
