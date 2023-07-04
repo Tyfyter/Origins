@@ -374,7 +374,7 @@ ACCESSORIES:
 (^) Mysterious Spray
 (^) Protozoa Food
 (X) Scrap Compactor
-(#4, ^2) Scribe of the Meat God !!!
+(☻) Scribe of the Meat God !!!
 (^) Third Eye
 
 (^) Agility Core
@@ -457,7 +457,7 @@ TOOLS:
 (^) Rivenator
 (^) Snatcher
 (^) Stabsmash
-(#4, ^2) Strainer !!!
+(☻) Strainer !!!
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
