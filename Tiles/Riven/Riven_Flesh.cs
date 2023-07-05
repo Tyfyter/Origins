@@ -16,6 +16,7 @@ namespace Origins.Tiles.Riven {
 			if (!Main.dedServ) {
 				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Flesh_Glow");
 			}
+			Origins.PotType.Add(Type, ((ushort)TileType<Riven_Pot>(), 0, 0));
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.DrawsWalls[Type] = true;
