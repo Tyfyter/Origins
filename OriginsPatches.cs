@@ -631,7 +631,7 @@ namespace Origins {
 		static GetTreeBottom getTreeBottom => instance._getTreeBottom ??=
 			typeof(WorldGen).GetMethod("GetTreeBottom", BindingFlags.NonPublic | BindingFlags.Static)
 			.CreateDelegate<GetTreeBottom>(null);
-		private void WorldGen_ShakeTree(On.Terraria.WorldGen.orig_ShakeTree orig, int i, int j) {
+		private static void WorldGen_ShakeTree(On.Terraria.WorldGen.orig_ShakeTree orig, int i, int j) {
 			getTreeBottom(i, j, out var x, out var y);
 			int num = y;
 			int tileType = Main.tile[x, y].TileType;
@@ -655,54 +655,58 @@ namespace Origins {
 			}
 			bool edgeB = WorldGen.numTreeShakes == WorldGen.maxTreeShakes;
 			bool edgeA = Collision.SolidTiles(x - 2, x + 2, y - 2, y + 2);
-			if (PlantLoader_ShakeTree(x, y, tileType, edgeA || edgeB || edgeC)) {
-				if (WorldGen.genRand.NextBool(20)) {
-					switch (WorldGen.genRand.Next(2)) {
-						case 0:
-						Item.NewItem(new EntitySource_ShakeTree(i, j), i * 16, j * 16, 16, 16, MC.ItemType<Tree_Sap>(), WorldGen.genRand.Next(1, 3));
-						break;
-						case 1:
-						Item.NewItem(new EntitySource_ShakeTree(i, j), i * 16, j * 16, 16, 16, MC.ItemType<Bark>(), WorldGen.genRand.Next(1, 3));
-						break;
-					}
+			if (!(edgeA || edgeB || edgeC) && PlantLoader_ShakeTree(x, y, tileType, false) && treeType == TreeTypes.None) {
+				ITree tree = PlantLoader.GetTree(tileType);
+				if (tree is Defiled_Tree) {
+
+				}
+			}
+			if (WorldGen.genRand.NextBool(20)) {
+				switch (WorldGen.genRand.Next(2)) {
+					case 0:
+					Item.NewItem(new EntitySource_ShakeTree(i, j), i * 16, j * 16, 16, 16, MC.ItemType<Tree_Sap>(), WorldGen.genRand.Next(1, 3));
+					break;
+					case 1:
+					Item.NewItem(new EntitySource_ShakeTree(i, j), i * 16, j * 16, 16, 16, MC.ItemType<Bark>(), WorldGen.genRand.Next(1, 3));
+					break;
 				}
 			}
 			orig(i, j);
 		}
-		static bool PlantLoader_ShakeTree(int x, int y, int type, bool useRealRand = false) {
+		internal static bool PlantLoader_ShakeTree(int x, int y, int type, bool useRealRand = false) {
 			//getTreeBottom(i, j, out var x, out var y);
 			UnifiedRandom genRand = useRealRand ? WorldGen.genRand : WorldGen.genRand.Clone();
 			TreeTypes treeType = WorldGen.GetTreeType(type);
-			if (Main.getGoodWorld && genRand.NextBool(15)) return false;
-			if (genRand.NextBool(300) && treeType == TreeTypes.Forest) return false;
-			if (genRand.NextBool(300) && treeType == TreeTypes.Forest) return false;
-			if (genRand.NextBool(200) && treeType == TreeTypes.Jungle) return false;
-			if (genRand.NextBool(200) && treeType == TreeTypes.Jungle) return false;
-			if (genRand.NextBool(1000) && treeType == TreeTypes.Forest) return false;
-			if (genRand.NextBool(7) && (treeType == TreeTypes.Forest || treeType == TreeTypes.Snow || treeType == TreeTypes.Hallowed)) return false;
-			if (genRand.NextBool(8) && treeType == TreeTypes.Mushroom) return false;
-			if (genRand.NextBool(35) && Main.halloween) return false;
-			if (genRand.NextBool(12)) return false;
-			if (genRand.NextBool(20)) return false;
-			if (genRand.NextBool(15) && (treeType == TreeTypes.Forest || treeType == TreeTypes.Hallowed)) return false;
-			if (genRand.NextBool(50) && treeType == TreeTypes.Hallowed && !Main.dayTime) return false;
-			if (genRand.NextBool(50) && treeType == TreeTypes.Forest && !Main.dayTime) return false;
-			if (genRand.NextBool(40) && treeType == TreeTypes.Forest && !Main.dayTime && Main.halloween) return false;
-			if (genRand.NextBool(50) && (treeType == TreeTypes.Forest || treeType == TreeTypes.Hallowed)) return false;
-			if (genRand.NextBool(40) && treeType == TreeTypes.Jungle) return false;
-			if (genRand.NextBool(20) && (treeType == TreeTypes.Palm || treeType == TreeTypes.PalmCorrupt || treeType == TreeTypes.PalmCrimson || treeType == TreeTypes.PalmHallowed) && !WorldGen.IsPalmOasisTree(x)) return false;
-			if (genRand.NextBool(30) && (treeType == TreeTypes.Crimson || treeType == TreeTypes.PalmCrimson)) return false;
-			if (genRand.NextBool(30) && (treeType == TreeTypes.Corrupt || treeType == TreeTypes.PalmCorrupt)) return false;
-			if (genRand.NextBool(30) && treeType == TreeTypes.Jungle && !Main.dayTime) return false;
-			if (genRand.NextBool(40) && treeType == TreeTypes.Jungle) return false;
-			if (genRand.NextBool(20) && (treeType == TreeTypes.Forest || treeType == TreeTypes.Hallowed) && !Main.raining && !NPC.TooWindyForButterflies && Main.dayTime) return false;
-			if (genRand.NextBool(15) && treeType == TreeTypes.Forest) return false;
-			if (genRand.NextBool(15) && treeType == TreeTypes.Snow) return false;
-			if (genRand.NextBool(15) && treeType == TreeTypes.Jungle) return false;
-			if (genRand.NextBool(15) && (treeType == TreeTypes.Palm || treeType == TreeTypes.PalmCorrupt || treeType == TreeTypes.PalmCrimson || treeType == TreeTypes.PalmHallowed) && !WorldGen.IsPalmOasisTree(x)) return false;
-			if (genRand.NextBool(15) && (treeType == TreeTypes.Corrupt || treeType == TreeTypes.PalmCorrupt)) return false;
-			if (genRand.NextBool(15) && (treeType == TreeTypes.Hallowed || treeType == TreeTypes.PalmHallowed)) return false;
-			if (genRand.NextBool(15) && (treeType == TreeTypes.Crimson || treeType == TreeTypes.PalmCrimson)) return false;
+			if (Main.getGoodWorld && genRand.NextBool(15)) return false; // lit Bomb
+			if (genRand.NextBool(300) && treeType == TreeTypes.Forest) return false;//LivingWoodWand
+			if (genRand.NextBool(300) && treeType == TreeTypes.Forest) return false;//LeafWand
+			if (genRand.NextBool(200) && treeType == TreeTypes.Jungle) return false;//LivingMahoganyWand
+			if (genRand.NextBool(200) && treeType == TreeTypes.Jungle) return false;//LivingMahoganyLeafWand
+			if (genRand.NextBool(1000) && treeType == TreeTypes.Forest) return false;//EucaluptusSap
+			if (genRand.NextBool(7) && (treeType == TreeTypes.Forest || treeType == TreeTypes.Snow || treeType == TreeTypes.Hallowed)) return false;//Acorn
+			if (genRand.NextBool(8) && treeType == TreeTypes.Mushroom) return false;//MushroomGrassSeeds
+			if (genRand.NextBool(35) && Main.halloween) return false;//RottenEgg
+			if (genRand.NextBool(12)) return false;//wood? uses KillTile_GetItemDrops
+			if (genRand.NextBool(20)) return false;//coin
+			if (genRand.NextBool(15) && (treeType == TreeTypes.Forest || treeType == TreeTypes.Hallowed)) return false;//Bird
+			if (genRand.NextBool(50) && treeType == TreeTypes.Hallowed && !Main.dayTime) return false;//Fairy
+			if (genRand.NextBool(50) && treeType == TreeTypes.Forest && !Main.dayTime) return false;//Owl
+			if (genRand.NextBool(40) && treeType == TreeTypes.Forest && !Main.dayTime && Main.halloween) return false;//Raven
+			if (genRand.NextBool(50) && (treeType == TreeTypes.Forest || treeType == TreeTypes.Hallowed)) return false;//multiple birds?
+			if (genRand.NextBool(40) && treeType == TreeTypes.Jungle) return false;//Bee
+			if (genRand.NextBool(20) && (treeType == TreeTypes.Palm || treeType == TreeTypes.PalmCorrupt || treeType == TreeTypes.PalmCrimson || treeType == TreeTypes.PalmHallowed) && !WorldGen.IsPalmOasisTree(x)) return false;//Seagull2
+			if (genRand.NextBool(30) && (treeType == TreeTypes.Crimson || treeType == TreeTypes.PalmCrimson)) return false;//LittleCrimera
+			if (genRand.NextBool(30) && (treeType == TreeTypes.Corrupt || treeType == TreeTypes.PalmCorrupt)) return false;//LittleEater
+			if (genRand.NextBool(30) && treeType == TreeTypes.Jungle && !Main.dayTime) return false;//JungleBat
+			if (genRand.NextBool(40) && treeType == TreeTypes.Jungle) return false;//BeeHive
+			if (genRand.NextBool(20) && (treeType == TreeTypes.Forest || treeType == TreeTypes.Hallowed) && !Main.raining && !NPC.TooWindyForButterflies && Main.dayTime) return false;//Butterfly
+			if (genRand.NextBool(15) && treeType == TreeTypes.Forest) return false;//Apple, Peach, etc.
+			if (genRand.NextBool(15) && treeType == TreeTypes.Snow) return false;//Plum, Cherry
+			if (genRand.NextBool(15) && treeType == TreeTypes.Jungle) return false;//Mango, Pineapple
+			if (genRand.NextBool(15) && (treeType == TreeTypes.Palm || treeType == TreeTypes.PalmCorrupt || treeType == TreeTypes.PalmCrimson || treeType == TreeTypes.PalmHallowed) && !WorldGen.IsPalmOasisTree(x)) return false;//Coconut, Banana
+			if (genRand.NextBool(15) && (treeType == TreeTypes.Corrupt || treeType == TreeTypes.PalmCorrupt)) return false;//Elderberry, BlackCurrant
+			if (genRand.NextBool(15) && (treeType == TreeTypes.Hallowed || treeType == TreeTypes.PalmHallowed)) return false;//Dragonfruit, Starfruit
+			if (genRand.NextBool(15) && (treeType == TreeTypes.Crimson || treeType == TreeTypes.PalmCrimson)) return false;//BloodOrange, Rambutan
 			return true;
 		}
 		#endregion

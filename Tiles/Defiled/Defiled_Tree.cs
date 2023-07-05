@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Other.Consumables.Food;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
@@ -12,9 +13,10 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Tree : ModTree {
-		private Mod mod => Origins.instance;
+		private static Mod mod => Origins.instance;
 		public static Defiled_Tree Instance { get; private set; }
 		public override TreePaintingSettings TreeShaderSettings => new();
+		public override TreeTypes CountsAsTreeType => TreeTypes.None;
 		public override void SetStaticDefaults() {
 			GrowsOnTileId = new int[] {
 				ModContent.TileType<Defiled_Grass>(),
@@ -29,7 +31,15 @@ namespace Origins.Tiles.Defiled {
 		internal static void Unload() {
 			Instance = null;
 		}
-
+		public override bool Shake(int x, int y, ref bool createLeaves) {
+			if (!Origins.PlantLoader_ShakeTree(x, y, Main.tile[x, y].TileType) && WorldGen.genRand.NextBool(15)) {
+				int type = WorldGen.genRand.NextBool() ? ModContent.ItemType<Bileberry>() : ModContent.ItemType<Prickly_Pear>();
+				Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, type);
+				createLeaves = true;
+				return false;
+			}
+			return true;
+		}
 		/*public override int CreateDust() {
 			return ModContent.DustType<>();
 		}*/

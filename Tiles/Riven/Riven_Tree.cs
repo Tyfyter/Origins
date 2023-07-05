@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Other.Consumables.Food;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
@@ -10,17 +11,26 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
 	public class Riven_Tree : ModTree {
-		private Mod mod => Origins.instance;
+		private static Mod mod => Origins.instance;
 
 		public static Riven_Tree Instance { get; private set; }
 		public override TreePaintingSettings TreeShaderSettings => new();
-
+		public override TreeTypes CountsAsTreeType => TreeTypes.None;
 		internal static void Load() {
 			Instance = new Riven_Tree();
 		}
 
 		internal static void Unload() {
 			Instance = null;
+		}
+		public override bool Shake(int x, int y, ref bool createLeaves) {
+			if (!Origins.PlantLoader_ShakeTree(x, y, Main.tile[x, y].TileType) && WorldGen.genRand.NextBool(15)) {
+				int type = WorldGen.genRand.NextBool() ? ModContent.ItemType<Pawpaw>() : ModContent.ItemType<Periven>();
+				Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, type);
+				createLeaves = true;
+				return false;
+			}
+			return true;
 		}
 
 		/*public override int CreateDust() {
