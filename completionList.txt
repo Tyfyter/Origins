@@ -374,7 +374,7 @@ ACCESSORIES:
 (^) Mysterious Spray
 (^) Protozoa Food
 (X) Scrap Compactor
-(☻) Scribe of the Meat God !!!
+(#4, ^2) Scribe of the Meat God !!!
 (^) Third Eye
 
 (^) Agility Core
@@ -457,7 +457,7 @@ TOOLS:
 (^) Rivenator
 (^) Snatcher
 (^) Stabsmash
-(☻) Strainer !!!
+(^) Strainer
 
 (^) Acrid Drill
 (^) Acrid Hamaxe
@@ -793,8 +793,8 @@ TILES:
 (#2, ^2) Laser Tag Console
 (#2, ^2) Riven Foliage !!!
 (#2, ^2) Riven Lesion !!!
-(#, ^2) Riven Pot !!!
-(^) Riven Tree
+(#3, ^2) Riven Pot !!!
+(#4, ^2) Riven Tree !!! (and defiled tree for now)
 (^) Soulspore
 (X) Star Cannon Cannon
 (^) Wilting Rose
