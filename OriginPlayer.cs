@@ -285,6 +285,7 @@ namespace Origins {
 		bool rivenWet = false;
 		public bool mountOnly = false;
 		public bool hideAllLayers = false;
+		public bool disableUseItem = false;
 		public bool changeSize = false;
 		public int targetWidth;
 		public int targetHeight;
@@ -538,6 +539,7 @@ namespace Origins {
 			plagueSightLight = false;
 			mountOnly = false;
 			hideAllLayers = false;
+			disableUseItem = false;
 			thornsVisualProjType = -1;
 			changeSize = false;
 			minionSubSlots = new float[minionSubSlotValues];
@@ -2103,6 +2105,7 @@ namespace Origins {
 		public override bool PreItemCheck() {
 			collidingX = oldXSign != 0 && Player.velocity.X == 0;
 			collidingY = oldYSign != 0 && Player.velocity.Y == 0;
+			if (disableUseItem) return false;
 			ItemChecking = true;
 			return true;
 		}

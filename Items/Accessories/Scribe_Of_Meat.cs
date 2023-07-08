@@ -25,6 +25,9 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().meatScribeItem = Item;
+			if (player.ownedProjectileCounts[Item.shoot] > 0) {
+				player.GetModPlayer<OriginPlayer>().disableUseItem = true;
+			}
 		}
 	}
 	public class Scribe_Of_Meat_P : ModProjectile {
