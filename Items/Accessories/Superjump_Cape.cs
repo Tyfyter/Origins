@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
     [AutoloadEquip(EquipType.Back)]
 	public class Superjump_Cape : ModItem {
-		public static sbyte BackSlot { get; private set; }
+		public static int BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Super-Jump Cape");
 			// Tooltip.SetDefault("Allows for a super high jump and negates fall damage");

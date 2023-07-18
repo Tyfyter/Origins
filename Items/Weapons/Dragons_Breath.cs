@@ -122,7 +122,7 @@ namespace Origins.Items.Weapons {
 			if (Projectile.frame == 1) {
 				PolarVec2 vel = particles[Projectile.frameCounter].Pos;
 				vel.R = knockback * -1.5f;
-				if (crit) vel.R *= 2;
+				if (hit.Crit) vel.R *= 2;
 				target.velocity = Vector2.Lerp(target.velocity, (Vector2)vel, target.knockBackResist);
 			}
 		}

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Rebreather : ModItem {
-		public static sbyte FaceSlot { get; private set; }
+		public static int FaceSlot { get; private set; }
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Rebreather");
 			// Tooltip.SetDefault("Gain more breath as you move in water");

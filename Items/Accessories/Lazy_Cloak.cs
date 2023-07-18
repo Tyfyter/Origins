@@ -235,7 +235,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Ichor, 60);
-			if (crit && target.life < damage * 3) {
+			if (hit.Crit && target.life < damageDone * 3) {
 				target.life = 0;
 				//target.checkDead();
 			}

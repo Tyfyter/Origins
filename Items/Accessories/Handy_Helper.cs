@@ -98,7 +98,7 @@ namespace Origins.Items.Accessories {
 			recipe.AddIngredient(ModContent.ItemType<Amebic_Vial>());
 			recipe.AddIngredient(ItemID.PowerGlove);
 			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddCondition(NetworkText.Empty, _ => !AprilFools.CheckAprilFools());
+			recipe.AddCondition(LocalizedText.Empty, () => !OriginsModIntegrations.CheckAprilFools());
 			recipe.Register();
 
 			static void HalfPrefix(Item item) {
@@ -154,8 +154,8 @@ namespace Origins.Items.Accessories {
 			recipe.AddIngredient(ModContent.ItemType<Amebic_Vial>());
 			recipe.AddIngredient(ItemID.PowerGlove, 2);
 			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddCondition(NetworkText.Empty, _ => AprilFools.CheckAprilFools());
-			recipe.AddOnCraftCallback((_, result, consumed) => {
+			recipe.AddCondition(LocalizedText.Empty, () => OriginsModIntegrations.CheckAprilFools());
+			recipe.AddOnCraftCallback((_, result, consumed, _) => {
 				if (result.ModItem is Handy_Helper helper) {
 					helper.bothGloves = true;
 					helper.SetDefaults();
@@ -170,8 +170,8 @@ namespace Origins.Items.Accessories {
 			recipe = Recipe.Create(ItemID.PowerGlove);
 			recipe.AddIngredient(Type);
 			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddCondition(NetworkText.FromLiteral("Does not consume Handy Helper"), _ => AprilFools.CheckAprilFools());
-			recipe.AddOnCraftCallback((_, result, consumed) => {
+			recipe.AddCondition(LocalizedText.FromLiteral("Does not consume Handy Helper"), () => OriginsModIntegrations.CheckAprilFools());
+			recipe.AddOnCraftCallback((_, result, consumed, _) => {
 				Item dropped = consumed[0];
 				if (dropped.ModItem is Handy_Helper helper) {
 					if (helper.bothGloves) {
@@ -296,7 +296,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.knockBackResist > 0) {
-				target.velocity = Vector2.Lerp(target.oldVelocity, Projectile.velocity * knockback / 3.2f, (float)Math.Sqrt(target.knockBackResist));
+				target.velocity = Vector2.Lerp(target.oldVelocity, Projectile.velocity * hit.Knockback / 3.2f, (float)Math.Sqrt(target.knockBackResist));
 			}
 			if (Projectile.timeLeft > 20) {
 				Projectile.timeLeft = 20;

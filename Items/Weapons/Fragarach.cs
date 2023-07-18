@@ -75,12 +75,6 @@ namespace Origins.Items.Weapons {
 				}
 			}
 		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			base.OnHitNPC(target, damage, knockback, crit);
-		}
 		public override void Kill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Item10.WithVolume(2), Projectile.Center);
 			Vector2 shockVelocity = -Projectile.oldVelocity;

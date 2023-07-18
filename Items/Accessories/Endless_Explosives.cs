@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
     [AutoloadEquip(EquipType.Back)]
 	public class Endless_Explosives : ModItem {
-		public static sbyte BackSlot { get; private set; }
+		public static int BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Dysfunctional Endless Explosives Bag");
 			// Tooltip.SetDefault("15% chance not to consume thrown explosives or explosive ammo");

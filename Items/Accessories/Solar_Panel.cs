@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
     [AutoloadEquip(EquipType.Back)]
 	public class Solar_Panel : ModItem {
-		public static sbyte BackSlot { get; private set; }
+		public static int BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Solar Panel");
 			// Tooltip.SetDefault("Sunlight exposure increases mana regeneration\n'Don't worry, mana was always renewable!'");

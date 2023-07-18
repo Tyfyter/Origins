@@ -422,7 +422,7 @@ namespace Origins {
 		public int cPet;
 		public int cLight;
 		public int cYorai;
-		public int cPortalbeStool;
+		public int cPortableStool;
 		public int cUnicornHorn;
 		public int cAngelHalo;
 		public int cBeard;
@@ -457,7 +457,7 @@ namespace Origins {
 			cPet = player.cPet;
 			cLight = player.cLight;
 			cYorai = player.cYorai;
-			cPortalbeStool = player.cPortalbeStool;
+			cPortableStool = player.cPortableStool;
 			cUnicornHorn = player.cUnicornHorn;
 			cAngelHalo = player.cAngelHalo;
 			cBeard = player.cBeard;
@@ -493,7 +493,7 @@ namespace Origins {
 			cPet = shader;
 			cLight = shader;
 			cYorai = shader;
-			cPortalbeStool = shader;
+			cPortableStool = shader;
 			cUnicornHorn = shader;
 			cAngelHalo = shader;
 			cBeard = shader;
@@ -529,7 +529,7 @@ namespace Origins {
 			player.cPet = cPet;
 			player.cLight = cLight;
 			player.cYorai = cYorai;
-			player.cPortalbeStool = cPortalbeStool;
+			player.cPortableStool = cPortableStool;
 			player.cUnicornHorn = cUnicornHorn;
 			player.cAngelHalo = cAngelHalo;
 			player.cBeard = cBeard;
@@ -539,18 +539,18 @@ namespace Origins {
 		}
 	}
 	public struct ItemSlotSet {
-		public sbyte beardSlot;
-		public sbyte backSlot;
-		public sbyte faceSlot;
-		public sbyte neckSlot;
-		public sbyte shieldSlot;
-		public sbyte wingSlot;
-		public sbyte waistSlot;
-		public sbyte shoeSlot;
-		public sbyte frontSlot;
-		public sbyte handOffSlot;
-		public sbyte handOnSlot;
-		public sbyte balloonSlot;
+		public int beardSlot;
+		public int backSlot;
+		public int faceSlot;
+		public int neckSlot;
+		public int shieldSlot;
+		public int wingSlot;
+		public int waistSlot;
+		public int shoeSlot;
+		public int frontSlot;
+		public int handOffSlot;
+		public int handOnSlot;
+		public int balloonSlot;
 		public ItemSlotSet(Item item) {
 			beardSlot = item.beardSlot;
 			backSlot = item.backSlot;
@@ -1766,8 +1766,12 @@ namespace Origins {
 			if (!canBeHitByItem) {
 				return false;
 			}
-			bool playerCanHitNPC = PlayerLoader.CanHitNPC(player, item, npc) ?? true;
+			bool playerCanHitNPC = PlayerLoader.CanHitNPC(player, npc);
 			if (!playerCanHitNPC) {
+				return false;
+			}
+			bool playerCanHitNPCWithItem = PlayerLoader.CanHitNPCWithItem(player, item, npc) ?? true;
+			if (!playerCanHitNPCWithItem) {
 				return false;
 			}
 			if (npc.friendly) {

@@ -258,7 +258,7 @@ namespace Origins.World.BiomeData {
 					75,
 					validTiles
 				);
-				if (structures is not null) structures.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, minGenX - minGenY), 6);
+				if (GenVars.structures is not null) GenVars.structures.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, minGenX - minGenY), 6);
 			}
 			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
 				ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();
@@ -370,11 +370,11 @@ namespace Origins.World.BiomeData {
 				int c = 0;
 				float size = 70;
 				int wallSize = 10;
-				Vector2 topLeft = new Vector2(i2, (float)worldSurfaceHigh);
-				Vector2 topRight = new Vector2(i2, (float)worldSurfaceHigh);
+				Vector2 topLeft = new Vector2(i2, (float)GenVars.worldSurfaceHigh);
+				Vector2 topRight = new Vector2(i2, (float)GenVars.worldSurfaceHigh);
 				int minX = int.MaxValue;
 				int maxX = int.MinValue;
-				for (int y = j2 - (int)(50 * sizeMult + 8); y > worldSurfaceLow; y--) {
+				for (int y = j2 - (int)(50 * sizeMult + 8); y > GenVars.worldSurfaceLow; y--) {
 					c++;
 					int changed = 0;
 					for (int x = i2 - (int)(66 * sizeMult + 10); x < i2 + (int)(66 * sizeMult + 10); x++) {
@@ -402,7 +402,7 @@ namespace Origins.World.BiomeData {
 							if (Main.tileContainer[Main.tile[x, y].TileType]) {
 								break;
 							}
-							if (y > worldSurfaceHigh || (Main.tile[x, y].HasTile && Main.tileSolid[Main.tile[x, y].TileType])) {
+							if (y > GenVars.worldSurfaceHigh || (Main.tile[x, y].HasTile && Main.tileSolid[Main.tile[x, y].TileType])) {
 								Main.tile[x, y].ResetToType(stoneID);
 								change = true;
 							}
@@ -413,11 +413,11 @@ namespace Origins.World.BiomeData {
 								if (Main.tile[x, y].HasTile) change = true;
 								Main.tile[x, y].SetActive(false);
 								OriginSystem.RemoveTree(x, y - 1);
-								if (y > worldSurfaceHigh) {
+								if (y > GenVars.worldSurfaceHigh) {
 									Main.tile[x, y].LiquidAmount = 255;
 								}
 							}
-							if (y < worldSurfaceHigh && Main.tile[x, y].HasTile && change) {
+							if (y < GenVars.worldSurfaceHigh && Main.tile[x, y].HasTile && change) {
 								if (x > i2) {//right side
 									if (x > maxX) {
 										maxX = x;
@@ -446,7 +446,7 @@ namespace Origins.World.BiomeData {
 							}
 							break;
 							default:
-							if (y > worldSurfaceHigh) {
+							if (y > GenVars.worldSurfaceHigh) {
 								Main.tile[x, y].WallType = stoneWallID;
 							}
 							break;
@@ -455,7 +455,7 @@ namespace Origins.World.BiomeData {
 							changed++;
 						}
 					}
-					if (y < worldSurfaceHigh) {
+					if (y < GenVars.worldSurfaceHigh) {
 						size -= 0.03f;
 					}
 					if (changed < 23 * sizeMult + 10) {
@@ -471,7 +471,7 @@ namespace Origins.World.BiomeData {
 					if (x >= topLeft.X && x <= topRight.X) {
 						prog++;
 					}
-					for (int y = (int)(worldSurfaceHigh + 1); y >= minY; y--) {
+					for (int y = (int)(GenVars.worldSurfaceHigh + 1); y >= minY; y--) {
 						Main.tile[x, y].WallType = stoneWallID;
 					}
 				}

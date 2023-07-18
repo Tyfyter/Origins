@@ -37,6 +37,9 @@ namespace Origins {
 		public static Mod HEROsMod { get => instance.herosMod; set => instance.herosMod = value; }
 		Mod thorium;
 		public static Mod Thorium { get => instance.thorium; set => instance.thorium = value; }
+		Func<bool> checkAprilFools;
+		public static Func<bool> CheckAprilFools { get => instance.checkAprilFools; set => instance.checkAprilFools = value; }
+		public static Condition AprilFools => new Condition("Mods.Origins.Conditions.AprilFools", CheckAprilFools);
 		static string WikiURL => "https://tyfyter.github.io/OriginsWiki";
 		static HashSet<string> wikiSiteMap;
 		public void Load(Mod mod) {
@@ -69,6 +72,11 @@ namespace Origins {
 			}
 			if (ModLoader.TryGetMod("ThoriumMod", out instance.thorium)) {
 				LoadThorium();
+			}
+			if (ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib)) {
+				checkAprilFools = (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
+			} else {
+				checkAprilFools = () => DateTime.Today.Month == 4 && DateTime.Today.Day == 1;
 			}
 		}
 		public static void LateLoad() {

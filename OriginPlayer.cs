@@ -602,7 +602,7 @@ namespace Origins {
 			#endregion
 		}
 		#endregion
-		public const float explosive_defense_factor = 1f;
+		public const float explosive_defense_factor = 2f;
 		public override void PreUpdateMovement() {
 			Origins.hurtCollisionCrimsonVine = false;
 			if (riptideLegs && Player.wet) {
@@ -1408,15 +1408,17 @@ namespace Origins {
 				}
 			}
 		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			if (modifiers.DamageType.CountsAsClass(DamageClasses.Explosive)) {
+				modifiers.DefenseEffectiveness *= explosive_defense_factor;
+			}
+		}
 		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */ {
 			//enemyDefense = NPC.GetDefense;
 			if (felnumShock > 29) {
-				damage += (int)(felnumShock / 15);
+				modifiers.SourceDamage.Flat += (int)(felnumShock / 15);
 				felnumShock = 0;
 				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), target.Center);
-			}
-			if (item.CountsAsClass(DamageClasses.Explosive)) {
-				damage -= (int)Math.Max((target.defense - Player.GetWeaponArmorPenetration(item)) * (explosive_defense_factor - 0.5f), 0);
 			}
 			if (target.HasBuff(BuffID.Bleeding)) {
 				target.lifeRegen -= 1;
@@ -1511,19 +1513,15 @@ namespace Origins {
 				damage = shouldReplace ? Main.DamageVar(baseDamage) : (int)baseDamage;
 			}
 			if ((proj.CountsAsClass(DamageClass.Melee) || proj.CountsAsClass(DamageClass.Summon) || ProjectileID.Sets.IsAWhip[proj.type]) && felnumShock > 29) {
-				damage += (int)(felnumShock / 15);
+				modifiers.SourceDamage.Flat += (int)(felnumShock / 15);
 				felnumShock = 0;
 				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(2), proj.Center);
 			}
 			if (proj.minion && rivenSet) {
-				damage = (int)(damage * rivenMult);
-			}
-			if (proj.CountsAsClass(DamageClasses.Explosive)) {
-				damage -= (int)Math.Max((target.defense - proj.ArmorPenetration) * (explosive_defense_factor - 0.5f), 0);
+				modifiers.SourceDamage *= rivenMult;
 			}
 		}
-		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */ {
-			OnHitNPCGeneral(item, target, damage, knockback, crit);
+		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
 				Projectile.NewProjectile(
 					Player.GetSource_OnHit(target),
@@ -1533,7 +1531,7 @@ namespace Origins {
 					0,
 					0,
 					Player.whoAmI,
-					ai1: damage / 10
+					ai1: damageDone / 10
 				);
 			}
 			if (item.CountsAsClass(DamageClass.Melee)) {//flasks
@@ -1551,8 +1549,7 @@ namespace Origins {
 				}
 			}
 		}
-		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */ {
-			OnHitNPCGeneral(proj, target, damage, knockback, crit);
+		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) {//flasks
 				if (flaskBile) {
 					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
@@ -1562,11 +1559,10 @@ namespace Origins {
 				}
 			}
 		}
-		public void OnHitNPCGeneral(Entity entity, NPC target, int damage, float knockback, bool crit) {
-			Entity sourceEntity = entity is Projectile ? entity : Player;
-			if (crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			if (hit.Crit) {
 				if (dimStarlight && dimStarlightCooldown < 1) {
-					Item.NewItem(sourceEntity.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
+					Item.NewItem(Player.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
 					dimStarlightCooldown = 300;
 				}
 			}
@@ -1616,7 +1612,7 @@ namespace Origins {
 
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers) {
 			if (trapCharm && proj.trap) {
-				damage /= 2;
+				modifiers.SourceDamage /= 2;
 				Player.buffImmune[BuffID.Poisoned] = true;
 			}
 			if (proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
@@ -1648,7 +1644,7 @@ namespace Origins {
 			}
 		}
 		public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo) {
-			if (!Player.noKnockback && damage != 0) {
+			if (!Player.noKnockback && hurtInfo.Damage != 0) {
 				Player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
 			}
 			if (preHitBuffs is not null)

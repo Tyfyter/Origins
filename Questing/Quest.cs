@@ -108,5 +108,11 @@ namespace Origins.Questing {
 		}
 		public virtual void SendSync(BinaryWriter writer) { }
 		public virtual void ReceiveSync(BinaryReader reader) { }
+		public static Condition QuestCondition<T>() where T : Quest {
+			return new Condition(
+				Language.GetOrRegister("Mods.Origins.Conditions.QuestCompleted").WithFormatArgs(ModContent.GetInstance<T>().NameKey),
+				() => ModContent.GetInstance<T>().Completed
+			);
+		}
 	}
 }

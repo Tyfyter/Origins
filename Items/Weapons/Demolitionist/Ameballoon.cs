@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Recipe recipe = Recipe.Create(Type, 40);
 			recipe.AddCondition(
 			   Terraria.Localization.NetworkText.FromLiteral("Riven Water"),
-			   (_) => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Riven_Hive>()
+			   () => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Riven_Hive>()
 			);
 			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 40);
 			recipe.AddTile(TileID.WorkBenches);

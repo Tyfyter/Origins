@@ -97,7 +97,7 @@ namespace Origins.NPCs.TownNPCs {
 				}
 			}
 			if (Main.WindyEnoughForKiteDrops) {
-				if (ChildSafety.Disabled && AprilFools.CheckAprilFools()) {
+				if (ChildSafety.Disabled && OriginsModIntegrations.CheckAprilFools()) {
 					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.April_Fools.Acid_Freak.InteractionWimd"));
 				} else {
 					chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.InteractionWind"));
@@ -166,7 +166,7 @@ namespace Origins.NPCs.TownNPCs {
 
 		public override void OnChatButtonClicked(bool firstButton, ref string shopName) {
 			if (firstButton) {
-				shop = true;
+				shopName = "Shop";
 			}
 		}
 

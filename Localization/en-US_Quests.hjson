@@ -1,6 +1,9 @@
 
 Mods: {
 	Origins: {
+		Conditions: {
+			QuestCompleted: "Completed \"{0}\""
+		}
 		Quests: {
 			Merchant: {
 				Blue_Bovine: {

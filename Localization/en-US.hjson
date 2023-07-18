@@ -1,6 +1,9 @@
 
 Mods: {
 	Origins: {
+		Conditions:{
+			AprilFools: on April Fools' day
+		}
 		Status_Messages: {
 			Defiled_Fissure_1: Your body suddenly aches everywhere...
 			Defiled_Fissure_2: Rattling emanates from the walls...
@@ -3376,6 +3379,7 @@ Mods: {
 			Ranged_Magic.DisplayName: ranged/magic damage
 			Summon_Magic_Speed.DisplayName: summon damage
 			Thrown_Explosive.DisplayName: explosive damage (thrown)
+			ExplosivePlus.DisplayName: explosive {${0}}
 		}
 
 		Projectiles: {

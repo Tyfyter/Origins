@@ -24,11 +24,11 @@ namespace Origins.Items.Accessories {
 			recipe.AddIngredient(ItemID.GuideVoodooDoll);
 			recipe.AddIngredient(ModContent.ItemType<Symbiote_Skull>());
 			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddCondition(new Recipe.Condition(
+			recipe.AddCondition(new Condition(
 				Terraria.Localization.NetworkText.FromLiteral("This kills the Guide"),
-				(r) => NPC.AnyNPCs(NPCID.Guide)
+				() => NPC.AnyNPCs(NPCID.Guide)
 			));
-			recipe.AddOnCraftCallback((r, item, _) => {
+			recipe.AddOnCraftCallback((r, item, _, _) => {
 				NPC guide = Main.npc[NPC.FindFirstNPC(NPCID.Guide)];
 				guide.life = 0;
 				guide.DeathSound = SoundID.Item104;

@@ -153,14 +153,14 @@ namespace Origins {
 				}
 				return retValue;
 			};
-			Terraria.On_Main.GetProjectileDesiredShader += (orig, index) => {
-				if (Main.projectile[index].TryGetGlobalProjectile(out OriginGlobalProj originGlobalProj) && originGlobalProj.isFromMitosis) {
+			Terraria.On_Main.GetProjectileDesiredShader += (orig, projectile) => {
+				if (projectile.TryGetGlobalProjectile(out OriginGlobalProj originGlobalProj) && originGlobalProj.isFromMitosis) {
 					return GameShaders.Armor.GetShaderIdFromItemId(ItemID.StardustDye);
 				}
-				if (Main.projectile[index].ModProjectile is IShadedProjectile shadedProjectile) {
+				if (projectile.ModProjectile is IShadedProjectile shadedProjectile) {
 					return shadedProjectile.Shader;
 				}
-				return orig(index);
+				return orig(projectile);
 			};
 			Terraria.Graphics.Light.On_TileLightScanner.GetTileLight += TileLightScanner_GetTileLight;
 			//On.Terraria.GameContent.UI.Elements.UIWorldListItem.GetIcon += UIWorldListItem_GetIcon;
@@ -257,9 +257,9 @@ namespace Origins {
 					keyedReason.Key,
 					deadPlayerName,
 					keyedReason.SourcePlayerIndex > -1 ? NetworkText.FromLiteral(Main.player[keyedReason.SourcePlayerIndex].name) : NetworkText.Empty,
-					Lang.GetItemName(keyedReason.SourceItemType),
+					keyedReason.SourceItem.Name,
 					keyedReason.SourceNPCIndex > -1 ? Main.npc[keyedReason.SourceNPCIndex].GetGivenOrTypeNetName() : NetworkText.Empty,
-					keyedReason.SourceProjectileIndex > -1 ? NetworkText.FromKey(Lang.GetProjectileName(Main.projectile[keyedReason.SourceProjectileIndex].type).Key) : NetworkText.Empty
+					keyedReason.SourceProjectileType > -1 ? NetworkText.FromKey(Lang.GetProjectileName(keyedReason.SourceProjectileType).Key) : NetworkText.Empty
 				);
 			}
 			return orig(self, deadPlayerName);
@@ -653,7 +653,7 @@ namespace Origins {
 			if (!WorldGen.IsTileALeafyTreeTop(x, y)) {
 				return;
 			}
-			bool edgeB = WorldGen.numTreeShakes == WorldGen.maxTreeShakes;
+			bool edgeB = GenVars.numTreeShakes == WorldGen.maxTreeShakes;
 			bool edgeA = Collision.SolidTiles(x - 2, x + 2, y - 2, y + 2);
 			if (!(edgeA || edgeB || edgeC) && PlantLoader_ShakeTree(x, y, tileType, false) && treeType == TreeTypes.None) {
 				ITree tree = PlantLoader.GetTree(tileType);

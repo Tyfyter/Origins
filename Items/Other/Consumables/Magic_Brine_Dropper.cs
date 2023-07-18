@@ -18,7 +18,7 @@ namespace Origins.Items.Other.Consumables {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddCondition(
 			   Terraria.Localization.NetworkText.FromLiteral("Brine"),
-			   (_) => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Brine_Pool>()
+			   () => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Brine_Pool>()
 			);
 			recipe.AddIngredient(ItemID.EmptyDropper);
 			recipe.AddTile(TileID.CrystalBall);

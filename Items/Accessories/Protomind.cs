@@ -173,7 +173,7 @@ namespace Origins.Items.Accessories {
 			recipe.AddIngredient(ItemID.BrainOfConfusion);
 			recipe.AddIngredient(ModContent.ItemType<Potato_Battery>());
 			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddOnCraftCallback((_, _, _) => {
+			recipe.AddOnCraftCallback((_, _, _, _) => {
 				PlayRandomMessage(
 					QuoteType.Craft,
 					Main.LocalPlayer.GetModPlayer<OriginPlayer>().protOSQuoteCooldown,

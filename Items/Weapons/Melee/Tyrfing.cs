@@ -337,9 +337,9 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			if (stabee == -1) {
-				knockback = 0;
+				modifiers.Knockback *= 0;
 			} else {
-				crit = true;
+				modifiers.SetCrit();
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
@@ -348,7 +348,7 @@ namespace Origins.Items.Weapons.Melee {
 				int proj;
 				bool bias = Main.rand.NextBool();
 				for (int i = 8; --i > 0;) {
-					proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedBy(MathHelper.PiOver2 * ((bias ^ i % 2 == 0) ? -1 : 1)).RotatedByRandom(1f) * Main.rand.NextFloat(0.25f, 0.3f), ModContent.ProjectileType<Tyrfing_Shard>(), damage / 6, Projectile.knockBack, Projectile.owner);
+					proj = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedBy(MathHelper.PiOver2 * ((bias ^ i % 2 == 0) ? -1 : 1)).RotatedByRandom(1f) * Main.rand.NextFloat(0.25f, 0.3f), ModContent.ProjectileType<Tyrfing_Shard>(), damageDone / 6, Projectile.knockBack, Projectile.owner);
 					Main.projectile[proj].localAI[1] = 45;
 					Main.projectile[proj].localAI[0] = 3;
 					Main.projectile[proj].tileCollide = false;

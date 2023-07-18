@@ -28,7 +28,6 @@ namespace Origins.Tiles.Riven {
             for(int i = 0; i < TileLoader.TileCount; i++) {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
             }*/
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Riven_Flesh_Item>();
 			AddMapEntry(new Color(0, 125, 200));
 			//SetModTree(Defiled_Tree.Instance);
 			mergeID = TileID.Stone;

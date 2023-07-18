@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Metadata;
@@ -83,13 +84,12 @@ namespace Origins.Tiles.Defiled {
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			offsetY = -2; // This is -1 for tiles using StyleAlch, but vanilla sets to -2 for herbs, which causes a slight visual offset between the placement preview and the placed tile. 
 		}
-
-		public override bool Drop(int i, int j)/* tModPorter Note: Removed. Use CanDrop to decide if an item should drop. Use GetItemDrops to decide which item drops. Item drops based on placeStyle are handled automatically now, so this method might be able to be removed altogether. */ {
+		public override IEnumerable<Item> GetItemDrops(int i, int j) {
 			int stage = GetStage(i, j);
 
 			if (stage < 1) {
 				// Do not drop anything when just planted
-				return false;
+				yield break;
 			}
 
 			Vector2 worldPosition = new Vector2(i, j).ToWorldCoordinates();
@@ -111,18 +111,13 @@ namespace Origins.Tiles.Defiled {
 				seedItemStack = Main.rand.Next(1, 4);
 			}
 
-			var source = new EntitySource_TileBreak(i, j);
-
 			if (herbItemStack > 0) {
-				Item.NewItem(source, worldPosition, herbItemType, herbItemStack);
+				yield return new Item(herbItemType, herbItemStack);
 			}
 
 			if (seedItemStack > 0) {
-				Item.NewItem(source, worldPosition, seedItemType, seedItemStack);
+				yield return new Item(seedItemType, seedItemStack);
 			}
-
-			// Custom drop code, so return false
-			return false;
 		}
 
 		public override bool IsTileSpelunkable(int i, int j) {

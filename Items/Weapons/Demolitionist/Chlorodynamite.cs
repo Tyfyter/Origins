@@ -107,7 +107,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool? CanHitNPC(NPC target) => null;//Projectile.type == ProjectileID.Grenade ? null : false;
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			if (Projectile.type != ProjectileID.Grenade) {
-				damage /= 12;
+				modifiers.SourceDamage /= 12;
 			}
 		}
 		public override void Kill(int timeLeft) {
@@ -134,11 +134,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.tileCollide = false;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			hitDirection = 0;
+			modifiers.HitDirectionOverride = 0;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.velocity != default) {
-				target.velocity -= Vector2.Normalize(Projectile.velocity) * knockback * target.knockBackResist;
+				target.velocity -= Vector2.Normalize(Projectile.velocity) * hit.Knockback * target.knockBackResist;
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {

@@ -5,6 +5,7 @@ using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;
@@ -40,39 +41,21 @@ namespace Origins.NPCs {
 			settings.PriceAdjustment *= 1 - discount;
 			return settings;
 		}
-		public override void ModifyActiveShop(NPC npc, string shopName, Item[] items) {
-			bool worldHasWastelands = false;
-			bool worldHasHive = false;
-			switch (AltLibrary.Common.Systems.WorldBiomeManager.WorldEvil) {
-				case "Origins/Defiled_Wastelands_Alt_Biome":
-				worldHasWastelands = true;
-				break;
-				case "Origins/Riven_Hive_Alt_Biome":
-				worldHasHive = true;
-				break;
-			}
-			switch (type) {
+		public override void ModifyShop(NPCShop shop) {
+			switch (shop.NpcType) {
 				case NPCID.Clothier: {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Pincushion>());
-					}
-					break;
+					shop.Add<Pincushion>();
+				}
+				break;
 				case NPCID.GoblinTinkerer: {
-					if (ModContent.GetInstance<Turbo_Reel_Quest>().Completed) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Turbo_Reel>());
-					}
-					if (ModContent.GetInstance<Gun_Glove_Quest>().Completed) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Gun_Glove>());
-					}
+					shop.Add<Turbo_Reel>(Quest.QuestCondition<Turbo_Reel_Quest>());
+					shop.Add<Gun_Glove>(Quest.QuestCondition<Gun_Glove_Quest>());
 					break;
 				}
 				case NPCID.Merchant: {
-					if (ModContent.GetInstance<Blue_Bovine_Quest>().Completed) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Blue_Bovine>());
-					}
-						if (ModContent.GetInstance<Lottery_Ticket_Quest>().Completed) {
-							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Lottery_Ticket>());
-						}
-						break;
+					shop.Add<Blue_Bovine>(Quest.QuestCondition<Blue_Bovine_Quest>());
+					shop.Add<Lottery_Ticket>(Quest.QuestCondition<Lottery_Ticket_Quest>());
+					break;
 				}
 				case NPCID.Demolitionist: {
 					if (ModContent.GetInstance<OriginSystem>().peatSold >= 0 && !Main.hardMode) {
@@ -121,9 +104,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Dryad: {
-					if (ModContent.GetInstance<Cleansing_Station_Quest>().Completed) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Mojo_Flask>());
-					}
+					shop.Add<Mojo_Flask>(Quest.QuestCondition<Cleansing_Station_Quest>());
 					if (Main.player[Main.myPlayer].ZoneGraveyard) {
 						if (!worldHasWastelands) {
 							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Defiled_Grass_Seeds>());
@@ -135,7 +116,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Cyborg: {
-					shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Advanced_Imaging>());
+					shop.Add<Advanced_Imaging>();
 					break;
 				}
 				case NPCID.SkeletonMerchant: {
@@ -143,18 +124,28 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Golfer: {
-					if (AprilFools.CheckAprilFools()) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Baseball_Bat>());
-					}
+					shop.Add<Baseball_Bat>(OriginsModIntegrations.AprilFools);
 					break;
 				}
 				case NPCID.ArmsDealer: {
-					if (ModContent.GetInstance<Shardcannon_Quest>().Completed) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Items.Weapons.Ranged.Shardcannon>());
-					}
+					shop.Add<Shardcannon>(Quest.QuestCondition<Shardcannon_Quest>());
 					break;
 				}
 			}
+		}
+		public override void ModifyActiveShop(NPC npc, string shopName, Item[] items) {
+			bool worldHasWastelands = false;
+			bool worldHasHive = false;
+#if false ///TODO: find a way
+			switch (AltLibrary.Common.Systems.WorldBiomeManager.WorldEvil) {
+				case "Origins/Defiled_Wastelands_Alt_Biome":
+				worldHasWastelands = true;
+				break;
+				case "Origins/Riven_Hive_Alt_Biome":
+				worldHasHive = true;
+				break;
+			}
+#endif
 		}
 		public override bool PreAI(NPC npc) {
 			if (npc.oldPosition == default && npc.oldVelocity == default && npc.position.LengthSquared() > 16) {
@@ -224,16 +215,15 @@ namespace Origins.NPCs {
 			return base.CanHitPlayer(npc, target, ref cooldownSlot);
 		}
 		public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers) {
-			if (npc.HasBuff(Toxic_Shock_Debuff.ID) && crit) {
-				damage *= 1.3;
+			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
+				modifiers.CritDamage *= 1.3f;
 			}
 			if (tornTime > 0) {
-				damage /= 1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime));
+				modifiers.FinalDamage /= 1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime));
 			}
 			/*if (explosive) {
 				damage = damage - npc.defense;
 			}*/
-			return true;
 		}
 		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers) {
 			if (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]) {
@@ -258,7 +248,7 @@ namespace Origins.NPCs {
 			}
 			int forceCritBuff = npc.FindBuffIndex(Headphones_Buff.ID);
 			if (forceCritBuff >= 0) {
-				crit |= Main.rand.NextBool(4);
+				if (Main.rand.NextBool(4)) modifiers.SetCrit();
 				npc.DelBuff(forceCritBuff);
 			}
 			if (Main.expertMode) {

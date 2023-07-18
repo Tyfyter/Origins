@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins {
@@ -85,6 +86,7 @@ namespace Origins {
 		public override string Name => name;
 
 		readonly DamageClass other;
+		public override LocalizedText DisplayName => Language.GetOrRegister("Mods.Origins.DamageClasses.ExplosivePlus.DisplayName").WithFormatArgs(other.DisplayName.Key);
 		public ExplosivePlus(DamageClass other, string name) {
 			this.other = other;
 			this.name = name;
@@ -92,9 +94,6 @@ namespace Origins {
 		internal static ExplosivePlus CreateAndRegister(DamageClass other) {
 			ExplosivePlus newClass = new(other, "ExplosivePlus" + other.FullName);
 			typeof(ILoadable).GetMethod("Load").Invoke(newClass, new object[] { Origins.instance });
-			if (newClass.DisplayName.GetDefault() is null) {
-				// newClass.DisplayName.SetDefault("Explosive + " + other.FullName);
-			}
 			return newClass;
 		}
 		public override void SetStaticDefaults() {

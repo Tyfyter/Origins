@@ -101,7 +101,7 @@ namespace Origins.Projectiles {
 			justHit = true;
 			if (bloodletter) target.AddBuff(BuffID.Bleeding, 300);
 		}
-		public override void OnHitPvp(Projectile projectile, Player target, int damage, bool crit)/* tModPorter Note: Removed. Use OnHitPlayer and check info.PvP */ {
+		public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info) {
 			justHit = true;
 			if (bloodletter) target.AddBuff(BuffID.Bleeding, 300);
 		}

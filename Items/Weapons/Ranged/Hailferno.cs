@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.EldMelter);
+			Item.CloneDefaults(ItemID.ElfMelter);
 			Item.damage = 12;
 			Item.useAnimation = 20;
 			Item.useTime = 4;

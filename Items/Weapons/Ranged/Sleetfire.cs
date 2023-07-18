@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.EldMelter);
+			Item.CloneDefaults(ItemID.ElfMelter);
 			Item.damage = 9;
 			Item.useAnimation = 20;
 			Item.useTime = 4;
@@ -69,7 +69,7 @@ namespace Origins.Items.Weapons.Ranged {
 			hitbox.Inflate(scale, scale);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.Frostburn, crit ? 600 : 300);
+			target.AddBuff(BuffID.Frostburn, hit.Crit ? 600 : 300);
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			return new Color(0, 200, 255, 255) * (1 - Projectile.alpha / 255f);

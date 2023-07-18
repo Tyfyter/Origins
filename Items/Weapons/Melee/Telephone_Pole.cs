@@ -74,7 +74,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.damage -= (int)((Projectile.Center - closest).Length() / 16f);
-			if (!Main.rand.NextBool(5)) Projectile.timeLeft += crit ? 2 : 1;
+			if (!Main.rand.NextBool(5)) Projectile.timeLeft += hit.Crit ? 2 : 1;
 			Vector2 dest = Projectile.Center;
 			Projectile.Center = Vector2.Lerp(closest, new Vector2(target.position.X + Main.rand.NextFloat(target.width), target.position.Y + Main.rand.NextFloat(target.height)), 0.5f);
 			for (int i = 0; i < 16; i++) {

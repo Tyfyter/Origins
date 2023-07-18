@@ -44,8 +44,8 @@ namespace Origins.Projectiles.Weapons {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.OnFire, crit ? 600 : 300);
-			target.AddBuff(BuffID.Oiled, crit ? 60 : 30);
+			target.AddBuff(BuffID.OnFire, hit.Crit ? 600 : 300);
+			target.AddBuff(BuffID.Oiled, hit.Crit ? 60 : 30);
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			//

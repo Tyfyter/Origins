@@ -159,21 +159,21 @@ namespace Origins {
 			OriginsModIntegrations.LateLoad();
 		}
 		public override void Load() {
-			LocalizedText newTranslation = Language.GetOrRegister("Riven");
-			// newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Riven}" : "{$Mods.Origins.Generic.Riven}");
-			LocalizationLoader.AddTranslation(newTranslation)/* tModPorter Note: Removed. Use Language.GetOrRegister */;
-			newTranslation = Language.GetOrRegister("Dusk");
-			// newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Dusk}" : "{$Mods.Origins.Generic.Dusk}");
-			LocalizationLoader.AddTranslation(newTranslation)/* tModPorter Note: Removed. Use Language.GetOrRegister */;
-			newTranslation = Language.GetOrRegister("Defiled");
-			// newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled}" : "{$Mods.Origins.Generic.Defiled}");
-			LocalizationLoader.AddTranslation(newTranslation)/* tModPorter Note: Removed. Use Language.GetOrRegister */;
-			newTranslation = Language.GetOrRegister("Defiled_Wastelands");
-			// newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "{$Mods.Origins.Generic.Defiled_Wastelands}");
-			LocalizationLoader.AddTranslation(newTranslation)/* tModPorter Note: Removed. Use Language.GetOrRegister */;
-			newTranslation = Language.GetOrRegister("The_Defiled_Wastelands");
-			// newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "the {$Mods.Origins.Generic.Defiled_Wastelands}");
-			LocalizationLoader.AddTranslation(newTranslation)/* tModPorter Note: Removed. Use Language.GetOrRegister */;
+			LocalizedText newTranslation = Language.GetOrRegister("Riven", 
+				() => OriginsModIntegrations.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Riven}" : "{$Mods.Origins.Generic.Riven}"
+			);
+			newTranslation = Language.GetOrRegister("Dusk",
+				() => OriginsModIntegrations.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Dusk}" : "{$Mods.Origins.Generic.Dusk}"
+			);
+			newTranslation = Language.GetOrRegister("Defiled",
+				() => OriginsModIntegrations.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled}" : "{$Mods.Origins.Generic.Defiled}"
+			);
+			newTranslation = Language.GetOrRegister("Defiled_Wastelands",
+				() => OriginsModIntegrations.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "{$Mods.Origins.Generic.Defiled_Wastelands}"
+			);
+			newTranslation = Language.GetOrRegister("The_Defiled_Wastelands",
+				() => OriginsModIntegrations.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "the {$Mods.Origins.Generic.Defiled_Wastelands}"
+			); 
 
 			RasterizeAdjustment = new Dictionary<int, (int, float)>();
 			ExplosiveBaseDamage = new Dictionary<int, int>();
@@ -205,7 +205,7 @@ namespace Origins {
 				(ushort)ItemID.Flamelash, Elements.Fire,
 				(ushort)ItemID.Sunfury, Elements.Fire,
 				(ushort)ItemID.Flamethrower, Elements.Fire,
-				(ushort)ItemID.EldMelter, Elements.Fire,
+				(ushort)ItemID.ElfMelter, Elements.Fire,
 				(ushort)ItemID.InfernoFork, Elements.Fire,
 				(ushort)ItemID.Cascade, Elements.Fire,
 				(ushort)ItemID.HelFire, Elements.Fire,
