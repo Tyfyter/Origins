@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
@@ -22,8 +23,8 @@ namespace Origins.Tiles.Brine {
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Brine Leaf Clover");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Brine Leaf Clover");
 			AddMapEntry(new Color(28, 128, 56), name);
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
@@ -37,7 +38,7 @@ namespace Origins.Tiles.Brine {
 
 			HitSound = SoundID.Grass;
 			DustType = DustID.JungleGrass;
-			ItemDrop = ItemType<Items.Accessories.Brine_Leafed_Clover_4>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Items.Accessories.Brine_Leafed_Clover_4>();
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {

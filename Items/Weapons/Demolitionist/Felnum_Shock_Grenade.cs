@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Felnum_Shock_Grenade : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Felnum Shock Grenade");
-			Tooltip.SetDefault("'Quite shocking'");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Felnum Shock Grenade");
+			// Tooltip.SetDefault("'Quite shocking'");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Felnum_Shock_Grenade_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Felnum_Shock_Grenade";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Felnum Shock Grenade");
+			// DisplayName.SetDefault("Felnum Shock Grenade");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
@@ -61,7 +61,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			int t = ModContent.ProjectileType<Felnum_Shock_Grenade_Shock>();
 			for (int i = Main.rand.Next(2); i < 3; i++) Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, t, (int)((Projectile.damage - 32) * 1.5f) + 16, 6, Projectile.owner);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Vector2 dest = Vector2.Lerp(target.Center, new Vector2(target.position.X + Main.rand.NextFloat(target.width), target.position.Y + Main.rand.NextFloat(target.height)), 0.5f);
 			for (int i = 0; i < 16; i++) {
 				Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center, dest, i / 16f), 226, Main.rand.NextVector2Circular(1, 1), Scale: 0.5f);
@@ -94,7 +94,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool? CanHitNPC(NPC target) {
 			return Projectile.penetrate > 1 ? base.CanHitNPC(target) : false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.damage -= (int)((Projectile.Center - closest).Length() / 16f);
 			if (!Main.rand.NextBool(5)) Projectile.timeLeft += crit ? 2 : 1;
 			Vector2 dest = Projectile.Center;

@@ -8,9 +8,9 @@ namespace Origins.Items.Armor.Soulhide {
     [AutoloadEquip(EquipType.Head)]
 	public class Soulhide_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Soulhide Helmet");
-			Tooltip.SetDefault("+10% melee weapon size");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Soulhide Helmet");
+			// Tooltip.SetDefault("+10% melee weapon size");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;
@@ -44,14 +44,14 @@ namespace Origins.Items.Armor.Soulhide {
 	[AutoloadEquip(EquipType.Body)]
 	public class Soulhide_Coat : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Soulhide Coat");
-			Tooltip.SetDefault("+12% melee weapon speed");
+			// DisplayName.SetDefault("Soulhide Coat");
+			// Tooltip.SetDefault("+12% melee weapon speed");
 			if (Main.netMode != NetmodeID.Server) {
 				if (Mod.RequestAssetIfExists("Items/Armor/Soulhide/Soulhide_Coat_Cloth_Legs", out Asset<Texture2D> asset)) {
 					Origins.TorsoLegLayers.Add(Item.bodySlot, asset);
 				}
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
@@ -72,9 +72,9 @@ namespace Origins.Items.Armor.Soulhide {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Soulhide_Guards : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Soulhide Guards");
-			Tooltip.SetDefault("+14% weapon knockback");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Soulhide Guards");
+			// Tooltip.SetDefault("+14% weapon knockback");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;

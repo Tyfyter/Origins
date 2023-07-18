@@ -13,10 +13,10 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Woodsprite Staff");
-			Tooltip.SetDefault("Summons a woodsprite to fight for you");
+			// DisplayName.SetDefault("Woodsprite Staff");
+			// Tooltip.SetDefault("Summons a woodsprite to fight for you");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 3;
@@ -46,8 +46,8 @@ namespace Origins.Items.Weapons.Summoner {
 namespace Origins.Buffs {
 	public class Woodsprite_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Woodsprite");
-			Description.SetDefault("The woodsprite will fight for you");
+			// DisplayName.SetDefault("Woodsprite");
+			// Description.SetDefault("The woodsprite will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 		}
@@ -67,7 +67,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 	public class Woodsprite : ModProjectile {
 		public override void SetStaticDefaults() {
 			Woodsprite_Staff.projectileID = Projectile.type;
-			DisplayName.SetDefault("Woodsprite");
+			// DisplayName.SetDefault("Woodsprite");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;
 			// This is necessary for right-click targeting
@@ -269,7 +269,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#endregion
 		}
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Woodsprite_Lifesteal>(), damage / 3, 0, Projectile.owner);
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {

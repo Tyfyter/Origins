@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -18,8 +19,8 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.newTile.CoordinateHeights = new[] { 18, 18 };
 			//TileObjectData.newTile.AnchorBottom = new AnchorData();
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("{$Defiled} Fissure");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("{$Defiled} Fissure");
 			AddMapEntry(new Color(40, 40, 40), name);
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.ShadowOrbs };
@@ -76,7 +77,7 @@ namespace Origins.Tiles.Defiled {
 	public class Defiled_Fissure_Item : ModItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Fissure";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Fissure (Debugging Item)");
+			// DisplayName.SetDefault("{$Defiled} Fissure (Debugging Item)");
 		}
 
 		public override void SetDefaults() {

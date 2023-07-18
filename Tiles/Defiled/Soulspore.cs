@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
@@ -26,8 +27,8 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Soulspore");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Soulspore");
 			AddMapEntry(new Color(128, 128, 128), name);
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
@@ -39,7 +40,7 @@ namespace Origins.Tiles.Defiled {
 
 			HitSound = SoundID.Grass;
 			DustType = DustID.Marble;
-			ItemDrop = ItemType<Soulspore_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Soulspore_Item>();
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {
@@ -54,8 +55,8 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Soulspore_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Soulspore");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Soulspore");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;

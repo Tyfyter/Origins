@@ -8,8 +8,8 @@ namespace Origins.Items.Tools {
 	public class Snatcher : ModItem {
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Snatcher");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Snatcher");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults() {
@@ -31,7 +31,7 @@ namespace Origins.Items.Tools {
 	}
 	public class Snatcher_Bobber : ModProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Snatcher Bobber");
+			// DisplayName.SetDefault("Snatcher Bobber");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BobberReinforced);

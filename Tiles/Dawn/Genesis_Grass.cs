@@ -25,7 +25,7 @@ namespace Origins.Tiles.Dawn {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(100, 100, 10));
-			ItemDrop = ItemID.DirtBlock;
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemID.DirtBlock;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			bool half = Main.tile[i, j].IsHalfBlock;
@@ -39,7 +39,7 @@ namespace Origins.Tiles.Dawn {
 		}
 		public class Genesis_Grass_Seeds : ModItem {
 			public override void SetStaticDefaults() {
-				DisplayName.SetDefault("Genesis Seeds");
+				// DisplayName.SetDefault("Genesis Seeds");
 			}
 			public override void SetDefaults() {
 				Item.CloneDefaults(ItemID.GrassSeeds);

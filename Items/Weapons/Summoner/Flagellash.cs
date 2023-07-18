@@ -13,10 +13,10 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Flagellash : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Flagellash");
-			Tooltip.SetDefault("2⅔ summon tag damage\n{$CommonItemTooltip.Whips}\n'Three ends are better than one'");
+			// DisplayName.SetDefault("Flagellash");
+			// Tooltip.SetDefault("2⅔ summon tag damage\n{$CommonItemTooltip.Whips}\n'Three ends are better than one'");
 			glowmask = Origins.AddGlowMask(this, "");
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			// Call this method to quickly set some of the properties below.
@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static float pitch = 0;
 		float _pitch = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Flagellash");
+			// DisplayName.SetDefault("Flagellash");
 			// This makes the projectile use whip collision detection and allows flasks to be applied to it.
 			ProjectileID.Sets.IsAWhip[Type] = true;
 		}
@@ -110,7 +110,7 @@ namespace Origins.Items.Weapons.Summoner {
 			segments = 20;
 			rangeMultiplier = 0.9f * Projectile.scale;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Flagellash_Buff_0.ID + (int)Projectile.ai[1], 240);
 			Projectile.damage = (int)(Projectile.damage * 0.68);
 		}

@@ -14,8 +14,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Materials {
     public class Adhesive_Wrap : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Adhesive Wrap");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Adhesive Wrap");
+			Item.ResearchUnlockCount = 25;
 
 		}
 		public override void SetDefaults() {
@@ -40,9 +40,9 @@ namespace Origins.Items.Materials {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Alkahest_Mat_Entry).Name;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Alkahest");
-			Tooltip.SetDefault("'Don't touch it'");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Alkahest");
+			// Tooltip.SetDefault("'Don't touch it'");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 99;
@@ -56,7 +56,7 @@ namespace Origins.Items.Materials {
 	}
 	public class Bark : ModItem {
 		public override void SetStaticDefaults() {
-			SacrificeTotal = 25;
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -71,8 +71,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Bat_Hide : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bat Hide");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Bat Hide");
+			Item.ResearchUnlockCount = 25;
 
 		}
 		public override void SetDefaults() {
@@ -90,9 +90,9 @@ namespace Origins.Items.Materials {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Black_Bile_Entry).Name;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Black Bile");
-			Tooltip.SetDefault("'So depressing it makes the party girl cry'");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Black Bile");
+			// Tooltip.SetDefault("'So depressing it makes the party girl cry'");
+			Item.ResearchUnlockCount = 25;
 
 		}
 		public override void SetDefaults() {
@@ -108,10 +108,10 @@ namespace Origins.Items.Materials {
 	public class Bleeding_Obsidian_Shard : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bleeding Obsidian Shard");
-			Tooltip.SetDefault("'Weakens those who touch it'");
+			// DisplayName.SetDefault("Bleeding Obsidian Shard");
+			// Tooltip.SetDefault("'Weakens those who touch it'");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 48;
+			Item.ResearchUnlockCount = 48;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -130,8 +130,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Bottled_Brine : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bottled Brine");
-			SacrificeTotal = 30;
+			// DisplayName.SetDefault("Bottled Brine");
+			Item.ResearchUnlockCount = 30;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 1;
@@ -149,9 +149,9 @@ namespace Origins.Items.Materials {
 	public class Brineglow : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Brineglow");
+			// DisplayName.SetDefault("Brineglow");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 5;
+			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 99;
@@ -162,8 +162,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Bud_Barnacle : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bud Barnacle");
-			SacrificeTotal = 30;
+			// DisplayName.SetDefault("Bud Barnacle");
+			Item.ResearchUnlockCount = 30;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 99;
@@ -205,8 +205,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Busted_Servo : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Busted Servo");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Busted Servo");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -216,9 +216,9 @@ namespace Origins.Items.Materials {
 	}
 	public class Chambersite : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chambersite");
-			Tooltip.SetDefault("'Loses all of its color when exposed to light'");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Chambersite");
+			// Tooltip.SetDefault("'Loses all of its color when exposed to light'");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -228,8 +228,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Chromtain_Bar : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chromtain Bar");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Chromtain Bar");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -247,8 +247,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Defiled_Bar : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Bar");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("{$Defiled} Bar");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -270,8 +270,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Dawn_Key : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dawn Key");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Dawn Key");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.width = 14;
@@ -282,8 +282,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Defiled_Key : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Key");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("{$Defiled} Key");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.width = 14;
@@ -294,8 +294,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Dusk_Key : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dusk Key");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Dusk Key");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.width = 14;
@@ -306,9 +306,9 @@ namespace Origins.Items.Materials {
 	}
 	public class Eitrite_Bar : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Eitrite Bar");
-			Tooltip.SetDefault("'So alkaline-concentrated it could be used as a power source'");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Eitrite Bar");
+			// Tooltip.SetDefault("'So alkaline-concentrated it could be used as a power source'");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(silver: 81);
@@ -338,8 +338,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Element36_Bundle : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Element-36 Bundle");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Element-36 Bundle");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -359,8 +359,8 @@ namespace Origins.Items.Materials {
 	[LegacyName("Infested_Bar")]
 	public class Encrusted_Bar : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Encrusted Bar");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Encrusted Bar");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 99;
@@ -382,9 +382,9 @@ namespace Origins.Items.Materials {
 	}
 	public class Eyndum_Bar : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Eyndum Bar");
-			Tooltip.SetDefault("'\"Half-life\" means nothing when used in the same sentence'");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Eyndum Bar");
+			// Tooltip.SetDefault("'\"Half-life\" means nothing when used in the same sentence'");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -396,8 +396,8 @@ namespace Origins.Items.Materials {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Felnum Bar");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Felnum Bar");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -413,8 +413,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Fibron_Plating : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fibron Plating");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Fibron Plating");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -424,8 +424,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Formium_Bar : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Formium Bar");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Formium Bar");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -441,8 +441,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Formium_Scrap : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Formium Scrap");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Formium Scrap");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -452,8 +452,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Hell_Key : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hell Key");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Hell Key");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.width = 14;
@@ -464,9 +464,9 @@ namespace Origins.Items.Materials {
 	}
 	public class Illegal_Explosive_Parts : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Illegal Explosive Parts");
-			Tooltip.SetDefault("'All explosive parts are illegal...'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Illegal Explosive Parts");
+			// Tooltip.SetDefault("'All explosive parts are illegal...'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -477,11 +477,11 @@ namespace Origins.Items.Materials {
 	public class Lunar_Token : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lunar Token");
-			Tooltip.SetDefault("'Valuable to the demented'");
+			// DisplayName.SetDefault("Lunar Token");
+			// Tooltip.SetDefault("'Valuable to the demented'");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 100;
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DefenderMedal);
@@ -492,9 +492,9 @@ namespace Origins.Items.Materials {
 	}
 	public class Magic_Hair_Spray : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Magic Hair Treatment Gel");
-			Tooltip.SetDefault("'Keeps your hair in perfect form!'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Magic Hair Treatment Gel");
+			// Tooltip.SetDefault("'Keeps your hair in perfect form!'");
+			Item.ResearchUnlockCount = 1;
 
 		}
 		public override void SetDefaults() {
@@ -514,8 +514,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Mushroom_Key : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mushroom Key");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Mushroom Key");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.width = 14;
@@ -527,12 +527,12 @@ namespace Origins.Items.Materials {
 	public class FragmentNova : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Nova Fragment");
-			Tooltip.SetDefault("'The essence of a dying star in its final moments...'");
+			// DisplayName.SetDefault("Nova Fragment");
+			// Tooltip.SetDefault("'The essence of a dying star in its final moments...'");
 			glowmask = Origins.AddGlowMask(this);
 			ItemID.Sets.ItemNoGravity[Type] = true;
 			ItemID.Sets.ItemIconPulse[Type] = true;
-			SacrificeTotal = 25;
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FragmentSolar);
@@ -550,8 +550,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Ocean_Key : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Ocean Key");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Ocean Key");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.width = 14;
@@ -563,9 +563,9 @@ namespace Origins.Items.Materials {
 	[LegacyName("Peat_Moss_Item")]
 	public class Peat_Moss : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Peat Moss");
-			Tooltip.SetDefault("The Demolitionist might find this interesting...");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Peat Moss");
+			// Tooltip.SetDefault("The Demolitionist might find this interesting...");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Peat_Moss_Tile>());
@@ -583,9 +583,9 @@ namespace Origins.Items.Materials {
 	public class Power_Core : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Power Core");
+			// DisplayName.SetDefault("Power Core");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 20;
+			Item.ResearchUnlockCount = 20;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 99;
@@ -604,10 +604,10 @@ namespace Origins.Items.Materials {
 	public class Qube : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Qube");
-			Tooltip.SetDefault("'Physical information, like everything else in the world'");
+			// DisplayName.SetDefault("Qube");
+			// Tooltip.SetDefault("'Physical information, like everything else in the world'");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 100;
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -619,9 +619,9 @@ namespace Origins.Items.Materials {
 	public class Riven_Key : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Riven} Key");
+			// DisplayName.SetDefault("{$Riven} Key");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.width = 18;
@@ -634,9 +634,9 @@ namespace Origins.Items.Materials {
 	public class Riven_Carapace : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Riven} Carapace");
+			// DisplayName.SetDefault("{$Riven} Carapace");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 25;
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 99;
@@ -680,7 +680,7 @@ namespace Origins.Items.Materials {
 	}
 	public class Rotor : ModItem {
 		public override void SetStaticDefaults() {
-			SacrificeTotal = 99;
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -697,7 +697,7 @@ namespace Origins.Items.Materials {
 	}
 	public class Rubber : ModItem {
 		public override void SetStaticDefaults() {
-			SacrificeTotal = 25;
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -719,8 +719,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Silicon : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Silicon");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Silicon");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -735,9 +735,9 @@ namespace Origins.Items.Materials {
 	}
 	public class Strange_String : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Strange String");
-			Tooltip.SetDefault("'Involuntary neurectomy'");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Strange String");
+			// Tooltip.SetDefault("'Involuntary neurectomy'");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 99;
@@ -779,8 +779,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Tree_Sap : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tree Sap");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Tree Sap");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -797,10 +797,10 @@ namespace Origins.Items.Materials {
 	public class Undead_Chunk : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Undead Chunk");
+			// DisplayName.SetDefault("Undead Chunk");
 			//Tooltip.SetDefault("'I'm still alive ya'know'");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 25;
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 99;
@@ -844,9 +844,9 @@ namespace Origins.Items.Materials {
 	}
 	public class Unpowered_Eyndum_Core : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Unpowered Eyndum Core");
-			Tooltip.SetDefault("'Limitless potential'");
-			SacrificeTotal = 2;
+			// DisplayName.SetDefault("Unpowered Eyndum Core");
+			// Tooltip.SetDefault("'Limitless potential'");
+			Item.ResearchUnlockCount = 2;
 
 		}
 		public override void SetDefaults() {
@@ -866,8 +866,8 @@ namespace Origins.Items.Materials {
 	public class Valkyrum_Bar : ModItem {
 		//Alloy of Felnum and Angelium, might have to replace it with Chlorophye :o
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Valkyrum Bar");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Valkyrum Bar");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -885,8 +885,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Wilting_Rose_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Wilting Rose");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Wilting Rose");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
@@ -895,8 +895,8 @@ namespace Origins.Items.Materials {
 	}
 	public class Wrycoral_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Wrycoral");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Wrycoral");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;

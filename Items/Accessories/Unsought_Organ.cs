@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Unsought_Organ : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Unsought Organ");
-			Tooltip.SetDefault("Half of damage received is split across 3 enemies, inflicting 'Toxic Shock'\n5% increased damage and critical strike chance\nEnemies are less likely to target you");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Unsought Organ");
+			// Tooltip.SetDefault("Half of damage received is split across 3 enemies, inflicting 'Toxic Shock'\n5% increased damage and critical strike chance\nEnemies are less likely to target you");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 26);
@@ -45,7 +45,7 @@ namespace Origins.Items.Accessories {
 			if (Projectile.alpha < 0)
 				Projectile.alpha = 0;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
 		}
 	}

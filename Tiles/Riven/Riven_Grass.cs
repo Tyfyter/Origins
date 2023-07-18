@@ -27,7 +27,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(0, 100, 160));
 			//SetModTree(Defiled_Tree.Instance);
-			ItemDrop = ItemID.DirtBlock;
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemID.DirtBlock;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			fail = true;
@@ -108,7 +108,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Riven_Grass_Seeds : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Riven Seeds");
+			// DisplayName.SetDefault("Riven Seeds");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrassSeeds);

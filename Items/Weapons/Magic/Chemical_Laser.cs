@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
     public class Chemical_Laser : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chemical Laser");
-			Tooltip.SetDefault("Splits into brine droplets on impact");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Chemical Laser");
+			// Tooltip.SetDefault("Splits into brine droplets on impact");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadowbeamStaff);
@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Laseer : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Flying_Exoskeleton";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Laseer");
+			// DisplayName.SetDefault("Laseer");
 			Projectile.penetrate = 1;
 		}
 		public override void SetDefaults() {
@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.friendly = true;
 			Projectile.penetrate = 1;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<Toxic_Shock_Debuff>(), 80);
 		}
 		public override void Kill(int timeLeft) {

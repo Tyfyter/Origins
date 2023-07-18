@@ -10,9 +10,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Ace_Shrapnel_Old : ModItem {
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Ancient Fragthrower");
-			Tooltip.SetDefault("What do we do with it?");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Ancient Fragthrower");
+			// Tooltip.SetDefault("What do we do with it?");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
@@ -123,7 +123,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 			return null;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.immune[Projectile.owner] /= 2;
 			if (target.life <= 0 && Projectile.ai[1] < 5) {
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Ace_Shrapnel_Old_P>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 8 - Projectile.ai[1], Projectile.ai[1]);

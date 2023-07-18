@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class IWTPA_Standard : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("I-WTPA Standard");
-			Tooltip.SetDefault("Reduces explosive fuse time");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("I-WTPA Standard");
+			// Tooltip.SetDefault("Reduces explosive fuse time");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 34);

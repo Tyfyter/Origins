@@ -10,12 +10,12 @@ namespace Origins.Items.Armor.Acrid {
     [AutoloadEquip(EquipType.Head)]
 	public class Acrid_Dome : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acrid Dome");
-			Tooltip.SetDefault("10% increased explosive critical chance and throwing velocity\nEffect stronger when submerged\nEmit a small aura of light");
+			// DisplayName.SetDefault("Acrid Dome");
+			// Tooltip.SetDefault("10% increased explosive critical chance and throwing velocity\nEffect stronger when submerged\nEmit a small aura of light");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Dome_Head_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 2;
@@ -57,12 +57,12 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Headgear : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acrid Headgear");
-			Tooltip.SetDefault("10% increased magic damage and 25% reduced mana cost\nEffect stronger when submerged\nEmit a small aura of light");
+			// DisplayName.SetDefault("Acrid Headgear");
+			// Tooltip.SetDefault("10% increased magic damage and 25% reduced mana cost\nEffect stronger when submerged\nEmit a small aura of light");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Headgear_Head_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
@@ -104,12 +104,12 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Helm : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acrid Helm");
-			Tooltip.SetDefault("10% increased melee damage and speed\nEffect stronger when submerged\nEmit a small aura of light");
+			// DisplayName.SetDefault("Acrid Helm");
+			// Tooltip.SetDefault("10% increased melee damage and speed\nEffect stronger when submerged\nEmit a small aura of light");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Helm_Head_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 18;
@@ -151,12 +151,12 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Mask : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acrid Mask");
-			Tooltip.SetDefault("10% increased summoning damage\n+1 minion slot\nEffects stronger when submerged\nEmit a small aura of light");
+			// DisplayName.SetDefault("Acrid Mask");
+			// Tooltip.SetDefault("10% increased summoning damage\n+1 minion slot\nEffects stronger when submerged\nEmit a small aura of light");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Mask_Head_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 1;
@@ -198,12 +198,12 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Visor : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acrid Visor");
-			Tooltip.SetDefault("20% increased ranged attack speed\nEffect stronger when submerged\nEmit a small aura of light");
+			// DisplayName.SetDefault("Acrid Visor");
+			// Tooltip.SetDefault("20% increased ranged attack speed\nEffect stronger when submerged\nEmit a small aura of light");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Visor_Head_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 9;
@@ -243,9 +243,9 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Body)]
 	public class Acrid_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acrid Breastplate");
-			Tooltip.SetDefault("Increased life regeneration");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Acrid Breastplate");
+			// Tooltip.SetDefault("Increased life regeneration");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 18;
@@ -266,9 +266,9 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Acrid_Greaves : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acrid Greaves");
-			Tooltip.SetDefault("Grants the ability to swim");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Acrid Greaves");
+			// Tooltip.SetDefault("Grants the ability to swim");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 14;

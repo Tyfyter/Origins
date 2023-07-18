@@ -7,9 +7,9 @@ namespace Origins.Items.Armor.Sapphire {
     [AutoloadEquip(EquipType.Head)]
 	public class Sapphire_Hood : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Sapphire Mediator Hood");
-			Tooltip.SetDefault("-40 mana");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Sapphire Mediator Hood");
+			// Tooltip.SetDefault("-40 mana");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
@@ -38,9 +38,9 @@ namespace Origins.Items.Armor.Sapphire {
 	[AutoloadEquip(EquipType.Body)]
 	public class Sapphire_Vest : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Sapphire Mediator Vest");
-			Tooltip.SetDefault("+15% magic speed");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Sapphire Mediator Vest");
+			// Tooltip.SetDefault("+15% magic speed");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
@@ -62,9 +62,9 @@ namespace Origins.Items.Armor.Sapphire {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Sapphire_Tights : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Sapphire Mediator Tights");
-			Tooltip.SetDefault("Increased movement speed");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Sapphire Mediator Tights");
+			// Tooltip.SetDefault("Increased movement speed");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;

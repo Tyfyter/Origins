@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables.Food {
 	public class Krunch_Mix : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Krunch Mix");
-			Tooltip.SetDefault("{$CommonItemTooltip.MinorStats} and further increased regeneration\n'Taste the graynbow'");
-			SacrificeTotal = 5;
+			// DisplayName.SetDefault("Krunch Mix");
+			// Tooltip.SetDefault("{$CommonItemTooltip.MinorStats} and further increased regeneration\n'Taste the graynbow'");
+			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.PotatoChips);

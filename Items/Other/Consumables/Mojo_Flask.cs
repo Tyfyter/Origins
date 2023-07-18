@@ -11,10 +11,10 @@ namespace Origins.Items.Other.Consumables {
     public class Mojo_Flask : ModItem {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mojo Flask");
-			Tooltip.SetDefault("Mitigates all assimilation by 20% each for five uses");
+			// DisplayName.SetDefault("Mojo Flask");
+			// Tooltip.SetDefault("Mitigates all assimilation by 20% each for five uses");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationDelegated(GetFrame));
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 			ID = Type;
 		}
 		public static Rectangle GetFrame(Texture2D texture) {

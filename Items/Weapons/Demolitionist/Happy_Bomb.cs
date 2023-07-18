@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Happy_Bomb : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Happy Bomb");
-			Tooltip.SetDefault("Laughs at downed enemies");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Happy Bomb");
+			// Tooltip.SetDefault("Laughs at downed enemies");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Happy_Bomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Happy_Bomb";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Happy Bomb");
+			// DisplayName.SetDefault("Happy Bomb");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

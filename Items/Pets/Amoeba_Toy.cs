@@ -10,9 +10,9 @@ namespace Origins.Items.Pets {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amoeba Toy");
-			Tooltip.SetDefault("Summons a Meberoid to light up the day");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Amoeba Toy");
+			// Tooltip.SetDefault("Summons a Meberoid to light up the day");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
@@ -30,7 +30,7 @@ namespace Origins.Items.Pets {
 		public override string Texture => "Origins/Items/Pets/Meberoid";
 		public override void SetStaticDefaults() {
 			Amoeba_Toy.projectileID = Projectile.type;
-			DisplayName.SetDefault("Meberoid");
+			// DisplayName.SetDefault("Meberoid");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;
 
@@ -147,8 +147,8 @@ namespace Origins.Items.Pets {
 namespace Origins.Buffs {
 	public class Meberoid_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Meberoid");
-			Description.SetDefault("The Meberoid will light up the way");
+			// DisplayName.SetDefault("Meberoid");
+			// Description.SetDefault("The Meberoid will light up the way");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.lightPet[Type] = true;

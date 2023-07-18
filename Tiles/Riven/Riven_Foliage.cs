@@ -61,10 +61,7 @@ namespace Origins.Tiles.Riven {
 			}
 			return false;
 		}
-
-		public override bool Drop(int i, int j) {
-			return false;
-		}
+		public override bool CanDrop(int i, int j) => false;
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}

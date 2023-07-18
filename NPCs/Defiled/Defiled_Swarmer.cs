@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Swarmer : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Swarmer");
+			// DisplayName.SetDefault("{$Defiled} Swarmer");
 			Main.npcFrameCount[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 			SpawnModBiomes = new int[] {
@@ -70,16 +70,16 @@ namespace Origins.NPCs.Defiled {
 				NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
 			}
 		}
-		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
+		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
 			Gore.NewGore(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
 		}
-		public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
+		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			int halfWidth = NPC.width / 2;
 			int baseX = player.direction > 0 ? 0 : halfWidth;
 			Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), new Vector2(knockback * player.direction, -0.1f * knockback), Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				for (int i = 0; i < 3; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4)));
 			}

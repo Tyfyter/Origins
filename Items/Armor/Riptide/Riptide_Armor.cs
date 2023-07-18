@@ -11,9 +11,9 @@ namespace Origins.Items.Armor.Riptide {
 	[AutoloadEquip(EquipType.Head)]
 	public class Riptide_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Riptide Helm");
-			Tooltip.SetDefault("5% increased magic damage\nGreatly extends underwater breathing");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Riptide Helm");
+			// Tooltip.SetDefault("5% increased magic damage\nGreatly extends underwater breathing");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
@@ -52,9 +52,9 @@ namespace Origins.Items.Armor.Riptide {
 	[AutoloadEquip(EquipType.Body)]
 	public class Riptide_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Riptide Breastplate");
-			Tooltip.SetDefault("Emit a small aura of light\n+60 mana capacity");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Riptide Breastplate");
+			// Tooltip.SetDefault("Emit a small aura of light\n+60 mana capacity");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
@@ -88,9 +88,9 @@ namespace Origins.Items.Armor.Riptide {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Riptide_Greaves : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Riptide Leggings");
-			Tooltip.SetDefault("5% increased magic damage\nGrants the ability to swim and provides increased movement speed in water");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Riptide Leggings");
+			// Tooltip.SetDefault("5% increased magic damage\nGrants the ability to swim and provides increased movement speed in water");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
@@ -113,7 +113,7 @@ namespace Origins.Items.Armor.Riptide {
 	public class Riptide_Dash_P : ModProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Riptide Dash");
+			// DisplayName.SetDefault("Riptide Dash");
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 19;
 			ID = Type;
@@ -138,7 +138,7 @@ namespace Origins.Items.Armor.Riptide {
 				}
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.penetrate == 1) {
 				Projectile.penetrate = 2;
 				Projectile.timeLeft = 40;

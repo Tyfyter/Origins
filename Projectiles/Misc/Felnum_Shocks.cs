@@ -18,7 +18,7 @@ namespace Origins.Projectiles.Misc {
 		public event Action OnStrike;
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Felnum Shock");
+			// DisplayName.SetDefault("Felnum Shock");
 			ID = Projectile.type;
 		}
 		public override void SetDefaults() {
@@ -37,7 +37,7 @@ namespace Origins.Projectiles.Misc {
 			hitbox.Width += 4;
 			hitbox.Height += 4;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			if (damage >= target.life) {
 				damage = target.life - 1;
 				target.GetGlobalNPC<OriginGlobalNPC>().shockTime = 15;

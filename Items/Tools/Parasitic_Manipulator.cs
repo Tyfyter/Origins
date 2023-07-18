@@ -8,8 +8,8 @@ namespace Origins.Items.Tools {
 	public class Parasitic_Manipulator : ModItem {
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Parasitic Manipulator");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Parasitic Manipulator");
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults() {
@@ -32,7 +32,7 @@ namespace Origins.Items.Tools {
 	}
 	public class Parasitic_Bobber : ModProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Parasitic Bobber");
+			// DisplayName.SetDefault("Parasitic Bobber");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BobberReinforced);

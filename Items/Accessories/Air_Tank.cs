@@ -8,10 +8,10 @@ namespace Origins.Items.Accessories {
 	public class Air_Tank : ModItem {
 		public static sbyte BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Air Tank");
-			Tooltip.SetDefault("Extends underwater breathing\nImmunity to ‘Suffocation’");
+			// DisplayName.SetDefault("Air Tank");
+			// Tooltip.SetDefault("Extends underwater breathing\nImmunity to ‘Suffocation’");
 			BackSlot = Item.backSlot;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);

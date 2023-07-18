@@ -84,7 +84,7 @@ namespace Origins.NPCs.Riven {
 	public abstract class Cleaver : Glowing_Mod_NPC {
 		public override string GlowTexturePath => Texture;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cleaver");
+			// DisplayName.SetDefault("Cleaver");
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive>().Type
 			};
@@ -93,7 +93,7 @@ namespace Origins.NPCs.Riven {
 		public override void AI() {
 			if (NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			NPC current = Main.npc[NPC.realLife > -1 ? NPC.realLife : NPC.whoAmI];
 			if (current.life < 0) {
 				int skip = Main.rand.Next(2);
@@ -118,7 +118,7 @@ namespace Origins.NPCs.Riven {
 				0.5f
 			);
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 300, 180, 0.9f);
 		}
 	}

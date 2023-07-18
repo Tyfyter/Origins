@@ -12,9 +12,9 @@ using static Microsoft.Xna.Framework.MathHelper;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Black_Hole_Bomb : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Black Hole Bomb");
-			Tooltip.SetDefault("'Implode. Explode'");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Black Hole Bomb");
+			// Tooltip.SetDefault("'Implode. Explode'");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
@@ -108,7 +108,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.friendly = false;
 			return false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.timeLeft <= totalDur) return;
 			Projectile.aiStyle = 0;
 			Projectile.velocity = Vector2.Zero;

@@ -10,9 +10,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
     public class Scribe_Of_Meat : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Scribe of the Meat God");
-			Tooltip.SetDefault("Transform into a miniature wall of flesh during a dash\n'You're made of meat'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Scribe of the Meat God");
+			// Tooltip.SetDefault("Transform into a miniature wall of flesh during a dash\n'You're made of meat'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);
@@ -41,7 +41,7 @@ namespace Origins.Items.Accessories {
 		public static int ID { get; private set; }
 		Vector2[] hungries;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Scribe of the Meat God");
+			// DisplayName.SetDefault("Scribe of the Meat God");
 			if (!Main.dedServ) {
 				Texture2 = Mod.Assets.Request<Texture2D>("Items/Accessories/Scribe_Of_Meat_Use2");
 				Texture3 = Mod.Assets.Request<Texture2D>("Items/Accessories/Scribe_Of_Meat_Use3");

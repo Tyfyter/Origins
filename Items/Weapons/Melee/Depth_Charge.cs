@@ -11,8 +11,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
     public class Depth_Charge : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Depth Charge");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Depth Charge");
+			Item.ResearchUnlockCount = 1;
 			ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
 		}
 		public override void SetDefaults() {
@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Melee {
 		const int ai_state_ricochet = 5;
 		const int ai_state_dropping = 6;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Depth Charge");
+			// DisplayName.SetDefault("Depth Charge");
 			if (Mod.RequestAssetIfExists<Texture2D>("Items/Weapons/Melee/Depth_Charge_Chain", out var chainTexture)) ChainTexture = chainTexture;
 		}
 		public override void Unload() {
@@ -57,7 +57,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.height = 36;
 			Projectile.penetrate = -1;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.ai[0] != ai_state_spinning) Projectile.penetrate = 0;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {

@@ -7,9 +7,9 @@ namespace Origins.Items.Accessories {
 	public class Stealth_Ravel : Ravel {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Stealth Ravel");
-			Tooltip.SetDefault("Double tap down to transform into a small, rolling ball\nEnemies are unable to target you when raveled");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Stealth Ravel");
+			// Tooltip.SetDefault("Double tap down to transform into a small, rolling ball\nEnemies are unable to target you when raveled");
+			Item.ResearchUnlockCount = 1;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -43,8 +43,8 @@ namespace Origins.Items.Accessories {
 		protected override int MountID => ModContent.MountType<Stealth_Ravel_Mount>();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			DisplayName.SetDefault("Stealth Ravel");
-			Description.SetDefault("10% chance to dodge. Less likely to be targeted");
+			// DisplayName.SetDefault("Stealth Ravel");
+			// Description.SetDefault("10% chance to dodge. Less likely to be targeted");
 		}
 	}
 }

@@ -14,9 +14,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Dart : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bile Dart");
-			Tooltip.SetDefault("Stuns the target");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Bile Dart");
+			// Tooltip.SetDefault("Stuns the target");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedDart);
@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Dart_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Ammo/Bile_Dart";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bile Dart");
+			// DisplayName.SetDefault("Bile Dart");
 		}
 		public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.CursedDart);
@@ -81,7 +81,7 @@ namespace Origins.Items.Weapons.Ammo {
             SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             SoundEngine.PlaySound(SoundID.NPCHit22.WithVolume(0.5f), Projectile.position);
         }
-        public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
             target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 30);
         }
 	}
@@ -90,7 +90,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public static ScreenTarget AuraTarget { get; private set; }
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bile Dart Aura");
+			// DisplayName.SetDefault("Bile Dart Aura");
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -117,10 +117,10 @@ namespace Origins.Items.Weapons.Ammo {
 				},
 				0
 			);
-			On.Terraria.Main.DrawInfernoRings += Main_DrawInfernoRings;
+			Terraria.On_Main.DrawInfernoRings += Main_DrawInfernoRings;
 		}
 
-		private void Main_DrawInfernoRings(On.Terraria.Main.orig_DrawInfernoRings orig, Main self) {
+		private void Main_DrawInfernoRings(Terraria.On_Main.orig_DrawInfernoRings orig, Main self) {
 			orig(self);
 			if (Main.dedServ) return;
 			if (Lighting.NotRetro) DrawAura(Main.spriteBatch);
@@ -143,7 +143,7 @@ namespace Origins.Items.Weapons.Ammo {
 				}
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 20);
 		}
 		public override bool PreDraw(ref Color lightColor) {

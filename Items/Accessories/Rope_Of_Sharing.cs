@@ -7,10 +7,10 @@ namespace Origins.Items.Accessories {
 	public class Rope_Of_Sharing : ModItem {
 		public static sbyte WaistSlot { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Rope of Sharing");
-			Tooltip.SetDefault("All stats, afflictions and other effects are shared with another connected player");
+			// DisplayName.SetDefault("Rope of Sharing");
+			// Tooltip.SetDefault("All stats, afflictions and other effects are shared with another connected player");
 			WaistSlot = Item.waistSlot;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Green;

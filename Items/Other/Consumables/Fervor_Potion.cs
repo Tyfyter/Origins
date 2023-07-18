@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Fervor_Potion : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fervor Potion");
-			Tooltip.SetDefault("Increases attack speed by 10%");
-			SacrificeTotal = 20;
+			// DisplayName.SetDefault("Fervor Potion");
+			// Tooltip.SetDefault("Increases attack speed by 10%");
+			Item.ResearchUnlockCount = 20;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WrathPotion);

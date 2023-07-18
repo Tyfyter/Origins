@@ -14,8 +14,8 @@ namespace Origins.Items.Weapons.Ranged {
 		int charge = 0;
 		public static short[] glowmasks;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tolruk");
-			Tooltip.SetDefault("Receives 50% higher damage bonuses\n[tɵlɹɘk]\nSprite needs reshaping to be less like dart rifle\nOn it :)");
+			// DisplayName.SetDefault("Tolruk");
+			// Tooltip.SetDefault("Receives 50% higher damage bonuses\n[tɵlɹɘk]\nSprite needs reshaping to be less like dart rifle\nOn it :)");
 			glowmasks = new short[]{
 				-1,
 				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_1"),
@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Ranged {
 				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_9"),
 				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_10")
 			};
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 37;
@@ -96,7 +96,7 @@ namespace Origins.Items.Weapons.Ranged {
 		(Vector2?, Vector2)[] oldPos = new (Vector2?, Vector2)[14];
 		public override string Texture => "Terraria/Images/Projectile_3";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tolruk Bolt");
+			// DisplayName.SetDefault("Tolruk Bolt");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);

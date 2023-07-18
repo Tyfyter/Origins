@@ -10,10 +10,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Nerve_Impulse_Manipulator : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Nerve Impulse Manipulator");
-			Tooltip.SetDefault("Summons the {$Defiled} Amalgamation");
+			// DisplayName.SetDefault("Nerve Impulse Manipulator");
+			// Tooltip.SetDefault("Summons the {$Defiled} Amalgamation");
 
-			SacrificeTotal = 3;
+			Item.ResearchUnlockCount = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;
 		}
 		public override void SetDefaults() {

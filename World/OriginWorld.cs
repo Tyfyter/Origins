@@ -22,6 +22,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
+using Terraria.WorldBuilding;
 using Tyfyter.Utils;
 using static Tyfyter.Utils.ChestLootCache;
 using static Tyfyter.Utils.ChestLootCache.LootQueueAction;
@@ -38,6 +39,8 @@ namespace Origins {
 		public const float biomeShaderSmoothing = 0.025f;
 		public byte worldEvil {
 			get {
+				return WorldGen.crimson ? evil_crimson : evil_corruption;
+#if false ///TODO: find a way
 				switch (AltLibrary.Common.Systems.WorldBiomeManager.WorldEvil) {
 					case "Origins/Defiled_Wastelands_Alt_Biome":
 					hasDefiled = true;
@@ -50,6 +53,7 @@ namespace Origins {
 					default:
 					return WorldGen.crimson ? evil_crimson : evil_corruption;
 				}
+#endif
 			}
 		}
 		internal bool hasDefiled = false;
@@ -393,7 +397,7 @@ namespace Origins {
 				(ENQUEUE, ModContent.ItemType<Asylum_Whistle>(), 1f),
 				(ENQUEUE, ModContent.ItemType<Bomb_Launcher>(), 1f),
 				(ENQUEUE, ModContent.ItemType<Bomb_Yeeter>(), 1f));
-			_worldSurfaceLow = WorldGen.worldSurfaceLow;
+			_worldSurfaceLow = GenVars.worldSurfaceLow;
 		}
 		[Obsolete]
 		public static void ApplyLootQueue(ChestLootCache[] lootCache, params (LootQueueAction action, int param)[] actions) {

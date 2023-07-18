@@ -10,9 +10,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Chlorodynamite : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chlorodynamite");
-			Tooltip.SetDefault("Vines will pull nearby enemies in before detonation");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Chlorodynamite");
+			// Tooltip.SetDefault("Vines will pull nearby enemies in before detonation");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Dynamite);
@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		const int explosion_delay_time = 60;
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Chlorodynamite";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chlorodynamite");
+			// DisplayName.SetDefault("Chlorodynamite");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
@@ -105,7 +105,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return true;
 		}
 		public override bool? CanHitNPC(NPC target) => null;//Projectile.type == ProjectileID.Grenade ? null : false;
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			if (Projectile.type != ProjectileID.Grenade) {
 				damage /= 12;
 			}
@@ -123,7 +123,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Chlorodynamite_Vine : ModProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chlorodynamite");
+			// DisplayName.SetDefault("Chlorodynamite");
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -133,10 +133,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 60;
 			Projectile.tileCollide = false;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			hitDirection = 0;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.velocity != default) {
 				target.velocity -= Vector2.Normalize(Projectile.velocity) * knockback * target.knockBackResist;
 			}

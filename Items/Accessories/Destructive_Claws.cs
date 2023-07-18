@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Destructive_Claws : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Destructive Claws");
-			Tooltip.SetDefault("25% increased explosive throwing velocity\nIncreases attack speed of thrown explosives\nEnables autouse for all explosive weapons");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Destructive Claws");
+			// Tooltip.SetDefault("25% increased explosive throwing velocity\nIncreases attack speed of thrown explosives\nEnables autouse for all explosive weapons");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(38, 20);

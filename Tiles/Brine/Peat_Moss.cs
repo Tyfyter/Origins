@@ -13,7 +13,7 @@ namespace Origins.Tiles.Brine {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			ItemDrop = ItemType<Peat_Moss>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Peat_Moss>();
 			AddMapEntry(new Color(18, 160, 56));
 			HitSound = SoundID.Dig;
 		}

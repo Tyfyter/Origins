@@ -17,7 +17,7 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.Stone));
-			ItemDrop = ItemType<Chambersite>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Chambersite>();
 		}
 		public static void AddChild(int type, AltLibraryLookupType biome) {
 			GetAltLibraryDataLookup(AltLibraryFieldType.Wall, AltLibraryLookupType.Parent).Add(type, WallType<Chambersite_Stone_Wall>());
@@ -27,7 +27,7 @@ namespace Origins.Walls {
 	}
 	public class Chambersite_Stone_Wall_Item : ModItem {
 		public override void SetDefaults() {
-			Item.DefaultToPlacableWall((ushort)WallType<Chambersite_Stone_Wall>());
+			Item.DefaultToPlaceableWall((ushort)WallType<Chambersite_Stone_Wall>());
 		}
 	}
 	public class Chambersite_Crimstone_Wall : ModWall {
@@ -35,7 +35,7 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.CrimsonUnsafe1;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.CrimsonUnsafe1));
 			Chambersite_Stone_Wall.AddChild(Type, AltLibraryLookupType.CrimsonConversion);
-			ItemDrop = ItemType<Chambersite>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Chambersite>();
 		}
 	}
 	public class Chambersite_Ebonstone_Wall : ModWall {
@@ -43,21 +43,21 @@ namespace Origins.Walls {
 			Main.wallBlend[Type] = WallID.CorruptionUnsafe1;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.CorruptionUnsafe1));
 			Chambersite_Stone_Wall.AddChild(Type, AltLibraryLookupType.CorruptionConversion);
-			ItemDrop = ItemType<Chambersite>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Chambersite>();
 		}
 	}
 	public class Chambersite_Defiled_Stone_Wall : ModWall {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallType<Defiled_Stone_Wall>();//what wall type this wall is considered to be when blending
 			AddMapEntry(new Color(150, 150, 150));
-			ItemDrop = ItemType<Chambersite>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Chambersite>();
 		}
 	}
 	public class Chambersite_Riven_Flesh_Wall : ModWall {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallType<Riven_Flesh_Wall>();//what wall type this wall is considered to be when blending
 			AddMapEntry(new Color(40, 140, 200));
-			ItemDrop = ItemType<Chambersite>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Chambersite>();
 		}
 	}
 }

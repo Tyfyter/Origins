@@ -10,9 +10,9 @@ namespace Origins.Items.Accessories {
     public class Dash_Ravel : Ravel {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dash Ravel");
-			Tooltip.SetDefault("Double tap down to transform into a small, rolling ball that damages enemies as it moves\nDouble tap a direction to dash and instantly morph");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Dash Ravel");
+			// Tooltip.SetDefault("Double tap down to transform into a small, rolling ball that damages enemies as it moves\nDouble tap a direction to dash and instantly morph");
+			Item.ResearchUnlockCount = 1;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -78,7 +78,7 @@ namespace Origins.Items.Accessories {
 	public class Dash_Ravel_P : ModProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Kinetic Wave");
+			// DisplayName.SetDefault("Kinetic Wave");
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -121,8 +121,8 @@ namespace Origins.Items.Accessories {
 		protected override int MountID => ModContent.MountType<Dash_Ravel_Mount>();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			DisplayName.SetDefault("Dash Ravel");
-			Description.SetDefault("10% chance to dodge. Double tap left or right to dash");
+			// DisplayName.SetDefault("Dash Ravel");
+			// Description.SetDefault("10% chance to dodge. Double tap left or right to dash");
 		}
 	}
 }

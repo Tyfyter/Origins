@@ -10,9 +10,9 @@ namespace Origins.Items.Accessories {
 		public abstract int Level { get; }
 		public abstract int NextLowerTier { get; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Brine-Leafed Clover");
-			Tooltip.SetDefault("Increases the likelihood of favorable outcomes based on how many leaves it has\nA leaf will fall out if it causes something exceptionally rare");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Brine-Leafed Clover");
+			// Tooltip.SetDefault("Increases the likelihood of favorable outcomes based on how many leaves it has\nA leaf will fall out if it causes something exceptionally rare");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void Load() {
 			if (faceSlot == -1) faceSlot = (sbyte)EquipLoader.AddEquipTexture(Mod, "Origins/Items/Accessories/Brine_Leafed_Clover_Face", EquipType.Face, name: "Brine_Leafed_Clover_Face");
@@ -37,9 +37,9 @@ namespace Origins.Items.Accessories {
 	}
 	public class Brine_Leafed_Clover_0 : Brine_Leafed_Clover {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Brine-Leafed Clover");
-			Tooltip.SetDefault("Does nothing\n'Better luck next time!'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Brine-Leafed Clover");
+			// Tooltip.SetDefault("Does nothing\n'Better luck next time!'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override int Level => 0;
 		public override int NextLowerTier => 0;

@@ -14,10 +14,10 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Teardown");
-			Tooltip.SetDefault("Summons a Flying Exoskeleton to fight for you\nIgnores some enemy defense");
+			// DisplayName.SetDefault("Teardown");
+			// Tooltip.SetDefault("Summons a Flying Exoskeleton to fight for you\nIgnores some enemy defense");
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 11;
@@ -55,7 +55,7 @@ namespace Origins.Items.Weapons.Summoner {
 		int armorPenetration;
 		public override void SetStaticDefaults() {
 			Teardown.projectileID = Projectile.type;
-			DisplayName.SetDefault("Flying Exoskeleton");
+			// DisplayName.SetDefault("Flying Exoskeleton");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 3;
 			// This is necessary for right-click targeting
@@ -217,10 +217,10 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 			#endregion
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			Projectile.ArmorPenetration = armorPenetration + target.defense / 2;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.ai[1] = 0;
 		}
 	}
@@ -229,8 +229,8 @@ namespace Origins.Buffs {
 	public class Teardown_Buff : ModBuff {
 		public override string Texture => "Origins/Buffs/Exoskeleton_Buff";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Flying Exoskeleton");
-			Description.SetDefault("The Flying Exoskeleton will fight for you");
+			// DisplayName.SetDefault("Flying Exoskeleton");
+			// Description.SetDefault("The Flying Exoskeleton will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Teardown.buffID = Type;

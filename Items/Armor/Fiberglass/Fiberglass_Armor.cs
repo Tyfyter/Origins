@@ -7,10 +7,10 @@ namespace Origins.Items.Armor.Fiberglass {
 	[AutoloadEquip(EquipType.Head)]
 	public class Fiberglass_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fiberglass Helmet");
-			Tooltip.SetDefault("'This doesn't seem very protective'");
+			// DisplayName.SetDefault("Fiberglass Helmet");
+			// Tooltip.SetDefault("'This doesn't seem very protective'");
 			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
@@ -32,11 +32,11 @@ namespace Origins.Items.Armor.Fiberglass {
 	public class Fiberglass_Body : ModItem {
 		public static int SlotID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fiberglass Pauldrons");
-			Tooltip.SetDefault("These don't seem very protective");
+			// DisplayName.SetDefault("Fiberglass Pauldrons");
+			// Tooltip.SetDefault("These don't seem very protective");
 			//ArmorIDs.Body.Sets.HidesTopSkin[Item.bodySlot] = true;
 			//ArmorIDs.Body.Sets.HidesBottomSkin[Item.bodySlot] = true;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 			SlotID = Item.bodySlot;
 		}
 		public override void SetDefaults() {
@@ -48,9 +48,9 @@ namespace Origins.Items.Armor.Fiberglass {
 	public class Fiberglass_Legs : ModItem {
 		public static int SlotID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fiberglass Boots");
-			Tooltip.SetDefault("'These don't seem very protective'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Fiberglass Boots");
+			// Tooltip.SetDefault("'These don't seem very protective'");
+			Item.ResearchUnlockCount = 1;
 			//ArmorIDs.Legs.Sets.HidesTopSkin[Item.legSlot] = true;
 			//ArmorIDs.Legs.Sets.HidesBottomSkin[Item.legSlot] = true;
 			SlotID = Item.legSlot;

@@ -76,7 +76,7 @@ namespace Origins.Tiles {
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ChestDrop);
+			Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */);
 			Chest.DestroyChest(i, j);
 		}
 
@@ -121,7 +121,7 @@ namespace Origins.Tiles {
 				if (isLocked) {
 					if (player.ConsumeItem(keyItem) && Chest.Unlock(left, top)) {
 						if (Main.netMode == NetmodeID.MultiplayerClient) {
-							NetMessage.SendData(MessageID.Unlock, -1, -1, null, player.whoAmI, 1f, (float)left, (float)top);
+							NetMessage.SendData(MessageID.LockAndUnlock, -1, -1, null, player.whoAmI, 1f, (float)left, (float)top);
 						}
 					}
 				} else {
@@ -163,10 +163,10 @@ namespace Origins.Tiles {
 			if (chestIndex < 0) {
 				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
 			} else {
-				player.cursorItemIconText = Main.chest[chestIndex].name.Length > 0 ? Main.chest[chestIndex].name : ContainerName.GetDefault();
-				if (player.cursorItemIconText.Equals(ContainerName.GetDefault())) {
+				player.cursorItemIconText = Main.chest[chestIndex].name.Length > 0 ? Main.chest[chestIndex].name : ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.GetDefault();
+				if (player.cursorItemIconText.Equals(ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.GetDefault())) {
 					if (IsLockedChest(left, top)) player.cursorItemIconID = keyItem;
-					else player.cursorItemIconID = ChestDrop;
+					else player.cursorItemIconID = ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */;
 					player.cursorItemIconText = "";
 				}
 			}

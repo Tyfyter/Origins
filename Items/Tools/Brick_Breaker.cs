@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Brick_Breaker : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Brick Breaker");
-			Tooltip.SetDefault("'Very pointy'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Brick Breaker");
+			// Tooltip.SetDefault("'Very pointy'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DeathbringerPickaxe);

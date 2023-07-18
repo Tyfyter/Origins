@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Hellfire_Grenade : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hellfire Grenade");
-			Tooltip.SetDefault("Explodes into a lingering fire");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Hellfire Grenade");
+			// Tooltip.SetDefault("Explodes into a lingering fire");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Hellfire_Grenade_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Hellfire_Grenade";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hellfire Grenade");
+			// DisplayName.SetDefault("Hellfire Grenade");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

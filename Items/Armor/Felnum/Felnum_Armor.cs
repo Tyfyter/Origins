@@ -8,9 +8,9 @@ namespace Origins.Items.Armor.Felnum {
 	[AutoloadEquip(EquipType.Head)]
 	public class Felnum_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Felnum Helmet");
-			Tooltip.SetDefault("4% increased damage");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Felnum Helmet");
+			// Tooltip.SetDefault("4% increased damage");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
@@ -54,9 +54,9 @@ namespace Origins.Items.Armor.Felnum {
 	[AutoloadEquip(EquipType.Body)]
 	public class Felnum_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Felnum Breastplate");
-			Tooltip.SetDefault("2% increased damage\n5% increased movement speed");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Felnum Breastplate");
+			// Tooltip.SetDefault("2% increased damage\n5% increased movement speed");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 6;
@@ -77,9 +77,9 @@ namespace Origins.Items.Armor.Felnum {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Felnum_Greaves : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Felnum Greaves");
-			Tooltip.SetDefault("5% increased movement speed");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Felnum Greaves");
+			// Tooltip.SetDefault("5% increased movement speed");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;

@@ -20,9 +20,9 @@ namespace Origins.Items.Weapons.Melee {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Vorpal Sword");
+			// DisplayName.SetDefault("Vorpal Sword");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 17;
@@ -79,7 +79,7 @@ namespace Origins.Items.Weapons.Melee {
 				text = "He took his vorpal sword in hand:";
 				break;
 				case 9:
-				text = "  Long time the manxome foe he soughtó";
+				text = "  Long time the manxome foe he sought—";
 				break;
 				case 10:
 				text = "So rested he by the Tumtum tree,";
@@ -261,7 +261,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			OriginGlobalNPC.InflictTorn(target, 60, targetSeverity: 0.65f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void CutTiles() {

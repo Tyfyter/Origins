@@ -33,7 +33,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Amoeba_Fluid_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amoeba Fluid");
+			// DisplayName.SetDefault("Amoeba Fluid");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FleshBlock);

@@ -14,10 +14,10 @@ namespace Origins.Items.Weapons.Magic {
 	public class Magnus : ModItem {
 		public const int baseDamage = 34;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Magnus");
-			Tooltip.SetDefault("Receives 50% higher damage bonuses");
+			// DisplayName.SetDefault("Magnus");
+			// Tooltip.SetDefault("Receives 50% higher damage bonuses");
 			Item.staff[Item.type] = true;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
@@ -47,7 +47,7 @@ namespace Origins.Items.Weapons.Magic {
 		(Vector2?, Vector2)[] oldPos = new (Vector2?, Vector2)[7];
 		public override string Texture => "Terraria/Images/Projectile_3";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lightning Strike");
+			// DisplayName.SetDefault("Lightning Strike");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);

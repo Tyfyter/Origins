@@ -10,9 +10,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Dismay : ModItem, ICustomDrawItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dismay");
-			Tooltip.SetDefault("'Very pointy for a book'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Dismay");
+			// Tooltip.SetDefault("'Very pointy for a book'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedFlames);

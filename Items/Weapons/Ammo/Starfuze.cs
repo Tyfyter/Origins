@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Starfuze : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Starfuze");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Starfuze");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenArrow);

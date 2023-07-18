@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Symbiote_Skull : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Symbiote Skull");
-			Tooltip.SetDefault("Attacks tenderize targets");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Symbiote Skull");
+			// Tooltip.SetDefault("Attacks tenderize targets");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 28);

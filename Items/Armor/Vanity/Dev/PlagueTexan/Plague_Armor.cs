@@ -7,9 +7,9 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 	[AutoloadEquip(EquipType.Head)]
 	public class Plague_Texan_Mask : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Plague Texan's Visage");
-			Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Plague Texan's Visage");
+			// Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.vanity = true;
@@ -19,10 +19,10 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 	[AutoloadEquip(EquipType.Body)]
 	public class Plague_Texan_Jacket : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Plague Texan's Surprisingly Affordable Style");
-			Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
+			// DisplayName.SetDefault("Plague Texan's Surprisingly Affordable Style");
+			// Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
 			ArmorIDs.Body.Sets.HidesHands[Item.bodySlot] = false;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.vanity = true;
@@ -32,9 +32,9 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Plague_Texan_Jeans : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Plague Texan's Jeans");
-			Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Plague Texan's Jeans");
+			// Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.vanity = true;
@@ -44,15 +44,15 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 	public class Plague_Texan_Sight : ModItem {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Plague Texan's Gift");
-			Tooltip.SetDefault("'Great for impersonating Origins devs!'\nForesight is '20/20'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Plague Texan's Gift");
+			// Tooltip.SetDefault("'Great for impersonating Origins devs!'\nForesight is '20/20'");
+			Item.ResearchUnlockCount = 1;
 			ID = Item.type;
 		}
 		public override void SetDefaults() {
 			Item.accessory = true;
 			Item.rare = AltCyanRarity.ID;
-			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.hasVanityEffects = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.dangerSense = true;

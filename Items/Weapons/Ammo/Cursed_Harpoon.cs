@@ -10,8 +10,8 @@ namespace Origins.Items.Weapons.Ammo {
 		public override string Texture => "Origins/Items/Weapons/Ammo/Cursed_Harpoon";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cursed Harpoon");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Cursed Harpoon");
+			Item.ResearchUnlockCount = 99;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Cursed_Harpoon_P : Harpoon_P {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cursed Harpoon");
+			// DisplayName.SetDefault("Cursed Harpoon");
 			ID = Type;
 		}
 		public override void AI() {//still needs its own AI override since it has unique AI functionality
@@ -68,7 +68,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.CursedDartFlame;
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cursed Harpoon");
+			// DisplayName.SetDefault("Cursed Harpoon");
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -102,7 +102,7 @@ namespace Origins.Items.Weapons.Ammo {
 				dust2.velocity *= 0.1f;
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.CursedInferno, Main.rand.Next(270, 360));
 		}
 	}

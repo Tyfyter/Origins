@@ -12,7 +12,7 @@ namespace Origins.NPCs.MiscE {
     public class Optiphage : ModNPC {
 		public static new AutoCastingAsset<Texture2D> HeadTexture { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Optiphage");
+			// DisplayName.SetDefault("Optiphage");
 			Main.npcFrameCount[Type] = 2;
 			if (!Main.dedServ) {
 				HeadTexture = Mod.Assets.Request<Texture2D>("NPCs/MiscE/Optiphage_Head");
@@ -66,13 +66,13 @@ namespace Origins.NPCs.MiscE {
 				}
 			}
 		}
-		public override bool? CanHitNPC(NPC target) {
+		public override bool CanHitNPC(NPC target)/* tModPorter Suggestion: Return true instead of null */ {
 			return NPC.aiStyle != NPCAIStyleID.Star_Cell;
 		}
 		public override bool CanHitPlayer(Player target, ref int cooldownSlot) {
 			return NPC.aiStyle != NPCAIStyleID.Star_Cell;
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			NPC.aiStyle = NPCAIStyleID.Star_Cell;
 			NPC.ai[0] = 1;
 		}

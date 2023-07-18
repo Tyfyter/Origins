@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Magic_Brine_Dropper : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Magic Brine Dropper");
-			SacrificeTotal = 20;
+			// DisplayName.SetDefault("Magic Brine Dropper");
+			Item.ResearchUnlockCount = 20;
 		}
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(copper: 40);

@@ -54,7 +54,7 @@ namespace Origins.Tiles.Riven {
 	public class Riven_Pot_Item : ModItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Pot";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Riven} Pot (Debugging Item)");
+			// DisplayName.SetDefault("{$Riven} Pot (Debugging Item)");
 		}
 
 		public override void SetDefaults() {

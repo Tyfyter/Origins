@@ -10,9 +10,9 @@ namespace Origins.Items.Armor.Lost {
     [AutoloadEquip(EquipType.Head)]
 	public class Lost_Helm : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lost Helm");
-			Tooltip.SetDefault("Increased mana regeneration rate");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Lost Helm");
+			// Tooltip.SetDefault("Increased mana regeneration rate");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;
@@ -40,14 +40,14 @@ namespace Origins.Items.Armor.Lost {
 	[AutoloadEquip(EquipType.Body)]
 	public class Lost_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lost Breastplate");
-			Tooltip.SetDefault("15% increased magic damage");
+			// DisplayName.SetDefault("Lost Breastplate");
+			// Tooltip.SetDefault("15% increased magic damage");
 			if (Main.netMode != NetmodeID.Server) {
 				if (Mod.RequestAssetIfExists("Items/Armor/Lost/Lost_Breastplate_Cloth_Legs", out Asset<Texture2D> asset)) {
 					Origins.TorsoLegLayers.Add(Item.bodySlot, asset);
 				}
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
@@ -68,9 +68,9 @@ namespace Origins.Items.Armor.Lost {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Lost_Pants : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lost Pants");
-			Tooltip.SetDefault("Increased movement speed");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Lost Pants");
+			// Tooltip.SetDefault("Increased movement speed");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;
@@ -92,7 +92,7 @@ namespace Origins.Items.Armor.Lost {
 namespace Origins.Buffs {
 	public class Defiled_Exhaustion_Debuff : ModBuff {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Exhaustion");
+			// DisplayName.SetDefault("{$Defiled} Exhaustion");
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.manaRegenBuff = false;

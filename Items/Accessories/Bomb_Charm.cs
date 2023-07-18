@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Bomb_Charm : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bomb Charm");
-			Tooltip.SetDefault("Reduces explosive self-damage by 15%");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Bomb Charm");
+			// Tooltip.SetDefault("Reduces explosive self-damage by 15%");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 26);

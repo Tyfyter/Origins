@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Voidsight_Potion : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Voidsight Potion");
-			Tooltip.SetDefault("Significantly increases visibility");
-			SacrificeTotal = 20;
+			// DisplayName.SetDefault("Voidsight Potion");
+			// Tooltip.SetDefault("Significantly increases visibility");
+			Item.ResearchUnlockCount = 20;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WrathPotion);

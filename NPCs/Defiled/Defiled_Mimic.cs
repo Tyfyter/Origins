@@ -11,7 +11,7 @@ namespace Origins.NPCs.Defiled {
 	public class Defiled_Mimic : ModNPC, IDefiledEnemy {
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.BigMimicCorruption;// remove when sprite is complete
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Mimic");
+			// DisplayName.SetDefault("{$Defiled} Mimic");
 			Main.npcFrameCount[NPC.type] = 14;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Defiled_Wastelands>().Type
@@ -46,7 +46,7 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			//spawn gore if npc is dead after being hit
 			if (NPC.life < 0) {
 				for (int i = 0; i < 3; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));

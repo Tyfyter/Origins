@@ -12,7 +12,7 @@ using static Origins.Items.Armor.Riven.Riven2_Mask;
 namespace Origins.NPCs.Riven {
     public class Measly_Moeba : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Measly Moeba");
+			// DisplayName.SetDefault("Measly Moeba");
 			Main.npcFrameCount[Type] = 4;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive>().Type
@@ -135,7 +135,7 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Coat>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 525));
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				for (int i = 0; i < 3; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
 			} else {

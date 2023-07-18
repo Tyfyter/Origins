@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Defiled_Loot_Box : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Loot Box");
-			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			// DisplayName.SetDefault("{$Defiled} Loot Box");
+			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);

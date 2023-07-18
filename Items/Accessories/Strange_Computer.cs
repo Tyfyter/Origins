@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Strange_Computer : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Strange Computer");
-			Tooltip.SetDefault("Displays the trajectory of projectiles from your selected item");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Strange Computer");
+			// Tooltip.SetDefault("Displays the trajectory of projectiles from your selected item");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);

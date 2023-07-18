@@ -10,10 +10,10 @@ namespace Origins.Items.Armor.Riven {
 		public const float lightMagnitude = 0.3f;
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Riven Mask");
-			Tooltip.SetDefault("6% increased weapon speed");
+			// DisplayName.SetDefault("Riven Mask");
+			// Tooltip.SetDefault("6% increased weapon speed");
 			GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Mask_Head_Glow");
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 6;
@@ -46,11 +46,11 @@ namespace Origins.Items.Armor.Riven {
 	public class Riven_Coat : ModItem {
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Riven Coat");
-			Tooltip.SetDefault("6% increased weapon speed");
+			// DisplayName.SetDefault("Riven Coat");
+			// Tooltip.SetDefault("6% increased weapon speed");
 			GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Coat_Body_Glow");
 			Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Riven/Riven_Coat_Body_Glow");
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
@@ -75,9 +75,9 @@ namespace Origins.Items.Armor.Riven {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Riven_Pants : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Riven Pants");
-			Tooltip.SetDefault("6% increased weapon speed");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Riven Pants");
+			// Tooltip.SetDefault("6% increased weapon speed");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 6;
@@ -99,7 +99,7 @@ namespace Origins.Items.Armor.Riven {
 	public class Riven2_Mask : Riven_Mask {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			DisplayName.SetDefault("Ancient Riven Mask");
+			// DisplayName.SetDefault("Ancient Riven Mask");
 		}
 		public override void AddRecipes() {
 		}
@@ -108,7 +108,7 @@ namespace Origins.Items.Armor.Riven {
 		public class Riven2_Coat : Riven_Coat {
 			public override void SetStaticDefaults() {
 				base.SetStaticDefaults();
-				DisplayName.SetDefault("Ancient Riven Coat");
+				// DisplayName.SetDefault("Ancient Riven Coat");
 			}
 			public override void AddRecipes() {
 			}
@@ -118,7 +118,7 @@ namespace Origins.Items.Armor.Riven {
 		public class Riven2_Pants : Riven_Pants {
 			public override void SetStaticDefaults() {
 				base.SetStaticDefaults();
-				DisplayName.SetDefault("Ancient Riven Pants");
+				// DisplayName.SetDefault("Ancient Riven Pants");
 			}
 			public override void AddRecipes() {
 			}

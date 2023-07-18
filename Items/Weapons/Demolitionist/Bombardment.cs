@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Bombardment : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bombardment");
-			Tooltip.SetDefault("Fires a barrage of floating mines");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Bombardment");
+			// Tooltip.SetDefault("Fires a barrage of floating mines");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
@@ -34,7 +34,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Bombardment_P : ModProjectile, IIsExplodingProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Floating Mine");
+			// DisplayName.SetDefault("Floating Mine");
 			Origins.MagicTripwireRange[Type] = 30;
 		}
 		public override void SetDefaults() {

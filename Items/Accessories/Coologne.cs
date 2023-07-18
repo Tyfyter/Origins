@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Coologne : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Coologne");
-			Tooltip.SetDefault("Increases life regeneration at low health\nPuts a shell around the owner when below 50% life that reduces damage by 25%");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Coologne");
+			// Tooltip.SetDefault("Increases life regeneration at low health\nPuts a shell around the owner when below 50% life that reduces damage by 25%");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 32);

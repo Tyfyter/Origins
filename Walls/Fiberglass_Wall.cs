@@ -18,14 +18,14 @@ namespace Origins.Walls {
 	public class Fiberglass_Wall_Safe : Defiled_Stone_Wall {
 		public override string Texture => "Origins/Walls/Fiberglass_Wall";
 		public override void SetStaticDefaults() {
-			ItemDrop = ItemType<Fiberglass_Wall_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Fiberglass_Wall_Item>();
 			Main.wallHouse[Type] = true;
 			base.SetStaticDefaults();
 		}
 	}
 	public class Fiberglass_Wall_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fiberglass Wall");
+			// DisplayName.SetDefault("Fiberglass Wall");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GlassWall);

@@ -48,7 +48,7 @@ namespace Origins.NPCs.MiscE {
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return NPCTypes.Contains(entity.type);
 		}
-		public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit) {
+		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
 			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
 				target.GetModPlayer<OriginPlayer>().CrimsonAssimilation += amount.GetValue(npc, target);
 			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {

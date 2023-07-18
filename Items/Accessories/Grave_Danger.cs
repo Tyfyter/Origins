@@ -9,9 +9,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Grave_Danger : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Grave Danger");
-			Tooltip.SetDefault("{$Mods.Origins.Doubles.GraveDangerDesc}");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Grave Danger");
+			// Tooltip.SetDefault("{$Mods.Origins.Doubles.GraveDangerDesc}");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(36, 42);

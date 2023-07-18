@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shoes)]
 	public class Lovers_Leap : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lover's Leap");
-			Tooltip.SetDefault("The wearer can run super fast and even faster after taking damage\nAllows the player to dash into the enemy\nDouble tap a direction");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Lover's Leap");
+			// Tooltip.SetDefault("The wearer can run super fast and even faster after taking damage\nAllows the player to dash into the enemy\nDouble tap a direction");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 24);

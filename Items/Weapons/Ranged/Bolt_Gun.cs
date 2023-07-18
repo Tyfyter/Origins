@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Bolt_Gun : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bolt Gun");
-			Tooltip.SetDefault("'Get boned'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Bolt Gun");
+			// Tooltip.SetDefault("'Get boned'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Handgun);

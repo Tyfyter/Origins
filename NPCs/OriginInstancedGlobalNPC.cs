@@ -95,7 +95,7 @@ namespace Origins.NPCs {
 				dust10.velocity *= 0.25f;
 			}
 		}
-		public override void ModifyHitPlayer(NPC npc, Player target, ref int damage, ref bool crit) {
+		public override void ModifyHitPlayer(NPC npc, Player target, ref Player.HurtModifiers modifiers) {
 			if (weakenedOnSpawn) return;
 			if (soulhideWeakenedDebuff) {
 				damage = (int)(damage * (1f - soulhideWeakenAmount));
@@ -104,7 +104,7 @@ namespace Origins.NPCs {
 				damage = (int)(damage * 1.7f);
 			}
 		}
-		public override void ModifyHitNPC(NPC npc, NPC target, ref int damage, ref float knockback, ref bool crit) {
+		public override void ModifyHitNPC(NPC npc, NPC target, ref NPC.HitModifiers modifiers) {
 			if (weakenedOnSpawn) return;
 			if (soulhideWeakenedDebuff) {
 				damage = (int)(damage * (1f - soulhideWeakenAmount));

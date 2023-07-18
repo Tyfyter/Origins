@@ -10,9 +10,9 @@ using Tyfyter.Utils;
 namespace Origins.Items.Tools {
 	public class Strainer : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Strainer");
-			Tooltip.SetDefault("Able to mine Hellstone");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Strainer");
+			// Tooltip.SetDefault("Able to mine Hellstone");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.LaserDrill);
@@ -35,7 +35,7 @@ namespace Origins.Items.Tools {
 	}
 	public class Strainer_P : ModProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Strainer");
+			// DisplayName.SetDefault("Strainer");
 			Main.projFrames[Type] = 2;
 			//ProjectileID.Sets.HeldProjDoesNotUsePlayerGfxOffY[Type] = true;
 		}

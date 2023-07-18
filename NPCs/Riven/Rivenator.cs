@@ -84,7 +84,7 @@ namespace Origins.NPCs.Riven {
 	public abstract class Rivenator : Glowing_Mod_NPC, IRivenEnemy {
 		public override string GlowTexturePath => Texture;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mitoworm");
+			// DisplayName.SetDefault("Mitoworm");
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive>().Type
 			};
@@ -93,7 +93,7 @@ namespace Origins.NPCs.Riven {
 		public override void AI() {
 			if (NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				NPC current = Main.npc[NPC.realLife > -1 ? NPC.realLife : NPC.whoAmI];
 				while (current.ai[0] != 0) {
@@ -107,7 +107,7 @@ namespace Origins.NPCs.Riven {
 			for (int i = 0; i < 5; i++) Gore.NewGore(npc.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
 			//for(int i = 0; i < 3; i++)
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 480, 180, 0.67f);
 		}
 	}

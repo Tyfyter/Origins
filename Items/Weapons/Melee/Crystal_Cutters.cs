@@ -7,8 +7,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Crystal_Cutters : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Crystal Cutters");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Crystal Cutters");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override string Texture => "Origins/Items/Weapons/Melee/Crystal_Cutters_P";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Crystal Ball");
+			// DisplayName.SetDefault("Crystal Ball");
 			ID = Type;
 		}
 		public override void SetDefaults() {

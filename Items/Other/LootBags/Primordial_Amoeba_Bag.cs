@@ -8,8 +8,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.LootBags {
 	public class Primordial_Amoeba_Bag : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Treasure Bag (Primordial Amoeba)");
-			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			// DisplayName.SetDefault("Treasure Bag (Primordial Amoeba)");
+			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);

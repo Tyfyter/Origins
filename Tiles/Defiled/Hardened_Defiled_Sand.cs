@@ -20,7 +20,7 @@ namespace Origins.Tiles.Defiled {
             Main.tileMerge[TileID.HardenedSand][Type] = true;
             Main.tileMerge[Type] = Main.tileMerge[TileID.HardenedSand];
             Main.tileMerge[Type][TileID.HardenedSand] = true;*/
-			ItemDrop = ItemType<Hardened_Defiled_Sand_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Hardened_Defiled_Sand_Item>();
 			AddMapEntry(new Color(200, 200, 200));
 			mergeID = TileID.HardenedSand;
 			AddDefiledTile();
@@ -28,7 +28,7 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Hardened_Defiled_Sand_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hardened {$Defiled} Sand");
+			// DisplayName.SetDefault("Hardened {$Defiled} Sand");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

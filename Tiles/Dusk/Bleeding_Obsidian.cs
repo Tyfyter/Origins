@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,14 +13,12 @@ namespace Origins.Tiles.Dusk {
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			ItemDrop = ItemType<Bleeding_Obsidian_Shard>();
 			AddMapEntry(new Color(57, 10, 75));
 			MinPick = 190;
 			MineResist = 8;
 		}
-		public override bool Drop(int i, int j) {
-			Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, ItemDrop, Main.rand.Next(4, 7));
-			return false;
+		public override IEnumerable<Item> GetItemDrops(int i, int j) {
+			yield return new Item(ItemType<Bleeding_Obsidian_Shard>(), Main.rand.Next(4, 7));
 		}
 
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
@@ -31,9 +30,9 @@ namespace Origins.Tiles.Dusk {
 	}
 	public class Bleeding_Obsidian_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bleeding Obsidian");
-			Tooltip.SetDefault("'Weakens those who touch it'");
-			SacrificeTotal = 100;
+			// DisplayName.SetDefault("Bleeding Obsidian");
+			// Tooltip.SetDefault("'Weakens those who touch it'");
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

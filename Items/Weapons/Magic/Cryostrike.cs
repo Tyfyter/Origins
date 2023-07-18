@@ -7,10 +7,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Cryostrike : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cryostrike");
-			Tooltip.SetDefault("Shoots a piercing icicle");
+			// DisplayName.SetDefault("Cryostrike");
+			// Tooltip.SetDefault("Shoots a piercing icicle");
 			Item.staff[Item.type] = true;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);

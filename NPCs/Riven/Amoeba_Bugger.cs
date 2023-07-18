@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
 	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amoeba Bugger");
+			// DisplayName.SetDefault("Amoeba Bugger");
 			Main.npcFrameCount[NPC.type] = 2;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive>().Type
@@ -51,7 +51,7 @@ namespace Origins.NPCs.Riven {
 				NPC.frameCounter = 0;
 			}
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				for (int i = 0; i < 3; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Meat" + Main.rand.Next(2, 4)));
@@ -59,7 +59,7 @@ namespace Origins.NPCs.Riven {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
 			}
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 300, 180, 0.85f);
 		}
 	}

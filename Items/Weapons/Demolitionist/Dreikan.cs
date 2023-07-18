@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Dreikan : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dreikan");
-			Tooltip.SetDefault("'Like \"Drakin\" with a heavy Aussie accent'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Dreikan");
+			// Tooltip.SetDefault("'Like \"Drakin\" with a heavy Aussie accent'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);
@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Dreikan_Shot : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_286";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dreikanfire");
+			// DisplayName.SetDefault("Dreikanfire");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
@@ -50,7 +50,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AI() {
 			Lighting.AddLight(Projectile.Center, 0.5f, 0.25f, 0.05f);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Daybreak, 30);
 			target.immune[Projectile.owner] = 5;
 		}

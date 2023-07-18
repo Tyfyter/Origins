@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Telephone_Pole : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Telephone Pole");
-			Tooltip.SetDefault("'We already have Cellphones'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Telephone Pole");
+			// Tooltip.SetDefault("'We already have Cellphones'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
@@ -34,7 +34,7 @@ namespace Origins.Items.Weapons.Melee {
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockBack, bool crit) {
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.NewProjectileDirect(
 				player.GetSource_OnHit(target),
 				target.Center,
@@ -72,7 +72,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool? CanHitNPC(NPC target) {
 			return Projectile.penetrate > 1 ? base.CanHitNPC(target) : false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.damage -= (int)((Projectile.Center - closest).Length() / 16f);
 			if (!Main.rand.NextBool(5)) Projectile.timeLeft += crit ? 2 : 1;
 			Vector2 dest = Projectile.Center;

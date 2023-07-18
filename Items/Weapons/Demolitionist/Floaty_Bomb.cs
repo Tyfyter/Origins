@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Floaty_Bomb : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Floaty Bomb");
-			Tooltip.SetDefault("Somewhat unaffected by gravity");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Floaty Bomb");
+			// Tooltip.SetDefault("Somewhat unaffected by gravity");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Floaty_Bomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Floaty_Bomb";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Floaty Bomb");
+			// DisplayName.SetDefault("Floaty Bomb");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

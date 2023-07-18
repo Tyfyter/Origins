@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables.Food {
 	public class Tasty_Vanilla_Shake : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Vanilla Shake");
-			Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}");
-			SacrificeTotal = 5;
+			// DisplayName.SetDefault("Vanilla Shake");
+			// Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}");
+			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Ale);

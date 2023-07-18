@@ -25,8 +25,8 @@ namespace Origins.Tiles.Other {
 	}
 	public class Laser_Tag_Console_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Laser Tag Console");
-			Tooltip.SetDefault("Used to set up laser tag matches");
+			// DisplayName.SetDefault("Laser Tag Console");
+			// Tooltip.SetDefault("Used to set up laser tag matches");
 		}
 
 		public override void SetDefaults() {

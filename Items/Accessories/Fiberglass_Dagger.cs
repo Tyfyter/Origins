@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Fiberglass_Dagger : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fiberglass Dagger");
-			Tooltip.SetDefault("Increases weapon damage by 8, but reduces defense by 8");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Fiberglass Dagger");
+			// Tooltip.SetDefault("Increases weapon damage by 8, but reduces defense by 8");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);

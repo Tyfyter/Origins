@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Grenade_Tube : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Grenade Tube");
-			Tooltip.SetDefault("Randomly launches a grenade while using a ranged weapon");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Grenade Tube");
+			// Tooltip.SetDefault("Randomly launches a grenade while using a ranged weapon");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);

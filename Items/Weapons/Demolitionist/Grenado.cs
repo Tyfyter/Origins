@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Grenado : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Grenado");
-			Tooltip.SetDefault("Uses grenades for ammo");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Grenado");
+			// Tooltip.SetDefault("Uses grenades for ammo");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);

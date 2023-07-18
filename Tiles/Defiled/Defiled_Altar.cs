@@ -19,8 +19,8 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.CoordinateHeights = new[] { 18, 18 };
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("{$Defiled} Altar");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("{$Defiled} Altar");
 			AddMapEntry(new Color(200, 200, 200), name);
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.DemonAltar };
@@ -153,7 +153,7 @@ namespace Origins.Tiles.Defiled {
 	public class Defiled_Altar_Item : ModItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Altar";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Altar (Debugging Item)");
+			// DisplayName.SetDefault("{$Defiled} Altar (Debugging Item)");
 		}
 
 		public override void SetDefaults() {

@@ -9,10 +9,10 @@ namespace Origins.Items.Weapons.Melee {
 	public class Riverang : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault(AprilFools.CheckAprilFools() ? "Lobsterang" : "Riverang");
-			Tooltip.SetDefault("'Very hydrodynamic'");
+			// DisplayName.SetDefault(AprilFools.CheckAprilFools() ? "Lobsterang" : "Riverang");
+			// Tooltip.SetDefault("'Very hydrodynamic'");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Riverang_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Riverang";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Riverang");
+			// DisplayName.SetDefault("Riverang");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThornChakram);
@@ -102,7 +102,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return null;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.localAI[1] > 0) Projectile.localAI[0] = 20;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {

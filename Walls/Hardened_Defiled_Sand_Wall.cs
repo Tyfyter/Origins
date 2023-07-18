@@ -20,14 +20,14 @@ namespace Origins.Walls {
 	public class Hardened_Defiled_Sand_Wall_Safe : Hardened_Defiled_Sand_Wall {
 		public override string Texture => "Origins/Walls/Hardened_Defiled_Sand_Wall";
 		public override void SetStaticDefaults() {
-			ItemDrop = ItemType<Hardened_Defiled_Sand_Wall_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Hardened_Defiled_Sand_Wall_Item>();
 			Main.wallHouse[Type] = true;
 			base.SetStaticDefaults();
 		}
 	}
 	public class Hardened_Defiled_Sand_Wall_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hardened {$Defiled} Sand Wall");
+			// DisplayName.SetDefault("Hardened {$Defiled} Sand Wall");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneWall);

@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons {
     public class Potato_Launcher : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Potato Launcher");
-			Tooltip.SetDefault("Uses potatoes for ammo\n'Time to make some mash...'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Potato Launcher");
+			// Tooltip.SetDefault("Uses potatoes for ammo\n'Time to make some mash...'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FlintlockPistol);
@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons {
 	public class Potato_P : ModProjectile {
 		public override string Texture => "Origins/Items/Other/Consumables/Food/Potato";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Potato");
+			// DisplayName.SetDefault("Potato");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.SnowBallFriendly);

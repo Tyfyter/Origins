@@ -48,7 +48,7 @@ namespace Origins {
 	}
 	public class Explosive : DamageClass {
 		public override void SetStaticDefaults() {
-			ClassName.SetDefault("explosive damage");
+			// DisplayName.SetDefault("explosive damage");
 			foreach (var entry in DamageClasses.ExplosiveVersion) {
 				try {
 					entry.Value.SetStaticDefaults();
@@ -61,7 +61,7 @@ namespace Origins {
 	}
 	public class Thrown_Explosive : DamageClass {
 		public override void SetStaticDefaults() {
-			ClassName.SetDefault("explosive damage (thrown)");
+			// DisplayName.SetDefault("explosive damage (thrown)");
 		}
 		public override bool GetEffectInheritance(DamageClass damageClass) {
 			return damageClass == DamageClasses.Explosive || damageClass == Throwing;
@@ -92,16 +92,16 @@ namespace Origins {
 		internal static ExplosivePlus CreateAndRegister(DamageClass other) {
 			ExplosivePlus newClass = new(other, "ExplosivePlus" + other.FullName);
 			typeof(ILoadable).GetMethod("Load").Invoke(newClass, new object[] { Origins.instance });
-			if (newClass.ClassName.GetDefault() is null) {
-				newClass.ClassName.SetDefault("Explosive + " + other.FullName);
+			if (newClass.DisplayName.GetDefault() is null) {
+				// newClass.DisplayName.SetDefault("Explosive + " + other.FullName);
 			}
 			return newClass;
 		}
 		public override void SetStaticDefaults() {
 			if (other is ThrowingDamageClass) {
-				ClassName.SetDefault("explosive damage (thrown)");
+				// DisplayName.SetDefault("explosive damage (thrown)");
 			} else {
-				ClassName.SetDefault("explosive " + (other.ClassName?.GetDefault() ?? other.DisplayName));
+				// DisplayName.SetDefault("explosive " + (other.DisplayName?.GetDefault() ?? other.DisplayName));
 			}
 		}
 		public override bool GetEffectInheritance(DamageClass damageClass) {
@@ -119,7 +119,7 @@ namespace Origins {
 	}
 	public class Ranged_Magic : DamageClass {
 		public override void SetStaticDefaults() {
-			ClassName.SetDefault("ranged/magic damage");
+			// DisplayName.SetDefault("ranged/magic damage");
 		}
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
 			if (damageClass == Generic || damageClass == Ranged || damageClass == Magic) {
@@ -136,7 +136,7 @@ namespace Origins {
 	}
 	public class Summon_Magic_Speed : DamageClass {
 		public override void SetStaticDefaults() {
-			ClassName.SetDefault("summon damage");
+			// DisplayName.SetDefault("summon damage");
 		}
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
 			if (damageClass == Generic || damageClass == Summon) {

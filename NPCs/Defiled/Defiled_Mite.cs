@@ -20,7 +20,7 @@ namespace Origins.NPCs.Defiled {
 		byte frame = 0;
 		byte anger = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Mite");
+			// DisplayName.SetDefault("{$Defiled} Mite");
 			Main.npcFrameCount[NPC.type] = 4;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Defiled_Wastelands>().Type
@@ -42,7 +42,7 @@ namespace Origins.NPCs.Defiled {
 		public int MaxMana => 16;
 		public int MaxManaDrain => 8;
 		public float Mana { get; set; }
-		public override void OnHitPlayer(Player target, int damage, bool crit) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			this.DrainMana(target);
 		}
 		public void Regenerate(out int lifeRegen) {
@@ -98,7 +98,7 @@ namespace Origins.NPCs.Defiled {
 		public override void FindFrame(int frameHeight) {
 			NPC.frame = new Rectangle(0, 28 * (frame & 12) / 4, 32, 26);
 		}
-		public override bool StrikeNPC(ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) {
+		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
 			anger = 6;
 			return true;
 		}
@@ -113,16 +113,16 @@ namespace Origins.NPCs.Defiled {
 			}
 			return base.SpawnNPC(tileX, tileY);
 		}
-		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
+		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
 			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
 		}
-		public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
+		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			int halfWidth = NPC.width / 2;
 			int baseX = player.direction > 0 ? 0 : halfWidth;
 			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), new Vector2(knockback * player.direction, -0.1f * knockback), Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF1_Gore"));
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4)));

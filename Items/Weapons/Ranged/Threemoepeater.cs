@@ -9,8 +9,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Threemoepeater : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Threemoepeater");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Threemoepeater");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.HallowedRepeater);
@@ -52,7 +52,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override string Texture => "Origins/Projectiles/Weapons/Amoeba_Ball";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amoeba Ball");
+			// DisplayName.SetDefault("Amoeba Ball");
 			ID = Type;
 		}
 		public override void SetDefaults() {

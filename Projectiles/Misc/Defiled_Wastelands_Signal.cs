@@ -27,7 +27,7 @@ namespace Origins.Projectiles.Misc {
 			}
 		}
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Nerve Impulse");
+			// DisplayName.SetDefault("Nerve Impulse");
 		}
 		public override void SetDefaults() {
 			Projectile.aiStyle = 0;

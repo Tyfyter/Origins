@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
     public class Haggard_Artery : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Haggard Artery");
-			Tooltip.SetDefault("Nearby bleeding enemies occasionally explode\n'Explosions happen near me 'cause I'm that cool!'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Haggard Artery");
+			// Tooltip.SetDefault("Nearby bleeding enemies occasionally explode\n'Explosions happen near me 'cause I'm that cool!'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);

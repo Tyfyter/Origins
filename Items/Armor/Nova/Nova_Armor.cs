@@ -7,12 +7,12 @@ namespace Origins.Items.Armor.Nova {
     [AutoloadEquip(EquipType.Head)]
 	public class Nova_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Nova Faceshield");
-			Tooltip.SetDefault("4% increased explosive damage and critical strike chance\n50% increased explosive velocity");
+			// DisplayName.SetDefault("Nova Faceshield");
+			// Tooltip.SetDefault("4% increased explosive damage and critical strike chance\n50% increased explosive velocity");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Nova/Nova_Helmet_Head_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 8;
@@ -45,12 +45,12 @@ namespace Origins.Items.Armor.Nova {
 	[AutoloadEquip(EquipType.Body)]
 	public class Nova_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Nova Vest");
-			Tooltip.SetDefault("4% increased explosive damage and critical strike chance\n-60% explosive self-damage");
+			// DisplayName.SetDefault("Nova Vest");
+			// Tooltip.SetDefault("4% increased explosive damage and critical strike chance\n-60% explosive self-damage");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Nova/Nova_Breastplate_Body_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 22;
@@ -73,12 +73,12 @@ namespace Origins.Items.Armor.Nova {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Nova_Greaves : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Nova Leggings");
-			Tooltip.SetDefault("4% increased explosive damage and critical strike chance\n15% increased movement speed");
+			// DisplayName.SetDefault("Nova Leggings");
+			// Tooltip.SetDefault("4% increased explosive damage and critical strike chance\n15% increased movement speed");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Nova/Nova_Greaves_Legs_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 18;

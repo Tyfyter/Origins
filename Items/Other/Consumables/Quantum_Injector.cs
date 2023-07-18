@@ -8,9 +8,9 @@ namespace Origins.Items.Other.Consumables {
 		public const int mana_per_use = 10;
 		public const int max_uses = 20;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Quantum Injector");
-			Tooltip.SetDefault("Permanently increases maximum mana by 10");
-			SacrificeTotal = 30;
+			// DisplayName.SetDefault("Quantum Injector");
+			// Tooltip.SetDefault("Permanently increases maximum mana by 10");
+			Item.ResearchUnlockCount = 30;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ManaCrystal);

@@ -24,12 +24,12 @@ namespace Origins.Items.Weapons.Melee {
 		public int charge = 0;
 		internal int frame = 5;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tyrfing");
-			Tooltip.SetDefault("Receives 50% higher damage bonuses\nHold right click to stab\n'Behold'");
+			// DisplayName.SetDefault("Tyrfing");
+			// Tooltip.SetDefault("Receives 50% higher damage bonuses\nHold right click to stab\n'Behold'");
 			animation = new DrawAnimationManual(6);
 			animation.Frame = 5;
 			Main.RegisterItemAnimation(Item.type, animation);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 88;
@@ -157,7 +157,7 @@ namespace Origins.Items.Weapons.Melee {
 
 		public override string Texture => "Origins/Items/Weapons/Melee/Tyrfing_Shard";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tyrfing");
+			// DisplayName.SetDefault("Tyrfing");
 			Main.projFrames[Projectile.type] = 3;
 		}
 		public override void SetDefaults() {
@@ -214,10 +214,10 @@ namespace Origins.Items.Weapons.Melee {
 				}
 			}
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			Projectile.ArmorPenetration += (int)(target.defense * 0.3f);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.CanBeChasedBy()) target.buffImmune[Mag_Debuff.ID] = false;
 			target.AddBuff(Mag_Debuff.ID, 180);
 			target.immune[Projectile.owner] = 1;
@@ -263,7 +263,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override string Texture => "Terraria/Images/Buff_160";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Magnetized");
+			// DisplayName.SetDefault("Magnetized");
 			ID = Type;
 		}
 	}
@@ -273,7 +273,7 @@ namespace Origins.Items.Weapons.Melee {
 		int stabee = -1;
 		bool noGrow = false;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tyrfing");
+			// DisplayName.SetDefault("Tyrfing");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
@@ -335,14 +335,14 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return base.CanHitNPC(target);
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			if (stabee == -1) {
 				knockback = 0;
 			} else {
 				crit = true;
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (stabee >= 0) {
 				target.AddBuff(Mag_Debuff.ID, 180);
 				int proj;
@@ -388,7 +388,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override string Texture => "Terraria/Images/Buff_160";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Impaled");
+			// DisplayName.SetDefault("Impaled");
 			ID = Type;
 		}
 	}
@@ -396,7 +396,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override string Texture => "Terraria/Images/Buff_160";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Stunned");
+			// DisplayName.SetDefault("Stunned");
 			ID = Type;
 		}
 	}

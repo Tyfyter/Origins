@@ -5,8 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Scrap : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Scrap");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Scrap");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenArrow);

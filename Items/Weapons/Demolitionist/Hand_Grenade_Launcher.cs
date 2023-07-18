@@ -14,9 +14,9 @@ using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Hand_Grenade_Launcher : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hand Grenade Launcher");
-			Tooltip.SetDefault("'Doesn't this defeat the purpose of a hand grenade?'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Hand Grenade Launcher");
+			// Tooltip.SetDefault("'Doesn't this defeat the purpose of a hand grenade?'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
@@ -84,7 +84,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Awe_Grenade_P : ModProjectile {
 		Vector2 oldVelocity;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Awe Grenade");
+			// DisplayName.SetDefault("Awe Grenade");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
@@ -114,7 +114,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Awe_Grenade_Blast : ModProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Awe Grenade");
+			// DisplayName.SetDefault("Awe Grenade");
 		}
 		public override string Texture => "Origins/Projectiles/Pixel";
 		const int duration = 15;
@@ -142,14 +142,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Vector2 closest = Projectile.Center.Clamp(target.TopLeft, target.BottomRight);
 			return (Projectile.Center - closest).Length() <= 160 * ((duration - Projectile.timeLeft) / (float)duration) * Projectile.scale;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-			damage -= (int)(damage * ((duration - Projectile.timeLeft) / (float)duration) * 0.6f);
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.SourceDamage *= 1 - ((duration - Projectile.timeLeft) / (float)duration) * 0.6f;
 		}
-		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) {
-			damage -= (int)(damage * ((duration - Projectile.timeLeft) / (float)duration) * 0.95f);
-		}
-		public override void ModifyHitPvp(Player target, ref int damage, ref bool crit) {
-			damage -= (int)(damage * ((duration - Projectile.timeLeft) / (float)duration) * 0.6f);
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.SourceDamage *= 1 - ((duration - Projectile.timeLeft) / (float)duration) * 0.95f;
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Main.spriteBatch.Restart(
@@ -168,7 +165,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Impact_Grenade_Blast : ModProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Blast Grenade");
+			// DisplayName.SetDefault("Blast Grenade");
 		}
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.DD2ExplosiveTrapT1Explosion;
 		protected override bool CloneNewInstances => true;
@@ -197,8 +194,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			dist = (float)((Projectile.Center - closest).Length() * rot / 5.5f) + 1;
 			return (Projectile.Center - closest).Length() <= 48 / rot;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-			damage = (int)(damage / dist);
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.SourceDamage /= dist;
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			int frame = (8 - Projectile.timeLeft) / 2;

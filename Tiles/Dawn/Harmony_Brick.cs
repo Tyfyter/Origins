@@ -9,13 +9,13 @@ namespace Origins.Tiles.Dawn {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			ItemDrop = ItemType<Harmony_Brick_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Harmony_Brick_Item>();
 			AddMapEntry(new Color(150, 30, 75));
 		}
 	}
 	public class Harmony_Brick_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Harmony Brick");
+			// DisplayName.SetDefault("Harmony Brick");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CobaltBrick);

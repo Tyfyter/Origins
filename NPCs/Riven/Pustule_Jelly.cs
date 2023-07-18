@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
 	public class Pustule_Jelly : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Pustule Jelly");
+			// DisplayName.SetDefault("Pustule Jelly");
 			Main.npcFrameCount[NPC.type] = 4;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive>().Type
@@ -44,7 +44,7 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 17));
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				for (int i = 0; i < 3; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Meat" + Main.rand.Next(2, 4)));

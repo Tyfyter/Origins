@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
     public class Defiled_Ekko : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Ekko");
+			// DisplayName.SetDefault("{$Defiled} Ekko");
 			Main.npcFrameCount[NPC.type] = 14;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Defiled_Wastelands>().Type
@@ -36,7 +36,7 @@ namespace Origins.NPCs.Defiled {
 		public int MaxMana => 50;
 		public int MaxManaDrain => 10;
 		public float Mana { get; set; }
-		public override void OnHitPlayer(Player target, int damage, bool crit) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			this.DrainMana(target);
 		}
 		public void Regenerate(out int lifeRegen) {
@@ -69,17 +69,17 @@ namespace Origins.NPCs.Defiled {
 				NPC.frameCounter = 0;
 			}
 		}
-		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
+		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
 			for (int i = Main.rand.Next(3); i-- > 0;)
 				Gore.NewGore(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
 		}
-		public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
+		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			int halfWidth = NPC.width / 2;
 			int baseX = player.direction > 0 ? 0 : halfWidth;
 			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), new Vector2(knockback * player.direction, -0.1f * knockback), Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				for (int i = 0; i < 3; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
 				for (int i = 0; i < 6; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4)));

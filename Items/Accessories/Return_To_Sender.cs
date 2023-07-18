@@ -6,10 +6,10 @@ namespace Origins.Items.Accessories {
 	public class Return_To_Sender : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Return To Sender");
-			Tooltip.SetDefault("Attackers receive all damage inflicted to the user");
+			// DisplayName.SetDefault("Return To Sender");
+			// Tooltip.SetDefault("Attackers receive all damage inflicted to the user");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 28);

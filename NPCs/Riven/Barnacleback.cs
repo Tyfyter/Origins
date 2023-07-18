@@ -12,7 +12,7 @@ using static Origins.Items.Armor.Riven.Riven2_Mask;
 namespace Origins.NPCs.Riven {
     public class Barnacleback : ModNPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Barnacle Back");
+			// DisplayName.SetDefault("Barnacle Back");
 			Main.npcFrameCount[NPC.type] = 3;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive>().Type
@@ -79,7 +79,7 @@ namespace Origins.NPCs.Riven {
 				NPC.frameCounter = 0;
 			}
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				for (int i = 0; i < 3; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Meat" + Main.rand.Next(1, 4)));
@@ -91,8 +91,8 @@ namespace Origins.NPCs.Riven {
 		public override string Texture => "Terraria/Images/Buff_32";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Barnacled");
-			Description.SetDefault("You shouldn't have this buff, but if you do, something is horribly wrong");
+			// DisplayName.SetDefault("Barnacled");
+			// Description.SetDefault("You shouldn't have this buff, but if you do, something is horribly wrong");
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {

@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Abrasion_Blaster : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Abrasion Blaster");
-			Tooltip.SetDefault("Shots can destroy tiles\nUses scrap as ammo");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Abrasion Blaster");
+			// Tooltip.SetDefault("Shots can destroy tiles\nUses scrap as ammo");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);

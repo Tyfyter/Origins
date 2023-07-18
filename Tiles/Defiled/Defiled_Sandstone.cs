@@ -24,7 +24,7 @@ namespace Origins.Tiles.Defiled {
 			/*for(int i = 0; i < TileLoader.TileCount; i++) {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Sandstone];
             }*/
-			ItemDrop = ItemType<Defiled_Sandstone_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Defiled_Sandstone_Item>();
 			AddMapEntry(new Color(150, 150, 150));
 			mergeID = TileID.Sandstone;
 			AddDefiledTile();
@@ -36,7 +36,7 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Defiled_Sandstone_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Sandstone");
+			// DisplayName.SetDefault("{$Defiled} Sandstone");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

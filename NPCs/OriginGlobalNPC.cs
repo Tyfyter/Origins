@@ -24,7 +24,7 @@ using Terraria.ModLoader.Default;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
-		public static ShoppingSettings ShopHelper_GetShoppingSettings(On.Terraria.GameContent.ShopHelper.orig_GetShoppingSettings orig, ShopHelper self, Player player, NPC npc) {
+		public static ShoppingSettings ShopHelper_GetShoppingSettings(Terraria.GameContent.On_ShopHelper.orig_GetShoppingSettings orig, ShopHelper self, Player player, NPC npc) {
 			ShoppingSettings settings = orig(self, player, npc);
 			float discount = 0;
 			switch (npc.type) {
@@ -40,7 +40,7 @@ namespace Origins.NPCs {
 			settings.PriceAdjustment *= 1 - discount;
 			return settings;
 		}
-		public override void SetupShop(int type, Chest shop, ref int nextSlot) {
+		public override void ModifyActiveShop(NPC npc, string shopName, Item[] items) {
 			bool worldHasWastelands = false;
 			bool worldHasHive = false;
 			switch (AltLibrary.Common.Systems.WorldBiomeManager.WorldEvil) {
@@ -223,7 +223,7 @@ namespace Origins.NPCs {
 			if (npc.HasBuff(Impaled_Debuff.ID) || npc.HasBuff(Stunned_Debuff.ID)) return false;
 			return base.CanHitPlayer(npc, target, ref cooldownSlot);
 		}
-		public override bool StrikeNPC(NPC npc, ref double damage, int defense, ref float knockback, int hitDirection, ref bool crit) {
+		public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers) {
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID) && crit) {
 				damage *= 1.3;
 			}
@@ -235,7 +235,7 @@ namespace Origins.NPCs {
 			}*/
 			return true;
 		}
-		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers) {
 			if (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]) {
 				float damageBoost = 0;
 				for (int i = 0; i < npc.buffType.Length; i++) {
@@ -290,7 +290,7 @@ namespace Origins.NPCs {
 				}
 			}
 		}
-		public override void OnHitByProjectile(NPC npc, Projectile projectile, int damage, float knockback, bool crit) {
+		public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			if (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]) {
 				if (npc.HasBuff(Maelstrom_Buff_Zap.ID) && projectile.owner == Main.myPlayer) {
 					const float maxDist = 136 * 136;

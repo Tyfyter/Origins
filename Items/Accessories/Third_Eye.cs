@@ -14,9 +14,9 @@ namespace Origins.Items.Accessories {
 		const int chargeup_time = 180;
 		const int reset_time = 600;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Third Eye");
-			Tooltip.SetDefault("Your third eye will fire a phantasmal death ray when enemies are nearby\n'I am the cosmos'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Third Eye");
+			// Tooltip.SetDefault("Your third eye will fire a phantasmal death ray when enemies are nearby\n'I am the cosmos'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);
@@ -82,7 +82,7 @@ namespace Origins.Items.Accessories {
 		Vector2 RealVelocity => Projectile.velocity.RotatedBy(Projectile.ai[0] * Projectile.ai[1]);
 		const int sample_points = 3;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Phantasmal Deathray");
+			// DisplayName.SetDefault("Phantasmal Deathray");
 		}
 		public override void SetDefaults() {
 			Projectile.usesLocalNPCImmunity = true;

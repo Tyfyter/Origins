@@ -25,8 +25,8 @@ namespace Origins.Tiles.Other {
 	}
 	public class A_Perfect_World_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("A Perfect World");
-			Tooltip.SetDefault("'The Defiled'");
+			// DisplayName.SetDefault("A Perfect World");
+			// Tooltip.SetDefault("'The Defiled'");
 		}
 
 		public override void SetDefaults() {

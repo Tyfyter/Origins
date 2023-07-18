@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Eyndum_Scar : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Eyndum Scar");
-			Tooltip.SetDefault("A very lame end-game sword");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Eyndum Scar");
+			// Tooltip.SetDefault("A very lame end-game sword");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Katana);
@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Melee {
 			//recipe.AddTile(TileID.Anvils); Omni-printer
 			recipe.Register();
 		}
-		public override void ModifyHitNPC(Player player, NPC target, ref int damage, ref float knockBack, ref bool crit) {
+		public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers) {
 			if (!(target.boss || NPCID.Sets.ShouldBeCountedAsBoss[target.type])) {
 				int quarterHealth = target.lifeMax / 4;
 				if (target.life <= quarterHealth) {

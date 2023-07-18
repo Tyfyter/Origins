@@ -10,12 +10,12 @@ namespace Origins.Items.Armor.Rift {
     [AutoloadEquip(EquipType.Head)]
 	public class Rift_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bleeding Obsidian Hardee");
-			Tooltip.SetDefault("Increased explosive velocity");
+			// DisplayName.SetDefault("Bleeding Obsidian Hardee");
+			// Tooltip.SetDefault("Increased explosive velocity");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Rift/Rift_Helmet_Head_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
@@ -49,15 +49,15 @@ namespace Origins.Items.Armor.Rift {
 	[AutoloadEquip(EquipType.Body)]
 	public class Rift_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bleeding Obsidian Trenchcoat");
-			Tooltip.SetDefault("-25% explosive self-damage");
+			// DisplayName.SetDefault("Bleeding Obsidian Trenchcoat");
+			// Tooltip.SetDefault("-25% explosive self-damage");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Rift/Rift_Breastplate_Body_Glow");
 				if (Mod.RequestAssetIfExists("Items/Armor/Rift/Rift_Trenchcoat_Cloth_Legs", out Asset<Texture2D> asset)) {
 					Origins.TorsoLegLayers.Add(Item.bodySlot, asset);
 				}
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 10;
@@ -78,12 +78,12 @@ namespace Origins.Items.Armor.Rift {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Rift_Greaves : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bleeding Obsidian Chaps");
-			Tooltip.SetDefault("15% increased movement speed");
+			// DisplayName.SetDefault("Bleeding Obsidian Chaps");
+			// Tooltip.SetDefault("15% increased movement speed");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Rift/Rift_Greaves_Legs_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 9;

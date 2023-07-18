@@ -53,9 +53,6 @@ namespace Origins.Tiles.Defiled {
 			}
 			return false;
 		}
-
-		public override bool Drop(int i, int j) {
-			return false;
-		}
+		public override bool CanDrop(int i, int j) => false;
 	}
 }

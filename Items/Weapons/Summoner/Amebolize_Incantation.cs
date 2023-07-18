@@ -10,10 +10,10 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Amebolize_Incantation : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amebolize Incantation");
-			Tooltip.SetDefault("Struck enemies will wither away\n5 summon tag damage\n{$CommonItemTooltip.Whips}");
+			// DisplayName.SetDefault("Amebolize Incantation");
+			// Tooltip.SetDefault("Struck enemies will wither away\n5 summon tag damage\n{$CommonItemTooltip.Whips}");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 20;
@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public const int frameSpeed = 5;
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amoeba Bubble");
+			// DisplayName.SetDefault("Amoeba Bubble");
 			Main.projFrames[Projectile.type] = 4;
 		}
 		public override void SetDefaults() {
@@ -129,7 +129,7 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 			#endregion
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Amebolize_Buff.ID, 240);
 			target.AddBuff(Slow_Debuff.ID, 90);
 			if (target.life > 0 && target.CanBeChasedBy()) Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;

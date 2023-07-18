@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Impact_Bomb : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Impact Bomb");
-			Tooltip.SetDefault("'Be careful, it's not a book'");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Impact Bomb");
+			// Tooltip.SetDefault("'Be careful, it's not a book'");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Impact_Bomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Impact_Bomb";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Impact Bomb");
+			// DisplayName.SetDefault("Impact Bomb");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

@@ -5,6 +5,7 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -72,8 +73,8 @@ namespace Origins.Tiles.Dawn {
 			TileObjectData.newTile.StyleMultiplier = 3;
 			TileObjectData.addTile(Type);
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Eden Sapling");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Eden Sapling");
 
 			AdjTiles = new int[] { TileID.Saplings };
 		}

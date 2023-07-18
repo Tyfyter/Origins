@@ -32,7 +32,7 @@ namespace Origins.NPCs.Fiberglass {
 		const float totalLegLength = upperLegLength + lowerLegLength;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fiberglass Weaver");
+			// DisplayName.SetDefault("Fiberglass Weaver");
 			if (!Main.dedServ) {
 				UpperLegTexture = Mod.Assets.Request<Texture2D>("NPCs/Fiberglass/Fiberglass_Weaver_Leg_Upper");
 				LowerLegTexture = Mod.Assets.Request<Texture2D>("NPCs/Fiberglass/Fiberglass_Weaver_Leg_Lower");
@@ -259,7 +259,7 @@ namespace Origins.NPCs.Fiberglass {
 			Main.EntitySpriteDraw(TextureAssets.Npc[Type].Value, NPC.Center - screenPos, null, drawColor, NPC.rotation, new Vector2(34, 70), 1f, SpriteEffects.None, 0);
 			return false;
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hitDirection * 3;
 			if (NPC.life < 0) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
@@ -273,7 +273,7 @@ namespace Origins.NPCs.Fiberglass {
 	public class Fiberglass_Thread : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fiberglass Thread");
+			// DisplayName.SetDefault("Fiberglass Thread");
 		}
 		public override void SetDefaults() {
 			Projectile.hostile = true;
@@ -304,7 +304,7 @@ namespace Origins.NPCs.Fiberglass {
 			}
 			return false;
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			if (Main.masterMode && Main.rand.NextBool(4)) {
 				target.AddBuff(BuffID.Webbed, 30);
 			}

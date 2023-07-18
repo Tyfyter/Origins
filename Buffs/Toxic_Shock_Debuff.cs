@@ -8,8 +8,8 @@ namespace Origins.Buffs {
 		public const int default_duration = 60;
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Toxic Shock");
-			Description.SetDefault("The agony is getting to you.");
+			// DisplayName.SetDefault("Toxic Shock");
+			// Description.SetDefault("The agony is getting to you.");
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {

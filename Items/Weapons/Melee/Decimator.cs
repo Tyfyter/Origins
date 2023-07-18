@@ -10,9 +10,9 @@ namespace Origins.Items.Weapons.Melee {
 	public class Decimator : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Decimator");
+			// DisplayName.SetDefault("Decimator");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 22;
@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Decimator_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Decimator_P";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Decimator");
+			// DisplayName.SetDefault("Decimator");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);

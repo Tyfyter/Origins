@@ -23,7 +23,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileMerge[Type] = Main.tileMerge[TileID.IceBlock];
 			Main.tileMerge[Type][TileID.IceBlock] = true;
 			Main.tileBlockLight[Type] = true;
-			ItemDrop = ItemType<Primordial_Permafrost_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Primordial_Permafrost_Item>();
 			AddMapEntry(new Color(100, 200, 200));
 			mergeID = TileID.IceBlock;
 		}
@@ -37,8 +37,8 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Primordial_Permafrost_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Primordial Permafrost");
-			Tooltip.SetDefault("A dangerous single-celled organism frozen...");
+			// DisplayName.SetDefault("Primordial Permafrost");
+			// Tooltip.SetDefault("A dangerous single-celled organism frozen...");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

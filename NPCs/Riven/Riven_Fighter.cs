@@ -12,7 +12,7 @@ using static Origins.Items.Armor.Riven.Riven2_Mask;
 namespace Origins.NPCs.Riven {
     public class Riven_Fighter : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Riven Protoform");
+			// DisplayName.SetDefault("Riven Protoform");
 			Main.npcFrameCount[NPC.type] = 5;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive>().Type
@@ -89,7 +89,7 @@ namespace Origins.NPCs.Riven {
 				NPC.frameCounter = 0;
 			}
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			//spawn gore if npc is dead after being hit
 			if (NPC.life < 0) {
 				for (int i = 0; i < 3; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));

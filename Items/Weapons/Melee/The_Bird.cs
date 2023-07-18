@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class The_Bird : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("The Bird");
-			Tooltip.SetDefault("Developer item\n'How's being 96-thousand feet in the air for yah? Thought so'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("The Bird");
+			// Tooltip.SetDefault("Developer item\n'How's being 96-thousand feet in the air for yah? Thought so'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenSword);

@@ -7,8 +7,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Riven_Loot_Box : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Riven} Loot Box");
-			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			// DisplayName.SetDefault("{$Riven} Loot Box");
+			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);

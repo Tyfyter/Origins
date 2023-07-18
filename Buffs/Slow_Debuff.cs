@@ -7,8 +7,8 @@ namespace Origins.Buffs {
 		public override string Texture => "Terraria/Images/Buff_32";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Slow");
-			Description.SetDefault("This is the enemy version of the debuff, if you get this just tap the movement keys so you move slower or something, ¯\\_(ツ)_/¯");
+			// DisplayName.SetDefault("Slow");
+			// Description.SetDefault("This is the enemy version of the debuff, if you get this just tap the movement keys so you move slower or something, ¯\\_(ツ)_/¯");
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {

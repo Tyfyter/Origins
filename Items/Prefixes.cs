@@ -17,7 +17,7 @@ namespace Origins.Items {
 	public class Heavy_Cal_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Ranged;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Heavy Caliber");
+			// DisplayName.SetDefault("Heavy Caliber");
 		}
 		public override void ModifyValue(ref float valueMult) {
 			valueMult += 0.4581f;
@@ -35,7 +35,7 @@ namespace Origins.Items {
 	public class Assuring_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Accessory;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Assuring");
+			// DisplayName.SetDefault("Assuring");
 		}
 		public override void ModifyValue(ref float valueMult) {
 			valueMult += 0.67f;
@@ -50,7 +50,7 @@ namespace Origins.Items {
 	public class Consistent_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Accessory;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Consistent");
+			// DisplayName.SetDefault("Consistent");
 		}
 		public override void ModifyValue(ref float valueMult) {
 			valueMult += 0.67f;
@@ -65,7 +65,7 @@ namespace Origins.Items {
 	public class Malicious_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Accessory;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Malicious");
+			// DisplayName.SetDefault("Malicious");
 		}
 		public override void ModifyValue(ref float valueMult) {
 			valueMult += 0.67f;
@@ -80,7 +80,7 @@ namespace Origins.Items {
 	public class Sudden_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Accessory;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Sudden");
+			// DisplayName.SetDefault("Sudden");
 		}
 		public override void ModifyValue(ref float valueMult) {
 			valueMult += 0.67f;
@@ -93,7 +93,7 @@ namespace Origins.Items {
 	public class Vicious_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Accessory;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Vicious");
+			// DisplayName.SetDefault("Vicious");
 		}
 		public override void ModifyValue(ref float valueMult) {
 			valueMult += 0.67f;
@@ -108,7 +108,7 @@ namespace Origins.Items {
 	public class Esoteric_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Accessory;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Esoteric");
+			// DisplayName.SetDefault("Esoteric");
 		}
 		public override void ModifyValue(ref float valueMult) {
 			valueMult += 0.67f;
@@ -123,7 +123,7 @@ namespace Origins.Items {
 	public class Unbounded_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Unbounded");
+			// DisplayName.SetDefault("Unbounded");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -135,7 +135,7 @@ namespace Origins.Items {
 	public class Eased_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Eased");
+			// DisplayName.SetDefault("Eased");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -146,7 +146,7 @@ namespace Origins.Items {
 	public class Loaded_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Loaded");
+			// DisplayName.SetDefault("Loaded");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -158,7 +158,7 @@ namespace Origins.Items {
 	public class Penetrative_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Penetrative");
+			// DisplayName.SetDefault("Penetrative");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -169,7 +169,7 @@ namespace Origins.Items {
 	public class Catastrophic_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Catastrophic");
+			// DisplayName.SetDefault("Catastrophic");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -183,7 +183,7 @@ namespace Origins.Items {
 	public class Persuasive_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Persuasive");
+			// DisplayName.SetDefault("Persuasive");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -194,7 +194,7 @@ namespace Origins.Items {
 	public class Dud_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dud");
+			// DisplayName.SetDefault("Dud");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -207,7 +207,7 @@ namespace Origins.Items {
 	public class Wimpy_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Wimpy");
+			// DisplayName.SetDefault("Wimpy");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -219,7 +219,7 @@ namespace Origins.Items {
 	public class Betraying_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Betraying");
+			// DisplayName.SetDefault("Betraying");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -229,7 +229,7 @@ namespace Origins.Items {
 	public class Lightweight_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lightweight");
+			// DisplayName.SetDefault("Lightweight");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -242,7 +242,7 @@ namespace Origins.Items {
 	public class Heavy_Duty_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Heavy-Duty");
+			// DisplayName.SetDefault("Heavy-Duty");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -256,7 +256,7 @@ namespace Origins.Items {
 	public class Safe_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Safe");
+			// DisplayName.SetDefault("Safe");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -266,7 +266,7 @@ namespace Origins.Items {
 	public class Guileless_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Custom;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Guileless");
+			// DisplayName.SetDefault("Guileless");
 		}
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -281,7 +281,7 @@ namespace Origins.Items {
 	public class Imperfect_Prefix : ModPrefix, IOnSpawnProjectilePrefix, IModifyTooltipsPrefix, IPreReforgePrefix {
 		public override PrefixCategory Category => PrefixCategory.Ranged;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Imperfect");
+			// DisplayName.SetDefault("Imperfect");
 		}
 		public override float RollChance(Item item) => 0f;
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {

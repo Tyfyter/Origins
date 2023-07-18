@@ -7,9 +7,9 @@ namespace Origins.Items.Accessories {
 	public class Spider_Ravel : Ravel {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Spider Ravel");
-			Tooltip.SetDefault("Double tap down to transform into a small, rolling ball\nYou may cling to walls and ceilings when raveled");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Spider Ravel");
+			// Tooltip.SetDefault("Double tap down to transform into a small, rolling ball\nYou may cling to walls and ceilings when raveled");
+			Item.ResearchUnlockCount = 1;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -44,8 +44,8 @@ namespace Origins.Items.Accessories {
 		protected override int MountID => ModContent.MountType<Spider_Ravel_Mount>();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			DisplayName.SetDefault("Spider Ravel");
-			Description.SetDefault("10% chance to dodge. Able to climb different surfaces");
+			// DisplayName.SetDefault("Spider Ravel");
+			// Description.SetDefault("10% chance to dodge. Able to climb different surfaces");
 		}
 	}
 }

@@ -7,9 +7,9 @@ namespace Origins.Items.Armor.Myth {
 	[AutoloadEquip(EquipType.Head)]
 	public class Mythic_Skull : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mythic Skull");
-			Tooltip.SetDefault("Increased explosive velocity\n'Skull ON'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Mythic Skull");
+			// Tooltip.SetDefault("Increased explosive velocity\n'Skull ON'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
@@ -48,9 +48,9 @@ namespace Origins.Items.Armor.Myth {
 	[AutoloadEquip(EquipType.Body)]
 	public class Mythic_Shell : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mythic Shell");
-			Tooltip.SetDefault("Greatly increased jump speed");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Mythic Shell");
+			// Tooltip.SetDefault("Greatly increased jump speed");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
@@ -72,9 +72,9 @@ namespace Origins.Items.Armor.Myth {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Mythic_Leggings : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mythic Leggings");
-			Tooltip.SetDefault("Greatly increased movement speed");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Mythic Leggings");
+			// Tooltip.SetDefault("Greatly increased movement speed");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;

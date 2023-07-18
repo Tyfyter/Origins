@@ -13,10 +13,10 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Eyeball Staff");
-			Tooltip.SetDefault("Summons a demon eye to fight for you");
+			// DisplayName.SetDefault("Eyeball Staff");
+			// Tooltip.SetDefault("Summons a demon eye to fight for you");
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 8;
@@ -50,8 +50,8 @@ namespace Origins.Items.Weapons.Summoner {
 namespace Origins.Buffs {
 	public class Mini_EOC_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Demon Eye");
-			Description.SetDefault("The demon eye will fight for you");
+			// DisplayName.SetDefault("Demon Eye");
+			// Description.SetDefault("The demon eye will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Eyeball_Staff.buffID = Type;
@@ -73,7 +73,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public const int frameSpeed = 5;
 		public override void SetStaticDefaults() {
 			Eyeball_Staff.projectileID = Projectile.type;
-			DisplayName.SetDefault("Gerald");
+			// DisplayName.SetDefault("Gerald");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;
 			// This is necessary for right-click targeting
@@ -251,10 +251,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			#endregion
 			if (Projectile.localAI[0] > 0) Projectile.localAI[0]--;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			damage += (int)(Projectile.localAI[0] / 6);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Vector2 intersect = Rectangle.Intersect(Projectile.Hitbox, target.Hitbox).Center.ToVector2() - Projectile.Hitbox.Center.ToVector2();
 			if (intersect.X != 0 && (Math.Sign(intersect.X) == Math.Sign(Projectile.velocity.X))) {
 				Projectile.velocity.X = -Projectile.velocity.X;

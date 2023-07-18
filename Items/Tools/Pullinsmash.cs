@@ -8,10 +8,10 @@ namespace Origins.Items.Tools {
 	public class Pullinsmash : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Stabsmash");
-			Tooltip.SetDefault("'Hammer and nail in one package'");
+			// DisplayName.SetDefault("Stabsmash");
+			// Tooltip.SetDefault("'Hammer and nail in one package'");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TitaniumWaraxe);

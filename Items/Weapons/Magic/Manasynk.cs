@@ -13,9 +13,9 @@ using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Magic {
     public class Manasynk : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Manasynk");
-			Tooltip.SetDefault("");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Manasynk");
+			// Tooltip.SetDefault("");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Manasynk_P : ModProjectile {
 		PolarVec2 embedPos;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Manasynk");
+			// DisplayName.SetDefault("Manasynk");
 			Main.projFrames[Type] = 4;
 		}
 		public override void SetDefaults() {
@@ -92,7 +92,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override bool? CanHitNPC(NPC target) {
 			return Projectile.ai[0] >= 0 ? target.whoAmI == (int)Projectile.ai[0] : null;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.CanBeChasedBy()) {
 				if (Projectile.ai[0] < 0) {
 					Projectile.ai[0] = target.whoAmI;
@@ -170,7 +170,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Manasynk_Pickup : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mana");
+			// DisplayName.SetDefault("Mana");
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 9999;

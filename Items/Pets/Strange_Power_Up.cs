@@ -13,10 +13,10 @@ namespace Origins.Items.Pets {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Strange Power Up");
-			Tooltip.SetDefault("The very first sprite.");
+			// DisplayName.SetDefault("Strange Power Up");
+			// Tooltip.SetDefault("The very first sprite.");
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
@@ -54,7 +54,7 @@ namespace Origins.Items.Pets {
 		}
 		public override void SetStaticDefaults() {
 			Strange_Power_Up.projectileID = Type;
-			DisplayName.SetDefault("Platformer Mech");
+			// DisplayName.SetDefault("Platformer Mech");
 			//Origins.ExplosiveProjectiles[Projectile.type] = true;
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Type] = 6;
@@ -244,8 +244,8 @@ namespace Origins.Items.Pets {
 namespace Origins.Buffs {
 	public class Platformer_Mech_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Platformer Mech");
-			Description.SetDefault("It stomps along the ground.");
+			// DisplayName.SetDefault("Platformer Mech");
+			// Description.SetDefault("It stomps along the ground.");
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
 			Strange_Power_Up.buffID = Type;

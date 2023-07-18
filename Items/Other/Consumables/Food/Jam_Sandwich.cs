@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables.Food {
 	public class Jam_Sandwich : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Jam Sandwich");
-			Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'What kind of jam is this?'");
-			SacrificeTotal = 5;
+			// DisplayName.SetDefault("Jam Sandwich");
+			// Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'What kind of jam is this?'");
+			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShrimpPoBoy);

@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Balloon)]
 	public class Plasma_Phial : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Plasma Phial");
-			Tooltip.SetDefault("Debuff durations are halved\nSlightly increased regeneration\nRapidly lose life when inflicted with Bleeding");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Plasma Phial");
+			// Tooltip.SetDefault("Debuff durations are halved\nSlightly increased regeneration\nRapidly lose life when inflicted with Bleeding");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 24);

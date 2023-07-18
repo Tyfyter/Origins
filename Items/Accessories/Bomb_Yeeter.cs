@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Bomb_Yeeter : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bomb Handling Device");
-			Tooltip.SetDefault("25% increased explosive throwing velocity\nAlso commonly referred to as the 'Bomb Yeeter'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Bomb Handling Device");
+			// Tooltip.SetDefault("25% increased explosive throwing velocity\nAlso commonly referred to as the 'Bomb Yeeter'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(38, 20);

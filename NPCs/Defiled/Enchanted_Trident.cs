@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
 	public class Enchanted_Trident : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Profaned Bident");
+			// DisplayName.SetDefault("Profaned Bident");
 			Main.npcFrameCount[NPC.type] = 3;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Defiled_Wastelands>().Type
@@ -46,7 +46,7 @@ namespace Origins.NPCs.Defiled {
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Nazar, 100));
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 
 		}
 	}

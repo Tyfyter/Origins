@@ -11,10 +11,10 @@ namespace Origins.Items.Weapons.Magic {
 	public class Low_Signal : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Low Signal");
+			// DisplayName.SetDefault("Low Signal");
 			Item.staff[Type] = true;
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 40;
@@ -41,7 +41,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Low_Signal_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Nerve Signal");
+			// DisplayName.SetDefault("Nerve Signal");
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_Parent parentSource && parentSource.Entity is NPC npc) {
@@ -69,7 +69,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void AI() {
 			Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, default, newColor: Color.White, Scale: 0.5f + (float)Math.Sin(Projectile.timeLeft * 0.1f) * 0.15f);
 		}
-		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) {
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			// sort of oddly phrased, and if there's a remotely simple way to add custom death reasons for projectiles this isn't it
 			// as seen with this functionally identical code the reason is never actually used
 			PlayerDeathReason reason = PlayerDeathReason.ByCustomReason(target.name + " watched defiled spikes come out of their body");

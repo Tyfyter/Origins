@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mitosis : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mitosis");
-			Tooltip.SetDefault("Shoots out a mitosis node that duplicates projectiles");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Mitosis");
+			// Tooltip.SetDefault("Shoots out a mitosis node that duplicates projectiles");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);
@@ -33,7 +33,7 @@ namespace Origins.Items.Accessories {
 		public override string Texture => "Origins/Items/Accessories/Mitosis_P";
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mitosis Node");
+			// DisplayName.SetDefault("Mitosis Node");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);

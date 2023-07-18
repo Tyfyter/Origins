@@ -12,9 +12,9 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Bone_Latcher : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bone Latcher");
+			// DisplayName.SetDefault("Bone Latcher");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			// Call this method to quickly set some of the properties below.
@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public class Bone_Latcher_P : ModProjectile, IWhipProjectile {
 			public override void SetStaticDefaults() {
-				DisplayName.SetDefault("Bone Latcher");
+				// DisplayName.SetDefault("Bone Latcher");
 				// This makes the projectile use whip collision detection and allows flasks to be applied to it.
 				ProjectileID.Sets.IsAWhip[Type] = true;
 			}
@@ -91,7 +91,7 @@ namespace Origins.Items.Weapons.Summoner {
 				segments = 20;
 				rangeMultiplier = 1.1f * Projectile.scale;
 			}
-			public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+			public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 				float range = 192 * Projectile.scale;
 				if (target.DistanceSQ(Main.player[Projectile.owner].Center) > range * range) {
 					hitDirection *= -1;

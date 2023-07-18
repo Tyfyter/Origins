@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Missile_Armcannon : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Missile Armcannon");
-			Tooltip.SetDefault("30% increased explosive throwing velocity\nIncreases attack speed of thrown explosives\nEnables autouse for all explosive weapons\nShoots rockets as you swing\n'Payload not included'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Missile Armcannon");
+			// Tooltip.SetDefault("30% increased explosive throwing velocity\nIncreases attack speed of thrown explosives\nEnables autouse for all explosive weapons\nShoots rockets as you swing\n'Payload not included'");
+			Item.ResearchUnlockCount = 1;
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];
 		}
 		public override void SetDefaults() {

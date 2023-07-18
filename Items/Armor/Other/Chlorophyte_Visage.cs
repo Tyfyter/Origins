@@ -12,9 +12,9 @@ namespace Origins.Items.Armor.Other {
 	[AutoloadEquip(EquipType.Head)]
 	public class Chlorophyte_Visage : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chlorophyte Visage");
-			Tooltip.SetDefault("+35% explosive blast radius\n-25% explosive fuse time");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Chlorophyte Visage");
+			// Tooltip.SetDefault("+35% explosive blast radius\n-25% explosive fuse time");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.width = 26;

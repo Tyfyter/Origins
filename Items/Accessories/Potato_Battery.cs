@@ -12,9 +12,9 @@ namespace Origins.Items.Accessories {
     public class Potato_Battery : ModItem {
 		static Message_Type_Count[] messageCountsByType;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Potato Battery");
-			Tooltip.SetDefault("Magic projectiles slightly home towards targets\n'How are you holding up? BECAUSE I'M A POTATO'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Potato Battery");
+			// Tooltip.SetDefault("Magic projectiles slightly home towards targets\n'How are you holding up? BECAUSE I'M A POTATO'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void Unload() {
 			messageCountsByType = null;

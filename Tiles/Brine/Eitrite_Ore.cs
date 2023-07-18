@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -11,9 +12,9 @@ namespace Origins.Tiles.Brine {
 			Main.tileBlockLight[Type] = true;
 			Main.tileOreFinderPriority[Type] = 666;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			ItemDrop = ItemType<Eitrite_Ore_Item>();
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Eitrite Ore");
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Eitrite_Ore_Item>();
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Eitrite Ore");
 			AddMapEntry(new Color(79, 86, 207));
 			mergeID = TileID.Mud;
 			MinPick = 150;
@@ -30,8 +31,8 @@ namespace Origins.Tiles.Brine {
 	}
 	public class Eitrite_Ore_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Eitrite Ore");
-			Tooltip.SetDefault("'So alkaline-concentrated it could be used as a power source'");
+			// DisplayName.SetDefault("Eitrite Ore");
+			// Tooltip.SetDefault("'So alkaline-concentrated it could be used as a power source'");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TitaniumOre);

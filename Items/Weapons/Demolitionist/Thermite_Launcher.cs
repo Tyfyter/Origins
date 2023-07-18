@@ -10,9 +10,9 @@ using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Thermite_Launcher : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Thermite Launcher");
-			Tooltip.SetDefault("Burn.\nUses Thermite Canisters for ammo");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Thermite Launcher");
+			// Tooltip.SetDefault("Burn.\nUses Thermite Canisters for ammo");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
@@ -43,7 +43,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Thermite_Canister_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Ammo/Thermite_Canister";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Thermite Canistah"); // https://youtu.be/8MHk0WwrzgY
+			// DisplayName.SetDefault("Thermite Canistah"); // https://youtu.be/8MHk0WwrzgY
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
@@ -86,7 +86,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Thermite_P : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Ammo/Napalm_Pellet_P";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Thermite Canister");
+			// DisplayName.SetDefault("Thermite Canister");
 			//Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
 		public override void SetDefaults() {
@@ -120,10 +120,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			//Projectile.velocity = Vector2.Zero;
 			return false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
 		}
-		public override void OnHitPvp(Player target, int damage, bool crit) {
+		public override void OnHitPvp(Player target, int damage, bool crit)/* tModPorter Note: Removed. Use OnHitPlayer and check info.PvP */ {
 			target.AddBuff(BuffID.OnFire, Main.rand.Next(300, 451));
 		}
 		public override Color? GetAlpha(Color lightColor) {

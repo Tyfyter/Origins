@@ -11,7 +11,7 @@ namespace Origins.Tiles.Other {
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;
-			ItemDrop = ItemType<Carburite_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Carburite_Item>();
 			AddMapEntry(new Color(110, 57, 33));
 			MinPick = 55;
 			MineResist = 3;
@@ -19,9 +19,9 @@ namespace Origins.Tiles.Other {
 	}
 	public class Carburite_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Carburite");
-			Tooltip.SetDefault("'An organic mineral that reacts to compounds'");
-			SacrificeTotal = 100;
+			// DisplayName.SetDefault("Carburite");
+			// Tooltip.SetDefault("'An organic mineral that reacts to compounds'");
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

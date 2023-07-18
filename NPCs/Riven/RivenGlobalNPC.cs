@@ -78,7 +78,7 @@ namespace Origins.NPCs.Riven {
 				damage += totalDPS / 3;
 			}
 		}
-        public override void OnHitPlayer(NPC npc, Player target, int damage, bool crit) {
+        public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
 			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
 				target.GetModPlayer<OriginPlayer>().RivenAssimilation += amount.GetValue(npc, target);
 			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {

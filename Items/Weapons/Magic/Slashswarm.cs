@@ -8,9 +8,9 @@ namespace Origins.Items.Weapons.Magic {
 	public class Slashswarm : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Slashswarm");
+			// DisplayName.SetDefault("Slashswarm");
 			glowmask = Origins.AddGlowMask(this, "");
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalStorm);
@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Amoeba_Bubble";
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amoeba Bubble");
+			// DisplayName.SetDefault("Amoeba Bubble");
 			Main.projFrames[Projectile.type] = 4;
 			ID = Type;
 		}
@@ -69,7 +69,7 @@ namespace Origins.Items.Weapons.Magic {
 			Split();
 			return false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Vector2 hitbox = Projectile.Hitbox.Center.ToVector2();
 			Vector2 intersect = Rectangle.Intersect(Projectile.Hitbox, target.Hitbox).Center.ToVector2();
 			bool bounced = false;
@@ -110,7 +110,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Amoeba_Bubble";
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Smaller Amoeba Bubble");
+			// DisplayName.SetDefault("Smaller Amoeba Bubble");
 			Main.projFrames[Projectile.type] = 4;
 			ID = Type;
 		}

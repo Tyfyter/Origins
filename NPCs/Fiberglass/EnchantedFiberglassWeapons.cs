@@ -45,11 +45,11 @@ namespace Origins.NPCs.Fiberglass {
 			} else NPC.localAI[0] = 0f;
 			if (NPC.spriteDirection == 1) NPC.rotation += MathHelper.Pi;
 		}
-		public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
+		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			NPC.localAI[0] = -15f;
 			teleport();
 		}
-		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
+		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			NPC.localAI[0] = 0f;
 			teleport();
 		}
@@ -57,7 +57,7 @@ namespace Origins.NPCs.Fiberglass {
 			npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Broken_Fiberglass_Bow>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hitDirection * 3;
 			if (damage > NPC.life * 2f) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore"));
@@ -156,7 +156,7 @@ namespace Origins.NPCs.Fiberglass {
 				}
 			}
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hitDirection * 3;
 			if (damage > NPC.life * 2f) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore"));
@@ -319,7 +319,7 @@ namespace Origins.NPCs.Fiberglass {
 			npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Broken_Fiberglass_Sword>(), 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hitDirection * 3;
 			if (damage > NPC.life * 2f) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore"));

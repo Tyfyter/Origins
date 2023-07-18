@@ -14,11 +14,11 @@ namespace Origins.Items.Weapons.Magic {
 	public class Infusion : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Infusion");
-			Tooltip.SetDefault("Rapidly fires spikes that will detonate when the target is implanted with enough");
+			// DisplayName.SetDefault("Infusion");
+			// Tooltip.SetDefault("Rapidly fires spikes that will detonate when the target is implanted with enough");
 			Origins.FlatDamageMultiplier[Type] = 2f / 8f;
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 4;
@@ -64,7 +64,7 @@ namespace Origins.Items.Weapons.Magic {
 		int EmbedTime { get => (int)Projectile.localAI[0]; set => Projectile.localAI[0] = value; }
 		int EmbedTarget { get => (int)Projectile.localAI[1]; set => Projectile.localAI[1] = value; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Infusion Spike");
+			// DisplayName.SetDefault("Infusion Spike");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);

@@ -17,12 +17,12 @@ namespace Origins.Items.Weapons.Magic {
 		public override DrawAnimation Animation => animation;
 		public override Color? GetGlowmaskTint(Player player) => Main.teamColor[player.team];
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Laser Tag Gun");
-			Tooltip.SetDefault("‘Defective to some, glory to others’");
+			// DisplayName.SetDefault("Laser Tag Gun");
+			// Tooltip.SetDefault("‘Defective to some, glory to others’");
 			animation = new DrawAnimationManual(1);
 			Main.RegisterItemAnimation(Item.type, animation);
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SpaceGun);
@@ -94,13 +94,10 @@ namespace Origins.Items.Weapons.Magic {
 				Lighting.AddLight(Projectile.Center, Vector3.Normalize(color.ToVector3()) * 3);
 			} catch (Exception) { }
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-			if (crit) damage *= 123;
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.CritDamage *= 123;
 		}
-		public override void ModifyHitPvp(Player target, ref int damage, ref bool crit) {
-			if (crit) damage *= 123;
-		}
-		public override void OnHitPvp(Player target, int damage, bool crit) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			target.AddBuff(BuffID.Cursed, 600);
 		}
 		public override bool PreDraw(ref Color lightColor) {

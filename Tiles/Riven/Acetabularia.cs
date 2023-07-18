@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
@@ -26,8 +27,8 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Acetabularia");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Acetabularia");
 			AddMapEntry(new Color(0, 175, 200), name);
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
@@ -38,7 +39,7 @@ namespace Origins.Tiles.Riven {
 
 			HitSound = SoundID.Grass;
 			DustType = DustID.Marble;
-			ItemDrop = ItemType<Acetabularia_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Acetabularia_Item>();
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {
@@ -53,8 +54,8 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Acetabularia_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acetabularia");
-			SacrificeTotal = 25;
+			// DisplayName.SetDefault("Acetabularia");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;

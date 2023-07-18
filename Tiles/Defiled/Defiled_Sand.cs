@@ -25,7 +25,7 @@ namespace Origins.Tiles.Defiled {
             Main.tileMerge[Type] = Main.tileMerge[TileID.Sand];
             Main.tileMerge[Type][TileID.Sand] = true;*/
 			TileID.Sets.Falling[Type] = true;
-			ItemDrop = ItemType<Defiled_Sand_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Defiled_Sand_Item>();
 			AddMapEntry(new Color(175, 175, 175));
 			//SetModTree(Defiled_Tree.Instance);
 			mergeID = TileID.Sand;
@@ -97,7 +97,7 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Defiled_Sand_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Sand");
+			// DisplayName.SetDefault("{$Defiled} Sand");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SandBlock);
@@ -116,7 +116,7 @@ namespace Origins.Tiles.Defiled {
 		protected const int dustType = 51;
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Sand Ball");
+			// DisplayName.SetDefault("{$Defiled} Sand Ball");
 			ProjectileID.Sets.ForcePlateDetection[Projectile.type] = true;
 		}
 
@@ -211,11 +211,11 @@ namespace Origins.Tiles.Defiled {
 							WorldGen.SlopeTile(tileX, tileY + 1, 0);
 
 							if (Main.netMode == NetmodeID.Server)
-								NetMessage.SendData(MessageID.TileChange, -1, -1, null, 14, tileX, tileY + 1);
+								NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 14, tileX, tileY + 1);
 						}
 
 						if (Main.netMode != NetmodeID.SinglePlayer)
-							NetMessage.SendData(MessageID.TileChange, -1, -1, null, 1, tileX, tileY, tileType);
+							NetMessage.SendData(MessageID.TileManipulation, -1, -1, null, 1, tileX, tileY, tileType);
 					}
 				}
 			}

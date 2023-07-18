@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class CFHES : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("C.F.H.E.S.");
-			Tooltip.SetDefault("All explosives inflict 'On Fire!' and have a reduced fuse time\nGreatly increased explosive blast radius");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("C.F.H.E.S.");
+			// Tooltip.SetDefault("All explosives inflict 'On Fire!' and have a reduced fuse time\nGreatly increased explosive blast radius");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 34);

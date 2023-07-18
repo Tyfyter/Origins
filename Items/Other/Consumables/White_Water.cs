@@ -10,9 +10,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class White_Water : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("White Water");
-			Tooltip.SetDefault("Spreads the {$Defiled_Wastelands} to some blocks");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("White Water");
+			// Tooltip.SetDefault("Spreads the {$Defiled_Wastelands} to some blocks");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.UnholyWater);
@@ -30,7 +30,7 @@ namespace Origins.Items.Other.Consumables {
 	public class White_Water_P : ModProjectile {
 		public override string Texture => base.Texture.Substring(0, base.Texture.Length - 2);
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("White Water");
+			// DisplayName.SetDefault("White Water");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.UnholyWater);

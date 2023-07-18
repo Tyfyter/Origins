@@ -24,11 +24,12 @@ using static Terraria.WorldGen;
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
 		internal static List<(Point, int)> HellSpikes = new List<(Point, int)>() { };
-		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref float totalWeight) {
+#if false ///TODO: find a way
+		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight) {
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge = new();
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsEastEdge = new();
 
-			#region _
+		#region _
 			/*genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
             if (genIndex == -1) {
                 return;
@@ -50,7 +51,7 @@ namespace Origins {
                 //Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh).type = TileID.AmberGemspark;
             }
             }));*/
-			#endregion _
+		#endregion _
 			int genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Larva"));
 			if (genIndex != -1) {
 				int duskStoneID = TileType<Dusk_Stone>();
@@ -127,7 +128,7 @@ namespace Origins {
 					//for (int i = 0; i < Main.maxTilesX / 5000; i++) {
 					int X = WorldGen.genRand.Next(JungleX - 100, JungleX + 100);
 					int Y;
-					for (Y = (int)WorldGen.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
+					for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
 					Y += WorldGen.genRand.Next(100, 125);
 					Mod.Logger.Info("BrineGen:" + X + ", " + Y);
 					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
@@ -148,7 +149,7 @@ namespace Origins {
 					while (!placed) {
 						int X = WorldGen.genRand.Next(JungleX - 100, JungleX + 100);
 						int Y;
-						for (Y = (int)WorldGen.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
+						for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
 						Y += WorldGen.genRand.Next(250, 350);
 						if (structures.CanPlace(new Rectangle(X - 32, Y - 32, 64, 64), 16) || ++tries > 1000) {
 							Mod.Logger.Info("FiberglassGen:" + X + ", " + Y);
@@ -252,8 +253,9 @@ namespace Origins {
 				}
 			}));
 		}
+#endif
 
-		public static void GERunnerHook(On.Terraria.WorldGen.orig_GERunner orig, int i, int j, float speedX = 0f, float speedY = 0f, bool good = true) {
+		public static void GERunnerHook(Terraria.On_WorldGen.orig_GERunner orig, int i, int j, float speedX = 0f, float speedY = 0f, bool good = true) {
 			byte worldEvil = GetInstance<OriginSystem>().worldEvil;
 			if (!good && (worldEvil & 4) != 0) {
 				ERunner(i, j, worldEvil, speedX, speedY);

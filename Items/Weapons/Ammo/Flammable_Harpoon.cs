@@ -7,8 +7,8 @@ namespace Origins.Items.Weapons.Ammo {
 		public override string Texture => "Origins/Items/Weapons/Ammo/Flammable_Harpoon";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Flammable Harpoon");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Flammable Harpoon");
+			Item.ResearchUnlockCount = 99;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -37,10 +37,10 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Flammable_Harpoon_P : Harpoon_P {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Flammable Harpoon");
+			// DisplayName.SetDefault("Flammable Harpoon");
 			ID = Type;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire, Main.rand.Next(269, 361));
 		}
 	}

@@ -14,9 +14,9 @@ namespace Origins.Items.Accessories {
 		bool bothGloves = false;
 		bool noGloves = false;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Handy Helper");
-			Tooltip.SetDefault("Amebic tentacles will protect you from projectiles and enemies\nIncreases melee knockback\n12% increased melee speed\nEnables auto swing for melee weapons\nIncreases the size of melee weapons");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Handy Helper");
+			// Tooltip.SetDefault("Amebic tentacles will protect you from projectiles and enemies\nIncreases melee knockback\n12% increased melee speed\nEnables auto swing for melee weapons\nIncreases the size of melee weapons");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.PowerGlove);
@@ -24,7 +24,7 @@ namespace Origins.Items.Accessories {
 			if (noGloves) Item.handOnSlot = -1;
 			Item.knockBack = 8;
 			Item.rare = ItemRarityID.Pink;
-			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.hasVanityEffects = true;
 			Item.value = Item.sellPrice(gold: 8);
 		}
 		public override void UpdateAccessory(Player player, bool isHidden) {
@@ -163,7 +163,7 @@ namespace Origins.Items.Accessories {
 
 				Item dropped = consumed[Main.rand.Next(1, 3)];
 				HalfPrefix(dropped);
-				Main.LocalPlayer.QuickSpawnClonedItem(Entity.GetSource_DropAsItem(), dropped);
+				Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_DropAsItem(), dropped);
 			});
 			recipe.Register();
 
@@ -185,7 +185,7 @@ namespace Origins.Items.Accessories {
 					helper.SetDefaults();
 				}
 				HalfPrefix(dropped);
-				Main.LocalPlayer.QuickSpawnClonedItem(Entity.GetSource_DropAsItem(), dropped);
+				Main.LocalPlayer.QuickSpawnItem(Entity.GetSource_DropAsItem(), dropped);
 			});
 			recipe.Register();
 		}
@@ -204,7 +204,7 @@ namespace Origins.Items.Accessories {
 	public class Handy_Helper_Tentacle : Amebic_Vial_Tentacle {
 		public static new int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Handy Tentacle");
+			// DisplayName.SetDefault("Handy Tentacle");
 			ID = Type;
 		}
 
@@ -246,7 +246,7 @@ namespace Origins.Items.Accessories {
 		public static AutoCastingAsset<Texture2D> GloveTexture { get; private set; }
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Handy Tentacle");
+			// DisplayName.SetDefault("Handy Tentacle");
 			if (ModContent.RequestIfExists<Texture2D>("Origins/Items/Accessories/Handy_Helper_P", out var gloveTexture))
 				GloveTexture = gloveTexture;
 			ID = Type;
@@ -289,12 +289,12 @@ namespace Origins.Items.Accessories {
 				Projectile.rotation -= MathHelper.PiOver2;
 			}
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			if (target.knockBackResist > 0) {
 				target.oldVelocity = target.velocity;
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (target.knockBackResist > 0) {
 				target.velocity = Vector2.Lerp(target.oldVelocity, Projectile.velocity * knockback / 3.2f, (float)Math.Sqrt(target.knockBackResist));
 			}

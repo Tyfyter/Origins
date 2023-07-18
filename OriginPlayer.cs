@@ -1194,7 +1194,7 @@ namespace Origins {
 					//1 minute (3600 ticks), decays over the latter 45 seconds (2700 ticks)
 					float factor = Math.Min((3600 - timeSinceLastDeath) / 2700f, 1);
 					if (factor > 0) {
-						Player.statDefense += (int)Math.Ceiling(Player.statDefense * factor * 0.25f);
+						Player.statDefense += (int)MathF.Ceiling(Player.statDefense * factor * 0.25f);
 						if (Main.rand.NextFloat(1.25f) < factor + 0.1f) {
 							Dust dust = Dust.NewDustDirect(Player.position - new Vector2(8, 0), Player.width + 16, Player.height, DustID.Smoke, newColor: new Color(0.1f, 0.1f, 0.2f));
 							dust.velocity *= 0.4f;
@@ -1224,7 +1224,7 @@ namespace Origins {
 			}
 			oldGravDir = Player.gravDir;
 		}
-		public override void OnRespawn(Player player) {
+		public override void OnRespawn() {
 			oldGravDir = Player.gravDir;
 			if (hasProtOS) {
 				Protomind.PlayRandomMessage(Protomind.QuoteType.Respawn, protOSQuoteCooldown, Player.Top);
@@ -1306,7 +1306,7 @@ namespace Origins {
 
 			Player.arrowDamage = Player.arrowDamage.Scale(1.5f);
 			Player.bulletDamage = Player.bulletDamage.Scale(1.5f);
-			Player.rocketDamage = Player.rocketDamage.Scale(1.5f);
+			Player.specialistDamage = Player.specialistDamage.Scale(1.5f);
 
 			explosiveBlastRadius = explosiveBlastRadius.Scale(1.5f);
 
@@ -1408,7 +1408,7 @@ namespace Origins {
 				}
 			}
 		}
-		public override void ModifyHitNPC(Item item, NPC target, ref int damage, ref float knockback, ref bool crit) {
+		public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Item, consider using ModifyHitNPC instead */ {
 			//enemyDefense = NPC.GetDefense;
 			if (felnumShock > 29) {
 				damage += (int)(felnumShock / 15);
@@ -1504,7 +1504,7 @@ namespace Origins {
 			}
 			return true;
 		}
-		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Projectile, consider using ModifyHitNPC instead */ {
 			if (Origins.DamageModOnHit[proj.type]) {
 				bool shouldReplace = Origins.ExplosiveBaseDamage.TryGetValue(proj.type, out int dam);
 				float baseDamage = Player.GetTotalDamage(proj.DamageType).ApplyTo(shouldReplace ? dam : damage);
@@ -1522,7 +1522,7 @@ namespace Origins {
 				damage -= (int)Math.Max((target.defense - proj.ArmorPenetration) * (explosive_defense_factor - 0.5f), 0);
 			}
 		}
-		public override void OnHitNPC(Item item, NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */ {
 			OnHitNPCGeneral(item, target, damage, knockback, crit);
 			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
 				Projectile.NewProjectile(
@@ -1551,7 +1551,7 @@ namespace Origins {
 				}
 			}
 		}
-		public override void OnHitNPCWithProj(Projectile proj, NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */ {
 			OnHitNPCGeneral(proj, target, damage, knockback, crit);
 			if (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) {//flasks
 				if (flaskBile) {
@@ -1614,7 +1614,7 @@ namespace Origins {
 			}
 		}
 
-		public override void ModifyHitByProjectile(Projectile proj, ref int damage, ref bool crit) {
+		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers) {
 			if (trapCharm && proj.trap) {
 				damage /= 2;
 				Player.buffImmune[BuffID.Poisoned] = true;
@@ -1647,7 +1647,7 @@ namespace Origins {
 				crit += Player.GetWeaponDamage(item) * 0.15f;
 			}
 		}
-		public override void OnHitByNPC(NPC npc, int damage, bool crit) {
+		public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo) {
 			if (!Player.noKnockback && damage != 0) {
 				Player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
 			}
@@ -1675,7 +1675,7 @@ namespace Origins {
 				}
 			MeleeCollisionNPCData.knockbackMult = 1f;
 		}
-		public override void OnHitByProjectile(Projectile proj, int damage, bool crit) {
+		public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo) {
 			if (preHitBuffs is not null)
 				for (int i = 0; i < Player.MaxBuffs; i++) {
 					if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
@@ -1713,16 +1713,16 @@ namespace Origins {
 		static FastFieldInfo<PlayerDeathReason, int> SourcePlayerIndex => _sourcePlayerIndex ??= new("_sourcePlayerIndex", BindingFlags.NonPublic);
 		internal static FastFieldInfo<PlayerDeathReason, int> _sourceProjectileIndex;
 		static FastFieldInfo<PlayerDeathReason, int> SourceProjectileIndex => _sourceProjectileIndex ??= new("_sourceProjectileIndex", BindingFlags.NonPublic);
-		public override bool PreHurt(bool pvp, bool quiet, ref int damage, ref int hitDirection, ref bool crit, ref bool customDamage, ref bool playSound, ref bool genGore, ref PlayerDeathReason damageSource, ref int cooldownCounter) {
-			if (Player.whoAmI == Main.myPlayer && !(protomindItem?.IsAir??true)) {
+		public override bool FreeDodge(Player.HurtInfo info) {
+			if (Player.whoAmI == Main.myPlayer && !(protomindItem?.IsAir ?? true)) {
 				for (int i = 0; i < 200; i++) {
 					if (!Main.npc[i].active || Main.npc[i].friendly) {
 						continue;
 					}
-					int num2 = 300 + damage * 2;
+					int num2 = 300 + info.Damage * 2;
 					if (Main.rand.Next(500) < num2) {
 						float dist = (Main.npc[i].Center - Player.Center).Length();
-						float chance = Main.rand.Next(200 + damage / 2, 301 + damage * 2);
+						float chance = Main.rand.Next(200 + info.Damage / 2, 301 + info.Damage * 2);
 						if (chance > 500f) {
 							chance = 500f + (chance - 500f) * 0.75f;
 						}
@@ -1733,7 +1733,7 @@ namespace Origins {
 							chance = 900f + (chance - 900f) * 0.25f;
 						}
 						if (dist < chance) {
-							float num4 = Main.rand.Next(90 + damage / 3, 300 + damage / 2);
+							float num4 = Main.rand.Next(90 + info.Damage / 3, 300 + info.Damage / 2);
 							Main.npc[i].AddBuff(BuffID.Confused, (int)num4);
 						}
 					}
@@ -1749,20 +1749,23 @@ namespace Origins {
 				);
 				if (Main.rand.NextBool(6) && Player.FindBuffIndex(BuffID.BrainOfConfusionBuff) == -1) {
 					Player.BrainOfConfusionDodge();
-					return false;
+					return true;
 				}
 			}
+			return false;
+		}
+		public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */ {
 			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(9) < 3) {
-				crit = true;
+				modifiers.SourceDamage *= 2;
 			}
 			heliumTankHit = false;
-			if (heliumTank && playSound) {
+			if (heliumTank) {
 				if (!Player.stoned && !Player.frostArmor && !Player.boneArmor) {
 					heliumTankHit = true;
-					playSound = false;
+					modifiers.DisableSound();
 				}
 			}
-			if (SourcePlayerIndex.GetValue(damageSource) == Player.whoAmI) {
+			if (SourcePlayerIndex.GetValue(modifiers.DamageSource) == Player.whoAmI) {
 				Projectile sourceProjectile = Main.projectile[SourceProjectileIndex.GetValue(damageSource)];
 				if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
 					float damageVal = damage;
@@ -1810,14 +1813,13 @@ namespace Origins {
 				damage = (int)(damage - (manaDamage * costMult3));
 				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
 			} else if (reshapingChunk) {
-				damage -= damage / 20;
+				modifiers.SourceDamage *= 0.95f;
 			}
 			if (toxicShock) {
-				damage += Player.statDefense / 10;
+				modifiers.ScalingArmorPenetration += 0.1f;
 			}
-			return damage > 0;
 		}
-		public override void PostHurt(bool pvp, bool quiet, double damage, int hitDirection, bool crit, int cooldownCounter) {
+		public override void PostHurt(Player.HurtInfo info) {
 			if (heliumTankHit) {
 				if ((Player.wereWolf || Player.forceWerewolf) && !Player.hideWolf) {
 					SoundEngine.PlaySound(SoundID.NPCHit6.WithPitch(1), Player.position);
@@ -1834,7 +1836,7 @@ namespace Origins {
 			}
 			if (razorwire) {
 				const float maxDist = 240 * 240;
-				double totalDamage = damage * 0.67f;
+				double totalDamage = info.Damage * 0.67f;
 				List<(int id, float weight)> targets = new();
 				NPC npc;
 				for (int i = 0; i < Main.maxNPCs; i++) {
@@ -1876,7 +1878,7 @@ namespace Origins {
 			}
 			if (unsoughtOrgan) {
 				const float maxDist = 240 * 240;
-				double totalDamage = damage * 0.5f;
+				double totalDamage = info.Damage * 0.5f;
 				List<(int id, float weight)> targets = new();
 				NPC npc;
 				for (int i = 0; i < Main.maxNPCs; i++) {
@@ -2007,7 +2009,7 @@ namespace Origins {
 			}
 		}
 		TagCompound questsTag;
-		public override void OnEnterWorld(Player player) {
+		public override void OnEnterWorld() {
 			questsTag ??= new TagCompound();
 			TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? new TagCompound();
 			Origins.instance.Logger.Debug(worldQuestsTag.ToString());

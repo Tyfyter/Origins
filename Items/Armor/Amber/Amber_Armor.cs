@@ -7,8 +7,8 @@ namespace Origins.Items.Armor.Amber {
     [AutoloadEquip(EquipType.Head)]
 	public class Amber_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amber Exploder Goggles");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Amber Exploder Goggles");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
@@ -35,9 +35,9 @@ namespace Origins.Items.Armor.Amber {
 	[AutoloadEquip(EquipType.Body)]
 	public class Amber_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amber Exploder Resin");
-			Tooltip.SetDefault("-34% explosive self-damage");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Amber Exploder Resin");
+			// Tooltip.SetDefault("-34% explosive self-damage");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
@@ -59,9 +59,9 @@ namespace Origins.Items.Armor.Amber {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Amber_Greaves : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amber Exploder Guards");
-			Tooltip.SetDefault("Increased movement speed");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Amber Exploder Guards");
+			// Tooltip.SetDefault("Increased movement speed");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;

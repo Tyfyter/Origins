@@ -11,8 +11,8 @@ using Terraria.DataStructures;
 namespace Origins.Items.Tools {
 	public class Amoeba_Hook : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amoeba Hook");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Amoeba Hook");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.AmethystHook);

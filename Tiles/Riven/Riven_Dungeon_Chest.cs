@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Riven {
@@ -14,16 +15,16 @@ namespace Origins.Tiles.Riven {
 				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Dungeon_Chest_Glow");
 			}
 			base.SetStaticDefaults();
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Riven Chest");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Riven Chest");
 			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
 			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
-			name.SetDefault("Locked Riven Chest");
+			// name.SetDefault("Locked Riven Chest");
 			AddMapEntry(new Color(140, 140, 140), name, MapChestName);
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.Containers };
-			ContainerName.SetDefault("Riven Chest");
-			ChestDrop = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
+			ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("Riven Chest");
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
 			keyItem = ModContent.ItemType<Riven_Key>();
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
@@ -37,7 +38,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Riven_Dungeon_Chest_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Riven} Chest");
+			// DisplayName.SetDefault("{$Riven} Chest");
 		}
 		public override void SetDefaults() {
 			Item.width = 32;

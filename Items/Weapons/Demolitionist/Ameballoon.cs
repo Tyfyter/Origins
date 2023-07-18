@@ -12,10 +12,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Ameballoon : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Ameballoon");
-			Tooltip.SetDefault("'Arguably worse than lava balloons'");
+			// DisplayName.SetDefault("Ameballoon");
+			// Tooltip.SetDefault("'Arguably worse than lava balloons'");
 			glowmask = Origins.AddGlowMask(this, "");
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
@@ -47,7 +47,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Ameballoon";
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Ameballoon");
+			// DisplayName.SetDefault("Ameballoon");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
@@ -92,7 +92,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Ameballoon_P";
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Ameballoon");
+			// DisplayName.SetDefault("Ameballoon");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);

@@ -61,7 +61,7 @@ namespace Origins.Projectiles.Weapons {
 		public static int ID { get; private set; } = -1;
 		Vector2 realPosition;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Spike Eruption");
+			// DisplayName.SetDefault("{$Defiled} Spike Eruption");
 			ID = Projectile.type;
 		}
 		public override void SetDefaults() {
@@ -115,7 +115,7 @@ namespace Origins.Projectiles.Weapons {
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			behindNPCsAndTiles.Add(index);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.localNPCImmunity[target.whoAmI] = 35 * 7;
 			target.immune[Projectile.owner] = 0;
 		}

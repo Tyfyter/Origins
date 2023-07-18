@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Gun_Glove : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Gun Glove");
-			Tooltip.SetDefault("Shoots as you swing\n'Ammo not included'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Gun Glove");
+			// Tooltip.SetDefault("Shoots as you swing\n'Ammo not included'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 18);

@@ -10,9 +10,9 @@ using Terraria.Utilities;
 namespace Origins.Items.Accessories {
 	public class Parasitic_Influence : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Parasitic Influence");
-			Tooltip.SetDefault("Chance to randomly strike nearby enemies");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Parasitic Influence");
+			// Tooltip.SetDefault("Chance to randomly strike nearby enemies");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(34, 26);
@@ -78,7 +78,7 @@ namespace Origins.Items.Accessories {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Flagellash_P";
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Parasitic Influence");
+			// DisplayName.SetDefault("Parasitic Influence");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ItemID.Spear);

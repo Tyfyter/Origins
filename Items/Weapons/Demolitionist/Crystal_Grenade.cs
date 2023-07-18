@@ -11,9 +11,9 @@ using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Crystal_Grenade : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Crystal Grenade");
-			Tooltip.SetDefault("Explodes into several crystal shards");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Crystal Grenade");
+			// Tooltip.SetDefault("Explodes into several crystal shards");
+			Item.ResearchUnlockCount = 99;
 
 		}
 		public override void SetDefaults() {
@@ -79,7 +79,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			AlphaDestinationBlend = Blend.InverseSourceAlpha,
 		};
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Crystal Grenade");
+			// DisplayName.SetDefault("Crystal Grenade");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
@@ -147,7 +147,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public static int ID { get; private set; } = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Crystal Shard");
+			// DisplayName.SetDefault("Crystal Shard");
 			ID = Projectile.type;
 			try {
 				ProjectileID.Sets.TrailingMode[ID] = 0;

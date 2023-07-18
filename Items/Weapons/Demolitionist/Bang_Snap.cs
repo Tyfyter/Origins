@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Bang_Snap : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bang Snap");
-			Tooltip.SetDefault("The Party Girl loves these");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Bang Snap");
+			// Tooltip.SetDefault("The Party Girl loves these");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);

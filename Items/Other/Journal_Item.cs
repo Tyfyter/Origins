@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other {
 	public class Journal_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Journal");
+			// DisplayName.SetDefault("Journal");
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();

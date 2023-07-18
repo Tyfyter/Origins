@@ -10,11 +10,11 @@ namespace Origins.Items.Weapons.Magic {
 	public class Rigged_Cubix : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Rigged Cubix");
-			Tooltip.SetDefault("'Infinite ammo, infinite wisdom'");
+			// DisplayName.SetDefault("Rigged Cubix");
+			// Tooltip.SetDefault("'Infinite ammo, infinite wisdom'");
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
@@ -47,7 +47,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Rigged_Cubix_P : ModProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Quantum Emission");
+			// DisplayName.SetDefault("Quantum Emission");
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Magic;

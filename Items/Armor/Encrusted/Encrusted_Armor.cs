@@ -10,10 +10,10 @@ namespace Origins.Items.Armor.Encrusted {
 		public const float lightMagnitude = 0.3f;
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Encrusted Mask");
-			Tooltip.SetDefault("Increases minion damage by 10%");
+			// DisplayName.SetDefault("Encrusted Mask");
+			// Tooltip.SetDefault("Increases minion damage by 10%");
 			GlowMask = Origins.AddGlowMask("Armor/Encrusted/Encrusted_Mask_Head_Glow");
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;
@@ -46,11 +46,11 @@ namespace Origins.Items.Armor.Encrusted {
 	public class Encrusted_Coat : ModItem {
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Encrusted Coat");
-			Tooltip.SetDefault("Increases your max number of minions by 1");
+			// DisplayName.SetDefault("Encrusted Coat");
+			// Tooltip.SetDefault("Increases your max number of minions by 1");
 			GlowMask = Origins.AddGlowMask("Armor/Encrusted/Encrusted_Coat_Body_Glow");
 			Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Encrusted/Encrusted_Coat_Body_Glow");
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
@@ -75,9 +75,9 @@ namespace Origins.Items.Armor.Encrusted {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Encrusted_Pants : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Encrusted Pants");
-			Tooltip.SetDefault("Increases jump height");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Encrusted Pants");
+			// Tooltip.SetDefault("Increases jump height");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;

@@ -1,4 +1,4 @@
-﻿using AltLibrary.Common.AltBiomes;
+﻿//using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items;
@@ -152,29 +152,47 @@ namespace Origins.Projectiles {
 				dust.noLight = true;
 			}
 		}
-		public override void ModifyHitNPC(Projectile projectile, NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
 			//this is actually how vanilla does projectile crits, which might explain why there are no vanilla multiclass weapons, since a 4% crit chance with a 4-class weapon would crit ~15% of the time
-			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
 			if (viperEffect) {
-				bool crt = crit;
 				for (int i = 0; i < target.buffType.Length; i++) {
 					if (Main.debuff[target.buffType[i]] && target.buffType[i] != Toxic_Shock_Debuff.ID) {
-						crit = true;
+						modifiers.SetCrit();
 						break;
 					}
 				}
-				if (crt || Main.rand.Next(0, 9) == 0) {
-					target.AddBuff(Toxic_Shock_Debuff.ID, 450);
-				}
 			}
 			if (target.boss && godHunterEffect != 0f) {
-				damage += (int)(damage * godHunterEffect);
+				modifiers.SourceDamage *= 1 + godHunterEffect;
+			}
+		}
+		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
+			if (fiberglassLifesteal) {
+				Projectile.NewProjectile(
+					projectile.GetSource_OnHit(target),
+					target.Center,
+					default,
+					ModContent.ProjectileType<Entangled_Energy_Lifesteal>(),
+					damageDone / 10,
+					0,
+					projectile.owner
+				);
+			}
+			if (target.life <= 0 && prefix == ModContent.PrefixType<Imperfect_Prefix>()) {
+				if (fromItemType == ModContent.ItemType<Shardcannon>()) {
+					ModContent.GetInstance<Shardcannon_Quest>().UpdateKillCount();
+				}
+			}
+			if (viperEffect) {
+				if (hit.Crit || Main.rand.Next(0, 9) == 0) {
+					target.AddBuff(Toxic_Shock_Debuff.ID, 450);
+				}
 			}
 		}
 		public override bool CanHitPlayer(Projectile projectile, Player target) {
 			return ownerSafe ? target.whoAmI != projectile.owner : true;
 		}
-		public override void OnHitPlayer(Projectile projectile, Player target, int damage, bool crit) {
+		public override void OnHitPlayer(Projectile projectile, Player target, Player.HurtInfo info) {
 
 		}
 		public override bool PreKill(Projectile projectile, int timeLeft) {
@@ -192,30 +210,14 @@ namespace Origins.Projectiles {
 				killLink = -1;
 			}
 		}
-		public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
-			if (fiberglassLifesteal) {
-				Projectile.NewProjectile(
-					projectile.GetSource_OnHit(target),
-					target.Center,
-					default,
-					ModContent.ProjectileType<Entangled_Energy_Lifesteal>(),
-					damage / 10,
-					0,
-					projectile.owner
-				);
-			}
-			if (target.life <= 0 && prefix == ModContent.PrefixType<Imperfect_Prefix>()) {
-				if (fromItemType == ModContent.ItemType<Shardcannon>()) {
-					ModContent.GetInstance<Shardcannon_Quest>().UpdateKillCount();
-				}
-			}
-		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
 			binaryWriter.Write(prefix);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			prefix = binaryReader.ReadInt32();
 		}
+
+#if false ///TODO: find a way
 		public static void ClentaminatorAI<TBiome>(Projectile projectile, int dustType, Color color) where TBiome : AltBiome {
 			if (projectile.owner == Main.myPlayer) {
 				AltLibrary.Core.ALConvert.SimulateSolution<TBiome>(projectile);
@@ -257,5 +259,6 @@ namespace Origins.Projectiles {
 			}
 			projectile.rotation += 0.3f * projectile.direction;
 		}
+#endif
 	}
 }

@@ -3,6 +3,7 @@ using Origins.Journal;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -14,9 +15,9 @@ namespace Origins.Tiles.Defiled {
 			Main.tileLighted[Type] = true;
 			Main.tileOreFinderPriority[Type] = 320;
 			TileID.Sets.Ore[Type] = true;
-			ItemDrop = ItemType<Defiled_Ore_Item>();
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Lost Ore");
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Defiled_Ore_Item>();
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Lost Ore");
 			AddMapEntry(new Color(225, 225, 225), name);
 			mergeID = TileID.Demonite;
 		}
@@ -37,8 +38,8 @@ namespace Origins.Tiles.Defiled {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Lost_Ore_Entry).Name;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lost Ore");
-			Tooltip.SetDefault("A strange metal warped to the curiosity of the Defiled");
+			// DisplayName.SetDefault("Lost Ore");
+			// Tooltip.SetDefault("A strange metal warped to the curiosity of the Defiled");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DemoniteOre);

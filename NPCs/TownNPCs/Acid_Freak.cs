@@ -18,7 +18,7 @@ namespace Origins.NPCs.TownNPCs {
 	[AutoloadHead]
 	public class Acid_Freak : ModNPC {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Acid Freak");
+			// DisplayName.SetDefault("Acid Freak");
 			Main.npcFrameCount[Type] = 23; // The amount of frames the NPC has, walk frame count (15) + ExtraFramesCount
 
 			NPCID.Sets.ExtraFramesCount[Type] = 8; // Generally for Town NPCs, but this is how the NPC does extra things such as sitting in a chair and talking to other NPCs.
@@ -145,7 +145,7 @@ namespace Origins.NPCs.TownNPCs {
 			return base.CheckConditions(left, right, top, bottom);
 		}
 		public override bool CanGoToStatue(bool toKingStatue) => toKingStatue;
-		public override bool CanTownNPCSpawn(int numTownNPCs, int money) { // Requirements for the town NPC to spawn.
+		public override bool CanTownNPCSpawn(int numTownNPCs)/* tModPorter Suggestion: Copy the implementation of NPC.SpawnAllowed_Merchant in vanilla if you to count money, and be sure to set a flag when unlocked, so you don't count every tick. */ { // Requirements for the town NPC to spawn.
 			for (int k = 0; k < 255; k++) {
 				Player player = Main.player[k];
 				if (!player.active) {
@@ -164,7 +164,7 @@ namespace Origins.NPCs.TownNPCs {
 			button = Language.GetTextValue("LegacyInterface.28");
 		}
 
-		public override void OnChatButtonClicked(bool firstButton, ref bool shop) {
+		public override void OnChatButtonClicked(bool firstButton, ref string shopName) {
 			if (firstButton) {
 				shop = true;
 			}

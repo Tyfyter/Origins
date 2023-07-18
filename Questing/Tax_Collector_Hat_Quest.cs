@@ -7,7 +7,7 @@ using Terraria.ModLoader.IO;
 namespace Origins.Questing {
 	public class Tax_Collector_Hat_Quest : Quest {
 		public override void Load() {
-			On.Terraria.NPC.UsesPartyHat += (orig, self) => {
+			Terraria.On_NPC.UsesPartyHat += (orig, self) => {
 				if (self.type == NPCID.TaxCollector) {
 					if (self.ForcePartyHatOn) {
 						return true;

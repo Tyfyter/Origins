@@ -6,9 +6,9 @@ using Origins.Items.Materials;
 namespace Origins.Items.Other.Consumables.Food {
 	public class Soul_Spaghetti : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Soul Spaghetti");
-			Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'Tastes like noodle with hairs and meats'");
-			SacrificeTotal = 5;
+			// DisplayName.SetDefault("Soul Spaghetti");
+			// Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'Tastes like noodle with hairs and meats'");
+			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.MonsterLasagna);

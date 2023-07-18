@@ -12,9 +12,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Ace_Shrapnel : ModItem {
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Ace Shrapnel");
-			Tooltip.SetDefault("Not implemented the way spriter dev wants it\nUses scrap as ammo");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Ace Shrapnel");
+			// Tooltip.SetDefault("Not implemented the way spriter dev wants it\nUses scrap as ammo");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Ace_Shrapnel_P : ModProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Ace Shrapnel");
+			// DisplayName.SetDefault("Ace Shrapnel");
 		}
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetDefaults() {
@@ -82,7 +82,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.BoneGloveProj;
 		int dustStyle;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Shrapnel");
+			// DisplayName.SetDefault("Shrapnel");
 			//Origins.ExplosiveProjectiles[Projectile.type] = true;
 		}
 		public override void SetDefaults() {
@@ -112,7 +112,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				//Dust.NewDustDirect(projectile.Center+new Vector2(16,0).RotatedBy(targetAngle), 0, 0, 6, Scale:2).noGravity = true;
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.immune[Projectile.owner] /= 2;
 			if (target.life <= 0 && Projectile.ai[1] < 5) {
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Ace_Shrapnel_P>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 8 - Projectile.ai[1], Projectile.ai[1]);

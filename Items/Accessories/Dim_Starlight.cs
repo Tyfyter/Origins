@@ -6,10 +6,10 @@ namespace Origins.Items.Accessories {
 	public class Dim_Starlight : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dim Starlight");
-			Tooltip.SetDefault("Chance for mana stars to fall from critical hits");
+			// DisplayName.SetDefault("Dim Starlight");
+			// Tooltip.SetDefault("Chance for mana stars to fall from critical hits");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 30);

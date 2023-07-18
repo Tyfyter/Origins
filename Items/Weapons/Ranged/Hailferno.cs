@@ -9,9 +9,9 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Hailferno : ModItem {
 		public override string Texture => "Origins/Items/Weapons/Ranged/Sleetfire";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hailferno");
-			Tooltip.SetDefault("Uses gel as ammo");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Hailferno");
+			// Tooltip.SetDefault("Uses gel as ammo");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.EldMelter);
@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public static float MinSize => 16f;
 		public static float MaxSize => 66f;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Slushflame");
+			// DisplayName.SetDefault("Slushflame");
 			Main.projFrames[Type] = 7;
 		}
 		public override void SetDefaults() {

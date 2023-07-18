@@ -10,10 +10,10 @@ namespace Origins.Items.Weapons.Magic {
 	//[LegacyName("Felnum_Staff")]?
 	public class Hivateinn : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hævateinn");
-			Tooltip.SetDefault("Receives 50% higher damage bonuses\nsprite needs recoloring");
+			// DisplayName.SetDefault("Hævateinn");
+			// Tooltip.SetDefault("Receives 50% higher damage bonuses\nsprite needs recoloring");
 			Item.staff[Item.type] = true;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
@@ -45,7 +45,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Felnum_Lightning : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_466";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hævateinn");
+			// DisplayName.SetDefault("Hævateinn");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
@@ -82,7 +82,7 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.velocity = direction;
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<LightningImmuneFixBuff>(), 4);
 		}
 		public override bool? CanHitNPC(NPC target) {

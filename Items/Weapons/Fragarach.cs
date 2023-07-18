@@ -10,10 +10,10 @@ namespace Origins.Items.Weapons {
 		static short glowmask;
 		//public override bool OnlyShootOnSwing => true;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fragarach");
-			Tooltip.SetDefault("Needs to be put in ROTP when it gets devving");
+			// DisplayName.SetDefault("Fragarach");
+			// Tooltip.SetDefault("Needs to be put in ROTP when it gets devving");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons {
 	public class Fragarach_P : ModProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fragarach");
+			// DisplayName.SetDefault("Fragarach");
 			ID = Projectile.type;
 		}
 		public override void SetDefaults() {
@@ -75,10 +75,10 @@ namespace Origins.Items.Weapons {
 				}
 			}
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			base.ModifyHitNPC(target, ref damage, ref knockback, ref crit, ref hitDirection);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			base.OnHitNPC(target, damage, knockback, crit);
 		}
 		public override void Kill(int timeLeft) {

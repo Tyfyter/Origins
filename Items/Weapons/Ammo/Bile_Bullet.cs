@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Bullet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bile Bullet");
-			Tooltip.SetDefault("Stuns the target");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Bile Bullet");
+			// Tooltip.SetDefault("Stuns the target");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedBullet);
@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Ammo {
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 			SoundEngine.PlaySound(SoundID.NPCHit22.WithVolume(0.5f), Projectile.position);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 20);
 		}
 	}

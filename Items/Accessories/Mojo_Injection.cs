@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mojo_Injection : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mojo Injection");
-			Tooltip.SetDefault("Slowly reduces assimilation");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Mojo Injection");
+			// Tooltip.SetDefault("Slowly reduces assimilation");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);

@@ -26,7 +26,7 @@ namespace Origins.Tiles.BossDrops {
 	}
 	public class DA_Trophy_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled Amalgamation Trophy");
+			// DisplayName.SetDefault("Defiled Amalgamation Trophy");
 		}
 
 		public override void SetDefaults() {

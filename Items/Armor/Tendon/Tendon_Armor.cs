@@ -6,9 +6,9 @@ namespace Origins.Items.Armor.Tendon {
     [AutoloadEquip(EquipType.Head)]
 	public class Tendon_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tendon Helmet");
-			Tooltip.SetDefault("+10% ranged damage");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Tendon Helmet");
+			// Tooltip.SetDefault("+10% ranged damage");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;
@@ -36,9 +36,9 @@ namespace Origins.Items.Armor.Tendon {
 	[AutoloadEquip(EquipType.Body)]
 	public class Tendon_Shirt : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tendon Shirt");
-			Tooltip.SetDefault("+6% critical strike chance");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Tendon Shirt");
+			// Tooltip.SetDefault("+6% critical strike chance");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
@@ -59,9 +59,9 @@ namespace Origins.Items.Armor.Tendon {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Tendon_Pants : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tendon Pants");
-			Tooltip.SetDefault("+20% ammo preservation");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Tendon Pants");
+			// Tooltip.SetDefault("+20% ammo preservation");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;

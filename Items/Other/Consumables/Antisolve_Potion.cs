@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Antisolve_Potion : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Antisolve Potion");
-			Tooltip.SetDefault("Grants immunity to 'Toxic Shock' and 'Torn'");
-			SacrificeTotal = 20;
+			// DisplayName.SetDefault("Antisolve Potion");
+			// Tooltip.SetDefault("Grants immunity to 'Toxic Shock' and 'Torn'");
+			Item.ResearchUnlockCount = 20;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WrathPotion);

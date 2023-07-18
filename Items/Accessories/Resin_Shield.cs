@@ -9,9 +9,9 @@ namespace Origins.Items.Accessories {
 		public static int ShieldID { get; private set; }
 		public static int InactiveShieldID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Resin Shield");
-			Tooltip.SetDefault("Grants immunity to knockback\nGrants immunity to fire blocks\nBlocks all self-damage on next hit\n5 second cooldown\n'A shield to withstand the test of time'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Resin Shield");
+			// Tooltip.SetDefault("Grants immunity to knockback\nGrants immunity to fire blocks\nBlocks all self-damage on next hit\n5 second cooldown\n'A shield to withstand the test of time'");
+			Item.ResearchUnlockCount = 1;
 			ShieldID = Item.shieldSlot;
 		}
 		public override void Load() {

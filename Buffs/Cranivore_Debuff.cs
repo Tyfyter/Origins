@@ -5,8 +5,8 @@ namespace Origins.Buffs {
     public class Cranivore_Debuff : ModBuff {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cranivore");
-			Description.SetDefault("It's on your face!");
+			// DisplayName.SetDefault("Cranivore");
+			// Description.SetDefault("It's on your face!");
 			Main.debuff[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			ID = Type;

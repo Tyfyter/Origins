@@ -139,7 +139,7 @@ namespace Origins.NPCs.Defiled {
 		public abstract float Mana { get; set; }
 		public virtual bool ForceSyncMana => false;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Digger");
+			// DisplayName.SetDefault("{$Defiled} Digger");
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Defiled_Wastelands>().Type
 			};
@@ -152,7 +152,7 @@ namespace Origins.NPCs.Defiled {
 				NPC.immune = head.immune;
 			}
 		}
-		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
+		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			if (NPC.realLife != NPC.whoAmI) {
 				if (projectile.usesLocalNPCImmunity) {
 					projectile.localNPCImmunity[NPC.realLife] = projectile.localNPCHitCooldown;
@@ -171,12 +171,12 @@ namespace Origins.NPCs.Defiled {
 			}
 			return null;
 		}
-		public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
+		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			int halfWidth = NPC.width / 2;
 			int baseX = player.direction > 0 ? 0 : halfWidth;
 			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), new Vector2(knockback * player.direction, -0.1f * knockback), Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				NPC current = Main.npc[NPC.realLife];
 				while (current.ai[0] != 0) {

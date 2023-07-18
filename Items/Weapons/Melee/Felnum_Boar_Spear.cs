@@ -10,9 +10,9 @@ namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Boar_Spear : ModItem {
 		public const int baseDamage = 18;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Felnum Boar Spear");
-			Tooltip.SetDefault("Receives 50% higher damage bonuses");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Felnum Boar Spear");
+			// Tooltip.SetDefault("Receives 50% higher damage bonuses");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = baseDamage;
@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Boar_Spear_Stab : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Felnum_Boar_Spear_P";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Felnum Boar Spear");
+			// DisplayName.SetDefault("Felnum Boar Spear");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
@@ -88,7 +88,7 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.rotation -= MathHelper.Pi / 2f;
 			}
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			Player player = Main.player[Projectile.owner];
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (originPlayer.felnumShock > 29) {

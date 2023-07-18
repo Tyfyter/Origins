@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Protean_Potion : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Protean Potion");
-			Tooltip.SetDefault("Half of any weapon boosts are shared across all classes");
-			SacrificeTotal = 20;
+			// DisplayName.SetDefault("Protean Potion");
+			// Tooltip.SetDefault("Half of any weapon boosts are shared across all classes");
+			Item.ResearchUnlockCount = 20;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WrathPotion);

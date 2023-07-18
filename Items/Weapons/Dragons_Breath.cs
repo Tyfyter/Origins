@@ -9,10 +9,10 @@ namespace Origins.Items.Weapons {
 	public class Dragons_Breath : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dragon's Breath");
-			Tooltip.SetDefault("Uses fireblossoms as ammo\nDesperately needs rework");
+			// DisplayName.SetDefault("Dragon's Breath");
+			// Tooltip.SetDefault("Uses fireblossoms as ammo\nDesperately needs rework");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);
@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons {
 		public override string Texture => "Terraria/Images/Item_37";
 		List<Particle> particles;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dragon's Breath");
+			// DisplayName.SetDefault("Dragon's Breath");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
@@ -102,7 +102,7 @@ namespace Origins.Items.Weapons {
 			Projectile.timeLeft /= 2;
 			return false;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			Projectile.frame = 0;
 			if (Projectile.velocity == Vector2.Zero) hitDirection = target.Center.X > Projectile.Center.X ? -1 : 1;
 			else {
@@ -114,7 +114,7 @@ namespace Origins.Items.Weapons {
 				}
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			bool centered = target.Hitbox.Contains(Projectile.oldPosition.ToPoint());
 			target.AddBuff(BuffID.Daybreak, centered ? 30 : 5);
 			target.immune[Projectile.owner] = 12;

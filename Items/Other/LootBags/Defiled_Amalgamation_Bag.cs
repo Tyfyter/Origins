@@ -8,8 +8,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.LootBags {
 	public class Defiled_Amalgamation_Bag : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Treasure Bag (Defiled Amalgamation)");
-			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			// DisplayName.SetDefault("Treasure Bag (Defiled Amalgamation)");
+			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);

@@ -10,9 +10,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Materials {
 	public class Dreadful_Powder : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dreadful Powder");
-			Tooltip.SetDefault("Spreads the Defiled");
-			SacrificeTotal = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.VilePowder];
+			// DisplayName.SetDefault("Dreadful Powder");
+			// Tooltip.SetDefault("Spreads the Defiled");
+			Item.ResearchUnlockCount = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.VilePowder];
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.VilePowder);

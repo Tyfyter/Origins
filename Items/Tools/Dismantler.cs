@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Dismantler : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dismantler");
-			Tooltip.SetDefault("Able to mine Hellstone\n'Very pointy'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Dismantler");
+			// Tooltip.SetDefault("Able to mine Hellstone\n'Very pointy'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DeathbringerPickaxe);

@@ -7,10 +7,10 @@ namespace Origins.Items.Accessories {
 	public class Rebreather : ModItem {
 		public static sbyte FaceSlot { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Rebreather");
-			Tooltip.SetDefault("Gain more breath as you move in water");
+			// DisplayName.SetDefault("Rebreather");
+			// Tooltip.SetDefault("Gain more breath as you move in water");
 			FaceSlot = Item.faceSlot;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 22);

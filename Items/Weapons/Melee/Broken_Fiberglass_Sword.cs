@@ -8,9 +8,9 @@ namespace Origins.Items.Weapons.Melee {
 	public class Broken_Fiberglass_Sword : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Broken Fiberglass Sword");
-			Tooltip.SetDefault("'It's even sharper now'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Broken Fiberglass Sword");
+			// Tooltip.SetDefault("'It's even sharper now'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 18;
@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Broken_Fiberglass_Sword_Stab : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Broken_Fiberglass_Sword";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Broken Fiberglass Sword");
+			// DisplayName.SetDefault("Broken Fiberglass Sword");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);

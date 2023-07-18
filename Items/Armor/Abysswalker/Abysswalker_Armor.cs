@@ -7,9 +7,9 @@ namespace Origins.Items.Armor.Abysswalker {
     [AutoloadEquip(EquipType.Head)]
 	public class Abysswalker_Hood : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Abysswalker's Hood");
-			Tooltip.SetDefault("+20 max life");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Abysswalker's Hood");
+			// Tooltip.SetDefault("+20 max life");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
@@ -109,9 +109,9 @@ namespace Origins.Items.Armor.Abysswalker {
 	[AutoloadEquip(EquipType.Body)]
 	public class Abysswalker_Cloak : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Abysswalker's Cloak");
-			Tooltip.SetDefault("Increased life regeneration");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Abysswalker's Cloak");
+			// Tooltip.SetDefault("Increased life regeneration");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 11;
@@ -135,9 +135,9 @@ namespace Origins.Items.Armor.Abysswalker {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Abysswalker_Greaves : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Abysswalker's Greaves");
-			Tooltip.SetDefault("Increased movement speed");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Abysswalker's Greaves");
+			// Tooltip.SetDefault("Increased movement speed");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 8;

@@ -9,9 +9,9 @@ namespace Origins.Items.Accessories {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Tripod_Nip_Entry).Name;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tripod Nip");
-			Tooltip.SetDefault("Reduces enemy aggression and spawn rates");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Tripod Nip");
+			// Tooltip.SetDefault("Reduces enemy aggression and spawn rates");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 24);

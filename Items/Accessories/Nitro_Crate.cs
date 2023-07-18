@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Nitro_Crate : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Nitro Crate");
-			Tooltip.SetDefault("Increases explosive blast radius by 40%");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Nitro Crate");
+			// Tooltip.SetDefault("Increases explosive blast radius by 40%");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 26);

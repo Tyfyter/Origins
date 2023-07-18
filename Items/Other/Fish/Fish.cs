@@ -7,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Fish {
 	public class Prikish : ModItem {
 		public override void SetStaticDefaults() {
-			SacrificeTotal = 2;
+			Item.ResearchUnlockCount = 2;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToQuestFish();
@@ -25,8 +25,8 @@ namespace Origins.Items.Other.Fish {
 	}
 	public class Bonehead_Jellyfish : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bonehead Jellyfish");
-			SacrificeTotal = 2;
+			// DisplayName.SetDefault("Bonehead Jellyfish");
+			Item.ResearchUnlockCount = 2;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToQuestFish();
@@ -42,7 +42,7 @@ namespace Origins.Items.Other.Fish {
 	}
 	public class Duskarp : ModItem {
 		public override void SetStaticDefaults() {
-			SacrificeTotal = 2;
+			Item.ResearchUnlockCount = 2;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToQuestFish();
@@ -58,9 +58,9 @@ namespace Origins.Items.Other.Fish {
 	}
 	public class Tire : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tire");
+			// DisplayName.SetDefault("Tire");
 			ItemID.Sets.ExtractinatorMode[Type] = 1;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.useStyle = ItemUseStyleID.Swing;
@@ -71,7 +71,7 @@ namespace Origins.Items.Other.Fish {
 			Item.autoReuse = true;
 			Item.consumable = true;
 		}
-		public override void ExtractinatorUse(ref int resultType, ref int resultStack) {
+		public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack) {
 			base.ExtractinatorUse(ref resultType, ref resultStack);
 		}
 		public override void AddRecipes() {
@@ -83,7 +83,7 @@ namespace Origins.Items.Other.Fish {
 	}
 	public class Tearracuda : ModItem {
 		public override void SetStaticDefaults() {
-			SacrificeTotal = 3;
+			Item.ResearchUnlockCount = 3;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Hemopiranha);
@@ -98,7 +98,7 @@ namespace Origins.Items.Other.Fish {
 	}
 	public class Bilemouth : ModItem {
 		public override void SetStaticDefaults() {
-			SacrificeTotal = 3;
+			Item.ResearchUnlockCount = 3;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Hemopiranha);

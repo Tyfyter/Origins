@@ -10,9 +10,9 @@ using Terraria.Utilities;
 namespace Origins.Items.Accessories {
 	public class Protozoa_Food : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Protozoa Food");
-			Tooltip.SetDefault("+1 minion slot\nSummons an amoeba pellet to chase after enemies and slow them down for every minion slot you have");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Protozoa Food");
+			// Tooltip.SetDefault("+1 minion slot\nSummons an amoeba pellet to chase after enemies and slow them down for every minion slot you have");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 20);
@@ -159,7 +159,7 @@ namespace Origins.Items.Accessories {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			ID = Projectile.type;
-			DisplayName.SetDefault("Little Protozoa");
+			// DisplayName.SetDefault("Little Protozoa");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 1;
 
@@ -337,7 +337,7 @@ namespace Origins.Items.Accessories {
 			Projectile.Damage();
 			return true;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Slow_Debuff.ID, Main.rand.Next(120, 180));
 		}
 	}

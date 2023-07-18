@@ -10,9 +10,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Lazy_Cloak : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lazy Cloak");
-			Tooltip.SetDefault("Chases after marked enemies\n'It just doesn't want to do all the work'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Lazy Cloak");
+			// Tooltip.SetDefault("Chases after marked enemies\n'It just doesn't want to do all the work'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 36);
@@ -25,7 +25,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Master;
 			Item.backSlot = 5;
 			Item.frontSlot = 3;
-			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.hasVanityEffects = true;
 			Item.master = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
@@ -49,7 +49,7 @@ namespace Origins.Items.Accessories {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			Eyeball_Staff.projectileID = Projectile.type;
-			DisplayName.SetDefault("Lazy Cloak");
+			// DisplayName.SetDefault("Lazy Cloak");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 2;
 
@@ -233,7 +233,7 @@ namespace Origins.Items.Accessories {
 			}
 			#endregion
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Ichor, 60);
 			if (crit && target.life < damage * 3) {
 				target.life = 0;
@@ -247,8 +247,8 @@ namespace Origins.Buffs {
 		public override string Texture => "Origins/Buffs/Lazy_Cloak_Buff";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lazy Cloak");
-			Description.SetDefault("Your cloak will fight for you");
+			// DisplayName.SetDefault("Lazy Cloak");
+			// Description.SetDefault("Your cloak will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			ID = Type;

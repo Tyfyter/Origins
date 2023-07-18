@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables.Food {
     public class Periven : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Periven");
-			Tooltip.SetDefault("{$CommonItemTooltip.MinorStats}");
-			SacrificeTotal = 5;
+			// DisplayName.SetDefault("Periven");
+			// Tooltip.SetDefault("{$CommonItemTooltip.MinorStats}");
+			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.BloodOrange);

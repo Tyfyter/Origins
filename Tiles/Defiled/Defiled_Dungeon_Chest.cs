@@ -17,22 +17,22 @@ namespace Origins.Tiles.Defiled {
 	public class Defiled_Dungeon_Chest : ModChest {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("{$Defiled} Chest");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("{$Defiled} Chest");
 			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
 			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
-			name.SetDefault("Locked {$Defiled} Chest");
+			// name.SetDefault("Locked {$Defiled} Chest");
 			AddMapEntry(new Color(140, 140, 140), name, MapChestName);
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.Containers };
-			ContainerName.SetDefault("{$Defiled} Chest");
-			ChestDrop = ModContent.ItemType<Defiled_Dungeon_Chest_Item>();
+			ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.SetDefault("{$Defiled} Chest");
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<Defiled_Dungeon_Chest_Item>();
 			keyItem = ModContent.ItemType<Defiled_Key>();
 		}
 	}
 	public class Defiled_Dungeon_Chest_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Chest");
+			// DisplayName.SetDefault("{$Defiled} Chest");
 		}
 
 		public override void SetDefaults() {
@@ -52,7 +52,7 @@ namespace Origins.Tiles.Defiled {
 	public class Locked_Defiled_Dungeon_Chest_Item : Defiled_Dungeon_Chest_Item {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Dungeon_Chest_Item";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Defiled Chest (locked)");
+			// DisplayName.SetDefault("Defiled Chest (locked)");
 		}
 
 		public override void SetDefaults() {

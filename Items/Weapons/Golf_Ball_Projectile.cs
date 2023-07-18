@@ -26,10 +26,10 @@ namespace Origins.Items.Weapons {
 			}
 			return false;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			damage += (int)(damage * Projectile.velocity.Length() * 0.0833f);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Vector2 hitbox = Projectile.Hitbox.Center.ToVector2();
 			Vector2 intersect = Rectangle.Intersect(Projectile.Hitbox, target.Hitbox).Center.ToVector2();
 			bool bounced = false;

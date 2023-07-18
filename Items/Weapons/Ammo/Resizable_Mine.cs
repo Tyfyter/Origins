@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Resizable_Mine_One : Resizable_Mine_Two {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Resizable Mine Mk. I");
-			Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Resizable Mine Mk. I");
+			// Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
@@ -32,9 +32,9 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class Resizable_Mine_Two : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Resizable Mine Mk. II");
-			Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Resizable Mine Mk. II");
+			// Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
@@ -57,9 +57,9 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class Resizable_Mine_Three : Resizable_Mine_Two {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Resizable Mine Mk. III");
-			Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Resizable Mine Mk. III");
+			// Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
@@ -82,9 +82,9 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class Resizable_Mine_Four : Resizable_Mine_Two {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Resizable Mine Mk. IV");
-			Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Resizable Mine Mk. IV");
+			// Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
@@ -107,9 +107,9 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class Resizable_Mine_Five : Resizable_Mine_Two {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Resizable Mine Mk. V");
-			Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Resizable Mine Mk. V");
+			// Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
@@ -133,7 +133,7 @@ namespace Origins.Items.Weapons.Ammo {
 	public abstract class Resizable_Mine_P<TextureItem> : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => (typeof(TextureItem).Namespace + "." + typeof(TextureItem).Name).Replace('.', '/');
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Resizable Mine");
+			// DisplayName.SetDefault("Resizable Mine");
 			Origins.MagicTripwireRange[Type] = 40;
 		}
 		public override void SetDefaults() {

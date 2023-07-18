@@ -21,7 +21,7 @@ namespace Origins.Tiles.Defiled {
             for(int i = 0; i < TileLoader.TileCount; i++) {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
             }*/
-			ItemDrop = ItemType<Defiled_Stone_Item>();
+			//ItemDrop = ItemType<Defiled_Stone_Item>();
 			AddMapEntry(new Color(200, 200, 200));
 			//SetModTree(Defiled_Tree.Instance);
 			mergeID = TileID.Stone;
@@ -37,7 +37,7 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Defiled_Stone_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Stone");
+			// DisplayName.SetDefault("{$Defiled} Stone");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

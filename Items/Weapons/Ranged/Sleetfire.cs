@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Sleetfire : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Sleetfire");
-			Tooltip.SetDefault("Uses gel as ammo");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Sleetfire");
+			// Tooltip.SetDefault("Uses gel as ammo");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.EldMelter);
@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class Sleetfire_P : ModProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Frosty Flame");
+			// DisplayName.SetDefault("Frosty Flame");
 		}
 		public override void SetDefaults() {
 			Projectile.width = Projectile.height = 6;
@@ -68,7 +68,7 @@ namespace Origins.Items.Weapons.Ranged {
 			int scale = (int)Utils.Remap(Projectile.ai[0], 0f, 25f, 10f, 60f);
 			hitbox.Inflate(scale, scale);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Frostburn, crit ? 600 : 300);
 		}
 		public override Color? GetAlpha(Color lightColor) {

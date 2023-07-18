@@ -11,9 +11,9 @@ using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bloombomb : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bloombomb");
-			Tooltip.SetDefault("Explodes into seeds");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Bloombomb");
+			// Tooltip.SetDefault("Explodes into seeds");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Bloombomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Bloombomb";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bloombomb");
+			// DisplayName.SetDefault("Bloombomb");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
@@ -75,7 +75,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Seed;
 		public static int ID { get; private set; } = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bloombomb");
+			// DisplayName.SetDefault("Bloombomb");
 			ID = Projectile.type;
 		}
 		public override void SetDefaults() {

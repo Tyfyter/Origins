@@ -13,7 +13,7 @@ namespace Origins.Walls {
 	}
 	public class Eden_Wood_Wall_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Eden Wood Wall");
+			// DisplayName.SetDefault("Eden Wood Wall");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodWall);

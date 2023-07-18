@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	//[AutoloadEquip(EquipType.Neck)] doesn't have neck spritesheet
 	public class Hazard_Charm : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hazard Charm");
-			Tooltip.SetDefault("{$Mods.Origins.ItemTooltip.Bomb_Charm}\n{$Mods.Origins.ItemTooltip.Trap_Charm}\n{$ItemTooltip.LavaCharm}");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Hazard Charm");
+			// Tooltip.SetDefault("{$Mods.Origins.ItemTooltip.Bomb_Charm}\n{$Mods.Origins.ItemTooltip.Trap_Charm}\n{$ItemTooltip.LavaCharm}");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 26);

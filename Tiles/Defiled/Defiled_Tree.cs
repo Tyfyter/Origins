@@ -8,6 +8,7 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -98,8 +99,8 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.addSubTile(1);*/
 			TileObjectData.addTile(Type);
 
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("{$Defiled} Sapling");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("{$Defiled} Sapling");
 			AddMapEntry(new Color(200, 200, 200), name);
 
 			TileID.Sets.TreeSapling[Type] = true;

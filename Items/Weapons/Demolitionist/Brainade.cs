@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Brainade : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Brainade");
-			Tooltip.SetDefault("Explodes into a bloody mess\n'Mind blown'");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Brainade");
+			// Tooltip.SetDefault("Explodes into a bloody mess\n'Mind blown'");
+			Item.ResearchUnlockCount = 99;
 
 		}
 		public override void SetDefaults() {
@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Brainade_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Brainade";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Brainade");
+			// DisplayName.SetDefault("Brainade");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
@@ -105,7 +105,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Damage();
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.timeLeft > 168 && (Projectile.ai[1] % 1 + 1) % 1 == 0.5f) Projectile.penetrate++;
 			target.AddBuff(BuffID.Confused, 180);
 			target.AddBuff(BuffID.Bleeding, 180);

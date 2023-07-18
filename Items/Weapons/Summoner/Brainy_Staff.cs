@@ -12,9 +12,9 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Brainy Staff");
-			Tooltip.SetDefault("Summons a mini crimbrain to fight for you");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Brainy Staff");
+			// Tooltip.SetDefault("Summons a mini crimbrain to fight for you");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 10;
@@ -48,8 +48,8 @@ namespace Origins.Items.Weapons.Summoner {
 namespace Origins.Buffs {
 	public class Brainy_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Crimbrain");
-			Description.SetDefault("The crimbrain will fight for you");
+			// DisplayName.SetDefault("Crimbrain");
+			// Description.SetDefault("The crimbrain will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Brainy_Staff.buffID = Type;
@@ -71,7 +71,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public const int frameSpeed = 4;
 		public override void SetStaticDefaults() {
 			Brainy_Staff.projectileID = Projectile.type;
-			DisplayName.SetDefault("Brainchild");
+			// DisplayName.SetDefault("Brainchild");
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;
 			// This is necessary for right-click targeting
@@ -237,7 +237,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			}
 			#endregion
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Main.rand.Next(10) < 3 && (target.Center - Main.player[Projectile.owner].Center).Length() < 480) {
 				target.AddBuff(BuffID.Confused, 60);
 			}

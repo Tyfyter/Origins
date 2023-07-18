@@ -11,9 +11,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public ushort Element => Elements.Acid;
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Caustica");
-			Tooltip.SetDefault("Releases a flurry of chaotic sparkles\nDeveloper item");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Caustica");
+			// Tooltip.SetDefault("Releases a flurry of chaotic sparkles\nDeveloper item");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
@@ -43,7 +43,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Caustica_P : ModProjectile {
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Caustica");
+			// DisplayName.SetDefault("Caustica");
 		}
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetDefaults() {
@@ -97,7 +97,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.damage = (int)(Projectile.damage * 0.75f);
 			Projectile.Damage();
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.ai[0] == 0) {
 				Projectile.ai[0]++;
 				Projectile.ai[1] = target.whoAmI;

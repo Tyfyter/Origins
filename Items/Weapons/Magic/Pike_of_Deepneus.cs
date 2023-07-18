@@ -13,9 +13,9 @@ namespace Origins.Items.Weapons.Magic {
     public class Pike_of_Deepneus : ModItem {
 		public const int baseDamage = 64;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Pike of Deepneus");
-			Tooltip.SetDefault("Time your throws for more powerful blows\n'Like so deep dude'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Pike of Deepneus");
+			// Tooltip.SetDefault("Time your throws for more powerful blows\n'Like so deep dude'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 160;
@@ -88,7 +88,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override string Texture => "Origins/Items/Weapons/Magic/Pike_of_Deepneus";
 		public new AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Pike of Deepneus");
+			// DisplayName.SetDefault("Pike of Deepneus");
 			if (!Main.dedServ) {
 				GlowTexture = ModContent.Request<Texture2D>(Texture + "_Glow");
 			}
@@ -170,11 +170,9 @@ namespace Origins.Items.Weapons.Magic {
 			if (Projectile.ai[0] != 0) return false;
 			return null;
 		}
-		public override void ModifyDamageScaling(ref float damageScale) {
-			damageScale *= 0.34f + Projectile.ai[1] * Projectile.ai[1] * 0.66f;
-		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
-			knockback *= 1 + Projectile.ai[1] * 0.65f;
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			modifiers.SourceDamage *= 0.34f + Projectile.ai[1] * Projectile.ai[1] * 0.66f;
+			modifiers.Knockback *= 1 + Projectile.ai[1] * 0.65f;
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			width = 14;

@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Hallowed_Cleaver : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hallowed Cleaver");
-			Tooltip.SetDefault("'Crude and dangerous'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Hallowed Cleaver");
+			// Tooltip.SetDefault("'Crude and dangerous'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);

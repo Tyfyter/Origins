@@ -12,9 +12,9 @@ namespace Origins.Items.Armor.Other {
 	[AutoloadEquip(EquipType.Head)]
 	public class Hallowed_Visage : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hallowed Visage");
-			Tooltip.SetDefault("+15% explosive velocity\n+8% explosive critical strike chance");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Hallowed Visage");
+			// Tooltip.SetDefault("+15% explosive velocity\n+8% explosive critical strike chance");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.width = 22;
@@ -45,7 +45,7 @@ namespace Origins.Items.Armor.Other {
 	public class Ancient_Hallowed_Visage : Hallowed_Visage {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			DisplayName.SetDefault("Ancient Hallowed Visage");
+			// DisplayName.SetDefault("Ancient Hallowed Visage");
 		}
 	}
 }

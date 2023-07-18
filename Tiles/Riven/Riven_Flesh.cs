@@ -28,7 +28,7 @@ namespace Origins.Tiles.Riven {
             for(int i = 0; i < TileLoader.TileCount; i++) {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Stone];
             }*/
-			ItemDrop = ItemType<Riven_Flesh_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Riven_Flesh_Item>();
 			AddMapEntry(new Color(0, 125, 200));
 			//SetModTree(Defiled_Tree.Instance);
 			mergeID = TileID.Stone;
@@ -76,7 +76,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Riven_Flesh_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Spug Flesh");
+			// DisplayName.SetDefault("Spug Flesh");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FleshBlock);

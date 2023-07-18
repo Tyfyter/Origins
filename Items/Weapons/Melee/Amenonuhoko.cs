@@ -10,8 +10,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
     public class Amenonuhoko : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amenonuhoko");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Amenonuhoko");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gungnir);
@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Amenonuhoko_P : ModProjectile {
 		public override string Texture => base.Texture;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amenonuhoko");
+			// DisplayName.SetDefault("Amenonuhoko");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
@@ -100,7 +100,7 @@ namespace Origins.Items.Weapons.Melee {
 			0);
 			return false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
 		}
 	}

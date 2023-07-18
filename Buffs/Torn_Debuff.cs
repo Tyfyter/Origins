@@ -11,8 +11,8 @@ namespace Origins.Buffs {
 	public class Torn_Debuff : ModBuff {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Torn");
-			Description.SetDefault("Your max life has been reduced!");
+			// DisplayName.SetDefault("Torn");
+			// Description.SetDefault("Your max life has been reduced!");
 			Main.debuff[Type] = true;
 			ID = Type;
 		}

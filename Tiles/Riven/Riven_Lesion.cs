@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -32,8 +33,8 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.newTile.LavaDeath = false;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Riven Lesion");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Riven Lesion");
 			AddMapEntry(new Color(217, 95, 54), name);
 			AdjTiles = new int[] { TileID.ShadowOrbs };
 			//soundType = SoundID.NPCKilled;
@@ -56,7 +57,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Riven_Lesion_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Riven} Lesion (Debugging Item)");
+			// DisplayName.SetDefault("{$Riven} Lesion (Debugging Item)");
 		}
 		public override void SetDefaults() {
 			Item.width = 26;

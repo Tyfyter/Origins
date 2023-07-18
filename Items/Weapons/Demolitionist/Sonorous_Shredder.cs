@@ -1,4 +1,5 @@
-﻿using Origins.Projectiles;
+﻿#if false ///TODO: unfalse if thorium
+using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -100,3 +101,4 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public bool IsExploding() => true;
 	}
 }
+#endif

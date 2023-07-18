@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Mine_Flayer : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mine Flayer");
-			Tooltip.SetDefault("Releases a barrage of mines when swung\n16.7% chance not to consume ammo");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Mine Flayer");
+			// Tooltip.SetDefault("Releases a barrage of mines when swung\n16.7% chance not to consume ammo");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);

@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Comb : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Comb");
-			Tooltip.SetDefault("3% increased damage");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Comb");
+			// Tooltip.SetDefault("3% increased damage");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 26);

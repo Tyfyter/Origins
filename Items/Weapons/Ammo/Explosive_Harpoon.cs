@@ -11,8 +11,8 @@ namespace Origins.Items.Weapons.Ammo {
     public class Explosive_Harpoon : ModItem {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Explosive Harpoon");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Explosive Harpoon");
+			Item.ResearchUnlockCount = 99;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Explosive_Harpoon_P : Harpoon_P {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Explosive Harpoon");
+			// DisplayName.SetDefault("Explosive Harpoon");
 			ID = Type;
 		}
 		public override void AI() {

@@ -11,10 +11,10 @@ namespace Origins.Items.Weapons.Melee {
 	public class Knee_Slapper : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Knee Slapper");
-			Tooltip.SetDefault("'Fish have feelings too'");
+			// DisplayName.SetDefault("Knee Slapper");
+			// Tooltip.SetDefault("'Fish have feelings too'");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 45;
@@ -49,7 +49,7 @@ namespace Origins.Items.Weapons.Melee {
 		public List<PolarVec2> nodes;
 		PolarVec2 GetSwingStartOffset => new PolarVec2(0, Projectile.ai[1] - Projectile.direction * 0.35f);
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Knee Slapper");
+			// DisplayName.SetDefault("Knee Slapper");
 		}
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Melee;

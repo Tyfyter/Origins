@@ -11,9 +11,9 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Longbone : ModItem {
 		internal static int t = ProjectileID.WoodenArrowFriendly;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Longbone");
-			Tooltip.SetDefault("Turns most arrows into fragile bone arrows");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Longbone");
+			// Tooltip.SetDefault("Turns most arrows into fragile bone arrows");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldBow);
@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override string Texture => "Terraria/Images/Projectile_117";
 		public override void SetStaticDefaults() {
 			ID = Projectile.type;
-			DisplayName.SetDefault("Bone Bolt");
+			// DisplayName.SetDefault("Bone Bolt");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(Longbone.t);
@@ -54,7 +54,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.usesLocalNPCImmunity = true;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.type = (int)Projectile.localAI[0];
 			Projectile.StatusNPC(target.whoAmI);
 			Projectile.type = ID;
@@ -156,7 +156,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override string Texture => "Origins/Projectiles/Weapons/BoneS_hard";
 		public override void SetStaticDefaults() {
 			ID = Projectile.type;
-			DisplayName.SetDefault("BoneS hard");
+			// DisplayName.SetDefault("BoneS hard");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(Longbone.t);
@@ -165,7 +165,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localAI[0] = Longbone.t;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.type = (int)Projectile.localAI[0];
 			Projectile.StatusNPC(target.whoAmI);
 			Projectile.type = ID;

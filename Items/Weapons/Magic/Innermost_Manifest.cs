@@ -11,9 +11,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Innermost_Manifest : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Innermost Manifest");
-			Tooltip.SetDefault("");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Innermost Manifest");
+			// Tooltip.SetDefault("");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Innermost_Manifest_P : ModProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Innermost Manifest");
+			// DisplayName.SetDefault("Innermost Manifest");
 			Main.projFrames[Type] = 2;
 		}
 		public override void SetDefaults() {
@@ -76,7 +76,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override bool? CanHitNPC(NPC target) {
 			return Projectile.ai[0] >= 0 ? target.whoAmI == (int)Projectile.ai[0] : null;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.ai[0] < 0) {
 				Projectile.ai[0] = target.whoAmI;
 				Projectile.ArmorPenetration = (target.defense + 2);

@@ -5,6 +5,7 @@ using Origins.Walls;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 using static Terraria.WorldGen;
 using System;
 using Terraria.ID;
@@ -17,9 +18,9 @@ using Terraria.Graphics.Effects;
 using static Origins.OriginExtensions;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Pets;
-using AltLibrary.Common.AltBiomes;
+//using AltLibrary.Common.AltBiomes;
 using Origins.NPCs.Defiled;
-using AltLibrary.Core.Generation;
+//using AltLibrary.Core.Generation;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Magic;
@@ -532,6 +533,7 @@ namespace Origins.World.BiomeData {
 			return base.IsBiomeActive(player);
 		}
 	}
+#if false ///TODO: find a way
 	public class Defiled_Wastelands_Alt_Biome : AltBiome {
 		public override string WorldIcon => "Origins/UI/WorldGen/IconDefiled";
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";
@@ -642,7 +644,7 @@ namespace Origins.World.BiomeData {
 				defiledWastelandsWestEdge.Add(evilBiomePositionWestBound);
 				defiledWastelandsEastEdge.Add(evilBiomePositionEastBound);
 				int startY;
-				for (startY = (int)WorldGen.worldSurfaceLow; !Main.tile[evilBiomePosition, startY].HasTile; startY++) ;
+				for (startY = (int)GenVars.worldSurfaceLow; !Main.tile[evilBiomePosition, startY].HasTile; startY++) ;
 				Point start = new Point(evilBiomePosition, startY + genRand.Next(105, 150));//range of depths
 
 				Defiled_Wastelands.Gen.StartDefiled(start.X, start.Y);
@@ -667,4 +669,5 @@ namespace Origins.World.BiomeData {
 			}
 		}
 	}
+#endif
 }

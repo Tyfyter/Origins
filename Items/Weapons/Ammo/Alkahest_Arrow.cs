@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Alkahest_Arrow : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Alkahest Arrow");
-			Tooltip.SetDefault("Tenderizes the target");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Alkahest Arrow");
+			// Tooltip.SetDefault("Tenderizes the target");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenArrow);
@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void Kill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.33f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 	}

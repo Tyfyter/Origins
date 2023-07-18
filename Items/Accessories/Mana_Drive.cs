@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mana_Drive : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mana Drive");
-			Tooltip.SetDefault("Mana regenerates faster with higher speeds");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Mana Drive");
+			// Tooltip.SetDefault("Mana regenerates faster with higher speeds");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 28);

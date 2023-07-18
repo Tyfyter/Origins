@@ -10,7 +10,7 @@ namespace Origins.NPCs.Riven {
     public class Amebic_Slime : Glowing_Mod_NPC, IRivenEnemy {
 		public override string GlowTexturePath => Texture;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amebic Slime");
+			// DisplayName.SetDefault("Amebic Slime");
 			Main.npcFrameCount[NPC.type] = 2;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive>().Type
@@ -39,10 +39,10 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 2, 4));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 10));
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 180, 180, 0.9f);
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				for (int i = 0; i < 5; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
 			}

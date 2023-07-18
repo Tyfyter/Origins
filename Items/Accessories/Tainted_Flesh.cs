@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Tainted_Flesh : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tainted Flesh");
-			Tooltip.SetDefault("Increases the strength of afflicted Torn effects");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Tainted Flesh");
+			// Tooltip.SetDefault("Increases the strength of afflicted Torn effects");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 30);

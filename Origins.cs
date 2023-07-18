@@ -26,6 +26,7 @@ using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Default;
 using Terraria.UI;
@@ -158,21 +159,21 @@ namespace Origins {
 			OriginsModIntegrations.LateLoad();
 		}
 		public override void Load() {
-			ModTranslation newTranslation = LocalizationLoader.CreateTranslation("Riven");
-			newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Riven}" : "{$Mods.Origins.Generic.Riven}");
-			LocalizationLoader.AddTranslation(newTranslation);
-			newTranslation = LocalizationLoader.CreateTranslation("Dusk");
-			newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Dusk}" : "{$Mods.Origins.Generic.Dusk}");
-			LocalizationLoader.AddTranslation(newTranslation);
-			newTranslation = LocalizationLoader.CreateTranslation("Defiled");
-			newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled}" : "{$Mods.Origins.Generic.Defiled}");
-			LocalizationLoader.AddTranslation(newTranslation);
-			newTranslation = LocalizationLoader.CreateTranslation("Defiled_Wastelands");
-			newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "{$Mods.Origins.Generic.Defiled_Wastelands}");
-			LocalizationLoader.AddTranslation(newTranslation);
-			newTranslation = LocalizationLoader.CreateTranslation("The_Defiled_Wastelands");
-			newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "the {$Mods.Origins.Generic.Defiled_Wastelands}");
-			LocalizationLoader.AddTranslation(newTranslation);
+			LocalizedText newTranslation = Language.GetOrRegister("Riven");
+			// newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Riven}" : "{$Mods.Origins.Generic.Riven}");
+			LocalizationLoader.AddTranslation(newTranslation)/* tModPorter Note: Removed. Use Language.GetOrRegister */;
+			newTranslation = Language.GetOrRegister("Dusk");
+			// newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Dusk}" : "{$Mods.Origins.Generic.Dusk}");
+			LocalizationLoader.AddTranslation(newTranslation)/* tModPorter Note: Removed. Use Language.GetOrRegister */;
+			newTranslation = Language.GetOrRegister("Defiled");
+			// newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled}" : "{$Mods.Origins.Generic.Defiled}");
+			LocalizationLoader.AddTranslation(newTranslation)/* tModPorter Note: Removed. Use Language.GetOrRegister */;
+			newTranslation = Language.GetOrRegister("Defiled_Wastelands");
+			// newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "{$Mods.Origins.Generic.Defiled_Wastelands}");
+			LocalizationLoader.AddTranslation(newTranslation)/* tModPorter Note: Removed. Use Language.GetOrRegister */;
+			newTranslation = Language.GetOrRegister("The_Defiled_Wastelands");
+			// newTranslation.SetDefault(AprilFools.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "the {$Mods.Origins.Generic.Defiled_Wastelands}");
+			LocalizationLoader.AddTranslation(newTranslation)/* tModPorter Note: Removed. Use Language.GetOrRegister */;
 
 			RasterizeAdjustment = new Dictionary<int, (int, float)>();
 			ExplosiveBaseDamage = new Dictionary<int, int>();
@@ -362,7 +363,7 @@ namespace Origins {
 				Journal_UI_Open.BackTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Use_Back");
 				Journal_UI_Open.PageTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Use");
 				Journal_UI_Open.TabsTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Tabs");
-				On.Terraria.Player.KeyDoubleTap += (On.Terraria.Player.orig_KeyDoubleTap orig, Player self, int keyDir) => {
+				Terraria.On_Player.KeyDoubleTap += (Terraria.On_Player.orig_KeyDoubleTap orig, Player self, int keyDir) => {
 					orig(self, keyDir);
 					if (OriginClientConfig.Instance.SetBonusDoubleTap) {
 						if (keyDir == (Main.ReversedUpDownArmorSetBonuses ? 1 : 0)) {
@@ -464,7 +465,7 @@ namespace Origins {
 			}
 		}
 
-		private static void FixedDrawBreath(On.Terraria.Main.orig_DrawInterface_Resources_Breath orig) {
+		private static void FixedDrawBreath(Terraria.On_Main.orig_DrawInterface_Resources_Breath orig) {
 			Player localPlayer = Main.LocalPlayer;
 			int breath = localPlayer.breath;
 			int breathMax = localPlayer.breathMax;
@@ -477,7 +478,7 @@ namespace Origins {
 			localPlayer.breathMax = breathMax;
 		}
 
-		private void NPC_GetMeleeCollisionData(On.Terraria.NPC.orig_GetMeleeCollisionData orig, Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect) {
+		private void NPC_GetMeleeCollisionData(Terraria.On_NPC.orig_GetMeleeCollisionData orig, Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect) {
 			NPC self = Main.npc[enemyIndex];
 			MeleeCollisionNPCData.knockbackMult = 1f;
 			if (self.ModNPC is IMeleeCollisionDataNPC meleeNPC) {

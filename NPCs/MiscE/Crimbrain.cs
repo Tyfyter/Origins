@@ -9,7 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.MiscE {
     public class Crimbrain : ModNPC {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Crimbrain");
+			// DisplayName.SetDefault("Crimbrain");
 			Main.npcFrameCount[NPC.type] = 4;
 			CrimsonGlobalNPC.NPCTypes.Add(Type);
 		}
@@ -24,7 +24,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.friendly = false;
 			NPC.knockBackResist = 0.85f;
 		}
-		public override void OnHitPlayer(Player target, int damage, bool crit) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			target.AddBuff(BuffID.Confused, 50);
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

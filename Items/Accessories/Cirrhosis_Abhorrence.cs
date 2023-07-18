@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Cirrhosis_Abhorrence : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cirrhosis' Abhorrence");
-			Tooltip.SetDefault("5 of the closest enemies have their stats reduced whilst being set ablaze and bleeding");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Cirrhosis' Abhorrence");
+			// Tooltip.SetDefault("5 of the closest enemies have their stats reduced whilst being set ablaze and bleeding");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 22);

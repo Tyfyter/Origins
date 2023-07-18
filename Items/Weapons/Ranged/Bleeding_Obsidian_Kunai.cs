@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
     public class Bleeding_Obsidian_Kunai : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bleeding Obsidian Kunai");
-			Tooltip.SetDefault("'Be careful, it's sharp'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Bleeding Obsidian Kunai");
+			// Tooltip.SetDefault("'Be careful, it's sharp'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class Bleeding_Obsidian_Kunai_P : ModProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bleeding Obsidian Kunai");
+			// DisplayName.SetDefault("Bleeding Obsidian Kunai");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PoisonDart);
@@ -54,14 +54,14 @@ namespace Origins.Items.Weapons.Ranged {
 			dust.noGravity = true;
 			dust.velocity *= 1.5f;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Bleeding, 300);
 			target.AddBuff(BuffID.CursedInferno, 300);
 			target.AddBuff(BuffID.Ichor, 300);
 			target.AddBuff(BuffID.OnFire, 300);
 			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.9f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
-		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) {
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			target.AddBuff(BuffID.Bleeding, 300);
 			target.AddBuff(BuffID.CursedInferno, 300);
 			target.AddBuff(BuffID.Ichor, 300);

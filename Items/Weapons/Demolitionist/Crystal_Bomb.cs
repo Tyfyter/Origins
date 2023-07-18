@@ -9,9 +9,9 @@ using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Crystal_Bomb : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Crystal Bomb");
-			Tooltip.SetDefault("Explodes into several crystal shards");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Crystal Bomb");
+			// Tooltip.SetDefault("Explodes into several crystal shards");
+			Item.ResearchUnlockCount = 99;
 
 		}
 		public override void SetDefaults() {
@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Crystal_Bomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Crystal_Bomb";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Crystal Bomb");
+			// DisplayName.SetDefault("Crystal Bomb");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

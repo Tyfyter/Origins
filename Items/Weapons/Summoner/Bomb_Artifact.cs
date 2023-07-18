@@ -13,11 +13,11 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bomb Artifact");
-			Tooltip.SetDefault("Summons a friendly bomb to fight for you");
+			// DisplayName.SetDefault("Bomb Artifact");
+			// Tooltip.SetDefault("Summons a friendly bomb to fight for you");
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 80;
@@ -47,8 +47,8 @@ namespace Origins.Items.Weapons.Summoner {
 namespace Origins.Buffs {
 	public class Friendly_Bomb_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Friendly Bomb");
-			Description.SetDefault("The bomb will fight for you");
+			// DisplayName.SetDefault("Friendly Bomb");
+			// Description.SetDefault("The bomb will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Bomb_Artifact.buffID = Type;
@@ -86,7 +86,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 		}
 		public override void SetStaticDefaults() {
 			Bomb_Artifact.projectileID = Type;
-			DisplayName.SetDefault("Friendly Bomb");
+			// DisplayName.SetDefault("Friendly Bomb");
 			//Origins.ExplosiveProjectiles[Projectile.type] = true;
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Type] = 11;

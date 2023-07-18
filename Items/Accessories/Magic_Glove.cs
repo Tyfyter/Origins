@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Magic_Glove : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Magic Glove");
-			Tooltip.SetDefault("8% reduced mana usage\nAutomatically use mana potions when needed\nShoots random magic as you swing\n'May require magical capability'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Magic Glove");
+			// Tooltip.SetDefault("8% reduced mana usage\nAutomatically use mana potions when needed\nShoots random magic as you swing\n'May require magical capability'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 24);

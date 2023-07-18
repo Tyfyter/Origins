@@ -14,10 +14,10 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Rotting Worm Staff");
-			Tooltip.SetDefault("Summons a mini Eater of Worlds to fight for you");
+			// DisplayName.SetDefault("Rotting Worm Staff");
+			// Tooltip.SetDefault("Summons a mini Eater of Worlds to fight for you");
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 4;
@@ -46,8 +46,8 @@ namespace Origins.Items.Weapons.Summoner {
 namespace Origins.Buffs {
 	public class Wormy_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mini Eater of Worlds");
-			Description.SetDefault("The Eater of Worlds will fight for you");
+			// DisplayName.SetDefault("Mini Eater of Worlds");
+			// Description.SetDefault("The Eater of Worlds will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
 			Rotting_Worm_Staff.buffID = Type;
@@ -251,7 +251,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Projectile body = Main.projectile[(int)Projectile.localAI[0]];
 			if (body.active && body.type == Rotting_Worm_Body.ID) body.Kill();
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			damage += (int)Projectile.velocity.Length();
 		}
 	}
@@ -288,7 +288,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 	public abstract class Mini_EOW_Base : ModProjectile {
 		public const int frameSpeed = 5;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Wormy");
+			// DisplayName.SetDefault("Wormy");
 			// This is necessary for right-click targeting
 			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 
@@ -352,10 +352,10 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		public override bool MinionContactDamage() {
 			return true;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			damage += (int)(Projectile.velocity.Length() / 2);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Main.rand.NextBool(10)) {
 				target.AddBuff(BuffID.Poisoned, 180);
 			}

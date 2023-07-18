@@ -12,9 +12,9 @@ namespace Origins.Items.Weapons {
 	public class Fiberglass_Shard : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fiberglass Shard");
-			Tooltip.SetDefault("'Be careful, it's sharp'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Fiberglass Shard");
+			// Tooltip.SetDefault("'Be careful, it's sharp'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons {
 	}
 	public class Fiberglass_Shard_P : ModProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fiberglass Shard");
+			// DisplayName.SetDefault("Fiberglass Shard");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PoisonDart);
@@ -86,7 +86,7 @@ namespace Origins.Items.Weapons {
 		public override bool? CanHitNPC(NPC target) {
 			return Projectile.damage == 1 ? false : base.CanHitNPC(target);
 		}
-		public override void ModifyHitPlayer(Player target, ref int damage, ref bool crit) {
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			if (Projectile.damage == 1) {
 				Item.NewItem(Projectile.GetSource_FromThis(), Projectile.Center, ModContent.ItemType<Fiberglass_Shard>());
 				damage = 0;

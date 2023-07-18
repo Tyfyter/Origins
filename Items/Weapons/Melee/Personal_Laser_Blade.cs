@@ -11,9 +11,9 @@ namespace Origins.Items.Weapons.Melee {
 		public const int max_charge = 75;
 		public ushort Element => Elements.Fire;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Personal Laser Blade");
-			Tooltip.SetDefault("Time your swings for more powerful blows\n'Be careful, it's hot'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Personal Laser Blade");
+			// Tooltip.SetDefault("Time your swings for more powerful blows\n'Be careful, it's hot'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 104;
@@ -80,7 +80,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override string Texture => "Origins/Items/Weapons/Melee/Personal_Laser_Blade";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Personal Laser Blade");
+			// DisplayName.SetDefault("Personal Laser Blade");
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -99,7 +99,7 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.ai[0] = sizeValue;
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Main.rand.NextBool()) target.AddBuff(BuffID.OnFire, 600);
 		}
 	}

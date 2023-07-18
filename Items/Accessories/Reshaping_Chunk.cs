@@ -6,10 +6,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Reshaping_Chunk : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Refactoring Pieces");
-			Tooltip.SetDefault("Strengthens the set bonus of Lost Armor\nReduces damage taken by 5% if Lost Armor is not equipped");
+			// DisplayName.SetDefault("Refactoring Pieces");
+			// Tooltip.SetDefault("Strengthens the set bonus of Lost Armor\nReduces damage taken by 5% if Lost Armor is not equipped");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(11, 6));
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 32);

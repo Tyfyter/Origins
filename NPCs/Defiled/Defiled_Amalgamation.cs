@@ -55,7 +55,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Amalgamation");
+			// DisplayName.SetDefault("{$Defiled} Amalgamation");
 			Main.npcFrameCount[NPC.type] = 8;
 			NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
 				SpecificallyImmuneTo = new int[] {
@@ -90,7 +90,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get => 1; set { } }
-		public override void ScaleExpertStats(int numPlayers, float bossLifeScale) {
+		public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */ {
 			switch (DifficultyMult) {
 				case 1:
 				NPC.lifeMax = (int)(2400 * bossLifeScale);
@@ -496,7 +496,7 @@ namespace Origins.NPCs.Defiled {
 				NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
 			}
 		}
-		public override void ModifyHitByProjectile(Projectile projectile, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers) {
 			switch (AIState) {
 				case 2:
 				case 3:
@@ -518,16 +518,16 @@ namespace Origins.NPCs.Defiled {
 				break;
 			}
 		}
-		public override void OnHitByProjectile(Projectile projectile, int damage, float knockback, bool crit) {
+		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
 			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_OnHurt(projectile), Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
 		}
-		public override void OnHitByItem(Player player, Item item, int damage, float knockback, bool crit) {
+		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			int halfWidth = NPC.width / 2;
 			int baseX = player.direction > 0 ? 0 : halfWidth;
 			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_OnHurt(player), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), new Vector2(knockback * player.direction, -0.1f * knockback), Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				for (int i = 0; i < 6; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));
 				for (int i = 0; i < 10; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4)));
@@ -566,7 +566,7 @@ namespace Origins.NPCs.Defiled {
 		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
 			return Asset<Texture2D>.Empty;
 		}
-		public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float lifePercent, ref float shieldPercent) {
+		public override bool? ModifyInfo(ref BigProgressBarInfo info, ref float life, ref float lifeMax, ref float shield, ref float shieldMax)/* tModPorter Note: life and shield current and max values are now separate to allow for hp/shield number text draw */ {
 			NPC owner = Main.npc[info.npcIndexToAimAt];
 			if (owner.type != Defiled_Amalgamation.ID || (lastTickPercent < 0 && isDead)) return false;
 			if (!owner.active || owner.life <= 0) {
@@ -595,9 +595,9 @@ namespace Origins.NPCs.Defiled {
 				Vector2 barPos = drawParams.BarCenter - barSize * new Vector2(0.5f, 0);
 				Vector2 origin = phaseIndicator.Size() / 2;
 				float tickPercent = 1f / tickCount;
-				for (float f = 0; f < drawParams.LifePercentToShow; f += tickPercent) {
+				for (float f = 0; f < drawParams.LifePercentToShow/* tModPorter Note: Removed. Suggest: Life / LifeMax */; f += tickPercent) {
 					if (f == 0f) continue;
-					float animFactor = Math.Min((drawParams.LifePercentToShow - f) / tickPercent, 1);
+					float animFactor = Math.Min((drawParams.LifePercentToShow/* tModPorter Note: Removed. Suggest: Life / LifeMax */ - f) / tickPercent, 1);
 					spriteBatch.Draw(
 						phaseIndicator,
 						barPos + barSize * new Vector2(f, 0),

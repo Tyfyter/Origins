@@ -6,9 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Entangled_Energy : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Entangled Energy");
-			Tooltip.SetDefault("Fiberglass weapons gain damage based on defense\nFiberglass weapons gain lifesteal");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Entangled Energy");
+			// Tooltip.SetDefault("Fiberglass weapons gain damage based on defense\nFiberglass weapons gain lifesteal");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 30);

@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Danger_Barrel : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Danger Barrel");
-			Tooltip.SetDefault("All explosives inflict 'On Fire!' and have a reduced fuse time");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Danger Barrel");
+			// Tooltip.SetDefault("All explosives inflict 'On Fire!' and have a reduced fuse time");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 34);

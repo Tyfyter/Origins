@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Exploder_Emblem : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Exploder Emblem");
-			Tooltip.SetDefault("+5% explosive damage");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Exploder Emblem");
+			// Tooltip.SetDefault("+5% explosive damage");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WarriorEmblem);

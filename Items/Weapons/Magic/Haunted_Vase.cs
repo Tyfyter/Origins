@@ -13,10 +13,10 @@ namespace Origins.Items.Weapons.Magic {
 	public class Haunted_Vase : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Haunted Vase");
-			Tooltip.SetDefault("'Try not to disturb the spirits within'");
+			// DisplayName.SetDefault("Haunted Vase");
+			// Tooltip.SetDefault("'Try not to disturb the spirits within'");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ToxicFlask);
@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Haunted_Vase_P : ModProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Haunted Vase");
+			// DisplayName.SetDefault("Haunted Vase");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ToxicFlask);
@@ -87,7 +87,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Haunted_Vase_Wisp : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Haunted_Vase";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Pissed Wisp");
+			// DisplayName.SetDefault("Pissed Wisp");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.SpiritFlame);

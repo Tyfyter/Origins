@@ -11,10 +11,10 @@ namespace Origins.Items.Weapons.Melee {
 	public class Ripper_Lance : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Ripper Lance");
-			Tooltip.SetDefault("'Very pointy'");
+			// DisplayName.SetDefault("Ripper Lance");
+			// Tooltip.SetDefault("'Very pointy'");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 24;
@@ -50,7 +50,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Ripper_Lance_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Ripper_Lance_P";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Ripper Lance");
+			// DisplayName.SetDefault("Ripper Lance");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
@@ -102,7 +102,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return null;
 		}
-		public override void ModifyHitNPC(NPC target, ref int damage, ref float knockback, ref bool crit, ref int hitDirection) {
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			if (handleHit) {
 				damage = (int)(damage * 0.65f);
 			}

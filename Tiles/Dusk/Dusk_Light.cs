@@ -16,7 +16,7 @@ namespace Origins.Tiles.Dusk {
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			ItemDrop = ItemType<Dusk_Light_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Dusk_Light_Item>();
 			AddMapEntry(new Color(95, 17, 125));
 		}
 
@@ -29,7 +29,7 @@ namespace Origins.Tiles.Dusk {
 	}
 	public class Dusk_Light_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dusk Light");
+			// DisplayName.SetDefault("Dusk Light");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

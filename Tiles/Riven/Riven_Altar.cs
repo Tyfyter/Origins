@@ -27,8 +27,8 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
 			TileObjectData.newTile.CoordinateHeights = new[] { 18, 18 };
 			TileObjectData.addTile(Type);
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Riven Altar");
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Riven Altar");
 			AddMapEntry(new Color(20, 136, 182), name);
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.DemonAltar };

@@ -7,8 +7,8 @@ namespace Origins.Buffs {
 		public static int ID { get; private set; } = -1;
 		public override string Texture => "Terraria/Images/Buff_153";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Dark Flames");
-			Description.SetDefault("Losing life (but half as strong as the normal kind since it'd be kinda OP to get full hardmode debuff DPS from a prehardmode set)");
+			// DisplayName.SetDefault("Dark Flames");
+			// Description.SetDefault("Losing life (but half as strong as the normal kind since it'd be kinda OP to get full hardmode debuff DPS from a prehardmode set)");
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
@@ -19,8 +19,8 @@ namespace Origins.Buffs {
 		public static int ID { get; private set; } = -1;
 		public override string Texture => "Terraria/Images/Buff_153";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Weakened");
-			Description.SetDefault("Damage reduced by 15%");
+			// DisplayName.SetDefault("Weakened");
+			// Description.SetDefault("Damage reduced by 15%");
 			ID = Type;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {

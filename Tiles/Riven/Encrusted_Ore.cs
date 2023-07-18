@@ -4,6 +4,7 @@ using Origins.Items;
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -18,9 +19,9 @@ namespace Origins.Tiles.Riven {
 			Main.tileLighted[Type] = true;
 			Main.tileOreFinderPriority[Type] = 320;
 			TileID.Sets.Ore[Type] = true;
-			ItemDrop = ItemType<Encrusted_Ore_Item>();
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Encrusted Ore");
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Encrusted_Ore_Item>();
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Encrusted Ore");
 			AddMapEntry(new Color(40, 148, 207), name);
 			mergeID = TileID.Crimtane;
 		}
@@ -41,7 +42,7 @@ namespace Origins.Tiles.Riven {
 	[LegacyName("Infested_Ore_Item")]
 	public class Encrusted_Ore_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Encrusted Ore");
+			// DisplayName.SetDefault("Encrusted Ore");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrimtaneOre);

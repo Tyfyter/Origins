@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
@@ -11,10 +12,10 @@ namespace Origins.Items.Other.Fish {
     #region chunky crate
     public class Chunky_Crate : Fishing_Crate_Item {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chunky Crate");
-			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
+			// DisplayName.SetDefault("Chunky Crate");
+			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
 			ItemID.Sets.IsFishingCrate[Type] = true;
-			SacrificeTotal = 5;
+			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrimsonFishingCrate);
@@ -63,8 +64,8 @@ namespace Origins.Items.Other.Fish {
 	public class Chunky_Crate_Tile : Fishing_Crate_Tile {
 		public override string Texture => "Origins/Items/Other/Fish/Chunky_Crate";
 		public override void SetMapEntry() {
-			ModTranslation name = CreateMapEntryName("Origins.Items.Other.Fish.Chunky_Crate");
-			name.SetDefault("Crate");
+			LocalizedText name = CreateMapEntryName("Origins.Items.Other.Fish.Chunky_Crate");
+			// name.SetDefault("Crate");
 			AddMapEntry(new Color(200, 200, 200), name);
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
@@ -76,11 +77,11 @@ namespace Origins.Items.Other.Fish {
 	public class Crusty_Crate : Fishing_Crate_Item {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Crusty Crate");
-			Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}\n'No, this is Patrick.'");
+			// DisplayName.SetDefault("Crusty Crate");
+			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}\n'No, this is Patrick.'");
 			glowmask = Origins.AddGlowMask(this);
 			ItemID.Sets.IsFishingCrate[Type] = true;
-			SacrificeTotal = 5;
+			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrimsonFishingCrate);
@@ -130,8 +131,8 @@ namespace Origins.Items.Other.Fish {
 	public class Crusty_Crate_Tile : Fishing_Crate_Tile {
 		public override string Texture => "Origins/Items/Other/Fish/Crusty_Crate";
 		public override void SetMapEntry() {
-			ModTranslation name = CreateMapEntryName("Origins.Items.Other.Fish.Crusty_Crate");
-			name.SetDefault("Crate");
+			LocalizedText name = CreateMapEntryName("Origins.Items.Other.Fish.Crusty_Crate");
+			// name.SetDefault("Crate");
 			AddMapEntry(new Color(0, 125, 165), name);
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {

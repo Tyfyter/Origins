@@ -11,8 +11,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Giant_Metal_Slug : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Giant Metal Slug");
-			SacrificeTotal = 199;
+			// DisplayName.SetDefault("Giant Metal Slug");
+			Item.ResearchUnlockCount = 199;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.MusketBall);
@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Giant_Metal_Slug_P : ModProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Giant Metal Slug");
+			// DisplayName.SetDefault("Giant Metal Slug");
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -55,9 +55,9 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Thermite_Canister : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Thermite Canister");
+			// DisplayName.SetDefault("Thermite Canister");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 199;
+			Item.ResearchUnlockCount = 199;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RocketI);
@@ -84,9 +84,9 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class White_Solution : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Gray Solution");
-			Tooltip.SetDefault("Spreads the Defiled");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Gray Solution");
+			// Tooltip.SetDefault("Spreads the Defiled");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GreenSolution);
@@ -101,14 +101,14 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.aiStyle = 0;
 		}
 		public override void AI() {
-			OriginGlobalProj.ClentaminatorAI<Defiled_Wastelands_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), Color.GhostWhite);
+			//OriginGlobalProj.ClentaminatorAI<Defiled_Wastelands_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), Color.GhostWhite);
 		}
 	}
 	public class Teal_Solution : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Teal Solution");
-			Tooltip.SetDefault("Spreads the Riven");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Teal Solution");
+			// Tooltip.SetDefault("Spreads the Riven");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GreenSolution);
@@ -123,7 +123,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.aiStyle = 0;
 		}
 		public override void AI() {
-			OriginGlobalProj.ClentaminatorAI<Riven_Hive_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), Color.Teal);
+			//OriginGlobalProj.ClentaminatorAI<Riven_Hive_Alt_Biome>(Projectile, ModContent.DustType<Solution_D>(), Color.Teal);
 		}
 	}
 }

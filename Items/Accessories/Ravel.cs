@@ -12,9 +12,9 @@ namespace Origins.Items.Accessories {
 	public class Ravel : ModItem {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Ravel");
-			Tooltip.SetDefault("Double tap down to transform into a small, rolling ball");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Ravel");
+			// Tooltip.SetDefault("Double tap down to transform into a small, rolling ball");
+			Item.ResearchUnlockCount = 1;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -22,7 +22,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 8);
 			Item.shoot = ModContent.MountType<Ravel_Mount>();//can't use mountType because that'd make it fit in the mount slot
-			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.hasVanityEffects = true;
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
@@ -177,8 +177,8 @@ namespace Origins.Items.Accessories {
 		public override string Texture => "Origins/Buffs/Ravel_Generic_Buff";
 		protected virtual int MountID => ModContent.MountType<Ravel_Mount>();
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Ravel");
-			Description.SetDefault("10% chance to dodge");
+			// DisplayName.SetDefault("Ravel");
+			// Description.SetDefault("10% chance to dodge");
 
 			BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
 				mountID = MountID

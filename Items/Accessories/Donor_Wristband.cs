@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Donor_Wristband : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Donor Wristband");
-			Tooltip.SetDefault("Increased life regeneration\nDebuff and healing potion cooldown durations reduced by 37.5%");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Donor Wristband");
+			// Tooltip.SetDefault("Increased life regeneration\nDebuff and healing potion cooldown durations reduced by 37.5%");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);

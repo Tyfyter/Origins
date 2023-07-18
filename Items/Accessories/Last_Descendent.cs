@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Last_Descendent : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Last Descendant");
-			Tooltip.SetDefault("Increases damage, movement speed, and length of invincibility after taking damage\nAdditionally causes stars to fall after taking damage");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Last Descendant");
+			// Tooltip.SetDefault("Increases damage, movement speed, and length of invincibility after taking damage\nAdditionally causes stars to fall after taking damage");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 26);

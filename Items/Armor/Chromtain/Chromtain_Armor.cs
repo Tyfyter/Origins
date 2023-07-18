@@ -8,11 +8,11 @@ namespace Origins.Items.Armor.Chromtain {
 	[AutoloadEquip(EquipType.Head)]
 	public class Chromtain_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chromtain Helmet");
+			// DisplayName.SetDefault("Chromtain Helmet");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Chromtain/Chromtain_Helmet_Head_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 21;
@@ -38,12 +38,12 @@ namespace Origins.Items.Armor.Chromtain {
 	[AutoloadEquip(EquipType.Body)]
 	public class Chromtain_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chromtain Breastplate");
-			Tooltip.SetDefault("+20 max life");
+			// DisplayName.SetDefault("Chromtain Breastplate");
+			// Tooltip.SetDefault("+20 max life");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Chromtain/Chromtain_Breastplate_Body_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 54;
@@ -63,11 +63,11 @@ namespace Origins.Items.Armor.Chromtain {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Chromtain_Greaves : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chromtain Greaves");
+			// DisplayName.SetDefault("Chromtain Greaves");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Chromtain/Chromtain_Greaves_Legs_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 33;

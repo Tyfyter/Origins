@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mysterious_Spray : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mysterious Spray");
-			Tooltip.SetDefault("Increases life regeneration at low health\n'The perfect ailment to attack your senses'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Mysterious Spray");
+			// Tooltip.SetDefault("Increases life regeneration at low health\n'The perfect ailment to attack your senses'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);

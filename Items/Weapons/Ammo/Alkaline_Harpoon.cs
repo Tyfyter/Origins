@@ -7,8 +7,8 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Alkaline_Harpoon : ModItem {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Alkaline Harpoon");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Alkaline Harpoon");
+			Item.ResearchUnlockCount = 99;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -38,10 +38,10 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Alkaline_Harpoon_P : Harpoon_P {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Alkaline Harpoon");
+			// DisplayName.SetDefault("Alkaline Harpoon");
 			ID = Type;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Venom, Main.rand.Next(270, 360));
 		}
 	}

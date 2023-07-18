@@ -12,7 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
 	public class Shattered_Mummy : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Shattered Mummy");
+			// DisplayName.SetDefault("Shattered Mummy");
 			Main.npcFrameCount[NPC.type] = 4;
 		}
 		public override void SetDefaults() {
@@ -33,7 +33,7 @@ namespace Origins.NPCs.Defiled {
 		public int MaxMana => 100;
 		public int MaxManaDrain => 20;
 		public float Mana { get; set; }
-		public override void OnHitPlayer(Player target, int damage, bool crit) {
+		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			this.DrainMana(target);
 		}
 		public void Regenerate(out int lifeRegen) {
@@ -70,7 +70,7 @@ namespace Origins.NPCs.Defiled {
 				NPC.frameCounter = 0;
 			}
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			//spawn gore if npc is dead after being hit
 			if (NPC.life < 0) {
 				for (int i = 0; i < 3; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF3_Gore"));

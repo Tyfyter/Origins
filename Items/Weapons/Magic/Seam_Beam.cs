@@ -12,9 +12,9 @@ namespace Origins.Items.Weapons.Magic {
 	public class Seam_Beam : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Seam Beam");
+			// DisplayName.SetDefault("Seam Beam");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults() {
@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		private Vector2 _targetPos;         //Ending position of the laser beam
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Seam Beam");
+			// DisplayName.SetDefault("Seam Beam");
 			if (!Main.dedServ) {
 				StartTexture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Seam_Beam_Start");
 				EndTexture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Seam_Beam_End");
@@ -69,7 +69,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.timeLeft = 32;
 		}
 
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			OriginGlobalNPC.InflictTorn(target, 300, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 

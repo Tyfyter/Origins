@@ -10,10 +10,10 @@ namespace Origins.Items.Weapons.Demolitionist {
     public class Boomphracken : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Boomphracken");
-			Tooltip.SetDefault("Chance to throw an explosive when used\n'He works his work, I work mine'");
+			// DisplayName.SetDefault("Boomphracken");
+			// Tooltip.SetDefault("Chance to throw an explosive when used\n'He works his work, I work mine'");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
@@ -50,7 +50,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Boomphracken_P : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Ammo/Boomphracken_P";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Obsidian Slug");
+			// DisplayName.SetDefault("Obsidian Slug");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);

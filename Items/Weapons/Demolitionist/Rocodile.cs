@@ -8,9 +8,9 @@ namespace Origins.Items.Weapons.Demolitionist {
     public class Rocodile : ModItem {
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Rocodile");
-			Tooltip.SetDefault("Uses rockets as ammo\n'Older cousin of the minishark'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Rocodile");
+			// Tooltip.SetDefault("Uses rockets as ammo\n'Older cousin of the minishark'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			dust3.scale *= 1f + Main.rand.Next(10) * 0.1f;
 			dust3.velocity *= 0.2f;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Wet, 600);
 		}
 		public override bool PreKill(int timeLeft) {

@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GolfBallDyedBlack;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			DisplayName.SetDefault("Impact Golf Ball");
+			// DisplayName.SetDefault("Impact Golf Ball");
 			Origins.ExplosiveBaseDamage[Type] = 80;
 			Origins.DamageModOnHit[Type] = true;
 		}
@@ -42,7 +42,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (CanDamage() ?? true) Projectile.Kill();
 			return true;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.Kill();
 		}
 		public override bool PreKill(int timeLeft) {
@@ -64,7 +64,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GolfBallDyedBlack;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			DisplayName.SetDefault("Explosive Golf Ball");
+			// DisplayName.SetDefault("Explosive Golf Ball");
 			Origins.ExplosiveBaseDamage[Type] = 80;
 			Origins.DamageModOnHit[Type] = true;
 		}
@@ -80,7 +80,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 			return false;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.Kill();
 		}
 		public override bool PreKill(int timeLeft) {
@@ -103,7 +103,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GolfBallDyedBlack;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			DisplayName.SetDefault("Ricochet Golf Ball");
+			// DisplayName.SetDefault("Ricochet Golf Ball");
 			Origins.ExplosiveBaseDamage[Type] = 60;
 			Origins.DamageModOnHit[Type] = true;
 		}
@@ -129,7 +129,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				bounceTimer--;
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 
 		}
 	}
@@ -153,7 +153,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GolfBallDyedBlack;
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			DisplayName.SetDefault("Remote Golf Ball");
+			// DisplayName.SetDefault("Remote Golf Ball");
 			Origins.ExplosiveBaseDamage[Type] = 160;
 			Origins.DamageModOnHit[Type] = true;
 		}

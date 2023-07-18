@@ -8,10 +8,10 @@ namespace Origins.Items.Accessories {
 	public class Solar_Panel : ModItem {
 		public static sbyte BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Solar Panel");
-			Tooltip.SetDefault("Sunlight exposure increases mana regeneration\n'Don't worry, mana was always renewable!'");
+			// DisplayName.SetDefault("Solar Panel");
+			// Tooltip.SetDefault("Sunlight exposure increases mana regeneration\n'Don't worry, mana was always renewable!'");
 			BackSlot = Item.backSlot;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);

@@ -12,7 +12,7 @@ namespace Origins.NPCs.ICARUS {
 	public class Swarmer : ModNPC {
 		byte frame = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Swarmer");
+			// DisplayName.SetDefault("Swarmer");
 			Main.npcFrameCount[NPC.type] = 3;
 		}
 		public override void SetDefaults() {

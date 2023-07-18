@@ -8,9 +8,9 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Felnum_Longbow : ModItem {
 		public const int baseDamage = 19;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Felnum Longbow");
-			Tooltip.SetDefault("Receives 50% higher damage bonuses");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Felnum Longbow");
+			// Tooltip.SetDefault("Receives 50% higher damage bonuses");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldBow);

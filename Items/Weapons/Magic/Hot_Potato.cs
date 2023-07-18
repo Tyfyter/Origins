@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
     public class Hot_Potato : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Hot Potato");
-			Tooltip.SetDefault("'Be careful, it's hot'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Hot Potato");
+			// Tooltip.SetDefault("'Be careful, it's hot'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
@@ -63,7 +63,7 @@ namespace Origins.Items.Weapons.Magic {
 			if (target.whoAmI == (int)Projectile.ai[0] || target.whoAmI == (int)Projectile.ai[1]) return false;
 			return null;
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			float maxDist = 256 * 256;
 			Vector2 nextDirection = default;
 			bool foundNextTarget = false;

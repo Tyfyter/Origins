@@ -11,10 +11,10 @@ namespace Origins.Items.Tools {
 	public class Lightning_Rod : ModItem {
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lightning Rod");
+			// DisplayName.SetDefault("Lightning Rod");
 			//Tooltip.SetDefault("Can fish in lava.");
 			//ItemID.Sets.CanFishInLava[item.type] = true;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults() {
@@ -49,7 +49,7 @@ namespace Origins.Items.Tools {
 	public class Lightning_Rod_Bobber : ModProjectile {
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lightning Rod Bobber");
+			// DisplayName.SetDefault("Lightning Rod Bobber");
 		}
 
 		public override void SetDefaults() {
@@ -72,7 +72,7 @@ namespace Origins.Items.Tools {
 				}
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.ai[0] == 1) {
 				target.velocity = Vector2.Lerp(target.velocity, Projectile.velocity, target.knockBackResist);
 			}

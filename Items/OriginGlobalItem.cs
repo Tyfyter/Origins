@@ -151,7 +151,7 @@ namespace Origins.Items {
 				}
 			}
 		}
-		public override bool PreReforge(Item item) {
+		public override void PreReforge(Item item)/* tModPorter Note: Use CanReforge instead for logic determining if a reforge can happen. */ {
 			if (PrefixLoader.GetPrefix(item.prefix) is IPreReforgePrefix preReforgePrefix) {
 				return preReforgePrefix.PreReforge(item);
 			}

@@ -19,7 +19,7 @@ namespace Origins.Projectiles.Weapons {
 		public float frameCount = 15;
 		public override string Texture => "Origins/Projectiles/Weapons/Lava_Cast_P";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Magma Shot");
+			// DisplayName.SetDefault("Magma Shot");
 			Main.projFrames[Projectile.type] = 2;
 		}
 		public override void SetDefaults() {
@@ -43,7 +43,7 @@ namespace Origins.Projectiles.Weapons {
 				Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.BreatheBubble);
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire, crit ? 600 : 300);
 			target.AddBuff(BuffID.Oiled, crit ? 60 : 30);
 		}

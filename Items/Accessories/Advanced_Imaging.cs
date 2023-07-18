@@ -7,10 +7,10 @@ namespace Origins.Items.Accessories {
 	public class Advanced_Imaging : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Advanced Imaging");
-			Tooltip.SetDefault("Increased projectile speed\nImmunity to Confusion");
+			// DisplayName.SetDefault("Advanced Imaging");
+			// Tooltip.SetDefault("Increased projectile speed\nImmunity to Confusion");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);

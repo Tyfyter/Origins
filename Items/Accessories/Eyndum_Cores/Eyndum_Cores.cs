@@ -25,9 +25,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 	public class Agility_Core : Eyndum_Core {
 		public override Color CoreGlowColor => new Color(255, 220, 0, 160);
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Agility Core");
-			Tooltip.SetDefault("Grants massive boosts in maneuverability");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Agility Core");
+			// Tooltip.SetDefault("Grants massive boosts in maneuverability");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.value = Item.buyPrice(platinum: 5);
@@ -44,9 +44,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 	public class Combat_Core : Eyndum_Core {
 		public override Color CoreGlowColor => new Color(160, 0, 255, 160);
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Combat Core");
-			Tooltip.SetDefault("Grants impressive boosts in combat capability");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Combat Core");
+			// Tooltip.SetDefault("Grants impressive boosts in combat capability");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.value = Item.buyPrice(platinum: 5);
@@ -61,9 +61,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 	public class Construction_Core : Eyndum_Core {
 		public override Color CoreGlowColor => new Color(255, 160, 0, 160);
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Construction Core");
-			Tooltip.SetDefault("Allows incredible construction abilities");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Construction Core");
+			// Tooltip.SetDefault("Allows incredible construction abilities");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.value = Item.buyPrice(platinum: 5);
@@ -81,9 +81,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 	public class Fishing_Core : Eyndum_Core {
 		public override Color CoreGlowColor => new Color(255, 0, 160, 75);
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fishing Core");
-			Tooltip.SetDefault("Facilitates flawless fishing");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Fishing Core");
+			// Tooltip.SetDefault("Facilitates flawless fishing");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.value = Item.buyPrice(platinum: 5);
@@ -98,9 +98,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 	public class Lifeforce_Core : Eyndum_Core {
 		public override Color CoreGlowColor => new Color(255, 0, 75, 160);
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Vitality Core");
-			Tooltip.SetDefault("Provides extreme boosts in health\n'Get a life'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Vitality Core");
+			// Tooltip.SetDefault("Provides extreme boosts in health\n'Get a life'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.value = Item.buyPrice(platinum: 5);
@@ -114,9 +114,9 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 	public class Magic_Core : Eyndum_Core {
 		public override Color CoreGlowColor => new Color(255, 100, 0, 160);
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Magic Core");
-			Tooltip.SetDefault("Graces one with true magic power");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Magic Core");
+			// Tooltip.SetDefault("Graces one with true magic power");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.value = Item.buyPrice(platinum: 5);

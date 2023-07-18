@@ -18,13 +18,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Flakjack");
+			// DisplayName.SetDefault("Flakjack");
 			if (!Main.dedServ) {
 				UseTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Flakjack_Use");
 				UseGlowTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Flakjack_Use_Glow");
 			}
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);
@@ -107,7 +107,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Flakjack_Explosion_P : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => "Terraria/Images/Projectile_16";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Flakjack");
+			// DisplayName.SetDefault("Flakjack");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
@@ -135,7 +135,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Flakjack_P_1 : ModProjectile, IIsExplodingProjectile {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Resizable Mine");
+			// DisplayName.SetDefault("Resizable Mine");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);

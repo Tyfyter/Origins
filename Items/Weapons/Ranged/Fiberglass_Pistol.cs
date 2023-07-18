@@ -7,9 +7,9 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Fiberglass_Pistol : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Fiberglass Pistol");
-			Tooltip.SetDefault("'Be careful, it's sharp'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Fiberglass Pistol");
+			// Tooltip.SetDefault("'Be careful, it's sharp'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 11;

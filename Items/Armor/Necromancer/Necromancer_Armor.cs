@@ -9,9 +9,9 @@ namespace Origins.Items.Armor.Necromancer {
 	[AutoloadEquip(EquipType.Head)]
 	public class Necromancer_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Necromancer Crown");
-			Tooltip.SetDefault("25% increased summoning damage");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Necromancer Crown");
+			// Tooltip.SetDefault("25% increased summoning damage");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
@@ -77,9 +77,9 @@ namespace Origins.Items.Armor.Necromancer {
 	[AutoloadEquip(EquipType.Body)]
 	public class Necromancer_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Necromancer Breastplate");
-			Tooltip.SetDefault("15% increased summoning attack speed\n+1 minion slot");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Necromancer Breastplate");
+			// Tooltip.SetDefault("15% increased summoning attack speed\n+1 minion slot");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 14;
@@ -102,9 +102,9 @@ namespace Origins.Items.Armor.Necromancer {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Necromancer_Greaves : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Necromancer Greaves");
-			Tooltip.SetDefault("25% increased artifact minion damage");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Necromancer Greaves");
+			// Tooltip.SetDefault("25% increased artifact minion damage");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 10;

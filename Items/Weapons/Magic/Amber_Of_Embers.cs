@@ -13,9 +13,9 @@ using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Magic {
 	public class Amber_Of_Embers : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amber of Embers");
+			// DisplayName.SetDefault("Amber of Embers");
 			Item.staff[Item.type] = true;
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Flamelash);
@@ -45,7 +45,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override string Texture => "Origins/Projectiles/Weapons/Fire_Wave_P";
 
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Burning Ember");
+			// DisplayName.SetDefault("Burning Ember");
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 19;
 		}
@@ -59,7 +59,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void AI() {
 			if (Projectile.timeLeft >= 80) Projectile.rotation = Projectile.velocity.ToRotation();
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Main.rand.NextBool()) target.AddBuff(BuffID.OnFire, 300);
 			if (Projectile.penetrate == 1) {
 				Projectile.penetrate = 2;

@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Origins.Items.Materials.Felnum_Bar;
 using static Terraria.ModLoader.ModContent;
@@ -16,9 +17,9 @@ namespace Origins.Tiles.Other {
 			Main.tileLighted[Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			Main.tileOreFinderPriority[Type] = 450;
-			ItemDrop = ItemType<Felnum_Ore_Item>();
-			ModTranslation name = CreateMapEntryName();
-			name.SetDefault("Felnum Ore");
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Felnum_Ore_Item>();
+			LocalizedText name = CreateMapEntryName();
+			// name.SetDefault("Felnum Ore");
 			AddMapEntry(new Color(160, 116, 42), name);
 			mergeID = TileID.Demonite;
 		}
@@ -36,7 +37,7 @@ namespace Origins.Tiles.Other {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Felnum Ore");
+			// DisplayName.SetDefault("Felnum Ore");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DemoniteOre);

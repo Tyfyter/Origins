@@ -12,12 +12,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			UseTexture = null;
 		}
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bomboomstick");
-			Tooltip.SetDefault("Fires a cluster of three to five grenades");
+			// DisplayName.SetDefault("Bomboomstick");
+			// Tooltip.SetDefault("Fires a cluster of three to five grenades");
 			if (!Main.dedServ) {
 				UseTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Bomboomstick_Use");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Boomstick);

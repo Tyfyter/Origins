@@ -19,9 +19,9 @@ using Origins.World.BiomeData;
 using Origins.Tiles.Defiled;
 using Origins.Items.Materials;
 using MonoMod.RuntimeDetour.HookGen;
-using ThoriumMod.Items;
+//using ThoriumMod.Items;
 using System.Reflection;
-using ThoriumMod.Projectiles.Bard;
+//using ThoriumMod.Projectiles.Bard;
 using Origins.NPCs.MiscE;
 
 namespace Origins {
@@ -134,8 +134,10 @@ namespace Origins {
 			wikiSiteMap = null;
 		}
 		[JITWhenModsEnabled("ThoriumMod")]
-		void LoadThorium() {
-			HookEndpointManager.Add(
+		void LoadThorium() {///TODO: unfalse if thorium
+#if false
+
+			MonoModHooks.Add(
 				typeof(BardItem).GetMethod("SetDefaults", BindingFlags.Public | BindingFlags.Instance),
 				(Action<Action<BardItem>, BardItem>)([JITWhenModsEnabled("ThoriumMod")](orig, self) => {
 					orig(self);
@@ -144,7 +146,7 @@ namespace Origins {
 					}
 				})
 			);
-			HookEndpointManager.Add(
+			MonoModHooks.Add(
 				typeof(BardProjectile).GetMethod("SetDefaults", BindingFlags.Public | BindingFlags.Instance),
 				(Action<Action<BardProjectile>, BardProjectile>)([JITWhenModsEnabled("ThoriumMod")](orig, self) => {
 					orig(self);
@@ -184,6 +186,7 @@ namespace Origins {
 			CrimsonGlobalNPC.NPCTypes.Add(ModContent.NPCType<ThoriumMod.NPCs.EpiDermon>());
 
 			CrimsonGlobalNPC.AssimilationAmounts.Add(ModContent.NPCType<ThoriumMod.NPCs.Blister>(), 0.01f);
+#endif
 		}
 	}
 	public interface ICustomWikiDestination {

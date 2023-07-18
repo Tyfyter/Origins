@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Omnidirectional_Claymore : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Omni-Directional Claymore");
-			Tooltip.SetDefault("Explodes when enemies cross its laser\nCan aim in different directions");
-			SacrificeTotal = 5;
+			// DisplayName.SetDefault("Omni-Directional Claymore");
+			// Tooltip.SetDefault("Explodes when enemies cross its laser\nCan aim in different directions");
+			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.LandMine);

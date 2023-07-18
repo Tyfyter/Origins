@@ -12,9 +12,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Tendon_Tear : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tendon Tear");
-			Tooltip.SetDefault("'Snap. Crackle. Pop'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Tendon Tear");
+			// Tooltip.SetDefault("'Snap. Crackle. Pop'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
@@ -45,7 +45,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public static int ID { get; private set; } = -1;
 		public override string Texture => "Origins/Items/Weapons/Ranged/Tendon_Tear_P";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tendon Tear");
+			// DisplayName.SetDefault("Tendon Tear");
 			// This makes the projectile use whip collision detection and allows flasks to be applied to it.
 			//ProjectileID.Sets.IsAWhip[Type] = true;
 			ID = Type;

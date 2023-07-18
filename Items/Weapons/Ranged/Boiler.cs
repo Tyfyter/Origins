@@ -9,11 +9,11 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Boiler : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Boiler");
-			Tooltip.SetDefault("Uses fireblossoms as ammo");
+			// DisplayName.SetDefault("Boiler");
+			// Tooltip.SetDefault("Uses fireblossoms as ammo");
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);

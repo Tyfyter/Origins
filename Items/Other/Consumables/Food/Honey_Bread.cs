@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables.Food {
     public class Honey_Bread : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Honey Wheat Bread");
-			Tooltip.SetDefault("{$CommonItemTooltip.MajorStats}\n'Let's get this bread!'");
-			SacrificeTotal = 5;
+			// DisplayName.SetDefault("Honey Wheat Bread");
+			// Tooltip.SetDefault("{$CommonItemTooltip.MajorStats}\n'Let's get this bread!'");
+			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.MonsterLasagna);

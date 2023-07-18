@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Tiny_Sniper : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Tiny Sniper");
-			Tooltip.SetDefault("'Comically small, comically powerful'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Tiny Sniper");
+			// Tooltip.SetDefault("'Comically small, comically powerful'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);

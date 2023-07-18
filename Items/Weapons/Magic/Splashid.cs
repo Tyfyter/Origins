@@ -12,10 +12,10 @@ namespace Origins.Items.Weapons.Magic {
 		static short glowmask;
 		public ushort Element => Elements.Acid;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Splashid");
-			Tooltip.SetDefault("Shoots a flurry of brine droplets");
+			// DisplayName.SetDefault("Splashid");
+			// Tooltip.SetDefault("Shoots a flurry of brine droplets");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);

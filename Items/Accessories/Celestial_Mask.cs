@@ -6,9 +6,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Celestial_Mask : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Celestial Stone Mask");
-			Tooltip.SetDefault("Increase to damage, melee speed, critical strike chance,\nlife regeneration, defense, mining speed, and minion knockback,\nbut your movement is hindered");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Celestial Stone Mask");
+			// Tooltip.SetDefault("Increase to damage, melee speed, critical strike chance,\nlife regeneration, defense, mining speed, and minion knockback,\nbut your movement is hindered");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 24);

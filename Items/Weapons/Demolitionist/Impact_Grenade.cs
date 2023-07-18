@@ -7,9 +7,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Impact_Grenade : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Impact Grenade");
-			Tooltip.SetDefault("'Be careful, it's not a book'");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Impact Grenade");
+			// Tooltip.SetDefault("'Be careful, it's not a book'");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Impact_Grenade_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Impact_Grenade";
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Impact Grenade");
+			// DisplayName.SetDefault("Impact Grenade");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

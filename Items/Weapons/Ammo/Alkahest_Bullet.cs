@@ -9,9 +9,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Alkahest_Bullet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Alkahest Bullet");
-			Tooltip.SetDefault("Tenderizes the target");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Alkahest Bullet");
+			// Tooltip.SetDefault("Tenderizes the target");
+			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedBullet);
@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Ammo {
 			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
 			SoundEngine.PlaySound(SoundID.Shatter.WithVolume(0.5f), Projectile.position);
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			OriginGlobalNPC.InflictTorn(target, 180, 180, 0.75f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 	}

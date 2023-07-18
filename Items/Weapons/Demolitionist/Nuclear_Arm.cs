@@ -9,9 +9,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 	[AutoloadEquip(EquipType.HandsOn)]
     public class Nuclear_Arm : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Nuclear Arm");
-			Tooltip.SetDefault("'Like nuclear arms? Well now you can have nuclear arms on your... arms'");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Nuclear Arm");
+			// Tooltip.SetDefault("'Like nuclear arms? Well now you can have nuclear arms on your... arms'");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaultsKeepSlots(ItemID.TerraBlade);
@@ -48,7 +48,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Nuclear_Arm_P";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Nuclear Arm");
+			// DisplayName.SetDefault("Nuclear Arm");
 			Origins.MagicTripwireRange[Type] = 32;
 			Main.projFrames[Type] = 4;
 			ID = Type;

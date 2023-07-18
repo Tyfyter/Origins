@@ -10,9 +10,9 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Waist)]
 	public class Amebic_Vial : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amebic Vial");
-			Tooltip.SetDefault("Amebic tentacles will protect you from projectiles");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Amebic Vial");
+			// Tooltip.SetDefault("Amebic tentacles will protect you from projectiles");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 26);
@@ -21,7 +21,7 @@ namespace Origins.Items.Accessories {
 			Item.shoot = ModContent.ProjectileType<Amebic_Vial_Tentacle>();
 			Item.rare = ItemRarityID.Expert;
 			Item.expert = true;
-			Item.canBePlacedInVanityRegardlessOfConditions = true;
+			Item.hasVanityEffects = true;
 			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateAccessory(Player player, bool isHidden) {
@@ -81,7 +81,7 @@ namespace Origins.Items.Accessories {
 		public override string GlowTexture => Texture;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Amebic Tentacle");
+			// DisplayName.SetDefault("Amebic Tentacle");
 			ID = Type;
 		}
 		public override void SetDefaults() {

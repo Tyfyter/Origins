@@ -7,10 +7,10 @@ namespace Origins.Items.Weapons.Melee {
 	public class Spiker_Sword : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Spiker Sword");
-			Tooltip.SetDefault("'Very pointy'");
+			// DisplayName.SetDefault("Spiker Sword");
+			// Tooltip.SetDefault("'Very pointy'");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 30;

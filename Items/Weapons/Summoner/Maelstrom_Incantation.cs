@@ -14,9 +14,9 @@ using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Summoner {
 	public class Maelstrom_Incantation : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Maelstrom Incantation");
-			Tooltip.SetDefault("5 summon tag damage\nDirectly struck enemies will shock nearby enemies when hit by minions\n{$CommonItemTooltip.Whips}\nReceives 50% higher damage bonuses");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Maelstrom Incantation");
+			// Tooltip.SetDefault("5 summon tag damage\nDirectly struck enemies will shock nearby enemies when hit by minions\n{$CommonItemTooltip.Whips}\nReceives 50% higher damage bonuses");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
@@ -53,7 +53,7 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Maelstrom_Incantation_P : ModProjectile {
 		const int lifespan = 1800;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lightning Orb");
+			// DisplayName.SetDefault("Lightning Orb");
 			Main.projFrames[Projectile.type] = 4;
 		}
 		public override void SetDefaults() {
@@ -177,7 +177,7 @@ namespace Origins.Items.Weapons.Summoner {
 				Projectile.ai[0] = 0;
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 			startExplosion();
 			target.AddBuff(Maelstrom_Buff_Damage.ID, 240);
@@ -241,7 +241,7 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 		}
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Lightning Orb Trail");
+			// DisplayName.SetDefault("Lightning Orb Trail");
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
@@ -286,7 +286,7 @@ namespace Origins.Items.Weapons.Summoner {
 				}
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;
 			target.AddBuff(Maelstrom_Buff_Damage.ID, 240);
 		}

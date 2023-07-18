@@ -7,10 +7,10 @@ namespace Origins.Items.Tools {
 	public class Rivenator : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Riven}ator");
-			Tooltip.SetDefault("Able to mine Hellstone");
+			// DisplayName.SetDefault("{$Riven}ator");
+			// Tooltip.SetDefault("Able to mine Hellstone");
 			glowmask = Origins.AddGlowMask(this);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.NightmarePickaxe);

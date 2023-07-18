@@ -6,8 +6,8 @@ namespace Origins.Buffs {
 		public override string Texture => "Terraria/Images/Buff_160";
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Mimic_Buff");
-			Description.SetDefault("Increased combat stats");
+			// DisplayName.SetDefault("Mimic_Buff");
+			// Description.SetDefault("Increased combat stats");
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {

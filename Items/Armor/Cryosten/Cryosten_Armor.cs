@@ -6,9 +6,9 @@ namespace Origins.Items.Armor.Cryosten {
 	[AutoloadEquip(EquipType.Head)]
 	public class Cryosten_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cryosten Helmet");
-			Tooltip.SetDefault("Increased life regeneration");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Cryosten Helmet");
+			// Tooltip.SetDefault("Increased life regeneration");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 2;
@@ -46,9 +46,9 @@ namespace Origins.Items.Armor.Cryosten {
 	[AutoloadEquip(EquipType.Body)]
 	public class Cryosten_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cryosten Breastplate");
-			Tooltip.SetDefault("12% increased maximum life");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Cryosten Breastplate");
+			// Tooltip.SetDefault("12% increased maximum life");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;
@@ -69,9 +69,9 @@ namespace Origins.Items.Armor.Cryosten {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Cryosten_Greaves : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Cryosten Greaves");
-			Tooltip.SetDefault("5% increased movement speed\nIncreased movement speed on ice");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Cryosten Greaves");
+			// Tooltip.SetDefault("5% increased movement speed\nIncreased movement speed on ice");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 2;

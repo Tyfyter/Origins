@@ -97,11 +97,11 @@ namespace Origins.Projectiles {
 				}
 			}
 		}
-		public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			justHit = true;
 			if (bloodletter) target.AddBuff(BuffID.Bleeding, 300);
 		}
-		public override void OnHitPvp(Projectile projectile, Player target, int damage, bool crit) {
+		public override void OnHitPvp(Projectile projectile, Player target, int damage, bool crit)/* tModPorter Note: Removed. Use OnHitPlayer and check info.PvP */ {
 			justHit = true;
 			if (bloodletter) target.AddBuff(BuffID.Bleeding, 300);
 		}

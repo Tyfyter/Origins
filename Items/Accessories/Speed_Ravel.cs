@@ -7,9 +7,9 @@ namespace Origins.Items.Accessories {
 	public class Speed_Ravel : Ravel {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Speed Ravel");
-			Tooltip.SetDefault("Double tap down to transform into a small, rolling ball that moves very fast");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Speed Ravel");
+			// Tooltip.SetDefault("Double tap down to transform into a small, rolling ball that moves very fast");
+			Item.ResearchUnlockCount = 1;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -59,8 +59,8 @@ namespace Origins.Items.Accessories {
 		protected override int MountID => ModContent.MountType<Speed_Ravel_Mount>();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			DisplayName.SetDefault("Speed Ravel");
-			Description.SetDefault("10% chance to dodge. Move very fast");
+			// DisplayName.SetDefault("Speed Ravel");
+			// Description.SetDefault("10% chance to dodge. Move very fast");
 		}
 	}
 }

@@ -18,13 +18,13 @@ namespace Origins.Graphics
 
 		public override void Load()
 		{
-			On.Terraria.Main.CheckMonoliths += RenderScreens;
+			Terraria.On_Main.CheckMonoliths += RenderScreens;
 			Main.OnResolutionChanged += ResizeScreens;
 		}
 
 		public override void Unload()
 		{
-			On.Terraria.Main.CheckMonoliths -= RenderScreens;
+			Terraria.On_Main.CheckMonoliths -= RenderScreens;
 			Main.OnResolutionChanged -= ResizeScreens;
 
 			Main.QueueMainThreadAction(() =>
@@ -87,7 +87,7 @@ namespace Origins.Graphics
 			targetSem.Release();
 		}
 
-		private void RenderScreens(On.Terraria.Main.orig_CheckMonoliths orig)
+		private void RenderScreens(Terraria.On_Main.orig_CheckMonoliths orig)
 		{
 			orig();
 

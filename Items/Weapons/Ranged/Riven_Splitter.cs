@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Riven_Splitter : Harpoon_Gun {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Riven Splitter");
-			Tooltip.SetDefault("Uses harpoons as ammo\n87.5% chance not to consume ammo");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Riven Splitter");
+			// Tooltip.SetDefault("Uses harpoons as ammo\n87.5% chance not to consume ammo");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 24;

@@ -8,9 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables.Food {
 	public class Potato : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Potato");
-			Tooltip.SetDefault("{$CommonItemTooltip.MinorStats}\nIt's a potato...");
-			SacrificeTotal = 5;
+			// DisplayName.SetDefault("Potato");
+			// Tooltip.SetDefault("{$CommonItemTooltip.MinorStats}\nIt's a potato...");
+			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ChocolateChipCookie);

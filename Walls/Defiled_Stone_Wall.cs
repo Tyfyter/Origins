@@ -16,14 +16,14 @@ namespace Origins.Walls {
 	public class Defiled_Stone_Wall_Safe : Defiled_Stone_Wall {
 		public override string Texture => "Origins/Walls/Defiled_Stone_Wall";
 		public override void SetStaticDefaults() {
-			ItemDrop = ItemType<Defiled_Stone_Wall_Item>();
+			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Defiled_Stone_Wall_Item>();
 			Main.wallHouse[Type] = true;
 			base.SetStaticDefaults();
 		}
 	}
 	public class Defiled_Stone_Wall_Item : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Stone Wall");
+			// DisplayName.SetDefault("{$Defiled} Stone Wall");
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneWall);

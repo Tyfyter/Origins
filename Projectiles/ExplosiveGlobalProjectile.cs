@@ -256,7 +256,7 @@ namespace Origins.Projectiles {
 				}
 			}
 		}
-		public override void OnHitNPC(Projectile projectile, NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
 			if (originPlayer.madHand) {
 				target.AddBuff(BuffID.Oiled, 600);

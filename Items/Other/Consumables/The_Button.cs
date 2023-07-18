@@ -6,10 +6,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class The_Button : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("The Button");
-			Tooltip.SetDefault("Summons I.C.A.R.U.S");
+			// DisplayName.SetDefault("The Button");
+			// Tooltip.SetDefault("Summons I.C.A.R.U.S");
 
-			SacrificeTotal = 3;
+			Item.ResearchUnlockCount = 3;
 			//ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;
 		}
 		public override void SetDefaults() {

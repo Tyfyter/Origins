@@ -14,10 +14,10 @@ namespace Origins.Items.Pets {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chromatic Scale");
-			Tooltip.SetDefault("A very long an convoluted tooltip text because Ty forgot to mess with its name and tooltip :p");
+			// DisplayName.SetDefault("Chromatic Scale");
+			// Tooltip.SetDefault("A very long an convoluted tooltip text because Ty forgot to mess with its name and tooltip :p");
 
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
@@ -55,7 +55,7 @@ namespace Origins.Items.Pets {
 
 		public override void SetStaticDefaults() {
 			Chromatic_Scale.projectileID = Type;
-			DisplayName.SetDefault("Chromatic Pangolin");
+			// DisplayName.SetDefault("Chromatic Pangolin");
 			//Origins.ExplosiveProjectiles[Projectile.type] = true;
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Type] = 4;
@@ -243,8 +243,8 @@ namespace Origins.Items.Pets {
 namespace Origins.Buffs {
 	public class Chromatic_Pangolin_Buff : ModBuff {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Chromatic Pangolin");
-			Description.SetDefault("It rainbow, tooltip coming soon.");
+			// DisplayName.SetDefault("Chromatic Pangolin");
+			// Description.SetDefault("It rainbow, tooltip coming soon.");
 			Main.buffNoTimeDisplay[Type] = true;
 			Main.vanityPet[Type] = true;
 			Chromatic_Scale.buffID = Type;

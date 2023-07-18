@@ -9,8 +9,8 @@ namespace Origins.Items.Weapons.Ammo {
     public class Bouncy_Harpoon : ModItem {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bouncy Harpoon");
-			SacrificeTotal = 99;
+			// DisplayName.SetDefault("Bouncy Harpoon");
+			Item.ResearchUnlockCount = 99;
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Bouncy_Harpoon_P : Harpoon_P {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Bouncy Harpoon");
+			// DisplayName.SetDefault("Bouncy Harpoon");
 			ID = Type;
 		}
 		public override void OnSpawn(IEntitySource source) {
@@ -68,7 +68,7 @@ namespace Origins.Items.Weapons.Ammo {
 				Projectile.penetrate--;
 			}
 		}
-		public override void OnHitNPC(NPC target, int damage, float knockback, bool crit) {
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.penetrate = Projectile.maxPenetrate == 1 ? 2 : -1;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {

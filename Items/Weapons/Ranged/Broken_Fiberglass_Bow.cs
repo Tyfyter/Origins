@@ -23,11 +23,11 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 		}
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Unstrung Fiberglass Bow");
-			Tooltip.SetDefault("Not very useful without a bowstring\nMaybe you could find something to replace it");
+			// DisplayName.SetDefault("Unstrung Fiberglass Bow");
+			// Tooltip.SetDefault("Not very useful without a bowstring\nMaybe you could find something to replace it");
 			animation = new DrawAnimationManual(2);
 			Main.RegisterItemAnimation(Item.type, animation);
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 17;

@@ -8,12 +8,12 @@ namespace Origins.Items.Armor.Defiled {
     [AutoloadEquip(EquipType.Head)]
 	public class Defiled_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Helmet");
-			Tooltip.SetDefault("5% increased critical strike chance");
+			// DisplayName.SetDefault("{$Defiled} Helmet");
+			// Tooltip.SetDefault("5% increased critical strike chance");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Defiled/Defiled_Helmet_Head_Glow");
 			}
-			SacrificeTotal = 1;
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 6;
@@ -42,9 +42,9 @@ namespace Origins.Items.Armor.Defiled {
 	[AutoloadEquip(EquipType.Body)]
 	public class Defiled_Breastplate : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Breastplate");
-			Tooltip.SetDefault("3% increased damage");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("{$Defiled} Breastplate");
+			// Tooltip.SetDefault("3% increased damage");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
@@ -65,9 +65,9 @@ namespace Origins.Items.Armor.Defiled {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Defiled_Greaves : ModItem {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("{$Defiled} Greaves");
-			Tooltip.SetDefault("3% increased damage");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("{$Defiled} Greaves");
+			// Tooltip.SetDefault("3% increased damage");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 6;
@@ -89,7 +89,7 @@ namespace Origins.Items.Armor.Defiled {
 	public class Defiled2_Helmet : Defiled_Helmet {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			DisplayName.SetDefault("Ancient {$Defiled} Helmet");
+			// DisplayName.SetDefault("Ancient {$Defiled} Helmet");
 		}
 		public override void AddRecipes() {
 		}
@@ -98,7 +98,7 @@ namespace Origins.Items.Armor.Defiled {
 		public class Defiled2_Breastplate : Defiled_Breastplate {
 			public override void SetStaticDefaults() {
 				base.SetStaticDefaults();
-				DisplayName.SetDefault("Ancient {$Defiled} Breastplate");
+				// DisplayName.SetDefault("Ancient {$Defiled} Breastplate");
 			}
 			public override void AddRecipes() {
 			}
@@ -107,7 +107,7 @@ namespace Origins.Items.Armor.Defiled {
 		public class Defiled2_Greaves : Defiled_Greaves {
 			public override void SetStaticDefaults() {
 				base.SetStaticDefaults();
-				DisplayName.SetDefault("Ancient {$Defiled} Greaves");
+				// DisplayName.SetDefault("Ancient {$Defiled} Greaves");
 			}
 			public override void AddRecipes() {
 			}

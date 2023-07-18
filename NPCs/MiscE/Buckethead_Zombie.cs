@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.MiscE {
     public class Buckethead_Zombie : ModNPC {
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Buckethead Zombie");
+			// DisplayName.SetDefault("Buckethead Zombie");
 			Main.npcFrameCount[NPC.type] = 3;
 		}
 		public override void SetDefaults() {
@@ -40,7 +40,7 @@ namespace Origins.NPCs.MiscE {
 			npcLoot.Add(ItemDropRule.Common(ItemID.EmptyBucket, 3));
 			npcLoot.Add(ItemDropRule.Common(ItemID.Diamond, 20));
 		}
-		public override void HitEffect(int hitDirection, double damage) {
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0 || Terraria.ModLoader.Default.AprilFools.CheckAprilFools()) {
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, 4);
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, 4);

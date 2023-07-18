@@ -11,8 +11,8 @@ namespace Origins.Items.Accessories {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Eccentric_Stone_Entry).Name;
 		public override void SetStaticDefaults() {
-			DisplayName.SetDefault("Eccentric Stone");
-			SacrificeTotal = 1;
+			// DisplayName.SetDefault("Eccentric Stone");
+			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 30);
