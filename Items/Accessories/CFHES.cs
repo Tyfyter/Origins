@@ -21,5 +21,12 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().dangerBarrel = true;
 			player.GetModPlayer<OriginPlayer>().explosiveFuseTime *= 0.666f;
 		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient<ACME_Crate>()
+			.AddIngredient<Danger_Barrel>()
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
+		}
 	}
 }

@@ -18,5 +18,12 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().explosiveBlastRadius *= 2.2f;
 			player.GetModPlayer<OriginPlayer>().magicTripwire = true;
 		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient<Magic_Tripwire>()
+			.AddIngredient<Nitro_Crate>()
+			.AddTile(TileID.TinkerersWorkbench)
+			.Register();
+		}
 	}
 }
