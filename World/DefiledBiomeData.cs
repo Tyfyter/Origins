@@ -533,7 +533,6 @@ namespace Origins.World.BiomeData {
 			return base.IsBiomeActive(player);
 		}
 	}
-#if false ///TODO: find a way
 	public class Defiled_Wastelands_Alt_Biome : AltBiome {
 		public override string WorldIcon => "Origins/UI/WorldGen/IconDefiled";
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";
@@ -669,5 +668,4 @@ namespace Origins.World.BiomeData {
 			}
 		}
 	}
-#endif
 }

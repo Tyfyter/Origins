@@ -24,7 +24,6 @@ using static Terraria.WorldGen;
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
 		internal static List<(Point, int)> HellSpikes = new List<(Point, int)>() { };
-#if false ///TODO: find a way
 		public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight) {
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsWestEdge = new();
 			Defiled_Wastelands_Alt_Biome.defiledWastelandsEastEdge = new();
@@ -253,7 +252,6 @@ namespace Origins {
 				}
 			}));
 		}
-#endif
 
 		public static void GERunnerHook(Terraria.On_WorldGen.orig_GERunner orig, int i, int j, float speedX = 0f, float speedY = 0f, bool good = true) {
 			byte worldEvil = GetInstance<OriginSystem>().worldEvil;

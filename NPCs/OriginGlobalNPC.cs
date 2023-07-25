@@ -136,7 +136,6 @@ namespace Origins.NPCs {
 		public override void ModifyActiveShop(NPC npc, string shopName, Item[] items) {
 			bool worldHasWastelands = false;
 			bool worldHasHive = false;
-#if false ///TODO: find a way
 			switch (AltLibrary.Common.Systems.WorldBiomeManager.WorldEvil) {
 				case "Origins/Defiled_Wastelands_Alt_Biome":
 				worldHasWastelands = true;
@@ -145,7 +144,6 @@ namespace Origins.NPCs {
 				worldHasHive = true;
 				break;
 			}
-#endif
 		}
 		public override bool PreAI(NPC npc) {
 			if (npc.oldPosition == default && npc.oldVelocity == default && npc.position.LengthSquared() > 16) {

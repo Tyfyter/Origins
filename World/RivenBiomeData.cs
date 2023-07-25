@@ -519,7 +519,6 @@ namespace Origins.World.BiomeData {
 			return base.IsBiomeActive(player);
 		}
 	}
-#if false ///TODO: find a way
 	public class Riven_Hive_Alt_Biome : AltBiome {
 		public override string WorldIcon => "";//TODO: Redo tree icons for AltLib
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Riven";
@@ -599,5 +598,4 @@ namespace Origins.World.BiomeData {
 			public override void PostGenerateEvil() { }
 		}
 	}
-#endif
 }

@@ -217,7 +217,6 @@ namespace Origins.Projectiles {
 			prefix = binaryReader.ReadInt32();
 		}
 
-#if false ///TODO: find a way
 		public static void ClentaminatorAI<TBiome>(Projectile projectile, int dustType, Color color) where TBiome : AltBiome {
 			if (projectile.owner == Main.myPlayer) {
 				AltLibrary.Core.ALConvert.SimulateSolution<TBiome>(projectile);
@@ -259,6 +258,5 @@ namespace Origins.Projectiles {
 			}
 			projectile.rotation += 0.3f * projectile.direction;
 		}
-#endif
 	}
 }

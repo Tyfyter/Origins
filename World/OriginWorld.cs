@@ -40,7 +40,6 @@ namespace Origins {
 		public byte worldEvil {
 			get {
 				return WorldGen.crimson ? evil_crimson : evil_corruption;
-#if false ///TODO: find a way
 				switch (AltLibrary.Common.Systems.WorldBiomeManager.WorldEvil) {
 					case "Origins/Defiled_Wastelands_Alt_Biome":
 					hasDefiled = true;
@@ -53,7 +52,6 @@ namespace Origins {
 					default:
 					return WorldGen.crimson ? evil_crimson : evil_corruption;
 				}
-#endif
 			}
 		}
 		internal bool hasDefiled = false;

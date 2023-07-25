@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
-	//TODO: find some way to track converting or change progression method
+	//TODO: implement
 	public class Cleansing_Station_Quest : Quest {
 		//backing field for Stage property
 		int stage = 0;
