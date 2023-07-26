@@ -8,7 +8,7 @@ Mods: {
 			// Or: "{0} or {1}"
 			// Not: Not {0}
 			// Comma: "{0}, {1}"
-			// QuestCompleted: Mods.Origins.Conditions.QuestCompleted
+			// QuestCompleted: Completed "{0}"
 			// PeatSoldCondition: Mods.Origins.Conditions.PeatSoldCondition
 			// Brine: Mods.Origins.Conditions.Brine
 			// RivenWater: Mods.Origins.Conditions.RivenWater
