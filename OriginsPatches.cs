@@ -663,11 +663,6 @@ namespace Origins {
 
 		delegate bool orig_ShakeTree(int x, int y, int type, ref bool createLeaves);
 		delegate bool hook_ShakeTree(orig_ShakeTree orig, int x, int y, int type, ref bool createLeaves);
-		delegate void GetTreeBottom(int i, int j, out int x, out int y);
-		GetTreeBottom _getTreeBottom;
-		static GetTreeBottom getTreeBottom => instance._getTreeBottom ??=
-			typeof(WorldGen).GetMethod("GetTreeBottom", BindingFlags.NonPublic | BindingFlags.Static)
-			.CreateDelegate<GetTreeBottom>(null);
 		static FastStaticFieldInfo<WorldGen, int> numTreeShakes;
 		static FastStaticFieldInfo<WorldGen, int> maxTreeShakes;
 		static FastStaticFieldInfo<WorldGen, int[]> treeShakeX;
@@ -677,7 +672,7 @@ namespace Origins {
 			maxTreeShakes ??= new("maxTreeShakes", BindingFlags.NonPublic);
 			treeShakeX ??= new("treeShakeX", BindingFlags.NonPublic);
 			treeShakeY ??= new("treeShakeY", BindingFlags.NonPublic);
-			getTreeBottom(i, j, out var x, out var y);
+			WorldGen.GetTreeBottom(i, j, out var x, out var y);
 			int num = y;
 			int tileType = Main.tile[x, y].TileType;
 			TreeTypes treeType = WorldGen.GetTreeType(tileType);
