@@ -74,6 +74,7 @@ namespace Origins.Tiles.Other {
 				return false;
 			}
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+			originPlayer.mojoFlaskCount = originPlayer.mojoFlaskCountMax;
 			if (originPlayer.CorruptionAssimilation > 0 || originPlayer.CrimsonAssimilation > 0 || originPlayer.DefiledAssimilation > 0 || originPlayer.RivenAssimilation > 0) {
 				
 			}

@@ -11,6 +11,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 using static Origins.OriginExtensions;
 using Origins.Items.Materials;
+using AltLibrary.Common.AltBiomes;
 
 namespace Origins.Walls {
 	public class Chambersite_Stone_Wall : ModWall {
@@ -19,10 +20,8 @@ namespace Origins.Walls {
 			AddMapEntry(GetWallMapColor(WallID.Stone));
 			RegisterItemDrop(ItemType<Chambersite>());
 		}
-		public static void AddChild(int type, AltLibraryLookupType biome) {
-			GetAltLibraryDataLookup(AltLibraryFieldType.Wall, AltLibraryLookupType.Parent).Add(type, WallType<Chambersite_Stone_Wall>());
-			GetAltLibraryDataLookup(AltLibraryFieldType.Wall, AltLibraryLookupType.ForestConversion).Add(type, WallType<Chambersite_Stone_Wall>());
-			GetAltLibraryDataLookup(AltLibraryFieldType.Wall, biome).Add(WallType<Chambersite_Stone_Wall>(), type);
+		public static void AddChild(int type, AltBiome biome) {
+			biome.AddWallConversions(type, WallType<Chambersite_Stone_Wall>());
 		}
 	}
 	public class Chambersite_Stone_Wall_Item : ModItem {
@@ -34,7 +33,7 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallID.CrimsonUnsafe1;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.CrimsonUnsafe1));
-			Chambersite_Stone_Wall.AddChild(Type, AltLibraryLookupType.CrimsonConversion);
+			Chambersite_Stone_Wall.AddChild(Type, GetInstance<CrimsonAltBiome>());
 			RegisterItemDrop(ItemType<Chambersite>());
 		}
 	}
@@ -42,7 +41,7 @@ namespace Origins.Walls {
 		public override void SetStaticDefaults() {
 			Main.wallBlend[Type] = WallID.CorruptionUnsafe1;//what wall type this wall is considered to be when blending
 			AddMapEntry(GetWallMapColor(WallID.CorruptionUnsafe1));
-			Chambersite_Stone_Wall.AddChild(Type, AltLibraryLookupType.CorruptionConversion);
+			Chambersite_Stone_Wall.AddChild(Type, GetInstance<CorruptionAltBiome>());
 			RegisterItemDrop(ItemType<Chambersite>());
 		}
 	}

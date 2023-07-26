@@ -29,7 +29,7 @@ namespace Origins.Tiles.Defiled {
 		}
 		public void MinePower(int i, int j, int minePower, ref int damage) {
 			if (minePower >= 55 || j <= Main.worldSurface) {
-				damage += (int)(minePower / MineResist);
+				damage = (int)(minePower / MineResist);
 			}
 		}
 	}

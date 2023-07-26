@@ -10,7 +10,7 @@ namespace Origins {
 		public static OriginConfig Instance;
 		public override ConfigScope Mode => ConfigScope.ServerSide;
 
-		[Header("Vanilla Buffs")]
+		[Header("VanillaBuffs")]
 
 		[Label("Infected Wood Items")]
 		[DefaultValue(true)]

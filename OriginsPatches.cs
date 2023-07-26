@@ -84,9 +84,41 @@ namespace Origins {
 					for (int i = 0; i < Main.maxTilesX; i++) WorldGen.CountTiles(i);
 				}
 			};
-			//AltLibrary hooks Lang.GetDryadWorldStatusDialog, so ours is probably not necessary
-			//On.Terraria.Lang.GetDryadWorldStatusDialog += Lang_GetDryadWorldStatusDialog;
-			MonoModHooks.Add(typeof(TileLoader).GetMethod("MineDamage", BindingFlags.Public | BindingFlags.Static), (hook_MinePower)MineDamage);
+			On_Player.GetPickaxeDamage += On_Player_GetPickaxeDamage;
+			IL_Player.ItemCheck_UseMiningTools_ActuallyUseMiningTool += (il) => {
+				ILCursor c = new(il);
+				int modTile = -1;
+				int damageArg = -1;
+				c.GotoNext(
+					i => i.MatchCall(typeof(TileLoader), "GetTile"),
+					i => i.MatchStloc(out modTile)
+				);
+				//IL_0151: ldarg.0
+				//IL_0152: ldfld class Terraria.HitTile Terraria.Player::hitTile
+				//IL_0157: ldloc.0
+				//IL_0158: ldloc.1
+				//IL_0159: ldc.i4.1
+				//IL_015a: callvirt instance int32 Terraria.HitTile::AddDamage(int32, int32, bool)
+				c.GotoNext(MoveType.Before,
+					i => i.MatchLdarg(0),
+					i => i.MatchLdfld<Player>("hitTile"),
+					i => i.MatchLdloc(out _),
+					i => i.MatchLdloc(out damageArg),
+					i => i.MatchLdcI4(1),
+					i => i.MatchCallvirt<HitTile>("AddDamage")
+				);
+				c.Emit(OpCodes.Ldloc, modTile);
+				c.Emit(OpCodes.Ldarg_3);
+				c.Emit(OpCodes.Ldarg_S, (byte)4);
+				c.Emit(OpCodes.Ldarg_1);
+				c.Emit(OpCodes.Ldfld, typeof(Item).GetField("hammer"));
+				c.Emit(OpCodes.Ldloca, damageArg);
+				c.EmitDelegate<MinePowerDel>((ModTile modTile, int x, int y, int minePower, ref int damage) => {
+					if (modTile is IComplexMineDamageTile damageTile) {
+						damageTile.MinePower(x, y, minePower, ref damage);
+					}
+				});
+			};
 
 			Terraria.Graphics.Renderers.On_LegacyPlayerRenderer.DrawPlayerInternal += LegacyPlayerRenderer_DrawPlayerInternal;
 			Terraria.On_Projectile.GetWhipSettings += Projectile_GetWhipSettings;
@@ -252,7 +284,7 @@ namespace Origins {
 				defense -= (int)(defense * 0.2f);
 			}
 		}
-		private NetworkText PlayerDeathReason_GetDeathText(Terraria.DataStructures.On_PlayerDeathReason.orig_GetDeathText orig, PlayerDeathReason self, string deadPlayerName) {
+		private NetworkText PlayerDeathReason_GetDeathText(On_PlayerDeathReason.orig_GetDeathText orig, PlayerDeathReason self, string deadPlayerName) {
 			if (self is KeyedPlayerDeathReason keyedReason) {
 				return NetworkText.FromKey(
 					keyedReason.Key,
@@ -260,7 +292,7 @@ namespace Origins {
 					keyedReason.SourcePlayerIndex > -1 ? NetworkText.FromLiteral(Main.player[keyedReason.SourcePlayerIndex].name) : NetworkText.Empty,
 					keyedReason.SourceItem.Name,
 					keyedReason.SourceNPCIndex > -1 ? Main.npc[keyedReason.SourceNPCIndex].GetGivenOrTypeNetName() : NetworkText.Empty,
-					keyedReason.SourceProjectileType > -1 ? NetworkText.FromKey(Lang.GetProjectileName(keyedReason.SourceProjectileType).Key) : NetworkText.Empty
+					keyedReason.SourceProjectileType > -1 ? Lang.GetProjectileName(keyedReason.SourceProjectileType).ToNetworkText() : NetworkText.Empty
 				);
 			}
 			return orig(self, deadPlayerName);
@@ -322,6 +354,10 @@ namespace Origins {
 		public static bool npcChatQuestSelected = false;
 		private void Main_DrawNPCChatButtons(Terraria.On_Main.orig_DrawNPCChatButtons orig, int superColor, Color chatColor, int numLines, string focusText, string focusText3) {
 			Player player = Main.LocalPlayer;
+			if (player.talkNPC < 0) {
+				orig(superColor, chatColor, numLines, focusText, focusText3);
+				return;
+			}
 			Quest quest = null;
 			List<Quest> startableQuests = new();
 			NPC talkNPC = Main.npc[player.talkNPC];
@@ -752,15 +788,14 @@ namespace Origins {
 			}
 		}
 		#region mining power
-		private delegate void orig_MinePower(int minePower, ref int damage);
-		private delegate void hook_MinePower(orig_MinePower orig, int minePower, ref int damage);
-		private void MineDamage(orig_MinePower orig, int minePower, ref int damage) {
-			ModTile modTile = MC.GetModTile(Main.tile[Player.tileTargetX, Player.tileTargetY].TileType);
+		delegate void MinePowerDel(ModTile modTile, int i, int j, int minePower, ref int damage);
+		private int On_Player_GetPickaxeDamage(On_Player.orig_GetPickaxeDamage orig, Player self, int x, int y, int pickPower, int hitBufferIndex, Tile tileTarget) {
+			int value = orig(self, x, y, pickPower, hitBufferIndex, tileTarget);
+			ModTile modTile = MC.GetModTile(tileTarget.TileType);
 			if (modTile is IComplexMineDamageTile damageTile) {
-				damageTile.MinePower(Player.tileTargetX, Player.tileTargetY, minePower, ref damage);
-			} else {
-				orig(minePower, ref damage);
+				damageTile.MinePower(x, y, pickPower, ref value);
 			}
+			return value;
 		}
 		#endregion
 		#region tile counts

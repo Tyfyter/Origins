@@ -30,7 +30,7 @@ namespace Origins.Tiles.Defiled {
 		public void MinePower(int i, int j, int minePower, ref int damage) {
 			Player player = Main.LocalPlayer;
 			if (Main.hardMode && player.HeldItem.hammer >= 80) {
-				damage += (int)(1.2f * minePower);
+				damage = (int)(1.2f * minePower);
 			} else {
 				player.Hurt(PlayerDeathReason.ByOther(4), player.statLife / 2, -player.direction);
 			}

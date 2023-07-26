@@ -23,7 +23,7 @@ namespace Origins.Tiles.Brine {
 		}
 		public void MinePower(int i, int j, int minePower, ref int damage) {
 			if (minePower >= 150 || j <= Main.worldSurface) {
-				damage += (int)(minePower / MineResist);
+				damage = (int)(minePower / MineResist);
 			}
 		}
 	}

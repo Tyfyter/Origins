@@ -1676,58 +1676,6 @@ namespace Origins {
 			if (Main.netMode == NetmodeID.Server) return Color.Transparent;
 			return MapColorLookup.GetValue()[MapHelper.wallLookup[type]];
 		}
-		public static Dictionary<int, int> GetAltLibraryDataLookup(AltLibraryFieldType fieldType, AltLibraryLookupType lookupType) {
-			Dictionary<AltLibraryLookupType, Func<Dictionary<int, int>>> dict = null;
-			switch (fieldType) {
-				case AltLibraryFieldType.Tile:
-				dict = tileLookups ??= new();
-				break;
-				case AltLibraryFieldType.Wall:
-				dict = wallLookups ??= new();
-				break;
-			}
-			if (dict.TryGetValue(lookupType, out var method)) {
-				return method();
-			}
-			altLibraryDataFields ??= new();
-			if (!altLibraryDataFields.TryGetValue(fieldType, out FieldInfo field)) {
-				var t1 = typeof(AltLibrary.Core.ALConvert).Assembly.GetType("AltLibrary.Core.Baking.ALConvertInheritanceData");
-				string fieldName = fieldType.ToString().ToLower() + "ParentageData";
-				field = t1.GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Static);
-				altLibraryDataFields.Add(fieldType, field);
-			}
-			altLibraryDataLookups ??= new();
-			if (!altLibraryDataLookups.TryGetValue(lookupType, out FieldInfo lookup)) {
-				lookup = typeof(AltLibrary.Core.ALConvert).Assembly.GetType("AltLibrary.Core.Baking.BlockParentageData").GetField(lookupType.ToString(), BindingFlags.Public | BindingFlags.Instance);
-				altLibraryDataLookups.Add(lookupType, lookup);
-			}
-			DynamicMethod getterMethod = new DynamicMethod($"_get_{fieldType}_{lookupType}", typeof(Dictionary<int, int>), Array.Empty<Type>(), true);
-			ILGenerator gen = getterMethod.GetILGenerator();
-
-			gen.Emit(OpCodes.Ldsfld, field);
-			gen.Emit(OpCodes.Ldfld, lookup);
-			gen.Emit(OpCodes.Ret);
-
-			method = getterMethod.CreateDelegate<Func<Dictionary<int, int>>>();
-			dict.Add(lookupType, method);
-			return method();
-		}
-		static Dictionary<AltLibraryFieldType, FieldInfo> altLibraryDataFields;
-		static Dictionary<AltLibraryLookupType, FieldInfo> altLibraryDataLookups;
-		static Dictionary<AltLibraryLookupType, Func<Dictionary<int, int>>> tileLookups;
-		static Dictionary<AltLibraryLookupType, Func<Dictionary<int, int>>> wallLookups;
-		public enum AltLibraryFieldType {
-			Tile,
-			Wall
-		}
-		public enum AltLibraryLookupType {
-			Parent,
-			ForestConversion,
-			HallowConversion,
-			CorruptionConversion,
-			CrimsonConversion,
-			MushroomConversion
-		}
 		internal static void unInitExt() {
 			_inext = null;
 			_inextp = null;

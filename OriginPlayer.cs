@@ -259,6 +259,7 @@ namespace Origins {
 		public int laserBladeCharge = 0;
 		public bool boatRockerAltUse = false;
 		public int mojoFlaskCount = 5;
+		public int mojoFlaskCountMax = 5;
 		#endregion
 
 		public int quantumInjectors = 0;
@@ -1526,12 +1527,6 @@ namespace Origins {
 			return true;
 		}
 		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) {
-			if (Origins.DamageModOnHit[proj.type]) {
-				/*bool shouldReplace = Origins.ExplosiveBaseDamage.TryGetValue(proj.type, out int dam);
-				float baseDamage = Player.GetTotalDamage(proj.DamageType).ApplyTo(shouldReplace ? dam : damage);
-				damage = shouldReplace ? Main.DamageVar(baseDamage) : (int)baseDamage;*/
-				int b = proj.damage;
-			}
 			if ((proj.CountsAsClass(DamageClass.Melee) || proj.CountsAsClass(DamageClass.Summon) || ProjectileID.Sets.IsAWhip[proj.type]) && felnumShock > 29) {
 				modifiers.SourceDamage.Flat += (int)(felnumShock / 15);
 				felnumShock = 0;
@@ -1636,15 +1631,35 @@ namespace Origins {
 				Player.buffImmune[BuffID.Poisoned] = true;
 			}
 			if (proj.owner == Player.whoAmI && proj.friendly && proj.CountsAsClass(DamageClasses.Explosive)) {
-				/*float damageVal = damage;
-                if(minerSet) {
-                    explosiveSelfDamage-=0.2f;
-                    float inverseDamage = Player.GetDamage(DamageClasses.Explosive).ApplyTo(damage);
-                    damageVal -= inverseDamage - damage;
-                    //damage = (int)(damage/explosiveDamage);
-                    //damage-=damage/5;
-                }
-                damage = (int)(damageVal * explosiveSelfDamage);*/
+				float damageMult = Main.GameModeInfo.EnemyDamageMultiplier;
+				if (Main.GameModeInfo.IsJourneyMode) {
+					Terraria.GameContent.Creative.CreativePowers.DifficultySliderPower power = Terraria.GameContent.Creative.CreativePowerManager.Instance.GetPower<Terraria.GameContent.Creative.CreativePowers.DifficultySliderPower>();
+					if (power.GetIsUnlocked()) {
+						damageMult = power.StrengthMultiplierToGiveNPCs;
+					}
+				}
+				modifiers.SourceDamage /= damageMult;
+
+				if (minerSet) {
+					explosiveSelfDamage -= 0.2f;
+					explosiveSelfDamage = explosiveSelfDamage.CombineWith(
+						Player.GetDamage(DamageClasses.Explosive).ScaleMatrix(
+							(0, 0),
+							(-1, -1),
+							(-1, 0),
+							(0, -1)
+						)
+					);
+					//damage = (int)(damage/explosiveDamage);
+					//damage-=damage/5;
+				}
+				StatModifier currentExplosiveSelfDamage = explosiveSelfDamage.ScaleMatrix(
+					(0, 0),
+					(1, 1),
+					(1, 0),
+					(0, 1)
+				);
+				modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(currentExplosiveSelfDamage);
 			}
 		}
 		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
@@ -1725,10 +1740,6 @@ namespace Origins {
 			return foundTarget;
 		}
 		#endregion
-		internal static FastFieldInfo<PlayerDeathReason, int> _sourcePlayerIndex;
-		static FastFieldInfo<PlayerDeathReason, int> SourcePlayerIndex => _sourcePlayerIndex ??= new("_sourcePlayerIndex", BindingFlags.NonPublic);
-		internal static FastFieldInfo<PlayerDeathReason, int> _sourceProjectileIndex;
-		static FastFieldInfo<PlayerDeathReason, int> SourceProjectileIndex => _sourceProjectileIndex ??= new("_sourceProjectileIndex", BindingFlags.NonPublic);
 		static bool reducedTo0Dodge = false;
 		public override bool FreeDodge(Player.HurtInfo info) {
 			if (reducedTo0Dodge) {
@@ -1776,17 +1787,17 @@ namespace Origins {
 			return false;
 		}
 		public override bool ConsumableDodge(Player.HurtInfo info) {
-			if (SourcePlayerIndex.GetValue(info.DamageSource) == Player.whoAmI) {
-				Projectile sourceProjectile = Main.projectile[SourceProjectileIndex.GetValue(info.DamageSource)];
+			if (info.DamageSource.SourcePlayerIndex == Player.whoAmI) {
+				Projectile sourceProjectile = Main.projectile[info.DamageSource.SourceProjectileLocalIndex];
 				if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
 					if (resinShield) {
-						explosiveSelfDamage = new StatModifier();
 						resinShieldCooldown = (int)explosiveFuseTime.Scale(5).ApplyTo(300);
 						if (Player.shield == Resin_Shield.ShieldID) {
 							for (int i = Main.rand.Next(4, 8); i-- > 0;) {
 								Dust.NewDust(Player.MountedCenter + new Vector2(12 * Player.direction - 6, -12), 8, 32, DustID.GemAmber, Player.direction * 2, Alpha: 100);
 							}
 						}
+						return true;
 					}
 				}
 			}
@@ -1801,31 +1812,6 @@ namespace Origins {
 				if (!Player.stoned && !Player.frostArmor && !Player.boneArmor) {
 					heliumTankHit = true;
 					modifiers.DisableSound();
-				}
-			}
-			if (SourcePlayerIndex.GetValue(modifiers.DamageSource) == Player.whoAmI) {
-				Projectile sourceProjectile = Main.projectile[SourceProjectileIndex.GetValue(modifiers.DamageSource)];
-				if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
-					if (minerSet) {
-						explosiveSelfDamage -= 0.2f;
-						explosiveSelfDamage = explosiveSelfDamage.CombineWith(
-							Player.GetDamage(DamageClasses.Explosive).ScaleMatrix(
-								(0, 0),
-								(-1, -1),
-								(-1, 0),
-								(0, -1)
-							)
-						);
-						//damage = (int)(damage/explosiveDamage);
-						//damage-=damage/5;
-					}
-					StatModifier currentExplosiveSelfDamage = explosiveSelfDamage.ScaleMatrix(
-						(0, 0),
-						(-1, -1),
-						(-1, 0),
-						(0, -1)
-					);
-					modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(currentExplosiveSelfDamage);
 				}
 			}
 			if (lostSet) {

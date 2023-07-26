@@ -56,7 +56,7 @@ namespace Origins.Items.Other.Consumables {
 				spriteBatch,
 				FontAssets.ItemStack.Value,
 				Main.LocalPlayer.GetModPlayer<OriginPlayer>().mojoFlaskCount.ToString(),
-				(position - (new Vector2(52) * inventoryScale) / 2f + frame.Size() * scale / 2f) + new Vector2(10f, 26f) * inventoryScale,
+				position + origin * scale * new Vector2(0.75f, 0.4f),
 				drawColor,
 				0f,
 				Vector2.Zero,
