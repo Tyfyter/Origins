@@ -257,7 +257,9 @@ namespace Origins.UI {
 					break;
 				}
 				case Journal_UI_Mode.Quest_Page: {
-					SetText(FormatTags(Quest_Registry.GetQuestByKey(key).GetJournalPage()));
+					Quest quest = Quest_Registry.GetQuestByKey(key);
+					SetText(FormatTags(quest.GetJournalPage()));
+					quest.HasNotification = false;
 				}
 				break;
 			}

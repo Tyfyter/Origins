@@ -23,6 +23,7 @@ namespace Origins.Questing {
 		public string NameValue => Language.GetTextValue(NameKey);
 		public virtual int Stage { get; set; }
 		public bool ShouldSync { get; protected set; }
+		public bool HasNotification { get; set; }
 		public bool LocalPlayerStarted {
 			get => Main.LocalPlayer?.GetModPlayer<OriginPlayer>()?.startedQuests?.Contains(NameKey) ?? Started;
 			set {

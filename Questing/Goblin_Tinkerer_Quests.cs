@@ -46,6 +46,10 @@ namespace Origins.Questing {
 						} else if (RecipeGroup.recipeGroups[RecipeGroupID.IronBar].ContainsItem(item.type)) {
 							ironBars += item.stack;
 						}
+						if (!hasNotified && CanComplete) {
+							hasNotified = true;
+							HasNotification = true;
+						}
 					};
 					break;
 					case 2:
@@ -57,6 +61,8 @@ namespace Origins.Questing {
 				}
 			}
 		}
+		bool hasNotified = false;
+		bool CanComplete => ironBars >= ironBarTarget && chains >= chainTarget && adhesiveWraps >= adhesiveWrapTarget && hasWatch;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
 		public override bool HasStartDialogue(NPC npc) {
@@ -66,11 +72,7 @@ namespace Origins.Questing {
 			if (npc.type != NPCID.GoblinTinkerer) return false; // NPCs other than the merchant won't have any dialogue related to this quest
 			switch (Stage) {
 				case 1:
-				return
-					ironBars >= ironBarTarget &&
-					chains >= chainTarget &&
-					adhesiveWraps >= adhesiveWrapTarget &&
-					hasWatch;
+				return CanComplete;
 			}
 			return false;
 		}
@@ -185,6 +187,10 @@ namespace Origins.Questing {
 							hasArm = true;
 							break;
 						}
+						if (!hasNotified && CanComplete) {
+							hasNotified = true;
+							HasNotification = true;
+						}
 					};
 					break;
 					case 2:
@@ -195,6 +201,8 @@ namespace Origins.Questing {
 				}
 			}
 		}
+		bool hasNotified = false;
+		bool CanComplete => leather >= leatherTarget && hasPistol && hasArm;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
 		public override bool HasStartDialogue(NPC npc) {
@@ -204,7 +212,7 @@ namespace Origins.Questing {
 			if (npc.type != NPCID.GoblinTinkerer) return false; // NPCs other than the merchant won't have any dialogue related to this quest
 			switch (Stage) {
 				case 1:
-				return leather >= leatherTarget && hasPistol && hasArm;
+				return CanComplete;
 			}
 			return false;
 		}
@@ -316,6 +324,10 @@ namespace Origins.Questing {
 						} else if (item.type == ItemID.AdamantiteBar || item.type == ItemID.TitaniumBar) {
 							adamantiteBars += item.stack;
 						}
+						if (!hasNotified && CanComplete) {
+							hasNotified = true;
+							HasNotification = true;
+						}
 					};
 					break;
 					case 2:
@@ -327,6 +339,8 @@ namespace Origins.Questing {
 				}
 			}
 		}
+		bool hasNotified = false;
+		bool CanComplete => rockets >= rocketTarget && adamantiteBars >= adamantiteBarTarget && adhesiveWraps >= adhesiveWrapTarget && hasMinecart;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
 		public override bool HasStartDialogue(NPC npc) {
@@ -336,11 +350,7 @@ namespace Origins.Questing {
 			if (npc.type != NPCID.GoblinTinkerer) return false; // NPCs other than the merchant won't have any dialogue related to this quest
 			switch (Stage) {
 				case 1:
-				return
-					rockets >= rocketTarget &&
-					adamantiteBars >= adamantiteBarTarget &&
-					adhesiveWraps >= adhesiveWrapTarget &&
-					hasMinecart;
+				return CanComplete;
 			}
 			return false;
 		}

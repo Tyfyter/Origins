@@ -22,6 +22,7 @@ namespace Origins.Questing {
 						if (npc.type == NPCID.Harpy) {// - if it's a harpy -
 							ShouldSync = true;
 							if (++progress >= target) { // - increment "progress", if the resulting value is at least "target" - 
+								HasNotification = true;
 								Stage = 2; // - set stage to 2 (killed enough harpies)
 							}
 						}
@@ -117,6 +118,7 @@ namespace Origins.Questing {
 						if (npc.type == NPCID.DoctorBones || npc.type == NPCID.Nymph || npc.type == NPCID.Tim) {
 							ShouldSync = true;
 							if (++progress >= target) {
+								HasNotification = true;
 								Stage = 2;
 							}
 						}

@@ -91,6 +91,20 @@ namespace Origins.UI {
 					} else {
 						size = FontAssets.MouseText.Value.MeasureString(Text);
 						ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, Text, position, color, 0, Vector2.Zero, new Vector2(scale));
+						if (Quest_Registry.GetQuestByKey(key).HasNotification) {
+							float scaleValue = MathHelper.Lerp(0.5f, 1.15f, Main.mouseTextColor / 255f);
+							size = ChatManager.DrawColorCodedStringWithShadow(
+								spriteBatch,
+								FontAssets.MouseText.Value,
+								"!",
+								position + new Vector2(size.X + 4 * scale, 0),
+								Color.Yellow,
+								Color.DarkGoldenrod,
+								0,
+								Vector2.Zero,
+								new Vector2(scale * scaleValue)
+							);
+						}
 						return true;
 					}
 				} else {

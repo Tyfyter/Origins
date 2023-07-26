@@ -15,7 +15,10 @@ namespace Origins.Questing {
 		const int target = 50;
 		public void UpdateKillCount() {
 			if (stage != 1) return;
-			if (++progress >= target) Stage = 2;
+			if (++progress >= target) {
+				HasNotification = true;
+				Stage = 2;
+			}
 			ShouldSync = true;
 		}
 		//Stage property so changing quest stage also updates its event handlers

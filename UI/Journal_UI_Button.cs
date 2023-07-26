@@ -17,6 +17,7 @@ using Origins.World;
 using Terraria.GameContent;
 using Terraria.UI.Gamepad;
 using Terraria.DataStructures;
+using Origins.Questing;
 
 namespace Origins.UI {
 	public class Journal_UI_Button : UIState {
@@ -73,6 +74,20 @@ namespace Origins.UI {
 			Terraria.Graphics.Shaders.GameShaders.Armor.ApplySecondary(data.shader, Main.LocalPlayer, data);
 			data.Draw(spriteBatch);
 			spriteBatch.Restart(oldstate);
+			if (Quest_Registry.Quests.Any(q => q.HasNotification)) {
+				float scaleValue = MathHelper.Lerp(0.5f, 1.15f, Main.mouseTextColor / 255f);
+				ChatManager.DrawColorCodedStringWithShadow(
+					spriteBatch,
+					FontAssets.MouseText.Value,
+					"!",
+					rectangle.TopRight() - FontAssets.MouseText.Value.MeasureString("!") * new Vector2(1.85f, 0.1f),
+					Color.Yellow,
+					Color.DarkGoldenrod,
+					0,
+					Vector2.Zero,
+					new Vector2(scaleValue)
+				);
+			}
 			//UILinkPointNavigator.SetPosition(15001, position);
 			if (!Main.mouseText && flag) {
 				Main.instance.MouseText(Language.GetTextValue("Mods.Origins.Interface.Journal"), 0, 0);
