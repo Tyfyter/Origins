@@ -38,12 +38,15 @@ namespace Origins.Projectiles.Misc {
 			hitbox.Height += 4;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			if (damage >= target.life) {
-				damage = target.life - 1;
-				target.GetGlobalNPC<OriginGlobalNPC>().shockTime = 15;
-			}
-			damage += Math.Max(target.defense - Projectile.ArmorPenetration, 0) / 2;
+			modifiers.ModifyHitInfo += (ref NPC.HitInfo info) => {
+				if (info.Damage >= target.life) {
+					info.Damage = target.life - 1;
+					target.GetGlobalNPC<OriginGlobalNPC>().shockTime = 15;
+				}
+			};
+			modifiers.ScalingArmorPenetration += 1;
 		}
+
 		public override void Kill(int timeLeft) {
 			if (timeLeft > 0) {
 				if (!(OnStrike is null)) OnStrike();

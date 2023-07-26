@@ -19,7 +19,6 @@ namespace Origins.Tiles.Riven {
 			Main.tileLighted[Type] = true;
 			Main.tileOreFinderPriority[Type] = 320;
 			TileID.Sets.Ore[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Encrusted_Ore_Item>();
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Encrusted Ore");
 			AddMapEntry(new Color(40, 148, 207), name);

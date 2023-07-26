@@ -252,7 +252,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (Projectile.localAI[0] > 0) Projectile.localAI[0]--;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			damage += (int)(Projectile.localAI[0] / 6);
+			modifiers.SourceDamage.Base += (int)(Projectile.localAI[0] / 6);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Vector2 intersect = Rectangle.Intersect(Projectile.Hitbox, target.Hitbox).Center.ToVector2() - Projectile.Hitbox.Center.ToVector2();

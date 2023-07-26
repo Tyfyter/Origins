@@ -252,7 +252,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			if (body.active && body.type == Rotting_Worm_Body.ID) body.Kill();
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			damage += (int)Projectile.velocity.Length();
+			modifiers.SourceDamage.Base += (int)Projectile.velocity.Length();
 		}
 	}
 	public class Rotting_Worm_Body : Mini_EOW_Base {
@@ -353,7 +353,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			return true;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			damage += (int)(Projectile.velocity.Length() / 2);
+			modifiers.SourceDamage.Base += (int)(Projectile.velocity.Length() / 2);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Main.rand.NextBool(10)) {

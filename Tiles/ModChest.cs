@@ -76,7 +76,7 @@ namespace Origins.Tiles {
 		}
 
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */);
+			//Item.NewItem(WorldGen.GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 32, 32, ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */);
 			Chest.DestroyChest(i, j);
 		}
 
@@ -163,10 +163,11 @@ namespace Origins.Tiles {
 			if (chestIndex < 0) {
 				player.cursorItemIconText = Language.GetTextValue("LegacyChestType.0");
 			} else {
-				player.cursorItemIconText = Main.chest[chestIndex].name.Length > 0 ? Main.chest[chestIndex].name : ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.GetDefault();
-				if (player.cursorItemIconText.Equals(ContainerName/* tModPorter Note: Removed. Override DefaultContainerName instead */.GetDefault())) {
+				string containerName = DefaultContainerName(0, 0).Value;
+				player.cursorItemIconText = Main.chest[chestIndex].name.Length > 0 ? Main.chest[chestIndex].name : containerName;
+				if (player.cursorItemIconText.Equals(containerName)) {
 					if (IsLockedChest(left, top)) player.cursorItemIconID = keyItem;
-					else player.cursorItemIconID = ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */;
+					else player.cursorItemIconID = TileLoader.GetItemDropFromTypeAndStyle(Type);
 					player.cursorItemIconText = "";
 				}
 			}

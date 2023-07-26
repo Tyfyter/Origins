@@ -17,6 +17,7 @@ using Origins.NPCs.Defiled;
 using Origins.Projectiles;
 using Origins.Projectiles.Misc;
 using Origins.Questing;
+using Origins.Reflection;
 using Origins.Water;
 using Origins.World.BiomeData;
 using System;
@@ -31,6 +32,7 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
 
 namespace Origins {
@@ -747,13 +749,34 @@ namespace Origins {
 										if (loversLeapHitbox.Intersects(npc.Hitbox)) {
 											bounce = true;
 											int damage = baseDamage;
-											int bannerBuff = Item.NPCtoBanner(Main.npc[i].BannerID());
-											if (bannerBuff > 0 && Player.HasNPCBannerBuff(bannerBuff)) {
-												ItemID.BannerEffect bannerEffect = ItemID.Sets.BannerStrength[Item.BannerToItem(bannerBuff)];
-												damage = (int)(Main.expertMode ? damage * bannerEffect.ExpertDamageDealt : damage * bannerEffect.NormalDamageDealt);
+											NPC.HitModifiers modifiers = npc.GetIncomingStrikeModifiers(loversLeapItem.DamageType, hitDirection);
+
+											Player.ApplyBannerOffenseBuff(npc, ref modifiers);
+											if (npc.life > 5) {
+												Player.OnHit(npc.Center.X, npc.Center.Y, npc);
 											}
-											damage = Main.DamageVar(damage, Player.luck) + npc.checkArmorPenetration(Player.GetWeaponArmorPenetration(loversLeapItem));
-											npc.StrikeNPC(damage, baseKnockback, hitDirection, Main.rand.Next(1, 101) <= crit);
+											modifiers.ArmorPenetration += Player.GetWeaponArmorPenetration(loversLeapItem);
+											CombinedHooks.ModifyPlayerHitNPCWithItem(Player, loversLeapItem, npc, ref modifiers);
+
+											NPC.HitInfo strike = modifiers.ToHitInfo(Player.GetWeaponDamage(loversLeapItem), Main.rand.Next(100) < Player.GetWeaponCrit(loversLeapItem), Player.GetWeaponKnockback(loversLeapItem), damageVariation: true, Player.luck);
+											NPCKillAttempt attempt = new NPCKillAttempt(npc);
+											int dmgDealt = npc.StrikeNPC(strike);
+
+											CombinedHooks.OnPlayerHitNPCWithItem(Player, loversLeapItem, npc, in strike, dmgDealt);
+											PlayerMethods.ApplyNPCOnHitEffects(Player, loversLeapItem, Item.GetDrawHitbox(loversLeapItem.type, Player), strike.SourceDamage, strike.Knockback, npc.whoAmI, strike.SourceDamage, dmgDealt);
+											int bannerID = Item.NPCtoBanner(npc.BannerID());
+											if (bannerID >= 0) {
+												Player.lastCreatureHit = bannerID;
+											}
+											if (Main.netMode != NetmodeID.SinglePlayer) {
+												NetMessage.SendStrikeNPC(npc, in strike);
+											}
+											if (Player.accDreamCatcher && !npc.HideStrikeDamage) {
+												Player.addDPS(dmgDealt);
+											}
+											if (attempt.DidNPCDie()) {
+												Player.OnKillNPC(ref attempt, loversLeapItem);
+											}
 										}
 									}
 								}
@@ -1506,11 +1529,12 @@ namespace Origins {
 			}
 			return true;
 		}
-		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Projectile, consider using ModifyHitNPC instead */ {
+		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) {
 			if (Origins.DamageModOnHit[proj.type]) {
-				bool shouldReplace = Origins.ExplosiveBaseDamage.TryGetValue(proj.type, out int dam);
+				/*bool shouldReplace = Origins.ExplosiveBaseDamage.TryGetValue(proj.type, out int dam);
 				float baseDamage = Player.GetTotalDamage(proj.DamageType).ApplyTo(shouldReplace ? dam : damage);
-				damage = shouldReplace ? Main.DamageVar(baseDamage) : (int)baseDamage;
+				damage = shouldReplace ? Main.DamageVar(baseDamage) : (int)baseDamage;*/
+				int b = proj.damage;
 			}
 			if ((proj.CountsAsClass(DamageClass.Melee) || proj.CountsAsClass(DamageClass.Summon) || ProjectileID.Sets.IsAWhip[proj.type]) && felnumShock > 29) {
 				modifiers.SourceDamage.Flat += (int)(felnumShock / 15);
@@ -1709,7 +1733,12 @@ namespace Origins {
 		static FastFieldInfo<PlayerDeathReason, int> SourcePlayerIndex => _sourcePlayerIndex ??= new("_sourcePlayerIndex", BindingFlags.NonPublic);
 		internal static FastFieldInfo<PlayerDeathReason, int> _sourceProjectileIndex;
 		static FastFieldInfo<PlayerDeathReason, int> SourceProjectileIndex => _sourceProjectileIndex ??= new("_sourceProjectileIndex", BindingFlags.NonPublic);
+		static bool reducedTo0Dodge = false;
 		public override bool FreeDodge(Player.HurtInfo info) {
+			if (reducedTo0Dodge) {
+				reducedTo0Dodge = false;
+				return false;
+			}
 			if (Player.whoAmI == Main.myPlayer && !(protomindItem?.IsAir ?? true)) {
 				for (int i = 0; i < 200; i++) {
 					if (!Main.npc[i].active || Main.npc[i].friendly) {
@@ -1750,6 +1779,23 @@ namespace Origins {
 			}
 			return false;
 		}
+		public override bool ConsumableDodge(Player.HurtInfo info) {
+			if (SourcePlayerIndex.GetValue(info.DamageSource) == Player.whoAmI) {
+				Projectile sourceProjectile = Main.projectile[SourceProjectileIndex.GetValue(info.DamageSource)];
+				if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
+					if (resinShield) {
+						explosiveSelfDamage = new StatModifier();
+						resinShieldCooldown = (int)explosiveFuseTime.Scale(5).ApplyTo(300);
+						if (Player.shield == Resin_Shield.ShieldID) {
+							for (int i = Main.rand.Next(4, 8); i-- > 0;) {
+								Dust.NewDust(Player.MountedCenter + new Vector2(12 * Player.direction - 6, -12), 8, 32, DustID.GemAmber, Player.direction * 2, Alpha: 100);
+							}
+						}
+					}
+				}
+			}
+			return false;
+		}
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */ {
 			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(9) < 3) {
 				modifiers.SourceDamage *= 2;
@@ -1762,52 +1808,50 @@ namespace Origins {
 				}
 			}
 			if (SourcePlayerIndex.GetValue(modifiers.DamageSource) == Player.whoAmI) {
-				Projectile sourceProjectile = Main.projectile[SourceProjectileIndex.GetValue(damageSource)];
+				Projectile sourceProjectile = Main.projectile[SourceProjectileIndex.GetValue(modifiers.DamageSource)];
 				if (sourceProjectile.owner == Player.whoAmI && sourceProjectile.CountsAsClass(DamageClasses.Explosive)) {
-					float damageVal = damage;
 					if (minerSet) {
 						explosiveSelfDamage -= 0.2f;
-						float inverseDamage = Player.GetDamage(DamageClasses.Explosive).ApplyTo(damage);
-						damageVal -= inverseDamage - damage;
-						if (damageVal < 0) {
-							damageVal = 0;
-						}
+						explosiveSelfDamage = explosiveSelfDamage.CombineWith(
+							Player.GetDamage(DamageClasses.Explosive).ScaleMatrix(
+								(0, 0),
+								(-1, -1),
+								(-1, 0),
+								(0, -1)
+							)
+						);
 						//damage = (int)(damage/explosiveDamage);
 						//damage-=damage/5;
 					}
-					if (resinShield) {
-						explosiveSelfDamage = new StatModifier();
-						resinShieldCooldown = (int)explosiveFuseTime.Scale(5).ApplyTo(300);
-						if (Player.shield == Resin_Shield.ShieldID) {
-							for (int i = Main.rand.Next(4, 8); i-->0;) {
-								Dust.NewDust(Player.MountedCenter + new Vector2(12 * Player.direction - 6, -12), 8, 32, DustID.GemAmber, Player.direction * 2, Alpha: 100);
-							}
-						}
-					}
-					damage = (int)explosiveSelfDamage.ApplyTo(damageVal);
-					if (Math.Sign(damage) != Math.Sign(damageVal)) {
-						damage = 0;
-					}
+					StatModifier currentExplosiveSelfDamage = explosiveSelfDamage.ScaleMatrix(
+						(0, 0),
+						(-1, -1),
+						(-1, 0),
+						(0, -1)
+					);
+					modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(currentExplosiveSelfDamage);
 				}
 			}
 			if (lostSet) {
-				float manaDamage = damage;
-				float costMult = 3;
-				float costMult2 = reshapingChunk ? 0.25f : 0.15f;
-				float costMult3 = (float)Math.Pow(reshapingChunk ? 0.25f : 0.15f, Player.manaCost);
-				if (Player.magicCuffs) {
-					costMult = 1;
-					Player.magicCuffs = false;
-				}
-				if (Player.statMana < manaDamage * costMult * costMult2) {
-					manaDamage = Player.statMana / (costMult * costMult2);
-				}
-				if (manaDamage * costMult * costMult2 >= 1f) {
-					Player.ManaEffect((int)-(manaDamage * costMult * costMult2));
-				}
-				Player.CheckMana((int)Math.Floor(manaDamage * costMult * costMult2), true);
-				damage = (int)(damage - (manaDamage * costMult3));
-				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
+				modifiers.ModifyHurtInfo += (ref Player.HurtInfo info) => {
+					float manaDamage = info.Damage;
+					float costMult = 3;
+					float costMult2 = reshapingChunk ? 0.25f : 0.15f;
+					float costMult3 = (float)Math.Pow(reshapingChunk ? 0.25f : 0.15f, Player.manaCost);
+					if (Player.magicCuffs) {
+						costMult = 1;
+						Player.magicCuffs = false;
+					}
+					if (Player.statMana < manaDamage * costMult * costMult2) {
+						manaDamage = Player.statMana / (costMult * costMult2);
+					}
+					if (manaDamage * costMult * costMult2 >= 1f) {
+						Player.ManaEffect((int)-(manaDamage * costMult * costMult2));
+					}
+					Player.CheckMana((int)Math.Floor(manaDamage * costMult * costMult2), true);
+					info.Damage = (int)(info.Damage - (manaDamage * costMult3));
+					Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
+				};
 			} else if (reshapingChunk) {
 				modifiers.SourceDamage *= 0.95f;
 			}

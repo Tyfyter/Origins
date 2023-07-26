@@ -58,15 +58,15 @@ namespace Origins.NPCs.Fiberglass {
 			npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			NPC.velocity.X += hitDirection * 3;
-			if (damage > NPC.life * 2f) {
+			NPC.velocity.X += hit.HitDirection * 3;
+			if (hit.Damage > NPC.life * 2f) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore"));
 			}
 			if (NPC.life < 0) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
-			} else if (damage > NPC.lifeMax * 0.5f) {
+			} else if (hit.Damage > NPC.lifeMax * 0.5f) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore"));
 			}
 		}
@@ -157,15 +157,15 @@ namespace Origins.NPCs.Fiberglass {
 			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			NPC.velocity.X += hitDirection * 3;
-			if (damage > NPC.life * 2f) {
+			NPC.velocity.X += hit.HitDirection * 3;
+			if (hit.Damage > NPC.life * 2f) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore"));
 			}
 			if (NPC.life < 0) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
-			} else if (damage > NPC.lifeMax * 0.5f) {
+			} else if (hit.Damage > NPC.lifeMax * 0.5f) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore"));
 			}
 		}
@@ -320,15 +320,15 @@ namespace Origins.NPCs.Fiberglass {
 			npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			NPC.velocity.X += hitDirection * 3;
-			if (damage > NPC.life * 2f) {
+			NPC.velocity.X += hit.HitDirection * 3;
+			if (hit.Damage > NPC.life * 2f) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore"));
 			}
 			if (NPC.life < 0) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
-			} else if (damage > NPC.lifeMax * 0.5f) {
+			} else if (hit.Damage > NPC.lifeMax * 0.5f) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore"));
 			}
 		}

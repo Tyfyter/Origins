@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons {
 			Lighting.AddLight(Projectile.Center, new Vector3(0, 0.3375f, 1.275f) * (Projectile.velocity.Length() + 4) * 0.1f);
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			damage = (int)(damage * Projectile.velocity.Length() * 0.1667f);
+			modifiers.SourceDamage *= Projectile.velocity.Length() * 0.1667f;
 		}
 	}
 }

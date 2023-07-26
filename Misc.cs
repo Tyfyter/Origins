@@ -1252,6 +1252,23 @@ namespace Origins {
 				statModifier.Base * @base
 			);
 		}
+		public static StatModifier ScaleMatrix(this StatModifier statModifier,
+			(float additive, float multiplicative) additive,
+			(float additive, float multiplicative) multiplicative,
+			(float flat, float @base) flat,
+			(float flat, float @base) @base
+			) {
+			return new StatModifier(
+				((statModifier.Additive - 1) * additive.additive + 1) * ((statModifier.Multiplicative - 1) * additive.multiplicative + 1),
+				((statModifier.Additive - 1) * multiplicative.additive + 1) * ((statModifier.Multiplicative - 1) * multiplicative.multiplicative + 1),
+				(statModifier.Flat * flat.flat) + (statModifier.Base * flat.@base),
+				(statModifier.Flat * @base.flat) + (statModifier.Base * @base.@base)
+			);
+		}
+		public static StatModifier GetInverse(this StatModifier statModifier) {
+			return new StatModifier(1f / statModifier.Multiplicative, 1f / statModifier.Additive, -statModifier.Base, -statModifier.Flat);
+		}
+		public static Vector2 GetKnockbackFromHit(this NPC.HitInfo hit, float xMult = 1, float yMult = -0.1f) => new Vector2(hit.Knockback * hit.HitDirection, -0.1f * hit.Knockback);
 		#region spritebatch
 		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();
@@ -1827,9 +1844,6 @@ namespace Origins {
 			}
 		}
 		#endregion
-		public static StatModifier GetInverse(this StatModifier statModifier) {
-			return new StatModifier(1f / statModifier.Multiplicative, 1f / statModifier.Additive, -statModifier.Base, -statModifier.Flat);
-		}
 		public static int GetVersion<T>(this LinkedList<T> ll) {
 			if (LLNodeEnumerator<T>.LLVersion is null) LLNodeEnumerator<T>.LLVersion = typeof(LinkedList<T>).GetField("version", BindingFlags.NonPublic | BindingFlags.Instance);
 			return (int)LLNodeEnumerator<T>.LLVersion.GetValue(ll);
@@ -2063,6 +2077,20 @@ namespace Origins {
 			}
 			return false;
 		}
+		public static WeightedRandom<int> GetAllPrefixes(Item item, UnifiedRandom rand, params PrefixCategory[] prefixCategories) {
+			WeightedRandom<int> wr = new WeightedRandom<int>(rand);
+			for (int i = 0; i < prefixCategories.Length; i++) {
+				PrefixCategory category = prefixCategories[i];
+				foreach (int pre in Item.GetVanillaPrefixes(category)) {
+					wr.Add(pre);
+				}
+				foreach (ModPrefix modPrefix in PrefixLoader.GetPrefixesInCategory(category).Where((ModPrefix x) => x.CanRoll(item))) {
+					wr.Add(modPrefix.Type, modPrefix.RollChance(item));
+				}
+			}
+			return wr;
+		}
+		#region font
 		static FieldInfo _spriteCharacters;
 		static FieldInfo _SpriteCharacters => _spriteCharacters ??= typeof(DynamicSpriteFont).GetField("_spriteCharacters", BindingFlags.NonPublic | BindingFlags.Instance);
 		static FieldInfo _defaultCharacterData;
@@ -2083,5 +2111,6 @@ namespace Origins {
 				return strikethroughFont;
 			}
 		}
+		#endregion
 	}
 }

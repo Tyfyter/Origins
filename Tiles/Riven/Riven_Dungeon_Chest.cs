@@ -18,12 +18,11 @@ namespace Origins.Tiles.Riven {
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Riven Chest");
 			AddMapEntry(new Color(200, 200, 200), name, MapChestName);
-			name = CreateMapEntryName(Name + "_Locked"); // With multiple map entries, you need unique translation keys.
+			name = Language.GetOrRegister(Mod.GetLocalizationKey($"{LocalizationCategory}.{Name}_Locked.MapEntry"));
 			// name.SetDefault("Locked Riven Chest");
 			AddMapEntry(new Color(140, 140, 140), name, MapChestName);
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.Containers };
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
 			keyItem = ModContent.ItemType<Riven_Key>();
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();

@@ -15,7 +15,6 @@ namespace Origins.Tiles.Defiled {
 			Main.tileLighted[Type] = true;
 			Main.tileOreFinderPriority[Type] = 320;
 			TileID.Sets.Ore[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Defiled_Ore_Item>();
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Lost Ore");
 			AddMapEntry(new Color(225, 225, 225), name);

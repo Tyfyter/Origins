@@ -94,8 +94,8 @@ namespace Origins.Items.Weapons.Summoner {
 			public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 				float range = 192 * Projectile.scale;
 				if (target.DistanceSQ(Main.player[Projectile.owner].Center) > range * range) {
-					hitDirection *= -1;
-					knockback *= 1.5f;
+					modifiers.HitDirectionOverride = -modifiers.HitDirection;
+					modifiers.Knockback *= 1.5f;
 				}
 			}
 

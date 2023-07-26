@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using System;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -32,123 +33,7 @@ namespace Origins.Items.Accessories {
 			originPlayer.protozoaFoodItem = Item;
 		}
 		public override int ChoosePrefix(UnifiedRandom rand) {
-			int prefix = 0;
-			if (rand.NextBool(19, 36 + 19)) {
-				prefix = rand.Next(62, 81);
-			} else {
-				switch (rand.Next(36)) {
-					case 0:
-					prefix = 26;
-					break;
-					case 1:
-					prefix = 27;
-					break;
-					case 2:
-					prefix = 28;
-					break;
-					case 3:
-					prefix = 29;
-					break;
-					case 4:
-					prefix = 30;
-					break;
-					case 5:
-					prefix = 31;
-					break;
-					case 6:
-					prefix = 32;
-					break;
-					case 7:
-					prefix = 33;
-					break;
-					case 8:
-					prefix = 34;
-					break;
-					case 9:
-					prefix = 35;
-					break;
-					case 10:
-					prefix = 52;
-					break;
-					case 11:
-					prefix = 36;
-					break;
-					case 12:
-					prefix = 37;
-					break;
-					case 13:
-					prefix = 38;
-					break;
-					case 14:
-					prefix = 53;
-					break;
-					case 15:
-					prefix = 54;
-					break;
-					case 16:
-					prefix = 55;
-					break;
-					case 17:
-					prefix = 39;
-					break;
-					case 18:
-					prefix = 40;
-					break;
-					case 19:
-					prefix = 56;
-					break;
-					case 20:
-					prefix = 41;
-					break;
-					case 21:
-					prefix = 57;
-					break;
-					case 22:
-					prefix = 42;
-					break;
-					case 23:
-					prefix = 43;
-					break;
-					case 24:
-					prefix = 44;
-					break;
-					case 25:
-					prefix = 45;
-					break;
-					case 26:
-					prefix = 46;
-					break;
-					case 27:
-					prefix = 47;
-					break;
-					case 28:
-					prefix = 48;
-					break;
-					case 29:
-					prefix = 49;
-					break;
-					case 30:
-					prefix = 50;
-					break;
-					case 31:
-					prefix = 51;
-					break;
-					case 32:
-					prefix = 59;
-					break;
-					case 33:
-					prefix = 60;
-					break;
-					case 34:
-					prefix = 61;
-					break;
-					case 35:
-					prefix = 83;
-					break;
-				}
-			}
-			PrefixLoader.Roll(Item, ref prefix, 36 + 19, rand, PrefixCategory.AnyWeapon, PrefixCategory.Magic, PrefixCategory.Accessory);
-			return prefix;
+			return OriginExtensions.GetAllPrefixes(Item, rand, PrefixCategory.AnyWeapon, PrefixCategory.Magic, PrefixCategory.Accessory);
 		}
 		public override bool MagicPrefix() => true;
 		public override bool WeaponPrefix() => false;

@@ -1,5 +1,6 @@
 ﻿using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
@@ -25,7 +26,7 @@ namespace Origins.Items.Accessories {
 			recipe.AddIngredient(ModContent.ItemType<Symbiote_Skull>());
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.AddCondition(new Condition(
-				Terraria.Localization.NetworkText.FromLiteral("This kills the Guide"),
+				Language.GetOrRegister("Mods.Origins.Conditions.KillsGuide"),
 				() => NPC.AnyNPCs(NPCID.Guide)
 			));
 			recipe.AddOnCraftCallback((r, item, _, _) => {

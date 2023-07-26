@@ -11,7 +11,6 @@ namespace Origins.Tiles.Brine {
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Sulphur_Stone_Item>();
 			AddMapEntry(new Color(18, 73, 56));
 			mergeID = TileID.Stone;
 			MinPick = 200;

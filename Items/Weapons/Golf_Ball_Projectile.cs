@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons {
 			return false;
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			damage += (int)(damage * Projectile.velocity.Length() * 0.0833f);
+			modifiers.SourceDamage.Base += Projectile.damage * Projectile.velocity.Length() * 0.0833f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Vector2 hitbox = Projectile.Hitbox.Center.ToVector2();

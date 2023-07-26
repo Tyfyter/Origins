@@ -104,7 +104,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			if (handleHit) {
-				damage = (int)(damage * 0.65f);
+				modifiers.SourceDamage *= 0.65f;
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {

@@ -1,5 +1,5 @@
-﻿//using AltLibrary.Common.AltBiomes;
-//using AltLibrary.Core.Generation;
+﻿using AltLibrary.Common.AltBiomes;
+using AltLibrary.Core.Generation;
 using Microsoft.Xna.Framework;
 using Origins.Backgrounds;
 using Origins.Items.Accessories;
@@ -12,6 +12,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs.Riven;
+using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.Water;
@@ -26,6 +27,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.WorldBuilding;
 using Tyfyter.Utils;
 using static Origins.OriginExtensions;
 using static Terraria.WorldGen;
@@ -531,45 +533,49 @@ namespace Origins.World.BiomeData {
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
 			//DisplayName.SetDefault(Language.GetTextValue("Mods.Origins.Generic.Riven_Hive"));
-			Description.SetDefault(Language.GetTextValue("A flourishing and beautiful ecosystem soon to replace the status quo dominated by a now sentient amoeba."));
-			GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
-			BiomeGrass = ModContent.TileType<Riven_Grass>();
+			//Description.SetDefault(Language.GetTextValue("A flourishing and beautiful ecosystem soon to replace the status quo dominated by a now sentient amoeba."));
+			//GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
+
+			AddTileConversion(ModContent.TileType<Riven_Grass>(), TileID.Grass);
+			AddTileConversion(ModContent.TileType<Riven_Flesh>(), TileID.Stone);
+			AddTileConversion(ModContent.TileType<Defiled_Sand>(), TileID.Sand);
+			AddTileConversion(ModContent.TileType<Defiled_Sandstone>(), TileID.Sandstone);
+			AddTileConversion(ModContent.TileType<Hardened_Defiled_Sand>(), TileID.HardenedSand);
+			AddTileConversion(ModContent.TileType<Primordial_Permafrost>(), TileID.IceBlock);
+
 			SeedType = ModContent.ItemType<Riven_Grass_Seeds>();
-			BiomeStone = ModContent.TileType<Riven_Flesh>();
-			BiomeSand = TileID.Silt;//ModContent.TileType<Defiled_Sand>();
-			BiomeSandstone = TileID.SandstoneBrick;//ModContent.TileType<Defiled_Sandstone>();
-			BiomeHardenedSand = TileID.Hive;//ModContent.TileType<Hardened_Defiled_Sand>();
-			BiomeIce = ModContent.TileType<Primordial_Permafrost>();
 			BiomeOre = ModContent.TileType<Encrusted_Ore>();
 			AltarTile = ModContent.TileType<Riven_Altar>();
+
 			BiomeChestItem = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
 			BiomeChestTile = ModContent.TileType<Riven_Dungeon_Chest>();
-			BiomeChestTileStyle = 1;//1:540, -1:836, 0:864
+			BiomeChestTileStyle = 1;
+			BiomeKeyItem = ModContent.ItemType<Riven_Key>();
+
 			MimicType = ModContent.NPCType<Riven_Mimic>();
 
-			WallContext = new WallContext()
-				.AddReplacement<Walls.Riven_Flesh_Wall>(
-					WallID.Stone,
-					WallID.CaveUnsafe,
-					WallID.Cave2Unsafe,
-					WallID.Cave3Unsafe,
-					WallID.Cave4Unsafe,
-					WallID.Cave5Unsafe,
-					WallID.Cave6Unsafe,
-					WallID.Cave7Unsafe,
-					WallID.Cave8Unsafe,
-					WallID.EbonstoneUnsafe,
-					WallID.CorruptionUnsafe1,
-					WallID.CorruptionUnsafe2,
-					WallID.CorruptionUnsafe3,
-					WallID.CorruptionUnsafe4,
-					WallID.CrimstoneUnsafe,
-					WallID.CrimsonUnsafe1,
-					WallID.CrimsonUnsafe2,
-					WallID.CrimsonUnsafe3,
-					WallID.CrimsonUnsafe4
-				)
-				.AddReplacement<Chambersite_Riven_Flesh_Wall>((ushort)ModContent.WallType<Chambersite_Stone_Wall>());
+			AddWallConversions<Riven_Flesh_Wall>(
+				WallID.Stone,
+				WallID.CaveUnsafe,
+				WallID.Cave2Unsafe,
+				WallID.Cave3Unsafe,
+				WallID.Cave4Unsafe,
+				WallID.Cave5Unsafe,
+				WallID.Cave6Unsafe,
+				WallID.Cave7Unsafe,
+				WallID.Cave8Unsafe,
+				WallID.EbonstoneUnsafe,
+				WallID.CorruptionUnsafe1,
+				WallID.CorruptionUnsafe2,
+				WallID.CorruptionUnsafe3,
+				WallID.CorruptionUnsafe4,
+				WallID.CrimstoneUnsafe,
+				WallID.CrimsonUnsafe1,
+				WallID.CrimsonUnsafe2,
+				WallID.CrimsonUnsafe3,
+				WallID.CrimsonUnsafe4
+			);
+			AddWallConversions<Chambersite_Riven_Flesh_Wall>((ushort)ModContent.WallType<Chambersite_Stone_Wall>());
 		}
 		public override AltMaterialContext MaterialContext {
 			get {
@@ -589,7 +595,7 @@ namespace Origins.World.BiomeData {
 		}
 		public class Riven_Hive_Generation_Pass : EvilBiomeGenerationPass {
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
-				int y = (int)worldSurface - 50;
+				int y = (int)GenVars.worldSurface - 50;
 				for (; !Main.tile[evilBiomePosition, y].HasSolidTile(); y++) ;
 				Riven_Hive.Gen.StartHive(evilBiomePosition, y);
 				OriginSystem.Instance.hasDefiled = true;

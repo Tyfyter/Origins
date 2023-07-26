@@ -23,7 +23,6 @@ namespace Origins.Tiles.Riven {
 			Main.tileMerge[Type] = Main.tileMerge[TileID.IceBlock];
 			Main.tileMerge[Type][TileID.IceBlock] = true;
 			Main.tileBlockLight[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Primordial_Permafrost_Item>();
 			AddMapEntry(new Color(100, 200, 200));
 			mergeID = TileID.IceBlock;
 		}

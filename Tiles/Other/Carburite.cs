@@ -11,7 +11,6 @@ namespace Origins.Tiles.Other {
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileMerge[Type][TileID.Dirt] = true;
 			Main.tileMerge[TileID.Dirt][Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Carburite_Item>();
 			AddMapEntry(new Color(110, 57, 33));
 			MinPick = 55;
 			MineResist = 3;

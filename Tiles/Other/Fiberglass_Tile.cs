@@ -24,7 +24,6 @@ namespace Origins.Tiles.Other {
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = false;
 			Main.tileMergeDirt[Type] = false;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Fiberglass_Item>();
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(42, 116, 160), name);
 		}

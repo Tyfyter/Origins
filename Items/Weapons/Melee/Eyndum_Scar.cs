@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Melee {
 			if (!(target.boss || NPCID.Sets.ShouldBeCountedAsBoss[target.type])) {
 				int quarterHealth = target.lifeMax / 4;
 				if (target.life <= quarterHealth) {
-					damage = Math.Max(target.life + (target.defense / 2), damage);
+					modifiers.SetInstantKill();
 				}
 			}
 		}

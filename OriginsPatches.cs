@@ -41,6 +41,7 @@ using Terraria.ObjectData;
 using Terraria.UI.Chat;
 using Terraria.UI.Gamepad;
 using Terraria.Utilities;
+using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
 
@@ -89,11 +90,11 @@ namespace Origins {
 
 			Terraria.Graphics.Renderers.On_LegacyPlayerRenderer.DrawPlayerInternal += LegacyPlayerRenderer_DrawPlayerInternal;
 			Terraria.On_Projectile.GetWhipSettings += Projectile_GetWhipSettings;
-			Terraria.On_Recipe.Condition.RecipeAvailable += (Terraria.On_Recipe.Condition.orig_RecipeAvailable orig, Recipe.Condition self, Recipe recipe) => {
-				if (self == Condition.NearWater && Main.LocalPlayer.InModBiome<Brine_Pool>()) {
-					return false;
+			On_Recipe.CollectItemsToCraftWithFrom += (orig, player) => {
+				orig(player);
+				if (player.InModBiome<Brine_Pool>()) {
+					player.adjWater = false;
 				}
-				return orig(self, recipe);
 			};
 			MonoModHooks.Add(typeof(CommonCode).GetMethod("DropItem", BindingFlags.Public | BindingFlags.Static, new Type[] { typeof(DropAttemptInfo), typeof(int), typeof(int), typeof(bool) }), (hook_DropItem)CommonCode_DropItem);
 			Terraria.On_WorldGen.ScoreRoom += (Terraria.On_WorldGen.orig_ScoreRoom orig, int ignoreNPC, int npcTypeAskingToScoreRoom) => {
@@ -208,7 +209,7 @@ namespace Origins {
 			Terraria.On_Player.RollLuck += Player_RollLuck;
 			Terraria.GameContent.Drawing.On_TileDrawing.Draw += TileDrawing_Draw;
 			Terraria.GameContent.Drawing.On_TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
-			Terraria.IL_NPC.StrikeNPC += NPC_StrikeNPC;
+			Terraria.IL_NPC.StrikeNPC_HitInfo_bool_bool += NPC_StrikeNPC;
 			Terraria.DataStructures.On_PlayerDeathReason.GetDeathText += PlayerDeathReason_GetDeathText;
 			Terraria.On_Player.KillMe += Player_KillMe;// should have no effect, but is necessary for custom death text somehow
 			Terraria.On_WorldGen.PlacePot += WorldGen_PlacePot;
@@ -631,7 +632,15 @@ namespace Origins {
 		static GetTreeBottom getTreeBottom => instance._getTreeBottom ??=
 			typeof(WorldGen).GetMethod("GetTreeBottom", BindingFlags.NonPublic | BindingFlags.Static)
 			.CreateDelegate<GetTreeBottom>(null);
-		private static void WorldGen_ShakeTree(Terraria.On_WorldGen.orig_ShakeTree orig, int i, int j) {
+		static FastStaticFieldInfo<WorldGen, int> numTreeShakes;
+		static FastStaticFieldInfo<WorldGen, int> maxTreeShakes;
+		static FastStaticFieldInfo<WorldGen, int[]> treeShakeX;
+		static FastStaticFieldInfo<WorldGen, int[]> treeShakeY;
+		private static void WorldGen_ShakeTree(On_WorldGen.orig_ShakeTree orig, int i, int j) {
+			numTreeShakes ??= new("numTreeShakes", BindingFlags.NonPublic);
+			maxTreeShakes ??= new("maxTreeShakes", BindingFlags.NonPublic);
+			treeShakeX ??= new("treeShakeX", BindingFlags.NonPublic);
+			treeShakeY ??= new("treeShakeY", BindingFlags.NonPublic);
 			getTreeBottom(i, j, out var x, out var y);
 			int num = y;
 			int tileType = Main.tile[x, y].TileType;
@@ -640,8 +649,8 @@ namespace Origins {
 				return;
 			}
 			bool edgeC = false;
-			for (int k = 0; k < WorldGen.numTreeShakes; k++) {
-				if (WorldGen.treeShakeX[k] == x && WorldGen.treeShakeY[k] == y) {
+			for (int k = 0; k < numTreeShakes.GetValue(); k++) {
+				if (treeShakeX.GetValue()[k] == x && treeShakeY.GetValue()[k] == y) {
 					edgeC = true;
 				}
 			}
@@ -653,7 +662,7 @@ namespace Origins {
 			if (!WorldGen.IsTileALeafyTreeTop(x, y)) {
 				return;
 			}
-			bool edgeB = GenVars.numTreeShakes == WorldGen.maxTreeShakes;
+			bool edgeB = numTreeShakes.GetValue() == maxTreeShakes.GetValue();
 			bool edgeA = Collision.SolidTiles(x - 2, x + 2, y - 2, y + 2);
 			if (!(edgeA || edgeB || edgeC) && PlantLoader_ShakeTree(x, y, tileType, false) && treeType == TreeTypes.None) {
 				ITree tree = PlantLoader.GetTree(tileType);
@@ -741,60 +750,6 @@ namespace Origins {
 			} else {
 				orig(proj, out timeToFlyOut, out segments, out rangeMultiplier);
 			}
-		}
-		private string Lang_GetDryadWorldStatusDialog(Terraria.On_Lang.orig_GetDryadWorldStatusDialog orig) {
-			const int good = 1;
-			const int evil = 2;
-			const int blood = 4;
-			const int defiled = 8;
-			const int riven = 16;
-			string text = "";
-			int tGood = WorldGen.tGood;
-			int tEvil = WorldGen.tEvil;
-			int tBlood = WorldGen.tBlood;
-			int tDefiled = OriginSystem.tDefiled;
-			int tRiven = OriginSystem.tRiven;
-			int tBad = tEvil + tBlood + tDefiled + tRiven;
-			if (tDefiled == 0 && tRiven == 0) {
-				return orig();
-			}
-			int tHas = (tGood > 0 ? good : 0) | (tEvil > 0 ? evil : 0) | (tBlood > 0 ? blood : 0) | (tDefiled > 0 ? defiled : 0) | (tRiven > 0 ? riven : 0);
-			switch (tHas & (good | evil | blood)) {
-				case good | evil | blood:
-				text = Language.GetTextValue("DryadSpecialText.WorldStatusAll", Main.worldName, tGood, tEvil, tBlood);
-				break;
-				case good | evil:
-				text = Language.GetTextValue("DryadSpecialText.WorldStatusHallowCorrupt", Main.worldName, tGood, tEvil, tBlood);
-				break;
-				case good | blood:
-				text = Language.GetTextValue("DryadSpecialText.WorldStatusHallowCrimson", Main.worldName, tGood, tEvil, tBlood);
-				break;
-				case evil | blood:
-				text = Language.GetTextValue("DryadSpecialText.WorldStatusCorruptCrimson", Main.worldName, tGood, tEvil, tBlood);
-				break;
-				case evil:
-				text = Language.GetTextValue("DryadSpecialText.WorldStatusCorrupt", Main.worldName, tGood, tEvil, tBlood);
-				break;
-				case blood:
-				text = Language.GetTextValue("DryadSpecialText.WorldStatusCrimson", Main.worldName, tGood, tEvil, tBlood);
-				break;
-				case good:
-				text = Language.GetTextValue("DryadSpecialText.WorldStatusHallow", Main.worldName, tGood, tEvil, tBlood);
-				break;
-				case 0:
-				text = Language.GetTextValue("DryadSpecialText.WorldStatusPure", Main.worldName, tGood, tEvil, tBlood);
-				break;
-			}
-			//temp fix, unlocalized and never grammatically correct
-			if (tDefiled > 0) text += $" and {tDefiled}% defiled wastelands";
-			if (tRiven > 0) text += $" and {tRiven}% riven";
-			string str = (tGood * 1.2 >= tBad && tGood * 0.8 <= tBad) ?
-				Language.GetTextValue("DryadSpecialText.WorldDescriptionBalanced") : ((tGood >= tBad) ?
-				Language.GetTextValue("DryadSpecialText.WorldDescriptionFairyTale") : ((tBad > tGood + 20) ?
-				Language.GetTextValue("DryadSpecialText.WorldDescriptionGrim") : ((tBad <= 10) ?
-				Language.GetTextValue("DryadSpecialText.WorldDescriptionClose") :
-				Language.GetTextValue("DryadSpecialText.WorldDescriptionWork"))));
-			return text + " " + str;
 		}
 		#region mining power
 		private delegate void orig_MinePower(int minePower, ref int damage);

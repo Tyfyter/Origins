@@ -25,7 +25,6 @@ namespace Origins.Tiles.Defiled {
             Main.tileMerge[Type] = Main.tileMerge[TileID.Sand];
             Main.tileMerge[Type][TileID.Sand] = true;*/
 			TileID.Sets.Falling[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Defiled_Sand_Item>();
 			AddMapEntry(new Color(175, 175, 175));
 			//SetModTree(Defiled_Tree.Instance);
 			mergeID = TileID.Sand;

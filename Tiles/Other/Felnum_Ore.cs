@@ -17,7 +17,6 @@ namespace Origins.Tiles.Other {
 			Main.tileLighted[Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			Main.tileOreFinderPriority[Type] = 450;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Felnum_Ore_Item>();
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Felnum Ore");
 			AddMapEntry(new Color(160, 116, 42), name);

@@ -1,4 +1,4 @@
-﻿//using AltLibrary.Common.AltBiomes;
+﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items;

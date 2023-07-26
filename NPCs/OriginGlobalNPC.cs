@@ -20,6 +20,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Default;
 
@@ -58,38 +59,15 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Demolitionist: {
-					if (ModContent.GetInstance<OriginSystem>().peatSold >= 0 && !Main.hardMode) {
-						shop.item[nextSlot++].SetDefaults(ItemID.ExplosivePowder);
-					}
-					if (ModContent.GetInstance<OriginSystem>().peatSold >= 5) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Peatball>());
-					}
-					if (ModContent.GetInstance<OriginSystem>().peatSold >= 10) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Flashbang>());
-					}
-					if (ModContent.GetInstance<OriginSystem>().peatSold >= 20) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Grenade>());
-					}
-					if (ModContent.GetInstance<OriginSystem>().peatSold >= 35) {
-						shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Bomb>());
-					}
-					if (Main.hardMode) {
-						if (ModContent.GetInstance<OriginSystem>().peatSold >= 50) {
-							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Impact_Dynamite>());
-						}
-						if (ModContent.GetInstance<OriginSystem>().peatSold >= 75) {
-							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Alkaline_Grenade>());
-						}
-						if (ModContent.GetInstance<OriginSystem>().peatSold >= 100) {
-							//shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Acid_Bomb>());
-						}
-						if (ModContent.GetInstance<OriginSystem>().peatSold >= 120) {
-							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Alkaline_Bomb>());
-						}
-						if (ModContent.GetInstance<OriginSystem>().peatSold >= 999 && !Main.hardMode) {
-							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Caustica>());
-						}
-					}
+					shop.Add(ItemID.ExplosivePowder, Condition.PreHardmode);
+					shop.Add<Peatball>(PeatSoldCondition(5));
+					shop.Add<Flashbang>(PeatSoldCondition(10));
+					shop.Add<Impact_Grenade>(PeatSoldCondition(20));
+					shop.Add<Impact_Bomb>(PeatSoldCondition(35));
+					shop.Add<Impact_Dynamite>(PeatSoldCondition(50), Condition.Hardmode);
+					shop.Add<Alkaline_Grenade>(PeatSoldCondition(75), Condition.Hardmode);
+					shop.Add<Alkaline_Bomb>(PeatSoldCondition(120), Condition.Hardmode);
+					shop.Add<Caustica>(PeatSoldCondition(999), Condition.Hardmode);
 					break;
 				}
 				case NPCID.Steampunker: {
@@ -131,18 +109,6 @@ namespace Origins.NPCs {
 					shop.Add<Shardcannon>(Quest.QuestCondition<Shardcannon_Quest>());
 					break;
 				}
-			}
-		}
-		public override void ModifyActiveShop(NPC npc, string shopName, Item[] items) {
-			bool worldHasWastelands = false;
-			bool worldHasHive = false;
-			switch (AltLibrary.Common.Systems.WorldBiomeManager.WorldEvil) {
-				case "Origins/Defiled_Wastelands_Alt_Biome":
-				worldHasWastelands = true;
-				break;
-				case "Origins/Riven_Hive_Alt_Biome":
-				worldHasHive = true;
-				break;
 			}
 		}
 		public override bool PreAI(NPC npc) {
@@ -242,7 +208,7 @@ namespace Origins.NPCs {
 				if (amebolizeDebuff) {
 					damageBoost += 5f;
 				}
-				damage += Main.rand.RandomRound(damageBoost);
+				modifiers.FlatBonusDamage += Main.rand.RandomRound(damageBoost);
 			}
 			int forceCritBuff = npc.FindBuffIndex(Headphones_Buff.ID);
 			if (forceCritBuff >= 0) {
@@ -269,10 +235,10 @@ namespace Origins.NPCs {
 						case ProjectileID.PartyGirlGrenade:
 						case ProjectileID.BouncyDynamite:
 						case ProjectileID.ScarabBomb:
-						if (!Main.masterMode) damage *= new Fraction(5, 2);
+						if (!Main.masterMode) modifiers.SourceDamage *= (float)new Fraction(5, 2);
 						break;
 						default:
-						if (projectile.CountsAsClass(DamageClasses.Explosive)) damage /= Main.masterMode ? 5 : 2;
+						if (projectile.CountsAsClass(DamageClasses.Explosive)) modifiers.SourceDamage /= Main.masterMode ? 5 : 2;
 						break;
 					}
 				}
@@ -299,7 +265,7 @@ namespace Origins.NPCs {
 								default,
 								Felnum_Shock_Leader.ID,
 								5,
-								knockback,
+								hit.Knockback,
 								projectile.owner,
 								currentStart.X,
 								currentStart.Y
@@ -429,6 +395,12 @@ namespace Origins.NPCs {
 			if (originPlayer.rapidSpawnFrames > 0) {
 				spawnRate = 1;
 			}
+		}
+		public static Condition PeatSoldCondition(int amount) {
+			return new Condition(
+				Language.GetOrRegister("Mods.Origins.Conditions.PeatSoldCondition").WithFormatArgs(amount),
+				() => ModContent.GetInstance<OriginSystem>().peatSold >= amount
+			);
 		}
 	}
 }

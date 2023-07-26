@@ -40,7 +40,7 @@ namespace Origins.Items.Weapons.Melee {
 				target.Center,
 				default,
 				ModContent.ProjectileType<Telephone_Pole_Shock>(),
-				damage,
+				damageDone,
 				0,
 				player.whoAmI
 			).localNPCImmunity[target.whoAmI] = 30;

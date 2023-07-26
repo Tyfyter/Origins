@@ -92,7 +92,7 @@ namespace Origins.Items.Weapons.Melee {
 			Player player = Main.player[Projectile.owner];
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (originPlayer.felnumShock > 29) {
-				damage += (int)(originPlayer.felnumShock / 30);
+				modifiers.SourceDamage.Flat += (int)(originPlayer.felnumShock / 30);
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {

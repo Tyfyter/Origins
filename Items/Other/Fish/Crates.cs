@@ -64,7 +64,7 @@ namespace Origins.Items.Other.Fish {
 	public class Chunky_Crate_Tile : Fishing_Crate_Tile {
 		public override string Texture => "Origins/Items/Other/Fish/Chunky_Crate";
 		public override void SetMapEntry() {
-			LocalizedText name = CreateMapEntryName("Origins.Items.Other.Fish.Chunky_Crate");
+			LocalizedText name = Language.GetOrRegister("Origins.Items.Other.Fish.Chunky_Crate");
 			// name.SetDefault("Crate");
 			AddMapEntry(new Color(200, 200, 200), name);
 		}
@@ -131,7 +131,7 @@ namespace Origins.Items.Other.Fish {
 	public class Crusty_Crate_Tile : Fishing_Crate_Tile {
 		public override string Texture => "Origins/Items/Other/Fish/Crusty_Crate";
 		public override void SetMapEntry() {
-			LocalizedText name = CreateMapEntryName("Origins.Items.Other.Fish.Crusty_Crate");
+			LocalizedText name = Language.GetOrRegister("Origins.Items.Other.Fish.Crusty_Crate");
 			// name.SetDefault("Crate");
 			AddMapEntry(new Color(0, 125, 165), name);
 		}

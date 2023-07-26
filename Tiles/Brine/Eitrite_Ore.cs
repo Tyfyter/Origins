@@ -12,10 +12,8 @@ namespace Origins.Tiles.Brine {
 			Main.tileBlockLight[Type] = true;
 			Main.tileOreFinderPriority[Type] = 666;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Eitrite_Ore_Item>();
-			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Eitrite Ore");
-			AddMapEntry(new Color(79, 86, 207));
+			AddMapEntry(new Color(79, 86, 207), CreateMapEntryName());
 			mergeID = TileID.Mud;
 			MinPick = 150;
 			HitSound = SoundID.Dig;

@@ -1,6 +1,7 @@
 ﻿using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
@@ -17,7 +18,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddCondition(
-			   Terraria.Localization.NetworkText.FromLiteral("Brine"),
+			   Language.GetOrRegister("Mods.Origins.Conditions.Brine"),
 			   () => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Brine_Pool>()
 			);
 			recipe.AddIngredient(ItemID.EmptyDropper);

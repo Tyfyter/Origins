@@ -10,7 +10,6 @@ namespace Origins.Tiles.Other {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.Stone[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Batholith_Item>();
 			AddMapEntry(new Color(35, 10, 10));
 			mergeID = TileID.Stone;
 			MinPick = 250;

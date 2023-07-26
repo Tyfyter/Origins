@@ -5,6 +5,7 @@ using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 
@@ -35,7 +36,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 40);
 			recipe.AddCondition(
-			   Terraria.Localization.NetworkText.FromLiteral("Riven Water"),
+			   Language.GetOrRegister("Mods.Origins.Conditions.RivenWater"),
 			   () => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Riven_Hive>()
 			);
 			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 40);

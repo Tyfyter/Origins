@@ -82,9 +82,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 					point *= (float)Math.Min(GeometryUtils.AngleDif(dir.ToRotation(), target.velocity.ToRotation(), out _) + Clamp(force - target.velocity.Length(), 0, 1), 1);
 					if (force > 1) target.velocity = Vector2.Lerp(target.velocity, dir * Min(force, dist), point);
 					if (force >= (Projectile.Center.Clamp(target.Hitbox) - Projectile.Center).Length()) {
-						if (Projectile.timeLeft > totalDur && Projectile.Hitbox.Intersects(target.Hitbox)) OnHitNPC(target, 0, 0, false);
+
+						if (Projectile.timeLeft > totalDur && Projectile.Hitbox.Intersects(target.Hitbox)) OnHitNPC(target, new NPC.HitInfo(), 0);
 						if (Projectile.localNPCImmunity[target.whoAmI] <= 0) {
-							target.StrikeNPC((int)(Projectile.damage / dotDivisor), 0, 0);
+							target.SimpleStrikeNPC((int)(Projectile.damage / dotDivisor), 0);
 							Projectile.localNPCImmunity[target.whoAmI] = 10;
 						}
 					}

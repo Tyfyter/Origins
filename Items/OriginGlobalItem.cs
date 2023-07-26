@@ -151,9 +151,9 @@ namespace Origins.Items {
 				}
 			}
 		}
-		public override void PreReforge(Item item)/* tModPorter Note: Use CanReforge instead for logic determining if a reforge can happen. */ {
-			if (PrefixLoader.GetPrefix(item.prefix) is IPreReforgePrefix preReforgePrefix) {
-				return preReforgePrefix.PreReforge(item);
+		public override bool CanReforge(Item item)/* tModPorter Note: Use CanReforge instead for logic determining if a reforge can happen. */ {
+			if (PrefixLoader.GetPrefix(item.prefix) is ICanReforgePrefix canReforgePrefix) {
+				return canReforgePrefix.CanReforge(item);
 			}
 			return true;
 		}
@@ -166,56 +166,6 @@ namespace Origins.Items {
 				}
 			}
 		}
-		/*
-        [Obsolete("replace with ModifyItemLoot when that exists")]
-		public override void OnSpawn(Item item, IEntitySource source) {
-            if (source is EntitySource_ItemOpen) {
-				switch (item.type) {
-                    case ItemID.WarriorEmblem:
-                    case ItemID.RangerEmblem:
-                    case ItemID.SorcererEmblem:
-                    case ItemID.SummonerEmblem:
-					if (Main.rand.NextBool(OriginGlobalNPC.woFEmblemsCount)) {
-                        int prefix = item.prefix;
-                        item.SetDefaults(ModContent.ItemType<Exploder_Emblem>());
-                        item.Prefix(prefix);
-                    }
-                    break;
-
-                    case ItemID.DemoniteOre:
-                    case ItemID.CrimtaneOre: {
-                        int stack = item.stack;
-                        switch (OriginSystem.WorldEvil) {
-                            case OriginSystem.evil_wastelands:
-                            item.SetDefaults(ModContent.ItemType<Defiled_Ore_Item>());
-                            break;
-
-                            case OriginSystem.evil_riven:
-                            item.SetDefaults(ModContent.ItemType<Encrusted_Ore_Item>());
-                            break;
-                        }
-                        item.stack = stack;
-                    }
-                    break;
-
-                    case ItemID.CorruptSeeds:
-                    case ItemID.CrimsonSeeds: {
-                        int stack = item.stack;
-                        switch (OriginSystem.WorldEvil) {
-                            case OriginSystem.evil_wastelands:
-                            item.SetDefaults(ModContent.ItemType<Defiled_Grass_Seeds>());
-                            break;
-
-                            case OriginSystem.evil_riven:
-                            //item.type = ModContent.ItemType<Defiled_Grass_Seeds>();
-                            break;
-                        }
-                        item.stack = stack;
-                    }
-                break;
-                }
-            }
-        }//*/
 		public override void ModifyItemLoot(Item item, ItemLoot itemLoot) {
 			List<IItemDropRule> dropRules = itemLoot.Get(false);
 			switch (item.type) {

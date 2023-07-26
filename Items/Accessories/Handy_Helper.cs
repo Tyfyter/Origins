@@ -154,7 +154,7 @@ namespace Origins.Items.Accessories {
 			recipe.AddIngredient(ModContent.ItemType<Amebic_Vial>());
 			recipe.AddIngredient(ItemID.PowerGlove, 2);
 			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddCondition(LocalizedText.Empty, () => OriginsModIntegrations.CheckAprilFools());
+			recipe.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.AprilFools"), () => OriginsModIntegrations.CheckAprilFools());
 			recipe.AddOnCraftCallback((_, result, consumed, _) => {
 				if (result.ModItem is Handy_Helper helper) {
 					helper.bothGloves = true;
@@ -170,7 +170,7 @@ namespace Origins.Items.Accessories {
 			recipe = Recipe.Create(ItemID.PowerGlove);
 			recipe.AddIngredient(Type);
 			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddCondition(LocalizedText.FromLiteral("Does not consume Handy Helper"), () => OriginsModIntegrations.CheckAprilFools());
+			recipe.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.AprilFoolsHandyHelper"), () => OriginsModIntegrations.CheckAprilFools());
 			recipe.AddOnCraftCallback((_, result, consumed, _) => {
 				Item dropped = consumed[0];
 				if (dropped.ModItem is Handy_Helper helper) {

@@ -104,7 +104,7 @@ namespace Origins.Items.Weapons {
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			Projectile.frame = 0;
-			if (Projectile.velocity == Vector2.Zero) hitDirection = target.Center.X > Projectile.Center.X ? -1 : 1;
+			if (Projectile.velocity == Vector2.Zero) modifiers.HitDirectionOverride = target.Center.X > Projectile.Center.X ? -1 : 1;
 			else {
 				Vector2 diff = (target.Center - (Projectile.Center + Projectile.velocity * 2)).SafeNormalize(default);
 				float dot = Vector2.Dot(diff, Vector2.Normalize(Projectile.velocity));
@@ -121,7 +121,7 @@ namespace Origins.Items.Weapons {
 			if (Projectile.timeLeft < 3 || centered) Projectile.velocity *= 0.95f;
 			if (Projectile.frame == 1) {
 				PolarVec2 vel = particles[Projectile.frameCounter].Pos;
-				vel.R = knockback * -1.5f;
+				vel.R = hit.Knockback * -1.5f;
 				if (hit.Crit) vel.R *= 2;
 				target.velocity = Vector2.Lerp(target.velocity, (Vector2)vel, target.knockBackResist);
 			}

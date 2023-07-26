@@ -89,7 +89,6 @@ namespace Origins.Items.Weapons {
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			if (Projectile.damage == 1) {
 				Item.NewItem(Projectile.GetSource_FromThis(), Projectile.Center, ModContent.ItemType<Fiberglass_Shard>());
-				damage = 0;
 				target.statLife--;
 				PlayerDeathReason reason = new PlayerDeathReason();
 				reason.SourceCustomReason = target.name + " cut themselves on broken glass"; //Oh, there's already code for death reasons :D

@@ -260,12 +260,12 @@ namespace Origins.NPCs.Fiberglass {
 			return false;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			NPC.velocity.X += hitDirection * 3;
+			NPC.velocity.X += hit.HitDirection * 3;
 			if (NPC.life < 0) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG1_Gore"));
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG2_Gore"));
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/FG3_Gore"));
-			} else if (damage > NPC.lifeMax * 0.1f) {
+			} else if (hit.Damage > NPC.lifeMax * 0.1f) {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position, NPC.velocity, Mod.GetGoreSlot($"Gores/NPCs/FG{Main.rand.Next(3) + 1}_Gore"));
 			}
 		}

@@ -125,7 +125,7 @@ namespace Origins {
 					Mod.Logger.Info("Pooling Brine");
 					progress.Message = "Pooling Brine";
 					//for (int i = 0; i < Main.maxTilesX / 5000; i++) {
-					int X = WorldGen.genRand.Next(JungleX - 100, JungleX + 100);
+					int X = WorldGen.genRand.Next(GenVars.JungleX - 100, GenVars.JungleX + 100);
 					int Y;
 					for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
 					Y += WorldGen.genRand.Next(100, 125);
@@ -146,11 +146,11 @@ namespace Origins {
 					bool placed = false;
 					int tries = 0;
 					while (!placed) {
-						int X = WorldGen.genRand.Next(JungleX - 100, JungleX + 100);
+						int X = WorldGen.genRand.Next(GenVars.JungleX - 100, GenVars.JungleX + 100);
 						int Y;
 						for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
 						Y += WorldGen.genRand.Next(250, 350);
-						if (structures.CanPlace(new Rectangle(X - 32, Y - 32, 64, 64), 16) || ++tries > 1000) {
+						if (GenVars.structures.CanPlace(new Rectangle(X - 32, Y - 32, 64, 64), 16) || ++tries > 1000) {
 							Mod.Logger.Info("FiberglassGen:" + X + ", " + Y);
 							Fiberglass_Undergrowth.Gen.FiberglassStart(X, Y);
 							placed = true;

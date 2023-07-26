@@ -23,7 +23,6 @@ namespace Origins.Tiles.Defiled {
 			Main.tileMerge[Type] = Main.tileMerge[TileID.IceBlock];
 			Main.tileMerge[Type][TileID.IceBlock] = true;
 			Main.tileBlockLight[Type] = true;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Defiled_Ice_Item>();
 			AddMapEntry(new Color(225, 225, 225));
 			mergeID = TileID.IceBlock;
 			AddDefiledTile();

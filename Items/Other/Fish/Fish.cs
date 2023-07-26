@@ -72,7 +72,7 @@ namespace Origins.Items.Other.Fish {
 			Item.consumable = true;
 		}
 		public override void ExtractinatorUse(int extractinatorBlockType, ref int resultType, ref int resultStack) {
-			base.ExtractinatorUse(ref resultType, ref resultStack);
+
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>(), 3);

@@ -40,7 +40,7 @@ namespace Origins.Tiles.Defiled {
 
 			HitSound = SoundID.Grass;
 			DustType = DustID.Marble;
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Soulspore_Item>();
+			RegisterItemDrop(ItemType<Soulspore_Item>());
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {

@@ -18,9 +18,9 @@ using Terraria.Graphics.Effects;
 using static Origins.OriginExtensions;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Pets;
-//using AltLibrary.Common.AltBiomes;
+using AltLibrary.Common.AltBiomes;
 using Origins.NPCs.Defiled;
-//using AltLibrary.Core.Generation;
+using AltLibrary.Core.Generation;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Magic;
@@ -553,56 +553,61 @@ namespace Origins.World.BiomeData {
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
 			//DisplayName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
-			Description.SetDefault(Language.GetTextValue("A desaturated and bleak environment that is actually a living organism growing its body."));
-			GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
-			GenPassName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
-			BiomeGrass = ModContent.TileType<Defiled_Grass>();
+			//Description.SetDefault(Language.GetTextValue("A desaturated and bleak environment that is actually a living organism growing its body."));
+			//GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
+			//GenPassName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
+			AddTileConversion(ModContent.TileType<Defiled_Grass>(), TileID.Grass);
+			AddTileConversion(ModContent.TileType<Defiled_Stone>(), TileID.Stone);
+			AddTileConversion(ModContent.TileType<Defiled_Sand>(), TileID.Sand);
+			AddTileConversion(ModContent.TileType<Defiled_Sandstone>(), TileID.Sandstone);
+			AddTileConversion(ModContent.TileType<Hardened_Defiled_Sand>(), TileID.HardenedSand);
+			AddTileConversion(ModContent.TileType<Defiled_Ice>(), TileID.IceBlock);
 			SeedType = ModContent.ItemType<Defiled_Grass_Seeds>();
-			BiomeStone = ModContent.TileType<Defiled_Stone>();
-			BiomeSand = ModContent.TileType<Defiled_Sand>();
-			BiomeSandstone = ModContent.TileType<Defiled_Sandstone>();
-			BiomeHardenedSand = ModContent.TileType<Hardened_Defiled_Sand>();
-			BiomeIce = ModContent.TileType<Defiled_Ice>();
 			BiomeOre = ModContent.TileType<Defiled_Ore>();
 			BiomeOreItem = ModContent.ItemType<Defiled_Ore_Item>();
 			AltarTile = ModContent.TileType<Defiled_Altar>();
+
+			BiomeChestItem = ModContent.ItemType<Defiled_Key>();
 			BiomeChestTile = ModContent.TileType<Defiled_Dungeon_Chest>();
 			BiomeChestTileStyle = 1;
+			BiomeKeyItem = ModContent.ItemType<Defiled_Key>();
+
 			MimicType = ModContent.NPCType<Defiled_Mimic>();
 
-			WallContext = new WallContext()
-				.AddReplacement<Defiled_Stone_Wall>(
-					WallID.Stone,
-					WallID.CaveUnsafe,
-					WallID.Cave2Unsafe,
-					WallID.Cave3Unsafe,
-					WallID.Cave4Unsafe,
-					WallID.Cave5Unsafe,
-					WallID.Cave6Unsafe,
-					WallID.Cave7Unsafe,
-					WallID.Cave8Unsafe,
-					WallID.EbonstoneUnsafe,
-					WallID.CorruptionUnsafe1,
-					WallID.CorruptionUnsafe2,
-					WallID.CorruptionUnsafe3,
-					WallID.CorruptionUnsafe4,
-					WallID.CrimstoneUnsafe,
-					WallID.CrimsonUnsafe1,
-					WallID.CrimsonUnsafe2,
-					WallID.CrimsonUnsafe3,
-					WallID.CrimsonUnsafe4
-				).AddReplacement<Defiled_Sandstone_Wall>(
-					WallID.Sandstone,
-					WallID.CorruptSandstone,
-					WallID.CrimsonSandstone,
-					WallID.HallowSandstone
-				).AddReplacement<Hardened_Defiled_Sand_Wall>(
-					WallID.HardenedSand,
-					WallID.CorruptHardenedSand,
-					WallID.CrimsonHardenedSand,
-					WallID.HallowHardenedSand
-				)
-				.AddReplacement<Chambersite_Defiled_Stone_Wall>((ushort)ModContent.WallType<Chambersite_Stone_Wall>());
+			AddWallConversions<Defiled_Stone_Wall>(
+				WallID.Stone,
+				WallID.CaveUnsafe,
+				WallID.Cave2Unsafe,
+				WallID.Cave3Unsafe,
+				WallID.Cave4Unsafe,
+				WallID.Cave5Unsafe,
+				WallID.Cave6Unsafe,
+				WallID.Cave7Unsafe,
+				WallID.Cave8Unsafe,
+				WallID.EbonstoneUnsafe,
+				WallID.CorruptionUnsafe1,
+				WallID.CorruptionUnsafe2,
+				WallID.CorruptionUnsafe3,
+				WallID.CorruptionUnsafe4,
+				WallID.CrimstoneUnsafe,
+				WallID.CrimsonUnsafe1,
+				WallID.CrimsonUnsafe2,
+				WallID.CrimsonUnsafe3,
+				WallID.CrimsonUnsafe4
+			);
+				AddWallConversions<Defiled_Sandstone_Wall>(
+				WallID.Sandstone,
+				WallID.CorruptSandstone,
+				WallID.CrimsonSandstone,
+				WallID.HallowSandstone
+			);
+			AddWallConversions<Hardened_Defiled_Sand_Wall>(
+				WallID.HardenedSand,
+				WallID.CorruptHardenedSand,
+				WallID.CrimsonHardenedSand,
+				WallID.HallowHardenedSand
+			);
+			AddWallConversions<Chambersite_Defiled_Stone_Wall>((ushort)ModContent.WallType<Chambersite_Stone_Wall>());
 		}
 		public override AltMaterialContext MaterialContext {
 			get {

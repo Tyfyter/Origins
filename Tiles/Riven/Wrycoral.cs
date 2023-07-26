@@ -35,7 +35,7 @@ namespace Origins.Tiles.Riven {
 			HitSound = SoundID.Grass;
 			DustType = DustID.WhiteTorch;
 
-			ItemDrop/* tModPorter Note: Removed. Tiles and walls will drop the item which places them automatically. Use RegisterItemDrop to alter the automatic drop if necessary. */ = ItemType<Wrycoral_Item>();
+			RegisterItemDrop(ItemType<Wrycoral_Item>());
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile tile = Framing.GetTileSafely(i, j);

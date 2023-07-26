@@ -102,7 +102,7 @@ namespace Origins.Items.Weapons.Magic {
 					Projectile.velocity = Vector2.Zero;
 					embedPos = ((PolarVec2)(Projectile.Center - target.Center)).RotatedBy(-target.rotation);
 				}
-				Projectile.ai[1] += damage;
+				Projectile.ai[1] += damageDone;
 			} else {
 				Projectile.Kill();
 			}

@@ -11,8 +11,8 @@ namespace Origins.Items {
 	public interface IModifyTooltipsPrefix {
 		void ModifyTooltips(Item item, List<TooltipLine> tooltips);
 	}
-	public interface IPreReforgePrefix {
-		bool PreReforge(Item item);
+	public interface ICanReforgePrefix {
+		bool CanReforge(Item item);
 	}
 	public class Heavy_Cal_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Ranged;
@@ -278,7 +278,7 @@ namespace Origins.Items {
 			//blastRadiusMult += 0.25f;
 		}
 	}
-	public class Imperfect_Prefix : ModPrefix, IOnSpawnProjectilePrefix, IModifyTooltipsPrefix, IPreReforgePrefix {
+	public class Imperfect_Prefix : ModPrefix, IOnSpawnProjectilePrefix, IModifyTooltipsPrefix, ICanReforgePrefix {
 		public override PrefixCategory Category => PrefixCategory.Ranged;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Imperfect");
@@ -311,6 +311,6 @@ namespace Origins.Items {
 				IsModifierBad = true
 			});
 		}
-		public bool PreReforge(Item item) => false;
+		public bool CanReforge(Item item) => false;
 	}
 }
