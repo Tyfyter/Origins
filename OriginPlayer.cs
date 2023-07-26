@@ -739,16 +739,12 @@ namespace Origins {
 							break;
 						}
 						if (canBounce) {
-							int baseDamage = Player.GetWeaponDamage(loversLeapItem);
-							float baseKnockback = Player.GetWeaponKnockback(loversLeapItem);
-							int crit = Player.GetWeaponCrit(loversLeapItem);
 							for (int i = 0; i < Main.maxNPCs; i++) {
 								NPC npc = Main.npc[i];
 								if (npc.active && !npc.dontTakeDamage) {
 									if (!npc.friendly || (npc.type == NPCID.Guide && Player.killGuide) || (npc.type == NPCID.Clothier && Player.killClothier)) {
 										if (loversLeapHitbox.Intersects(npc.Hitbox)) {
 											bounce = true;
-											int damage = baseDamage;
 											NPC.HitModifiers modifiers = npc.GetIncomingStrikeModifiers(loversLeapItem.DamageType, hitDirection);
 
 											Player.ApplyBannerOffenseBuff(npc, ref modifiers);

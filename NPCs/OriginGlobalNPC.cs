@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AltLibrary.Common.Conditions;
+using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
@@ -12,6 +13,7 @@ using Origins.Projectiles.Misc;
 using Origins.Questing;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using System;
@@ -23,6 +25,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Default;
+using static Origins.ConditionExtensions;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
@@ -71,25 +74,21 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Steampunker: {
-					if (Main.bloodMoon || Main.eclipse) {
-						if (worldHasWastelands) {
-							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<White_Solution>());
-						}
-						if (worldHasHive) {
-							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Teal_Solution>());
-						}
-					}
+					shop.Add<White_Solution>(Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
+					shop.Add<Teal_Solution>(Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>()));
 					break;
 				}
 				case NPCID.Dryad: {
+					shop.Add<Cleansing_Station_Item>(Quest.QuestCondition<Cleansing_Station_Quest>());
 					shop.Add<Mojo_Flask>(Quest.QuestCondition<Cleansing_Station_Quest>());
+
+					shop.Add<Defiled_Grass_Seeds>(Condition.InGraveyard.CommaAnd(Condition.Hardmode).And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>().Not()));
+					shop.Add<Riven_Grass_Seeds>(Condition.InGraveyard.CommaAnd(Condition.Hardmode).And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>().Not()));
+
+					shop.Add<Defiled_Grass_Seeds>(Condition.BloodMoon.And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
+					shop.Add<Riven_Grass_Seeds>(Condition.BloodMoon.And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>()));
 					if (Main.player[Main.myPlayer].ZoneGraveyard) {
-						if (!worldHasWastelands) {
-							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Defiled_Grass_Seeds>());
-						}
-						if (!worldHasHive) {
-							shop.item[nextSlot++].SetDefaults(ModContent.ItemType<Riven_Grass_Seeds>());
-						}
+
 					}
 					break;
 				}

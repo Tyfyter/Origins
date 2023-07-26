@@ -1,4 +1,5 @@
-﻿using Origins.Items;
+﻿using AltLibrary.Common.Systems;
+using Origins.Items;
 using Origins.Items.Weapons.Ranged;
 using System.IO;
 using Terraria;
@@ -11,14 +12,9 @@ namespace Origins.Questing {
 	//TODO: implement
 	public class Cleansing_Station_Quest : Quest {
 		//backing field for Stage property
-		int stage = 0;
 		int progress = 0;
 		const int target = 50;
 		//Stage property so changing quest stage also updates its event handlers
-		public override int Stage {
-			get => stage;
-			set => stage = value;
-		}
 		public override bool SaveToWorld => true;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
@@ -50,14 +46,14 @@ namespace Origins.Questing {
 		//when the player clicks the dialogue button - 
 		public override void OnDialogue() {
 			// - if they're on -
-			switch (stage) {
+			switch (Stage) {
 				case 0: {// - stage 0 (not started) - 
 					if (Origins.npcChatQuestSelected) {// - if the player has already inquired about a quest -
 						Stage = 1;// - set stage to 1 (kill harpies)
 						LocalPlayerStarted = true;
 					} else {// - otherwise -
 							// - set npc chat text to "start" text and mark that the player has inquired about a quest
-						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Dryad.Cleansing_Station.Start", Main.LocalPlayer.Get2ndPersonReference("casual"));
+						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Dryad.Cleansing_Station.Start", Main.LocalPlayer.name, WorldBiomeManager.GetWorldEvil(true).DisplayName);
 						Origins.npcChatQuestSelected = true;// (npcChatQuestSelected is reset to false when the player closes the dialogue box)
 					}
 					break;
@@ -80,9 +76,11 @@ namespace Origins.Questing {
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
 				"Mods.Origins.Quests.Dryad.Cleansing_Station.Journal", //translation key
+				Main.LocalPlayer.name,
+				WorldBiomeManager.GetWorldEvil(true).DisplayName,
 				progress,
 				target,
-				StageTagOption(progress >= target) //used in a quest stage tag to show the stage as completed
+				StageTagOption(Stage >= 2) //used in a quest stage tag to show the stage as completed
 			);
 		}
 		public override void SetStaticDefaults() {
@@ -106,6 +104,15 @@ namespace Origins.Questing {
 		public override void ReceiveSync(BinaryReader reader) {
 			Stage = reader.ReadInt32();
 			progress = reader.ReadInt32();
+		}
+		public void UpdateProgress(int amount) {
+			if (Stage == 1) {
+				progress += amount;
+				if (progress >= target) {
+					Stage = 2;
+				}
+				ShouldSync = true;
+			}
 		}
 	}
 }

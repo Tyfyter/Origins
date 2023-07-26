@@ -538,18 +538,6 @@ namespace Origins.World.BiomeData {
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override Color OuterColor => new(170, 170, 170);
-		public override List<int> SpreadingTiles => new List<int> {
-			ModContent.TileType<Defiled_Grass>(),
-			ModContent.TileType<Defiled_Stone>(),
-			ModContent.TileType<Defiled_Sand>(),
-			ModContent.TileType<Defiled_Sandstone>(),
-			ModContent.TileType<Hardened_Defiled_Sand>(),
-			ModContent.TileType<Defiled_Ice>(),
-		};
-		public override Dictionary<int, int> SpecialConversion => new Dictionary<int, int>() {
-			[TileID.LargePiles] = ModContent.TileType<Defiled_Large_Foliage>(),
-			[TileID.LargePiles2] = ModContent.TileType<Defiled_Large_Foliage>()
-		};
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
 			//DisplayName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
@@ -562,6 +550,10 @@ namespace Origins.World.BiomeData {
 			AddTileConversion(ModContent.TileType<Defiled_Sandstone>(), TileID.Sandstone);
 			AddTileConversion(ModContent.TileType<Hardened_Defiled_Sand>(), TileID.HardenedSand);
 			AddTileConversion(ModContent.TileType<Defiled_Ice>(), TileID.IceBlock);
+
+			AddTileConversion(ModContent.TileType<Defiled_Large_Foliage>(), TileID.LargePiles);
+			AddTileConversion(ModContent.TileType<Defiled_Large_Foliage>(), TileID.LargePiles2);
+
 			SeedType = ModContent.ItemType<Defiled_Grass_Seeds>();
 			BiomeOre = ModContent.TileType<Defiled_Ore>();
 			BiomeOreItem = ModContent.ItemType<Defiled_Ore_Item>();

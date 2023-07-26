@@ -188,6 +188,39 @@ Mods: {
 					Complete: missingno
 				}
 			}
+
+			Dryad: {
+				Cleansing_Station: {
+					Name: I’ll Give You a Deal
+					Journal:
+						'''
+						{$Mods.Origins.Quests.Dryad.Cleansing_Station.Name}
+						Client: Dryad
+								
+						'{$Mods.Origins.Quests.Dryad.Cleansing_Station.Start}'
+								
+						- [qs{4}:Cleanse {3} blocks ({2}/{3})]
+						Unlocks: [i:Origins/Cleansing_Station_Item]
+						'''
+					Start: Hey {0}, look… I know you’ve probably been busy lately, but can I take some time off you to cleanse some of the {1}? If you follow through, I’ll reward you with access to a very rare resource….
+					Complete: we really need these completion messages
+				}
+				Cleansing_Station_Again?: {
+					Name: I’ll Give You a Deal
+					Journal:
+						'''
+						{$Mods.Origins.Quests.Dryad.Cleansing_Station_Again?.Name}
+						Client: Dryad
+								
+						'{$Mods.Origins.Quests.Dryad.Cleansing_Station_Again?.Start}'
+								
+						- [qs{3}:Cleanse {2} blocks ({1}/{2})]
+						Unlocks: [i:Origins/Cleansing_Station_Item]
+						'''
+					Start: Okay look. I’ve never had to cleanse people from the {0} this much in my life time, so since I’m getting quite tired of it I’ve proposed giving away this station that does it for me. Only one caveat, you have to cleanse some of the {0}.
+					Complete: we really need these completion messages
+				}
+			}
 		}
 	}
 }
