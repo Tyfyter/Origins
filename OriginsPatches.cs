@@ -261,6 +261,30 @@ namespace Origins {
 				OriginPlayer.hitOriginalDamage = self.SourceDamage.ApplyTo(damage) * self.IncomingDamageMultiplier.Value;
 				return orig(ref self, damage, defense, defenseEffectiveness, knockback, knockbackImmune);
 			};
+			On_Player.AddBuff_DetermineBuffTimeToAdd += On_Player_AddBuff_DetermineBuffTimeToAdd;
+			On_Player.Update_NPCCollision += On_Player_Update_NPCCollision;
+		}
+
+		private void On_Player_Update_NPCCollision(On_Player.orig_Update_NPCCollision orig, Player self) {
+			orig(self);
+			if (self.TryGetModPlayer(out OriginPlayer originPlayer)) {
+				originPlayer.PostHitByNPC();
+			}
+		}
+
+		private int On_Player_AddBuff_DetermineBuffTimeToAdd(On_Player.orig_AddBuff_DetermineBuffTimeToAdd orig, Player self, int type, int time) {
+			int value = orig(self, type, time);
+			if (self.TryGetModPlayer(out OriginPlayer originPlayer)) {
+				float mult = 1f;
+				if (originPlayer.plasmaPhial && Main.debuff[type]) {
+					mult *= OriginPlayer.plasmaPhialMult;
+				}
+				if (originPlayer.donorWristband && Main.debuff[type]) {
+					mult *= OriginPlayer.donorWristbandMult;
+				}
+				value = (int)(value * mult);
+			}
+			return value;
 		}
 
 		private void Player_KillMe(Terraria.On_Player.orig_KillMe orig, Player self, PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp) {

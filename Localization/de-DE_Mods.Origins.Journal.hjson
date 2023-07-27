@@ -1,0 +1,270 @@
+Name: {
+	// Black_Bile: Black Bile
+	// Captured_Mojo: Mojo
+	// Cubekon_Tinkerer: Cubekon Tinkerer
+	// District_Attorney: Defiled Amalgamation
+	// Felnum: Felnum Ore
+	// Lost_Ore: Lost Ore
+	// The_Defiled: The Defiled
+	// The_Riven: The Riven
+	// The_Terrarian: The Terrarian
+	// Tripod_Nip: Tripod Nip
+}
+
+Indicator: {
+	// Whispers: You hear whispers nearby...
+	// Other: Detailed description available.
+}
+
+// Material Descriptions vv
+
+/* Alkahest:
+	'''
+	Alkahest (title)
+	[i:Origins/Alkahest] (enlarge to span top of page, working on custom image)
+
+	Overview: 
+		- Alkahest is an extremely-concentrated alkaline solution that is notable for being capable of breaking down any composite material. Alkahest is the primary chemical used by the Primordial Amoeba to break down the Terrarian world into energy. Alkahest is a very rare resource despite being widely available within the Riven Hive due to the fact that the Primordial Amoeba is the only being capable of synthesizing the chemical, making it highly sought after by merchants.
+						
+	Characteristics: 
+		- Contrary to the bright blue-green coloration of the Primordial Amoeba, Alkahest takes on a bright, almost straw-colored yellow color. Alkahest also has almost no viscosity as well and is very reflective.
+						
+	Origins: 
+		- As previously mentioned, Alkahest first appeared on Terraria due to the Primordial Amoeba that naturally synthesizes it to digest all matter for nutrition. There is no known way to synthesize Alkahest artificially.
+						
+	Chemistry:
+		- Alkahest has a wide range of applications including general waste removal, energy generation, heat generation, and other purposes. Alkahest is most commonly used for combat and alchemy, due to how easily capable of dissolving matter it is.
+						
+	History: 
+		- Alkahest is a relatively newer material that has sprouted into the mix thanks to some early Terrarian history. Before the Primordial Amoeba became a keystone species for the Riven Hive, it was like any other single-cellular organism. When Cthulhu’s invasion on Terraria’s inhabitants came to a conclusion after his lower half was severed, his blood was said to spill into the caverns of the world, corrupting the very pool of water that the Primordial Amoeba resided. As part of its prompted, rapid evolution, the Amoeba gained the ability for Alkahest synthesis and used it to shape the surrounding environment.
+	''' */
+/* Black_Bile:
+	'''
+	Black Bile (title)
+	[i:Origins/Black_Bile] (enlarge to span top of page, working on custom image)
+
+	Overview: 
+		- Black Bile is a semi-solid material that sublimates at a really low temperature like that of the Defiled Wastelands, in which case Black Bile is only observed as a heavy gas. Black Bike is mostly known to be the waste by-product produced by the Defiled entity during the creation of Defiled Matter and Defiled Mana. It’s also known to significantly increase the risk of cancer and depression when in contact.
+						
+	Characteristics: 
+		- Black Bile in its semi-solid form takes on a dark mulberry-like color and possesses little-to-no resistance to forces applied to it. It also is inherently slippery to grasp, making extraction of the material prove difficult. In its gaseous form, Black Bile completely absorbs almost all light casted onto it and appears to prevent separation into multiple clouds of gas as much as possible. It is also extremely resistant to being set aflame and not reactive to anything, making it quite stable.
+						
+	Origins: 
+		- As previously stated, Black Bile is the waste by-product of Defiled Matter and Mana generation in the specific process known as “refactoring defiledization”.
+						
+	Chemistry:
+		- Black Bile is quite a versatile material offering applications in combat, medicine, and crafting. It’s main use is for combat, due to its deadly and volatile nature. Black Bile is known to have a strange reaction with Terraria’s nitrogen-rich air, causing the atmosphere to be desaturated of color. 
+						
+	History: 
+		- Black Bile is a relatively new material due to the recent introduction of the Defiled in Terraria. Unlike the other evils, the Defiled entity was not naturally from Terraria. Black Bile has been an important material used by the Defiled ever since as the Defiled uses it to aid in constructing its various structures. 
+	''' */
+/* Felnum:
+	'''
+	[header:Felnum]
+	[i:Origins/Felnum_Ore_Item] [i:Origins/Felnum_Bar] (enlarge to span top of page)
+
+	Overview: 
+		- Felnum is mostly known for its "eletrical greed" in that it builds up a crystalline material known as "felnum crust" to trap electrons that try to escape despite already having a strong negative charge. Felnum can be found in the floating isles of Terraria where it saps the static electricity culminating in the clouds. It is said that lightning would strike all the time during thunderstorms if it weren't for felnum.
+						
+	Characteristics: 
+		- Felnum in its unrefined state adopts a similar appearance to that of copper ore, and then fades into a desaturated gold-brown color when hardened. It has a very prominent luster, isn’t too malleable, and possesses a worse thermal conductivity than its copper equivalent.
+						
+	Origins: 
+		- Felnum's development on Terraria is due to a high presence of mana throughout the world. It manifests due the high presence of mana particles in conjunction with the appropriate elements in the area. The greatest way to manifest Felnum is to transmute Copper Ore [i:Terraria/Copper_Ore_Item] by blessing it at a Crystal Ball [i:Terraria/Crystal_Ball_Item].
+						
+	Chemistry:
+		- Felnum is mostly used as a capacitor when it is not being combined with other materials. It can be used best in battery-technology applications where a power source is necessary. Aside from its applications, Felnum can be further blessed into Valkyrum [i:Origins/Valkyrum_Bar] by combining it with Ectoplasm [i:Terraria/Ectoplasm] released by Dungeon Spirits [i:Terraria/Dungeon_Spirit]. Based on early analysis, Felnum could likely be used in applications of providing energy in the form of electrolytes.
+						
+	History: 
+		- Felnum is an artificial metal material conjured by the wizards of the Bastile (dungeon). Its sole purpose was to prevent lightning strikes from rapidly striking the lands of Terraria during thunderstorms to allow for the development of villages. Felnum's presence can greatly harm Terraria if not applied carefully as thunderstorms are just a way for Terraria to naturally combat manifested evils on the surface.
+						
+	Symbolism:
+		- Felnum is seen as blessing or a curse depending on who you ask due to its history. To the Order of Dryads that once lived in Terraria, it is seen as a grave mistake to restoring balance in the world. To the settlers of the surface, it can be seen as a blessing shielding them from the destructive thunderstorms.
+	''' */
+/* Lost_Ore:
+	'''
+	Lost Ore (title)
+	[i:Origins/Lost_Ore_Item] [i:Origins/Defiled_Bar] (enlarge to span top of page)
+
+	Overview: 
+		- Lost Ore is the primary metal material used by the Defiled entity to create the compound known as "Defiled Matter". Lost Ore is not a material directly tied in with the Defiled, and thus is impossible to be assimilated from. It is quite a versatile material, but cannot be utilized like many other metal materials available due to its mysterious properties.
+						
+	Characteristics: 
+		- Lost Ore, being derived from Iron Ore [i:Terraria/Iron_Ore_Item], shares little in common. Lost Ore is certainly lighter, more reflective, less dense, and significantly less conductive. It takes on a bright white coloration and is also very magnetic to allow for easy movement by the Defiled's means.
+						
+	Origins: 
+		- Lost Ore occurs commonly in the Defiled Caverns and elsewhere in the world where the Defiled plans to propogate. In this case, Lost Ore serves as a catalyst to the Defiled's spread across the world. It additionally likes to keep Lost Ore in numerous reserves underground in hopes that they will not be tampered with. By extracting Lost Ore, an individual could slow the spread of the Defiled.
+						
+	Chemistry:
+		- Lost Ore's primary use is to serve as a readily available metal material to integrate into newly generated Defiled Matter. It is responsible for giving Defiled Matter its smooth, metallic appearance, which is a sign of the Matter's toughness. Lost Ore can alternatively be used as refined material, but the means of refining it are unknown as is its appearance. The main way to utilize Lost Ore's capabilities is to combine it with a live Defiled host, i. e. Undead Chunks [i:Origins/Undead_Chunk].
+						
+	History: 
+		- Lost Ore wasn't always available to the Defiled, at least not initially. The Defiled had to spread enough to reach the caverns of Terraria in order to discover the natural ore that resides there. After discovering a particular vein of Iron Ore [i:Terraria/Iron_Ore_Item], it absorbed it and integrated it into its current production of Defiled Matter. However, the entity found that Iron was too heavy and too conductive for its liking and thus reconfigured Iron's characteristics to be more favorable; the result was Lost Ore.
+	''' */
+/* Captured_Mojo:
+	'''
+	Mojo (title)
+	[i:Origins/Captured_Mojo] (enlarge to span top of page, working on custom image)
+
+	Overview: 
+		- only a rare type of plant is capable of capturing Mojo that randomly wanders the world. The Dryad doesn't speak much of this rare plant, likely for good reason. Touching Mojo feels extremely refreshing and saturating as it is said to make you younger. Could possibly explain why the Dryad is so old! 
+						
+	Characteristics: 
+		- Contrary to the bright blue-green coloration of the Primordial Amoeba, Alkahest takes on a bright, almost straw-colored yellow color. Alkahest also has almost no viscosity as well and is very reflective.
+						
+	Origins: 
+		- As previously mentioned, Alkahest first appeared on Terraria due to the Primordial Amoeba that naturally synthesizes it to digest all matter for nutrition. There is no known way to synthesize Alkahest artificially.
+						
+	Chemistry:
+		- Alkahest has a wide range of applications including general waste removal, energy generation, heat generation, and other purposes. Alkahest is most commonly used for combat and alchemy, due to how easily capable of dissolving matter it is.
+						
+	History: 
+		- Alkahest is a relatively newer material that has sprouted into the mix thanks to some early Terrarian history. Before the Primordial Amoeba became a keystone species for the Riven Hive, it was like any other single-cellular organism. When Cthulhu’s invasion on Terraria’s inhabitants came to a conclusion after his lower half was severed, his blood was said to spill into the caverns of the world, corrupting the very pool of water that the Primordial Amoeba resided. As part of its prompted, rapid evolution, the Amoeba gained the ability for Alkahest synthesis and used it to shape the surrounding environment.
+	''' */
+// Lore Accessories vv
+
+// Asylum_Whistle: They always told us to come back into the citadel whenever the rain came. That whistle would always sound to get us children inside, and following that would always be a strike of lightning. They told us it was too dangerous to wander in the rain because the clouds would get angry and strike at the ground in fury. I was just curious as to why they were so angry at the ground all the time, but I would never get to know that because that whistle would always sound.
+/* Eccentric_Stone:
+	'''
+	My Gloria! Where is she?!
+
+	You’re too late… she is dead.
+
+	H- Why are you doing this?!
+
+	There world has done nothing for me. Why not?
+
+	That doesn’t mean the blood of innocents is anywhere necessary!
+
+	Someone could’ve said something, but they all passed me by…
+
+	You’re remembering wrong!
+
+	How dare you gaslight me! These are my own memories. How could I forget my own memories?! Die insolent pig!
+
+	NO!
+
+	No… father…
+
+	Daughter, I’m here! I’m right here!
+
+	Father… where are you?
+
+	I’m right here!
+	''' */
+/* Lost_Page:
+	'''
+	I think they’re still discovering- OKAY, so I totally just got sent to some kind of pocket dimension, so I’m going to try and write as much as I can on this piece of paper. I can see a lot of their data now that I’m in this weird realm, which I could only presume is some kind of prison. Their civilization is trying to become a singularity and combine all of their consciousnesses into one. It’s really crazy, and I didn’t think they were that far, but I am really discovering a lot of secrets right now. When I get out of here I’m going to really have to experiment…
+
+	Crap, I’m running out of space. Basically, if I don’t forget what I learned from all this (still trying to process what I just saw) I have a lot of awesome projects in mind…
+	''' */
+/* Stone_Mask:
+	'''
+	I have it. The power of the nature-will is strong in my soul. The Dryads use this mask to foresee the future, but I do remember there being some kind of consequence. I hope I learn that in time. For now, I must use this helm to stop that evil sorcerer from destroying the rest of Terraria…
+
+	Ah, that’s it. That’s what we must do. Gerald, go warn the postmaster. We must act quickly and warn any of the others of what is to come.
+	''' */
+/* Timbre_of_Hell:
+	'''
+	To those who were banished to the depths, the cities of Hell were the closest thing to home. The cities of Hell always stood strong against the wild creatures that lived there until chaos ensued. There were loud crashing noises and unearthly screams coming from a faraway horizon as the wilderness grew rampant and even more violent. The cities were eventually overwhelmed by the creatures of Hell as they became more powerful and populous.
+
+	What’s left are only the constructs of the inhabitants that once lived there. Some are said to still roam along the ashen ground of the underworld to this day.
+	''' */
+/* Tinkerers_Handing_Guide:
+	'''
+	So, they call themselves the Cuboids, but they’re a part of the Cubekon race, just to clarify… after looking into their data, they seem to be from another world and are somehow trapped here for some reason. My question is, with this wealth of technological advance, why haven’t they gotten out of here yet? Not even I know that. What I do know is what’s inside of them.
+
+	The Cuboids seem to be entirely mechanical in nature with a brain made out of these weird green cubes, which I’ll just call ‘qubes’ for now. These ‘qubes’ act like a power source and data storage membrane in one. How I know that is because they make branch out in a very symmetric way all over the body of these Cuboids. There’s also a lot of other machinery in here that I can only assume allows these things to move since I recently discovered that they have a consciousness, but that’s a bit complicated…
+	''' */
+/* Tripod_Nip:
+	'''
+	Post-Operation Log 448 ||
+	<Name of Cubekon Tinkerer> Mares
+						
+	I figured it would’ve been obvious, the tripods are the the most prominent predator in the wastelands. I’ve observed them behind the scenes, they always seem to go after my decoys first and make sure work that they were destroyed, and then immediately go after the substance. The drug has interesting effects on tripods that I haven’t seen in any other antibody; I found that the tripods would do one of the following actions when tripod nip was introduced: 1) rub their bodies all over it like some kind of cat, 2) dance excitedly, or 3) absorb it with some kind of appendage made of black bile and then make a run for it. I also went ahead to test the effects of the drug on rather unfortunate Defiled Cyclops [i:Origins/Defiled_Cyclops] and before it could even dispose of can, it was promptly absorbed by a tripod making a mad dash at it. It was a hilarious sight to see to the extent I broke out in laughter. Ever since that day, I’ve been too afraid to return to the wastes to do anymore testing. I'm sure if you had to chop of your leg from being side-swiped by a Defiled Tripod you were just laughing at, you'd be pretty traumatized too. And, <Name of Mechanic> really wonders why I set the darn place off limits... and specifically had to tell her not to feed the tripods no matter how adorable they are.
+	''' */
+/* Vorpal_Sword:
+	'''
+	This sword can only be used by a pure mind for He cannot corrupt. The sword is very powerful and can slice through anything for if He were to get his mitts on them, we would all be doomed.
+
+	I bestow to you, the might of a weapon that inquires the true responsibility of an individual. You mustn’t use this blade for any other reason than to slash down the Forbidden One. We are in times of need, Boy… do not let us down… I can do it sir.
+
+	Hmmph! Ah, it’s a bust! I can’t get it. It’s stuck with the ground! Being this sharp, I would’ve figured it could slide right out! This would be too dangerous for the parasite to consume!
+
+	The leak had been neglected, and so came the Riven.
+	''' */
+// NPCs, Enemies, and Bosses vv
+
+/* Cubekon_Tinkerer:
+	'''
+	""
+
+	Overview:
+		- is the mentor of the mechanic before she discovered the Cubekons where she was promptly captured by Quantux. Spent her seemingly 'forever' time inside the Cubekon Matrix, learning about everything they know and taking notes about the most important things. She became the Cubekon Tinkerer after she was released now full of ideas. resposible for ICARUS, and created it to be the final line of defense just before she was captured
+						
+	Origins:
+		- cubekon tinkerer's origins are unknown other than that she resided in the same kingdom as the Mechanic
+
+	Contributions:
+		- aiding the Terrarian, ICARUS, mech bosses (aid)
+	''' */
+/* District_Attorney:
+	'''
+	"That creature... it's seems so... distraught?"
+
+	"I mean, if you had the collective conciousness of every being warped to the Defiled, wouldn't you be so hostile?"
+
+	"I wouldn't say *every* being. The Defiled is still quite small compared to the other three evils out there."
+
+	"The Amalgamation is the oldest known being in the Defiled's possession, it has went through so many chunks that I hardly doubt it even has one memory of itself."
+
+
+	Overview:
+		- The Defiled Amalgamation is the oldest known entity in the Defiled's hold as evident with its uniquely large size. The creature is known to prevent intruders from reaching the caverns of the Defiled Wastelands.
+
+	Characteristics:
+		- The Amalgamation adopts the same desaturated, misfigured appearance like any other Defiled creature, however, its size is surely a unique characteristic that not many other anti-bodies can share. It also bears a prominent avian physiology, moreso than Defiled Phantoms. Behaviorally, the Amalgamation is very volatile and sporadic. It also can be quite territorial and regularly guards the entrances to the Defiled Caverns on the surface.
+						
+	Origins:
+		- The Defiled Amalgamation's original form is not known, but it could likely be assumed that it was once a bird based on its physiology. Aside from that, it went through a the same process like any other creature being assimilated to the Defiled will that being "refactoring defiledization”.
+
+	Speculation:
+		- It is known that the Defiled Amalgamation contains the memories of many different beings assimilated to the Defiled. It could likely be assumed that the Amalgamation is seen as a higher entity than the other creatures that wander the wastes, but a heirarchy has not been confirmed to be present.
+	''' */
+/* Zoologist:
+	'''
+	"Well, long ago my dad was this kinda wizard who knew Severus, and I remember he was really upset about how evil he became so he took it upon himself to end the chaos... but, he disappeared. I've been looking for him ever since I was a little girl. I wish I could help out with Severus, but I am just not cut out for that kinda thing. Especially since he could just curse me more."
+
+	Overview:
+		- 
+						
+	Origins:
+		- golfer and Zoologist are related. Her parents are name of wizard related to severus and the mother is unknown. The wizard loved their mother so much, but something bad happened.
+
+	Contributions:
+		- aiding the Terrarian
+	''' */
+// Non-Physical Lores vv
+
+/* The_Defiled:
+	'''
+	"This, the entire thing is a living entity. The creatures we saw during our expedition were merely its immune system reacting to our presence."
+						
+	"Wait what? That thing is a living creature?! No wonder its so unlike the other evils!"
+
+	"Not just that, <Name of Mechanic>, my readings also indicate that it doesn’t even originate from Terraria either."
+
+	"It's an alien like those Martians?"
+
+	"Mhm, although it seems to have come from Hell unlike the other three evils which were directly tied into the splitting of Cthulhu’s lower half."
+
+	"Huh, what else did you gather?"
+
+	Overview:
+		- 
+
+	Characteristics:
+		- defiled is quite a hot environment due to the concentration of the atmosphere caused by a unique chemical reaction with black bile. This allows black bile to consistently be in its gaseous form even when the temperature drops to barely acceptable limits. the defiled is very desaturated of color from this. the geography also seems to shift consistently and appears similar to the disfigured entities that roam the wastelands. Giant spikes appear all over the surface as if the defiled is trying to protect itself from an entity large enough to consume it
+	''' */
+// The_Riven: - the riven is a hot and damp environment due to the chemical reaction of alkahest digesting the world with there being waste heat
+// The_Terrarian: '''"The Terrarian, its voice. A godlike entity so close yet so far to the inhabitants of Terraria. This one lives without purpose, but it would be foolish to not address it. They were created directly from the world by the Order of Dryads before they were nearly left extinct from Cthulhu’s hand. The Terrarian is different, they possess many abilities that make them the ultimate life form. The ability to respawn is one such ability that many creatures cannot recreate besides the most powerful."'''

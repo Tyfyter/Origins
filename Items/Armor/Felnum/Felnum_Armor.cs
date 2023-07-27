@@ -3,14 +3,18 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Origins.Items.Materials;
+using Microsoft.Xna.Framework;
+using System;
 
 namespace Origins.Items.Armor.Felnum {
 	[AutoloadEquip(EquipType.Head)]
 	public class Felnum_Helmet : ModItem {
+		public static short glowMask = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Felnum Helmet");
 			// Tooltip.SetDefault("4% increased damage");
 			Item.ResearchUnlockCount = 1;
+			glowMask = Origins.AddGlowMask("Armor/Felnum/Felnum_Glow_Head");
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
@@ -19,6 +23,11 @@ namespace Origins.Items.Armor.Felnum {
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Generic) += 0.04f;
+		}
+		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
+			glowMask = Felnum_Helmet.glowMask;
+			int a = (int)Math.Max(Math.Min((drawPlayer.GetModPlayer<OriginPlayer>().felnumShock * 255) / drawPlayer.statLifeMax2, 255), 1);
+			glowMaskColor = new Color(a, a, a, a);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Felnum_Breastplate>() && legs.type == ModContent.ItemType<Felnum_Greaves>();
@@ -53,10 +62,12 @@ namespace Origins.Items.Armor.Felnum {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Felnum_Breastplate : ModItem {
+		public static short glowMask = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Felnum Breastplate");
 			// Tooltip.SetDefault("2% increased damage\n5% increased movement speed");
 			Item.ResearchUnlockCount = 1;
+			glowMask = Origins.AddGlowMask("Armor/Felnum/Felnum_Glow_Body");
 		}
 		public override void SetDefaults() {
 			Item.defense = 6;
@@ -67,6 +78,16 @@ namespace Origins.Items.Armor.Felnum {
 			player.GetDamage(DamageClass.Generic) += 0.02f;
 			player.moveSpeed += 0.05f;
 		}
+		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
+			glowMask = Felnum_Breastplate.glowMask;
+			int a = (int)Math.Max(Math.Min((drawPlayer.GetModPlayer<OriginPlayer>().felnumShock * 255) / drawPlayer.statLifeMax2, 255), 1);
+			glowMaskColor = new Color(a, a, a, a);
+		}
+		public override void ArmorArmGlowMask(Player drawPlayer, float shadow, ref int glowMask, ref Color color) {
+			glowMask = Felnum_Breastplate.glowMask;
+			int a = (int)Math.Max(Math.Min((drawPlayer.GetModPlayer<OriginPlayer>().felnumShock * 255) / drawPlayer.statLifeMax2, 255), 1);
+			color = new Color(a, a, a, a);
+		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 25);
@@ -76,10 +97,12 @@ namespace Origins.Items.Armor.Felnum {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Felnum_Greaves : ModItem {
+		public static short glowMask = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Felnum Greaves");
 			// Tooltip.SetDefault("5% increased movement speed");
 			Item.ResearchUnlockCount = 1;
+			glowMask = Origins.AddGlowMask("Armor/Felnum/Felnum_Glow_Legs");
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
@@ -88,6 +111,11 @@ namespace Origins.Items.Armor.Felnum {
 		}
 		public override void UpdateEquip(Player player) {
 			player.moveSpeed += 0.05f;
+		}
+		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
+			glowMask = Felnum_Greaves.glowMask;
+			int a = (int)Math.Max(Math.Min((drawPlayer.GetModPlayer<OriginPlayer>().felnumShock * 255) / drawPlayer.statLifeMax2, 255), 1);
+			glowMaskColor = new Color(a, a, a, a);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

@@ -75,8 +75,26 @@ namespace Origins.Tiles.Other {
 			}
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 			originPlayer.mojoFlaskCount = originPlayer.mojoFlaskCountMax;
-			if (originPlayer.CorruptionAssimilation > 0 || originPlayer.CrimsonAssimilation > 0 || originPlayer.DefiledAssimilation > 0 || originPlayer.RivenAssimilation > 0) {
-				
+			float assimilationTotal = originPlayer.CorruptionAssimilation + originPlayer.CrimsonAssimilation + originPlayer.DefiledAssimilation + originPlayer.RivenAssimilation;
+			if (assimilationTotal > 0) {
+				for (int k = 0; k < 6 + 3 * assimilationTotal; k++) {
+					Vector2 pos = new Vector2(i + Main.rand.NextFloat(1), j + Main.rand.NextFloat(1)) * 16;
+					Vector2 dir = ((Main.LocalPlayer.MountedCenter - pos) / 24).WithMaxLength(8);
+					Dust dust = Dust.NewDustDirect(pos, 0, 0, DustID.Phantasmal, dir.X, dir.Y);
+					dust.velocity += dir;
+					dust.noGravity = true;
+					dust.fadeIn = 1.5f;
+					dust.color = Color.Blue;
+				}
+			}
+			for (int k = 0; k < 2; k++) {
+				Vector2 pos = new Vector2(i + Main.rand.NextFloat(1), j + Main.rand.NextFloat(1)) * 16;
+				Vector2 dir = ((Main.LocalPlayer.MountedCenter - pos) / 24).WithMaxLength(8);
+				Dust dust = Dust.NewDustDirect(pos, 0, 0, DustID.Phantasmal, dir.X, dir.Y);
+				dust.velocity += dir;
+				dust.noGravity = true;
+				dust.fadeIn = 1.5f;
+				dust.color = Color.Blue;
 			}
 			originPlayer.CorruptionAssimilation = 0;
 			originPlayer.CrimsonAssimilation = 0;

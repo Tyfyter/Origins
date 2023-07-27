@@ -152,9 +152,14 @@ namespace Origins {
 		public bool messyLeech = false;
 		public bool magmaLeech = false;
 		public bool noU = false;
+		public const float donorWristbandMult = 0.625f;
 		public bool donorWristband = false;
+		public bool oldDonorWristband = false;
 		public HashSet<Point> preHitBuffs;
+		public int lastHitEnemy;
+		public const float plasmaPhialMult = 0.5f;
 		public bool plasmaPhial = false;
+		public bool oldPlasmaPhial = false;
 		public bool turboReel = false;
 		public bool turboReel2 = false;
 		public bool trapCharm = false;
@@ -404,10 +409,17 @@ namespace Origins {
 			messyLeech = false;
 			magmaLeech = false;
 			noU = false;
-			plasmaPhial = false;
+
 			turboReel = false;
 			turboReel2 = false;
+
+			Player.ApplyBuffTimeAccessory(oldPlasmaPhial, plasmaPhial, plasmaPhialMult, Main.debuff);
+			oldPlasmaPhial = plasmaPhial;
+			plasmaPhial = false;
+			Player.ApplyBuffTimeAccessory(oldDonorWristband, donorWristband, donorWristbandMult, Main.debuff);
+			oldDonorWristband = donorWristband;
 			donorWristband = false;
+
 			trapCharm = false;
 			dangerBarrel = false;
 			pincushion = false;
@@ -552,6 +564,7 @@ namespace Origins {
 				if (asylumWhistle) {
 					if (Player.MinionAttackTargetNPC == -1) {
 						Player.MinionAttackTargetNPC = asylumWhistleTarget;
+						asylumWhistleTarget = -1;
 					} else {
 						asylumWhistleTarget = lastMinionAttackTarget;
 					}
@@ -1108,28 +1121,31 @@ namespace Origins {
 					break;
 
 					case WaterStyleID.Corrupt:
-					waterFactor = new Vector3(0.94f, 0.85f, 1.01f);
+					waterFactor = new Vector3(0.94f, 0.85f, 1.01f) * 0.91f;
 					break;
 					case WaterStyleID.Jungle:
-					waterFactor = new Vector3(0.84f, 0.95f, 1.015f);
+					waterFactor = new Vector3(0.84f, 0.95f, 1.015f) * 0.91f;
 					break;
 					case WaterStyleID.Hallow:
-					waterFactor = new Vector3(0.90f, 0.86f, 1.01f);
+					waterFactor = new Vector3(0.90f, 0.86f, 1.01f) * 0.91f;
 					break;
 					case WaterStyleID.Snow:
-					waterFactor = new Vector3(0.64f, 0.99f, 1.01f);
+					waterFactor = new Vector3(0.64f, 0.99f, 1.01f) * 0.91f;
 					break;
 					case WaterStyleID.Desert:
-					waterFactor = new Vector3(0.93f, 0.83f, 0.98f);
+					waterFactor = new Vector3(0.93f, 0.83f, 0.98f) * 0.91f;
 					break;
 					case WaterStyleID.Bloodmoon:
-					waterFactor = new Vector3(1f, 0.88f, 0.84f);
+					waterFactor = new Vector3(1f, 0.88f, 0.84f) * 0.91f;
 					break;
 					case WaterStyleID.Crimson:
-					waterFactor = new Vector3(0.83f, 1f, 1f);
+					waterFactor = new Vector3(0.83f, 1f, 1f) * 0.91f;
 					break;
 					case WaterStyleID.UndergroundDesert:
-					waterFactor = new Vector3(0.95f, 0.98f, 0.85f);
+					waterFactor = new Vector3(0.95f, 0.98f, 0.85f) * 0.91f;
+					break;
+					case 13://???
+					waterFactor = new Vector3(0.9f, 1f, 1.02f) * 0.91f;
 					break;
 
 					case WaterStyleID.Honey:
@@ -1146,7 +1162,6 @@ namespace Origins {
 				sunFactor += DoTileCalcs((int)Player.Top.X / 16, top, sunLight, waterFactor).Length() / 1.56f;
 				sunFactor += DoTileCalcs((int)(Player.TopRight.X - 1) / 16, top, sunLight, waterFactor).Length() / 1.56f;
 
-				Player.chatOverhead.NewMessage(sunFactor + "", 5);
 				Player.manaRegenCount += (int)(sunFactor * 12);
 			}
 		}
@@ -1685,7 +1700,11 @@ namespace Origins {
 			if (!Player.noKnockback && hurtInfo.Damage != 0) {
 				Player.velocity.X *= MeleeCollisionNPCData.knockbackMult;
 			}
-			if (preHitBuffs is not null)
+			MeleeCollisionNPCData.knockbackMult = 1f;
+		}
+		public void PostHitByNPC() {
+			if (preHitBuffs is not null && lastHitEnemy >= 0) {
+				NPC npc = Main.npc[lastHitEnemy];
 				for (int i = 0; i < Player.MaxBuffs; i++) {
 					if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
 						int buffType = Player.buffType[i];
@@ -1696,35 +1715,10 @@ namespace Origins {
 							npc.buffImmune[buffType] = immune;
 
 							Player.DelBuff(i--);
-						} else if (plasmaPhial) {
-							if (Main.debuff[buffType]) {
-								Player.buffTime[i] /= 2;
-							}
-						} else if (donorWristband) {
-							if (Main.debuff[buffType]) {
-								Player.buffTime[i] -= (int)(Player.buffTime[i] * 0.375f);
-							}
 						}
 					}
 				}
-			MeleeCollisionNPCData.knockbackMult = 1f;
-		}
-		public override void OnHitByProjectile(Projectile proj, Player.HurtInfo hurtInfo) {
-			if (preHitBuffs is not null)
-				for (int i = 0; i < Player.MaxBuffs; i++) {
-					if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
-						int buffType = Player.buffType[i];
-						if (plasmaPhial) {
-							if (Main.debuff[buffType]) {
-								Player.buffTime[i] /= 2;
-							}
-						} else if (donorWristband) {
-							if (Main.debuff[buffType]) {
-								Player.buffTime[i] -= (int)(Player.buffTime[i] * 0.375f);
-							}
-						}
-					}
-				}
+			}
 		}
 		/// <param name="target">the potential target</param>
 		/// <param name="targetPriorityMultiplier"></param>
@@ -1946,6 +1940,7 @@ namespace Origins {
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				preHitBuffs.Add(new Point(Player.buffType[i], Player.buffTime[i]));
 			}
+			lastHitEnemy = info.DamageSource.SourceNPCIndex;
 			if (thornsVisualProjType >= 0) {
 				Projectile.NewProjectile(
 					Player.GetSource_Misc("thorns_visual"),

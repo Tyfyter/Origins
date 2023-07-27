@@ -20,46 +20,35 @@ namespace Origins.Layers {
 		public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.FaceAcc, PlayerDrawLayers.MountFront);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 			Player drawPlayer = drawInfo.drawPlayer;
-			Vector2 Position;
-			Rectangle? Frame;
+			Vector2 Position = default;
+			Rectangle Frame;
 			Texture2D Texture;
 			DrawData item;
 			int a = (int)Math.Max(Math.Min((drawPlayer.GetModPlayer<OriginPlayer>().felnumShock * 255) / drawPlayer.statLifeMax2, 255), 1);
-			if (drawPlayer.head == Origins.FelnumHeadArmorID) {
-				Position = new Vector2(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f, drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + drawInfo.headVect;
-				Frame = new Rectangle?(drawPlayer.bodyFrame);
-				Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Felnum_Glow_Head").Value;
-				item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.headRotation, drawInfo.headVect, 1f, drawInfo.playerEffect, 0);
-				item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
-				drawInfo.DrawDataCache.Add(item);
+			if (drawPlayer.head == Origins.FelnumHeadArmorID || drawInfo.fullHair || drawInfo.hatHair || drawPlayer.head == ArmorIDs.Head.FamiliarWig) {
+				Vector2 bodyOffset = new Vector2(-drawInfo.drawPlayer.bodyFrame.Width / 2 + drawInfo.drawPlayer.width / 2, drawInfo.drawPlayer.height - drawInfo.drawPlayer.bodyFrame.Height + 4);
+				Position = (drawInfo.Position - Main.screenPosition + bodyOffset).Floor() + drawInfo.drawPlayer.headPosition + drawInfo.headVect;
+				Frame = drawPlayer.bodyFrame;
+
 				Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Felnum_Glow_Eye").Value;
 				item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.headRotation, drawInfo.headVect, 1f, drawInfo.playerEffect, 0);
-				item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
-				drawInfo.DrawDataCache.Add(item);
-			} else if (drawInfo.fullHair || drawInfo.hatHair || drawPlayer.head == ArmorIDs.Head.FamiliarWig) {
-				Position = new Vector2(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f, drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f) + drawPlayer.headPosition + drawInfo.headVect;
-				Frame = new Rectangle?(drawPlayer.bodyFrame);
-				Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Felnum_Glow_Eye").Value;
-				item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.headRotation, drawInfo.headVect, 1f, drawInfo.playerEffect, 0);
-				item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[0].type);
+				item.shader = drawInfo.cHead;
 				drawInfo.DrawDataCache.Add(item);
 			}
-			if (drawPlayer.body == Origins.FelnumBodyArmorID) {
-				Position = new Vector2(((int)(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f)), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + drawInfo.bodyVect;
-				Frame = new Rectangle?(drawPlayer.bodyFrame);
+			if (drawPlayer.body == Origins.FelnumBodyArmorID) {// since the tML support for torso glowmasks doesn't seem to work
+				Frame = drawInfo.compTorsoFrame;
+				int armorAdjust = drawInfo.armorAdjust;
+				Frame.X += armorAdjust;
+				Frame.Width -= armorAdjust;
+				Position = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - (drawInfo.drawPlayer.bodyFrame.Width / 2) + (drawInfo.drawPlayer.width / 2)) + armorAdjust, (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawInfo.drawPlayer.height - drawInfo.drawPlayer.bodyFrame.Height + 4f)) + drawInfo.drawPlayer.bodyPosition + new Vector2(drawInfo.drawPlayer.bodyFrame.Width / 2, drawInfo.drawPlayer.bodyFrame.Height / 2);
 				Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Felnum_Glow_Body").Value;
-				item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
-				item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
+				item = new DrawData(Texture, Position, drawInfo.compTorsoFrame, new Color(a, a, a, a), drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
+				item.shader = drawInfo.cBody;
 				drawInfo.DrawDataCache.Add(item);
 			}
-			if (drawPlayer.legs == Origins.FelnumLegsArmorID) {
-				Position = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.legPosition + drawInfo.legVect;
-				Frame = new Rectangle?(drawPlayer.legFrame);
-				Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Felnum_Glow_Legs").Value;
-				item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.legRotation, drawInfo.legVect, 1f, drawInfo.playerEffect, 0);
-				item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[2].type);
-				drawInfo.DrawDataCache.Add(item);
-			}
+			//Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Felnum_Glow_Body").Value;
+			//item = new DrawData(Texture, Position, drawInfo.compTorsoFrame, new Color(a, a, a, a), drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
+			//drawInfo.DrawDataCache.Add(item);
 		}
 	}
 }

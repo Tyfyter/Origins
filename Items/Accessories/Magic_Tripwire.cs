@@ -5,8 +5,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Magic_Tripwire : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Magic Tripwire");
-			// Tooltip.SetDefault("Improved mine blast radius and detection proximity\n'Uses Bluetooth'");
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {

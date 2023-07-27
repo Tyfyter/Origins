@@ -1244,6 +1244,9 @@ namespace Origins {
 			return soundStyle;
 		}
 		#endregion sound
+		#region combat mechanics
+
+		#endregion
 		public static StatModifier Scale(this StatModifier statModifier, float additive = 1f, float multiplicative = 1f, float flat = 1f, float @base = 1f) {
 			return new StatModifier(
 				(statModifier.Additive - 1) * additive + 1,
@@ -1269,6 +1272,43 @@ namespace Origins {
 			return new StatModifier(1f / statModifier.Multiplicative, 1f / statModifier.Additive, -statModifier.Base, -statModifier.Flat);
 		}
 		public static Vector2 GetKnockbackFromHit(this NPC.HitInfo hit, float xMult = 1, float yMult = -0.1f) => new Vector2(hit.Knockback * hit.HitDirection, -0.1f * hit.Knockback);
+		public static void ApplyBuffTimeModifier(this Player player, float mult, bool[] set, bool invert = false) {
+			for (int i = 0; i < Player.MaxBuffs; i++) {
+				if (set[player.buffType[i]]) {
+					if (invert) {
+						player.buffTime[i] = (int)(player.buffTime[i] / mult);
+					} else {
+						player.buffTime[i] = (int)(player.buffTime[i] * mult);
+					}
+				}
+			}
+		}
+		public static void ApplyBuffTimeModifier(this Player player, float mult, int type, bool invert = false) {
+			for (int i = 0; i < Player.MaxBuffs; i++) {
+				if (player.buffType[i] == type) {
+					if (invert) {
+						player.buffTime[i] = (int)(player.buffTime[i] / mult);
+					} else {
+						player.buffTime[i] = (int)(player.buffTime[i] * mult);
+					}
+					break;
+				}
+			}
+		}
+		public static void ApplyBuffTimeAccessory(this Player player, bool old, bool current, float mult, bool[] set) {
+			if (current && !old) {
+				player.ApplyBuffTimeModifier(mult, set);
+			} else if (!current && old) {
+				player.ApplyBuffTimeModifier(mult, set, true);
+			}
+		}
+		public static void ApplyBuffTimeAccessory(this Player player, bool old, bool current, float mult, int type) {
+			if (current && !old) {
+				player.ApplyBuffTimeModifier(mult, type);
+			} else if (!current && old) {
+				player.ApplyBuffTimeModifier(mult, type, true);
+			}
+		}
 		#region spritebatch
 		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();

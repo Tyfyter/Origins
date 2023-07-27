@@ -90,6 +90,9 @@ namespace Origins.Items.Weapons.Magic {
 			}
 			Split();
 		}
+		public override Color? GetAlpha(Color lightColor) {
+			return new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f);
+		}
 		void Split() {
 			if (Type != Slashswarm_P.ID) return;
 			for (int i = 0; i < 2; i++) {

@@ -12,7 +12,7 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WrathPotion);
-			Item.buffTime = 60;
+			Item.buffTime = 6;
 			Item.value = Item.sellPrice(silver: 2);
 		}
 		public override void AddRecipes() {
@@ -24,12 +24,13 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override bool? UseItem(Player player) {
 			//debuff removal
-			for (int i = 0; i < BuffLoader.BuffCount; i++) {
-				if (Main.debuff[i] && !BuffID.Sets.NurseCannotRemoveDebuff[i]) {
-					player.buffImmune[i] = true;
+			for (int i = 0; i < player.buffType.Length; i++) {
+				int buffType = player.buffType[i];
+				if (buffType == 0) break;
+				if (Main.debuff[i] && (!BuffID.Sets.NurseCannotRemoveDebuff[i] || buffType == BuffID.Suffocation)) {
+					player.DelBuff(i--);
 				}
 			}
-			player.buffImmune[BuffID.Suffocation] = true;
 			return null;
 		}
 	}

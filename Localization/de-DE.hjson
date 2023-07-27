@@ -307,7 +307,11 @@ Mods: {
 
 			ACME_Crate: {
 				// DisplayName: ACME Crate
-				// Tooltip: Greatly increased explosive blast radius
+				/* Tooltip:
+					'''
+					Greatly increased explosive blast radius
+					Explosives will detonate near enemies
+					''' */
 			}
 
 			Advanced_Imaging: {
@@ -677,8 +681,8 @@ Mods: {
 				// DisplayName: Hazard Charm
 				/* Tooltip:
 					'''
-					{$Mods.Origins.ItemTooltip.Bomb_Charm}
-					{$Mods.Origins.ItemTooltip.Trap_Charm}
+					{$Mods.Origins.Items.Bomb_Charm.Tooltip}
+					{$Mods.Origins.Items.Trap_Charm.Tooltip}
 					{$ItemTooltip.LavaCharm}
 					''' */
 			}
@@ -766,7 +770,7 @@ Mods: {
 				// DisplayName: Magic Tripwire
 				/* Tooltip:
 					'''
-					Improved mine blast radius and detection proximity
+					Explosives will detonate near enemies
 					'Uses Bluetooth'
 					''' */
 			}

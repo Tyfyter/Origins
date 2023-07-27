@@ -75,6 +75,7 @@ namespace Origins.UI {
 			data.Draw(spriteBatch);
 			spriteBatch.Restart(oldstate);
 			if (Quest_Registry.Quests.Any(q => q.HasNotification)) {
+				//TODO: use Terraria/UI/UI_quickicon1
 				float scaleValue = MathHelper.Lerp(0.5f, 1.15f, Main.mouseTextColor / 255f);
 				ChatManager.DrawColorCodedStringWithShadow(
 					spriteBatch,
