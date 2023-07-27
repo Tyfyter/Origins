@@ -47,14 +47,7 @@ namespace Origins.Layers {
 			if (drawPlayer.body == Origins.FelnumBodyArmorID) {
 				Position = new Vector2(((int)(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f)), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + drawInfo.bodyVect;
 				Frame = new Rectangle?(drawPlayer.bodyFrame);
-				Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Felnum_Glow_Arms").Value;
-				item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
-				item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
-				drawInfo.DrawDataCache.Add(item);
-
-				Position = new Vector2(((int)(drawInfo.Position.X - Main.screenPosition.X - drawPlayer.bodyFrame.Width / 2f + drawPlayer.width / 2f)), (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawPlayer.height - drawPlayer.bodyFrame.Height + 4f)) + drawPlayer.bodyPosition + drawInfo.bodyVect;
-				Frame = new Rectangle?(drawPlayer.bodyFrame);
-				Texture = ModContent.Request<Texture2D>(drawPlayer.Male ? "Origins/Items/Armor/Felnum/Felnum_Glow_Body" : "Origins/Items/Armor/Felnum/Felnum_Glow_FemaleBody").Value;
+				Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Felnum_Glow_Body").Value;
 				item = new DrawData(Texture, Position, Frame, new Color(a, a, a, a), drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
 				item.shader = GameShaders.Armor.GetShaderIdFromItemId(drawPlayer.dye[1].type);
 				drawInfo.DrawDataCache.Add(item);

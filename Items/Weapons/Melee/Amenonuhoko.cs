@@ -12,6 +12,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Amenonuhoko");
 			Item.ResearchUnlockCount = 1;
+			ItemID.Sets.Spears[Item.type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gungnir);
@@ -48,9 +49,10 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
-			Projectile.timeLeft = 24;
+			Projectile.timeLeft = 3600;
 			Projectile.width = 32;
 			Projectile.height = 32;
+			Projectile.aiStyle = 0;
 		}
 		public float movementFactor {
 			get => Projectile.ai[0];
@@ -67,15 +69,17 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.position.X = ownerMountedCenter.X - (Projectile.width / 2);
 			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (!projOwner.frozen) {
-				if (movementFactor == 0f) {
+				if (movementFactor == 1f) {
 					movementFactor = 1.5f;
-					if (Projectile.timeLeft == 24) Projectile.timeLeft = projOwner.itemAnimationMax - 1;
 					Projectile.netUpdate = true;
 				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2) {
 					movementFactor -= 1.1f;
 				} else if (projOwner.itemAnimation > projOwner.itemAnimationMax / 2 + 1) {
 					movementFactor += 1.3f;
+				}
+				if (projOwner.itemAnimation == 14 || Projectile.timeLeft == 0) {
+
 				}
 			}
 			Projectile.position += Projectile.velocity * movementFactor;

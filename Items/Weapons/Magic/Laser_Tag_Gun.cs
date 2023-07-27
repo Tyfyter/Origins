@@ -95,7 +95,7 @@ namespace Origins.Items.Weapons.Magic {
 			} catch (Exception) { }
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.CritDamage *= 123;
+			modifiers.CritDamage *= 123 * 0.5f;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			target.AddBuff(BuffID.Cursed, 600);

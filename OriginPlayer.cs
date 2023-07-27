@@ -1076,6 +1076,9 @@ namespace Origins {
 								sunLight -= new Vector3(0.0025f, 0.0025f, 0f);
 								break;
 							}
+						} else if (y > Main.worldSurface) {
+							sunLight *= new Vector3(0.999f, 0.999f, 0.999f);
+							sunLight -= new Vector3(0.001f, 0.001f, 0.001f);
 						}
 						if (sunLight.X < 0) {
 							sunLight.X = 0;
@@ -1134,7 +1137,7 @@ namespace Origins {
 					break;
 
 					default:
-					LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle).LightColorMultiplier(ref waterFactor.X, ref waterFactor.Y, ref waterFactor.Z);
+					if (LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle) is ModWaterStyle waterStyle) waterStyle.LightColorMultiplier(ref waterFactor.X, ref waterFactor.Y, ref waterFactor.Z);
 					break;
 				}
 				waterFactor /= 1.015f;
@@ -1740,10 +1743,9 @@ namespace Origins {
 			return foundTarget;
 		}
 		#endregion
-		static bool reducedTo0Dodge = false;
+		internal static int hitOriginalDamage = 0;
 		public override bool FreeDodge(Player.HurtInfo info) {
-			if (reducedTo0Dodge) {
-				reducedTo0Dodge = false;
+			if (hitOriginalDamage <= 0) {
 				return false;
 			}
 			if (Player.whoAmI == Main.myPlayer && !(protomindItem?.IsAir ?? true)) {

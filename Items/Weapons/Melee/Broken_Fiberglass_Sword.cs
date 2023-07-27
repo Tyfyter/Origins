@@ -39,9 +39,10 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
-			Projectile.timeLeft = 14;
+			Projectile.timeLeft = 3600;
 			Projectile.width = 20;
 			Projectile.height = 20;
+			Projectile.aiStyle = 0;
 		}
 		public float movementFactor {
 			get => Projectile.ai[0];
@@ -59,7 +60,6 @@ namespace Origins.Items.Weapons.Melee {
 			if (!projOwner.frozen) {
 				if (movementFactor == 0f) {
 					movementFactor = 4.7f;
-					if (Projectile.timeLeft == 26) Projectile.timeLeft = projOwner.itemAnimationMax;
 					Projectile.netUpdate = true;
 				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 7) {
@@ -73,9 +73,7 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.Kill();
 			}
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.ToRadians(135f);
-			if (Projectile.spriteDirection == 1) {
-				Projectile.rotation -= MathHelper.Pi / 2f;
-			}
+			Projectile.rotation -= MathHelper.Pi / 2f;
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Broken_Fiberglass_Sword").Value, (Projectile.Center - Projectile.velocity * 2) - Main.screenPosition, new Rectangle(0, 0, 24, 26), lightColor, Projectile.rotation, new Vector2(12, 13), 1f, SpriteEffects.None, 0);

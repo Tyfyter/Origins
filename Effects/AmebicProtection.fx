@@ -40,7 +40,7 @@ float4 AmebicProtection(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) 
 	if (IsInBounds(coords + realOffset)) {
 		alpha = tex2D(uImage0, coords + realOffset).a > 0 ? 0 : tex2D(uImage0, coords).a;
 	} else {
-		alpha = tex2D(uImage0, coords).a;
+		alpha = 0;
 	}
 
 	float2 spriteCoords = float2(round(coords.x), round(coords.y)) * uImageSize0;

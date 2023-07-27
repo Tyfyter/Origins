@@ -270,7 +270,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 		}
 
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Woodsprite_Lifesteal>(), damageDone / 3, 0, Projectile.owner);
+			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Woodsprite_Lifesteal>(), Math.Max(damageDone / 3, 1), 0, Projectile.owner);
 		}
 		public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac) {
 			width -= 2;
@@ -287,8 +287,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			Player player = Main.player[Projectile.owner];
 			if (player.dead || !player.active) Projectile.Kill();
 			if (player.Hitbox.Contains(Projectile.Center.ToPoint())) {
-				player.statLife += Projectile.damage;
-				player.HealEffect(Projectile.damage);
+				player.Heal(Projectile.damage);
 				Projectile.Kill();
 				return;
 			}

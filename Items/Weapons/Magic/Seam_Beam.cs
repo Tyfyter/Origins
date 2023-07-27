@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.glowMask = glowmask;
 		}
 		public override bool AltFunctionUse(Player player) {
-			return true;
+			return false;
 		}
 		public override bool CanUseItem(Player player) {
 			return true;

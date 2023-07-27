@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.dimStarlight = true;
 			player.manaFlower = true;
-			float light = 0.2f + (originPlayer.dimStarlightCooldown / 1000f);
+			player.manaCost *= 0.92f;
 			Lighting.AddLight(player.Center, 0.3f, 0.3f, 0f);
 		}
 		public override void AddRecipes() {

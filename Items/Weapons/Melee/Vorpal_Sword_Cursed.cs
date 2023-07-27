@@ -173,7 +173,8 @@ namespace Origins.Items.Weapons.Melee {
 					switchbackSlot = -1;
 				}
 			}
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, ai0: player.itemAnimation == player.itemTime ? 1 : 0, ai1: player.itemAnimation == player.itemTime ? -1 : 1);
+			bool firstSwing = player.ItemUsesThisAnimation == 1;
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, ai0: firstSwing ? 0 : 1, ai1: firstSwing ? 1 : -1);
 			return false;
 		}
 		public override void UpdateInventory(Player player) {

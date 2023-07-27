@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override bool ConsumeItem(Player player) => false;
 		public override bool? CanBeChosenAsAmmo(Item weapon, Player player) {
-			return player.CheckMana(Item, pay: false);
+			return weapon.useAmmo == Item.ammo && player.CheckMana(Item, pay: false);
 		}
 		public override bool CanBeConsumedAsAmmo(Item weapon, Player player) {
 			player.CheckMana(Item, pay: true);

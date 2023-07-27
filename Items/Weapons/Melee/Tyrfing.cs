@@ -104,6 +104,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
+				Item.noUseGraphic = true;
 				Item.useStyle = ItemUseStyleID.Shoot;
 				if (player.controlUseTile && (charge >= 15 || frame == 0 || player.CheckMana(7, true))) {
 					player.itemTime = 0;
@@ -129,7 +130,7 @@ namespace Origins.Items.Weapons.Melee {
 						SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(0.75f), position);
 					}
 				}
-			} else {
+			} else if (frame != 5) {
 				SoundEngine.PlaySound(SoundID.Item122.WithPitch(1).WithVolume(0.25f), position);
 				int prev = -1;
 				int curr = -1;
@@ -280,6 +281,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.timeLeft = 16;
 			Projectile.width = 32;
 			Projectile.height = 32;
+			Projectile.aiStyle = 0;
 		}
 		public float movementFactor {
 			get => Projectile.ai[0];

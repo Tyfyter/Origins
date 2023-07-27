@@ -90,8 +90,8 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.hide = true;
 		}
 		public override void AI() {
-			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.Clentaminator_Blue, 0, 0, 65, new Color(240, 50, 0), 0.9f);
-			dust.velocity *= 1.8f;
+			Dust dust = Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.IceTorch, 0, 0, 65, new Color(240, 50, 0), 1.5f);
+			dust.velocity *= 1.2f;
 			const float sizeValue = 10;
 			if (Projectile.ai[0] < sizeValue) {
 				Projectile.ai[0] += 1.25f;

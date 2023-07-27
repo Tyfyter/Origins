@@ -20,6 +20,7 @@ namespace Origins.Projectiles.Weapons {
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.hide = true;
 			Projectile.rotation = Main.rand.NextFloatDirection();
+			Projectile.tileCollide = false;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_Parent parentSource && parentSource.Entity is Projectile parentProj) {
@@ -35,8 +36,7 @@ namespace Origins.Projectiles.Weapons {
 		public override void AI() {
 			if (Projectile.ai[0] > 0) {
 				Projectile.ai[0]--;
-				int[] immune = Projectile.localNPCImmunity.ToArray();
-				Projectile proj = Projectile.NewProjectileDirect(
+				Projectile.NewProjectileDirect(
 					Projectile.GetSource_FromThis(),
 					Projectile.Center,
 					(Vector2)new PolarVec2(Main.rand.NextFloat(8, 16), Projectile.ai[1]++),
@@ -46,13 +46,6 @@ namespace Origins.Projectiles.Weapons {
 					Projectile.owner,
 					ai1: Projectile.whoAmI
 				);
-				for (int i = 0; i < 200; i++) { // for some reason spawning the spikes 
-					if (immune[i] != Projectile.localNPCImmunity[i]) {
-						Projectile.localNPCImmunity[i] = immune[i];
-					}
-				}
-				proj.localNPCImmunity = Projectile.localNPCImmunity;
-				//localNPCImmunity is never overwritten in vanilla, and since it's an array I can just do this to permanently link the cooldowns of two projectiles
 			}
 		}
 	}
@@ -72,7 +65,8 @@ namespace Origins.Projectiles.Weapons {
 			Projectile.aiStyle = 0;
 			Projectile.penetrate = -1;
 			Projectile.tileCollide = false;
-			Projectile.usesLocalNPCImmunity = false;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 0;
 			Projectile.hide = true;
 		}
 		public override void OnSpawn(IEntitySource source) {
@@ -84,6 +78,7 @@ namespace Origins.Projectiles.Weapons {
 			}
 			realPosition = Projectile.Center;
 		}
+		public Projectile ParentProjectile => Main.projectile[(int)Projectile.ai[1]];
 		public float movementFactor {
 			get => Projectile.ai[0];
 			set => Projectile.ai[0] = value;
@@ -101,13 +96,10 @@ namespace Origins.Projectiles.Weapons {
 			Projectile.position += Projectile.velocity * movementFactor;
 			Projectile.rotation = Projectile.velocity.ToRotation();
 			Projectile.rotation += MathHelper.PiOver2;
-			Main.projectile[(int)Projectile.ai[1]].timeLeft = 7;
+			ParentProjectile.timeLeft = 7;
 		}
 		public override bool? CanHitNPC(NPC target) {
-			if (target.Hitbox.Intersects(Projectile.Hitbox)) {
-
-			}
-			if (Projectile.localNPCImmunity[target.whoAmI] == 0) {
+			if (ParentProjectile.localNPCImmunity[target.whoAmI] == 0) {
 				return null;
 			}
 			return false;
@@ -116,8 +108,7 @@ namespace Origins.Projectiles.Weapons {
 			behindNPCsAndTiles.Add(index);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Projectile.localNPCImmunity[target.whoAmI] = 35 * 7;
-			target.immune[Projectile.owner] = 0;
+			ParentProjectile.localNPCImmunity[target.whoAmI] = -1;
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			float totalLength = Projectile.velocity.Length() * movementFactor;

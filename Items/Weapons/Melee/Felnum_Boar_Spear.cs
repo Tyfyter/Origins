@@ -50,9 +50,10 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
-			Projectile.timeLeft = 24;
+			Projectile.timeLeft = 3600;
 			Projectile.width = 18;
 			Projectile.height = 18;
+			Projectile.aiStyle = 0;
 		}
 		public float movementFactor {
 			get => Projectile.ai[0];
@@ -70,7 +71,6 @@ namespace Origins.Items.Weapons.Melee {
 			if (!projOwner.frozen) {
 				if (movementFactor == 0f) {
 					movementFactor = 2.5f;
-					if (Projectile.timeLeft == 26) Projectile.timeLeft = projOwner.itemAnimationMax;
 					Projectile.netUpdate = true;
 				}
 				if (projOwner.itemAnimation < projOwner.itemAnimationMax / 2 - 1) {

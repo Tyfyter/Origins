@@ -29,8 +29,7 @@ namespace Origins.Items.Accessories {
 			Player player = Main.player[Projectile.owner];
 			if (player.dead || !player.active) Projectile.Kill();
 			if (player.Hitbox.Contains(Projectile.Center.ToPoint())) {
-				player.statLife += Projectile.damage;
-				player.HealEffect(Projectile.damage);
+				player.Heal(Projectile.damage);
 				Projectile.Kill();
 				return;
 			}

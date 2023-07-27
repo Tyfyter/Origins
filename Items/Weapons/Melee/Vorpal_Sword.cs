@@ -177,7 +177,7 @@ namespace Origins.Items.Weapons.Melee {
 				return false;
 			}
 			SoundEngine.PlaySound(SoundID.Item1, position);
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback * 0.25f, player.whoAmI, ai1: player.itemAnimation == player.itemTime ? -1 : 1);
+			Projectile.NewProjectile(source, position, velocity, type, damage, knockback * 0.25f, player.whoAmI, ai1: player.ItemUsesThisAnimation == 1 ? 1 : -1);
 			return false;
 		}
 	}

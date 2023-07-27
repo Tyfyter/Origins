@@ -257,6 +257,14 @@ namespace Origins {
 				}
 			};
 			Terraria.GameContent.On_ShopHelper.GetShoppingSettings += OriginGlobalNPC.ShopHelper_GetShoppingSettings;
+			var HurtInfoSourceDamage = typeof(Player.HurtInfo).GetProperty(nameof(Player.HurtInfo.SourceDamage)).SetMethod;
+			MonoModHooks.Add(
+				HurtInfoSourceDamage,
+				(Action<Action<Player.HurtInfo, int>, Player.HurtInfo, int>)((orig, self, value) => {
+					OriginPlayer.hitOriginalDamage = value;
+					orig(self, value);
+				})
+			);
 		}
 
 		private void Player_KillMe(Terraria.On_Player.orig_KillMe orig, Player self, PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp) {
