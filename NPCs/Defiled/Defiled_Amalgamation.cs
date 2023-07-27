@@ -493,7 +493,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public void SpawnWisp(NPC npc) {
 			for (int releasedWisps = 0; releasedWisps < 5; releasedWisps++) {
-				NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
+				NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X + Main.rand.Next(npc.width), (int)npc.position.Y + Main.rand.Next(npc.height), ModContent.NPCType<Defiled_Wisp>());
 			}
 		}
 		public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers) {
@@ -577,14 +577,14 @@ namespace Origins.NPCs.Defiled {
 				isDead = false;
 				life = owner.life;
 				lifeMax = owner.lifeMax;
+				shield = owner.life;
 				shieldMax = lifeMax;
 			}
 
 			int tickCount = 10 - Defiled_Amalgamation.DifficultyMult * 2;
 			float tickSize = lifeMax / tickCount;
-			float lifeTarget = ((life + tickSize - 1) / tickSize) / tickCount;
+			float lifeTarget = MathF.Ceiling((life - 1) / tickSize) / tickCount;
 			OriginExtensions.LinearSmoothing(ref lastTickPercent, lifeTarget, 0.015f);
-			shield = life;
 			life = lastTickPercent * lifeMax;
 			return life > 0;
 		}

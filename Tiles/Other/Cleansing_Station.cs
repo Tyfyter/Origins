@@ -77,7 +77,7 @@ namespace Origins.Tiles.Other {
 			originPlayer.mojoFlaskCount = originPlayer.mojoFlaskCountMax;
 			float assimilationTotal = originPlayer.CorruptionAssimilation + originPlayer.CrimsonAssimilation + originPlayer.DefiledAssimilation + originPlayer.RivenAssimilation;
 			if (assimilationTotal > 0) {
-				for (int k = 0; k < 6 + 3 * assimilationTotal; k++) {
+				for (int k = 0; k < 3 + 6 * assimilationTotal; k++) {
 					Vector2 pos = new Vector2(i + Main.rand.NextFloat(1), j + Main.rand.NextFloat(1)) * 16;
 					Vector2 dir = ((Main.LocalPlayer.MountedCenter - pos) / 24).WithMaxLength(8);
 					Dust dust = Dust.NewDustDirect(pos, 0, 0, DustID.Phantasmal, dir.X, dir.Y);

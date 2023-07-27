@@ -146,14 +146,14 @@ namespace Origins.NPCs.Defiled {
 		}
 
 		public override void AI() {
-			if (NPC.realLife != NPC.whoAmI) {
+			if (NPC.realLife != NPC.whoAmI && NPC.realLife != -1) {
 				NPC head = Main.npc[NPC.realLife];
 				NPC.life = head.active ? NPC.lifeMax : 0;
 				NPC.immune = head.immune;
 			}
 		}
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
-			if (NPC.realLife != NPC.whoAmI) {
+			if (NPC.realLife != NPC.whoAmI && NPC.realLife != -1) {
 				if (projectile.usesLocalNPCImmunity) {
 					projectile.localNPCImmunity[NPC.realLife] = projectile.localNPCHitCooldown;
 					projectile.localNPCImmunity[NPC.whoAmI] = 0;
@@ -165,7 +165,7 @@ namespace Origins.NPCs.Defiled {
 			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
 		}
 		public override bool? CanBeHitByProjectile(Projectile projectile) {
-			if (NPC.realLife == NPC.whoAmI) return null;
+			if (NPC.realLife == NPC.whoAmI || NPC.realLife == -1) return null;
 			if ((projectile.usesLocalNPCImmunity ? projectile.localNPCImmunity[NPC.realLife] : Main.npc[NPC.realLife].immune[projectile.owner]) > 0) {
 				return false;
 			}
