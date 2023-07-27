@@ -1743,10 +1743,10 @@ namespace Origins {
 			return foundTarget;
 		}
 		#endregion
-		internal static int hitOriginalDamage = 0;
+		internal static float hitOriginalDamage = 0;
 		public override bool FreeDodge(Player.HurtInfo info) {
 			if (hitOriginalDamage <= 0) {
-				return false;
+				return true;
 			}
 			if (Player.whoAmI == Main.myPlayer && !(protomindItem?.IsAir ?? true)) {
 				for (int i = 0; i < 200; i++) {

@@ -257,14 +257,10 @@ namespace Origins {
 				}
 			};
 			Terraria.GameContent.On_ShopHelper.GetShoppingSettings += OriginGlobalNPC.ShopHelper_GetShoppingSettings;
-			var HurtInfoSourceDamage = typeof(Player.HurtInfo).GetProperty(nameof(Player.HurtInfo.SourceDamage)).SetMethod;
-			MonoModHooks.Add(
-				HurtInfoSourceDamage,
-				(Action<Action<Player.HurtInfo, int>, Player.HurtInfo, int>)((orig, self, value) => {
-					OriginPlayer.hitOriginalDamage = value;
-					orig(self, value);
-				})
-			);
+			On_Player.HurtModifiers.ToHurtInfo += (On_Player.HurtModifiers.orig_ToHurtInfo orig, ref Player.HurtModifiers self, int damage, int defense, float defenseEffectiveness, float knockback, bool knockbackImmune) => {
+				OriginPlayer.hitOriginalDamage = self.SourceDamage.ApplyTo(damage) * self.IncomingDamageMultiplier.Value;
+				return orig(ref self, damage, defense, defenseEffectiveness, knockback, knockbackImmune);
+			};
 		}
 
 		private void Player_KillMe(Terraria.On_Player.orig_KillMe orig, Player self, PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp) {
