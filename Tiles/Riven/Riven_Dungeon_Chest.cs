@@ -53,4 +53,7 @@ namespace Origins.Tiles.Riven {
 			Item.createTile = ModContent.TileType<Riven_Dungeon_Chest>();
 		}
 	}
+	public class Riven_Dungeon_Chest_Placeholder_Item : ModItem {
+		public override string Texture => "Origins/Tiles/Riven/Riven_Dungeon_Chest_Item";
+	}
 }

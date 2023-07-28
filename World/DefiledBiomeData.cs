@@ -559,7 +559,7 @@ namespace Origins.World.BiomeData {
 			BiomeOreItem = ModContent.ItemType<Defiled_Ore_Item>();
 			AltarTile = ModContent.TileType<Defiled_Altar>();
 
-			BiomeChestItem = ModContent.ItemType<Defiled_Key>();
+			BiomeChestItem = ModContent.ItemType<Defiled_Dungeon_Chest_Placeholder_Item>();
 			BiomeChestTile = ModContent.TileType<Defiled_Dungeon_Chest>();
 			BiomeChestTileStyle = 1;
 			BiomeKeyItem = ModContent.ItemType<Defiled_Key>();

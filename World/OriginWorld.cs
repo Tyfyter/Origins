@@ -39,7 +39,6 @@ namespace Origins {
 		public const float biomeShaderSmoothing = 0.025f;
 		public byte worldEvil {
 			get {
-				return WorldGen.crimson ? evil_crimson : evil_corruption;
 				switch (AltLibrary.Common.Systems.WorldBiomeManager.WorldEvil) {
 					case "Origins/Defiled_Wastelands_Alt_Biome":
 					hasDefiled = true;
@@ -118,7 +117,6 @@ namespace Origins {
 		internal TagCompound questsTag;
 		public override void SaveWorldData(TagCompound tag) {
 			tag.Add("peatSold", peatSold);
-			tag.Add("worldEvil", worldEvil);
 			tag.Add("hasDefiled", hasDefiled);
 			tag.Add("hasRiven", hasRiven);
 			tag.Add("forceThunderstorm", forceThunderstorm);

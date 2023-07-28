@@ -15,7 +15,7 @@ namespace Origins.Graphics
 		public Action<SpriteBatch> drawFunct;
 
 		/// <summary>
-		/// If this render target should be rendered. Make sure this it as restrictive as possible to prevent uneccisary rendering work.
+		/// If this render target should be rendered. Make sure this it as restrictive as possible to prevent unnecessary rendering work.
 		/// </summary>
 		public Func<bool> activeFunct;
 

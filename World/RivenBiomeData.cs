@@ -547,7 +547,7 @@ namespace Origins.World.BiomeData {
 			BiomeOre = ModContent.TileType<Encrusted_Ore>();
 			AltarTile = ModContent.TileType<Riven_Altar>();
 
-			BiomeChestItem = ModContent.ItemType<Riven_Dungeon_Chest_Item>();
+			BiomeChestItem = ModContent.ItemType<Riven_Dungeon_Chest_Placeholder_Item>();
 			BiomeChestTile = ModContent.TileType<Riven_Dungeon_Chest>();
 			BiomeChestTileStyle = 1;
 			BiomeKeyItem = ModContent.ItemType<Riven_Key>();

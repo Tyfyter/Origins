@@ -3575,6 +3575,16 @@ Mods: {
 				DisplayName: Sulphur Stone Wall
 				Tooltip: ""
 			}
+
+			Defiled_Dungeon_Chest_Placeholder_Item: {
+				DisplayName: Defiled_ Dungeon_ Chest_ Placeholder_ Item
+				Tooltip: ""
+			}
+
+			Riven_Dungeon_Chest_Placeholder_Item: {
+				DisplayName: Riven_ Dungeon_ Chest_ Placeholder_ Item
+				Tooltip: ""
+			}
 		}
 
 		Buffs: {
