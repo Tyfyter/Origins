@@ -56,7 +56,6 @@ namespace Origins {
 				int duskStoneID = TileType<Dusk_Stone>();
 				tasks.Insert(genIndex + 1, new PassLegacy("Dusk Biome", delegate (GenerationProgress progress, GameConfiguration _) {
 					progress.Message = "Generating Dusk Biome";
-					//for(int i = 0; i < Main.maxTilesX / 900; i++) {       //900 is how many biomes. the bigger is the number = less biomes
 					int X = (int)(Main.maxTilesX * 0.4);//WorldGen.genRand.Next(1, Main.maxTilesX - 300);
 					GenRunners.HellRunner(X, Main.maxTilesY - 25, 650, WorldGen.genRand.Next(100, 200), duskStoneID, false, 0f, 0f, true, true);
 					//Framing.GetTileSafely(X, (int)WorldGen.worldSurfaceHigh-1).type = TileID.AmberGemspark;

@@ -41,6 +41,9 @@ namespace Origins.Layers {
 				Frame.X += armorAdjust;
 				Frame.Width -= armorAdjust;
 				Position = new Vector2((int)(drawInfo.Position.X - Main.screenPosition.X - (drawInfo.drawPlayer.bodyFrame.Width / 2) + (drawInfo.drawPlayer.width / 2)) + armorAdjust, (int)(drawInfo.Position.Y - Main.screenPosition.Y + drawInfo.drawPlayer.height - drawInfo.drawPlayer.bodyFrame.Height + 4f)) + drawInfo.drawPlayer.bodyPosition + new Vector2(drawInfo.drawPlayer.bodyFrame.Width / 2, drawInfo.drawPlayer.bodyFrame.Height / 2);
+				Vector2 headgearOffset = Main.OffsetsPlayerHeadgear[drawInfo.drawPlayer.bodyFrame.Y / drawInfo.drawPlayer.bodyFrame.Height];
+				headgearOffset.Y -= 2f;
+				Position += headgearOffset * -drawInfo.playerEffect.HasFlag(SpriteEffects.FlipVertically).ToDirectionInt();
 				Texture = ModContent.Request<Texture2D>("Origins/Items/Armor/Felnum/Felnum_Glow_Body").Value;
 				item = new DrawData(Texture, Position, drawInfo.compTorsoFrame, new Color(a, a, a, a), drawPlayer.bodyRotation, drawInfo.bodyVect, 1f, drawInfo.playerEffect, 0);
 				item.shader = drawInfo.cBody;

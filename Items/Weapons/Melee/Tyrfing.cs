@@ -105,6 +105,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (player.altFunctionUse == 2) {
 				Item.noUseGraphic = true;
+				player.itemLocation = Vector2.Zero;
 				Item.useStyle = ItemUseStyleID.Shoot;
 				if (player.controlUseTile && (charge >= 15 || frame == 0 || player.CheckMana(7, true))) {
 					player.itemTime = 0;

@@ -787,6 +787,7 @@ namespace Origins {
 											if (attempt.DidNPCDie()) {
 												Player.OnKillNPC(ref attempt, loversLeapItem);
 											}
+											Player.GiveImmuneTimeForCollisionAttack(4);
 										}
 									}
 								}
@@ -2138,8 +2139,7 @@ namespace Origins {
 			if (
 				(
 					drawInfo.drawPlayer.ItemAnimationActive && (
-						(item.useStyle == ItemUseStyleID.Shoot && item.ModItem is ICustomDrawItem) ||
-						(item.useStyle == ItemUseStyleID.Swing && item.ModItem is AnimatedModItem)
+						(item.useStyle == ItemUseStyleID.Shoot && item.ModItem is ICustomDrawItem)
 					)
 				)) PlayerDrawLayers.HeldItem.Hide();
 

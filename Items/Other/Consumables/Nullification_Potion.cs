@@ -24,10 +24,11 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override bool? UseItem(Player player) {
 			//debuff removal
+
 			for (int i = 0; i < player.buffType.Length; i++) {
 				int buffType = player.buffType[i];
 				if (buffType == 0) break;
-				if (Main.debuff[i] && (!BuffID.Sets.NurseCannotRemoveDebuff[i] || buffType == BuffID.Suffocation)) {
+				if (Main.debuff[buffType] && (!BuffID.Sets.NurseCannotRemoveDebuff[buffType] || buffType == BuffID.Suffocation)) {
 					player.DelBuff(i--);
 				}
 			}
