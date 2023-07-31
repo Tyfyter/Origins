@@ -27,7 +27,7 @@ namespace Origins.Tiles.Defiled {
 			AdjTiles = new int[] { TileID.Containers };
 			keyItem = ModContent.ItemType<Defiled_Key>();
 		}
-
+		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 	}
 	public class Defiled_Dungeon_Chest_Item : ModItem {
 		public override void SetStaticDefaults() {
