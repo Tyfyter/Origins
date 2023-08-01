@@ -31,7 +31,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			\recipe.AddIngredient(ItemID.SoulofNight, 15);
+			recipe.AddIngredient(ItemID.SoulofNight, 15);
 			recipe.AddIngredient(ItemID.SpellTome);
 			recipe.AddIngredient(ModContent.ItemType<Alkahest>(), 20);
 			recipe.AddTile(TileID.Bookcases);
