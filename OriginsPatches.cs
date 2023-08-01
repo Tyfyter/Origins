@@ -834,8 +834,10 @@ namespace Origins {
 				OriginSystem.totalDefiled2 = 0;
 				OriginSystem.totalRiven2 = 0;
 			}
-			OriginSystem.totalDefiled2 += tileCounts[MC.TileType<Defiled_Stone>()] + tileCounts[MC.TileType<Defiled_Grass>()] + tileCounts[MC.TileType<Defiled_Sand>()] + tileCounts[MC.TileType<Defiled_Ice>()];
-			OriginSystem.totalRiven2 += tileCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
+			OriginSystem.totalDefiled2 += MC.GetInstance<Defiled_Wastelands_Alt_Biome>().SpreadingTiles.Sum(v => tileCounts[v]);
+			OriginSystem.totalRiven2 += MC.GetInstance<Riven_Hive_Alt_Biome>().SpreadingTiles.Sum(v => tileCounts[v]);
+			//OriginSystem.totalDefiled2 += tileCounts[MC.TileType<Defiled_Stone>()] + tileCounts[MC.TileType<Defiled_Grass>()] + tileCounts[MC.TileType<Defiled_Sand>()] + tileCounts[MC.TileType<Defiled_Ice>()];
+			//OriginSystem.totalRiven2 += tileCounts[MC.TileType<Tiles.Riven.Riven_Flesh>()];
 			orig(clearCounts);
 		}
 		#endregion

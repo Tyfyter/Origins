@@ -545,6 +545,7 @@ namespace Origins.World.BiomeData {
 			//GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));
 			//GenPassName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
 			AddTileConversion(ModContent.TileType<Defiled_Grass>(), TileID.Grass);
+			AddTileConversion(ModContent.TileType<Defiled_Jungle_Grass>(), TileID.JungleGrass);
 			AddTileConversion(ModContent.TileType<Defiled_Stone>(), TileID.Stone);
 			AddTileConversion(ModContent.TileType<Defiled_Sand>(), TileID.Sand);
 			AddTileConversion(ModContent.TileType<Defiled_Sandstone>(), TileID.Sandstone);

@@ -30,10 +30,6 @@ namespace Origins.Tiles.Defiled {
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 	}
 	public class Defiled_Dungeon_Chest_Item : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Chest");
-		}
-
 		public override void SetDefaults() {
 			Item.width = 26;
 			Item.height = 22;
