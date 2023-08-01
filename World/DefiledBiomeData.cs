@@ -552,6 +552,24 @@ namespace Origins.World.BiomeData {
 			AddTileConversion(ModContent.TileType<Hardened_Defiled_Sand>(), TileID.HardenedSand);
 			AddTileConversion(ModContent.TileType<Defiled_Ice>(), TileID.IceBlock);
 
+
+			BiomeFlesh = TileID.SilverBrick;
+			BiomeFleshWall = WallID.SilverBrick;
+
+			FleshDoorTile = TileID.ClosedDoor;
+			FleshChairTile = TileID.Chairs;
+			FleshTableTile = TileID.Tables;
+			FleshChestTile = TileID.Containers;
+			FleshDoorTileStyle = 7;
+			FleshChairTileStyle = 7;
+			FleshTableTileStyle = 7;
+			FleshChestTileStyle = 7;
+
+			FountainTile = TileID.WaterFountain;
+			FountainTileStyle = 1;
+			//FountainTile = TileID.WaterFountain;
+			//Fountain = TileID.WaterFountain;
+
 			AddTileConversion(ModContent.TileType<Defiled_Large_Foliage>(), TileID.LargePiles);
 			AddTileConversion(ModContent.TileType<Defiled_Large_Foliage>(), TileID.LargePiles2);
 

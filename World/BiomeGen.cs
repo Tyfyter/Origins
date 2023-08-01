@@ -126,8 +126,12 @@ namespace Origins {
 					//for (int i = 0; i < Main.maxTilesX / 5000; i++) {
 					int X = WorldGen.genRand.Next(GenVars.JungleX - 100, GenVars.JungleX + 100);
 					int Y;
-					for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
-					Y += WorldGen.genRand.Next(100, 125);
+					if (WorldGen.remixWorldGen) {
+						Y = Main.UnderworldLayer - WorldGen.genRand.Next(100, 125);
+					} else {
+						for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
+						Y += WorldGen.genRand.Next(100, 125);
+					}
 					Mod.Logger.Info("BrineGen:" + X + ", " + Y);
 					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
 					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);

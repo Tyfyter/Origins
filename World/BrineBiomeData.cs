@@ -176,88 +176,90 @@ namespace Origins.World.BiomeData {
 						wallType: stoneWallID
 					);
 				}
-				int lowestScore = int.MaxValue; 
-				Vector2 surfaceConnection = genRand.Next(cells.Where(v => v.Y < j).Select(
-						v => {
-							Vector2 v0 = v;
-							while (Framing.GetTileSafely(v0.ToPoint()).WallType == stoneWallID) {
-								v0.Y--;
+				if (!WorldGen.remixWorldGen) {
+					int lowestScore = int.MaxValue;
+					Vector2 surfaceConnection = genRand.Next(cells.Where(v => v.Y < j).Select(
+							v => {
+								Vector2 v0 = v;
+								while (Framing.GetTileSafely(v0.ToPoint()).WallType == stoneWallID) {
+									v0.Y--;
+								}
+								int tileCount = 0;
+								Tile currentTile = Framing.GetTileSafely(v0.ToPoint());
+								while (currentTile.HasTile || currentTile.WallType != WallID.None) {
+									v0.Y--;
+									tileCount++;
+									currentTile = Framing.GetTileSafely(v0.ToPoint());
+								}
+								if (lowestScore > tileCount) lowestScore = tileCount;
+								return new Tuple<Vector2, int>(v, tileCount);
 							}
-							int tileCount = 0;
-							Tile currentTile = Framing.GetTileSafely(v0.ToPoint());
-							while (currentTile.HasTile || currentTile.WallType != WallID.None) {
-								v0.Y--;
-								tileCount++;
-								currentTile = Framing.GetTileSafely(v0.ToPoint());
+						).Where(v => v.Item2 < lowestScore + 25).OrderBy(v => v.Item2).Take(3).Select(v => v.Item1).ToArray()
+					);
+					// make sure the surface cell has 
+					{
+						List<Vector2> validOthers = cells.Where(v0 => {
+							if (v0 == surfaceConnection || connections.Contains((surfaceConnection, v0))) return false;
+							Vector2 potentialDiff = v0 - surfaceConnection;
+							float potentialLength = potentialDiff.Length();
+							potentialDiff /= potentialLength;
+							return !cells.Any(
+								v1 => {
+									if (v1 == v0) return false;
+									Vector2 otherDiff = v1 - surfaceConnection;
+									float otherLength = otherDiff.Length();
+									otherDiff /= otherLength;
+									float dot = Vector2.Dot(potentialDiff, otherDiff);
+									return potentialLength > otherLength && dot > 0.15f;
+								}
+							);
+						}).ToList();
+						if (validOthers.Count > 0) {
+							Vector2 targetCell = genRand.Next(validOthers);
+							Vector2 diff = targetCell - surfaceConnection;
+							float length = diff.Length();
+							diff /= length;
+							Vector2 pos = surfaceConnection;
+							Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
+							while (!currentTile.HasTile) {
+								pos += diff;
+								currentTile = Framing.GetTileSafely(pos.ToPoint());
 							}
-							if (lowestScore > tileCount) lowestScore = tileCount;
-							return new Tuple<Vector2, int>(v, tileCount);
-						}
-					).Where(v => v.Item2 < lowestScore + 25).OrderBy(v => v.Item2).Take(3).Select(v => v.Item1).ToArray()
-				);
-				// make sure the surface cell has 
-				{
-					List<Vector2> validOthers = cells.Where(v0 => {
-						if (v0 == surfaceConnection || connections.Contains((surfaceConnection, v0))) return false;
-						Vector2 potentialDiff = v0 - surfaceConnection;
-						float potentialLength = potentialDiff.Length();
-						potentialDiff /= potentialLength;
-						return !cells.Any(
-							v1 => {
-								if (v1 == v0) return false;
-								Vector2 otherDiff = v1 - surfaceConnection;
-								float otherLength = otherDiff.Length();
-								otherDiff /= otherLength;
-								float dot = Vector2.Dot(potentialDiff, otherDiff);
-								return potentialLength > otherLength && dot > 0.15f;
+							int wallThickness = 0;
+							while (currentTile.HasTile) {
+								pos += diff;
+								currentTile = Framing.GetTileSafely(pos.ToPoint());
+								wallThickness++;
 							}
-						);
-					}).ToList();
-					if (validOthers.Count > 0) {
-						Vector2 targetCell = genRand.Next(validOthers);
-						Vector2 diff = targetCell - surfaceConnection;
-						float length = diff.Length();
-						diff /= length;
-						Vector2 pos = surfaceConnection;
-						Tile currentTile = Framing.GetTileSafely(pos.ToPoint());
-						while (!currentTile.HasTile) {
-							pos += diff;
-							currentTile = Framing.GetTileSafely(pos.ToPoint());
+							GenRunners.WalledVeinRunner(
+								(int)pos.X, (int)pos.Y,
+								genRand.NextFloat(1.8f, 3),
+								-diff.RotatedByRandom(0.1f),
+								wallThickness * genRand.NextFloat(0.8f, 1f),
+								stoneID,
+								1,
+								wallType: stoneWallID
+							);
+						} else {
+							Origins.instance.Logger.Warn("No brine pool surface connection generated, connection may have already been generated");
 						}
-						int wallThickness = 0;
-						while (currentTile.HasTile) {
-							pos += diff;
-							currentTile = Framing.GetTileSafely(pos.ToPoint());
-							wallThickness++;
-						}
-						GenRunners.WalledVeinRunner(
-							(int)pos.X, (int)pos.Y,
-							genRand.NextFloat(1.8f, 3),
-							-diff.RotatedByRandom(0.1f),
-							wallThickness * genRand.NextFloat(0.8f, 1f),
-							stoneID,
-							1,
-							wallType: stoneWallID
-						);
-					} else {
-						Origins.instance.Logger.Warn("No brine pool surface connection generated, connection may have already been generated");
 					}
+					bool[] validTiles = TileID.Sets.CanBeClearedDuringGeneration.ToArray();
+					validTiles[stoneID] = true;
+					validTiles[mossID] = true;
+					validTiles[TileID.Mud] = true;
+					while (!Framing.GetTileSafely(surfaceConnection.ToPoint()).HasTile) {
+						surfaceConnection.Y--;
+					}
+					GenRunners.OpeningRunner(
+						(int)surfaceConnection.X, (int)surfaceConnection.Y,
+						genRand.NextFloat(4, 6),
+						genRand.NextFloat(0.95f, 1.2f),
+						-Vector2.UnitY.RotatedByRandom(0.15f),
+						75,
+						validTiles
+					);
 				}
-				bool[] validTiles = TileID.Sets.CanBeClearedDuringGeneration.ToArray();
-				validTiles[stoneID] = true;
-				validTiles[mossID] = true;
-				validTiles[TileID.Mud] = true;
-				while (!Framing.GetTileSafely(surfaceConnection.ToPoint()).HasTile) {
-					surfaceConnection.Y--;
-				}
-				GenRunners.OpeningRunner(
-					(int)surfaceConnection.X, (int)surfaceConnection.Y,
-					genRand.NextFloat(4, 6),
-					genRand.NextFloat(0.95f, 1.2f),
-					-Vector2.UnitY.RotatedByRandom(0.15f),
-					75,
-					validTiles
-				);
 				if (GenVars.structures is not null) GenVars.structures.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, minGenX - minGenY), 6);
 			}
 			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
