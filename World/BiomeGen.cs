@@ -201,7 +201,6 @@ namespace Origins {
 				if (EvilSpikes.Count > 0) {
 					Mod.Logger.Info($"Adding {EvilSpikes.Count} Evil Spikes");
 				}
-				crimson = true;
 			}));
 			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
 			tasks.Insert(genIndex + 1, new PassLegacy("Placing Spikes", (GenerationProgress progress, GameConfiguration _) => {
