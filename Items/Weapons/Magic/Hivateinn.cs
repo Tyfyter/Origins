@@ -28,8 +28,8 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.SkyFracture);
 			recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15);
-			recipe.AddIngredient(ItemID.SkyFracture, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

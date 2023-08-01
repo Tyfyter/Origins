@@ -48,8 +48,8 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.Excalibur);
 			recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 12);
-			recipe.AddIngredient(ItemID.Excalibur, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

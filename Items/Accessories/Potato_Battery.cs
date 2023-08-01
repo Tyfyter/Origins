@@ -63,7 +63,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.CopperOre, 3);
+			recipe.AddIngredient(ItemID.CopperBar);
 			recipe.AddIngredient(ModContent.ItemType<Potato>());
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
 			recipe.AddTile(TileID.MythrilAnvil); //fabricator

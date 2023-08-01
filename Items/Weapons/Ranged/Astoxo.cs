@@ -25,8 +25,8 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.DaedalusStormbow);
 			recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 14);
-			recipe.AddIngredient(ItemID.DaedalusStormbow, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

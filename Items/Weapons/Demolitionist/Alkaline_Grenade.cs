@@ -21,8 +21,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.maxStack = 999;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 3);
-			recipe.AddIngredient(ItemID.Grenade, 3);
+			Recipe recipe = Recipe.Create(Type, 8);
+			recipe.AddIngredient(ItemID.Grenade, 8);
 			recipe.AddIngredient(ModContent.ItemType<Bottled_Brine>());
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();

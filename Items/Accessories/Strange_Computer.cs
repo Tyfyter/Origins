@@ -24,7 +24,6 @@ namespace Origins.Items.Accessories {
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 10);
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
 			recipe.AddIngredient(ModContent.ItemType<Rotor>(), 6);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 20);
 			recipe.AddTile(TileID.MythrilAnvil); //fabricator
 			recipe.Register();
 		}

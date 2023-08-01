@@ -51,8 +51,8 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.Uzi);
 			recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 15);
-			recipe.AddIngredient(ItemID.Uzi, 1);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

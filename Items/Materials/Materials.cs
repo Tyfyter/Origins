@@ -142,7 +142,7 @@ namespace Origins.Items.Materials {
 			recipe.AddIngredient(ItemID.Bottle);
 			recipe.AddIngredient(ItemID.Stinger, 2);
 			recipe.AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>());
-			recipe.AddTile(TileID.AlchemyTable);
+			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}
 	}
@@ -470,7 +470,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
-			Item.value = Item.buyPrice(gold: 20);
+			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.LightRed;
 		}
 	}
@@ -589,7 +589,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 99;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.sellPrice(silver: 20);
 			Item.rare = ItemRarityID.Pink;
 			Item.glowMask = glowmask;
 		}
@@ -864,7 +864,7 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Valkyrum_Bar : ModItem {
-		//Alloy of Felnum and Angelium, might have to replace it with Chlorophye :o
+		//Alloy of Felnum and a Dawn material. I can imagine a pearl-like color now
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Valkyrum Bar");
 			Item.ResearchUnlockCount = 25;
@@ -879,7 +879,7 @@ namespace Origins.Items.Materials {
 			recipe.AddIngredient(ItemID.Ectoplasm);
 			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>());
 			//recipe.AddIngredient(ModContent.ItemType<_Bar>(), 1);
-			recipe.AddTile(TileID.Furnaces);
+			recipe.AddTile(TileID.AdamantiteForge);
 			recipe.Register();
 		}
 	}
