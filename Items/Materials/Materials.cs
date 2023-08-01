@@ -155,7 +155,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 99;
-			Item.value = Item.sellPrice(silver: 5);
+			Item.value = Item.sellPrice(copper: 30);
 			Item.rare = ItemRarityID.White;
 			Item.glowMask = glowmask;
 		}
@@ -171,7 +171,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.BattlePotion);
-			recipe.AddIngredient(ItemID.BottledWater, 1);
+			recipe.AddIngredient(ItemID.BottledWater);
 			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wrycoral_Item>());
 			recipe.AddIngredient(Type);
 			recipe.AddTile(TileID.Bottles);
@@ -401,7 +401,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void SetDefaults() {
 			Item.maxStack = 999;
-			Item.value = Item.buyPrice(gold: 2);
+			Item.value = Item.sellPrice(silver: 40);
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
@@ -688,9 +688,9 @@ namespace Origins.Items.Materials {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 8);
-			recipe.AddIngredient(ItemID.HallowedBar, 2);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 2);
+			Recipe recipe = Recipe.Create(Type, 4);
+			recipe.AddIngredient(ItemID.HallowedBar);
+			recipe.AddIngredient(ModContent.ItemType<Silicon>());
 			recipe.AddTile(TileID.Anvils); //Fabricator not implemented yet
 			recipe.Register();
 		}
@@ -745,7 +745,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.BattlePotion);
-			recipe.AddIngredient(ItemID.BottledWater, 1);
+			recipe.AddIngredient(ItemID.BottledWater);
 			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
 			recipe.AddIngredient(Type);
 			recipe.AddTile(TileID.Bottles);
@@ -876,8 +876,8 @@ namespace Origins.Items.Materials {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Ectoplasm, 1);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 1);
+			recipe.AddIngredient(ItemID.Ectoplasm);
+			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>());
 			//recipe.AddIngredient(ModContent.ItemType<_Bar>(), 1);
 			recipe.AddTile(TileID.Furnaces);
 			recipe.Register();

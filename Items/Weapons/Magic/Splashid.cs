@@ -37,8 +37,8 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 15);
 			recipe.AddIngredient(ModContent.ItemType<Brineglow>(), 8);
+			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 15);
 			recipe.AddIngredient(ModContent.ItemType<Sulphur_Stone_Item>(), 10);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();

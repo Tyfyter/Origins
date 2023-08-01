@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -31,6 +32,13 @@ namespace Origins.Items.Tools {
 			Item.shoot = ModContent.ProjectileType<Strainer_P>();
 			Item.shootSpeed = 16;
 			Item.tileBoost = 7;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 12);
+			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 6);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 		}
 	}
 	public class Strainer_P : ModProjectile {

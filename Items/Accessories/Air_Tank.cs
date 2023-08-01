@@ -24,13 +24,13 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.TitaniumBar, 20);
+			recipe.AddIngredient(ItemID.AdamantiteBar, 20);
 			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 
 			recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.AdamantiteBar, 20);
+			recipe.AddIngredient(ItemID.TitaniumBar, 20);
 			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 12);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();

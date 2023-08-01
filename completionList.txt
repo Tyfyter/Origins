@@ -766,8 +766,9 @@ TILES:
 (X) Cubekon Node
 (X) Dawn Dungeon Chest
 (^) Defiled Dungeon Chest
-(X) Desert Dungeon Chest
 (#, ^2) Defiled Water Fountain
+(#, ^2) Defiled Torch
+(X) Desert Dungeon Chest
 (X) Dusk Dungeon Chest
 (#, ^2) Living Alkahest
 (#, ^2) Living Bile

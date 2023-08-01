@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -36,8 +37,8 @@ namespace Origins.Items.Armor.Encrusted {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 15);
-			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 10);
+			recipe.AddIngredient(ModContent.ItemType<Bud_Barnacle>(), 16);
+			recipe.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 8);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
@@ -66,8 +67,8 @@ namespace Origins.Items.Armor.Encrusted {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 25);
-			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 20);
+			recipe.AddIngredient(ModContent.ItemType<Bud_Barnacle>(), 28);
+			recipe.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 20);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
@@ -89,8 +90,8 @@ namespace Origins.Items.Armor.Encrusted {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 20);
-			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 15);
+			recipe.AddIngredient(ModContent.ItemType<Bud_Barnacle>(), 22);
+			recipe.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 14);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
