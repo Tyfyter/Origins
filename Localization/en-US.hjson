@@ -3532,7 +3532,7 @@ Mods: {
 			}
 
 			Chambersite_Stone_Wall_Item: {
-				DisplayName: Chambersite_ Stone_ Wall_ Item
+				DisplayName: Chambersite Stone Wall Item
 				Tooltip: ""
 			}
 
@@ -3577,12 +3577,32 @@ Mods: {
 			}
 
 			Defiled_Dungeon_Chest_Placeholder_Item: {
-				DisplayName: Defiled_ Dungeon_ Chest_ Placeholder_ Item
+				DisplayName: Defiled Dungeon Chest Placeholder Item
 				Tooltip: ""
 			}
 
 			Riven_Dungeon_Chest_Placeholder_Item: {
-				DisplayName: Riven_ Dungeon_ Chest_ Placeholder_ Item
+				DisplayName: Riven Dungeon Chest Placeholder Item
+				Tooltip: ""
+			}
+
+			Defiled_Torch: {
+				DisplayName: Defiled Torch
+				Tooltip: ""
+			}
+
+			Riven_Torch: {
+				DisplayName: Riven_ Torch
+				Tooltip: ""
+			}
+
+			Bile_Torch: {
+				DisplayName: Bile_ Torch
+				Tooltip: ""
+			}
+
+			Alkahest_Torch: {
+				DisplayName: Alkahest_ Torch
 				Tooltip: ""
 			}
 		}

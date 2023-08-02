@@ -24,6 +24,7 @@ using Terraria.Chat;
 using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -39,6 +40,7 @@ namespace Origins.World.BiomeData {
 		public override int Music => Origins.Music.Riven;
 		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Riven_Water_Style>();
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Riven_Surface_Background>();
+		public override int BiomeTorchItemType => ModContent.ItemType<Riven_Torch>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => ModContent.GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;
 		public override bool IsBiomeActive(Player player) {
@@ -526,6 +528,7 @@ namespace Origins.World.BiomeData {
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Riven";
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilRiven";
 		public override Color OuterColor => new(30, 176, 255);
+		public override IShoppingBiome Biome => ModContent.GetInstance<Riven_Hive>();
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
 			//DisplayName.SetDefault(Language.GetTextValue("Mods.Origins.Generic.Riven_Hive"));

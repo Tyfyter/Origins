@@ -25,6 +25,7 @@ using Origins.Items.Materials;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
+using Terraria.GameContent.Personalities;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -33,6 +34,7 @@ namespace Origins.World.BiomeData {
 		public override int Music => Origins.Music.Defiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
+		public override int BiomeTorchItemType => ModContent.ItemType<Defiled_Torch>();
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ZoneDefiledProgress = (Math.Min(
@@ -538,6 +540,7 @@ namespace Origins.World.BiomeData {
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";
 		public override string IconSmall => "Origins/UI/WorldGen/IconEvilDefiled";
 		public override Color OuterColor => new(170, 170, 170);
+		public override IShoppingBiome Biome => ModContent.GetInstance<Defiled_Wastelands>();
 		public override void SetStaticDefaults() {
 			BiomeType = AltLibrary.BiomeType.Evil;
 			//DisplayName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));

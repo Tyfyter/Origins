@@ -13,6 +13,7 @@ using Origins.NPCs.MiscE;
 using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
 using Origins.Questing;
+using Origins.Reflection;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
@@ -167,25 +168,17 @@ namespace Origins {
 				}
 				return orig(key, obj);
 			};
-
-			Terraria.GameContent.On_ShopHelper.IsPlayerInEvilBiomes += (Terraria.GameContent.On_ShopHelper.orig_IsPlayerInEvilBiomes orig, ShopHelper self, Player player) => {
-				bool retValue = false;
-				IShoppingBiome[] orig_dangerousBiomes = dangerousBiomes.GetValue(self);
-				try {
-					IShoppingBiome[] _dangerousBiomes;
-					if (Main.npc[player.talkNPC].type == MC.NPCType<Acid_Freak>()) {
-						_dangerousBiomes = new IShoppingBiome[] { orig_dangerousBiomes[2] };
-					} else {
-						_dangerousBiomes = orig_dangerousBiomes.WithLength(orig_dangerousBiomes.Length + 2);
-						_dangerousBiomes[^2] = new Defiled_Wastelands();
-						_dangerousBiomes[^1] = new Riven_Hive();
+			On_ShopHelper.IsPlayerInEvilBiomes += (Terraria.GameContent.On_ShopHelper.orig_IsPlayerInEvilBiomes orig, ShopHelper self, Player player) => {
+				if (Main.npc[player.talkNPC].type == MC.NPCType<Acid_Freak>()) {
+					IShoppingBiome shoppingBiome = new DungeonBiome();
+					if (shoppingBiome.IsInBiome(player)) {
+						ShopMethods.AddHappinessReportText(self, "HateBiome", new {
+							BiomeName = ShopHelper.BiomeNameByKey(shoppingBiome.NameKey)
+						});
 					}
-					dangerousBiomes.SetValue(self, _dangerousBiomes);
-					retValue = orig(self, player);
-				} finally {
-					dangerousBiomes.SetValue(self, orig_dangerousBiomes);
+					return false;
 				}
-				return retValue;
+				return orig(self, player);
 			};
 			Terraria.On_Main.GetProjectileDesiredShader += (orig, projectile) => {
 				if (projectile.TryGetGlobalProjectile(out OriginGlobalProj originGlobalProj) && originGlobalProj.isFromMitosis) {
