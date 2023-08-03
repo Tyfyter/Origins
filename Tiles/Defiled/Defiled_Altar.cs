@@ -23,6 +23,7 @@ namespace Origins.Tiles.Defiled {
 			// name.SetDefault("{$Defiled} Altar");
 			AddMapEntry(new Color(200, 200, 200), name);
 			//disableSmartCursor = true;
+			RegisterItemDrop(-1);
 			AdjTiles = new int[] { TileID.DemonAltar };
 			ID = Type;
 		}

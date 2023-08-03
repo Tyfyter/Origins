@@ -482,6 +482,7 @@ MELEE WEAPONS:
 (^) Ripper Lance
 (^) Riverang
 (^) Spiker Sword
+(X) Switchblade !!!
 (^) Tyrfing
 (^) Vorpal Sword
 
@@ -519,6 +520,7 @@ RANGED WEAPONS:
 (^) Harpoon Gun
 (^) Longbone
 (^) Magma Grappler
+(X) Neural Network !!!
 (^) Riven Splitter
 (^) Shardcannon
 (^) Sleetfire
@@ -537,13 +539,16 @@ RANGED WEAPONS:
 (X) Dart Crossbow
 (^) Dragon's Breath (replanning soon)
 (^) Firespit
+(X) Frequency !!!
 (^) Incision
+(X) Left Click
 (X) Mythril Harpoon Gun
 (X) Orichalcum Harpoon Gun
 (X) Palladium Harpoon Gun
 (X) Spray 'N Pray
 (^) Tiny Sniper
 (X) Titanium Harpoon Gun
+(X) Tripod Jawbow
 (^) Vipershot
 
 (X) Disciple Maker
@@ -566,6 +571,7 @@ MAGIC WEAPONS:
 ---
 (^) Beginner's Tome
 (^) Cryostike
+(^) Eternabrite
 (^) Hot Potato
 (^) Infusion
 (^) Low Signal
@@ -617,6 +623,7 @@ SUMMONER WEAPONS:
 (#, ^2) Ocean Amulet !!!
 (#, ^2) Ocotoral Bud !!!
 (^) Rotted Worm Staff
+(X) Stubborn Flower !!!
 (^) Teardown
 (^) Woodsprite Staff
 
@@ -658,7 +665,10 @@ EXPLOSIVE WEAPONS:
 (#3, ^2) Hellfire Bomb !!!
 (#3, ^2) Hellfire Grenade !!!
 (^) Impact Explosives
+(X) Internal Combustion !!!
 (^) Lightning Grenade
+(X) Link Grenades !!!
+(X) Matrix !!!
 (#2, ^2) Outbreak Bomb !!!
 (^) Peatball*
 (#3, ^2) Potato Mine !!!

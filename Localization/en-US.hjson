@@ -256,7 +256,7 @@ Mods: {
 				Torn_1: "{0} realized there's no such thing as a 'riven pool party.'"
 				Torn_2: "{0} learned Terrarian anatomy faster than they teach in school."
 				Torn_3: "{0} enjoys being vored."
-				// oh god no
+				// oh god no, YESSSS
 				Torn_4: "{0} was compelled by the Primordial Amoeba to 'Split apart, lost one.'"
 			}
 		}
@@ -2824,6 +2824,11 @@ Mods: {
 				Tooltip: "'Very pointy for a book'"
 			}
 
+			Eternabrite: {
+				DisplayName: Eternabrite
+				Tooltip: Casts a forceful flame
+			}
+
 			Haunted_Vase: {
 				DisplayName: Haunted Vase
 				Tooltip: "'Try not to disturb the spirits within'"
@@ -2834,7 +2839,7 @@ Mods: {
 				Tooltip:
 					'''
 					Receives 50% higher damage bonuses
-					sprite needs recoloring
+					sprite needs recoloring as soon as Dawn material is determined
 					'''
 			}
 
@@ -3605,6 +3610,11 @@ Mods: {
 				DisplayName: Alkahest Torch
 				Tooltip: ""
 			}
+
+			Test: {
+				DisplayName: Test
+				Tooltip: ""
+			}
 		}
 
 		Buffs: {
@@ -3908,7 +3918,7 @@ Mods: {
 			ExplosivePlusTerraria/MagicDamageClass: explosive magic damage
 			ExplosivePlusTerraria/SummonDamageClass: explosive summon damage
 			ExplosivePlusTerraria/SummonMeleeSpeedDamageClass: explosive summon damage
-			ExplosivePlusTerraria/MagicSummonHybridDamageClass: explosive agic or summon damage
+			ExplosivePlusTerraria/MagicSummonHybridDamageClass: explosive magic or summon damage
 			ExplosivePlusTerraria/ThrowingDamageClass: explosive damage (thrown)
 			ExplosivePlusThoriumMod/BardDamage: explosive symphonic damage
 			ExplosivePlusThoriumMod/HealerDamage: explosive radiant damage
@@ -4127,6 +4137,7 @@ Mods: {
 			Gooey_Exaultion_P.DisplayName: Gooey Exaultion
 			Lava_Shot.DisplayName: Magma Shot
 			Defiled_Sand_Ball.DisplayName: "{$Defiled} Sand Ball"
+			Test2.DisplayName: Test2
 		}
 
 		Prefixes: {

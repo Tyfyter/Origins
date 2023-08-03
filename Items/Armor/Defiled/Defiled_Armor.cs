@@ -21,15 +21,14 @@ namespace Origins.Items.Armor.Defiled {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.setBonus = "Greatly increased maximum life";
-			player.statLifeMax2 += (int)(player.statLifeMax2 * 0.25);
+			player.GetCritChance(DamageClass.Generic) += 5;
 		}
         public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Defiled_Breastplate>() && legs.type == ModContent.ItemType<Defiled_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "15% of damage taken is redirected to mana";
-			player.GetModPlayer<OriginPlayer>().lostSet = true;
+			player.setBonus = "Greatly increased maximum life";
+			player.statLifeMax2 += (int)(player.statLifeMax2 * 0.25);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.knockBack = 5;
 			Item.shoot = ModContent.ProjectileType<Low_Signal_P>();
-			Item.shootSpeed = 14f;
+			Item.shootSpeed = 16f;
 			Item.useTurn = false;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
@@ -68,11 +68,6 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void AI() {
 			Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, default, newColor: Color.White, Scale: 0.5f + (float)Math.Sin(Projectile.timeLeft * 0.1f) * 0.15f);
-		}
-		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
-			// sort of oddly phrased, and if there's a remotely simple way to add custom death reasons for projectiles this isn't it
-			// as seen with this functionally identical code the reason is never actually used
-			PlayerDeathReason reason = PlayerDeathReason.ByCustomReason(target.name + " watched defiled spikes come out of their body");
 		}
 		public override void Kill(int timeLeft) {
 			int[] immune = Projectile.localNPCImmunity.ToArray();
