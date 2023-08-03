@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.damage = 10;
-			Item.CountsAsClass(DamageClasses.Explosive);
+			Item.DamageType = DamageClasses.ThrownExplosive;
 			Item.shoot = ModContent.ProjectileType<Bang_Snap_P>();
 			Item.shootSpeed = 12;
             Item.knockBack = 0;
@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Bang_Snap_P";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.SnowBallFriendly);
-			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
+			Projectile.DamageType = DamageClasses.ThrownExplosive;
 			Projectile.penetrate = 1;
 		}
 		public override void Kill(int timeLeft) {
