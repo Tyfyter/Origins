@@ -2573,7 +2573,7 @@ Mods: {
 			}
 
 			Bouncy_Explosive_Golf_Ball: {
-				// DisplayName: Bouncy_ Explosive_ Golf_ Ball
+				// DisplayName: Bouncy Explosive Golf Ball
 				// Tooltip: ""
 			}
 
@@ -2621,7 +2621,7 @@ Mods: {
 			}
 
 			Explosive_Golf_Ball: {
-				// DisplayName: Explosive_ Golf_ Ball
+				// DisplayName: Explosive Golf Ball
 				// Tooltip: ""
 			}
 
@@ -2681,7 +2681,7 @@ Mods: {
 			}
 
 			Impact_Golf_Ball: {
-				// DisplayName: Impact_ Golf_ Ball
+				// DisplayName: Impact Golf Ball
 				// Tooltip: ""
 			}
 
@@ -2738,7 +2738,7 @@ Mods: {
 			}
 
 			Remote_Golf_Ball: {
-				// DisplayName: Remote_ Golf_ Ball
+				// DisplayName: Remote Golf Ball
 				// Tooltip: ""
 			}
 
@@ -3597,17 +3597,17 @@ Mods: {
 			}
 
 			Riven_Torch: {
-				// DisplayName: Riven_ Torch
+				// DisplayName: Riven Torch
 				// Tooltip: ""
 			}
 
 			Bile_Torch: {
-				// DisplayName: Bile_ Torch
+				// DisplayName: Bile Torch
 				// Tooltip: ""
 			}
 
 			Alkahest_Torch: {
-				// DisplayName: Alkahest_ Torch
+				// DisplayName: Alkahest Torch
 				// Tooltip: ""
 			}
 
@@ -3939,21 +3939,21 @@ Mods: {
 			// Amebic_Vial_Tentacle.DisplayName: Amebic Tentacle
 			// Amoeba_Bubble.DisplayName: Mitosis Node
 			// Dash_Ravel_P.DisplayName: Kinetic Wave
-			// Entangled_Energy_Lifesteal.DisplayName: Entangled_ Energy_ Lifesteal
-			// Explosive_Artery_P.DisplayName: Explosive_ Artery_ P
+			// Entangled_Energy_Lifesteal.DisplayName: Entangled Energy Lifesteal
+			// Explosive_Artery_P.DisplayName: Explosive Artery
 			// Handy_Helper_NPC_Tentacle.DisplayName: Handy Tentacle
 			// Handy_Helper_Tentacle.DisplayName: Handy Tentacle
 			// Lazy_Cloak_P.DisplayName: Lazy Cloak
 			// Mini_Protozoa_P.DisplayName: Little Protozoa
 			// Parasitic_Influence_Tentacle.DisplayName: Parasitic Influence
-			// Protomind_P.DisplayName: Protomind_ P
-			// Return_To_Sender_Thorns.DisplayName: Return_ To_ Sender_ Thorns
+			// Protomind_P.DisplayName: Protomind
+			// Return_To_Sender_Thorns.DisplayName: Return To Sender
 			// Scribe_Of_Meat_P.DisplayName: Scribe of the Meat God
 			// Third_Eye_Deathray.DisplayName: Phantasmal Deathray
-			// Unsought_Organ_P.DisplayName: Unsought_ Organ_ P
+			// Unsought_Organ_P.DisplayName: Unsought Organ
 			// Riptide_Dash_P.DisplayName: Riptide Dash
-			// Defiled_Powder_P.DisplayName: Defiled_ Powder_ P
-			// Sentient_Powder_P.DisplayName: Sentient_ Powder_ P
+			// Defiled_Powder_P.DisplayName: Defiled Powder
+			// Sentient_Powder_P.DisplayName: Sentient Powder
 			// Gooey_Water_P.DisplayName: Gooey Water
 			// White_Water_P.DisplayName: White Water
 			// Chromatic_Pangolin.DisplayName: Chromatic Pangolin
@@ -3961,22 +3961,22 @@ Mods: {
 			// Meberoid.DisplayName: Meberoid
 			// Platformer_Mech.DisplayName: Platformer Mech
 			// Acrid_Drill_P.DisplayName: Acrid Drill
-			// Amoeba_Hook_Projectile.DisplayName: Amoeba_ Hook_ Projectile
+			// Amoeba_Hook_Projectile.DisplayName: Amoeba Hook
 			// Lightning_Rod_Bobber.DisplayName: Lightning Rod Bobber
 			// Parasitic_Bobber.DisplayName: Parasitic Bobber
 			// Snatcher_Bobber.DisplayName: Snatcher Bobber
 			// Strainer_P.DisplayName: Strainer
-			// Alkahest_Arrow_P.DisplayName: Alkahest_ Arrow_ P
-			// Alkahest_Bullet_P.DisplayName: Alkahest_ Bullet_ P
+			// Alkahest_Arrow_P.DisplayName: Alkahest Arrow
+			// Alkahest_Bullet_P.DisplayName: Alkahest Bullet
 			// Alkaline_Harpoon_P.DisplayName: Alkaline Harpoon
-			// Bile_Arrow_P.DisplayName: Bile_ Arrow_ P
-			// Bile_Bullet_P.DisplayName: Bile_ Bullet_ P
+			// Bile_Arrow_P.DisplayName: Bile Arrow
+			// Bile_Bullet_P.DisplayName: Bile Bullet
 			// Bile_Dart_Aura.DisplayName: Bile Dart Aura
 			// Bile_Dart_P.DisplayName: Bile Dart
 			// Bouncy_Harpoon_P.DisplayName: Bouncy Harpoon
 			// Cursed_Harpoon_Flame.DisplayName: Cursed Harpoon
 			// Cursed_Harpoon_P.DisplayName: Cursed Harpoon
-			// Explosive_Harpoon_Explosion.DisplayName: Explosive_ Harpoon_ Explosion
+			// Explosive_Harpoon_Explosion.DisplayName: Explosive Harpoon
 			// Explosive_Harpoon_P.DisplayName: Explosive Harpoon
 			// Flammable_Harpoon_P.DisplayName: Flammable Harpoon
 			// Giant_Metal_Slug_P.DisplayName: Giant Metal Slug
@@ -3986,10 +3986,10 @@ Mods: {
 			// Resizable_Mine_P_3.DisplayName: Resizable Mine
 			// Resizable_Mine_P_4.DisplayName: Resizable Mine
 			// Resizable_Mine_P_5.DisplayName: Resizable Mine
-			// Teal_Solution_P.DisplayName: Teal_ Solution_ P
-			// White_Solution_P.DisplayName: White_ Solution_ P
-			// Ace_Shrapnel_Old_P.DisplayName: Ace_ Shrapnel_ Old_ P
-			// Ace_Shrapnel_Old_Shard.DisplayName: Ace_ Shrapnel_ Old_ Shard
+			// Teal_Solution_P.DisplayName: Teal Solution
+			// White_Solution_P.DisplayName: White Solution
+			// Ace_Shrapnel_Old_P.DisplayName: Ace Shrapnel
+			// Ace_Shrapnel_Old_Shard.DisplayName: Ace Shrapnel Shard
 			// Ace_Shrapnel_P.DisplayName: Ace Shrapnel
 			// Ace_Shrapnel_Shard.DisplayName: Shrapnel
 			// Acid_Bomb_P.DisplayName: Alkaline Bomb
@@ -4000,14 +4000,14 @@ Mods: {
 			// Awe_Bomb_P.DisplayName: Awe Bomb
 			// Awe_Grenade_Blast.DisplayName: Awe Grenade
 			// Awe_Grenade_P.DisplayName: Awe Grenade
-			// Bang_Snap_P.DisplayName: Bang_ Snap_ P
-			// Black_Hole_Bomb_P.DisplayName: Black_ Hole_ Bomb_ P
+			// Bang_Snap_P.DisplayName: Bang Snap
+			// Black_Hole_Bomb_P.DisplayName: Black Hole Bomb
 			// Bloombomb_P.DisplayName: Bloombomb
 			// Bloombomb_Seed.DisplayName: Bloombomb
 			// Bombardment_P.DisplayName: Floating Mine
 			// Boomphracken_P.DisplayName: Obsidian Slug
 			// Bouncy_Explosive_Golf_Ball_P.DisplayName: Ricochet Golf Ball
-			// Brain_Blood.DisplayName: Brain_ Blood
+			// Brain_Blood.DisplayName: Brain Blood
 			// Brainade_P.DisplayName: Brainade
 			// Caustica_P.DisplayName: Caustica
 			// Chlorodynamite_P.DisplayName: Chlorodynamite
@@ -4019,14 +4019,14 @@ Mods: {
 			// Dreikan_Shot.DisplayName: Dreikanfire
 			// Explosive_Golf_Ball_P.DisplayName: Explosive Golf Ball
 			// Felnum_Shock_Grenade_P.DisplayName: Felnum Shock Grenade
-			// Felnum_Shock_Grenade_Shock.DisplayName: Felnum_ Shock_ Grenade_ Shock
+			// Felnum_Shock_Grenade_Shock.DisplayName: Felnum Shock
 			// Flakjack_Explosion_P.DisplayName: Flakjack
 			// Flakjack_P_1.DisplayName: Resizable Mine
 			// Flakjack_P_2.DisplayName: Resizable Mine
 			// Flakjack_P_3.DisplayName: Resizable Mine
 			// Flakjack_P_4.DisplayName: Resizable Mine
 			// Flakjack_P_5.DisplayName: Resizable Mine
-			// Flash_P.DisplayName: Flash_ P
+			// Flash_P.DisplayName: Flash P
 			// Flashbang_P.DisplayName: Flashbang
 			// Floaty_Bomb_P.DisplayName: Floaty Bomb
 			// Happy_Bomb_P.DisplayName: Happy Bomb
@@ -4038,41 +4038,41 @@ Mods: {
 			// Impact_Golf_Ball_P.DisplayName: Impact Golf Ball
 			// Impact_Grenade_Blast.DisplayName: Blast Grenade
 			// Impact_Grenade_P.DisplayName: Impact Grenade
-			// Missile_Minigun_P1.DisplayName: Missile_ Minigun_ P1
-			// Missile_Minigun_P2.DisplayName: Missile_ Minigun_ P2
-			// Missile_Minigun_P3.DisplayName: Missile_ Minigun_ P3
-			// Missile_Minigun_P4.DisplayName: Missile_ Minigun_ P4
+			// Missile_Minigun_P1.DisplayName: Missile Minigun I
+			// Missile_Minigun_P2.DisplayName: Missile Minigun II
+			// Missile_Minigun_P3.DisplayName: Missile Minigun III
+			// Missile_Minigun_P4.DisplayName: Missile Minigun IV
 			// Nuclear_Arm_P.DisplayName: Nuclear Arm
 			// Outbreak_Bomb_P.DisplayName: Outbreak Bomb
-			// Peatball_P.DisplayName: Peatball_ P
+			// Peatball_P.DisplayName: Peatball
 			// Remote_Golf_Ball_P.DisplayName: Remote Golf Ball
-			// Rocodile_P1.DisplayName: Rocodile_ P1
-			// Rocodile_P2.DisplayName: Rocodile_ P2
-			// Rocodile_P3.DisplayName: Rocodile_ P3
-			// Rocodile_P4.DisplayName: Rocodile_ P4
+			// Rocodile_P1.DisplayName: Rocodile
+			// Rocodile_P2.DisplayName: Rocodile
+			// Rocodile_P3.DisplayName: Rocodile
+			// Rocodile_P4.DisplayName: Rocodile
 			// Shrapnel_Bomb_P.DisplayName: Shrapnel Bomb
-			// Sonorous_Shredder_Explosion.DisplayName: Sonorous_ Shredder_ Explosion
-			// Sonorous_Shredder_Projectile.DisplayName: Sonorous_ Shredder_ Projectile
+			// Sonorous_Shredder_Explosion.DisplayName: Sonorous Shredder Explosion
+			// Sonorous_Shredder_Projectile.DisplayName: Sonorous Shredder Wave
 			// Thermite_Canister_P.DisplayName: Thermite Canistah
 			// Thermite_P.DisplayName: Thermite Canister
 			// Dragons_Breath_P.DisplayName: Dragon's Breath
 			// Felnum_Golf_Ball_P.DisplayName: Felnum Golf Ball
 			// Fiberglass_Shard_P.DisplayName: Fiberglass Shard
 			// Fragarach_P.DisplayName: Fragarach
-			// Agony_Shard.DisplayName: Agony_ Shard
+			// Agony_Shard.DisplayName: Agony Shard
 			// Amber_Of_Embers_P.DisplayName: Burning Ember
-			// Beginner_Spell.DisplayName: Beginner_ Spell
-			// Bled_Out_Staff_P.DisplayName: Bled_ Out_ Staff_ P
-			// Dismay_Spike.DisplayName: Dismay_ Spike
+			// Beginner_Spell.DisplayName: Beginner Spell
+			// Bled_Out_Staff_P.DisplayName: Bled Out Staff
+			// Dismay_Spike.DisplayName: Dismay
 			// Felnum_Lightning.DisplayName: Hævateinn
 			// Felnum_Zap.DisplayName: Lightning Strike
 			// Haunted_Vase_P.DisplayName: Haunted Vase
 			// Haunted_Vase_Wisp.DisplayName: Pissed Wisp
-			// Hot_Potato_P.DisplayName: Hot_ Potato_ P
+			// Hot_Potato_P.DisplayName: Hot Potato
 			// Infusion_P.DisplayName: Infusion Spike
 			// Innermost_Manifest_P.DisplayName: Innermost Manifest
 			// Laseer.DisplayName: Laseer
-			// Laser_Tag_Laser.DisplayName: Laser_ Tag_ Laser
+			// Laser_Tag_Laser.DisplayName: Laser Tag Laser
 			// Low_Signal_P.DisplayName: Nerve Signal
 			// Manasynk_P.DisplayName: Manasynk
 			// Pike_of_Deepneus_P.DisplayName: Pike of Deepneus
@@ -4084,9 +4084,9 @@ Mods: {
 			// Amenonuhoko_P.DisplayName: Amenonuhoko
 			// Broken_Fiberglass_Sword_Stab.DisplayName: Broken Fiberglass Sword
 			// Crystal_Cutters_P.DisplayName: Crystal Ball
-			// Cursed_Vorpal_Sword_Slash.DisplayName: Cursed_ Vorpal_ Sword_ Slash
+			// Cursed_Vorpal_Sword_Slash.DisplayName: Cursed Vorpal Sword
 			// Decimator_P.DisplayName: Decimator
-			// Depth_Charge_Explosion.DisplayName: Depth_ Charge_ Explosion
+			// Depth_Charge_Explosion.DisplayName: Depth Charge
 			// Depth_Charge_P.DisplayName: Depth Charge
 			// Felnum_Boar_Spear_Stab.DisplayName: Felnum Boar Spear
 			// Knee_Slapper_P.DisplayName: Knee Slapper
@@ -4094,19 +4094,19 @@ Mods: {
 			// Personal_Laser_Blade_P.DisplayName: Personal Laser Blade
 			// Ripper_Lance_P.DisplayName: Ripper Lance
 			// Riverang_P.DisplayName: Riverang
-			// Telephone_Pole_Shock.DisplayName: Telephone_ Pole_ Shock
+			// Telephone_Pole_Shock.DisplayName: Telephone Pole
 			// Tyrfing_Shard.DisplayName: Tyrfing
 			// Tyrfing_Stab.DisplayName: Tyrfing
-			// Vorpal_Sword_Slash.DisplayName: Vorpal_ Sword_ Slash
+			// Vorpal_Sword_Slash.DisplayName: Vorpal Sword
 			// Potato_P.DisplayName: Potato
 			// Bleeding_Obsidian_Kunai_P.DisplayName: Bleeding Obsidian Kunai
 			// Blotopus_P.DisplayName: Bloody Needle
 			// Bone_Bolt.DisplayName: Bone Bolt
 			// Bone_Shard.DisplayName: BoneS hard
 			// Hailferno_P.DisplayName: Slushflame
-			// Shardcannon_P1.DisplayName: Shardcannon_ P1
-			// Shardcannon_P2.DisplayName: Shardcannon_ P2
-			// Shardcannon_P3.DisplayName: Shardcannon_ P3
+			// Shardcannon_P1.DisplayName: Shardcannon
+			// Shardcannon_P2.DisplayName: Shardcannon
+			// Shardcannon_P3.DisplayName: Shardcannon
 			// Sleetfire_P.DisplayName: Frosty Flame
 			// Tendon_Tear_Swing.DisplayName: Tendon Tear
 			// Threemoepeater_P.DisplayName: Amoeba Ball
@@ -4123,18 +4123,18 @@ Mods: {
 			// Rotting_Worm_Head.DisplayName: Wormy
 			// Rotting_Worm_Tail.DisplayName: Wormy
 			// Woodsprite.DisplayName: Woodsprite
-			// Woodsprite_Lifesteal.DisplayName: Woodsprite_ Lifesteal
+			// Woodsprite_Lifesteal.DisplayName: Woodsprite Lifesteal
 			// Teardown_P.DisplayName: Flying Exoskeleton
 			// Fiberglass_Thread.DisplayName: Fiberglass Thread
-			// Defiled_Enemy_Summon.DisplayName: Defiled_ Enemy_ Summon
+			// Defiled_Enemy_Summon.DisplayName: Defiled Enemy Summon
 			// Defiled_Wastelands_Signal.DisplayName: Nerve Impulse
-			// Felnum_Shock_Arc.DisplayName: Felnum_ Shock_ Arc
+			// Felnum_Shock_Arc.DisplayName: Felnum Shock Arc
 			// Felnum_Shock_Leader.DisplayName: Felnum Shock
-			// Acid_Shot.DisplayName: Acid_ Shot
-			// Cryostrike_P.DisplayName: Cryostrike_ P
-			// Defiled_Spike_Explosion.DisplayName: Defiled_ Spike_ Explosion
+			// Acid_Shot.DisplayName: Acid Shot
+			// Cryostrike_P.DisplayName: Cryostrike
+			// Defiled_Spike_Explosion.DisplayName: Defiled Spike Explosion
 			// Defiled_Spike_Explosion_Spike.DisplayName: "{$Defiled} Spike Eruption"
-			// Gooey_Exaultion_P.DisplayName: Gooey_ Exaultion_ P
+			// Gooey_Exaultion_P.DisplayName: Gooey Exaultion
 			// Lava_Shot.DisplayName: Magma Shot
 			// Defiled_Sand_Ball.DisplayName: "{$Defiled} Sand Ball"
 			// Test2.DisplayName: Test2
@@ -4185,9 +4185,9 @@ Mods: {
 			// Defiled_Wisp.DisplayName: "{$Defiled} Wisp"
 			// Enchanted_Trident.DisplayName: Profaned Bident
 			// Shattered_Mummy.DisplayName: Shattered Mummy
-			// Enchanted_Fiberglass_Bow.DisplayName: Enchanted_ Fiberglass_ Bow
-			// Enchanted_Fiberglass_Pistol.DisplayName: Enchanted_ Fiberglass_ Pistol
-			// Enchanted_Fiberglass_Sword.DisplayName: Enchanted_ Fiberglass_ Sword
+			// Enchanted_Fiberglass_Bow.DisplayName: Enchanted Fiberglass Bow
+			// Enchanted_Fiberglass_Pistol.DisplayName: Enchanted Fiberglass Pistol
+			// Enchanted_Fiberglass_Sword.DisplayName: Enchanted Fiberglass Sword
 			// Fiberglass_Weaver.DisplayName: Fiberglass Weaver
 			// Swarmer.DisplayName: Swarmer
 			// Buckethead_Zombie.DisplayName: Buckethead Zombie
@@ -4241,13 +4241,13 @@ Mods: {
 
 		Biomes: {
 			Brine_Pool: {
-				// DisplayName: Brine_ Pool
-				// TownNPCDialogueName: the Brine_ Pool
+				// DisplayName: Brine Pool
+				// TownNPCDialogueName: the Brine Pool
 			}
 
 			Defiled_Wastelands: {
-				// DisplayName: Defiled_ Wastelands
-				// TownNPCDialogueName: the Defiled_ Wastelands
+				// DisplayName: Defiled Wastelands
+				// TownNPCDialogueName: the Defiled Wastelands
 			}
 
 			Dusk: {
@@ -4256,29 +4256,29 @@ Mods: {
 			}
 
 			Fiberglass_Undergrowth: {
-				// DisplayName: Fiberglass_ Undergrowth
-				// TownNPCDialogueName: the Fiberglass_ Undergrowth
+				// DisplayName: Fiberglass Undergrowth
+				// TownNPCDialogueName: the Fiberglass Undergrowth
 			}
 
 			Riven_Hive: {
-				// DisplayName: Riven_ Hive
-				// TownNPCDialogueName: the Riven_ Hive
+				// DisplayName: Riven Hive
+				// TownNPCDialogueName: the Riven Hive
 			}
 
 			Underground_Defiled_Wastelands_Biome: {
-				// DisplayName: Underground_ Defiled_ Wastelands_ Biome
-				// TownNPCDialogueName: the Underground_ Defiled_ Wastelands_ Biome
+				// DisplayName: Underground Defiled Wastelands Biome
+				// TownNPCDialogueName: the Underground Defiled Wastelands Biome
 			}
 
 			Underground_Riven_Hive_Biome: {
-				// DisplayName: Underground_ Riven_ Hive_ Biome
-				// TownNPCDialogueName: the Underground_ Riven_ Hive_ Biome
+				// DisplayName: Underground Riven Hive Biome
+				// TownNPCDialogueName: the Underground Riven Hive Biome
 			}
 
 			Bestiary_Biomes: {
 				TheTemple: {
-					// DisplayName: Bestiary_ Biomes. The Temple
-					// TownNPCDialogueName: the Bestiary_ Biomes. The Temple
+					// DisplayName: Bestiary Biomes. The Temple
+					// TownNPCDialogueName: the Bestiary Biomes. The Temple
 				}
 			}
 		}
@@ -4392,8 +4392,8 @@ Mods: {
 		}
 
 		AltBiomes: {
-			// Defiled_Wastelands_Alt_Biome.DisplayName: Defiled_ Wastelands_ Alt_ Biome
-			// Riven_Hive_Alt_Biome.DisplayName: Riven_ Hive_ Alt_ Biome
+			// Defiled_Wastelands_Alt_Biome.DisplayName: Defiled Wastelands
+			// Riven_Hive_Alt_Biome.DisplayName: Riven Hive
 		}
 	}
 }
