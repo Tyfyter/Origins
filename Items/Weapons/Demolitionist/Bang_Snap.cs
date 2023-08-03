@@ -13,6 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.damage = 10;
+			Item.CountsAsClass(DamageClasses.Explosive);
 			Item.shoot = ModContent.ProjectileType<Bang_Snap_P>();
 			Item.shootSpeed = 12;
             Item.knockBack = 0;

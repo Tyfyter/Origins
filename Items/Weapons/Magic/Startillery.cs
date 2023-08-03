@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.damage = 48;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Item.mana = 12;
-			Item.noUseGraphic = true;
+			Item.noUseGraphic = false;
 			Item.useTime = 20;
 			Item.useAnimation = 20;
 			Item.knockBack = 6;

@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Katana);
-			Item.damage = 12;
+			Item.damage = 18;
 			Item.DamageType = DamageClass.Melee;
 			Item.noUseGraphic = false;
 			Item.noMelee = false;
