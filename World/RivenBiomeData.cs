@@ -545,6 +545,7 @@ namespace Origins.World.BiomeData {
 
 			SeedType = ModContent.ItemType<Riven_Grass_Seeds>();
 			BiomeOre = ModContent.TileType<Encrusted_Ore>();
+			BiomeOreItem = ModContent.ItemType<Encrusted_Ore_Item>();
 			AltarTile = ModContent.TileType<Riven_Altar>();
 
 			BiomeChestItem = ModContent.ItemType<Riven_Dungeon_Chest_Placeholder_Item>();

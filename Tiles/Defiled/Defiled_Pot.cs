@@ -38,6 +38,7 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);*/
+			RegisterItemDrop(-1);
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			WorldGen.CheckPot(i, j);

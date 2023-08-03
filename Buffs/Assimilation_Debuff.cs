@@ -67,7 +67,7 @@ namespace Origins.Buffs {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Crimson"
 				}, 40, 0);
 			}
-			if (Main.rand.NextFloat(200) < percent) {
+			if (Main.rand.NextFloat(50, 200) < percent) {
 				if (buffChosen == 0) {
 					player.AddBuff(BuffID.Confused, Main.rand.Next(24, 69) * (1 + (int)percent));
 				} else if (buffChosen == 1) {

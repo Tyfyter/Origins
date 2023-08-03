@@ -35,8 +35,8 @@ namespace Origins.NPCs.MiscE {
 				NPCID.PigronCrimson,
 			};
 			AssimilationAmounts = new() {
-				[NPCID.BrainofCthulhu] = 0.12f,
-				[NPCID.Creeper] = 0.01f,
+				[NPCID.BrainofCthulhu] = 0.03f,
+				[NPCID.Creeper] = 0.002f,
 				[ModContent.NPCType<Crimbrain>()] = 0.07f,
 				[NPCID.IchorSticker] = 0.06f // for projectile
 			};
