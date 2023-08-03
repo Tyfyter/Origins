@@ -57,7 +57,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Riven_Lesion_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Riven} Lesion (Debugging Item)");
+			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.width = 26;

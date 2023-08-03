@@ -77,7 +77,7 @@ namespace Origins.Tiles.Defiled {
 	public class Defiled_Fissure_Item : ModItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Fissure";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Fissure (Debugging Item)");
+			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 		}
 
 		public override void SetDefaults() {

@@ -38,7 +38,6 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.newTile.LavaDeath = true;
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);*/
-			RegisterItemDrop(-1);
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			WorldGen.CheckPot(i, j);
@@ -47,21 +46,18 @@ namespace Origins.Tiles.Defiled {
 	public class Defiled_Pot_Item : ModItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Pot";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Pot (Debugging Item)");
+			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 		}
 
 		public override void SetDefaults() {
-			Item.width = 26;
-			Item.height = 22;
-			Item.maxStack = 99;
-			Item.useTurn = true;
-			Item.autoReuse = true;
-			Item.useAnimation = 15;
-			Item.useTime = 10;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.consumable = true;
-			Item.value = 500;
-			Item.createTile = ModContent.TileType<Defiled_Pot>();
+			Item.DefaultToPlaceableTile(ModContent.TileType<Defiled_Pot>());
+		}
+		public override bool? UseItem(Player player) {
+			WorldGen.Place2x2(Player.tileTargetX, Player.tileTargetY, (ushort)Item.createTile, 0);
+			return base.UseItem(player);
+		}
+		public override void ModifyTooltips(List<TooltipLine> tooltips) {
+			tooltips.Add(new(Mod, "createTile", Item.createTile+""));
 		}
 	}
 }

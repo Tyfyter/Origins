@@ -9,10 +9,12 @@ using Origins.LootConditions;
 using Origins.Questing;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
@@ -260,6 +262,17 @@ namespace Origins.Items {
 				return false;
 			}
 			return true;
+		}
+		public override void OnSpawn(Item item, IEntitySource source) {
+			if (ItemID.Sets.Torches[item.type] && source is EntitySource_TileBreak tileSource && Main.tileCut[Framing.GetTileSafely(tileSource.TileCoords).TileType]) {
+				int stack = item.stack;
+				if (Main.LocalPlayer.InModBiome<Defiled_Wastelands>()) {
+					item.SetDefaults(ModContent.ItemType<Defiled_Torch>());
+				} else if (Main.LocalPlayer.InModBiome<Riven_Hive>()) {
+					item.SetDefaults(ModContent.ItemType<Riven_Torch>());
+				}
+				item.stack = stack;
+			}
 		}
 
 		public static ushort GetItemElement(Item item) {

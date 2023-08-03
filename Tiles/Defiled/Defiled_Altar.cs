@@ -153,7 +153,7 @@ namespace Origins.Tiles.Defiled {
 	public class Defiled_Altar_Item : ModItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Altar";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Altar (Debugging Item)");
+			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 		}
 
 		public override void SetDefaults() {
