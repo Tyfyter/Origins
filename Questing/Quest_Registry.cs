@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Questing {
@@ -27,6 +25,7 @@ namespace Origins.Questing {
 				quest.NetID = NetQuests.Count;
 				NetQuests.Add(quest);
 			}
+			if (!Main.dedServ) Language.GetOrRegister(quest.NameKey);
 		}
 		static void Setup() {
 			if (QuestIDs is null) QuestIDs = new Dictionary<string, int>();

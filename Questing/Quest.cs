@@ -20,7 +20,7 @@ namespace Origins.Questing {
 		public virtual bool Started => false;
 		public virtual bool Completed => false;
 		public string NameKey { get; protected set; }
-		public string NameValue => Language.GetTextValue(NameKey);
+		public string NameValue => Language.GetOrRegister(NameKey).Value;
 		public virtual int Stage { get; set; }
 		public bool ShouldSync { get; protected set; }
 		public bool HasNotification { get; set; }

@@ -84,7 +84,7 @@ namespace Origins.UI {
 				textSnippet.Update();
 				snippetScale = textSnippet.Scale;
 				Color snippetColor = textSnippet.GetVisibleColor();
-				if (textSnippet.UniqueDraw(justCheckingString: true, out var size, Main.spriteBatch, cursor, default, snippetScale)) {
+				if (textSnippet.UniqueDraw(justCheckingString: true, out var size, Main.spriteBatch, cursor, Color.Black, snippetScale)) {
 					cursor.X += size.X * baseScale.X * snippetScale;
 					result.X = Math.Max(result.X, cursor.X);
 					currentPage.Add(textSnippet);

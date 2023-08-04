@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
+	//TODO: make better
 	public class Spiker_Sword : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
@@ -32,14 +33,6 @@ namespace Origins.Items.Weapons.Melee {
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 6);
 			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 3);
 			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.NightsEdge);
-			recipe.AddIngredient(this);
-			recipe.AddIngredient(ItemID.Muramasa);
-			recipe.AddIngredient(ItemID.BladeofGrass);
-			recipe.AddIngredient(ItemID.FieryGreatsword);
-			recipe.AddTile(TileID.DemonAltar);
 			recipe.Register();
 		}
 	}
