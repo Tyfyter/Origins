@@ -32,10 +32,6 @@ namespace Origins.Tiles.Other {
 			tile.TileFrameY = 0;
 			return false;
 		}
-        public override bool CanExplode(int i, int j) {
-			CanExplode(10, 10);
-			return true;
-        }
         public override void MouseOver(int i, int j) {
 			Player player = Main.LocalPlayer;
 
