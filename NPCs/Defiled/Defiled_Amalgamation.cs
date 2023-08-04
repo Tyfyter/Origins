@@ -489,7 +489,7 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		public override void OnKill() {
-			NPC.downedBoss2 = true;
+			NPC.SetEventFlagCleared(ref NPC.downedBoss2, GameEventClearedID.DefeatedEaterOfWorldsOrBrainOfChtulu);
 		}
 		public void SpawnWisp(NPC npc) {
 			for (int releasedWisps = 0; releasedWisps < 5; releasedWisps++) {
