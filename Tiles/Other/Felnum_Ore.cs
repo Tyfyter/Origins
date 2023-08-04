@@ -17,6 +17,7 @@ namespace Origins.Tiles.Other {
 			Main.tileLighted[Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			Main.tileOreFinderPriority[Type] = 450;
+			Main.tileSpelunker[Type] = true;
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Felnum Ore");
 			AddMapEntry(new Color(160, 116, 42), name);

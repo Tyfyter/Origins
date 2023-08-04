@@ -18,6 +18,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;
 			Main.tileOreFinderPriority[Type] = 320;
+			Main.tileSpelunker[Type] = true;
 			TileID.Sets.Ore[Type] = true;
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Encrusted Ore");
