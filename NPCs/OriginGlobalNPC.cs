@@ -395,6 +395,10 @@ namespace Origins.NPCs {
 			if (originPlayer.rapidSpawnFrames > 0) {
 				spawnRate = 1;
 			}
+			if (player.InModBiome<Defiled_Wastelands>() || player.InModBiome<Riven_Hive>()) {
+				spawnRate = (int)(spawnRate * 0.65);
+				maxSpawns = (int)(maxSpawns * 1.3f);
+			}
 		}
 		public static Condition PeatSoldCondition(int amount) {
 			return new Condition(
