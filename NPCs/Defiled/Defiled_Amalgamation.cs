@@ -99,15 +99,15 @@ namespace Origins.NPCs.Defiled {
 				break;
 
 				case 2:
-				NPC.lifeMax = (int)(3840 * balance) / 2;
-				NPC.defense = 15;
-				NPC.damage = 60;
+				NPC.lifeMax = (int)(3840 * balance);
+				NPC.defense = 16;
+				NPC.damage = 70;
 				break;
 
 				case 3:
-				NPC.lifeMax = (int)(6144 * balance) / 3;
-				NPC.defense = 16;
-				NPC.damage = 75;
+				NPC.lifeMax = (int)(6144 * balance);
+				NPC.defense = 18;
+				NPC.damage = 80;
 				break;
 			}
 		}
