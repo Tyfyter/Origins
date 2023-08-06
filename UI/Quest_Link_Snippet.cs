@@ -41,6 +41,10 @@ namespace Origins.UI {
 				Main.LocalPlayer.mouseInterface = true;
 			}
 			public override void OnClick() {
+				if (ItemSlot.ControlInUse && OriginConfig.Instance.DebugMode) {
+					Quest_Registry.GetQuestByKey(key).LoadData(new Terraria.ModLoader.IO.TagCompound());
+					return;
+				}
 				Origins.OpenJournalQuest(key);
 			}
 			public override bool UniqueDraw(bool justCheckingString, out Vector2 size, SpriteBatch spriteBatch, Vector2 position = default(Vector2), Color color = default(Color), float scale = 1) {

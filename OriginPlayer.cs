@@ -2017,8 +2017,8 @@ namespace Origins {
 			if (tag.SafeGet<List<string>>("UnlockedJournalEntries") is List<string> journalEntries) {
 				unlockedJournalEntries = journalEntries.ToHashSet();
 			}
-			if (tag.SafeGet<List<string>>("UnlockedQuests") is List<string> quests) {
-				startedQuests = quests.ToHashSet();
+			if (tag.SafeGet<List<string>>("UnlockedQuests") is List<string> unlockedQuests) {
+				startedQuests = unlockedQuests.ToHashSet();
 			}
 			if (tag.ContainsKey("journalUnlocked")) {
 				journalUnlocked = tag.Get<bool>("journalUnlocked");

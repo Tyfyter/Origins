@@ -4377,6 +4377,7 @@ Mods: {
 				Headers: {
 					VanillaBuffs: Vanilla Buffs Header
 					Other: Other Header
+					Debugging: Debugging Header
 				}
 
 				WoodBuffs: {
@@ -4386,6 +4387,11 @@ Mods: {
 
 				GrassMerge: {
 					Label: Universal Grass Merge
+					Tooltip: ""
+				}
+
+				DebugMode: {
+					Label: Debug Mode
 					Tooltip: ""
 				}
 			}

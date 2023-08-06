@@ -22,6 +22,12 @@ namespace Origins {
 		[ReloadRequired]
 		[DefaultValue(true)]
 		public bool GrassMerge = true;
+
+		[Header("Debugging")]
+
+		[Label("Debug Mode")]
+		[DefaultValue(false)]
+		public bool DebugMode = false;
 		internal void Save() {
 			Directory.CreateDirectory(ConfigManager.ModConfigPath);
 			string filename = Mod.Name + "_" + Name + ".json";
