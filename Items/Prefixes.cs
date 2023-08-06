@@ -41,7 +41,11 @@ namespace Origins.Items {
 			valueMult += 0.67f;
 		}
 		public override float RollChance(Item item) {
-			return 0.3f;
+#if false
+			return Origins.NPCs.TownNPCs.Cubekon_Tinkerer.rolling ? 0.3f : 0;
+#else
+			return 0f;
+#endif
 		}
 		public override void Apply(Item item) {
 			item.defense += 7;
@@ -56,7 +60,11 @@ namespace Origins.Items {
 			valueMult += 0.67f;
 		}
 		public override float RollChance(Item item) {
-			return 0.3f;
+#if false
+			return Origins.NPCs.TownNPCs.Cubekon_Tinkerer.rolling ? 0.3f : 0;
+#else
+			return 0f;
+#endif
 		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			critBonus += 8;
@@ -71,7 +79,11 @@ namespace Origins.Items {
 			valueMult += 0.67f;
 		}
 		public override float RollChance(Item item) {
-			return 0.3f;
+#if false
+			return Origins.NPCs.TownNPCs.Cubekon_Tinkerer.rolling ? 0.3f : 0;
+#else
+			return 0f;
+#endif
 		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult += 0.06f;
@@ -86,7 +98,11 @@ namespace Origins.Items {
 			valueMult += 0.67f;
 		}
 		public override float RollChance(Item item) {
-			return 0.3f;
+#if false
+			return Origins.NPCs.TownNPCs.Cubekon_Tinkerer.rolling ? 0.3f : 0;
+#else
+			return 0f;
+#endif
 		}
 		//movement speed boost here
 	}
@@ -99,7 +115,11 @@ namespace Origins.Items {
 			valueMult += 0.67f;
 		}
 		public override float RollChance(Item item) {
-			return 0.3f;
+#if false
+			return Origins.NPCs.TownNPCs.Cubekon_Tinkerer.rolling ? 0.3f : 0;
+#else
+			return 0f;
+#endif
 		}
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			useTimeMult -= 0.06f;
@@ -114,7 +134,11 @@ namespace Origins.Items {
 			valueMult += 0.67f;
 		}
 		public override float RollChance(Item item) {
-			return 0.3f;
+#if false
+			return Origins.NPCs.TownNPCs.Cubekon_Tinkerer.rolling ? 0.3f : 0;
+#else
+			return 0f;
+#endif
 		}
 		public override void Apply(Item item) {
 			item.manaIncrease += 40;
@@ -283,6 +307,7 @@ namespace Origins.Items {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Imperfect");
 		}
+		public override bool CanRoll(Item item) => true;
 		public override float RollChance(Item item) => 0f;
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
 			damageMult -= 0.1f;
@@ -302,14 +327,16 @@ namespace Origins.Items {
 					break;
 				}
 			}
-			tooltips.Insert(tooltips.FindLastIndex(line => line.IsModifier) + 1, new TooltipLine(
+		}
+		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) {
+			yield return new TooltipLine(
 				Mod,
 				"PrefixSpread",
 				"+10° Spread"
 				) {
 				IsModifier = true,
 				IsModifierBad = true
-			});
+			};
 		}
 		public bool CanReforge(Item item) => false;
 	}
