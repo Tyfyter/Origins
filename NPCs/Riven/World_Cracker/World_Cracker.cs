@@ -46,6 +46,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void Unload() {
 			ArmorTexture = null;
+			HPBarArmorTexture = null;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
