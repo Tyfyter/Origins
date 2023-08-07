@@ -26,6 +26,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override int TailType => ModContent.NPCType<World_Cracker_Tail>();
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public static AutoCastingAsset<Texture2D> ArmorTexture { get; private set; }
+		public static AutoCastingAsset<Texture2D> HPBarArmorTexture { get; private set; }
 		public static int MaxArmorHealth {
 			get => 100 + 50 * DifficultyMult;
 		}
@@ -38,7 +39,10 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				PortraitPositionYOverride = 12f
 			};
 			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);*/
-			if (!Main.dedServ) ArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
+			if (!Main.dedServ) {
+				ArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
+				HPBarArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor_Health_Bar");
+			}
 		}
 		public override void Unload() {
 			ArmorTexture = null;
@@ -117,7 +121,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			DrawArmor(spriteBatch, screenPos, drawColor, new Rectangle(0, 0, 102, 58), NPC);
 		}
 		public override void Init() {
-			MinSegmentLength = MaxSegmentLength = 12 + 4 * DifficultyMult;
+			MinSegmentLength = MaxSegmentLength = 13 + 2 * DifficultyMult;
 			CommonWormInit(this);
 		}
 	}
@@ -221,11 +225,46 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override Asset<Texture2D> GetIconTexture(ref Rectangle? iconFrame) {
 			return Asset<Texture2D>.Empty;
 		}
-		public override void PostDraw(SpriteBatch spriteBatch, NPC npc, BossBarDrawParams drawParams) {
-
+		public override bool PreDraw(SpriteBatch spriteBatch, NPC npc, ref BossBarDrawParams drawParams) {
+			drawParams.ShowText = false;
+			BossBarLoader.DrawFancyBar_TML(spriteBatch, drawParams);
+			drawParams.ShowText = true;
+			float totalWidth = 0;
+			List<Rectangle> frames = new();
+			void AddFrame(NPC currentNPC, Rectangle baseFrame) {
+				if (currentNPC.ai[3] <= 0) {
+					baseFrame.Y = 58;
+					baseFrame.Height = 2;
+				} else if (currentNPC.ai[3] < MaxArmorHealth * 0.5f) {
+					baseFrame.Y += 60;
+				}
+				totalWidth += baseFrame.Width;
+				frames.Add(baseFrame);
+			}
+			AddFrame(npc, new Rectangle(0, 0, 50, 36));
+			totalWidth -= 60;
+			NPC current = Main.npc[(int)npc.ai[0]];
+			int tailType = ModContent.NPCType<World_Cracker_Tail>();
+			while (current.type != tailType) {
+				AddFrame(current, new Rectangle(52, 0, 30, 36));
+				current = Main.npc[(int)current.ai[0]];
+			}
+			AddFrame(npc, new Rectangle(84, 0, 26, 36));
+			Vector2 pos = drawParams.BarCenter;
+			float scale = 1f;
+			float barWidth = drawParams.BarTexture.Width - 60;
+			pos.X += barWidth * 0.5f;
+			pos.X -= 8;
+			for (int i = frames.Count - 1; i >= 0; i--) {
+				Rectangle frame = frames[i];
+				spriteBatch.Draw(HPBarArmorTexture, pos, frame, Color.White, 0, frame.Size() / 2, scale, 0, 0);
+				pos.X -= barWidth / frames.Count;
+			}
+			drawParams.BarTexture = Asset<Texture2D>.DefaultValue;
+			BossBarLoader.DrawFancyBar_TML(spriteBatch, drawParams);
+			return false;
 		}
 	}
-
 	public class World_Cracker_Master_Biome : ModBiome {
 		const string biomeName = "Origins:WorldCrackerMaster";
 		public override void SetStaticDefaults() {
