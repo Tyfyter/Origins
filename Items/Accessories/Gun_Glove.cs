@@ -22,6 +22,8 @@ namespace Origins.Items.Accessories {
 			Item.shootSpeed = 5;
 			Item.useAmmo = AmmoID.Bullet;
 			Item.UseSound = SoundID.Item10;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.FeralClaws] = ModContent.ItemType<Gun_Glove>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Gun_Glove>()] = ItemID.FeralClaws;
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

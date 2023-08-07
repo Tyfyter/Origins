@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Other {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Chlorophyte_Crown : ModItem {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Chlorophyte Crown");
@@ -20,7 +15,7 @@ namespace Origins.Items.Armor.Other {
 			Item.width = 24;
 			Item.height = 18;
 			Item.defense = 2;
-			Item.value = Item.buyPrice(gold: 6);
+			Item.value = Item.sellPrice(gold: 6);
 			Item.rare = ItemRarityID.Lime;
 		}
 		public override void UpdateEquip(Player player) {

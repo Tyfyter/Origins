@@ -16,7 +16,7 @@ namespace Origins.Items.Armor.Lost {
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;
-			Item.value = Item.buyPrice(silver: 75);
+			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
@@ -51,7 +51,7 @@ namespace Origins.Items.Armor.Lost {
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
-			Item.value = Item.buyPrice(silver: 60);
+			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
@@ -74,7 +74,7 @@ namespace Origins.Items.Armor.Lost {
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;
-			Item.value = Item.buyPrice(silver: 45);
+			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {

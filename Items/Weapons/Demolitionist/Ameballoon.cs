@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Ameballoon_P>();
 			Item.shootSpeed = 8.75f;
 			Item.knockBack = 5f;
-			Item.value = Item.buyPrice(silver: 4);
+			Item.value = Item.sellPrice(copper: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;

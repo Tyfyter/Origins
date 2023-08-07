@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.shootSpeed = 9.75f;
 			Item.mana = 10;
 			Item.knockBack = 0f;
-			Item.value = Item.buyPrice(gold: 1, silver: 50);
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item7;
 			Item.glowMask = glowmask;

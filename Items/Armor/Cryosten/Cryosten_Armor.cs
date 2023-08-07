@@ -12,7 +12,7 @@ namespace Origins.Items.Armor.Cryosten {
 		}
 		public override void SetDefaults() {
 			Item.defense = 2;
-			Item.value = Item.buyPrice(silver: 35);
+			Item.value = Item.sellPrice(silver: 7);
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().cryostenHelmet = true;
@@ -52,7 +52,7 @@ namespace Origins.Items.Armor.Cryosten {
 		}
 		public override void SetDefaults() {
 			Item.defense = 3;
-			Item.value = Item.buyPrice(silver: 35);
+			Item.value = Item.sellPrice(silver: 7);
 		}
 		public override void UpdateEquip(Player player) {
 			player.statLifeMax2 += (int)(player.statLifeMax2 * 0.12);
@@ -75,7 +75,7 @@ namespace Origins.Items.Armor.Cryosten {
 		}
 		public override void SetDefaults() {
 			Item.defense = 2;
-			Item.value = Item.buyPrice(silver: 35);
+			Item.value = Item.sellPrice(silver: 7);
 		}
 		public override void UpdateEquip(Player player) {
 			player.moveSpeed += 0.05f;

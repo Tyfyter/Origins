@@ -19,6 +19,8 @@ namespace Origins.Items.Accessories {
 			Item.accessory = true;
 			Item.rare = ItemRarityID.Orange;
 			Item.value = Item.sellPrice(gold: 1);
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bomb_Yeeter>()] = ModContent.ItemType<Asylum_Whistle>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Asylum_Whistle>()] = ModContent.ItemType<Bomb_Yeeter>();
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().asylumWhistle = true;

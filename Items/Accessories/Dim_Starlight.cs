@@ -16,6 +16,8 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
+			ItemID.Sets.ShimmerTransformToItem[ItemID.BandofStarpower] = ModContent.ItemType<Dim_Starlight>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Dim_Starlight>()] = ItemID.BandofStarpower;
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

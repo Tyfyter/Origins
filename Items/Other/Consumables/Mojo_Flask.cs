@@ -31,7 +31,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.useTime = 15;
 			Item.useAnimation = 15;
 			Item.healLife = 0;
-			Item.value = Item.buyPrice(gold: 2);
+			Item.value = Item.sellPrice(silver: 40);
 			Item.consumable = false;
 		}
 		public override bool CanUseItem(Player player) {

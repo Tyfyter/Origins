@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useAnimation = 20;
 			Item.knockBack = 9.5f;
 			Item.shoot = ProjectileID.None;
-			Item.value = Item.buyPrice(gold: 25);
+			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = CrimsonRarity.ID;
 			Item.autoReuse = true;
 		}

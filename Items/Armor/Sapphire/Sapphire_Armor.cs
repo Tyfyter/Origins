@@ -13,7 +13,7 @@ namespace Origins.Items.Armor.Sapphire {
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
@@ -44,7 +44,7 @@ namespace Origins.Items.Armor.Sapphire {
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {
@@ -68,7 +68,7 @@ namespace Origins.Items.Armor.Sapphire {
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {

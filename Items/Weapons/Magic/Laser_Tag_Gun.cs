@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.mana = 10;
 			Item.shoot = ModContent.ProjectileType<Laser_Tag_Laser>();
 			Item.scale = 1f;
-			Item.value = Item.buyPrice(gold: 10);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Lime;
 			Item.glowMask = glowmask;
 		}

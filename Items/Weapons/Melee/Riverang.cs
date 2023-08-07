@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shoot = ModContent.ProjectileType<Riverang_P>();
 			Item.shootSpeed = 10.75f;
 			Item.knockBack = 5f;
-			Item.value = Item.buyPrice(silver: 40);
+			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;

@@ -14,6 +14,13 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.Green;
 		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.TreasureMagnet);
+			recipe.AddIngredient(ModContent.ItemType<Turbo_Reel>());
+			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.Register();
+		}
 		public override void UpdateEquip(Player player) {
 			//player.GetModPlayer<OriginPlayer>().boomerangMagnet = true;
 		}

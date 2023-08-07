@@ -59,12 +59,6 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolt_Gun>(), 50));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 50));
 				break;
-				case NPCID.EaterofWorldsHead: // Optiphage
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotting_Worm_Staff>(), 50));
-				break;
-				case NPCID.BrainofCthulhu: //crimbrain
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brainy_Staff>(), 50));
-				break;
 				case NPCID.DemonEye:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Eyeball_Staff>(), 63));
 				break;

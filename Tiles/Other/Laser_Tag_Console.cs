@@ -31,7 +31,6 @@ namespace Origins.Tiles.Other {
 
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.LampPost);
-			Item.value = Item.buyPrice(gold: 10);
 			Item.createTile = ModContent.TileType<Laser_Tag_Console>();
 		}
 		public override void AddRecipes() {

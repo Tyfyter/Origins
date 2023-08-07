@@ -17,7 +17,7 @@ namespace Origins.Items.Armor.Riptide {
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
-			Item.value = Item.buyPrice(silver: 30);
+			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
@@ -58,7 +58,7 @@ namespace Origins.Items.Armor.Riptide {
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
-			Item.value = Item.buyPrice(silver: 30);
+			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
@@ -94,7 +94,7 @@ namespace Origins.Items.Armor.Riptide {
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
-			Item.value = Item.buyPrice(silver: 30);
+			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {

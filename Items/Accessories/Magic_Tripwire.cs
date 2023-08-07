@@ -11,6 +11,8 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(28, 34);
 			Item.value = Item.sellPrice(silver: 35);
 			Item.rare = ItemRarityID.Blue;
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Trap_Charm>()] = ModContent.ItemType<Magic_Tripwire>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Magic_Tripwire>()] = ModContent.ItemType<Trap_Charm>();
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().magicTripwire = true;

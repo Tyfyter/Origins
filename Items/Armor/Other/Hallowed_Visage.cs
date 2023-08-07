@@ -20,7 +20,7 @@ namespace Origins.Items.Armor.Other {
 			Item.width = 22;
 			Item.height = 26;
 			Item.defense = 3;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void UpdateEquip(Player player) {

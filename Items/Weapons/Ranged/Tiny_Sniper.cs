@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.height = 12;
 			Item.scale = 0.5f;
 			Item.holdStyle = ItemHoldStyleID.HoldHeavy;
-			Item.value = Item.buyPrice(gold: 4);
+			Item.value = Item.sellPrice(gold: 5);
 		}
 		public override void HoldItemFrame(Player player) {
 			if (player.scope && (PlayerInput.UsingGamepad ? (PlayerInput.GamepadThumbstickRight.Length() != 0f || !Main.SmartCursorIsUsed) : Main.mouseRight)) {

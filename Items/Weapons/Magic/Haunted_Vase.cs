@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.glowMask = glowmask;
 			Item.shoot = ModContent.ProjectileType<Haunted_Vase_P>();
 			Item.shootSpeed *= 1.5f;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Yellow;
 
 		}

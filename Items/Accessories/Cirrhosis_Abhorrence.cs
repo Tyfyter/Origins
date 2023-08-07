@@ -1,10 +1,9 @@
-﻿using Origins.Buffs;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Cirrhosis_Abhorrence : ModItem {
+    public class Cirrhosis_Abhorrence : ModItem {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Cirrhosis' Abhorrence");
 			// Tooltip.SetDefault("5 of the closest enemies have their stats reduced whilst being set ablaze and bleeding");

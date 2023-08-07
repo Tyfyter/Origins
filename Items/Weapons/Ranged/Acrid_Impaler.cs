@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.shoot = Harpoon_P.ID;
 			Item.shootSpeed = 15.75f;
 			Item.UseSound = SoundID.Item11;
-			Item.value = Item.buyPrice(silver: 50);
+			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = ItemRarityID.LightRed;
 			Item.autoReuse = true;
 		}

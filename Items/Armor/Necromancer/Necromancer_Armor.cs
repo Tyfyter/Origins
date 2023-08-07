@@ -15,7 +15,7 @@ namespace Origins.Items.Armor.Necromancer {
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
@@ -83,7 +83,7 @@ namespace Origins.Items.Armor.Necromancer {
 		}
 		public override void SetDefaults() {
 			Item.defense = 14;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {
@@ -108,7 +108,7 @@ namespace Origins.Items.Armor.Necromancer {
 		}
 		public override void SetDefaults() {
 			Item.defense = 10;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void UpdateEquip(Player player) {

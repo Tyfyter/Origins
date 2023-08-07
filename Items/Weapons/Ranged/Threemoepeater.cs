@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.width = 50;
 			Item.height = 10;
 			Item.UseSound = SoundID.Item11;
-			Item.value = Item.buyPrice(silver: 42);
+			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {

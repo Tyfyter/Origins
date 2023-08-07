@@ -54,7 +54,7 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.aiStyle = 0;
 			NPC.width = NPC.height = 68;
 			NPC.knockBackResist = 0.1f;
-			NPC.value = Item.buyPrice(gold: 3);
+			NPC.value = Item.sellPrice(gold: 3); // troll face
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (legs is null) {

@@ -13,7 +13,7 @@ namespace Origins.Items.Armor.Abysswalker {
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
-			Item.value = Item.buyPrice(gold: 2);
+			Item.value = Item.sellPrice(silver: 40);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
@@ -115,7 +115,7 @@ namespace Origins.Items.Armor.Abysswalker {
 		}
 		public override void SetDefaults() {
 			Item.defense = 11;
-			Item.value = Item.buyPrice(gold: 2);
+			Item.value = Item.sellPrice(silver: 40);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {

@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.shootSpeed = 8.75f;
 			Item.UseSound = SoundID.Item20;
 			Item.reuseDelay = 9;
-			Item.value = Item.buyPrice(gold: 2);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Orange;
 			Item.glowMask = glowmask;
 			Item.consumeAmmoOnFirstShotOnly = true;

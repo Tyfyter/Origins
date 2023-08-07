@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shoot = ModContent.ProjectileType<Amenonuhoko_P>();
 			Item.shootSpeed = 5f;
 			Item.useTurn = false;
-			Item.value = Item.buyPrice(silver: 50);
+			Item.value = Item.sellPrice(gold: 3);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item1;
 		}

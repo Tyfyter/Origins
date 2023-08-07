@@ -19,7 +19,7 @@ namespace Origins.Items.Other.LootBags {
 			itemLoot.Add(Defiled_Amalgamation.normalDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Reshaping_Chunk>()));
 			//itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Mysterious_Spray>()));
-			itemLoot.Add(ItemDropRule.Coins(Item.buyPrice(gold: 3), false));
+			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(gold: 3), false));
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
 			itemGroup = ContentSamples.CreativeHelper.ItemGroup.BossBags;

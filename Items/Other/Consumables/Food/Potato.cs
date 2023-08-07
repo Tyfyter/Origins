@@ -18,8 +18,7 @@ namespace Origins.Items.Other.Consumables.Food {
 			Item.scale = 0.75f;
 			Item.buffType = BuffID.WellFed;
 			Item.buffTime = 60 * 60 * 10;
-			Item.value = Item.buyPrice(silver: 1);
-			Item.rare = ItemRarityID.White;
+			Item.value = Item.sellPrice(silver: 1);
 		}
 		public override bool AltFunctionUse(Player player) {
 			return true;

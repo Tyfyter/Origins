@@ -12,7 +12,7 @@ namespace Origins.Items.Armor.Amber {
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
@@ -41,7 +41,7 @@ namespace Origins.Items.Armor.Amber {
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
@@ -65,7 +65,7 @@ namespace Origins.Items.Armor.Amber {
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {

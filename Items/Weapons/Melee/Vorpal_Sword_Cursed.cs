@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 0f;
 			Item.useTurn = false;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = CursedRarity.ID;
 			Item.UseSound = SoundID.Item1;
 			Item.ArmorPenetration = 9999;

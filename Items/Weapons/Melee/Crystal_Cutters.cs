@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shootSpeed = 7;
 			Item.rare = ItemRarityID.LightRed;
 			Item.autoReuse = true;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.sellPrice(silver: 20);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

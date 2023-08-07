@@ -1690,6 +1690,11 @@ Mods: {
 				Tooltip: ""
 			}
 
+			Biocomponent10: {
+				DisplayName: Biocomponent 10
+				Tooltip: ""
+			}
+
 			Black_Bile: {
 				DisplayName: Black Bile
 				Tooltip: "'So depressing it makes the party girl cry'"
@@ -1825,6 +1830,11 @@ Mods: {
 				Tooltip: ""
 			}
 
+			NE9: {
+				DisplayName: NE9
+				Tooltip: ""
+			}
+
 			Ocean_Key: {
 				DisplayName: Ocean Key
 				Tooltip: ""
@@ -1845,6 +1855,11 @@ Mods: {
 				Tooltip: "'Physical information, like everything else in the world'"
 			}
 
+			Respyrite: {
+				DisplayName: Respyrite
+				Tooltip: "'Crystal remains of captured breath'"
+			}
+
 			Riven_Carapace: {
 				DisplayName: "{$Riven} Carapace"
 				Tooltip: ""
@@ -1863,6 +1878,11 @@ Mods: {
 			Rubber: {
 				DisplayName: Rubber
 				Tooltip: ""
+			}
+
+			Sanguinite_Bar: {
+				DisplayName: Sanguinite Bar
+				Tooltip: A rare mineral that grows more powerful with heat
 			}
 
 			Sentient_Powder: {
@@ -1897,6 +1917,11 @@ Mods: {
 
 			Valkyrum_Bar: {
 				DisplayName: Valkyrum Bar
+				Tooltip: ""
+			}
+
+			Waste_Pump: {
+				DisplayName: Waste Pump
 				Tooltip: ""
 			}
 
@@ -3336,6 +3361,11 @@ Mods: {
 				Tooltip: Summons a woodsprite to fight for you
 			}
 
+			Sanguinite_Ore_Item: {
+				DisplayName: Sanguinite Ore
+				Tooltip: A rare mineral that grows more powerful with heat
+			}
+
 			DA_Trophy_Item: {
 				DisplayName: Defiled Amalgamation Trophy
 				Tooltip: ""
@@ -4311,6 +4341,7 @@ Mods: {
 			Defiled_Fissure.MapEntry: "{$Defiled} Fissure"
 			Defiled_Heart.MapEntry: "{$Defiled} Heart"
 			Defiled_Ore.MapEntry: Lost Ore
+			Sanguinite_Ore.MapEntry: Sanguinite Ore
 			Defiled_Tree_Sapling.MapEntry: "{$Defiled} Sapling"
 			Soulspore.MapEntry: Soulspore
 			Wilted_Rose.MapEntry: Wilted Rose

@@ -743,6 +743,7 @@ TILES:
 (^) Peat Moss*
 (^) Primordial Permafrost
 (^) Riven Grass
+(#, ^2) Sanguinite Ore !!!
 (^) Spug Flesh
 (@5, ^3) Sulphur Stone
 (^) White Ice
@@ -775,6 +776,7 @@ TILES:
 (X) Cubekon Chest
 (X) Cubekon Node
 (X) Dawn Dungeon Chest
+(X) Defiled Campfire
 (^) Defiled Dungeon Chest
 (#, ^2) Defiled Water Fountain
 (#, ^2) Defiled Torch
@@ -785,6 +787,7 @@ TILES:
 (X) Mushroom Dungeon Chest
 (X) Ocean Dungeon Chest
 (X) Residue Block
+(X) Riven Campfire
 (^) Riven Dungeon Chest
 (#, ^2) Riven Torch
 (X) Riven Water Fountain
@@ -846,6 +849,7 @@ MATERIALS:
 (^) Adhesive Wrap
 (^) Bark
 (^) Bat Hide
+(^) Biocomponent 10
 (^) Bud Barnacle
 (^) Carburite
 (^) Defiled Bar*
@@ -853,15 +857,19 @@ MATERIALS:
 (^) Encrusted Bar
 (^) Felnum Bar
 (^) Magic Hair Treatment Gel
+(^) NE-9
 (^) Riven Carapace
 (^) Rubber
+(^) Sanguinite Bar
 (^) Sentient Powder
 (^) Silicon
 (^) Soulspore
 (^) Strange String*
+(^) Surveysprout
 (^) Tire
 (^) Tree Sap
 (^) Undead Chunk*
+(^) Waste Pump
 (^) Wilting Rose
 (^) Wrycoral
 
@@ -879,6 +887,7 @@ MATERIALS:
 (^) Illegal Explosive Parts
 (^) Mushroom Key
 (^) Ocean Key
+(^) Respyrite
 (^) Riven Key
 
 (^) Busted Servo

@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.shoot = ModContent.ProjectileType<Sleetfire_P>();
 			Item.shootSpeed = 7f;
 			Item.reuseDelay = 9;
-			Item.value = Item.buyPrice(silver: 50);
+			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.White;
 			Item.ArmorPenetration = 5;
 			Item.UseSound = SoundID.Item34;

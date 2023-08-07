@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.knockBack = 4;
 			Item.shoot = ModContent.ProjectileType<Depth_Charge_P>();
 			Item.shootSpeed = 8f;
-			Item.value = Item.buyPrice(silver: 50);
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = SoundID.Item1;
 		}

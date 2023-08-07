@@ -16,7 +16,7 @@ namespace Origins.Items.Armor.Chromtain {
 		}
 		public override void SetDefaults() {
 			Item.defense = 21;
-			Item.value = Item.buyPrice(platinum: 1);
+			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = CrimsonRarity.ID;
 		}
 		public override void AddRecipes() {
@@ -47,7 +47,7 @@ namespace Origins.Items.Armor.Chromtain {
 		}
 		public override void SetDefaults() {
 			Item.defense = 54;
-			Item.value = Item.buyPrice(platinum: 1);
+			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = CrimsonRarity.ID;
 		}
 		public override void UpdateEquip(Player player) {
@@ -71,7 +71,7 @@ namespace Origins.Items.Armor.Chromtain {
 		}
 		public override void SetDefaults() {
 			Item.defense = 33;
-			Item.value = Item.buyPrice(platinum: 1);
+			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = CrimsonRarity.ID;
 		}
 		public override void AddRecipes() {

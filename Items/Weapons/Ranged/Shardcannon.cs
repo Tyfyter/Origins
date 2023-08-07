@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.shootSpeed = 6.5f;
 			Item.width = 44;
 			Item.height = 20;
-			Item.value = Item.buyPrice(gold: 6);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Green;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-6, 0);

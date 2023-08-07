@@ -175,28 +175,32 @@ namespace Origins {
 			group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.Deathweed), new int[] {
 				ItemID.Deathweed,
 				ModContent.ItemType<Wilting_Rose_Item>(),
-				ModContent.ItemType<Wrycoral_Item>()
+				ModContent.ItemType<Wrycoral_Item>(),
+				ModContent.ItemType<Surveysprout>()
 			});
 			DeathweedRecipeGroupID = RecipeGroup.RegisterGroup("Deathweed", group);
 			group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.RottenChunk), new int[] {
 				ItemID.RottenChunk,
 				ItemID.Vertebrae,
 				ModContent.ItemType<Strange_String>(),
-				ModContent.ItemType<Bud_Barnacle>()
+				ModContent.ItemType<Bud_Barnacle>(),
+				ModContent.ItemType<Biocomponent10>()
 			});
 			RottenChunkRecipeGroupID = RecipeGroup.RegisterGroup("Rotten Chunk", group);
 			group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.ShadowScale), new int[] {
 				ItemID.ShadowScale,
 				ItemID.TissueSample,
 				ModContent.ItemType<Undead_Chunk>(),
-				ModContent.ItemType<Riven_Carapace>()
+				ModContent.ItemType<Riven_Carapace>(),
+				ModContent.ItemType<NE9>()
 			});
 			ShadowScaleRecipeGroupID = RecipeGroup.RegisterGroup("Shadow Scale", group);
 			group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.CursedFlame), new int[] {
 				ItemID.CursedFlame,
 				ItemID.Ichor,
 				ModContent.ItemType<Alkahest>(),
-				ModContent.ItemType<Black_Bile>()
+				ModContent.ItemType<Black_Bile>(),
+				ModContent.ItemType<Respyrite>()
 			});
 			CursedFlameRecipeGroupID = RecipeGroup.RegisterGroup("Cursed Flames", group);
 		}

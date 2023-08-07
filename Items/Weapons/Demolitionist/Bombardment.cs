@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Bombardment_P>();
 			Item.shootSpeed = 9;
 			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.buyPrice(silver: 49);
+			Item.value = Item.sellPrice(silver: 20);
 			Item.UseSound = null;
 			Item.reuseDelay = 60;
 		}

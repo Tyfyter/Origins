@@ -16,6 +16,8 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(20, 34);
 			Item.rare = ItemRarityID.Gray;
 			Item.value = Item.sellPrice(gold: 3);
+			ItemID.Sets.ShimmerTransformToItem[ItemID.MagicQuiver] = ModContent.ItemType<Endless_Explosives>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Endless_Explosives>()] = ItemID.MagicQuiver;
 		}
 		public override void UpdateEquip(Player player) {
 			//player.GetModPlayer<OriginPlayer>().endlessExplosives = true;

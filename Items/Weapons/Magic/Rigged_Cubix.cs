@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.shootSpeed = 14;
 			Item.mana = 4;
 			Item.shoot = ModContent.ProjectileType<Rigged_Cubix_P>();
-			Item.value = Item.buyPrice(platinum: 1);
+			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = ButterscotchRarity.ID;
 			Item.UseSound = null;
 			Item.glowMask = glowmask;

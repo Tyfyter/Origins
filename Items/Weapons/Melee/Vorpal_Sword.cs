@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using Origins.Journal;
 using Origins.NPCs;
 using System.Collections.Generic;
@@ -34,18 +35,16 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.knockBack = 0f;
 			Item.useTurn = false;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
-			// lowered from 9999 so it's still greater than any vanilla defense except DG & Crawltipede but can be slightly less than World Cracker's
-			// could still be put into a "Storm Ruler" sort of situation if we make it available before or during the fight
 			Item.ArmorPenetration = 150;
 			Item.UseSound = null;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Vorpal_Sword_Cursed>());
-			recipe.AddTile(TileID.BewitchingTable);
+			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 10);
+			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
 		static int textIndex = -1;

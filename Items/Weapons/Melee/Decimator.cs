@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.shoot = ModContent.ProjectileType<Decimator_P>();
 			Item.shootSpeed = 3.75f;
 			Item.useTurn = false;
-			Item.value = Item.buyPrice(silver: 30);
+			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;

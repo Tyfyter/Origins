@@ -117,7 +117,7 @@ namespace Origins.Tiles.Other {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.BoneTable);
-			Item.value = Item.buyPrice(gold: 2);
+			Item.value = Item.sellPrice(gold: 1);
 			Item.createTile = ModContent.TileType<Cleansing_Station>();
 			Item.placeStyle = 0;
 		}

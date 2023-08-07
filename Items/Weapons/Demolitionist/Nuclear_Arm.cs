@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed = 5;
 			Item.UseSound = SoundID.Item45;
 			Item.rare = ItemRarityID.Pink;
-			Item.value = Item.buyPrice(gold: 2);
+			Item.value = Item.sellPrice(gold: 5);
 		}
 		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
 			//player.handon = Item.handOnSlot;

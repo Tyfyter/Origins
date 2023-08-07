@@ -26,7 +26,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.useAnimation = 28;
 			Item.mana = 15;
 			Item.shoot = ModContent.ProjectileType<Agony_Shard>();
-			Item.value = Item.buyPrice(silver: 80);
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Green;
 		}
 	}

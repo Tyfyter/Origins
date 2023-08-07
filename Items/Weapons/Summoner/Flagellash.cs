@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Summoner {
 			// Call this method to quickly set some of the properties below.
 			Item.DefaultToWhip(ModContent.ProjectileType<Flagellash_P>(), 13, 2, 4, 42);
 
-			Item.value = Item.buyPrice(gold: 3);
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
 		}

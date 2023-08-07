@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.value = Item.buyPrice(gold: 1, silver: 50);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item44;
 			Item.noMelee = true;

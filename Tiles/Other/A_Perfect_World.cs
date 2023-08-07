@@ -31,7 +31,7 @@ namespace Origins.Tiles.Other {
 
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.PaintingMartiaLisa);
-			Item.value = Item.buyPrice(gold: 10);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.createTile = ModContent.TileType<A_Perfect_World>();
 		}
 	}

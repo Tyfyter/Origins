@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Magic {
 			recipe.AddIngredient(ItemID.Book);
 			recipe.AddIngredient(ItemID.FallenStar);
 			recipe.AddIngredient(ItemID.WandofSparking);
-			recipe.AddTile(TileID.WorkBenches);
+			recipe.AddTile(TileID.Bookcases);
 			recipe.Register();
 		}
 	}

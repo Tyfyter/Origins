@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -34,6 +35,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brainy_Staff>(), 5));
 		}
 		public override void AI() {
 			NPC.FaceTarget();

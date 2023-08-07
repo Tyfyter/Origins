@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P_1>();
 			Item.shootSpeed = 9;
 			Item.rare = ItemRarityID.Pink;
-			Item.value = Item.buyPrice(gold: 2);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.reuseDelay = 60;
 			Item.autoReuse = false;
 			Item.UseSound = null;

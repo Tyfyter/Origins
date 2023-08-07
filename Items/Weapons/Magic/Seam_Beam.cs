@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.shootSpeed = 1;
 			Item.width = 12;
 			Item.height = 10;
-			Item.value = Item.buyPrice(gold: 4);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = Origins.Sounds.EnergyRipple;
 			Item.glowMask = glowmask;

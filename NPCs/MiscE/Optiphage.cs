@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -42,6 +43,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.RottenChunk, 5));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotting_Worm_Staff>(), 5));
 		}
 		public override void AI() {
 			if (NPC.aiStyle == NPCAIStyleID.Star_Cell) {

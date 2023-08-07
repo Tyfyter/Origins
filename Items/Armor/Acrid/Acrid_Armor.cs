@@ -19,7 +19,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void SetDefaults() {
 			Item.defense = 2;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
@@ -66,7 +66,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void SetDefaults() {
 			Item.defense = 4;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 2, silver: 40);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
@@ -113,7 +113,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void SetDefaults() {
 			Item.defense = 18;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 2, silver: 40);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
@@ -160,7 +160,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void SetDefaults() {
 			Item.defense = 1;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 2, silver: 40);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
@@ -207,7 +207,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void SetDefaults() {
 			Item.defense = 9;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 2, silver: 40);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
@@ -249,7 +249,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void SetDefaults() {
 			Item.defense = 18;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 2, silver: 40);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
@@ -272,7 +272,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void SetDefaults() {
 			Item.defense = 14;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 2, silver: 40);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {

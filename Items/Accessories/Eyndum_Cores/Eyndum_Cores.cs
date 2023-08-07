@@ -8,7 +8,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 	public abstract class Eyndum_Core : ModItem {
 		public abstract Color CoreGlowColor { get; }
 		public override void SetDefaults() {
-			Item.value = Item.buyPrice(platinum: 5);
+			Item.value = Item.sellPrice(platinum: 1);
 			Item.rare = CrimsonRarity.ID;
 			Item.accessory = true;
 		}

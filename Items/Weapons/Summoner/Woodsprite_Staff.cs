@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.useTime = 36;
 			Item.useAnimation = 36;
 			Item.useStyle = ItemUseStyleID.Swing;
-			Item.value = Item.buyPrice(gold: 1);
+			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.White;
 			Item.UseSound = SoundID.Item44;
 			buffID = ModContent.BuffType<Woodsprite_Buff>();

@@ -14,6 +14,8 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(20, 26);
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.BandofRegeneration] = ModContent.ItemType<Bomb_Charm>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bomb_Charm>()] = ItemID.BandofRegeneration;
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.15f;
