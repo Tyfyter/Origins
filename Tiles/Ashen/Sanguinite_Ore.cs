@@ -5,7 +5,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Origins.Tiles.Defiled {
+namespace Origins.Tiles.Ashen {
     public class Sanguinite_Ore : OriginTile, IComplexMineDamageTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;

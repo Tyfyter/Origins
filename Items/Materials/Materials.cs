@@ -1,5 +1,6 @@
 ﻿using Origins.Items.Other.Consumables;
 using Origins.Journal;
+using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;

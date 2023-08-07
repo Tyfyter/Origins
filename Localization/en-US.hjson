@@ -3645,6 +3645,11 @@ Mods: {
 				DisplayName: Test
 				Tooltip: ""
 			}
+
+			Surveysprout: {
+				DisplayName: Surveysprout
+				Tooltip: ""
+			}
 		}
 
 		Buffs: {
