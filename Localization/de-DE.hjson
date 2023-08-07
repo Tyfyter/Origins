@@ -4235,6 +4235,10 @@ Mods: {
 
 				// Census.SpawnCondition: Conditions unknown
 			}
+
+			// World_Cracker_Body.DisplayName: World_ Cracker_ Body
+			// World_Cracker_Head.DisplayName: World_ Cracker_ Head
+			// World_Cracker_Tail.DisplayName: World_ Cracker_ Tail
 		}
 
 		// BiomeName.Bestiary_Biomes.TheTemple: Bestiary_ Biomes. The Temple
@@ -4265,14 +4269,19 @@ Mods: {
 				// TownNPCDialogueName: the Riven Hive
 			}
 
+			World_Cracker_Master_Biome: {
+				// DisplayName: World_ Cracker_ Master_ Biome
+				// TownNPCDialogueName: the World_ Cracker_ Master_ Biome
+			}
+
 			Underground_Defiled_Wastelands_Biome: {
-				// DisplayName: Underground Defiled Wastelands Biome
-				// TownNPCDialogueName: the Underground Defiled Wastelands Biome
+				// DisplayName: Underground Defiled Wastelands
+				// TownNPCDialogueName: the Underground Defiled Wastelands
 			}
 
 			Underground_Riven_Hive_Biome: {
-				// DisplayName: Underground Riven Hive Biome
-				// TownNPCDialogueName: the Underground Riven Hive Biome
+				// DisplayName: Underground Riven Hive
+				// TownNPCDialogueName: the Underground Riven Hive
 			}
 
 			Bestiary_Biomes: {

@@ -4235,9 +4235,13 @@ Mods: {
 
 				Census.SpawnCondition: Conditions unknown
 			}
+
+			World_Cracker_Body.DisplayName: World Cracker Body
+			World_Cracker_Head.DisplayName: World Cracker Head
+			World_Cracker_Tail.DisplayName: World Cracker Tail
 		}
 
-		BiomeName.Bestiary_Biomes.TheTemple: Bestiary_ Biomes. The Temple
+		BiomeName.Bestiary_Biomes.TheTemple: The Temple
 
 		Biomes: {
 			Brine_Pool: {
@@ -4265,14 +4269,19 @@ Mods: {
 				TownNPCDialogueName: the Riven Hive
 			}
 
+			World_Cracker_Master_Biome: {
+				DisplayName: World Cracker
+				TownNPCDialogueName: the World Cracker
+			}
+
 			Underground_Defiled_Wastelands_Biome: {
-				DisplayName: Underground Defiled Wastelands Biome
-				TownNPCDialogueName: the Underground Defiled Wastelands Biome
+				DisplayName: Underground Defiled Wastelands
+				TownNPCDialogueName: the Underground Defiled Wastelands
 			}
 
 			Underground_Riven_Hive_Biome: {
-				DisplayName: Underground Riven Hive Biome
-				TownNPCDialogueName: the Underground Riven Hive Biome
+				DisplayName: Underground Riven Hive
+				TownNPCDialogueName: the Underground Riven Hive
 			}
 
 			Bestiary_Biomes: {

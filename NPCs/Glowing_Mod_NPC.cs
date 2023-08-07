@@ -16,33 +16,36 @@ namespace Origins.NPCs {
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (GlowTexture is not null) {
-				Tile tile = Framing.GetTileSafely(NPC.TopLeft.ToTileCoordinates());
+			DrawGlow(spriteBatch, screenPos, GlowTexture, NPC);
+		}
+		public static void DrawGlow(SpriteBatch spriteBatch, Vector2 screenPos, Texture2D glowTexture, NPC npc) {
+			if (glowTexture is not null) {
+				Tile tile = Framing.GetTileSafely(npc.TopLeft.ToTileCoordinates());
 				if (!tile.HasTile || !Main.tileBlockLight[tile.TileType]) goto success;
 
-				tile = Framing.GetTileSafely(NPC.TopRight.ToTileCoordinates());
+				tile = Framing.GetTileSafely(npc.TopRight.ToTileCoordinates());
 				if (!tile.HasTile || !Main.tileBlockLight[tile.TileType]) goto success;
 
-				tile = Framing.GetTileSafely(NPC.BottomLeft.ToTileCoordinates());
+				tile = Framing.GetTileSafely(npc.BottomLeft.ToTileCoordinates());
 				if (!tile.HasTile || !Main.tileBlockLight[tile.TileType]) goto success;
 
-				tile = Framing.GetTileSafely(NPC.BottomRight.ToTileCoordinates());
+				tile = Framing.GetTileSafely(npc.BottomRight.ToTileCoordinates());
 				if (!tile.HasTile || !Main.tileBlockLight[tile.TileType]) goto success;
 				return;
 				success:
 				SpriteEffects spriteEffects = SpriteEffects.None;
-				if (NPC.spriteDirection == 1) {
+				if (npc.spriteDirection == 1) {
 					spriteEffects = SpriteEffects.FlipHorizontally;
 				}
-				Vector2 halfSize = new Vector2(GlowTexture.Width / 2, GlowTexture.Height / Main.npcFrameCount[NPC.type] / 2);
+				Vector2 halfSize = new Vector2(glowTexture.Width / 2, glowTexture.Height / Main.npcFrameCount[npc.type] / 2);
 				spriteBatch.Draw(
-					GlowTexture,
-					new Vector2(NPC.position.X - screenPos.X + (NPC.width / 2) - GlowTexture.Width * NPC.scale / 2f + halfSize.X * NPC.scale, NPC.position.Y - screenPos.Y + NPC.height - GlowTexture.Height * NPC.scale / Main.npcFrameCount[NPC.type] + 4f + halfSize.Y * NPC.scale + Main.NPCAddHeight(NPC) + NPC.gfxOffY),
-					NPC.frame,
+					glowTexture,
+					new Vector2(npc.position.X - screenPos.X + (npc.width / 2) - glowTexture.Width * npc.scale / 2f + halfSize.X * npc.scale, npc.position.Y - screenPos.Y + npc.height - glowTexture.Height * npc.scale / Main.npcFrameCount[npc.type] + 4f + halfSize.Y * npc.scale + Main.NPCAddHeight(npc) + npc.gfxOffY),
+					npc.frame,
 					Color.White,
-					NPC.rotation,
+					npc.rotation,
 					halfSize,
-					NPC.scale,
+					npc.scale,
 					spriteEffects,
 				0);
 			}

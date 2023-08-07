@@ -10,6 +10,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.NPCs;
 using Origins.NPCs.MiscE;
+using Origins.NPCs.Riven.World_Cracker;
 using Origins.NPCs.TownNPCs;
 using Origins.Projectiles;
 using Origins.Questing;
@@ -257,6 +258,102 @@ namespace Origins {
 			};
 			On_Player.AddBuff_DetermineBuffTimeToAdd += On_Player_AddBuff_DetermineBuffTimeToAdd;
 			On_Player.Update_NPCCollision += On_Player_Update_NPCCollision;
+			IL_Main.UpdateWeather += IL_Main_UpdateWeather;
+			On_Rain.Update += On_Rain_Update;
+			On_Main.DrawRain += On_Main_DrawRain;
+			IL_Main.DrawRain += IL_Main_DrawRain;
+		}
+
+		private void IL_Main_DrawRain(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.Before, i => i.MatchStloc(6));
+			c.EmitDelegate<Func<Color, Color>>(static c => rivenRain ? new Color(0, 255, 195, 175) : c);
+		}
+
+		static Rectangle umbrellaHitbox;
+		public static bool rainedOnPlayer = false;
+		static bool rivenRain = false;
+		private void On_Main_DrawRain(On_Main.orig_DrawRain orig, Main self) {
+			Player player = Main.LocalPlayer;
+			if (player.dead) {
+				orig(self);
+				return;
+			}
+			Rectangle playerHitbox = player.Hitbox;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			umbrellaHitbox = default;
+			switch (player.HeldItem.type) {
+				case ItemID.Umbrella:
+				case ItemID.TragicUmbrella:
+				if (player.ItemAnimationActive) goto default;
+				umbrellaHitbox = playerHitbox;
+				float width = 16;
+				player.ApplyMeleeScale(ref width);
+				umbrellaHitbox.Inflate((int)width, -4);
+				umbrellaHitbox.Y -= umbrellaHitbox.Height + 8;
+				umbrellaHitbox.X += Main.LocalPlayer.direction * 8;
+				break;
+				default:
+				if (player.armor[0].type == ItemID.UmbrellaHat) {
+					umbrellaHitbox = playerHitbox;
+					umbrellaHitbox.Inflate(14, -12);
+					umbrellaHitbox.Y -= umbrellaHitbox.Height;
+				}
+				break;
+			}
+			rainedOnPlayer = false;
+			rivenRain = player.InModBiome<Riven_Hive>();
+			orig(self);
+			if (rainedOnPlayer && rivenRain) {
+				bool extraStrength = Main.remixWorld || (Main.masterMode && NPC.npcsFoundForCheckActive[ModContent.NPCType<World_Cracker_Head>()]);
+				originPlayer.RivenAssimilation += extraStrength ? 0.01f : 0.003f;
+				int duration = extraStrength ? 30 : 15;
+				int targetTime = extraStrength ? 480 : 1440;
+				float targetSeverity = 0f;
+				bool hadTorn = player.HasBuff(Torn_Debuff.ID);
+				player.AddBuff(Torn_Debuff.ID, duration);
+				if (hadTorn || targetSeverity < originPlayer.tornTarget) {
+					originPlayer.tornTargetTime = targetTime;
+					originPlayer.tornTarget = targetSeverity;
+				}
+			}
+		}
+
+		private void On_Rain_Update(On_Rain.orig_Update orig, Rain self) {
+			orig(self);
+			int rainSmokeChance = 1000;
+			bool splash = false;
+			if (umbrellaHitbox.Contains(self.position)) {
+				self.active = false;
+				splash = true;
+				rainSmokeChance /= 5;
+			} else if (Main.LocalPlayer.Hitbox.Contains(self.position)) {
+				self.active = false;
+				rainedOnPlayer = true;
+				splash = true;
+				rainSmokeChance /= 5;
+			}
+			if (rivenRain && !self.active && Main.rand.Next(rainSmokeChance) < Main.gfxQuality * 100f) {
+				Gore.NewGore(Entity.GetSource_None(), self.position, default, GoreID.ChimneySmoke1 + Main.rand.Next(3));
+			}
+			if (splash) {
+				if (Main.rand.Next(100) < Main.gfxQuality * 100f) {
+					Dust dust = Main.dust[Dust.NewDust(self.position - self.velocity, 2, 2, Dust.dustWater())];
+					dust.position.X -= 2f;
+					dust.position.Y += 2f;
+					dust.alpha = 38;
+					dust.velocity *= 0.1f;
+					dust.velocity += -self.velocity * 0.025f;
+					dust.scale = 0.6f;
+					dust.noGravity = true;
+				}
+			}
+		}
+
+		private void IL_Main_UpdateWeather(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.After, i => i.MatchCall<Main>("get_IsItStorming"));
+			c.EmitDelegate<Func<bool, bool>>(static (v) => v || (Main.masterMode && Main.LocalPlayer.InModBiome<Riven_Hive>() && NPC.npcsFoundForCheckActive[MC.NPCType<World_Cracker_Head>()]));
 		}
 
 		private void On_Player_Update_NPCCollision(On_Player.orig_Update_NPCCollision orig, Player self) {
@@ -312,7 +409,7 @@ namespace Origins {
 					keyedReason.Key,
 					deadPlayerName,
 					keyedReason.SourcePlayerIndex > -1 ? NetworkText.FromLiteral(Main.player[keyedReason.SourcePlayerIndex].name) : NetworkText.Empty,
-					keyedReason.SourceItem.Name,
+					keyedReason.SourceItem?.Name ?? "",
 					keyedReason.SourceNPCIndex > -1 ? Main.npc[keyedReason.SourceNPCIndex].GetGivenOrTypeNetName() : NetworkText.Empty,
 					keyedReason.SourceProjectileType > -1 ? Lang.GetProjectileName(keyedReason.SourceProjectileType).ToNetworkText() : NetworkText.Empty
 				);
