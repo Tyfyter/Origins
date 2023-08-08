@@ -40,15 +40,15 @@ namespace Origins.Items.Materials {
 		public string EntryName => "Origins/" + typeof(Alkahest_Mat_Entry).Name;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.value = Item.sellPrice(silver: 9);
-			Item.rare = ItemRarityID.Orange;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.CursedFlame] = ItemID.Ichor;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.Ichor] = ModContent.ItemType<Black_Bile>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Black_Bile>()] = ModContent.ItemType<Alkahest>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Alkahest>()] = ModContent.ItemType<Respyrite>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Respyrite>()] = ItemID.CursedFlame;
+		}
+		public override void SetDefaults() {
+			Item.value = Item.sellPrice(silver: 9);
+			Item.rare = ItemRarityID.Orange;
 		}
 		public class Alkahest_Mat_Entry : JournalEntry {
 			public override string TextKey => "Alkahest";
@@ -87,14 +87,14 @@ namespace Origins.Items.Materials {
 	public class Biocomponent10 : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 30;
-		}
-		public override void SetDefaults() {
-			Item.value = Item.sellPrice(copper: 2);
 			ItemID.Sets.ShimmerTransformToItem[ItemID.RottenChunk] = ItemID.Vertebrae;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.Vertebrae] = ModContent.ItemType<Strange_String>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Strange_String>()] = ModContent.ItemType<Bud_Barnacle>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bud_Barnacle>()] = ModContent.ItemType<Biocomponent10>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Biocomponent10>()] = ItemID.RottenChunk;
+		}
+		public override void SetDefaults() {
+			Item.value = Item.sellPrice(copper: 2);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.BattlePotion);
@@ -104,27 +104,8 @@ namespace Origins.Items.Materials {
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 
-			recipe = Recipe.Create(ItemID.CoffinMinecart);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
-			recipe.AddRecipeGroup(RecipeGroupID.Wood, 10);
-			recipe.AddIngredient(Type, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.MechanicalWorm);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
-			recipe.AddIngredient(ItemID.SoulofNight, 6);
-			recipe.AddIngredient(Type, 6);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.MonsterLasagna);
-			recipe.AddIngredient(Type, 8);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
-
 			recipe = Recipe.Create(ItemID.UnholyArrow, 5);
-			recipe.AddRecipeGroup(ItemID.WoodenArrow, 5);
+			recipe.AddIngredient(ItemID.WoodenArrow, 5);
 			recipe.AddIngredient(Type);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
@@ -208,27 +189,13 @@ namespace Origins.Items.Materials {
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 
-			recipe = Recipe.Create(ItemID.CoffinMinecart);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
-			recipe.AddRecipeGroup(RecipeGroupID.Wood, 10);
-			recipe.AddIngredient(Type, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.MechanicalWorm);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
-			recipe.AddIngredient(ItemID.SoulofNight, 6);
-			recipe.AddIngredient(Type, 6);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-
 			recipe = Recipe.Create(ItemID.MonsterLasagna);
 			recipe.AddIngredient(Type, 8);
 			recipe.AddTile(TileID.CookingPots);
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.UnholyArrow, 5);
-			recipe.AddRecipeGroup(ItemID.WoodenArrow, 5);
+			recipe.AddIngredient(ItemID.WoodenArrow, 5);
 			recipe.AddIngredient(Type);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
@@ -453,12 +420,12 @@ namespace Origins.Items.Materials {
 	public class Illegal_Explosive_Parts : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.IllegalGunParts] = ModContent.ItemType<Illegal_Explosive_Parts>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Illegal_Explosive_Parts>()] = ItemID.IllegalGunParts;
 		}
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.LightRed;
-			ItemID.Sets.ShimmerTransformToItem[ItemID.IllegalGunParts] = ModContent.ItemType<Illegal_Explosive_Parts>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Illegal_Explosive_Parts>()] = ItemID.IllegalGunParts;
 		}
 	}
 	public class Lunar_Token : ModItem {
@@ -504,15 +471,15 @@ namespace Origins.Items.Materials {
 	public class NE9 : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.value = Item.sellPrice(silver: 1, copper: 50);
-			Item.rare = ItemRarityID.Blue;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.ShadowScale] = ItemID.TissueSample;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.TissueSample] = ModContent.ItemType<Undead_Chunk>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Undead_Chunk>()] = ModContent.ItemType<Riven_Carapace>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Carapace>()] = ModContent.ItemType<NE9>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<NE9>()] = ItemID.ShadowScale;
+		}
+		public override void SetDefaults() {
+			Item.value = Item.sellPrice(silver: 1, copper: 50);
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.ObsidianHelm);
@@ -778,27 +745,8 @@ namespace Origins.Items.Materials {
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 
-			recipe = Recipe.Create(ItemID.CoffinMinecart);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
-			recipe.AddRecipeGroup(RecipeGroupID.Wood, 10);
-			recipe.AddIngredient(Type, 10);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.MechanicalWorm);
-			recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
-			recipe.AddIngredient(ItemID.SoulofNight, 6);
-			recipe.AddIngredient(Type, 6);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.MonsterLasagna);
-			recipe.AddIngredient(Type, 8);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
-
 			recipe = Recipe.Create(ItemID.UnholyArrow, 5);
-			recipe.AddRecipeGroup(ItemID.WoodenArrow, 5);
+			recipe.AddIngredient(ItemID.WoodenArrow, 5);
 			recipe.AddIngredient(Type);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
@@ -807,13 +755,13 @@ namespace Origins.Items.Materials {
 	public class Surveysprout : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.value = Item.sellPrice(copper: 20);
 			ItemID.Sets.ShimmerTransformToItem[ItemID.Deathweed] = ModContent.ItemType<Wilting_Rose_Item>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wilting_Rose_Item>()] = ModContent.ItemType<Wrycoral_Item>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wrycoral_Item>()] = ModContent.ItemType<Surveysprout>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Surveysprout>()] = ItemID.Deathweed;
+		}
+		public override void SetDefaults() {
+			Item.value = Item.sellPrice(copper: 20);
 		}
 	}
 	public class Tree_Sap : ModItem {
@@ -915,13 +863,15 @@ namespace Origins.Items.Materials {
 	public class Waste_Pump : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 25;
-		}
-        public override void SetDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.VileMushroom] = ItemID.ViciousMushroom;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.ViciousMushroom] = ModContent.ItemType<Soulspore_Item>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Soulspore_Item>()] = ModContent.ItemType<Acetabularia_Item>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Acetabularia_Item>()] = ModContent.ItemType<Waste_Pump>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Waste_Pump>()] = ItemID.VileMushroom;
+		}
+        public override void SetDefaults() {
+			Item.width = 14;
+			Item.height = 18;
 		}
     }
 	public class Wilting_Rose_Item : ModItem {
