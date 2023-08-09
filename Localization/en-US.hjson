@@ -4445,6 +4445,7 @@ Mods: {
 		AltBiomes: {
 			Defiled_Wastelands_Alt_Biome.DisplayName: Defiled Wastelands
 			Riven_Hive_Alt_Biome.DisplayName: Riven Hive
+			Ashen_Alt_Biome.Description: Ashen_ Alt_ Biome
 		}
 	}
 }
