@@ -19,12 +19,16 @@ namespace Origins.Tiles.Other {
     public class Cleansing_Station : ModTile, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => CanUse(Main.LocalPlayer) ? Color.White : Color.Transparent;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameY == 0 && CanUse(Main.LocalPlayer)) color = new Vector3(0, 0.784f, 0.839f);
+		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
 				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Other/Cleansing_Station_Glow");
 			}
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;
+			Main.tileLighted[Type] = true;
 			TileID.Sets.HasOutlines[Type] = true;
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style3x2);
@@ -39,7 +43,7 @@ namespace Origins.Tiles.Other {
 			return CanUse(Main.LocalPlayer);
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Cleansing_Station_Item>());
+			//Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Cleansing_Station_Item>());
 		}
 		static bool CanUse(Player player) {
 			const float maxDist = 25 * 16;
@@ -103,7 +107,12 @@ namespace Origins.Tiles.Other {
 			return true;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			this.DrawTileGlow(i, j, spriteBatch);
+			//this.DrawTileGlow(i, j, spriteBatch);
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.glowTexture = GlowTexture;
+			drawData.glowColor = GlowColor;
+			drawData.glowSourceRect = new Rectangle(drawData.tileFrameX, drawData.tileFrameY, 16, 16);
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = 0f;

@@ -23,6 +23,9 @@ using MonoMod.RuntimeDetour.HookGen;
 using System.Reflection;
 //using ThoriumMod.Projectiles.Bard;
 using Origins.NPCs.MiscE;
+using Microsoft.Xna.Framework;
+using Origins.Tiles.Other;
+using Origins.Tiles;
 
 namespace Origins {
 	public class OriginsModIntegrations : ILoadable {
@@ -37,6 +40,8 @@ namespace Origins {
 		public static Mod HEROsMod { get => instance.herosMod; set => instance.herosMod = value; }
 		Mod thorium;
 		public static Mod Thorium { get => instance.thorium; set => instance.thorium = value; }
+		Mod fancyLighting;
+		public static Mod FancyLighting { get => instance.fancyLighting; set => instance.fancyLighting = value; }
 		Func<bool> checkAprilFools;
 		public static Func<bool> CheckAprilFools { get => instance.checkAprilFools; set => instance.checkAprilFools = value; }
 		public static Condition AprilFools => new Condition("Mods.Origins.Conditions.AprilFools", CheckAprilFools);
@@ -102,6 +107,9 @@ namespace Origins {
 					(Predicate<Item>)((Item i) => i.CountsAsClass<Explosive>())
 				);
 			}
+			if (ModLoader.TryGetMod("FancyLighting", out instance.fancyLighting)) {
+				instance.LoadFancyLighting();
+			}
 		}
 		public static bool WikiPageExists(object obj, object id) {
 			if (wikiSiteMap is not null) {
@@ -136,11 +144,29 @@ namespace Origins {
 			}
 			return null;
 		}
-
 		public void Unload() {
 			instance = null;
 			wikiSiteMap = null;
 		}
+		[JITWhenModsEnabled("FancyLighting")]
+		void LoadFancyLighting() {
+			Type smoothLightingType = fancyLighting.GetType().Assembly.GetType("FancyLighting.SmoothLighting");
+			MonoModHooks.Add(
+				smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Instance),
+				(hook_TileShine)((orig_TileShine orig, object self, ref Vector3 color, Tile tile) => {
+					orig(self, ref color, tile);
+					if (TileLoader.GetTile(tile.TileType) is IGlowingModTile glowingTile) glowingTile.FancyLightingGlowColor(tile, ref color);
+				})
+			);
+			/*for (int i = 0; i < OriginTile.IDs.Count; i++) {
+				if (OriginTile.IDs[i] is IGlowingModTile glowingTile) {
+					glowingTiles[OriginTile.IDs[i].Type] = true;
+					glowingTileColors[OriginTile.IDs[i].Type] = glowingTile.GlowColor;
+				}
+			}*/
+		}
+		delegate void orig_TileShine(object self, ref Vector3 color, Tile tile);
+		delegate void hook_TileShine(orig_TileShine orig, object self, ref Vector3 color, Tile tile);
 		[JITWhenModsEnabled("ThoriumMod")]
 		void LoadThorium() {///TODO: unfalse if thorium
 #if false

@@ -16,10 +16,14 @@ namespace Origins.Tiles.Riven {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
+		}
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileCut[Type] = true;
 			Main.tileNoFail[Type] = true;
+			Main.tileLighted[Type] = true;
 			AddMapEntry(new Color(20, 138, 220));
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
@@ -64,6 +68,11 @@ namespace Origins.Tiles.Riven {
 		public override bool CanDrop(int i, int j) => false;
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			r = 0.05f * GlowValue;
+			g = 0.0375f * GlowValue;
+			b = 0.015f * GlowValue;
 		}
 	}
 }

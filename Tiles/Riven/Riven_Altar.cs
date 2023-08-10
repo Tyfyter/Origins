@@ -15,6 +15,9 @@ namespace Origins.Tiles.Riven {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
+		}
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {

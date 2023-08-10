@@ -17,6 +17,9 @@ namespace Origins.Tiles.Riven {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
+		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
 				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Flesh_Glow");
@@ -25,6 +28,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileCut[Type] = true;
 			Main.tileFrameImportant[Type] = true;
 			//Main.tileNoAttach[Type] = true;
+			Main.tileLighted[Type] = true;
 			Main.tileLavaDeath[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.Pots, 0));
 			TileObjectData.newTile.Width = 2;
@@ -49,6 +53,11 @@ namespace Origins.Tiles.Riven {
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			WorldGen.CheckPot(i, j);
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			r = 0.05f * GlowValue;
+			g = 0.0375f * GlowValue;
+			b = 0.015f * GlowValue;
 		}
 	}
 	public class Riven_Pot_Item : ModItem {

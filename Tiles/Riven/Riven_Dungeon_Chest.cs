@@ -10,11 +10,15 @@ namespace Origins.Tiles.Riven {
 	public class Riven_Dungeon_Chest : ModChest, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => Color.White;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			color = new Vector3(0.394f, 0.879f, 0.912f);
+		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
 				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Dungeon_Chest_Glow");
 			}
 			base.SetStaticDefaults();
+			Main.tileLighted[Type] = true;
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Riven Chest");
 			AddMapEntry(new Color(200, 200, 200), name, MapChestName);

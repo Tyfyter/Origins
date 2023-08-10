@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Reflection;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -12,6 +13,12 @@ namespace Origins.Tiles.Riven {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (HasScar(tile)) {
+				//Lighting.AddLight((int)(id % Main.maxTilesX) * 16, (int)(id / Main.maxTilesX) * 16, 1, 0.05f, 0.055f);
+				color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
+			}
+		}
 		public override void SetStaticDefaults() {
 			if (!Main.dedServ) {
 				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Flesh_Glow");
@@ -19,6 +26,7 @@ namespace Origins.Tiles.Riven {
 			Origins.PotType.Add(Type, ((ushort)TileType<Riven_Pot>(), 0, 0));
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
+			Main.tileLighted[Type] = true;
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -49,22 +57,66 @@ namespace Origins.Tiles.Riven {
 			return false;
 		}
 		bool CheckOtherTilesGlow(int i, int j) {
-			if (Main.tile[i + 1, j].TileIsType(Type) && Main.tile[i + 1, j].TileFrameY > 90) {
+			if (Main.tile[i + 1, j].TileIsType(Type) && Main.tile[i + 1, j].TileFrameY < 90) {
 				return true;
 			}
-			if (Main.tile[i - 1, j].TileIsType(Type) && Main.tile[i + 1, j].TileFrameY > 90) {
+			if (Main.tile[i - 1, j].TileIsType(Type) && Main.tile[i - 1, j].TileFrameY < 90) {
 				return true;
 			}
-			if (Main.tile[i, j + 1].TileIsType(Type) && Main.tile[i + 1, j].TileFrameY > 90) {
+			if (Main.tile[i, j + 1].TileIsType(Type) && Main.tile[i, j + 1].TileFrameY < 90) {
 				return true;
 			}
-			if (Main.tile[i, j - 1].TileIsType(Type) && Main.tile[i + 1, j].TileFrameY > 90) {
+			if (Main.tile[i, j - 1].TileIsType(Type) && Main.tile[i, j - 1].TileFrameY < 90) {
 				return true;
 			}
 			return false;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			r = g = b = 0;
+			Tile tile = Main.tile[i, j];
+			if (OriginsModIntegrations.FancyLighting is not null && HasScar(tile)) {
+				r = 0.02f * GlowValue;
+				g = 0.15f * GlowValue;
+				b = 0.2f * GlowValue;
+			}
+		}
+		static bool HasScar(Tile tile) {
+			if (tile.TileFrameY >= 90) return false;
+			switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
+				case (1, 0):
+				case (2, 0):
+				case (3, 0):
+
+				case (1, 1):
+				case (2, 1):
+				case (3, 1):
+
+				case (1, 2):
+				case (2, 2):
+				case (3, 2):
+
+				case (1, 4):
+				case (2, 3):
+				case (5, 1):
+				case (5, 2):
+				case (6, 2):
+				case (6, 3):
+				case (7, 1):
+				case (7, 4):
+				case (8, 0):
+				case (8, 3):
+				case (9, 3):
+				case (10, 1):
+				case (11, 2):
+				return true;
+			}
+			return false;
+		}
+		static bool CheckOtherTilesActive(int i, int j) {
+			return !(Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].HasTile && Main.tile[i + 1, j].HasTile);
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (Main.rand.NextBool((int)(100 * MathHelper.Lerp(151, 151 * 2.8f, MathHelper.Clamp(Main.maxTilesX / 4200f - 1f, 0f, 1f)))) && !TileObject.CanPlace(i, j + 1, TileType<Wrycoral>(), 2, 0, out TileObject objectData, onlyCheck: false, checkStay: true)) {
