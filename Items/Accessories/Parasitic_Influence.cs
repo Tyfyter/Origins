@@ -24,7 +24,20 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 		}
-		public override void UpdateAccessory(Player player, bool isHidden) {
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.PanicNecklace);
+            recipe.AddIngredient(ItemID.ThornsPotion);
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.BandofStarpower);
+            recipe.AddIngredient(ItemID.ManaCrystal);
+            recipe.AddIngredient(Type);
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.Register();
+        }
+        public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (originPlayer.parasiticInfluenceCooldown > 0) return;
 			const float maxDist = 64 * 64;

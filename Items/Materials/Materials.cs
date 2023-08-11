@@ -16,7 +16,6 @@ namespace Origins.Items.Materials {
     public class Adhesive_Wrap : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 25;
-
 		}
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(copper: 18);
@@ -468,14 +467,14 @@ namespace Origins.Items.Materials {
 			Item.rare = ItemRarityID.Yellow;
 		}
 	}
-	public class NE9 : ModItem {
+	public class NE8 : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 25;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.ShadowScale] = ItemID.TissueSample;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.TissueSample] = ModContent.ItemType<Undead_Chunk>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Undead_Chunk>()] = ModContent.ItemType<Riven_Carapace>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Carapace>()] = ModContent.ItemType<NE9>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<NE9>()] = ItemID.ShadowScale;
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Carapace>()] = ModContent.ItemType<NE8>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<NE8>()] = ItemID.ShadowScale;
 		}
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(silver: 1, copper: 50);

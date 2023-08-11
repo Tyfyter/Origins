@@ -52,7 +52,7 @@ BOSSES AND MINI-BOSSES:
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver
-(#, ^2) World Cracker !!!
+(#2, ^2) World Cracker !!!
 
 (%?, ^2) Lost Diver (Just needs the item/projectile/use sprites)
 (X) Miscreant
@@ -479,6 +479,8 @@ MELEE WEAPONS:
 (^) Felnum Spear
 (^) Fiberglass Broadsword
 (^) Krakram*
+(#, ^2) Nineball !!!
+(#, ^2) Orbital Saw !!!
 (^) Ripper Lance
 (^) Riverang
 (^) Spiker Sword
@@ -556,6 +558,7 @@ RANGED WEAPONS:
 (X) EAC Thunder
 (^) Laser Tag Gun
 (X) Serpentine
+(X) Seventh Spline
 (X) Shroomshot
 (X) Skewr
 

@@ -21,7 +21,7 @@ namespace Origins.World {
 			.SetEvilHerb(ModContent.ItemType<Surveysprout>())
 			.SetVileComponent(ModContent.ItemType<Respyrite>())
 			.SetVileInnard(ModContent.ItemType<Biocomponent10>())
-			.SetEvilBossDrop(ModContent.ItemType<NE9>());
+			.SetEvilBossDrop(ModContent.ItemType<NE8>());
 		public override void SetStaticDefaults() {
 			Selectable = false;
 			BiomeOre = ModContent.TileType<Sanguinite_Ore>();

@@ -192,7 +192,7 @@ namespace Origins {
 				ItemID.TissueSample,
 				ModContent.ItemType<Undead_Chunk>(),
 				ModContent.ItemType<Riven_Carapace>(),
-				ModContent.ItemType<NE9>()
+				ModContent.ItemType<NE8>()
 			});
 			ShadowScaleRecipeGroupID = RecipeGroup.RegisterGroup("Shadow Scale", group);
 			group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.CursedFlame), new int[] {
