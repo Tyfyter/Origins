@@ -19,6 +19,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(copper: 18);
+			Item.maxStack = Item.CommonMaxStack;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 5);
@@ -48,6 +49,7 @@ namespace Origins.Items.Materials {
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(silver: 9);
 			Item.rare = ItemRarityID.Orange;
+			Item.maxStack = Item.CommonMaxStack;
 		}
 		public class Alkahest_Mat_Entry : JournalEntry {
 			public override string TextKey => "Alkahest";
@@ -60,6 +62,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Gray;
+			Item.maxStack = Item.CommonMaxStack;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>());
@@ -75,6 +78,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Gray;
+			Item.maxStack = Item.CommonMaxStack;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.Leather);
@@ -94,6 +98,7 @@ namespace Origins.Items.Materials {
 		}
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(copper: 2);
+			Item.maxStack = Item.CommonMaxStack;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.BattlePotion);
@@ -115,10 +120,10 @@ namespace Origins.Items.Materials {
 		public string EntryName => "Origins/" + typeof(Black_Bile_Entry).Name;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 25;
-
 		}
 		public override void SetDefaults() {
 			Item.value = Item.sellPrice(silver: 10);
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Orange;
 		}
 		public class Black_Bile_Entry : JournalEntry {
@@ -133,6 +138,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 48;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.LightRed;
 			Item.glowMask = glowmask;
 		}
@@ -151,6 +157,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 30;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 40);
 		}
 		public override void AddRecipes() {
@@ -169,6 +176,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 30);
 			Item.glowMask = glowmask;
 		}
@@ -178,6 +186,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 30;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 2);
 		}
 		public override void AddRecipes() {
@@ -205,6 +214,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 2);
 			Item.rare = ItemRarityID.Pink;
 		}
@@ -214,6 +224,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 8);
 			Item.rare = ItemRarityID.Blue;
 		}
@@ -223,6 +234,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = CrimsonRarity.ID;
 		}
@@ -240,6 +252,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 		}
@@ -261,6 +274,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Yellow;
 		}
 	}
@@ -269,6 +283,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Yellow;
 		}
 	}
@@ -277,6 +292,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Yellow;
 		}
 	}
@@ -285,6 +301,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 81);
 			Item.rare = ItemRarityID.Orange;
 		}
@@ -314,6 +331,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = CrimsonRarity.ID;
 		}
@@ -333,6 +351,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 		}
@@ -354,6 +373,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = CrimsonRarity.ID;
 		}
@@ -365,6 +385,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 40);
 			Item.rare = ItemRarityID.Green;
 		}
@@ -380,6 +401,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 68);
 			Item.rare = CrimsonRarity.ID;
 		}
@@ -389,6 +411,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 68);
 			Item.rare = ButterscotchRarity.ID;
 		}
@@ -404,6 +427,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 10);
 			Item.rare = ItemRarityID.Purple;
 		}
@@ -413,6 +437,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Yellow;
 		}
 	}
@@ -423,6 +448,7 @@ namespace Origins.Items.Materials {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Illegal_Explosive_Parts>()] = ItemID.IllegalGunParts;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(gold: 4);
 			Item.rare = ItemRarityID.LightRed;
 		}
@@ -446,6 +472,7 @@ namespace Origins.Items.Materials {
 
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 40);
 			Item.rare = ItemRarityID.Quest;
 		}
@@ -464,6 +491,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Yellow;
 		}
 	}
@@ -477,6 +505,7 @@ namespace Origins.Items.Materials {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<NE8>()] = ItemID.ShadowScale;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 1, copper: 50);
 			Item.rare = ItemRarityID.Blue;
 		}
@@ -541,6 +570,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Yellow;
 		}
 	}
@@ -568,6 +598,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 20;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 20);
 			Item.rare = ItemRarityID.Pink;
 			Item.glowMask = glowmask;
@@ -587,6 +618,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(gold: 1, silver: 60);
 			Item.rare = ButterscotchRarity.ID;
 			Item.glowMask = glowmask;
@@ -597,6 +629,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 9);
 			Item.rare = ItemRarityID.Orange;
 		}
@@ -608,6 +641,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Yellow;
 			Item.glowMask = glowmask;
 		}
@@ -619,6 +653,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(gold: 1, copper: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
@@ -662,6 +697,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 40);
 			Item.rare = ItemRarityID.Pink;
 		}
@@ -678,6 +714,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 6);
 		}
 		public override void AddRecipes() {
@@ -699,6 +736,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;
 		}
@@ -720,6 +758,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 44);
 		}
 		public override void AddRecipes() {
@@ -734,6 +773,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 2);
 		}
 		public override void AddRecipes() {
@@ -760,6 +800,7 @@ namespace Origins.Items.Materials {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Surveysprout>()] = ItemID.Deathweed;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 20);
 		}
 	}
@@ -768,6 +809,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 2);
 			Item.rare = ItemRarityID.Gray;
 		}
@@ -785,6 +827,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(silver: 1, copper: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
@@ -829,6 +872,7 @@ namespace Origins.Items.Materials {
 
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(gold: 10);
 			Item.rare = ButterscotchRarity.ID;
 		}
@@ -847,6 +891,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Yellow;
 		}
@@ -871,6 +916,7 @@ namespace Origins.Items.Materials {
         public override void SetDefaults() {
 			Item.width = 14;
 			Item.height = 18;
+			Item.maxStack = Item.CommonMaxStack;
 		}
     }
 	public class Wilting_Rose_Item : ModItem {
@@ -878,6 +924,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 20);
 		}
 	}
@@ -886,6 +933,7 @@ namespace Origins.Items.Materials {
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
+			Item.maxStack = Item.CommonMaxStack;
 			Item.value = Item.sellPrice(copper: 20);
 		}
 	}
