@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -35,6 +37,11 @@ namespace Origins.Tiles.Ashen {
 	}
 	public class Sanguinite_Ore_Item : ModItem {
 		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ItemID.DemoniteOre] = ItemID.CrimtaneOre;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.CrimtaneOre] = ItemType<Defiled_Ore_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ItemType<Defiled_Ore_Item>()] = ItemType<Encrusted_Ore_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ItemType<Encrusted_Ore_Item>()] = Type;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.DemoniteOre;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DemoniteOre);
