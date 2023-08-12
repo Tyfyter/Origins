@@ -3650,6 +3650,11 @@ Mods: {
 				DisplayName: Surveysprout
 				Tooltip: ""
 			}
+
+			NE8: {
+				DisplayName: N E8
+				Tooltip: ""
+			}
 		}
 
 		Buffs: {
