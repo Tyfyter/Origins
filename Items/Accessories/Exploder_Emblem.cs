@@ -13,8 +13,8 @@ namespace Origins.Items.Accessories {
 			Item.CloneDefaults(ItemID.WarriorEmblem);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
-			ItemID.Sets.ShimmerTransformToItem[ItemID.RangerEmblem] = ModContent.ItemType<Exploder_Emblem>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Exploder_Emblem>()] = ItemID.WarriorEmblem;
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Exploder_Emblem>()] = ItemID.Sets.ShimmerTransformToItem[ItemID.SorcererEmblem];
+			ItemID.Sets.ShimmerTransformToItem[ItemID.SorcererEmblem] = ModContent.ItemType<Exploder_Emblem>();
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClasses.Explosive) += 0.05f;
