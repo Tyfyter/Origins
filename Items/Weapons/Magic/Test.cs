@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.SpectreStaff);
+			Item.CloneDefaults(ItemID.Vilethorn);
 			Item.damage = 16;
 			Item.crit = 4;
 			Item.DamageType = DamageClass.Magic;

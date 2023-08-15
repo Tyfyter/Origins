@@ -10,8 +10,6 @@ namespace Origins.Items.Pets {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Suspicious Looking Pebble");
-			// Tooltip.SetDefault("Summons a {$Defiled} blight to light your way");
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {

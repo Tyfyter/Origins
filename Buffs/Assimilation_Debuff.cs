@@ -109,13 +109,13 @@ namespace Origins.Buffs {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Defiled"
 				}, 40, 0);
 			}
-			if (percent >= 0.33) {
+			if (percent >= 0.17) {
 				player.AddBuff(BuffID.Weak, 10);
             }
-			if (percent >= 0.66) {
+			if (percent >= 0.33) {
 				player.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 10);
 			}
-			if (percent >= 0.99) {
+			if (percent >= 0.67) {
 				player.AddBuff(BuffID.BrokenArmor, 10);
 			}
 		}
@@ -153,7 +153,7 @@ namespace Origins.Buffs {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Riven"
 				}, 40, 0);
 			}
-			//OriginPlayer.InflictTorn(player, 60, 1800, 1 - percent);
+			//OriginPlayer.InflictTorn(player, 60, 1800, 1 - percent); This is the code I tried implementing. Could fix to where the player doesn't just count down their health to zero?
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			float percent = Main.LocalPlayer.GetModPlayer<OriginPlayer>().RivenAssimilation;

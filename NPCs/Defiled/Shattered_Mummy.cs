@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
-using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -9,8 +8,9 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.NPCs.Defiled {
-	public class Shattered_Mummy : ModNPC, IDefiledEnemy {
+namespace Origins.NPCs.Defiled
+{
+    public class Shattered_Mummy : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Shattered Mummy");
 			Main.npcFrameCount[NPC.type] = 4;

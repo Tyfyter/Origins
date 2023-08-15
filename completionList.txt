@@ -106,10 +106,12 @@ ENEMY NPCS:
 (^) Amebic Slime
 (^) Ancient Cyclops
 (^) Barnacleback
+(^) Bottomfeeder
 (^) Buckethead Zombie
 (X) Cellarkeep
 (^) Chunky Slime
 (^) Cleaver
+(^) Conehead Zombie
 (^) Cranivore
 (^) Crimbrain
 (#2, ^2) Defiled Ekko !!!
@@ -120,6 +122,7 @@ ENEMY NPCS:
 (^) Pre-H Defiled Enemies
 (^) Riven Protoform
 (#, ^2) Scanner Scout
+(^) Shattered Goldfish
 (^) Single-Cellular Nautilus
 (#, ^2) Spider Amoeba !!!
 
@@ -321,18 +324,19 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing
 (^) Ruby Reticle
+(^) Shield of Retribution
 (^) Sonar Visor*
 (^) Scavenger Bag
 (^) Solar Panel
 (^) Sonic Radar
-(^) Shield of Retribution
 (#2, ^2) Strange Computer
 (^) Super Turbo Reel
 (^) Superjump Cape
+(X) Support Pulley !!!
 (^) Symbiote Skull
 (^) Tainted Flesh
 (^) Trap Charm
-(^) Turbo Reel
+(#3, ^2) Turbo Reel !!!
 (^) Unsought Organ
 (^) Volatile Charm
 
@@ -479,7 +483,7 @@ MELEE WEAPONS:
 (^) Felnum Spear
 (^) Fiberglass Broadsword
 (^) Krakram*
-(#, ^2) Nineball !!!
+(^) Nineball
 (#, ^2) Orbital Saw !!!
 (^) Ripper Lance
 (^) Riverang
@@ -794,6 +798,7 @@ TILES:
 (^) Riven Dungeon Chest
 (#, ^2) Riven Torch
 (X) Riven Water Fountain
+(#3, ^2) Traffic Cone !!!
 
 (^) Cleansing Station
 (X) Defiled Waste Organ
@@ -859,6 +864,7 @@ MATERIALS:
 (^) Dreadful Powder
 (^) Encrusted Bar
 (^) Felnum Bar
+(^) Fungarust
 (^) Magic Hair Treatment Gel
 (^) NE-9
 (^) Riven Carapace
@@ -872,7 +878,7 @@ MATERIALS:
 (^) Tire
 (^) Tree Sap
 (^) Undead Chunk*
-(^) Waste Pump
+(^) Urn of Ashes
 (^) Wilting Rose
 (^) Wrycoral
 
@@ -952,7 +958,7 @@ CONSUMABLES:
 (^) Jam Sandwich
 (^) Jelly Schnapps
 (^) Krunch Mix*
-(^) Pawpaw                                  dont forget to implement the evil fruit tree shake drops
+(^) Pawpaw
 (^) Periven
 (^) Potato
 (^) Prickly Pear
@@ -960,6 +966,7 @@ CONSUMABLES:
 (^) Soul Spaghetti
 (^) Tasty Vanilla Shake
 
+(#3, ^2) Broken Record !!!
 (^) Nerve Impulse Manipulator*
 (#2, ^2) Quantum Cell
 (^) Suspicious Looking Ice Cream

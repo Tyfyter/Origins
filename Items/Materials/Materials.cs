@@ -432,7 +432,23 @@ namespace Origins.Items.Materials {
 			Item.rare = ItemRarityID.Purple;
 		}
 	}
-	public class Hell_Key : ModItem {
+    public class Fungarust : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 25;
+            ItemID.Sets.ShimmerTransformToItem[ItemID.VileMushroom] = ItemID.ViciousMushroom;
+            ItemID.Sets.ShimmerTransformToItem[ItemID.ViciousMushroom] = ModContent.ItemType<Soulspore_Item>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Soulspore_Item>()] = ModContent.ItemType<Acetabularia_Item>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Acetabularia_Item>()] = ModContent.ItemType<Fungarust>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Fungarust>()] = ItemID.VileMushroom;
+        }
+        public override void SetDefaults()
+        {
+            Item.maxStack = Item.CommonMaxStack;
+        }
+    }
+    public class Hell_Key : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 		}
@@ -904,21 +920,6 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Waste_Pump : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-			ItemID.Sets.ShimmerTransformToItem[ItemID.VileMushroom] = ItemID.ViciousMushroom;
-			ItemID.Sets.ShimmerTransformToItem[ItemID.ViciousMushroom] = ModContent.ItemType<Soulspore_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Soulspore_Item>()] = ModContent.ItemType<Acetabularia_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Acetabularia_Item>()] = ModContent.ItemType<Waste_Pump>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Waste_Pump>()] = ItemID.VileMushroom;
-		}
-        public override void SetDefaults() {
-			Item.width = 14;
-			Item.height = 18;
-			Item.maxStack = Item.CommonMaxStack;
-		}
-    }
 	public class Wilting_Rose_Item : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 25;

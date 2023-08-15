@@ -1890,6 +1890,11 @@ Mods: {
 				// Tooltip: Spreads the Riven
 			}
 
+			Ash_Urn: {
+				// DisplayName: Urn of Ashes
+				// Tooltip: The day of Verdict will come...
+			}
+
 			Silicon: {
 				// DisplayName: Silicon
 				// Tooltip: ""
@@ -1920,9 +1925,9 @@ Mods: {
 				// Tooltip: ""
 			}
 
-			Waste_Pump: {
-				// DisplayName: Waste Pump
-				// Tooltip: ""
+			Fungarust: {
+				// DisplayName: Fungarust
+				// Tooltip: Catalyst of rusting metal
 			}
 
 			Wilting_Rose_Item: {
@@ -1962,6 +1967,11 @@ Mods: {
 					Developer item
 					'It's my ace in the hole!'
 					''' */
+			}
+
+			Broken_Record: {
+				// DisplayName: Broken Record
+				// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
 			Corruption_Loot_Box: {
@@ -3021,6 +3031,11 @@ Mods: {
 				// Tooltip: Inflicts acid venom, poison, and toxic shock
 			}
 
+			Nineball: {
+				// DisplayName: Nineball
+				// Tooltip: "'Target verified, commencing hostilities!'"
+			}
+
 			Personal_Laser_Blade: {
 				// DisplayName: Personal Laser Blade
 				/* Tooltip:
@@ -3521,6 +3536,11 @@ Mods: {
 				// Tooltip: Used to set up laser tag matches
 			}
 
+			Traffic_Cone_Item: {
+				// DisplayName: Traffic Cone
+				// Tooltip: ""
+			}
+
 			Acetabularia_Item: {
 				// DisplayName: Acetabularia
 				// Tooltip: ""
@@ -3992,6 +4012,7 @@ Mods: {
 			// Third_Eye_Deathray.DisplayName: Phantasmal Deathray
 			// Unsought_Organ_P.DisplayName: Unsought Organ
 			// Riptide_Dash_P.DisplayName: Riptide Dash
+			// Ash_Urn_P.DisplayName: Ashes
 			// Defiled_Powder_P.DisplayName: Defiled Powder
 			// Sentient_Powder_P.DisplayName: Sentient Powder
 			// Gooey_Water_P.DisplayName: Gooey Water
@@ -4143,6 +4164,7 @@ Mods: {
 			// Blotopus_P.DisplayName: Bloody Needle
 			// Bone_Bolt.DisplayName: Bone Bolt
 			// Bone_Shard.DisplayName: BoneS hard
+			// Nineball_P.DisplayName: Nienball
 			// Hailferno_P.DisplayName: Slushflame
 			// Shardcannon_P1.DisplayName: Shardcannon
 			// Shardcannon_P2.DisplayName: Shardcannon
@@ -4224,6 +4246,7 @@ Mods: {
 			// Defiled_Tripod.DisplayName: "{$Defiled} Tripod"
 			// Defiled_Wisp.DisplayName: "{$Defiled} Wisp"
 			// Enchanted_Trident.DisplayName: Profaned Bident
+			// Shattered_Goldfish.DisplayName: Shattered Goldfish
 			// Shattered_Mummy.DisplayName: Shattered Mummy
 			// Enchanted_Fiberglass_Bow.DisplayName: Enchanted Fiberglass Bow
 			// Enchanted_Fiberglass_Pistol.DisplayName: Enchanted Fiberglass Pistol
@@ -4231,6 +4254,7 @@ Mods: {
 			// Fiberglass_Weaver.DisplayName: Fiberglass Weaver
 			// Swarmer.DisplayName: Swarmer
 			// Buckethead_Zombie.DisplayName: Buckethead Zombie
+			// Conehead_Zombie.DisplayName: Conehead Zombie
 			// Cranivore.DisplayName: Cranivore
 			// Crimbrain.DisplayName: Crimbrain
 			// Optiphage.DisplayName: Optiphage
@@ -4279,6 +4303,7 @@ Mods: {
 			// World_Cracker_Body.DisplayName: World Cracker
 			// World_Cracker_Head.DisplayName: World Cracker
 			// World_Cracker_Tail.DisplayName: World Cracker
+			// Bottomfeeder.DisplayName: Bottomfeeder
 		}
 
 		// BiomeName.Bestiary_Biomes.TheTemple: The Temple

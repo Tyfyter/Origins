@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -6,19 +7,18 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.MiscE {
-    public class Buckethead_Zombie : ModNPC {
+    public class Conehead_Zombie : ModNPC {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Buckethead Zombie");
 			Main.npcFrameCount[NPC.type] = 3;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.Fighter;
 			NPC.lifeMax = 45;
-			NPC.defense = 28;
+			NPC.defense = 14;
 			NPC.damage = 14;
 			NPC.width = 19;
-			NPC.height = 23;
+			NPC.height = 28;
 			NPC.friendly = false;
 		}
 		public override void FindFrame(int frameHeight) {
@@ -32,14 +32,14 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
-				new FlavorTextBestiaryInfoElement("Buckethead zombie always wore a bucket. Part of it was to assert his uniqueness in an uncaring world. Mostly he just forgot it was there in the first place."),
+				new FlavorTextBestiaryInfoElement("Conehead Zombie shuffled mindlessly forward like every other zombie. But something made him stop, made him pick up a traffic cone and stick it on his head. Oh yeah. He likes to party."),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ItemID.EmptyBucket, 3));
 			npcLoot.Add(ItemDropRule.Common(ItemID.Diamond, 20));
-		}
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Traffic_Cone_Item>(), 3));
+        }
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0 || OriginsModIntegrations.CheckAprilFools()) {
 				Gore.NewGore(NPC.GetSource_Death(), new Vector2(NPC.position.X, NPC.position.Y + 20f), NPC.velocity, 4);

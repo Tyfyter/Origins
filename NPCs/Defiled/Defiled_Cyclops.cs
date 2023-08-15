@@ -74,7 +74,14 @@ namespace Origins.NPCs.Defiled {
 				NPC.frameCounter = 0;
 			}
 		}
-		public override void PostAI() {
+        public void SpawnWisp(NPC npc)
+        {
+            if (Main.masterMode || (Main.expertMode && Main.rand.NextBool()))
+            {
+                NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
+            }
+        }
+        public override void PostAI() {
 			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X *= speedMult;
 			/*if(!attacking) {
                 npc.Hitbox = new Rectangle((int)npc.position.X+(npc.oldDirection == 1 ? 70 : 52), (int)npc.position.Y, 56, npc.height);

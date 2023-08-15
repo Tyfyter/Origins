@@ -1,30 +1,33 @@
-﻿using Origins.NPCs.MiscE;
-using System;
+﻿using Origins.NPCs.Riven.World_Cracker;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.IO;
 
-namespace Origins.NPCs.Riven {
-	public class RivenGlobalNPC : GlobalNPC {
+namespace Origins.NPCs.Riven
+{
+    public class RivenGlobalNPC : GlobalNPC {
 		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
 		public override void Load() {
 			AssimilationAmounts = new() {
-				[ModContent.NPCType<Amebic_Slime>()] = 0.02f,
-				[ModContent.NPCType<Cleaver_Head>()] = 0.06f,
+				[ModContent.NPCType<Amebic_Slime>()] = 0.04f,
+                [ModContent.NPCType<Amoeba_Bugger>()] = 0.03f,
+                [ModContent.NPCType<Barnacleback>()] = 0.05f,
+                [ModContent.NPCType<Cleaver_Head>()] = 0.04f,
 				[ModContent.NPCType<Cleaver_Body>()] = 0.04f,
 				[ModContent.NPCType<Cleaver_Tail>()] = 0.04f,
-				[ModContent.NPCType<Flagellant>()] = 0.03f,
-				[ModContent.NPCType<Rivenator_Head>()] = 0.06f,
-				[ModContent.NPCType<Rivenator_Body>()] = 0.04f,
-				[ModContent.NPCType<Rivenator_Tail>()] = 0.04f,
-				[ModContent.NPCType<Riven_Fighter>()] = 0.01f,
-			};
+				[ModContent.NPCType<Flagellant>()] = 0.11f,
+                [ModContent.NPCType<Measly_Moeba>()] = 0.05f,
+                [ModContent.NPCType<Pustule_Jelly>()] = 0.08f,
+                [ModContent.NPCType<Rivenator_Head>()] = 0.06f,
+				[ModContent.NPCType<Rivenator_Body>()] = 0.06f,
+				[ModContent.NPCType<Rivenator_Tail>()] = 0.06f,
+				[ModContent.NPCType<Riven_Fighter>()] = 0.09f,
+                [ModContent.NPCType<Riven_Mummy>()] = 0.07f,
+                [ModContent.NPCType<Single_Cellular_Nautilus>()] = 0.03f,
+                [ModContent.NPCType<World_Cracker_Head>()] = 0.07f,
+                [ModContent.NPCType<World_Cracker_Body>()] = 0.04f,
+                [ModContent.NPCType<World_Cracker_Tail>()] = 0.09f,
+            };
 		}
 		public override void Unload() {
 			AssimilationAmounts = null;

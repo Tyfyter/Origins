@@ -1,24 +1,34 @@
-﻿using Origins.NPCs.MiscE;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
-namespace Origins.NPCs.Defiled {
-	public class DefiledGlobalNPC : GlobalNPC {
+namespace Origins.NPCs.Defiled
+{
+    public class DefiledGlobalNPC : GlobalNPC {
 		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
-		public override void Load() {
-			AssimilationAmounts = new() {
-				[-1] = 0.01f,
-			};
-		}
-		public override void Unload() {
+        public override void Load()
+        {
+            AssimilationAmounts = new()
+            {
+                [ModContent.NPCType<Chunky_Slime>()] = 0.05f,
+                [ModContent.NPCType<Defiled_Amalgamation>()] = 0.11f,
+                [ModContent.NPCType<Defiled_Brute>()] = 0.08f,
+                [ModContent.NPCType<Defiled_Cyclops>()] = 0.08f,
+                [ModContent.NPCType<Defiled_Digger_Head>()] = 0.06f,
+                [ModContent.NPCType<Defiled_Digger_Body>()] = 0.03f,
+                [ModContent.NPCType<Defiled_Digger_Tail>()] = 0.03f,
+                [ModContent.NPCType<Defiled_Ekko>()] = 0.04f,
+                [ModContent.NPCType<Defiled_Flyer>()] = 0.05f,
+                [ModContent.NPCType<Defiled_Swarmer>()] = 0.02f,
+                [ModContent.NPCType<Defiled_Tripod>()] = 0.07f,
+                [ModContent.NPCType<Shattered_Mummy>()] = 0.07f,
+            };
+        }
+        public override void Unload() {
 			AssimilationAmounts = null;
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {

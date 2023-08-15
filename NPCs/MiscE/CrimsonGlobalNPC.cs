@@ -35,11 +35,21 @@ namespace Origins.NPCs.MiscE {
 				NPCID.PigronCrimson,
 			};
 			AssimilationAmounts = new() {
-				[NPCID.BrainofCthulhu] = 0.03f,
+                [NPCID.BloodCrawler] = 0.05f,
+                [NPCID.BloodFeeder] = 0.06f,
+                [NPCID.BloodJelly] = 0.08f,
+                [NPCID.BrainofCthulhu] = 0.16f,
 				[NPCID.Creeper] = 0.002f,
-				[ModContent.NPCType<Crimbrain>()] = 0.07f,
-				[NPCID.IchorSticker] = 0.06f // for projectile
-			};
+                [NPCID.Crimera] = 0.05f,
+                [NPCID.Crimslime] = 0.06f,
+                [NPCID.CrimsonGoldfish] = 0.05f,
+                [NPCID.DesertGhoulCrimson] = 0.06f,
+                [NPCID.FaceMonster] = 0.08f,
+                [NPCID.FloatyGross] = 0.08f,
+                [NPCID.Herpling] = 0.06f,
+                [NPCID.IchorSticker] = 0.06f,
+                [ModContent.NPCType<Crimbrain>()] = 0.07f,
+            };
 		}
 		public override void Unload() {
 			NPCTypes = null;
