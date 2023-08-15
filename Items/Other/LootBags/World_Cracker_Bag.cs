@@ -1,12 +1,13 @@
 ﻿using Origins.Items.Accessories;
 using Origins.NPCs.Riven;
+using Origins.NPCs.Riven.World_Cracker;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.LootBags {
-	public class Primordial_Amoeba_Bag : ModItem {
+	public class World_Cracker_Bag : ModItem {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Treasure Bag (Primordial Amoeba)");
 			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
@@ -15,10 +16,8 @@ namespace Origins.Items.Other.LootBags {
 			Item.CloneDefaults(ItemID.CultistBossBag);
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			IItemDropRuleCondition master = new Conditions.IsMasterMode();
-			//itemLoot.Add(Primordial_Amoeba.normalDropRule);
+			itemLoot.Add(World_Cracker_Head.normalDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Amebic_Vial>()));
-			//itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Protozoa_Food>()));
 			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(gold: 3), false));
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {

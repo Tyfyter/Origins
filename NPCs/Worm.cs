@@ -153,6 +153,7 @@ namespace Origins.NPCs
 		/// Whether the NPC ignores tile collision when attempting to "dig" through tiles, like how Wyverns work.
 		/// </summary>
 		public bool CanFly { get; set; }
+		public SoundStyle? DigSound { get; set; } = SoundID.WormDig;
 
 		/// <summary>
 		/// The maximum distance in <b>pixels</b> within which the NPC will use tile collision, if <see cref="CanFly"/> returns <see langword="false"/>.<br/>
@@ -380,11 +381,11 @@ namespace Origins.NPCs
 			float length = (float)Math.Sqrt(dirX * dirX + dirY * dirY);
 
 			// If we do not have any type of collision, we want the NPC to fall down and de-accelerate along the X axis.
-			if (!collision && !CanFly)
+			if (!collision && !CanFly) {
 				HeadAI_Movement_HandleFallingFromNoCollision(dirX, speed, acceleration);
-			else {
+			} else {
 				// Else we want to play some audio (soundDelay) and move towards our target.
-				HeadAI_Movement_PlayDigSounds(length);
+				if (collision) HeadAI_Movement_PlayDigSounds(length);
 
 				HeadAI_Movement_HandleMovement(dirX, dirY, length, speed, acceleration);
 			}
@@ -397,7 +398,7 @@ namespace Origins.NPCs
 			NPC.TargetClosest(true);
 
 			// Constant gravity of 0.11 pixels/tick
-			NPC.velocity.Y += 0.11f;
+			NPC.velocity.Y += 0.11f * NPC.GravityMultiplier.Value;
 
 			// Ensure that the NPC does not fall too quickly
 			if (NPC.velocity.Y > speed)
@@ -425,7 +426,7 @@ namespace Origins.NPCs
 		}
 
 		protected void HeadAI_Movement_PlayDigSounds(float length) {
-			if (NPC.soundDelay == 0) {
+			if (NPC.soundDelay == 0 && DigSound.HasValue) {
 				// Play sounds quicker the closer the NPC is to the target location
 				float num1 = length / 40f;
 
@@ -437,7 +438,7 @@ namespace Origins.NPCs
 
 				NPC.soundDelay = (int)num1;
 
-				SoundEngine.PlaySound(SoundID.WormDig, NPC.position);
+				SoundEngine.PlaySound(DigSound, NPC.position);
 			}
 		}
 
@@ -525,6 +526,28 @@ namespace Origins.NPCs
 			// Force a netupdate if the NPC's velocity changed sign and it was not "just hit" by a player
 			if (((NPC.velocity.X > 0 && NPC.oldVelocity.X < 0) || (NPC.velocity.X < 0 && NPC.oldVelocity.X > 0) || (NPC.velocity.Y > 0 && NPC.oldVelocity.Y < 0) || (NPC.velocity.Y < 0 && NPC.oldVelocity.Y > 0)) && !NPC.justHit)
 				NPC.netUpdate = true;
+		}
+		public override bool SpecialOnKill() {
+			if (NPC.boss) {
+				int tailType = TailType;
+				float dist = float.PositiveInfinity;
+				int closest = NPC.whoAmI;
+				NPC current = NPC;
+				while (current is not null) {
+					for (int j = 0; j < Main.maxPlayers; j++) {
+						if (Main.player[j].active && !Main.player[j].dead) {
+							float currentDist = Main.player[j].DistanceSQ(current.Center);
+							if (currentDist < dist) {
+								dist = currentDist;
+								closest = current.whoAmI;
+							}
+						}
+					}
+					current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
+				}
+				NPC.Center = Main.npc[closest].Center;
+			}
+			return false;
 		}
 	}
 

@@ -108,7 +108,7 @@ namespace Origins.NPCs.Defiled {
 		bool ForceSyncMana => true;
 		void Regenerate(out int lifeRegen) { lifeRegen = 0; }
 		void SpawnWisp(NPC npc) {
-			NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
+			if (Main.expertMode) NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
 		}
 	}
 	public static class IDefiledEnemyExt {

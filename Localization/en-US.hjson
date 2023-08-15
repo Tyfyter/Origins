@@ -2278,8 +2278,8 @@ Mods: {
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
-			Primordial_Amoeba_Bag: {
-				DisplayName: Treasure Bag (Primordial Amoeba)
+			World_Cracker_Bag: {
+				DisplayName: Treasure Bag (World Cracker)
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
@@ -4276,9 +4276,9 @@ Mods: {
 				Census.SpawnCondition: Conditions unknown
 			}
 
-			World_Cracker_Body.DisplayName: World Cracker Body
-			World_Cracker_Head.DisplayName: World Cracker Head
-			World_Cracker_Tail.DisplayName: World Cracker Tail
+			World_Cracker_Body.DisplayName: World Cracker
+			World_Cracker_Head.DisplayName: World Cracker
+			World_Cracker_Tail.DisplayName: World Cracker
 		}
 
 		BiomeName.Bestiary_Biomes.TheTemple: The Temple

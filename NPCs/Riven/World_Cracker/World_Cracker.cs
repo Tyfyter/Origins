@@ -1,5 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Accessories;
+using Origins.Items.Materials;
+using Origins.Items.Other.LootBags;
+using Origins.Items.Tools;
+using Origins.Items.Weapons.Summoner;
+using Origins.LootConditions;
+using Origins.Tiles.Riven;
 using Origins.Water;
 using Origins.World.BiomeData;
 using ReLogic.Content;
@@ -11,6 +18,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -30,6 +38,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public static int MaxArmorHealth {
 			get => 100 + 50 * DifficultyMult;
 		}
+		internal static IItemDropRule normalDropRule;
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = (int)value; }
 		public override void SetStaticDefaults() {
 			/*var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0) { // Influences how the NPC looks in the Bestiary
@@ -47,6 +56,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override void Unload() {
 			ArmorTexture = null;
 			HPBarArmorTexture = null;
+			normalDropRule = null;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
@@ -57,6 +67,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.defense = 100;
 			NPC.lifeMax = 4000;
 			NPC.aiStyle = -1;
+			NPC.GravityMultiplier *= 0.5f;
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
@@ -67,7 +78,15 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			} else {
 				NPC.defense = 0;
 			}
-			ForcedTargetPosition = Main.MouseWorld;
+			//ForcedTargetPosition = Main.MouseWorld;
+			//Acceleration = 1;
+			SetBaseSpeed();
+			Player playerTarget = Main.player[NPC.target];
+			ForcedTargetPosition = playerTarget.Center - playerTarget.velocity * 32;
+			float dot = Vector2.Dot(NPC.velocity.SafeNormalize(default), (ForcedTargetPosition.Value - NPC.Center).SafeNormalize(default));
+			CanFly = dot > 0.5f;
+
+			//Acceleration *= MathF.Max((0.8f -  * 5, 1);
 		}
 		public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position) {
 			if (ArmorHealth > 0) {
@@ -86,7 +105,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			DamageArmor(NPC, hit, projectile.ArmorPenetration);
 		}
 		public static void DamageArmor(NPC npc, NPC.HitInfo hit,  int armorPenetration) {
+			if (npc.ai[3] <= 0) return;
 			npc.ai[3] = (int)Math.Max(npc.ai[3] - Math.Max(hit.SourceDamage - Math.Max(15 - armorPenetration, 0), 0), 0);
+			if (npc.ai[3] <= 0) {
+
+			}
 		}
 		public static void DrawArmor(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, Rectangle frame, NPC npc) {
 			float ArmorHealthPercent = ((int)npc.ai[3]) / (float)MaxArmorHealth;
@@ -113,17 +136,38 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		internal static void CommonWormInit(Worm worm) {
 			// These two properties handle the movement of the worm
-			worm.MoveSpeed = 15.5f;
-			worm.Acceleration = 0.3f;
 			worm.NPC.ai[3] = MaxArmorHealth;
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Glowing_Mod_NPC.DrawGlow(spriteBatch, screenPos, GlowTexture, NPC);
 			DrawArmor(spriteBatch, screenPos, drawColor, new Rectangle(0, 0, 102, 58), NPC);
 		}
+		void SetBaseSpeed() {
+			MoveSpeed = 15.5f;
+			Acceleration = 0.3f;
+		}
 		public override void Init() {
 			MinSegmentLength = MaxSegmentLength = 13 + 2 * DifficultyMult;
+			SetBaseSpeed();
 			CommonWormInit(this);
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+
+			normalDropRule = new LeadingSuccessRule();
+
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Encrusted_Ore_Item>(), 1, 140, 330));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Riven_Carapace>(), 1, 40, 100));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Amoeba_Hook>(), 1));
+			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Teardown>(), ModContent.ItemType<Return_To_Sender>()));
+
+			//normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PA_Trophy_Item>(), 10));
+			//normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PA_Mask>(), 10));
+
+			npcLoot.Add(new DropBasedOnExpertMode(
+				normalDropRule,
+				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<World_Cracker_Bag>(), 1, 1, 1, null)
+			));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Protozoa_Food>(), 4));
 		}
 	}
 	public class World_Cracker_Body : WormBody {

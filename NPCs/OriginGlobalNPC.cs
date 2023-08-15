@@ -299,6 +299,19 @@ namespace Origins.NPCs {
 				pool[0] = 0;
 				return;
 			}
+			if (player.InModBiome<Defiled_Wastelands>()) {
+				if (spawnInfo.PlayerFloorY <= Main.worldSurface + 50 && spawnInfo.SpawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), Defiled_Wastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
+
+				if (Defiled_Amalgamation.spawnDA) {
+					foreach (var entry in pool) {
+						pool[entry.Key] = 0;
+					}
+					if (spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Walls.Defiled_Stone_Wall>()) {
+						pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 999);
+					}
+				}
+				return;
+			}
 			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is DefiledTile) {
 				if (Main.invasionType <= 0) pool[0] = 0;
 
@@ -307,7 +320,6 @@ namespace Origins.NPCs {
 
 				if (NPC.downedBoss1 || NPC.downedBoss2 || NPC.downedBoss3 || NPC.downedQueenBee || NPC.downedDeerclops || Main.hardMode) pool.Add(ModContent.NPCType<Ancient_Defiled_Cyclops>(), Defiled_Wastelands.SpawnRates.AncientCyclops);
 
-				if (spawnInfo.PlayerFloorY <= Main.worldSurface + 50 && spawnInfo.SpawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), Defiled_Wastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
 				if (Main.hardMode) {
 					if (TileID.Sets.Conversion.Sand[Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType]) {
 						pool.Add(ModContent.NPCType<Shattered_Mummy>(), Defiled_Wastelands.SpawnRates.Cyclops);
@@ -342,14 +354,6 @@ namespace Origins.NPCs {
 					SkipMiteSpawn:;
 				} else {
 					pool.Add(ModContent.NPCType<Defiled_Brute>(), Defiled_Wastelands.SpawnRates.Brute);
-				}
-				if (Defiled_Amalgamation.spawnDA) {
-					foreach (var entry in pool) {
-						pool[entry.Key] = 0;
-					}
-					if (spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Walls.Defiled_Stone_Wall>()) {
-						pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 999);
-					}
 				}
 			}
 			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is RivenTile) {
