@@ -2279,7 +2279,7 @@ Mods: {
 			}
 
 			World_Cracker_Bag: {
-				// DisplayName: Treasure Bag (World_Cracker)
+				// DisplayName: Treasure Bag (World Cracker)
 				// Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 

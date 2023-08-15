@@ -1187,7 +1187,7 @@ namespace Origins {
 				Player.jumpSpeedBoost += Math.Min(Player.statLife / 167, 5);
 				Player.runAcceleration *= Math.Min((Player.statLife / 167) + 1, 1.85f);
 			}
-			if (protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions) {
+			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions) {
 				Item item = protozoaFoodItem;
 				int damage = Player.GetWeaponDamage(item);
 				Projectile.NewProjectileDirect(
@@ -2004,44 +2004,6 @@ namespace Origins {
 			}
 		}
 
-		public override void LoadData(TagCompound tag) {
-			if (tag.SafeGet<Item>("EyndumCore") is Item eyndumCoreItem) {
-				eyndumCore = new Ref<Item>(eyndumCoreItem);
-			}
-			if (tag.SafeGet<int>("MimicSetSelection") is int mimicSetSelection) {
-				mimicSetChoices = mimicSetSelection;
-			}
-			if (tag.SafeGet<Item>("JournalDye") is Item journalDyeItem) {
-				journalDye = journalDyeItem;
-			}
-			if (tag.SafeGet<List<string>>("UnlockedJournalEntries") is List<string> journalEntries) {
-				unlockedJournalEntries = journalEntries.ToHashSet();
-			}
-			if (tag.SafeGet<List<string>>("UnlockedQuests") is List<string> unlockedQuests) {
-				startedQuests = unlockedQuests.ToHashSet();
-			}
-			if (tag.ContainsKey("journalUnlocked")) {
-				journalUnlocked = tag.Get<bool>("journalUnlocked");
-			}
-			questsTag = tag.SafeGet<TagCompound>("Quests");
-			if (tag.SafeGet<int>("TimeSinceLastDeath") is int timeSinceLastDeath) {
-				this.timeSinceLastDeath = timeSinceLastDeath;
-			}
-		}
-		TagCompound questsTag;
-		public override void OnEnterWorld() {
-			questsTag ??= new TagCompound();
-			TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? new TagCompound();
-			Origins.instance.Logger.Debug(worldQuestsTag.ToString());
-			foreach (var quest in Quest_Registry.Quests) {
-				if (!quest.SaveToWorld) {
-					quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
-				} else {
-					quest.LoadData(worldQuestsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
-				}
-			}
-			netInitialized = false;
-		}
 		public override void SaveData(TagCompound tag) {
 			if (eyndumCore is not null) {
 				tag.Add("EyndumCore", eyndumCore.Value);
@@ -2069,6 +2031,52 @@ namespace Origins {
 				tag.Add("Quests", questsTag);
 			}
 			tag.Add("TimeSinceLastDeath", timeSinceLastDeath);
+			tag.Add("corruptionAssimilation", corruptionAssimilation);
+			tag.Add("crimsonAssimilation", crimsonAssimilation);
+			tag.Add("defiledAssimilation", defiledAssimilation);
+			tag.Add("rivenAssimilation", rivenAssimilation);
+		}
+		public override void LoadData(TagCompound tag) {
+			if (tag.SafeGet<Item>("EyndumCore") is Item eyndumCoreItem) {
+				eyndumCore = new Ref<Item>(eyndumCoreItem);
+			}
+			if (tag.SafeGet<int>("MimicSetSelection") is int mimicSetSelection) {
+				mimicSetChoices = mimicSetSelection;
+			}
+			if (tag.SafeGet<Item>("JournalDye") is Item journalDyeItem) {
+				journalDye = journalDyeItem;
+			}
+			if (tag.SafeGet<List<string>>("UnlockedJournalEntries") is List<string> journalEntries) {
+				unlockedJournalEntries = journalEntries.ToHashSet();
+			}
+			if (tag.SafeGet<List<string>>("UnlockedQuests") is List<string> unlockedQuests) {
+				startedQuests = unlockedQuests.ToHashSet();
+			}
+			if (tag.ContainsKey("journalUnlocked")) {
+				journalUnlocked = tag.Get<bool>("journalUnlocked");
+			}
+			questsTag = tag.SafeGet<TagCompound>("Quests");
+			if (tag.SafeGet<int>("TimeSinceLastDeath") is int timeSinceLastDeath) {
+				this.timeSinceLastDeath = timeSinceLastDeath;
+			}
+			corruptionAssimilation = tag.SafeGet<float>("corruptionAssimilation");
+			crimsonAssimilation = tag.SafeGet<float>("crimsonAssimilation");
+			defiledAssimilation = tag.SafeGet<float>("defiledAssimilation");
+			rivenAssimilation = tag.SafeGet<float>("rivenAssimilation");
+		}
+		TagCompound questsTag;
+		public override void OnEnterWorld() {
+			questsTag ??= new TagCompound();
+			TagCompound worldQuestsTag = ModContent.GetInstance<OriginSystem>().questsTag ?? new TagCompound();
+			Origins.instance.Logger.Debug(worldQuestsTag.ToString());
+			foreach (var quest in Quest_Registry.Quests) {
+				if (!quest.SaveToWorld) {
+					quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+				} else {
+					quest.LoadData(worldQuestsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+				}
+			}
+			netInitialized = false;
 		}
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
 			bool zoneDefiled = Player.InModBiome<Defiled_Wastelands>();
