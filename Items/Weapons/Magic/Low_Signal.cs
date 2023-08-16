@@ -43,17 +43,6 @@ namespace Origins.Items.Weapons.Magic {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Nerve Signal");
 		}
-		public override void OnSpawn(IEntitySource source) {
-			if (source is EntitySource_Parent parentSource && parentSource.Entity is NPC npc) {
-				Projectile.npcProj = true;
-				Projectile.hostile = false;//!npc.friendly;
-				Projectile.friendly = npc.friendly;
-				if ((Main.masterMode || Main.expertMode) && !npc.friendly) {
-					Projectile.hostile = true;
-				}
-				Projectile.DamageType = DamageClass.Default;
-			}
-		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
 			Projectile.DamageType = DamageClass.Magic;
