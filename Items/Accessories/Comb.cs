@@ -6,16 +6,13 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Comb : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Comb");
-			// Tooltip.SetDefault("3% increased damage");
-			Item.ResearchUnlockCount = 1;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.Shackle] = ModContent.ItemType<Comb>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Comb>()] = ItemID.Shackle;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 26);
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Green;
-			ItemID.Sets.ShimmerTransformToItem[ItemID.Shackle] = ModContent.ItemType<Comb>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Comb>()] = ItemID.Shackle;
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Generic) *= 1.03f;

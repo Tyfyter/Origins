@@ -2100,6 +2100,15 @@ namespace Origins {
 			}
 		}
 		#endregion
+		/// <summary>
+		/// inserts an item into a shimmer cycle, will not work to add an item after the last item of a cycle that is not complete yet
+		/// </summary>
+		/// <param name="type"></param>
+		/// <param name="after"></param>
+		public static void InsertIntoShimmerCycle(int type, int after) {
+			ItemID.Sets.ShimmerTransformToItem[type] = ItemID.Sets.ShimmerTransformToItem[after];
+			ItemID.Sets.ShimmerTransformToItem[after] = type;
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>

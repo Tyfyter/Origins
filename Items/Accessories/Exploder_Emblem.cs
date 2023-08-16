@@ -5,16 +5,12 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Exploder_Emblem : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Exploder Emblem");
-			// Tooltip.SetDefault("+5% explosive damage");
-			Item.ResearchUnlockCount = 1;
+			OriginExtensions.InsertIntoShimmerCycle(Type, ItemID.SummonerEmblem);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WarriorEmblem);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightRed;
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Exploder_Emblem>()] = ItemID.Sets.ShimmerTransformToItem[ItemID.SorcererEmblem];
-			ItemID.Sets.ShimmerTransformToItem[ItemID.SorcererEmblem] = ModContent.ItemType<Exploder_Emblem>();
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClasses.Explosive) += 0.05f;

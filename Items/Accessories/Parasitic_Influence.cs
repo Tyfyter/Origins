@@ -29,13 +29,15 @@ namespace Origins.Items.Accessories {
             recipe.AddIngredient(ItemID.PanicNecklace);
             recipe.AddIngredient(ItemID.ThornsPotion);
             recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.Register();
+			recipe.DisableDecraft();
+			recipe.Register();
 
             recipe = Recipe.Create(ItemID.BandofStarpower);
             recipe.AddIngredient(ItemID.ManaCrystal);
             recipe.AddIngredient(Type);
             recipe.AddTile(TileID.TinkerersWorkbench);
-            recipe.Register();
+			recipe.DisableDecraft();
+			recipe.Register();
         }
         public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

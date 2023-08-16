@@ -10,17 +10,14 @@ namespace Origins.Items.Accessories {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Asylum_Whistle_Entry).Name;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Asylum Whistle");
-			// Tooltip.SetDefault("Summons can target two enemies at once\nIncreases minion damage by 10%");
-			Item.ResearchUnlockCount = 1;
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bomb_Yeeter>()] = ModContent.ItemType<Asylum_Whistle>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Asylum_Whistle>()] = ModContent.ItemType<Bomb_Yeeter>();
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 28);
 			Item.accessory = true;
 			Item.rare = ItemRarityID.Orange;
 			Item.value = Item.sellPrice(gold: 1);
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bomb_Yeeter>()] = ModContent.ItemType<Asylum_Whistle>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Asylum_Whistle>()] = ModContent.ItemType<Bomb_Yeeter>();
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().asylumWhistle = true;

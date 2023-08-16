@@ -25,7 +25,7 @@ namespace Origins.Items.Other.Testing {
 		int mode;
 		const int modeCount = 10;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Animation Testing Item");
+			Item.ResearchUnlockCount = 0;
 		}
 		public override void SetDefaults() {
 			//item.name = "jfdjfrbh";

@@ -20,7 +20,7 @@ namespace Origins.Items.Other.Testing {
 		LinkedQueue<object> parameters = new LinkedQueue<object>();
 		Vector2 basePosition;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Worldgen Testing Item");
+			Item.ResearchUnlockCount = 0;
 		}
 		public override void SetDefaults() {
 			//item.name = "jfdjfrbh";

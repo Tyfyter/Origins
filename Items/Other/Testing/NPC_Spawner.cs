@@ -18,8 +18,7 @@ namespace Origins.Items.Other.Testing {
 	public class NPC_Spawner : ModItem {
 		public override string Texture => "Terraria/Images/Extra_74";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("NPC Spawner");
-			// Tooltip.SetDefault("");
+			Item.ResearchUnlockCount = 0;
 		}
 		public override void SetDefaults() {
 			//item.name = "jfdjfrbh";

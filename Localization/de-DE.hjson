@@ -4200,6 +4200,9 @@ Mods: {
 			// Lava_Shot.DisplayName: Magma Shot
 			// Defiled_Sand_Ball.DisplayName: "{$Defiled} Sand Ball"
 			// Test2.DisplayName: Test2
+			// Defiled_Spike_Explosion_Hostile.DisplayName: Defiled_ Spike_ Explosion_ Hostile
+			// Defiled_Spike_Explosion_Spike_Hostile.DisplayName: Defiled_ Spike_ Explosion_ Spike_ Hostile
+			// Low_Signal_Hostile.DisplayName: Low_ Signal_ Hostile
 		}
 
 		Prefixes: {
