@@ -627,6 +627,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
 			Projectile.DamageType = DamageClass.Default;
+			Projectile.friendly = false;
 			if (Main.masterMode || Main.expertMode) {
 				Projectile.hostile = true;
 			}

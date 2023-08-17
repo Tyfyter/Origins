@@ -4203,6 +4203,7 @@ Mods: {
 			Defiled_Spike_Explosion_Hostile.DisplayName: Low Signal
 			Defiled_Spike_Explosion_Spike_Hostile.DisplayName: Low Signal
 			Low_Signal_Hostile.DisplayName: Low Signal
+			Amoeball.DisplayName: Amoeball
 		}
 
 		Prefixes: {

@@ -18,10 +18,6 @@ namespace Origins.Tiles.Other {
 
 			AddMapEntry(new Color(81, 81, 81), Language.GetText("Laser Tag Console"));
 		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Laser_Tag_Console_Item>());
-		}
 	}
 	public class Laser_Tag_Console_Item : ModItem {
 		public override void SetStaticDefaults() {

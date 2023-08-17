@@ -18,10 +18,6 @@ namespace Origins.Tiles.Other {
 
 			AddMapEntry(new Color(200, 80, 0), Language.GetText("Traffic Cone"));
 		}
-
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			Item.NewItem(new EntitySource_TileBreak(i, j), i * 16, j * 16, 32, 32, ModContent.ItemType<Laser_Tag_Console_Item>());
-		}
 	}
 	public class Traffic_Cone_Item : ModItem {
 		public override void SetStaticDefaults() {
