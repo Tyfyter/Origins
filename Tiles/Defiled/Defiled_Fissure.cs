@@ -13,6 +13,7 @@ namespace Origins.Tiles.Defiled {
 			Main.tileNoAttach[Type] = true;
 			Main.tileHammer[Type] = true;
 			Main.tileLighted[Type] = true;
+			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 			TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);

@@ -30,6 +30,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileNoAttach[Type] = true;
 			Main.tileLighted[Type] = true;
 			Main.tileOreFinderPriority[Type] = 500;
+			TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
 			TileObjectData.newTile.Origin = new Point16(1, 1);
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
