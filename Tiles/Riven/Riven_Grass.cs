@@ -27,6 +27,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(0, 100, 160));
 			//SetModTree(Defiled_Tree.Instance);
+			DustType = DustID.BlueMoss;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			fail = true;

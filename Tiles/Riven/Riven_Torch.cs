@@ -53,6 +53,7 @@ namespace Origins.Tiles.Riven {
 			if (!Main.dedServ) {
 				RequestIfExists("Origins/Tiles/Riven/Riven_Torch_Tile_Flame", out flameTexture);
 			}
+			DustType = DustID.BlueMoss;
 		}
 
 		public override void MouseOver(int i, int j) {

@@ -4393,7 +4393,7 @@ Mods: {
 			// Riven_Lesion.MapEntry: Riven Lesion
 			// Riven_Tree_Sapling.MapEntry: Riven Sapling
 			// Wrycoral.MapEntry: Wrycoral
-			// Traffic_Cone.DisplayName: Mods.Origins.Tiles.Traffic_Cone.DisplayName
+			// Traffic_Cone.DisplayName: Traffic Cone
 		}
 
 		AltBiomeDescription: {

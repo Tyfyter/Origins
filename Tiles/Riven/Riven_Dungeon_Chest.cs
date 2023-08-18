@@ -28,6 +28,7 @@ namespace Origins.Tiles.Riven {
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.Containers };
 			keyItem = ModContent.ItemType<Riven_Key>();
+			DustType = DustID.BlueMoss;
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {

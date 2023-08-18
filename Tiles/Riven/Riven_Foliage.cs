@@ -34,6 +34,7 @@ namespace Origins.Tiles.Riven {
 
 			TileObjectData.addTile(Type);
 			//soundType = SoundID.NPCKilled;
+			DustType = DustID.BlueMoss;
 		}
 
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {

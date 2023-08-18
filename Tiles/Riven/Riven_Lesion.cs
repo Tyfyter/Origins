@@ -11,7 +11,8 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
 	public class Riven_Lesion : ModTile, IGlowingModTile {
-		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+		public static AutoCastingAsset<Texture2D> LesionGlowTexture { get; private set; }
+		public AutoCastingAsset<Texture2D> GlowTexture { get => LesionGlowTexture; private set => LesionGlowTexture = value; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
@@ -25,6 +26,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileShine2[Type] = true;
 			Main.tileShine[Type] = 1200;
 			Main.tileFrameImportant[Type] = true;
+			Main.tileHammer[Type] = true;
 			Main.tileNoAttach[Type] = true;
 			Main.tileLighted[Type] = true;
 			Main.tileOreFinderPriority[Type] = 500;
@@ -41,13 +43,36 @@ namespace Origins.Tiles.Riven {
 			// name.SetDefault("Riven Lesion");
 			AddMapEntry(new Color(217, 95, 54), name);
 			AdjTiles = new int[] { TileID.ShadowOrbs };
-			//soundType = SoundID.NPCKilled;
+			HitSound = SoundID.NPCDeath1;
+			DustType = DustID.BlueMoss;
+		}
+		public override void PlaceInWorld(int i, int j, Item item) {
+			WorldGen.SectionTileFrame(i, j + 2, i + 4, j + 4 + 2);
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			return true;
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
 			World.BiomeData.Riven_Hive.CheckLesion(i, j, Type);
+			int fleshType = ModContent.TileType<Riven_Flesh>();
+			for (int x = 0; x < 4; x++) {
+				for (int y = 0; y < 4; y++) {
+					Tile tile = Framing.GetTileSafely(x + i, y + j + 2);
+					if (tile.TileType == fleshType) {
+						switch ((x, y)) {
+							case (1, 0):
+							case (2, 0):
+							case (2, 1):
+							case (3, 0):
+							tile.HasTile = false;
+							WorldGen.SquareTileFrame(x + i, y + j + 2);
+							for (int k = 0; k < 3; k++) Dust.NewDust(new Vector2(x + i, y + j + 2) * 16, 16, 16, DustID.BlueMoss);
+							break;
+						}
+					} else break;
+				}
+			}
+			//WorldGen.SectionTileFrame(i, j + 2, i + 4, j + 4 + 2);
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
@@ -56,6 +81,40 @@ namespace Origins.Tiles.Riven {
 			r = 0.05f * GlowValue;
 			g = 0.0375f * GlowValue;
 			b = 0.015f * GlowValue;
+		}
+	}
+	public class Riven_Lesion_Wound : ModTile, IGlowingModTile {
+		public AutoCastingAsset<Texture2D> GlowTexture => Riven_Lesion.LesionGlowTexture;
+		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
+		public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
+		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+			if (tile.TileFrameX / 18 == 2) color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
+		}
+		public override void SetStaticDefaults() {
+			Main.tileFrameImportant[Type] = true;
+			Main.tileNoAttach[Type] = true;
+			Main.tileLighted[Type] = true;
+			// name.SetDefault("Riven Lesion");
+			AddMapEntry(new Color(217, 95, 54));
+			AdjTiles = new int[] { TileID.ShadowOrbs };
+			HitSound = SoundID.NPCDeath1;
+		}
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			if (noBreak) ;
+			return false;
+		}
+		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
+			drawData.glowTexture = GlowTexture;
+			drawData.glowColor = GlowColor;
+			drawData.glowSourceRect = new(drawData.tileFrameX, drawData.tileFrameY + 18 * 6, 16, 16);
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			r = g = b = 0;
+			if (OriginsModIntegrations.FancyLighting is not null && Main.tile[i, j].TileFrameX / 18 == 2) {
+				r = 0.02f * GlowValue;
+				g = 0.15f * GlowValue;
+				b = 0.2f * GlowValue;
+			}
 		}
 	}
 	public class Riven_Lesion_Item : ModItem {

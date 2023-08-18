@@ -28,6 +28,7 @@ namespace Origins.Tiles.Riven {
 			//SetModTree(Defiled_Tree.Instance);
 			mergeID = TileID.Stone;
 			//soundType = SoundID.NPCKilled;
+			DustType = DustID.BlueMoss;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			fail = false;
