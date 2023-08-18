@@ -60,11 +60,9 @@ namespace Origins.Tiles.Riven {
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
 			WorldGen.SmashAltar(i, j);
 		}
-		public override bool CanExplode(int i, int j) {
-			return base.CanExplode(i, j);
-		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			this.DrawTileGlow(i, j, spriteBatch);
 		}
+		public override bool CanExplode(int i, int j) => false;
 	}
 }

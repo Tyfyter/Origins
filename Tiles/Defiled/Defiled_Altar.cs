@@ -48,6 +48,7 @@ namespace Origins.Tiles.Defiled {
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = g = b = 0.5f;
 		}
+		public override bool CanExplode(int i, int j) => false;
 	}
 	public class Defiled_Altar_Item : ModItem {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Altar";

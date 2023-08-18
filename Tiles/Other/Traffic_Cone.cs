@@ -16,13 +16,10 @@ namespace Origins.Tiles.Other {
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
 			TileObjectData.addTile(Type);
 
-			AddMapEntry(new Color(200, 80, 0), Language.GetText("Traffic Cone"));
+			AddMapEntry(new Color(200, 80, 0), Language.GetOrRegister(this.GetLocalizationKey("DisplayName")));
 		}
 	}
 	public class Traffic_Cone_Item : ModItem {
-		public override void SetStaticDefaults() {
-		}
-
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.LampPost);
 			Item.createTile = ModContent.TileType<Traffic_Cone>();

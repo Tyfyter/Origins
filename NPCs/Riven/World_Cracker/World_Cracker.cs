@@ -98,7 +98,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			int otherShotDelay = Main.rand.Next(50, 70);
 			if (++npc.ai[2] > (Main.expertMode ? 300 : 120) && Collision.CanHitLine(playerTarget.position, playerTarget.width, playerTarget.height, npc.Center, 8, 8)) {
 				npc.ai[2] = otherShotDelay;
-				Terraria.Audio.SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(-0.6f, -0.4f), npc.Center);
+				Terraria.Audio.SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(0.4f, 0.6f), npc.Center);
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
 					Projectile.NewProjectileDirect(
 						npc.GetSource_FromAI(),

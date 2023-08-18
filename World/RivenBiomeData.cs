@@ -357,14 +357,31 @@ namespace Origins.World.BiomeData {
 					}
 				}
 				List<Point> validLesionPlacementSpots = new List<Point>();
+				bool CheckPos(int x, int y) {
+					return !Main.tile[x, y].HasTile && !Main.tile[x, y - 1].HasTile && Main.tile[x, y + 1].HasTile && Main.tile[x, y + 1].Slope == SlopeType.Solid;
+				}
 				while (lesionPlacementSpots.Count > 0) {
 					Point current = lesionPlacementSpots.Dequeue();
-					if (!Main.tile[current.X, current.Y].HasTile && !Main.tile[current.X, current.Y - 1].HasTile && Main.tile[current.X, current.Y + 1].HasTile) {
-						if (!Main.tile[current.X - 1, current.Y].HasTile && !Main.tile[current.X - 1, current.Y - 1].HasTile && Main.tile[current.X - 1, current.Y + 1].HasTile) {
-							validLesionPlacementSpots.Add(new Point(current.X - 1, current.Y));
+					if (validLesionPlacementSpots.Contains(current)) continue;
+					if (CheckPos(current.X, current.Y) && CheckPos(current.X - 1, current.Y) && CheckPos(current.X + 1, current.Y) && CheckPos(current.X + 2, current.Y)) {
+						int minX = current.X;
+						int maxX = current.X;
+						for (int x = -1; x > -3; x--) {
+							if (CheckPos(current.X + x, current.Y)) {
+								if (x <= -2) minX--;
+							} else {
+								break;
+							}
 						}
-						if (!Main.tile[current.X + 1, current.Y].HasTile && !Main.tile[current.X + 1, current.Y - 1].HasTile && Main.tile[current.X + 1, current.Y + 1].HasTile) {
-							validLesionPlacementSpots.Add(new Point(current.X, current.Y));
+						for (int x = 1; x < 4; x++) {
+							if (CheckPos(current.X + x, current.Y)) {
+								if (x >= 2) maxX++;
+							} else {
+								break;
+							}
+						}
+						for (int x = minX; x < maxX; x++) {
+							validLesionPlacementSpots.Add(new(x, current.Y + 4));
 						}
 					}
 				}
@@ -374,7 +391,7 @@ namespace Origins.World.BiomeData {
 					}
 					Point current = genRand.Next(validLesionPlacementSpots);
 
-					Place2x2(current.X, current.Y, lesionID, 0);
+					PlaceTile(current.X, current.Y, lesionID);
 
 					lesionCount++;
 					validLesionPlacementSpots.Remove(current.OffsetBy(-1));
@@ -418,7 +435,7 @@ namespace Origins.World.BiomeData {
 			}
 		}
 		public static void CheckLesion(int i, int j, int type) {
-			if (destroyObject) {
+			if (WorldGen.generatingWorld) {
 				return;
 			}
 			int x = Main.tile[i, j].TileFrameX != 0 ? i - 1 : i;
@@ -499,7 +516,7 @@ namespace Origins.World.BiomeData {
 				shadowOrbCount++;
 				if (shadowOrbCount >= 3) {
 					shadowOrbCount = 0;
-					NPC.SpawnOnPlayer(plr, ModContent.NPCType<Riven_Fighter>());
+					NPC.SpawnOnPlayer(plr, ModContent.NPCType<NPCs.Riven.World_Cracker.World_Cracker_Head>());
 				} else {
 					LocalizedText localizedText = Lang.misc[10];
 					if (shadowOrbCount == 2) {
