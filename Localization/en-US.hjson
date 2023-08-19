@@ -4204,6 +4204,8 @@ Mods: {
 			Defiled_Spike_Explosion_Spike_Hostile.DisplayName: Low Signal
 			Low_Signal_Hostile.DisplayName: Low Signal
 			Amoeball.DisplayName: Amoeball
+			Spiked_Slime_Minion.DisplayName: Spiked_ Slime_ Minion
+			Spiked_Slime_Minion_Spike.DisplayName: Spiked_ Slime_ Minion_ Spike
 		}
 
 		Prefixes: {
