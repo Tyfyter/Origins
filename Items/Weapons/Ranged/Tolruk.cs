@@ -18,16 +18,16 @@ namespace Origins.Items.Weapons.Ranged {
 			// Tooltip.SetDefault("Receives 50% higher damage bonuses\n[tɵlɹɘk]\nSprite needs reshaping to be less like dart rifle\nOn it :)");
 			glowmasks = new short[]{
 				-1,
-				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_1"),
-				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_2"),
-				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_3"),
-				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_4"),
-				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_5"),
-				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_6"),
-				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_7"),
-				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_8"),
-				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_9"),
-				Origins.AddGlowMask("Weapons/Ranged/Tolruk_Glow_10")
+				Origins.AddGlowMask(Texture + "_Glow_1"),
+				Origins.AddGlowMask(Texture + "_Glow_2"),
+				Origins.AddGlowMask(Texture + "_Glow_3"),
+				Origins.AddGlowMask(Texture + "_Glow_4"),
+				Origins.AddGlowMask(Texture + "_Glow_5"),
+				Origins.AddGlowMask(Texture + "_Glow_6"),
+				Origins.AddGlowMask(Texture + "_Glow_7"),
+				Origins.AddGlowMask(Texture + "_Glow_8"),
+				Origins.AddGlowMask(Texture + "_Glow_9"),
+				Origins.AddGlowMask(Texture + "_Glow_10")
 			};
 			Item.ResearchUnlockCount = 1;
 		}

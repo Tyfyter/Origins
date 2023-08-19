@@ -530,6 +530,7 @@ namespace Origins {
 			}
 			eyndumCoreUITexture = null;
 			eyndumCoreTexture = null;
+			Array.Resize(ref TextureAssets.GlowMask, GlowMaskID.Count);
 		}
 		public static void SetEyndumCoreUI() {
 			UserInterface setBonusUI = OriginSystem.Instance.setBonusUI;
@@ -565,16 +566,17 @@ namespace Origins {
 				goto retry;
 			}
 		}
-		internal static short AddGlowMask(string name, string prefix = "Items/") {
+		public static short AddGlowMask(string texture) {
 			if (Main.netMode != NetmodeID.Server) {
-				Asset<Texture2D>[] glowMasks = new Asset<Texture2D>[TextureAssets.GlowMask.Length + 1];
-				for (int i = 0; i < TextureAssets.GlowMask.Length; i++) {
-					glowMasks[i] = TextureAssets.GlowMask[i];
+				string name = texture;
+				if (MC.RequestIfExists(name, out Asset<Texture2D> asset)) {
+					int index = TextureAssets.GlowMask.Length;
+					Array.Resize(ref TextureAssets.GlowMask, index + 1);
+					TextureAssets.GlowMask[^1] = asset;
+					return (short)index;
 				}
-				glowMasks[^1] = instance.Assets.Request<Texture2D>(prefix + name);
-				TextureAssets.GlowMask = glowMasks;
-				return (short)(glowMasks.Length - 1);
-			} else return -1;
+			}
+			return -1;
 		}
 		public static short AddGlowMask(ModItem item, string suffix = "_Glow") {
 			if (Main.netMode != NetmodeID.Server) {

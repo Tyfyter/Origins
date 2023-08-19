@@ -13,7 +13,7 @@ namespace Origins.Items.Armor.Encrusted {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Encrusted Mask");
 			// Tooltip.SetDefault("Increases minion damage by 10%");
-			GlowMask = Origins.AddGlowMask("Armor/Encrusted/Encrusted_Mask_Head_Glow");
+			GlowMask = Origins.AddGlowMask(Texture+"_Head_Glow");
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
@@ -49,7 +49,7 @@ namespace Origins.Items.Armor.Encrusted {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Encrusted Coat");
 			// Tooltip.SetDefault("Increases your max number of minions by 1");
-			GlowMask = Origins.AddGlowMask("Armor/Encrusted/Encrusted_Coat_Body_Glow");
+			GlowMask = Origins.AddGlowMask(Texture + "_Body_Glow");
 			Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Encrusted/Encrusted_Coat_Body_Glow");
 			Item.ResearchUnlockCount = 1;
 		}
@@ -64,6 +64,10 @@ namespace Origins.Items.Armor.Encrusted {
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
 			glowMask = GlowMask;
 			glowMaskColor = Color.White;
+		}
+		public override void ArmorArmGlowMask(Player drawPlayer, float shadow, ref int glowMask, ref Color color) {
+			glowMask = GlowMask;
+			color = Color.White;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

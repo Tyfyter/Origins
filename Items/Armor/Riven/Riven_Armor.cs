@@ -8,11 +8,11 @@ namespace Origins.Items.Armor.Riven {
 	[AutoloadEquip(EquipType.Head)]
 	public class Riven_Mask : ModItem {
 		public const float lightMagnitude = 0.3f;
-		public static short GlowMask = -1;
+		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Riven Mask");
 			// Tooltip.SetDefault("6% increased weapon speed");
-			GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Mask_Head_Glow");
+			GlowMask = Origins.AddGlowMask(Texture + "_Head_Glow");
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
@@ -44,11 +44,11 @@ namespace Origins.Items.Armor.Riven {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Riven_Coat : ModItem {
-		public static short GlowMask = -1;
+		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Riven Coat");
 			// Tooltip.SetDefault("6% increased weapon speed");
-			GlowMask = Origins.AddGlowMask("Armor/Riven/Riven_Coat_Body_Glow");
+			GlowMask = Origins.AddGlowMask(Texture + "_Body_Glow");
 			Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Riven/Riven_Coat_Body_Glow");
 			Item.ResearchUnlockCount = 1;
 		}
@@ -63,6 +63,10 @@ namespace Origins.Items.Armor.Riven {
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) {
 			glowMask = GlowMask;
 			glowMaskColor = Color.White;
+		}
+		public override void ArmorArmGlowMask(Player drawPlayer, float shadow, ref int glowMask, ref Color color) {
+			glowMask = GlowMask;
+			color = Color.White;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

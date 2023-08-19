@@ -45,12 +45,14 @@ using Terraria.UI.Gamepad;
 using Terraria.Utilities;
 using Terraria.WorldBuilding;
 using static Origins.OriginExtensions;
+using static Mono.Cecil.Cil.OpCodes;
 using MC = Terraria.ModLoader.ModContent;
+using ReLogic.Content;
 
 namespace Origins {
 	public partial class Origins : Mod {
 		void ApplyPatches() {
-			Terraria.On_NPC.UpdateCollision += (orig, self) => {
+			On_NPC.UpdateCollision += (orig, self) => {
 				int realID = self.type;
 				if (self.ModNPC is ICustomCollisionNPC shark) {
 					if (shark.IsSandshark) self.type = NPCID.SandShark;
@@ -68,7 +70,7 @@ namespace Origins {
 				orig(self);
 				self.type = realID;
 			};
-			Terraria.On_NPC.GetMeleeCollisionData += NPC_GetMeleeCollisionData;
+			On_NPC.GetMeleeCollisionData += NPC_GetMeleeCollisionData;
 			//On.Terraria.WorldGen.GERunner += OriginSystem.GERunnerHook;
 			//On.Terraria.WorldGen.Convert += OriginSystem.ConvertHook;
 			Defiled_Tree.Load();
@@ -262,6 +264,80 @@ namespace Origins {
 			On_Rain.Update += On_Rain_Update;
 			On_Main.DrawRain += On_Main_DrawRain;
 			IL_Main.DrawRain += IL_Main_DrawRain;
+			IL_PlayerDrawLayers.DrawPlayer_28_ArmOverItemComposite += IL_PlayerDrawLayers_DrawPlayer_28_ArmOverItemComposite;
+		}
+
+		delegate void __DrawCompositeArmorPiece(ref PlayerDrawSet drawinfo, CompositePlayerDrawContext context, DrawData data);
+		private void IL_PlayerDrawLayers_DrawPlayer_28_ArmOverItemComposite(ILContext il) {
+			ILCursor c = new(il);
+			int drawData = -1;
+			static void _DrawCompositeArmorPiece(ref PlayerDrawSet drawinfo, CompositePlayerDrawContext context, DrawData data) {
+				if (drawinfo.armGlowMask >= 0 && drawinfo.armGlowMask < TextureAssets.GlowMask.Length) {
+					data.texture = TextureAssets.GlowMask[drawinfo.armGlowMask].Value;
+					data.color = drawinfo.armGlowColor;
+					PlayerDrawLayers.DrawCompositeArmorPiece(ref drawinfo, context, data);
+				}
+			}
+
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdarg(0),
+				i => i.MatchLdcI4((int)CompositePlayerDrawContext.FrontShoulder),
+				i => i.MatchLdloca(out drawData),
+				i => i.MatchLdloc(out _),
+				i => i.MatchLdloc(out _),
+				i => i.MatchLdarg(0),
+				i => i.MatchLdfld<PlayerDrawSet>("compFrontShoulderFrame"),
+				i => i.MatchNewobj(out _),
+				i => i.MatchLdarg(0),
+				i => i.MatchLdfld<PlayerDrawSet>("colorArmorBody"),
+				i => i.MatchLdloc(out _),
+				i => i.MatchLdloc(out _),
+				i => i.MatchLdcR4(out _),
+				i => i.MatchLdarg(0),
+				i => i.MatchLdfld<PlayerDrawSet>("playerEffect"),
+				i => i.MatchLdcR4(out _),
+				i => i.MatchCall(out _),
+				i => i.MatchLdloca(out _),
+				i => i.MatchLdarg(0),
+				i => i.MatchLdfld<PlayerDrawSet>("cBody"),
+				i => i.MatchStfld<DrawData>("shader"),
+				i => i.MatchLdloc(out _),
+				i => i.MatchCall(typeof(PlayerDrawLayers), "DrawCompositeArmorPiece")
+			);
+			c.Emit(Ldarg_0);
+			c.Emit(Ldc_I4_3);
+			c.Emit(Ldloc, drawData);
+			c.EmitDelegate<__DrawCompositeArmorPiece>(_DrawCompositeArmorPiece);
+
+			c.GotoNext(MoveType.After,
+				i => i.MatchLdarg(0),
+				i => i.MatchLdcI4((int)CompositePlayerDrawContext.FrontArm),
+				i => i.MatchLdloca(out drawData),
+				i => i.MatchLdloc(out _),
+				i => i.MatchLdloc(out _),
+				i => i.MatchLdarg(0),
+				i => i.MatchLdfld<PlayerDrawSet>("compFrontArmFrame"),
+				i => i.MatchNewobj(out _),
+				i => i.MatchLdarg(0),
+				i => i.MatchLdfld<PlayerDrawSet>("colorArmorBody"),
+				i => i.MatchLdloc(out _),
+				i => i.MatchLdloc(out _),
+				i => i.MatchLdcR4(out _),
+				i => i.MatchLdarg(0),
+				i => i.MatchLdfld<PlayerDrawSet>("playerEffect"),
+				i => i.MatchLdcR4(out _),
+				i => i.MatchCall(out _),
+				i => i.MatchLdloca(out _),
+				i => i.MatchLdarg(0),
+				i => i.MatchLdfld<PlayerDrawSet>("cBody"),
+				i => i.MatchStfld<DrawData>("shader"),
+				i => i.MatchLdloc(out _),
+				i => i.MatchCall(typeof(PlayerDrawLayers), "DrawCompositeArmorPiece")
+			);
+			c.Emit(Ldarg_0);
+			c.Emit(Ldc_I4_3);
+			c.Emit(Ldloc, drawData);
+			c.EmitDelegate<__DrawCompositeArmorPiece>(_DrawCompositeArmorPiece);
 		}
 
 		private void IL_Main_DrawRain(ILContext il) {
