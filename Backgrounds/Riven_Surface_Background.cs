@@ -1,11 +1,31 @@
-﻿using Origins;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins;
+using Origins.Reflection;
+using ReLogic.Content;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader;
 
 namespace Origins.Backgrounds {
 	public class Riven_Surface_Background : ModSurfaceBackgroundStyle {
+		Asset<Texture2D> glowTexture;
 		public override int ChooseFarTexture() {
-			return BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Riven_Background3");
+			int textureSlot = BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Riven_Background3");
+			glowTexture ??= ModContent.Request<Texture2D>("Origins/Backgrounds/Riven_Background3_Glow");
+			for (int i = 0; i < MainReflection.bgLoops.GetValue(Main.instance); i++) {
+				Main.spriteBatch.Draw(
+					glowTexture.Value,
+					new Vector2(MainReflection.bgStartX.GetValue(Main.instance) + MainReflection.bgWidthScaled * i, MainReflection.bgTopY.GetValue(Main.instance)),
+					new Rectangle(0, 0, Main.backgroundWidth[textureSlot], Main.backgroundHeight[textureSlot]),
+					Color.White,
+					0f,
+					default(Vector2),
+					MainReflection.bgScale,
+					SpriteEffects.None,
+				0f);
+			}
+			return textureSlot;
 		}
 
 		public override int ChooseMiddleTexture() {
