@@ -579,34 +579,10 @@ namespace Origins {
 			return -1;
 		}
 		public static short AddGlowMask(ModItem item, string suffix = "_Glow") {
-			if (Main.netMode != NetmodeID.Server) {
-				string name = item.Texture + suffix;
-				if (MC.RequestIfExists(name, out Asset<Texture2D> asset)) {
-					Asset<Texture2D>[] glowMasks = new Asset<Texture2D>[TextureAssets.GlowMask.Length + 1];
-					for (int i = 0; i < TextureAssets.GlowMask.Length; i++) {
-						glowMasks[i] = TextureAssets.GlowMask[i];
-					}
-					glowMasks[^1] = asset;
-					TextureAssets.GlowMask = glowMasks;
-					return (short)(glowMasks.Length - 1);
-				}
-			}
-			return -1;
+			return AddGlowMask(item.Texture + suffix);
 		}
 		public static short AddGlowMask(ModTexturedType content, string suffix = "_Glow") {
-			if (Main.netMode != NetmodeID.Server) {
-				string name = content.Texture + suffix;
-				if (MC.RequestIfExists(name, out Asset<Texture2D> asset)) {
-					Asset<Texture2D>[] glowMasks = new Asset<Texture2D>[TextureAssets.GlowMask.Length + 1];
-					for (int i = 0; i < TextureAssets.GlowMask.Length; i++) {
-						glowMasks[i] = TextureAssets.GlowMask[i];
-					}
-					glowMasks[^1] = asset;
-					TextureAssets.GlowMask = glowMasks;
-					return (short)(glowMasks.Length - 1);
-				}
-			}
-			return -1;
+			return AddGlowMask(content.Texture + suffix);
 		}
 		internal static void AddHelmetGlowmask(int armorID, string texture) {
 			if (Main.netMode != NetmodeID.Server && instance.RequestAssetIfExists(texture, out Asset<Texture2D> asset)) {
