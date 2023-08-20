@@ -177,7 +177,7 @@ namespace Origins.Items.Tools {
 				Color lineColor = Lighting.GetColor((int)lineOrigin.X / 16, (int)(lineOrigin.Y / 16f), fishingLineColor);
 				float rotation = playerToProjectile.ToRotation() - MathHelper.PiOver2;
 				Texture2D fishingLineTexture = TextureAssets.FishingLine.Value;
-				Main.spriteBatch.Draw(fishingLineTexture, new Vector2(lineOrigin.X - Main.screenPosition.X + fishingLineTexture.Width * 0.5f, lineOrigin.Y - Main.screenPosition.Y + fishingLineTexture.Height * 0.5f), new Rectangle(0, 0, fishingLineTexture.Width, (int)height), lineColor, rotation, new Vector2(fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
+				Main.EntitySpriteDraw(fishingLineTexture, new Vector2(lineOrigin.X - Main.screenPosition.X + fishingLineTexture.Width * 0.5f, lineOrigin.Y - Main.screenPosition.Y + fishingLineTexture.Height * 0.5f), new Rectangle(0, 0, fishingLineTexture.Width, (int)height), lineColor, rotation, new Vector2(fishingLineTexture.Width * 0.5f, 0f), 1f, SpriteEffects.None, 0f);
 				Lighting.AddLight(new Vector2(lineOrigin.X + fishingLineTexture.Width * 0.5f, lineOrigin.Y + fishingLineTexture.Height * 0.5f), 0, fishingLineColor.G * 0.0003f, fishingLineColor.B * 0.001f);
 			}
 			return false;
