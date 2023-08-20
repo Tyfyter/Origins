@@ -54,7 +54,8 @@ namespace Origins.Items.Weapons.Summoner {
 		const int lifespan = 1800;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Lightning Orb");
-			Main.projFrames[Projectile.type] = 4;
+			Main.projFrames[Type] = 4;
+			ProjectileID.Sets.MinionTargettingFeature[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.AmberBolt);
@@ -173,9 +174,13 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		private void startExplosion() {
 			if (Projectile.ai[0] > 0) {
+				Projectile.ai[2] = Projectile.velocity.X;
 				Projectile.velocity = Vector2.Zero;
 				Projectile.ai[0] = 0;
 			}
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			if (Projectile.velocity == Vector2.Zero) modifiers.HitDirectionOverride = Math.Sign(Projectile.ai[2]);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Main.player[Projectile.owner].MinionAttackTargetNPC = target.whoAmI;

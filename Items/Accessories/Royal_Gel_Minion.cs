@@ -30,10 +30,8 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BabySlime);
 			Projectile.minionSlots = 0;
-			//Projectile.usesIDStaticNPCImmunity = true;
-			//Projectile.idStaticNPCHitCooldown = 10;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 10;
+			Projectile.usesIDStaticNPCImmunity = true;
+			Projectile.idStaticNPCHitCooldown = 10;
 			Projectile.aiStyle = 0;
 			//AIType = ProjectileID.BabySlime;
 		}
@@ -240,8 +238,30 @@ namespace Origins.Items.Accessories {
 					float targetDist = 100000f;
 					float throughWallDist = targetDist;
 					int targetIndex = -1;
+					void targetingAlgorithm(NPC target, float targetPriorityMultiplier, bool isPriorityTarget, ref bool foundTarget) {
+						float x = target.Center.X;
+						float y = target.Center.Y;
+						if (target.CanBeChasedBy(this)) {
+							float currentDist = Math.Abs(Projectile.position.X + Projectile.width / 2 - x) + Math.Abs(Projectile.position.Y + Projectile.height / 2 - y);
+							if (currentDist < targetDist) {
+								if (targetIndex == -1 && currentDist <= throughWallDist) {
+									throughWallDist = currentDist;
+									targetX = x;
+									targetY = y;
+								}
+								if (isPriorityTarget || Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, target.position, target.width, target.height)) {
+									targetDist = currentDist;
+									targetX = x;
+									targetY = y;
+									targetIndex = target.whoAmI;
+									foundTarget = true;
+								}
+							}
+						}
+					}
+					owner.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
 					//TODO: replace with custom system
-					NPC ownerMinionAttackTargetNPC2 = Projectile.OwnerMinionAttackTargetNPC;
+					/*NPC ownerMinionAttackTargetNPC2 = Projectile.OwnerMinionAttackTargetNPC;
 					if (ownerMinionAttackTargetNPC2 != null && ownerMinionAttackTargetNPC2.CanBeChasedBy(this)) {
 						float x = ownerMinionAttackTargetNPC2.Center.X;
 						float y = ownerMinionAttackTargetNPC2.Center.Y;
@@ -282,7 +302,7 @@ namespace Origins.Items.Accessories {
 								}
 							}
 						}
-					}
+					}*/
 					if (targetIndex == -1 && throughWallDist < targetDist) {
 						targetDist = throughWallDist;
 					}

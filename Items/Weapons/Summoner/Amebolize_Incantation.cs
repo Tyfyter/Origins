@@ -13,7 +13,6 @@ namespace Origins.Items.Weapons.Summoner {
 			// DisplayName.SetDefault("Amebolize Incantation");
 			// Tooltip.SetDefault("Struck enemies will wither away\n5 summon tag damage\n{$CommonItemTooltip.Whips}");
 			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 20;
@@ -40,7 +39,8 @@ namespace Origins.Items.Weapons.Summoner {
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Amoeba Bubble");
-			Main.projFrames[Projectile.type] = 4;
+			Main.projFrames[Type] = 4;
+			ProjectileID.Sets.MinionTargettingFeature[Type] = true;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
