@@ -12,6 +12,7 @@ namespace Origins.Items.Accessories {
 	public class Royal_Gel_Global : GlobalItem {
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.type == ItemID.RoyalGel;
 		public override void SetDefaults(Item entity) {
+			entity.DamageType = DamageClass.Summon;
 			entity.damage = 11;
 			entity.knockBack = 0.5f;
 		}

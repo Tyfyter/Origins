@@ -328,6 +328,7 @@ namespace Origins {
 				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade", AssetRequestMode.ImmediateLoad).Value), "VoidShade"), EffectPriority.High);
 				Filters.Scene["Origins:ZoneDefiled"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade", AssetRequestMode.ImmediateLoad).Value), "DefiledShade"), EffectPriority.High);
 				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/MaskedRasterizeFilter", AssetRequestMode.ImmediateLoad).Value), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
+				Filters.Scene["Origins:VolatileGelatinFilter"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/MaskedPurpleJellyFilter", AssetRequestMode.ImmediateLoad).Value), "MaskedPurpleJellyFilter"), EffectPriority.VeryHigh);
 				
 				//Filters.Scene["Origins:ZoneRiven"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade", AssetRequestMode.ImmediateLoad).Value), "RivenShade"), EffectPriority.High);
 
@@ -335,6 +336,7 @@ namespace Origins {
 				GameShaders.Misc["Origins:Solvent"] = solventShader;
 				cellNoiseTexture = Assets.Request<Texture2D>("Textures/Cell_Noise_Pixel");
 				Filters.Scene["Origins:MaskedRasterizeFilter"].GetShader().UseImage(cellNoiseTexture, 2);
+				Filters.Scene["Origins:VolatileGelatinFilter"].GetShader().UseImage(cellNoiseTexture, 2);
 
 				rasterizeShader = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/Rasterize", AssetRequestMode.ImmediateLoad).Value), "Rasterize");
 				GameShaders.Misc["Origins:Rasterize"] = rasterizeShader;

@@ -3967,6 +3967,11 @@ Mods: {
 				DisplayName: Barnacled
 				Description: You shouldn't have this buff, but if you do, something is horribly wrong
 			}
+
+			Volatile_Gelatin_Slime_Debuff: {
+				DisplayName: Volatile_ Gelatin_ Slime_ Debuff
+				Description: Mods.Origins.Buffs.Volatile_Gelatin_Slime_Debuff.Description
+			}
 		}
 
 		DamageClassName: {
@@ -4206,6 +4211,7 @@ Mods: {
 			Amoeball.DisplayName: Amoeball
 			Spiked_Slime_Minion.DisplayName: Spiked_ Slime_ Minion
 			Spiked_Slime_Minion_Spike.DisplayName: Spiked_ Slime_ Minion_ Spike
+			Volatile_Gelatin_Slime_Explosion.DisplayName: Volatile_ Gelatin_ Slime_ Explosion
 		}
 
 		Prefixes: {

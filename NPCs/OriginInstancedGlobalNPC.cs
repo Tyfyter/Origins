@@ -176,7 +176,7 @@ namespace Origins.NPCs {
 				Origins.rasterizeShader.Shader.Parameters["uWorldPosition"].SetValue(npc.position);
 				Origins.rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(TextureAssets.Npc[npc.type].Value.Width, TextureAssets.Npc[npc.type].Value.Height, 0));
 				Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;
-				spriteBatch.Restart(SpriteSortMode.Immediate, effect: Origins.rasterizeShader.Shader);
+				spriteBatch.Restart(spriteBatch.GetState() with { effect = Origins.rasterizeShader.Shader });
 				return true;
 			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {

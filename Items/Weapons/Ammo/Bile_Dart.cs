@@ -175,7 +175,10 @@ namespace Origins.Items.Weapons.Ammo {
 		static void DrawAura(SpriteBatch spriteBatch) {
 			if (Main.dedServ) return;
 			Main.LocalPlayer.ManageSpecialBiomeVisuals("Origins:MaskedRasterizeFilter", anyActive, Main.LocalPlayer.Center);
-			Filters.Scene["Origins:MaskedRasterizeFilter"].GetShader().UseImage(AuraTarget.RenderTarget, 1);
+			if (anyActive) {
+				Filters.Scene["Origins:MaskedRasterizeFilter"].GetShader().UseImage(AuraTarget.RenderTarget, 1);
+			}
+			spriteBatch.Draw(AuraTarget.RenderTarget, Vector2.Zero, Color.White);
 		}
 	}
 

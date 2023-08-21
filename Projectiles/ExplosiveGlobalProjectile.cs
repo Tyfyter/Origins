@@ -130,6 +130,9 @@ namespace Origins.Projectiles {
 				return explodingProjectile.IsExploding();
 			}
 			switch (projectile.type) {
+				case ProjectileID.VolatileGelatinBall:
+				return false;
+
 				default:
 				return projectile.timeLeft <= 3 || projectile.penetrate == 0;
 			}
