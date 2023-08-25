@@ -13,12 +13,15 @@ namespace Origins.Reflection {
 		public static int bgWidthScaled { get => _bgWidthScaled.GetValue(); set => _bgWidthScaled.SetValue(value); }
 		static FastStaticFieldInfo<Main, float> _bgScale;
 		public static float bgScale { get => _bgScale.GetValue(); set => _bgScale.SetValue(value); }
+		static FastStaticFieldInfo<Main, Color> _ColorOfSurfaceBackgroundsModified;
+		public static Color ColorOfSurfaceBackgroundsModified { get => _ColorOfSurfaceBackgroundsModified.GetValue(); set => _ColorOfSurfaceBackgroundsModified.SetValue(value); }
 		public void Load(Mod mod) {
 			bgLoops = new("bgLoops", BindingFlags.NonPublic);
 			bgStartX = new("bgStartX", BindingFlags.NonPublic);
 			bgTopY = new("bgTopY", BindingFlags.NonPublic);
 			_bgWidthScaled = new("bgWidthScaled", BindingFlags.NonPublic);
 			_bgScale = new("bgScale", BindingFlags.NonPublic);
+			_ColorOfSurfaceBackgroundsModified = new("ColorOfSurfaceBackgroundsModified", BindingFlags.NonPublic);
 		}
 		public void Unload() {
 			bgLoops = null;
@@ -26,6 +29,7 @@ namespace Origins.Reflection {
 			bgTopY = null;
 			_bgWidthScaled = null;
 			_bgScale = null;
+			_ColorOfSurfaceBackgroundsModified = null;
 		}
 	}
 }

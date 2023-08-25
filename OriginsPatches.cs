@@ -48,6 +48,8 @@ using static Origins.OriginExtensions;
 using static Mono.Cecil.Cil.OpCodes;
 using MC = Terraria.ModLoader.ModContent;
 using ReLogic.Content;
+using Origins.Backgrounds;
+using System.Threading.Tasks;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -265,6 +267,94 @@ namespace Origins {
 			On_Main.DrawRain += On_Main_DrawRain;
 			IL_Main.DrawRain += IL_Main_DrawRain;
 			IL_PlayerDrawLayers.DrawPlayer_28_ArmOverItemComposite += IL_PlayerDrawLayers_DrawPlayer_28_ArmOverItemComposite;
+			IL_Main.DrawSurfaceBG += IL_Main_DrawSurfaceBG;
+		}
+
+		private static void IL_Main_DrawSurfaceBG(ILContext il) {
+			ILCursor c = new(il);
+			int index = -1;
+			int color = -1;
+			int cloudAlpha = -1;
+			(OpCode code, object operand)[] cloudYInstructions = null;
+			bool DoThing() {
+				if (!c.TryGotoNext(MoveType.After,
+					i => i.MatchLdsfld<Main>(nameof(Main.cloud)),
+					i => i.MatchLdloc(out index),
+					i => i.MatchLdelemRef(),
+					i => i.MatchLdfld<Cloud>(nameof(Cloud.scale)),
+					i => i.MatchLdsfld<Main>(nameof(Main.cloud)),
+					i => i.MatchLdloc(index),
+					i => i.MatchLdelemRef(),
+					i => i.MatchLdfld<Cloud>(nameof(Cloud.spriteDir)),
+					i => i.MatchLdcR4(0),
+					i => i.MatchCallOrCallvirt<SpriteBatch>(nameof(SpriteBatch.Draw))
+				)) return false;
+				int afterIndex = c.Index;
+				c.Index--;
+				//public void Draw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
+				MonoFuckery.SkipPrevArgument(c);//layerDepth
+				MonoFuckery.SkipPrevArgument(c);//effects
+				MonoFuckery.SkipPrevArgument(c);//scale
+				MonoFuckery.SkipPrevArgument(c);//origin
+				MonoFuckery.SkipPrevArgument(c);//rotation
+				MonoFuckery.SkipPrevArgument(c);//color
+				c.Next.MatchLdloc(out color);
+				c.Next.Next.MatchLdloc(out cloudAlpha);
+				MonoFuckery.SkipPrevArgument(c);//sourceRectangle
+				int positionArg = MonoFuckery.SkipPrevArgument(c);
+				c.Index += positionArg;
+				c.Index--;
+				int positionYArg = MonoFuckery.SkipPrevArgument(c);//position y
+				cloudYInstructions = new (OpCode code, object operand)[positionYArg - 11];
+				for (int i = 0; i < positionYArg; i++) {
+					if (i == 0) {
+						cloudYInstructions[0] = (c.Next.OpCode, c.Next.Operand);
+					} if (i > 11) {
+						cloudYInstructions[i - 11] = (c.Next.OpCode, c.Next.Operand);
+					} else {
+
+					}
+					c.Index++;
+				}
+				c.Index = afterIndex;
+				c.EmitDelegate<Func<bool>>(() => {
+					if (Main.gameMenu) {
+						return MenuLoader.CurrentMenu.MenuBackgroundStyle is Riven_Surface_Background;
+					} else {
+						return Main.LocalPlayer.InModBiome<Riven_Hive>();
+					}
+				});
+				return true;
+			}
+			while (DoThing()) {
+				ILLabel ifBreak = c.DefineLabel();
+				c.Emit(Brfalse, ifBreak);
+				c.Emit(Ldloc, index);
+				c.Emit(Ldloc, color);
+				c.Emit(Ldloc, cloudAlpha);
+				foreach (var item in cloudYInstructions) {
+					c.Emit(item.code, item.operand);
+				}
+				c.EmitDelegate<Action<int, Color, float, float>>(static (i, color, cloudAlpha, cloudY) => {
+					//return;
+					if (CloudBottoms is null) LoadCloudBottoms();
+					color = new Color(0, 80, 70, 0) * (color.A / 255f);
+					Cloud cloud = Main.cloud[i];
+					Texture2D texture = CloudBottoms[cloud.type];
+					Vector2 halfSize = texture.Size() * 0.5f;
+					Main.spriteBatch.Draw(
+						texture,
+						new Vector2(cloud.position.X, cloudY) + halfSize,
+						texture.Bounds,
+						color * (cloudAlpha * cloudAlpha) * Riven_Hive.NormalGlowValue.GetValue(),//
+						cloud.rotation,
+						halfSize,
+						cloud.scale,
+						cloud.spriteDir,
+					0f);
+				});
+				c.MarkLabel(ifBreak);
+			}
 		}
 
 		delegate void __DrawCompositeArmorPiece(ref PlayerDrawSet drawinfo, CompositePlayerDrawContext context, DrawData data);

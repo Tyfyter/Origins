@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -90,6 +91,7 @@ namespace Origins {
 		public static AutoCastingAsset<Texture2D> cellNoiseTexture;
 		public static AutoCastingAsset<Texture2D> eyndumCoreUITexture;
 		public static AutoCastingAsset<Texture2D> eyndumCoreTexture;
+		public static Texture2D[] CloudBottoms;
 		public override uint ExtraPlayerBuffSlots => 4;
 		public Origins() {
 			instance = this;
@@ -378,6 +380,22 @@ namespace Origins {
 				foreach (string gore in goreFiles) {
 					AutoLoadGores.AddGore("Origins/" + gore.Replace(".rawimg", null), this);
 				}
+				/*Task.Run(async () => {
+					await Task.Yield();
+					lock (CloudBottoms) {
+						for (int i = 0; i < TextureAssets.Cloud.Length; i++) {
+							TextureAssets.Cloud[i].Wait();
+							Texture2D baseCloud = TextureAssets.Cloud[i].Value;
+							Texture2D bottom = new Texture2D(baseCloud.GraphicsDevice, baseCloud.Width, baseCloud.Height) {
+								Name = baseCloud.Name + "_Bottom"
+							};
+							Color[] colorData = new Color[baseCloud.Width * baseCloud.Height];
+							baseCloud.GetData(colorData);
+							bottom.SetData(colorData.Select(c => new Color(255 - c.B, 255 - c.B, 255 - c.B, 0)).ToArray());
+							CloudBottoms[i] = bottom;
+						}
+					}
+				});*/
 			}
 			ChatManager.Register<Journal_Link_Handler>(new string[]{
 				"journal",
@@ -430,7 +448,58 @@ namespace Origins {
 			Music.Dusk = MusicID.Eerie;
 			Music.Defiled = MusicID.Corruption;
 			Music.UndergroundDefiled = MusicID.UndergroundCorruption;
+			Main.OnPostDraw += IncrementFrameCount;
 			ApplyPatches();
+		}
+		public override void Unload() {
+			ExplosiveBaseDamage = null;
+			DamageModOnHit = null;
+			VanillaElements = null;
+			forceFelnumShockOnShoot = null;
+			flatDamageMultiplier = null;
+			RasterizeAdjustment = null;
+			homingEffectivenessMultiplier = null;
+			PotType = null;
+			PileType = null;
+			artifactMinion = null;
+			celestineBoosters = null;
+			perlinFade0 = null;
+			blackHoleShade = null;
+			solventShader = null;
+			rasterizeShader = null;
+			amebicProtectionShader = null;
+			amebicProtectionHairShader = null;
+			tileOutlineShader = null;
+			cellNoiseTexture = null;
+			Journal_UI_Button.Texture = null;
+			Journal_UI_Open.BackTexture = null;
+			Journal_UI_Open.PageTexture = null;
+			Journal_UI_Open.TabsTexture = null;
+			OriginExtensions.drawPlayerItemPos = null;
+			Tolruk.glowmasks = null;
+			HelmetGlowMasks = null;
+			BreastplateGlowMasks = null;
+			LeggingGlowMasks = null;
+			TorsoLegLayers = null;
+			instance = null;
+			Defiled_Tree.Unload();
+			OriginExtensions.unInitExt();
+			OriginTile.IDs = null;
+			OriginTile.DefiledTiles = null;
+			OriginSystem worldInstance = ModContent.GetInstance<OriginSystem>();
+			if (!(worldInstance is null)) {
+				worldInstance.defiledResurgenceTiles = null;
+				worldInstance.defiledAltResurgenceTiles = null;
+			}
+			eyndumCoreUITexture = null;
+			eyndumCoreTexture = null;
+			CloudBottoms = null;
+			Main.OnPostDraw -= IncrementFrameCount;
+			Array.Resize(ref TextureAssets.GlowMask, GlowMaskID.Count);
+		}
+		public static uint gameFrameCount = 0;
+		static unsafe void IncrementFrameCount(GameTime gameTime) {
+			gameFrameCount++;
 		}
 		public override void PostSetupContent() {
 			foreach (KeyValuePair<int, NPCDebuffImmunityData> item in NPCID.Sets.DebuffImmunitySets) {
@@ -490,50 +559,6 @@ namespace Origins {
 			}
 		}
 
-		public override void Unload() {
-			ExplosiveBaseDamage = null;
-			DamageModOnHit = null;
-			VanillaElements = null;
-			forceFelnumShockOnShoot = null;
-			flatDamageMultiplier = null;
-			RasterizeAdjustment = null;
-			homingEffectivenessMultiplier = null;
-			PotType = null;
-			PileType = null;
-			artifactMinion = null;
-			celestineBoosters = null;
-			perlinFade0 = null;
-			blackHoleShade = null;
-			solventShader = null;
-			rasterizeShader = null;
-			amebicProtectionShader = null;
-			amebicProtectionHairShader = null;
-			tileOutlineShader = null;
-			cellNoiseTexture = null;
-			Journal_UI_Button.Texture = null;
-			Journal_UI_Open.BackTexture = null;
-			Journal_UI_Open.PageTexture = null;
-			Journal_UI_Open.TabsTexture = null;
-			OriginExtensions.drawPlayerItemPos = null;
-			Tolruk.glowmasks = null;
-			HelmetGlowMasks = null;
-			BreastplateGlowMasks = null;
-			LeggingGlowMasks = null;
-			TorsoLegLayers = null;
-			instance = null;
-			Defiled_Tree.Unload();
-			OriginExtensions.unInitExt();
-			OriginTile.IDs = null;
-			OriginTile.DefiledTiles = null;
-			OriginSystem worldInstance = ModContent.GetInstance<OriginSystem>();
-			if (!(worldInstance is null)) {
-				worldInstance.defiledResurgenceTiles = null;
-				worldInstance.defiledAltResurgenceTiles = null;
-			}
-			eyndumCoreUITexture = null;
-			eyndumCoreTexture = null;
-			Array.Resize(ref TextureAssets.GlowMask, GlowMaskID.Count);
-		}
 		public static void SetEyndumCoreUI() {
 			UserInterface setBonusUI = OriginSystem.Instance.setBonusUI;
 			if (setBonusUI.CurrentState is not Eyndum_Core_UI) {
@@ -617,6 +642,33 @@ namespace Origins {
 			magicTripwireRange = ProjectileID.Sets.Factory.CreateIntSet(0);
 			magicTripwireDetonationStyle = ProjectileID.Sets.Factory.CreateIntSet(0);
 			ExplosiveGlobalProjectile.SetupMagicTripwireRanges(magicTripwireRange, magicTripwireDetonationStyle);
+		}
+		static void LoadCloudBottoms() {
+			CloudBottoms = new Texture2D[TextureAssets.Cloud.Length];
+			for (int i = 0; i < TextureAssets.Cloud.Length; i++) {
+				Texture2D baseCloud = TextureAssets.Cloud[i].Value;
+				Texture2D bottom = new RenderTarget2D(baseCloud.GraphicsDevice, baseCloud.Width, baseCloud.Height) {
+					Name = baseCloud.Name + "_Bottom"
+				};
+				Color[] colorData = new Color[baseCloud.Width * baseCloud.Height];
+				baseCloud.GetData(colorData);
+				const float minValue = 0.25f;
+				const float maxValue = 1;
+				Color[] bottomData = new Color[colorData.Length];
+				for (int j = 0; j < colorData.Length; j++) {
+					Color c = colorData[j];
+					if (c.A == 0) continue;
+					float value = Math.Max(maxValue - (c.R / 255f), 0) / (maxValue - minValue);
+					if (j / baseCloud.Width < 2 || colorData[j - baseCloud.Width * 2].A == 0) {
+						value *= 0.5f;
+					} else {
+
+					}
+					bottomData[j] = new Color(value, value, value, 1f) * (c.A / 255f);//
+				}
+				bottom.SetData(bottomData);
+				CloudBottoms[i] = bottom;
+			}
 		}
 		public static class Music {
 			public static int Dusk = MusicID.PumpkinMoon;

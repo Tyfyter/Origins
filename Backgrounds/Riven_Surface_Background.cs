@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins;
 using Origins.Reflection;
+using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
 using Terraria.GameContent;
@@ -13,12 +14,14 @@ namespace Origins.Backgrounds {
 		public override int ChooseFarTexture() {
 			int textureSlot = BackgroundTextureLoader.GetBackgroundSlot("Origins/Backgrounds/Riven_Background3");
 			glowTexture ??= ModContent.Request<Texture2D>("Origins/Backgrounds/Riven_Background3_Glow");
+			Color glowColor = Color.Lerp(MainReflection.ColorOfSurfaceBackgroundsModified, Color.White, Riven_Hive.NormalGlowValue.GetValue() * 0.5f + 0.25f);
+			glowColor.A = 255;
 			for (int i = 0; i < MainReflection.bgLoops.GetValue(Main.instance); i++) {
 				Main.spriteBatch.Draw(
 					glowTexture.Value,
 					new Vector2(MainReflection.bgStartX.GetValue(Main.instance) + MainReflection.bgWidthScaled * i, MainReflection.bgTopY.GetValue(Main.instance)),
 					new Rectangle(0, 0, Main.backgroundWidth[textureSlot], Main.backgroundHeight[textureSlot]),
-					Color.White,
+					glowColor,
 					0f,
 					default(Vector2),
 					MainReflection.bgScale,

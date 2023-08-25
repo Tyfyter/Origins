@@ -3974,8 +3974,8 @@ Mods: {
 			}
 
 			Purifying_Buff: {
-				// DisplayName: Purifying_ Buff
-				// Description: Mods.Origins.Buffs.Purifying_Buff.Description
+				// DisplayName: Purifying
+				// Description: You are being healed of your assimilation
 			}
 		}
 

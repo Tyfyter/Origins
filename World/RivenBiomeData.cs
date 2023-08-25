@@ -11,6 +11,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
+using Origins.Misc;
 using Origins.NPCs.Riven;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
@@ -43,6 +44,7 @@ namespace Origins.World.BiomeData {
 		public override int BiomeTorchItemType => ModContent.ItemType<Riven_Torch>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => ModContent.GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;
+		public static FrameCachedValue<float> NormalGlowValue { get; private set; }  = new(() => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f);
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (NeededTiles - ShaderTileCount), ShaderTileCount) / ShaderTileCount;
@@ -71,6 +73,7 @@ namespace Origins.World.BiomeData {
 		public override void Unload() {
 			FirstLesionDropRule = null;
 			LesionDropRule = null;
+			NormalGlowValue = null;
 		}
 		public const int NeededTiles = 200;
 		public const int ShaderTileCount = 25;

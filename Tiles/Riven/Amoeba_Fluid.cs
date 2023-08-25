@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables;
+using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -11,7 +12,7 @@ namespace Origins.Tiles.Riven {
 	public class Amoeba_Fluid : OriginTile, RivenTile, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
-		public float GlowValue => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f;
+		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
 		}
