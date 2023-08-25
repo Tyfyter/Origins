@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -42,12 +43,8 @@ namespace Origins.Items.Other.Consumables {
 			return false;
 		}
 		public override bool? UseItem(Player player) {
-			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
-			originPlayer.mojoFlaskCount--;
-			originPlayer.CorruptionAssimilation -= Math.Min(0.16f, originPlayer.CorruptionAssimilation);
-			originPlayer.CrimsonAssimilation -= Math.Min(0.16f, originPlayer.CrimsonAssimilation);
-			originPlayer.DefiledAssimilation -= Math.Min(0.16f, originPlayer.DefiledAssimilation);
-			originPlayer.RivenAssimilation -= Math.Min(0.16f, originPlayer.RivenAssimilation);
+			Main.LocalPlayer.GetModPlayer<OriginPlayer>().mojoFlaskCount--;
+			player.AddBuff(Purifying_Buff.ID, 20);
 			return true;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {

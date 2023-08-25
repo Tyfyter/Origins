@@ -3972,6 +3972,11 @@ Mods: {
 				// DisplayName: Volatile_ Gelatin_ Slime_ Debuff
 				// Description: Mods.Origins.Buffs.Volatile_Gelatin_Slime_Debuff.Description
 			}
+
+			Purifying_Buff: {
+				// DisplayName: Purifying_ Buff
+				// Description: Mods.Origins.Buffs.Purifying_Buff.Description
+			}
 		}
 
 		DamageClassName: {

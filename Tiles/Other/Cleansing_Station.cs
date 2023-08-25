@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.MiscE;
 using Origins.NPCs.Riven;
@@ -78,9 +79,8 @@ namespace Origins.Tiles.Other {
 				return false;
 			}
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
-			originPlayer.mojoFlaskCount = originPlayer.mojoFlaskCountMax;
 			float assimilationTotal = originPlayer.CorruptionAssimilation + originPlayer.CrimsonAssimilation + originPlayer.DefiledAssimilation + originPlayer.RivenAssimilation;
-			if (assimilationTotal > 0) {
+			if (assimilationTotal > 0 || originPlayer.mojoFlaskCount < originPlayer.mojoFlaskCountMax) {
 				for (int k = 0; k < 3 + 6 * assimilationTotal; k++) {
 					Vector2 pos = new Vector2(i + Main.rand.NextFloat(1), j + Main.rand.NextFloat(1)) * 16;
 					Vector2 dir = ((Main.LocalPlayer.MountedCenter - pos) / 24).WithMaxLength(8);
@@ -100,10 +100,8 @@ namespace Origins.Tiles.Other {
 				dust.fadeIn = 1.5f;
 				dust.color = Color.Blue;
 			}
-			originPlayer.CorruptionAssimilation = 0;
-			originPlayer.CrimsonAssimilation = 0;
-			originPlayer.DefiledAssimilation = 0;
-			originPlayer.RivenAssimilation = 0;
+			originPlayer.mojoFlaskCount = originPlayer.mojoFlaskCountMax;
+			Main.LocalPlayer.AddBuff(Purifying_Buff.ID, 120);
 			return true;
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
