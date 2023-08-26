@@ -16,6 +16,7 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using static Tyfyter.Utils.UITools;
+using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 
 namespace Origins {
 	public partial class OriginSystem : ModSystem {
@@ -163,46 +164,18 @@ namespace Origins {
 		public static int ShadowScaleRecipeGroupID { get; private set; }
 		public static int CursedFlameRecipeGroupID { get; private set; }
 		public override void AddRecipeGroups() {
-			RecipeGroup group = new RecipeGroup(() => $"{Lang.misc[37].Value} Gem Staff", new int[] {
+			GemStaffRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Staves", new RecipeGroup(() => $"{Lang.misc[37].Value} Gem Staff", new int[] {
 				ItemID.AmethystStaff,
 				ItemID.TopazStaff,
 				ItemID.SapphireStaff,
 				ItemID.EmeraldStaff,
 				ItemID.RubyStaff,
 				ItemID.DiamondStaff
-			});
-			GemStaffRecipeGroupID = RecipeGroup.RegisterGroup("Origins:Gem Staves", group);
-			group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.Deathweed), new int[] {
-				ItemID.Deathweed,
-				ModContent.ItemType<Wilting_Rose_Item>(),
-				ModContent.ItemType<Wrycoral_Item>(),
-				ModContent.ItemType<Surveysprout>()
-			});
-			DeathweedRecipeGroupID = RecipeGroup.RegisterGroup("Deathweed", group);
-			group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.RottenChunk), new int[] {
-				ItemID.RottenChunk,
-				ItemID.Vertebrae,
-				ModContent.ItemType<Strange_String>(),
-				ModContent.ItemType<Bud_Barnacle>(),
-				ModContent.ItemType<Biocomponent10>()
-			});
-			RottenChunkRecipeGroupID = RecipeGroup.RegisterGroup("Rotten Chunk", group);
-			group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.ShadowScale), new int[] {
-				ItemID.ShadowScale,
-				ItemID.TissueSample,
-				ModContent.ItemType<Undead_Chunk>(),
-				ModContent.ItemType<Riven_Carapace>(),
-				ModContent.ItemType<NE8>()
-			});
-			ShadowScaleRecipeGroupID = RecipeGroup.RegisterGroup("Shadow Scale", group);
-			group = new RecipeGroup(() => Lang.misc[37].Value + " " + Lang.GetItemName(ItemID.CursedFlame), new int[] {
-				ItemID.CursedFlame,
-				ItemID.Ichor,
-				ModContent.ItemType<Alkahest>(),
-				ModContent.ItemType<Black_Bile>(),
-				ModContent.ItemType<Respyrite>()
-			});
-			CursedFlameRecipeGroupID = RecipeGroup.RegisterGroup("Cursed Flames", group);
+			}));
+			DeathweedRecipeGroupID = ALRecipeGroups.Deathweed.RegisteredId;
+			RottenChunkRecipeGroupID = ALRecipeGroups.RottenChunks.RegisteredId;
+			ShadowScaleRecipeGroupID = ALRecipeGroups.ShadowScales.RegisteredId;
+			CursedFlameRecipeGroupID = ALRecipeGroups.CursedFlames.RegisteredId;
 		}
 		public override void PostAddRecipes() {
 			int l = Main.recipe.Length;

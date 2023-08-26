@@ -1614,15 +1614,8 @@ Mods: {
 				// Tooltip: +6% critical strike chance
 			}
 
-			DA_Mask: {
-				// DisplayName: "{$Defiled} Amalgamation Mask"
-				// Tooltip: ""
-			}
-
-			FW_Head: {
-				// DisplayName: Fiberglass Weaver Head
-				// Tooltip: ""
-			}
+			// DA_Mask.DisplayName: "{$Defiled} Amalgamation Mask"
+			// FW_Head.DisplayName: Fiberglass Weaver Head
 
 			Plague_Texan_Jacket: {
 				// DisplayName: Plague Texan's Surprisingly Affordable Style
@@ -1670,30 +1663,16 @@ Mods: {
 				// Tooltip: Quite fashionable
 			}
 
-			Adhesive_Wrap: {
-				// DisplayName: Adhesive Wrap
-				// Tooltip: ""
-			}
+			// Adhesive_Wrap.DisplayName: Adhesive Wrap
 
 			Alkahest: {
 				// DisplayName: Alkahest
 				// Tooltip: "'Don't touch it'"
 			}
 
-			Bark: {
-				// DisplayName: Bark
-				// Tooltip: ""
-			}
-
-			Bat_Hide: {
-				// DisplayName: Bat Hide
-				// Tooltip: ""
-			}
-
-			Biocomponent10: {
-				// DisplayName: Biocomponent 10
-				// Tooltip: ""
-			}
+			// Bark.DisplayName: Bark
+			// Bat_Hide.DisplayName: Bat Hide
+			// Biocomponent10.DisplayName: Biocomponent 10
 
 			Black_Bile: {
 				// DisplayName: Black Bile
@@ -1705,110 +1684,52 @@ Mods: {
 				// Tooltip: "'Weakens those who touch it'"
 			}
 
-			Bottled_Brine: {
-				// DisplayName: Bottled Brine
-				// Tooltip: ""
-			}
-
-			Brineglow: {
-				// DisplayName: Brineglow
-				// Tooltip: ""
-			}
-
-			Bud_Barnacle: {
-				// DisplayName: Bud Barnacle
-				// Tooltip: ""
-			}
-
-			Busted_Servo: {
-				// DisplayName: Busted Servo
-				// Tooltip: ""
-			}
+			// Bottled_Brine.DisplayName: Bottled Brine
+			// Brineglow.DisplayName: Brineglow
+			// Bud_Barnacle.DisplayName: Bud Barnacle
+			// Busted_Servo.DisplayName: Busted Servo
 
 			Chambersite: {
 				// DisplayName: Chambersite
 				// Tooltip: "'Loses all of its color when exposed to light'"
 			}
 
-			Chromtain_Bar: {
-				// DisplayName: Chromtain Bar
-				// Tooltip: ""
-			}
-
-			Dawn_Key: {
-				// DisplayName: Dawn Key
-				// Tooltip: ""
-			}
-
-			Defiled_Bar: {
-				// DisplayName: "{$Defiled} Bar"
-				// Tooltip: ""
-			}
-
-			Defiled_Key: {
-				// DisplayName: "{$Defiled} Key"
-				// Tooltip: ""
-			}
+			// Chromtain_Bar.DisplayName: Chromtain Bar
+			// Dawn_Key.DisplayName: Dawn Key
+			// Defiled_Bar.DisplayName: "{$Defiled} Bar"
+			// Defiled_Key.DisplayName: "{$Defiled} Key"
 
 			Dreadful_Powder: {
 				// DisplayName: Dreadful Powder
 				// Tooltip: Spreads the Defiled
 			}
 
-			Dusk_Key: {
-				// DisplayName: Dusk Key
-				// Tooltip: ""
-			}
+			// Dusk_Key.DisplayName: Dusk Key
 
 			Eitrite_Bar: {
 				// DisplayName: Eitrite Bar
 				// Tooltip: "'So alkaline-concentrated it could be used as a power source'"
 			}
 
-			Element36_Bundle: {
-				// DisplayName: Element-36 Bundle
-				// Tooltip: ""
-			}
-
-			Encrusted_Bar: {
-				// DisplayName: Encrusted Bar
-				// Tooltip: ""
-			}
+			// Element36_Bundle.DisplayName: Element-36 Bundle
+			// Encrusted_Bar.DisplayName: Encrusted Bar
 
 			Eyndum_Bar: {
 				// DisplayName: Eyndum Bar
 				// Tooltip: '''"Half-life" means nothing when used in the same sentence'''
 			}
 
-			Felnum_Bar: {
-				// DisplayName: Felnum Bar
-				// Tooltip: ""
-			}
-
-			Fibron_Plating: {
-				// DisplayName: Fibron Plating
-				// Tooltip: ""
-			}
-
-			Formium_Bar: {
-				// DisplayName: Formium Bar
-				// Tooltip: ""
-			}
-
-			Formium_Scrap: {
-				// DisplayName: Formium Scrap
-				// Tooltip: ""
-			}
+			// Felnum_Bar.DisplayName: Felnum Bar
+			// Fibron_Plating.DisplayName: Fibron Plating
+			// Formium_Bar.DisplayName: Formium Bar
+			// Formium_Scrap.DisplayName: Formium Scrap
 
 			FragmentNova: {
 				// DisplayName: Nova Fragment
 				// Tooltip: "'The essence of a dying star in its final moments...'"
 			}
 
-			Hell_Key: {
-				// DisplayName: Hell Key
-				// Tooltip: ""
-			}
+			// Hell_Key.DisplayName: Hell Key
 
 			Illegal_Explosive_Parts: {
 				// DisplayName: Illegal Explosive Parts
@@ -1825,30 +1746,16 @@ Mods: {
 				// Tooltip: "'Keeps your hair in perfect form!'"
 			}
 
-			Mushroom_Key: {
-				// DisplayName: Mushroom Key
-				// Tooltip: ""
-			}
-
-			NE9: {
-				// DisplayName: NE9
-				// Tooltip: ""
-			}
-
-			Ocean_Key: {
-				// DisplayName: Ocean Key
-				// Tooltip: ""
-			}
+			// Mushroom_Key.DisplayName: Mushroom Key
+			// NE9.DisplayName: NE9
+			// Ocean_Key.DisplayName: Ocean Key
 
 			Peat_Moss: {
 				// DisplayName: Peat Moss
 				// Tooltip: The Demolitionist might find this interesting...
 			}
 
-			Power_Core: {
-				// DisplayName: Power Core
-				// Tooltip: ""
-			}
+			// Power_Core.DisplayName: Power Core
 
 			Qube: {
 				// DisplayName: Qube
@@ -1860,25 +1767,10 @@ Mods: {
 				// Tooltip: "'Crystal remains of captured breath'"
 			}
 
-			Riven_Carapace: {
-				// DisplayName: "{$Riven} Carapace"
-				// Tooltip: ""
-			}
-
-			Riven_Key: {
-				// DisplayName: "{$Riven} Key"
-				// Tooltip: ""
-			}
-
-			Rotor: {
-				// DisplayName: Rotor
-				// Tooltip: ""
-			}
-
-			Rubber: {
-				// DisplayName: Rubber
-				// Tooltip: ""
-			}
+			// Riven_Carapace.DisplayName: "{$Riven} Carapace"
+			// Riven_Key.DisplayName: "{$Riven} Key"
+			// Rotor.DisplayName: Rotor
+			// Rubber.DisplayName: Rubber
 
 			Sanguinite_Bar: {
 				// DisplayName: Sanguinite Bar
@@ -1895,50 +1787,30 @@ Mods: {
 				// Tooltip: The day of Verdict will come...
 			}
 
-			Silicon: {
-				// DisplayName: Silicon
-				// Tooltip: ""
-			}
+			// Silicon.DisplayName: Silicon
 
 			Strange_String: {
 				// DisplayName: Strange String
 				// Tooltip: "'Involuntary neurectomy'"
 			}
 
-			Tree_Sap: {
-				// DisplayName: Tree Sap
-				// Tooltip: ""
-			}
-
-			Undead_Chunk: {
-				// DisplayName: Undead Chunk
-				// Tooltip: ""
-			}
+			// Tree_Sap.DisplayName: Tree Sap
+			// Undead_Chunk.DisplayName: Undead Chunk
 
 			Unpowered_Eyndum_Core: {
 				// DisplayName: Unpowered Eyndum Core
 				// Tooltip: "'Limitless potential'"
 			}
 
-			Valkyrum_Bar: {
-				// DisplayName: Valkyrum Bar
-				// Tooltip: ""
-			}
+			// Valkyrum_Bar.DisplayName: Valkyrum Bar
 
 			Fungarust: {
 				// DisplayName: Fungarust
 				// Tooltip: Catalyst of rusting metal
 			}
 
-			Wilting_Rose_Item: {
-				// DisplayName: Wilting Rose
-				// Tooltip: ""
-			}
-
-			Wrycoral_Item: {
-				// DisplayName: Wrycoral
-				// Tooltip: ""
-			}
+			// Wilting_Rose_Item.DisplayName: Wilting Rose
+			// Wrycoral_Item.DisplayName: Wrycoral
 
 			Absorption_Potion: {
 				// DisplayName: Absorption Potion
@@ -3666,15 +3538,9 @@ Mods: {
 				// Tooltip: ""
 			}
 
-			Surveysprout: {
-				// DisplayName: Surveysprout
-				// Tooltip: ""
-			}
-
-			NE8: {
-				// DisplayName: N E8
-				// Tooltip: ""
-			}
+			// Surveysprout.DisplayName: Surveysprout
+			// NE8.DisplayName: NE8
+			// Nova_Fragment.DisplayName: Nova_ Fragment
 		}
 
 		Buffs: {

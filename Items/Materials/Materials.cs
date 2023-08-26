@@ -10,17 +10,32 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
-    public class Adhesive_Wrap : ModItem {
+	public abstract class MaterialItem : ModItem {
+		public virtual bool HasTooltip => false;
+		public virtual bool HasGlowmask => false;
+		public virtual string GlowTexture => Texture + "_Glow";
+		public override LocalizedText Tooltip => HasTooltip ? base.Tooltip : LocalizedText.Empty;
+		public virtual int ResearchUnlockCount => 25;
+		public virtual int Rare => ItemRarityID.White;
+		public virtual int Value => 0;
+		protected short glowmask = -1;
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
+			Item.ResearchUnlockCount = ResearchUnlockCount;
+			if (HasGlowmask) glowmask = Origins.AddGlowMask(GlowTexture);
 		}
 		public override void SetDefaults() {
-			Item.value = Item.sellPrice(copper: 18);
+			Item.value = Value;
 			Item.maxStack = Item.CommonMaxStack;
+			Item.glowMask = glowmask;
 		}
+	}
+	public class Adhesive_Wrap : MaterialItem {
+		public override int ResearchUnlockCount => 25;
+		public override int Value => Item.sellPrice(copper: 18);
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 5);
 			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 5);
@@ -35,35 +50,26 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Alkahest : ModItem, IJournalEntryItem {
+	public class Alkahest : MaterialItem, IJournalEntryItem {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Alkahest_Mat_Entry).Name;
+		public override int ResearchUnlockCount => 25;
+		public override int Rare => ItemRarityID.Orange;
+		public override int Value => Item.sellPrice(silver: 9);
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
+			base.SetStaticDefaults();
 			ItemID.Sets.ShimmerTransformToItem[ItemID.CursedFlame] = ItemID.Ichor;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.Ichor] = ModContent.ItemType<Black_Bile>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Black_Bile>()] = ModContent.ItemType<Alkahest>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Alkahest>()] = ModContent.ItemType<Respyrite>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Respyrite>()] = ItemID.CursedFlame;
 		}
-		public override void SetDefaults() {
-			Item.value = Item.sellPrice(silver: 9);
-			Item.rare = ItemRarityID.Orange;
-			Item.maxStack = Item.CommonMaxStack;
-		}
 		public class Alkahest_Mat_Entry : JournalEntry {
 			public override string TextKey => "Alkahest";
 			public override ArmorShaderData TextShader => null;
 		}
 	}
-	public class Bark : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.rare = ItemRarityID.Gray;
-			Item.maxStack = Item.CommonMaxStack;
-		}
+	public class Bark : MaterialItem {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>());
 			recipe.AddIngredient(this);
@@ -71,15 +77,7 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Bat_Hide : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-
-		}
-		public override void SetDefaults() {
-			Item.rare = ItemRarityID.Gray;
-			Item.maxStack = Item.CommonMaxStack;
-		}
+	public class Bat_Hide : MaterialItem {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.Leather);
 			recipe.AddIngredient(this, 4);
@@ -87,18 +85,16 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Biocomponent10 : ModItem {
+	public class Biocomponent10 : MaterialItem {
+		public override int ResearchUnlockCount => 30;
+		public override int Value => Item.sellPrice(copper: 2);
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 30;
+			base.SetStaticDefaults();
 			ItemID.Sets.ShimmerTransformToItem[ItemID.RottenChunk] = ItemID.Vertebrae;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.Vertebrae] = ModContent.ItemType<Strange_String>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Strange_String>()] = ModContent.ItemType<Bud_Barnacle>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bud_Barnacle>()] = ModContent.ItemType<Biocomponent10>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Biocomponent10>()] = ItemID.RottenChunk;
-		}
-		public override void SetDefaults() {
-			Item.value = Item.sellPrice(copper: 2);
-			Item.maxStack = Item.CommonMaxStack;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.BattlePotion);
@@ -115,33 +111,20 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Black_Bile : ModItem, IJournalEntryItem {
+	public class Black_Bile : MaterialItem, IJournalEntryItem {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Black_Bile_Entry).Name;
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.value = Item.sellPrice(silver: 10);
-			Item.maxStack = Item.CommonMaxStack;
-			Item.rare = ItemRarityID.Orange;
-		}
+		public override int Rare => ItemRarityID.Orange;
+		public override int Value => Item.sellPrice(silver: 10);
 		public class Black_Bile_Entry : JournalEntry {
 			public override string TextKey => "Black_Bile";
 			public override ArmorShaderData TextShader => null;
 		}
 	}
-	public class Bleeding_Obsidian_Shard : ModItem {
-		static short glowmask;
-		public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 48;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.rare = ItemRarityID.LightRed;
-			Item.glowMask = glowmask;
-		}
+	public class Bleeding_Obsidian_Shard : MaterialItem {
+		public override bool HasGlowmask => true;
+		public override int ResearchUnlockCount => 48;
+		public override int Rare => ItemRarityID.LightRed;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Bleeding_Obsidian_Item>());
 			recipe.AddIngredient(this, 8);
@@ -152,14 +135,9 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Bottled_Brine : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 30;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 40);
-		}
+	public class Bottled_Brine : MaterialItem {
+		public override int ResearchUnlockCount => 30;
+		public override int Value => Item.sellPrice(copper: 40);
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.Bottle);
@@ -169,26 +147,14 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Brineglow : ModItem {
-		static short glowmask;
-		public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 5;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 30);
-			Item.glowMask = glowmask;
-		}
+	public class Brineglow : MaterialItem {
+		public override bool HasGlowmask => true;
+		public override int ResearchUnlockCount => 5;
+		public override int Value => Item.sellPrice(copper: 30);
 	}
-	public class Bud_Barnacle : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 30;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 2);
-		}
+	public class Bud_Barnacle : MaterialItem {
+		public override int ResearchUnlockCount => 30;
+		public override int Value => Item.sellPrice(copper: 2);
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.BattlePotion);
 			recipe.AddIngredient(ItemID.BottledWater);
@@ -209,35 +175,18 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Busted_Servo : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 99;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 2);
-			Item.rare = ItemRarityID.Pink;
-		}
+	public class Busted_Servo : MaterialItem {
+		public override int ResearchUnlockCount => 99;
+		public override int Value => Item.sellPrice(silver: 2);
+		public override int Rare => ItemRarityID.Pink;
 	}
-	public class Chambersite : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 8);
-			Item.rare = ItemRarityID.Blue;
-		}
+	public class Chambersite : MaterialItem {
+		public override int Value => Item.sellPrice(silver: 8);
+		public override int Rare => ItemRarityID.Blue;
 	}
-	public class Chromtain_Bar : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = CrimsonRarity.ID;
-		}
+	public class Chromtain_Bar : MaterialItem {
+		public override int Value => Item.sellPrice(gold: 1);
+		public override int Rare => CrimsonRarity.ID;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.FragmentSolar, 4);
@@ -247,15 +196,9 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Defiled_Bar : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 30);
-			Item.rare = ItemRarityID.Blue;
-		}
+	public class Defiled_Bar : MaterialItem {
+		public override int Value => Item.sellPrice(silver: 30);
+		public override int Rare => ItemRarityID.Blue;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 3);
@@ -269,42 +212,9 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Dawn_Key : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.rare = ItemRarityID.Yellow;
-		}
-	}
-	public class Defiled_Key : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.rare = ItemRarityID.Yellow;
-		}
-	}
-	public class Dusk_Key : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.rare = ItemRarityID.Yellow;
-		}
-	}
-	public class Eitrite_Bar : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 81);
-			Item.rare = ItemRarityID.Orange;
-		}
+	public class Eitrite_Bar : MaterialItem {
+		public override int Value => Item.sellPrice(silver: 81);
+		public override int Rare => ItemRarityID.Orange;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Eitrite_Ore_Item>(), 4);
@@ -326,15 +236,9 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Element36_Bundle : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = CrimsonRarity.ID;
-		}
+	public class Element36_Bundle : MaterialItem {
+		public override int Value => Item.sellPrice(gold: 1);
+		public override int Rare => CrimsonRarity.ID;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.FragmentNebula, 2);
@@ -346,15 +250,9 @@ namespace Origins.Items.Materials {
 		}
 	}
 	[LegacyName("Infested_Bar")]
-	public class Encrusted_Bar : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 30);
-			Item.rare = ItemRarityID.Blue;
-		}
+	public class Encrusted_Bar : MaterialItem {
+		public override int Value => Item.sellPrice(silver: 30);
+		public override int Rare => ItemRarityID.Blue;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 3);
@@ -368,27 +266,15 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Eyndum_Bar : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = CrimsonRarity.ID;
-		}
+	public class Eyndum_Bar : MaterialItem {
+		public override int Value => Item.sellPrice(gold: 1);
+		public override int Rare => CrimsonRarity.ID;
 	}
-	public class Felnum_Bar : ModItem, IJournalEntryItem {
+	public class Felnum_Bar : MaterialItem, IJournalEntryItem {
+		public override int Value => Item.sellPrice(silver: 40);
+		public override int Rare => ItemRarityID.Green;
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 40);
-			Item.rare = ItemRarityID.Green;
-		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Felnum_Ore_Item>(), 3);
@@ -396,25 +282,13 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Fibron_Plating : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 68);
-			Item.rare = CrimsonRarity.ID;
-		}
+	public class Fibron_Plating : MaterialItem {
+		public override int Value => Item.sellPrice(silver: 68);
+		public override int Rare => CrimsonRarity.ID;
 	}
-	public class Formium_Bar : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 68);
-			Item.rare = ButterscotchRarity.ID;
-		}
+	public class Formium_Bar : MaterialItem {
+		public override int Value => Item.sellPrice(silver: 68);
+		public override int Rare => ButterscotchRarity.ID;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Formium_Scrap>(), 6);
@@ -422,76 +296,46 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Formium_Scrap : ModItem {
+	public class Formium_Scrap : MaterialItem {
+		public override int Value => Item.sellPrice(silver: 10);
+		public override int Rare => ItemRarityID.Purple;
+	}
+	public class Fungarust : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 10);
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 10);
-			Item.rare = ItemRarityID.Purple;
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[ItemID.VileMushroom] = ItemID.ViciousMushroom;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.ViciousMushroom] = ModContent.ItemType<Soulspore_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Soulspore_Item>()] = ModContent.ItemType<Acetabularia_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Acetabularia_Item>()] = ModContent.ItemType<Fungarust>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Fungarust>()] = ItemID.VileMushroom;
 		}
 	}
-    public class Fungarust : ModItem
-    {
-        public override void SetStaticDefaults()
-        {
-            Item.ResearchUnlockCount = 25;
-            ItemID.Sets.ShimmerTransformToItem[ItemID.VileMushroom] = ItemID.ViciousMushroom;
-            ItemID.Sets.ShimmerTransformToItem[ItemID.ViciousMushroom] = ModContent.ItemType<Soulspore_Item>();
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Soulspore_Item>()] = ModContent.ItemType<Acetabularia_Item>();
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Acetabularia_Item>()] = ModContent.ItemType<Fungarust>();
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Fungarust>()] = ItemID.VileMushroom;
-        }
-        public override void SetDefaults()
-        {
-            Item.maxStack = Item.CommonMaxStack;
-        }
-    }
-    public class Hell_Key : ModItem {
+	public class Illegal_Explosive_Parts : MaterialItem {
+		public override int ResearchUnlockCount => 1;
+		public override int Value => Item.sellPrice(gold: 4);
+		public override int Rare => ItemRarityID.LightRed;
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.rare = ItemRarityID.Yellow;
-		}
-	}
-	public class Illegal_Explosive_Parts : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
+			base.SetStaticDefaults();
 			ItemID.Sets.ShimmerTransformToItem[ItemID.IllegalGunParts] = ModContent.ItemType<Illegal_Explosive_Parts>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Illegal_Explosive_Parts>()] = ItemID.IllegalGunParts;
 		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(gold: 4);
-			Item.rare = ItemRarityID.LightRed;
-		}
 	}
-	public class Lunar_Token : ModItem {
-		static short glowmask;
+	public class Lunar_Token : MaterialItem {
+		public override bool HasGlowmask => true;
+		public override string GlowTexture => Texture;
+		public override int ResearchUnlockCount => 100;
+		public override int Value => -1;
+		public override int Rare => ItemRarityID.Cyan;
 		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(8, 4));
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 100;
-		}
-		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.DefenderMedal);
-			Item.rare = ItemRarityID.Cyan;
-			Item.glowMask = glowmask;
 		}
 	}
-	public class Magic_Hair_Spray : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 40);
-			Item.rare = ItemRarityID.Quest;
-		}
+	public class Magic_Hair_Spray : MaterialItem {
+		public override int ResearchUnlockCount => 1;
+		public override int Value => Item.sellPrice(copper: 40);
+		public override int Rare => ItemRarityID.Quest;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 5);
 			recipe.AddIngredient(ItemID.BottledWater, 5);
@@ -502,74 +346,26 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Mushroom_Key : ModItem {
+	public class NE8 : MaterialItem {
+		public override int Rare => ItemRarityID.Blue;
+		public override int Value => Item.sellPrice(silver: 1, copper: 50);
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.rare = ItemRarityID.Yellow;
-		}
-	}
-	public class NE8 : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
+			base.SetStaticDefaults();
 			ItemID.Sets.ShimmerTransformToItem[ItemID.ShadowScale] = ItemID.TissueSample;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.TissueSample] = ModContent.ItemType<Undead_Chunk>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Undead_Chunk>()] = ModContent.ItemType<Riven_Carapace>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Carapace>()] = ModContent.ItemType<NE8>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<NE8>()] = ItemID.ShadowScale;
 		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 1, copper: 50);
-			Item.rare = ItemRarityID.Blue;
-		}
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.ObsidianHelm);
-			recipe.AddIngredient(ItemID.Obsidian, 20);
-			recipe.AddIngredient(ItemID.Silk, 10);
-			recipe.AddIngredient(this, 5);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.Register();
-			recipe = Recipe.Create(ItemID.ObsidianPants);
-			recipe.AddIngredient(ItemID.Obsidian, 20);
-			recipe.AddIngredient(ItemID.Silk, 10);
-			recipe.AddIngredient(this, 5);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.Register();
-			recipe = Recipe.Create(ItemID.ObsidianShirt);
-			recipe.AddIngredient(ItemID.Obsidian, 20);
-			recipe.AddIngredient(ItemID.Silk, 10);
-			recipe.AddIngredient(this, 10);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.VoidVault);
-			recipe.AddIngredient(ItemID.Bone, 15);
-			recipe.AddIngredient(ItemID.JungleSpores, 8);
-			recipe.AddIngredient(this, 15);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
-			recipe = Recipe.Create(ItemID.VoidLens);
-			recipe.AddIngredient(ItemID.Bone, 30);
-			recipe.AddIngredient(ItemID.JungleSpores, 15);
-			recipe.AddIngredient(this, 30);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
-		}
 	}
-	public class FragmentNova : ModItem {
-		static short glowmask;
+	public class Nova_Fragment : MaterialItem {
+		public override string GlowTexture => Texture;
+		public override int Value => Item.sellPrice(silver: 20);
+		public override int Rare => ItemRarityID.Cyan;
 		public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
+			base.SetStaticDefaults();
 			ItemID.Sets.ItemNoGravity[Type] = true;
 			ItemID.Sets.ItemIconPulse[Type] = true;
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.FragmentSolar);
-			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -581,25 +377,11 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Ocean_Key : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.rare = ItemRarityID.Yellow;
-		}
-	}
 	[LegacyName("Peat_Moss_Item")]
-	public class Peat_Moss : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 99;
-		}
-		public override void SetDefaults() {
-			Item.DefaultToPlaceableTile(ModContent.TileType<Peat_Moss_Tile>());
-			Item.value = Item.sellPrice(copper: 60);
-			Item.rare = ItemRarityID.Green;
-		}
+	public class Peat_Moss : MaterialItem {
+		public override int ResearchUnlockCount => 99;
+		public override int Value => Item.sellPrice(copper: 60);
+		public override int Rare => ItemRarityID.Green;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.ExplosivePowder);
 			recipe.AddIngredient(this, 3);
@@ -607,18 +389,11 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Power_Core : ModItem {
-		static short glowmask;
-		public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 20;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 20);
-			Item.rare = ItemRarityID.Pink;
-			Item.glowMask = glowmask;
-		}
+	public class Power_Core : MaterialItem {
+		public override bool HasGlowmask => true;
+		public override int ResearchUnlockCount => 20;
+		public override int Value => Item.sellPrice(silver: 20);
+		public override int Rare => ItemRarityID.Pink;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.HallowedBar, 2);
@@ -627,96 +402,25 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Qube : ModItem {
-		static short glowmask;
-		public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 100;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(gold: 1, silver: 60);
-			Item.rare = ButterscotchRarity.ID;
-			Item.glowMask = glowmask;
-		}
+	public class Qube : MaterialItem {
+		public override bool HasGlowmask => true;
+		public override int ResearchUnlockCount => 100;
+		public override int Value => Item.sellPrice(gold: 1, silver: 60);
+		public override int Rare => ButterscotchRarity.ID;
 	}
-	public class Respyrite : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 9);
-			Item.rare = ItemRarityID.Orange;
-		}
+	public class Respyrite : MaterialItem {
+		public override int Value => Item.sellPrice(silver: 9);
+		public override int Rare => ItemRarityID.Orange;
 	}
-	public class Riven_Key : ModItem {
-		static short glowmask;
-		public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.rare = ItemRarityID.Yellow;
-			Item.glowMask = glowmask;
-		}
+	public class Riven_Carapace : MaterialItem {
+		public override bool HasGlowmask => true;
+		public override int Rare => ItemRarityID.Blue;
+		public override int Value => Item.sellPrice(silver: 1, copper: 50);
 	}
-	public class Riven_Carapace : ModItem {
-		static short glowmask;
-		public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(gold: 1, copper: 50);
-			Item.rare = ItemRarityID.Blue;
-			Item.glowMask = glowmask;
-		}
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.ObsidianHelm);
-			recipe.AddIngredient(ItemID.Obsidian, 20);
-			recipe.AddIngredient(ItemID.Silk, 10);
-			recipe.AddIngredient(this, 5);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.Register();
-			recipe = Recipe.Create(ItemID.ObsidianPants);
-			recipe.AddIngredient(ItemID.Obsidian, 20);
-			recipe.AddIngredient(ItemID.Silk, 10);
-			recipe.AddIngredient(this, 5);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.Register();
-			recipe = Recipe.Create(ItemID.ObsidianShirt);
-			recipe.AddIngredient(ItemID.Obsidian, 20);
-			recipe.AddIngredient(ItemID.Silk, 10);
-			recipe.AddIngredient(this, 10);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.VoidVault);
-			recipe.AddIngredient(ItemID.Bone, 15);
-			recipe.AddIngredient(ItemID.JungleSpores, 8);
-			recipe.AddIngredient(this, 15);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
-			recipe = Recipe.Create(ItemID.VoidLens);
-			recipe.AddIngredient(ItemID.Bone, 30);
-			recipe.AddIngredient(ItemID.JungleSpores, 15);
-			recipe.AddIngredient(this, 30);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
-		}
-	}
-	public class Rotor : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 99;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 40);
-			Item.rare = ItemRarityID.Pink;
-		}
+	public class Rotor : MaterialItem {
+		public override int ResearchUnlockCount => 99;
+		public override int Value => Item.sellPrice(copper: 40);
+		public override int Rare => ItemRarityID.Pink;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.HallowedBar);
@@ -725,14 +429,8 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Rubber : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 6);
-		}
+	public class Rubber : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 6);
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.Flipper);
 			recipe.AddIngredient(Type, 15);
@@ -747,15 +445,9 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Sanguinite_Bar : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 30);
-			Item.rare = ItemRarityID.Blue;
-		}
+	public class Sanguinite_Bar : MaterialItem {
+		public override int Value => Item.sellPrice(silver: 30);
+		public override int Rare => ItemRarityID.Blue;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 3);
@@ -769,14 +461,8 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Silicon : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 44);
-		}
+	public class Silicon : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 44);
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.SandBlock, 3);
@@ -784,14 +470,8 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Strange_String : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 2);
-		}
+	public class Strange_String : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 2);
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.BattlePotion);
 			recipe.AddIngredient(ItemID.BottledWater);
@@ -807,28 +487,18 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Surveysprout : ModItem {
+	public class Surveysprout : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 20);
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
+			base.SetStaticDefaults();
 			ItemID.Sets.ShimmerTransformToItem[ItemID.Deathweed] = ModContent.ItemType<Wilting_Rose_Item>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wilting_Rose_Item>()] = ModContent.ItemType<Wrycoral_Item>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wrycoral_Item>()] = ModContent.ItemType<Surveysprout>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Surveysprout>()] = ItemID.Deathweed;
 		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 20);
-		}
 	}
-	public class Tree_Sap : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 2);
-			Item.rare = ItemRarityID.Gray;
-		}
+	public class Tree_Sap : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 2);
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Rubber>());
 			recipe.AddIngredient(this);
@@ -836,62 +506,15 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Undead_Chunk : ModItem {
-		static short glowmask;
-		public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(silver: 1, copper: 50);
-			Item.rare = ItemRarityID.Blue;
-			Item.glowMask = glowmask;
-		}
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.ObsidianHelm);
-			recipe.AddIngredient(ItemID.Obsidian, 20);
-			recipe.AddIngredient(ItemID.Silk, 10);
-			recipe.AddIngredient(this, 5);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.Register();
-			recipe = Recipe.Create(ItemID.ObsidianPants);
-			recipe.AddIngredient(ItemID.Obsidian, 20);
-			recipe.AddIngredient(ItemID.Silk, 10);
-			recipe.AddIngredient(this, 5);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.Register();
-			recipe = Recipe.Create(ItemID.ObsidianShirt);
-			recipe.AddIngredient(ItemID.Obsidian, 20);
-			recipe.AddIngredient(ItemID.Silk, 10);
-			recipe.AddIngredient(this, 10);
-			recipe.AddTile(TileID.Hellforge);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.VoidVault);
-			recipe.AddIngredient(ItemID.Bone, 15);
-			recipe.AddIngredient(ItemID.JungleSpores, 8);
-			recipe.AddIngredient(this, 15);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
-			recipe = Recipe.Create(ItemID.VoidLens);
-			recipe.AddIngredient(ItemID.Bone, 30);
-			recipe.AddIngredient(ItemID.JungleSpores, 15);
-			recipe.AddIngredient(this, 30);
-			recipe.AddTile(TileID.DemonAltar);
-			recipe.Register();
-		}
+	public class Undead_Chunk : MaterialItem {
+		public override bool HasGlowmask => true;
+		public override int Rare => ItemRarityID.Blue;
+		public override int Value => Item.sellPrice(silver: 1, copper: 50);
 	}
-	public class Unpowered_Eyndum_Core : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 2;
-
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(gold: 10);
-			Item.rare = ButterscotchRarity.ID;
-		}
+	public class Unpowered_Eyndum_Core : MaterialItem {
+		public override int ResearchUnlockCount => 2;
+		public override int Value => Item.sellPrice(gold: 10);
+		public override int Rare => ButterscotchRarity.ID;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			//recipe.AddIngredient(ModContent.ItemType<Superconductor>(), 10);
@@ -901,16 +524,10 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Valkyrum_Bar : ModItem {
+	public class Valkyrum_Bar : MaterialItem {
 		//Alloy of Felnum and a Dawn material. I can imagine a pearl-like color now
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = ItemRarityID.Yellow;
-		}
+		public override int Value => Item.sellPrice(gold: 1);
+		public override int Rare => ItemRarityID.Yellow;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.Ectoplasm);
@@ -920,22 +537,26 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Wilting_Rose_Item : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 20);
-		}
+	public class Wilting_Rose_Item : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 20);
 	}
-	public class Wrycoral_Item : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 25;
-		}
-		public override void SetDefaults() {
-			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.sellPrice(copper: 20);
-		}
+	public class Wrycoral_Item : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 20);
 	}
+
+	#region biome keys
+	public class Dawn_Key : MaterialItem {
+		public override int ResearchUnlockCount => 1;
+		public override int Value => 0;
+		public override int Rare => ItemRarityID.Yellow;
+	}
+	public class Defiled_Key : Dawn_Key { }
+	public class Dusk_Key : Dawn_Key { }
+	public class Hell_Key : Dawn_Key { }
+	public class Mushroom_Key : Dawn_Key { }
+	public class Ocean_Key : Dawn_Key { }
+	public class Riven_Key : Dawn_Key {
+		public override bool HasGlowmask => true;
+	}
+	#endregion
 }

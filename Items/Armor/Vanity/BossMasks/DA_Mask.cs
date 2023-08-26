@@ -1,10 +1,12 @@
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Vanity.BossMasks {
 	[AutoloadEquip(EquipType.Head)]
 	public class DA_Mask : ModItem {
+		public override LocalizedText Tooltip => LocalizedText.Empty;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("{$Defiled} Amalgamation Mask");
 			if (Main.netMode != NetmodeID.Server) {
@@ -14,6 +16,7 @@ namespace Origins.Items.Armor.Vanity.BossMasks {
 		}
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Blue;
+			Item.vanity = true;
 		}
 	}
 }

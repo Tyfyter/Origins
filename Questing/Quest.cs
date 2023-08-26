@@ -24,6 +24,7 @@ namespace Origins.Questing {
 		public virtual int Stage { get; set; }
 		public bool ShouldSync { get; protected set; }
 		public bool HasNotification { get; set; }
+		public bool ActiveForLocalPlayer => Started && !Completed && LocalPlayerStarted;
 		public bool LocalPlayerStarted {
 			get => Main.LocalPlayer?.GetModPlayer<OriginPlayer>()?.startedQuests?.Contains(NameKey) ?? Started;
 			set {
