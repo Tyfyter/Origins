@@ -546,10 +546,8 @@ Mods: {
 					'''
 			}
 
-			Eccentric_Stone: {
-				DisplayName: Eccentric Stone
-				Tooltip: ""
-			}
+			Eccentric_Stone.DisplayName: Eccentric Stone
+			
 
 			Endless_Explosives: {
 				DisplayName: Dysfunctional Endless Explosives Bag
@@ -1247,25 +1245,19 @@ Mods: {
 				Tooltip: Increased movement speed
 			}
 
-			Amber_Helmet: {
-				DisplayName: Amber Exploder Goggles
-				Tooltip: ""
-			}
+			Amber_Helmet.DisplayName: Amber Exploder Goggles
+			
 
 			Chromtain_Breastplate: {
 				DisplayName: Chromtain Breastplate
 				Tooltip: +20 max life
 			}
 
-			Chromtain_Greaves: {
-				DisplayName: Chromtain Greaves
-				Tooltip: ""
-			}
+			Chromtain_Greaves.DisplayName: Chromtain Greaves
+			
 
-			Chromtain_Helmet: {
-				DisplayName: Chromtain Helmet
-				Tooltip: ""
-			}
+			Chromtain_Helmet.DisplayName: Chromtain Helmet
+			
 
 			Cryosten_Breastplate: {
 				DisplayName: Cryosten Breastplate
@@ -1331,20 +1323,14 @@ Mods: {
 				Tooltip: Increases jump height
 			}
 
-			Eyndum_Breastplate: {
-				DisplayName: Eyndum Breastplate
-				Tooltip: ""
-			}
+			Eyndum_Breastplate.DisplayName: Eyndum Breastplate
+			
 
-			Eyndum_Greaves: {
-				DisplayName: Eyndum Greaves
-				Tooltip: ""
-			}
+			Eyndum_Greaves.DisplayName: Eyndum Greaves
+			
 
-			Eyndum_Helmet: {
-				DisplayName: Eyndum Helmet
-				Tooltip: ""
-			}
+			Eyndum_Helmet.DisplayName: Eyndum Helmet
+			
 
 			Felnum_Breastplate: {
 				DisplayName: Felnum Breastplate
@@ -1614,15 +1600,8 @@ Mods: {
 				Tooltip: +6% critical strike chance
 			}
 
-			DA_Mask: {
-				DisplayName: "{$Defiled} Amalgamation Mask"
-				Tooltip: ""
-			}
-
-			FW_Head: {
-				DisplayName: Fiberglass Weaver Head
-				Tooltip: ""
-			}
+			DA_Mask.DisplayName: "{$Defiled} Amalgamation Mask"
+			FW_Head.DisplayName: Fiberglass Weaver Head
 
 			Plague_Texan_Jacket: {
 				DisplayName: Plague Texan's Surprisingly Affordable Style
@@ -1660,40 +1639,30 @@ Mods: {
 					'''
 			}
 
-			Cranivore_Beanie: {
-				DisplayName: Cranivore Beanie
-				Tooltip: ""
-			}
+			Cranivore_Beanie.DisplayName: Cranivore Beanie
+			
 
 			Sunflower_Sandal: {
 				DisplayName: Sunflower Sandals
 				Tooltip: Quite fashionable
 			}
 
-			Adhesive_Wrap: {
-				DisplayName: Adhesive Wrap
-				Tooltip: ""
-			}
+			Adhesive_Wrap.DisplayName: Adhesive Wrap
+			
 
 			Alkahest: {
 				DisplayName: Alkahest
 				Tooltip: "'Don't touch it'"
 			}
 
-			Bark: {
-				DisplayName: Bark
-				Tooltip: ""
-			}
+			Bark.DisplayName: Bark
+			
 
-			Bat_Hide: {
-				DisplayName: Bat Hide
-				Tooltip: ""
-			}
+			Bat_Hide.DisplayName: Bat Hide
+			
 
-			Biocomponent10: {
-				DisplayName: Biocomponent 10
-				Tooltip: ""
-			}
+			Biocomponent10.DisplayName: Biocomponent 10
+			
 
 			Black_Bile: {
 				DisplayName: Black Bile
@@ -1705,110 +1674,78 @@ Mods: {
 				Tooltip: "'Weakens those who touch it'"
 			}
 
-			Bottled_Brine: {
-				DisplayName: Bottled Brine
-				Tooltip: ""
-			}
+			Bottled_Brine.DisplayName: Bottled Brine
+			
 
-			Brineglow: {
-				DisplayName: Brineglow
-				Tooltip: ""
-			}
+			Brineglow.DisplayName: Brineglow
+			
 
-			Bud_Barnacle: {
-				DisplayName: Bud Barnacle
-				Tooltip: ""
-			}
+			Bud_Barnacle.DisplayName: Bud Barnacle
+			
 
-			Busted_Servo: {
-				DisplayName: Busted Servo
-				Tooltip: ""
-			}
+			Busted_Servo.DisplayName: Busted Servo
+			
 
 			Chambersite: {
 				DisplayName: Chambersite
 				Tooltip: "'Loses all of its color when exposed to light'"
 			}
 
-			Chromtain_Bar: {
-				DisplayName: Chromtain Bar
-				Tooltip: ""
-			}
+			Chromtain_Bar.DisplayName: Chromtain Bar
+			
 
-			Dawn_Key: {
-				DisplayName: Dawn Key
-				Tooltip: ""
-			}
+			Dawn_Key.DisplayName: Dawn Key
+			
 
-			Defiled_Bar: {
-				DisplayName: "{$Defiled} Bar"
-				Tooltip: ""
-			}
+			Defiled_Bar.DisplayName: "{$Defiled} Bar"
+			
 
-			Defiled_Key: {
-				DisplayName: "{$Defiled} Key"
-				Tooltip: ""
-			}
+			Defiled_Key.DisplayName: "{$Defiled} Key"
+			
 
 			Dreadful_Powder: {
 				DisplayName: Dreadful Powder
 				Tooltip: Spreads the Defiled
 			}
 
-			Dusk_Key: {
-				DisplayName: Dusk Key
-				Tooltip: ""
-			}
+			Dusk_Key.DisplayName: Dusk Key
+			
 
 			Eitrite_Bar: {
 				DisplayName: Eitrite Bar
 				Tooltip: "'So alkaline-concentrated it could be used as a power source'"
 			}
 
-			Element36_Bundle: {
-				DisplayName: Element-36 Bundle
-				Tooltip: ""
-			}
+			Element36_Bundle.DisplayName: Element-36 Bundle
+			
 
-			Encrusted_Bar: {
-				DisplayName: Encrusted Bar
-				Tooltip: ""
-			}
+			Encrusted_Bar.DisplayName: Encrusted Bar
+			
 
 			Eyndum_Bar: {
 				DisplayName: Eyndum Bar
 				Tooltip: '''"Half-life" means nothing when used in the same sentence'''
 			}
 
-			Felnum_Bar: {
-				DisplayName: Felnum Bar
-				Tooltip: ""
-			}
+			Felnum_Bar.DisplayName: Felnum Bar
+			
 
-			Fibron_Plating: {
-				DisplayName: Fibron Plating
-				Tooltip: ""
-			}
+			Fibron_Plating.DisplayName: Fibron Plating
+			
 
-			Formium_Bar: {
-				DisplayName: Formium Bar
-				Tooltip: ""
-			}
+			Formium_Bar.DisplayName: Formium Bar
+			
 
-			Formium_Scrap: {
-				DisplayName: Formium Scrap
-				Tooltip: ""
-			}
+			Formium_Scrap.DisplayName: Formium Scrap
+			
 
 			FragmentNova: {
 				DisplayName: Nova Fragment
 				Tooltip: "'The essence of a dying star in its final moments...'"
 			}
 
-			Hell_Key: {
-				DisplayName: Hell Key
-				Tooltip: ""
-			}
+			Hell_Key.DisplayName: Hell Key
+			
 
 			Illegal_Explosive_Parts: {
 				DisplayName: Illegal Explosive Parts
@@ -1825,30 +1762,22 @@ Mods: {
 				Tooltip: "'Keeps your hair in perfect form!'"
 			}
 
-			Mushroom_Key: {
-				DisplayName: Mushroom Key
-				Tooltip: ""
-			}
+			Mushroom_Key.DisplayName: Mushroom Key
+			
 
-			NE9: {
-				DisplayName: NE9
-				Tooltip: ""
-			}
+			NE9.DisplayName: NE9
+			
 
-			Ocean_Key: {
-				DisplayName: Ocean Key
-				Tooltip: ""
-			}
+			Ocean_Key.DisplayName: Ocean Key
+			
 
 			Peat_Moss: {
 				DisplayName: Peat Moss
 				Tooltip: The Demolitionist might find this interesting...
 			}
 
-			Power_Core: {
-				DisplayName: Power Core
-				Tooltip: ""
-			}
+			Power_Core.DisplayName: Power Core
+			
 
 			Qube: {
 				DisplayName: Qube
@@ -1860,25 +1789,17 @@ Mods: {
 				Tooltip: "'Crystal remains of captured breath'"
 			}
 
-			Riven_Carapace: {
-				DisplayName: "{$Riven} Carapace"
-				Tooltip: ""
-			}
+			Riven_Carapace.DisplayName: "{$Riven} Carapace"
+			
 
-			Riven_Key: {
-				DisplayName: "{$Riven} Key"
-				Tooltip: ""
-			}
+			Riven_Key.DisplayName: "{$Riven} Key"
+			
 
-			Rotor: {
-				DisplayName: Rotor
-				Tooltip: ""
-			}
+			Rotor.DisplayName: Rotor
+			
 
-			Rubber: {
-				DisplayName: Rubber
-				Tooltip: ""
-			}
+			Rubber.DisplayName: Rubber
+			
 
 			Sanguinite_Bar: {
 				DisplayName: Sanguinite Bar
@@ -1895,50 +1816,38 @@ Mods: {
 				Tooltip: The day of Verdict will come...
 			}
 
-			Silicon: {
-				DisplayName: Silicon
-				Tooltip: ""
-			}
+			Silicon.DisplayName: Silicon
+			
 
 			Strange_String: {
 				DisplayName: Strange String
 				Tooltip: "'Involuntary neurectomy'"
 			}
 
-			Tree_Sap: {
-				DisplayName: Tree Sap
-				Tooltip: ""
-			}
+			Tree_Sap.DisplayName: Tree Sap
+			
 
-			Undead_Chunk: {
-				DisplayName: Undead Chunk
-				Tooltip: ""
-			}
+			Undead_Chunk.DisplayName: Undead Chunk
+			
 
 			Unpowered_Eyndum_Core: {
 				DisplayName: Unpowered Eyndum Core
 				Tooltip: "'Limitless potential'"
 			}
 
-			Valkyrum_Bar: {
-				DisplayName: Valkyrum Bar
-				Tooltip: ""
-			}
+			Valkyrum_Bar.DisplayName: Valkyrum Bar
+			
 
 			Fungarust: {
 				DisplayName: Fungarust
 				Tooltip: Catalyst of rusting metal
 			}
 
-			Wilting_Rose_Item: {
-				DisplayName: Wilting Rose
-				Tooltip: ""
-			}
+			Wilting_Rose_Item.DisplayName: Wilting Rose
+			
 
-			Wrycoral_Item: {
-				DisplayName: Wrycoral
-				Tooltip: ""
-			}
+			Wrycoral_Item.DisplayName: Wrycoral
+			
 
 			Absorption_Potion: {
 				DisplayName: Absorption Potion
@@ -2125,10 +2034,8 @@ Mods: {
 					'''
 			}
 
-			Magic_Brine_Dropper: {
-				DisplayName: Magic Brine Dropper
-				Tooltip: ""
-			}
+			Magic_Brine_Dropper.DisplayName: Magic Brine Dropper
+			
 
 			Mojo_Flask: {
 				DisplayName: Mojo Flask
@@ -2209,25 +2116,17 @@ Mods: {
 				Tooltip: Spreads the {$Defiled_Wastelands} to some blocks
 			}
 
-			High_Contrast_Dye: {
-				DisplayName: High-Contrast Dye
-				Tooltip: ""
-			}
+			High_Contrast_Dye.DisplayName: High-Contrast Dye
+			
 
-			Amoeba_Buggy_Item: {
-				DisplayName: Amoeba Buggy
-				Tooltip: ""
-			}
+			Amoeba_Buggy_Item.DisplayName: Amoeba Buggy
+			
 
-			Bilemouth: {
-				DisplayName: Bilemouth
-				Tooltip: ""
-			}
+			Bilemouth.DisplayName: Bilemouth
+			
 
-			Bonehead_Jellyfish: {
-				DisplayName: Bonehead Jellyfish
-				Tooltip: ""
-			}
+			Bonehead_Jellyfish.DisplayName: Bonehead Jellyfish
+			
 
 			Bug_Item: {
 				DisplayName: Bug
@@ -2239,10 +2138,8 @@ Mods: {
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
-			Cicada_3301_Item: {
-				DisplayName: Cicada 3301
-				Tooltip: ""
-			}
+			Cicada_3301_Item.DisplayName: Cicada 3301
+			
 
 			Crusty_Crate: {
 				DisplayName: Crusty Crate
@@ -2253,30 +2150,20 @@ Mods: {
 					'''
 			}
 
-			Duskarp: {
-				DisplayName: Duskarp
-				Tooltip: ""
-			}
+			Duskarp.DisplayName: Duskarp
+			
 
-			Prikish: {
-				DisplayName: Prikish
-				Tooltip: ""
-			}
+			Prikish.DisplayName: Prikish
+			
 
-			Tearracuda: {
-				DisplayName: Tearracuda
-				Tooltip: ""
-			}
+			Tearracuda.DisplayName: Tearracuda
+			
 
-			Tire: {
-				DisplayName: Tire
-				Tooltip: ""
-			}
+			Tire.DisplayName: Tire
+			
 
-			Journal_Item: {
-				DisplayName: Journal
-				Tooltip: ""
-			}
+			Journal_Item.DisplayName: Journal
+			
 
 			Defiled_Amalgamation_Bag: {
 				DisplayName: Treasure Bag (Defiled Amalgamation)
@@ -2293,20 +2180,14 @@ Mods: {
 				Tooltip: "{$CommonItemTooltip.RightClickToOpen}"
 			}
 
-			Blood_Mushroom_Soup: {
-				DisplayName: Worldgen Testing Item
-				Tooltip: ""
-			}
+			Blood_Mushroom_Soup.DisplayName: Worldgen Testing Item
+			
 
-			Chocolate_Bar: {
-				DisplayName: Animation Testing Item
-				Tooltip: ""
-			}
+			Chocolate_Bar.DisplayName: Animation Testing Item
+			
 
-			NPC_Spawner: {
-				DisplayName: NPC Spawner
-				Tooltip: ""
-			}
+			NPC_Spawner.DisplayName: NPC Spawner
+			
 
 			Amoeba_Toy: {
 				DisplayName: Amoeba Toy
@@ -2352,10 +2233,8 @@ Mods: {
 				Tooltip: Increased mining speed when submerged
 			}
 
-			Amoeba_Hook: {
-				DisplayName: Amoeba Hook
-				Tooltip: ""
-			}
+			Amoeba_Hook.DisplayName: Amoeba Hook
+			
 
 			Brick_Breaker: {
 				DisplayName: Brick Breaker
@@ -2371,10 +2250,8 @@ Mods: {
 					'''
 			}
 
-			Dissector: {
-				DisplayName: Dissector
-				Tooltip: ""
-			}
+			Dissector.DisplayName: Dissector
+			
 
 			Felnum_Hamaxe: {
 				DisplayName: Felnum Hamaxe
@@ -2390,15 +2267,11 @@ Mods: {
 					'''
 			}
 
-			Lightning_Rod: {
-				DisplayName: Lightning Rod
-				Tooltip: ""
-			}
+			Lightning_Rod.DisplayName: Lightning Rod
+			
 
-			Parasitic_Manipulator: {
-				DisplayName: Parasitic Manipulator
-				Tooltip: ""
-			}
+			Parasitic_Manipulator.DisplayName: Parasitic Manipulator
+			
 
 			Pullinsmash: {
 				DisplayName: Stabsmash
@@ -2410,10 +2283,8 @@ Mods: {
 				Tooltip: Able to mine Hellstone
 			}
 
-			Snatcher: {
-				DisplayName: Snatcher
-				Tooltip: ""
-			}
+			Snatcher.DisplayName: Snatcher
+			
 
 			Strainer: {
 				DisplayName: Strainer
@@ -2430,10 +2301,8 @@ Mods: {
 				Tooltip: Tenderizes the target
 			}
 
-			Alkaline_Harpoon: {
-				DisplayName: Alkaline Harpoon
-				Tooltip: ""
-			}
+			Alkaline_Harpoon.DisplayName: Alkaline Harpoon
+			
 
 			Bile_Arrow: {
 				DisplayName: Bile Arrow
@@ -2450,35 +2319,23 @@ Mods: {
 				Tooltip: Stuns the target
 			}
 
-			Bouncy_Harpoon: {
-				DisplayName: Bouncy Harpoon
-				Tooltip: ""
-			}
+			Bouncy_Harpoon.DisplayName: Bouncy Harpoon
+			
 
-			Cursed_Harpoon: {
-				DisplayName: Cursed Harpoon
-				Tooltip: ""
-			}
+			Cursed_Harpoon.DisplayName: Cursed Harpoon
+			
 
-			Explosive_Harpoon: {
-				DisplayName: Explosive Harpoon
-				Tooltip: ""
-			}
+			Explosive_Harpoon.DisplayName: Explosive Harpoon
+			
 
-			Flammable_Harpoon: {
-				DisplayName: Flammable Harpoon
-				Tooltip: ""
-			}
+			Flammable_Harpoon.DisplayName: Flammable Harpoon
+			
 
-			Giant_Metal_Slug: {
-				DisplayName: Giant Metal Slug
-				Tooltip: ""
-			}
+			Giant_Metal_Slug.DisplayName: Giant Metal Slug
+			
 
-			Harpoon: {
-				DisplayName: Harpoon
-				Tooltip: ""
-			}
+			Harpoon.DisplayName: Harpoon
+			
 
 			Resizable_Mine_Five: {
 				DisplayName: Resizable Mine Mk. V
@@ -2505,25 +2362,19 @@ Mods: {
 				Tooltip: "'Compatible with your garden-variety mine launchers!'"
 			}
 
-			Scrap: {
-				DisplayName: Scrap
-				Tooltip: ""
-			}
+			Scrap.DisplayName: Scrap
+			
 
-			Starfuze: {
-				DisplayName: Starfuze
-				Tooltip: ""
-			}
+			Starfuze.DisplayName: Starfuze
+			
 
 			Teal_Solution: {
 				DisplayName: Teal Solution
 				Tooltip: Spreads the Riven
 			}
 
-			Thermite_Canister: {
-				DisplayName: Thermite Canister
-				Tooltip: ""
-			}
+			Thermite_Canister.DisplayName: Thermite Canister
+			
 
 			White_Solution: {
 				DisplayName: Gray Solution
@@ -2607,10 +2458,8 @@ Mods: {
 					'''
 			}
 
-			Bouncy_Explosive_Golf_Ball: {
-				DisplayName: Bouncy Explosive Golf Ball
-				Tooltip: ""
-			}
+			Bouncy_Explosive_Golf_Ball.DisplayName: Bouncy Explosive Golf Ball
+			
 
 			Brainade: {
 				DisplayName: Brainade
@@ -2645,30 +2494,24 @@ Mods: {
 				Tooltip: Explodes into several crystal shards
 			}
 
-			Defiled_Spirit: {
-				DisplayName: Defiled Spirit
-				Tooltip: ""
-			}
+			Defiled_Spirit.DisplayName: Defiled Spirit
+			
 
 			Dreikan: {
 				DisplayName: Dreikan
 				Tooltip: Pronounced exactly how it looks: auf Deutsch
 			}
 
-			Explosive_Golf_Ball: {
-				DisplayName: Explosive Golf Ball
-				Tooltip: ""
-			}
+			Explosive_Golf_Ball.DisplayName: Explosive Golf Ball
+			
 
 			Felnum_Shock_Grenade: {
 				DisplayName: Felnum Shock Grenade
 				Tooltip: "'Quite shocking'"
 			}
 
-			Flakjack: {
-				DisplayName: Flakjack
-				Tooltip: ""
-			}
+			Flakjack.DisplayName: Flakjack
+			
 
 			Flashbang: {
 				DisplayName: Flashbang
@@ -2715,10 +2558,8 @@ Mods: {
 				Tooltip: "'Be careful, it's not a book'"
 			}
 
-			Impact_Golf_Ball: {
-				DisplayName: Impact Golf Ball
-				Tooltip: ""
-			}
+			Impact_Golf_Ball.DisplayName: Impact Golf Ball
+			
 
 			Impact_Grenade: {
 				DisplayName: Impact Grenade
@@ -2758,10 +2599,8 @@ Mods: {
 				Tooltip: Struck enemies contract a contagious effect
 			}
 
-			Peatball: {
-				DisplayName: Peatball
-				Tooltip: ""
-			}
+			Peatball.DisplayName: Peatball
+			
 
 			Potato_Mine: {
 				DisplayName: Potato Mine
@@ -2772,10 +2611,8 @@ Mods: {
 					'''
 			}
 
-			Remote_Golf_Ball: {
-				DisplayName: Remote Golf Ball
-				Tooltip: ""
-			}
+			Remote_Golf_Ball.DisplayName: Remote Golf Ball
+			
 
 			Rocodile: {
 				DisplayName: Rocodile
@@ -2814,10 +2651,8 @@ Mods: {
 					'''
 			}
 
-			Felnum_Golf_Ball: {
-				DisplayName: Felnum Golf Ball
-				Tooltip: ""
-			}
+			Felnum_Golf_Ball.DisplayName: Felnum Golf Ball
+			
 
 			Fiberglass_Shard: {
 				DisplayName: Fiberglass Shard
@@ -2829,20 +2664,16 @@ Mods: {
 				Tooltip: Needs to be put in ROTP when it gets devving
 			}
 
-			Amber_Of_Embers: {
-				DisplayName: Amber of Embers
-				Tooltip: ""
-			}
+			Amber_Of_Embers.DisplayName: Amber of Embers
+			
 
 			Beginners_Tome: {
 				DisplayName: Beginner's Tome
 				Tooltip: "'Be careful, it's book'"
 			}
 
-			Bled_Out_Staff: {
-				DisplayName: Bled Out Staff
-				Tooltip: ""
-			}
+			Bled_Out_Staff.DisplayName: Bled Out Staff
+			
 
 			Chemical_Laser: {
 				DisplayName: Chemical Laser
@@ -2888,35 +2719,27 @@ Mods: {
 				Tooltip: Rapidly fires spikes that will detonate when the target is implanted with enough
 			}
 
-			Innermost_Manifest: {
-				DisplayName: Innermost Manifest
-				Tooltip: ""
-			}
+			Innermost_Manifest.DisplayName: Innermost Manifest
+			
 
 			Laser_Tag_Gun: {
 				DisplayName: Laser Tag Gun
 				Tooltip: ‘Defective to some, glory to others’
 			}
 
-			Low_Signal: {
-				DisplayName: Low Signal
-				Tooltip: ""
-			}
+			Low_Signal.DisplayName: Low Signal
+			
 
 			Magnus: {
 				DisplayName: Magnus
 				Tooltip: Receives 50% higher damage bonuses
 			}
 
-			Manasynk: {
-				DisplayName: Manasynk
-				Tooltip: ""
-			}
+			Manasynk.DisplayName: Manasynk
+			
 
-			Manasynk_Pickup: {
-				DisplayName: Mana
-				Tooltip: ""
-			}
+			Manasynk_Pickup.DisplayName: Mana
+			
 
 			Missing_File: {
 				DisplayName: Missing File
@@ -2941,15 +2764,11 @@ Mods: {
 				Tooltip: "'Infinite ammo, infinite wisdom'"
 			}
 
-			Seam_Beam: {
-				DisplayName: Seam Beam
-				Tooltip: ""
-			}
+			Seam_Beam.DisplayName: Seam Beam
+			
 
-			Slashswarm: {
-				DisplayName: Slashswarm
-				Tooltip: ""
-			}
+			Slashswarm.DisplayName: Slashswarm
+			
 
 			Splashid: {
 				DisplayName: Splashid
@@ -2966,40 +2785,28 @@ Mods: {
 				Tooltip: "'Cries of the suffering'"
 			}
 
-			Amenonuhoko: {
-				DisplayName: Amenonuhoko
-				Tooltip: ""
-			}
+			Amenonuhoko.DisplayName: Amenonuhoko
+			
 
-			Baseball_Bat: {
-				DisplayName: Baseball Bat
-				Tooltip: ""
-			}
+			Baseball_Bat.DisplayName: Baseball Bat
+			
 
 			Broken_Fiberglass_Sword: {
 				DisplayName: Broken Fiberglass Sword
 				Tooltip: "'It's even sharper now'"
 			}
 
-			Crystal_Cutters: {
-				DisplayName: Crystal Cutters
-				Tooltip: ""
-			}
+			Crystal_Cutters.DisplayName: Crystal Cutters
+			
 
-			Cyah_Nara: {
-				DisplayName: Cyah Nara
-				Tooltip: ""
-			}
+			Cyah_Nara.DisplayName: Cyah Nara
+			
 
-			Decimator: {
-				DisplayName: Decimator
-				Tooltip: ""
-			}
+			Decimator.DisplayName: Decimator
+			
 
-			Depth_Charge: {
-				DisplayName: Depth Charge
-				Tooltip: ""
-			}
+			Depth_Charge.DisplayName: Depth Charge
+			
 
 			Eyndum_Scar: {
 				DisplayName: Eyndum Scar
@@ -3084,15 +2891,11 @@ Mods: {
 					'''
 			}
 
-			Vorpal_Sword: {
-				DisplayName: Vorpal Sword
-				Tooltip: ""
-			}
+			Vorpal_Sword.DisplayName: Vorpal Sword
+			
 
-			Vorpal_Sword_Cursed: {
-				DisplayName: Vorpal Sword
-				Tooltip: ""
-			}
+			Vorpal_Sword_Cursed.DisplayName: Vorpal Sword
+			
 
 			Potato_Launcher: {
 				DisplayName: Potato Launcher
@@ -3246,20 +3049,14 @@ Mods: {
 					'''
 			}
 
-			Shardcannon: {
-				DisplayName: Shardcannon
-				Tooltip: ""
-			}
+			Shardcannon.DisplayName: Shardcannon
+			
 
-			Shotty_x2: {
-				DisplayName: 2-in-1 Shotty
-				Tooltip: ""
-			}
+			Shotty_x2.DisplayName: 2-in-1 Shotty
+			
 
-			Shotty_x3: {
-				DisplayName: 3-in-1 Shotty
-				Tooltip: ""
-			}
+			Shotty_x3.DisplayName: 3-in-1 Shotty
+			
 
 			Sleetfire: {
 				DisplayName: Sleetfire
@@ -3271,10 +3068,8 @@ Mods: {
 				Tooltip: "'Snap. Crackle. Pop'"
 			}
 
-			Threemoepeater: {
-				DisplayName: Threemoepeater
-				Tooltip: ""
-			}
+			Threemoepeater.DisplayName: Threemoepeater
+			
 
 			Tiny_Sniper: {
 				DisplayName: Tiny Sniper
@@ -3316,10 +3111,8 @@ Mods: {
 				Tooltip: Summons a friendly bomb to fight for you
 			}
 
-			Bone_Latcher: {
-				DisplayName: Bone Latcher
-				Tooltip: ""
-			}
+			Bone_Latcher.DisplayName: Bone Latcher
+			
 
 			Brainy_Staff: {
 				DisplayName: Brainy Staff
@@ -3381,125 +3174,85 @@ Mods: {
 				Tooltip: A rare mineral that grows more powerful with heat
 			}
 
-			DA_Trophy_Item: {
-				DisplayName: Defiled Amalgamation Trophy
-				Tooltip: ""
-			}
+			DA_Trophy_Item.DisplayName: Defiled Amalgamation Trophy
+			
 
 			Eitrite_Ore_Item: {
 				DisplayName: Eitrite Ore
 				Tooltip: "'So alkaline-concentrated it could be used as a power source'"
 			}
 
-			Sulphur_Stone_Item: {
-				DisplayName: Sulphur Stone
-				Tooltip: ""
-			}
+			Sulphur_Stone_Item.DisplayName: Sulphur Stone
+			
 
-			Angelic_Cloud_Item: {
-				DisplayName: Angelic Cloud
-				Tooltip: ""
-			}
+			Angelic_Cloud_Item.DisplayName: Angelic Cloud
+			
 
 			Eden_Wood_Item: {
 				DisplayName: Eden Wood
 				Tooltip: "'A wood too sacred to chop'"
 			}
 
-			Genesis_Grass_Seeds: {
-				DisplayName: Genesis Seeds
-				Tooltip: ""
-			}
+			Genesis_Grass_Seeds.DisplayName: Genesis Seeds
+			
 
-			Harmony_Brick_Item: {
-				DisplayName: Harmony Brick
-				Tooltip: ""
-			}
+			Harmony_Brick_Item.DisplayName: Harmony Brick
+			
 
-			Defiled_Altar_Item: {
-				DisplayName: "{$Defiled} Altar (Debugging Item)"
-				Tooltip: ""
-			}
+			Defiled_Altar_Item.DisplayName: "{$Defiled} Altar (Debugging Item)"
+			
 
-			Defiled_Dungeon_Chest_Item: {
-				DisplayName: "{$Defiled} Chest"
-				Tooltip: ""
-			}
+			Defiled_Dungeon_Chest_Item.DisplayName: "{$Defiled} Chest"
+			
 
-			Defiled_Fissure_Item: {
-				DisplayName: "{$Defiled} Fissure (Debugging Item)"
-				Tooltip: ""
-			}
+			Defiled_Fissure_Item.DisplayName: "{$Defiled} Fissure (Debugging Item)"
+			
 
-			Defiled_Grass_Seeds: {
-				DisplayName: "{$Defiled} Seeds"
-				Tooltip: ""
-			}
+			Defiled_Grass_Seeds.DisplayName: "{$Defiled} Seeds"
+			
 
-			Defiled_Heart_Item: {
-				DisplayName: "{$Defiled} Heart (Debugging Item)"
-				Tooltip: ""
-			}
+			Defiled_Heart_Item.DisplayName: "{$Defiled} Heart (Debugging Item)"
+			
 
-			Defiled_Ice_Item: {
-				DisplayName: Gray Ice
-				Tooltip: ""
-			}
+			Defiled_Ice_Item.DisplayName: Gray Ice
+			
 
 			Defiled_Ore_Item: {
 				DisplayName: Lost Ore
 				Tooltip: A strange metal warped to the curiosity of the Defiled
 			}
 
-			Defiled_Pot_Item: {
-				DisplayName: "{$Defiled} Pot (Debugging Item)"
-				Tooltip: ""
-			}
+			Defiled_Pot_Item.DisplayName: "{$Defiled} Pot (Debugging Item)"
+			
 
-			Defiled_Sand_Item: {
-				DisplayName: "{$Defiled} Sand"
-				Tooltip: ""
-			}
+			Defiled_Sand_Item.DisplayName: "{$Defiled} Sand"
+			
 
-			Defiled_Sandstone_Item: {
-				DisplayName: "{$Defiled} Sandstone"
-				Tooltip: ""
-			}
+			Defiled_Sandstone_Item.DisplayName: "{$Defiled} Sandstone"
+			
 
-			Defiled_Stone_Item: {
-				DisplayName: "{$Defiled} Stone"
-				Tooltip: ""
-			}
+			Defiled_Stone_Item.DisplayName: "{$Defiled} Stone"
+			
 
-			Hardened_Defiled_Sand_Item: {
-				DisplayName: Hardened {$Defiled} Sand
-				Tooltip: ""
-			}
+			Hardened_Defiled_Sand_Item.DisplayName: Hardened {$Defiled} Sand
+			
 
-			Locked_Defiled_Dungeon_Chest_Item: {
-				DisplayName: Defiled Chest (locked)
-				Tooltip: ""
-			}
+			Locked_Defiled_Dungeon_Chest_Item.DisplayName: Defiled Chest (locked)
+			
 
-			Soulspore_Item: {
-				DisplayName: Soulspore
-				Tooltip: ""
-			}
+			Soulspore_Item.DisplayName: Soulspore
+			
 
 			Bleeding_Obsidian_Item: {
 				DisplayName: Bleeding Obsidian
 				Tooltip: "'Weakens those who touch it'"
 			}
 
-			Dusk_Light_Item: {
-				DisplayName: Dusk Light
-				Tooltip: ""
-			}
+			Dusk_Light_Item.DisplayName: Dusk Light
+			
 
-			Dusk_Stone_Item: {
-				DisplayName: Dusk Stone
-				Tooltip: ""
-			}
+			Dusk_Stone_Item.DisplayName: Dusk Stone
+			
 
 			A_Perfect_World_Item: {
 				DisplayName: A Perfect World
@@ -3516,165 +3269,104 @@ Mods: {
 				Tooltip: "'An organic mineral that reacts to compounds'"
 			}
 
-			Cleansing_Station_Item: {
-				DisplayName: Cleansing Station
-				Tooltip: ""
-			}
+			Cleansing_Station_Item.DisplayName: Cleansing Station
+			
 
-			Felnum_Ore_Item: {
-				DisplayName: Felnum Ore
-				Tooltip: ""
-			}
+			Felnum_Ore_Item.DisplayName: Felnum Ore
+			
 
-			Fiberglass_Item: {
-				DisplayName: Fiberglass
-				Tooltip: ""
-			}
+			Fiberglass_Item.DisplayName: Fiberglass
+			
 
 			Laser_Tag_Console_Item: {
 				DisplayName: Laser Tag Console
 				Tooltip: Used to set up laser tag matches
 			}
 
-			Traffic_Cone_Item: {
-				DisplayName: Traffic Cone
-				Tooltip: ""
-			}
+			Traffic_Cone_Item.DisplayName: Traffic Cone
+			
 
-			Acetabularia_Item: {
-				DisplayName: Acetabularia
-				Tooltip: ""
-			}
+			Acetabularia_Item.DisplayName: Acetabularia
+			
 
-			Amoeba_Fluid_Item: {
-				DisplayName: Amoeba Fluid
-				Tooltip: ""
-			}
+			Amoeba_Fluid_Item.DisplayName: Amoeba Fluid
+			
 
-			Encrusted_Ore_Item: {
-				DisplayName: Encrusted Ore
-				Tooltip: ""
-			}
+			Encrusted_Ore_Item.DisplayName: Encrusted Ore
+			
 
 			Primordial_Permafrost_Item: {
 				DisplayName: Primordial Permafrost
 				Tooltip: A dangerous single-celled organism frozen...
 			}
 
-			Riven_Dungeon_Chest_Item: {
-				DisplayName: "{$Riven} Chest"
-				Tooltip: ""
-			}
+			Riven_Dungeon_Chest_Item.DisplayName: "{$Riven} Chest"
+			
 
-			Riven_Flesh_Item: {
-				DisplayName: Spug Flesh
-				Tooltip: ""
-			}
+			Riven_Flesh_Item.DisplayName: Spug Flesh
+			
 
-			Riven_Grass_Seeds: {
-				DisplayName: Riven Seeds
-				Tooltip: ""
-			}
+			Riven_Grass_Seeds.DisplayName: Riven Seeds
+			
 
-			Riven_Lesion_Item: {
-				DisplayName: "{$Riven} Lesion (Debugging Item)"
-				Tooltip: ""
-			}
+			Riven_Lesion_Item.DisplayName: "{$Riven} Lesion (Debugging Item)"
+			
 
-			Riven_Pot_Item: {
-				DisplayName: "{$Riven} Pot (Debugging Item)"
-				Tooltip: ""
-			}
+			Riven_Pot_Item.DisplayName: "{$Riven} Pot (Debugging Item)"
+			
 
-			Chambersite_Stone_Wall_Item: {
-				DisplayName: Chambersite Stone Wall Item
-				Tooltip: ""
-			}
+			Chambersite_Stone_Wall_Item.DisplayName: Chambersite Stone Wall Item
+			
 
-			Defiled_Sandstone_Wall_Item: {
-				DisplayName: "{$Defiled} Sandstone Wall"
-				Tooltip: ""
-			}
+			Defiled_Sandstone_Wall_Item.DisplayName: "{$Defiled} Sandstone Wall"
+			
 
-			Defiled_Stone_Wall_Item: {
-				DisplayName: "{$Defiled} Stone Wall"
-				Tooltip: ""
-			}
+			Defiled_Stone_Wall_Item.DisplayName: "{$Defiled} Stone Wall"
+			
 
-			Eden_Wood_Wall_Item: {
-				DisplayName: Eden Wood Wall
-				Tooltip: ""
-			}
+			Eden_Wood_Wall_Item.DisplayName: Eden Wood Wall
+			
 
-			Fiberglass_Wall_Item: {
-				DisplayName: Fiberglass Wall
-				Tooltip: ""
-			}
+			Fiberglass_Wall_Item.DisplayName: Fiberglass Wall
+			
 
-			Hardened_Defiled_Sand_Wall_Item: {
-				DisplayName: Hardened {$Defiled} Sand Wall
-				Tooltip: ""
-			}
+			Hardened_Defiled_Sand_Wall_Item.DisplayName: Hardened {$Defiled} Sand Wall
+			
 
-			Harmony_Brick_Wall_Item: {
-				DisplayName: Harmony Brick Wall
-				Tooltip: ""
-			}
+			Harmony_Brick_Wall_Item.DisplayName: Harmony Brick Wall
+			
 
-			Riven_Flesh_Wall_Item: {
-				DisplayName: Spug Flesh Wall
-				Tooltip: ""
-			}
+			Riven_Flesh_Wall_Item.DisplayName: Spug Flesh Wall
+			
 
-			Sulphur_Stone_Wall_Item: {
-				DisplayName: Sulphur Stone Wall
-				Tooltip: ""
-			}
+			Sulphur_Stone_Wall_Item.DisplayName: Sulphur Stone Wall
+			
 
-			Defiled_Dungeon_Chest_Placeholder_Item: {
-				DisplayName: Defiled Dungeon Chest Placeholder Item
-				Tooltip: ""
-			}
+			Defiled_Dungeon_Chest_Placeholder_Item.DisplayName: Defiled Dungeon Chest Placeholder Item
+			
 
-			Riven_Dungeon_Chest_Placeholder_Item: {
-				DisplayName: Riven Dungeon Chest Placeholder Item
-				Tooltip: ""
-			}
+			Riven_Dungeon_Chest_Placeholder_Item.DisplayName: Riven Dungeon Chest Placeholder Item
+			
 
-			Defiled_Torch: {
-				DisplayName: Defiled Torch
-				Tooltip: ""
-			}
+			Defiled_Torch.DisplayName: Defiled Torch
+			
 
-			Riven_Torch: {
-				DisplayName: Riven Torch
-				Tooltip: ""
-			}
+			Riven_Torch.DisplayName: Riven Torch
+			
 
-			Bile_Torch: {
-				DisplayName: Bile Torch
-				Tooltip: ""
-			}
+			Bile_Torch.DisplayName: Bile Torch
+			
 
-			Alkahest_Torch: {
-				DisplayName: Alkahest Torch
-				Tooltip: ""
-			}
+			Alkahest_Torch.DisplayName: Alkahest Torch
+			
 
-			Test: {
-				DisplayName: Test
-				Tooltip: ""
-			}
+			Test.DisplayName: Test
+			
 
-			Surveysprout: {
-				DisplayName: Surveysprout
-				Tooltip: ""
-			}
+			Surveysprout.DisplayName: Surveysprout
+			
 
-			NE8: {
-				DisplayName: N E8
-				Tooltip: ""
-			}
+			NE8.DisplayName: NE8
 		}
 
 		Buffs: {
