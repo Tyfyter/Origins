@@ -1694,6 +1694,11 @@ namespace Origins {
 		public static string Get2ndPersonReference(this Player self, string args = "") {
 			return Language.GetTextValue($"Mods.Origins.Words.2ndref{args}{(Main.LocalPlayer.Male ? "male" : "female")}");
 		}
+		public static string GetCooldownText(int time) {
+			return ((time / 60 < 60)
+				? Language.GetTextValue("Mods.Origins.Items.CommonTooltip.SecondCooldown", Math.Round(time / 60.0))
+				: Language.GetTextValue("Mods.Origins.Items.CommonTooltip.MinuteCooldown", Math.Round((time / 60) / 60.0)));
+		}
 		#region UnifiedRandom FieldInfos
 		private static FieldInfo _inext;
 		internal static FieldInfo Inext => _inext ??= typeof(UnifiedRandom).GetField("inext", BindingFlags.NonPublic | BindingFlags.Instance);

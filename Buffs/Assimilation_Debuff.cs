@@ -109,14 +109,14 @@ namespace Origins.Buffs {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Defiled"
 				}, 40, 0);
 			}
-			if (percent >= 0.17) {
-				player.AddBuff(BuffID.Weak, 10);
+			if (percent >= 0.125 && Main.rand.NextFloat(0, 200) < percent - 0.125) {
+				player.AddBuff(BuffID.Weak, 300);
             }
-			if (percent >= 0.33) {
-				player.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 10);
+			if (percent >= 0.35 && Main.rand.NextFloat(0, 200) < percent - 0.35) {
+				player.AddBuff(BuffID.BrokenArmor, 180);
 			}
-			if (percent >= 0.67) {
-				player.AddBuff(BuffID.BrokenArmor, 10);
+			if (percent >= 0.5) {
+				player.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), (int)(((percent - 0.5) / (1 - 0.5)) * 14));
 			}
 		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {

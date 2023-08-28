@@ -103,7 +103,6 @@ namespace Origins.Items.Accessories {
 		}
 		private void Main_DrawInfernoRings(Terraria.On_Main.orig_DrawInfernoRings orig, Main self) {
 			orig(self);
-			if (Main.LocalPlayer.chatOverhead.timeLeft > 0) Main.LocalPlayer.chatOverhead.NewMessage(Main.LocalPlayer.chatOverhead.chatText + "|", Main.LocalPlayer.chatOverhead.timeLeft);
 			if (Main.dedServ) return;
 			if (Lighting.NotRetro) DrawAura(Main.spriteBatch);
 		}

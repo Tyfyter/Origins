@@ -296,6 +296,11 @@ Mods: {
 		}
 
 		Items: {
+			GenericTooltip: {
+				MinuteCooldown: "{0} minute cooldown"
+				SecondCooldown: "{0} second cooldown"
+			}
+
 			Krunch_Mix: {
 				DisplayName: Krunch Mix
 				Tooltip:
@@ -3842,6 +3847,11 @@ Mods: {
 			Purifying_Buff: {
 				DisplayName: Purifying
 				Description: You are being healed of your assimilation
+			}
+
+			Mojo_Flask_Cooldown: {
+				DisplayName: Mojo_ Flask_ Cooldown
+				Description: Mods.Origins.Buffs.Mojo_Flask_Cooldown.Description
 			}
 		}
 
