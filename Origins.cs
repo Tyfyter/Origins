@@ -498,8 +498,10 @@ namespace Origins {
 			Array.Resize(ref TextureAssets.GlowMask, GlowMaskID.Count);
 		}
 		public static uint gameFrameCount = 0;
-		static unsafe void IncrementFrameCount(GameTime gameTime) {
-			gameFrameCount++;
+		static void IncrementFrameCount(GameTime gameTime) {
+			unchecked {
+                gameFrameCount++;
+            }
 		}
 		public override void PostSetupContent() {
 			foreach (KeyValuePair<int, NPCDebuffImmunityData> item in NPCID.Sets.DebuffImmunitySets) {
