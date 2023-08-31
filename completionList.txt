@@ -332,7 +332,6 @@ ACCESSORIES:
 (#2, ^2) Strange Computer
 (^) Super Turbo Reel
 (^) Superjump Cape
-(X) Support Pulley !!!
 (^) Symbiote Skull
 (^) Tainted Flesh
 (^) Trap Charm
@@ -488,7 +487,7 @@ MELEE WEAPONS:
 (^) Ripper Lance
 (^) Riverang
 (^) Spiker Sword
-(X) Switchblade !!!
+(#, ^2) Switchblade !!!
 (^) Tyrfing
 (^) Vorpal Sword
 
@@ -501,6 +500,7 @@ MELEE WEAPONS:
 (^) Nematoclaw*
 (%, @, #) Origins Biome Keybrands
 (^) Telephone Pole*
+(X) Unicorn Lance
 
 (X) Chiton Kursarigama
 (X) Gospel
@@ -526,7 +526,7 @@ RANGED WEAPONS:
 (^) Harpoon Gun
 (^) Longbone
 (^) Magma Grappler
-(X) Neural Network !!!
+(#, ^2) Neural Network !!!
 (^) Riven Splitter
 (^) Shardcannon
 (^) Sleetfire
@@ -545,7 +545,7 @@ RANGED WEAPONS:
 (X) Dart Crossbow
 (^) Dragon's Breath (replanning soon)
 (^) Firespit
-(X) Frequency !!!
+(X) Frequency
 (^) Incision
 (X) Left Click
 (X) Mythril Harpoon Gun
@@ -652,6 +652,7 @@ SUMMONER WEAPONS:
 (X) Ribatar
 (X) Seraphim Song
 (@2, #2) SMART Wrench
+(X) Technomancer 4000
 
 NO POST ML SUMMONER CONTENT YET.
 ---
@@ -972,10 +973,12 @@ CONSUMABLES:
 (^) Suspicious Looking Ice Cream
 (#2, ^2) The Button
 
+(#, ^2) Bilious Crate
 (#2, ^2) Corruption Loot Box
 (#2, ^2) Crimson Loot Box
 (^) Crusty Crate
 (#2, ^2) Defiled Loot Box
+(X) Festering Crate
 (^) Pointy Crate
 (#2, ^2) Riven Loot Box
 
