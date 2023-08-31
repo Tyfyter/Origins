@@ -64,7 +64,7 @@ namespace Origins.Items.Other.Consumables {
 			return false;
 		}
 		public override bool? UseItem(Player player) {
-			Main.LocalPlayer.GetModPlayer<OriginPlayer>().mojoFlaskCount--;
+			player.GetModPlayer<OriginPlayer>().mojoFlaskCount--;
 			player.AddBuff(Purifying_Buff.ID, 20);
 			return true;
 		}
