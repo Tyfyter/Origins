@@ -22,6 +22,7 @@ namespace Origins.Questing {
 			Quests.Add(quest);
 
 			if (quest.SaveToWorld) {
+				Origins.instance.Logger.Info($"Added netQuest {quest.NameValue}");
 				quest.NetID = NetQuests.Count;
 				NetQuests.Add(quest);
 			}

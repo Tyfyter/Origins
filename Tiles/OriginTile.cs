@@ -30,6 +30,7 @@ namespace Origins.Tiles {
 			}
 		}
 		public override void RandomUpdate(int i, int j) {
+			return;
 			AltBiome biome = null;
 			if (this is DefiledTile) {
 				biome = ModContent.GetInstance<Defiled_Wastelands_Alt_Biome>();

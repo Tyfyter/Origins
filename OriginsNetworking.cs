@@ -80,8 +80,15 @@ namespace Origins {
 		}
 	}
 	public partial class OriginPlayer : ModPlayer {
+		bool dummyInitialize = false;
 		bool netInitialized = false;
 		void NetInit() {
+			if (!dummyInitialize) {
+				Mod.Logger.Info($"FakeInit {netInitialized}, {Player.name}");
+				dummyInitialize = true;
+				return;
+			}
+			Mod.Logger.Info($"NetInit {netInitialized}, {Player.name}");
 			if (!netInitialized) {
 				netInitialized = true;
 				foreach (var quest in Quest_Registry.NetQuests) {

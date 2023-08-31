@@ -113,6 +113,13 @@ namespace Origins {
 			defiledResurgenceTiles = new List<(int, int)>() { };
 			defiledAltResurgenceTiles = new List<(int, int, ushort)>() { };
 			questsTag = tag.SafeGet<TagCompound>("Quests");
+			if (Main.dedServ) {
+				foreach (var quest in Quest_Registry.Quests) {
+					if (quest.SaveToWorld) {
+						quest.LoadData(questsTag.SafeGet<TagCompound>(quest.FullName) ?? new TagCompound());
+					}
+				}
+			}
 		}
 		internal TagCompound questsTag;
 		public override void SaveWorldData(TagCompound tag) {
@@ -127,9 +134,13 @@ namespace Origins {
 			TagCompound questsTag = new TagCompound();
 			foreach (var quest in Quest_Registry.Quests) {
 				if (quest.SaveToWorld) {
+					Mod.Logger.Info($"Saving {quest.NameValue}");
 					TagCompound questTag = new TagCompound();
 					quest.SaveData(questTag);
-					if (questTag.Count > 0) questsTag.Add(quest.FullName, questTag);
+					if (questTag.Count > 0) {
+						questsTag.Add(quest.FullName, questTag);
+						Mod.Logger.Info($"with data: {questTag}");
+					}
 				}
 			}
 			if (questsTag.Count > 0) {

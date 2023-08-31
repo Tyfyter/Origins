@@ -101,6 +101,9 @@ namespace Origins.Questing {
 		}
 		public void Sync(int toClient = -1, int ignoreClient = -1) {
 			if (Main.netMode == NetmodeID.SinglePlayer) return;
+			TagCompound dataTag = new();
+			SaveData(dataTag);
+			Mod.Logger.Info($"Syncing {NameValue}, to {(toClient == -1 ? "everyone" : Main.player[toClient].name)} with data: {dataTag}");
 			ModPacket packet = Origins.instance.GetPacket();
 			packet.Write(Origins.NetMessageType.sync_quest);
 			packet.Write(Type);
