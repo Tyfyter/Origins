@@ -309,8 +309,8 @@ namespace Origins.NPCs {
 					if (spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Walls.Defiled_Stone_Wall>()) {
 						pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 999);
 					}
+					return;
 				}
-				return;
 			}
 			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is DefiledTile) {
 				if (Main.invasionType <= 0) pool[0] = 0;
