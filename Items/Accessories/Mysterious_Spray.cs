@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -16,7 +17,8 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 6);
 		}
 		public static void EquippedEffect(Player player) {
-			int factor = (int)(30 / ((player.statLife / (float)player.statLifeMax2) * 3.5f + 0.5f));
+			const float hit_ramp_up_factor = 1 / 120f;
+			int factor = (int)((30 / ((player.statLife / (float)player.statLifeMax2) * 3.5f + 0.5f)) * MathF.Min(player.GetModPlayer<OriginPlayer>().lifeRegenTimeSinceHit * hit_ramp_up_factor, 1f));
 			player.lifeRegen += factor;
 		}
 		public static void VanityEffect(Player player) {

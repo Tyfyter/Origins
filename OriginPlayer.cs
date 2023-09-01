@@ -310,6 +310,7 @@ namespace Origins {
 		public int timeSinceLastDeath = -1;
 		public int oldBreath = 200;
 		public float oldGravDir = 0;
+		public float lifeRegenTimeSinceHit = 0;
 		public override void ResetEffects() {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
@@ -593,6 +594,17 @@ namespace Origins {
 			asylumWhistle = false;
 			#endregion
 			oldBreath = Player.breath;
+			if (Player.lifeRegenTime > lifeRegenTimeSinceHit) {
+				lifeRegenTimeSinceHit = Player.lifeRegenTime;
+			} else {
+				lifeRegenTimeSinceHit += 1f;
+				if (Player.usedAegisCrystal) {
+					lifeRegenTimeSinceHit += 0.2f;
+				}
+				if (Player.honey) {
+					lifeRegenTimeSinceHit += 2f;
+				}
+			}
 
 			Player.statManaMax2 += quantumInjectors * Quantum_Injector.mana_per_use;
 			#region check if a dash should start
@@ -1839,6 +1851,7 @@ namespace Origins {
 			}
 		}
 		public override void PostHurt(Player.HurtInfo info) {
+			lifeRegenTimeSinceHit = 0;
 			if (heliumTankHit) {
 				if ((Player.wereWolf || Player.forceWerewolf) && !Player.hideWolf) {
 					SoundEngine.PlaySound(SoundID.NPCHit6.WithPitch(1), Player.position);
