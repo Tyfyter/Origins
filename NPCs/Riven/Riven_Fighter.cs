@@ -31,6 +31,9 @@ namespace Origins.NPCs.Riven {
 			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
 			NPC.value = 90;
 		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Fighter;
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				new FlavorTextBestiaryInfoElement("The first creature born in the abominable Riven Hive. It is a very agile protector of its home."),

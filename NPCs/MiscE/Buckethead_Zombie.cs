@@ -22,10 +22,10 @@ namespace Origins.NPCs.MiscE {
 			NPC.friendly = false;
 		}
 		public override void FindFrame(int frameHeight) {
-			NPC.CloneFrame(NPCID.Zombie , frameHeight);
+			NPC.CloneFrame(NPCID.Zombie, frameHeight);
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.Player.ZoneGraveyard || !Main.dayTime) {
+			if ((spawnInfo.Player.ZoneGraveyard || !Main.dayTime) && spawnInfo.Player.ZoneForest) {
 				return 0.085f;
 			}
 			return 0;

@@ -13,6 +13,7 @@ using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.Misc;
 using Origins.NPCs.Riven;
+using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Origins.Walls;
@@ -87,6 +88,17 @@ namespace Origins.World.BiomeData {
 			public const float Shark1 = 0.4f;
 			public const float Worm = 0.6f;
 			public const float Crawler = 0.8f;
+			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
+				if (hardmode && !Main.hardMode) return 0f;
+				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is RivenTile || (spawnInfo.Player.InModBiome<Riven_Hive>() && spawnInfo.SpawnTileType == ModContent.TileType<Encrusted_Ore>())) {
+					return 1f;
+				}
+				return 0f;
+			}
+			public static float FlyingEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
+				if (hardmode && !Main.hardMode) return 0f;
+				return spawnInfo.Player.InModBiome<Riven_Hive>() ? 1f : 0f;
+			}
 		}
 		public static class Gen {
 			static int lesionCount = 0;

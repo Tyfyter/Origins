@@ -5,6 +5,7 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Riven {
 	public class Riven_Mummy : Glowing_Mod_NPC, IRivenEnemy {
@@ -25,6 +26,9 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 54;
 			NPC.friendly = false;
 			NPC.value = 7;
+		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			return SpawnCondition.Mummy.Chance * Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Mummy;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

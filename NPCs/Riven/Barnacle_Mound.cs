@@ -83,6 +83,9 @@ namespace Origins.NPCs.Riven {
 			NPC.oldVelocity = Vector2.Zero;
 			NPC.oldPosition = NPC.position;
 		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Barnacle;
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				new FlavorTextBestiaryInfoElement("Barnacle mounds act as a self-contained ecosystem of microbes, buggers, and the Riven of course."),

@@ -117,6 +117,10 @@ namespace Origins.NPCs.Riven {
 				NPC.ai[0] = 1f;
 			}
 		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (!spawnInfo.Water) return 0f;
+			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Moeba;
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				new FlavorTextBestiaryInfoElement(""),

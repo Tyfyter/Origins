@@ -26,6 +26,7 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Default;
+using Terraria.ModLoader.Utilities;
 using static Origins.ConditionExtensions;
 
 namespace Origins.NPCs {
@@ -285,7 +286,7 @@ namespace Origins.NPCs {
 				return;
 			}
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			if (spawnInfo.SpawnTileType == ModContent.TileType<Tiles.Other.Fiberglass_Tile>()) {
+			if (spawnInfo.SpawnTileType == ModContent.TileType<Fiberglass_Tile>()) {
 				if (originPlayer.ZoneFiberglass) {
 					pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Sword>(), 1);
 					pool.Add(ModContent.NPCType<Fiberglass.Enchanted_Fiberglass_Bow>(), 1);
@@ -307,7 +308,7 @@ namespace Origins.NPCs {
 						pool[entry.Key] = 0;
 					}
 					if (spawnInfo.PlayerFloorY < Main.worldSurface && Main.tile[spawnInfo.PlayerFloorX, spawnInfo.PlayerFloorY].WallType != ModContent.WallType<Walls.Defiled_Stone_Wall>()) {
-						pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 999);
+						pool.Add(ModContent.NPCType<Defiled_Amalgamation>(), 9999);
 					}
 					return;
 				}
@@ -356,26 +357,8 @@ namespace Origins.NPCs {
 					pool.Add(ModContent.NPCType<Defiled_Brute>(), Defiled_Wastelands.SpawnRates.Brute);
 				}
 			}
-			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is RivenTile) {
+			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is RivenTile || player.InModBiome<Riven_Hive>()) {
 				if (Main.invasionType <= 0) pool[0] = 0;
-
-				pool.Add(ModContent.NPCType<Riven_Fighter>(), Riven_Hive.SpawnRates.Fighter);
-				pool.Add(ModContent.NPCType<Amebic_Slime>(), Riven_Hive.SpawnRates.AmebSlime);
-
-				if (spawnInfo.Water) pool.Add(ModContent.NPCType<Measly_Moeba>(), Riven_Hive.SpawnRates.Moeba);
-
-				//if (spawnInfo.playerFloorY <= Main.worldSurface + 50 && spawnInfo.spawnTileY < Main.worldSurface - 50) pool.Add(ModContent.NPCType<Defiled_Flyer>(), DefiledWastelands.SpawnRates.Flyer * (player.ZoneSkyHeight ? 2 : 1));
-				if (Main.hardMode) {
-					pool.Add(ModContent.NPCType<Barnacle_Mound>(), Riven_Hive.SpawnRates.Barnacle);
-
-					pool.Add(ModContent.NPCType<Rivenator_Head>(), Riven_Hive.SpawnRates.Worm);
-					if (player.ZoneDesert) {
-						pool.Add(ModContent.NPCType<Riven_Mummy>(), Riven_Hive.SpawnRates.Mummy);
-					}
-					if (Terraria.GameContent.Events.Sandstorm.Happening && player.ZoneSandstorm) {
-						//sandshark here
-					}
-				}
 			}
 			if (Main.hardMode && !spawnInfo.PlayerSafe) {
 				if (spawnInfo.SpawnTileY > Main.rockLayer) {

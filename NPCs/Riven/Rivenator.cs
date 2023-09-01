@@ -17,6 +17,9 @@ namespace Origins.NPCs.Riven {
 			NPC.damage = 52;
 			NPC.value = 1000;
 		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Worm;
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				new FlavorTextBestiaryInfoElement("A common spreading agent of the Riven parasite. The Mitoworm can reproduce very rapidly if a threat is being persistent."),

@@ -30,6 +30,9 @@ namespace Origins.NPCs.Riven {
 		public override void FindFrame(int frameHeight) {
 			NPC.CloneFrame(NPCID.Crimslime, frameHeight);
 		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.AmebSlime;
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				new FlavorTextBestiaryInfoElement("With its viscosity unchanged, it behaves like most slimes... the only difference is that it tends to easily digest whatever it absorbs."),
