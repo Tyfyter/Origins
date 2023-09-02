@@ -100,7 +100,7 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 
 			// This method draws a line between all points of the whip, in case there's empty space between the sprites.
-			private void DrawLine(List<Vector2> list) {
+			/*private void DrawLine(List<Vector2> list) {
 				Texture2D texture = TextureAssets.FishingLine.Value;
 				Rectangle frame = texture.Frame();
 				Vector2 origin = new Vector2(frame.Width / 2, 2);
@@ -118,13 +118,11 @@ namespace Origins.Items.Weapons.Summoner {
 
 					pos += diff;
 				}
-			}
+			}*/
 
 			public override bool PreDraw(ref Color lightColor) {
 				List<Vector2> list = new List<Vector2>();
 				Projectile.FillWhipControlPoints(Projectile, list);
-
-				DrawLine(list);
 
 				SpriteEffects flip = Projectile.spriteDirection < 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 

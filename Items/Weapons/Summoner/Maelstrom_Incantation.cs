@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.noUseGraphic = true;
 			Item.shootSpeed = 16f;
 			Item.UseSound = null;
-			Item.mana = 10;
+			Item.mana = 16;
 			Item.useTime = 26;
 			Item.useAnimation = 26;
 			Item.rare = ItemRarityID.Green;

@@ -79,7 +79,7 @@ namespace Origins.NPCs {
 			}
 			return ClassicAmount;
 		}
-		public static implicit operator AssimilationAmount(float value) => new(value);
+		public static implicit operator AssimilationAmount(float value) => new(value, value * 1.3f, value * 1.5f);
 		public static implicit operator AssimilationAmount((float classic, float expert) value) => new(value.classic, value.expert);
 		public static implicit operator AssimilationAmount((float classic, float expert, float master) value) => new(value.classic, value.expert, value.master);
 		public static implicit operator AssimilationAmount(Func<NPC, Player, float> function) => new(function);

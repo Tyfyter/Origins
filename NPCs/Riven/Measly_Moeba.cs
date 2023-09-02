@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 using static Origins.Items.Armor.Riven.Riven2_Mask;
 
 namespace Origins.NPCs.Riven {
-    public class Measly_Moeba : Glowing_Mod_NPC, IRivenEnemy {
+    public class Measly_Moeba : ModNPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Measly Moeba");
 			Main.npcFrameCount[Type] = 4;
@@ -27,7 +27,7 @@ namespace Origins.NPCs.Riven {
 			NPC.width = 20;
 			NPC.height = 20;
 			NPC.frame.Height = 22;
-			NPC.alpha = 100;
+			NPC.alpha = 50;
 			NPC.value = 20;
 		}
 		public override void AI() {

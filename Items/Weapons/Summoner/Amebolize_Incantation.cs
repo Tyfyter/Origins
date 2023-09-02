@@ -15,16 +15,16 @@ namespace Origins.Items.Weapons.Summoner {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
-			Item.damage = 20;
+			Item.damage = 17;
 			Item.DamageType = DamageClasses.SummonMagicSpeed;
-			Item.width = 20;
-			Item.height = 22;
+			Item.width = 22;
+			Item.height = 34;
 			Item.useStyle = ItemUseStyleID.Shoot;
-			Item.useTime = 18;
-			Item.useAnimation = 18;
+			Item.useTime = 26;
+			Item.useAnimation = 26;
 			Item.shoot = ModContent.ProjectileType<Amebolize_Incantation_P>();
 			Item.shootSpeed = 9.75f;
-			Item.mana = 10;
+			Item.mana = 14;
 			Item.knockBack = 0f;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.DamageType = DamageClass.Summon;
 			Projectile.aiStyle = 0;
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 5;
 			Projectile.width = 30;
 			Projectile.height = 30;
 			Projectile.ignoreWater = true;
