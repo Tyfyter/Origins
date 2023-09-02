@@ -11,8 +11,6 @@ namespace Origins.Items.Weapons.Melee {
 		public const int max_charge = 75;
 		public ushort Element => Elements.Fire;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Personal Laser Blade");
-			// Tooltip.SetDefault("Time your swings for more powerful blows\n'Be careful, it's hot'");
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {

@@ -84,7 +84,13 @@ namespace Origins.Items.Other.Fish {
 	public class Tearracuda : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 3;
-		}
+
+            ItemID.Sets.ShimmerTransformToItem[ItemID.Ebonkoi] = ItemID.Hemopiranha;
+            ItemID.Sets.ShimmerTransformToItem[ItemID.Hemopiranha] = ModContent.ItemType<Bilemouth>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bilemouth>()] = ModContent.ItemType<Tearracuda>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Tearracuda>()] = ModContent.ItemType<Polyeel>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Polyeel>()] = ItemID.Ebonkoi;
+        }
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Hemopiranha);
 			Item.rare = ItemRarityID.Blue;
@@ -111,4 +117,23 @@ namespace Origins.Items.Other.Fish {
 			recipe.Register();
 		}
 	}
+    public class Polyeel : ModItem
+    {
+        public override void SetStaticDefaults()
+        {
+            Item.ResearchUnlockCount = 3;
+        }
+        public override void SetDefaults()
+        {
+            Item.CloneDefaults(ItemID.Hemopiranha);
+            Item.rare = ItemRarityID.Blue;
+        }
+        public override void AddRecipes()
+        {
+            Recipe recipe = Recipe.Create(ItemID.SeafoodDinner);
+            recipe.AddIngredient(this, 2);
+            recipe.AddTile(TileID.CookingPots);
+            recipe.Register();
+        }
+    }
 }

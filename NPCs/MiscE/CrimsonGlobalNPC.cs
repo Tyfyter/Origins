@@ -59,6 +59,14 @@ namespace Origins.NPCs.MiscE {
 			return NPCTypes.Contains(entity.type);
 		}
 		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
+			/*if (GameModeID.Master) {
+				AssimilationAmounts = AssimilationAmounts * 1.5;
+			} else if (GameModeID.Expert) {
+				AssimilationAmounts = AssimilationAmounts * 1.3;      would be sicko
+			} else {
+				AssimilationAmounts = AssimilationAmounts;
+			}*/
+
 			if (AssimilationAmounts.TryGetValue(npc.type, out AssimilationAmount amount)) {
 				target.GetModPlayer<OriginPlayer>().CrimsonAssimilation += amount.GetValue(npc, target);
 			} else if (AssimilationAmounts.TryGetValue(-1, out amount)) {

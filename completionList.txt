@@ -486,8 +486,10 @@ MELEE WEAPONS:
 (#, ^2) Orbital Saw !!!
 (^) Ripper Lance
 (^) Riverang
+(#, ^2) Snapthrow !!!
 (^) Spiker Sword
 (#, ^2) Switchblade !!!
+(#, ^2) Triple Threat !!!
 (^) Tyrfing
 (^) Vorpal Sword
 
@@ -752,6 +754,7 @@ TILES:
 (^) Primordial Permafrost
 (^) Riven Grass
 (#, ^2) Sanguinite Ore !!!
+(#, ^2) Silica !!!
 (^) Spug Flesh
 (@5, ^3) Sulphur Stone
 (^) White Ice
@@ -928,6 +931,7 @@ CRITTERS AND FISH:
 (^) Bilemouth
 (^) Bonehead Jellyfish
 (^) Duskarp
+(^) Polyeel
 (^) Prikish
 (^) Tearracuda
 ---

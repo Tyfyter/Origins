@@ -6,8 +6,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mysterious_Spray : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Mysterious Spray");
-			// Tooltip.SetDefault("Increases life regeneration at low health\n'The perfect ailment to attack your senses'");
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
@@ -17,7 +15,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 6);
 		}
 		public static void EquippedEffect(Player player) {
-			const float hit_ramp_up_factor = 1 / 120f;
+			const float hit_ramp_up_factor = 1 / 180f;
 			int factor = (int)((30 / ((player.statLife / (float)player.statLifeMax2) * 3.5f + 0.5f)) * MathF.Min(player.GetModPlayer<OriginPlayer>().lifeRegenTimeSinceHit * hit_ramp_up_factor, 1f));
 			player.lifeRegen += factor;
 		}

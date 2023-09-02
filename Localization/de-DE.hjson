@@ -2914,7 +2914,7 @@ Mods: {
 			}
 
 			Personal_Laser_Blade: {
-				// DisplayName: Personal Laser Blade
+				// DisplayName: Laser Blade
 				/* Tooltip:
 					'''
 					Time your swings for more powerful blows
@@ -3546,6 +3546,11 @@ Mods: {
 			// Surveysprout.DisplayName: Surveysprout
 			// NE8.DisplayName: NE8
 			// Nova_Fragment.DisplayName: Nova_ Fragment
+
+			Polyeel: {
+				// DisplayName: Polyeel
+				// Tooltip: ""
+			}
 		}
 
 		Buffs: {
