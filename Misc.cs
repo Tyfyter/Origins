@@ -1696,8 +1696,8 @@ namespace Origins {
 		}
 		public static string GetCooldownText(int time) {
 			return ((time / 60 < 60)
-				? Language.GetTextValue("Mods.Origins.Items.CommonTooltip.SecondCooldown", Math.Round(time / 60.0))
-				: Language.GetTextValue("Mods.Origins.Items.CommonTooltip.MinuteCooldown", Math.Round((time / 60) / 60.0)));
+				? Language.GetTextValue("Mods.Origins.Items.GenericTooltip.SecondCooldown", Math.Round(time / 60.0))
+				: Language.GetTextValue("Mods.Origins.Items.GenericTooltip.MinuteCooldown", Math.Round((time / 60) / 60.0)));
 		}
 		#region UnifiedRandom FieldInfos
 		private static FieldInfo _inext;

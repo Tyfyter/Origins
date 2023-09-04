@@ -12,6 +12,7 @@ using Terraria.UI.Chat;
 
 namespace Origins.Items.Other.Consumables {
     public class Mojo_Flask : ModItem {
+		public const int cooldown_time = 5 * 60;
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Mojo Flask");
@@ -36,14 +37,18 @@ namespace Origins.Items.Other.Consumables {
 			Item.healLife = 0;
 			Item.value = Item.sellPrice(silver: 40);
 			Item.potion = false;
-			Item.buffType = ModContent.BuffType<Mojo_Flask_Cooldown>();
-			Item.buffTime = 5 * 60;
+			Item.buffTime = 20;
 			Item.consumable = false;
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
-			foreach (var tooltip in tooltips) {
-				if (tooltip.Name == "") {
-					tooltip.Text = OriginExtensions.GetCooldownText(Item.buffTime);
+			for (int i = 0; i < tooltips.Count; i++) {
+				if (tooltips[i].Name == "BuffTime") {
+					tooltips[i] = new TooltipLine(
+						Mod,
+						"Cooldown",
+						OriginExtensions.GetCooldownText(cooldown_time)
+					);
+					break;
 				}
 			}
 		}
@@ -54,8 +59,6 @@ namespace Origins.Items.Other.Consumables {
 				player.DpadRadial.ChangeSelection(-1);
 			}
 		}
-		public override void HoldItem(Player player) {
-		}
 		public override bool CanUseItem(Player player) {
 			if (player.HasBuff(Item.buffType)) return false;
 			if (player.GetModPlayer<OriginPlayer>().mojoFlaskCount > 0) {
@@ -65,7 +68,8 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override bool? UseItem(Player player) {
 			player.GetModPlayer<OriginPlayer>().mojoFlaskCount--;
-			player.AddBuff(Purifying_Buff.ID, 20);
+			player.AddBuff(ModContent.BuffType<Mojo_Flask_Cooldown>(), cooldown_time);
+			player.AddBuff(Purifying_Buff.ID, Item.buffTime);
 			return true;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
