@@ -675,10 +675,10 @@ EXPLOSIVE WEAPONS:
 (#3, ^2) Hellfire Bomb !!!
 (#3, ^2) Hellfire Grenade !!!
 (^) Impact Explosives
-(X) Internal Combustion !!!
+(#, ^2) Internal Combustion !!!
 (^) Lightning Grenade
-(X) Link Grenades !!!
-(X) Matrix !!!
+(#, ^2) Link Grenades !!!
+(#, ^2) Matrix !!!
 (#2, ^2) Outbreak Bomb !!!
 (^) Peatball*
 (#3, ^2) Potato Mine !!!
