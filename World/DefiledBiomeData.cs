@@ -531,8 +531,9 @@ namespace Origins.World.BiomeData {
 	}
 	public class Underground_Defiled_Wastelands_Biome : ModBiome {
 		public override int Music => Origins.Music.UndergroundDefiled;
+		public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 		public override bool IsBiomeActive(Player player) {
-			return base.IsBiomeActive(player);
+			return player.ZoneRockLayerHeight && player.InModBiome<Defiled_Wastelands>();
 		}
 	}
 	public class Defiled_Wastelands_Alt_Biome : AltBiome {

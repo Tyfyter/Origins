@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
@@ -445,9 +446,18 @@ namespace Origins {
 				MaxInstances = 0
 			};
 			//OriginExtensions.initClone();
-			Music.Dusk = MusicID.Eerie;
-			Music.Defiled = MusicID.Corruption;
-			Music.UndergroundDefiled = MusicID.UndergroundCorruption;
+			Func<int> ReserveMusicID = typeof(MusicLoader).GetMethod("ReserveMusicID", BindingFlags.NonPublic | BindingFlags.Static).CreateDelegate<Func<int>>();
+			static void SetMusic(int newID, int baseID) {
+				if (Main.audioSystem is LegacyAudioSystem audioSystem) {
+					if (audioSystem.AudioTracks.Length <= newID) {
+						Array.Resize(ref audioSystem.AudioTracks, newID + 1);
+					}
+					Main.audioSystem.LoadCue(newID, "Music_" + baseID);
+				}
+			}
+			SetMusic(Music.Dusk = ReserveMusicID(), MusicID.Eerie);
+			SetMusic(Music.Defiled = ReserveMusicID(), MusicID.Corruption);
+			SetMusic(Music.UndergroundDefiled = ReserveMusicID(), MusicID.UndergroundCorruption);
 			Main.OnPostDraw += IncrementFrameCount;
 			ApplyPatches();
 		}
