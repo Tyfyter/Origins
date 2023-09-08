@@ -215,6 +215,7 @@ ARMOR:
 ---
 (^) Ancient Defiled Armor
 (^) Ancient Encrusted Armor
+(X) Ashen Armor !!!
 (^) Cryosten Armor*
 (^) Defiled Armor*
 (^) Encrusted Armor
@@ -224,6 +225,7 @@ ARMOR:
 (^) Myth Armor
 (^) Riptide Armor
 (^) Riven Armor
+(X) Scavenger Armor !!!
 (^) Soulhide Armor
 (^) Tendon Armor
 
@@ -628,6 +630,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash
 (#, ^2) Forest Staff !!!
+(X) Joint Pop !!!
 (^) Maelstrom Incantation
 (#, ^2) Ocean Amulet !!!
 (#, ^2) Ocotoral Bud !!!
@@ -643,6 +646,7 @@ SUMMONER WEAPONS:
 (X) Mildew Whip
 (X) Ziptie
 
+(X) Candlelight
 (X) Controller/Patrol Bot Controller
 (X) Core of Cogs
 (X) Culltivator
@@ -669,6 +673,7 @@ EXPLOSIVE WEAPONS:
 (^) Bomb Launcher (needs to be balanced)
 (^) Brainade
 (^) Defiled Spirit
+(X) Eruption !!!
 (^) Flashbang
 (^) Floaty Bomb
 (^) Hand Grenade Launcher
@@ -688,6 +693,7 @@ EXPLOSIVE WEAPONS:
 (X) Big Surprise
 (#2, ^2) Boomphracken
 (X) Cavitation Cannon
+(X) Chambersite Mine Launcher
 (^) Happy Bomb
 (^) Sonorous Shredder
 (^) Thermite Launcher
@@ -813,7 +819,7 @@ TILES:
 (X) Riven Flesh Shredder
 
 (^) Acetabularia
-(X) Brineglow Vine !!!
+(#, ^2) Brineglow Vine !!!
 (^) Defiled Misc Tiles*
 (#2, ^2) Eden Tree
 (#2, ^2) Laser Tag Console
@@ -837,11 +843,11 @@ TILES:
 (X) Music Box (Cosmos)
 (X) Music Box (Cubekon Temple)
 (X) Music Box (Dawn)
-(@5, #2-4) Music Box (Defiled Caverns) !!!
-(@5, #2-4) Music Box (Defiled Wastelands) !!!
+(#2-4, ^2) Music Box (Defiled Caverns) !!!
+(#2-4, ^2) Music Box (Defiled Wastelands) !!!
 (X) Music Box (Fractured Isles)
 (X) Music Box (Dusk)
-(X) Music Box (Riven Hive) !!!
+(#2-4, ^2) Music Box (Riven Hive) !!!
 (X) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Trophy
@@ -943,6 +949,7 @@ CONSUMABLES:
 (@5, #3) The Defiled Will
 
 (^) Absorption Potion
+(X) Ambition Potion !!!
 (^) Antisolve Potion
 (^) Fervor Potion
 (^) Flask of Alkahest
