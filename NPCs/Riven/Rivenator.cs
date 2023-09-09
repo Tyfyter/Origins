@@ -111,7 +111,7 @@ namespace Origins.NPCs.Riven {
 			//for(int i = 0; i < 3; i++)
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			OriginPlayer.InflictTorn(target, 480, 180, 0.67f);
+			OriginPlayer.InflictTorn(target, 480, targetSeverity: 1f - 0.67f);
 		}
 	}
 }

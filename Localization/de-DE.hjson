@@ -299,6 +299,7 @@ Mods: {
 			GenericTooltip: {
 				// MinuteCooldown: "{0} minute cooldown"
 				// SecondCooldown: "{0} second cooldown"
+				// TornSeverity: +{0}% torn severity
 			}
 
 			Krunch_Mix: {
@@ -628,7 +629,7 @@ Mods: {
 				/* Tooltip:
 					'''
 					Attacks tenderize targets
-					Increases the strength of afflicted Torn effects
+					{$Mods.Origins.Items.GenericTooltip.TornSeverity}
 					''' */
 			}
 
@@ -1115,7 +1116,7 @@ Mods: {
 
 			Tainted_Flesh: {
 				// DisplayName: Tainted Flesh
-				// Tooltip: Increases the strength of afflicted Torn effects
+				// Tooltip: "{$Mods.Origins.Items.GenericTooltip.TornSeverity}"
 			}
 
 			Third_Eye: {

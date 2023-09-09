@@ -84,7 +84,7 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.damage = 2;
 				Projectile.knockBack = 0;
 			}
-			OriginGlobalNPC.InflictTorn(target, 60, 120, 0.75f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 60, 120, 0.25f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			behindNPCs.Add(index);

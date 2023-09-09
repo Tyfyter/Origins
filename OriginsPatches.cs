@@ -446,7 +446,6 @@ namespace Origins {
 				return;
 			}
 			Rectangle playerHitbox = player.Hitbox;
-			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			umbrellaHitbox = default;
 			switch (player.HeldItem.type) {
 				case ItemID.Umbrella:
@@ -471,17 +470,12 @@ namespace Origins {
 			rivenRain = player.InModBiome<Riven_Hive>();
 			orig(self);
 			if (rainedOnPlayer && rivenRain) {
-				bool extraStrength = Main.remixWorld || (Main.masterMode && NPC.npcsFoundForCheckActive[ModContent.NPCType<World_Cracker_Head>()]);
+				OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+				bool extraStrength = Main.remixWorld || (Main.masterMode && NPC.npcsFoundForCheckActive[MC.NPCType<World_Cracker_Head>()]);
 				originPlayer.RivenAssimilation += extraStrength ? 0.01f : 0.003f;
 				int duration = extraStrength ? 30 : 15;
 				int targetTime = extraStrength ? 480 : 1440;
-				float targetSeverity = 0f;
-				bool hadTorn = player.HasBuff(Torn_Debuff.ID);
-				player.AddBuff(Torn_Debuff.ID, duration);
-				if (hadTorn || targetSeverity < originPlayer.tornTarget) {
-					originPlayer.tornTargetTime = targetTime;
-					originPlayer.tornTarget = targetSeverity;
-				}
+				OriginPlayer.InflictTorn(player, duration, targetTime, 1);
 			}
 		}
 

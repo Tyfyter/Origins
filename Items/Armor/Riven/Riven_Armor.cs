@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Riven {
@@ -31,8 +32,8 @@ namespace Origins.Items.Armor.Riven {
 			return body.type == ModContent.ItemType<Riven_Coat>() && legs.type == ModContent.ItemType<Riven_Pants>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "+15% torn severity";
-			player.GetModPlayer<OriginPlayer>().rivenSetBoost = true;
+			player.setBonus = Language.GetTextValue("Mods.Origins.Items.GenericTooltip.TornSeverity", 10);
+			player.GetModPlayer<OriginPlayer>().tornStrengthBoost.Flat += 0.10f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

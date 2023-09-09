@@ -268,7 +268,7 @@ namespace Origins.Items.Weapons.Melee {
 			return false;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			OriginGlobalNPC.InflictTorn(target, 60, targetSeverity: 0.65f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
+			OriginGlobalNPC.InflictTorn(target, 60, targetSeverity: 0.35f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void CutTiles() {
 			DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;

@@ -22,8 +22,9 @@ namespace Origins.NPCs {
 		internal List<int> infusionSpikes;
 		internal bool amebolizeDebuff = false;
 		public bool tornDebuff = false;
-		int tornTime = 0;
-		int tornTargetTime = 180;
+		float tornCurrentSeverity = 0;
+		float tornSeverityRate = 0.3f / 180;
+		const float tornSeverityDecayRate = 0.3f / 180;
 		float tornTarget = 0.7f;
 		public bool slowDebuff = false;
 		public bool barnacleBuff = false;
@@ -47,12 +48,15 @@ namespace Origins.NPCs {
 			}
 			amebolizeDebuff = false;
 			if (tornDebuff) {
-				if (tornTime < tornTargetTime) {
-					tornTime++;
+				OriginExtensions.LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornSeverityRate);
+				if (tornCurrentSeverity >= 1 && Main.netMode != NetmodeID.MultiplayerClient) {
+					npc.StrikeInstantKill();
 				}
-			} else if (tornTime > 0 && --tornTime <= 0) {
-				tornTargetTime = 180;
-				tornTarget = 0.7f;
+			} else if (tornCurrentSeverity > 0) {
+				tornCurrentSeverity -= tornSeverityDecayRate;
+				if (tornCurrentSeverity <= 0) {
+					tornTarget = 0f;
+				}
 			}
 			tornDebuff = false;
 			if (oldSlowDebuff && !slowDebuff) {
@@ -193,25 +197,23 @@ namespace Origins.NPCs {
 				spriteBatch.Restart();
 			}
 		}
-		public static void InflictTorn(NPC npc, int duration, int targetTime = 180, float targetSeverity = 0.7f, OriginPlayer source = null) {
+		public static void InflictTorn(NPC npc, int duration, int targetTime = 180, float targetSeverity = 0.3f, OriginPlayer source = null) {
 			if (source is not null) {
-				if (source.taintedFlesh) {
-					targetSeverity *= 0.9f;
-				}
-				if (source.taintedFlesh2) {
-					targetSeverity *= 0.81f;
-				}
-				if (source.rivenSetBoost) {
-					targetSeverity -= 0.15f;
-				}
+				targetSeverity = source.tornStrengthBoost.ApplyTo(targetSeverity);
 			}
-			bool hadTorn = npc.HasBuff(Torn_Debuff.ID);
-			npc.AddBuff(Torn_Debuff.ID, duration);
 			OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
+			int buffIndex = npc.FindBuffIndex(Torn_Debuff.ID);
+			if (buffIndex < 0 || (targetSeverity.CompareTo(globalNPC.tornTarget) + (duration.CompareTo(npc.buffTime[buffIndex]) & 1) > 0)) {
+				npc.AddBuff(Torn_Debuff.ID, duration);
+				globalNPC.tornSeverityRate = targetSeverity / targetTime;
+				globalNPC.tornTarget = targetSeverity;
+			}
+			/*bool hadTorn = npc.HasBuff(Torn_Debuff.ID);
+			npc.AddBuff(Torn_Debuff.ID, duration);
 			if (!hadTorn || targetSeverity < globalNPC.tornTarget) {
 				globalNPC.tornTargetTime = targetTime;
 				globalNPC.tornTarget = Math.Max(targetSeverity, float.Epsilon);
-			}
+			}*/
 		}
 	}
 }

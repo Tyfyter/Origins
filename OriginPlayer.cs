@@ -209,6 +209,7 @@ namespace Origins {
 		public Item meatScribeItem = null;
 		public int meatDashCooldown = 0;
 		public Item lotteryTicketItem = null;
+		public StatModifier tornStrengthBoost = StatModifier.Default;
 		#endregion
 
 		#region explosive stats
@@ -250,9 +251,10 @@ namespace Origins {
 		public bool tornDebuff = false;
 		public bool flaskBile = false;
 		public bool flaskSalt = false;
-		public int tornTime = 0;
-		public int tornTargetTime = 180;
-		public float tornTarget = 0.7f;
+		public float tornCurrentSeverity = 0;
+		public float tornSeverityRate = 0.3f / 180;
+		public float tornSeverityDecayRate = 0.15f / 180;
+		public float tornTarget = 0f;
 		#endregion
 
 		#region keybinds
@@ -394,6 +396,7 @@ namespace Origins {
 			symbioteSkull = false;
 			taintedFlesh = false;
 			taintedFlesh2 = false;
+			tornStrengthBoost = StatModifier.Default;
 			if (toxicShock) {
 				if (Player.breath > oldBreath) Player.breath = oldBreath;
 				toxicShock = false;
@@ -536,10 +539,13 @@ namespace Origins {
 
 			if (rapidSpawnFrames > 0)
 				rapidSpawnFrames--;
-			if (!tornDebuff && tornTime > 0 && --tornTime <= 0) {
-				tornTargetTime = 180;
-				tornTarget = 0.7f;
+			if (!tornDebuff && tornCurrentSeverity > 0) {
+				tornCurrentSeverity -= tornSeverityDecayRate;
+				if (tornCurrentSeverity <= 0) {
+					tornTarget = 0f;
+				}
 			}
+			tornSeverityDecayRate = 0.15f / 180f;
 			tornDebuff = false;
 			int rasterized = Player.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
@@ -957,19 +963,23 @@ namespace Origins {
 						int targetTime = 1440;
 						float targetSeverity = 0.08f;
 					}*/
-					int duration = 188;
-					int targetTime = 1440;
-					float targetSeverity = 0f;
-					bool hadTorn = Player.HasBuff(Torn_Debuff.ID);
-					Player.AddBuff(Torn_Debuff.ID, duration);
-					if (hadTorn || targetSeverity < tornTarget) {
-						tornTargetTime = targetTime;
-						tornTarget = targetSeverity;
-					}
+					InflictTorn(Player, 188, 1440, 0.99f);
 					Player.velocity *= 0.95f;
 					rivenAssimilation += 0.001f; // This value x60 for every second, remember 100% is the max assimilation. This should be 6% every second resulting in 16.67 seconds of total time to play in Riven Water
 				} else if (waterStyle is Brine_Water_Style) {
 					Player.AddBuff(Toxic_Shock_Debuff.ID, 300);
+				}
+			}
+		}
+		public override void ModifyMaxStats(out StatModifier health, out StatModifier mana) {
+			health = StatModifier.Default;
+			mana = StatModifier.Default;
+			if (tornCurrentSeverity > 0) {
+				health *= 1 - tornCurrentSeverity;
+				if (tornCurrentSeverity >= 1) {
+					Player.KillMe(new KeyedPlayerDeathReason() {
+						Key = "Mods.Origins.DeathMessage.Torn_" + Main.rand.Next(5)
+					}, 1, 0);
 				}
 			}
 		}
@@ -982,17 +992,7 @@ namespace Origins {
 			}
 			Player.buffImmune[Rasterized_Debuff.ID] = Player.buffImmune[BuffID.Cursed];
 			if (tornDebuff) {
-				if (tornTime < tornTargetTime) {
-					tornTime++;
-				}
-			}
-			if (tornTime > 0) {
-				Player.statLifeMax2 = (int)(Player.statLifeMax2 * (1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime))));
-				if (Player.statLifeMax2 <= 0) {
-					Player.KillMe(new KeyedPlayerDeathReason() {
-						Key = "Mods.Origins.DeathMessage.Torn_" + Main.rand.Next(5)
-					}, 1, 0);
-				}
+				LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornSeverityRate);
 			}
 			if (explosiveArtery) {
 				if (explosiveArteryCount == -1) {
@@ -1283,9 +1283,9 @@ namespace Origins {
 		}
 		public override void UpdateDead() {
 			timeSinceLastDeath = -1;
-			tornTime = 0;
-			tornTargetTime = 180;
-			tornTarget = 0.7f;
+			tornCurrentSeverity = 0;
+			tornTarget = 0f;
+			mojoFlaskCount = mojoFlaskCountMax;
 			corruptionAssimilation = 0;
 			crimsonAssimilation = 0;
 			defiledAssimilation = 0;
@@ -1585,7 +1585,7 @@ namespace Origins {
 					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
 				}
 				if (flaskSalt) {
-					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f, this);
+					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);
 				}
 			}
 			if (item.CountsAsClass(DamageClasses.Explosive)) {
@@ -1601,7 +1601,7 @@ namespace Origins {
 					target.AddBuff(Rasterized_Debuff.ID, Rasterized_Debuff.duration * 2);
 				}
 				if (flaskSalt) {
-					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.8f, this);
+					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);
 				}
 			}
 		}
@@ -1613,7 +1613,7 @@ namespace Origins {
 				}
 			}
 			if (symbioteSkull) {
-				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.9f, this);
+				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.1f, this);
 			}
 			if (decayingScale) {
 				target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
@@ -2008,11 +2008,18 @@ namespace Origins {
 			}
 			return !unlockedEntry;
 		}
-		public static void InflictTorn(Player player, int duration, int targetTime = 180, float targetSeverity = 0.7f) {
-			player.AddBuff(Torn_Debuff.ID, duration);
+		public static void InflictTorn(Player player, int duration, int targetTime = 180, float targetSeverity = 0.3f) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			if (targetSeverity < originPlayer.tornTarget) {
-				originPlayer.tornTargetTime = targetTime;
+			int buffIndex = player.FindBuffIndex(Torn_Debuff.ID);
+			if (buffIndex < 0 || (targetSeverity.CompareTo(originPlayer.tornTarget) + (duration.CompareTo(player.buffTime[buffIndex]) & 1) > 0)) {
+				int decayIndex = player.FindBuffIndex(Torn_Decay_Debuff.ID);
+				if (decayIndex < 0) {
+					player.AddBuff(Torn_Debuff.ID, duration);
+				} else {
+					player.buffType[decayIndex] = Torn_Debuff.ID;
+					player.buffTime[decayIndex] = duration;
+				}
+				originPlayer.tornSeverityRate = targetSeverity / targetTime;
 				originPlayer.tornTarget = targetSeverity;
 			}
 		}

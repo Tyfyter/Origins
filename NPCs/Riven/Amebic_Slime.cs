@@ -43,7 +43,7 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 10));
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			OriginPlayer.InflictTorn(target, 180, 180, 0.9f);
+			OriginPlayer.InflictTorn(target, 180, targetSeverity: 1f - 0.9f);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {

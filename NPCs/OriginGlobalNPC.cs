@@ -183,8 +183,8 @@ namespace Origins.NPCs {
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				modifiers.CritDamage *= 1.3f;
 			}
-			if (tornTime > 0) {
-				modifiers.FinalDamage /= 1 - ((1 - tornTarget) * (tornTime / (float)tornTargetTime));
+			if (tornCurrentSeverity > 0) {
+				modifiers.FinalDamage /= 1 - tornCurrentSeverity;
 			}
 			/*if (explosive) {
 				damage = damage - npc.defense;

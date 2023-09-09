@@ -50,7 +50,7 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 525));
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
-			OriginPlayer.InflictTorn(target, 1800, 180, 0.47f);
+			OriginPlayer.InflictTorn(target, 1800, targetSeverity: 1f - 0.47f);// is this really supposed to last 30 seconds?
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
