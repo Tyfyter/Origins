@@ -95,11 +95,13 @@ namespace Origins.NPCs.Riven {
 
 		public override void AI() {
 			if (NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;
+			NPC.oldVelocity = NPC.position - NPC.oldPosition;
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
 				NPC current = Main.npc[NPC.realLife > -1 ? NPC.realLife : NPC.whoAmI];
 				while (current.ai[0] != 0) {
+					current.velocity = current.oldVelocity;
 					deathEffect(current);
 					current = Main.npc[(int)current.ai[0]];
 				}

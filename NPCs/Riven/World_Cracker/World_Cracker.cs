@@ -243,6 +243,12 @@ namespace Origins.NPCs.Riven.World_Cracker {
 						}
 					}
 					DamageArmor(current, new NPC.HitInfo() { SourceDamage = 9999, HideCombatText = true }, 0);
+					if (!Main.dedServ) for (int i = 0; i < 10; i++) Gore.NewGore(
+						current.GetSource_Death(),
+						Main.rand.NextVector2FromRectangle(current.Hitbox),
+						current.oldVelocity,
+						Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+					);
 					current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
 				}
 				NPC.Center = Main.npc[closest].Center;
@@ -278,6 +284,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 			NPC.life = NPC.lifeMax - 1;
 
+			NPC.oldVelocity = NPC.position - NPC.oldPosition;
 			if (Main.expertMode) ProcessShoot(NPC);
 		}
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
@@ -327,6 +334,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			}
 			NPC.life = NPC.lifeMax - 1;
 
+			NPC.oldVelocity = NPC.position - NPC.oldPosition;
 			if (Main.expertMode) ProcessShoot(NPC);
 		}
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {

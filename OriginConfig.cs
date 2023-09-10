@@ -58,5 +58,8 @@ namespace Origins {
 		[Label("Animated Ravel Transformation")]
 		[DefaultValue(true)]
 		public bool AnimatedRavel = true;
+
+		[DefaultValue(true)]
+		public bool ExtraGooeyRivenGores = true;
 	}
 }

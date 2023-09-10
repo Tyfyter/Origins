@@ -25,7 +25,8 @@ float sum(float3 value) {
 }
 
 float4 MaskedPurpleJellyFilter(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
-	float4 color = tex2D(uImage2, coords);
+	float2 worldCoords = (coords - float2(0.5, 0.5)) / uZoom + float2(0.5, 0.5);
+	float4 color = tex2D(uImage2, worldCoords);
 	float2 noiseCoords = fmod(coords * 1.5, float2(1, 1));
 	float brightness = sum(color.rgb) / 3;
 	color = float4(1.2, 0.6, 1.5, 0) * brightness;

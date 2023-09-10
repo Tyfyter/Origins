@@ -1,4 +1,4 @@
-Description file detected: 9
+Description file detected: 10
 * AmebicProtection.fx
 * BiomeShade.fx
 * BlackHole.fx
@@ -6,6 +6,7 @@ Description file detected: 9
 * MaskedRasterizeFilter.fx
 * PerlinFade.fx
 * Rasterize.fx
+* RivenBloodCoating.fx
 * Solvent.fx
 * TileOutline.fx
 
@@ -51,6 +52,10 @@ Start compiling font content file: PerlinFade.xnb ..Done!
 Start loading description file: Rasterize.fx ..Done!
 Start compiling font..Done!
 Start compiling font content file: Rasterize.xnb ..Done!
+
+Start loading description file: RivenBloodCoating.fx ..Done!
+Start compiling font..Done!
+Start compiling font content file: RivenBloodCoating.xnb ..Done!
 
 Start loading description file: Solvent.fx ..Done!
 Start compiling font..Done!

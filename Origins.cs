@@ -332,7 +332,8 @@ namespace Origins {
 				Filters.Scene["Origins:ZoneDefiled"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade", AssetRequestMode.ImmediateLoad).Value), "DefiledShade"), EffectPriority.High);
 				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/MaskedRasterizeFilter", AssetRequestMode.ImmediateLoad).Value), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:VolatileGelatinFilter"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/MaskedPurpleJellyFilter", AssetRequestMode.ImmediateLoad).Value), "MaskedPurpleJellyFilter"), EffectPriority.VeryHigh);
-				
+				Filters.Scene["Origins:RivenBloodCoating"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/RivenBloodCoating", AssetRequestMode.ImmediateLoad).Value), "RivenBloodCoating"), EffectPriority.VeryHigh);
+				Filters.Scene["Origins:RivenBloodCoating"].GetShader().UseImage(Assets.Request<Texture2D>("Textures/Riven_Blood_Map"), 0, SamplerState.PointWrap);
 				//Filters.Scene["Origins:ZoneRiven"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade", AssetRequestMode.ImmediateLoad).Value), "RivenShade"), EffectPriority.High);
 
 				solventShader = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/Solvent", AssetRequestMode.ImmediateLoad).Value), "Dissolve");

@@ -4344,6 +4344,11 @@ Mods: {
 					Label: Animated Ravel Transformation
 					Tooltip: ""
 				}
+
+				ExtraGooeyRivenGores: {
+					Label: Extra Gooey Riven Gores
+					Tooltip: ""
+				}
 			}
 
 			OriginConfig: {
