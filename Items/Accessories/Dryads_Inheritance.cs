@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.SporeSac);
-			recipe.AddIngredient(ModContent.ItemType<Last_Descendent>());
+			recipe.AddIngredient(ModContent.ItemType<Last_Descendant>());
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
