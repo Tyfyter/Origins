@@ -3,8 +3,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
+	[LegacyName("Last_Descendent")]
 	[AutoloadEquip(EquipType.Neck)]
-	public class Last_Descendent : ModItem {
+	public class Last_Descendant : ModItem {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Last Descendant");
 			// Tooltip.SetDefault("Increases damage, movement speed, and length of invincibility after taking damage\nAdditionally causes stars to fall after taking damage");

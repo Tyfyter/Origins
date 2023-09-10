@@ -132,7 +132,7 @@ Mods: {
 				CompanionCube_1: The Enrichment Center reminds you that the Weighted Companion Cube will never threaten to stab you and, in fact, cannot speak.
 				InHell: Good people don't end up here.
 				ItemIsBad_0: I wouldn't bother with that thing. My guess is that touching it will just make your life even worse somehow.
-				ItemIsBad_1: I know it's not a terrablade or anything, but it is important to the game.
+				ItemIsBad_1: I know it's not a Terra Blade or anything, but it is important to the game.
 				ItemIsExplosive_0: Killing you and giving you good advice aren't mutually exclusive. The rocket really is the way to go.
 				ItemIsExplosive_1: This should be interesting. Wait, I'm not the Demolitionist.
 				SmashingEvilTile: Nice job breaking it. Hero.
@@ -723,7 +723,7 @@ Mods: {
 				Tooltip: Increases armor penetration by 5 and attacks tenderize targets
 			}
 
-			Last_Descendent: {
+			Last_Descendant: {
 				DisplayName: Last Descendant
 				Tooltip:
 					'''
@@ -864,7 +864,7 @@ Mods: {
 				DisplayName: No U Card
 				Tooltip:
 					'''
-					Attackers recieve 50% of incoming damage and debuffs regardless of immunity
+					Attackers receive 50% of incoming damage and debuffs regardless of immunity
 					Immune to most debuffs
 					'''
 			}
@@ -952,7 +952,7 @@ Mods: {
 				DisplayName: Razorwire
 				Tooltip:
 					'''
-					67% of damage recieved is split across 3 enemies
+					67% of damage received is split across 3 enemies
 					Enemies are less likely to target you
 					'''
 			}
@@ -989,7 +989,7 @@ Mods: {
 					'''
 					Grants immunity to knockback
 					Grants immunity to fire blocks
-					67% of damage recieved is redirected to 3 enemies
+					67% of damage received is redirected to 3 enemies
 					Enemies are less likely to target you
 					'''
 			}
