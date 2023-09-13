@@ -22,12 +22,11 @@ namespace Origins.Items.Other.Consumables {
             recipe.Register();
         }
         public override void ModifyItemLoot(ItemLoot itemLoot) {
-            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Orbccessory>(), 5));
-            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Orbanger Weapon>(), 5));
-            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Orblight Pet>(), 5));
-            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Orbagic Weapon>(), 5));
-            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Orblee Weapon>(), 5));
-            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Orbummon Weapon>(), 5));
+            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Cinder_Seal>(), 5));
+            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Neural_Network>(), 5));
+            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Smiths_Hammer>(), 5));
+            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Area_Denial>(), 5));
+            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Outreach>(), 5));
         }
         public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
 			itemGroup = ContentSamples.CreativeHelper.ItemGroup.GoodieBags;

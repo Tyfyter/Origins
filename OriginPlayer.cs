@@ -79,7 +79,8 @@ namespace Origins {
 		#endregion assimilation
 
 		#region armor/set bonuses
-		public bool fiberglassSet = false;
+		public bool ashenKBReduction = false;
+        public bool fiberglassSet = false;
 		public bool cryostenSet = false;
 		public bool cryostenHelmet = false;
 		public bool felnumSet = false;
@@ -344,7 +345,8 @@ namespace Origins {
 				Player.mushroomDelayTime = (int)(Player.mushroomDelayTime * healLogic);
 			}
 
-			felnumSet = false;
+			ashenKBReduction = false;
+            felnumSet = false;
 			minerSet = false;
 			lostSet = false;
 			reshapingChunk = false;
@@ -1848,6 +1850,9 @@ namespace Origins {
 			}
 			if (toxicShock) {
 				modifiers.ScalingArmorPenetration += 0.1f;
+			}
+			if(ashenKBReduction) {
+				modifiers.Knockback -= 0.15f;
 			}
 		}
 		public override void PostHurt(Player.HurtInfo info) {

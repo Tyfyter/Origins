@@ -48,6 +48,7 @@ BOSSES AND MINI-BOSSES:
 (X) Hive Mind
 (X) Holy Enlightener
 (#, ^2) Ichor Storm
+(X) Scrapper
 (X) Super Brainz
 
 (^) Defiled Amalgamation*
@@ -56,7 +57,6 @@ BOSSES AND MINI-BOSSES:
 
 (%?, ^2) Lost Diver (Just needs the item/projectile/use sprites)
 (X) Miscreant
-(X) Scrapper
 
 (%2) Deacon
 (X) Duskord
@@ -188,7 +188,7 @@ STATUS EFFECTS:
 (X) Celestial Flames
 (#3, ^2) Defiled Exhaustion
 (X) Ionizing Radiation
-(^) Impeding Shrapnel
+(#3, ^2) Impeding Shrapnel !!!
 (^) Rasterize
 (@3, ^3) Torn
 (^) Totally Safe
@@ -215,7 +215,7 @@ ARMOR:
 ---
 (^) Ancient Defiled Armor
 (^) Ancient Encrusted Armor
-(X) Ashen Armor !!!
+(^) Ashen Armor
 (^) Cryosten Armor*
 (^) Defiled Armor*
 (^) Encrusted Armor
@@ -326,6 +326,7 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing
 (^) Ruby Reticle
+(X) Seal of Cinders !!!
 (^) Shield of Retribution
 (^) Sonar Visor*
 (^) Scavenger Bag
@@ -454,11 +455,14 @@ WINGS:
 TOOLS:
 ---
 (^) Brick Breaker
+(X) C6 Jackhammer !!!
 (^) Dismantler
 (^) Dissector
 (^) Felnum Hamaxe
 (^) Felnum Pickaxe
+(X) Miter Saw !!!
 (^) Parasitic Manipulator
+(X) Pile Driver !!!
 (^) Rivenator
 (^) Snatcher
 (^) Stabsmash
@@ -486,6 +490,7 @@ MELEE WEAPONS:
 (^) Krakram*
 (^) Nineball
 (#, ^2) Orbital Saw !!!
+(X) Outreach !!!
 (^) Ripper Lance
 (^) Riverang
 (#, ^2) Snapthrow !!!
@@ -580,6 +585,7 @@ RANGED WEAPONS:
 
 MAGIC WEAPONS:
 ---
+(X) Area Denial !!!
 (^) Beginner's Tome
 (^) Cryostike
 (^) Eternabrite
@@ -666,6 +672,8 @@ NO POST ML SUMMONER CONTENT YET.
 
 EXPLOSIVE WEAPONS:
 ---
+(#2, ^2) Abrasion Blaster !!!
+(#2, ^2) Ace Shrapnel !!!
 (^) Ameballoon
 (^) Bang Snap
 (^) Bloombomb
@@ -687,6 +695,7 @@ EXPLOSIVE WEAPONS:
 (#2, ^2) Outbreak Bomb !!!
 (^) Peatball*
 (#3, ^2) Potato Mine !!!
+(#, ^2) Shrapnel Bomb !!!
 
 (^) Alkaline Bomb
 (^) Alkaline Grenade
@@ -698,8 +707,6 @@ EXPLOSIVE WEAPONS:
 (^) Sonorous Shredder
 (^) Thermite Launcher
 
-(#2, ^2) Abrasion Blaster
-(#2, ^2) Ace Shrapnel
 (^) Bomboomstick
 (#2, ^2) Chlorodynamite !!!
 (^) Crystal Bomb
@@ -711,7 +718,6 @@ EXPLOSIVE WEAPONS:
 (#2, ^2) Omni-Directional Claymore
 (^) Rocodile
 (X) Self-Destruct
-(#, ^2) Shrapnel Bomb
 (X) Starforge
 
 (^) Black Hole Bomb
@@ -1017,6 +1023,7 @@ MOUNTS & PETS:
 (^) Amoeba Toy (Meberoid)
 (X) Eutrophic Cell (Gel Pod)
 (@2, #2) Rusty Cross Necklace (Guardian Angel)
+(X) Smith's Hammer (Walking Furnace) !!!
 (^) Suspicious Looking Pebble (Defiled Blight)
 
 (#, ^2) Chew Toy (Chee Toy)
