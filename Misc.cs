@@ -606,7 +606,7 @@ namespace Origins {
 	}
 	interface IComplexMineDamageTile {
 		void MinePower(int i, int j, int minePower, ref int damage) {
-			damage += (int)(1.2f * minePower);
+			damage = (int)(1.2f * minePower);
 		}
 	}
 	public interface IWhipProjectile {

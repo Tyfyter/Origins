@@ -47,6 +47,7 @@ namespace Origins.Tiles.Riven {
 				damage = (int)(1.2f * minePower);
 			} else {
 				player.Hurt(PlayerDeathReason.ByOther(4), player.statLife / 2, -player.direction);
+				damage = 0;
 			}
 		}
 
