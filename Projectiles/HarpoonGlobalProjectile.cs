@@ -21,7 +21,7 @@ namespace Origins.Projectiles {
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
-			return entity.aiStyle == 13;
+			return entity.aiStyle == ProjAIStyleID.Harpoon;
 		}
 		public override void SetDefaults(Projectile projectile) {
 			isRetracting = false;
@@ -39,15 +39,16 @@ namespace Origins.Projectiles {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (projectile.ai[0] == 1) {
 				if (!isRetracting) {
-					if (projectile.aiStyle == 13 && originPlayer.turboReel) {
-						projectile.extraUpdates++;
-					}
-					if (projectile.aiStyle == 13 && originPlayer.turboReel2) {
-						projectile.extraUpdates += 2;
+					if (projectile.aiStyle == ProjAIStyleID.Harpoon) {
+						if (originPlayer.turboReel2) {
+							projectile.extraUpdates += 2;
+						} else if(originPlayer.turboReel) {
+							projectile.extraUpdates++;
+						}
 					}
 					isRetracting = true;
 				}
-			} else if (projectile.aiStyle == 13) {
+			} else if (projectile.aiStyle == ProjAIStyleID.Harpoon) {
 				if (slamming) {
 					Vector2 oldDiff = (projectile.oldPosition - projectile.Size * 0.5f) - player.MountedCenter;
 					PolarVec2 polarDiff = (PolarVec2)(projectile.Center - player.MountedCenter);
