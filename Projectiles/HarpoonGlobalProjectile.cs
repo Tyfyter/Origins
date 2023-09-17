@@ -12,7 +12,7 @@ using Terraria.ModLoader.IO;
 using Tyfyter.Utils;
 
 namespace Origins.Projectiles {
-	//separate global for organization, might also make non-artifact projectiles less laggy than the alternative
+	//separate global for organization
 	public class HarpoonGlobalProjectile : GlobalProjectile {
 		bool isRetracting = false;
 		bool slamming = false;

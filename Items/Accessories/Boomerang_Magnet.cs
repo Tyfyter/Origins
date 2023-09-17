@@ -22,7 +22,7 @@ namespace Origins.Items.Accessories {
 			recipe.Register();
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().boomerangMagnet = true;
+			player.GetModPlayer<OriginPlayer>().boomerangMagnet = true;
 		}
 	}
 }

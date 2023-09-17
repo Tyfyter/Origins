@@ -266,7 +266,7 @@ ACCESSORIES:
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
-(#2, ^2) Boomerang Magnet
+(☻) Boomerang Magnet
 (^) Brine-Leafed Clover
 (X) C.F.H.E.S.
 (^) Celestial Starlight

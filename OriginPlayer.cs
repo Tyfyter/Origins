@@ -163,6 +163,7 @@ namespace Origins {
 		public bool oldPlasmaPhial = false;
 		public bool turboReel = false;
 		public bool turboReel2 = false;
+		public bool boomerangMagnet = false;
 		public bool trapCharm = false;
 		public bool rebreather = false;
 		public float rebreatherCount = 0;
@@ -418,6 +419,7 @@ namespace Origins {
 
 			turboReel = false;
 			turboReel2 = false;
+			boomerangMagnet = false;
 
 			Player.ApplyBuffTimeAccessory(oldPlasmaPhial, plasmaPhial, plasmaPhialMult, Main.debuff);
 			oldPlasmaPhial = plasmaPhial;
