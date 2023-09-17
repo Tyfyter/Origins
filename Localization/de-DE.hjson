@@ -3587,6 +3587,11 @@ Mods: {
 				// DisplayName: Snapthrow
 				// Tooltip: ""
 			}
+
+			Outreach: {
+				// DisplayName: Outreach
+				// Tooltip: ""
+			}
 		}
 
 		Buffs: {
@@ -4135,6 +4140,7 @@ Mods: {
 			// Spiked_Slime_Minion_Spike.DisplayName: Spiked_ Slime_ Minion_ Spike
 			// Volatile_Gelatin_Slime_Explosion.DisplayName: Volatile_ Gelatin_ Slime_ Explosion
 			// Snapthrow_P.DisplayName: Snapthrow_ P
+			// Outreach_P.DisplayName: Outreach_ P
 		}
 
 		Prefixes: {

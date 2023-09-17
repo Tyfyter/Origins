@@ -473,7 +473,7 @@ TOOLS:
 (^) Acrid Pickaxe
 (X) Bleeding Obsidian Dramaxe
 
-(#, %2, ^2)Impactaxe
+(#, %2, ^2) Impactaxe
 
 (X) Terraformer
 (X) Ahe
@@ -490,7 +490,7 @@ MELEE WEAPONS:
 (^) Krakram*
 (^) Nineball
 (#, ^2) Orbital Saw !!!
-(X) Outreach !!!
+(#, ^2) Outreach !!!
 (^) Ripper Lance
 (^) Riverang
 (^) Snapthrow

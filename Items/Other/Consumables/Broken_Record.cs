@@ -1,5 +1,7 @@
 ﻿using Origins.Items.Materials;
+using Origins.Items.Weapons.Melee;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -26,7 +28,7 @@ namespace Origins.Items.Other.Consumables {
             //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Neural_Network>(), 5));
             //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Smiths_Hammer>(), 5));
             //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Area_Denial>(), 5));
-            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Outreach>(), 5));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Outreach>(), 5));
         }
         public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
 			itemGroup = ContentSamples.CreativeHelper.ItemGroup.GoodieBags;
