@@ -3567,6 +3567,11 @@ Mods: {
 				DisplayName: Polyeel
 				Tooltip: ""
 			}
+
+			Snapthrow: {
+				DisplayName: Snapthrow
+				Tooltip: ""
+			}
 		}
 
 		Buffs: {
@@ -4114,6 +4119,7 @@ Mods: {
 			Spiked_Slime_Minion.DisplayName: Spiked_ Slime_ Minion
 			Spiked_Slime_Minion_Spike.DisplayName: Spiked_ Slime_ Minion_ Spike
 			Volatile_Gelatin_Slime_Explosion.DisplayName: Volatile_ Gelatin_ Slime_ Explosion
+			Snapthrow_P.DisplayName: Snapthrow_ P
 		}
 
 		Prefixes: {

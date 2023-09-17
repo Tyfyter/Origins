@@ -281,7 +281,7 @@ ACCESSORIES:
 (^) Dim Starlight*
 (^) Donor Wristband
 (#2, ^2) Dryad's Inheritance
-(#2, ^2) Dysfunctional Endless Explosives Bag
+(@) Dysfunctional Endless Explosives Bag
 (^) Exploder Emblem*
 (^) Explosive Artery
 (^) Fleshy Figurine
@@ -318,7 +318,7 @@ ACCESSORIES:
 (^) Powerflower
 (#2, ^2) Priority Mail !!!
 (X) Proactive Protozoa
-(#3, ^2) Protomind
+(#3?, ^2) Protomind
 (@2, #) Rage Quilt
 (^) Razorwire
 (^) Rebreather
@@ -338,7 +338,7 @@ ACCESSORIES:
 (^) Symbiote Skull
 (^) Tainted Flesh
 (^) Trap Charm
-(#3, ^2) Turbo Reel !!!
+(#3?, ^2) Turbo Reel !!!
 (^) Unsought Organ
 (^) Volatile Charm
 
@@ -493,7 +493,7 @@ MELEE WEAPONS:
 (X) Outreach !!!
 (^) Ripper Lance
 (^) Riverang
-(#, ^2) Snapthrow !!!
+(☻) Snapthrow !!!
 (^) Spiker Sword
 (#, ^2) Switchblade !!!
 (#, ^2) Triple Threat !!!
