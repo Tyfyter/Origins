@@ -46,7 +46,7 @@ namespace Origins.Tiles.Riven {
 			AddMapEntry(new Color(217, 95, 54), name);
 			AdjTiles = new int[] { TileID.ShadowOrbs };
 			HitSound = SoundID.NPCDeath1;
-			DustType = DustID.BlueMoss;
+			DustType = Riven_Hive.DefaultTileDust;
 		}
 		public override void PlaceInWorld(int i, int j, Item item) {
 			WorldGen.SectionTileFrame(i, j + 2, i + 4, j + 4 + 2);
@@ -68,7 +68,7 @@ namespace Origins.Tiles.Riven {
 							case (3, 0):
 							tile.HasTile = false;
 							WorldGen.SquareTileFrame(x + i, y + j + 2);
-							for (int k = 0; k < 3; k++) Dust.NewDust(new Vector2(x + i, y + j + 2) * 16, 16, 16, DustID.BlueMoss);
+							for (int k = 0; k < 3; k++) Dust.NewDust(new Vector2(x + i, y + j + 2) * 16, 16, 16, Riven_Hive.DefaultTileDust);
 							break;
 						}
 					} else break;

@@ -37,7 +37,6 @@ namespace Origins.Projectiles {
 				}
 			}
 			if (boomerangMagnet) {
-				Dust.NewDustPerfect(player.MountedCenter, 6, Vector2.Zero);
 				projectile.velocity += projectile.DirectionTo(player.MountedCenter) * 1.25f;
 			}
 		}

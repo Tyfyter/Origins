@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -28,7 +29,7 @@ namespace Origins.Tiles.Riven {
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.Containers };
 			keyItem = ModContent.ItemType<Riven_Key>();
-			DustType = DustID.BlueMoss;
+			DustType = Riven_Hive.DefaultTileDust;
 		}
 		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {

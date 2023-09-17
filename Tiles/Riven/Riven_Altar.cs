@@ -38,7 +38,7 @@ namespace Origins.Tiles.Riven {
 			//disableSmartCursor = true;
 			AdjTiles = new int[] { TileID.DemonAltar };
 			ID = Type;
-			DustType = DustID.BlueMoss;
+			DustType = Riven_Hive.DefaultTileDust;
 		}
 
 		public void MinePower(int i, int j, int minePower, ref int damage) {

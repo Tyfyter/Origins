@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.World;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,7 @@ namespace Origins.Tiles.Riven {
 			//SetModTree(Defiled_Tree.Instance);
 			mergeID = TileID.Stone;
 			//soundType = SoundID.NPCKilled;
-			DustType = DustID.BlueMoss;
+			DustType = Riven_Hive.DefaultTileDust;
 		}
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			fail = false;

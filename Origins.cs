@@ -447,18 +447,8 @@ namespace Origins {
 				MaxInstances = 0
 			};
 			//OriginExtensions.initClone();
-			Func<int> ReserveMusicID = typeof(MusicLoader).GetMethod("ReserveMusicID", BindingFlags.NonPublic | BindingFlags.Static).CreateDelegate<Func<int>>();
-			static void SetMusic(int newID, int baseID) {
-				if (Main.audioSystem is LegacyAudioSystem audioSystem) {
-					if (audioSystem.AudioTracks.Length <= newID) {
-						Array.Resize(ref audioSystem.AudioTracks, newID + 1);
-					}
-					Main.audioSystem.LoadCue(newID, "Music_" + baseID);
-				}
-			}
-			SetMusic(Music.Dusk = ReserveMusicID(), MusicID.Eerie);
-			SetMusic(Music.Defiled = ReserveMusicID(), MusicID.Corruption);
-			SetMusic(Music.UndergroundDefiled = ReserveMusicID(), MusicID.UndergroundCorruption);
+			Music.LoadMusic();
+
 			Main.OnPostDraw += IncrementFrameCount;
 			ApplyPatches();
 		}
@@ -505,6 +495,7 @@ namespace Origins {
 			eyndumCoreUITexture = null;
 			eyndumCoreTexture = null;
 			CloudBottoms = null;
+			Music.UnloadMusic();
 			Main.OnPostDraw -= IncrementFrameCount;
 			Array.Resize(ref TextureAssets.GlowMask, GlowMaskID.Count);
 		}
@@ -684,13 +675,40 @@ namespace Origins {
 			}
 		}
 		public static class Music {
-			public static int Dusk = MusicID.PumpkinMoon;
-			public static int Defiled = MusicID.Corruption;
-			public static int DefiledBoss = MusicID.OtherworldlyBoss1;
-			public static int UndergroundDefiled = MusicID.UndergroundCorruption;
-			public static int Riven = MusicID.Crimson;
-			public static int RivenBoss = MusicID.OtherworldlyBoss1;
-			public static int UndergroundRiven = MusicID.UndergroundCrimson;
+			public static int Dusk;
+
+			public static int Defiled;
+			public static int UndergroundDefiled;
+			public static int DefiledBoss;
+
+			public static int Riven;
+			public static int UndergroundRiven;
+			public static int RivenBoss;
+			internal static void LoadMusic() {
+				ReserveMusicID = typeof(MusicLoader).GetMethod("ReserveMusicID", BindingFlags.NonPublic | BindingFlags.Static).CreateDelegate<Func<int>>();
+				static void SetMusic(ref int newID, int baseID) {
+					newID = ReserveMusicID();
+					if (Main.audioSystem is LegacyAudioSystem audioSystem) {
+						if (audioSystem.AudioTracks.Length <= newID) {
+							Array.Resize(ref audioSystem.AudioTracks, newID + 1);
+						}
+						Main.audioSystem.LoadCue(newID, "Music_" + baseID);
+					}
+				}
+				SetMusic(ref Dusk, MusicID.Eerie);
+
+				SetMusic(ref Defiled, MusicID.Corruption);
+				SetMusic(ref UndergroundDefiled, MusicID.UndergroundCorruption);
+				SetMusic(ref RivenBoss, MusicID.OtherworldlyBoss1);
+
+				SetMusic(ref Riven, MusicID.Crimson);
+				SetMusic(ref UndergroundRiven, MusicID.UndergroundCrimson);
+				SetMusic(ref RivenBoss, MusicID.OtherworldlyBoss1);
+			}
+			private static Func<int> ReserveMusicID;
+			internal static void UnloadMusic() {
+				ReserveMusicID = null;
+			}
 		}
 		public static class Sounds {
 			public static SoundStyle MultiWhip = SoundID.Item153;

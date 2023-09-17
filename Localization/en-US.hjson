@@ -4310,6 +4310,9 @@ Mods: {
 			Riven_Tree_Sapling.MapEntry: Riven Sapling
 			Wrycoral.MapEntry: Wrycoral
 			Traffic_Cone.DisplayName: Traffic Cone
+			Music_Box_DC: Music Box (Defiled Caverns)
+			Music_Box_DW: Music Box (Defiled Wastelands)
+			Music_Box_RH: Music Box (Riven Hive)
 		}
 
 		AltBiomeDescription: {

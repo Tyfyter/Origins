@@ -43,7 +43,7 @@ namespace Origins.Tiles.Riven {
 			//soundType = SoundID.NPCDeath1;
 			MinPick = 65;
 			MineResist = 1.5f;
-			DustType = DustID.BlueMoss;
+			DustType = Riven_Hive.DefaultTileDust;
 		}
 		bool recursion = false;
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {

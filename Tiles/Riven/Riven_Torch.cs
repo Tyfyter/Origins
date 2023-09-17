@@ -53,7 +53,7 @@ namespace Origins.Tiles.Riven {
 			if (!Main.dedServ) {
 				RequestIfExists("Origins/Tiles/Riven/Riven_Torch_Tile_Flame", out flameTexture);
 			}
-			DustType = DustID.BlueMoss;
+			DustType = Riven_Hive.DefaultTileDust;
 		}
 
 		public override void MouseOver(int i, int j) {
@@ -131,7 +131,7 @@ namespace Origins.Tiles.Riven {
 		}
 	}
 	public class Riven_Torch : ModItem {
-		public static Vector3 Light => new(0.15f, 1.05f, 0.95f);
+		public static Vector3 Light => new Vector3(0.15f, 1.05f, 0.95f) * Riven_Hive.NormalGlowValue.GetValue();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
 
