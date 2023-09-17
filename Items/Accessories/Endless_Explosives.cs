@@ -15,7 +15,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 3);
 		}
 		public override void UpdateEquip(Player player) {
-			//player.GetModPlayer<OriginPlayer>().endlessExplosives = true;
+			player.GetModPlayer<OriginPlayer>().endlessExplosives = true;
 		}
 	}
 }
