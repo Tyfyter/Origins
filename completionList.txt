@@ -184,7 +184,7 @@ EVENTS:
 
 STATUS EFFECTS:
 ---
-(#3, ^2) Assimilation !!!
+(^) Assimilation
 (X) Celestial Flames
 (#3, ^2) Defiled Exhaustion
 (X) Ionizing Radiation
@@ -281,7 +281,7 @@ ACCESSORIES:
 (^) Dim Starlight*
 (^) Donor Wristband
 (#2, ^2) Dryad's Inheritance
-(@) Dysfunctional Endless Explosives Bag
+(#, ^2) Dysfunctional Endless Explosives Bag
 (^) Exploder Emblem*
 (^) Explosive Artery
 (^) Fleshy Figurine
@@ -318,7 +318,7 @@ ACCESSORIES:
 (^) Powerflower
 (#2, ^2) Priority Mail !!!
 (X) Proactive Protozoa
-(#3?, ^2) Protomind
+(#3, ^2) Protomind
 (@2, #) Rage Quilt
 (^) Razorwire
 (^) Rebreather
@@ -338,7 +338,7 @@ ACCESSORIES:
 (^) Symbiote Skull
 (^) Tainted Flesh
 (^) Trap Charm
-(#3?, ^2) Turbo Reel !!!
+(#3, ^2) Turbo Reel !!!
 (^) Unsought Organ
 (^) Volatile Charm
 
@@ -493,7 +493,7 @@ MELEE WEAPONS:
 (X) Outreach !!!
 (^) Ripper Lance
 (^) Riverang
-(☻) Snapthrow !!!
+(^) Snapthrow
 (^) Spiker Sword
 (#, ^2) Switchblade !!!
 (#, ^2) Triple Threat !!!
@@ -765,7 +765,7 @@ TILES:
 (^) Peat Moss*
 (^) Primordial Permafrost
 (^) Riven Grass
-(☻) Sanguinite Ore !!!
+(^) Sanguinite Ore
 (#, ^2) Silica !!!
 (^) Spug Flesh
 (@5, ^3) Sulphur Stone
@@ -785,8 +785,8 @@ TILES:
 (^) Sulphur Stone Wall
 
 (X) Acid Chest
-(☻) Alkahest Torch
-(☻) Bile Torch
+(^) Alkahest Torch
+(^) Bile Torch
 (X) Brine Water Fountain
 (X) Cancer Block
 (X) Chambersite Gem Lock
