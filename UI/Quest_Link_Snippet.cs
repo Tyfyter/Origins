@@ -41,7 +41,7 @@ namespace Origins.UI {
 				Main.LocalPlayer.mouseInterface = true;
 			}
 			public override void OnClick() {
-				if (ItemSlot.ControlInUse && OriginConfig.Instance.DebugMode) {
+				if (ItemSlot.ControlInUse && OriginClientConfig.Instance.debugMenuButton.DebugMode) {
 					Quest_Registry.GetQuestByKey(key).LoadData(new Terraria.ModLoader.IO.TagCompound());
 					return;
 				}

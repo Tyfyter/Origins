@@ -425,6 +425,12 @@ namespace Origins {
 				TriggerSetBonus();
 			}
 		}
+		public override IEnumerable<Item> AddMaterialsForCrafting(out ItemConsumedCallback itemConsumedCallback) {
+			if (Player.InModBiome<Brine_Pool>()) {
+				Player.adjWater = false;
+			}
+			return base.AddMaterialsForCrafting(out itemConsumedCallback);
+		}
 		public override bool CanSellItem(NPC vendor, Item[] shopInventory, Item item) {
 			if (item.prefix == ModContent.PrefixType<Imperfect_Prefix>()) return false;
 			return true;

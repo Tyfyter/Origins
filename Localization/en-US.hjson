@@ -4394,6 +4394,12 @@ Mods: {
 					Label: Extra Gooey Riven Gores
 					Tooltip: ""
 				}
+
+				debugMenuButton: {
+					Label: Terraria Origins version
+					SecretLabel: Debugging
+					Tooltip: Click to copy
+				}
 			}
 
 			OriginConfig: {
@@ -4420,12 +4426,36 @@ Mods: {
 					Tooltip: ""
 				}
 			}
+
+			DebugConfig: {
+				Tooltip: ""
+
+				DebugMode: {
+					Label: Debug Mode
+					Tooltip: ""
+				}
+
+				ExportAllStatsJSON: {
+					Label: Export All Stats JSON
+					Tooltip: Shift must be held to mass-export stats
+				}
+
+				ExportItemStatsJSON: {
+					Label: Export Item Stats JSON
+					Tooltip: ""
+				}
+
+				StatJSONPath: {
+					Label: Stat JSON Path
+					Tooltip: the path to put the json files in
+				}
+			}
 		}
 
 		AltBiomes: {
 			Defiled_Wastelands_Alt_Biome.DisplayName: Defiled Wastelands
 			Riven_Hive_Alt_Biome.DisplayName: Riven Hive
-			Ashen_Alt_Biome.Description: Ashen_ Alt_ Biome
+			Ashen_Alt_Biome.Description: Ashen Biome
 		}
 	}
 }

@@ -4394,6 +4394,12 @@ Mods: {
 					// Label: Extra Gooey Riven Gores
 					// Tooltip: ""
 				}
+
+				debugMenuButton: {
+					// Label: Terraria Origins version
+					// SecretLabel: Debugging
+					// Tooltip: Click to copy
+				}
 			}
 
 			OriginConfig: {
@@ -4417,6 +4423,30 @@ Mods: {
 
 				DebugMode: {
 					// Label: Debug Mode
+					// Tooltip: ""
+				}
+			}
+
+			DebugConfig: {
+				// Tooltip: ""
+
+				DebugMode: {
+					// Label: Debug Mode
+					// Tooltip: ""
+				}
+
+				ExportAllStatsJSON: {
+					// Label: Export All Stats J S O N
+					// Tooltip: ""
+				}
+
+				ExportItemStatsJSON: {
+					// Label: Export Item Stats J S O N
+					// Tooltip: ""
+				}
+
+				StatJSONPath: {
+					// Label: Stat J S O N Path
 					// Tooltip: ""
 				}
 			}

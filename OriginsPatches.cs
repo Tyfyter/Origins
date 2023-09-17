@@ -129,12 +129,12 @@ namespace Origins {
 			Terraria.Graphics.Renderers.On_LegacyPlayerRenderer.DrawPlayerInternal += LegacyPlayerRenderer_DrawPlayerInternal;
 			Terraria.DataStructures.On_PlayerDrawLayers.DrawPlayer_TransformDrawData += On_PlayerDrawLayers_DrawPlayer_TransformDrawData;
 			Terraria.On_Projectile.GetWhipSettings += Projectile_GetWhipSettings;
-			On_Recipe.CollectItemsToCraftWithFrom += (orig, player) => {
+			/*On_Recipe.CollectItemsToCraftWithFrom += (orig, player) => {
 				orig(player);
 				if (player.InModBiome<Brine_Pool>()) {
 					player.adjWater = false;
 				}
-			};
+			};*/
 			MonoModHooks.Add(typeof(CommonCode).GetMethod("DropItem", BindingFlags.Public | BindingFlags.Static, new Type[] { typeof(DropAttemptInfo), typeof(int), typeof(int), typeof(bool) }), (hook_DropItem)CommonCode_DropItem);
 			Terraria.On_WorldGen.ScoreRoom += (Terraria.On_WorldGen.orig_ScoreRoom orig, int ignoreNPC, int npcTypeAskingToScoreRoom) => {
 				npcScoringRoom = npcTypeAskingToScoreRoom;
