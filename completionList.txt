@@ -490,7 +490,7 @@ MELEE WEAPONS:
 (^) Krakram*
 (^) Nineball
 (#, ^2) Orbital Saw !!!
-(#, ^2) Outreach !!!
+(^) Outreach
 (^) Ripper Lance
 (^) Riverang
 (^) Snapthrow
@@ -585,7 +585,7 @@ RANGED WEAPONS:
 
 MAGIC WEAPONS:
 ---
-(X) Area Denial !!!
+(#, ^2) Area Denial !!!
 (^) Beginner's Tome
 (^) Cryostike
 (^) Eternabrite
@@ -636,7 +636,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash
 (#, ^2) Forest Staff !!!
-(X) Joint Pop !!!
+(#, ^2) Joint Pop !!!
 (^) Maelstrom Incantation
 (#, ^2) Ocean Amulet !!!
 (#, ^2) Ocotoral Bud !!!
