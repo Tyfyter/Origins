@@ -1352,6 +1352,21 @@ Mods: {
 				Tooltip: Increases jump height
 			}
 
+			Scavenger_Breastplate: {
+				DisplayName: Scavenger Body Armor
+				Tooltip: -25% self-damage
+			}
+
+			Scavenger_Helmet: {
+				DisplayName: Scavenger Goggles
+				Tooltip: +10% explosive critical strike chance
+			}
+
+			Scavenger_Greaves: {
+				DisplayName: Scavenger Greaves
+				Tooltip: +15% explosive velocity
+			}
+
 			Eyndum_Breastplate: {
 				DisplayName: Eyndum Breastplate
 				Tooltip: ""

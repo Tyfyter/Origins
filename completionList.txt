@@ -225,7 +225,7 @@ ARMOR:
 (^) Myth Armor
 (^) Riptide Armor
 (^) Riven Armor
-(X) Scavenger Armor !!!
+(#3, ^2) Scavenger Armor !!!
 (^) Soulhide Armor
 (^) Tendon Armor
 
@@ -326,7 +326,7 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing
 (^) Ruby Reticle
-(X) Seal of Cinders !!!
+(#, ^2) Seal of Cinders !!!
 (^) Shield of Retribution
 (^) Sonar Visor*
 (^) Scavenger Bag
@@ -338,7 +338,7 @@ ACCESSORIES:
 (^) Symbiote Skull
 (^) Tainted Flesh
 (^) Trap Charm
-(#3, ^2) Turbo Reel !!!
+(^) Turbo Reel
 (^) Unsought Organ
 (^) Volatile Charm
 
@@ -455,14 +455,14 @@ WINGS:
 TOOLS:
 ---
 (^) Brick Breaker
-(X) C6 Jackhammer !!!
+(#, ^2) C6 Jackhammer !!!
 (^) Dismantler
 (^) Dissector
 (^) Felnum Hamaxe
 (^) Felnum Pickaxe
-(X) Miter Saw !!!
+(#, ^2) Miter Saw !!!
 (^) Parasitic Manipulator
-(X) Pile Driver !!!
+(#, ^2) Pile Driver !!!
 (^) Rivenator
 (^) Snatcher
 (^) Stabsmash

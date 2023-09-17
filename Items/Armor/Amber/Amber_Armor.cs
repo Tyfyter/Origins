@@ -7,8 +7,8 @@ namespace Origins.Items.Armor.Amber {
     [AutoloadEquip(EquipType.Head)]
 	public class Amber_Helmet : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amber Exploder Goggles");
-			Item.ResearchUnlockCount = 1;
+            ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
+            Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
