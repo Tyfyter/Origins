@@ -765,7 +765,7 @@ TILES:
 (^) Peat Moss*
 (^) Primordial Permafrost
 (^) Riven Grass
-(#, ^2) Sanguinite Ore !!!
+(☻) Sanguinite Ore !!!
 (#, ^2) Silica !!!
 (^) Spug Flesh
 (@5, ^3) Sulphur Stone
@@ -785,8 +785,8 @@ TILES:
 (^) Sulphur Stone Wall
 
 (X) Acid Chest
-(#, ^2) Alkahest Torch
-(#, ^2) Bile Torch
+(☻) Alkahest Torch
+(☻) Bile Torch
 (X) Brine Water Fountain
 (X) Cancer Block
 (X) Chambersite Gem Lock
