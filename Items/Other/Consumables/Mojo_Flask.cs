@@ -23,9 +23,12 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public static Rectangle GetFrame(Texture2D texture) {
 			const int frameCount = 5;
-			int frame = Main.LocalPlayer.GetModPlayer<OriginPlayer>().mojoFlaskCount;
-			if (Main.LocalPlayer.ItemAnimationActive && Main.LocalPlayer.HeldItem.type == ID) {
-				frame++;
+			int frame = 5;
+			if (!Main.gameMenu) {
+				frame = Main.LocalPlayer.GetModPlayer<OriginPlayer>().mojoFlaskCount;
+				if (Main.LocalPlayer.ItemAnimationActive && Main.LocalPlayer.HeldItem.type == ID) {
+					frame++;
+				}
 			}
 			return texture.Frame(frameCount, 1, Math.Min(frame, frameCount - 1), 0);
 		}
@@ -73,6 +76,7 @@ namespace Origins.Items.Other.Consumables {
 			return true;
 		}
 		public override void PostDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale) {
+			if (Main.gameMenu) return;
 			float inventoryScale = Main.inventoryScale;
 			int buffIndex = Main.LocalPlayer.FindBuffIndex(Item.buffType);
 			if (buffIndex >= 0) {

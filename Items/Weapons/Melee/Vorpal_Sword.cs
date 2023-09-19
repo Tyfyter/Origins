@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Melee {
-	public class Vorpal_Sword : ModItem, IJournalEntryItem {
+	public class Vorpal_Sword : ModItem, IJournalEntryItem, ICustomWikiStat {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override void SetStaticDefaults() {
@@ -171,6 +171,8 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback * 0.25f, player.whoAmI, ai1: player.ItemUsesThisAnimation == 1 ? 1 : -1);
 			return false;
 		}
+		public string[] Categories => new string[] { "Sword" };
+		public bool? Hardmode => false;
 	}
 	public class Vorpal_Sword_Slash : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Vorpal_Sword";

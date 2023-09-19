@@ -4436,17 +4436,32 @@ Mods: {
 				}
 
 				ExportAllStatsJSON: {
-					// Label: Export All Stats J S O N
-					// Tooltip: ""
+					// Label: Export All Stats JSON
+					// Tooltip: Shift must be held to mass-export stats
 				}
 
 				ExportItemStatsJSON: {
-					// Label: Export Item Stats J S O N
+					// Label: Export Item Stats JSON
 					// Tooltip: ""
 				}
 
 				StatJSONPath: {
-					// Label: Stat J S O N Path
+					// Label: Stat JSON Path
+					// Tooltip: the path to put the json files in
+				}
+
+				ExportItemPage: {
+					// Label: Export Item Page
+					// Tooltip: ""
+				}
+
+				WikiTemplatePath: {
+					// Label: Wiki Template Path
+					// Tooltip: ""
+				}
+
+				WikiPagePath: {
+					// Label: Wiki Page Path
 					// Tooltip: ""
 				}
 			}
@@ -4455,7 +4470,7 @@ Mods: {
 		AltBiomes: {
 			// Defiled_Wastelands_Alt_Biome.DisplayName: Defiled Wastelands
 			// Riven_Hive_Alt_Biome.DisplayName: Riven Hive
-			// Ashen_Alt_Biome.Description: Ashen_ Alt_ Biome
+			// Ashen_Alt_Biome.Description: Ashen Biome
 		}
 	}
 }

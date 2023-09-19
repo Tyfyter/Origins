@@ -4449,6 +4449,21 @@ Mods: {
 					Label: Stat JSON Path
 					Tooltip: the path to put the json files in
 				}
+
+				ExportItemPage: {
+					Label: Export Item Page
+					Tooltip: ""
+				}
+
+				WikiTemplatePath: {
+					Label: Wiki Template Path
+					Tooltip: ""
+				}
+
+				WikiPagePath: {
+					Label: Wiki Page Path
+					Tooltip: ""
+				}
 			}
 		}
 

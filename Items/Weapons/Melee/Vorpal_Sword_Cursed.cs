@@ -15,7 +15,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Melee {
-	public class Vorpal_Sword_Cursed : ModItem, IJournalEntryItem {
+	public class Vorpal_Sword_Cursed : ModItem, IJournalEntryItem, ICustomWikiStat {
 		static short glowmask;
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
@@ -204,6 +204,8 @@ namespace Origins.Items.Weapons.Melee {
 				Item.autoReuse = true;
 			}
 		}
+		public string[] Categories => new string[] { "Sword" };
+		public bool? Hardmode => false;
 	}
 	public class Cursed_Vorpal_Sword_Slash : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Vorpal_Sword_Cursed";

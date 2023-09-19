@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using Origins.Dev;
 using Origins.Reflection;
 using ReLogic.OS;
 using System;
@@ -106,12 +107,14 @@ namespace Origins {
 		}
 	}
 	public class DebugConfig : ModConfig {
+		public static DebugConfig Instance => OriginClientConfig.Instance.debugMenuButton;
 		public override ConfigScope Mode => ConfigScope.ClientSide;
 		public override bool Autoload(ref string name) => false;
 
 		[DefaultValue(false)]
 		public bool DebugMode = false;
 
+		public string StatJSONPath { get; set; }
 		public bool ExportAllStatsJSON {
 			get => false;
 			set {
@@ -147,6 +150,16 @@ namespace Origins {
 				}
 			}
 		}
+		public ItemDefinition ExportItemPage {
+			get => default;
+			set {
+				if ((value?.Type ?? 0) > ItemID.None && !string.IsNullOrWhiteSpace(WikiTemplatePath) && !string.IsNullOrWhiteSpace(WikiPagePath)) {
+					WikiPageExporter.ExportItemPage(ContentSamples.ItemsByType[value.Type]);
+				}
+			}
+		}
+		public string WikiTemplatePath { get; set; }
+		public string WikiPagePath { get; set; }
 		static void AppendLine(ref string data, string newData) {
 			if (data.Length > 2) {
 				data += $",\n";
@@ -168,14 +181,54 @@ namespace Origins {
 		}
 		internal static string GetWikiStats(Item item) {
 			string data = "{\n";
-			data += $"\t\"Image\": \"{item.ModItem.Texture.Replace(nameof(Origins), "§ModImage§")}\"";
+			ICustomWikiStat customStat = item.ModItem as ICustomWikiStat;
+			if (item.ModItem is null) {
+				data += $"\t\"Image\": \"MissingTexture\"";
+			} else {
+				data += $"\t\"Image\": \"{item.ModItem.Texture.Replace(nameof(Origins), "§ModImage§")}\"";
+			}
 
 			string types = ",\n\t\"Types\":[\n\t\t\"Item\"";
 			if (item.accessory) AppendLine(ref types, "\t\"Accessory\"");
-			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None) AppendLine(ref types, "\t\"Weapon\"");
+			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None) {
+				AppendLine(ref types, "\t\"Weapon\"");
+				if (!item.noMelee && item.useStyle == ItemUseStyleID.Swing) {
+					AppendLine(ref types, "\t\"Sword\"");
+				}
+				if (item.shoot > ProjectileID.None) {
+					switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
+						case ProjAIStyleID.Boomerang:
+						AppendLine(ref types, "\t\"Boomerang\"");
+						break;
+
+						case ProjAIStyleID.Spear:
+						AppendLine(ref types, "\t\"Spear\"");
+						break;
+					}
+				}
+				switch (item.useAmmo) {
+					case ItemID.WoodenArrow:
+					AppendLine(ref types, "\t\"Bow\"");
+					break;
+					case ItemID.MusketBall:
+					AppendLine(ref types, "\t\"Gun\"");
+					break;
+				}
+				switch (item.ammo) {
+					case ItemID.WoodenArrow:
+					AppendLine(ref types, "\t\"Arrow\"");
+					break;
+					case ItemID.MusketBall:
+					AppendLine(ref types, "\t\"Bullet\"");
+					break;
+				}
+			}
+			if (customStat?.Hardmode ?? (!item.material && !item.consumable && item.rare > ItemRarityID.Orange)) AppendLine(ref types, "\t\"Hardmode\"");
+
 			if (item.ammo != 0) AppendLine(ref types, "\t\"Ammo\"");
 			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) AppendLine(ref types, "\t\"Tool\"");
 			if (item.headSlot != -1 || item.bodySlot != -1 || item.legSlot != -1) AppendLine(ref types, "\t\"Armor\"");
+			if (customStat is not null) foreach (string cat in customStat.Categories) AppendLine(ref types, $"\t\"{cat}\"");
 			types += "\n\t]";
 			data += types;
 
@@ -222,24 +275,23 @@ namespace Origins {
 			string itemTooltip = "";
 			for (int i = 0; i < item.ToolTip.Lines; i++) {
 				if (i > 0) itemTooltip += "\n";
-				itemTooltip += item.ToolTip.GetLine(i).Replace(",", "\\,");
+				itemTooltip += item.ToolTip.GetLine(i).Replace(",", "\\\\,").Replace("'", "\\\\'");
 			}
 			AppendStat(ref data, "Tooltip", itemTooltip.Replace("\n", "\\n"), "");
 			AppendStat(ref data, "Rarity", (RarityLoader.GetRarity(item.rare)?.Name ?? ItemRarityID.Search.GetName(item.rare)).Replace("Rarity", ""), "");
+			if (customStat?.Buyable ?? false) AppendStat(ref data, "Buy", item.value, 0);
 			AppendStat(ref data, "Sell", item.value / 5, 0);
 
-			if (item.ModItem is ICustomWikiStat customStat) {
-				if (customStat.Buyable) AppendStat(ref data, "Buy", item.value, 0);
-				AppendLine(ref data, customStat.WikiStats);
-			}
+			if (customStat?.WikiStats is not null) AppendLine(ref data, customStat.WikiStats);
 			AppendStat(ref data, "SpriteWidth", item.ModItem is null ? item.width :ModContent.Request<Texture2D>(item.ModItem.Texture).Width(), 0);
 			data += "\n}";
 			return data;
 		}
-		public string StatJSONPath { get; set; }
 	}
 	internal interface ICustomWikiStat {
 		bool Buyable => false;
-		string WikiStats { get; }
+		string WikiStats => null;
+		string[] Categories => Array.Empty<string>();
+		bool? Hardmode => null;
 	}
 }
