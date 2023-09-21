@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.Map;
 using Terraria.ModLoader;
 
@@ -70,6 +71,16 @@ namespace Origins.Dev {
 
 			string filename = context["Name"] + ".html";
 			string path = Path.Combine(DebugConfig.Instance.WikiPagePath, filename);
+			if (item.ModItem is ICustomWikiStat wikiStats) {
+				if (!wikiStats.FullyGeneratable && File.Exists(path)) return;
+				context["PageTextMain"] = wikiStats.PageTextMain.Value;
+				foreach (var text in wikiStats.PageTexts) {
+					context[text.name] = text.text;
+				}
+			} else {
+				string key = $"WikiGenerator.{item.ModItem?.Mod?.Name}.{item.ModItem?.LocalizationCategory}.{context["Name"]}.MainText";
+				context["PageTextMain"] = Language.GetOrRegister(key).Value;
+			}
 			File.WriteAllText(path, WikiTemplate.Resolve(context));
 		}
 		public void Unload() {

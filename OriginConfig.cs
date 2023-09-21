@@ -6,6 +6,7 @@ using Origins.Dev;
 using Origins.Reflection;
 using ReLogic.OS;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
@@ -278,5 +279,31 @@ namespace Origins {
 		void ModifyWikiStats(JObject data) {}
 		string[] Categories => Array.Empty<string>();
 		bool? Hardmode => null;
+		bool FullyGeneratable => true;
+		LocalizedText PageTextMain => (this is ILocalizedModType modType) ? Language.GetOrRegister($"WikiGenerator.{modType.Mod.Name}.{modType.LocalizationCategory}.{modType.Name}.MainText") : null;
+		IEnumerable<(string name, LocalizedText text)> PageTexts {
+			get {
+				if (this is ILocalizedModType modType) {
+					string baseKey = $"WikiGenerator.{modType.Mod.Name}.{modType.LocalizationCategory}.{modType.Name}.";
+					LocalizedText text;
+					bool TryGetText(string suffix, out LocalizedText text) {
+						if (Language.Exists(baseKey + suffix)) {
+							text = Language.GetText(baseKey + suffix);
+							return true;
+						}
+						text = null;
+						return false;
+					}
+					if (TryGetText("Behavior", out text)) yield return ("Behavior", text);
+					if (TryGetText("DifficultyChanges", out text)) yield return ("DifficultyChanges", text);
+					if (TryGetText("Tips", out text)) yield return ("Tips", text);
+					if (TryGetText("Trivia", out text)) yield return ("Trivia", text);
+					if (TryGetText("Notes", out text)) yield return ("Notes", text);
+					if (TryGetText("Lore", out text)) yield return ("Lore", text);
+					if (TryGetText("Changelog", out text)) yield return ("Changelog", text);
+				}
+				yield break;
+			}
+		}
 	}
 }
