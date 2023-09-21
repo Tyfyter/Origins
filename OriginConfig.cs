@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Reflection;
 using ReLogic.OS;
@@ -129,7 +130,7 @@ namespace Origins {
 
 							string filename = item.ModItem.Name + ".json";
 							string path = Path.Combine(StatJSONPath, filename);
-							File.WriteAllText(path, GetWikiStats(item));
+							File.WriteAllText(path, JsonConvert.SerializeObject(GetWikiStats(item), Formatting.Indented));
 						}
 					} else {
 						Main.NewText("Shift must be held to export all stats, for safety reasons");
@@ -146,7 +147,7 @@ namespace Origins {
 
 					string filename = (item.ModItem?.Name ?? ItemID.Search.GetName(value.Type)) + ".json";
 					string path = Path.Combine(StatJSONPath, filename);
-					File.WriteAllText(path, GetWikiStats(item));
+					File.WriteAllText(path, JsonConvert.SerializeObject(GetWikiStats(item), Formatting.Indented));
 				}
 			}
 		}
@@ -160,137 +161,121 @@ namespace Origins {
 		}
 		public string WikiTemplatePath { get; set; }
 		public string WikiPagePath { get; set; }
-		static void AppendLine(ref string data, string newData) {
-			if (data.Length > 2) {
-				data += $",\n";
-			}
-			data += "\t" + newData;
-		}
-		static void AppendStat<T>(ref string data, string name, T value, T defaultValue) {
+		static void AppendStat<T>(JObject data, string name, T value, T defaultValue) {
 			if (!value.Equals(defaultValue)) {
-				string text = $"\"{name}\":";
-				if (value is string) {
-					text += $"\"{value}\"";
-				} else if (value is float) {
-					text += $"{value:0.##}";
-				} else {
-					text += value.ToString();
-				}
-				AppendLine(ref data, text);
+				data.Add(name, JToken.FromObject(value));
 			}
 		}
-		internal static string GetWikiStats(Item item) {
-			string data = "{\n";
+		internal static JObject GetWikiStats(Item item) {
+			JObject data = new();
 			ICustomWikiStat customStat = item.ModItem as ICustomWikiStat;
 			if (item.ModItem is null) {
-				data += $"\t\"Image\": \"MissingTexture\"";
+				data["Image"] = "MissingTexture";
 			} else {
-				data += $"\t\"Image\": \"{item.ModItem.Texture.Replace(nameof(Origins), "§ModImage§")}\"";
+				data["Image"] = $"{item.ModItem.Texture.Replace(nameof(Origins), "§ModImage§")}";
 			}
-
-			string types = ",\n\t\"Types\":[\n\t\t\"Item\"";
-			if (item.accessory) AppendLine(ref types, "\t\"Accessory\"");
+			JArray types = new("Item");
+			if (item.accessory) types.Add("Accessory");
 			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None) {
-				AppendLine(ref types, "\t\"Weapon\"");
+				types.Add("Weapon");
 				if (!item.noMelee && item.useStyle == ItemUseStyleID.Swing) {
-					AppendLine(ref types, "\t\"Sword\"");
+					types.Add("Sword");
 				}
 				if (item.shoot > ProjectileID.None) {
 					switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
 						case ProjAIStyleID.Boomerang:
-						AppendLine(ref types, "\t\"Boomerang\"");
+						types.Add("Boomerang");
 						break;
 
 						case ProjAIStyleID.Spear:
-						AppendLine(ref types, "\t\"Spear\"");
+						types.Add("Spear");
 						break;
 					}
 				}
 				switch (item.useAmmo) {
 					case ItemID.WoodenArrow:
-					AppendLine(ref types, "\t\"Bow\"");
+					types.Add("Bow");
 					break;
 					case ItemID.MusketBall:
-					AppendLine(ref types, "\t\"Gun\"");
+					types.Add("Gun");
 					break;
 				}
 				switch (item.ammo) {
 					case ItemID.WoodenArrow:
-					AppendLine(ref types, "\t\"Arrow\"");
+					types.Add("Arrow");
 					break;
 					case ItemID.MusketBall:
-					AppendLine(ref types, "\t\"Bullet\"");
+					types.Add("Bullet");
 					break;
 				}
 			}
-			if (customStat?.Hardmode ?? (!item.material && !item.consumable && item.rare > ItemRarityID.Orange)) AppendLine(ref types, "\t\"Hardmode\"");
+			if (customStat?.Hardmode ?? (!item.material && !item.consumable && item.rare > ItemRarityID.Orange)) types.Add("Hardmode");
 
-			if (item.ammo != 0) AppendLine(ref types, "\t\"Ammo\"");
-			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) AppendLine(ref types, "\t\"Tool\"");
-			if (item.headSlot != -1 || item.bodySlot != -1 || item.legSlot != -1) AppendLine(ref types, "\t\"Armor\"");
-			if (customStat is not null) foreach (string cat in customStat.Categories) AppendLine(ref types, $"\t\"{cat}\"");
-			types += "\n\t]";
-			data += types;
+			if (item.ammo != 0) types.Add("Ammo");
+			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) types.Add("Tool");
+			if (item.headSlot != -1 || item.bodySlot != -1 || item.legSlot != -1) types.Add("Armor");
+			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
+			data.Add("Types", types);
 
-			AppendStat(ref data, "PickPower", item.pick, 0);
-			AppendStat(ref data, "AxePower", item.axe, 0);
-			AppendStat(ref data, "HammerPower", item.hammer, 0);
-			AppendStat(ref data, "FishPower", item.fishingPole, 0);
-			AppendStat(ref data, "BaitPower", item.bait, 0);
+			AppendStat(data, "PickPower", item.pick, 0);
+			AppendStat(data, "AxePower", item.axe, 0);
+			AppendStat(data, "HammerPower", item.hammer, 0);
+			AppendStat(data, "FishPower", item.fishingPole, 0);
+			AppendStat(data, "BaitPower", item.bait, 0);
 
 			if (item.createTile != -1) {
 				ModTile tile = TileLoader.GetTile(item.createTile);
 				if (tile is not null) {
-					AppendStat(ref data, Main.tileHammer[item.createTile] ? "HammerReq" : "PickReq", tile.MinPick, 0);
+					AppendStat(data, Main.tileHammer[item.createTile] ? "HammerReq" : "PickReq", tile.MinPick, 0);
 				}
 				int width = 1, height = 1;
 				if (TileObjectData.GetTileData(item.createTile, item.placeStyle) is TileObjectData tileData) {
 					width = tileData.Width;
 					height = tileData.Height;
 				}
-				AppendLine(ref data, $"\"PlacementSize\": [{width}, {height}]");
+				data.Add("PlacementSize", new JArray(width, height));
 			}
-			AppendStat(ref data, "Defense", item.defense, 0);
+			AppendStat(data, "Defense", item.defense, 0);
 			if (item.headSlot != -1) {
-				AppendLine(ref data, "\"ArmorSlot\":\"Helmet\"");
+				data.Add("ArmorSlot", "Helmet");
 			} else if (item.bodySlot != -1) {
-				AppendLine(ref data, "\"ArmorSlot\":\"Shirt\"");
+				data.Add("ArmorSlot", "Shirt");
 			} else if (item.legSlot != -1) {
-				AppendLine(ref data, "\"ArmorSlot\":\"Pants\"");
+				data.Add("ArmorSlot", "Pants");
 			}
-			AppendStat(ref data, "ManaCost", item.mana, 0);
-			AppendStat(ref data, "HealLife", item.healLife, 0);
-			AppendStat(ref data, "HealMana", item.healMana, 0);
-			AppendStat(ref data, "Damage", item.damage, -1);
+			AppendStat(data, "ManaCost", item.mana, 0);
+			AppendStat(data, "HealLife", item.healLife, 0);
+			AppendStat(data, "HealMana", item.healMana, 0);
+			AppendStat(data, "Damage", item.damage, -1);
 			if (item.damage > 0) {
 				string damageClass = item.DamageType.DisplayName.Value;
 				damageClass = damageClass.Replace(" damage", "");
 				damageClass = System.Text.RegularExpressions.Regex.Replace(damageClass, "( |^)(\\w)", (match) => match.Groups[2].Value.ToUpper());
-				AppendLine(ref data, $"\"DamageClass\":\"{damageClass}\"");
+				data.Add("DamageClass", damageClass);
 			}
-			AppendStat(ref data, "Knockback", item.knockBack, 0);
-			AppendStat(ref data, "Crit", item.crit + 4, 4);
-			AppendStat(ref data, "UseTime", item.useTime, 100);
-			AppendStat(ref data, "Velocity", item.shootSpeed, 0);
+			AppendStat(data, "Knockback", item.knockBack, 0);
+			AppendStat(data, "Crit", item.crit + 4, 4);
+			AppendStat(data, "UseTime", item.useTime, 100);
+			AppendStat(data, "Velocity", item.shootSpeed, 0);
 			string itemTooltip = "";
 			for (int i = 0; i < item.ToolTip.Lines; i++) {
 				if (i > 0) itemTooltip += "\n";
-				itemTooltip += item.ToolTip.GetLine(i).Replace(",", "\\\\,").Replace("'", "\\\\'");
+				itemTooltip += item.ToolTip.GetLine(i);
 			}
-			AppendStat(ref data, "Tooltip", itemTooltip.Replace("\n", "\\n"), "");
-			AppendStat(ref data, "Rarity", (RarityLoader.GetRarity(item.rare)?.Name ?? ItemRarityID.Search.GetName(item.rare)).Replace("Rarity", ""), "");
-			if (customStat?.Buyable ?? false) AppendStat(ref data, "Buy", item.value, 0);
-			AppendStat(ref data, "Sell", item.value / 5, 0);
+			AppendStat(data, "Tooltip", itemTooltip, "");
+			AppendStat(data, "Rarity", (RarityLoader.GetRarity(item.rare)?.Name ?? ItemRarityID.Search.GetName(item.rare)).Replace("Rarity", ""), "");
+			if (customStat?.Buyable ?? false) AppendStat(data, "Buy", item.value, 0);
+			AppendStat(data, "Sell", item.value / 5, 0);
 
-			if (customStat?.WikiStats is not null) AppendLine(ref data, customStat.WikiStats);
-			AppendStat(ref data, "SpriteWidth", item.ModItem is null ? item.width :ModContent.Request<Texture2D>(item.ModItem.Texture).Width(), 0);
-			data += "\n}";
+			if (customStat is not null) customStat.ModifyWikiStats(data);
+			AppendStat(data, "SpriteWidth", item.ModItem is null ? item.width : ModContent.Request<Texture2D>(item.ModItem.Texture).Width(), 0);
+			
 			return data;
 		}
 	}
 	internal interface ICustomWikiStat {
 		bool Buyable => false;
-		string WikiStats => null;
+		void ModifyWikiStats(JObject data) {}
 		string[] Categories => Array.Empty<string>();
 		bool? Hardmode => null;
 	}
