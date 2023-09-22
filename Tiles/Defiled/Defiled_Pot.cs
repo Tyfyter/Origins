@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Origins.Dev;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -43,7 +44,7 @@ namespace Origins.Tiles.Defiled {
 			WorldGen.CheckPot(i, j);
 		}
 	}
-	public class Defiled_Pot_Item : ModItem {
+	public class Defiled_Pot_Item : ModItem, ICustomWikiStat {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Pot";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
@@ -59,5 +60,6 @@ namespace Origins.Tiles.Defiled {
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			tooltips.Add(new(Mod, "createTile", Item.createTile+""));
 		}
+		public bool ShouldHavePage => false;
 	}
 }

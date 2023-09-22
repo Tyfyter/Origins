@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -62,7 +63,7 @@ namespace Origins.Tiles.Riven {
 			b = 0.015f * GlowValue;
 		}
 	}
-	public class Riven_Pot_Item : ModItem {
+	public class Riven_Pot_Item : ModItem, ICustomWikiStat {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Pot";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
@@ -81,5 +82,6 @@ namespace Origins.Tiles.Riven {
 			Item.value = 500;
 			Item.createTile = ModContent.TileType<Riven_Pot>();
 		}
+		public bool ShouldHavePage => false;
 	}
 }

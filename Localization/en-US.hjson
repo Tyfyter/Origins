@@ -4464,6 +4464,11 @@ Mods: {
 					Label: Wiki Page Path
 					Tooltip: ""
 				}
+
+				ExportAllItemPages: {
+					Label: Export All Item Pages
+					Tooltip: ""
+				}
 			}
 		}
 

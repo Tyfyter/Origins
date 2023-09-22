@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
@@ -55,7 +57,7 @@ namespace Origins.Dev {
 				}
 			}
 			Dictionary<string, object> context = new() {
-				["Name"] = (item.ModItem?.Name ?? ItemID.Search.GetName(item.type)),
+				["Name"] = GetWikiName(item),
 				["DisplayName"] = Lang.GetItemNameValue(item.type)
 			};
 			if (recipes.Count > 0 || usedIn.Count > 0) {
@@ -69,24 +71,67 @@ namespace Origins.Dev {
 			}
 			Directory.CreateDirectory(DebugConfig.Instance.WikiPagePath);
 
-			string filename = context["Name"] + ".html";
-			string path = Path.Combine(DebugConfig.Instance.WikiPagePath, filename);
+			string path = GetWikiPagePath((string)context["Name"]);
+			IEnumerable<(string name, LocalizedText text)> pageTexts;
 			if (item.ModItem is ICustomWikiStat wikiStats) {
-				if (!wikiStats.FullyGeneratable && File.Exists(path)) return;
 				context["PageTextMain"] = wikiStats.PageTextMain.Value;
-				foreach (var text in wikiStats.PageTexts) {
-					context[text.name] = text.text;
-				}
+				pageTexts = wikiStats.PageTexts;
 			} else {
 				string key = $"WikiGenerator.{item.ModItem?.Mod?.Name}.{item.ModItem?.LocalizationCategory}.{context["Name"]}.MainText";
 				context["PageTextMain"] = Language.GetOrRegister(key).Value;
+				pageTexts = GetDefaultPageTexts(item.ModItem);
+			}
+			foreach (var text in pageTexts) {
+				context[text.name] = text.text;
 			}
 			File.WriteAllText(path, WikiTemplate.Resolve(context));
 		}
+		public static string GetWikiName(Item item) => (item.ModItem?.Name ?? ItemID.Search.GetName(item.type)).Replace("_Item", "");
+		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
 		public void Unload() {
 			wikiTemplate = null;
 			LinkFormatters = null;
 		}
+		public static LocalizedText GetDefaultMainPageText(ILocalizedModType modType) {
+			string name = modType.Name;
+			if (modType is ModItem modItem) name = GetWikiName(modItem.Item);
+			return Language.GetOrRegister($"WikiGenerator.{modType.Mod.Name}.{modType.LocalizationCategory}.{name}.MainText");
+		}
+		public static IEnumerable<(string name, LocalizedText text)> GetDefaultPageTexts(ILocalizedModType modType) {
+			string baseKey = $"WikiGenerator.{modType?.Mod?.Name}.{modType?.LocalizationCategory}.{modType?.Name}.";
+			LocalizedText text;
+			bool TryGetText(string suffix, out LocalizedText text) {
+				if (Language.Exists(baseKey + suffix)) {
+					text = Language.GetText(baseKey + suffix);
+					return true;
+				}
+				text = null;
+				return false;
+			}
+			if (TryGetText("Behavior", out text)) yield return ("Behavior", text);
+			if (TryGetText("DifficultyChanges", out text)) yield return ("DifficultyChanges", text);
+			if (TryGetText("Tips", out text)) yield return ("Tips", text);
+			if (TryGetText("Trivia", out text)) yield return ("Trivia", text);
+			if (TryGetText("Notes", out text)) yield return ("Notes", text);
+			if (TryGetText("Lore", out text)) yield return ("Lore", text);
+			if (TryGetText("Changelog", out text)) yield return ("Changelog", text);
+		}
+		public static void AddTorchLightStats(JObject data, Vector3 light) {
+			float intensity = MathF.Max(MathF.Max(light.X, light.Y), light.Z);
+			if (intensity > 1) light /= intensity;
+			data.Add("LightIntensity", $"{intensity * 100:0.#}%");
+			data.Add("LightColor", new JArray() { light.X, light.Y, light.Z });
+		}
+	}
+	public interface ICustomWikiStat {
+		bool Buyable => false;
+		void ModifyWikiStats(JObject data) { }
+		string[] Categories => Array.Empty<string>();
+		bool? Hardmode => null;
+		bool FullyGeneratable => true;
+		bool ShouldHavePage => true;
+		LocalizedText PageTextMain => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultMainPageText(modType) : null;
+		IEnumerable<(string name, LocalizedText text)> PageTexts => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultPageTexts(modType) : null;
 	}
 	public class PageTemplate {
 		ITemplateSnippet[] snippets;
@@ -94,7 +139,7 @@ namespace Origins.Dev {
 			snippets = Parse(text);
 		}
 		public string Resolve(Dictionary<string, object> context) => CombineSnippets(snippets, context);
-		public ITemplateSnippet[] Parse(string text) {
+		public static ITemplateSnippet[] Parse(string text) {
 			StringBuilder currentText = new();
 			int ifDepth = 0;
 			List<ITemplateSnippet> snippets = new();
@@ -244,7 +289,7 @@ namespace Origins.Dev {
 					builder.Append("recipes}");
 					return builder.ToString();
 				}
-				return value.ToString();
+				return CombineSnippets(Parse(value.ToString()), context);
 			}
 		}
 	}

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -75,7 +76,7 @@ namespace Origins.Tiles.Defiled {
 			r = g = b = 0.3f;
 		}
 	}
-	public class Defiled_Fissure_Item : ModItem {
+	public class Defiled_Fissure_Item : ModItem, ICustomWikiStat {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Fissure";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
@@ -94,5 +95,6 @@ namespace Origins.Tiles.Defiled {
 			Item.value = 500;
 			Item.createTile = ModContent.TileType<Defiled_Fissure>();
 		}
+		public bool ShouldHavePage => false;
 	}
 }

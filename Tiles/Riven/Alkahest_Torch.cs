@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using ReLogic.Content;
@@ -126,7 +128,7 @@ namespace Origins.Tiles.Riven {
 			}
 		}
 	}
-	public class Alkahest_Torch : ModItem {
+	public class Alkahest_Torch : ModItem, ICustomWikiStat {
 		public static Vector3 Light => new(1.2f, 1.3f, 0.9f);
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
@@ -159,6 +161,9 @@ namespace Origins.Tiles.Riven {
 			.AddIngredient(ItemType<Alkahest>())
 			.SortAfterFirstRecipesOf(ItemID.IchorTorch)
 			.Register();
+		}
+		public void ModifyWikiStats(JObject data) {
+			WikiPageExporter.AddTorchLightStats(data, Light);
 		}
 	}
 }

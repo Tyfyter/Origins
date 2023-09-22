@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
+using Origins.Dev;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
@@ -130,7 +132,7 @@ namespace Origins.Tiles.Riven {
 			}
 		}
 	}
-	public class Riven_Torch : ModItem {
+	public class Riven_Torch : ModItem, ICustomWikiStat {
 		public static Vector3 Light => new Vector3(0.15f, 1.05f, 0.95f) * Riven_Hive.NormalGlowValue.GetValue();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
@@ -182,6 +184,21 @@ namespace Origins.Tiles.Riven {
 			.AddIngredient(ItemType<Primordial_Permafrost_Item>())
 			.SortAfterFirstRecipesOf(ItemID.Torch)
 			.Register();
+		}
+		public void ModifyWikiStats(JObject data) {
+			float time = Main.GlobalTimeWrappedHourly;
+			Main.GlobalTimeWrappedHourly = -MathHelper.PiOver2;
+
+			JObject minLight = new();
+			Origins.gameFrameCount++;
+			WikiPageExporter.AddTorchLightStats(minLight, Light);
+
+			Main.GlobalTimeWrappedHourly = MathHelper.PiOver2;
+			Origins.gameFrameCount++;
+			WikiPageExporter.AddTorchLightStats(data, Light);
+
+			Main.GlobalTimeWrappedHourly = time;
+			data["LightIntensity"] = $"{minLight["LightIntensity"]}-{data["LightIntensity"]}";
 		}
 	}
 }

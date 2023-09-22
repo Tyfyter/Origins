@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
+using Origins.Dev;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
@@ -129,7 +131,7 @@ namespace Origins.Tiles.Defiled {
 			}
 		}
 	}
-	public class Defiled_Torch : ModItem {
+	public class Defiled_Torch : ModItem, ICustomWikiStat {
 		public static Vector3 Light => new(0.7f, 0.7f, 0.7f);
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 100;
@@ -180,6 +182,9 @@ namespace Origins.Tiles.Defiled {
 			.AddIngredient(ItemType<Defiled_Ice_Item>())
 			.SortAfterFirstRecipesOf(ItemID.Torch)
 			.Register();
+		}
+		public void ModifyWikiStats(JObject data) {
+			WikiPageExporter.AddTorchLightStats(data, Light);
 		}
 	}
 }

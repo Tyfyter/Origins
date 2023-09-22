@@ -128,8 +128,7 @@ namespace Origins {
 						for (; i < ItemLoader.ItemCount; i++) {
 							Item item = ContentSamples.ItemsByType[i];
 							if (item.ModItem?.Mod is not Origins) break;
-
-							string filename = item.ModItem.Name + ".json";
+							string filename = item.ModItem.Name.Replace("_Item", "") + ".json";
 							string path = Path.Combine(StatJSONPath, filename);
 							File.WriteAllText(path, JsonConvert.SerializeObject(GetWikiStats(item), Formatting.Indented));
 						}
@@ -146,9 +145,30 @@ namespace Origins {
 					Directory.CreateDirectory(StatJSONPath);
 					Item item = ContentSamples.ItemsByType[value.Type];
 
-					string filename = (item.ModItem?.Name ?? ItemID.Search.GetName(value.Type)) + ".json";
+					string filename = (item.ModItem?.Name ?? ItemID.Search.GetName(value.Type)).Replace("_Item", "") + ".json";
 					string path = Path.Combine(StatJSONPath, filename);
 					File.WriteAllText(path, JsonConvert.SerializeObject(GetWikiStats(item), Formatting.Indented));
+				}
+			}
+		}
+		public bool ExportAllItemPages {
+			get => false;
+			set {
+				if (value && !string.IsNullOrWhiteSpace(StatJSONPath)) {
+					if (Terraria.UI.ItemSlot.ShiftInUse) {
+						Directory.CreateDirectory(StatJSONPath);
+						int i;
+						for (i = 0; i < ItemLoader.ItemCount; i++) if (ContentSamples.ItemsByType[i].ModItem?.Mod is Origins) break;
+						for (; i < ItemLoader.ItemCount; i++) {
+							Item item = ContentSamples.ItemsByType[i];
+							if (item.ModItem?.Mod is not Origins) break;
+							if ((item.ModItem as ICustomWikiStat)?.ShouldHavePage == false) continue;
+							if (((item.ModItem as ICustomWikiStat)?.FullyGeneratable ?? false) || !File.Exists(WikiPageExporter.GetWikiPagePath(WikiPageExporter.GetWikiName(item))))
+								WikiPageExporter.ExportItemPage(item);
+						}
+					} else {
+						Main.NewText("Shift must be held to export all stats, for safety reasons");
+					}
 				}
 			}
 		}
@@ -215,6 +235,12 @@ namespace Origins {
 			if (item.ammo != 0) types.Add("Ammo");
 			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) types.Add("Tool");
 			if (item.headSlot != -1 || item.bodySlot != -1 || item.legSlot != -1) types.Add("Armor");
+			if (item.createTile != -1) {
+				types.Add("Tile");
+				if (TileID.Sets.Torch[item.createTile]) {
+					types.Add("Torch");
+				}
+			}
 			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
 			data.Add("Types", types);
 
@@ -270,40 +296,9 @@ namespace Origins {
 
 			if (customStat is not null) customStat.ModifyWikiStats(data);
 			AppendStat(data, "SpriteWidth", item.ModItem is null ? item.width : ModContent.Request<Texture2D>(item.ModItem.Texture).Width(), 0);
-			
+			AppendStat(data, "InternalName", item.ModItem?.Name, null);
+
 			return data;
-		}
-	}
-	internal interface ICustomWikiStat {
-		bool Buyable => false;
-		void ModifyWikiStats(JObject data) {}
-		string[] Categories => Array.Empty<string>();
-		bool? Hardmode => null;
-		bool FullyGeneratable => true;
-		LocalizedText PageTextMain => (this is ILocalizedModType modType) ? Language.GetOrRegister($"WikiGenerator.{modType.Mod.Name}.{modType.LocalizationCategory}.{modType.Name}.MainText") : null;
-		IEnumerable<(string name, LocalizedText text)> PageTexts {
-			get {
-				if (this is ILocalizedModType modType) {
-					string baseKey = $"WikiGenerator.{modType.Mod.Name}.{modType.LocalizationCategory}.{modType.Name}.";
-					LocalizedText text;
-					bool TryGetText(string suffix, out LocalizedText text) {
-						if (Language.Exists(baseKey + suffix)) {
-							text = Language.GetText(baseKey + suffix);
-							return true;
-						}
-						text = null;
-						return false;
-					}
-					if (TryGetText("Behavior", out text)) yield return ("Behavior", text);
-					if (TryGetText("DifficultyChanges", out text)) yield return ("DifficultyChanges", text);
-					if (TryGetText("Tips", out text)) yield return ("Tips", text);
-					if (TryGetText("Trivia", out text)) yield return ("Trivia", text);
-					if (TryGetText("Notes", out text)) yield return ("Notes", text);
-					if (TryGetText("Lore", out text)) yield return ("Lore", text);
-					if (TryGetText("Changelog", out text)) yield return ("Changelog", text);
-				}
-				yield break;
-			}
 		}
 	}
 }

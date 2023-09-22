@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -119,7 +120,7 @@ namespace Origins.Tiles.Riven {
 			}
 		}
 	}
-	public class Riven_Lesion_Item : ModItem {
+	public class Riven_Lesion_Item : ModItem, ICustomWikiStat {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 		}
@@ -178,5 +179,6 @@ namespace Origins.Tiles.Riven {
 			}
 			return true;
 		}
+		public bool ShouldHavePage => false;
 	}
 }

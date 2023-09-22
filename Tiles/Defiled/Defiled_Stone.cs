@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
@@ -35,13 +37,14 @@ namespace Origins.Tiles.Defiled {
 			return true;
 		}
 	}
-	public class Defiled_Stone_Item : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Stone");
-		}
+	public class Defiled_Stone_Item : ModItem, ICustomWikiStat {
 		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.StoneBlock);
-			Item.createTile = TileType<Defiled_Stone>();
+			Item.DefaultToPlaceableTile(TileType<Defiled_Stone>());
 		}
+		public LocalizedText PageTextMain => WikiPageExporter.GetDefaultMainPageText(this)
+			.WithFormatArgs(65,
+			Language.GetText("Mods.Origins.Generic.Defiled_Wastelands"),
+			"Stone"
+		);
 	}
 }

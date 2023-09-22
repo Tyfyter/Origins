@@ -1,0 +1,10 @@
+// Location: <b>§DisplayName§</b> is a {$WikiGenerator.Generic.Tiles.Link.block} type found in
+// PickRequirement: It requires at least {0}% {$WikiGenerator.Generic.Tiles.Link.PickPower} to mine.
+// PickOrExplosives: It requires at least {0}% {$WikiGenerator.Generic.Tiles.Link.PickPower} or {$WikiGenerator.Generic.Tiles.Link.explosives} to mine.
+// HardmodeSpread: In {$WikiGenerator.Generic.Link.Hardmode}, the spread of the {1} converts ordinary {2} blocks into §DisplayName§. §DisplayName§ itself also spreads {1} to susceptible blocks nearby.
+
+Link: {
+	// PickPower: "[link Pickaxe power | | https://terraria.wiki.gg/wiki/Pickaxe_power]"
+	// block: "[link block | | https://terraria.wiki.gg/wiki/Blocks]"
+	// explosives: "[link explosives | | https://terraria.wiki.gg/wiki/Explosives_(class)]"
+}
