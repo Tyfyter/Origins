@@ -4469,6 +4469,11 @@ Mods: {
 					// Label: Export All Item Pages
 					// Tooltip: ""
 				}
+
+				WikiArmorTemplatePath: {
+					// Label: Wiki Armor Template Path
+					// Tooltip: ""
+				}
 			}
 		}
 

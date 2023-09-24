@@ -5,10 +5,12 @@ using Terraria.GameContent.Creative;
 using Origins.Items.Materials;
 using Microsoft.Xna.Framework;
 using System;
+using Origins.Dev;
+using System.Collections.Generic;
 
 namespace Origins.Items.Armor.Felnum {
 	[AutoloadEquip(EquipType.Head)]
-	public class Felnum_Helmet : ModItem {
+	public class Felnum_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Felnum Helmet");
@@ -59,9 +61,13 @@ namespace Origins.Items.Armor.Felnum {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Felnum_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Felnum_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Felnum_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Felnum_Breastplate : ModItem {
+	public class Felnum_Breastplate : ModItem, INoSeperateWikiPage {
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Felnum Breastplate");
@@ -96,7 +102,7 @@ namespace Origins.Items.Armor.Felnum {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Felnum_Greaves : ModItem {
+	public class Felnum_Greaves : ModItem, INoSeperateWikiPage {
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Felnum Greaves");

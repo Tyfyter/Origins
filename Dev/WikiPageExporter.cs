@@ -1,22 +1,30 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.Map;
 using Terraria.ModLoader;
+using Terraria.ObjectData;
 
 namespace Origins.Dev {
 	public class WikiPageExporter : ILoadable {
 		public delegate string WikiLinkFormatter(string name);
 		public static DictionaryWithNull<Mod, WikiLinkFormatter> LinkFormatters { get; private set; } = new();
+		static List<(Type, WikiProvider)> typedDataProviders;
+		public static List<(Type type, WikiProvider provider)> TypedDataProviders => typedDataProviders ??= new();
+		static HashSet<Type> interfaceReplacesGenericClassProvider;
+		public static HashSet<Type> InterfaceReplacesGenericClassProvider => interfaceReplacesGenericClassProvider ??= new();
 		public void Load(Mod mod) {
 			LinkFormatters[Origins.instance] = (t) => {
 				string formattedName = t.Replace(" ", "_");
@@ -29,7 +37,7 @@ namespace Origins.Dev {
 		}
 		static PageTemplate wikiTemplate;
 		static DateTime wikiTemplateWriteTime;
-		static PageTemplate WikiTemplate {
+		public static PageTemplate WikiTemplate {
 			get {
 				if (wikiTemplate is null || File.GetLastWriteTime(DebugConfig.Instance.WikiTemplatePath) > wikiTemplateWriteTime) {
 					wikiTemplate = new(File.ReadAllText(DebugConfig.Instance.WikiTemplatePath));
@@ -39,66 +47,41 @@ namespace Origins.Dev {
 			}
 		}
 		public static void ExportItemPage(Item item) {
-			List<Recipe> recipes = new();
-			List<Recipe> usedIn = new();
-			for (int i = 0; i < Main.recipe.Length; i++) {
-				Recipe recipe = Main.recipe[i];
-				if (recipe.HasResult(item.type)) {
-					recipes.Add(recipe);
-				}
-				if (recipe.HasIngredient(item.type)) {
-					usedIn.Add(recipe);
-				} else {
-					foreach (int num in recipe.acceptedGroups) {
-						if (RecipeGroup.recipeGroups[num].ContainsItem(item.type)) {
-							usedIn.Add(recipe);
-						}
-					}
-				}
+			foreach (WikiProvider provider in GetWikiProviders(item.ModItem)) {
+				if (provider.GetPage(item.ModItem) is string page) File.WriteAllText(GetWikiPagePath(provider.PageName(item.ModItem)), page);
 			}
-			Dictionary<string, object> context = new() {
-				["Name"] = GetWikiName(item),
-				["DisplayName"] = Lang.GetItemNameValue(item.type)
-			};
-			if (recipes.Count > 0 || usedIn.Count > 0) {
-				context["Crafting"] = true;
-				if (recipes.Count > 0) {
-					context["Recipes"] = recipes;
-				}
-				if (usedIn.Count > 0) {
-					context["UsedIn"] = usedIn;
-				}
-			}
-			Directory.CreateDirectory(DebugConfig.Instance.WikiPagePath);
-
-			string path = GetWikiPagePath((string)context["Name"]);
-			IEnumerable<(string name, LocalizedText text)> pageTexts;
-			if (item.ModItem is ICustomWikiStat wikiStats) {
-				context["PageTextMain"] = wikiStats.PageTextMain.Value;
-				pageTexts = wikiStats.PageTexts;
-			} else {
-				string key = $"WikiGenerator.{item.ModItem?.Mod?.Name}.{item.ModItem?.LocalizationCategory}.{context["Name"]}.MainText";
-				context["PageTextMain"] = Language.GetOrRegister(key).Value;
-				pageTexts = GetDefaultPageTexts(item.ModItem);
-			}
-			foreach (var text in pageTexts) {
-				context[text.name] = text.text;
-			}
-			File.WriteAllText(path, WikiTemplate.Resolve(context));
 		}
-		public static string GetWikiName(Item item) => (item.ModItem?.Name ?? ItemID.Search.GetName(item.type)).Replace("_Item", "");
+		public static void ExportItemStats(Item item) {
+			foreach (WikiProvider provider in GetWikiProviders(item.ModItem)) {
+				foreach ((string name, JObject stats) stats in provider.GetStats(item.ModItem)) {
+					File.WriteAllText(
+						GetWikiStatPath(stats.name),
+						JsonConvert.SerializeObject(stats.stats, Formatting.Indented)
+					);
+				}
+			}
+		}
+		public static string GetWikiName(ModItem modItem) => modItem.Name.Replace("_Item", "");
 		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
+		public static string GetWikiStatPath(string name) => Path.Combine(DebugConfig.Instance.StatJSONPath, name + ".json");
+		public static string GetWikiItemPath(ModItem modItem) => modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");
+		public static string GetWikiItemRarity(Item item) => (RarityLoader.GetRarity(item.rare)?.Name ?? ItemRarityID.Search.GetName(item.rare)).Replace("Rarity", "");
 		public void Unload() {
 			wikiTemplate = null;
 			LinkFormatters = null;
+			typedDataProviders = null;
+			interfaceReplacesGenericClassProvider = null;
 		}
 		public static LocalizedText GetDefaultMainPageText(ILocalizedModType modType) {
 			string name = modType.Name;
-			if (modType is ModItem modItem) name = GetWikiName(modItem.Item);
+			if (modType is ModItem modItem) name = GetWikiName(modItem);
 			return Language.GetOrRegister($"WikiGenerator.{modType.Mod.Name}.{modType.LocalizationCategory}.{name}.MainText");
 		}
 		public static IEnumerable<(string name, LocalizedText text)> GetDefaultPageTexts(ILocalizedModType modType) {
 			string baseKey = $"WikiGenerator.{modType?.Mod?.Name}.{modType?.LocalizationCategory}.{modType?.Name}.";
+			return GetDefaultPageTexts(baseKey);
+		}
+		public static IEnumerable<(string name, LocalizedText text)> GetDefaultPageTexts(string baseKey) {
 			LocalizedText text;
 			bool TryGetText(string suffix, out LocalizedText text) {
 				if (Language.Exists(baseKey + suffix)) {
@@ -116,22 +99,34 @@ namespace Origins.Dev {
 			if (TryGetText("Lore", out text)) yield return ("Lore", text);
 			if (TryGetText("Changelog", out text)) yield return ("Changelog", text);
 		}
+		public static IEnumerable<WikiProvider> GetDefaultProviders(Type type) {
+			(Type type, WikiProvider provider) bestMatch = default;
+			bool noClassProvider = false;
+			foreach ((Type type, WikiProvider provider) item in TypedDataProviders) {
+				if (item.type.IsAssignableFrom(type)) {
+					if (item.type.IsInterface) {
+						if (InterfaceReplacesGenericClassProvider.Contains(item.type)) noClassProvider = true;
+						yield return item.provider;
+					} else if (bestMatch.type is null || item.type.IsAssignableTo(bestMatch.type)) {
+						bestMatch = item;
+					}
+				}
+			}
+			if (noClassProvider && bestMatch.type != type) yield break;
+			yield return bestMatch.provider;
+		}
+		public static IEnumerable<WikiProvider> GetWikiProviders(object obj) {
+			if (obj is ICustomWikiStat stat) {
+				return stat.GetWikiProviders();
+			}
+			return GetDefaultProviders(obj.GetType());
+		}
 		public static void AddTorchLightStats(JObject data, Vector3 light) {
 			float intensity = MathF.Max(MathF.Max(light.X, light.Y), light.Z);
 			if (intensity > 1) light /= intensity;
 			data.Add("LightIntensity", $"{intensity * 100:0.#}%");
 			data.Add("LightColor", new JArray() { light.X, light.Y, light.Z });
 		}
-	}
-	public interface ICustomWikiStat {
-		bool Buyable => false;
-		void ModifyWikiStats(JObject data) { }
-		string[] Categories => Array.Empty<string>();
-		bool? Hardmode => null;
-		bool FullyGeneratable => true;
-		bool ShouldHavePage => true;
-		LocalizedText PageTextMain => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultMainPageText(modType) : null;
-		IEnumerable<(string name, LocalizedText text)> PageTexts => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultPageTexts(modType) : null;
 	}
 	public class PageTemplate {
 		ITemplateSnippet[] snippets;
@@ -141,7 +136,7 @@ namespace Origins.Dev {
 		public string Resolve(Dictionary<string, object> context) => CombineSnippets(snippets, context);
 		public static ITemplateSnippet[] Parse(string text) {
 			StringBuilder currentText = new();
-			int ifDepth = 0;
+			int blockDepth = 0;
 			List<ITemplateSnippet> snippets = new();
 			void FlushText() {
 				if (currentText.Length > 0) {
@@ -165,13 +160,20 @@ namespace Origins.Dev {
 						append = false;
 						FlushText();
 						i++;
+						bool isFor = false;
 						while (!char.IsWhiteSpace(text[i])) currentText.Append(text[i++]);
 						switch (currentText.ToString()) {
 							case "if":
-							ifDepth += 1;
+							blockDepth += 1;
+							break;
+							case "for":
+							blockDepth += 1;
+							isFor = true;
 							break;
 							case "endif":
 							throw new ArgumentException($"invalid format, endif with no if at character {i}: {text}");
+							case "endfor":
+							throw new ArgumentException($"invalid format, endfor with no for at character {i}: {text}");
 						}
 						currentText.Clear();
 
@@ -180,7 +182,7 @@ namespace Origins.Dev {
 						string condition = currentText.ToString();
 						currentText.Clear();
 
-						while (ifDepth > 0) {
+						while (blockDepth > 0) {
 							switch (text[i]) {
 								case '#': {
 									int parsePos = i + 1;
@@ -188,14 +190,20 @@ namespace Origins.Dev {
 									while (!char.IsWhiteSpace(text[parsePos])) directiveParser.Append(text[parsePos++]);
 									switch (directiveParser.ToString()) {
 										case "if":
-										ifDepth += 1;
+										blockDepth += 1;
+										break;
+										case "for":
+										blockDepth += 1;
 										break;
 										case "endif":
-										ifDepth -= 1;
+										blockDepth -= 1;
+										break;
+										case "endfor":
+										blockDepth -= 1;
 										break;
 									}
-									if (ifDepth != 0) goto default;
-									i += "endif".Length;
+									if (blockDepth != 0) goto default;
+									i += (isFor ? "endfor" : "endif").Length;
 									break;
 								}
 
@@ -204,7 +212,11 @@ namespace Origins.Dev {
 								break;
 							}
 						}
-						snippets.Add(new ConditionalSnippit(condition, Parse(currentText.ToString())));
+						snippets.Add(
+							isFor ?
+							new RepeatingSnippet(condition, Parse(currentText.ToString())) :
+							new ConditionalSnippit(condition, Parse(currentText.ToString()))
+						);
 						currentText.Clear();
 					}
 					break;
@@ -235,6 +247,24 @@ namespace Origins.Dev {
 			public string Resolve(Dictionary<string, object> context) {
 				if (context.ContainsKey(condition)) return CombineSnippets(snippets, context);
 				return null;
+			}
+		}
+		public class RepeatingSnippet : ITemplateSnippet {
+			readonly string name;
+			readonly ITemplateSnippet[] snippets;
+			public RepeatingSnippet(string name, ITemplateSnippet[] snippets) {
+				this.name = name;
+				this.snippets = snippets;
+			}
+			public string Resolve(Dictionary<string, object> context) {
+				StringBuilder builder = new();
+				if (context.TryGetValue(name, out object value) && value is IEnumerable enumerable) {
+					foreach (var item in enumerable) {
+						context["iteratorValue"] = item;
+						builder.Append(CombineSnippets(snippets, context));
+					}
+				}
+				return builder.ToString();
 			}
 		}
 		public class VariableSnippit : ITemplateSnippet {
@@ -346,6 +376,222 @@ namespace Origins.Dev {
 				return hasNullValue;
 			}
 			return base.TryGetValue(key, out value);
+		}
+	}
+	public interface ICustomWikiStat {
+		bool Buyable => false;
+		void ModifyWikiStats(JObject data) { }
+		string[] Categories => Array.Empty<string>();
+		bool? Hardmode => null;
+		bool FullyGeneratable => true;
+		bool ShouldHavePage => true;
+		LocalizedText PageTextMain => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultMainPageText(modType) : null;
+		IEnumerable<(string name, LocalizedText text)> PageTexts => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultPageTexts(modType) : null;
+		IEnumerable<WikiProvider> GetWikiProviders() => WikiPageExporter.GetDefaultProviders(this.GetType());
+	}
+	public class ItemWikiProvider : WikiProvider<ModItem> {
+		public override string PageName(ModItem modItem) => WikiPageExporter.GetWikiName(modItem);
+		public override string GetPage(ModItem modItem) {
+			Item item = modItem.Item;
+			Dictionary<string, object> context = new() {
+				["Name"] = WikiPageExporter.GetWikiName(modItem),
+				["DisplayName"] = Lang.GetItemNameValue(item.type)
+			};
+			(List<Recipe> recipes, List<Recipe> usedIn) = WikiExtensions.GetRecipes(item);
+			if (recipes.Count > 0 || usedIn.Count > 0) {
+				context["Crafting"] = true;
+				if (recipes.Count > 0) {
+					context["Recipes"] = recipes;
+				}
+				if (usedIn.Count > 0) {
+					context["UsedIn"] = usedIn;
+				}
+			}
+
+			IEnumerable<(string name, LocalizedText text)> pageTexts;
+			if (modItem is ICustomWikiStat wikiStats) {
+				context["PageTextMain"] = wikiStats.PageTextMain.Value;
+				pageTexts = wikiStats.PageTexts;
+			} else {
+				string key = $"WikiGenerator.{modItem.Mod?.Name}.{modItem.LocalizationCategory}.{context["Name"]}.MainText";
+				context["PageTextMain"] = Language.GetOrRegister(key).Value;
+				pageTexts = WikiPageExporter.GetDefaultPageTexts(modItem);
+			}
+			foreach (var text in pageTexts) {
+				context[text.name] = text.text;
+			}
+			return WikiPageExporter.WikiTemplate.Resolve(context);
+		}
+		public override IEnumerable<(string, JObject)> GetStats(ModItem modItem) {
+			Item item = modItem.Item;
+			JObject data = new();
+			ICustomWikiStat customStat = item.ModItem as ICustomWikiStat;
+			data["Image"] = WikiPageExporter.GetWikiItemPath(modItem);
+			JArray types = new("Item");
+			if (item.accessory) types.Add("Accessory");
+			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None) {
+				types.Add("Weapon");
+				if (!item.noMelee && item.useStyle == ItemUseStyleID.Swing) {
+					types.Add("Sword");
+				}
+				if (item.shoot > ProjectileID.None) {
+					switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
+						case ProjAIStyleID.Boomerang:
+						types.Add("Boomerang");
+						break;
+
+						case ProjAIStyleID.Spear:
+						types.Add("Spear");
+						break;
+					}
+				}
+				switch (item.useAmmo) {
+					case ItemID.WoodenArrow:
+					types.Add("Bow");
+					break;
+					case ItemID.MusketBall:
+					types.Add("Gun");
+					break;
+				}
+				switch (item.ammo) {
+					case ItemID.WoodenArrow:
+					types.Add("Arrow");
+					break;
+					case ItemID.MusketBall:
+					types.Add("Bullet");
+					break;
+				}
+			}
+			if (customStat?.Hardmode ?? (!item.material && !item.consumable && item.rare > ItemRarityID.Orange)) types.Add("Hardmode");
+
+			if (item.ammo != 0) types.Add("Ammo");
+			if (item.pick != 0 || item.axe != 0 || item.hammer != 0 || item.fishingPole != 0 || item.bait != 0) types.Add("Tool");
+			if (item.headSlot != -1 || item.bodySlot != -1 || item.legSlot != -1) types.Add("Armor");
+			if (item.createTile != -1) {
+				types.Add("Tile");
+				if (TileID.Sets.Torch[item.createTile]) {
+					types.Add("Torch");
+				}
+			}
+			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
+			data.Add("Types", types);
+
+			data.AppendStat("PickPower", item.pick, 0);
+			data.AppendStat("AxePower", item.axe, 0);
+			data.AppendStat("HammerPower", item.hammer, 0);
+			data.AppendStat("FishPower", item.fishingPole, 0);
+			data.AppendStat("BaitPower", item.bait, 0);
+
+			if (item.createTile != -1) {
+				ModTile tile = TileLoader.GetTile(item.createTile);
+				if (tile is not null) {
+					data.AppendStat(Main.tileHammer[item.createTile] ? "HammerReq" : "PickReq", tile.MinPick, 0);
+				}
+				int width = 1, height = 1;
+				if (TileObjectData.GetTileData(item.createTile, item.placeStyle) is TileObjectData tileData) {
+					width = tileData.Width;
+					height = tileData.Height;
+				}
+				data.Add("PlacementSize", new JArray(width, height));
+			}
+			data.AppendStat("Defense", item.defense, 0);
+			if (item.headSlot != -1) {
+				data.Add("ArmorSlot", "Helmet");
+			} else if (item.bodySlot != -1) {
+				data.Add("ArmorSlot", "Shirt");
+			} else if (item.legSlot != -1) {
+				data.Add("ArmorSlot", "Pants");
+			}
+			data.AppendStat("ManaCost", item.mana, 0);
+			data.AppendStat("HealLife", item.healLife, 0);
+			data.AppendStat("HealMana", item.healMana, 0);
+			data.AppendStat("Damage", item.damage, -1);
+			if (item.damage > 0) {
+				string damageClass = item.DamageType.DisplayName.Value;
+				damageClass = damageClass.Replace(" damage", "");
+				damageClass = Regex.Replace(damageClass, "( |^)(\\w)", (match) => match.Groups[2].Value.ToUpper());
+				data.Add("DamageClass", damageClass);
+			}
+			data.AppendStat("Knockback", item.knockBack, 0);
+			data.AppendStat("Crit", item.crit + 4, 4);
+			data.AppendStat("UseTime", item.useTime, 100);
+			data.AppendStat("Velocity", item.shootSpeed, 0);
+			string itemTooltip = "";
+			for (int i = 0; i < item.ToolTip.Lines; i++) {
+				if (i > 0) itemTooltip += "\n";
+				itemTooltip += item.ToolTip.GetLine(i);
+			}
+			data.AppendStat("Tooltip", itemTooltip, "");
+			data.AppendStat("Rarity", WikiPageExporter.GetWikiItemRarity(item), "");
+			if (customStat?.Buyable ?? false) data.AppendStat("Buy", item.value, 0);
+			data.AppendStat("Sell", item.value / 5, 0);
+
+			if (customStat is not null) customStat.ModifyWikiStats(data);
+			data.AppendStat("SpriteWidth", item.ModItem is null ? item.width : ModContent.Request<Texture2D>(item.ModItem.Texture).Width(), 0);
+			data.AppendStat("InternalName", item.ModItem?.Name, null);
+			yield return (PageName(modItem), data);
+		}
+	}
+	public interface INoSeperateWikiPage { }
+	public class StatOnlyItemWikiProvider : ItemWikiProvider {
+		protected override void Register() {
+			base.Register();
+			WikiPageExporter.TypedDataProviders.Add((typeof(INoSeperateWikiPage), this));
+			WikiPageExporter.InterfaceReplacesGenericClassProvider.Add(typeof(INoSeperateWikiPage));
+		}
+		public override string GetPage(ModItem modItem) => null;
+	}
+	public abstract class WikiProvider : ModType {
+		protected override void Register() {
+			ModTypeLookup<WikiProvider>.Register(this);
+		}
+		public abstract string PageName(object value);
+		public virtual string GetPage(object value) => default;
+		public virtual IEnumerable<(string name, JObject stats)> GetStats(object value) => default;
+	}
+	public abstract class WikiProvider<T> : WikiProvider {
+		protected override void Register() {
+			base.Register();
+			Type ownType = this.GetType();
+			if (ownType.BaseType.IsGenericType) {
+				Type baseWithGenerics = typeof(WikiProvider<>).MakeGenericType(ownType.BaseType.GenericTypeArguments);
+				if (ownType.BaseType == baseWithGenerics) {
+					WikiPageExporter.TypedDataProviders.Add((typeof(T), this));
+				}
+			}
+		}
+		public sealed override string PageName(object value) => value is T v ? PageName(v) : null;
+		public sealed override string GetPage(object value) => value is T v ? GetPage(v) : default;
+		public sealed override IEnumerable<(string, JObject)> GetStats(object value) => value is T v ? GetStats(v) : null;
+		public abstract string PageName(T value);
+		public abstract string GetPage(T value);
+		public abstract IEnumerable<(string, JObject)> GetStats(T value);
+	}
+	public static class WikiExtensions {
+		public static void AppendStat<T>(this JObject data, string name, T value, T defaultValue) {
+			if (!value.Equals(defaultValue)) {
+				data.Add(name, JToken.FromObject(value));
+			}
+		}
+		public static (List<Recipe> recipes, List<Recipe> usedIn) GetRecipes(Item item) {
+			List<Recipe> recipes = new();
+			List<Recipe> usedIn = new();
+			for (int i = 0; i < Main.recipe.Length; i++) {
+				Recipe recipe = Main.recipe[i];
+				if (recipe.HasResult(item.type)) {
+					recipes.Add(recipe);
+				}
+				if (recipe.HasIngredient(item.type)) {
+					usedIn.Add(recipe);
+				} else {
+					foreach (int num in recipe.acceptedGroups) {
+						if (RecipeGroup.recipeGroups[num].ContainsItem(item.type)) {
+							usedIn.Add(recipe);
+						}
+					}
+				}
+			}
+			return (recipes, usedIn);
 		}
 	}
 }
