@@ -539,6 +539,9 @@ namespace Origins {
 		}
 	}
 	public struct ItemSlotSet {
+		public int headSlot;
+		public int bodySlot;
+		public int legSlot;
 		public int beardSlot;
 		public int backSlot;
 		public int faceSlot;
@@ -552,6 +555,9 @@ namespace Origins {
 		public int handOnSlot;
 		public int balloonSlot;
 		public ItemSlotSet(Item item) {
+			headSlot = item.headSlot;
+			bodySlot = item.bodySlot;
+			legSlot = item.legSlot;
 			beardSlot = item.beardSlot;
 			backSlot = item.backSlot;
 			faceSlot = item.faceSlot;
@@ -566,6 +572,9 @@ namespace Origins {
 			balloonSlot = item.balloonSlot;
 		}
 		public void Apply(Item item) {
+			item.headSlot = headSlot;
+			item.bodySlot = bodySlot;
+			item.legSlot = legSlot;
 			item.beardSlot = beardSlot;
 			item.backSlot = backSlot;
 			item.faceSlot = faceSlot;
@@ -578,6 +587,40 @@ namespace Origins {
 			item.handOffSlot = handOffSlot;
 			item.handOnSlot = handOnSlot;
 			item.balloonSlot = balloonSlot;
+		}
+		public ItemSlotSet(Player player) {
+			headSlot = player.head;
+			bodySlot = player.body;
+			legSlot = player.legs;
+			beardSlot = player.beard;
+			backSlot = player.back;
+			faceSlot = player.face;
+			neckSlot = player.neck;
+			shieldSlot = player.shield;
+			wingSlot = player.wings;
+			waistSlot = player.waist;
+			shoeSlot = player.shoe;
+			frontSlot = player.front;
+			handOffSlot = player.handoff;
+			handOnSlot = player.handon;
+			balloonSlot = player.balloon;
+		}
+		public void Apply(Player player) {
+			player.head = headSlot;
+			player.body = bodySlot;
+			player.legs = legSlot;
+			player.beard = beardSlot;
+			player.back = backSlot;
+			player.face = faceSlot;
+			player.neck = neckSlot;
+			player.shield = shieldSlot;
+			player.wings = wingSlot;
+			player.waist = waistSlot;
+			player.shoe = shoeSlot;
+			player.front = frontSlot;
+			player.handoff = handOffSlot;
+			player.handon = handOnSlot;
+			player.balloon = balloonSlot;
 		}
 	}
 	public record SpriteBatchState(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix transformMatrix = default);

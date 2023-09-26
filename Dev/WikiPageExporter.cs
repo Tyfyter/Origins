@@ -23,6 +23,9 @@ namespace Origins.Dev {
 		public static DictionaryWithNull<Mod, WikiLinkFormatter> LinkFormatters { get; private set; } = new();
 		static List<(Type, WikiProvider)> typedDataProviders;
 		public static List<(Type type, WikiProvider provider)> TypedDataProviders => typedDataProviders ??= new();
+		public delegate bool ConditionalWikiProvider(object obj, out WikiProvider provider, ref bool replaceGenericClassProvider);
+		static List<ConditionalWikiProvider> conditionalDataProviders;
+		public static List<ConditionalWikiProvider> ConditionalDataProviders => conditionalDataProviders ??= new();
 		static HashSet<Type> interfaceReplacesGenericClassProvider;
 		public static HashSet<Type> InterfaceReplacesGenericClassProvider => interfaceReplacesGenericClassProvider ??= new();
 		public void Load(Mod mod) {
@@ -61,6 +64,22 @@ namespace Origins.Dev {
 				}
 			}
 		}
+		public static void ExportItemSprites(Item item) {
+			int screenWidth = Main.screenWidth;
+			int screenHeight = Main.screenHeight;
+			foreach (WikiProvider provider in GetWikiProviders(item.ModItem)) {
+				foreach ((string name, Texture2D texture) sprite in provider.GetSprites(item.ModItem) ?? Array.Empty<(string, Texture2D)>()) {
+					string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, sprite.name) + ".png";
+					Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+					Stream stream = File.Exists(filePath) ? File.OpenWrite(filePath) : File.Create(filePath);
+					sprite.texture.SaveAsPng(stream, sprite.texture.Width, sprite.texture.Height);
+					sprite.texture.Dispose();
+					stream.Close();
+				}
+			}
+			Main.screenWidth = screenWidth;
+			Main.screenHeight = screenHeight;
+		}
 		public static string GetWikiName(ModItem modItem) => modItem.Name.Replace("_Item", "");
 		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
 		public static string GetWikiStatPath(string name) => Path.Combine(DebugConfig.Instance.StatJSONPath, name + ".json");
@@ -70,6 +89,7 @@ namespace Origins.Dev {
 			wikiTemplate = null;
 			LinkFormatters = null;
 			typedDataProviders = null;
+			conditionalDataProviders = null;
 			interfaceReplacesGenericClassProvider = null;
 		}
 		public static LocalizedText GetDefaultMainPageText(ILocalizedModType modType) {
@@ -99,7 +119,8 @@ namespace Origins.Dev {
 			if (TryGetText("Lore", out text)) yield return ("Lore", text);
 			if (TryGetText("Changelog", out text)) yield return ("Changelog", text);
 		}
-		public static IEnumerable<WikiProvider> GetDefaultProviders(Type type) {
+		public static IEnumerable<WikiProvider> GetDefaultProviders(object obj) {
+			Type type = obj.GetType();
 			(Type type, WikiProvider provider) bestMatch = default;
 			bool noClassProvider = false;
 			foreach ((Type type, WikiProvider provider) item in TypedDataProviders) {
@@ -112,6 +133,11 @@ namespace Origins.Dev {
 					}
 				}
 			}
+			foreach (ConditionalWikiProvider item in ConditionalDataProviders) {
+				if (item(obj, out WikiProvider provider, ref noClassProvider)) {
+					yield return provider;
+				}
+			}
 			if (noClassProvider && bestMatch.type != type) yield break;
 			yield return bestMatch.provider;
 		}
@@ -119,7 +145,7 @@ namespace Origins.Dev {
 			if (obj is ICustomWikiStat stat) {
 				return stat.GetWikiProviders();
 			}
-			return GetDefaultProviders(obj.GetType());
+			return GetDefaultProviders(obj);
 		}
 		public static void AddTorchLightStats(JObject data, Vector3 light) {
 			float intensity = MathF.Max(MathF.Max(light.X, light.Y), light.Z);
@@ -385,9 +411,10 @@ namespace Origins.Dev {
 		bool? Hardmode => null;
 		bool FullyGeneratable => true;
 		bool ShouldHavePage => true;
+		bool NeedsCustomSprite => false;
 		LocalizedText PageTextMain => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultMainPageText(modType) : null;
 		IEnumerable<(string name, LocalizedText text)> PageTexts => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultPageTexts(modType) : null;
-		IEnumerable<WikiProvider> GetWikiProviders() => WikiPageExporter.GetDefaultProviders(this.GetType());
+		IEnumerable<WikiProvider> GetWikiProviders() => WikiPageExporter.GetDefaultProviders(this);
 	}
 	public class ItemWikiProvider : WikiProvider<ModItem> {
 		public override string PageName(ModItem modItem) => WikiPageExporter.GetWikiName(modItem);
@@ -548,6 +575,7 @@ namespace Origins.Dev {
 		public abstract string PageName(object value);
 		public virtual string GetPage(object value) => default;
 		public virtual IEnumerable<(string name, JObject stats)> GetStats(object value) => default;
+		public virtual IEnumerable<(string name, Texture2D texture)> GetSprites(object value) => default;
 	}
 	public abstract class WikiProvider<T> : WikiProvider {
 		protected override void Register() {
@@ -563,9 +591,11 @@ namespace Origins.Dev {
 		public sealed override string PageName(object value) => value is T v ? PageName(v) : null;
 		public sealed override string GetPage(object value) => value is T v ? GetPage(v) : default;
 		public sealed override IEnumerable<(string, JObject)> GetStats(object value) => value is T v ? GetStats(v) : null;
+		public sealed override IEnumerable<(string, Texture2D)> GetSprites(object value) => value is T v ? GetSprites(v) : null;
 		public abstract string PageName(T value);
 		public abstract string GetPage(T value);
 		public abstract IEnumerable<(string, JObject)> GetStats(T value);
+		public virtual IEnumerable<(string, Texture2D)> GetSprites(T value) => default;
 	}
 	public static class WikiExtensions {
 		public static void AppendStat<T>(this JObject data, string name, T value, T defaultValue) {

@@ -4474,6 +4474,21 @@ Mods: {
 					// Label: Wiki Armor Template Path
 					// Tooltip: ""
 				}
+
+				ExportItemImages: {
+					// Label: Export Item Images
+					// Tooltip: ""
+				}
+
+				WikiSpritesPath: {
+					// Label: Wiki Sprites Path
+					// Tooltip: ""
+				}
+
+				ExportAllItemImages: {
+					// Label: Export All Item Images
+					// Tooltip: ""
+				}
 			}
 		}
 

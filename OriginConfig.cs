@@ -148,7 +148,7 @@ namespace Origins {
 		public bool ExportAllItemPages {
 			get => false;
 			set {
-				if (value && !string.IsNullOrWhiteSpace(StatJSONPath)) {
+				if (value && !string.IsNullOrWhiteSpace(WikiPagePath)) {
 					if (Terraria.UI.ItemSlot.ShiftInUse) {
 						Directory.CreateDirectory(WikiPagePath);
 						int i;
@@ -175,8 +175,34 @@ namespace Origins {
 				}
 			}
 		}
+		public bool ExportAllItemImages {
+			get => default;
+			set {
+				if (value && !string.IsNullOrWhiteSpace(WikiSpritesPath)) {
+					Directory.CreateDirectory(WikiSpritesPath);
+					int i;
+					for (i = 0; i < ItemLoader.ItemCount; i++) if (ContentSamples.ItemsByType[i].ModItem?.Mod is Origins) break;
+					for (; i < ItemLoader.ItemCount; i++) {
+						Item item = ContentSamples.ItemsByType[i];
+						if (item.ModItem?.Mod is not Origins) break;
+						if ((item.ModItem as ICustomWikiStat)?.ShouldHavePage == false) continue;
+						WikiPageExporter.ExportItemSprites(item);
+					}
+				}
+			}
+		}
+		public ItemDefinition ExportItemImages {
+			get => default;
+			set {
+				if ((value?.Type ?? 0) > ItemID.None && !string.IsNullOrWhiteSpace(WikiTemplatePath) && !string.IsNullOrWhiteSpace(WikiPagePath)) {
+					Directory.CreateDirectory(WikiSpritesPath);
+					WikiPageExporter.ExportItemSprites(ContentSamples.ItemsByType[value.Type]);
+				}
+			}
+		}
 		public string WikiTemplatePath { get; set; }
 		public string WikiArmorTemplatePath { get; set; }
+		public string WikiSpritesPath { get; set; }
 		public string WikiPagePath { get; set; }
 	}
 }

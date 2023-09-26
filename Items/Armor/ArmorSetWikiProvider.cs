@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using System;
 using System.Collections.Generic;
@@ -123,6 +124,39 @@ namespace Origins.Items.Armor {
 				yield return (statGroups[i].Value<string>("SetName"), statGroups[i]);
 			}
 			yield break;
+		}
+		public override IEnumerable<(string, Texture2D)> GetSprites(IWikiArmorSet value) {
+			foreach (IWikiArmorSet set in GetSetAndSubSets(value)) {
+				ItemSlotSet slotSet = default(ItemSlotSet) with {
+					headSlot = new Item(set.HeadItemID).headSlot,
+					bodySlot = new Item(set.BodyItemID).bodySlot,
+					legSlot = new Item(set.LegsItemID).legSlot
+				};
+				string baseName = Path.Combine("ArmorSets", set.ArmorSetName);
+				Player mainPlayer = Main.gameMenu ? Main.player[Main.maxPlayers] : Main.LocalPlayer;
+				bool male = mainPlayer.Male;
+				if (Main.gameMenu) {
+					mainPlayer.Male = true;
+					mainPlayer.hair = 1;
+				}
+				mainPlayer.headFrame.Y = 0;
+				mainPlayer.bodyFrame.Y = 0;
+				mainPlayer.legFrame.Y = 0;
+				yield return (
+					baseName + ((male || !set.HasFemaleVersion) ? "" : "_Female"),
+					SpriteGenerator.GenerateArmorSprite(mainPlayer, slotSet)
+				);
+				if (set.HasFemaleVersion) {
+					Player dummyPlayer = Main.player[Main.maxPlayers];
+					dummyPlayer.CopyVisuals(mainPlayer);
+					dummyPlayer.Male ^= true;
+					dummyPlayer.hair = dummyPlayer.Male ? 1 : 6;
+					yield return (
+						baseName + (male ? "_Female" : ""),
+						SpriteGenerator.GenerateArmorSprite(dummyPlayer, slotSet)
+					);
+				}
+			};
 		}
 		public static List<IWikiArmorSet> GetSetAndSubSets(IWikiArmorSet baseSet) {
 			List<IWikiArmorSet> sets = new() { baseSet };

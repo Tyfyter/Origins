@@ -270,6 +270,10 @@ namespace Origins {
 			IL_Main.DrawSurfaceBG += IL_Main_DrawSurfaceBG;
 		}
 
+		private static void On_SpriteDrawBuffer_Draw_Texture2D_Vector4_Nullable1_VertexColors_float_Vector2_SpriteEffects_float(On_SpriteDrawBuffer.orig_Draw_Texture2D_Vector4_Nullable1_VertexColors_float_Vector2_SpriteEffects_float orig, SpriteDrawBuffer self, Texture2D texture, Vector4 destinationRectangle, Rectangle? sourceRectangle, VertexColors colors, float rotation, Vector2 origin, SpriteEffects effect, float depth) {
+			orig(self, texture, destinationRectangle, sourceRectangle, colors, rotation, origin, effect, depth);
+		}
+
 		private static void IL_Main_DrawSurfaceBG(ILContext il) {
 			ILCursor c = new(il);
 			int index = -1;
