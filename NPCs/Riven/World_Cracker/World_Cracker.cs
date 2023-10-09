@@ -26,7 +26,8 @@ using Terraria.ModLoader;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
 namespace Origins.NPCs.Riven.World_Cracker {
-	public class World_Cracker_Head : WormHead {
+	public class World_Cracker_Head : WormHead, ILoadExtraTextures {
+		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
@@ -256,7 +257,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			return false;
 		}
 	}
-	public class World_Cracker_Body : WormBody {
+	public class World_Cracker_Body : WormBody, ILoadExtraTextures {
+		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;

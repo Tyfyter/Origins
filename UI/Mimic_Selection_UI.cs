@@ -4,10 +4,31 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.GameInput;
 using Terraria.ID;
+using Terraria.ModLoader;
 using Terraria.UI;
 
 namespace Origins.UI {
 	public class Mimic_Selection_UI : UIState {
+		static AutoCastingAsset<Texture2D>[] Textures;
+		public class TextureLoader : ILoadable {
+			public void Load(Mod mod) {
+				Textures = new AutoCastingAsset<Texture2D>[] {
+					Origins.instance.Assets.Request<Texture2D>("UI/Broadcast_Icon"),
+					Origins.instance.Assets.Request<Texture2D>("UI/Dream_Icon"),
+					Origins.instance.Assets.Request<Texture2D>("UI/Grow_Icon"),
+					Origins.instance.Assets.Request<Texture2D>("UI/Inject_Icon"),
+					Origins.instance.Assets.Request<Texture2D>("UI/Defile_Icon"),
+					Origins.instance.Assets.Request<Texture2D>("UI/Focus_Icon"),
+					Origins.instance.Assets.Request<Texture2D>("UI/Float_Icon"),
+					Origins.instance.Assets.Request<Texture2D>("UI/Command_Icon"),
+					Origins.instance.Assets.Request<Texture2D>("UI/Evolve_Icon")
+				};
+			}
+
+			public void Unload() {
+				Textures = null;
+			}
+		}
 		public float StartX => Main.screenWidth - 64 - 14 - 142;
 		public float StartY => (174 + (!Main.mapFullscreen && Main.mapStyle == 1 ? 204 : 0)) + (1 * 56) * 0.85f;
 		public string GetAbilityTooltip(int level, int choice) {
@@ -56,17 +77,6 @@ namespace Origins.UI {
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 			int currentLevel = OriginSystem.MimicSetLevel;
-			AutoCastingAsset<Texture2D>[] textures = new AutoCastingAsset<Texture2D>[] {
-				Origins.instance.Assets.Request<Texture2D>("UI/Broadcast_Icon"),
-				Origins.instance.Assets.Request<Texture2D>("UI/Dream_Icon"),
-				Origins.instance.Assets.Request<Texture2D>("UI/Grow_Icon"),
-				Origins.instance.Assets.Request<Texture2D>("UI/Inject_Icon"),
-				Origins.instance.Assets.Request<Texture2D>("UI/Defile_Icon"),
-				Origins.instance.Assets.Request<Texture2D>("UI/Focus_Icon"),
-				Origins.instance.Assets.Request<Texture2D>("UI/Float_Icon"),
-				Origins.instance.Assets.Request<Texture2D>("UI/Command_Icon"),
-				Origins.instance.Assets.Request<Texture2D>("UI/Evolve_Icon")
-			};
 			int boxSize = (int)(32 * Main.inventoryScale);
 			float posX = StartX;
 			if (Main.netMode == NetmodeID.MultiplayerClient) {
@@ -89,7 +99,7 @@ namespace Origins.UI {
 						Main.hoverItemName = GetAbilityTooltip(level, i);
 						glow = true;
 					}
-					spriteBatch.Draw(textures[i + level * 3], rectangle, glow ? Color.White : Color.LightSlateGray);
+					spriteBatch.Draw(Textures[i + level * 3], rectangle, glow ? Color.White : Color.LightSlateGray);
 					posY += boxSize + 2;
 				}
 				posX -= boxSize + 4;

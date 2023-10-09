@@ -681,6 +681,9 @@ namespace Origins {
 	interface ICustomRespawnArtifact {
 		void Respawn();
 	}
+	interface ILoadExtraTextures {
+		void LoadTextures();
+	}
 	public static class Elements {
 		public const ushort Fire = 1;
 		public const ushort Earth = 2;

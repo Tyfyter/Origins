@@ -222,21 +222,66 @@ namespace Origins {
 						} else if (content is ModWall wall) {
 							Main.instance.LoadWall(wall.Type);
 						}
+						if (content is ILoadExtraTextures extras) {
+							extras.LoadTextures();
+						}
 					}
-					StringBuilder unused = new();
-					var loadedAssets = AssetRepositoryMethods._assets.GetValue(Origins.instance.Assets).Keys.ToHashSet();
+					List<string> unused = new();
+					var loadedAssets = AssetRepositoryMethods._assets.GetValue(Origins.instance.Assets).Keys.Select(k => k.Replace(Path.DirectorySeparatorChar, '/')).ToHashSet();
+					loadedAssets.Add("icon");
+					loadedAssets.Add("Buffs/BuffTemplate");
+					loadedAssets.Add("Buffs/DebuffTemplate");
+					loadedAssets.Add("Items/Armor/Armor_Conversion");
+					loadedAssets.Add("Items/Armor/ArmorTemplate_v1");
+					loadedAssets.Add("NPCs/BossBarTemplate");
+					loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Empty");
+					loadedAssets.Add("Tiles/BossDrops/Boss_Trophy_Item_Empty");
+					loadedAssets.Add("Tiles/BossDrops/Relic_Examples");
+					loadedAssets.Add("Tiles/interesting_tile");
+					loadedAssets.Add("Tiles/Tile_Template");
 					foreach (string asset in Origins.instance.RootContentSource.EnumerateAssets()) {
-						string _asset = Path.ChangeExtension(asset, null).Replace('/', Path.DirectorySeparatorChar);
+						string _asset = Path.ChangeExtension(asset, null);
+						if ((_asset.EndsWith("_") || _asset.EndsWith("__Glow")) && (_asset.StartsWith("Items/Armor/") || _asset.StartsWith("Items/Accessories/AccUseCatalogs"))) {
+							continue;
+						}
 						if (!loadedAssets.Contains(_asset)) {
-							unused.AppendLine(_asset);
+							unused.Add(_asset);
+						}
+					}
+					unused.Sort(new AssetPathComparer());
+					for (int i = 0; i < unused.Count - 1; i++) {
+						string[] a = unused[i].Split('/');
+						string[] b = unused[i + 1].Split('/');
+						int minLength = a.Length < b.Length ? a.Length : b.Length;
+						for (int j = 0; j < minLength - 1; j++) {
+							if (a[j] != b[j]) {
+								unused.Insert(i + 1, "");
+								break;
+							}
 						}
 					}
 					Directory.CreateDirectory(ConfigManager.ModConfigPath);
 					string filename = nameof(Origins) + "_Unused_Assets.txt";
 					string path = Path.Combine(ConfigManager.ModConfigPath, filename);
-					File.WriteAllText(path, unused.ToString());
+					File.WriteAllText(path, string.Join('\n', unused));
 				}
 			}
+		}
+	}
+	public class AssetPathComparer : IComparer<string> {
+		public int Compare(string x, string y) {
+			string[] a = x.Split('/');
+			string[] b = y.Split('/');
+			Comparer<string> comparer = Comparer<string>.Default;
+			if (a.Length == b.Length) return comparer.Compare(x, y);
+			int maxLength = a.Length > b.Length ? a.Length : b.Length;
+			for (int i = 0; i < maxLength; i++) {
+				if (i + 1 == a.Length) return 1;
+				if (i + 1 == b.Length) return -1;
+				int comp = comparer.Compare(a[i], b[i]);
+				if (comp != 0) return comp;
+			}
+			return comparer.Compare(x, y);
 		}
 	}
 }
