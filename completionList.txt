@@ -399,7 +399,7 @@ VANITY:
 (X) Lost Diver Head
 (X) Miscreant Mask
 (X) Quantux Mask
-(#, ^2) World Cracker Mask !!!
+(#2, ^2) World Cracker Mask !!!
 (X) Scrapper Head
 (X) Severus' Hat
 
