@@ -1065,7 +1065,7 @@ namespace Origins {
 				orig(proj, out timeToFlyOut, out segments, out rangeMultiplier);
 			}
 		}
-		#region mining power
+		#region mining
 		delegate void MinePowerDel(ModTile modTile, int i, int j, int minePower, ref int damage);
 		private int On_Player_GetPickaxeDamage(On_Player.orig_GetPickaxeDamage orig, Player self, int x, int y, int pickPower, int hitBufferIndex, Tile tileTarget) {
 			int value = orig(self, x, y, pickPower, hitBufferIndex, tileTarget);

@@ -3592,6 +3592,11 @@ Mods: {
 				DisplayName: Outreach
 				Tooltip: ""
 			}
+
+			Piledriver: {
+				DisplayName: Piledriver
+				Tooltip: ""
+			}
 		}
 
 		Buffs: {
@@ -4141,6 +4146,8 @@ Mods: {
 			Volatile_Gelatin_Slime_Explosion.DisplayName: Volatile_ Gelatin_ Slime_ Explosion
 			Snapthrow_P.DisplayName: Snapthrow_ P
 			Outreach_P.DisplayName: Outreach_ P
+			Piledriver_P.DisplayName: Piledriver
+			Piledriver_Mine_P.DisplayName: Piledriver
 		}
 
 		Prefixes: {
