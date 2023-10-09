@@ -45,7 +45,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi / 2;
 			Dust.NewDust(Projectile.Center, 0, 0, DustID.Dirt, Scale: 0.4f);
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			Dust.NewDust(Projectile.position, 10, 10, DustID.Dirt, Scale: 0.6f);
 			Dust.NewDust(Projectile.position, 10, 10, DustID.Dirt, Scale: 0.6f);
 			Dust.NewDust(Projectile.position, 10, 10, DustID.Dirt, Scale: 0.6f);

@@ -75,7 +75,7 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 			return true;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			int t = Bone_Shard.ID;
 			Longbone.t = (int)Projectile.localAI[0];
 			Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Projectile.velocity.RotatedByRandom(0.3f), t, Projectile.damage / 5, 2, Projectile.owner).localNPCImmunity = Projectile.localNPCImmunity;

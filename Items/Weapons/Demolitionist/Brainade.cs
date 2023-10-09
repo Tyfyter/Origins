@@ -47,7 +47,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.type = ProjectileID.Grenade;
 			return true;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;
 			Projectile.width = 128;
@@ -89,7 +89,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 			return true;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			for (int i = 0; i < 7; i++) {
 				Dust dust = Dust.NewDustDirect(Projectile.position, 10, 10, DustID.Blood, 0, 0, 100, new Color(255, 0, 0), 1.25f * Projectile.scale);
 				dust.noGravity = true;

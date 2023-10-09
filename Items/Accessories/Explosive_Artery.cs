@@ -39,7 +39,7 @@ namespace Origins.Items.Accessories {
 			Projectile.height = 0;
 			Projectile.timeLeft = 0;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			Main.player[Projectile.owner].GetModPlayer<OriginPlayer>().messyLeech = false; // so it doesn't cause an OP chain reaction
 			Projectile.width = 64;
 			Projectile.height = 64;

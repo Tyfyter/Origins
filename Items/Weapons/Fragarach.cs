@@ -75,7 +75,7 @@ namespace Origins.Items.Weapons {
 				}
 			}
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Item10.WithVolume(2), Projectile.Center);
 			Vector2 shockVelocity = -Projectile.oldVelocity;
 			shockVelocity.Normalize();

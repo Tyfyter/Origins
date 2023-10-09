@@ -204,7 +204,7 @@ namespace Origins.Projectiles {
 			}
 			return true;
 		}
-		public override void Kill(Projectile projectile, int timeLeft) {
+		public override void OnKill(Projectile projectile, int timeLeft) {
 			if (killLink != -1 && projectile.penetrate == 0) {
 				Main.projectile[killLink].active = false;
 				killLink = -1;

@@ -94,7 +94,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			return true;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Item38.WithVolume(0.75f), Projectile.Center);
 			SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolume(5), Projectile.Center);
 			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Awe_Bomb_Blast>(), Projectile.damage, 24, Projectile.owner);

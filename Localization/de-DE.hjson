@@ -1652,6 +1652,7 @@ Mods: {
 
 			// DA_Mask.DisplayName: "{$Defiled} Amalgamation Mask"
 			// FW_Head.DisplayName: Fiberglass Weaver Head
+			// WC_Mask.DisplayName: World Cracker Mask
 
 			Plague_Texan_Jacket: {
 				// DisplayName: Plague Texan's Surprisingly Affordable Style

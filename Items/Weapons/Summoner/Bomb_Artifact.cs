@@ -346,7 +346,7 @@ namespace Origins.Items.Weapons.Summon.Minions {
 			Projectile.type = ProjectileID.Grenade;
 			return true;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			Projectile.friendly = true;
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;

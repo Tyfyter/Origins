@@ -58,7 +58,7 @@ namespace Origins.Items.Weapons.Magic {
 		public override void AI() {
 			Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, default, newColor: Color.White, Scale: 0.5f + (float)Math.Sin(Projectile.timeLeft * 0.1f) * 0.15f);
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			int[] immune = Projectile.localNPCImmunity.ToArray();
 			Projectile.NewProjectileDirect(
 				Projectile.GetSource_FromThis(),

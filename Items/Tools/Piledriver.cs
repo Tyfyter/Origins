@@ -111,7 +111,7 @@ namespace Origins.Items.Tools {
 			}
 			return true;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			if (timeLeft > 0) {
 				Vector2 pos = Projectile.Center;
 				for (int i = 0; i < 3; i++) Dust.NewDust(pos, 0, 0, DustID.Torch);

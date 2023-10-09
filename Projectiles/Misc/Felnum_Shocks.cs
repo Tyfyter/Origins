@@ -47,7 +47,7 @@ namespace Origins.Projectiles.Misc {
 			modifiers.ScalingArmorPenetration += 1;
 		}
 
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			if (timeLeft > 0) {
 				if (!(OnStrike is null)) OnStrike();
 				SoundEngine.PlaySound(SoundID.Item60.WithVolume(0.65f).WithPitch(1f), Projectile.Center);
@@ -72,7 +72,7 @@ namespace Origins.Projectiles.Misc {
 			Projectile.hide = true;
 			Projectile.localAI[0] = (float)Math.Pow(Main.rand.NextFloat(-4, 4), 2);
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			Projectile.position.X -= 4;
 			Projectile.position.Y -= 4;
 			Projectile.width = Projectile.height = 8;

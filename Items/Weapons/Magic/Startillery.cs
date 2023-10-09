@@ -51,7 +51,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.type = ProjectileID.StarCannonStar;
 			return true;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;
 			Projectile.width = 64;

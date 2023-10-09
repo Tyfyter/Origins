@@ -64,7 +64,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool PreKill(int timeLeft) {
 			return base.PreKill(timeLeft);
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.NPCDeath1.WithPitch(0.15f));
 			PolarVec2 vel = new PolarVec2(4, Main.rand.NextFloat(MathHelper.TwoPi));
 
@@ -108,7 +108,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AI() {
 			Projectile.rotation -= MathHelper.PiOver2;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			if (timeLeft < 3590) SoundEngine.PlaySound(SoundID.NPCHit18.WithPitch(0.15f).WithVolumeScale(0.5f));
 		}
 	}

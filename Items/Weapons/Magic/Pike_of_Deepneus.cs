@@ -107,7 +107,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.penetrate = 1;
 			Projectile.ArmorPenetration = 40;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Item167, Projectile.position);
 
 			Dust dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.GoldFlame, 0, 0, 255, new Color(255, 150, 30), 1f);

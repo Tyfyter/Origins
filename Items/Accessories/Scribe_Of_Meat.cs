@@ -88,7 +88,7 @@ namespace Origins.Items.Accessories {
 				Projectile.frame++;
 			}
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			// dusts and/or gores here
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {

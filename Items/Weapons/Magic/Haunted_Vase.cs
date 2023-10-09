@@ -51,7 +51,7 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.rotation -= (Math.Abs(Projectile.velocity.X) + Math.Abs(Projectile.velocity.Y)) * 0.03f * Projectile.direction;
 			Projectile.rotation += Math.Abs(Projectile.velocity.X) * 0.04f * Projectile.direction;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Item107, Projectile.position);
 			Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, -Projectile.oldVelocity * 0.2f, 704);
 			Gore.NewGore(Projectile.GetSource_FromThis(), Projectile.Center, -Projectile.oldVelocity * 0.2f, 705);

@@ -76,7 +76,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override Color? GetAlpha(Color lightColor) {
 			return Projectile.alpha == 0 ? new Color(255, 255, 255, 200) : Color.Transparent;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
             Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
             SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             SoundEngine.PlaySound(SoundID.NPCHit22.WithVolume(0.5f), Projectile.position);

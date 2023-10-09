@@ -79,7 +79,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool? CanHitNPC(NPC target) {
 			return ((int)Projectile.ai[0] <= 0) ? null : ((bool?)false);
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			Projectile.ai[0] = 0;
 			for (int i = 0; i < 9; i++) {
 				Dust dust = Dust.NewDustDirect(Projectile.position, 10, 10, DustID.Electric, 0, 0, 100, i % 2 == 0 ? Color.LightSeaGreen : Color.Coral, Projectile.scale);

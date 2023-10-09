@@ -35,7 +35,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BloodWater);
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			AltLibrary.Core.ALConvert.Convert<Riven_Hive_Alt_Biome>((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16);
 
 			SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);

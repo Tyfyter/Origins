@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.height = 12;
 			Projectile.scale = 0.85f;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;
 			Projectile.width = 48;

@@ -246,7 +246,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			#endregion
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			Projectile.active = false;
 			Projectile body = Main.projectile[(int)Projectile.localAI[0]];
 			if (body.active && body.type == Rotting_Worm_Body.ID) body.Kill();
@@ -360,7 +360,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				target.AddBuff(BuffID.Poisoned, 180);
 			}
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			Projectile.active = false;
 			Projectile head = Main.projectile[(int)Projectile.localAI[3]];
 			if (head.active) {

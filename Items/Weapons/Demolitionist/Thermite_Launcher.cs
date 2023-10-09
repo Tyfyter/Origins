@@ -67,7 +67,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 1;
 			return true;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, 0, 0, Projectile.owner, -1, 1);
 			Projectile.damage = (int)(Projectile.damage * 0.75f);
 			Projectile.knockBack = 16f;

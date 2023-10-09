@@ -62,12 +62,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("{$Defiled} Amalgamation");
 			Main.npcFrameCount[NPC.type] = 8;
-			NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
-				SpecificallyImmuneTo = new int[] {
-					BuffID.Confused
-				}
-			};
-			NPCID.Sets.DebuffImmunitySets[Type] = debuffData;
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			ID = Type;
 			SpawnModBiomes = new int[] {
@@ -643,7 +638,7 @@ namespace Origins.NPCs.Defiled {
 		public override void AI() {
 			Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight, default, newColor: Color.White, Scale: 0.5f + (float)Math.Sin(Projectile.timeLeft * 0.1f) * 0.15f);
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			int[] immune = Projectile.localNPCImmunity.ToArray();
 			Projectile.NewProjectileDirect(
 				Projectile.GetSource_FromThis(),

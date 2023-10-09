@@ -54,7 +54,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			target.AddBuff(BuffID.Daybreak, 30);
 			target.immune[Projectile.owner] = 5;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Item14, Projectile.position);
 			for (int i = 0; i < 7; i++) {
 				Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.Smoke, 0f, 0f, 100, default(Color), 1.5f);

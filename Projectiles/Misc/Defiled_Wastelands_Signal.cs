@@ -68,7 +68,7 @@ namespace Origins.Projectiles.Misc {
 				Projectile.velocity = Projectile.DirectionTo(Target.ToVector2() * 16 + new Vector2(8)) * 8;
 			}
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			if ((int)Projectile.ai[0] == 2) {
 				WorldGen.shadowOrbCount = 2;
 				Projectile.ai[0] = 1;

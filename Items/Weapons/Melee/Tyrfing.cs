@@ -399,8 +399,10 @@ namespace Origins.Items.Weapons.Melee {
 		public override string Texture => "Terraria/Images/Buff_160";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Stunned");
 			ID = Type;
+			BuffID.Sets.GrantImmunityWith[Type] = new() {
+				BuffID.Confused
+			};
 		}
 	}
 }

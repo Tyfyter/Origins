@@ -110,7 +110,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				modifiers.SourceDamage /= 12;
 			}
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;
 			Projectile.width = 200;

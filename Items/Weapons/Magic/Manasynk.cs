@@ -107,7 +107,7 @@ namespace Origins.Items.Weapons.Magic {
 				Projectile.Kill();
 			}
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			const float manaStealFactor = 0.5f;
 			if (Projectile.ai[1] > 0) {
 				Item.NewItem(

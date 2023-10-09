@@ -188,7 +188,7 @@ namespace Origins.Tiles.Defiled {
 			return false;
 		}
 
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			if (Projectile.owner == Main.myPlayer && !Projectile.noDropItem) {
 				int tileX = (int)(Projectile.position.X + Projectile.width / 2) / 16;
 				int tileY = (int)(Projectile.position.Y + Projectile.width / 2) / 16;

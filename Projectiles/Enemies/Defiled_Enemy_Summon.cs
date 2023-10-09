@@ -27,7 +27,7 @@ namespace Origins.Projectiles.Enemies {
 				Projectile.ai[1] = parentNPC.whoAmI;
 			}
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			IEntitySource source = Projectile.GetSource_FromThis();
 			NPC amalgam = Main.npc[(int)Projectile.ai[1]];
 			if (amalgam.active && amalgam.type == ModContent.NPCType<Defiled_Amalgamation>()) {

@@ -41,7 +41,7 @@ namespace Origins.Projectiles.Weapons {
 			}
 			return true;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			for (int i = 0; i < 7; i++) {
 				Dust dust = Dust.NewDustDirect(Projectile.position, 10, 10, DustID.Electric, 0, 0, 100, new Color(0, 255, 0), 1.25f * Projectile.scale);
 				dust.shader = GameShaders.Armor.GetSecondaryShader(18, Main.LocalPlayer);

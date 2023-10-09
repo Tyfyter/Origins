@@ -184,7 +184,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 			return Color.Transparent;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			if (Projectile.owner == Main.myPlayer) {
 				Projectile.NewProjectileDirect(
 					Projectile.GetSource_Death(),

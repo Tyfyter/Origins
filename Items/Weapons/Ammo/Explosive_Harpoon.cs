@@ -64,7 +64,7 @@ namespace Origins.Items.Weapons.Ammo {
 				Projectile.penetrate--;
 			}
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			if (Projectile.penetrate >= 0) {
 				Projectile.NewProjectile(
 					Projectile.GetSource_Death(),

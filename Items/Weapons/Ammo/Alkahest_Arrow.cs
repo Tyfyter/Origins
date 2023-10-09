@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.width = 14;
 			Projectile.height = 32;
 		}
-		public override void Kill(int timeLeft) {
+		public override void OnKill(int timeLeft) {
 			SoundEngine.PlaySound(SoundID.Shatter, Projectile.position);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {

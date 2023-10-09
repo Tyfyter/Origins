@@ -23,7 +23,7 @@ namespace Origins.Projectiles {
 		public bool CanRespawn(Projectile projectile) {
 			return !isRespawned && Main.player[projectile.owner].GetModPlayer<OriginPlayer>().spiritShard;
 		}
-		public override void Kill(Projectile projectile, int timeLeft) {
+		public override void OnKill(Projectile projectile, int timeLeft) {
 			if (projectile.ModProjectile is ICustomRespawnArtifact customRespawnArtifact) {
 				customRespawnArtifact.Respawn();
 			} else {

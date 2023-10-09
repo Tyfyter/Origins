@@ -1,5 +1,6 @@
 ﻿using Origins.NPCs;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Buffs {
@@ -8,9 +9,10 @@ namespace Origins.Buffs {
 		public const int default_duration = 60;
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Toxic Shock");
-			// Description.SetDefault("The agony is getting to you.");
 			ID = Type;
+			BuffID.Sets.GrantImmunityWith[Type] = new() {
+				BuffID.Confused
+			};
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.GetModPlayer<OriginPlayer>().toxicShock = true;
