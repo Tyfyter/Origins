@@ -9,10 +9,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Waist)]
 	public class Amebic_Vial : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amebic Vial");
-			// Tooltip.SetDefault("Amebic tentacles will protect you from projectiles");
-			Item.ResearchUnlockCount = 1;
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 26);
@@ -23,6 +22,7 @@ namespace Origins.Items.Accessories {
 			Item.expert = true;
 			Item.hasVanityEffects = true;
 			Item.value = Item.sellPrice(gold: 2);
+			Item.glowMask = glowmask;
 		}
 		public override void UpdateAccessory(Player player, bool isHidden) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

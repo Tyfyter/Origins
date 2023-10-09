@@ -8,9 +8,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Slashswarm : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Slashswarm");
-			glowmask = Origins.AddGlowMask(this, "");
-			Item.ResearchUnlockCount = 1;
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalStorm);

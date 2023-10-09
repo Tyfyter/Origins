@@ -4,15 +4,15 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
     public class Cirrhosis_Abhorrence : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Cirrhosis' Abhorrence");
-			// Tooltip.SetDefault("5 of the closest enemies have their stats reduced whilst being set ablaze and bleeding");
-			Item.ResearchUnlockCount = 1;
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 22);
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 2);
+			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

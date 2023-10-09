@@ -13,11 +13,10 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Teardown : ModItem {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Teardown");
-			// Tooltip.SetDefault("Summons a Flying Exoskeleton to fight for you\nIgnores some enemy defense");
+			glowmask = Origins.AddGlowMask(this);
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
-			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 11;
@@ -34,6 +33,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.buffType = buffID;
 			Item.shoot = projectileID;
 			Item.noMelee = true;
+			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

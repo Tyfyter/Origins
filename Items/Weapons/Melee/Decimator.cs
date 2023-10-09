@@ -10,9 +10,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Decimator : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Decimator");
 			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.damage = 22;
@@ -43,8 +41,14 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Decimator_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Decimator_P";
+		static new AutoCastingAsset<Texture2D> GlowTexture;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Decimator");
+			if (!Main.dedServ) {
+				GlowTexture = ModContent.Request<Texture2D>(base.GlowTexture);
+			}
+		}
+		public override void Unload() {
+			GlowTexture = null;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
@@ -93,6 +97,16 @@ namespace Origins.Items.Weapons.Melee {
 				Projectile.Center - Main.screenPosition + Projectile.velocity * 5,
 				new Rectangle(0, 0, 100, 98),
 				lightColor,
+				Projectile.rotation,
+				new Vector2(50 + 39 * Projectile.spriteDirection, 9),
+				Projectile.scale,
+				Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
+			0);
+			Main.EntitySpriteDraw(
+				GlowTexture,
+				Projectile.Center - Main.screenPosition + Projectile.velocity * 5,
+				new Rectangle(0, 0, 100, 98),
+				new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f),
 				Projectile.rotation,
 				new Vector2(50 + 39 * Projectile.spriteDirection, 9),
 				Projectile.scale,

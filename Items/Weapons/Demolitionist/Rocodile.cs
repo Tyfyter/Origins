@@ -6,11 +6,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Rocodile : ModItem {
-
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Rocodile");
-			// Tooltip.SetDefault("Uses rockets as ammo\n'Older cousin of the minishark'");
-			Item.ResearchUnlockCount = 1;
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
@@ -21,6 +19,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 7);
 			Item.rare = ItemRarityID.Lime;
 			Item.autoReuse = true;
+			Item.glowMask = glowmask;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			type = Item.shoot + (type - Item.shoot) / 3;

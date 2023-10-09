@@ -44,6 +44,22 @@ namespace Origins.Items.Weapons.Melee {
 		}
 	}
 	public class Knee_Slapper_P : ModProjectile {
+		static AutoCastingAsset<Texture2D> HeadTexture;
+		static AutoCastingAsset<Texture2D> BodyTexture;
+		static AutoCastingAsset<Texture2D> TailTexture;
+		public class TextureLoader : ILoadable {
+			public void Load(Mod mod) {
+				HeadTexture = mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Knee_Slapper_Head");
+				BodyTexture = mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Knee_Slapper_Body");
+				TailTexture = mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Knee_Slapper_Tail");
+			}
+
+			public void Unload() {
+				HeadTexture = null;
+				BodyTexture = null;
+				TailTexture = null;
+			}
+		}
 		static bool lastSlapDir = false;
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 		public List<PolarVec2> nodes;
@@ -119,7 +135,7 @@ namespace Origins.Items.Weapons.Melee {
 			Vector2 basePosition = owner.MountedCenter;
 			PolarVec2 position = GetSwingStartOffset;
 			Vector2 lastPosition = basePosition;
-			Texture2D texture = Mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Knee_Slapper_Body").Value;
+			Texture2D texture = BodyTexture;
 			PolarVec2 diff = default;
 			for (int i = 0; i < nodes.Count - 1; i++) {
 				PolarVec2 vec = nodes[i];
@@ -128,7 +144,7 @@ namespace Origins.Items.Weapons.Melee {
 				diff = (PolarVec2)(basePosition + (Vector2)position - lastPosition);
 				if (i == 0) {
 					Main.EntitySpriteDraw(
-						Mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Knee_Slapper_Tail").Value,
+						TailTexture,
 						lastPosition - Main.screenPosition,
 						null,
 						new Color(Lighting.GetSubLight(lastPosition)),
@@ -153,7 +169,7 @@ namespace Origins.Items.Weapons.Melee {
 			}
 
 			Main.EntitySpriteDraw(
-				Mod.Assets.Request<Texture2D>("Items/Weapons/Melee/Knee_Slapper_Head").Value,
+				HeadTexture,
 				lastPosition - Main.screenPosition,
 				null,
 				new Color(Lighting.GetSubLight(lastPosition)),

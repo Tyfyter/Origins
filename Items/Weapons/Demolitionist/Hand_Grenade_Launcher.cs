@@ -13,10 +13,9 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Hand_Grenade_Launcher : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Hand Grenade Launcher");
-			// Tooltip.SetDefault("'Doesn't this defeat the purpose of a hand grenade?'");
-			Item.ResearchUnlockCount = 1;
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
@@ -32,6 +31,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed = 5f;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Orange;
+			Item.glowMask = glowmask;
 		}
 		public override bool AltFunctionUse(Player player) {
 			return true;

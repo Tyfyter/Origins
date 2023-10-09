@@ -8,10 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	[AutoloadEquip(EquipType.HandsOn)]
     public class Nuclear_Arm : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Nuclear Arm");
-			// Tooltip.SetDefault("'Like nuclear arms? Well now you can have nuclear arms on your... arms'");
-			Item.ResearchUnlockCount = 1;
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaultsKeepSlots(ItemID.TerraBlade);
@@ -28,6 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.UseSound = SoundID.Item45;
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 5);
+			Item.glowMask = glowmask;
 		}
 		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
 			//player.handon = Item.handOnSlot;

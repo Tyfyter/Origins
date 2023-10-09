@@ -5,9 +5,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Hellfire_Grenade : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Hellfire Grenade");
-			// Tooltip.SetDefault("Explodes into a lingering fire");
+			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -17,6 +17,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value *= 9;
 			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 999;
+			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 40);

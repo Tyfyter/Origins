@@ -49,8 +49,14 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Ripper_Lance_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Ripper_Lance_P";
+		static new AutoCastingAsset<Texture2D> GlowTexture;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ripper Lance");
+			if (!Main.dedServ) {
+				GlowTexture = ModContent.Request<Texture2D>(base.GlowTexture);
+			}
+		}
+		public override void Unload() {
+			GlowTexture = null;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
@@ -108,7 +114,26 @@ namespace Origins.Items.Weapons.Melee {
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, Projectile.Center - Main.screenPosition + Projectile.velocity * 3, new Rectangle(0, 0, 80, 84), lightColor, Projectile.rotation, new Vector2(40 + 40 * Projectile.spriteDirection, 0), Projectile.scale, Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+			Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				Projectile.Center - Main.screenPosition + Projectile.velocity * 3,
+				new Rectangle(0, 0, 80, 84),
+				lightColor,
+				Projectile.rotation,
+				new Vector2(40 + 40 * Projectile.spriteDirection, 0),
+				Projectile.scale,
+				Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally
+			);
+			Main.EntitySpriteDraw(
+				GlowTexture,
+				Projectile.Center - Main.screenPosition + Projectile.velocity * 3,
+				new Rectangle(0, 0, 80, 84),
+				Color.White,
+				Projectile.rotation,
+				new Vector2(40 + 40 * Projectile.spriteDirection, 0),
+				Projectile.scale,
+				Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally
+			);
 			return false;
 		}
 	}

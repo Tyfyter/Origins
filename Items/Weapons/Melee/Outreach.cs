@@ -49,9 +49,16 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Outreach_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Outreach_P";
+		static new AutoCastingAsset<Texture2D> GlowTexture;
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) {
+				GlowTexture = ModContent.Request<Texture2D>(base.GlowTexture);
+			}
 		}
-        public override void SetDefaults() {
+		public override void Unload() {
+			GlowTexture = null;
+		}
+		public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.Spear);
             Projectile.timeLeft = 3600;
             Projectile.width = 18;
@@ -92,7 +99,26 @@ namespace Origins.Items.Weapons.Melee {
             }
         }
         public override bool PreDraw(ref Color lightColor) {
-            Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, (Projectile.Center) - Main.screenPosition, new Rectangle(0, 0, 72, 72), lightColor, Projectile.rotation, new Vector2(62, 8), Projectile.scale, SpriteEffects.None, 0);
+            Main.EntitySpriteDraw(
+				TextureAssets.Projectile[Type].Value,
+				(Projectile.Center) - Main.screenPosition,
+				new Rectangle(0, 0, 72, 72),
+				lightColor,
+				Projectile.rotation,
+				new Vector2(62, 8),
+				Projectile.scale,
+				SpriteEffects.None
+			);
+            Main.EntitySpriteDraw(
+				GlowTexture,
+				(Projectile.Center) - Main.screenPosition,
+				new Rectangle(0, 0, 72, 72),
+				Color.White,
+				Projectile.rotation,
+				new Vector2(62, 8),
+				Projectile.scale,
+				SpriteEffects.None
+			);
             return false;
         }
     }

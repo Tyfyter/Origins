@@ -6,8 +6,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Defiled_Spirit : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Defiled Spirit");
+			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -21,6 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack -= 3;
 			Item.value = Item.sellPrice(copper: 80);
 			Item.rare = ItemRarityID.Blue;
+			Item.glowMask = glowmask;
 		}
 	}
 	public class Defiled_Spirit_P : ModProjectile {

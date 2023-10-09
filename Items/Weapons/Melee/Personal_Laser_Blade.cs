@@ -10,8 +10,9 @@ namespace Origins.Items.Weapons.Melee {
     public class Personal_Laser_Blade : ModItem, IElementalItem {
 		public const int max_charge = 75;
 		public ushort Element => Elements.Fire;
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.damage = 104;
@@ -30,6 +31,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.useTurn = false;
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = SoundID.Item45;
+			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

@@ -9,16 +9,16 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Nerve_Impulse_Manipulator : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Nerve Impulse Manipulator");
-			// Tooltip.SetDefault("Summons the {$Defiled} Amalgamation");
-
+			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WormFood);
 			Item.rare = ItemRarityID.Blue;
+			Item.glowMask = glowmask;
 		}
 		public override bool CanUseItem(Player player) {
 			return player.InModBiome<Defiled_Wastelands>() && !NPC.AnyNPCs(ModContent.NPCType<Defiled_Amalgamation>());

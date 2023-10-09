@@ -7,16 +7,16 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Sus_Ice_Cream : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Suspicious Looking Ice Cream");
-			// Tooltip.SetDefault("Summons the Primordial Amoeba\n'This ice cream will eat YOU'");
-
+			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WormFood);
 			Item.rare = ItemRarityID.Blue;
+			Item.glowMask = glowmask;
 		}
 		public override bool CanUseItem(Player player) {
 			return player.InModBiome<Riven_Hive>() && !NPC.AnyNPCs(ModContent.NPCType<Riven_Fighter>());

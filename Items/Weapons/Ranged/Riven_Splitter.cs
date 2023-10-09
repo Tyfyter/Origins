@@ -7,10 +7,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Riven_Splitter : Harpoon_Gun {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Riven Splitter");
-			// Tooltip.SetDefault("Uses harpoons as ammo\n87.5% chance not to consume ammo");
-			Item.ResearchUnlockCount = 1;
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.damage = 24;
@@ -30,6 +29,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
 			Item.autoReuse = true;
+			Item.glowMask = glowmask;
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override void OnConsumeAmmo(Item ammo, Player player) {

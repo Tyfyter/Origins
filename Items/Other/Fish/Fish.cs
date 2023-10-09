@@ -24,12 +24,14 @@ namespace Origins.Items.Other.Fish {
 		}
 	}
 	public class Bonehead_Jellyfish : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bonehead Jellyfish");
+			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 2;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToQuestFish();
+			Item.glowMask = glowmask;
 		}
 		public override bool IsAnglerQuestAvailable() {
 			return OriginSystem.WorldEvil == OriginSystem.evil_riven;

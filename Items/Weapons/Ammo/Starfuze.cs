@@ -4,8 +4,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
 	public class Starfuze : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Starfuze");
+			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -17,6 +18,7 @@ namespace Origins.Items.Weapons.Ammo {
             Item.knockBack = 3f;*/
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Cyan;
+			Item.glowMask = glowmask;
 		}
 	}
 	/*public class Alkahest_Arrow_P : ModProjectile {

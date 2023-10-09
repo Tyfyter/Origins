@@ -13,9 +13,7 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Flagellash : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Flagellash");
-			// Tooltip.SetDefault("2⅔ summon tag damage\n{$CommonItemTooltip.Whips}\n'Three ends are better than one'");
-			glowmask = Origins.AddGlowMask(this, "");
+			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {

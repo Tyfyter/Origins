@@ -4,9 +4,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
 	public class Jam_Sandwich : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Jam Sandwich");
-			// Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}\n'What kind of jam is this?'");
+			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
@@ -17,6 +17,7 @@ namespace Origins.Items.Other.Consumables.Food {
 			Item.buffTime = 60 * 60 * 10;
 			Item.value = Item.sellPrice(silver: 10);
 			Item.rare = ItemRarityID.Orange;
+			Item.glowMask = glowmask;
 		}
 	}
 }

@@ -5,11 +5,16 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Tainted_Flesh : ModItem {
+		static short glowmask;
 		public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(5);
+		public override void SetStaticDefaults() {
+			glowmask = Origins.AddGlowMask(this);
+		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 30);
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 4);
+			Item.glowMask = glowmask;
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
