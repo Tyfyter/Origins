@@ -3597,6 +3597,11 @@ Mods: {
 				DisplayName: Piledriver
 				Tooltip: ""
 			}
+
+			Cinder_Seal: {
+				DisplayName: Seal of Cinders
+				Tooltip: ""
+			}
 		}
 
 		Buffs: {
@@ -4148,6 +4153,8 @@ Mods: {
 			Outreach_P.DisplayName: Outreach_ P
 			Piledriver_P.DisplayName: Piledriver
 			Piledriver_Mine_P.DisplayName: Piledriver
+			Cinder_Seal_Dust.DisplayName: "{$Mods.Origins.Items.Cinder_Seal.DisplayName}"
+			Cinder_Seal_Explosion.DisplayName: "{$Mods.Origins.Items.Cinder_Seal.DisplayName}"
 		}
 
 		Prefixes: {

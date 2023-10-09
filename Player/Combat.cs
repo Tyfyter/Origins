@@ -503,6 +503,17 @@ namespace Origins {
 					);
 				}
 			}
+			if (cinderSealItem is not null) {
+				cinderSealItem.ModItem.Shoot(
+					Player,
+					Player.GetSource_ItemUse_WithPotentialAmmo(cinderSealItem, ItemID.None) as EntitySource_ItemUse_WithAmmo,
+					Player.Center,
+					Vector2.Zero,
+					cinderSealItem.shoot,
+					Player.GetWeaponDamage(cinderSealItem),
+					Player.GetWeaponKnockback(cinderSealItem)
+				);
+			}
 			if (unsoughtOrgan) {
 				const float maxDist = 240 * 240;
 				double totalDamage = info.Damage * 0.5f;

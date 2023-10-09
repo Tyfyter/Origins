@@ -190,6 +190,7 @@ namespace Origins {
 		public Item lotteryTicketItem = null;
 		public StatModifier tornStrengthBoost = StatModifier.Default;
 		public bool endlessExplosives = false;
+		public Item cinderSealItem = null;
 		#endregion
 
 		#region explosive stats
@@ -379,6 +380,7 @@ namespace Origins {
 			taintedFlesh2 = false;
 			tornStrengthBoost = StatModifier.Default;
 			endlessExplosives = false;
+			cinderSealItem = null;
 			if (toxicShock) {
 				if (Player.breath > oldBreath) Player.breath = oldBreath;
 				toxicShock = false;
