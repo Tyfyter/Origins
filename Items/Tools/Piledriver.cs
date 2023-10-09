@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -97,7 +98,7 @@ namespace Origins.Items.Tools {
 			hitbox.Inflate(4, 4);
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
-			oldVelocity /= System.MathF.Max(System.MathF.Abs(oldVelocity.X) / 16, System.MathF.Abs(oldVelocity.Y) / 16);
+			oldVelocity /= MathF.Max(MathF.Abs(oldVelocity.X) / 16, MathF.Abs(oldVelocity.Y) / 16);
 			Vector2 pos = Projectile.Center;
 			Point tilePos = pos.ToTileCoordinates();
 			if (!Framing.GetTileSafely(tilePos).HasSolidTile()) pos += oldVelocity;

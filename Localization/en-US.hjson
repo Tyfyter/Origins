@@ -4496,6 +4496,11 @@ Mods: {
 					Label: Export All Item Images
 					Tooltip: ""
 				}
+
+				CheckTextureUsage: {
+					Label: Check Texture Usage
+					Tooltip: ""
+				}
 			}
 		}
 

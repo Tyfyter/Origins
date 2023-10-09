@@ -9,7 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Text;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
@@ -204,5 +206,37 @@ namespace Origins {
 		public string WikiArmorTemplatePath { get; set; }
 		public string WikiSpritesPath { get; set; }
 		public string WikiPagePath { get; set; }
+		public bool CheckTextureUsage {
+			get => default;
+			set {
+				if (value) {
+					foreach (ILoadable content in Origins.instance.GetContent()) {
+						if (content is ModItem item) {
+							Main.instance.LoadItem(item.Type);
+						} else if (content is ModProjectile proj) {
+							Main.instance.LoadProjectile(proj.Type);
+						} else if (content is ModNPC npc) {
+							Main.instance.LoadNPC(npc.Type);
+						} else if (content is ModTile tile) {
+							Main.instance.LoadTiles(tile.Type);
+						} else if (content is ModWall wall) {
+							Main.instance.LoadWall(wall.Type);
+						}
+					}
+					StringBuilder unused = new();
+					var loadedAssets = AssetRepositoryMethods._assets.GetValue(Origins.instance.Assets).Keys.ToHashSet();
+					foreach (string asset in Origins.instance.RootContentSource.EnumerateAssets()) {
+						string _asset = Path.ChangeExtension(asset, null).Replace('/', Path.DirectorySeparatorChar);
+						if (!loadedAssets.Contains(_asset)) {
+							unused.AppendLine(_asset);
+						}
+					}
+					Directory.CreateDirectory(ConfigManager.ModConfigPath);
+					string filename = nameof(Origins) + "_Unused_Assets.txt";
+					string path = Path.Combine(ConfigManager.ModConfigPath, filename);
+					File.WriteAllText(path, unused.ToString());
+				}
+			}
+		}
 	}
 }
