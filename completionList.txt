@@ -42,12 +42,10 @@ X: No progress
 BOSSES AND MINI-BOSSES:
 ---
 (#, ^2) Chambersite Sentinel
-(#, ^2) Defiled Spawnswarmer
-(X) Discombobulator
 (#, ^2) Grand Corruptor
 (X) Hive Mind
 (X) Holy Enlightener
-(#, ^2) Ichor Storm
+(#, ^2) Ichor Storm 
 (X) Scrapper
 (X) Super Brainz
 
@@ -74,7 +72,7 @@ TOWN NPCs:
 (#2) TOWN NPC QUEST MECHANICS (general)
 
 (#2, %2, ^2) Acid Freak
-(X) Defiled Effigy
+(#, ^2) Defiled Effigy
 
 (%2, X) Dusk Trader
 
@@ -266,7 +264,7 @@ ACCESSORIES:
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
-(☻) Boomerang Magnet
+(^) Boomerang Magnet
 (^) Brine-Leafed Clover
 (X) C.F.H.E.S.
 (^) Celestial Starlight
@@ -379,7 +377,7 @@ ACCESSORIES:
 (^) Lazy Cloak
 (^) Mysterious Spray
 (^) Protozoa Food
-(X) Scrap Compactor
+(#, ^2) Scrap Compactor
 (^) Scribe of the Meat God
 (^) Third Eye
 
@@ -401,7 +399,7 @@ VANITY:
 (X) Lost Diver Head
 (X) Miscreant Mask
 (X) Quantux Mask
-(X) World Cracker Mask
+(#, ^2) World Cracker Mask !!!
 (X) Scrapper Head
 (X) Severus' Hat
 
@@ -421,7 +419,7 @@ VANITY:
 
 UTILITIES:
 ---
-(^) Amoeba Hook
+(#, ^2) Amoeba Hook !!! (missing sprite, use generic sprite)
 (X) Chunky Hook
 (#, ^2) Nano Hook
 (#, ^2) Quantum Hook
@@ -432,7 +430,7 @@ UTILITIES:
 
 (#, ^2) Black Light
 (#, ^2) Impenetrable Trashcan Lid
-(X) Indestructible Saddle
+(#, ^2) Indestructible Saddle
 ---
 
 
@@ -599,7 +597,7 @@ MAGIC WEAPONS:
 
 (^) Bled Out Staff
 (^) Chemical Laser
-(X) Communion
+(#, ^2) Communion
 (^) Dismay
 (^) Innermost Manifest
 (#, ^2) Meltdown
@@ -681,7 +679,7 @@ EXPLOSIVE WEAPONS:
 (^) Bomb Launcher (needs to be balanced)
 (^) Brainade
 (^) Defiled Spirit
-(X) Eruption !!!
+(#, ^2) Eruption !!!
 (^) Flashbang
 (^) Floaty Bomb
 (^) Hand Grenade Launcher
@@ -955,7 +953,7 @@ CONSUMABLES:
 (@5, #3) The Defiled Will
 
 (^) Absorption Potion
-(X) Ambition Potion !!!
+(#, ^2) Ambition Potion !!!
 (^) Antisolve Potion
 (^) Fervor Potion
 (^) Flask of Alkahest

@@ -9,17 +9,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Terraria;
-using Terraria.Chat;
-using Terraria.GameContent.NetModules;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using static Tyfyter.Utils.UITools;
 using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 
 namespace Origins {
-	public partial class OriginSystem : ModSystem {
+    public partial class OriginSystem : ModSystem {
 		public static OriginSystem Instance => ModContent.GetInstance<OriginSystem>();
 		public UserInterface setBonusUI;
 		public UserInterfaceWithDefaultState journalUI;

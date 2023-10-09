@@ -233,7 +233,7 @@ namespace Origins {
 			};
 			Terraria.On_NPC.AddBuff += (orig, self, type, time, quiet) => {
 				orig(self, type, time, quiet);
-				if (!quiet && type != Headphones_Buff.ID && BuffID.Sets.IsAnNPCWhipDebuff[type] && Main.LocalPlayer.GetModPlayer<OriginPlayer>().summonTagForceCrit) {
+				if (!quiet && type != Headphones_Buff.ID && BuffID.Sets.IsATagBuff[type] && Main.LocalPlayer.GetModPlayer<OriginPlayer>().summonTagForceCrit) {
 					orig(self, Headphones_Buff.ID, 300, quiet);
 				}
 			};

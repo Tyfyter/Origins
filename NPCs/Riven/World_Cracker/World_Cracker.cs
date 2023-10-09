@@ -545,8 +545,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				}
 			}
 		}
-		public override void Kill(int timeLeft) {
-			base.Kill(timeLeft);
+		public override void OnKill(int timeLeft) {
+			base.OnKill(timeLeft);
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			float timeFactor = 1f;

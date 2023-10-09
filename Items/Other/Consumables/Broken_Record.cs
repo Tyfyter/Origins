@@ -1,4 +1,5 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Items.Accessories;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Melee;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -24,7 +25,7 @@ namespace Origins.Items.Other.Consumables {
             recipe.Register();
         }
         public override void ModifyItemLoot(ItemLoot itemLoot) {
-            //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Cinder_Seal>(), 5));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Cinder_Seal>(), 5));
             //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Neural_Network>(), 5));
             //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Smiths_Hammer>(), 5));
             //itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Area_Denial>(), 5));
