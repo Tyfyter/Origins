@@ -25,7 +25,7 @@ namespace Origins.Items.Tools {
 			Item.useAnimation = 48;
 			Item.knockBack = 0.8f;
 			Item.value = Item.sellPrice(silver: 40);
-			Item.UseSound = SoundID.Item1;
+			Item.UseSound = SoundID.Item23;
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) {
@@ -41,12 +41,22 @@ namespace Origins.Items.Tools {
 				(int)size,
 				(int)size
 			);
-			int cd = player.itemAnimationMax / 6;
+			itemHitbox = hitbox;
+			int cd = player.itemAnimationMax / 8;
 			if (player.attackCD > cd) player.attackCD = cd;
 			player.ResetMeleeHitCooldowns();
 		}
+		Rectangle itemHitbox;
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
-			//SetMeleeHitCooldown(npcIndex, itemAnimation);
+			Rectangle overlap = Rectangle.Intersect(itemHitbox, target.Hitbox);
+			Vector2 dir = new Vector2(4 * hit.HitDirection, 2).RotatedBy(player.compositeFrontArm.rotation);
+			for (int i = 0; i < 4; i++) {
+				Dust.NewDustPerfect(
+					Main.rand.NextVector2FromRectangle(overlap),
+					DustID.Torch,
+					dir.RotatedByRandom(1f)
+				).noGravity = true;
+			}
 		}
 		public override void UseItemFrame(Player player) {
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation - MathHelper.PiOver2 * player.direction);

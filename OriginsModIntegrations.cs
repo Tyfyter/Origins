@@ -43,7 +43,10 @@ namespace Origins {
 		Mod fancyLighting;
 		public static Mod FancyLighting { get => instance.fancyLighting; set => instance.fancyLighting = value; }
 		Func<bool> checkAprilFools;
-		public static Func<bool> CheckAprilFools { get => instance.checkAprilFools; set => instance.checkAprilFools = value; }
+		public static Func<bool> CheckAprilFools { 
+			get => instance.checkAprilFools ??= ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib) ? HolidayLibCheckAprilFools(HolidayLib) : DefaultCheckAprilFools;
+			set => instance.checkAprilFools = value;
+		}
 		public static Condition AprilFools => new Condition("Mods.Origins.Conditions.AprilFools", CheckAprilFools);
 		static string WikiURL => "https://tyfyter.github.io/OriginsWiki";
 		static HashSet<string> wikiSiteMap;
@@ -81,9 +84,11 @@ namespace Origins {
 			if (ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib)) {
 				checkAprilFools = (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
 			} else {
-				checkAprilFools = () => DateTime.Today.Month == 4 && DateTime.Today.Day == 1;
+				checkAprilFools = DefaultCheckAprilFools;
 			}
 		}
+		static Func<bool> HolidayLibCheckAprilFools(Mod HolidayLib) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", "April fools");
+		static bool DefaultCheckAprilFools() => DateTime.Today.Month == 4 && DateTime.Today.Day == 1;
 		public static void LateLoad() {
 			if (ModLoader.TryGetMod("PhaseIndicator", out Mod phaseIndicatorMod) && phaseIndicatorMod.RequestAssetIfExists("PhaseIndicator", out Asset<Texture2D> phaseIndicatorTexture)) {
 				instance.phaseIndicator = phaseIndicatorTexture;

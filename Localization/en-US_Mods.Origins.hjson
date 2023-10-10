@@ -70,6 +70,7 @@ Dialogue: {
 		BloodMoon1: Oh. Do my toxins bother you, Terrarian?
 		BloodMoon2: I've had enough. Acid will be spilt today.
 	}
+
 	Defiled_Effigy: {
 		FirstDialogue: Humble of Terrarian, being spared. Hopeful my abilities prove useful.
 		StandardDialogue1: All coin proceeds to ‘Church of Defiled’. Negatory, coin is only much-needed material.
@@ -78,10 +79,10 @@ Dialogue: {
 		StandardDialogue4: Survival is mandatory, desire is optional. Do you survive or desire?
 		StandardDialogue5: A world absent of us is that of error. Order and unity purpose we offer, correct?
 		DefiledNotPresent: Concerned. You- I do not understand...
-		InteractionGuide1: {NPCName} does not tell much of past, does he?
+		InteractionGuide1: "{NPCName} does not tell much of past, does he?"
 		InteractionGuide2: Ever wonder why demons have doll of {NPCName}? I know...
-		InteractionDryad1: {NPCName}'s kind attempted destroying us during infancy. Align with her morals, you do?
-		InteractionDryad2: {NPCName}'s way of life primitive. No end to ours. Remember that.
+		InteractionDryad1: "{NPCName}'s kind attempted destroying us during infancy. Align with her morals, you do?"
+		InteractionDryad2: "{NPCName}'s way of life primitive. No end to ours. Remember that."
 		InteractionParty: Too sad to celebrate. {NPCName} (party girl) will understand...
 		InteractionWind: *Excessive respsiration amplifies...* Apologies, we dislike pollen...
 		InteractionStorm1: Rain permits our chunks shift optimally. Vowed ecology-safe by rejecting petrol.
@@ -92,12 +93,12 @@ Dialogue: {
 		BloodMoon2: Do not understand why others are dreary. Tonight is the time to be alive.
 		BloodMoon3: *Chittering.*
 		BloodMoon4: Blood Moon, a welcome sight.
-
 		LowSpread: Spread is {%}. Lethargic, material urgently required.
 		Spread20: Spread is {%}. The world aligns with our image, but more material is desired.
 		Spread50: Spread is {%}. The world sings harmonious, but more material is desired.
 		Spread100: Spread is {%}. A perfect world… we wonder if more material is acquirable…
 	}
+
 	Demolitionist: {
 		StandardDialogue9001: Ah, a story! There was once a bunch of wizards that did what I do but thought it was magic. Ain't that funny?
 		AshenWorld: The Structs bothern' yah? Well, it's like they were MADE for my explosives!
@@ -105,6 +106,7 @@ Dialogue: {
 		RivenWorld: Trying to get past that Skinpaste, eh? Why not introduce it to one of these explosives!
 		BloodMoon9001: Can’t turn those bloody monsters into a bloody mess because they already bloody are. At least I can blast them into smithereens!
 	}
+
 	Dryad: {
 		AshenWorld: The Ashen is mechanizing the world and polluting it! You must stop the Factory.
 		CorruptWorld: The Corruption seeks to turn this world into a devoid wasteland! You must eliminate the infection.
@@ -117,10 +119,11 @@ Dialogue: {
 		BeforeDefeatDA: Have you tried using purification powder on Defiled Stone?
 		BeforeDefeatWC: Have you tried using purification powder on Spug Flesh?
 	}
+
 	WitchDoctor: {
 		InteractionAcidFreak1: Good relations with {NPCName} I have.
-		InteractionAcidFreak2: {NPCName} embodies confidence. I embody fondness in that.
-		InteractionAcidFreak3: {NPCName} can be quite moody, but understand that she is only a youngin.
+		InteractionAcidFreak2: "{NPCName} embodies confidence. I embody fondness in that."
+		InteractionAcidFreak3: "{NPCName} can be quite moody, but understand that she is only a youngin."
 	}
 
 	PotatOS: {
@@ -242,6 +245,7 @@ TownNPCMood: {
 		
 		HateNPC: "{NPCName} should keep away from me. He wouldn't want to know what I'd do to him."
 	}
+
 	Defiled_Effigy: {
 		Content: We aspire to waste time presently.
 		NoHome: Place of rest protects chunks from elements...
@@ -252,7 +256,6 @@ TownNPCMood: {
 		Ocean: Barrier to our prison rests beyond, Terrarian...
 		LoveBiome: Satisfactory. The spirits of our brothers and sisters welcome us...
 		LikeBiome: Anywhere remains optimal for home, so long as we are present…
-		
 		HateBiome: Our chunks decay on this ground. Help us, Terrarian.
 		# HateBiome_Mushroom: The smell of mushrooms makes me sick, and I've smelled much worse.
 		# HateBiome_Ashen: Shocked. We are curious of this place... but, it bothers us. Break it.
@@ -269,8 +272,8 @@ TownNPCMood: {
 		
 		HateNPC: "{NPCName} is our mortal enemy. She desires a world exempt of us."
 	}
+
 	WitchDoctor: {
-		# LikeNPC_Acid_Freak: "{NPCName} is an interesting figure. I should explore more into her brewery."
 	}
 }
 
@@ -3656,6 +3659,7 @@ Items: {
 		DisplayName: Seal of Cinders
 		Tooltip: ""
 	}
+
 	Miter_Saw: {
 		DisplayName: Miter Saw
 		Tooltip: ""
