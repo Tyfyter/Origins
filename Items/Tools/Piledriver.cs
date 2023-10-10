@@ -27,6 +27,7 @@ namespace Origins.Items.Tools {
 			Item.shoot = ModContent.ProjectileType<Piledriver_P>();
 			Item.value = Item.sellPrice(silver: 40);
 			Item.rare = ItemRarityID.Blue;
+			Item.tileBoost = 0;
 		}
 		public override void ModifyTooltips(List<TooltipLine> tooltips) {
 			for (int i = 0; i < tooltips.Count; i++) {
@@ -69,6 +70,11 @@ namespace Origins.Items.Tools {
 			Projectile.CloneDefaults(ProjectileID.TitaniumDrill);
 			Projectile.friendly = false;
 		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ItemUse itemUse) {
+				Projectile.scale *= itemUse.Player.GetAdjustedItemScale(itemUse.Item);
+			}
+		}
 		public override bool PreAI() {
 			Player owner = Main.player[Projectile.owner];
 			if (owner.controlUseTile) {
@@ -96,7 +102,7 @@ namespace Origins.Items.Tools {
 			} else {
 				Projectile.ai[1]++;
 				Projectile.frame = (int)((Projectile.ai[1] / Projectile.ai[0]) * 3);
-				if (Projectile.ai[1] <= 0) Projectile.frame = 3;
+				if (Projectile.ai[1] <= 1) Projectile.frame = 3;
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {
@@ -124,6 +130,13 @@ namespace Origins.Items.Tools {
 			Projectile.tileCollide = false;
 			Projectile.penetrate = 1;
 		}
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_ItemUse itemUse) {
+				float scale = itemUse.Player.GetAdjustedItemScale(itemUse.Item);
+				Projectile.timeLeft = (int)(Projectile.timeLeft * scale);
+				Projectile.scale *= scale + scale - 1;
+			}
+		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
 			hitbox.Inflate(4, 4);
 			//Dust.NewDustPerfect(Projectile.Center, DustID.Torch, Vector2.Zero).noGravity = true;
@@ -135,7 +148,8 @@ namespace Origins.Items.Tools {
 			}
 		}
 		public override void AI() {
-			if (Framing.GetTileSafely(Projectile.position.ToTileCoordinates()).HasSolidTile()) {
+			Point pos = Projectile.position.ToTileCoordinates();
+			if ((pos.X == Player.tileTargetX && pos.Y == Player.tileTargetY) || Framing.GetTileSafely(pos).HasFullSolidTile()) {
 				Mine();
 			}
 		}
@@ -146,14 +160,35 @@ namespace Origins.Items.Tools {
 			Player owner = Main.player[Projectile.owner];
 			int pick = Piledriver.Pick;
 			bool stronk = Projectile.ai[2] == 2;
-			int stronkth = stronk ? 1 : 2;
+			float stronkth = stronk ? 0 : 0.4f;
 			Vector2 perp = new Vector2(velocity.Y, -velocity.X);
-			static void MineTile(Player owner, int x, int y, int pick, int count = 1) {
-				for (int i = 0; i < count; i++) owner.PickTile(x, y, pick / (i * 2 + 1));
+			static void MineTile(Player owner, int x, int y, int pick, float extraHits = 0) {
+				int tileType = Framing.GetTileSafely(x, y).TileType;
+				bool altar = false;
+				if (tileType == TileID.DemonAltar) altar = true;
+				if (tileType >= TileID.Count) {
+					int[] adj = TileLoader.GetTile(tileType).AdjTiles;
+					for (int i = 0; i < adj.Length; i++) if (adj[i] == TileID.DemonAltar) {
+						altar = true;
+						break;
+					}
+				}
+				if (altar) {
+					owner.Hurt(PlayerDeathReason.ByOther(4), owner.statLife / 2, -owner.direction);
+					return;
+				}
+				if (Main.tileAxe[tileType]) pick = 0;
+				if (Main.tileHammer[tileType]) pick /= 10;
+				owner.PickTile(x, y, pick);
+				for (int i = 0; i < extraHits; i++) {
+					owner.PickTile(x, y, (int)(pick * Math.Min(extraHits, 1)));
+				}
 			}
+			Point tilePos = pos.ToTileCoordinates();
+			int minSolidness = Framing.GetTileSafely(tilePos).TileSolidness();
+			if (minSolidness <= 0) return;
 			for (int i = 0; i < 5; i++) {
-				Point tilePos = pos.ToTileCoordinates();
-				if (!Framing.GetTileSafely(tilePos).HasSolidTile()) break;
+				if (Framing.GetTileSafely(tilePos).TileSolidness() < minSolidness) break;
 				MineTile(owner, tilePos.X, tilePos.Y, pick, stronkth);
 				if (stronk) {
 					tilePos = (pos + perp).ToTileCoordinates();
@@ -162,6 +197,7 @@ namespace Origins.Items.Tools {
 					MineTile(owner, tilePos.X, tilePos.Y, pick, stronkth);
 				}
 				pos += velocity;
+				tilePos = pos.ToTileCoordinates();
 			}
 			Projectile.Kill();
 		}

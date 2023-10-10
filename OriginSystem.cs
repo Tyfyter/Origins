@@ -2,14 +2,17 @@
 using Origins.Items.Materials;
 using Origins.Projectiles;
 using Origins.Questing;
+using Origins.Reflection;
 using Origins.Tiles.Other;
 using Origins.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI;
 using static Tyfyter.Utils.UITools;
@@ -249,6 +252,36 @@ namespace Origins {
 						},
 						InterfaceScaleType.UI) { Active = Main.playerInventory }
 					);
+				}
+			}
+		}
+		public override void OnLocalizationsLoaded() {
+			Dictionary<string, LocalizedText> texts = LocalizationMethods._localizedTexts.GetValue(LanguageManager.Instance);
+			texts["Riven"] = texts["Mods.Origins.Generic.Riven"];
+			texts["Riven_Hive"] = texts["Mods.Origins.Generic.Riven_Hive"];
+			texts["Dusk"] = texts["Mods.Origins.Generic.Dusk"];
+			texts["Defiled"] = texts["Mods.Origins.Generic.Defiled"];
+			texts["Defiled_Wastelands"] = texts["Mods.Origins.Generic.Defiled_Wastelands"];
+			texts["The_Defiled_Wastelands"] = texts["Mods.Origins.Generic.The_Defiled_Wastelands"];
+			foreach (var text in texts.ToList()) {
+				if (text.Key.StartsWith("Mods.Origins.AprilFools")) {
+					string key = text.Key.Replace("AprilFools.", "");
+					if (texts.TryGetValue(key, out LocalizedText targetText)) {
+						LocalizationMethods._value.SetValue(targetText, text.Value.Value);
+						LocalizationMethods._hasPlurals.SetValue(targetText, LocalizationMethods._hasPlurals.GetValue(text.Value));
+						LocalizationMethods.BoundArgs.SetValue(targetText, text.Value.BoundArgs);
+					} else {
+						Mod.Logger.Warn($"Adding April Fools text instead of replacing existing text: {text.Key}");
+						texts[key] = text.Value;
+					}
+				}
+			}
+			Regex substitutionRegex = new Regex("{§(.*?)}", RegexOptions.Compiled);
+			foreach (var text in texts.ToList()) {
+				Match subMatch = substitutionRegex.Match(text.Value.Value);
+				while (subMatch.Success) {
+					LocalizationMethods._value.SetValue(text.Value, text.Value.Value.Replace(subMatch.Groups[0].Value, Language.GetTextValue(subMatch.Groups[1].Value)));
+					subMatch = substitutionRegex.Match(text.Value.Value);
 				}
 			}
 		}

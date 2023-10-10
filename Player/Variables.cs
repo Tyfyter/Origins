@@ -191,6 +191,7 @@ namespace Origins {
 		public StatModifier tornStrengthBoost = StatModifier.Default;
 		public bool endlessExplosives = false;
 		public Item cinderSealItem = null;
+		public int cinderSealCount = 4;
 		#endregion
 
 		#region explosive stats
@@ -381,6 +382,7 @@ namespace Origins {
 			tornStrengthBoost = StatModifier.Default;
 			endlessExplosives = false;
 			cinderSealItem = null;
+			if (!Player.immune) cinderSealCount = 4;
 			if (toxicShock) {
 				if (Player.breath > oldBreath) Player.breath = oldBreath;
 				toxicShock = false;

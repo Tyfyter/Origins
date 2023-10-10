@@ -305,6 +305,19 @@ namespace Origins {
 			if (hasProtOS && Player.gravDir != oldGravDir) {
 				Protomind.PlayRandomMessage(Protomind.QuoteType.Respawn, protOSQuoteCooldown, Player.Top);
 			}
+
+			if (cinderSealItem?.ModItem is not null && cinderSealCount > 0 && Player.immuneTime % 15 == 1) {
+				cinderSealCount--;
+				cinderSealItem.ModItem.Shoot(
+					Player,
+					Player.GetSource_ItemUse_WithPotentialAmmo(cinderSealItem, ItemID.None) as Terraria.DataStructures.EntitySource_ItemUse_WithAmmo,
+					Player.Center,
+					Vector2.Zero,
+					cinderSealItem.shoot,
+					Player.GetWeaponDamage(cinderSealItem),
+					Player.GetWeaponKnockback(cinderSealItem)
+				);
+			}
 			oldGravDir = Player.gravDir;
 		}
 		public override void UpdateDyes() {

@@ -1,0 +1,30 @@
+Generic: {
+	Riven: Blue Lobster
+	Dusk: Duck
+	Defiled: Blŏkus
+	Defiled_Wastelands: Blŏkusland
+	The_Defiled_Wastelands: "{$Mods.Origins.AprilFools.Generic.Defiled_Wastelands}"
+}
+
+Status_Messages: {
+	Defiled_Fissure_1: is that bone-hurting juice?
+	Defiled_Fissure_2: owww my bones hurt a lot
+	Defiled_Fissure_3: oww oof my booones!!!
+	Cleansing_Station_Invalid_Location: Evil magicks do janky stuff and ya can't use this here
+}
+
+Items: {
+	Defiled_Bar.DisplayName: Spare Chunks
+	Laser_Tag_Gun.Tooltip: Pew pew, Motherfucker...
+}
+
+Dialogue.Acid_Freak.InteractionWind: It fucken WIMDY!
+
+DeathMessage: {
+	Torn_0: "{0} beezechurgered."
+	Torn_1: "{0} realized there's no such thing as a 'riven pool party.'"
+	Torn_2: "{0} learned Terrarian anatomy faster than they teach in school."
+	Torn_3: "{0} enjoys being vored."
+	// oh god no, YESSSS
+	Torn_4: "{0} was compelled by the Primordial Amoeba to 'Split apart, lost one.'"
+}

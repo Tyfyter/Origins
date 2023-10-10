@@ -12,7 +12,8 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Blue;
 
 			Item.shoot = ModContent.ProjectileType<Cinder_Seal_Dust>();
-			Item.damage = 30;
+			Item.damage = 12;
+			Item.ArmorPenetration = 6;
 			Item.knockBack = 3;
 		}
 		public override void UpdateEquip(Player player) {
@@ -41,7 +42,7 @@ namespace Origins.Items.Accessories {
 			Projectile.velocity *= 0.98f;
 		}
 		public override void OnKill(int timeLeft) {
-			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38.WithVolumeScale(0.75f), Projectile.Center);
+			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38.WithVolumeScale(0.5f), Projectile.Center);
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item45, Projectile.Center);
 			Projectile.NewProjectile(
 				Projectile.GetSource_Death(),

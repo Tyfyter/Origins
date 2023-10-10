@@ -5,6 +5,7 @@ using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {

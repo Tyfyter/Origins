@@ -11,6 +11,7 @@ using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
+using Origins.Reflection;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.UI;
@@ -162,21 +163,11 @@ namespace Origins {
 			OriginsModIntegrations.LateLoad();
 		}
 		public override void Load() {
-			LocalizedText newTranslation = Language.GetOrRegister("Riven", 
-				() => OriginsModIntegrations.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Riven}" : "{$Mods.Origins.Generic.Riven}"
-			);
-			newTranslation = Language.GetOrRegister("Dusk",
-				() => OriginsModIntegrations.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Dusk}" : "{$Mods.Origins.Generic.Dusk}"
-			);
-			newTranslation = Language.GetOrRegister("Defiled",
-				() => OriginsModIntegrations.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled}" : "{$Mods.Origins.Generic.Defiled}"
-			);
-			newTranslation = Language.GetOrRegister("Defiled_Wastelands",
-				() => OriginsModIntegrations.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "{$Mods.Origins.Generic.Defiled_Wastelands}"
-			);
-			newTranslation = Language.GetOrRegister("The_Defiled_Wastelands",
-				() => OriginsModIntegrations.CheckAprilFools() ? "{$Mods.Origins.April_Fools.Generic.Defiled_Wastelands}" : "the {$Mods.Origins.Generic.Defiled_Wastelands}"
-			); 
+			LocalizationMethods.BindArgs(Language.GetOrRegister("Riven", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Riven"));
+			LocalizationMethods.BindArgs(Language.GetOrRegister("Dusk", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Dusk"));
+			LocalizationMethods.BindArgs(Language.GetOrRegister("Defiled", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled"));
+			LocalizationMethods.BindArgs(Language.GetOrRegister("Defiled_Wastelands", () => "{0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled_Wastelands"));
+			LocalizationMethods.BindArgs(Language.GetOrRegister("The_Defiled_Wastelands", () => "the {0}"), Language.GetTextValue("Mods.Origins.Generic.Defiled_Wastelands")); 
 
 			RasterizeAdjustment = new Dictionary<int, (int, float)>();
 			ExplosiveBaseDamage = new Dictionary<int, int>();
@@ -506,7 +497,6 @@ namespace Origins {
             }
 		}
 		public override void PostSetupContent() {
-
 			for (int i = 0; i < NPCID.Sets.SpecificDebuffImmunity.Length; i++) {
 				bool?[] immunityData = NPCID.Sets.SpecificDebuffImmunity[i];
 				if (immunityData is not null && (immunityData[BuffID.Confused] ?? false)) {

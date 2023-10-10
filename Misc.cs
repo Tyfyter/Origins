@@ -2035,6 +2035,14 @@ namespace Origins {
 		public static bool HasSolidTile(this Tile tile) {
 			return tile.HasUnactuatedTile && Main.tileSolid[tile.TileType];
 		}
+		public static bool HasFullSolidTile(this Tile tile) {
+			return tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType];
+		}
+		public static int TileSolidness(this Tile tile) {
+			if (!tile.HasTile) return 0;
+			if (!Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType] || tile.IsActuated) return 1;
+			return 2;
+		}
 		/// <summary>
 		/// checks if a tile is active and is the provided type
 		/// </summary>
