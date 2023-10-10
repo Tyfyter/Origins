@@ -324,7 +324,7 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing
 (^) Ruby Reticle
-(#, ^2) Seal of Cinders !!!
+(#3, ^2) Seal of Cinders !!!
 (^) Shield of Retribution
 (^) Sonar Visor*
 (^) Scavenger Bag
@@ -460,7 +460,7 @@ TOOLS:
 (^) Felnum Pickaxe
 (#, ^2) Miter Saw !!!
 (^) Parasitic Manipulator
-(#, ^2) Pile Driver !!!
+(#3, ^2) Pile Driver !!!
 (^) Rivenator
 (^) Snatcher
 (^) Stabsmash

@@ -12,7 +12,7 @@ namespace Origins.Items.Tools {
 	public class Piledriver : ModItem {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TitaniumDrill);
-			Item.damage = 24;
+			Item.damage = 36;
 			Item.pick = 70;
 			Item.width = 28;
 			Item.height = 26;
@@ -103,7 +103,7 @@ namespace Origins.Items.Tools {
 			Point tilePos = pos.ToTileCoordinates();
 			if (!Framing.GetTileSafely(tilePos).HasSolidTile()) pos += oldVelocity;
 			Player owner = Main.player[Projectile.owner];
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < 8; i++) {
 				tilePos = pos.ToTileCoordinates();
 				if (!Framing.GetTileSafely(tilePos).HasSolidTile()) break;
 				owner.PickTile(tilePos.X, tilePos.Y, owner.HeldItem.pick);
