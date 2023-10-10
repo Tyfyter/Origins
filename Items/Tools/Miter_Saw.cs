@@ -10,6 +10,7 @@ namespace Origins.Items.Tools {
 		static AutoCastingAsset<Texture2D> useTexture;
 		public override void SetStaticDefaults() {
 			useTexture = ModContent.Request<Texture2D>(Texture + "_Use");
+			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 		}
 		public override void Unload() {
 			useTexture = null;
@@ -18,17 +19,22 @@ namespace Origins.Items.Tools {
 			Item.CloneDefaults(ItemID.WarAxeoftheNight);
 			Item.damage = 18;
 			Item.DamageType = DamageClass.Melee;
-			Item.axe = 16;
+			Item.axe = 10;
 			Item.width = 42;
 			Item.height = 38;
-			Item.useTime = 13;
+			Item.useTime = 5;
 			Item.useAnimation = 48;
 			Item.knockBack = 0.8f;
 			Item.value = Item.sellPrice(silver: 40);
 			Item.UseSound = SoundID.Item23;
 			Item.rare = ItemRarityID.Green;
 		}
+		public override bool AltFunctionUse(Player player) => true;
 		public override void UseItemHitbox(Player player, ref Rectangle hitbox, ref bool noHitbox) {
+			if (player.ItemAnimationJustStarted) {
+				noHitbox = true;
+				return;
+			}
 			float itemRotation = player.compositeFrontArm.rotation;
 			float size = 14 * player.GetAdjustedItemScale(Item);
 			Vector2 pos = player.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, itemRotation)
@@ -59,6 +65,12 @@ namespace Origins.Items.Tools {
 			}
 		}
 		public override void UseItemFrame(Player player) {
+			float fact = (0.5f - (player.itemAnimation / (float)player.itemAnimationMax)) * 2;
+			if (player.altFunctionUse == 2) {
+				player.itemRotation -= player.direction * fact * (System.Math.Abs(fact) - 0.5f);
+			} else {
+				player.itemRotation += player.direction * fact * (System.Math.Abs(fact) - 0.5f);
+			}
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation - MathHelper.PiOver2 * player.direction);
 		}
 		public bool DrawOverHand => true;
