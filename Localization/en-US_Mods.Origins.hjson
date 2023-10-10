@@ -92,6 +92,35 @@ Dialogue: {
 		BloodMoon2: Do not understand why others are dreary. Tonight is the time to be alive.
 		BloodMoon3: *Chittering.*
 		BloodMoon4: Blood Moon, a welcome sight.
+
+		LowSpread: Spread is {%}. Lethargic, material urgently required.
+		Spread20: Spread is {%}. The world aligns with our image, but more material is desired.
+		Spread50: Spread is {%}. The world sings harmonious, but more material is desired.
+		Spread100: Spread is {%}. A perfect world… we wonder if more material is acquirable…
+	}
+	Demolitionist: {
+		StandardDialogue9001: Ah, a story! There was once a bunch of wizards that did what I do but thought it was magic. Ain't that funny?
+		AshenWorld: The Structs bothern' yah? Well, it's like they were MADE for my explosives!
+		DefiledWorld: Trying to get past that Chunkrock, eh? Why not introduce it to one of these explosives!
+		RivenWorld: Trying to get past that Skinpaste, eh? Why not introduce it to one of these explosives!
+		BloodMoon9001: Can’t turn those bloody monsters into a bloody mess because they already bloody are. At least I can blast them into smithereens!
+	}
+	Dryad: {
+		AshenWorld: The Ashen is mechanizing the world and polluting it! You must stop the Factory.
+		CorruptWorld: The Corruption seeks to turn this world into a devoid wasteland! You must eliminate the infection.
+		CrimsonWorld: The Crimson is bleeding the world of its purity. You must heal the world of this gouge.
+		DefiledWorld1: My kind barely banished the Defiled into the Dusk. Now it’s back from a disturbance and stronger than before…
+		DefiledWorld2: The Defiled lives by its means, but even that is too much for the world…
+		WindyDefiled: It’s never wind in the Defiled Wastelands, that’s breathing…
+		DefiledHeartDown: That's it for the Defiled. Finish it up.
+		BeforeDefeatS: Have you tried using purification powder on... wait a minute...
+		BeforeDefeatDA: Have you tried using purification powder on Defiled Stone?
+		BeforeDefeatWC: Have you tried using purification powder on Spug Flesh?
+	}
+	WitchDoctor: {
+		InteractionAcidFreak1: Good relations with {NPCName} I have.
+		InteractionAcidFreak2: {NPCName} embodies confidence. I embody fondness in that.
+		InteractionAcidFreak3: {NPCName} can be quite moody, but understand that she is only a youngin.
 	}
 
 	PotatOS: {
@@ -239,6 +268,9 @@ TownNPCMood: {
 		# DislikeNPC_Truffle: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
 		
 		HateNPC: "{NPCName} is our mortal enemy. She desires a world exempt of us."
+	}
+	WitchDoctor: {
+		# LikeNPC_Acid_Freak: "{NPCName} is an interesting figure. I should explore more into her brewery."
 	}
 }
 
@@ -3624,7 +3656,6 @@ Items: {
 		DisplayName: Seal of Cinders
 		Tooltip: ""
 	}
-
 	Miter_Saw: {
 		DisplayName: Miter Saw
 		Tooltip: ""

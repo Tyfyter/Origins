@@ -199,12 +199,13 @@ STATUS EFFECTS:
 NPC DIALOGUE:
 ---
 (%3) Cyborg
-(X) Demolitionist
-(X) Dryad
+(^) Demolitionist
+(^) Dryad
+(^) Witch Doctor
 
 (^) Acid Freak
 (X) Cubekon Tinkerer
-(X) Defiled Effigy
+(^) Defiled Effigy
 (X) Dusk Trader
 ---
 
