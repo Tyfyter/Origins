@@ -16,7 +16,6 @@ namespace Origins.Layers {
 			return drawInfo.drawPlayer.ItemAnimationActive
 				&& !drawInfo.drawPlayer.JustDroppedAnItem
 				&& drawInfo.shadow == 0
-				&& drawInfo.heldItem.useStyle == Terraria.ID.ItemUseStyleID.Shoot
 				&& drawInfo.heldItem.ModItem is ICustomDrawItem;
 		}
 		public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.HeldItem, PlayerDrawLayers.ArmOverItem);

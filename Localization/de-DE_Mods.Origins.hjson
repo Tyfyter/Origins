@@ -3574,6 +3574,11 @@ Items: {
 		// DisplayName: Seal of Cinders
 		// Tooltip: ""
 	}
+
+	Miter_Saw: {
+		// DisplayName: Miter_ Saw
+		// Tooltip: ""
+	}
 }
 
 Buffs: {
@@ -4193,7 +4198,7 @@ NPCs: {
 	// Cleaver_Head.DisplayName: Cleaver
 	// Cleaver_Tail.DisplayName: Cleaver
 	// Flagellant.DisplayName: Flagellant
-	// Measly_Moeba.DisplayName: Measly Moeba
+	// Measly_Moeba.DisplayName: Measly 'Moeba
 	// Pustule_Jelly.DisplayName: Pustule Jelly
 	// Riven_Fighter.DisplayName: "{§Riven} Protoform"
 	// Riven_Mimic.DisplayName: "{§Riven} Mimic"

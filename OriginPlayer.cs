@@ -612,7 +612,7 @@ namespace Origins {
 			if (
 				(
 					drawInfo.drawPlayer.ItemAnimationActive && (
-						(item.useStyle == ItemUseStyleID.Shoot && item.ModItem is ICustomDrawItem)
+						(item.ModItem is ICustomDrawItem)
 					)
 				)) PlayerDrawLayers.HeldItem.Hide();
 

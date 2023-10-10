@@ -263,16 +263,18 @@ namespace Origins {
 			texts["Defiled"] = texts["Mods.Origins.Generic.Defiled"];
 			texts["Defiled_Wastelands"] = texts["Mods.Origins.Generic.Defiled_Wastelands"];
 			texts["The_Defiled_Wastelands"] = texts["Mods.Origins.Generic.The_Defiled_Wastelands"];
-			foreach (var text in texts.ToList()) {
-				if (text.Key.StartsWith("Mods.Origins.AprilFools")) {
-					string key = text.Key.Replace("AprilFools.", "");
-					if (texts.TryGetValue(key, out LocalizedText targetText)) {
-						LocalizationMethods._value.SetValue(targetText, text.Value.Value);
-						LocalizationMethods._hasPlurals.SetValue(targetText, LocalizationMethods._hasPlurals.GetValue(text.Value));
-						LocalizationMethods.BoundArgs.SetValue(targetText, text.Value.BoundArgs);
-					} else {
-						Mod.Logger.Warn($"Adding April Fools text instead of replacing existing text: {text.Key}");
-						texts[key] = text.Value;
+			if (OriginsModIntegrations.CheckAprilFools()) {
+				foreach (var text in texts.ToList()) {
+					if (text.Key.StartsWith("Mods.Origins.AprilFools")) {
+						string key = text.Key.Replace("AprilFools.", "");
+						if (texts.TryGetValue(key, out LocalizedText targetText)) {
+							LocalizationMethods._value.SetValue(targetText, text.Value.Value);
+							LocalizationMethods._hasPlurals.SetValue(targetText, LocalizationMethods._hasPlurals.GetValue(text.Value));
+							LocalizationMethods.BoundArgs.SetValue(targetText, text.Value.BoundArgs);
+						} else {
+							Mod.Logger.Warn($"Adding April Fools text instead of replacing existing text: {text.Key}");
+							texts[key] = text.Value;
+						}
 					}
 				}
 			}

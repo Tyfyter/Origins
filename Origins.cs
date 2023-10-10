@@ -129,6 +129,7 @@ namespace Origins {
 			Main.tileMerge[TileID.Sandstone][TileID.HardenedSand] = true;
 			for (int oID = 0; oID < OriginTile.IDs.Count; oID++) {
 				OriginTile oT = OriginTile.IDs[oID];
+				if (oT.mergeID == oT.Type) continue;
 				Logger.Info("fixing tilemerge for " + oT.GetType());
 				//Main.tileMergeDirt[oT.Type] = Main.tileMergeDirt[oT.mergeID];
 				Main.tileMerge[oT.Type] = Main.tileMerge[oT.mergeID];
