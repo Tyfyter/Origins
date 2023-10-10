@@ -18,7 +18,12 @@ namespace Origins.Layers {
 				&& drawInfo.shadow == 0
 				&& drawInfo.heldItem.ModItem is ICustomDrawItem;
 		}
-		public override Position GetDefaultPosition() => new Between(PlayerDrawLayers.HeldItem, PlayerDrawLayers.ArmOverItem);
+		public override Position GetDefaultPosition() {
+			Multiple position = new Multiple();
+			position.Add(new Between(PlayerDrawLayers.BladedGlove, PlayerDrawLayers.ProjectileOverArm), (drawInfo) => (drawInfo.drawPlayer.HeldItem?.ModItem as ICustomDrawItem)?.DrawOverHand ?? false);
+			position.Add(new Between(PlayerDrawLayers.HeldItem, PlayerDrawLayers.ArmOverItem), (_) => true);
+			return position;
+		}
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
 			Player drawPlayer = drawInfo.drawPlayer;
 			Item item = drawPlayer.HeldItem;

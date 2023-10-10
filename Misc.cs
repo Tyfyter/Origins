@@ -34,6 +34,7 @@ using ReLogic.Graphics;
 using System.Reflection.Emit;
 using Terraria.GameContent.Personalities;
 using Terraria.Map;
+using static Terraria.ModLoader.PlayerDrawLayer;
 
 namespace Origins {
 	#region classes
@@ -635,6 +636,7 @@ namespace Origins {
 	}
 	public interface ICustomDrawItem {
 		void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin);
+		bool DrawOverHand => false;
 	}
 	public interface IAltTileCollideNPC {
 		int CollisionType { get; }

@@ -61,6 +61,7 @@ namespace Origins.Items.Tools {
 		public override void UseItemFrame(Player player) {
 			player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, player.itemRotation - MathHelper.PiOver2 * player.direction);
 		}
+		public bool DrawOverHand => true;
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
 			Player drawPlayer = drawInfo.drawPlayer;
 			float itemRotation = drawPlayer.itemRotation - MathHelper.PiOver2;
