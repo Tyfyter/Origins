@@ -3596,7 +3596,7 @@ Mods: {
 
 			Piledriver: {
 				DisplayName: Piledriver
-				Tooltip: ""
+				Tooltip: <right> to mine a larger area
 			}
 
 			Cinder_Seal: {
