@@ -4,10 +4,8 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[LegacyName("Mad_Hand")]
-	public class SOTH : ModItem {
+	public class Shrap_Stack : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("SOTH");
-			// Tooltip.SetDefault("Double the gunpowder, double the fun.");
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
@@ -19,8 +17,8 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.madHand = true;
-			originPlayer.explosiveBlastRadius += 0.25f;
-			originPlayer.explosiveThrowSpeed += 0.65f;
+			originPlayer.explosiveBlastRadius += 0.15f;
+			originPlayer.explosiveThrowSpeed += 0.2f;
 		}
 	}
 }

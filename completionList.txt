@@ -347,7 +347,7 @@ ACCESSORIES:
 (X) Grapple Ravel
 (^) Ninja Ravel
 (X) Ornament of Metamorphosis
-(#2, ^2) Ravel                                     (new plans)
+(#2, ^2) Ravel                                      (new plans)
 (X) Scroll Ravel
 (X) Sigil of the Machine
 (X) Slick Ravel
@@ -362,13 +362,13 @@ ACCESSORIES:
 (^) Eccentric Stone
 (^) Spirit Shard
 (^) Stone Mask
-(X) Timbre of Hell
+(^) Timbre of Hell
 (^) Tripod Nip
 
 (^) Amebic Vial
 (^) Fiberglass Dagger
 (^) Refactoring Pieces
-(X) SOTH
+(^) Stack of Shraps
 (X) Void Arcanum
 (#2, ^2) Mana Drive
 
@@ -460,7 +460,7 @@ TOOLS:
 (^) Felnum Pickaxe
 (#, ^2) Miter Saw !!!
 (^) Parasitic Manipulator
-(#3, ^2) Pile Driver !!!
+(^) Pile Driver
 (^) Rivenator
 (^) Snatcher
 (^) Stabsmash
@@ -993,7 +993,7 @@ CONSUMABLES:
 (#2, ^2) Crimson Loot Box
 (^) Crusty Crate
 (#2, ^2) Defiled Loot Box
-(X) Festering Crate
+(#, ^2) Festering Crate
 (^) Pointy Crate
 (#2, ^2) Riven Loot Box
 
@@ -1009,7 +1009,7 @@ CONSUMABLES:
 
 (^) Defiled Amalgamation Bag
 (^) Fiberglass Weaver Bag
-(X) World Cracker Bag
+(^) World Cracker Bag
 ---
 
 MOUNTS & PETS:
@@ -1019,13 +1019,12 @@ MOUNTS & PETS:
 (^) Chromatic Scale (Rainbow Pangolin)
 
 (^) Amoeba Toy (Meberoid)
-(X) Eutrophic Cell (Gel Pod)
+(#2, ^2) Salty Seed (Eutrophic Cell)
 (@2, #2) Rusty Cross Necklace (Guardian Angel)
 (X) Smith's Hammer (Walking Furnace) !!!
 (^) Suspicious Looking Pebble (Defiled Blight)
 
 (#, ^2) Chew Toy (Chee Toy)
-(X) Familiar Dog Bone (Rufus)
 ---
 
 
@@ -1062,6 +1061,8 @@ AMMO:
 
 UI:
 ---
+(X) Ashen Map/Bestiary Backdrop
+(X) Ashen Icon
 (X) Cosmos Map/Bestiary Backdrop
 (X) Dawn Map/Bestiary Backdrop
 (X) Dawn Icon
@@ -1081,13 +1082,13 @@ UI:
 
 MUSIC:
 ---
-(O) Brine Pool
+(X) Brine Pool
 (^) Cubekon Temple
 (X) Dawn
-(X) Defiled Caverns
+(^) Defiled Caverns
 (^) Defiled Wastelands
 (^) Defiled Wastelands - Mimic Route
-(O) Fiberglass Caves
+(X) Fiberglass Caves
 (X) Fractured Isles
 (^) Riven Hive
 (^) The Dusk
@@ -1103,6 +1104,7 @@ MUSIC:
 (X) Scrapper
 (X) Severus
 
+(X) Ashen Invasion
 (X) Corruption Invasion
 (X) Crimson Invasion
 (X) Defiled Invasion

@@ -68,7 +68,30 @@ Dialogue: {
 		InteractionStorm2: Lightning is not my taste. Acid is where its at.
 		InteractionGraveYard: All that is dead will decay. All that decays is dead.
 		BloodMoon1: Oh. Do my toxins bother you, Terrarian?
-		BloodMoon2: I've had enough. Acid will be poured today.
+		BloodMoon2: I've had enough. Acid will be spilt today.
+	}
+	Defiled_Effigy: {
+		FirstDialogue: Humble of Terrarian, being spared. Hopeful my abilities prove useful.
+		StandardDialogue1: All coin proceeds to ‘Church of Defiled’. Negatory, coin is only much-needed material.
+		StandardDialogue2: Waste no time, {0}. Our vision needs followers.
+		StandardDialogue3: What is sought? Items, knowledge, or other?
+		StandardDialogue4: Survival is mandatory, desire is optional. Do you survive or desire?
+		StandardDialogue5: A world absent of us is that of error. Order and unity purpose we offer, correct?
+		DefiledNotPresent: Concerned. You- I do not understand...
+		InteractionGuide1: {NPCName} does not tell much of past, does he?
+		InteractionGuide2: Ever wonder why demons have doll of {NPCName}? I know...
+		InteractionDryad1: {NPCName}'s kind attempted destroying us during infancy. Align with her morals, you do?
+		InteractionDryad2: {NPCName}'s way of life primitive. No end to ours. Remember that.
+		InteractionParty: Too sad to celebrate. {NPCName} (party girl) will understand...
+		InteractionWind: *Excessive respsiration amplifies...* Apologies, we dislike pollen...
+		InteractionStorm1: Rain permits our chunks shift optimally. Vowed ecology-safe by rejecting petrol.
+		InteractionStorm2: Considering sub-optimal metal-material... Neglected consequences of electric shock.
+		InteractionGraveYard1: Death is an unrealistic outcome to life...
+		InteractionGraveYard2: Why offer energy back? Become circle of life.
+		BloodMoon1: We feel... execellent tonight.
+		BloodMoon2: Do not understand why others are dreary. Tonight is the time to be alive.
+		BloodMoon3: *Chittering.*
+		BloodMoon4: Blood Moon, a welcome sight.
 	}
 
 	PotatOS: {
@@ -189,6 +212,33 @@ TownNPCMood: {
 		# DislikeNPC_Zoologist: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
 		
 		HateNPC: "{NPCName} should keep away from me. He wouldn't want to know what I'd do to him."
+	}
+	Defiled_Effigy: {
+		Content: We aspire to waste time presently.
+		NoHome: Place of rest protects chunks from elements...
+		FarFromHome: Terrarian, we are lost. Where resides village?
+		LoveSpace: Tension low, healthy heart rate.
+		DislikeCrowded: We are not appreciated here, Terrarian... allow space.
+		HateCrowded: Crowdedness feeds instinct. Fix now, Terrarian.
+		Ocean: Barrier to our prison rests beyond, Terrarian...
+		LoveBiome: Satisfactory. The spirits of our brothers and sisters welcome us...
+		LikeBiome: Anywhere remains optimal for home, so long as we are present…
+		
+		HateBiome: Our chunks decay on this ground. Help us, Terrarian.
+		# HateBiome_Mushroom: The smell of mushrooms makes me sick, and I've smelled much worse.
+		# HateBiome_Ashen: Shocked. We are curious of this place... but, it bothers us. Break it.
+		# HateBiome_Corruption: Corruption. Opposite of our desires, Terrarian. Cleanse it.
+		# HateBiome_Crimson: The Crimson bleeds the world of all life. We require hospitable land, Terrarian. Clot it.
+		# HateBiome_Riven_Hive: Hive stirs sickness, this is no healthy ecosystem. Fill this cavity before it destroys us.
+		
+		LikeNPC: "{NPCName} is decent. Desire the feeling was... mutual."
+		# LikeNPC_Guide: "{NPCName} shares similar origins. {NPCName} understands."
+		# LikeNPC_WitchDoctor: "{NPCName} has explored the dark arts of Terraria. I value this."
+		
+		DislikeNPC: "{NPCName} is interesting... but, I do not take hostilities well."
+		# DislikeNPC_Truffle: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
+		
+		HateNPC: "{NPCName} is our mortal enemy. She desires a world exempt of us."
 	}
 }
 
@@ -1027,8 +1077,8 @@ Items: {
 			'''
 	}
 
-	SOTH: {
-		DisplayName: SOTH
+	Shrap_Stack: {
+		DisplayName: Stack of Shraps
 		Tooltip: Double the gunpowder, double the fun.
 	}
 
@@ -4225,6 +4275,30 @@ NPCs: {
 		}
 
 		Census.SpawnCondition: Conditions unknown
+	}
+
+	Defiled_Effigy: {
+		DisplayName: Defiled Effigy
+
+		TownNPCMood: {
+			Content: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.Content}"
+			NoHome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.NoHome}"
+			FarFromHome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.FarFromHome}"
+			LoveSpace: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LoveSpace}"
+			DislikeCrowded: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.DislikeCrowded}"
+			HateCrowded: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.HateCrowded}"
+			LoveBiome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LoveBiome}"
+			LikeBiome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LikeBiome}"
+			HateBiome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.HateBiome}"
+			LoveNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LoveNPC}"
+			LikeNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LikeNPC}"
+			DislikeNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.DislikeNPC}"
+			HateNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.HateNPC}"
+			LikeNPC_Princess: I like {NPCName}.
+			Princess_LovesNPC: I like {NPCName}.
+		}
+
+		Census.SpawnCondition: After sparing the Defiled
 	}
 
 	World_Cracker_Body.DisplayName: World Cracker
