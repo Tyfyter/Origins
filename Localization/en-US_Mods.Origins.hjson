@@ -4294,8 +4294,8 @@ NPCs: {
 			LikeNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LikeNPC}"
 			DislikeNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.DislikeNPC}"
 			HateNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.HateNPC}"
-			LikeNPC_Princess: I like {NPCName}.
-			Princess_LovesNPC: I like {NPCName}.
+			LikeNPC_Princess: We find {NPCName}'s face adorable.
+			Princess_LovesNPC: The Defiled is my favorite of the world evils. Take that Corruption nostalgics!
 		}
 
 		Census.SpawnCondition: After sparing the Defiled
