@@ -50,6 +50,7 @@ using MC = Terraria.ModLoader.ModContent;
 using ReLogic.Content;
 using Origins.Backgrounds;
 using System.Threading.Tasks;
+using Origins.Items.Tools;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -268,6 +269,7 @@ namespace Origins {
 			IL_Main.DrawRain += IL_Main_DrawRain;
 			IL_PlayerDrawLayers.DrawPlayer_28_ArmOverItemComposite += IL_PlayerDrawLayers_DrawPlayer_28_ArmOverItemComposite;
 			IL_Main.DrawSurfaceBG += IL_Main_DrawSurfaceBG;
+			On_Player.ItemCheck_UseMiningTools_TryHittingWall += On_Player_ItemCheck_UseMiningTools_TryHittingWall;
 		}
 
 		private static void On_SpriteDrawBuffer_Draw_Texture2D_Vector4_Nullable1_VertexColors_float_Vector2_SpriteEffects_float(On_SpriteDrawBuffer.orig_Draw_Texture2D_Vector4_Nullable1_VertexColors_float_Vector2_SpriteEffects_float orig, SpriteDrawBuffer self, Texture2D texture, Vector4 destinationRectangle, Rectangle? sourceRectangle, VertexColors colors, float rotation, Vector2 origin, SpriteEffects effect, float depth) {
@@ -1074,6 +1076,20 @@ namespace Origins {
 				damageTile.MinePower(x, y, pickPower, ref value);
 			}
 			return value;
+		}
+
+		private void On_Player_ItemCheck_UseMiningTools_TryHittingWall(On_Player.orig_ItemCheck_UseMiningTools_TryHittingWall orig, Player self, Item sItem, int wX, int wY) {
+			orig(self, sItem, wX, wY);
+			Debugging.ChatOverhead("eeee");
+			if (sItem.ModItem is C6_Jackhammer && self.altFunctionUse == 2) {
+				for (int i = -1; i < 2; i++) {
+					for (int j = -1; j < 2; j++) {
+						if (i != 0 || j != 0) {
+							orig(self, sItem, wX + i, wY + j);
+						}
+					}
+				}
+			}
 		}
 		#endregion
 		#region tile counts

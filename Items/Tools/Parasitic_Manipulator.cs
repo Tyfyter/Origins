@@ -62,7 +62,8 @@ namespace Origins.Items.Tools {
 			}
 		}//*/
 		public override void ModifyFishingLine(ref Vector2 lineOriginOffset, ref Color lineColor) {
-			//I think you just set lineOriginOffset to wherever in the sprite it should connect to
+			lineOriginOffset.X = 45;
+			lineOriginOffset.Y = 15;
 		}
 	}
 }

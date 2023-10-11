@@ -602,6 +602,9 @@ namespace Origins {
 			collidingY = oldYSign != 0 && Player.velocity.Y == 0;
 			if (disableUseItem) return false;
 			ItemChecking = true;
+			if (Player.HeldItem.ModItem is C6_Jackhammer && Player.altFunctionUse == 2 && Player.controlUseTile) {
+				Player.controlUseItem = true;
+			}
 			return true;
 		}
 		public override void PostItemCheck() {

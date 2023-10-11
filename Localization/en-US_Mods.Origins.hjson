@@ -3662,7 +3662,12 @@ Items: {
 
 	Miter_Saw: {
 		DisplayName: Miter Saw
-		Tooltip: ""
+		Tooltip: <right> while holding for an alternate attack
+	}
+
+	C6_Jackhammer: {
+		DisplayName: C6_ Jackhammer
+		Tooltip: <right> to mine a larger area
 	}
 }
 
@@ -4217,6 +4222,7 @@ Projectiles: {
 	Piledriver_Mine_P.DisplayName: Piledriver
 	Cinder_Seal_Dust.DisplayName: "{$Mods.Origins.Items.Cinder_Seal.DisplayName}"
 	Cinder_Seal_Explosion.DisplayName: "{$Mods.Origins.Items.Cinder_Seal.DisplayName}"
+	C6_Jackhammer_P.DisplayName: C6_ Jackhammer_ P
 }
 
 Prefixes: {
