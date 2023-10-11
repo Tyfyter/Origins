@@ -198,15 +198,15 @@ STATUS EFFECTS:
 
 NPC DIALOGUE:
 ---
-(%3) Cyborg
+(^) Cyborg
 (^) Demolitionist
 (^) Dryad
 (^) Witch Doctor
 
 (^) Acid Freak
-(X) Cubekon Tinkerer
+(^) Cubekon Tinkerer
 (^) Defiled Effigy
-(X) Dusk Trader
+(^) Dusk Trader
 ---
 
 
@@ -743,6 +743,7 @@ TILES:
 (#3, ^2) Batholith*
 (^) Bleeding Obsidian
 (X) Carburite
+(X) Compacted Scrap
 (X) Cubekon Altar
 (^) Defiled Grass*
 (^) Defiled Sand

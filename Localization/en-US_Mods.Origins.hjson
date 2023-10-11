@@ -61,7 +61,7 @@ Dialogue: {
 		StandardDialogue4: For my next experiment, I want to try my mixtures on living organisms.
 		InteractionWitchDoctor1: Ah, the Witch Doctor. Wait, which doctor?
 		InteractionWitchDoctor2: Yeah, I know {NPCName}. He's kinda from the same tribe.
-		InteractionPartyDemolitionist: I should probably tell <Name of Demolitionist> that we can use peat as snappers.
+		InteractionPartyDemolitionist: "I should probably tell {NPCName} that we can use peat as snappers."
 		InteractionParty: I never thought there was this side of me.
 		InteractionWind: Good thing acid is too heavy to be mist. Right?
 		InteractionStorm1: I guess I will not be swimming today.
@@ -69,6 +69,24 @@ Dialogue: {
 		InteractionGraveYard: All that is dead will decay. All that decays is dead.
 		BloodMoon1: Oh. Do my toxins bother you, Terrarian?
 		BloodMoon2: I've had enough. Acid will be spilt today.
+	}
+
+	Cubekon_Tinkerer: {
+		StandardDialogue1: Remember to smile, Terrarian.
+		StandardDialogue2: Usually I'm the one who likes to put up a show, but man, the Cubekons had one in for me that day...
+		StandardDialogue3: How can I make your day, Tourist?
+		StandardDialogue4: I will tell yah. Cuboid anatomy ain't easy to understand, even with my knowledge...
+		StandardDialogue5: Get your laughs while you can...
+		InteractionWizard: "I really dont know what {NPCName}'s problem is. Could you lighten his mood up for me, Tourist?"
+		InteractionTaxCollector: "I really wonder what goes on in Mr. {NPCName}'s head sometimes. I think he may be all out of laughs."
+		InteractionPartyTavernKeep: Now is the time for laughs and cheer! I could really do for some Irish Red Ale... oh, there he is.
+		InteractionParty: When it's a party, it's hard not to smile...
+		InteractionWind: The fresh air is a sure change from the Cubekon Matrix, Terrarian. A welcome one too...
+		InteractionStorm1: Oh, the storms always give me excitement.
+		InteractionStorm2: I'm weird like that... I like to go out to the park on rainy days.
+		InteractionGraveYard: I would be discouraged of quantum immortality... but undead exist, so...
+		BloodMoon1: Accounting for the various IQT pathway inconsistencies in a single Cuboid matrix alone is certainly a lot, Tourist... what could you be thinking?
+		BloodMoon2: Yeah, my current "situation" sucks right now, but how may I be of assistance, Terrarian?
 	}
 
 	Defiled_Effigy: {
@@ -118,6 +136,14 @@ Dialogue: {
 		BeforeDefeatS: Have you tried using purification powder on... wait a minute...
 		BeforeDefeatDA: Have you tried using purification powder on Defiled Stone?
 		BeforeDefeatWC: Have you tried using purification powder on Spug Flesh?
+	}
+
+	Dusk_Trader: {
+		StandardDialogue1: What is it?
+		StandardDialogue2: Give haste, Terrarian.
+		StandardDialogue3: Yes, I am the Dusk Trader. What keeps you?
+		StandardDialogue4: Yes?
+		BloodMoon: Interesting. Wicked spirits shouldn't bother us as much on this night.
 	}
 
 	WitchDoctor: {
@@ -225,9 +251,8 @@ TownNPCMood: {
 		LoveBiome: Screw the Clan Leader! I stand here proudly in the Temple!
 		# LoveBiome_Temple: Screw the Ilkamin! I stand here proudly in the Temple!
 		
-		HateBiome: The smell of mushrooms makes me sick, and I've smelled much worse.
-		# HateBiome_Mushroom: The smell of mushrooms makes me sick, and I've smelled much worse.
-		
+		HateBiome: This atmosphere makes our nervous system's itch...
+		# HateBiome_Mushroom: This place... Truffle does not even taste good.
 		
 		LikeBiome_Evil: The perfect place to melt everything down with my mega-acid brew!
 		LikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome_Evil}"
@@ -244,6 +269,38 @@ TownNPCMood: {
 		# DislikeNPC_Zoologist: "{NPCName} just lets her animals run around disturbing my peace. She ruins my work."
 		
 		HateNPC: "{NPCName} should keep away from me. He wouldn't want to know what I'd do to him."
+	}
+
+	Cubekon_Tinkerer: {
+		Content: Hm, I feel like hanging out today, Tourist.
+		NoHome: My quantum storage backpack works just fine, but I'd still like to set up shop and tinker around, ya' know?
+		FarFromHome: I've collected enough scrap for today. Time to return back to the 'shop.
+		LoveSpace: I feel like a kid again... all this room is givin' me ideas. Not the kind you'd be a fan of either...
+		DislikeCrowded: I don't really enjoy hating on things, but I sure would love some privacy right now.
+		LikeBiome: This place is quite interesting. I wonder if there's any scrap lying around?
+		DislikeBiome_Evil: I'm not into the creepy stuff, but thanks for the offer, Terrarian.
+		DislikeBiome_Ashen: This place would be really fun to work in, but it doesn't give me the good feels.
+		DislikeBiome_Corruption: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		DislikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		DislikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		DislikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
+		
+		# LoveBiome_Temple: I love the Underground, closer to the Cubekons.
+		
+		LoveNPC: There's only one name on my mind right now, Terrarian. Could yah guess?
+		# LoveNPC_Cyborg: "{NPCName} is quite the work of art. I see something beyond all that circuitry."
+		
+		LikeNPC: "{NPCName} "
+		# LikeNPC_GoblinTinkerer: "{NPCName}'s work in the workshop always catches my eye. He just needs the right tools and he'd be unstoppable..."
+		# LikeNPC_Mechanic: "{NPCName} (GoblinT) and {NPCName} (Mechanic) are so cute together... I'm almost envious..."
+		
+		DislikeNPC: "{NPCName}... poor fella. Wish I knew 'em better..."
+		# DislikeNPC_Steampunker: "{NPCName} likes to make it a little personal. She really needs to learn to smile."
+	}
+
+	Cyborg: {
+		# LoveNPC_Cubekon_Tinkerer1: "{NPCName} facilitates specific 'emotions' in my programming."
+		# LoveNPC_Cubekon_Tinkerer2: "Performing analysis on: {NPCName}. Complete. The human concept of love requires admiration, attraction, devotion, and respect. Conclusion: I am 100% in love."
 	}
 
 	Defiled_Effigy: {
@@ -271,9 +328,6 @@ TownNPCMood: {
 		# DislikeNPC_Truffle: "{NPCName}'s existence is obstacle to growth. We must take care of matter."
 		
 		HateNPC: "{NPCName} is our mortal enemy. She desires a world exempt of us."
-	}
-
-	WitchDoctor: {
 	}
 }
 
