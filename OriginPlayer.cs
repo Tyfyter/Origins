@@ -600,11 +600,19 @@ namespace Origins {
 		public override bool PreItemCheck() {
 			collidingX = oldXSign != 0 && Player.velocity.X == 0;
 			collidingY = oldYSign != 0 && Player.velocity.Y == 0;
-			if (disableUseItem) return false;
-			ItemChecking = true;
-			if (Player.HeldItem.ModItem is C6_Jackhammer && Player.altFunctionUse == 2 && Player.controlUseTile) {
-				Player.controlUseItem = true;
+			if (disableUseItem) {
+				itemUseOldDirection = Player.direction;
+				return false;
 			}
+			ItemChecking = true;
+			if (Player.HeldItem.ModItem is C6_Jackhammer or Miter_Saw && Player.controlUseTile) {
+				if (Player.ItemAnimationEndingOrEnded) {
+					Player.direction = itemUseOldDirection;
+				} else if (Player.altFunctionUse == 2) {
+					Player.controlUseItem = true;
+				}
+			}
+			itemUseOldDirection = Player.direction;
 			return true;
 		}
 		public override void PostItemCheck() {

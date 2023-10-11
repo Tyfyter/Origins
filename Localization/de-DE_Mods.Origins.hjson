@@ -3662,12 +3662,12 @@ Items: {
 
 	Miter_Saw: {
 		// DisplayName: Miter Saw
-		// Tooltip: ""
+		// Tooltip: <right> while holding for an alternate attack
 	}
 
 	C6_Jackhammer: {
 		// DisplayName: C6_ Jackhammer
-		// Tooltip: ""
+		// Tooltip: <right> to mine a larger area
 	}
 }
 

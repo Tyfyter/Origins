@@ -16,7 +16,7 @@ namespace Origins.Items.Tools {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ChlorophyteJackhammer);
-			Item.damage = 46;
+			Item.damage = 28;
 			Item.width = 28;
 			Item.height = 26;
 			Item.hammer = 55;
@@ -52,6 +52,10 @@ namespace Origins.Items.Tools {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ChlorophyteJackhammer);
+			Projectile.width = 38;
+			Projectile.height = 38;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 1;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_ItemUse itemUse) {
@@ -66,16 +70,35 @@ namespace Origins.Items.Tools {
 			return true;
 		}
 		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
-			hitbox.Inflate((int)(hitbox.Width * (Projectile.scale - 1)), (int)(hitbox.Height * (Projectile.scale - 1)));
+			if (Main.player[Projectile.owner].altFunctionUse == 2) {
+				hitbox.Inflate((int)(hitbox.Width * (Projectile.scale - 1)), (int)(hitbox.Height * (Projectile.scale - 1)));
+			}
+			hitbox.Offset((Projectile.velocity * 2).ToPoint());
 		}
 		public override void AI() {
 			Projectile.rotation -= MathHelper.PiOver2;
 			Projectile.Center = Main.player[Projectile.owner].MountedCenter + Projectile.velocity.SafeNormalize(default) * 50 * Projectile.scale;
-			if (++Projectile.frameCounter > 3) {
+			Projectile.friendly = false;
+			if (++Projectile.frameCounter > (Main.player[Projectile.owner].altFunctionUse == 2 ? 6 : 4)) {
 				Projectile.frameCounter = 0;
 				if (++Projectile.frame >= Main.projFrames[Type]) {
 					Projectile.frame = 0;
+					Projectile.friendly = true;
+					Vector2 slamPos = Projectile.Center + Projectile.velocity * 2f;
+					Terraria.Audio.SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolumeScale(0.15f).WithPitch(1), slamPos);
+					for (int i = (Main.player[Projectile.owner].altFunctionUse == 2 ? 8 : 4); i --> 0;) {
+						Dust.NewDustPerfect(
+							slamPos,
+							DustID.Torch,
+							new Vector2(0, 1).RotatedBy(Main.rand.NextFloat(MathHelper.TwoPi))
+						).velocity *= 2;
+					}
 				}
+			}
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			if (Main.player[Projectile.owner].altFunctionUse == 2) {
+				modifiers.SourceDamage *= 1.65f;
 			}
 		}
 		public override bool PreDraw(ref Color lightColor) {

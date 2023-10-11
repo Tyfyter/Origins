@@ -67,7 +67,7 @@ namespace Origins.Items.Tools {
 		public override void UseItemFrame(Player player) {
 			float fact = (0.5f - (player.itemAnimation / (float)player.itemAnimationMax)) * 2;
 			if (player.altFunctionUse == 2) {
-				player.itemRotation -= player.direction * fact * (System.Math.Abs(fact) - 0.5f);
+				player.itemRotation -= player.direction * (fact * (System.Math.Abs(fact + 0.1f) - 0.65f) + 0.2f);
 			} else {
 				player.itemRotation += player.direction * fact * (System.Math.Abs(fact) - 0.5f);
 			}

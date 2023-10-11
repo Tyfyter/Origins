@@ -1080,7 +1080,6 @@ namespace Origins {
 
 		private void On_Player_ItemCheck_UseMiningTools_TryHittingWall(On_Player.orig_ItemCheck_UseMiningTools_TryHittingWall orig, Player self, Item sItem, int wX, int wY) {
 			orig(self, sItem, wX, wY);
-			Debugging.ChatOverhead("eeee");
 			if (sItem.ModItem is C6_Jackhammer && self.altFunctionUse == 2) {
 				for (int i = -1; i < 2; i++) {
 					for (int j = -1; j < 2; j++) {

@@ -295,6 +295,7 @@ namespace Origins {
 		public int oldBreath = 200;
 		public float oldGravDir = 0;
 		public float lifeRegenTimeSinceHit = 0;
+		public int itemUseOldDirection = 0;
 		public override void ResetEffects() {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
