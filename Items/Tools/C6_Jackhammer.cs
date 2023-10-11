@@ -35,7 +35,8 @@ namespace Origins.Items.Tools {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 12)
+			.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 10)
+			.AddIngredient(ModContent.ItemType<NE8>(), 5)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}
