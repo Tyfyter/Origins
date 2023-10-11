@@ -1,3 +1,4 @@
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,6 +31,12 @@ namespace Origins.Items.Tools {
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {
 			damage = damage.Scale(1.5f);
+		}
+		public override void AddRecipes() {
+			CreateRecipe()
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 16)
+			.AddTile(TileID.Anvils)
+			.Register();
 		}
 	}
 }

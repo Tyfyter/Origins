@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Reflection;
 using ReLogic.OS;
 using System;
@@ -14,6 +15,7 @@ using System.Reflection;
 using System.Text;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
@@ -264,6 +266,142 @@ namespace Origins {
 					string filename = nameof(Origins) + "_Unused_Assets.txt";
 					string path = Path.Combine(ConfigManager.ModConfigPath, filename);
 					File.WriteAllText(path, string.Join('\n', unused));
+				}
+			}
+		}
+		public bool CheckItemObtainability {
+			get => default;
+			set {
+				if (value) {
+					List<string> unobtainable = new();
+					HashSet<int> obtainableItems = new() {
+						ModContent.ItemType<Bark>(),
+						ModContent.ItemType<Tree_Sap>(),
+
+						/*ModContent.ItemType<Chunky_Crate>(),
+						ModContent.ItemType<Knee_Slapper>(),
+						ModContent.ItemType<Prikish>(),
+						ModContent.ItemType<Bilemouth>(),
+
+						ModContent.ItemType<Crusty_Crate>(),
+						ModContent.ItemType<Tearracuda>(),
+
+						ModContent.ItemType<Tire>(),
+						ModContent.ItemType<Messy_Leech>(),*/
+					};
+					List<(int, List<int>)> recipeResultItems = new();
+					for (int i = 0; i < Main.recipe.Length; i++) {
+						Recipe recipe = Main.recipe[i];
+						List<int> requiredItems = recipe.requiredItem.Where(item => item.ModItem?.Mod is Origins).Select(item => item.type).ToList();
+						if (requiredItems.Count <= 0) {
+							obtainableItems.Add(recipe.createItem.type);
+						} else {
+							recipeResultItems.Add((recipe.createItem.type, requiredItems));
+						}
+					}
+					DropRateInfoChainFeed ratesInfo = new DropRateInfoChainFeed(1f);
+					List<DropRateInfo> dropInfoList = new List<DropRateInfo>();
+					foreach (var rule in ItemDropDatabaseMethods._entriesByNpcNetId.GetValue(Main.ItemDropsDB).Values
+						.Concat(ItemDropDatabaseMethods._entriesByItemId.GetValue(Main.ItemDropsDB).Values)
+						.SelectMany(l => l)
+						.Concat(ItemDropDatabaseMethods._globalEntries.GetValue(Main.ItemDropsDB))
+					) {
+						rule.ReportDroprates(dropInfoList, ratesInfo);
+					}
+					for (int i = 0; i < dropInfoList.Count; i++) {
+						obtainableItems.Add(dropInfoList[i].itemId);
+					}
+					foreach (var item in TileLoaderMethods.tileTypeAndTileStyleToItemType.GetValue()) {
+						obtainableItems.Add(item.Value);
+					}
+					foreach (var item in TileLoaderMethods.tiles.GetValue().SelectMany(l => l.GetItemDrops(0, 0))) {
+						obtainableItems.Add(item.type);
+					}
+
+					foreach (var item in TileLoaderMethods.wallTypeToItemType.GetValue()) {
+						obtainableItems.Add(item.Value);
+					}
+					foreach (var wall in TileLoaderMethods.walls.GetValue()) {
+						int drop = -1;
+						wall.Drop(0, 0, ref drop);
+						if (drop != -1) {
+							obtainableItems.Add(drop);
+						}
+					}
+
+					foreach (int itemType in Origins.instance.GetContent().SelectMany(c => c is IItemObtainabilityProvider provider ? provider.ProvideItemObtainability() : new int[0])) {
+						obtainableItems.Add(itemType);
+					}
+					foreach (NPCShop.Entry entry in NPCShopDatabase.AllShops.SelectMany(s => s is NPCShop shop ? shop.Entries : new NPCShop.Entry[0])) {
+						obtainableItems.Add(entry.Item.type);
+					}
+					for (int i = 0; i < ItemID.Sets.ShimmerTransformToItem.Length; i++) {
+						if (i != -1 && obtainableItems.Contains(i)) {
+							obtainableItems.Add(ItemID.Sets.ShimmerTransformToItem[i]);
+						}
+					}
+					int tries = 0;
+					while (recipeResultItems.Count > 0 && ++tries < 1000) {
+						for (int i = 0; i < ItemID.Sets.ShimmerTransformToItem.Length; i++) {
+							if (i != -1 && obtainableItems.Contains(i)) {
+								obtainableItems.Add(ItemID.Sets.ShimmerTransformToItem[i]);
+							}
+						}
+						for (int i = recipeResultItems.Count; i --> 0;) {
+							(int result, List<int> ingredients) = recipeResultItems[i];
+							if (obtainableItems.Contains(result)) {
+								recipeResultItems.RemoveAt(i);
+								continue;
+							}
+							for (int j = ingredients.Count; j --> 0;) {
+								if (obtainableItems.Contains(ingredients[j])) {
+									ingredients.RemoveAt(j);
+								}
+							}
+							if (ingredients.Count <= 0) {
+								obtainableItems.Add(result);
+							}
+							if (obtainableItems.Contains(result)) {
+								recipeResultItems.RemoveAt(i);
+							}
+						}
+					}
+					Dictionary<int, HashSet<int>> missingIngredients = new();
+					for (int i = recipeResultItems.Count; i-- > 0;) {
+						(int result, List<int> ingredients) = recipeResultItems[i];
+						if (!missingIngredients.TryGetValue(result, out HashSet<int> missing)) {
+							missingIngredients.Add(result, ingredients.ToHashSet());
+						} else {
+							foreach (var item in ingredients) {
+								missing.Add(item);
+							}
+						}
+					}
+					foreach (ILoadable content in Origins.instance.GetContent()) {
+						if (content is ModItem item && !obtainableItems.Contains(item.Type)) {
+							if (missingIngredients.TryGetValue(item.Type, out HashSet<int> missing)) {
+								unobtainable.Add($"{item.Name}: [{string.Join(", ", missing.Select(Lang.GetItemName))}]");
+							} else {
+								unobtainable.Add(item.Name);
+							}
+						}
+					}
+					unobtainable.Sort(new AssetPathComparer());
+					for (int i = 0; i < unobtainable.Count - 1; i++) {
+						string[] a = unobtainable[i].Split('/');
+						string[] b = unobtainable[i + 1].Split('/');
+						int minLength = a.Length < b.Length ? a.Length : b.Length;
+						for (int j = 0; j < minLength - 1; j++) {
+							if (a[j] != b[j]) {
+								unobtainable.Insert(i + 1, "");
+								break;
+							}
+						}
+					}
+					Directory.CreateDirectory(ConfigManager.ModConfigPath);
+					string filename = nameof(Origins) + "_Unobtainable_Items.txt";
+					string path = Path.Combine(ConfigManager.ModConfigPath, filename);
+					File.WriteAllText(path, string.Join('\n', unobtainable));
 				}
 			}
 		}

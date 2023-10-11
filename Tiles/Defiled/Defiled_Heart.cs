@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -74,7 +75,8 @@ namespace Origins.Tiles.Defiled {
 			heartBroken++;
         }
     }
-	public class Defiled_Heart_Item : ModItem, ICustomWikiStat {
+	public class Defiled_Heart_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
+		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Heart";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;

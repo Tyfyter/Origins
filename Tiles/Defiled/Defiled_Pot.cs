@@ -44,7 +44,8 @@ namespace Origins.Tiles.Defiled {
 			WorldGen.CheckPot(i, j);
 		}
 	}
-	public class Defiled_Pot_Item : ModItem, ICustomWikiStat {
+	public class Defiled_Pot_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
+		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Pot";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;

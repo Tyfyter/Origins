@@ -3666,7 +3666,7 @@ Items: {
 	}
 
 	C6_Jackhammer: {
-		// DisplayName: C6_ Jackhammer
+		// DisplayName: C6 Jackhammer
 		// Tooltip: <right> to mine a larger area
 	}
 }
@@ -4598,6 +4598,11 @@ Configs: {
 
 		CheckTextureUsage: {
 			// Label: Check Texture Usage
+			// Tooltip: ""
+		}
+
+		CheckItemObtainability: {
+			// Label: Check Item Obtainability
 			// Tooltip: ""
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -57,11 +58,11 @@ namespace Origins.Tiles.Defiled {
 			Projectile.NewProjectile(WorldGen.GetItemSource_FromTileBreak(i, j), new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0: 0, ai1: Main.myPlayer);
 			return false;
 		}
-        public override void NearbyEffects(int i, int j, bool closer) {
+		public override void NearbyEffects(int i, int j, bool closer) {
 			//Projectile.NewProjectile(spawnSource: this, new Vector2((i + 1) * 16, (j + 1) * 16), Vector2.Zero, ModContent.ProjectileType<Projectiles.Misc.Defiled_Wastelands_Signal>(), 0, 0, ai0: 0, ai1: Main.myPlayer);
 		}
 
-        public override void NumDust(int i, int j, bool fail, ref int num) {
+		public override void NumDust(int i, int j, bool fail, ref int num) {
 			num = fail ? 1 : 3;
 		}
 
@@ -76,7 +77,8 @@ namespace Origins.Tiles.Defiled {
 			r = g = b = 0.3f;
 		}
 	}
-	public class Defiled_Fissure_Item : ModItem, ICustomWikiStat {
+	public class Defiled_Fissure_Item : ModItem, ICustomWikiStat, IItemObtainabilityProvider {
+		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Fissure";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;

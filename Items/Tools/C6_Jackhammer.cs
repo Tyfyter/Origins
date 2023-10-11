@@ -4,6 +4,7 @@ using Origins.Items.Materials;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -85,7 +86,7 @@ namespace Origins.Items.Tools {
 					Projectile.frame = 0;
 					Projectile.friendly = true;
 					Vector2 slamPos = Projectile.Center + Projectile.velocity * 2f;
-					Terraria.Audio.SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolumeScale(0.15f).WithPitch(1), slamPos);
+					SoundEngine.PlaySound(Origins.Sounds.DeepBoom.WithVolumeScale(0.15f).WithPitch(1), slamPos);
 					for (int i = (Main.player[Projectile.owner].altFunctionUse == 2 ? 8 : 4); i --> 0;) {
 						Dust.NewDustPerfect(
 							slamPos,

@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public abstract class Brine_Leafed_Clover : ModItem {
+	public abstract class Brine_Leafed_Clover : ModItem, IItemObtainabilityProvider {
 		protected static sbyte faceSlot = -1;
 		public abstract int Level { get; }
 		public abstract int NextLowerTier { get; }
@@ -33,6 +33,9 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.brineClover = Level;
 			originPlayer.brineCloverItem = Item;
+		}
+		public IEnumerable<int> ProvideItemObtainability() {
+			yield return NextLowerTier;
 		}
 	}
 	public class Brine_Leafed_Clover_0 : Brine_Leafed_Clover {

@@ -686,6 +686,9 @@ namespace Origins {
 	interface ILoadExtraTextures {
 		void LoadTextures();
 	}
+	interface IItemObtainabilityProvider {
+		IEnumerable<int> ProvideItemObtainability();
+	}
 	public static class Elements {
 		public const ushort Fire = 1;
 		public const ushort Earth = 2;
