@@ -61,7 +61,7 @@ Dialogue: {
 		StandardDialogue4: For my next experiment, I want to try my mixtures on living organisms.
 		InteractionWitchDoctor1: Ah, the Witch Doctor. Wait, which doctor?
 		InteractionWitchDoctor2: Yeah, I know {NPCName}. He's kinda from the same tribe.
-		InteractionPartyDemolitionist: "I should probably tell {NPCName} that we can use peat as snappers."
+		InteractionPartyDemolitionist: I should probably tell {NPCName} that we can use peat as snappers.
 		InteractionParty: I never thought there was this side of me.
 		InteractionWind: Good thing acid is too heavy to be mist. Right?
 		InteractionStorm1: I guess I will not be swimming today.
@@ -77,8 +77,8 @@ Dialogue: {
 		StandardDialogue3: How can I make your day, Tourist?
 		StandardDialogue4: I will tell yah. Cuboid anatomy ain't easy to understand, even with my knowledge...
 		StandardDialogue5: Get your laughs while you can...
-		InteractionWizard: "I really dont know what {NPCName}'s problem is. Could you lighten his mood up for me, Tourist?"
-		InteractionTaxCollector: "I really wonder what goes on in Mr. {NPCName}'s head sometimes. I think he may be all out of laughs."
+		InteractionWizard: I really dont know what {NPCName}'s problem is. Could you lighten his mood up for me, Tourist?
+		InteractionTaxCollector: I really wonder what goes on in Mr. {NPCName}'s head sometimes. I think he may be all out of laughs.
 		InteractionPartyTavernKeep: Now is the time for laughs and cheer! I could really do for some Irish Red Ale... oh, there he is.
 		InteractionParty: When it's a party, it's hard not to smile...
 		InteractionWind: The fresh air is a sure change from the Cubekon Matrix, Terrarian. A welcome one too...
@@ -284,7 +284,6 @@ TownNPCMood: {
 		DislikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
 		DislikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
 		DislikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		
 		# LoveBiome_Temple: I love the Underground, closer to the Cubekons.
 		
 		LoveNPC: There's only one name on my mind right now, Terrarian. Could yah guess?
@@ -295,12 +294,9 @@ TownNPCMood: {
 		# LikeNPC_Mechanic: "{NPCName} (GoblinT) and {NPCName} (Mechanic) are so cute together... I'm almost envious..."
 		
 		DislikeNPC: "{NPCName}... poor fella. Wish I knew 'em better..."
-		# DislikeNPC_Steampunker: "{NPCName} likes to make it a little personal. She really needs to learn to smile."
 	}
 
 	Cyborg: {
-		# LoveNPC_Cubekon_Tinkerer1: "{NPCName} facilitates specific 'emotions' in my programming."
-		# LoveNPC_Cubekon_Tinkerer2: "Performing analysis on: {NPCName}. Complete. The human concept of love requires admiration, attraction, devotion, and respect. Conclusion: I am 100% in love."
 	}
 
 	Defiled_Effigy: {
