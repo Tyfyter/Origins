@@ -11,7 +11,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
-    public class Brine_Leaf_Clover_Tile : OriginTile, DefiledTile {
+    public class Brine_Leaf_Clover_Tile : OriginTile {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;

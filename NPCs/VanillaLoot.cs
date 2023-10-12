@@ -29,7 +29,7 @@ namespace Origins.NPCs {
 		internal static int woFEmblemsCount = 4;
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
 			List<IItemDropRule> dropRules = npcLoot.Get(false);
-			switch (npc.type) {
+			switch (npc.netID) {
 				case NPCID.CaveBat:
 				case NPCID.GiantBat:
 				case NPCID.IceBat:
@@ -58,9 +58,6 @@ namespace Origins.NPCs {
 				case NPCID.AngryBonesBigHelmet:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolt_Gun>(), 50));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 50));
-				break;
-				case NPCID.DemonEye:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Eyeball_Staff>(), 63));
 				break;
 				case NPCID.SkeletronPrime:
 				case NPCID.TheDestroyer:
@@ -189,6 +186,11 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Third_Eye>(), 4));
 				break;
 				default:
+				break;
+			}
+			switch (npc.type) {
+				case NPCID.DemonEye:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Eyeball_Staff>(), 63));
 				break;
 			}
 		}

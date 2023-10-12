@@ -18,6 +18,8 @@ using Origins.Projectiles;
 using Origins.Projectiles.Misc;
 using Origins.Questing;
 using Origins.Reflection;
+using Origins.Tiles;
+using Origins.Tiles.Brine;
 using Origins.Water;
 using Origins.World.BiomeData;
 using System;
@@ -274,6 +276,16 @@ namespace Origins {
 			oldYSign = Math.Sign(Player.velocity.Y);
 			//endCustomMovement:
 			hookTarget = -1;
+			int directionX = Math.Sign(Player.velocity.X);
+			int directionY = Math.Sign(Player.velocity.Y);
+			int vine = ModContent.TileType<Brineglow_Vine>();
+			foreach (Point item in Collision.GetTilesIn(Player.TopLeft, Player.BottomRight)) {
+				Tile tile = Framing.GetTileSafely(item);
+				if (tile.HasTile && tile.TileType == vine) {
+					ref short windSpeed = ref tile.Get<TileExtraVisualData>().TileFrameX;
+					windSpeed = (short)Math.Clamp(windSpeed + Player.velocity.X, -128, 128);
+				}
+			}
 		}
 		public override void PreUpdate() {
 			if (corruptionAssimilation > 0) {

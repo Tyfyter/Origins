@@ -1828,6 +1828,7 @@ Items: {
 	}
 
 	Bottled_Brine.DisplayName: Bottled Brine
+	Brineglow_Item.DisplayName: Brineglow
 	Brineglow.DisplayName: Brineglow
 	Bud_Barnacle.DisplayName: Bud Barnacle
 	Busted_Servo.DisplayName: Busted Servo
@@ -3719,6 +3720,11 @@ Items: {
 		DisplayName: C6 Jackhammer
 		Tooltip: <right> to mine a larger area
 	}
+
+	Brineglow_Debug_Item: {
+		DisplayName: Brineglow_ Debug_ Item
+		Tooltip: ""
+	}
 }
 
 Buffs: {
@@ -4490,6 +4496,7 @@ Tiles: {
 	Music_Box_DC: Music Box (Defiled Caverns)
 	Music_Box_DW: Music Box (Defiled Wastelands)
 	Music_Box_RH: Music Box (Riven Hive)
+	Brineglow_Vine.MapEntry: Brineglow_ Vine
 }
 
 AltBiomeDescription: {

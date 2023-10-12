@@ -28,6 +28,7 @@ namespace Origins.Tiles.Defiled {
 			TileID.Sets.FramesOnKillWall[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.DisableSmartInteract[Type] = true;
+			TileID.Sets.AllowLightInWater[Type] = true;
 			TileID.Sets.Torch[Type] = true;
 
 			DustType = DustID.Smoke;
@@ -127,6 +128,9 @@ namespace Origins.Tiles.Defiled {
 				spriteBatch.Draw(flameTexture.Value, new Vector2(i * 16 - (int)Main.screenPosition.X - (width - 16f) / 2f + xx, j * 16 - (int)Main.screenPosition.Y + offsetY + yy) + zero, new Rectangle(frameX, frameY, width, height), color, 0f, default, 1f, SpriteEffects.None, 0f);
 			}
 		}
+		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
+			base.KillTile(i, j, ref fail, ref effectOnly, ref noItem);
+		}
 	}
 	public class Bile_Torch : ModItem, ICustomWikiStat {
 		public static Vector3 Light => new(1.05f, 1.05f, 1.05f);
@@ -136,6 +140,7 @@ namespace Origins.Tiles.Defiled {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerTorch;
 			ItemID.Sets.SingleUseInGamepad[Type] = true;
 			ItemID.Sets.Torches[Type] = true;
+			ItemID.Sets.WaterTorches[Type] = true;
 		}
 
 		public override void SetDefaults() {
