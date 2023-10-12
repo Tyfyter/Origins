@@ -3,7 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
+using Origins.Items.Accessories;
 using Origins.Items.Materials;
+using Origins.Items.Other.Fish;
+using Origins.Items.Weapons.Melee;
 using Origins.Reflection;
 using ReLogic.OS;
 using System;
@@ -278,7 +281,7 @@ namespace Origins {
 						ModContent.ItemType<Bark>(),
 						ModContent.ItemType<Tree_Sap>(),
 
-						/*ModContent.ItemType<Chunky_Crate>(),
+						ModContent.ItemType<Chunky_Crate>(),
 						ModContent.ItemType<Knee_Slapper>(),
 						ModContent.ItemType<Prikish>(),
 						ModContent.ItemType<Bilemouth>(),
@@ -287,7 +290,7 @@ namespace Origins {
 						ModContent.ItemType<Tearracuda>(),
 
 						ModContent.ItemType<Tire>(),
-						ModContent.ItemType<Messy_Leech>(),*/
+						ModContent.ItemType<Messy_Leech>(),
 					};
 					List<(int, List<int>)> recipeResultItems = new();
 					for (int i = 0; i < Main.recipe.Length; i++) {
