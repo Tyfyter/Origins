@@ -33,7 +33,7 @@ namespace Origins.Tiles.Defiled {
 			Instance = null;
 		}
 		public override bool Shake(int x, int y, ref bool createLeaves) {
-			if (!Origins.PlantLoader_ShakeTree(x, y, Main.tile[x, y].TileType) && WorldGen.genRand.NextBool(15)) {
+			if (!Origins.PlantLoader_ShakeTree(x, y, Main.tile[x, y].TileType, out _) && WorldGen.genRand.NextBool(15)) {
 				int type = WorldGen.genRand.NextBool() ? ModContent.ItemType<Bileberry>() : ModContent.ItemType<Prickly_Pear>();
 				Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, type);
 				createLeaves = true;

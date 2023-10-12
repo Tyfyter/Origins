@@ -278,9 +278,6 @@ namespace Origins {
 				if (value) {
 					List<string> unobtainable = new();
 					HashSet<int> obtainableItems = new() {
-						ModContent.ItemType<Bark>(),
-						ModContent.ItemType<Tree_Sap>(),
-
 						ModContent.ItemType<Chunky_Crate>(),
 						ModContent.ItemType<Knee_Slapper>(),
 						ModContent.ItemType<Prikish>(),
