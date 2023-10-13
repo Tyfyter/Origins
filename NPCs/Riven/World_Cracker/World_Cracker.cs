@@ -529,6 +529,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			target.GetModPlayer<OriginPlayer>().RivenAssimilation += Assimilation.GetValue(null, target);
+			Projectile.Kill();
+			//Projectile.penetrate--;
 		}
 		public override void OnKill(int timeLeft) {
 			if (timeLeft > 0 && OriginClientConfig.Instance.ExtraGooeyRivenGores) {
