@@ -13,8 +13,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Origins.Tiles.Defiled {
-	public class Defiled_Sand : OriginTile, DefiledTile {
+namespace Origins.Tiles.Riven {
+	public class Silica : OriginTile, RivenTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -26,10 +26,8 @@ namespace Origins.Tiles.Defiled {
             Main.tileMerge[Type] = Main.tileMerge[TileID.Sand];
             Main.tileMerge[Type][TileID.Sand] = true;*/
 			TileID.Sets.Falling[Type] = true;
-			AddMapEntry(new Color(175, 175, 175));
-			//SetModTree(Defiled_Tree.Instance);
+			AddMapEntry(new Color(194, 200, 200));
 			mergeID = TileID.Sand;
-			AddDefiledTile();
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			if (WorldGen.noTileActions)
@@ -47,7 +45,7 @@ namespace Origins.Tiles.Defiled {
 
 			if (canFall) {
 				//Set the projectile type to ExampleSandProjectile
-				int projectileType = ProjectileType<Defiled_Sand_Ball>();
+				int projectileType = ProjectileType<Silica_Ball>();
 				float positionX = i * 16 + 8;
 				float positionY = j * 16 + 8;
 
@@ -86,29 +84,22 @@ namespace Origins.Tiles.Defiled {
 			}
 			return true;
 		}
-		/*public override int SaplingGrowthType(ref int style) {
-			style = 0;
-			return ModContent.TileType<Defiled_Tree_Sapling>();
-		}*/
 		public override bool CreateDust(int i, int j, ref int type) {
-			type = Defiled_Wastelands.DefaultTileDust;
+			type = DustID.Bone;
 			return true;
 		}
 	}
-	public class Defiled_Sand_Item : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Sand");
-		}
+	public class Silica_Item : ModItem {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SandBlock);
-			Item.createTile = TileType<Defiled_Sand>();
+			Item.createTile = TileType<Silica>();
 			Item.ammo = AmmoID.Sand;
 		}
 		public override void PickAmmo(Item weapon, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback) {
-			type = ProjectileType<Defiled_Sand_Ball>();
+			type = ProjectileType<Silica_Ball>();
 		}
 	}
-	public class Defiled_Sand_Ball : ModProjectile {
+	public class Silica_Ball : ModProjectile {
 		protected override bool CloneNewInstances => true;
 		protected bool falling = true;
 		protected int tileType;
@@ -127,7 +118,7 @@ namespace Origins.Tiles.Defiled {
 			Projectile.penetrate = -1;
 			Projectile.aiStyle = 1;
 			//Set the tile type to ExampleSand
-			tileType = TileType<Defiled_Sand>();
+			tileType = TileType<Silica>();
 		}
 
 		public override void AI() {
@@ -198,7 +189,7 @@ namespace Origins.Tiles.Defiled {
 				Tile tile = Main.tile[tileX, tileY];
 				Tile tileBelow = Main.tile[tileX, tileY + 1];
 
-				if (tile.IsHalfBlock && Projectile.velocity.Y > 0f && System.Math.Abs(Projectile.velocity.Y) > System.Math.Abs(Projectile.velocity.X))
+				if (tile.IsHalfBlock && Projectile.velocity.Y > 0f && Math.Abs(Projectile.velocity.Y) > System.Math.Abs(Projectile.velocity.X))
 					tileY--;
 
 				if (!tile.HasTile) {

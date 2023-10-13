@@ -3,7 +3,9 @@ using Origins.Items.Materials;
 using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
+using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
+using Origins.Tiles.Riven;
 using Origins.UI;
 using System;
 using System.Collections.Generic;
@@ -176,6 +178,9 @@ namespace Origins {
 			RottenChunkRecipeGroupID = ALRecipeGroups.RottenChunks.RegisteredId;
 			ShadowScaleRecipeGroupID = ALRecipeGroups.ShadowScales.RegisteredId;
 			CursedFlameRecipeGroupID = ALRecipeGroups.CursedFlames.RegisteredId;
+			RecipeGroup sandGroup = RecipeGroup.recipeGroups[RecipeGroupID.Sand];
+			sandGroup.ValidItems.Add(ModContent.ItemType<Defiled_Sand_Item>());
+			sandGroup.ValidItems.Add(ModContent.ItemType<Silica_Item>());
 		}
 		public override void PostAddRecipes() {
 			int l = Main.recipe.Length;
