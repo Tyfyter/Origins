@@ -242,7 +242,7 @@ namespace Origins {
 			Terraria.On_Player.RollLuck += Player_RollLuck;
 			Terraria.GameContent.Drawing.On_TileDrawing.Draw += TileDrawing_Draw;
 			Terraria.GameContent.Drawing.On_TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
-			Terraria.IL_NPC.StrikeNPC_HitInfo_bool_bool += NPC_StrikeNPC;
+			//Terraria.IL_NPC.StrikeNPC_HitInfo_bool_bool += NPC_StrikeNPC;
 			Terraria.DataStructures.On_PlayerDeathReason.GetDeathText += PlayerDeathReason_GetDeathText;
 			Terraria.On_Player.KillMe += Player_KillMe;// should have no effect, but is necessary for custom death text somehow
 			Terraria.On_WorldGen.PlacePot += WorldGen_PlacePot;
@@ -271,10 +271,6 @@ namespace Origins {
 			IL_PlayerDrawLayers.DrawPlayer_28_ArmOverItemComposite += IL_PlayerDrawLayers_DrawPlayer_28_ArmOverItemComposite;
 			IL_Main.DrawSurfaceBG += IL_Main_DrawSurfaceBG;
 			On_Player.ItemCheck_UseMiningTools_TryHittingWall += On_Player_ItemCheck_UseMiningTools_TryHittingWall;
-		}
-
-		private static void On_SpriteDrawBuffer_Draw_Texture2D_Vector4_Nullable1_VertexColors_float_Vector2_SpriteEffects_float(On_SpriteDrawBuffer.orig_Draw_Texture2D_Vector4_Nullable1_VertexColors_float_Vector2_SpriteEffects_float orig, SpriteDrawBuffer self, Texture2D texture, Vector4 destinationRectangle, Rectangle? sourceRectangle, VertexColors colors, float rotation, Vector2 origin, SpriteEffects effect, float depth) {
-			orig(self, texture, destinationRectangle, sourceRectangle, colors, rotation, origin, effect, depth);
 		}
 
 		private static void IL_Main_DrawSurfaceBG(ILContext il) {

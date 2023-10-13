@@ -69,7 +69,7 @@ namespace Origins.Gores.NPCs {
 				for (int i = Main.rand.Next(3, 6); i-- > 0;) {
 					Dust.NewDustPerfect(
 						dustSpawnPosition,
-						ModContent.DustType<Riven_Blood_Coating>(),
+						Main.rand.Next(Riven_Blood_Coating.IDs),
 						gore.velocity.RotatedByRandom(0.5f) * Main.rand.NextFloat(0f, 1f) * 0.5f
 					).customData = dustCustomData;
 				}
@@ -88,16 +88,8 @@ namespace Origins.Gores.NPCs {
 			gore.active = false;
 		}
 	}
-	public class R_Effect_Blood2 : R_Effect_Blood1 {
-		public override Color? GetAlpha(Gore gore, Color lightColor) {
-			return new Color(255, 255, 255, 0);
-		}
-	}
-	public class R_Effect_Blood3 : R_Effect_Blood1 {
-		public override Color? GetAlpha(Gore gore, Color lightColor) {
-			return new Color(255, 255, 255, 0);
-		}
-	}
+	public class R_Effect_Blood2 : R_Effect_Blood1 {}
+	public class R_Effect_Blood3 : R_Effect_Blood1 {}
 	public class R_Effect_Blood1_Small : ModGore {
 		public override string Texture => "Origins/Gores/NPCs/R_Effect_Blood1";
 		public override void SetStaticDefaults() {
@@ -123,6 +115,7 @@ namespace Origins.Gores.NPCs {
 		internal static Stack<int> cachedDusts;
 		internal static bool anyActive;
 		public static ScreenTarget SlimeTarget { get; private set; }
+		public static int[] IDs { get; private set; }
 		public override string Texture => "Origins/Gores/NPCs/R_Effect_Blood1";
 		public override bool Update(Dust dust) {
 			Lighting.AddLight(dust.position, 0.0175f, 0.05f, 0.0375f);
@@ -174,9 +167,17 @@ namespace Origins.Gores.NPCs {
 			if (Main.dedServ) return;
 			if (Lighting.NotRetro) DrawAura(Main.spriteBatch);
 		}
+		public override void SetStaticDefaults() {
+			IDs = new int[] {
+				ModContent.DustType<Riven_Blood_Coating>(),
+				ModContent.DustType<Riven_Blood_Coating2>(),
+				ModContent.DustType<Riven_Blood_Coating3>()
+			};
+		}
 		public override void Unload() {
 			cachedDusts = null;
 			SlimeTarget = null;
+			IDs = null;
 		}
 		static void MaskAura(SpriteBatch spriteBatch) {
 			if (Main.dedServ) return;
@@ -206,5 +207,15 @@ namespace Origins.Gores.NPCs {
 			anyActive = true;
 			return false;
 		}
+	}
+	public class Riven_Blood_Coating2 : Riven_Blood_Coating {
+		public override string Texture => "Origins/Gores/NPCs/R_Effect_Blood2";
+		public override void Load() {}
+		public override void Unload() {}
+	}
+	public class Riven_Blood_Coating3 : Riven_Blood_Coating {
+		public override string Texture => "Origins/Gores/NPCs/R_Effect_Blood3";
+		public override void Load() { }
+		public override void Unload() { }
 	}
 }

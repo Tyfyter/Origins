@@ -26,7 +26,7 @@ using Terraria.ModLoader;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
 namespace Origins.NPCs.Riven.World_Cracker {
-	public class World_Cracker_Head : WormHead, ILoadExtraTextures {
+	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy {
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
@@ -257,14 +257,14 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			return false;
 		}
 	}
-	public class World_Cracker_Body : WormBody, ILoadExtraTextures {
+	public class World_Cracker_Body : WormBody, ILoadExtraTextures, IRivenEnemy {
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = (int)value; }
 		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers(0) {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
 			});
 		}
@@ -311,10 +311,10 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			CommonWormInit(this);
 		}
 	}
-	public class World_Cracker_Tail : WormTail {
+	public class World_Cracker_Tail : WormTail, IRivenEnemy {
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = (int)value; }
 		public override void SetStaticDefaults() {
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers(0) {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() {
 				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
 			});
 		}
@@ -372,28 +372,29 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			List<Rectangle> frames = new();
 			void AddFrame(NPC currentNPC, Rectangle baseFrame) {
 				if (currentNPC.ai[3] <= 0) {
-					baseFrame.Y = 58;
-					baseFrame.Height = 2;
+					baseFrame.Y = 27;
+					baseFrame.Height = 1;
 				} else if (currentNPC.ai[3] < MaxArmorHealth * 0.5f) {
-					baseFrame.Y += 60;
+					baseFrame.Y += 28;
 				}
 				totalWidth += baseFrame.Width;
 				frames.Add(baseFrame);
 			}
-			AddFrame(npc, new Rectangle(0, 0, 50, 36));
-			totalWidth -= 60;
+			AddFrame(npc, new Rectangle(0, 0, 32, 26));
+			totalWidth -= 48;
 			NPC current = Main.npc[(int)npc.ai[0]];
 			int tailType = ModContent.NPCType<World_Cracker_Tail>();
 			while (current.type != tailType) {
-				AddFrame(current, new Rectangle(52, 0, 30, 36));
+				AddFrame(current, new Rectangle(34, 0, 32, 26));
 				current = Main.npc[(int)current.ai[0]];
 			}
-			AddFrame(npc, new Rectangle(84, 0, 26, 36));
+			AddFrame(npc, new Rectangle(68, 0, 32, 26));
 			Vector2 pos = drawParams.BarCenter;
 			float scale = 1f;
-			float barWidth = drawParams.BarTexture.Width - 60;
+			float barWidth = drawParams.BarTexture.Width - 48;
 			pos.X += barWidth * 0.5f;
 			pos.X -= 8;
+			pos.Y += 10;
 			for (int i = frames.Count - 1; i >= 0; i--) {
 				Rectangle frame = frames[i];
 				spriteBatch.Draw(HPBarArmorTexture, pos, frame, Color.White, 0, frame.Size() / 2, scale, 0, 0);
@@ -485,6 +486,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public static int ID { get; private set; } = -1;
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Amoeba_Bubble";
 		public override string GlowTexture => Texture;
+		public AssimilationAmount Assimilation => 0.04f;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Amoeba Bubble");
 			Main.projFrames[Projectile.type] = 4;
@@ -525,28 +527,18 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			Projectile.penetrate--;
 			return false;
 		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Vector2 hitbox = Projectile.Hitbox.Center.ToVector2();
-			Vector2 intersect = Rectangle.Intersect(Projectile.Hitbox, target.Hitbox).Center.ToVector2();
-			bool bounced = false;
-			if (hitbox.X != intersect.X) {
-				Projectile.velocity.X = -Projectile.velocity.X;
-				bounced = true;
-			}
-			if (hitbox.Y != intersect.Y) {
-				Projectile.velocity.Y = -Projectile.velocity.Y;
-				bounced = true;
-			}
-			if (!bounced) {
-				if (Math.Abs(Projectile.velocity.X) > Math.Abs(Projectile.velocity.Y)) {
-					Projectile.velocity.X = -Projectile.velocity.X;
-				} else if (Math.Abs(Projectile.velocity.Y) > Math.Abs(Projectile.velocity.X)) {
-					Projectile.velocity.Y = -Projectile.velocity.Y;
-				}
-			}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.GetModPlayer<OriginPlayer>().RivenAssimilation += Assimilation.GetValue(null, target);
 		}
 		public override void OnKill(int timeLeft) {
-			base.OnKill(timeLeft);
+			if (timeLeft > 0 && OriginClientConfig.Instance.ExtraGooeyRivenGores) {
+				Gore.NewGore(
+					 Projectile.GetSource_Death(),
+					 Projectile.Center,
+					 Projectile.oldVelocity,
+					 Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+				 );
+			}
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			float timeFactor = 1f;

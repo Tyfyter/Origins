@@ -58,6 +58,11 @@ namespace Origins.NPCs.MiscE {
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return NPCTypes.Contains(entity.type);
 		}
+		public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers) {
+			if (npc.ichor) {
+				modifiers.Defense.Flat += 5;
+			}
+		}
 		public override void OnHitPlayer(NPC npc, Player target, Player.HurtInfo hurtInfo) {
 			/*if (GameModeID.Master) {
 				AssimilationAmounts = AssimilationAmounts * 1.5;

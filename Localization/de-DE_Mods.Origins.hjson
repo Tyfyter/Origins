@@ -3727,7 +3727,7 @@ Items: {
 	}
 
 	Silica_Item: {
-		// DisplayName: Silica_ Item
+		// DisplayName: Silica
 		// Tooltip: ""
 	}
 }
@@ -4284,7 +4284,7 @@ Projectiles: {
 	// Cinder_Seal_Dust.DisplayName: "{$Mods.Origins.Items.Cinder_Seal.DisplayName}"
 	// Cinder_Seal_Explosion.DisplayName: "{$Mods.Origins.Items.Cinder_Seal.DisplayName}"
 	// C6_Jackhammer_P.DisplayName: C6_ Jackhammer_ P
-	// Silica_Ball.DisplayName: Silica_ Ball
+	// Silica_Ball.DisplayName: Silica Ball
 }
 
 Prefixes: {

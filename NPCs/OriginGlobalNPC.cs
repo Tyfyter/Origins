@@ -182,13 +182,14 @@ namespace Origins.NPCs {
 		public override void ModifyIncomingHit(NPC npc, ref NPC.HitModifiers modifiers) {
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				modifiers.CritDamage *= 1.3f;
+				modifiers.Defense -= 0.2f;
 			}
 			if (tornCurrentSeverity > 0) {
 				modifiers.FinalDamage /= 1 - tornCurrentSeverity;
 			}
-			/*if (explosive) {
-				damage = damage - npc.defense;
-			}*/
+			if (npc.GetGlobalNPC<OriginGlobalNPC>().barnacleBuff) {
+				modifiers.Defense += 0.25f;
+			}
 		}
 		public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers) {
 			if (projectile.minion || ProjectileID.Sets.MinionShot[projectile.type]) {
