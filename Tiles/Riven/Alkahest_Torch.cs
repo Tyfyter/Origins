@@ -28,6 +28,7 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.FramesOnKillWall[Type] = true;
 			TileID.Sets.DisableSmartCursor[Type] = true;
 			TileID.Sets.DisableSmartInteract[Type] = true;
+			TileID.Sets.AllowLightInWater[Type] = true;
 			TileID.Sets.Torch[Type] = true;
 
 			DustType = DustID.CoralTorch;
@@ -38,14 +39,11 @@ namespace Origins.Tiles.Riven {
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(TileID.Torches, 0));
 
-			// This code adds style-specific properties to style 1. Style 1 is used by ExampleWaterTorch. This code allows the tile to be placed in liquids. More info can be found in the guide: https://github.com/tModLoader/tModLoader/wiki/Basic-Tile#newsubtile-and-newalternate
-			TileObjectData.newSubTile.CopyFrom(TileObjectData.newTile);
-			TileObjectData.newSubTile.LinkedAlternates = true;
-			TileObjectData.newSubTile.WaterDeath = false;
-			TileObjectData.newSubTile.LavaDeath = false;
-			TileObjectData.newSubTile.WaterPlacement = LiquidPlacement.Allowed;
-			TileObjectData.newSubTile.LavaPlacement = LiquidPlacement.Allowed;
-			TileObjectData.addSubTile(1);
+			TileObjectData.newTile.LinkedAlternates = true;
+			TileObjectData.newTile.WaterDeath = false;
+			TileObjectData.newTile.LavaDeath = true;
+			TileObjectData.newTile.WaterPlacement = LiquidPlacement.Allowed;
+			TileObjectData.newTile.LavaPlacement = LiquidPlacement.NotAllowed;
 
 			TileObjectData.addTile(Type);
 
@@ -136,6 +134,7 @@ namespace Origins.Tiles.Riven {
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.ShimmerTorch;
 			ItemID.Sets.SingleUseInGamepad[Type] = true;
 			ItemID.Sets.Torches[Type] = true;
+			ItemID.Sets.WaterTorches[Type] = true;
 		}
 
 		public override void SetDefaults() {

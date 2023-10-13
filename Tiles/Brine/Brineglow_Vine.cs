@@ -20,7 +20,7 @@ namespace Origins.Tiles.Brine {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (Glows(tile)) color.Z += MathHelper.Max(1 - color.Z * 0.5f, color.Z);
+			if (Glows(tile)) color.Z += MathHelper.Max(1 - color.Z * 0.5f, 0);
 		}
 		public static bool Glows(Tile tile) {
 			switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
@@ -68,6 +68,7 @@ namespace Origins.Tiles.Brine {
 			Main.tileNoFail[Type] = true;
 			Main.tileSpelunker[Type] = true;
 			Main.tileWaterDeath[Type] = false;
+			Main.tileLighted[Type] = true;
 			TileID.Sets.ReplaceTileBreakUp[Type] = true;
 			TileID.Sets.IgnoredInHouseScore[Type] = true;
 			TileID.Sets.IgnoredByGrowingSaplings[Type] = true;
@@ -75,11 +76,11 @@ namespace Origins.Tiles.Brine {
 
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Brine Leaf Clover");
-			AddMapEntry(new Color(164, 192, 56), name);
+			AddMapEntry(new Color(37, 128, 109), name);
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			TileObjectData.newTile.WaterDeath = false;
-			TileObjectData.newTile.WaterPlacement = LiquidPlacement.Allowed;
+			TileObjectData.newTile.WaterPlacement = LiquidPlacement.OnlyInFullLiquid;
 			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidTile | AnchorType.AlternateTile, 1, 0);
 			TileObjectData.newTile.AnchorValidTiles = new int[] {
 				TileType<Peat_Moss_Tile>(),
@@ -94,15 +95,24 @@ namespace Origins.Tiles.Brine {
 			DustType = DustID.JungleGrass;
 			RegisterItemDrop(ItemType<Brineglow>());
 		}
-
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (Glows(Framing.GetTileSafely(i, j))) b = 0.1f;
+		}
 		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {
 			if (i % 2 == 0) {
 				spriteEffects = SpriteEffects.FlipHorizontally;
 			}
 		}
-		public override bool RightClick(int i, int j) {
-			WorldGen.TileFrame(i, j);
-			return true;
+		public override void RandomUpdate(int i, int j) {
+			if (!Framing.GetTileSafely(i, j - 1).HasTile && Main.rand.NextBool(2)) {
+				if (TileObject.CanPlace(i, j - 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
+					objectData.style = 0;
+					objectData.alternate = 0;
+					objectData.random = 0;
+					TileObject.Place(objectData);
+					WorldGen.TileFrame(i, j);
+				}
+			}
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile below = Framing.GetTileSafely(i, j + 1);
@@ -208,8 +218,9 @@ namespace Origins.Tiles.Brine {
 				if (i % 2 == 0) {
 					spriteEffects = SpriteEffects.FlipHorizontally;
 				}
-				//Vector2 inexplicableOffset = new Vector2(12, 13) * 16;
-				Vector2 position = new Vector2(i + 12, j + 13) * 16 - Main.screenPosition;
+
+				Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange);
+				Vector2 position = new Vector2(i, j) * 16 - Main.screenPosition + zero;
 				//position.Y += 2;
 				Rectangle frame = new Rectangle(0, 0, 16, 16);//2
 				//float lastWindGridPush = 0;
@@ -231,6 +242,7 @@ namespace Origins.Tiles.Brine {
 							dust.noLight = true;
 						}
 					}
+					//Dust.NewDustPerfect(position + Main.screenPosition - zero, DustID.AmberBolt, Vector2.Zero).noGravity = true;
 					frame.X = tile.TileFrameX;
 					frame.Y = tile.TileFrameY;
 					Main.spriteBatch.Draw(

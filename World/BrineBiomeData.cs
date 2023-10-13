@@ -260,7 +260,28 @@ namespace Origins.World.BiomeData {
 						validTiles
 					);
 				}
-				if (GenVars.structures is not null) GenVars.structures.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, minGenX - minGenY), 6);
+				int vineTries = 0;
+				int vineTile = ModContent.TileType<Brineglow_Vine>();
+				int vineCount = 0;
+				for (int k = genRand.Next(200, 300); k > 0;) {
+					int posX = genRand.Next(minGenX, maxGenX);
+					int posY = genRand.Next(minGenY, maxGenY);
+					int length = 0;
+					bool isVine = false;
+					Tile currentTile;
+					for (; (currentTile = Framing.GetTileSafely(posX, posY)).HasTile; posY--) if (currentTile.TileType == vineTile) isVine = true;
+					for (; !isVine && TileObject.CanPlace(posX, posY, vineTile, 0, 0, out TileObject objectData, false, checkStay: true); posY--) {
+						objectData.style = 0;
+						objectData.alternate = 0;
+						objectData.random = 0;
+						TileObject.Place(objectData);
+						length++;
+						if (genRand.NextBool(12 - length)) break;
+					}
+					if (length > 0 || ++vineTries > 1000) k--;
+					if (length > 0) vineCount++;
+				}
+				if (GenVars.structures is not null) GenVars.structures.AddProtectedStructure(new Rectangle(minGenX, minGenY, maxGenX - minGenX, maxGenY - minGenY), 6);
 			}
 			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
 				ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();

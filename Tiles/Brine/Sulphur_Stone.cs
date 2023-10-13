@@ -19,6 +19,16 @@ namespace Origins.Tiles.Brine {
 		public override bool CanExplode(int i, int j) {
 			return false;
 		}
+		public override void RandomUpdate(int i, int j) {
+			if (!Framing.GetTileSafely(i, j - 1).HasTile) {
+				if (TileObject.CanPlace(i, j - 1, TileType<Brineglow_Vine>(), 0, 0, out TileObject objectData, false, checkStay: true)) {
+					objectData.style = 0;
+					objectData.alternate = 0;
+					objectData.random = 0;
+					TileObject.Place(objectData);
+				}
+			}
+		}
 	}
 	public class Sulphur_Stone_Item : ModItem {
 		public override void SetStaticDefaults() {
