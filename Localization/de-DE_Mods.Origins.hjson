@@ -3730,6 +3730,16 @@ Items: {
 		// DisplayName: Silica
 		// Tooltip: ""
 	}
+
+	Bilious_Crate: {
+		// DisplayName: Bilious Crate
+		// Tooltip: ""
+	}
+
+	Festering_Crate: {
+		// DisplayName: Festering Crate
+		// Tooltip: ""
+	}
 }
 
 Buffs: {
@@ -4503,6 +4513,10 @@ Tiles: {
 	// Music_Box_DW: Music Box (Defiled Wastelands)
 	// Music_Box_RH: Music Box (Riven Hive)
 	// Brineglow_Vine.MapEntry: Brineglow_ Vine
+	// Bilious_Crate_Tile.MapEntry: Bilious Crate
+	// Chunky_Crate_Tile.MapEntry: Chunky Crate
+	// Crusty_Crate_Tile.MapEntry: Crusty Crate
+	// Festering_Crate_Tile.MapEntry: Festering Crate
 }
 
 AltBiomeDescription: {
@@ -4529,8 +4543,8 @@ MapObject: {
 }
 
 Keybinds: {
-	// "Trigger Set Bonus.DisplayName": Trigger  Set  Bonus
-	// "Inspect Item.DisplayName": Inspect  Item
+	// "Trigger Set Bonus.DisplayName": Trigger Set Bonus
+	// "Inspect Item.DisplayName": Inspect Item
 }
 
 Configs: {

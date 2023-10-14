@@ -556,52 +556,7 @@ namespace Origins {
 			netInitialized = false;
 		}
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
-			bool zoneDefiled = Player.InModBiome<Defiled_Wastelands>();
-			bool zoneRiven = Player.InModBiome<Riven_Hive>();
-			bool junk = (itemDrop >= ItemID.OldShoe && itemDrop < ItemID.MinecartTrack);
-			if (zoneDefiled && zoneDefiled) {
-				if (Main.rand.NextBool()) {
-					zoneDefiled = false;
-				} else {
-					zoneRiven = false;
-				}
-			}
-			if (zoneDefiled) {
-				if (attempt.crate) {
-					if (attempt.rare && !(attempt.veryrare || attempt.legendary)) {
-						itemDrop = ModContent.ItemType<Chunky_Crate>();
-					}
-				} else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
-					itemDrop = ModContent.ItemType<Knee_Slapper>();
-				} else if (attempt.uncommon) {
-					int prikish = ModContent.ItemType<Prikish>();
-					if (attempt.questFish == prikish) {
-						itemDrop = prikish;
-					} else {
-						itemDrop = ModContent.ItemType<Bilemouth>();
-					}
-				}
-			} else if (zoneRiven) {
-				if (attempt.crate) {
-					if (attempt.rare && !(attempt.veryrare || attempt.legendary)) {
-						itemDrop = ModContent.ItemType<Crusty_Crate>();
-					}
-				} else if (attempt.legendary && Main.hardMode && Main.rand.NextBool(2)) {
-					itemDrop = ModContent.ItemType<Knee_Slapper>();
-				} else if (attempt.uncommon) {
-					itemDrop = ModContent.ItemType<Tearracuda>();
-				}
-			}
-			if (junk) {
-				if (Main.rand.NextBool(4)) {
-					itemDrop = ModContent.ItemType<Tire>();
-				}
-			}
-			if (Player.ZoneJungle && attempt.uncommon && !(attempt.rare || attempt.veryrare || attempt.legendary)) {
-				if (Main.rand.NextBool(10)) {
-					itemDrop = ModContent.ItemType<Messy_Leech>();
-				}
-			} // Blotopus here
+			FishingLoot.Pool.CatchFish(Player, attempt, ref itemDrop, ref npcSpawn, ref sonar, ref sonarPosition);
 		}
 		public override bool CanUseItem(Item item) {
 			if (ravel) {
