@@ -106,7 +106,7 @@ ENEMY NPCS:
 (^) Barnacleback
 (^) Bottomfeeder
 (^) Buckethead Zombie
-(X) Cellarkeep
+(#, ^2) Cellarkeep !!!
 (^) Chunky Slime
 (^) Cleaver
 (^) Conehead Zombie
@@ -132,7 +132,7 @@ ENEMY NPCS:
 (X) Brine Moccasin
 (@5, #) Carpalfish*
 (X) Defiled Asphyxiator
-(@5, #3, %2) Defiled Mimic
+(@, #3) Defiled Mimic
 (X) Defiled Reaper
 (@5, ^3/4) Defiled Tripod
 (^) Flagellant
@@ -141,7 +141,7 @@ ENEMY NPCS:
 (X) Holy Warrior
 (X) King Crab
 (#, ^2) Mildew Creeper
-(#2?, ^2) Mitoworm
+(^) Mitoworm
 (X) Peat Lobber
 (@5, #3) Riven Mimic
 (X) Sea Dragon
@@ -184,11 +184,11 @@ STATUS EFFECTS:
 ---
 (^) Assimilation
 (X) Celestial Flames
-(#3, ^2) Defiled Exhaustion
+(^) Defiled Exhaustion
 (X) Ionizing Radiation
 (#3, ^2) Impeding Shrapnel !!!
 (^) Rasterize
-(@3, ^3) Torn
+(@3, ^3) Torn (would the shader be something like Riven_Blood_Map?)
 (^) Totally Safe
 (O) Toxic Shock
 (X) Whiplash
