@@ -1167,12 +1167,14 @@ namespace Origins {
 		}
 		#endregion worldgen
 		#region graphics
+		public static int drawPlayersWithShader = -1;
+		public static int keepPlayerShader = -1;
 		static int forcePlayerShader = -1;
-		private void On_PlayerDrawLayers_DrawPlayer_TransformDrawData(On_PlayerDrawLayers.orig_DrawPlayer_TransformDrawData orig, ref PlayerDrawSet drawinfo) {
+		private static void On_PlayerDrawLayers_DrawPlayer_TransformDrawData(On_PlayerDrawLayers.orig_DrawPlayer_TransformDrawData orig, ref PlayerDrawSet drawinfo) {
 			orig(ref drawinfo);
 			if (forcePlayerShader >= 0) {
 				for (int i = 0; i < drawinfo.DrawDataCache.Count; i++) {
-					drawinfo.DrawDataCache[i] = drawinfo.DrawDataCache[i] with { shader = forcePlayerShader };
+					if (drawinfo.DrawDataCache[i].shader != keepPlayerShader) drawinfo.DrawDataCache[i] = drawinfo.DrawDataCache[i] with { shader = forcePlayerShader };
 				}
 			}
 		}
@@ -1182,6 +1184,17 @@ namespace Origins {
 			forcePlayerShader = -1;
 			try {
 				OriginPlayer originPlayer = drawPlayer.GetModPlayer<OriginPlayer>();
+				if (drawPlayersWithShader >= 0) {
+					forcePlayerShader = drawPlayersWithShader;
+					if (drawPlayersWithShader == coordinateMaskFilterID) {
+						coordinateMaskFilter.Shader.Parameters["uOffset"].SetValue(drawPlayer.position);
+						coordinateMaskFilter.Shader.Parameters["uScale"].SetValue(1f);
+						coordinateMaskFilter.UseColor(new Color((Main.MouseScreen.Y * 2) / Main.screenHeight, 0f, originPlayer.tornCurrentSeverity));
+						coordinateMaskFilter.UseOpacity(1);//supposed to be originPlayer.tornCurrentSeverity, but can't figure out how to fix blending
+					}
+					orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);
+					return;
+				}
 				if (originPlayer.amebicVialVisible) {
 
 					const float offset = 2;

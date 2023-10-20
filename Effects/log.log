@@ -1,21 +1,10 @@
-Description file detected: 10
-* AmebicProtection.fx
-* BiomeShade.fx
-* BlackHole.fx
-* MaskedPurpleJellyFilter.fx
-* MaskedRasterizeFilter.fx
-* PerlinFade.fx
-* Rasterize.fx
-* RivenBloodCoating.fx
-* Solvent.fx
-* TileOutline.fx
 
-Start loading description file: AmebicProtection.fx ..Done!
-Start compiling font..Done!
-Start compiling font content file: AmebicProtection.xnb ..Done!
+Loading description file: AmebicProtection.fx... Done!
+Compiling font... Done!
+Compiling font content file: AmebicProtection.xnb... Done!
 
-Start loading description file: BiomeShade.fx ..Done!
-Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Loading description file: BiomeShade.fx... Done!
+Compiling font... Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
 File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx
 Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
@@ -24,44 +13,60 @@ File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins
 Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
 File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BiomeShade.fx
-.Done!
-Start compiling font content file: BiomeShade.xnb ..Done!
+Done!
+Compiling font content file: BiomeShade.xnb... Done!
 
-Start loading description file: BlackHole.fx ..Done!
-Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BlackHole.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Loading description file: BlackHole.fx... Done!
+Compiling font... Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BlackHole.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
 File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\BlackHole.fx
-.Done!
-Start compiling font content file: BlackHole.xnb ..Done!
+Done!
+Compiling font content file: BlackHole.xnb... Done!
 
-Start loading description file: MaskedPurpleJellyFilter.fx ..Done!
-Start compiling font..Done!
-Start compiling font content file: MaskedPurpleJellyFilter.xnb ..Done!
+Loading description file: CoordinateMaskFilter.fx... Done!
+Compiling font... Done!
+Compiling font content file: CoordinateMaskFilter.xnb... Done!
 
-Start loading description file: MaskedRasterizeFilter.fx ..Done!
-Start compiling font..Done!
-Start compiling font content file: MaskedRasterizeFilter.xnb ..Done!
+Loading description file: MaskedPurpleJellyFilter.fx... Done!
+Compiling font... Done!
+Compiling font content file: MaskedPurpleJellyFilter.xnb... Done!
 
-Start loading description file: PerlinFade.fx ..Done!
-Start compiling font.Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\PerlinFade.fx: warning X3081: potentially unintended use of a comma expression in a variable initializer
+Loading description file: MaskedRasterizeFilter.fx... Done!
+Compiling font... Done!
+Compiling font content file: MaskedRasterizeFilter.xnb... Done!
+
+Loading description file: MaskedTornFilter.fx... Done!
+Compiling font... Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx
+Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx
+Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx: warning X4121: gradient-based operations must be moved out of flow control to prevent divergence. Performance may improve by using a non-gradient operation
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\MaskedTornFilter.fx
+Done!
+Compiling font content file: MaskedTornFilter.xnb... Done!
+
+Loading description file: PerlinFade.fx... Done!
+Compiling font... Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\PerlinFade.fx: warning X3081: potentially unintended use of a comma expression in a variable initializer
 Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
 File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\PerlinFade.fx
-.Done!
-Start compiling font content file: PerlinFade.xnb ..Done!
+Done!
+Compiling font content file: PerlinFade.xnb... Done!
 
-Start loading description file: Rasterize.fx ..Done!
-Start compiling font..Done!
-Start compiling font content file: Rasterize.xnb ..Done!
+Loading description file: Rasterize.fx... Done!
+Compiling font... Done!
+Compiling font content file: Rasterize.xnb... Done!
 
-Start loading description file: RivenBloodCoating.fx ..Done!
-Start compiling font..Done!
-Start compiling font content file: RivenBloodCoating.xnb ..Done!
+Loading description file: RivenBloodCoating.fx... Done!
+Compiling font... Done!
+Compiling font content file: RivenBloodCoating.xnb... Done!
 
-Start loading description file: Solvent.fx ..Done!
-Start compiling font..Done!
-Start compiling font content file: Solvent.xnb ..Done!
+Loading description file: Solvent.fx... Done!
+Compiling font... Done!
+Compiling font content file: Solvent.xnb... Done!
 
-Start loading description file: TileOutline.fx ..Done!
-Start compiling font..Done!
-Start compiling font content file: TileOutline.xnb ..Done!
-
+Loading description file: TileOutline.fx... Done!
+Compiling font... Done!
+Compiling font content file: TileOutline.xnb... Done!

@@ -536,7 +536,6 @@ namespace Origins {
 			player.cBeard = cBeard;
 			player.cMinion = cMinion;
 			player.cLeinShampoo = cLeinShampoo;
-
 		}
 	}
 	public struct ItemSlotSet {
@@ -1364,6 +1363,17 @@ namespace Origins {
 		#region spritebatch
 		public static void Restart(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.End();
+			spriteBatch.Start(
+				sortMode,
+				blendState ?? BlendState.AlphaBlend,
+				samplerState ?? SamplerState.LinearClamp,
+				rasterizerState ?? Main.Rasterizer,
+				effect,
+				transformMatrix ?? Main.GameViewMatrix.TransformationMatrix,
+				depthStencilState ?? DepthStencilState.None
+			);
+		}
+		public static void Start(this SpriteBatch spriteBatch, SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null, DepthStencilState depthStencilState = null) {
 			spriteBatch.Begin(
 				sortMode,
 				blendState ?? BlendState.AlphaBlend,
@@ -1393,6 +1403,9 @@ namespace Origins {
 		}
 		public static void Restart(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode? sortMode = null, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
 			spriteBatch.End();
+			spriteBatch.Start(spriteBatchState, sortMode ?? spriteBatchState.sortMode, blendState ?? spriteBatchState.blendState, samplerState ?? spriteBatchState.samplerState, rasterizerState ?? spriteBatchState.rasterizerState, effect ?? spriteBatchState.effect, transformMatrix ?? spriteBatchState.transformMatrix);
+		}
+		public static void Start(this SpriteBatch spriteBatch, SpriteBatchState spriteBatchState, SpriteSortMode? sortMode = null, BlendState blendState = null, SamplerState samplerState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix? transformMatrix = null) {
 			spriteBatch.Begin(sortMode ?? spriteBatchState.sortMode, blendState ?? spriteBatchState.blendState, samplerState ?? spriteBatchState.samplerState, spriteBatchState.depthStencilState, rasterizerState ?? spriteBatchState.rasterizerState, effect ?? spriteBatchState.effect, transformMatrix ?? spriteBatchState.transformMatrix);
 		}
 		#endregion

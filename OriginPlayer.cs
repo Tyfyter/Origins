@@ -585,59 +585,5 @@ namespace Origins {
 		public override void PostItemCheck() {
 			ItemChecking = false;
 		}
-		public override void HideDrawLayers(PlayerDrawSet drawInfo) {
-			Item item = drawInfo.heldItem;
-			if (item.ModItem is ICustomDrawItem) PlayerDrawLayers.HeldItem.Hide();
-
-			if (mountOnly && !drawInfo.headOnlyRender) {
-				for (int i = 0; i < PlayerDrawLayerLoader.DrawOrder.Count; i++) {
-					PlayerDrawLayer layer = PlayerDrawLayerLoader.DrawOrder[i];
-					if (layer != PlayerDrawLayers.MountFront && layer != PlayerDrawLayers.MountBack) {
-						layer.Hide();
-					}
-				}
-			}
-			if (hideAllLayers) {
-				foreach (var layer in PlayerDrawLayerLoader.Layers) {
-					layer.Hide();
-				}
-			}
-		}
-		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
-
-			if (plagueSight) drawInfo.colorEyes = IsDevName(Player.name, 1) ? new Color(43, 185, 255) : Color.Gold;
-			if (mysteriousSprayMult != 1f) {
-				float lightSaturationMult = (float)Math.Pow(mysteriousSprayMult, 2f);
-				float saturationMult = 1f - (float)Math.Pow(1f - mysteriousSprayMult, 1.5f);
-				drawInfo.colorArmorHead = OriginExtensions.Desaturate(drawInfo.colorArmorHead, lightSaturationMult);
-				drawInfo.colorArmorBody = OriginExtensions.Desaturate(drawInfo.colorArmorBody, lightSaturationMult);
-				drawInfo.colorArmorLegs = OriginExtensions.Desaturate(drawInfo.colorArmorLegs, lightSaturationMult);
-				drawInfo.floatingTubeColor = OriginExtensions.Desaturate(drawInfo.floatingTubeColor, lightSaturationMult);
-				drawInfo.itemColor = OriginExtensions.Desaturate(drawInfo.itemColor, lightSaturationMult);
-
-				drawInfo.headGlowColor = OriginExtensions.Desaturate(drawInfo.headGlowColor, saturationMult);
-				drawInfo.armGlowColor = OriginExtensions.Desaturate(drawInfo.armGlowColor, saturationMult);
-				drawInfo.bodyGlowColor = OriginExtensions.Desaturate(drawInfo.bodyGlowColor, saturationMult);
-				drawInfo.legsGlowColor = OriginExtensions.Desaturate(drawInfo.legsGlowColor, saturationMult);
-
-				drawInfo.colorElectricity = OriginExtensions.Desaturate(drawInfo.colorElectricity, saturationMult);
-				drawInfo.ArkhalisColor = OriginExtensions.Desaturate(drawInfo.ArkhalisColor, saturationMult);
-
-				drawInfo.colorHair = OriginExtensions.Desaturate(drawInfo.colorHair, saturationMult);
-				drawInfo.colorHead = OriginExtensions.Desaturate(drawInfo.colorHead, saturationMult);
-				drawInfo.colorEyes = Color.Lerp(drawInfo.colorEyes, Color.White, 1f - saturationMult);
-				drawInfo.colorEyeWhites = Color.Lerp(drawInfo.colorEyeWhites, Color.Black, 1f - saturationMult);
-				drawInfo.colorBodySkin = OriginExtensions.Desaturate(drawInfo.colorBodySkin, saturationMult);
-
-			}
-			if (drawInfo.drawPlayer.shield == Resin_Shield.ShieldID && resinShieldCooldown > 0) {
-				drawInfo.drawPlayer.shield = (sbyte)Resin_Shield.InactiveShieldID;
-			}
-		}
-		public override void FrameEffects() {
-			for (int i = 13; i < 18 + Player.extraAccessorySlots; i++) {
-				if (Player.armor[i].type == Plague_Texan_Sight.ID) Plague_Texan_Sight.ApplyVisuals(Player);
-			}
-		}
 	}
 }

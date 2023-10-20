@@ -15,6 +15,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 4);
 			Item.glowMask = glowmask;
+			Item.dye = 0;
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
