@@ -637,6 +637,7 @@ namespace Origins {
 	public interface ICustomDrawItem {
 		void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin);
 		bool DrawOverHand => false;
+		bool BackHand => false;
 	}
 	public interface IAltTileCollideNPC {
 		int CollisionType { get; }

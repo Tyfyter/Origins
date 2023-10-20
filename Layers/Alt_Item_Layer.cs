@@ -13,15 +13,17 @@ using Terraria.ModLoader;
 namespace Origins.Layers {
 	public class Alt_Item_Layer : PlayerDrawLayer {
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
-			return drawInfo.drawPlayer.ItemAnimationActive
+			return (drawInfo.drawPlayer.ItemAnimationActive || drawInfo.heldItem.holdStyle > 0)
 				&& !drawInfo.drawPlayer.JustDroppedAnItem
 				&& drawInfo.shadow == 0
 				&& drawInfo.heldItem.ModItem is ICustomDrawItem;
 		}
 		public override Position GetDefaultPosition() {
-			Multiple position = new Multiple();
-			position.Add(new Between(PlayerDrawLayers.BladedGlove, PlayerDrawLayers.ProjectileOverArm), (drawInfo) => (drawInfo.drawPlayer.HeldItem?.ModItem as ICustomDrawItem)?.DrawOverHand ?? false);
-			position.Add(new Between(PlayerDrawLayers.HeldItem, PlayerDrawLayers.ArmOverItem), (_) => true);
+			Multiple position = new Multiple {
+				{ new Between(PlayerDrawLayers.BladedGlove, PlayerDrawLayers.ProjectileOverArm), (drawInfo) => (drawInfo.drawPlayer.HeldItem?.ModItem is ICustomDrawItem customDraw && customDraw.DrawOverHand) },
+				{ new Between(PlayerDrawLayers.Skin, PlayerDrawLayers.Leggings), (drawInfo) => (drawInfo.drawPlayer.HeldItem?.ModItem is ICustomDrawItem customDraw && customDraw.BackHand) },
+				{ new Between(PlayerDrawLayers.HeldItem, PlayerDrawLayers.ArmOverItem), (drawInfo) => (drawInfo.drawPlayer.HeldItem?.ModItem is ICustomDrawItem customDraw && !customDraw.DrawOverHand && !customDraw.BackHand) }
+			};
 			return position;
 		}
 		protected override void Draw(ref PlayerDrawSet drawInfo) {

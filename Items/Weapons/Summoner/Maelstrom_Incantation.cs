@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Items.Materials;
+using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -12,12 +13,9 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Maelstrom_Incantation : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Maelstrom Incantation");
-			// Tooltip.SetDefault("5 summon tag damage\nDirectly struck enemies will shock nearby enemies when hit by minions\n{$CommonItemTooltip.Whips}\nReceives 50% higher damage bonuses");
-			Item.ResearchUnlockCount = 1;
-		}
+	public class Maelstrom_Incantation : ModItem, ICustomDrawItem {
+		private Asset<Texture2D> _smolTexture;
+		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
 			Item.damage = 19;
@@ -32,6 +30,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.useAnimation = 26;
 			Item.rare = ItemRarityID.Green;
 			Item.value = Item.sellPrice(silver: 60);
+			Item.holdStyle = ItemHoldStyleID.HoldLamp;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -48,6 +47,16 @@ namespace Origins.Items.Weapons.Summoner {
 			SoundEngine.PlaySound(SoundID.Item117.WithPitchRange(0.0f, 0.2f), position);//117
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, player.itemTime);
 			return false;
+		}
+		public override void UseItemFrame(Player player) => Incantations.HoldItemFrame(player);
+		public override void HoldItemFrame(Player player) => Incantations.HoldItemFrame(player);
+		public bool BackHand => true;
+		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
+			Incantations.DrawInHand(
+				SmolTexture,
+				ref drawInfo,
+				lightColor
+			);
 		}
 	}
 	public class Maelstrom_Incantation_P : ModProjectile {

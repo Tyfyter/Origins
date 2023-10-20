@@ -587,12 +587,7 @@ namespace Origins {
 		}
 		public override void HideDrawLayers(PlayerDrawSet drawInfo) {
 			Item item = drawInfo.heldItem;
-			if (
-				(
-					drawInfo.drawPlayer.ItemAnimationActive && (
-						(item.ModItem is ICustomDrawItem)
-					)
-				)) PlayerDrawLayers.HeldItem.Hide();
+			if (item.ModItem is ICustomDrawItem) PlayerDrawLayers.HeldItem.Hide();
 
 			if (mountOnly && !drawInfo.headOnlyRender) {
 				for (int i = 0; i < PlayerDrawLayerLoader.DrawOrder.Count; i++) {

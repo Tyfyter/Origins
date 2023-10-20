@@ -296,6 +296,7 @@ namespace Origins {
 		public float oldGravDir = 0;
 		public float lifeRegenTimeSinceHit = 0;
 		public int itemUseOldDirection = 0;
+		public List<Vector2> oldVelocities = new();
 		public override void ResetEffects() {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
@@ -599,6 +600,8 @@ namespace Origins {
 					lifeRegenTimeSinceHit += 2f;
 				}
 			}
+			oldVelocities.Insert(0, Player.velocity);
+			while (oldVelocities.Count > 20) oldVelocities.RemoveAt(20);
 			#region check if a dash should start
 			dashDirection = 0;
 			dashDirectionY = 0;
@@ -620,6 +623,15 @@ namespace Origins {
 				dashDelay--;
 			}
 			#endregion
+		}
+		public Vector2 AverageOldVelocity(int count = -1) {
+			if (count == -1 || count > oldVelocities.Count) count = oldVelocities.Count;
+			Vector2 value = Vector2.Zero;
+			for (int i = 0; i < count; i++) {
+				value += oldVelocities[i];
+			}
+			value /= count;
+			return value;
 		}
 	}
 }

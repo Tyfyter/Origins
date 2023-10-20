@@ -1,17 +1,22 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using ReLogic.Content;
 using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Amebolize_Incantation : ModItem {
+	public class Amebolize_Incantation : ModItem, ICustomDrawItem {
+		private Asset<Texture2D> _smolTexture;
+		private Asset<Texture2D> _smolGlowTexture;
+		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
+		public Texture2D SmolGlowTexture => (_smolGlowTexture ??= this.GetSmallTexture("_Glow"))?.Value;
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amebolize Incantation");
-			// Tooltip.SetDefault("Struck enemies will wither away\n5 summon tag damage\n{$CommonItemTooltip.Whips}");
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
@@ -31,6 +36,19 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.UseSound = SoundID.Item7;
 			Item.glowMask = glowmask;
 			Item.channel = true;
+			Item.holdStyle = ItemHoldStyleID.HoldLamp;
+		}
+		public override void UseItemFrame(Player player) => Incantations.HoldItemFrame(player);
+		public override void HoldItemFrame(Player player) => Incantations.HoldItemFrame(player);
+		public bool BackHand => true;
+		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
+			Incantations.DrawInHand(
+				SmolTexture,
+				ref drawInfo,
+				lightColor,
+				SmolGlowTexture,
+				new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f)
+			);
 		}
 	}
 	public class Amebolize_Incantation_P : ModProjectile {
