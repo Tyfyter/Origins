@@ -185,7 +185,7 @@ namespace Origins.Items.Other.Fish {
 			Item.CloneDefaults(ItemID.CrimsonFishingCrate);
 			Item.createTile = ModContent.TileType<TTile>();
 			Item.placeStyle = 0;
-			Item.rare = Hardmode ?:;
+			Item.rare = Hardmode ? ItemRarityID.LightRed : ItemRarityID.Green;
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {
 			itemGroup = ContentSamples.CreativeHelper.ItemGroup.Crates;
