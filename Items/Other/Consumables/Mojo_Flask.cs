@@ -63,11 +63,8 @@ namespace Origins.Items.Other.Consumables {
 			}
 		}
 		public override bool CanUseItem(Player player) {
-			if (player.HasBuff(Item.buffType)) return false;
-			if (player.GetModPlayer<OriginPlayer>().mojoFlaskCount > 0) {
-				return true;
-			}
-			return false;
+			if (player.HasBuff(ModContent.BuffType<Mojo_Flask_Cooldown>())) return false;
+			return player.GetModPlayer<OriginPlayer>().mojoFlaskCount > 0;
 		}
 		public override bool? UseItem(Player player) {
 			player.GetModPlayer<OriginPlayer>().mojoFlaskCount--;

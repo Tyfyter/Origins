@@ -42,8 +42,9 @@ namespace Origins.Tiles.Riven {
 		}
 	}
 	public class Riven_Dungeon_Chest_Item : ModItem {
+		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Riven} Chest");
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.width = 32;
@@ -57,6 +58,7 @@ namespace Origins.Tiles.Riven {
 			Item.consumable = true;
 			Item.value = 500;
 			Item.createTile = ModContent.TileType<Riven_Dungeon_Chest>();
+			Item.glowMask = glowmask;
 		}
 	}
 	public class Riven_Dungeon_Chest_Placeholder_Item : ModItem {

@@ -3684,7 +3684,7 @@ Items: {
 
 	// Surveysprout.DisplayName: Surveysprout
 	// NE8.DisplayName: NE8
-	// Nova_Fragment.DisplayName: Nova_ Fragment
+	// Nova_Fragment.DisplayName: Nova Fragment
 
 	Polyeel: {
 		// DisplayName: Polyeel
@@ -3722,7 +3722,7 @@ Items: {
 	}
 
 	Brineglow_Debug_Item: {
-		// DisplayName: Brineglow_ Debug_ Item
+		// DisplayName: Brineglow Debug Item
 		// Tooltip: ""
 	}
 
@@ -3738,6 +3738,11 @@ Items: {
 
 	Festering_Crate: {
 		// DisplayName: Festering Crate
+		// Tooltip: ""
+	}
+
+	Chambersite_Gemspark_Item: {
+		// DisplayName: Chambersite Gemspark Item
 		// Tooltip: ""
 	}
 }
@@ -4034,7 +4039,7 @@ Buffs: {
 	}
 
 	Volatile_Gelatin_Slime_Debuff: {
-		// DisplayName: Volatile_ Gelatin_ Slime_ Debuff
+		// DisplayName: Volatile Gelatin Slime
 		// Description: Mods.Origins.Buffs.Volatile_Gelatin_Slime_Debuff.Description
 	}
 
@@ -4044,8 +4049,8 @@ Buffs: {
 	}
 
 	Mojo_Flask_Cooldown: {
-		// DisplayName: Mojo_ Flask_ Cooldown
-		// Description: Mods.Origins.Buffs.Mojo_Flask_Cooldown.Description
+		// DisplayName: Mojo Sickness
+		// Description: Can't use your {$Mods.Origins.Items.Mojo_Flask}
 	}
 }
 
@@ -4284,16 +4289,16 @@ Projectiles: {
 	// Defiled_Spike_Explosion_Spike_Hostile.DisplayName: Low Signal
 	// Low_Signal_Hostile.DisplayName: Low Signal
 	// Amoeball.DisplayName: Amoeball
-	// Spiked_Slime_Minion.DisplayName: Spiked_ Slime_ Minion
-	// Spiked_Slime_Minion_Spike.DisplayName: Spiked_ Slime_ Minion_ Spike
-	// Volatile_Gelatin_Slime_Explosion.DisplayName: Volatile_ Gelatin_ Slime_ Explosion
-	// Snapthrow_P.DisplayName: Snapthrow_ P
-	// Outreach_P.DisplayName: Outreach_ P
+	// Spiked_Slime_Minion.DisplayName: Spiked Slime Minion
+	// Spiked_Slime_Minion_Spike.DisplayName: Spiked Slime Minion Spike
+	// Volatile_Gelatin_Slime_Explosion.DisplayName: Volatile Gelatin Slime Explosion
+	// Snapthrow_P.DisplayName: Snapthrow P
+	// Outreach_P.DisplayName: Outreach P
 	// Piledriver_P.DisplayName: Piledriver
 	// Piledriver_Mine_P.DisplayName: Piledriver
 	// Cinder_Seal_Dust.DisplayName: "{$Mods.Origins.Items.Cinder_Seal.DisplayName}"
 	// Cinder_Seal_Explosion.DisplayName: "{$Mods.Origins.Items.Cinder_Seal.DisplayName}"
-	// C6_Jackhammer_P.DisplayName: C6_ Jackhammer_ P
+	// C6_Jackhammer_P.DisplayName: C6 Jackhammer P
 	// Silica_Ball.DisplayName: Silica Ball
 }
 
@@ -4512,7 +4517,7 @@ Tiles: {
 	// Music_Box_DC: Music Box (Defiled Caverns)
 	// Music_Box_DW: Music Box (Defiled Wastelands)
 	// Music_Box_RH: Music Box (Riven Hive)
-	// Brineglow_Vine.MapEntry: Brineglow_ Vine
+	// Brineglow_Vine.MapEntry: Brineglow Vine
 	// Bilious_Crate_Tile.MapEntry: Bilious Crate
 	// Chunky_Crate_Tile.MapEntry: Chunky Crate
 	// Crusty_Crate_Tile.MapEntry: Crusty Crate
