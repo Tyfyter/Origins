@@ -454,12 +454,12 @@ WINGS:
 TOOLS:
 ---
 (^) Brick Breaker
-(#, ^2) C6 Jackhammer !!!
+(☻) C6 Jackhammer !!!
 (^) Dismantler
 (^) Dissector
 (^) Felnum Hamaxe
 (^) Felnum Pickaxe
-(#, ^2) Miter Saw !!!
+(☻) Miter Saw !!!
 (^) Parasitic Manipulator
 (^) Pile Driver
 (^) Rivenator
@@ -766,7 +766,7 @@ TILES:
 (^) Primordial Permafrost
 (^) Riven Grass
 (^) Sanguinite Ore
-(#, ^2) Silica !!!
+(☻) Silica !!!
 (^) Spug Flesh
 (@5, ^3) Sulphur Stone
 (^) White Ice
@@ -825,7 +825,7 @@ TILES:
 (X) Riven Flesh Shredder
 
 (^) Acetabularia
-(#, ^2) Brineglow Vine !!!
+(☻) Brineglow Vine !!!
 (^) Defiled Misc Tiles*
 (#2, ^2) Eden Tree
 (#2, ^2) Laser Tag Console
@@ -849,11 +849,11 @@ TILES:
 (X) Music Box (Cosmos)
 (X) Music Box (Cubekon Temple)
 (X) Music Box (Dawn)
-(#2-4, ^2) Music Box (Defiled Caverns) !!!
-(#2-4, ^2) Music Box (Defiled Wastelands) !!!
+(☻) Music Box (Defiled Caverns) !!!
+(☻) Music Box (Defiled Wastelands) !!!
 (X) Music Box (Fractured Isles)
 (X) Music Box (Dusk)
-(#2-4, ^2) Music Box (Riven Hive) !!!
+(☻) Music Box (Riven Hive) !!!
 (X) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Trophy
