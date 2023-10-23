@@ -42,21 +42,18 @@ X: No progress
 BOSSES AND MINI-BOSSES:
 ---
 (#, ^2) Chambersite Sentinel
+(X) Defiled Depressant
 (#, ^2) Grand Corruptor
-(X) Hive Mind
-(X) Holy Enlightener
 (#, ^2) Ichor Storm 
-(X) Scrapper
-(X) Super Brainz
 
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver
+(X) Scrapper
 (#2, ^2) World Cracker !!!
 
 (%?, ^2) Lost Diver (Just needs the item/projectile/use sprites)
 (X) Miscreant
 
-(%2) Deacon
 (X) Duskord
 (X) Logic Brane
 (X) Severus, the Dark One
@@ -185,10 +182,10 @@ STATUS EFFECTS:
 (^) Assimilation
 (X) Celestial Flames
 (^) Defiled Exhaustion
-(X) Ionizing Radiation
 (#3, ^2) Impeding Shrapnel !!!
-(^) Rasterize
-(@3, ^3) Torn (would the shader be something like Riven_Blood_Map?)
+(X) Ionizing Radiation
+(^) Rasterized
+(@3, ^3) Torn
 (^) Totally Safe
 (O) Toxic Shock
 (X) Whiplash
