@@ -3341,3 +3341,8 @@ Chambersite_Gemspark_Item: {
 	DisplayName: Chambersite Gemspark Item
 	Tooltip: ""
 }
+
+Ambition_Potion: {
+	DisplayName: Ambition_ Potion
+	Tooltip: ""
+}

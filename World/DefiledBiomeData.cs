@@ -26,6 +26,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Terraria.GameContent.Personalities;
+using Terraria.ObjectData;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -623,6 +624,42 @@ namespace Origins.World.BiomeData {
 				WallID.HallowHardenedSand
 			);
 			AddWallConversions<Chambersite_Defiled_Stone_Wall>((ushort)ModContent.WallType<Chambersite_Stone_Wall>());
+		}
+		public override int GetAltBlock(int BaseBlock, int posX, int posY, bool GERunner = false) {
+			switch (BaseBlock) {
+				case TileID.LargePiles: {
+					Tile tile = Main.tile[posX, posY];
+					switch (tile.TileFrameX / (18 * 3)) {
+						case 7 or 8 or 9 or 10 or 11 or 12:
+						return ModContent.TileType<Defiled_Large_Foliage>();
+					}
+					break;
+				}
+				case TileID.LargePiles2: {
+					Tile tile = Main.tile[posX, posY];
+					switch ((tile.TileFrameX / (18 * 3), tile.TileFrameY / (18 * 2))) {
+						case (0, 0) or (1, 0) or (2, 0) or (3, 0) or (4, 0) or (5, 0):
+						case (15, 0) or (16, 0) or (17, 0):
+						case (16, 1) or (17, 1):
+						return ModContent.TileType<Defiled_Large_Foliage>();
+					}
+					break;
+				}
+				case TileID.SmallPiles: {
+					Tile tile = Main.tile[posX, posY];
+					switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
+						case (28, 0) or (29, 0) or (30, 0) or (31, 0) or (32, 0) or (33, 0) or (34, 0):
+						case (31, 1) or (32, 1) or (33, 1) or (34, 1) or (35, 1) or (36, 1):
+						break;
+					}
+					TileObjectData tileObjectData = TileObjectData.GetTileData(tile);
+					if (tileObjectData.Width == 2) {
+
+					}
+					break;
+				}
+			}
+			return base.GetAltBlock(BaseBlock, posX, posY, GERunner);
 		}
 		public override AltMaterialContext MaterialContext {
 			get {

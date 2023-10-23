@@ -21,7 +21,6 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.addTile(Type);
 			//soundType = SoundID.Grass;
 		}
-
 		public override bool CanDrop(int i, int j) => false;
 	}
 }

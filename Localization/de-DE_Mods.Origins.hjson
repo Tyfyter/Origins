@@ -706,6 +706,11 @@ Buffs: {
 		// DisplayName: Mojo Sickness
 		// Description: Can't use your {$Mods.Origins.Items.Mojo_Flask}
 	}
+
+	Ambition_Buff: {
+		// DisplayName: Ambition_ Buff
+		// Description: Mods.Origins.Buffs.Ambition_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1132,6 +1137,11 @@ Biomes: {
 			// DisplayName: Bestiary Biomes. The Temple
 			// TownNPCDialogueName: the Bestiary Biomes. The Temple
 		}
+	}
+
+	AshenBiomeData: {
+		// DisplayName: Ashen Biome Data
+		// TownNPCDialogueName: the Ashen Biome Data
 	}
 }
 

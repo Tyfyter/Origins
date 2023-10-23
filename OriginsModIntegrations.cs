@@ -53,15 +53,9 @@ namespace Origins {
 		public void Load(Mod mod) {
 			instance = this;
 			if (!Main.dedServ && ModLoader.TryGetMod("Wikithis", out wikiThis)) {
-				//WikiThis.Call("AddModURL", Origins.instance, "tyfyter.github.io/OriginsWiki");
-				WikiThis.Call(
-					"DelegateWiki",
-					Origins.instance.Name,
-					(Func<object, object, bool>)WikiPageExists,
-					(Func<object, object, bool>)OpenWikiPage
-				);
+				WikiThis.Call("AddModURL", Origins.instance, "tyfyter.github.io/OriginsWiki/{}");
 				Origins.instance.Logger.Info("Added Wikithis integration");
-				wikiSiteMap = new HashSet<string>();
+				/*wikiSiteMap = new HashSet<string>();
 				using WebClient client = new WebClient();
 				client.DownloadStringCompleted += (object sender, DownloadStringCompletedEventArgs e) => {
 					if (e.Error is not null) {
@@ -76,7 +70,7 @@ namespace Origins {
 							}
 						}
 				};
-				client.DownloadStringAsync(new Uri(WikiURL + "/sitemap.xml"));
+				client.DownloadStringAsync(new Uri(WikiURL + "/sitemap.xml"));*/
 			}
 			if (ModLoader.TryGetMod("ThoriumMod", out instance.thorium)) {
 				LoadThorium();
