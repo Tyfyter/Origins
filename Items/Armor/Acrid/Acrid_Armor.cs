@@ -1,14 +1,16 @@
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Materials;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Acrid {
     [AutoloadEquip(EquipType.Head)]
-	public class Acrid_Dome : ModItem {
+	public class Acrid_Dome : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Acrid Dome");
 			// Tooltip.SetDefault("10% increased explosive critical chance and throwing velocity\nEffect stronger when submerged\nEmit a small aura of light");
@@ -53,9 +55,22 @@ namespace Origins.Items.Armor.Acrid {
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
+		public string MergedArmorSetName => "Acrid_Armor";
+		public string ArmorSetName => "Explosive_Acrid_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Acrid_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Acrid_Greaves>();
+		public IEnumerable<int> SharedPageItems {
+			get {
+				yield return ModContent.ItemType<Acrid_Headgear>();
+				yield return ModContent.ItemType<Acrid_Helm>();
+				yield return ModContent.ItemType<Acrid_Mask>();
+				yield return ModContent.ItemType<Acrid_Visor>();
+			}
+		}
 	}
 	[AutoloadEquip(EquipType.Head)]
-	public class Acrid_Headgear : ModItem {
+	public class Acrid_Headgear : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Acrid Headgear");
 			// Tooltip.SetDefault("10% increased magic damage and 25% reduced mana cost\nEffect stronger when submerged\nEmit a small aura of light");
@@ -100,9 +115,14 @@ namespace Origins.Items.Armor.Acrid {
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Magic_Acrid_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Acrid_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Acrid_Greaves>();
+		public bool SharedPageSecondary => true;
 	}
 	[AutoloadEquip(EquipType.Head)]
-	public class Acrid_Helm : ModItem {
+	public class Acrid_Helm : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Acrid Helm");
 			// Tooltip.SetDefault("10% increased melee damage and speed\nEffect stronger when submerged\nEmit a small aura of light");
@@ -147,9 +167,14 @@ namespace Origins.Items.Armor.Acrid {
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Melee_Acrid_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Acrid_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Acrid_Greaves>();
+		public bool SharedPageSecondary => true;
 	}
 	[AutoloadEquip(EquipType.Head)]
-	public class Acrid_Mask : ModItem {
+	public class Acrid_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Acrid Mask");
 			// Tooltip.SetDefault("10% increased summoning damage\n+1 minion slot\nEffects stronger when submerged\nEmit a small aura of light");
@@ -194,9 +219,14 @@ namespace Origins.Items.Armor.Acrid {
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Summon_Acrid_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Acrid_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Acrid_Greaves>();
+		public bool SharedPageSecondary => true;
 	}
 	[AutoloadEquip(EquipType.Head)]
-	public class Acrid_Visor : ModItem {
+	public class Acrid_Visor : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Acrid Visor");
 			// Tooltip.SetDefault("20% increased ranged attack speed\nEffect stronger when submerged\nEmit a small aura of light");
@@ -239,9 +269,14 @@ namespace Origins.Items.Armor.Acrid {
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Ranged_Acrid_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Acrid_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Acrid_Greaves>();
+		public bool SharedPageSecondary => true;
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Acrid_Breastplate : ModItem {
+	public class Acrid_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Acrid Breastplate");
 			// Tooltip.SetDefault("Increased life regeneration");
@@ -264,7 +299,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Acrid_Greaves : ModItem {
+	public class Acrid_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Acrid Greaves");
 			// Tooltip.SetDefault("Grants the ability to swim");
