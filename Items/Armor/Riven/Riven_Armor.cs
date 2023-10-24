@@ -106,33 +106,22 @@ namespace Origins.Items.Armor.Riven {
 		}
 	}
 	[AutoloadEquip(EquipType.Head)]
-	public class Riven2_Mask : Riven_Mask {
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			// DisplayName.SetDefault("Ancient Riven Mask");
-		}
-		public override void AddRecipes() {
-		}
+	public class Riven2_Mask : Riven_Mask, IWikiArmorSet, INoSeperateWikiPage {
+		public override void AddRecipes() {}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
-		[AutoloadEquip(EquipType.Body)]
-		public class Riven2_Coat : Riven_Coat {
-			public override void SetStaticDefaults() {
-				base.SetStaticDefaults();
-				// DisplayName.SetDefault("Ancient Riven Coat");
-			}
-			public override void AddRecipes() {
-			}
-			public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
-		}
-		[AutoloadEquip(EquipType.Legs)]
-		public class Riven2_Pants : Riven_Pants {
-			public override void SetStaticDefaults() {
-				base.SetStaticDefaults();
-				// DisplayName.SetDefault("Ancient Riven Pants");
-			}
-			public override void AddRecipes() {
-			}
-			public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
-		}
+		public new string ArmorSetName => "Ancient_Riven_Armor";
+		public new int HeadItemID => Type;
+		public new int BodyItemID => ModContent.ItemType<Riven2_Coat>();
+		public new int LegsItemID => ModContent.ItemType<Riven2_Pants>();
+	}
+	[AutoloadEquip(EquipType.Body)]
+	public class Riven2_Coat : Riven_Coat {
+		public override void AddRecipes() {}
+		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
+	}
+	[AutoloadEquip(EquipType.Legs)]
+	public class Riven2_Pants : Riven_Pants {
+		public override void AddRecipes() {}
+		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
 	}
 }

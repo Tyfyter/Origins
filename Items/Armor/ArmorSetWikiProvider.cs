@@ -35,18 +35,21 @@ namespace Origins.Items.Armor {
 				setNames.Add(set.ArmorSetName);
 			}
 			foreach (var item in heads) {
+				if (ContentSamples.ItemsByType[item].ModItem is not null) continue;
 				pieceNames.Add(WikiPageExporter.GetWikiName(ContentSamples.ItemsByType[item].ModItem));
 				(List<Recipe> curRecipes, List<Recipe> curUsedIn) = WikiExtensions.GetRecipes(ContentSamples.ItemsByType[item]);
 				recipes.AddRange(curRecipes);
 				usedIn.AddRange(curUsedIn);
 			}
 			foreach (var item in bodies) {
+				if (ContentSamples.ItemsByType[item].ModItem is not null) continue;
 				pieceNames.Add(WikiPageExporter.GetWikiName(ContentSamples.ItemsByType[item].ModItem));
 				(List<Recipe> curRecipes, List<Recipe> curUsedIn) = WikiExtensions.GetRecipes(ContentSamples.ItemsByType[item]);
 				recipes.AddRange(curRecipes);
 				usedIn.AddRange(curUsedIn);
 			}
 			foreach (var item in legss) {
+				if (ContentSamples.ItemsByType[item].ModItem is not null) continue;
 				pieceNames.Add(WikiPageExporter.GetWikiName(ContentSamples.ItemsByType[item].ModItem));
 				(List<Recipe> curRecipes, List<Recipe> curUsedIn) = WikiExtensions.GetRecipes(ContentSamples.ItemsByType[item]);
 				recipes.AddRange(curRecipes);

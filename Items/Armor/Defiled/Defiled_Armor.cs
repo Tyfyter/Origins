@@ -90,31 +90,21 @@ namespace Origins.Items.Armor.Defiled {
 		}
 	}
 	[AutoloadEquip(EquipType.Head)]
-	public class Defiled2_Helmet : Defiled_Helmet {
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			// DisplayName.SetDefault("Ancient {$Defiled} Helmet");
-		}
-		public override void AddRecipes() {
-		}
+	public class Defiled2_Helmet : Defiled_Helmet, IWikiArmorSet, INoSeperateWikiPage {
+		public override void AddRecipes() {}
 		public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor) { }
-		[AutoloadEquip(EquipType.Body)]
-		public class Defiled2_Breastplate : Defiled_Breastplate {
-			public override void SetStaticDefaults() {
-				base.SetStaticDefaults();
-				// DisplayName.SetDefault("Ancient {$Defiled} Breastplate");
-			}
-			public override void AddRecipes() {
-			}
-		}
-		[AutoloadEquip(EquipType.Legs)]
-		public class Defiled2_Greaves : Defiled_Greaves {
-			public override void SetStaticDefaults() {
-				base.SetStaticDefaults();
-				// DisplayName.SetDefault("Ancient {$Defiled} Greaves");
-			}
-			public override void AddRecipes() {
-			}
-		}
+		public new string ArmorSetName => "Ancient_Defiled_Armor";
+		public new int HeadItemID => Type;
+		public new int BodyItemID => ModContent.ItemType<Defiled2_Breastplate>();
+		public new int LegsItemID => ModContent.ItemType<Defiled2_Greaves>();
+	}
+	[AutoloadEquip(EquipType.Body)]
+	public class Defiled2_Breastplate : Defiled_Breastplate {
+		public override void AddRecipes() {}
+	}
+	[AutoloadEquip(EquipType.Legs)]
+	public class Defiled2_Greaves : Defiled_Greaves {
+		public override void SetStaticDefaults() {}
+		public override void AddRecipes() {}
 	}
 }
