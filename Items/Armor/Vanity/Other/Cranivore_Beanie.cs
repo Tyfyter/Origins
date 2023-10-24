@@ -10,6 +10,7 @@ namespace Origins.Items.Armor.Vanity.Other {
 		public int HeadItemID => Type;
 		public int BodyItemID => ItemID.None;
 		public int LegsItemID => ItemID.None;
+		public bool HasFemaleVersion => false;
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Blue;
 		}

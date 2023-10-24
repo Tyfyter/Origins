@@ -268,7 +268,7 @@ namespace Origins {
 					Directory.CreateDirectory(ConfigManager.ModConfigPath);
 					string filename = nameof(Origins) + "_Unused_Assets.txt";
 					string path = Path.Combine(ConfigManager.ModConfigPath, filename);
-					File.WriteAllText(path, string.Join('\n', unused));
+					WikiPageExporter.WriteFileNoUnneededRewrites(path, string.Join('\n', unused));
 				}
 			}
 		}
@@ -401,7 +401,7 @@ namespace Origins {
 					Directory.CreateDirectory(ConfigManager.ModConfigPath);
 					string filename = nameof(Origins) + "_Unobtainable_Items.txt";
 					string path = Path.Combine(ConfigManager.ModConfigPath, filename);
-					File.WriteAllText(path, string.Join('\n', unobtainable));
+					WikiPageExporter.WriteFileNoUnneededRewrites(path, string.Join('\n', unobtainable));
 				}
 			}
 		}

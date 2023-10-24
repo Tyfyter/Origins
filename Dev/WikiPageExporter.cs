@@ -51,13 +51,13 @@ namespace Origins.Dev {
 		}
 		public static void ExportItemPage(Item item) {
 			foreach (WikiProvider provider in GetWikiProviders(item.ModItem)) {
-				if (provider.GetPage(item.ModItem) is string page) File.WriteAllText(GetWikiPagePath(provider.PageName(item.ModItem)), page);
+				if (provider.GetPage(item.ModItem) is string page) WriteFileNoUnneededRewrites(GetWikiPagePath(provider.PageName(item.ModItem)), page);
 			}
 		}
 		public static void ExportItemStats(Item item) {
 			foreach (WikiProvider provider in GetWikiProviders(item.ModItem)) {
 				foreach ((string name, JObject stats) stats in provider.GetStats(item.ModItem)) {
-					File.WriteAllText(
+					WriteFileNoUnneededRewrites(
 						GetWikiStatPath(stats.name),
 						JsonConvert.SerializeObject(stats.stats, Formatting.Indented)
 					);
@@ -91,6 +91,10 @@ namespace Origins.Dev {
 			typedDataProviders = null;
 			conditionalDataProviders = null;
 			interfaceReplacesGenericClassProvider = null;
+		}
+		public static void WriteFileNoUnneededRewrites(string file, string text) {
+			if (File.Exists(file) && File.ReadAllText(file) == text) return;
+			File.WriteAllText(file, text);
 		}
 		public static LocalizedText GetDefaultMainPageText(ILocalizedModType modType) {
 			string name = modType.Name;

@@ -11,6 +11,7 @@ namespace Origins.Items.Armor.Vanity.BossMasks {
 		public int HeadItemID => Type;
 		public int BodyItemID => ItemID.None;
 		public int LegsItemID => ItemID.None;
+		public bool HasFemaleVersion => false;
 		public override LocalizedText Tooltip => LocalizedText.Empty;
         public override void SetStaticDefaults() {
             if (Main.netMode != NetmodeID.Server) {
