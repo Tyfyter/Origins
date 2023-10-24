@@ -1,3 +1,4 @@
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -5,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Nova {
     [AutoloadEquip(EquipType.Head)]
-	public class Nova_Helmet : ModItem {
+	public class Nova_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Nova Faceshield");
 			// Tooltip.SetDefault("4% increased explosive damage and critical strike chance\n50% increased explosive velocity");
@@ -41,9 +42,13 @@ namespace Origins.Items.Armor.Nova {
 			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Nova_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Nova_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Nova_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Nova_Breastplate : ModItem {
+	public class Nova_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Nova Vest");
 			// Tooltip.SetDefault("4% increased explosive damage and critical strike chance\n-60% explosive self-damage");
@@ -71,7 +76,7 @@ namespace Origins.Items.Armor.Nova {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Nova_Greaves : ModItem {
+	public class Nova_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Nova Leggings");
 			// Tooltip.SetDefault("4% increased explosive damage and critical strike chance\n15% increased movement speed");

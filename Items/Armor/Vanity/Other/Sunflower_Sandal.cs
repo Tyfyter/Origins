@@ -1,15 +1,15 @@
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Vanity.Other {
 	[AutoloadEquip(EquipType.Legs)]
-	public class Sunflower_Sandal : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Sunflower Sandals");
-			// Tooltip.SetDefault("Quite fashionable");
-			Item.ResearchUnlockCount = 1;
-		}
+	public class Sunflower_Sandal : ModItem, IWikiArmorSet, INoSeperateWikiPage {
+		public string ArmorSetName => "Sunflower_Sandal";
+		public int HeadItemID => Type;
+		public int BodyItemID => ItemID.None;
+		public int LegsItemID => ItemID.None;
 		public override void SetDefaults() {
 			Item.rare = ItemRarityID.Green;
 		}

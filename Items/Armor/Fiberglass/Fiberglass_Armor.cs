@@ -2,10 +2,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using Origins.Dev;
 
 namespace Origins.Items.Armor.Fiberglass {
 	[AutoloadEquip(EquipType.Head)]
-	public class Fiberglass_Helmet : ModItem {
+	public class Fiberglass_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Fiberglass Helmet");
 			// Tooltip.SetDefault("'This doesn't seem very protective'");
@@ -27,9 +28,13 @@ namespace Origins.Items.Armor.Fiberglass {
 			int inv = player.FindBuffIndex(BuffID.Invisibility);
 			if (inv > -1) player.buffTime[inv]++;
 		}
+		public string ArmorSetName => "Fiberglass_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Fiberglass_Body>();
+		public int LegsItemID => ModContent.ItemType<Fiberglass_Legs>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Fiberglass_Body : ModItem {
+	public class Fiberglass_Body : ModItem, INoSeperateWikiPage {
 		public static int SlotID { get; private set; }
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Fiberglass Pauldrons");
@@ -45,7 +50,7 @@ namespace Origins.Items.Armor.Fiberglass {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Fiberglass_Legs : ModItem {
+	public class Fiberglass_Legs : ModItem, INoSeperateWikiPage {
 		public static int SlotID { get; private set; }
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Fiberglass Boots");

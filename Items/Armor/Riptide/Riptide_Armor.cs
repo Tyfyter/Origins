@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -9,7 +10,7 @@ using Tyfyter.Utils;
 
 namespace Origins.Items.Armor.Riptide {
 	[AutoloadEquip(EquipType.Head)]
-	public class Riptide_Helmet : ModItem {
+	public class Riptide_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Riptide Helm");
 			// Tooltip.SetDefault("5% increased magic damage\nGreatly extends underwater breathing");
@@ -48,9 +49,13 @@ namespace Origins.Items.Armor.Riptide {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Riptide_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Riptide_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Riptide_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Riptide_Breastplate : ModItem {
+	public class Riptide_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Riptide Breastplate");
 			// Tooltip.SetDefault("Emit a small aura of light\n+60 mana capacity");
@@ -86,7 +91,7 @@ namespace Origins.Items.Armor.Riptide {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Riptide_Greaves : ModItem {
+	public class Riptide_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Riptide Leggings");
 			// Tooltip.SetDefault("5% increased magic damage\nGrants the ability to swim and provides increased movement speed in water");

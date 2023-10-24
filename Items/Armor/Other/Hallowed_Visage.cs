@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Origins.Dev;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Other {
 	[AutoloadEquip(EquipType.Head)]
-	public class Hallowed_Visage : ModItem {
+	public class Hallowed_Visage : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Hallowed Visage");
 			// Tooltip.SetDefault("+15% explosive velocity\n+8% explosive critical strike chance");
@@ -40,12 +41,23 @@ namespace Origins.Items.Armor.Other {
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
+		public string MergedArmorSetName => "Explosive_Hallowed_Armor";
+		public string ArmorSetName => Name;
+		public int HeadItemID => Type;
+		public int BodyItemID => ItemID.HallowedPlateMail;
+		public int LegsItemID => ItemID.HallowedGreaves;
+		public IEnumerable<int> SharedPageItems {
+			get {
+				yield return ModContent.ItemType<Ancient_Hallowed_Visage>();
+			}
+		}
 	}
 	[AutoloadEquip(EquipType.Head)]
-	public class Ancient_Hallowed_Visage : Hallowed_Visage {
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			// DisplayName.SetDefault("Ancient Hallowed Visage");
-		}
+	public class Ancient_Hallowed_Visage : Hallowed_Visage, IWikiArmorSet, INoSeperateWikiPage {
+		public new string ArmorSetName => Name;
+		public new int HeadItemID => Type;
+		public new int BodyItemID => ItemID.AncientHallowedPlateMail;
+		public new int LegsItemID => ItemID.AncientHallowedGreaves;
+		public bool SharedPageSecondary => true;
 	}
 }

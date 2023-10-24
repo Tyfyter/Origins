@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Tiles.Dusk;
 using ReLogic.Content;
 using Terraria;
@@ -8,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Rift {
     [AutoloadEquip(EquipType.Head)]
-	public class Rift_Helmet : ModItem {
+	public class Rift_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Bleeding Obsidian Hardee");
 			// Tooltip.SetDefault("Increased explosive velocity");
@@ -45,9 +46,13 @@ namespace Origins.Items.Armor.Rift {
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Rift_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Rift_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Rift_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Rift_Breastplate : ModItem {
+	public class Rift_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Bleeding Obsidian Trenchcoat");
 			// Tooltip.SetDefault("-25% explosive self-damage");
@@ -76,7 +81,7 @@ namespace Origins.Items.Armor.Rift {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Rift_Greaves : ModItem {
+	public class Rift_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Bleeding Obsidian Chaps");
 			// Tooltip.SetDefault("15% increased movement speed");

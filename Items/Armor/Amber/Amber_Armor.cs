@@ -1,3 +1,4 @@
+using Origins.Dev;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
@@ -5,10 +6,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Amber {
     [AutoloadEquip(EquipType.Head)]
-	public class Amber_Helmet : ModItem {
+	public class Amber_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
             ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
-            Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 7;
@@ -31,9 +31,13 @@ namespace Origins.Items.Armor.Amber {
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Amber_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Amber_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Amber_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Amber_Breastplate : ModItem {
+	public class Amber_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Amber Exploder Resin");
 			// Tooltip.SetDefault("-34% explosive self-damage");
@@ -57,7 +61,7 @@ namespace Origins.Items.Armor.Amber {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Amber_Greaves : ModItem {
+	public class Amber_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Amber Exploder Guards");
 			// Tooltip.SetDefault("Increased movement speed");

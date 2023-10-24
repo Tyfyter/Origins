@@ -1,11 +1,13 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Other {
     [AutoloadEquip(EquipType.Head)]
-	public class Chlorophyte_Crown : ModItem {
+	public class Chlorophyte_Crown : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Chlorophyte Crown");
 			// Tooltip.SetDefault("Increases summon damage by 12%\nIncreases artifact minion damage by 15%\nIncreases your max number of minions by 1");
@@ -36,6 +38,16 @@ namespace Origins.Items.Armor.Other {
 			recipe.AddIngredient(ItemID.ChlorophyteBar, 12);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
+		}
+		public string MergedArmorSetName => "Chlorophyte_Armor";
+		public string ArmorSetName => Name;
+		public int HeadItemID => Type;
+		public int BodyItemID => ItemID.ChlorophytePlateMail;
+		public int LegsItemID => ItemID.ChlorophyteGreaves;
+		public IEnumerable<int> SharedPageItems {
+			get {
+				yield return ModContent.ItemType<Chlorophyte_Visage>();
+			}
 		}
 	}
 }

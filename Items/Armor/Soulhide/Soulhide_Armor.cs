@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
@@ -6,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Soulhide {
     [AutoloadEquip(EquipType.Head)]
-	public class Soulhide_Helmet : ModItem {
+	public class Soulhide_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Soulhide Helmet");
 			// Tooltip.SetDefault("+10% melee weapon size");
@@ -40,9 +41,13 @@ namespace Origins.Items.Armor.Soulhide {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Soulhide_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Soulhide_Coat>();
+		public int LegsItemID => ModContent.ItemType<Soulhide_Guards>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Soulhide_Coat : ModItem {
+	public class Soulhide_Coat : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Soulhide Coat");
 			// Tooltip.SetDefault("+12% melee weapon speed");
@@ -70,7 +75,7 @@ namespace Origins.Items.Armor.Soulhide {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Soulhide_Guards : ModItem {
+	public class Soulhide_Guards : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Soulhide Guards");
 			// Tooltip.SetDefault("+14% weapon knockback");

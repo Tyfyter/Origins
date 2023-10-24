@@ -1,23 +1,23 @@
 using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 	[AutoloadEquip(EquipType.Head)]
-	public class Plague_Texan_Mask : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Plague Texan's Visage");
-			// Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
-			Item.ResearchUnlockCount = 1;
-		}
+	public class Plague_Texan_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
+		public string ArmorSetName => "Plague_Texan_Vanity";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Plague_Texan_Jacket>();
+		public int LegsItemID => ModContent.ItemType<Plague_Texan_Jeans>();
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = AltCyanRarity.ID;
 		}
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Plague_Texan_Jacket : ModItem {
+	public class Plague_Texan_Jacket : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Plague Texan's Surprisingly Affordable Style");
 			// Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
@@ -30,7 +30,7 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Plague_Texan_Jeans : ModItem {
+	public class Plague_Texan_Jeans : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Plague Texan's Jeans");
 			// Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");

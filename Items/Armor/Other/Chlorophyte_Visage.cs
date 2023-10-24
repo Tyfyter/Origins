@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Origins.Dev;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Other {
 	[AutoloadEquip(EquipType.Head)]
-	public class Chlorophyte_Visage : ModItem {
+	public class Chlorophyte_Visage : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Chlorophyte Visage");
 			// Tooltip.SetDefault("+35% explosive blast radius\n-25% explosive fuse time");
@@ -41,5 +42,10 @@ namespace Origins.Items.Armor.Other {
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
+		public string ArmorSetName => Name;
+		public int HeadItemID => Type;
+		public int BodyItemID => ItemID.ChlorophytePlateMail;
+		public int LegsItemID => ItemID.ChlorophyteGreaves;
+		public bool SharedPageSecondary => true;
 	}
 }

@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Riven;
 using Terraria;
@@ -7,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Encrusted {
 	[AutoloadEquip(EquipType.Head)]
-	public class Encrusted_Mask : ModItem {
+	public class Encrusted_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public const float lightMagnitude = 0.3f;
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
@@ -42,9 +43,13 @@ namespace Origins.Items.Armor.Encrusted {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Encrusted_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Encrusted_Coat>();
+		public int LegsItemID => ModContent.ItemType<Encrusted_Pants>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Encrusted_Coat : ModItem {
+	public class Encrusted_Coat : ModItem, INoSeperateWikiPage {
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Encrusted Coat");
@@ -78,7 +83,7 @@ namespace Origins.Items.Armor.Encrusted {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Encrusted_Pants : ModItem {
+	public class Encrusted_Pants : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Encrusted Pants");
 			// Tooltip.SetDefault("Increases jump height");

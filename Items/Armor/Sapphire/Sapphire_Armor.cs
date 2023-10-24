@@ -1,3 +1,4 @@
+using Origins.Dev;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
@@ -5,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Sapphire {
     [AutoloadEquip(EquipType.Head)]
-	public class Sapphire_Hood : ModItem {
+	public class Sapphire_Hood : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Sapphire Mediator Hood");
 			// Tooltip.SetDefault("-40 mana");
@@ -34,9 +35,13 @@ namespace Origins.Items.Armor.Sapphire {
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Sapphire_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Sapphire_Vest>();
+		public int LegsItemID => ModContent.ItemType<Sapphire_Tights>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Sapphire_Vest : ModItem {
+	public class Sapphire_Vest : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Sapphire Mediator Vest");
 			// Tooltip.SetDefault("+15% magic speed");
@@ -60,7 +65,7 @@ namespace Origins.Items.Armor.Sapphire {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Sapphire_Tights : ModItem {
+	public class Sapphire_Tights : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Sapphire Mediator Tights");
 			// Tooltip.SetDefault("Increased movement speed");

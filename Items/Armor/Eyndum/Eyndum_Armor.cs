@@ -2,10 +2,11 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
+using Origins.Dev;
 
 namespace Origins.Items.Armor.Eyndum {
 	[AutoloadEquip(EquipType.Head)]
-	public class Eyndum_Helmet : ModItem {
+	public class Eyndum_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Eyndum Helmet");
 			if (Main.netMode != NetmodeID.Server) {
@@ -35,9 +36,13 @@ namespace Origins.Items.Armor.Eyndum {
             recipe.AddTile(TileID.Anvils);
             recipe.Register();*/
 		}
+		public string ArmorSetName => "Eyndum_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Eyndum_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Eyndum_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Eyndum_Breastplate : ModItem {
+	public class Eyndum_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Eyndum Breastplate");
 			if (Main.netMode != NetmodeID.Server) {
@@ -64,7 +69,7 @@ namespace Origins.Items.Armor.Eyndum {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Eyndum_Greaves : ModItem {
+	public class Eyndum_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Eyndum Greaves");
 			if (Main.netMode != NetmodeID.Server) {

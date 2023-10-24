@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -6,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Defiled {
     [AutoloadEquip(EquipType.Head)]
-	public class Defiled_Helmet : ModItem {
+	public class Defiled_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("{$Defiled} Helmet");
 			// Tooltip.SetDefault("5% increased critical strike chance");
@@ -37,9 +38,13 @@ namespace Origins.Items.Armor.Defiled {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Defiled_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Defiled_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Defiled_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Defiled_Breastplate : ModItem {
+	public class Defiled_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("{$Defiled} Breastplate");
 			// Tooltip.SetDefault("3% increased damage");
@@ -62,7 +67,7 @@ namespace Origins.Items.Armor.Defiled {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Defiled_Greaves : ModItem {
+	public class Defiled_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("{$Defiled} Greaves");
 			// Tooltip.SetDefault("3% increased damage");

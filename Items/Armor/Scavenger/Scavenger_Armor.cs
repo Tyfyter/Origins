@@ -1,3 +1,4 @@
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Ashen;
 using Terraria;
@@ -6,7 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Scavenger {
     [AutoloadEquip(EquipType.Head)]
-	public class Scavenger_Helmet : ModItem {
+	public class Scavenger_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
 			Item.ResearchUnlockCount = 1;
@@ -33,9 +34,13 @@ namespace Origins.Items.Armor.Scavenger {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Scavenger_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Scavenger_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Scavenger_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Scavenger_Breastplate : ModItem {
+	public class Scavenger_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 		}
@@ -56,7 +61,7 @@ namespace Origins.Items.Armor.Scavenger {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Scavenger_Greaves : ModItem {
+	public class Scavenger_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 		}

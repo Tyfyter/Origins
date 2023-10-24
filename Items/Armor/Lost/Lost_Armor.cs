@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
 using ReLogic.Content;
@@ -8,7 +9,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Lost {
     [AutoloadEquip(EquipType.Head)]
-	public class Lost_Helm : ModItem {
+	public class Lost_Helm : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Lost Helm");
 			// Tooltip.SetDefault("Increased mana regeneration rate");
@@ -36,9 +37,13 @@ namespace Origins.Items.Armor.Lost {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Lost_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Lost_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Lost_Pants>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Lost_Breastplate : ModItem {
+	public class Lost_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Lost Breastplate");
 			// Tooltip.SetDefault("15% increased magic damage");
@@ -66,7 +71,7 @@ namespace Origins.Items.Armor.Lost {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Lost_Pants : ModItem {
+	public class Lost_Pants : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Lost Pants");
 			// Tooltip.SetDefault("Increased movement speed");

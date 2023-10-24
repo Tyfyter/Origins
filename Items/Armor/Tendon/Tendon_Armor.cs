@@ -1,15 +1,11 @@
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Tendon {
     [AutoloadEquip(EquipType.Head)]
-	public class Tendon_Helmet : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Tendon Helmet");
-			// Tooltip.SetDefault("+10% ranged damage");
-			Item.ResearchUnlockCount = 1;
-		}
+	public class Tendon_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);
@@ -32,9 +28,13 @@ namespace Origins.Items.Armor.Tendon {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Tendon_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Tendon_Shirt>();
+		public int LegsItemID => ModContent.ItemType<Tendon_Pants>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Tendon_Shirt : ModItem {
+	public class Tendon_Shirt : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Tendon Shirt");
 			// Tooltip.SetDefault("+6% critical strike chance");
@@ -57,7 +57,7 @@ namespace Origins.Items.Armor.Tendon {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Tendon_Pants : ModItem {
+	public class Tendon_Pants : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Tendon Pants");
 			// Tooltip.SetDefault("+20% ammo preservation");

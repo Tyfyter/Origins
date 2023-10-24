@@ -1,3 +1,4 @@
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -6,7 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Ashen
 {
     [AutoloadEquip(EquipType.Head)]
-	public class Ashen_Helmet : ModItem {
+	public class Ashen_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Ashen/Ashen_Helmet_Head_Glow");
@@ -37,9 +38,13 @@ namespace Origins.Items.Armor.Ashen
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Ashen_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Ashen_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Ashen_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Ashen_Breastplate : ModItem {
+	public class Ashen_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 		}
@@ -60,7 +65,7 @@ namespace Origins.Items.Armor.Ashen
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Ashen_Greaves : ModItem {
+	public class Ashen_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 		}

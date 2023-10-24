@@ -3,10 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.GameContent.Creative;
 using Origins.Items.Materials;
+using Origins.Dev;
 
 namespace Origins.Items.Armor.Chromtain {
 	[AutoloadEquip(EquipType.Head)]
-	public class Chromtain_Helmet : ModItem {
+	public class Chromtain_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Chromtain Helmet");
 			if (Main.netMode != NetmodeID.Server) {
@@ -34,9 +35,13 @@ namespace Origins.Items.Armor.Chromtain {
 			player.buffImmune[BuffID.BrokenArmor] = true;
 			player.buffImmune[BuffID.WitheredArmor] = true;
 		}
+		public string ArmorSetName => "Chromtain_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Chromtain_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Chromtain_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Chromtain_Breastplate : ModItem {
+	public class Chromtain_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Chromtain Breastplate");
 			// Tooltip.SetDefault("+20 max life");
@@ -61,7 +66,7 @@ namespace Origins.Items.Armor.Chromtain {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Chromtain_Greaves : ModItem {
+	public class Chromtain_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Chromtain Greaves");
 			if (Main.netMode != NetmodeID.Server) {

@@ -1,10 +1,11 @@
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Cryosten {
 	[AutoloadEquip(EquipType.Head)]
-	public class Cryosten_Helmet : ModItem {
+	public class Cryosten_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Cryosten Helmet");
 			// Tooltip.SetDefault("Increased life regeneration");
@@ -42,9 +43,13 @@ namespace Origins.Items.Armor.Cryosten {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Cryosten_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Cryosten_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Cryosten_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Cryosten_Breastplate : ModItem {
+	public class Cryosten_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Cryosten Breastplate");
 			// Tooltip.SetDefault("12% increased maximum life");
@@ -67,7 +72,7 @@ namespace Origins.Items.Armor.Cryosten {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Cryosten_Greaves : ModItem {
+	public class Cryosten_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Cryosten Greaves");
 			// Tooltip.SetDefault("5% increased movement speed\nIncreased movement speed on ice");

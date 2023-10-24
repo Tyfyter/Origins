@@ -1,3 +1,4 @@
+using Origins.Dev;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -5,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Myth {
 	[AutoloadEquip(EquipType.Head)]
-	public class Mythic_Skull : ModItem {
+	public class Mythic_Skull : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Mythic Skull");
 			// Tooltip.SetDefault("Increased explosive velocity\n'Skull ON'");
@@ -44,9 +45,13 @@ namespace Origins.Items.Armor.Myth {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Mythic_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Mythic_Shell>();
+		public int LegsItemID => ModContent.ItemType<Mythic_Leggings>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Mythic_Shell : ModItem {
+	public class Mythic_Shell : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Mythic Shell");
 			// Tooltip.SetDefault("Greatly increased jump speed");
@@ -70,7 +75,7 @@ namespace Origins.Items.Armor.Myth {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Mythic_Leggings : ModItem {
+	public class Mythic_Leggings : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Mythic Leggings");
 			// Tooltip.SetDefault("Greatly increased movement speed");

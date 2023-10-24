@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -7,7 +8,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Riven {
 	[AutoloadEquip(EquipType.Head)]
-	public class Riven_Mask : ModItem {
+	public class Riven_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public const float lightMagnitude = 0.3f;
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
@@ -42,9 +43,13 @@ namespace Origins.Items.Armor.Riven {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
+		public string ArmorSetName => "Riven_Armor";
+		public int HeadItemID => Type;
+		public int BodyItemID => ModContent.ItemType<Riven_Coat>();
+		public int LegsItemID => ModContent.ItemType<Riven_Pants>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Riven_Coat : ModItem {
+	public class Riven_Coat : ModItem, INoSeperateWikiPage {
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Riven Coat");
@@ -78,7 +83,7 @@ namespace Origins.Items.Armor.Riven {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Riven_Pants : ModItem {
+	public class Riven_Pants : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Riven Pants");
 			// Tooltip.SetDefault("6% increased weapon speed");
