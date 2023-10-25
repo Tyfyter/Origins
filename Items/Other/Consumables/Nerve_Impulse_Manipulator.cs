@@ -1,5 +1,6 @@
 ﻿using Origins.Items.Materials;
 using Origins.NPCs.Defiled;
+using Origins.NPCs.Defiled.Boss;
 using Origins.Projectiles.Misc;
 using Origins.World.BiomeData;
 using Terraria;

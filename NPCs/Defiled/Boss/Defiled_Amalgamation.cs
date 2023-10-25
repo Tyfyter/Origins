@@ -29,12 +29,11 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 using Tyfyter.Utils;
 
-namespace Origins.NPCs.Defiled {
+namespace Origins.NPCs.Defiled.Boss {
 	[AutoloadBossHead]
 	public class Defiled_Amalgamation : ModNPC, IDefiledEnemy {
-
-		public override string Texture => "Origins/NPCs/Defiled/Defiled_Amalgamation_Body";
-		public override string BossHeadTexture => "Origins/UI/BossMap/Map_Icon_DA";
+		static AutoLoadingAsset<Texture2D> RightArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
+		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
 		public static bool spawnDA = false;
 		float rightArmRot = 0;
 		float leftArmRot = 0;
@@ -145,8 +144,9 @@ namespace Origins.NPCs.Defiled {
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Undead_Chunk>(), 1, 40, 100));
 			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>()));
 
-			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<DA_Trophy_Item>(), 10));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Defiled_Amalgamation_Trophy_Item>(), 10));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Defiled_Amalgamation_Mask>(), 10));
+			normalDropRule.OnSuccess(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Defiled_Amalgamation_Relic_Item>()));
 
 			npcLoot.Add(new DropBasedOnExpertMode(
 				normalDropRule,
@@ -537,7 +537,7 @@ namespace Origins.NPCs.Defiled {
 			drawColor *= (255 - NPC.alpha) / 255f;
 			bool dir = NPC.spriteDirection == 1;
 			Rectangle armsFrame = new Rectangle(0, armFrame * 96, 30, 94);
-			Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("NPCs/Defiled/Defiled_Amalgamation_RA").Value,
+			Main.EntitySpriteDraw(RightArmTexture,
 				NPC.Center - new Vector2(-46 * NPC.spriteDirection, 12) * NPC.scale - screenPos,
 				armsFrame,
 				drawColor,
@@ -547,7 +547,7 @@ namespace Origins.NPCs.Defiled {
 				dir ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
 			0);
 
-			Main.EntitySpriteDraw(Mod.Assets.Request<Texture2D>("NPCs/Defiled/Defiled_Amalgamation_LA").Value,
+			Main.EntitySpriteDraw(LeftArmTexture,
 				NPC.Center - new Vector2(36 * NPC.spriteDirection, 0) * NPC.scale - screenPos,
 				armsFrame,
 				drawColor,

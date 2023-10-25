@@ -20,10 +20,10 @@ using static Origins.OriginExtensions;
 using static Tyfyter.Utils.KinematicUtils;
 
 namespace Origins.NPCs.Fiberglass {
+	[AutoloadBossHead]
 	public class Fiberglass_Weaver : ModNPC, IMeleeCollisionDataNPC {
-		public override string Texture => "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Body";
-		public static AutoCastingAsset<Texture2D> UpperLegTexture { get; private set; }
-		public static AutoCastingAsset<Texture2D> LowerLegTexture { get; private set; }
+		static AutoLoadingAsset<Texture2D> UpperLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Upper";
+		static AutoLoadingAsset<Texture2D> LowerLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Lower";
 		Arm[] legs;
 		Vector2[] legTargets;
 		internal static IItemDropRule normalDropRule;
@@ -31,16 +31,7 @@ namespace Origins.NPCs.Fiberglass {
 		const float lowerLegLength = 76f;
 		const float totalLegLength = upperLegLength + lowerLegLength;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Fiberglass Weaver");
-			if (!Main.dedServ) {
-				UpperLegTexture = Mod.Assets.Request<Texture2D>("NPCs/Fiberglass/Fiberglass_Weaver_Leg_Upper");
-				LowerLegTexture = Mod.Assets.Request<Texture2D>("NPCs/Fiberglass/Fiberglass_Weaver_Leg_Lower");
-			}
-		}
 		public override void Unload() {
-			UpperLegTexture = null;
-			LowerLegTexture = null;
 			normalDropRule = null;
 		}
 		public override void SetDefaults() {

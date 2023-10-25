@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
+using Origins.NPCs.Defiled.Boss;
 
 namespace Origins.NPCs.Defiled
 {

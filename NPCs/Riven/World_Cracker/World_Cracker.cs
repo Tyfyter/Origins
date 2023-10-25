@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Accessories;
+using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Tools;
@@ -26,6 +27,7 @@ using Terraria.ModLoader;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
 namespace Origins.NPCs.Riven.World_Cracker {
+	[AutoloadBossHead]
 	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy {
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";
@@ -214,7 +216,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Teardown>(), ModContent.ItemType<Return_To_Sender>()));
 
 			//normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PA_Trophy_Item>(), 10));
-			//normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PA_Mask>(), 10));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Mask>(), 10));
 
 			npcLoot.Add(new DropBasedOnExpertMode(
 				normalDropRule,

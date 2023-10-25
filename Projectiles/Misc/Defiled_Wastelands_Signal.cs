@@ -15,6 +15,7 @@ using Terraria.GameContent.Achievements;
 using Terraria.Audio;
 using Origins.NPCs.Defiled;
 using Terraria.DataStructures;
+using Origins.NPCs.Defiled.Boss;
 
 namespace Origins.Projectiles.Misc {
 	public class Defiled_Wastelands_Signal : ModProjectile {

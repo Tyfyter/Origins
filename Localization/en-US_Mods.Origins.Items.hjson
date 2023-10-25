@@ -3346,3 +3346,13 @@ Ambition_Potion: {
 	DisplayName: Ambition_ Potion
 	Tooltip: ""
 }
+
+Defiled_Amalgamation_Relic_Item: {
+	DisplayName: Defiled_ Amalgamation_ Relic_ Item
+	Tooltip: ""
+}
+
+Defiled_Amalgamation_Trophy_Item: {
+	DisplayName: Defiled_ Amalgamation_ Trophy_ Item
+	Tooltip: ""
+}

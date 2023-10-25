@@ -363,6 +363,40 @@ namespace Origins {
 		public static implicit operator AutoCastingAsset<T>(Asset<T> asset) => new(asset);
 		public static implicit operator T(AutoCastingAsset<T> asset) => asset.Value;
 	}
+	public struct AutoLoadingAsset<T> : IUnloadable where T : class {
+		public bool IsLoaded => asset?.IsLoaded ?? false;
+		public T Value {
+			get {
+				if (asset is null) {
+					if (assetPath is null) {
+						asset = Asset<T>.Empty;
+					} else {
+						asset = Main.dedServ ? Asset<T>.Empty : ModContent.Request<T>(assetPath);
+					}
+				}
+				return asset?.Value;
+			}
+		}
+		string assetPath;
+		Asset<T> asset;
+		AutoLoadingAsset(Asset<T> asset) {
+			assetPath = "";
+			this.asset = asset;
+			this.RegisterForUnload();
+		}
+		AutoLoadingAsset(string asset) {
+			assetPath = asset;
+			this.asset = null;
+			this.RegisterForUnload();
+		}
+		public void Unload() {
+			assetPath = null;
+			asset = null;
+		}
+		public static implicit operator AutoLoadingAsset<T>(Asset<T> asset) => new(asset);
+		public static implicit operator AutoLoadingAsset<T>(string asset) => new(asset);
+		public static implicit operator T(AutoLoadingAsset<T> asset) => asset.Value;
+	}
 	public struct UnorderedTuple<T> : IEquatable<UnorderedTuple<T>> {
 		readonly T a;
 		readonly T b;
@@ -688,6 +722,9 @@ namespace Origins {
 	}
 	interface IItemObtainabilityProvider {
 		IEnumerable<int> ProvideItemObtainability();
+	}
+	public interface IUnloadable {
+		void Unload();
 	}
 	public static class Elements {
 		public const ushort Fire = 1;
@@ -2186,6 +2223,9 @@ namespace Origins {
 		public static void InsertIntoShimmerCycle(int type, int after) {
 			ItemID.Sets.ShimmerTransformToItem[type] = ItemID.Sets.ShimmerTransformToItem[after];
 			ItemID.Sets.ShimmerTransformToItem[after] = type;
+		}
+		public static void RegisterForUnload(this IUnloadable unloadable) {
+			Origins.unloadables.Add(unloadable);
 		}
 	}
 	public static class ShopExtensions {
