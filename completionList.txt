@@ -397,7 +397,7 @@ VANITY:
 (X) Lost Diver Head
 (X) Miscreant Mask
 (X) Quantux Mask
-(#2, ^2) World Cracker Mask !!!
+(☻) World Cracker Mask !!!
 (X) Scrapper Head
 (X) Severus' Hat
 
@@ -417,7 +417,7 @@ VANITY:
 
 UTILITIES:
 ---
-(#, ^2) Amoeba Hook !!! (missing sprite, use generic sprite)
+(☻) Amoeba Hook !!! (missing sprite, use generic sprite)
 (X) Chunky Hook
 (#, ^2) Nano Hook
 (#, ^2) Quantum Hook
@@ -854,13 +854,13 @@ TILES:
 (X) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Trophy
-(X) Defiled Amalgamation Relic
-(X) Miscreant Trophy
-(X) Miscreant Relic
-(X) Quantux Trophy
-(X) Quantux Relic
-(X) World Cracker Trophy
-(X) World Cracker Relic
+(☻) Defiled Amalgamation Relic
+(^3) Miscreant Trophy
+(^3) Miscreant Relic
+(^3) Quantux Trophy
+(^3) Quantux Relic
+(^3) World Cracker Trophy
+(^3) World Cracker Relic
 ---
 
 
@@ -952,7 +952,7 @@ CONSUMABLES:
 (@5, #3) The Defiled Will
 
 (^) Absorption Potion
-(#, ^2) Ambition Potion !!!
+(☻) Ambition Potion !!!
 (^) Antisolve Potion
 (^) Fervor Potion
 (^) Flask of Alkahest

@@ -2993,11 +2993,6 @@ Sanguinite_Ore_Item: {
 	Tooltip: A rare mineral that grows more powerful with heat
 }
 
-DA_Trophy_Item: {
-	DisplayName: Defiled Amalgamation Trophy
-	Tooltip: ""
-}
-
 Eitrite_Ore_Item: {
 	DisplayName: Eitrite Ore
 	Tooltip: "'So alkaline-concentrated it could be used as a power source'"
@@ -3348,11 +3343,11 @@ Ambition_Potion: {
 }
 
 Defiled_Amalgamation_Relic_Item: {
-	DisplayName: Defiled_ Amalgamation_ Relic_ Item
+	DisplayName: Defiled Amalgamation Relic
 	Tooltip: ""
 }
 
 Defiled_Amalgamation_Trophy_Item: {
-	DisplayName: Defiled_ Amalgamation_ Trophy_ Item
+	DisplayName: Defiled Amalgamation Trophy
 	Tooltip: ""
 }
