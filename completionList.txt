@@ -34,6 +34,7 @@ X: No progress
 ♦: I don't think I did this as planned, pending review anyway
 ?: requesting explanation
 ♠: pure combination item (effects are all present on other items, can be implemented by combining effects (if they're all implemented))
+◘: Pending review before continuation
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -397,7 +398,7 @@ VANITY:
 (X) Lost Diver Head
 (X) Miscreant Mask
 (X) Quantux Mask
-(☻) World Cracker Mask !!!
+(◘) World Cracker Mask !!!
 (X) Scrapper Head
 (X) Severus' Hat
 
@@ -787,7 +788,7 @@ TILES:
 (X) Brine Water Fountain
 (X) Cancer Block
 (X) Chambersite Gem Lock
-(#, ^2) Chambersite Gemspark
+(☻) Chambersite Gemspark
 (#, ^2) Chambersite Gemstone
 (#, ^2) Chambersite Gemstone (Corruption)
 (#, ^2) Chambersite Gemstone (Crimson)
@@ -799,7 +800,7 @@ TILES:
 (X) Defiled Campfire
 (^) Defiled Dungeon Chest
 (#, ^2) Defiled Water Fountain
-(#, ^2) Defiled Torch
+(☻) Defiled Torch
 (X) Desert Dungeon Chest
 (X) Dusk Dungeon Chest
 (#, ^2) Living Alkahest
@@ -809,7 +810,7 @@ TILES:
 (X) Residue Block
 (X) Riven Campfire
 (^) Riven Dungeon Chest
-(#, ^2) Riven Torch
+(☻) Riven Torch
 (X) Riven Water Fountain
 (#3, ^2) Traffic Cone !!!
 
