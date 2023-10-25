@@ -146,13 +146,13 @@ namespace Origins.NPCs.Defiled.Boss {
 
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Defiled_Amalgamation_Trophy_Item>(), 10));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Defiled_Amalgamation_Mask>(), 10));
-			normalDropRule.OnSuccess(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Defiled_Amalgamation_Relic_Item>()));
 
 			npcLoot.Add(new DropBasedOnExpertMode(
 				normalDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Defiled_Amalgamation_Bag>(), 1, 1, 1, null)
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Mysterious_Spray>(), 4));
+			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Defiled_Amalgamation_Relic_Item>()));
 		}
 		const int state_single_dash = 1;
 		const int state_projectiles = 2;
