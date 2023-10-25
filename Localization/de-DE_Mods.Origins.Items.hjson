@@ -1352,9 +1352,9 @@ Tendon_Shirt: {
 	// Tooltip: +6% critical strike chance
 }
 
-// DA_Mask.DisplayName: "{§Defiled} Amalgamation Mask"
-// FW_Head.DisplayName: Fiberglass Weaver Head
-// WC_Mask.DisplayName: World Cracker Mask
+// Defiled_Amalgamation_Mask.DisplayName: "{§Defiled} Amalgamation Mask"
+// Fiberglass_Weaver_Head.DisplayName: Fiberglass Weaver Head
+// World_Cracker_Mask.DisplayName: World Cracker Mask
 
 Plague_Texan_Jacket: {
 	// DisplayName: Plague Texan's Surprisingly Affordable Style

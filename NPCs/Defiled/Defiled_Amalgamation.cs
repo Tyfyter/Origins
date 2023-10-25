@@ -146,7 +146,7 @@ namespace Origins.NPCs.Defiled {
 			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Low_Signal>(), ModContent.ItemType<Return_To_Sender>()));
 
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<DA_Trophy_Item>(), 10));
-			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<DA_Mask>(), 10));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Defiled_Amalgamation_Mask>(), 10));
 
 			npcLoot.Add(new DropBasedOnExpertMode(
 				normalDropRule,
