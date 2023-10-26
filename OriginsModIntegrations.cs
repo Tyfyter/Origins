@@ -149,14 +149,24 @@ namespace Origins {
 		}
 		[JITWhenModsEnabled("FancyLighting")]
 		void LoadFancyLighting() {
-			Type smoothLightingType = fancyLighting.GetType().Assembly.GetType("FancyLighting.SmoothLighting");
-			MonoModHooks.Add(
-				smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Instance),
-				(hook_TileShine)((orig_TileShine orig, object self, ref Vector3 color, Tile tile) => {
-					orig(self, ref color, tile);
-					if (TileLoader.GetTile(tile.TileType) is IGlowingModTile glowingTile) glowingTile.FancyLightingGlowColor(tile, ref color);
-				})
-			);
+			try {
+				Type smoothLightingType = fancyLighting.GetType().Assembly.GetType("FancyLighting.SmoothLighting");
+				//MethodInfo[] methods = smoothLightingType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
+				MonoModHooks.Add(
+					smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Static),
+					(hook_TileShine)((orig_TileShine orig, object self, ref Vector3 color, Tile tile) => {
+						orig(self, ref color, tile);
+						if (TileLoader.GetTile(tile.TileType) is IGlowingModTile glowingTile) glowingTile.FancyLightingGlowColor(tile, ref color);
+					})
+				);
+			} catch (Exception e) {
+#if DEBUG
+				throw;
+#endif
+				Origins.instance.Logger.Error("Exception thrown while loading Fancy Lighting Integration:");
+				Origins.instance.Logger.Error(e);
+				FancyLighting = null;
+			}
 			/*for (int i = 0; i < OriginTile.IDs.Count; i++) {
 				if (OriginTile.IDs[i] is IGlowingModTile glowingTile) {
 					glowingTiles[OriginTile.IDs[i].Type] = true;
