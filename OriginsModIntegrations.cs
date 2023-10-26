@@ -154,8 +154,8 @@ namespace Origins {
 				//MethodInfo[] methods = smoothLightingType.GetMethods(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static);
 				MonoModHooks.Add(
 					smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Static),
-					(hook_TileShine)((orig_TileShine orig, object self, ref Vector3 color, Tile tile) => {
-						orig(self, ref color, tile);
+					(hook_TileShine)((orig_TileShine orig, ref Vector3 color, Tile tile) => {
+						orig(ref color, tile);
 						if (TileLoader.GetTile(tile.TileType) is IGlowingModTile glowingTile) glowingTile.FancyLightingGlowColor(tile, ref color);
 					})
 				);
@@ -174,8 +174,8 @@ namespace Origins {
 				}
 			}*/
 		}
-		delegate void orig_TileShine(object self, ref Vector3 color, Tile tile);
-		delegate void hook_TileShine(orig_TileShine orig, object self, ref Vector3 color, Tile tile);
+		delegate void orig_TileShine(ref Vector3 color, Tile tile);
+		delegate void hook_TileShine(orig_TileShine orig, ref Vector3 color, Tile tile);
 		[JITWhenModsEnabled("ThoriumMod")]
 		void LoadThorium() {///TODO: unfalse if thorium
 #if false
