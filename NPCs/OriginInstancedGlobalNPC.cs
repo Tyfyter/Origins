@@ -209,7 +209,7 @@ namespace Origins.NPCs {
 			OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
 			int buffIndex = npc.FindBuffIndex(Torn_Debuff.ID);
 			if (buffIndex < 0 || (targetSeverity.CompareTo(globalNPC.tornTarget) + (duration.CompareTo(npc.buffTime[buffIndex]) & 1) > 0)) {
-				if (buffIndex < 0) globalNPC.tornOffset = new Vector2(Main.rand.Next(0, 300));
+				if (buffIndex < 0) globalNPC.tornOffset = new Vector2(Main.rand.NextFloat());
 				npc.AddBuff(Torn_Debuff.ID, duration);
 				globalNPC.tornSeverityRate = targetSeverity / targetTime;
 				globalNPC.tornTarget = targetSeverity;
