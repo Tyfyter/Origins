@@ -23,7 +23,7 @@ namespace Origins.Items.Accessories {
 			Projectile.NewProjectile(
 				player.GetSource_Accessory_OnHurt(source.Item, attacker: null),
 				position,
-				Vector2.Zero,
+				new Vector2(1, 0).RotatedByRandom(MathHelper.Pi),
 				type,
 				damage,
 				knockback,
@@ -37,9 +37,11 @@ namespace Origins.Items.Accessories {
 			Projectile.tileCollide = false;
 			Projectile.friendly = false;
 			Projectile.timeLeft = 30;
+			Projectile.width = Projectile.height = 6;
 		}
 		public override void AI() {
-			Projectile.velocity *= 0.98f;
+			Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Ash, Alpha: 100).noGravity = true;
+			Projectile.velocity *= 0.95f;
 		}
 		public override void OnKill(int timeLeft) {
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item38.WithVolumeScale(0.5f), Projectile.Center);

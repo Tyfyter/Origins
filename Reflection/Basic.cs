@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -15,6 +17,24 @@ namespace Origins.Reflection {
 		public void Unload() {
 			_target = null;
 			reflectionLoaders = null;
+		}
+		public static T MakeInstanceCaller<T>(Type type, string name) where T : Delegate {
+			return MakeInstanceCaller<T>(type.GetMethod(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance));
+		}
+		public static T MakeInstanceCaller<T>(MethodInfo method) where T : Delegate {
+			string methodName = method.ReflectedType.FullName + ".call_" + method.Name;
+			MethodInfo invoke = typeof(T).GetMethod("Invoke");
+			ParameterInfo[] parameters = invoke.GetParameters();
+			DynamicMethod getterMethod = new DynamicMethod(methodName, invoke.ReturnType, parameters.Select(p => p.ParameterType).ToArray(), true);
+			ILGenerator gen = getterMethod.GetILGenerator();
+
+			for (int i = 0; i < parameters.Length; i++) {
+				gen.Emit(OpCodes.Ldarg_S, i);
+			}
+			gen.Emit(OpCodes.Call, method);
+			gen.Emit(OpCodes.Ret);
+
+			return getterMethod.CreateDelegate<T>();
 		}
 		public static void LoadReflections(Type type) {
 			foreach (var item in type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)) {

@@ -277,7 +277,7 @@ ACCESSORIES:
 (^) Destructive Claws
 (^) Dim Starlight*
 (^) Donor Wristband
-(#2, ^2) Dryad's Inheritance
+(☻) Dryad's Inheritance
 (#, ^2) Dysfunctional Endless Explosives Bag
 (^) Exploder Emblem*
 (^) Explosive Artery
@@ -323,7 +323,7 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing
 (^) Ruby Reticle
-(#3, ^2) Seal of Cinders !!!
+(☻) Seal of Cinders !!!
 (^) Shield of Retribution
 (^) Sonar Visor*
 (^) Scavenger Bag
