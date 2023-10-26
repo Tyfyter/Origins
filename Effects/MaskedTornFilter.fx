@@ -40,7 +40,7 @@ float4 MaskedTorn(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLO
 		maskAlpha = 1;
 	}
 	float glow = maskAlpha * mask.g;
-	float2 spriteCoords = float2(round((coords.x * uScreenResolution.x + color.r) / 2) * 2, round((coords.y * uScreenResolution.y + color.g) / 2) * 2);
+	float2 spriteCoords = float2(round((color.r * uImageSize1.x) / 2) * 2, round((color.g * uImageSize1.y) / 2) * 2);
 	float gloSinG = sin((sin(uTime) + spriteCoords.x * 8 + spriteCoords.y) * 2) + 0.5;
 	float gloSinB = sin((uTime + spriteCoords.x + spriteCoords.y * 16)) + 0.5;
 	float glowG = glow * (gloSinG + gloSinB * 1 + 1) * 0.4;

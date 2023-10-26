@@ -1189,7 +1189,7 @@ namespace Origins {
 					if (drawPlayersWithShader == coordinateMaskFilterID) {
 						coordinateMaskFilter.Shader.Parameters["uOffset"].SetValue(drawPlayer.position);
 						coordinateMaskFilter.Shader.Parameters["uScale"].SetValue(1f);
-						coordinateMaskFilter.UseColor(new Color((Main.MouseScreen.Y * 2) / Main.screenHeight, 0f, originPlayer.tornCurrentSeverity));
+						coordinateMaskFilter.UseColor(new Vector3(originPlayer.tornOffset, originPlayer.tornCurrentSeverity));
 						coordinateMaskFilter.UseOpacity(1);//supposed to be originPlayer.tornCurrentSeverity, but can't figure out how to fix blending
 					}
 					orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);

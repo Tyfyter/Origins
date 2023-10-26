@@ -22,7 +22,7 @@ float2 uLegacyArmorSheetSize;
 float4 CoordinateMask(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	if (tex2D(uImage0, coords).a <= 0) return float4(0, 0, 0, 0);
 	coords = ((uWorldPosition - uOffset) * 0.18 + ((coords * uImageSize0 - uSourceRect.xy) * uScale)) / uCoordinateSize; //
-	return float4(fmod(coords.x, 1), fmod(coords.y + uColor.g, 1), uColor.b, uOpacity);
+	return float4(fmod(coords.x + uColor.r, 1), fmod(coords.y + uColor.g, 1), uColor.b, uOpacity);
 }
 
 float4 Transparency(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {

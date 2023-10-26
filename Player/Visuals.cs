@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
@@ -20,83 +21,6 @@ using static Origins.OriginExtensions;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
-		internal static List<Player> cachedTornPlayers;
-		internal static bool anyActiveTorn;
-		internal static bool drawingTorn;
-		public static ScreenTarget TornScreenTarget { get; private set; }
-		public override void Load() {
-			if (Main.dedServ) return;
-			cachedTornPlayers = new();
-			TornScreenTarget = new(
-				MaskAura,
-				() => {
-					bool isActive = anyActiveTorn;
-					anyActiveTorn = false;
-					return isActive && Lighting.NotRetro;
-				},
-				0
-			);
-			On_Main.DrawInfernoRings += Main_DrawInfernoRings;
-		}
-		private void Main_DrawInfernoRings(On_Main.orig_DrawInfernoRings orig, Main self) {
-			orig(self);
-			if (Main.dedServ) return;
-			if (Lighting.NotRetro) DrawAura(Main.spriteBatch);
-		}
-		static void MaskAura(SpriteBatch spriteBatch) {
-			if (Main.dedServ) return;
-			//SpriteBatch mainSpriteBatch = Main.spriteBatch;
-			SpriteBatchState state = spriteBatch.GetState();
-			try {
-				//Main.spriteBatch = spriteBatch;
-				drawingTorn = true;
-				//spriteBatch.End();
-				spriteBatch.Restart(state);
-				Origins.drawPlayersWithShader = Origins.coordinateMaskFilterID;
-				Origins.coordinateMaskFilter.Shader.Parameters["uCoordinateSize"].SetValue(new Vector2(20, 24));//put the size of the texture in here
-
-				PlayerShaderSet dontCoverArmor = new PlayerShaderSet(0);
-				Origins.keepPlayerShader = Origins.transparencyFilterID;
-				dontCoverArmor.cHead = Origins.keepPlayerShader;
-				for (int i = 0; i < cachedTornPlayers.Count; i++) {
-					Player player = cachedTornPlayers[i];
-					PlayerShaderSet shaderSet = new(player);
-					dontCoverArmor.Apply(player);
-					Vector2 itemLocation = player.itemLocation;
-					try {
-						player.itemLocation = Vector2.Zero;
-						Main.PlayerRenderer.DrawPlayer(
-							Main.Camera,
-							player,
-							player.position + new Vector2(0, player.gfxOffY),
-							player.fullRotation,
-							player.fullRotationOrigin,
-							scale:Main.GameViewMatrix.Zoom.X
-						);
-					} finally {
-						player.itemLocation = itemLocation;
-						shaderSet.Apply(player);
-					}
-				}
-				//Main.PlayerRenderer.DrawPlayers(Main.Camera, cachedTornPlayers);
-			} finally {
-				Origins.drawPlayersWithShader = -1;
-				Origins.keepPlayerShader = -1;
-				cachedTornPlayers.Clear();
-				drawingTorn = false;
-				spriteBatch.Restart(state);
-				//Main.spriteBatch = mainSpriteBatch;
-			}
-		}
-		static void DrawAura(SpriteBatch spriteBatch) {
-			if (Main.dedServ) return;
-			//anyActive = false;
-			Main.LocalPlayer.ManageSpecialBiomeVisuals("Origins:MaskedTornFilter", anyActiveTorn, Main.LocalPlayer.Center);
-			if (anyActiveTorn) {
-				Filters.Scene["Origins:MaskedTornFilter"].GetShader().UseImage(TornScreenTarget.RenderTarget, 1);
-			}
-			//spriteBatch.Draw(TornScreenTarget.RenderTarget, Vector2.Zero, Color.Blue);
-		}
 		public override void HideDrawLayers(PlayerDrawSet drawInfo) {
 			Item item = drawInfo.heldItem;
 			if (item.ModItem is ICustomDrawItem) PlayerDrawLayers.HeldItem.Hide();
@@ -145,9 +69,9 @@ namespace Origins {
 			if (drawInfo.drawPlayer.shield == Resin_Shield.ShieldID && resinShieldCooldown > 0) {
 				drawInfo.drawPlayer.shield = (sbyte)Resin_Shield.InactiveShieldID;
 			}
-			if (tornCurrentSeverity > 0 && !drawingTorn) {
-				cachedTornPlayers.Add(Player);
-				anyActiveTorn = true;
+			if (tornCurrentSeverity > 0 && !Torn_Debuff.drawingTorn) {
+				Torn_Debuff.cachedTornPlayers.Add(Player);
+				Torn_Debuff.anyActiveTorn = true;
 			}
 		}
 		public override void FrameEffects() {

@@ -599,6 +599,7 @@ namespace Origins {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			int buffIndex = player.FindBuffIndex(Torn_Debuff.ID);
 			if (buffIndex < 0 || (targetSeverity.CompareTo(originPlayer.tornTarget) + (duration.CompareTo(player.buffTime[buffIndex]) & 1) > 0)) {
+				if (buffIndex < 0) originPlayer.tornOffset = new Vector2(Main.rand.Next(0, 300));
 				int decayIndex = player.FindBuffIndex(Torn_Decay_Debuff.ID);
 				if (decayIndex < 0) {
 					player.AddBuff(Torn_Debuff.ID, duration);

@@ -238,6 +238,7 @@ namespace Origins {
 		public float tornSeverityRate = 0.3f / 180;
 		public float tornSeverityDecayRate = 0.15f / 180;
 		public float tornTarget = 0f;
+		public Vector2 tornOffset = default;
 		#endregion
 
 		#region keybinds

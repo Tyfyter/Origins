@@ -26,6 +26,7 @@ namespace Origins.NPCs {
 		float tornSeverityRate = 0.3f / 180;
 		const float tornSeverityDecayRate = 0.3f / 180;
 		float tornTarget = 0.7f;
+		public Vector2 tornOffset = default;
 		public bool slowDebuff = false;
 		public bool barnacleBuff = false;
 		public bool oldSlowDebuff = false;
@@ -174,6 +175,10 @@ namespace Origins.NPCs {
 
 		}
 		public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
+			if (tornCurrentSeverity > 0 && !Torn_Debuff.drawingTorn) {
+				Torn_Debuff.cachedTornNPCs.Add(npc);
+				Torn_Debuff.anyActiveTorn = true;
+			}
 			if (rasterizedTime > 0) {
 				Origins.rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
 				Origins.rasterizeShader.Shader.Parameters["uOffset"].SetValue(npc.velocity.WithMaxLength(4) * 0.0625f * rasterizedTime);
@@ -204,6 +209,7 @@ namespace Origins.NPCs {
 			OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
 			int buffIndex = npc.FindBuffIndex(Torn_Debuff.ID);
 			if (buffIndex < 0 || (targetSeverity.CompareTo(globalNPC.tornTarget) + (duration.CompareTo(npc.buffTime[buffIndex]) & 1) > 0)) {
+				if (buffIndex < 0) globalNPC.tornOffset = new Vector2(Main.rand.Next(0, 300));
 				npc.AddBuff(Torn_Debuff.ID, duration);
 				globalNPC.tornSeverityRate = targetSeverity / targetTime;
 				globalNPC.tornTarget = targetSeverity;
