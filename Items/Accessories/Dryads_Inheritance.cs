@@ -79,7 +79,7 @@ namespace Origins.Items.Accessories {
 						player.AddBuff(BuffID.DryadsWard, 120);
 					}
 				}
-				if (Projectile.ai[0] % 10f == 0f && Main.netMode != NetmodeID.MultiplayerClient) {
+				if (Projectile.ai[2] % 10f == 0f && Main.netMode != NetmodeID.MultiplayerClient) {
 					for (int i = 0; i < 200; i++) {
 						NPC npc = Main.npc[i];
 						if (AppliesToEnemy(npc, radius)) {
@@ -94,6 +94,9 @@ namespace Origins.Items.Accessories {
 					Projectile.frame = 0;
 				}
 			}
+			if (++Projectile.ai[2] >= 10) {
+				Projectile.ai[2] = 0;
+			}
 		}
 		bool AppliesToEnemy(NPC npc, float radius) {
 			if (npc.type == NPCID.TargetDummy || !npc.active) return false;
@@ -102,7 +105,7 @@ namespace Origins.Items.Accessories {
 			int buffIndex = npc.FindBuffIndex(BuffID.DryadsWardDebuff);
 			if (buffIndex != -1 && npc.buffTime[buffIndex] > 20) return false;
 			if (!npc.dryadBane && !Collision.CanHit(Projectile.Center, 1, 1, npc.position, npc.width, npc.height)) return false;
-			return false;
+			return true;
 		}
 		public override Color? GetAlpha(Color lightColor) {
 			if (Projectile.ai[2] == 1f) {

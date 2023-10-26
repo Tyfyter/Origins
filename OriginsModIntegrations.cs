@@ -160,12 +160,12 @@ namespace Origins {
 					})
 				);
 			} catch (Exception e) {
-#if DEBUG
-				throw;
-#endif
 				Origins.instance.Logger.Error("Exception thrown while loading Fancy Lighting Integration:");
 				Origins.instance.Logger.Error(e);
 				FancyLighting = null;
+#if DEBUG
+				throw;
+#endif
 			}
 			/*for (int i = 0; i < OriginTile.IDs.Count; i++) {
 				if (OriginTile.IDs[i] is IGlowingModTile glowingTile) {
