@@ -8,7 +8,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Armor.Riven.Riven2_Mask;
 
 namespace Origins.NPCs.Riven {
     public class Flagellant : Glowing_Mod_NPC, IRivenEnemy {
@@ -24,8 +23,8 @@ namespace Origins.NPCs.Riven {
 			NPC.lifeMax = 380;
 			NPC.defense = 20;
 			NPC.damage = 70;
-			NPC.width = 56;
-			NPC.height = 60;
+			NPC.width = 33;
+			NPC.height = 50;
 			NPC.frame.Height = 58;
 			NPC.value = 500;
 		}

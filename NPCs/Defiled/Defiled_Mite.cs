@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using System;
 using System.IO;
@@ -11,10 +10,9 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Mite : ModNPC, IDefiledEnemy {
+    public class Defiled_Mite : ModNPC, IDefiledEnemy {
 		internal const int spawnCheckDistance = 15;
 		public const int aggroRange = 128;
 		byte frame = 0;
@@ -32,8 +30,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.lifeMax = 22;
 			NPC.defense = 9;
 			NPC.damage = 34;
-			NPC.width = 34;
-			NPC.height = 26;
+			NPC.width = 20;
+			NPC.height = 18;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;

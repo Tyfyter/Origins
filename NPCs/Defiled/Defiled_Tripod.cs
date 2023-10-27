@@ -8,7 +8,6 @@ using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -16,7 +15,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Tripod : ModNPC, ICustomCollisionNPC, IDefiledEnemy {
+    public class Defiled_Tripod : ModNPC, ICustomCollisionNPC, IDefiledEnemy {
 		public const float horizontalSpeed = 3.2f;
 		public const float horizontalAirSpeed = 2f;
 		public const float verticalSpeed = 4f;
@@ -35,8 +34,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.lifeMax = 475;
 			NPC.defense = 28;
 			NPC.damage = 52;
-			NPC.width = 98;
-			NPC.height = 98;
+			NPC.width = 56;
+			NPC.height = 90;
 			NPC.scale = 0.85f;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;

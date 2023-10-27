@@ -19,8 +19,8 @@ namespace Origins.NPCs.Riven
 			NPC.lifeMax = 120;
 			NPC.defense = 7;
 			NPC.damage = 38;
-			NPC.width = 38;
-			NPC.height = 28;
+			NPC.width = 28;
+			NPC.height = 26;
 			NPC.frame.Height = 28;
 			NPC.value = 500;
 		}

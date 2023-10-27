@@ -7,7 +7,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Armor.Riven.Riven2_Mask;
 
 namespace Origins.NPCs.Riven {
     public class Riven_Fighter : Glowing_Mod_NPC, IRivenEnemy {
@@ -24,8 +23,8 @@ namespace Origins.NPCs.Riven {
 			NPC.lifeMax = 81;
 			NPC.defense = 10;
 			NPC.damage = 33;
-			NPC.width = 36;
-			NPC.height = 40;
+			NPC.width = 20;
+			NPC.height = 38;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);

@@ -22,8 +22,8 @@ namespace Origins.NPCs.Defiled
 			NPC.defense = 18;
 			NPC.knockBackResist = 0.5f;
 			NPC.damage = 60;
-			NPC.width = 32;
-			NPC.height = 48;
+			NPC.width = 20;
+			NPC.height = 44;
 			NPC.value = 700;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;

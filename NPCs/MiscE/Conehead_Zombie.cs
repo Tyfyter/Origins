@@ -17,8 +17,8 @@ namespace Origins.NPCs.MiscE {
 			NPC.lifeMax = 45;
 			NPC.defense = 14;
 			NPC.damage = 14;
-			NPC.width = 19;
-			NPC.height = 28;
+			NPC.width = 28;
+			NPC.height = 46;
 			NPC.friendly = false;
 		}
 		public override void FindFrame(int frameHeight) {

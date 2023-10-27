@@ -962,8 +962,8 @@ Projectiles: {
 	// Dryad_Ward.DisplayName: Dryad Ward
 	// Triple_Threat_Dupe_P.DisplayName: Triple Threat
 	// Triple_Threat_P.DisplayName: Triple Threat
-	// Barnacle_Turret.DisplayName: Barnacle_ Turret
-	// Barnacle_Turret_Shot.DisplayName: Barnacle_ Turret_ Shot
+	// Barnacle_Turret.DisplayName: Barnacle Turret
+	// Barnacle_Turret_Shot.DisplayName: Barnacle Turret
 }
 
 Prefixes: {

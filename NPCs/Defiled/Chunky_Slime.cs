@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Summoner;
 using Origins.World.BiomeData;
-using System;
-using System.IO;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;

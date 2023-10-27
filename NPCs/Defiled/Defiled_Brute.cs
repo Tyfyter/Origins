@@ -4,17 +4,15 @@ using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using System;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Brute : ModNPC, IDefiledEnemy {
+    public class Defiled_Brute : ModNPC, IDefiledEnemy {
 		public const float speedMult = 0.75f;
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;
@@ -31,8 +29,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.lifeMax = 160;
 			NPC.defense = 9;
 			NPC.damage = 49;
-			NPC.width = 76;
-			NPC.height = 66;
+			NPC.width = 33;
+			NPC.height = 54;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0.5f, 0.75f);
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(0.5f, 0.75f);

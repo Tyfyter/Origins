@@ -7,6 +7,7 @@ using Origins.Items.Other.LootBags;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
+using Origins.Tiles.BossDrops;
 using Origins.Tiles.Riven;
 using Origins.Water;
 using Origins.World.BiomeData;
@@ -210,21 +211,22 @@ namespace Origins.NPCs.Riven.World_Cracker {
 
 			normalDropRule = new LeadingSuccessRule();
 
-			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Encrusted_Ore_Item>(), 1, 140, 330));
-			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Riven_Carapace>(), 1, 40, 100));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Encrusted_Ore_Item>(), 1, 20, 330));
+			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Riven_Carapace>(), 1, 1, 134));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Amoeba_Hook>(), 1));
-			normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Teardown>(), ModContent.ItemType<Return_To_Sender>()));
+            normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Teardown>(), 1));
 
-			//normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<PA_Trophy_Item>(), 10));
-			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Mask>(), 10));
+            normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Trophy_Item>(), 10));
+            normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Mask>(), 10));
 
 			npcLoot.Add(new DropBasedOnExpertMode(
 				normalDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<World_Cracker_Bag>(), 1, 1, 1, null)
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Protozoa_Food>(), 4));
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<World_Cracker_Relic_Item>()));
 
-			armorBreakDropRule = new LeadingSuccessRule();
+            armorBreakDropRule = new LeadingSuccessRule();
 
 			armorBreakDropRule.OnSuccess(new CommonDrop(ModContent.ItemType<Encrusted_Ore_Item>(), 2, 5, 12, 3));
 			armorBreakDropRule.OnSuccess(new CommonDrop(ModContent.ItemType<Riven_Carapace>(), 2, 2, 5, 3));

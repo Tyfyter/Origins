@@ -121,6 +121,7 @@ ENEMY NPCS:
 (^) Shattered Goldfish
 (^) Single-Cellular Nautilus
 (#, ^2) Spider Amoeba !!!
+(^) Splitooth
 
 (X) Amebeye
 (^) Amebic Mummy
@@ -636,7 +637,7 @@ SUMMONER WEAPONS:
 (#, ^2) Joint Pop !!!
 (^) Maelstrom Incantation
 (#, ^2) Ocean Amulet !!!
-(#, ^2) Ocotoral Bud !!!
+(#3, ^2) Ocotoral Bud !!!
 (^) Rotted Worm Staff
 (X) Stubborn Flower !!!
 (^) Teardown
@@ -816,7 +817,7 @@ TILES:
 (#, ^2) Riven Campfire !!!
 (^) Riven Dungeon Chest
 (^) Riven Torch
-(X) Riven Water Fountain !!!
+(#, ^2) Riven Water Fountain !!!
 (#3, ^2) Traffic Cone !!!
 
 (^) Cleansing Station
@@ -846,7 +847,7 @@ TILES:
 
 (X) Ancient Music Box (Brine Pool)
 (X) Ancient Music Box (Defiled Wastelands)
-(X) Ancient Music Box (Riven Hive)
+(#, ^2) Ancient Music Box (Riven Hive)
 (X) Music Box (Abstract)
 (X) Music Box (Riven Dancer 2081)
 (X) Music Box (Brine Pool)
@@ -866,8 +867,8 @@ TILES:
 (^3) Miscreant Relic
 (^3) Quantux Trophy
 (^3) Quantux Relic
-(^3) World Cracker Trophy
-(^3) World Cracker Relic
+(^) World Cracker Trophy
+(^) World Cracker Relic
 ---
 
 
@@ -1072,14 +1073,14 @@ UI:
 (X) Cosmos Map/Bestiary Backdrop
 (X) Dawn Map/Bestiary Backdrop
 (X) Dawn Icon
-(X) Defiled Map/Bestiary Backdrop
+(#, ^2) Defiled Map/Bestiary Backdrop !!!
 (^) Defiled Icon
 (X) Dusk Map/Bestiary Backdrop
 (X) Dusk Icon
 (X) Fiberglass Map/Bestiary Backdrop
 (X) Fiberglass Icon
 (X) Fractured Isles Icon
-(X) Riven Map/Bestiary Backdrop
+(#, ^2) Riven Map/Bestiary Backdrop !!!
 (^) Riven Icon
 
 (@5, ^3) 30x30 Origins Icon

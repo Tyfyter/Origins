@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
 using Origins.World.BiomeData;
 using System;
@@ -10,10 +9,9 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 
 namespace Origins.NPCs.Defiled {
-	public class Ancient_Defiled_Cyclops : ModNPC, IMeleeCollisionDataNPC, IDefiledEnemy {
+    public class Ancient_Defiled_Cyclops : ModNPC, IMeleeCollisionDataNPC, IDefiledEnemy {
 		public const float speedMult = 1f;
 		bool attacking = false;
 		public override void SetStaticDefaults() {
@@ -29,8 +27,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.lifeMax = 300;
 			NPC.defense = 12;
 			NPC.damage = 63;
-			NPC.width = 110;
-			NPC.height = 120;
+			NPC.width = 45;
+			NPC.height = 114;
 			NPC.friendly = false;
 			NPC.value = 10000;
 		}

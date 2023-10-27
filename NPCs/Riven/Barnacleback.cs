@@ -7,7 +7,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Armor.Riven.Riven2_Mask;
 
 namespace Origins.NPCs.Riven {
     public class Barnacleback : ModNPC, IRivenEnemy {
@@ -23,8 +22,8 @@ namespace Origins.NPCs.Riven {
 			NPC.lifeMax = 40;
 			NPC.defense = 0;
 			NPC.damage = 14;
-			NPC.width = 36;
-			NPC.height = 50;
+			NPC.width = 24;
+			NPC.height = 47;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath15;

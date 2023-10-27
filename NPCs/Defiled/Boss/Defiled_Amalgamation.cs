@@ -7,7 +7,6 @@ using Origins.Items.Other.LootBags;
 using Origins.Items.Weapons.Magic;
 using Origins.LootConditions;
 using Origins.Projectiles.Enemies;
-using Origins.Projectiles.Weapons;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
@@ -30,7 +29,7 @@ using Terraria.Utilities;
 using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled.Boss {
-	[AutoloadBossHead]
+    [AutoloadBossHead]
 	public class Defiled_Amalgamation : ModNPC, IDefiledEnemy {
 		static AutoLoadingAsset<Texture2D> RightArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Right_Arm";
 		static AutoLoadingAsset<Texture2D> LeftArmTexture = "Origins/NPCs/Defiled/Boss/Defiled_Amalgamation_Left_Arm";
@@ -76,16 +75,16 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.lifeMax = 2400;
 			NPC.defense = 14;
 			NPC.damage = 60;
-			NPC.width = 122;
-			NPC.height = 114;
+			NPC.width = 81;
+			NPC.height = 96;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt.WithPitchRange(0f, 0.25f);
 			NPC.DeathSound = Origins.Sounds.DefiledKill.WithPitchRange(-1f, -0.75f);
 			NPC.noGravity = true;
 			NPC.npcSlots = 200;
 			Music = Origins.Music.DefiledBoss;
-			NPC.knockBackResist = 0;// actually a multiplier
-			NPC.value = Item.sellPrice(gold: 5); // I do a little trollin'
+			NPC.knockBackResist = 0; // actually a multiplier
+			NPC.value = Item.sellPrice(gold: 5);
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get => 1; set { } }

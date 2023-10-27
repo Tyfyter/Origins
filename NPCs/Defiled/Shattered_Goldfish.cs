@@ -1,14 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.NPCs.Defiled;
 using Origins.World.BiomeData;
-using System.IO;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.NPCs.Defiled
-{
+namespace Origins.NPCs.Defiled {
     public class Shattered_Goldfish : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
@@ -21,8 +18,8 @@ namespace Origins.NPCs.Defiled
 			NPC.lifeMax = 110;
 			NPC.defense = 7;
 			NPC.damage = 32;
-			NPC.width = 38;
-			NPC.height = 28;
+			NPC.width = 26;
+			NPC.height = 18;
 			NPC.frame.Height = 28;
 			NPC.value = 500;
 		}

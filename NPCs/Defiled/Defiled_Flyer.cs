@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
-using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using System;
 using System.IO;
@@ -13,10 +11,9 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Flyer : ModNPC, IDefiledEnemy {
+    public class Defiled_Flyer : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("{$Defiled} Phantom");
 			//Origins.AddGlowMask(NPC. "NPCs/Defiled/Defiled_Flyer_Glow");
@@ -31,8 +28,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.lifeMax = 42;
 			NPC.defense = 10;
 			NPC.damage = 20;
-			NPC.width = 104;
-			NPC.height = 38;
+			NPC.width = 70;
+			NPC.height = 26;
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;

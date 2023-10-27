@@ -3363,5 +3363,15 @@ Triple_Threat: {
 
 Ocotoral_Bud: {
 	DisplayName: Ocotoral Bud
+	Tooltip: Summons a mobile barnacle turret to fight for you
+}
+
+World_Cracker_Relic_Item: {
+	DisplayName: World_ Cracker_ Relic_ Item
+	Tooltip: ""
+}
+
+World_Cracker_Trophy_Item: {
+	DisplayName: World_ Cracker_ Trophy_ Item
 	Tooltip: ""
 }

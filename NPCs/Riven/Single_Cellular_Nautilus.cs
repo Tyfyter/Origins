@@ -8,7 +8,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Armor.Riven.Riven2_Mask;
 
 namespace Origins.NPCs.Riven {
     public class Single_Cellular_Nautilus : Glowing_Mod_NPC, IRivenEnemy {
@@ -25,8 +24,8 @@ namespace Origins.NPCs.Riven {
 			NPC.lifeMax = 70;
 			NPC.defense = 12;
 			NPC.damage = 33;
-			NPC.width = 38;
-			NPC.height = 38;
+			NPC.width = 20;
+			NPC.height = 24;
 			NPC.friendly = false;
 			NPC.knockBackResist = 1f;
 			NPC.frame.Height = 30;
