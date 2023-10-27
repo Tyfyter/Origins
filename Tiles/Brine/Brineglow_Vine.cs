@@ -81,7 +81,8 @@ namespace Origins.Tiles.Brine {
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
 			TileObjectData.newTile.WaterDeath = false;
 			TileObjectData.newTile.WaterPlacement = LiquidPlacement.OnlyInFullLiquid;
-			TileObjectData.newTile.AnchorBottom = new(AnchorType.SolidTile | AnchorType.AlternateTile, 1, 0);
+			TileObjectData.newTile.AnchorTop = new(AnchorType.SolidTile | AnchorType.AlternateTile, 1, 0);
+			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.newTile.AnchorValidTiles = new int[] {
 				TileType<Peat_Moss_Tile>(),
 				TileType<Sulphur_Stone>()
@@ -101,14 +102,9 @@ namespace Origins.Tiles.Brine {
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (Glows(Framing.GetTileSafely(i, j))) b = 0.1f;
 		}
-		public override void SetSpriteEffects(int i, int j, ref SpriteEffects spriteEffects) {
-			if (i % 2 == 0) {
-				spriteEffects = SpriteEffects.FlipHorizontally;
-			}
-		}
 		public override void RandomUpdate(int i, int j) {
-			if (!Framing.GetTileSafely(i, j - 1).HasTile && Main.rand.NextBool(2)) {
-				if (TileObject.CanPlace(i, j - 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
+			if (!Framing.GetTileSafely(i, j + 1).HasTile && Main.rand.NextBool(2)) {
+				if (TileObject.CanPlace(i, j + 1, Type, 0, 0, out TileObject objectData, false, checkStay: true)) {
 					objectData.style = 0;
 					objectData.alternate = 0;
 					objectData.random = 0;
@@ -118,7 +114,7 @@ namespace Origins.Tiles.Brine {
 			}
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			Tile below = Framing.GetTileSafely(i, j + 1);
+			Tile below = Framing.GetTileSafely(i, j - 1);
 			if (!below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss_Tile>()) && !below.TileIsType(TileType<Sulphur_Stone>())) {
 				WorldGen.KillTile(i, j);
 				return false;
@@ -171,7 +167,7 @@ namespace Origins.Tiles.Brine {
 					(5, 4),
 				};
 			}
-			Tile above = Framing.GetTileSafely(i, j - 1);
+			Tile above = Framing.GetTileSafely(i, j + 1);
 			if (above.TileIsType(Type)) {
 				frames.Remove(((short)(above.TileFrameX / 18), (short)(above.TileFrameY / 18)));
 			} else {
@@ -213,13 +209,13 @@ namespace Origins.Tiles.Brine {
 			return false;
 		}
 		public override bool PreDraw(int i, int j, SpriteBatch spriteBatch) {
-			if (Framing.GetTileSafely(i, j + 1).TileType != Type) {
+			if (Framing.GetTileSafely(i, j - 1).TileType != Type) {
 				bool spelunk = Main.LocalPlayer.findTreasure;
 				bool isActiveAndNotPaused = !Main.gamePaused && Main.instance.IsActive;
 				Texture2D tileDrawTexture = TextureAssets.Tile[Type].Value;
-				SpriteEffects spriteEffects = SpriteEffects.None;
+				SpriteEffects spriteEffects = SpriteEffects.FlipVertically;
 				if (i % 2 == 0) {
-					spriteEffects = SpriteEffects.FlipHorizontally;
+					spriteEffects |= SpriteEffects.FlipHorizontally;
 				}
 
 				Vector2 zero = Main.drawToScreen ? Vector2.Zero : new Vector2(Main.offScreenRange, Main.offScreenRange);
@@ -227,7 +223,7 @@ namespace Origins.Tiles.Brine {
 				//position.Y += 2;
 				Rectangle frame = new Rectangle(0, 0, 16, 16);//2
 				//float lastWindGridPush = 0;
-				for (int k = j; Framing.GetTileSafely(i, k).TileType == Type; k--) {
+				for (int k = j; Framing.GetTileSafely(i, k).TileType == Type; k++) {
 					Tile tile = Main.tile[i, k];
 					//if (TileDrawing.IsVisible(tile)) {
 					Color color = Lighting.GetColor(i, k);
@@ -268,7 +264,7 @@ namespace Origins.Tiles.Brine {
 						1f,
 						spriteEffects,
 					0f);
-					position.Y -= 16;
+					position.Y += 16;
 					//}
 
 					/*float windGridPush = Main.instance.TilesRenderer.GetWindGridPush(i, k, 20, 0.01f);

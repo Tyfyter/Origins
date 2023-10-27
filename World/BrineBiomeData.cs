@@ -269,8 +269,8 @@ namespace Origins.World.BiomeData {
 					int length = 0;
 					bool isVine = false;
 					Tile currentTile;
-					for (; (currentTile = Framing.GetTileSafely(posX, posY)).HasTile; posY--) if (currentTile.TileType == vineTile) isVine = true;
-					for (; !isVine && TileObject.CanPlace(posX, posY, vineTile, 0, 0, out TileObject objectData, false, checkStay: true); posY--) {
+					for (; (currentTile = Framing.GetTileSafely(posX, posY)).HasTile; posY++) if (currentTile.TileType == vineTile) isVine = true;
+					if (!isVine) for (; TileObject.CanPlace(posX, posY, vineTile, 0, 0, out TileObject objectData, false, checkStay: true); posY++) {
 						objectData.style = 0;
 						objectData.alternate = 0;
 						objectData.random = 0;

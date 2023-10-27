@@ -276,7 +276,7 @@ namespace Origins {
 			oldYSign = Math.Sign(Player.velocity.Y);
 			//endCustomMovement:
 			hookTarget = -1;
-			int directionX = Math.Sign(Player.velocity.X);
+			/*int directionX = Math.Sign(Player.velocity.X);
 			int directionY = Math.Sign(Player.velocity.Y);
 			int vine = ModContent.TileType<Brineglow_Vine>();
 			foreach (Point item in Collision.GetTilesIn(Player.TopLeft, Player.BottomRight)) {
@@ -285,7 +285,7 @@ namespace Origins {
 					ref short windSpeed = ref tile.Get<TileExtraVisualData>().TileFrameX;
 					windSpeed = (short)Math.Clamp(windSpeed + Player.velocity.X, -128, 128);
 				}
-			}
+			}*/
 		}
 		public override void PreUpdate() {
 			if (corruptionAssimilation > 0) {
