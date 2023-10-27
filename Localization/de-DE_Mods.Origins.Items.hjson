@@ -3351,3 +3351,8 @@ Defiled_Amalgamation_Trophy_Item: {
 	// DisplayName: Defiled Amalgamation Trophy
 	// Tooltip: ""
 }
+
+Triple_Threat: {
+	// DisplayName: Triple_ Threat
+	// Tooltip: ""
+}

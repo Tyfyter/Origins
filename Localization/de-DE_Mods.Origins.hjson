@@ -960,6 +960,8 @@ Projectiles: {
 	// C6_Jackhammer_P.DisplayName: C6 Jackhammer P
 	// Silica_Ball.DisplayName: Silica Ball
 	// Dryad_Ward.DisplayName: Dryad_ Ward
+	// Triple_Threat_Dupe_P.DisplayName: Triple_ Threat_ Dupe_ P
+	// Triple_Threat_P.DisplayName: Triple_ Threat_ P
 }
 
 Prefixes: {
