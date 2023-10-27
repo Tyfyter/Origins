@@ -3367,11 +3367,11 @@ Ocotoral_Bud: {
 }
 
 World_Cracker_Relic_Item: {
-	DisplayName: World_ Cracker_ Relic_ Item
+	DisplayName: World Cracker Relic
 	Tooltip: ""
 }
 
 World_Cracker_Trophy_Item: {
-	DisplayName: World_ Cracker_ Trophy_ Item
+	DisplayName: World Cracker Trophy
 	Tooltip: ""
 }
