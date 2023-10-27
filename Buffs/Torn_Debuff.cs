@@ -112,10 +112,12 @@ namespace Origins.Buffs {
 					EffectParameter sourceRect = Origins.coordinateMaskFilter.Shader.Parameters["uSourceRect"];
 					EffectParameter scale = Origins.coordinateMaskFilter.Shader.Parameters["uScale"];
 					EffectParameter offset = Origins.coordinateMaskFilter.Shader.Parameters["uOffset"];
+					EffectParameter color = Origins.coordinateMaskFilter.Shader.Parameters["uColor"];
 					for (int i = 0; i < cachedTornNPCs.Count; i++) {
 						NPC npc = cachedTornNPCs[i];
 						if (npc.active) {
-							Origins.coordinateMaskFilter.UseColor(new Vector3(npc.GetGlobalNPC<OriginGlobalNPC>().tornOffset, 0));
+							OriginGlobalNPC gNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
+							color.SetValue(new Vector3(gNPC.tornOffset, gNPC.tornCurrentSeverity));
 							worldPosition.SetValue(npc.position);
 							offset.SetValue(npc.position);
 							sourceRect.SetValue(new Vector4(npc.frame.X, npc.frame.Y, npc.frame.Width, npc.frame.Height));
@@ -143,7 +145,7 @@ namespace Origins.Buffs {
 			if (anyActiveTorn) {
 				Filters.Scene["Origins:MaskedTornFilter"].GetShader().UseImage(TornScreenTarget.RenderTarget, 1);
 			}
-			//spriteBatch.Draw(TornScreenTarget.RenderTarget, Vector2.Zero, Color.White);
+			//spriteBatch.Draw(TornScreenTarget.RenderTarget, Vector2.Zero, Color.Blue);
 		}
 	}
 	public class Torn_Decay_Debuff : Torn_Debuff {

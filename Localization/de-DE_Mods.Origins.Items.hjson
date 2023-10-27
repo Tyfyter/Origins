@@ -3341,8 +3341,8 @@ Ambition_Potion: {
 	// DisplayName: Ambition Potion
 	/* Tooltip:
 		'''
-		12.5% increased damage, crit chance, weapon speed
-		62.5% stat share 
+		2.5% increased damage, crit chance, weapon speed
+		12.5% stat share 
 		''' */
 }
 
@@ -3358,5 +3358,10 @@ Defiled_Amalgamation_Trophy_Item: {
 
 Triple_Threat: {
 	// DisplayName: Triple Threat
+	// Tooltip: ""
+}
+
+Ocotoral_Bud: {
+	// DisplayName: Ocotoral_ Bud
 	// Tooltip: ""
 }

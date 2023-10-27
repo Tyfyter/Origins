@@ -1190,7 +1190,7 @@ namespace Origins {
 						coordinateMaskFilter.Shader.Parameters["uOffset"].SetValue(drawPlayer.position);
 						coordinateMaskFilter.Shader.Parameters["uScale"].SetValue(1f);
 						coordinateMaskFilter.UseColor(new Vector3(originPlayer.tornOffset, originPlayer.tornCurrentSeverity));
-						coordinateMaskFilter.UseOpacity(1);//supposed to be originPlayer.tornCurrentSeverity, but can't figure out how to fix blending
+						//coordinateMaskFilter.UseOpacity(1);//supposed to be originPlayer.tornCurrentSeverity, but can't figure out how to fix blending
 					}
 					orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);
 					return;

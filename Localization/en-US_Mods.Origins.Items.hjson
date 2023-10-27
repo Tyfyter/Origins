@@ -3360,3 +3360,8 @@ Triple_Threat: {
 	DisplayName: Triple Threat
 	Tooltip: ""
 }
+
+Ocotoral_Bud: {
+	DisplayName: Ocotoral Bud
+	Tooltip: ""
+}

@@ -22,10 +22,10 @@ namespace Origins.NPCs {
 		internal List<int> infusionSpikes;
 		internal bool amebolizeDebuff = false;
 		public bool tornDebuff = false;
-		float tornCurrentSeverity = 0;
-		float tornSeverityRate = 0.3f / 180;
+		public float tornCurrentSeverity = 0;
+		public float tornSeverityRate = 0.3f / 180;
 		const float tornSeverityDecayRate = 0.3f / 180;
-		float tornTarget = 0.7f;
+		public float tornTarget = 0.7f;
 		public Vector2 tornOffset = default;
 		public bool slowDebuff = false;
 		public bool barnacleBuff = false;
