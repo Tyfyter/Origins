@@ -93,7 +93,10 @@ namespace Origins.Tiles.Brine {
 
 			HitSound = SoundID.Grass;
 			DustType = DustID.JungleGrass;
-			RegisterItemDrop(ItemType<Brineglow>());
+			//RegisterItemDrop(ItemType<Brineglow>());
+		}
+		public override IEnumerable<Item> GetItemDrops(int i, int j) {
+			if (Glows(Framing.GetTileSafely(i, j))) yield return new Item(ItemType<Brineglow>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (Glows(Framing.GetTileSafely(i, j))) b = 0.1f;
