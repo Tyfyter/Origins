@@ -41,7 +41,8 @@ namespace Origins.Tiles {
 		public static IEnumerable<TreeShakeLoot> GetLoot((float chance, TreeShakeLoot[])[] lootPool, ITree tree) {
 			for (int i = 0; i < lootPool.Length; i++) {
 				if (WorldGen.genRand.NextFloat() < lootPool[i].chance) {
-					yield return new WeightedRandom<TreeShakeLoot>(lootPool[i].Item2.Select(l => new Tuple<TreeShakeLoot, double>(l, l.Weight(tree))).ToArray()).Get();
+					Tuple<TreeShakeLoot, double>[] loots = lootPool[i].Item2.Select(l => new Tuple<TreeShakeLoot, double>(l, l.Weight(tree))).Where(l => l.Item2 > 0).ToArray();
+					if (loots.Length > 0) yield return new WeightedRandom<TreeShakeLoot>(loots).Get();
 				}
 			}
 		}
