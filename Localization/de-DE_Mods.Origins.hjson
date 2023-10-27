@@ -708,8 +708,8 @@ Buffs: {
 	}
 
 	Ambition_Buff: {
-		// DisplayName: Ambition_ Buff
-		// Description: Mods.Origins.Buffs.Ambition_Buff.Description
+		// DisplayName: Ambition Buff
+		// Description: Increased offensive stats and stat share
 	}
 }
 
@@ -959,9 +959,9 @@ Projectiles: {
 	// Cinder_Seal_Explosion.DisplayName: "{$Mods.Origins.Items.Cinder_Seal.DisplayName}"
 	// C6_Jackhammer_P.DisplayName: C6 Jackhammer P
 	// Silica_Ball.DisplayName: Silica Ball
-	// Dryad_Ward.DisplayName: Dryad_ Ward
-	// Triple_Threat_Dupe_P.DisplayName: Triple_ Threat_ Dupe_ P
-	// Triple_Threat_P.DisplayName: Triple_ Threat_ P
+	// Dryad_Ward.DisplayName: Dryad Ward
+	// Triple_Threat_Dupe_P.DisplayName: Triple Threat
+	// Triple_Threat_P.DisplayName: Triple Threat
 }
 
 Prefixes: {

@@ -277,7 +277,7 @@ ACCESSORIES:
 (^) Destructive Claws
 (^) Dim Starlight*
 (^) Donor Wristband
-(☻) Dryad's Inheritance
+(^) Dryad's Inheritance
 (#, ^2) Dysfunctional Endless Explosives Bag
 (^) Exploder Emblem*
 (^) Explosive Artery
@@ -323,7 +323,7 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing
 (^) Ruby Reticle
-(☻) Seal of Cinders !!!
+(#3, ^2) Seal of Cinders !!!
 (^) Shield of Retribution
 (^) Sonar Visor*
 (^) Scavenger Bag
@@ -398,7 +398,7 @@ VANITY:
 (X) Lost Diver Head
 (X) Miscreant Mask
 (X) Quantux Mask
-(◘) World Cracker Mask !!!
+(^) World Cracker Mask
 (X) Scrapper Head
 (X) Severus' Hat
 
@@ -418,7 +418,7 @@ VANITY:
 
 UTILITIES:
 ---
-(☻) Amoeba Hook !!! (missing sprite, use generic sprite)
+(#3, ^2) Amoeba Hook !!!
 (X) Chunky Hook
 (#, ^2) Nano Hook
 (#, ^2) Quantum Hook
@@ -452,12 +452,12 @@ WINGS:
 TOOLS:
 ---
 (^) Brick Breaker
-(☻) C6 Jackhammer !!!
+(^) C6 Jackhammer
 (^) Dismantler
 (^) Dissector
 (^) Felnum Hamaxe
 (^) Felnum Pickaxe
-(☻) Miter Saw !!!
+(^) Miter Saw
 (^) Parasitic Manipulator
 (^) Pile Driver
 (^) Rivenator
@@ -493,7 +493,7 @@ MELEE WEAPONS:
 (^) Snapthrow
 (^) Spiker Sword
 (#, ^2) Switchblade !!!
-(#, ^2) Triple Threat !!!
+(^) Triple Threat
 (^) Tyrfing
 (^) Vorpal Sword
 
@@ -740,7 +740,7 @@ TILES:
 (^) Angelic Cloud
 (#3, ^2) Batholith*
 (^) Bleeding Obsidian
-(X) Carburite
+(#, ^2) Carburite
 (X) Compacted Scrap
 (X) Cubekon Altar
 (^) Defiled Grass*
@@ -759,21 +759,26 @@ TILES:
 (^) Hardened Defiled Sand
 (#4, ^2) Harmony Brick
 (^) Lost Ore
-(X) Mildew
+(#, ^2) Mildew
 (^) Peat Moss*
 (^) Primordial Permafrost
 (^) Riven Grass
 (^) Sanguinite Ore
-(☻) Silica !!!
+(^) Silica
 (^) Spug Flesh
 (@5, ^3) Sulphur Stone
 (^) White Ice
-(X) Defiled Cactus
-(X) Riven Cactus
+(X) Defiled Cactus !!!
+(#, ^2) Riven Cactus !!!
 (^) Riven Grass
 
 (#, ^2) Batholith Wall
 (#, ^2) Chambersite Gemspark Wall
+(^) Chambersite Gemstone Wall
+(^) Chambersite Gemstone Wall (Corruption)
+(^) Chambersite Gemstone Wall (Crimson)                         dont forget to add chambersite world gen
+(^) Chambersite Gemstone Wall (Defiled)
+(^) Chambersite Gemstone Wall (Riven)
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (^) Eden Wood Wall
@@ -788,19 +793,19 @@ TILES:
 (X) Brine Water Fountain
 (X) Cancer Block
 (X) Chambersite Gem Lock
-(☻) Chambersite Gemspark
-(#, ^2) Chambersite Gemstone
-(#, ^2) Chambersite Gemstone (Corruption)
-(#, ^2) Chambersite Gemstone (Crimson)
-(#, ^2) Chambersite Gemstone (Defiled)
-(#, ^2) Chambersite Gemstone (Riven)
+(^) Chambersite Gemspark
+(#3, ^2) Chambersite Gemstone
+(#3, ^2) Chambersite Gemstone (Corruption)
+(#3, ^2) Chambersite Gemstone (Crimson)                      for these fellas too
+(#3, ^2) Chambersite Gemstone (Defiled)
+(#3, ^2) Chambersite Gemstone (Riven)
 (X) Cubekon Chest
 (X) Cubekon Node
 (X) Dawn Dungeon Chest
-(X) Defiled Campfire
+(#, ^2) Defiled Campfire !!!
 (^) Defiled Dungeon Chest
-(#, ^2) Defiled Water Fountain
-(☻) Defiled Torch
+(#, ^2) Defiled Water Fountain !!!
+(^) Defiled Torch
 (X) Desert Dungeon Chest
 (X) Dusk Dungeon Chest
 (#, ^2) Living Alkahest
@@ -808,10 +813,10 @@ TILES:
 (X) Mushroom Dungeon Chest
 (X) Ocean Dungeon Chest
 (X) Residue Block
-(X) Riven Campfire
+(#, ^2) Riven Campfire !!!
 (^) Riven Dungeon Chest
-(☻) Riven Torch
-(X) Riven Water Fountain
+(^) Riven Torch
+(X) Riven Water Fountain !!!
 (#3, ^2) Traffic Cone !!!
 
 (^) Cleansing Station
@@ -823,20 +828,21 @@ TILES:
 (X) Riven Flesh Shredder
 
 (^) Acetabularia
-(☻) Brineglow Vine !!!
+(#3, ^2) Brineglow Vine !!!
 (^) Defiled Misc Tiles*
 (#2, ^2) Eden Tree
 (#2, ^2) Laser Tag Console
+(X) Riven Blister !!!
 (#2, ^2) Riven Foliage !!!
-(#2, ^2) Riven Lesion !!!
-(#3, ^2) Riven Pot !!!
+(^) Riven Lesion
+(^) Riven Pot
 (#4, ^2) Riven Tree !!! (and defiled tree for now)
 (^) Soulspore
 (X) Star Cannon Cannon
 (^) Wilting Rose
 (^) Wrycoral
 
-(#3, ^2) A Perfect World
+(^) A Perfect World
 
 (X) Ancient Music Box (Brine Pool)
 (X) Ancient Music Box (Defiled Wastelands)
@@ -847,15 +853,15 @@ TILES:
 (X) Music Box (Cosmos)
 (X) Music Box (Cubekon Temple)
 (X) Music Box (Dawn)
-(☻) Music Box (Defiled Caverns) !!!
-(☻) Music Box (Defiled Wastelands) !!!
+(^) Music Box (Defiled Caverns)
+(^) Music Box (Defiled Wastelands)
 (X) Music Box (Fractured Isles)
 (X) Music Box (Dusk)
-(☻) Music Box (Riven Hive) !!!
+(^) Music Box (Riven Hive)
 (X) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Trophy
-(☻) Defiled Amalgamation Relic
+(^) Defiled Amalgamation Relic
 (^3) Miscreant Trophy
 (^3) Miscreant Relic
 (^3) Quantux Trophy
@@ -953,7 +959,7 @@ CONSUMABLES:
 (@5, #3) The Defiled Will
 
 (^) Absorption Potion
-(☻) Ambition Potion !!!
+(#2, ^2) Ambition Potion !!!
 (^) Antisolve Potion
 (^) Fervor Potion
 (^) Flask of Alkahest

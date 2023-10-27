@@ -709,7 +709,7 @@ Buffs: {
 
 	Ambition_Buff: {
 		DisplayName: Ambition Buff
-		Description: Mods.Origins.Buffs.Ambition_Buff.Description
+		Description: Increased offensive stats and stat share
 	}
 }
 

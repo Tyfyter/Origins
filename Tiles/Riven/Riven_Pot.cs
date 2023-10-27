@@ -53,7 +53,8 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
 			TileObjectData.addTile(Type);*/
 			DustType = Riven_Hive.DefaultTileDust;
-		}
+            HitSound = SoundID.NPCHit20;
+        }
 		public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem) {
 			WorldGen.CheckPot(i, j);
 		}

@@ -2559,7 +2559,7 @@ Seam_Beam: {
 }
 
 Slashswarm: {
-	// DisplayName: Slashswarm
+	// DisplayName: Splitsplash
 	// Tooltip: ""
 }
 
@@ -3338,8 +3338,12 @@ Chambersite_Gemspark_Item: {
 }
 
 Ambition_Potion: {
-	// DisplayName: Ambition_ Potion
-	// Tooltip: ""
+	// DisplayName: Ambition Potion
+	/* Tooltip:
+		'''
+		12.5% increased damage, crit chance, weapon speed
+		62.5% stat share 
+		''' */
 }
 
 Defiled_Amalgamation_Relic_Item: {
@@ -3353,6 +3357,6 @@ Defiled_Amalgamation_Trophy_Item: {
 }
 
 Triple_Threat: {
-	// DisplayName: Triple_ Threat
+	// DisplayName: Triple Threat
 	// Tooltip: ""
 }

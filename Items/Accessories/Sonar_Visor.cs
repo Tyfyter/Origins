@@ -6,8 +6,6 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Sonar_Visor : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Sonar Visor");
-			// Tooltip.SetDefault("Increased projectile speed\nImmunity to Confusion\nAllows you to see the outermost tiles");
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
