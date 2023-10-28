@@ -255,7 +255,7 @@ namespace Origins {
 			if (hookTarget >= 0) {//ropeVel.HasValue&&
 				Player.fallStart = (int)(Player.position.Y / 16f);
 				Projectile projectile = Main.projectile[hookTarget];
-				if (projectile.type == Amoeba_Hook_Projectile.ID) {
+				if (projectile.type == Amoeba_Hook_P.ID) {
 					Vector2 diff = Player.Center - projectile.Center;
 					Vector2 normDiff = diff.SafeNormalize(default);
 					float dot = Vector2.Dot(normDiff, Player.velocity.SafeNormalize(default));

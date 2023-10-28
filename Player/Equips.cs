@@ -266,7 +266,7 @@ namespace Origins {
 			}
 			if (hookTarget >= 0) {
 				Projectile projectile = Main.projectile[hookTarget];
-				if (projectile.type == Amoeba_Hook_Projectile.ID) {
+				if (projectile.type == Amoeba_Hook_P.ID) {
 					if (projectile.ai[1] < 5 || Player.controlJump || (Player.Center - projectile.Center).LengthSquared() > 2304) {
 						Player.GoingDownWithGrapple = true;
 					}

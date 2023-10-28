@@ -766,7 +766,7 @@ Projectiles: {
 	Meberoid.DisplayName: Meberoid
 	Platformer_Mech.DisplayName: Platformer Mech
 	Acrid_Drill_P.DisplayName: Acrid Drill
-	Amoeba_Hook_Projectile.DisplayName: Amoeba Hook
+	Amoeba_Hook_P.DisplayName: Amoeba Hook
 	Lightning_Rod_Bobber.DisplayName: Lightning Rod Bobber
 	Parasitic_Bobber.DisplayName: Parasitic Bobber
 	Snatcher_Bobber.DisplayName: Snatcher Bobber
