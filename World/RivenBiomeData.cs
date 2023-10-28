@@ -43,6 +43,7 @@ namespace Origins.World.BiomeData {
 		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Riven_Water_Style>();
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Riven_Surface_Background>();
 		public override int BiomeTorchItemType => ModContent.ItemType<Riven_Torch>();
+		public override int BiomeCampfireItemType => ModContent.ItemType<Riven_Campfire_Item>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => ModContent.GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;
 		public static FrameCachedValue<float> NormalGlowValue { get; private set; }  = new(() => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f);

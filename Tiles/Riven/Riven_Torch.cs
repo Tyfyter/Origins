@@ -49,7 +49,7 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.addTile(Type);
 
 			// Etc
-			AddMapEntry(new Color(200, 200, 200), Language.GetText("ItemName.Torch"));
+			AddMapEntry(new Color(217, 95, 54), Language.GetText("ItemName.Torch"));
 
 			// Assets
 			if (!Main.dedServ) {

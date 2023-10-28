@@ -3380,3 +3380,8 @@ Riven_Cactus_Item: {
 	// DisplayName: Riven_ Cactus_ Item
 	// Tooltip: ""
 }
+
+Riven_Campfire_Item: {
+	// DisplayName: Riven_ Campfire_ Item
+	// Tooltip: ""
+}
