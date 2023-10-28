@@ -12,7 +12,7 @@ namespace Origins.Tiles.Riven {
 	public class Amoeba_Fluid : OriginTile, RivenTile, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
-		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
+		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue() + 0.2f;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
 		}
@@ -21,7 +21,8 @@ namespace Origins.Tiles.Riven {
 				GlowTexture = Mod.Assets.Request<Texture2D>("Tiles/Riven/Amoeba_Fluid_Glow");
 			}
 			Main.tileSolid[Type] = true;
-			Main.tileBlockLight[Type] = true;
+			Main.tileBlockLight[Type] = false;
+			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			AddMapEntry(new Color(0, 200, 200));
 			MinPick = 10;
@@ -37,7 +38,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Amoeba_Fluid_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amoeba Fluid");
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FleshBlock);
