@@ -261,49 +261,7 @@ namespace Origins.Items.Accessories {
 						}
 					}
 					owner.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
-					//TODO: replace with custom system
-					/*NPC ownerMinionAttackTargetNPC2 = Projectile.OwnerMinionAttackTargetNPC;
-					if (ownerMinionAttackTargetNPC2 != null && ownerMinionAttackTargetNPC2.CanBeChasedBy(this)) {
-						float x = ownerMinionAttackTargetNPC2.Center.X;
-						float y = ownerMinionAttackTargetNPC2.Center.Y;
-						float ownerTargetDist = Math.Abs(Projectile.position.X + Projectile.width / 2 - x) + Math.Abs(Projectile.position.Y + Projectile.height / 2 - y);
-						if (ownerTargetDist < targetDist) {
-							if (targetIndex == -1 && ownerTargetDist <= throughWallDist) {
-								throughWallDist = ownerTargetDist;
-								targetX = x;
-								targetY = y;
-							}
-							if (Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, ownerMinionAttackTargetNPC2.position, ownerMinionAttackTargetNPC2.width, ownerMinionAttackTargetNPC2.height)) {
-								targetDist = ownerTargetDist;
-								targetX = x;
-								targetY = y;
-								targetIndex = ownerMinionAttackTargetNPC2.whoAmI;
-							}
-						}
-					}
-					if (targetIndex == -1) {
-						for (int i = 0; i < 200; i++) {
-							if (!Main.npc[i].CanBeChasedBy(this)) {
-								continue;
-							}
-							float targetCenterX = Main.npc[i].position.X + Main.npc[i].width / 2;
-							float targetCenterY = Main.npc[i].position.Y + Main.npc[i].height / 2;
-							float currentDist = Math.Abs(Projectile.position.X + Projectile.width / 2 - targetCenterX) + Math.Abs(Projectile.position.Y + Projectile.height / 2 - targetCenterY);
-							if (currentDist < targetDist) {
-								if (targetIndex == -1 && currentDist <= throughWallDist) {
-									throughWallDist = currentDist;
-									targetX = targetCenterX;
-									targetY = targetCenterY;
-								}
-								if (Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, Main.npc[i].position, Main.npc[i].width, Main.npc[i].height)) {
-									targetDist = currentDist;
-									targetX = targetCenterX;
-									targetY = targetCenterY;
-									targetIndex = i;
-								}
-							}
-						}
-					}*/
+					
 					if (targetIndex == -1 && throughWallDist < targetDist) {
 						targetDist = throughWallDist;
 					}
