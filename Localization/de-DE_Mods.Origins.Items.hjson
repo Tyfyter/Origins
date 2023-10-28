@@ -3375,3 +3375,8 @@ World_Cracker_Trophy_Item: {
 	// DisplayName: World Cracker Trophy
 	// Tooltip: ""
 }
+
+Riven_Cactus_Item: {
+	// DisplayName: Riven_ Cactus_ Item
+	// Tooltip: ""
+}

@@ -35,6 +35,7 @@ using System.Reflection.Emit;
 using Terraria.GameContent.Personalities;
 using Terraria.Map;
 using static Terraria.ModLoader.PlayerDrawLayer;
+using Origins.Reflection;
 
 namespace Origins {
 	#region classes
@@ -2113,12 +2114,15 @@ namespace Origins {
 			if (self.GlowTexture.Value is null) {
 				return;
 			}
+			DrawTileGlow(self.GlowTexture, self.GlowColor, i, j, spriteBatch);
+		}
+		public static void DrawTileGlow(Texture2D glowTexture, Color glowColor, int i, int j, SpriteBatch spriteBatch) {
 			Tile tile = Main.tile[i, j];
 			Vector2 vector = new Vector2(Main.offScreenRange, Main.offScreenRange);
 			if (Main.drawToScreen) {
 				vector = Vector2.Zero;
 			}
-			spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+			spriteBatch.Draw(glowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY, 16, 16), glowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
 		}
 		public static void DrawChestGlow(this IGlowingModTile self, int i, int j, SpriteBatch spriteBatch) {
 			if (self.GlowTexture.Value is null) {
@@ -2138,6 +2142,10 @@ namespace Origins {
 			}
 			int frameOffset = Main.chest[Chest.FindChest(key.X, key.Y)].frame * 38;
 			spriteBatch.Draw(self.GlowTexture, (new Vector2(i * 16f, j * 16f) + vector) - Main.screenPosition, new Rectangle(tile.TileFrameX, tile.TileFrameY + frameOffset, 16, 16), self.GlowColor, 0f, default(Vector2), 1f, SpriteEffects.None, 0f);
+		}
+		public static Point GetTilePosition(this Tile tile) {
+			uint id = TileMethods.TileId.GetValue(tile);
+			return new Point((int)(id / Main.tile.Height), (int)(id % Main.tile.Height));
 		}
 		public static Point OffsetBy(this Point self, int x = 0, int y = 0) {
 			return new Point(self.X + x, self.Y + y);

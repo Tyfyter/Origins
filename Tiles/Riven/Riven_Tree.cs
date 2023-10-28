@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
-	public class Riven_Tree : ModTree {
+	public class Riven_Tree : ModTree, IGlowingModTile {
 		private static Mod mod => Origins.instance;
 
 		public static Riven_Tree Instance { get; private set; }
@@ -24,19 +24,6 @@ namespace Origins.Tiles.Riven {
 		internal static void Unload() {
 			Instance = null;
 		}
-		public override bool Shake(int x, int y, ref bool createLeaves) {
-			if (!Origins.PlantLoader_ShakeTree(x, y, Main.tile[x, y].TileType, out _) && WorldGen.genRand.NextBool(15)) {
-				int type = WorldGen.genRand.NextBool() ? ModContent.ItemType<Pawpaw>() : ModContent.ItemType<Periven>();
-				Item.NewItem(WorldGen.GetItemSource_FromTreeShake(x, y), x * 16, y * 16, 16, 16, type);
-				createLeaves = true;
-				return false;
-			}
-			return true;
-		}
-
-		/*public override int CreateDust() {
-			return ModContent.DustType<>();
-		}*/
 
 		public override int DropWood() {
 			return ModContent.ItemType<Riven_Flesh_Item>();//temporary drop type
