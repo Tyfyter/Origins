@@ -187,7 +187,7 @@ STATUS EFFECTS:
 (#3, ^2) Impeding Shrapnel !!!
 (X) Ionizing Radiation
 (^) Rasterized
-(@3, ^3) Torn
+(^) Torn
 (^) Totally Safe
 (O) Toxic Shock
 (X) Whiplash
@@ -419,7 +419,7 @@ VANITY:
 
 UTILITIES:
 ---
-(#3, ^2) Amoeba Hook !!!
+(^) Amoeba Hook
 (X) Chunky Hook
 (#, ^2) Nano Hook
 (#, ^2) Quantum Hook
@@ -832,8 +832,8 @@ TILES:
 (#3, ^2) Brineglow Vine !!!
 (^) Defiled Misc Tiles*
 (#2, ^2) Eden Tree
+(#, ^2) Gel Blister !!!
 (#2, ^2) Laser Tag Console
-(X) Riven Blister !!!
 (#2, ^2) Riven Foliage !!!
 (^) Riven Lesion
 (^) Riven Pot

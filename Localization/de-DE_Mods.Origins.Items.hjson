@@ -3377,11 +3377,11 @@ World_Cracker_Trophy_Item: {
 }
 
 Riven_Cactus_Item: {
-	// DisplayName: Riven_ Cactus_ Item
+	// DisplayName: Cactus Debug Item
 	// Tooltip: ""
 }
 
 Riven_Campfire_Item: {
-	// DisplayName: Riven_ Campfire_ Item
+	// DisplayName: Riven Campfire
 	// Tooltip: ""
 }
