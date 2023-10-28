@@ -137,7 +137,7 @@ namespace Origins.Items.Weapons.Summoner {
 				Rectangle frame = new Rectangle(0, progress + 2, 6, (int)dist);
 				progress += (int)dist;
 				float rotation = diff.ToRotation() - MathHelper.PiOver2;
-				Color color = Color.Lerp(Lighting.GetColor(element.ToTileCoordinates(), Color.White), Color.White, 0.85f);
+				Color color = Color.Lerp(Lighting.GetColor(element.ToTileCoordinates()), Color.White, 0.85f);
 				Vector2 scale = Vector2.One;//new Vector2(1, dist / frame.Height);
 
 				Main.EntitySpriteDraw(texture, pos - Main.screenPosition, frame, color, rotation + MathHelper.Pi, origin, scale, SpriteEffects.None, 0);

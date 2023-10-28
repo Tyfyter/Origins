@@ -59,7 +59,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 			// Sets the amount of frames this minion has on its spritesheet
 			Main.projFrames[Projectile.type] = 4;
 			// This is necessary for right-click targeting
-			ProjectileID.Sets.TurretFeature[Projectile.type] = true;
+			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
 		}
 
 		public sealed override void SetDefaults() {
