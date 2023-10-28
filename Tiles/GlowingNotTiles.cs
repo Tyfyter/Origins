@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Tiles.Riven;
+using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,15 +19,24 @@ namespace Origins.Tiles {
 				Tile tile = Main.tile[i, j];
 				WorldGen.GetCactusType(i, j, tile.TileFrameX, tile.TileFrameY, out int sandType);
 				if (sandType == ModContent.TileType<Silica>()) {
-					Color lightColor = Color.White;// Lighting.GetColor(i, j);
+					float glowValue = Riven_Hive.NormalGlowValue.GetValue();
+					Color glowColor = new Color(glowValue, glowValue, glowValue, glowValue);
 					OriginExtensions.DrawTileGlow(
 						Riven_Cactus.GlowTexture,
-						new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f),
+						glowColor,
 						i,
 						j,
 						spriteBatch
 					);
 				}
+			} else if (OriginExtensions.GetTreeType(i, j) is IGlowingModTile glowingTree) {
+				OriginExtensions.DrawTileGlow(
+					glowingTree.GlowTexture,
+					glowingTree.GlowColor,
+					i,
+					j,
+					spriteBatch
+				);
 			}
 		}
 	}

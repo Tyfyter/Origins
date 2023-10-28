@@ -156,15 +156,30 @@ namespace Origins {
 					smoothLightingType.GetMethod("TileShine", BindingFlags.NonPublic | BindingFlags.Static),
 					(hook_TileShine)((orig_TileShine orig, ref Vector3 color, Tile tile) => {
 						orig(ref color, tile);
-						if (TileLoader.GetTile(tile.TileType) is IGlowingModTile glowingTile) glowingTile.FancyLightingGlowColor(tile, ref color);
-						if (tile.TileType == TileID.Cactus) {
-							Point pos = tile.GetTilePosition();
-							WorldGen.GetCactusType(pos.X, pos.Y, tile.TileFrameX, tile.TileFrameY, out int sandType);
-							if (PlantLoader.Get<ModCactus>(80, sandType) is IGlowingModPlant glowingPlant) {
-								glowingPlant.FancyLightingGlowColor(tile, ref color);
+						if (tile.HasTile) {
+							if (tile.GetTilePosition() == new Point(1773, 277)) {
+								var mtile = TileLoader.GetTile(tile.TileType) is IGlowingModTile;
 							}
-						} else if (PlantLoader.GetTree(tile.TileType) is IGlowingModPlant glowingPlant) {
-							glowingPlant.FancyLightingGlowColor(tile, ref color);
+							if (TileLoader.GetTile(tile.TileType) is IGlowingModTile glowingTile) glowingTile.FancyLightingGlowColor(tile, ref color);
+							switch (tile.TileType) {
+								case TileID.Cactus: {
+									Point pos = tile.GetTilePosition();
+									WorldGen.GetCactusType(pos.X, pos.Y, tile.TileFrameX, tile.TileFrameY, out int sandType);
+									if (PlantLoader.Get<ModCactus>(80, sandType) is IGlowingModPlant glowingPlant) {
+										glowingPlant.FancyLightingGlowColor(tile, ref color);
+									}
+									break;
+								}
+								case TileID.VanityTreeSakura:
+								case TileID.VanityTreeYellowWillow:
+								break;
+								default: {
+									if (OriginExtensions.GetTreeType(tile) is IGlowingModTile glowingTree) {
+										glowingTree.FancyLightingGlowColor(tile, ref color);
+									}
+									break;
+								}
+							}
 						}
 					})
 				);

@@ -358,7 +358,7 @@ namespace Origins {
 		public T Value => asset?.Value;
 
 		readonly Asset<T> asset;
-		AutoCastingAsset(Asset<T> asset) {
+		public AutoCastingAsset(Asset<T> asset) {
 			this.asset = asset;
 		}
 		public static implicit operator AutoCastingAsset<T>(Asset<T> asset) => new(asset);
@@ -368,13 +368,7 @@ namespace Origins {
 		public bool IsLoaded => asset?.IsLoaded ?? false;
 		public T Value {
 			get {
-				if (asset is null) {
-					if (assetPath is null) {
-						asset = Asset<T>.Empty;
-					} else {
-						asset = Main.dedServ ? Asset<T>.Empty : ModContent.Request<T>(assetPath);
-					}
-				}
+				LoadAsset();
 				return asset?.Value;
 			}
 		}
@@ -394,9 +388,22 @@ namespace Origins {
 			assetPath = null;
 			asset = null;
 		}
+		public void LoadAsset() {
+			if (asset is null) {
+				if (assetPath is null) {
+					asset = Asset<T>.Empty;
+				} else {
+					asset = Main.dedServ ? Asset<T>.Empty : ModContent.Request<T>(assetPath);
+				}
+			}
+		}
 		public static implicit operator AutoLoadingAsset<T>(Asset<T> asset) => new(asset);
 		public static implicit operator AutoLoadingAsset<T>(string asset) => new(asset);
 		public static implicit operator T(AutoLoadingAsset<T> asset) => asset.Value;
+		public static implicit operator AutoCastingAsset<T>(AutoLoadingAsset<T> asset) {
+			asset.LoadAsset();
+			return new(asset.asset);
+		}
 	}
 	public struct UnorderedTuple<T> : IEquatable<UnorderedTuple<T>> {
 		readonly T a;
@@ -2146,6 +2153,17 @@ namespace Origins {
 		public static Point GetTilePosition(this Tile tile) {
 			uint id = TileMethods.TileId.GetValue(tile);
 			return new Point((int)(id / Main.tile.Height), (int)(id % Main.tile.Height));
+		}
+		public static ITree GetTreeType(Tile tile) {
+			if (!tile.HasTile || tile.TileType is TileID.VanityTreeSakura or TileID.VanityTreeYellowWillow || !TileID.Sets.IsATreeTrunk[tile.TileType]) return null;
+			Point pos = tile.GetTilePosition();
+			return GetTreeType(pos.X, pos.Y);
+		}
+		public static ITree GetTreeType(int i, int j) {
+			Tile tile = Main.tile[i, j];
+			if (!tile.HasTile || tile.TileType is TileID.VanityTreeSakura or TileID.VanityTreeYellowWillow || !TileID.Sets.IsATreeTrunk[tile.TileType]) return null;
+			WorldGen.GetTreeBottom(i, j, out var x, out var y);
+			return PlantLoader.GetTree(Main.tile[x, y].TileType);
 		}
 		public static Point OffsetBy(this Point self, int x = 0, int y = 0) {
 			return new Point(self.X + x, self.Y + y);

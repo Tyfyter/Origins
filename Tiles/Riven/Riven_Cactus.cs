@@ -17,7 +17,23 @@ namespace Origins.Tiles.Riven {
 	public class Riven_Cactus : ModCactus, IGlowingModPlant, ICustomWikiStat, INoSeperateWikiPage {
 		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Riven_Cactus).GetDefaultTMLName() + "_Glow";
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+			if (HasScar(tile)) color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+		}
+		static bool HasScar(Tile tile) {
+			switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
+				case (2, 0):
+				case (5, 0):
+
+				case (4, 1):
+				case (6, 1):
+				case (7, 1):
+
+				case (4, 2):
+				case (5, 2):
+				case (7, 2):
+				return false;
+			}
+			return true;
 		}
 		public override void SetStaticDefaults() {
 			GrowsOnTileId = new int[] { ModContent.TileType<Silica>() };

@@ -572,8 +572,8 @@ namespace Origins.World.BiomeData {
 			AddTileConversion(ModContent.TileType<Riven_Jungle_Grass>(), TileID.JungleGrass);
 			AddTileConversion(ModContent.TileType<Riven_Flesh>(), TileID.Stone);
 			AddTileConversion(ModContent.TileType<Silica>(), TileID.Sand);
-			AddTileConversion(ModContent.TileType<Defiled_Sandstone>(), TileID.Sandstone);//TODO
-			AddTileConversion(ModContent.TileType<Hardened_Defiled_Sand>(), TileID.HardenedSand);//TODO
+			AddTileConversion(ModContent.TileType<Defiled_Sandstone>(), TileID.Sandstone);
+			AddTileConversion(ModContent.TileType<Hardened_Defiled_Sand>(), TileID.HardenedSand);
 			AddTileConversion(ModContent.TileType<Primordial_Permafrost>(), TileID.IceBlock);
 
 			SeedType = ModContent.ItemType<Riven_Grass_Seeds>();
