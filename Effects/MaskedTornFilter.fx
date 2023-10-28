@@ -34,8 +34,8 @@ float4 MaskedTorn(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLO
 	if (color.a <= 0 || maskAlpha <= 0) return baseColor;
 	if (mask.r > color.b) {
 		maskAlpha = 0;
-	} else if (mask.r + 0.05 > color.b) {
-		maskAlpha *= (mask.r - color.b) / 0.05;
+	} else if (mask.r + 0.02 > color.b) {
+		maskAlpha *= (mask.r - color.b) / 0.02;
 	} else {
 		maskAlpha = 1;
 	}
