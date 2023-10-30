@@ -3385,3 +3385,8 @@ Riven_Campfire_Item: {
 	// DisplayName: Riven Campfire
 	// Tooltip: ""
 }
+
+Defiled_Campfire_Item: {
+	// DisplayName: Defiled_ Campfire_ Item
+	// Tooltip: ""
+}

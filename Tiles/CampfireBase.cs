@@ -67,8 +67,7 @@ namespace Origins.Tiles {
 			player.noThrow = 2;
 			player.cursorItemIconEnabled = true;
 
-			int style = TileObjectData.GetTileStyle(Main.tile[i, j]);
-			player.cursorItemIconID = TileLoader.GetItemDropFromTypeAndStyle(Type, style);
+			player.cursorItemIconID = TileLoader.GetItemDropFromTypeAndStyle(Type, TileObjectData.GetTileStyle(Main.tile[i, j]));
 		}
 
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) {
@@ -87,7 +86,7 @@ namespace Origins.Tiles {
 
 		// ToggleTile is a method that contains code shared by HitWire and RightClick, since they both toggle the state of the tile.
 		// Note that TileFrameY doesn't necessarily match up with the image that is drawn, AnimateTile and AnimateIndividualTile contribute to the drawing decisions.
-		public void ToggleTile(int i, int j) {
+		public static void ToggleTile(int i, int j) {
 			Tile tile = Main.tile[i, j];
 			int topX = i - tile.TileFrameX % 54 / 18;
 			int topY = j - tile.TileFrameY % 36 / 18;
@@ -152,9 +151,9 @@ namespace Origins.Tiles {
 			if (tile.TileFrameY < 36) {
 				float pulse = Main.rand.Next(28, 42) * 0.005f;
 				pulse += (270 - Main.mouseTextColor) / 700f;
-				r = 0.1f + pulse;
-				g = 0.9f + pulse;
-				b = 0.3f + pulse;
+				r = Light.X + pulse;
+				g = Light.Y + pulse;
+				b = Light.Z + pulse;
 			}
 		}
 
