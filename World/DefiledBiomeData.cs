@@ -36,6 +36,7 @@ namespace Origins.World.BiomeData {
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
 		public override int BiomeTorchItemType => ModContent.ItemType<Defiled_Torch>();
+		public override int BiomeCampfireItemType => ModContent.ItemType<Defiled_Campfire_Item>();
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ZoneDefiledProgress = (Math.Min(
