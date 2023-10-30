@@ -358,7 +358,7 @@ namespace Origins {
 		public T Value => asset?.Value;
 
 		readonly Asset<T> asset;
-		public AutoCastingAsset(Asset<T> asset) {
+		AutoCastingAsset(Asset<T> asset) {
 			this.asset = asset;
 		}
 		public static implicit operator AutoCastingAsset<T>(Asset<T> asset) => new(asset);
@@ -372,14 +372,17 @@ namespace Origins {
 				return asset?.Value;
 			}
 		}
+		bool triedLoading;
 		string assetPath;
 		Asset<T> asset;
 		AutoLoadingAsset(Asset<T> asset) {
+			triedLoading = false;
 			assetPath = "";
 			this.asset = asset;
 			this.RegisterForUnload();
 		}
 		AutoLoadingAsset(string asset) {
+			triedLoading = false;
 			assetPath = asset;
 			this.asset = null;
 			this.RegisterForUnload();
@@ -389,11 +392,12 @@ namespace Origins {
 			asset = null;
 		}
 		public void LoadAsset() {
-			if (asset is null) {
+			if (!triedLoading) {
+				triedLoading = true;
 				if (assetPath is null) {
 					asset = Asset<T>.Empty;
 				} else {
-					asset = Main.dedServ ? Asset<T>.Empty : ModContent.Request<T>(assetPath);
+					asset = !Main.dedServ && ModContent.RequestIfExists<T>(assetPath, out var foundAsset) ? foundAsset : Asset<T>.Empty;
 				}
 			}
 		}
@@ -402,7 +406,7 @@ namespace Origins {
 		public static implicit operator T(AutoLoadingAsset<T> asset) => asset.Value;
 		public static implicit operator AutoCastingAsset<T>(AutoLoadingAsset<T> asset) {
 			asset.LoadAsset();
-			return new(asset.asset);
+			return asset.asset;
 		}
 	}
 	public struct UnorderedTuple<T> : IEquatable<UnorderedTuple<T>> {
