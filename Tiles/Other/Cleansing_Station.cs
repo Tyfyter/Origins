@@ -38,7 +38,7 @@ namespace Origins.Tiles.Other {
 			TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
 			TileObjectData.addTile(Type);
 
-			AddMapEntry(new Color(6, 157, 44), Language.GetText("Cleansing Station"));
+			AddMapEntry(new Color(6, 157, 44), CreateMapEntryName());
 		}
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) {
 			return CanUse(Main.LocalPlayer);

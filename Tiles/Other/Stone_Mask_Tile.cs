@@ -28,7 +28,7 @@ namespace Origins.Tiles.Other {
 			DustType = DustID.Stone;
 
 			// Names
-			AddMapEntry(new Color(100, 100, 100), Language.GetText("Stone Mask"));
+			AddMapEntry(new Color(100, 100, 100), CreateMapEntryName());
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);
