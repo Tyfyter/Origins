@@ -3387,6 +3387,11 @@ Riven_Campfire_Item: {
 }
 
 Defiled_Campfire_Item: {
-	// DisplayName: Defiled_ Campfire_ Item
+	// DisplayName: Defiled Campfire
+	// Tooltip: ""
+}
+
+Riven_Fountain_Item: {
+	// DisplayName: Riven Water Fountain
 	// Tooltip: ""
 }

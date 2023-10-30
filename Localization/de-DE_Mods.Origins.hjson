@@ -1191,6 +1191,9 @@ Tiles: {
 	// Chunky_Crate_Tile.MapEntry: Chunky Crate
 	// Crusty_Crate_Tile.MapEntry: Crusty Crate
 	// Festering_Crate_Tile.MapEntry: Festering Crate
+	// Cleansing_Station.MapEntry: Cleansing Station
+	// Potato_Mine_Tile.MapEntry: Potato Mine
+	// Stone_Mask_Tile.MapEntry: Stone Mask
 }
 
 AltBiomeDescription: {
