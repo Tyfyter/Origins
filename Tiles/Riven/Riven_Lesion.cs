@@ -44,7 +44,7 @@ namespace Origins.Tiles.Riven {
 			TileObjectData.addTile(Type);
 			LocalizedText name = CreateMapEntryName();
 			// name.SetDefault("Riven Lesion");
-			AddMapEntry(new Color(217, 95, 54), name);
+			AddMapEntry(new Color(20, 136, 182), name);
 			AdjTiles = new int[] { TileID.ShadowOrbs };
 			HitSound = SoundID.NPCDeath1;
 			DustType = Riven_Hive.DefaultTileDust;
@@ -56,7 +56,7 @@ namespace Origins.Tiles.Riven {
 			return true;
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			World.BiomeData.Riven_Hive.CheckLesion(i, j, Type);
+			Riven_Hive.CheckLesion(i, j, Type);
 			int fleshType = ModContent.TileType<Riven_Flesh>();
 			for (int x = 0; x < 4; x++) {
 				for (int y = 0; y < 4; y++) {

@@ -3395,3 +3395,8 @@ Riven_Fountain_Item: {
 	// DisplayName: Riven Water Fountain
 	// Tooltip: ""
 }
+
+Gel_Blister_Item: {
+	// DisplayName: Gel_ Blister_ Item
+	// Tooltip: ""
+}

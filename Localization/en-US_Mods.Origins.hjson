@@ -1194,6 +1194,7 @@ Tiles: {
 	Cleansing_Station.MapEntry: Cleansing Station
 	Potato_Mine_Tile.MapEntry: Potato Mine
 	Stone_Mask_Tile.MapEntry: Stone Mask
+	Gel_Blister.MapEntry: Gel Blister
 }
 
 AltBiomeDescription: {
