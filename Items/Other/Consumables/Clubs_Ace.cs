@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Clubs_Ace : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ace in the Hole");
-			// Tooltip.SetDefault("Developer item\n'It's my ace in the hole!'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ManaCrystal);
 			Item.rare = ItemRarityID.Cyan;

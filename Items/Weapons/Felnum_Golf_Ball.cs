@@ -6,9 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons {
 	public class Felnum_Golf_Ball : ModItem {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.GolfBallDyedBrown;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Felnum Golf Ball");
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GolfBall);
 			Item.damage = 20;

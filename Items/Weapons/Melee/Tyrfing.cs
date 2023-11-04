@@ -274,9 +274,7 @@ namespace Origins.Items.Weapons.Melee {
 		protected override bool CloneNewInstances => true;
 		int stabee = -1;
 		bool noGrow = false;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Tyrfing");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
 			Projectile.timeLeft = 16;

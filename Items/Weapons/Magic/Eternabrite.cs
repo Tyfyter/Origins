@@ -4,9 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
     public class Eternabrite : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Flamethrower);
 			Item.damage = 30;

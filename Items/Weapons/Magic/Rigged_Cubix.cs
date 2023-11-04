@@ -46,9 +46,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Rigged_Cubix_P : ModProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Quantum Emission");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Magic;
 			Projectile.friendly = true;

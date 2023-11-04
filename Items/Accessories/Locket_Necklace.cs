@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Locket_Necklace : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Locket Necklace");
-			// Tooltip.SetDefault("Increases damage and movement speed after taking damage");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 32);
 			Item.value = Item.sellPrice(gold: 2);

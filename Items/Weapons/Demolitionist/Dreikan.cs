@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Dreikan : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Dreikan");
-			// Tooltip.SetDefault("'Like \"Drakin\" with a heavy Aussie accent'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
@@ -38,9 +34,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Dreikan_Shot : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_286";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Dreikanfire");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];

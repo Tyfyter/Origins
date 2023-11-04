@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Razorwire : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Razorwire");
-			// Tooltip.SetDefault("67% of damage recieved is split across 3 enemies\nEnemies are less likely to target you");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 28);
 			Item.rare = ItemRarityID.Green;

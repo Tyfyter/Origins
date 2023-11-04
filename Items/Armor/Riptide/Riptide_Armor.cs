@@ -11,11 +11,7 @@ using Tyfyter.Utils;
 namespace Origins.Items.Armor.Riptide {
 	[AutoloadEquip(EquipType.Head)]
 	public class Riptide_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Riptide Helm");
-			// Tooltip.SetDefault("5% increased magic damage\nGreatly extends underwater breathing");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 4;
 			Item.value = Item.sellPrice(silver: 30);
@@ -56,11 +52,7 @@ namespace Origins.Items.Armor.Riptide {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Riptide_Breastplate : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Riptide Breastplate");
-			// Tooltip.SetDefault("Emit a small aura of light\n+60 mana capacity");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 5;
 			Item.value = Item.sellPrice(silver: 30);
@@ -92,11 +84,7 @@ namespace Origins.Items.Armor.Riptide {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Riptide_Greaves : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Riptide Leggings");
-			// Tooltip.SetDefault("5% increased magic damage\nGrants the ability to swim and provides increased movement speed in water");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 4;
 			Item.value = Item.sellPrice(silver: 30);

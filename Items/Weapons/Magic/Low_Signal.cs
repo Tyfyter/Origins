@@ -40,9 +40,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Low_Signal_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Nerve Signal");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
 			Projectile.DamageType = DamageClass.Magic;

@@ -46,9 +46,7 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Locked_Defiled_Dungeon_Chest_Item : Defiled_Dungeon_Chest_Item {
 		public override string Texture => "Origins/Tiles/Defiled/Defiled_Dungeon_Chest_Item";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Defiled Chest (locked)");
-		}
+		
 
 		public override void SetDefaults() {
 			base.SetDefaults();

@@ -8,11 +8,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("HNO-3 \"Viper\"");
-			// Tooltip.SetDefault("Has a chance to inflict \"Toxic Shock\"\nDeals critical damage on otherwise afflicted enemies");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
 			Item.damage = 60;

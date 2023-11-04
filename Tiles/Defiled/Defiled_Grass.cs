@@ -106,9 +106,7 @@ namespace Origins.Tiles.Defiled {
 		}
 	}
 	public class Defiled_Grass_Seeds : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Seeds");
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrassSeeds);
 			Item.placeStyle = ModContent.TileType<Defiled_Grass>();

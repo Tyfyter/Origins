@@ -6,11 +6,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Eyndum_Scar : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Eyndum Scar");
-			// Tooltip.SetDefault("A very lame end-game sword");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Katana);
 			Item.damage = 407;

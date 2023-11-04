@@ -38,11 +38,7 @@ namespace Origins.Items.Armor.Amber {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Amber_Breastplate : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amber Exploder Resin");
-			// Tooltip.SetDefault("-34% explosive self-damage");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(gold: 2);
@@ -62,11 +58,7 @@ namespace Origins.Items.Armor.Amber {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Amber_Greaves : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amber Exploder Guards");
-			// Tooltip.SetDefault("Increased movement speed");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(gold: 2);

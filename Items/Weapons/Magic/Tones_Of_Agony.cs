@@ -10,11 +10,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Tones_Of_Agony : ModItem, IElementalItem {
 		public ushort Element => Elements.Earth;
 
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Tones of Agony");
-			// Tooltip.SetDefault("'Cries of the suffering'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 40;

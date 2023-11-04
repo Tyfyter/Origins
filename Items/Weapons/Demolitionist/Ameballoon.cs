@@ -47,9 +47,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Ameballoon_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Ameballoon";
 		public override string GlowTexture => Texture;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ameballoon");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.aiStyle = ProjAIStyleID.GroundProjectile;
@@ -92,9 +90,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Ameballoon_Shrapnel : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Ameballoon_P";
 		public override string GlowTexture => Texture;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ameballoon");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.timeLeft = 3600;

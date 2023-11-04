@@ -254,9 +254,7 @@ namespace Origins.Items.Weapons.Summoner {
 				);
 			}
 		}
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Lightning Orb Trail");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
 			Projectile.DamageType = DamageClass.Summon;

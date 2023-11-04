@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
     public class Hot_Potato : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Hot Potato");
-			// Tooltip.SetDefault("'Be careful, it's hot'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.maxStack = 1;

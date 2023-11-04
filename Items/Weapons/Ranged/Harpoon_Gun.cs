@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Harpoon_Gun : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Harpoon Gun");
-			// Tooltip.SetDefault("Uses harpoons as ammo\n85.7% chance not to consume ammo");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = 17;
 			Item.DamageType = DamageClass.Ranged;

@@ -13,11 +13,7 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bomb_Launcher : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bomb Launcher");
-			// Tooltip.SetDefault("Uses bombs as ammo");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
 			Item.damage = 2;
@@ -72,9 +68,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Awe_Bomb_P : ModProjectile {
 		Vector2 oldVelocity;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Awe Bomb");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
@@ -101,9 +95,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Awe_Bomb_Blast : ModProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Awe Bomb");
-		}
+		
 		public override string Texture => "Origins/Projectiles/Pixel";
 		const int duration = 15;
 		public override void SetDefaults() {
@@ -152,9 +144,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Impact_Bomb_Blast : ModProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Blast Bomb");
-		}
+		
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.DD2ExplosiveTrapT1Explosion;
 		protected override bool CloneNewInstances => true;
 		float dist;

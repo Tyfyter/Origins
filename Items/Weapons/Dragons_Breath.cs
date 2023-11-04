@@ -38,9 +38,7 @@ namespace Origins.Items.Weapons {
 	public class Dragons_Breath_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Item_37";
 		List<Particle> particles;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Dragon's Breath");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
 			Projectile.DamageType = DamageClasses.RangedMagic;

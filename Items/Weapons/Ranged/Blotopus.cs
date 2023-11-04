@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Blotopus : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Blotopus");
-			// Tooltip.SetDefault("Fires a stream of needles that bleed enemies\n20% chance not consume ammo");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
 			Item.damage = 4;
@@ -39,9 +35,7 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class Blotopus_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Ranged/Blotopus_P";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bloody Needle");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bullet);
 			Projectile.width = 6;

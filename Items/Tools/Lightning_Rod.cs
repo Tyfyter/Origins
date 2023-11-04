@@ -10,12 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Lightning_Rod : ModItem {
 
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Lightning Rod");
-			//Tooltip.SetDefault("Can fish in lava.");
-			//ItemID.Sets.CanFishInLava[item.type] = true;
-			Item.ResearchUnlockCount = 1;
-		}
+		
 
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
@@ -48,9 +43,7 @@ namespace Origins.Items.Tools {
 	}
 	public class Lightning_Rod_Bobber : ModProjectile {
 
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Lightning Rod Bobber");
-		}
+		
 
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BobberReinforced);

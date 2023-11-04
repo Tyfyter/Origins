@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Powerflower : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Powerflower");
-			// Tooltip.SetDefault("Chance for mana stars to fall from critical hits\n8% reduced mana cost\nAutomatically use mana potions when needed");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 28);
 			Item.rare = ItemRarityID.Pink;

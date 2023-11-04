@@ -10,11 +10,7 @@ using Tyfyter.Utils;
 
 namespace Origins.Items.Tools {
 	public class Strainer : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Strainer");
-			// Tooltip.SetDefault("Able to mine Hellstone");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.LaserDrill);
 			Item.damage = 13;

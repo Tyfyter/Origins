@@ -9,11 +9,7 @@ using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ace_Shrapnel_Old : ModItem {
 
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ancient Fragthrower");
-			// Tooltip.SetDefault("What do we do with it?");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
 			Item.damage = 85;

@@ -106,9 +106,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Flakjack_Explosion_P : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => "Terraria/Images/Projectile_16";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Flakjack");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.timeLeft = 5;
@@ -134,9 +132,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public bool IsExploding() => true;
 	}
 	public class Flakjack_P_1 : ModProjectile, IIsExplodingProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Resizable Mine");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.MaxUpdates = 10;

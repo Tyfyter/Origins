@@ -11,10 +11,7 @@ using Origins.Items.Weapons.Summoner;
 
 namespace Origins.Items.Tools {
 	public class Amoeba_Hook : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amoeba Hook");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.AmethystHook);
 			Item.shootSpeed = 18f;

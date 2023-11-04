@@ -4,10 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Corruption_Loot_Box : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Corruption Loot Box");
-			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);
 		}

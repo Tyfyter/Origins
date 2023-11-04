@@ -64,9 +64,7 @@ namespace Origins.Items.Weapons.Melee {
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
 		public List<PolarVec2> nodes;
 		PolarVec2 GetSwingStartOffset => new PolarVec2(0, Projectile.ai[1] - Projectile.direction * 0.35f);
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Knee Slapper");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Melee;
 			Projectile.friendly = true;

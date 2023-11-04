@@ -12,11 +12,7 @@ using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Magic {
     public class Manasynk : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Manasynk");
-			// Tooltip.SetDefault("");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.maxStack = 1;
@@ -169,9 +165,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Manasynk_Pickup : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Mana");
-		}
+		
 		public override void SetDefaults() {
 			Item.maxStack = 9999;
 		}

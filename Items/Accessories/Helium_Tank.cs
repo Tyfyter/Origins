@@ -6,11 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Helium_Tank : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Helium Tank");
-			// Tooltip.SetDefault("Extends underwater breathing\nImmunity to ‘Suffocation’\n'Don't laugh'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
 			Item.rare = ItemRarityID.LightRed;

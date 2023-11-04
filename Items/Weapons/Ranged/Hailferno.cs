@@ -8,11 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Hailferno : ModItem {
 		public override string Texture => "Origins/Items/Weapons/Ranged/Sleetfire";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Hailferno");
-			// Tooltip.SetDefault("Uses gel as ammo");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ElfMelter);
 			Item.damage = 12;

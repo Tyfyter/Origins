@@ -277,11 +277,7 @@ namespace Origins.Items.Armor.Acrid {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Acrid_Breastplate : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acrid Breastplate");
-			// Tooltip.SetDefault("Increased life regeneration");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 18;
 			Item.value = Item.sellPrice(gold: 2, silver: 40);
@@ -300,11 +296,7 @@ namespace Origins.Items.Armor.Acrid {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Acrid_Greaves : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acrid Greaves");
-			// Tooltip.SetDefault("Grants the ability to swim");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 14;
 			Item.value = Item.sellPrice(gold: 2, silver: 40);

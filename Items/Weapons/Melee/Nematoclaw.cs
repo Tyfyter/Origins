@@ -6,11 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
     public class Nematoclaw : ModItem, IElementalItem {
 		public ushort Element => Elements.Acid;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Nematoclaw");
-			// Tooltip.SetDefault("Inflicts acid venom, poison, and toxic shock");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FetidBaghnakhs);
 			Item.damage = 48;

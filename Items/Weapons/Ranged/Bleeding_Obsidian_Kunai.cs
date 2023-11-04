@@ -8,11 +8,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
     public class Bleeding_Obsidian_Kunai : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bleeding Obsidian Kunai");
-			// Tooltip.SetDefault("'Be careful, it's sharp'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.damage = 38;
@@ -38,9 +34,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 	}
 	public class Bleeding_Obsidian_Kunai_P : ModProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bleeding Obsidian Kunai");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PoisonDart);
 			Projectile.penetrate = 1;

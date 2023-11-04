@@ -9,11 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Boar_Spear : ModItem {
 		public const int baseDamage = 18;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Felnum Boar Spear");
-			// Tooltip.SetDefault("Receives 50% higher damage bonuses");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = baseDamage;
 			Item.DamageType = DamageClass.Melee;
@@ -45,9 +41,7 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Felnum_Boar_Spear_Stab : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Felnum_Boar_Spear_P";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Felnum Boar Spear");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
 			Projectile.timeLeft = 3600;

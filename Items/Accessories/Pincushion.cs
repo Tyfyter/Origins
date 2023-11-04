@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Pincushion : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Pincushion");
-			// Tooltip.SetDefault("Prevents tile destruction from explosives");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
 			Item.rare = ItemRarityID.Blue;

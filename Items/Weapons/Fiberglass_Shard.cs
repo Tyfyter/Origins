@@ -11,11 +11,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons {
 	public class Fiberglass_Shard : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Fiberglass Shard");
-			// Tooltip.SetDefault("'Be careful, it's sharp'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.width = 12;
@@ -29,9 +25,7 @@ namespace Origins.Items.Weapons {
 		}
 	}
 	public class Fiberglass_Shard_P : ModProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Fiberglass Shard");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PoisonDart);
 			Projectile.hostile = false;

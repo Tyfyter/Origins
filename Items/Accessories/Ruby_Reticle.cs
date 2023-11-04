@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Ruby_Reticle : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ruby Reticle");
-			// Tooltip.SetDefault("Critical strike chance is increased by 15% of weapon damage");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 30);
 			Item.rare = ItemRarityID.Green;

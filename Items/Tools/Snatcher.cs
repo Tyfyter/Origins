@@ -7,10 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Snatcher : ModItem {
 
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Snatcher");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
@@ -30,9 +27,7 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Snatcher_Bobber : ModProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Snatcher Bobber");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BobberReinforced);
 			DrawOriginOffsetY = -8;

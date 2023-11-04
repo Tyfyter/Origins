@@ -43,9 +43,7 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Riverang_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Riverang";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Riverang");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThornChakram);
 			Projectile.penetrate = -1;

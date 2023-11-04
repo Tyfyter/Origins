@@ -5,9 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Mysterious_Spray : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);
 			Item.rare = ItemRarityID.Master;

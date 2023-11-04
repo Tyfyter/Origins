@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
     //extends harpoon gun so it doesn't have to have redundant overrides for CanShoot, CanConsumeAmmo, etc.
     public class Acrid_Impaler : Harpoon_Gun {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acrid Impaler");
-			// Tooltip.SetDefault("Uses harpoons as ammo\n85.7% chance not to consume ammo");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = 40;
 			Item.DamageType = DamageClass.Ranged;

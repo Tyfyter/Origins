@@ -11,11 +11,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Missile_Minigun : ModItem {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.ProximityMineLauncher;
 
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Missile Minigun");
-			// Tooltip.SetDefault("'Light 'em up'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
 			Item.damage = 110;

@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Beginners_Tome : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Beginner's Tome");
-			// Tooltip.SetDefault("'Be careful, it's book'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 16;

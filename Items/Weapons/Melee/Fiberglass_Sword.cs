@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Fiberglass_Sword : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Fiberglass Sword");
-			// Tooltip.SetDefault("'Be careful, it's sharp'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = 18;
 			Item.DamageType = DamageClass.Melee;

@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Messy_Magma_Leech : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Messy Magma Leech");
-			// Tooltip.SetDefault("All attacks inflict Bleeding and set enemies ablaze\nPrevents Defiled enemies from regenerating");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 26);
 			Item.value = Item.sellPrice(gold: 3);

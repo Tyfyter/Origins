@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
 	public class Felnum_Pickaxe : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Felnum Pickaxe");
-			// Tooltip.SetDefault("Able to mine Hellstone\n'Its strikes sound like thunder'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DeathbringerPickaxe);
 			Item.damage = 13;

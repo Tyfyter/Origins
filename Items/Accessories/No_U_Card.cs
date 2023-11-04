@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class No_U_Card : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("No U Card");
-			// Tooltip.SetDefault("Attackers recieve 50% of incoming damage and debuffs regardless of immunity\nImmune to most debuffs");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 18);
 			Item.value = Item.sellPrice(gold: 4);

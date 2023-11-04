@@ -7,9 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee
 {
     public class Nineball : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Code1);
 			Item.damage = 18;
@@ -30,8 +28,7 @@ namespace Origins.Items.Weapons.Melee
     }
     public class Nineball_P : ModProjectile
     {
-        public override void SetStaticDefaults() {
-        }
+        
         public override void SetDefaults()
         {
             Projectile.CloneDefaults(ProjectileID.WoodYoyo);

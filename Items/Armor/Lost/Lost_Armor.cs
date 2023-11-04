@@ -10,11 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Lost {
     [AutoloadEquip(EquipType.Head)]
 	public class Lost_Helm : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Lost Helm");
-			// Tooltip.SetDefault("Increased mana regeneration rate");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);
@@ -72,11 +68,7 @@ namespace Origins.Items.Armor.Lost {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Lost_Pants : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Lost Pants");
-			// Tooltip.SetDefault("Increased movement speed");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);
@@ -96,9 +88,7 @@ namespace Origins.Items.Armor.Lost {
 }
 namespace Origins.Buffs {
 	public class Defiled_Exhaustion_Debuff : ModBuff {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Exhaustion");
-		}
+		
 		public override void Update(Player player, ref int buffIndex) {
 			player.manaRegenBuff = false;
 			player.manaRegen = 0;

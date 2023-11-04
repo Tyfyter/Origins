@@ -9,11 +9,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Lazy_Cloak : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Lazy Cloak");
-			// Tooltip.SetDefault("Chases after marked enemies\n'It just doesn't want to do all the work'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 36);
 			Item.damage = 30;

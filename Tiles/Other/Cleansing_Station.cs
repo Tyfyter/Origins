@@ -119,9 +119,7 @@ namespace Origins.Tiles.Other {
 		}
 	}
 	public class Cleansing_Station_Item : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Cleansing Station");
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.BoneTable);
 			Item.value = Item.sellPrice(gold: 1);

@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Myth {
 	[AutoloadEquip(EquipType.Head)]
 	public class Mythic_Skull : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Mythic Skull");
-			// Tooltip.SetDefault("Increased explosive velocity\n'Skull ON'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 4;
 			Item.value = Item.sellPrice(silver: 90);
@@ -52,11 +48,7 @@ namespace Origins.Items.Armor.Myth {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Mythic_Shell : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Mythic Shell");
-			// Tooltip.SetDefault("Greatly increased jump speed");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 4;
 			Item.value = Item.sellPrice(silver: 60);
@@ -76,11 +68,7 @@ namespace Origins.Items.Armor.Myth {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Mythic_Leggings : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Mythic Leggings");
-			// Tooltip.SetDefault("Greatly increased movement speed");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 4;
 			Item.value = Item.sellPrice(silver: 60);

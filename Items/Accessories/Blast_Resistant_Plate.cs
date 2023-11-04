@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Blast_Resistant_Plate : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Blast Resistant Plate");
-			// Tooltip.SetDefault("Reduces explosive self-damage by 10%");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 28);
 			Item.defense = 3;

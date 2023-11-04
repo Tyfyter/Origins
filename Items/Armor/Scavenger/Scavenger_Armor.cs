@@ -41,9 +41,7 @@ namespace Origins.Items.Armor.Scavenger {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Scavenger_Breastplate : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 4;
 			Item.value = Item.sellPrice(silver: 30);
@@ -62,9 +60,7 @@ namespace Origins.Items.Armor.Scavenger {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Scavenger_Greaves : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);

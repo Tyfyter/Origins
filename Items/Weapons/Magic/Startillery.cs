@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Startillery : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Startillery");
-			// Tooltip.SetDefault("Fires an arcing starshot that explodes on impact");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldenShower);
 			Item.damage = 48;
@@ -28,9 +24,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Starshot : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_288";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Starshot");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
 			Projectile.friendly = true;

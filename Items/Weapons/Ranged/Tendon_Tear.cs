@@ -11,11 +11,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Tendon_Tear : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Tendon Tear");
-			// Tooltip.SetDefault("'Snap. Crackle. Pop'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
 			Item.damage = 18;

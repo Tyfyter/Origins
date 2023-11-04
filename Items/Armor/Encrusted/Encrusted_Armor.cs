@@ -84,11 +84,7 @@ namespace Origins.Items.Armor.Encrusted {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Encrusted_Pants : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Encrusted Pants");
-			// Tooltip.SetDefault("Increases jump height");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);

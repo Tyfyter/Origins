@@ -13,12 +13,7 @@ namespace Origins.Items.Pets {
 	public class Chromatic_Scale : ModItem {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Chromatic Scale");
-			// Tooltip.SetDefault("A very long an convoluted tooltip text because Ty forgot to mess with its name and tooltip :p");
-
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.width = 32;

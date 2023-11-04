@@ -113,9 +113,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Awe_Grenade_Blast : ModProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Awe Grenade");
-		}
+		
 		public override string Texture => "Origins/Projectiles/Pixel";
 		const int duration = 15;
 		public override void SetDefaults() {
@@ -164,9 +162,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Impact_Grenade_Blast : ModProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Blast Grenade");
-		}
+		
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.DD2ExplosiveTrapT1Explosion;
 		protected override bool CloneNewInstances => true;
 		float dist;

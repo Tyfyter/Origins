@@ -7,10 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Tools {
 	public class Parasitic_Manipulator : ModItem {
 
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Parasitic Manipulator");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
@@ -31,9 +28,7 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Parasitic_Bobber : ModProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Parasitic Bobber");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BobberReinforced);
 			DrawOriginOffsetY = -8;

@@ -18,10 +18,7 @@ namespace Origins.Items.Weapons.Melee {
 	public class Vorpal_Sword : ModItem, IJournalEntryItem, ICustomWikiStat {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Vorpal Sword");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = 17;
 			Item.DamageType = DamageClass.Melee;

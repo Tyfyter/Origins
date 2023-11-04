@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Makeover_Choker : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Makeover Choker");
-			// Tooltip.SetDefault("Increases life regeneration at low health\nIncreases length of invincibility after taking damage\n'You look like a mess, let's get that taken care of'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 18);
 			Item.rare = ItemRarityID.LightRed;

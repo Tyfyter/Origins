@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
 	public class Retribution_Shield : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Shield of Retribution");
-			// Tooltip.SetDefault("Grants immunity to knockback\nGrants immunity to fire blocks\n67% of damage recieved is redirected to 3 enemies\nEnemies are less likely to target you");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(36, 38);
 			Item.defense = 3;

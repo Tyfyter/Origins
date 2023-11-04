@@ -11,11 +11,7 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class SMART_Wrench : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("SMART Wrench");
-			// Tooltip.SetDefault("Summons a SMART Turret to rip apart your enemies");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = 11;
 			Item.DamageType = DamageClass.Summon;

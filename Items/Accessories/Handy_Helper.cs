@@ -13,11 +13,7 @@ namespace Origins.Items.Accessories {
 	public class Handy_Helper : ModItem {
 		bool bothGloves = false;
 		bool noGloves = false;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Handy Helper");
-			// Tooltip.SetDefault("Amebic tentacles will protect you from projectiles and enemies\nIncreases melee knockback\n12% increased melee speed\nEnables auto swing for melee weapons\nIncreases the size of melee weapons");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.PowerGlove);
 			if (!bothGloves) Item.handOffSlot = -1;

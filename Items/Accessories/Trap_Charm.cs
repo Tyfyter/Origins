@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Trap_Charm : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Trap Charm");
-			// Tooltip.SetDefault("Reduces damage received from traps");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 24);
 			Item.value = Item.sellPrice(gold: 2);

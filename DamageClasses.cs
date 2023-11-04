@@ -61,9 +61,7 @@ namespace Origins {
 		}
 	}
 	public class Thrown_Explosive : DamageClass {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("explosive damage (thrown)");
-		}
+		
 		public override bool GetEffectInheritance(DamageClass damageClass) {
 			return damageClass == DamageClasses.Explosive || damageClass == Throwing;
 		}
@@ -117,9 +115,7 @@ namespace Origins {
 		}
 	}
 	public class Ranged_Magic : DamageClass {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("ranged/magic damage");
-		}
+		
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
 			if (damageClass == Generic || damageClass == Ranged || damageClass == Magic) {
 				return StatInheritanceData.Full;
@@ -134,9 +130,7 @@ namespace Origins {
 		}
 	}
 	public class Summon_Magic_Speed : DamageClass {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("summon damage");
-		}
+		
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
 			if (damageClass == Generic || damageClass == Summon) {
 				return StatInheritanceData.Full;

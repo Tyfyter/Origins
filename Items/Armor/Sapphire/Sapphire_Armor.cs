@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Sapphire {
     [AutoloadEquip(EquipType.Head)]
 	public class Sapphire_Hood : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Sapphire Mediator Hood");
-			// Tooltip.SetDefault("-40 mana");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(gold: 2);
@@ -42,11 +38,7 @@ namespace Origins.Items.Armor.Sapphire {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Sapphire_Vest : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Sapphire Mediator Vest");
-			// Tooltip.SetDefault("+15% magic speed");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(gold: 2);
@@ -66,11 +58,7 @@ namespace Origins.Items.Armor.Sapphire {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Sapphire_Tights : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Sapphire Mediator Tights");
-			// Tooltip.SetDefault("Increased movement speed");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(gold: 2);

@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
 	public class Felnum_Hamaxe : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Felnum Hamaxe");
-			// Tooltip.SetDefault("'Its strikes sound like thunder'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.MoltenHamaxe);
 			Item.damage = 18;

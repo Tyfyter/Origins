@@ -5,9 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Sonar_Visor : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);
 			Item.value = Item.sellPrice(gold: 7);

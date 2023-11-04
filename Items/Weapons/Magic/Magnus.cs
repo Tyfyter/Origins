@@ -46,9 +46,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Felnum_Zap : ModProjectile {
 		(Vector2?, Vector2)[] oldPos = new (Vector2?, Vector2)[7];
 		public override string Texture => "Terraria/Images/Projectile_3";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Lightning Strike");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
 			Projectile.DamageType = DamageClass.Magic;

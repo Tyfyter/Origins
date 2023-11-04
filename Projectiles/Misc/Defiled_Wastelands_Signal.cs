@@ -27,9 +27,7 @@ namespace Origins.Projectiles.Misc {
 				Projectile.localAI[1] = value.Y;
 			}
 		}
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Nerve Impulse");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.aiStyle = 0;
 			Projectile.timeLeft = 600;

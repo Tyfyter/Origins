@@ -9,11 +9,7 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Thermite_Launcher : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Thermite Launcher");
-			// Tooltip.SetDefault("Burn.\nUses Thermite Canisters for ammo");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
 			Item.damage = 27;
@@ -85,10 +81,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Thermite_P : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Ammo/Napalm_Pellet_P";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Thermite Canister");
-			//Origins.ExplosiveProjectiles[Projectile.type] = true;
-		}
+		
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.Explosive;
 			Projectile.friendly = true;

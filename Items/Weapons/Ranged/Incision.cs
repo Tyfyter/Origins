@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	[LegacyName("Defiled_Dart_Burst")]
 	public class Incision : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Incision");
-			// Tooltip.SetDefault("'Very pointy'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = 25;
 			Item.DamageType = DamageClass.Ranged;

@@ -12,11 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Other {
 	[AutoloadEquip(EquipType.Head)]
 	public class Hallowed_Visage : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Hallowed Visage");
-			// Tooltip.SetDefault("+15% explosive velocity\n+8% explosive critical strike chance");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.width = 22;
 			Item.height = 26;

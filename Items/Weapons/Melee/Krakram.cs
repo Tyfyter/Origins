@@ -5,11 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Krakram : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Krakram");
-			// Tooltip.SetDefault("'Very pointy'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
 			Item.damage = 25;
@@ -36,9 +32,7 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Krakram_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Melee/Krakram";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Krakram");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThornChakram);
 			Projectile.penetrate = -1;

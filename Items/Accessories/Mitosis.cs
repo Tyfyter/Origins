@@ -6,11 +6,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Mitosis : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Mitosis");
-			// Tooltip.SetDefault("Shoots out a mitosis node that duplicates projectiles");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);
 			Item.rare = ItemRarityID.Pink;
@@ -32,9 +28,7 @@ namespace Origins.Items.Accessories {
 	public class Amoeba_Bubble : ModProjectile {
 		public override string Texture => "Origins/Items/Accessories/Mitosis_P";
 		public override string GlowTexture => Texture;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Mitosis Node");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
 			Projectile.aiStyle = 0;

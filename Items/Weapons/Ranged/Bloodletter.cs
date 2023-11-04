@@ -8,11 +8,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
     public class Bloodletter : Harpoon_Gun {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bloodletter");
-			// Tooltip.SetDefault("Uses harpoons as ammo\n80% chance not to consume ammo");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = 21;
 			Item.DamageType = DamageClass.Ranged;

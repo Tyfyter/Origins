@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Shardcannon : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Shardcannon");
-			// Tooltip.SetDefault("");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
 			Item.damage = 9;

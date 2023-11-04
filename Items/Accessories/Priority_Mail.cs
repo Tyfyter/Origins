@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
     public class Priority_Mail : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Priority Mail");
-			// Tooltip.SetDefault("Enemies recently struck by a teammate receive 18% more damage");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 28);
 			Item.accessory = true;

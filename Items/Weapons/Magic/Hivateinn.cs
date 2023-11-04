@@ -44,9 +44,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Felnum_Lightning : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_466";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Hævateinn");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
 			Projectile.usesLocalNPCImmunity = true;

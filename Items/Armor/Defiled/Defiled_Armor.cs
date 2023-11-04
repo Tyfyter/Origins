@@ -45,11 +45,7 @@ namespace Origins.Items.Armor.Defiled {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Defiled_Breastplate : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Breastplate");
-			// Tooltip.SetDefault("3% increased damage");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(gold: 1);
@@ -68,11 +64,7 @@ namespace Origins.Items.Armor.Defiled {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Defiled_Greaves : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Greaves");
-			// Tooltip.SetDefault("3% increased damage");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 6;
 			Item.value = Item.sellPrice(gold: 1);

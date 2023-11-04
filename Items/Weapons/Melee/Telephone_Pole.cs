@@ -6,11 +6,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Telephone_Pole : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Telephone Pole");
-			// Tooltip.SetDefault("'We already have Cellphones'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
 			Item.damage = 110;

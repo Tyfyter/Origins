@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Keepsake_Remains : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Keepsake Remains");
-			// Tooltip.SetDefault("Increases armor penetration by 5 and attacks tenderize targets");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 28);
 			Item.value = Item.sellPrice(gold: 3);

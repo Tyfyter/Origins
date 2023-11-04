@@ -6,11 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Fiberglass_Bow : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Fiberglass Bow");
-			// Tooltip.SetDefault("'Be careful, it's sharp'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = 17;
 			Item.DamageType = DamageClass.Ranged;

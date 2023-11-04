@@ -8,11 +8,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Astoxo : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Astoxo");
-			// Tooltip.SetDefault("Receives 50% higher damage bonuses");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Tsunami);
 			Item.damage = 78;

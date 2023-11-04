@@ -35,11 +35,7 @@ namespace Origins.Items.Armor.Tendon {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Tendon_Shirt : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Tendon Shirt");
-			// Tooltip.SetDefault("+6% critical strike chance");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 4;
 			Item.value = Item.sellPrice(silver: 30);
@@ -58,11 +54,7 @@ namespace Origins.Items.Armor.Tendon {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Tendon_Pants : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Tendon Pants");
-			// Tooltip.SetDefault("+20% ammo preservation");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);

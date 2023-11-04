@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class ACME_Crate : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("ACME Crate");
-			// Tooltip.SetDefault("Greatly increased explosive blast radius");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 26);
 			Item.value = Item.sellPrice(gold: 2);

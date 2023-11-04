@@ -615,9 +615,7 @@ namespace Origins.NPCs.Defiled.Boss {
 	}
 	public class Low_Signal_Hostile : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Infusion_P";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Nerve Signal");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
 			Projectile.DamageType = DamageClass.Default;

@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Headphones : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Headphones");
-			// Tooltip.SetDefault("Tagging an enemy increases the chance of a critical strike by 25% on next hit\nApplies to teammates\n'Callouts guys!'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);
 			Item.value = Item.sellPrice(gold: 2);

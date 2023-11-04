@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Olid_Organ : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Olid Organ");
-			// Tooltip.SetDefault("5% increased damage and critical strike chance\nAll attacks inflict Toxic Shock\nEnemies are less likely to target you");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 24);
 			Item.rare = ItemRarityID.LightPurple;

@@ -5,10 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
 	public class Dissector : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Dissector");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TitaniumWaraxe);
 			Item.damage = 16;

@@ -10,11 +10,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Innermost_Manifest : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Innermost Manifest");
-			// Tooltip.SetDefault("");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 8;

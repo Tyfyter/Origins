@@ -12,12 +12,7 @@ namespace Origins.Items.Pets {
 	public class Strange_Power_Up : ModItem {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Strange Power Up");
-			// Tooltip.SetDefault("The very first sprite.");
-
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.width = 32;

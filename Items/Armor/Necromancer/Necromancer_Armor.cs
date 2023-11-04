@@ -9,11 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Necromancer {
 	[AutoloadEquip(EquipType.Head)]
 	public class Necromancer_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Necromancer Crown");
-			// Tooltip.SetDefault("25% increased summoning damage");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(gold: 5);
@@ -81,11 +77,7 @@ namespace Origins.Items.Armor.Necromancer {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Necromancer_Breastplate : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Necromancer Breastplate");
-			// Tooltip.SetDefault("15% increased summoning attack speed\n+1 minion slot");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 14;
 			Item.value = Item.sellPrice(gold: 5);
@@ -106,11 +98,7 @@ namespace Origins.Items.Armor.Necromancer {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Necromancer_Greaves : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Necromancer Greaves");
-			// Tooltip.SetDefault("25% increased artifact minion damage");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 10;
 			Item.value = Item.sellPrice(gold: 5);

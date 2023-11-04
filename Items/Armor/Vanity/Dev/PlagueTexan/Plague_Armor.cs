@@ -31,11 +31,7 @@ namespace Origins.Items.Armor.Vanity.Dev.PlagueTexan {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Plague_Texan_Jeans : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Plague Texan's Jeans");
-			// Tooltip.SetDefault("'Great for impersonating Origins devs!'\n");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.vanity = true;
 			Item.rare = AltCyanRarity.ID;

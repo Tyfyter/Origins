@@ -84,11 +84,7 @@ namespace Origins.Items.Armor.Riven {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Riven_Pants : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Riven Pants");
-			// Tooltip.SetDefault("6% increased weapon speed");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 6;
 			Item.value = Item.sellPrice(silver: 60);

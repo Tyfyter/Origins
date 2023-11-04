@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Bombardment : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bombardment");
-			// Tooltip.SetDefault("Fires a barrage of floating mines");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
 			Item.damage = 4;

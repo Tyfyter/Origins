@@ -95,9 +95,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Tolruk_Bolt : ModProjectile {
 		(Vector2?, Vector2)[] oldPos = new (Vector2?, Vector2)[14];
 		public override string Texture => "Terraria/Images/Projectile_3";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Tolruk Bolt");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.CultistBossLightningOrbArc);
 			Projectile.usesLocalNPCImmunity = true;

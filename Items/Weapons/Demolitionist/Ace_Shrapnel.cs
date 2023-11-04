@@ -11,11 +11,7 @@ using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ace_Shrapnel : ModItem {
 
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ace Shrapnel");
-			// Tooltip.SetDefault("Not implemented the way spriter dev wants it\nUses scrap as ammo");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
@@ -38,9 +34,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Ace_Shrapnel_P : ModProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ace Shrapnel");
-		}
+		
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bullet);
@@ -81,10 +75,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		const double chaos = Math.PI;
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.BoneGloveProj;
 		int dustStyle;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Shrapnel");
-			//Origins.ExplosiveProjectiles[Projectile.type] = true;
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bullet);
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];

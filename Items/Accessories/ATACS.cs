@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
     public class ATACS : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("ATACS");
-			// Tooltip.SetDefault("10% increased critical strike chance\nDisplays the trajectory of projectiles from your selected item");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);
 			Item.value = Item.sellPrice(gold: 7);

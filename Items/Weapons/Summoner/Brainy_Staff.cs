@@ -11,11 +11,7 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Brainy_Staff : ModItem {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Brainy Staff");
-			// Tooltip.SetDefault("Summons a mini crimbrain to fight for you");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = 10;
 			Item.DamageType = DamageClass.Summon;

@@ -8,10 +8,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.LootBags {
 	public class World_Cracker_Bag : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Treasure Bag (Primordial Amoeba)");
-			// Tooltip.SetDefault("{$CommonItemTooltip.RightClickToOpen}");
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);
 		}

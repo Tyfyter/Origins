@@ -45,9 +45,7 @@ namespace Origins.Items.Armor.Ashen
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Ashen_Breastplate : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(gold: 1);
@@ -66,9 +64,7 @@ namespace Origins.Items.Armor.Ashen
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Ashen_Greaves : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 6;
 			Item.value = Item.sellPrice(gold: 1);

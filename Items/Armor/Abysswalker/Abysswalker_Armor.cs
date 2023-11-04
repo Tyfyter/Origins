@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Abysswalker {
     [AutoloadEquip(EquipType.Head)]
 	public class Abysswalker_Hood : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Abysswalker's Hood");
-			// Tooltip.SetDefault("+20 max life");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 5;
 			Item.value = Item.sellPrice(silver: 40);
@@ -113,11 +109,7 @@ namespace Origins.Items.Armor.Abysswalker {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Abysswalker_Cloak : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Abysswalker's Cloak");
-			// Tooltip.SetDefault("Increased life regeneration");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 11;
 			Item.value = Item.sellPrice(silver: 40);
@@ -139,11 +131,7 @@ namespace Origins.Items.Armor.Abysswalker {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Abysswalker_Greaves : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Abysswalker's Greaves");
-			// Tooltip.SetDefault("Increased movement speed");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 8;
 			Item.value = Item.sellPrice(gold: 2);

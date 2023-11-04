@@ -12,11 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
     public class Pike_of_Deepneus : ModItem {
 		public const int baseDamage = 64;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Pike of Deepneus");
-			// Tooltip.SetDefault("Time your throws for more powerful blows\n'Like so deep dude'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = 160;
 			Item.DamageType = DamageClass.Magic;

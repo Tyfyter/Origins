@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Sleetfire : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Sleetfire");
-			// Tooltip.SetDefault("Uses gel as ammo");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ElfMelter);
 			Item.damage = 9;
@@ -39,9 +35,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 	}
 	public class Sleetfire_P : ModProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Frosty Flame");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.width = Projectile.height = 6;
 			Projectile.penetrate = 2;

@@ -6,10 +6,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Crystal_Cutters : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Crystal Cutters");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
 			Item.damage = 44;

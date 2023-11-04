@@ -27,9 +27,7 @@ namespace Origins.Items.Other.Consumables {
 	}
 	public class Gooey_Water_P : ModProjectile {
 		public override string Texture => base.Texture.Substring(0, base.Texture.Length - 2);
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Gooey Water");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BloodWater);
 		}

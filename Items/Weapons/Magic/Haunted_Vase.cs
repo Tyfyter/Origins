@@ -39,9 +39,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Haunted_Vase_P : ModProjectile {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Haunted Vase");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ToxicFlask);
 			Projectile.width = 32;
@@ -86,9 +84,7 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Haunted_Vase_Wisp : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Magic/Haunted_Vase";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Pissed Wisp");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.SpiritFlame);
 			Projectile.aiStyle = 0;

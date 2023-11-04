@@ -36,9 +36,7 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class Bile_Dart_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Ammo/Bile_Dart";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bile Dart");
-		}
+		
 		public override void SetDefaults() {
             Projectile.CloneDefaults(ProjectileID.CursedDart);
         }

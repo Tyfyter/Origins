@@ -9,11 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
     public class Protomind : ModItem {
 		static Message_Cache[] messagesByType;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Protomind");
-			// Tooltip.SetDefault("Has a chance to create illusions and dodge an attack\nTemporarily increase critical chance after a dodge\nMay confuse nearby enemies after being struck\nMagic projectiles slightly home towards targets");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void Unload() {
 			messagesByType = null;
 		}

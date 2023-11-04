@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
     public class Chemical_Laser : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Chemical Laser");
-			// Tooltip.SetDefault("Splits into brine droplets on impact");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadowbeamStaff);
 			Item.damage = 30;

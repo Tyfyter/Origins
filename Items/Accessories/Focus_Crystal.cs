@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Focus_Crystal : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Focus Crystal");
-			// Tooltip.SetDefault("Life regeneration is boosted from dealing damage\nCritical strike chance is increased by 15% of weapon damage\nBase damage increased while standing still");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 30);
 			Item.rare = ItemRarityID.Yellow;

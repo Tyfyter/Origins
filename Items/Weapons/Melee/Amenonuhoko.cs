@@ -44,9 +44,7 @@ namespace Origins.Items.Weapons.Melee {
 	}
 	public class Amenonuhoko_P : ModProjectile {
 		public override string Texture => base.Texture;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amenonuhoko");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Spear);
 			Projectile.timeLeft = 3600;

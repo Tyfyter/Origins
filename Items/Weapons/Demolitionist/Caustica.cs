@@ -10,11 +10,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Caustica : ModItem, IElementalItem {
 		public ushort Element => Elements.Acid;
 
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Caustica");
-			// Tooltip.SetDefault("Releases a flurry of chaotic sparkles\nDeveloper item");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 270;
@@ -42,9 +38,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Caustica_P : ModProjectile {
 
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Caustica");
-		}
+		
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bullet);

@@ -8,11 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Soulhide {
     [AutoloadEquip(EquipType.Head)]
 	public class Soulhide_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Soulhide Helmet");
-			// Tooltip.SetDefault("+10% melee weapon size");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);
@@ -76,11 +72,7 @@ namespace Origins.Items.Armor.Soulhide {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Soulhide_Guards : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Soulhide Guards");
-			// Tooltip.SetDefault("+14% weapon knockback");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);

@@ -8,10 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Shotty_x2 : ModItem {
 		public override string Texture => "Origins/Items/Weapons/Ranged/2_In_1_Shotty";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("2-in-1 Shotty");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Boomstick);
 			Item.value = Item.sellPrice(gold: 4);
@@ -32,10 +29,7 @@ namespace Origins.Items.Weapons.Ranged {
 	}
 	public class Shotty_x3 : ModItem {
 		public override string Texture => "Origins/Items/Weapons/Ranged/3_In_1_Shotty";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("3-in-1 Shotty");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Boomstick);
 			Item.value = Item.sellPrice(gold: 6);

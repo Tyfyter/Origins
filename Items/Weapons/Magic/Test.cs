@@ -7,9 +7,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
     public class Test : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Vilethorn);
 			Item.damage = 16;
@@ -38,8 +36,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Test2 : ModProjectile {
-		public override void SetStaticDefaults() {
-		}
+		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bee);
 			Projectile.friendly = true;

@@ -8,11 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Other {
     [AutoloadEquip(EquipType.Head)]
 	public class Chlorophyte_Crown : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Chlorophyte Crown");
-			// Tooltip.SetDefault("Increases summon damage by 12%\nIncreases artifact minion damage by 15%\nIncreases your max number of minions by 1");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.width = 24;
 			Item.height = 18;

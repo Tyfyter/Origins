@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Celestial_Starlight : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Celestial Starlight");
-			// Tooltip.SetDefault("Increases pickup range for mana stars\nChance for mana stars to fall from critical hits");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 30);
 			Item.rare = ItemRarityID.Pink;

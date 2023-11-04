@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
     public class Missing_File : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Missing File");
-			// Tooltip.SetDefault("Click on the portrait of the targetted enemy for a damage bonus\n'Let's demake some code...'");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
 			Item.shoot = ModContent.ProjectileType<Potato_P>();

@@ -263,9 +263,7 @@ namespace Origins.NPCs.Fiberglass {
 	}
 	public class Fiberglass_Thread : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Pixel";
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Fiberglass Thread");
-		}
+		
 		public override void SetDefaults() {
 			Projectile.hostile = true;
 			Projectile.timeLeft = 600;

@@ -9,8 +9,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Broken_Record : ModItem {
-		public override void SetStaticDefaults() {
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);
 			Item.maxStack = Item.CommonMaxStack;

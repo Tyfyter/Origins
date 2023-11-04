@@ -5,11 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Volatile_Charm : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Volatile Charm");
-			// Tooltip.SetDefault("Increases explosive blast radius by 40% and reduces explosive self-damage by 20%");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(14, 28);
 			Item.value = Item.sellPrice(gold: 2);

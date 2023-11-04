@@ -6,11 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Cryosten {
 	[AutoloadEquip(EquipType.Head)]
 	public class Cryosten_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Cryosten Helmet");
-			// Tooltip.SetDefault("Increased life regeneration");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 2;
 			Item.value = Item.sellPrice(silver: 7);
@@ -50,11 +46,7 @@ namespace Origins.Items.Armor.Cryosten {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Cryosten_Breastplate : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Cryosten Breastplate");
-			// Tooltip.SetDefault("12% increased maximum life");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 7);
@@ -73,11 +65,7 @@ namespace Origins.Items.Armor.Cryosten {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Cryosten_Greaves : ModItem, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Cryosten Greaves");
-			// Tooltip.SetDefault("5% increased movement speed\nIncreased movement speed on ice");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.defense = 2;
 			Item.value = Item.sellPrice(silver: 7);

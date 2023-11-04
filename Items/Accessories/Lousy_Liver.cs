@@ -4,11 +4,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Lousy_Liver : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Lousy Liver");
-			// Tooltip.SetDefault("Weakens up to 4 nearby enemies");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 22);
 			Item.rare = ItemRarityID.LightRed;

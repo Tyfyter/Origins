@@ -5,9 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	[LegacyName("Mad_Hand")]
 	public class Shrap_Stack : ModItem {
-		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 26);
 			Item.value = Item.sellPrice(gold: 2);

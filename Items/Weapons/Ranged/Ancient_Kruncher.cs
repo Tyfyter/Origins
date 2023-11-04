@@ -6,11 +6,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Ancient_Kruncher : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ancient Kruncher");
-			// Tooltip.SetDefault("Wh3re did you f!nd this?");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = 13;
 			Item.DamageType = DamageClass.Ranged;

@@ -9,11 +9,7 @@ namespace Origins.Items.Pets {
 	public class Amoeba_Toy : ModItem {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amoeba Toy");
-			// Tooltip.SetDefault("Summons a Meberoid to light up the day");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
 			Item.value = Item.sellPrice(gold: 7, silver: 50);

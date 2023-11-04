@@ -6,11 +6,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
     public class Boat_Rocker : Harpoon_Gun {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Boat Rocker");
-			// Tooltip.SetDefault("Uses harpoons as ammo\nRight-click while a line is cast to use it as a whip\n75% chance not to consume ammo");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.damage = 38;
 			Item.DamageType = DamageClass.Ranged;

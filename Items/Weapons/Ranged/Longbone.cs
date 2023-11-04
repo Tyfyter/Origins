@@ -10,11 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Longbone : ModItem {
 		internal static int t = ProjectileID.WoodenArrowFriendly;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Longbone");
-			// Tooltip.SetDefault("Turns most arrows into fragile bone arrows");
-			Item.ResearchUnlockCount = 1;
-		}
+		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldBow);
 			Item.damage = 28;
