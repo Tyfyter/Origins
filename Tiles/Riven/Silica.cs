@@ -28,6 +28,7 @@ namespace Origins.Tiles.Riven {
 			TileID.Sets.Falling[Type] = true;
 			AddMapEntry(new Color(194, 200, 200));
 			mergeID = TileID.Sand;
+			DustType = DustID.Bone;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			if (WorldGen.noTileActions)
@@ -84,12 +85,11 @@ namespace Origins.Tiles.Riven {
 			}
 			return true;
 		}
-		public override bool CreateDust(int i, int j, ref int type) {
-			type = DustID.Bone;
-			return true;
-		}
 	}
 	public class Silica_Item : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 100;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SandBlock);
 			Item.createTile = TileType<Silica>();

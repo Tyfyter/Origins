@@ -36,6 +36,9 @@ namespace Origins.Tiles.Dawn {
 			NetMessage.SendTileSquare(-1, i, j, 1);
 		}
 		public class Genesis_Grass_Seeds : ModItem {
+			public override void SetStaticDefaults() {
+				Item.ResearchUnlockCount = 25;
+			}
 			public override void SetDefaults() {
 				Item.CloneDefaults(ItemID.GrassSeeds);
 				Item.placeStyle = ModContent.TileType<Genesis_Grass>();

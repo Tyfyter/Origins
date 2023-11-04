@@ -19,10 +19,7 @@ namespace Origins.Tiles.Ashen {
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(255, 165, 0), name);
 			mergeID = TileID.Demonite;
-		}
-		public override bool CreateDust(int i, int j, ref int type) {
-			type = DustID.Torch;
-			return true;
+			DustType = DustID.Torch;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = 1f;
@@ -42,6 +39,7 @@ namespace Origins.Tiles.Ashen {
 			ItemID.Sets.ShimmerTransformToItem[ItemType<Defiled_Ore_Item>()] = ItemType<Encrusted_Ore_Item>();
 			ItemID.Sets.ShimmerTransformToItem[ItemType<Encrusted_Ore_Item>()] = Type;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.DemoniteOre;
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DemoniteOre);

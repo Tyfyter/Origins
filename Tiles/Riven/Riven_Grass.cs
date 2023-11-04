@@ -95,7 +95,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Riven_Grass_Seeds : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Riven Seeds");
+			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrassSeeds);

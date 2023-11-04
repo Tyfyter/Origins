@@ -27,13 +27,13 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(150, 150, 150));
 			mergeID = TileID.Sandstone;
 			AddDefiledTile();
-		}
-		public override bool CreateDust(int i, int j, ref int type) {
-			type = Defiled_Wastelands.DefaultTileDust;
-			return true;
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 	}
 	public class Defiled_Sandstone_Item : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 100;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.createTile = TileType<Defiled_Sandstone>();

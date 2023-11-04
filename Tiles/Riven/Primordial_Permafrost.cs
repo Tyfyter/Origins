@@ -25,10 +25,7 @@ namespace Origins.Tiles.Riven {
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(100, 200, 200));
 			mergeID = TileID.IceBlock;
-		}
-		public override bool CreateDust(int i, int j, ref int type) {
-			type = DustID.Water_Snow;
-			return true;
+			DustType = DustID.Water_Snow;
 		}
 		public override void FloorVisuals(Player player) {
 			player.slippy = true;
@@ -36,8 +33,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Primordial_Permafrost_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Primordial Permafrost");
-			// Tooltip.SetDefault("A dangerous single-celled organism frozen...");
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

@@ -30,6 +30,7 @@ namespace Origins.Tiles.Defiled {
 			//SetModTree(Defiled_Tree.Instance);
 			mergeID = TileID.Sand;
 			AddDefiledTile();
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			if (WorldGen.noTileActions)
@@ -86,18 +87,10 @@ namespace Origins.Tiles.Defiled {
 			}
 			return true;
 		}
-		/*public override int SaplingGrowthType(ref int style) {
-			style = 0;
-			return ModContent.TileType<Defiled_Tree_Sapling>();
-		}*/
-		public override bool CreateDust(int i, int j, ref int type) {
-			type = Defiled_Wastelands.DefaultTileDust;
-			return true;
-		}
 	}
 	public class Defiled_Sand_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Sand");
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SandBlock);

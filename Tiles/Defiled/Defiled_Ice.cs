@@ -26,10 +26,7 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(225, 225, 225));
 			mergeID = TileID.IceBlock;
 			AddDefiledTile();
-		}
-		public override bool CreateDust(int i, int j, ref int type) {
-			type = Defiled_Wastelands.DefaultTileDust;
-			return true;
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override void FloorVisuals(Player player) {
 			player.slippy = true;
@@ -37,7 +34,7 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Defiled_Ice_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Gray Ice");
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

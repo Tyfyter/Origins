@@ -54,7 +54,6 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Acetabularia_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acetabularia");
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {

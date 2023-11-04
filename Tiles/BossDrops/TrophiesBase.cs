@@ -115,9 +115,7 @@ namespace Origins.Tiles.BossDrops {
 			AdjTiles = new int[] { TileID.MasterTrophyBase };
 		}
 
-		public override bool CreateDust(int i, int j, ref int type) {
-			return false;
-		}
+		public override bool CreateDust(int i, int j, ref int type) => false;
 
 		public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY) {
 			// This forces the tile to draw the pedestal even if the placeStyle differs. 

@@ -20,10 +20,7 @@ namespace Origins.Tiles.Defiled {
 			// name.SetDefault("Lost Ore");
 			AddMapEntry(new Color(225, 225, 225), name);
 			mergeID = TileID.Demonite;
-		}
-		public override bool CreateDust(int i, int j, ref int type) {
-			type = DustID.WhiteTorch;
-			return true;
+			DustType = DustID.WhiteTorch;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = g = b = 0.25f;

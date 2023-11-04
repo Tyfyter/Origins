@@ -219,8 +219,6 @@ namespace Origins.Items.Other.Fish {
 		public virtual void SetMapEntry() {
 			AddMapEntry(MapColor, CreateMapEntryName());
 		}
-		public override bool CreateDust(int i, int j, ref int type) {
-			return false;
-		}
+		public override bool CreateDust(int i, int j, ref int type) => false;
 	}
 }

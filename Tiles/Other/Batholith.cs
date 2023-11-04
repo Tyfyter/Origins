@@ -21,8 +21,7 @@ namespace Origins.Tiles.Other {
 	}
 	public class Batholith_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Batholith");
-			// Tooltip.SetDefault("'Respect your elders'");
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

@@ -37,7 +37,7 @@ namespace Origins.Tiles.Other {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Felnum Ore");
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DemoniteOre);

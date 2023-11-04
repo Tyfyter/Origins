@@ -27,6 +27,9 @@ namespace Origins.Tiles.Dusk {
 		}
 	}
 	public class Dusk_Light_Item : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 100;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.createTile = TileType<Dusk_Light>();

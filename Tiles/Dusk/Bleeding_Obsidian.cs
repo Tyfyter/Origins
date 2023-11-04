@@ -30,8 +30,6 @@ namespace Origins.Tiles.Dusk {
 	}
 	public class Bleeding_Obsidian_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bleeding Obsidian");
-			// Tooltip.SetDefault("'Weakens those who touch it'");
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {

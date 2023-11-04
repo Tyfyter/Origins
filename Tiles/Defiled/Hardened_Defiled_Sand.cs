@@ -26,6 +26,9 @@ namespace Origins.Tiles.Defiled {
 		}
 	}
 	public class Hardened_Defiled_Sand_Item : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 100;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.createTile = TileType<Hardened_Defiled_Sand>();

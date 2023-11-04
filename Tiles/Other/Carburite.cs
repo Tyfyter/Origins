@@ -18,8 +18,6 @@ namespace Origins.Tiles.Other {
 	}
 	public class Carburite_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Carburite");
-			// Tooltip.SetDefault("'An organic mineral that reacts to compounds'");
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {

@@ -55,7 +55,6 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Soulspore_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Soulspore");
 			Item.ResearchUnlockCount = 25;
 		}
 		public override void SetDefaults() {

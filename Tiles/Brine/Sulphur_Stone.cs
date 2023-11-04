@@ -32,7 +32,7 @@ namespace Origins.Tiles.Brine {
 	}
 	public class Sulphur_Stone_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Sulphur Stone");
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);

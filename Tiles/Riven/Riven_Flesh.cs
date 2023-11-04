@@ -160,7 +160,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Riven_Flesh_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Spug Flesh");
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FleshBlock);

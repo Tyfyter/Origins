@@ -14,6 +14,9 @@ namespace Origins.Tiles.Dawn {
 		}
 	}
 	public class Eden_Wood_Item : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 100;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Wood);
 			Item.createTile = TileType<Eden_Wood>();

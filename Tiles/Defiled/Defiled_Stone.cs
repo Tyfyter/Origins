@@ -31,13 +31,13 @@ namespace Origins.Tiles.Defiled {
 			MineResist = 2;
 			AddDefiledTile();
 			HitSound = Origins.Sounds.DefiledIdle;
-		}
-		public override bool CreateDust(int i, int j, ref int type) {
-			type = Defiled_Wastelands.DefaultTileDust;
-			return true;
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 	}
 	public class Defiled_Stone_Item : ModItem, ICustomWikiStat {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 100;
+		}
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(TileType<Defiled_Stone>());
 		}

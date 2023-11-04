@@ -35,6 +35,7 @@ namespace Origins.Tiles.Defiled {
 			AdjTiles = new int[] { TileID.ShadowOrbs };
 			ID = Type;
 			HitSound = Origins.Sounds.DefiledIdle;
+			DustType = Defiled_Wastelands.DefaultTileDust;
 		}
 		public override void AnimateTile(ref int frame, ref int frameCounter) {
 			if (++frameCounter >= 9) {
@@ -57,10 +58,6 @@ namespace Origins.Tiles.Defiled {
 		}
 		public override bool CanExplode(int i, int j) {
 			return false;
-		}
-		public override bool CreateDust(int i, int j, ref int type) {
-			type = Defiled_Wastelands.DefaultTileDust;
-			return true;
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = g = b = 0.3f;

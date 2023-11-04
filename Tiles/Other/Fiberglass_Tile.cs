@@ -39,7 +39,7 @@ namespace Origins.Tiles.Other {
 	}
 	public class Fiberglass_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Fiberglass");
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Glass);

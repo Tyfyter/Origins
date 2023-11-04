@@ -43,7 +43,7 @@ namespace Origins.Tiles.Riven {
 	[LegacyName("Infested_Ore_Item")]
 	public class Encrusted_Ore_Item : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Encrusted Ore");
+			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrimtaneOre);
