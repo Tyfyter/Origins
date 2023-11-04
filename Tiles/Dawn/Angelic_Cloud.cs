@@ -14,6 +14,9 @@ namespace Origins.Tiles.Dawn {
 		}
 	}
 	public class Angelic_Cloud_Item : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 100;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Cloud);
 			Item.createTile = TileType<Angelic_Cloud>();

@@ -13,6 +13,9 @@ namespace Origins.Tiles.Dawn {
 		}
 	}
 	public class Harmony_Brick_Item : ModItem {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 100;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CobaltBrick);
 			Item.createTile = TileType<Harmony_Brick>();
