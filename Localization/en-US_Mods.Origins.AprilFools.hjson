@@ -18,6 +18,14 @@ Items: {
 	Laser_Tag_Gun.Tooltip: Pew pew, Motherfucker...
 	Miter_Saw.DisplayName: Miter Did See
 	Lost_Pants.Tooltip: '''"Honey, where are my pants?"'''
+	Jam_Sandwich.Tooltip: "'This is my jam... Get your own.'"
+	Mine_Flayer.Tooltip:
+		'''
+		Doesn't actually flay mines
+		Releases a barrage of mines when swung
+		16.7% chance not to consume ammo
+		'''
+	Hot_Potato.Tooltip: "'Be careful, it's a potato'"
 }
 
 Dialogue.Acid_Freak.InteractionWind: It fucken WIMDY!

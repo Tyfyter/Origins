@@ -186,6 +186,7 @@ Coologne: {
 		'''
 		Increases life regeneration at low health
 		Puts a shell around the owner when below 50% life that reduces damage by 25%
+		'20% cooler than competing brands!'
 		'''
 }
 
@@ -1744,7 +1745,11 @@ Magic_Brine_Dropper: {
 
 Mojo_Flask: {
 	DisplayName: Mojo Flask
-	Tooltip: Mitigates all assimilation by 20% each for five uses
+	Tooltip:
+		'''
+		Reduces all assimilation by 20% each
+		All uses are restored when you use a {$Mods.Origins.Items.Cleansing_Station_Item.DisplayName}
+		'''
 }
 
 Nerve_Impulse_Manipulator: {
@@ -1754,7 +1759,7 @@ Nerve_Impulse_Manipulator: {
 
 Nullification_Potion: {
 	DisplayName: Nullification Potion
-	Tooltip: Removes all current harmful effects
+	Tooltip: Cures all debuffs
 }
 
 Protean_Potion: {
@@ -1828,7 +1833,7 @@ High_Contrast_Dye: {
 
 Amoeba_Buggy_Item: {
 	DisplayName: Amoeba Buggy
-	Tooltip: ""
+	Tooltip: Amoeba very buggy
 }
 
 Bilemouth: {
@@ -1927,7 +1932,7 @@ Amoeba_Toy: {
 
 Chromatic_Scale: {
 	DisplayName: Chromatic Scale
-	Tooltip: A very long an convoluted tooltip text because Ty forgot to mess with its name and tooltip :p
+	Tooltip: Summons a rainbow pangolin
 }
 
 Rusty_Cross_Necklace: {
@@ -2762,7 +2767,7 @@ Boat_Rocker: {
 	Tooltip:
 		'''
 		Uses harpoons as ammo
-		Right-click while a line is cast to use it as a whip
+		<right> while a line is cast to use it as a whip
 		75% chance not to consume ammo
 		'''
 }
@@ -2783,6 +2788,7 @@ Broken_Fiberglass_Bow: {
 		'''
 		Not very useful without a bowstring
 		Maybe you could find something to replace it
+		<right> to string it with vines
 		'''
 }
 
@@ -2837,7 +2843,7 @@ Kruncher: {
 
 Longbone: {
 	DisplayName: Longbone
-	Tooltip: Turns most arrows into fragile bone arrows
+	Tooltip: Turns most arrows into splitting bone arrows
 }
 
 Magma_Grappler: {
@@ -2908,7 +2914,7 @@ Viper_Rifle: {
 	DisplayName: HNO-3 "Viper"
 	Tooltip:
 		'''
-		Has a chance to inflict "Toxic Shock"
+		Has a chance to inflict Toxic Shock
 		Deals critical damage on otherwise afflicted enemies
 		'''
 }
@@ -3125,7 +3131,7 @@ Carburite_Item: {
 
 Cleansing_Station_Item: {
 	DisplayName: Cleansing Station
-	Tooltip: ""
+	Tooltip: Use to cleanse all assimilation
 }
 
 Felnum_Ore_Item: {
@@ -3397,6 +3403,6 @@ Riven_Fountain_Item: {
 }
 
 Gel_Blister_Item: {
-	DisplayName: Gel_ Blister_ Item
+	DisplayName: Gel Blister Item
 	Tooltip: ""
 }
