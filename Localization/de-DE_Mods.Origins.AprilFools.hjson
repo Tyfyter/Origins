@@ -22,7 +22,8 @@ Items: {
 	/* Mine_Flayer.Tooltip:
 		'''
 		Doesn't actually flay mines
-		{$Mods.Origins.Mine_Flayer.Tooltip}
+		Releases a barrage of mines when swung
+		16.7% chance not to consume ammo
 		''' */
 	// Hot_Potato.Tooltip: "'Be careful, it's a potato'"
 }
