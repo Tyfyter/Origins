@@ -76,7 +76,11 @@ namespace Origins.Items.Other.Consumables {
 	}
 	public record HolidayHairPassData(string PassName = "Default", bool UsesLighting = true, bool UsesHairColor = true, Asset<Texture2D> Image = null);
 	public class HolidayHairShaderData : HairShaderData {
-		public HolidayHairShaderData(Ref<Effect> shader, string passName) : base(shader, passName) { }
+		readonly Func<object[], object> checkVersion;
+		int lastVersion = -1;
+		public HolidayHairShaderData(Ref<Effect> shader, string passName) : base(shader, passName) {
+			checkVersion = (Func<object[], object>)ModLoader.GetMod("HolidayLib").Call("GETFUNC", "FORCEDHOLIDAYVERSION");
+		}
 		public override Color GetColor(Player player, Color lightColor) {
 			Vector4 color = Vector4.One;
 			currentPass ??= new();
@@ -88,14 +92,15 @@ namespace Origins.Items.Other.Consumables {
 			}
 			return new Color(color);
 		}
-		int checkDay = -1;
+
 		HolidayHairPassData currentPass = new();
 		public override void Apply(Player player, DrawData? drawData = null) {
 			if (drawData.HasValue) {
 				UseTargetPosition(Main.screenPosition + drawData.Value.position);
 			}
-			if (DateTime.Now.Day != checkDay || currentPass is null) {
-				checkDay = DateTime.Now.Day;
+			int currentVersion = (int)checkVersion(null);
+			if (currentVersion != lastVersion || currentPass is null) {
+				lastVersion = currentVersion;
 				HolidayHairPassData newPass = Holiday_Hair_Dye.CurrentPass;
 				if (currentPass.PassName != newPass.PassName) {
 					currentPass = newPass;
