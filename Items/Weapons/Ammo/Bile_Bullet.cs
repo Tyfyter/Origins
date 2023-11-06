@@ -36,7 +36,8 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.aiStyle = 0;
 		}
 		public override void AI() {
-			Projectile.rotation = Projectile.velocity.ToRotation();
+            Dust.NewDustDirect(Projectile.Center, 0, 0, DustID.Asphalt, 0, 0, 65, new Color(30, 0, 30), 0.75f);
+            Projectile.rotation = Projectile.velocity.ToRotation();
 			if (Projectile.alpha > 0)
 				Projectile.alpha -= 15;
 			if (Projectile.alpha < 0)

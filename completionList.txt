@@ -271,6 +271,7 @@ ACCESSORIES:
 (^) Celestial Stone Mask
 (^) Cirrhosis' Abhorrence
 (^) Comb
+(X) Control Locus
 (^) Coologne
 (^) I-WTPA Standard
 (^) Danger Barrel
@@ -330,6 +331,7 @@ ACCESSORIES:
 (^) Scavenger Bag
 (^) Solar Panel
 (^) Sonic Radar
+(X) Sniper's Mark
 (#2, ^2) Strange Computer
 (^) Super Turbo Reel
 (^) Superjump Cape
@@ -366,20 +368,24 @@ ACCESSORIES:
 (^) Tripod Nip
 
 (^) Amebic Vial
+(X) Crimson Hymn !!!
 (^) Fiberglass Dagger
 (^) Refactoring Pieces
+(X) Soul Scythe !!!
 (^) Stack of Shraps
 (X) Void Arcanum
 (#2, ^2) Mana Drive
 
 (%3, X) Armored Core
 (^) Entangled Energy
+(X) Forbidden Voice !!!
 (^) Lazy Cloak
 (^) Mysterious Spray
 (^) Protozoa Food
 (#, ^2) Scrap Compactor
 (^) Scribe of the Meat God
 (^) Third Eye
+(X) Weakpoint Analyzer !!!
 
 (^) Agility Core
 (^) Combat Core
@@ -438,6 +444,7 @@ WINGS:
 ---
 (X) Acid Wings
 (X) Blighted Wings
+(X) Gills
 (X) Mutant Wings
 
 (X) Anti-Gravity Booster
@@ -832,7 +839,7 @@ TILES:
 (#3, ^2) Brineglow Vine !!!
 (^) Defiled Misc Tiles*
 (#2, ^2) Eden Tree
-(#, ^2) Gel Blister !!!
+(^) Gel Blister
 (#2, ^2) Laser Tag Console
 (#2, ^2) Riven Foliage !!!
 (^) Riven Lesion
@@ -1007,7 +1014,7 @@ CONSUMABLES:
 (#2, ^2) Ace in the Hole
 (X) Gift of Giving
 (^) Gooey Water
-(#2, ^2) Holiday Hair Dye
+(#3, ^2) Holiday Hair Dye
 (#2, ^2) Invisible Ink
 (^) Lottery Ticket
 (#2, ^2) Magic Brine Dropper
@@ -1022,6 +1029,7 @@ CONSUMABLES:
 MOUNTS & PETS:
 ---
 (X) Ever-Watchful Eye (Juvenile Amalgamation)
+(X) Fleshy Globe (Self-Contained Universe)
 (^) Strange Power-Up (Platformer Mech)
 (^) Chromatic Scale (Rainbow Pangolin)
 
