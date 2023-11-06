@@ -20,7 +20,6 @@ namespace Origins.Items.Other.Consumables {
 		public override HairShaderData ShaderData => new HolidayHairShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/HolidayHairDye", AssetRequestMode.ImmediateLoad).Value), "Default");
 		public static HolidayHairPassData CurrentPass {
 			get {
-				return shaders[1].pass;
 				for (int i = 0; i < shaders.Count; i++) {
 					if (shaders[i].day()) return shaders[i].pass;
 				}
