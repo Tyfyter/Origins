@@ -82,16 +82,6 @@ float4 SummerSolstace(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : 
 }
 
 float4 WinterSolstace(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
-	float2 baseCoords = float2(0.5, (uSourceRect.y + 16) / uImageSize0.y);
-	float2 offsetCoords = (coords - baseCoords) * uImageSize0;
-	float len = length(offsetCoords) / 32;
-	float angle = atan2(offsetCoords.y, offsetCoords.x);
-	float cosine = cos(angle);
-	float sine = sin(angle);
-	//offsetCoords += float2(offsetCoords.x * cosine - offsetCoords.y * sine, offsetCoords.x * sine + offsetCoords.y * cosine) * len * 0.5 * sin(uTime + len);
-	//offsetCoords += float2(sin(uTime + offsetCoords.x * 0.25) * max(abs(offsetCoords.x) - 8, 0) * 0.25, cos(-uTime + offsetCoords.y * 0.25) * max(abs(offsetCoords.y) - 8, 0) * 0.25);
-	
-	coords = (offsetCoords / uImageSize0) + baseCoords;
 	float4 baseColor = tex2D(uImage0, coords);
 	float4 color = float4(0.557 * 0.5, 0.441 * 0.5, 0.769 * 0.5, 0.769) * 0.5;
 
@@ -116,7 +106,18 @@ float4 WinterSolstace(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : 
 	}
 	float2 absoluteCoords = (float2(frameX, frameY)) + float2(uTime, -uTime) * 3 + uTargetPosition * 0.05;
 	float4 starColor = tex2D(uImage1, fmod((absoluteCoords % uImageSize1) / uImageSize1, float2(1, 1)));
-	float star = (pow(max(starColor.b, 0), 4) - 0.1) * 4;
+	float starSubCycle = (uTime % 1);
+	float starCycle = uTime % 3;
+	starSubCycle *= pow(starSubCycle, 0.5);
+	float val;
+	if (starCycle < 1) {
+		val = starColor.r * (1 - starSubCycle) + starColor.g * starSubCycle;
+	} else if (starCycle < 2) {
+		val = starColor.g * (1 - starSubCycle) + starColor.b * starSubCycle;
+	} else {
+		val = starColor.b * (1 - starSubCycle) + starColor.r * starSubCycle;
+	}
+	float star = (pow(max(val, 0), 3) - 0.1) * 4;
 	if (star < 0) star = 0;
 	if (star > 0.7) star = 0.7;
 	//return float4(star * 0.64, star * 0.7, star, 1) * color.a * baseColor.a;

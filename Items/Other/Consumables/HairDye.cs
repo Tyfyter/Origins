@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Reflection;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
@@ -15,29 +16,36 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Holiday_Hair_Dye : HairDye {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.TwilightHairDye;
-		(HairShaderData shader, Func<bool> day)[] shaders;
-		public override HairShaderData ShaderData {
+		static List<(Func<bool> day, HolidayHairPassData pass)> shaders;
+		public override HairShaderData ShaderData => new HolidayHairShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/HolidayHairDye", AssetRequestMode.ImmediateLoad).Value), "Default");
+		public static HolidayHairPassData CurrentPass {
 			get {
-				for (int i = 0; i < shaders.Length; i++) {
-					if (shaders[i].day()) return shaders[i].shader;
+				return shaders[1].pass;
+				for (int i = 0; i < shaders.Count; i++) {
+					if (shaders[i].day()) return shaders[i].pass;
 				}
-				return shaders[^1].shader;
+				return shaders[^1].pass;
 			}
 		}
 		public override void Load() {
-			Ref<Effect> effect = new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/HolidayHairDye", AssetRequestMode.ImmediateLoad).Value);
 			Mod HolidayLib = ModLoader.GetMod("HolidayLib");
-			Func<bool> GetHolidayCheck(string day) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", day);
-			shaders = new (HairShaderData, Func<bool>)[] {
-				(new HairShaderData(effect, "SummerSolstace").UseImage("Images/Misc/noise"), GetHolidayCheck("Summer Solstice")),
-				(new WinterSolstaceHairShaderData(effect, "WinterSolstace").UseImage("Images/Misc/noise"), GetHolidayCheck("Winter Solstice")),
-				(new HairShaderData(effect, "Default"), () => true)
+			Func<bool> Day(string name) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", name);
+			shaders = new() {
+				(Day("Summer Solstice"), new HolidayHairPassData(
+					  PassName: "SummerSolstace"
+				)),
+				(Day("Winter Solstice"), new HolidayHairPassData(
+					  PassName: "WinterSolstace",
+					  UsesHairColor: false,
+					  Image: Main.Assets.Request<Texture2D>("Images/Misc/noise")
+				)),
+				(() => true, new())
 			};
 		}
+		public override void Unload() => shaders = null;
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Item.value = Item.sellPrice(gold: 6);
-			Item.rare = ItemRarityID.Green;
 		}
 		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("HolidayLib");
 	}
@@ -57,7 +65,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.width = 20;
 			Item.height = 26;
 			Item.maxStack = Item.CommonMaxStack;
-			Item.value = Item.buyPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Green;
 			Item.UseSound = SoundID.Item3;
 			Item.useStyle = ItemUseStyleID.DrinkLiquid;
@@ -67,12 +75,34 @@ namespace Origins.Items.Other.Consumables {
 			Item.consumable = true;
 		}
 	}
-	public class WinterSolstaceHairShaderData : HairShaderData {
-		public WinterSolstaceHairShaderData(Ref<Effect> shader, string passName) : base(shader, passName) { }
-		public override Color GetColor(Player player, Color lightColor) => lightColor;
+	public record HolidayHairPassData(string PassName = "Default", bool UsesLighting = true, bool UsesHairColor = true, Asset<Texture2D> Image = null);
+	public class HolidayHairShaderData : HairShaderData {
+		public HolidayHairShaderData(Ref<Effect> shader, string passName) : base(shader, passName) { }
+		public override Color GetColor(Player player, Color lightColor) {
+			Vector4 color = Vector4.One;
+			currentPass ??= new();
+			if (currentPass.UsesHairColor) {
+				color *= player.hairColor.ToVector4();
+			}
+			if (currentPass.UsesLighting) {
+				color *= lightColor.ToVector4();
+			}
+			return new Color(color);
+		}
+		int checkDay = -1;
+		HolidayHairPassData currentPass = new();
 		public override void Apply(Player player, DrawData? drawData = null) {
 			if (drawData.HasValue) {
 				UseTargetPosition(Main.screenPosition + drawData.Value.position);
+			}
+			if (DateTime.Now.Day != checkDay || currentPass is null) {
+				checkDay = DateTime.Now.Day;
+				HolidayHairPassData newPass = Holiday_Hair_Dye.CurrentPass;
+				if (currentPass.PassName != newPass.PassName) {
+					currentPass = newPass;
+					ShaderDataMethods._passName.SetValue(this, newPass.PassName);
+					_uImage = currentPass.Image;
+				}
 			}
 			//Shader.Parameters["zoom"].SetValue(Main.GameViewMatrix.TransformationMatrix);
 			base.Apply(player, drawData);
