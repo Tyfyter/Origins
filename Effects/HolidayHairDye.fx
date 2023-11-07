@@ -19,6 +19,8 @@ float4 uLegacyArmorSourceRect;
 float2 uLegacyArmorSheetSize;
 /*float2 uMin;
 float2 uMax;*/
+const float pi = 3.1415926535897931;
+
 bool EmptyAdj(float2 coords, float2 unit) {
 	return tex2D(uImage0, coords - unit * float2(1, 0)).a == 0 
 	|| tex2D(uImage0, coords - unit * float2(0, 1)).a == 0
@@ -125,6 +127,89 @@ float4 WinterSolstace(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : 
 	//
 	return color * baseColor + float4(star * 0.64, star * 0.7, star, 0) * baseColor.a; // * baseColor
 }
+const float3 RefXYZ = float3(95.047, 100.000, 108.883);
+static double PivotXyz(float n) {
+	float i = pow(n, 1 / 3);
+	return n > 0.008856 ? i : 7.787 * n + 16 / 116;
+}
+static double PivotRgb(float n) {
+	return (n > 0.04045 ? pow((n + 0.055) / 1.055, 2.4) : n / 12.92) * 100;
+}
+float3 RGBToXYZ(float3 rgb) {
+	float r = PivotRgb(rgb.r);
+	float g = PivotRgb(rgb.g);
+	float b = PivotRgb(rgb.b);
+	
+	return float3(r * 0.4124 + g * 0.3576 + b * 0.1805, r * 0.2126 + g * 0.7152 + b * 0.0722, r * 0.0193 + g * 0.1192 + b * 0.9505);
+}
+float3 XYZToRGB(float3 xyz) {
+	float x = xyz.x / 100;
+	float y = xyz.y / 100;
+	float z = xyz.z / 100;
+
+	float r = x * 3.2406 + y * -1.5372 + z * -0.4986;
+	float g = x * -0.9689 + y * 1.8758 + z * 0.0415;
+	float b = x * 0.0557 + y * -0.2040 + z * 1.0570;
+
+	return float3(
+		r > 0.0031308 ? 1.055 * pow(r, 1 / 2.4) - 0.055 : 12.92 * r,
+		g > 0.0031308 ? 1.055 * pow(g, 1 / 2.4) - 0.055 : 12.92 * g,
+		b > 0.0031308 ? 1.055 * pow(b, 1 / 2.4) - 0.055 : 12.92 * b
+	);
+}
+float3 XYZToLaB(float3 xyz) {
+	xyz /= RefXYZ;
+	float x = PivotXyz(xyz.x);
+	float y = PivotXyz(xyz.y);
+	float z = PivotXyz(xyz.z);
+
+	return float3(max(0, 116 * y - 16), 500 * (x - y), 200 * (y - z));
+}
+float3 LaBToXYZ(float3 lab) {
+	float y = (lab[0] + 16) / 116.0;
+	float x = lab[1] / 500.0 + y;
+	float z = y - lab[2] / 200.0;
+
+	y = pow(y, 3) > 0.008856 ? pow(y, 3) : (y - 16 / 116) / 7.787;
+	x = pow(x, 3) > 0.008856 ? pow(x, 3) : (x - 16 / 116) / 7.787;
+	z = pow(z, 3) > 0.008856 ? pow(z, 3) : (z - 16 / 116) / 7.787;
+	return float3(x, y, z) * RefXYZ;
+}
+float3 LaBToLCh(float3 lab) {
+	float h = atan2(lab[2], lab[1]);
+	if (h > 0) {
+		h = (h / pi) * 180;
+	} else {
+		h = 360 - (abs(h) / pi) * 180;
+	}
+	lab.yz = float2(length(lab.yz), h % 360);
+	return lab;
+}
+float3 LChToLaB(float3 lch) {
+	float hRadians = (pi * lch[2]) / 180.0;
+	lch.yz = float2(cos(hRadians) * lch[1], sin(hRadians) * lch[1]);
+	return lch;
+}
+float3 RGBToLCh(float3 rgb) {
+	return LaBToLCh(XYZToLaB(RGBToXYZ(rgb)));
+}
+float3 LChToRGB(float3 rgb) {
+	return XYZToRGB(LaBToXYZ(LChToLaB(rgb)));
+}
+
+float4 AutismAwareness(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	float4 color = tex2D(uImage0, coords);
+	if (color.r > 0.36 || !EmptyAdj(coords, float2(2, 2) / uImageSize0)) {
+		color.rgb *= 0.99;
+	}
+	//color *= sampleColor;
+	float3 convertedColor = RGBToLCh(color.rgb);
+	convertedColor[1] = 100;
+	float2 dist = coords * uImageSize0 - uSourceRect.xy;
+	convertedColor[2] = dist.x * 25 + dist.y * 5 + uTime * 50;
+	
+	return float4(LChToRGB(convertedColor), color.a) * color * sampleColor;
+}
 
 float4 BorderedDyeBase(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	float4 baseColor = tex2D(uImage0, coords);
@@ -134,6 +219,24 @@ float4 BorderedDyeBase(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) :
 		
 	}
 	return color * baseColor;
+}
+
+float4 Overlay(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	float4 baseColor = tex2D(uImage0, coords);
+	float4 overlay = tex2D(uImage1, coords);
+	baseColor.rgb *= uColor;
+	overlay.rgb *= uSecondaryColor;
+	return (baseColor * (1 - overlay.a) + overlay) * sampleColor;
+}
+
+float4 Textured(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
+	float4 baseColor = tex2D(uImage0, coords);
+	float4 overlay = tex2D(uImage1, coords);
+	overlay *= baseColor.a;
+	overlay.rgb *= baseColor.rgb;
+	baseColor.rgb *= uColor;
+	overlay.rgb *= uSecondaryColor;
+	return (baseColor * (1 - overlay.a) + overlay) * sampleColor;
 }
 
 float4 Identity(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
@@ -146,6 +249,15 @@ technique Technique1 {
 	}
 	pass WinterSolstace {
 		PixelShader = compile ps_3_0 WinterSolstace();
+	}
+	pass AutismAwareness {
+		PixelShader = compile ps_3_0 AutismAwareness();
+	}
+	pass Overlay {
+		PixelShader = compile ps_3_0 Overlay();
+	}
+	pass Textured {
+		PixelShader = compile ps_3_0 Textured();
 	}
 	pass Default {
 		PixelShader = compile ps_3_0 Identity();

@@ -28,7 +28,19 @@ Compiling font... Done!
 Compiling font content file: CoordinateMaskFilter.xnb... Done!
 
 Loading description file: HolidayHairDye.fx... Done!
-Compiling font... Done!
+Compiling font... Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx
+Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx
+Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx
+Warning: Warning compiling C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx: warning X3571: pow(f, e) will not work for negative f, use abs(f) or conditionally handle negative values if you expect them
+Help link: EffectProcessor_WarningsOrErrorsWhenCompilingEffect
+File: C:\Users\Tyfyter\Documents\My Games\Terraria\tModLoader\ModSources\Origins\Effects\HolidayHairDye.fx
+Done!
 Compiling font content file: HolidayHairDye.xnb... Done!
 
 Loading description file: MaskedPurpleJellyFilter.fx... Done!
