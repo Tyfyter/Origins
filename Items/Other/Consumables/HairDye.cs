@@ -84,7 +84,6 @@ namespace Origins.Items.Other.Consumables {
 					ShaderData
 				);
 			}
-			Item.ResearchUnlockCount = 3;
 		}
 
 		public override void SetDefaults() {
