@@ -126,12 +126,17 @@ namespace Origins.Projectiles {
 			noTileSplode = bitReader.ReadBit();
 		}
 		public static bool IsExploding(Projectile projectile) {
+			if (!projectile.CountsAsClass(DamageClasses.Explosive)) return false;
 			if (projectile.ModProjectile is IIsExplodingProjectile explodingProjectile) {
 				return explodingProjectile.IsExploding();
 			}
 			switch (projectile.type) {
 				case ProjectileID.VolatileGelatinBall:
 				return false;
+
+				case ProjectileID.FireWhipProj:
+				case ProjectileID.Volcano:
+				return true;
 
 				default:
 				return projectile.timeLeft <= 3 || projectile.penetrate == 0;
@@ -361,6 +366,12 @@ namespace Origins.Projectiles {
 				case ProjectileID.StyngerShrapnel:
 				case ProjectileID.JackOLantern:
 				return 2;
+
+				case ProjectileID.Volcano:
+				return 3;
+
+				case ProjectileID.FireWhipProj:
+				return 4;
 
 				default:
 				return 0;

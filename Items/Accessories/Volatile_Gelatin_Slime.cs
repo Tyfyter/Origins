@@ -73,7 +73,7 @@ namespace Origins.Items.Accessories {
 			if (slimeTime > 0) slimeTime--;
 		}
 		public override void OnHitByProjectile(NPC npc, Projectile projectile, NPC.HitInfo hit, int damageDone) {
-			if (slimeTime > 0 && ExplosiveGlobalProjectile.IsExploding(projectile)) {
+			if (slimeTime > 0 && (ExplosiveGlobalProjectile.IsExploding(projectile) || projectile.type is ProjectileID.Sunfury or ProjectileID.Flamelash)) {
 				slimeTime = 0;
 				Projectile.NewProjectile(
 					npc.GetSource_OnHurt(projectile),
@@ -84,6 +84,26 @@ namespace Origins.Items.Accessories {
 					6,
 					projectile.owner
 				);
+			}
+		}
+		public override void PostAI(NPC npc) {
+			if (slimeTime > 0) {
+				for (int i = 0; i < npc.buffType.Length; i++) {
+					if(npc.buffTime[i] > 0 && npc.buffType[i] is BuffID.OnFire or BuffID.OnFire or BuffID.OnFire3) {
+						slimeTime = 0;
+						Projectile.NewProjectile(
+							npc.GetSource_Buff(i),
+							npc.Center,
+							default,
+							ModContent.ProjectileType<Volatile_Gelatin_Slime_Explosion>(),
+							slimeDamage,
+							6,
+							Main.myPlayer
+						);
+						npc.DelBuff(i);
+						break;
+					}
+				}
 			}
 		}
 		#region rendering
