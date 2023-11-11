@@ -964,6 +964,7 @@ Projectiles: {
 	Triple_Threat_P.DisplayName: Triple Threat
 	Barnacle_Turret.DisplayName: Barnacle Turret
 	Barnacle_Turret_Shot.DisplayName: Barnacle Turret
+	Orbital_Saw_P.DisplayName: Orbital Saw
 }
 
 Prefixes: {

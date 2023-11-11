@@ -3406,3 +3406,8 @@ Gel_Blister_Item: {
 	// DisplayName: Gel Blister Item
 	// Tooltip: ""
 }
+
+Orbital_Saw: {
+	// DisplayName: Orbital_ Saw
+	// Tooltip: ""
+}
