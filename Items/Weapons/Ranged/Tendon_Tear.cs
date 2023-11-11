@@ -41,9 +41,6 @@ namespace Origins.Items.Weapons.Ranged {
 		public static int ID { get; private set; } = -1;
 		public override string Texture => "Origins/Items/Weapons/Ranged/Tendon_Tear_P";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Tendon Tear");
-			// This makes the projectile use whip collision detection and allows flasks to be applied to it.
-			//ProjectileID.Sets.IsAWhip[Type] = true;
 			ID = Type;
 		}
 

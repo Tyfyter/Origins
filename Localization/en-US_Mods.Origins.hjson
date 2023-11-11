@@ -711,6 +711,11 @@ Buffs: {
 		DisplayName: Ambition Buff
 		Description: Increased offensive stats and stat share
 	}
+
+	Neural_Network_Buff: {
+		DisplayName: Neural_ Network_ Buff
+		Description: Mods.Origins.Buffs.Neural_Network_Buff.Description
+	}
 }
 
 DamageClassName: {

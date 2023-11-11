@@ -3411,3 +3411,8 @@ Orbital_Saw: {
 	DisplayName: Orbital Saw
 	Tooltip: ""
 }
+
+Neural_Network: {
+	DisplayName: Neural_ Network
+	Tooltip: ""
+}

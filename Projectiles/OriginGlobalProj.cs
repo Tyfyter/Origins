@@ -38,6 +38,8 @@ namespace Origins.Projectiles {
 		public int mitosisTimeLeft = 3600;
 		public bool fiberglassLifesteal = false;
 		public int prefix;
+		public bool neuralNetworkEffect = false;
+		public bool neuralNetworkHit = false;
 		public override void SetDefaults(Projectile projectile) {
 			if (hostileNext) {
 				projectile.hostile = true;
@@ -98,6 +100,9 @@ namespace Origins.Projectiles {
 				}
 
 				fromItemType = itemUseSource.Item.type;
+				if (fromItemType == Neural_Network.ID) {
+					neuralNetworkEffect = true;
+				}
 			} else if (source is EntitySource_Parent source_Parent) {
 				if (source_Parent.Entity is Projectile parentProjectile) {
 					if (parentProjectile.type == ModContent.ProjectileType<Amoeba_Bubble>()) {
@@ -173,6 +178,10 @@ namespace Origins.Projectiles {
 			if (target.boss && godHunterEffect != 0f) {
 				modifiers.SourceDamage *= 1 + godHunterEffect;
 			}
+			int nNBuffIndex = target.FindBuffIndex(ModContent.BuffType<Neural_Network_Buff>());
+			if (nNBuffIndex >= 0) {
+				modifiers.SourceDamage.Base += target.buffTime[nNBuffIndex] * Neural_Network_Buff.buff_damage_factor;
+			}
 		}
 		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (fiberglassLifesteal) {
@@ -196,6 +205,14 @@ namespace Origins.Projectiles {
 					target.AddBuff(Toxic_Shock_Debuff.ID, 450);
 				}
 			}
+			if (neuralNetworkEffect) {
+				neuralNetworkHit = true;
+				if (target.CanBeChasedBy(projectile)) {
+					int buffType = ModContent.BuffType<Neural_Network_Buff>();
+					Main.player[projectile.owner].AddBuff(buffType, 1);
+					target.AddBuff(buffType, 2);
+				}
+			}
 		}
 		public override bool CanHitPlayer(Projectile projectile, Player target) {
 			return ownerSafe ? target.whoAmI != projectile.owner : true;
@@ -216,6 +233,10 @@ namespace Origins.Projectiles {
 			if (killLink != -1 && projectile.penetrate == 0) {
 				Main.projectile[killLink].active = false;
 				killLink = -1;
+			}
+			if (neuralNetworkEffect && !neuralNetworkHit) {
+				neuralNetworkEffect = false;
+				Main.player[projectile.owner].ClearBuff(ModContent.BuffType<Neural_Network_Buff>());
 			}
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {

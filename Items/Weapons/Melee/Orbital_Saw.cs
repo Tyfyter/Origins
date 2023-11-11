@@ -89,7 +89,7 @@ namespace Origins.Items.Weapons.Melee {
 							}
 						}
 					}
-					Projectile.rotation += 0.6f * Projectile.direction;
+					Projectile.rotation += 0.533f * Projectile.direction;
 				}
 			}
 		}
