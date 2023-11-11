@@ -11,11 +11,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
     public class Riven_Fighter : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Riven Protoform");
 			Main.npcFrameCount[NPC.type] = 5;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);

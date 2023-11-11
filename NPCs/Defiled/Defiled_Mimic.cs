@@ -12,11 +12,7 @@ namespace Origins.NPCs.Defiled {
 	public class Defiled_Mimic : ModNPC, IDefiledEnemy {
 		public override string Texture => "Terraria/Images/NPC_" + NPCID.BigMimicCorruption;// remove when sprite is complete
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Mimic");
 			Main.npcFrameCount[NPC.type] = 14;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.width = 28;

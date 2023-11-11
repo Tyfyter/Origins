@@ -6,6 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Origins.NPCs.Defiled.Boss;
+using Origins.World.BiomeData;
 
 namespace Origins.NPCs.Defiled
 {
@@ -34,6 +35,11 @@ namespace Origins.NPCs.Defiled
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return entity.ModNPC is IDefiledEnemy;
+		}
+		public override void SetDefaults(NPC entity) {
+			if (entity.ModNPC is not null) entity.ModNPC.SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			};
 		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (npc.ModNPC is IDefiledEnemy defiledEnemy) {

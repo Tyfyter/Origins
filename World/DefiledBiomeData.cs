@@ -34,6 +34,9 @@ namespace Origins.World.BiomeData {
 		public static IItemDropRule FissureDropRule;
 		public override int Music => Origins.Music.Defiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override string BestiaryIcon => "Origins/UI/Defiled_Wastelands_Bestiary_Icon";
+		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Normal";
+		public override string MapBackground => BackgroundPath;
 		public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<Defiled_Surface_Background>();
 		public override int BiomeTorchItemType => ModContent.ItemType<Defiled_Torch>();
 		public override int BiomeCampfireItemType => ModContent.ItemType<Defiled_Campfire_Item>();

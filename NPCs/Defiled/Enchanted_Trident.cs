@@ -8,11 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
 	public class Enchanted_Trident : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Profaned Bident");
 			Main.npcFrameCount[NPC.type] = 3;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CursedHammer);

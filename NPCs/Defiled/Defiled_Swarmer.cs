@@ -14,12 +14,8 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Swarmer : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Swarmer");
 			Main.npcFrameCount[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);

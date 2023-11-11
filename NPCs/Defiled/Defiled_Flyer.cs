@@ -15,12 +15,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
     public class Defiled_Flyer : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Phantom");
-			//Origins.AddGlowMask(NPC. "NPCs/Defiled/Defiled_Flyer_Glow");
 			Main.npcFrameCount[NPC.type] = 4;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);

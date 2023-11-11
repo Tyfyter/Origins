@@ -63,7 +63,7 @@ namespace Origins.NPCs.Riven {
 	internal class Rivenator_Body : Rivenator {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
 				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
 			});
 		}
@@ -75,7 +75,7 @@ namespace Origins.NPCs.Riven {
 	internal class Rivenator_Tail : Rivenator {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
 				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
 			});
 		}
@@ -86,13 +86,6 @@ namespace Origins.NPCs.Riven {
 
 	public abstract class Rivenator : Glowing_Mod_NPC, IRivenEnemy {
 		public override string GlowTexturePath => Texture;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Mitoworm");
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
-		}
-
 		public override void AI() {
 			if (NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;
 			NPC.oldVelocity = NPC.position - NPC.oldPosition;

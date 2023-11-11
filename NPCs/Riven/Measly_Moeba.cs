@@ -11,11 +11,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
     public class Measly_Moeba : ModNPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Measly Moeba");
 			Main.npcFrameCount[Type] = 4;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);

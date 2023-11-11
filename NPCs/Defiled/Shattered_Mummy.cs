@@ -12,7 +12,6 @@ namespace Origins.NPCs.Defiled
 {
     public class Shattered_Mummy : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Shattered Mummy");
 			Main.npcFrameCount[NPC.type] = 4;
 		}
 		public override void SetDefaults() {

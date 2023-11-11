@@ -1,4 +1,5 @@
 ﻿using Origins.NPCs.Riven.World_Cracker;
+using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader;
@@ -34,6 +35,11 @@ namespace Origins.NPCs.Riven
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return entity.ModNPC is IRivenEnemy;
+		}
+		public override void SetDefaults(NPC entity) {
+			if (entity.ModNPC is not null) entity.ModNPC.SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Riven_Hive>().Type
+			};
 		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (npc.poisoned) {

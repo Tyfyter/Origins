@@ -12,11 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
     public class Single_Cellular_Nautilus : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Single-Cellular Nautilus");
 			Main.npcFrameCount[NPC.type] = 3;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Tumbleweed);

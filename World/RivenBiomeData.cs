@@ -45,6 +45,9 @@ namespace Origins.World.BiomeData {
 		public override int BiomeTorchItemType => ModContent.ItemType<Riven_Torch>();
 		public override int BiomeCampfireItemType => ModContent.ItemType<Riven_Campfire_Item>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override string BestiaryIcon => "Origins/UI/Defiled_Wastelands_Bestiary_Icon";
+		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Hive_Caverns";
+		public override string MapBackground => BackgroundPath;
 		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => ModContent.GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;
 		public static FrameCachedValue<float> NormalGlowValue { get; private set; }  = new(() => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f);
 		public override bool IsBiomeActive(Player player) {

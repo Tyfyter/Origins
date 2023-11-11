@@ -11,11 +11,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
 	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amoeba Bugger");
 			Main.npcFrameCount[NPC.type] = 2;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Bunny);

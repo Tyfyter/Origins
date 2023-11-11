@@ -58,7 +58,7 @@ namespace Origins.NPCs.Riven {
 	internal class Cleaver_Body : Cleaver {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
 				Hide = true
 			});
 		}
@@ -71,7 +71,7 @@ namespace Origins.NPCs.Riven {
 	internal class Cleaver_Tail : Cleaver {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
 				Hide = true
 			});
 		}
@@ -83,13 +83,6 @@ namespace Origins.NPCs.Riven {
 
 	public abstract class Cleaver : Glowing_Mod_NPC {
 		public override string GlowTexturePath => Texture;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Cleaver");
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
-		}
-
 		public override void AI() {
 			if (NPC.realLife > -1) NPC.life = Main.npc[NPC.realLife].active ? NPC.lifeMax : 0;
 		}

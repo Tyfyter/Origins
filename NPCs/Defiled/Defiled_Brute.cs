@@ -17,11 +17,7 @@ namespace Origins.NPCs.Defiled {
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Krusher");
 			Main.npcFrameCount[NPC.type] = 4;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);

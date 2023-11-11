@@ -10,11 +10,7 @@ using Terraria.ModLoader.Utilities;
 namespace Origins.NPCs.Riven {
 	public class Riven_Mummy : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amebic Mummy");
 			Main.npcFrameCount[NPC.type] = 16;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);

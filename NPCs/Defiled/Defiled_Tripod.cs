@@ -20,13 +20,9 @@ namespace Origins.NPCs.Defiled {
 		public const float horizontalAirSpeed = 2f;
 		public const float verticalSpeed = 4f;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Tripod");
 			Main.npcFrameCount[NPC.type] = 4;
 			NPCID.Sets.TrailCacheLength[NPC.type] = 4;
 			NPCID.Sets.TrailingMode[NPC.type] = 1;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);

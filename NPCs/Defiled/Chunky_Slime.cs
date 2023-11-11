@@ -9,11 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
     public class Chunky_Slime : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Chunky Slime");
 			Main.npcFrameCount[NPC.type] = 2;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Crimslime);

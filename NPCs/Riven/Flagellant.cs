@@ -12,11 +12,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
     public class Flagellant : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Flagellant");
 			Main.npcFrameCount[NPC.type] = 4;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);

@@ -16,9 +16,6 @@ namespace Origins.NPCs.Defiled {
 			// DisplayName.SetDefault("{$Defiled} Wisp");
 			Main.npcFrameCount[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DungeonSpirit);

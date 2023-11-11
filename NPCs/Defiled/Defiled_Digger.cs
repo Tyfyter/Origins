@@ -104,7 +104,7 @@ namespace Origins.NPCs.Defiled {
 	internal class Defiled_Digger_Body : Defiled_Digger {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
 				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
 			});
 		}
@@ -120,7 +120,7 @@ namespace Origins.NPCs.Defiled {
 	internal class Defiled_Digger_Tail : Defiled_Digger {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new(0) {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
 				Hide = true // Hides this NPC from the Bestiary, useful for multi-part NPCs whom you only want one entry.
 			});
 		}
@@ -138,13 +138,6 @@ namespace Origins.NPCs.Defiled {
 		public virtual int MaxManaDrain => 10;
 		public abstract float Mana { get; set; }
 		public virtual bool ForceSyncMana => false;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Digger");
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
-		}
-
 		public override void AI() {
 			if (NPC.realLife != NPC.whoAmI && NPC.realLife != -1) {
 				NPC head = Main.npc[NPC.realLife];

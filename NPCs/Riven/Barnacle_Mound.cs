@@ -15,13 +15,6 @@ namespace Origins.NPCs.Riven {
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Barnacle Mound");
-			Main.npcFrameCount[NPC.type] = 1;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
-		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);
 			NPC.aiStyle = 0;

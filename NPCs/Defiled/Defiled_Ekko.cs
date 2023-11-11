@@ -16,9 +16,6 @@ namespace Origins.NPCs.Defiled {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("{$Defiled} Ekko");
 			Main.npcFrameCount[NPC.type] = 14;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.PirateCrossbower);

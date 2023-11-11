@@ -7,11 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
 	public class Riven_Mimic : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Riven Mimic");
 			Main.npcFrameCount[NPC.type] = 14;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.width = 28;

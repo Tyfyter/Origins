@@ -10,9 +10,6 @@ namespace Origins.NPCs.Riven
     public class Bottomfeeder : ModNPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CorruptGoldfish);

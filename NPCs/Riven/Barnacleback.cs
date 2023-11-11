@@ -11,11 +11,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
     public class Barnacleback : ModNPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Barnacle Back");
 			Main.npcFrameCount[NPC.type] = 3;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Drippler);

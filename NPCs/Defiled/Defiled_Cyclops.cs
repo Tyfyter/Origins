@@ -16,13 +16,9 @@ using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 namespace Origins.NPCs.Defiled {
     public class Defiled_Cyclops : ModNPC, IDefiledEnemy {
 		public const float speedMult = 1f;
-		bool attacking = false;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("{$Defiled} Cyclops");
 			Main.npcFrameCount[NPC.type] = 4;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
