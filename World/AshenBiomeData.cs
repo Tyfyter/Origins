@@ -3,18 +3,12 @@ using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Melee;
 using Origins.Tiles.Ashen;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.World {
-	public class AshenBiomeData : ModBiome {
+    public class AshenBiomeData : ModBiome {
 		public static IItemDropRule FirstOrbDropRule;
 		public static IItemDropRule OrbDropRule;
 		public override void Load() {

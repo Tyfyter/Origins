@@ -494,7 +494,7 @@ MELEE WEAPONS:
 (^) Fiberglass Broadsword
 (^) Krakram*
 (^) Nineball
-(☻) Orbital Saw !!!
+(^) Orbital Saw
 (^) Outreach
 (^) Ripper Lance
 (^) Riverang
@@ -540,7 +540,7 @@ RANGED WEAPONS:
 (^) Harpoon Gun
 (^) Longbone
 (^) Magma Grappler
-(☻) Neural Network !!!
+(#4, ^2) Neural Network !!!
 (^) Riven Splitter
 (^) Shardcannon
 (^) Sleetfire
@@ -644,7 +644,7 @@ SUMMONER WEAPONS:
 (#, ^2) Joint Pop !!!
 (^) Maelstrom Incantation
 (#, ^2) Ocean Amulet !!!
-(☻) Ocotoral Bud !!!
+(#3, ^2) Ocotoral Bud !!!
 (^) Rotted Worm Staff
 (X) Stubborn Flower !!!
 (^) Teardown
@@ -810,7 +810,7 @@ TILES:
 (X) Cubekon Chest
 (X) Cubekon Node
 (X) Dawn Dungeon Chest
-(☻) Defiled Campfire !!!
+(^) Defiled Campfire
 (^) Defiled Dungeon Chest
 (X (missing water style to apply)) Defiled Water Fountain !!!
 (^) Defiled Torch
@@ -821,10 +821,10 @@ TILES:
 (X) Mushroom Dungeon Chest
 (X) Ocean Dungeon Chest
 (X) Residue Block
-(☻) Riven Campfire !!!
+(^) Riven Campfire
 (^) Riven Dungeon Chest
 (^) Riven Torch
-(☻) Riven Water Fountain !!!
+(^) Riven Water Fountain
 (#3, ^2) Traffic Cone !!!
 
 (^) Cleansing Station
@@ -836,7 +836,7 @@ TILES:
 (X) Riven Flesh Shredder
 
 (^) Acetabularia
-(☻) Brineglow Vine !!!
+(^) Brineglow Vine
 (^) Defiled Misc Tiles*
 (#2, ^2) Eden Tree
 (^) Gel Blister
@@ -996,7 +996,7 @@ CONSUMABLES:
 (^) Soul Spaghetti
 (^) Tasty Vanilla Shake
 
-(#3?, ^2) Broken Record !!!
+(^) Broken Record
 (^) Nerve Impulse Manipulator*
 (#2, ^2) Quantum Cell
 (^) Suspicious Looking Ice Cream
@@ -1081,14 +1081,14 @@ UI:
 (X) Cosmos Map/Bestiary Backdrop
 (X) Dawn Map/Bestiary Backdrop
 (X) Dawn Icon
-(#, ^2) Defiled Map/Bestiary Backdrop !!!
+(#3, ^2) Defiled Map/Bestiary Backdrop !!!
 (^) Defiled Icon
 (X) Dusk Map/Bestiary Backdrop
 (X) Dusk Icon
 (X) Fiberglass Map/Bestiary Backdrop
 (X) Fiberglass Icon
 (X) Fractured Isles Icon
-(#, ^2) Riven Map/Bestiary Backdrop !!!
+(#3, ^2) Riven Map/Bestiary Backdrop !!!
 (^) Riven Icon
 
 (@5, ^3) 30x30 Origins Icon
