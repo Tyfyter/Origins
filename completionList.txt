@@ -751,6 +751,7 @@ TILES:
 (#, ^2) Carburite
 (X) Compacted Scrap
 (X) Cubekon Altar
+(#, ^2) Defiled Cactus !!!
 (^) Defiled Grass*
 (^) Defiled Sand
 (^) Defiled Sandstone
@@ -776,8 +777,7 @@ TILES:
 (^) Spug Flesh
 (@5, ^3) Sulphur Stone
 (^) White Ice
-(@) Defiled Cactus !!!
-(@6) Riven Cactus !!!
+(@6?) Riven Cactus !!!
 (^) Riven Grass
 
 (#, ^2) Batholith Wall
