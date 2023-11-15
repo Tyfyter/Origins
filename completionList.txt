@@ -35,6 +35,7 @@ X: No progress
 ?: requesting explanation
 ♠: pure combination item (effects are all present on other items, can be implemented by combining effects (if they're all implemented))
 ◘: Pending review before continuation
+○: Implemented with temp stats/missing recipe/etc.
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -325,7 +326,7 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing
 (^) Ruby Reticle
-(#3, ^2) Seal of Cinders !!!
+(☻) Seal of Cinders !!!
 (^) Shield of Retribution
 (^) Sonar Visor*
 (^) Scavenger Bag
@@ -637,14 +638,14 @@ SUMMONER WEAPONS:
 (^) Amebolize Incantation
 (^) Bone Latcher
 (^) Brainy Staff
-(#, ^2) Desert Crown !!!
+(X, ^2) Desert Crown !!!
 (^) Eyeball Staff
 (^) Flagellash
-(#, ^2) Forest Staff !!!
+(X, ^2) Forest Staff !!!
 (#, ^2) Joint Pop !!!
 (^) Maelstrom Incantation
-(#, ^2) Ocean Amulet !!!
-(#3, ^2) Ocotoral Bud !!!
+(X, ^2) Ocean Amulet !!!
+(☻) Ocotoral Bud !!!
 (^) Rotted Worm Staff
 (X) Stubborn Flower !!!
 (^) Teardown
@@ -677,7 +678,7 @@ NO POST ML SUMMONER CONTENT YET.
 
 EXPLOSIVE WEAPONS:
 ---
-(#2, ^2) Abrasion Blaster !!!
+(#2?, ^2) Abrasion Blaster !!!
 (#2, ^2) Ace Shrapnel !!!
 (^) Ameballoon
 (^) Bang Snap
@@ -686,7 +687,7 @@ EXPLOSIVE WEAPONS:
 (^) Bomb Launcher (needs to be balanced)
 (^) Brainade
 (^) Defiled Spirit
-(#, ^2) Eruption !!!
+(○) Eruption !!!
 (^) Flashbang
 (^) Floaty Bomb
 (^) Hand Grenade Launcher

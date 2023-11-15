@@ -3416,3 +3416,8 @@ Neural_Network: {
 	DisplayName: Neural Network
 	Tooltip: ""
 }
+
+Eruption: {
+	DisplayName: Eruption
+	Tooltip: ""
+}

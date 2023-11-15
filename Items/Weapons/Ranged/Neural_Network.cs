@@ -44,14 +44,6 @@ namespace Origins.Items.Weapons.Ranged {
 			if (buffTime < 50) buffTime += time;
 			return false;
 		}
-		public override void Update(NPC npc, ref int buffIndex) {
-			npc.buffTime[buffIndex]++;
-		}
-		public override bool ReApply(NPC npc, int time, int buffIndex) {
-			ref int buffTime = ref npc.buffTime[buffIndex];
-			if (buffTime < 50) buffTime += time - 1;
-			return false;
-		}
 		public override void PostDraw(SpriteBatch spriteBatch, int buffIndex, BuffDrawParams drawParams) {
 			Color color = new Color(new Vector4(Main.buffAlpha[buffIndex]));
 			spriteBatch.DrawString(

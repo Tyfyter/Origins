@@ -115,6 +115,8 @@ namespace Origins.Projectiles {
 					}
 					OriginGlobalProj parentGlobalProjectile = parentProjectile.GetGlobalProjectile<OriginGlobalProj>();
 					prefix = parentGlobalProjectile.prefix;
+					neuralNetworkEffect = parentGlobalProjectile.neuralNetworkEffect;
+					neuralNetworkHit = parentGlobalProjectile.neuralNetworkHit;
 
 					ModPrefix projPrefix = PrefixLoader.GetPrefix(prefix);
 
@@ -178,10 +180,6 @@ namespace Origins.Projectiles {
 			if (target.boss && godHunterEffect != 0f) {
 				modifiers.SourceDamage *= 1 + godHunterEffect;
 			}
-			int nNBuffIndex = target.FindBuffIndex(ModContent.BuffType<Neural_Network_Buff>());
-			if (nNBuffIndex >= 0) {
-				modifiers.SourceDamage.Base += target.buffTime[nNBuffIndex] * Neural_Network_Buff.buff_damage_factor;
-			}
 		}
 		public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (fiberglassLifesteal) {
@@ -210,7 +208,6 @@ namespace Origins.Projectiles {
 				if (target.CanBeChasedBy(projectile)) {
 					int buffType = ModContent.BuffType<Neural_Network_Buff>();
 					Main.player[projectile.owner].AddBuff(buffType, 1);
-					target.AddBuff(buffType, 2);
 				}
 			}
 		}

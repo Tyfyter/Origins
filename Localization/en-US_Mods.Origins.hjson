@@ -970,6 +970,8 @@ Projectiles: {
 	Barnacle_Turret.DisplayName: Barnacle Turret
 	Barnacle_Turret_Shot.DisplayName: Barnacle Turret
 	Orbital_Saw_P.DisplayName: Orbital Saw
+	Eruption_Geyser.DisplayName: Eruption
+	Eruption_P.DisplayName: Eruption
 }
 
 Prefixes: {

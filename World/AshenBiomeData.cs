@@ -2,6 +2,7 @@
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
 using Origins.Tiles.Ashen;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -12,7 +13,7 @@ namespace Origins.World {
 		public static IItemDropRule FirstOrbDropRule;
 		public static IItemDropRule OrbDropRule;
 		public override void Load() {
-			FirstOrbDropRule = ItemDropRule.Common(ItemID.FlintlockPistol);
+			FirstOrbDropRule = ItemDropRule.Common(ModContent.ItemType<Neural_Network>());
 			FirstOrbDropRule.OnSuccess(ItemDropRule.Common(ItemID.MusketBall, 1, 100, 100));
 
 			OrbDropRule = new OneFromRulesRule(1,
