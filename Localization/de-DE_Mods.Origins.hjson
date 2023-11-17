@@ -146,6 +146,8 @@ Dialogue: {
 		// BloodMoon: Interesting. Wicked spirits shouldn't bother us as much on this night.
 	}
 
+	// Truffle.InteractionTeenyTruffle: What a cute fella! OW! He did not like that...
+
 	WitchDoctor: {
 		// InteractionAcidFreak1: Good relations with {NPCName} I have.
 		// InteractionAcidFreak2: "{NPCName} embodies confidence. I embody fondness in that."
@@ -970,8 +972,8 @@ Projectiles: {
 	// Barnacle_Turret.DisplayName: Barnacle Turret
 	// Barnacle_Turret_Shot.DisplayName: Barnacle Turret
 	// Orbital_Saw_P.DisplayName: Orbital Saw
-	// Eruption_Geyser.DisplayName: Eruption_ Geyser
-	// Eruption_P.DisplayName: Eruption_ P
+	// Eruption_Geyser.DisplayName: Eruption
+	// Eruption_P.DisplayName: Eruption
 }
 
 Prefixes: {

@@ -274,15 +274,14 @@ ACCESSORIES:
 (^) Comb
 (X) Control Locus
 (^) Coologne
-(^) I-WTPA Standard
 (^) Danger Barrel
 (^) Decaying Scale*
 (^) Destructive Claws
 (^) Dim Starlight*
 (^) Donor Wristband
 (^) Dryad's Inheritance
-(#, ^2) Dysfunctional Endless Explosives Bag
-(^) Exploder Emblem*
+(^) Dysfunctional Endless Explosives Bag
+(^) Exploder Emblem
 (^) Explosive Artery
 (^) Fleshy Figurine
 (^) Focus Crystal
@@ -294,6 +293,7 @@ ACCESSORIES:
 (^) Hazard Charm
 (^) Headphones
 (^) Helium Tank
+(^) I-WTPA Standard
 (^) Keepsake Remains
 (@2, #) Laser Tag Vest
 (^) Last Descendent
@@ -326,7 +326,7 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing
 (^) Ruby Reticle
-(☻) Seal of Cinders !!!
+(#3, ^2) Seal of Cinders !!!
 (^) Shield of Retribution
 (^) Sonar Visor*
 (^) Scavenger Bag
@@ -371,11 +371,11 @@ ACCESSORIES:
 (^) Amebic Vial
 (X) Crimson Hymn !!!
 (^) Fiberglass Dagger
+(#2, ^2) Mana Drive
 (^) Refactoring Pieces
 (X) Soul Scythe !!!
 (^) Stack of Shraps
 (X) Void Arcanum
-(#2, ^2) Mana Drive
 
 (%3, X) Armored Core
 (^) Entangled Energy
@@ -637,17 +637,17 @@ SUMMONER WEAPONS:
 ---
 (^) Amebolize Incantation
 (^) Bone Latcher
-(^) Brainy Staff
-(X, ^2) Desert Crown !!!
+(^) Brainy Staff*
+(#, ^2) Desert Crown* !!!
 (^) Eyeball Staff
 (^) Flagellash
-(X, ^2) Forest Staff !!!
+(#, ^2) Forest Staff* !!!
 (#, ^2) Joint Pop !!!
 (^) Maelstrom Incantation
-(X, ^2) Ocean Amulet !!!
-(☻) Ocotoral Bud !!!
+(#, ^2) Ocean Amulet* !!!
+(^) Ocotoral Bud
 (^) Rotted Worm Staff
-(X) Stubborn Flower !!!
+(X) Stubborn Flower* !!!
 (^) Teardown
 (^) Woodsprite Staff
 
@@ -666,7 +666,6 @@ SUMMONER WEAPONS:
 (X) Ego
 (@2/3, #) Fiber Optic Whip
 (X) Obsidian Bone
-(X) Queen's Call
 (X) Ribatar
 (X) Seraphim Song
 (@2, #2) SMART Wrench
@@ -678,7 +677,7 @@ NO POST ML SUMMONER CONTENT YET.
 
 EXPLOSIVE WEAPONS:
 ---
-(#2?, ^2) Abrasion Blaster !!!
+(#2, ^2) Abrasion Blaster !!!
 (#2, ^2) Ace Shrapnel !!!
 (^) Ameballoon
 (^) Bang Snap
@@ -687,7 +686,7 @@ EXPLOSIVE WEAPONS:
 (^) Bomb Launcher (needs to be balanced)
 (^) Brainade
 (^) Defiled Spirit
-(○) Eruption !!!
+(#3, ^2) Eruption !!!
 (^) Flashbang
 (^) Floaty Bomb
 (^) Hand Grenade Launcher
@@ -749,6 +748,7 @@ TILES:
 (^) Angelic Cloud
 (#3, ^2) Batholith*
 (^) Bleeding Obsidian
+(X) Brittle Quartz !!!
 (#, ^2) Carburite
 (X) Compacted Scrap
 (X) Cubekon Altar
@@ -772,6 +772,7 @@ TILES:
 (#, ^2) Mildew
 (^) Peat Moss*
 (^) Primordial Permafrost
+(X) Quartz !!!
 (^) Riven Grass
 (^) Sanguinite Ore
 (^) Silica
@@ -793,6 +794,7 @@ TILES:
 (^) Eden Wood Wall
 (#, ^2) Fiberglass Wall
 (^) Harmony Brick Wall
+(X) Quartz Wall !!!
 (^) Spug Flesh Wall
 (^) Sulphur Stone Wall
 
@@ -857,15 +859,16 @@ TILES:
 (X) Ancient Music Box (Defiled Wastelands)
 (#, ^2) Ancient Music Box (Riven Hive)
 (X) Music Box (Abstract)
-(X) Music Box (Riven Dancer 2081)
 (X) Music Box (Brine Pool)
 (X) Music Box (Cosmos)
 (X) Music Box (Cubekon Temple)
 (X) Music Box (Dawn)
 (^) Music Box (Defiled Caverns)
 (^) Music Box (Defiled Wastelands)
-(X) Music Box (Fractured Isles)
 (X) Music Box (Dusk)
+(X) Music Box (Eutrophic Sea)
+(X) Music Box (Fractured Isles)
+(X) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
 (X) Otherworldly Music Box (Defiled Wastelands)
 

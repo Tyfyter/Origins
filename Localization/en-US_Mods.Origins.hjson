@@ -146,6 +146,8 @@ Dialogue: {
 		BloodMoon: Interesting. Wicked spirits shouldn't bother us as much on this night.
 	}
 
+	Truffle.InteractionTeenyTruffle: What a cute fella! OW! He did not like that...
+
 	WitchDoctor: {
 		InteractionAcidFreak1: Good relations with {NPCName} I have.
 		InteractionAcidFreak2: "{NPCName} embodies confidence. I embody fondness in that."
