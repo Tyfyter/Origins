@@ -226,7 +226,7 @@ namespace Origins.NPCs {
 						case ProjectileID.Grenade:
 						case ProjectileID.StickyBomb:
 						case ProjectileID.Explosives:
-						case ProjectileID.Bee://bee?? like, all of them?
+						case ProjectileID.Bee://well, is there a way to track if they came out of an explosive?
 						case ProjectileID.Beenade:
 						case ProjectileID.ExplosiveBunny:
 						case ProjectileID.StickyGrenade:
@@ -234,7 +234,7 @@ namespace Origins.NPCs {
 						case ProjectileID.BouncyBomb:
 						case ProjectileID.BouncyGrenade:
 						case ProjectileID.BombFish:
-						case ProjectileID.GiantBee:// these too?
+						case ProjectileID.GiantBee:
 						case ProjectileID.PartyGirlGrenade:
 						case ProjectileID.BouncyDynamite:
 						case ProjectileID.ScarabBomb:

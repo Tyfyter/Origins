@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.Buffs;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -24,7 +25,8 @@ namespace Origins.Items.Accessories {
 					case BuffID.Silenced:
 					case BuffID.Cursed:
 					case BuffID.Darkness:
-					player.DelBuff(i--);
+                    //case Rasterized_Debuff.ID:
+                    player.DelBuff(i--);
 					break;
 				}
 			}

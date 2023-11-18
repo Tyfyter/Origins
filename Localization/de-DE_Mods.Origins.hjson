@@ -225,6 +225,23 @@ Dialogue: {
 		// The_Part_Where_He_Kills_You_1: Oh no...
 	}
 
+	Strange_Computer: {
+		// Pickup: Greetings, Terrarian.
+		// PotatoNearby: Conflicting authority, Terrarian. I do advise purging the other unit.
+		// ProtomindNearby: Conflicting authority, Terrarian. The Protomind may be an advanced model but that unit will hinder your abilities.
+		// CubekonTinkererNearby: W-what? My creator is still alive?
+		// Death_0: Oh. According to my calculations, your death was highly improbable.
+		// Death_1: See you again, Terrarian.
+		// Death_2: Terrarians never die...
+		// Combat_0: Providing precision support!
+		// Combat_1: This enemy is no match for you, Terrarian.
+		// Combat_2: I estimate a success rate no ordinary computer could compute. You got this.
+		// GoodAim_0: That's it, Terrarian.
+		// GoodAim_1: Strike at them now.
+		// GoodAim_2: Bullseye.
+		// GoodAim_3: Now's your chance.
+	}
+
 	WitheringDefiled: {
 		// Idle_0: Want to be my friend..?
 		// Idle_1: Come play with me...

@@ -1,14 +1,11 @@
-﻿using Origins.Items.Accessories;
-using Origins.Items.Materials;
-using Origins.Items.Weapons.Melee;
+﻿using Origins.Items.Materials;
 using Origins.World;
 using Terraria;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class Broken_Record : ModItem {
+    public class Broken_Record : ModItem {
 		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);

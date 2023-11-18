@@ -273,7 +273,7 @@ ACCESSORIES:
 (^) Cirrhosis' Abhorrence
 (^) Comb
 (X) Control Locus
-(^) Coologne
+(^) Coologne*
 (^) Danger Barrel
 (^) Decaying Scale*
 (^) Destructive Claws
@@ -333,9 +333,9 @@ ACCESSORIES:
 (^) Solar Panel
 (^) Sonic Radar
 (X) Sniper's Mark
-(#2, ^2) Strange Computer
+(#2, ^2) Strange Computer*
 (^) Super Turbo Reel
-(^) Superjump Cape
+(^) Superjump Cape*
 (^) Symbiote Skull
 (^) Tainted Flesh
 (^) Trap Charm
@@ -350,7 +350,7 @@ ACCESSORIES:
 (X) Grapple Ravel
 (^) Ninja Ravel
 (X) Ornament of Metamorphosis
-(#2, ^2) Ravel                                      (new plans)
+(#2, ^2) Ravel*                                      (new plans)
 (X) Scroll Ravel
 (X) Sigil of the Machine
 (X) Slick Ravel

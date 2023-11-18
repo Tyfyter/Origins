@@ -13,9 +13,9 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Bomb_Charm>());
+            recipe.AddIngredient(ItemID.LavaCharm);
+            recipe.AddIngredient(ModContent.ItemType<Bomb_Charm>());
 			recipe.AddIngredient(ModContent.ItemType<Trap_Charm>());
-			recipe.AddIngredient(ItemID.LavaCharm);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
