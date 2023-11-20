@@ -50,7 +50,7 @@ namespace Origins {
 			string filename = Mod.Name + "_" + Name + ".json";
 			string path = Path.Combine(ConfigManager.ModConfigPath, filename);
 			string json = JsonConvert.SerializeObject(this, ConfigManager.serializerSettings);
-			File.WriteAllText(path, json);
+			WikiPageExporter.WriteFileNoUnneededRewrites(path, json);
 		}
 	}
 	[Label("Client Settings")]
