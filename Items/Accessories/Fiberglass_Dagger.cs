@@ -1,10 +1,13 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Fiberglass_Dagger : ModItem {
-		
+	public class Fiberglass_Dagger : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);
 			Item.rare = ItemRarityID.Expert;

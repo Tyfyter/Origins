@@ -1,10 +1,14 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
-	public class Advanced_Imaging : ModItem {
+	public class Advanced_Imaging : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

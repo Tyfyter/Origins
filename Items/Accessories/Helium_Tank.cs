@@ -1,12 +1,16 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Dev;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
-	public class Helium_Tank : ModItem {
-		
+	public class Helium_Tank : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Resource",
+			"Misc"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
 			Item.rare = ItemRarityID.LightRed;

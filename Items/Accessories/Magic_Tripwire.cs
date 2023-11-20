@@ -1,9 +1,14 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Magic_Tripwire : ModItem {
+	public class Magic_Tripwire : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Explosive"
+		};
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Trap_Charm>()] = ModContent.ItemType<Magic_Tripwire>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Magic_Tripwire>()] = ModContent.ItemType<Trap_Charm>();

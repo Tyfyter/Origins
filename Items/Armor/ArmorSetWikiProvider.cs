@@ -86,7 +86,9 @@ namespace Origins.Items.Armor {
 			string[] baseTypes = { "Item", "Armor", "ArmorSet" };
 			foreach (var item in ApplySets(GetSetAndSubSets(set))) {
 				JObject data = new();
-				data.Add("Types", new JArray(baseTypes));
+				JArray types = new(baseTypes);
+				foreach (string type in set.SetCategories) types.Add(type);
+				data.Add("Types", types);
 				data.Add("SetName", item.set.ArmorSetName);
 				JArray images = new JArray() { $"ArmorSets/{item.set.ArmorSetName}" };
 				if (item.set.HasFemaleVersion) images.Add($"ArmorSets/{item.set.ArmorSetName}_Female");
@@ -100,7 +102,9 @@ namespace Origins.Items.Armor {
 			}
 			if (set.CreateMergedSet && statGroups.Count > 1) {
 				JObject data = new();
-				data.Add("Types", new JArray(baseTypes));
+				JArray types = new(baseTypes);
+				foreach (string type in set.SetCategories) types.Add(type);
+				data.Add("Types", types);
 				data.Add("SetName", set.MergedArmorSetName);
 				data.Add("SetBonus", statGroups[0].GetValue("SetBonus"));
 
@@ -215,6 +219,7 @@ namespace Origins.Items.Armor {
 		int HeadItemID { get; }
 		int BodyItemID { get; }
 		int LegsItemID { get; }
+		string[] SetCategories => Array.Empty<string>();
 		IEnumerable<int> SharedPageItems {
 			get {
 				yield break;

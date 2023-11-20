@@ -1,11 +1,14 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
-	public class Automated_Handler : ModItem {
-		
+	public class Automated_Handler : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);
 			Item.value = Item.sellPrice(gold: 12);

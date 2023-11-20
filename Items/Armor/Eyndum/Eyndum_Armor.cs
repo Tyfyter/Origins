@@ -26,7 +26,7 @@ namespace Origins.Items.Armor.Eyndum {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.GetModPlayer<OriginPlayer>().eyndumSet = true;
-			Origins.SetEyndumCoreUI();
+			if (player.whoAmI == Main.myPlayer && !Main.gameMenu) Origins.SetEyndumCoreUI();
 		}
 		public override void AddRecipes() {
 			/*Recipe recipe = Recipe.Create(Type);

@@ -1,10 +1,13 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class ATACS : ModItem {
-		
+    public class ATACS : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);
 			Item.value = Item.sellPrice(gold: 7);

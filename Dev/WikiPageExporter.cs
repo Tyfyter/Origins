@@ -413,7 +413,7 @@ namespace Origins.Dev {
 		void ModifyWikiStats(JObject data) { }
 		string[] Categories => Array.Empty<string>();
 		bool? Hardmode => null;
-		bool FullyGeneratable => true;
+		bool FullyGeneratable => false;
 		bool ShouldHavePage => true;
 		bool NeedsCustomSprite => false;
 		LocalizedText PageTextMain => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultMainPageText(modType) : null;
@@ -504,6 +504,8 @@ namespace Origins.Dev {
 					types.Add("Torch");
 				}
 			}
+			if (item.expert) types.Add("Expert");
+			if (item.master) types.Add("Master");
 			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
 			data.Add("Types", types);
 
@@ -547,12 +549,16 @@ namespace Origins.Dev {
 			data.AppendStat("Crit", item.crit + 4, 4);
 			data.AppendStat("UseTime", item.useTime, 100);
 			data.AppendStat("Velocity", item.shootSpeed, 0);
-			string itemTooltip = "";
-			for (int i = 0; i < item.ToolTip.Lines; i++) {
-				if (i > 0) itemTooltip += "\n";
-				itemTooltip += item.ToolTip.GetLine(i);
+			if (item.ToolTip.Lines > 1) {
+				JArray itemTooltip = new();
+				for (int i = 0; i < item.ToolTip.Lines; i++) {
+					string line = item.ToolTip.GetLine(i);
+					if (!string.IsNullOrWhiteSpace(line)) itemTooltip.Add(line);
+				}
+				data.AppendJStat("Tooltip", itemTooltip, new());
+			} else if (item.ToolTip.Lines > 0) {
+				data.AppendStat("Tooltip", item.ToolTip.GetLine(0), string.Empty);
 			}
-			data.AppendStat("Tooltip", itemTooltip, "");
 			data.AppendStat("Rarity", WikiPageExporter.GetWikiItemRarity(item), "");
 			if (customStat?.Buyable ?? false) data.AppendStat("Buy", item.value, 0);
 			data.AppendStat("Sell", item.value / 5, 0);
@@ -604,6 +610,11 @@ namespace Origins.Dev {
 	public static class WikiExtensions {
 		public static void AppendStat<T>(this JObject data, string name, T value, T defaultValue) {
 			if (!value.Equals(defaultValue)) {
+				data.Add(name, JToken.FromObject(value));
+			}
+		}
+		public static void AppendJStat<T>(this JObject data, string name, T value, T defaultValue) where T : JToken {
+			if (!JToken.DeepEquals(value, defaultValue)) {
 				data.Add(name, JToken.FromObject(value));
 			}
 		}

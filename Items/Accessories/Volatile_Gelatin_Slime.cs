@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using Origins.Dev;
 using Origins.Graphics;
 using Origins.Projectiles;
 using System;
@@ -16,7 +17,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Volatile_Gelatin_Global_Item : GlobalItem {
+	public class Volatile_Gelatin_Global_Item : GlobalItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Explosive"
+		};
 		public override bool AppliesToEntity(Item entity, bool lateInstantiation) => entity.type == ItemID.VolatileGelatin;
 		public override void SetDefaults(Item entity) {
 			entity.DamageType = DamageClasses.Explosive;

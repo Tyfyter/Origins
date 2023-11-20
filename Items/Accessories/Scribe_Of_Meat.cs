@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -8,8 +9,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Scribe_Of_Meat : ModItem {
-		
+    public class Scribe_Of_Meat : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Movement",
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);
 			Item.damage = 65;

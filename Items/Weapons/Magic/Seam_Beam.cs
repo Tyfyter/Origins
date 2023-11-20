@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.NPCs;
 using System;
 using Terraria;
@@ -9,12 +10,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Seam_Beam : ModItem {
+	public class Seam_Beam : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Torn",
+			"TornSource"
+		};
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Seam Beam");
 			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 1;
 		}
 
 		public override void SetDefaults() {

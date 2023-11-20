@@ -1,11 +1,15 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
-	public class Bomb_Yeeter : ModItem {
-		
+	public class Bomb_Yeeter : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Explosive"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(38, 20);
 			Item.value = Item.sellPrice(gold: 2);

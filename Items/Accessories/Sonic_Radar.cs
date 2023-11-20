@@ -1,10 +1,13 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Sonic_Radar : ModItem {
-		
+	public class Sonic_Radar : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Info"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 26);
 			Item.value = Item.sellPrice(gold: 2);

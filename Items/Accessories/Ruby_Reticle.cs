@@ -1,11 +1,14 @@
-﻿using Origins.Tiles.Other;
+﻿using Origins.Dev;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Ruby_Reticle : ModItem {
-		
+	public class Ruby_Reticle : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 30);
 			Item.rare = ItemRarityID.Green;

@@ -1,10 +1,14 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Reshaping_Chunk : ModItem {
+	public class Reshaping_Chunk : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Refactoring Pieces");
 			// Tooltip.SetDefault("Strengthens the set bonus of Lost Armor\nReduces damage taken by 5% if Lost Armor is not equipped");

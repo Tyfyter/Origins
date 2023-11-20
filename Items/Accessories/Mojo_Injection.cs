@@ -1,11 +1,15 @@
-﻿using System;
+﻿using Origins.Dev;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Mojo_Injection : ModItem {
-		
+	public class Mojo_Injection : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Resource",
+			"Exploration"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);
 			Item.rare = ItemRarityID.LightRed;

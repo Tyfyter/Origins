@@ -1,10 +1,14 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Blast_Resistant_Plate : ModItem {
-		
+	public class Blast_Resistant_Plate : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Explosive"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 28);
 			Item.defense = 3;

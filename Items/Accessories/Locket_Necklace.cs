@@ -1,11 +1,14 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
-	public class Locket_Necklace : ModItem {
-		
+	public class Locket_Necklace : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 32);
 			Item.value = Item.sellPrice(gold: 2);

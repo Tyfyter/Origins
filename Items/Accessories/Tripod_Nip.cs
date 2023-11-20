@@ -1,11 +1,15 @@
-﻿using Origins.Journal;
+﻿using Origins.Dev;
+using Origins.Journal;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Tripod_Nip : ModItem, IJournalEntryItem {
+	public class Tripod_Nip : ModItem, IJournalEntryItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Misc"
+		};
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Tripod_Nip_Entry).Name;
 		

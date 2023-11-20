@@ -1,3 +1,4 @@
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs;
 using Terraria;
@@ -6,7 +7,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-	public class Alkahest_Arrow : ModItem {
+	public class Alkahest_Arrow : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Torn",
+			"TornSource"
+		};
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Alkahest Arrow");
 			// Tooltip.SetDefault("Tenderizes the target");

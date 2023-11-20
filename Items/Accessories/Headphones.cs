@@ -1,4 +1,5 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
@@ -6,8 +7,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
-	public class Headphones : ModItem {
-		
+	public class Headphones : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);
 			Item.value = Item.sellPrice(gold: 2);

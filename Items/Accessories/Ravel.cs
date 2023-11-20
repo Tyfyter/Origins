@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Dusts;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Ravel : ModItem {
+	public class Ravel : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Movement"
+		};
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Ravel");

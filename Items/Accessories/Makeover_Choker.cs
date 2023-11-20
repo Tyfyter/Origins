@@ -1,10 +1,14 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Makeover_Choker : ModItem {
-		
+	public class Makeover_Choker : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Resource"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 18);
 			Item.rare = ItemRarityID.LightRed;

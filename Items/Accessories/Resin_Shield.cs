@@ -1,11 +1,16 @@
-﻿using Origins.Tiles.Other;
+﻿using Origins.Dev;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
-	public class Resin_Shield : ModItem {
+	public class Resin_Shield : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Misc",
+			"Explosive"
+		};
 		public static int ShieldID { get; private set; }
 		public static int InactiveShieldID { get; private set; }
 		public override void SetStaticDefaults() {

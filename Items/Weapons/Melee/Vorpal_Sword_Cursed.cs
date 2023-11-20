@@ -205,7 +205,11 @@ namespace Origins.Items.Weapons.Melee {
 				Item.autoReuse = true;
 			}
 		}
-		public string[] Categories => new string[] { "Sword" };
+		public string[] Categories => new string[] {
+			"Sword",
+			"Torn",
+			"TornSource"
+		};
 		public bool? Hardmode => false;
 	}
 	public class Cursed_Vorpal_Sword_Slash : ModProjectile {

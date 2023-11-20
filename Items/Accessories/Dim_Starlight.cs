@@ -1,11 +1,16 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Dev;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories
 {
-    public class Dim_Starlight : ModItem {
+    public class Dim_Starlight : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Resource",
+			"Exploration"
+		};
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.BandofStarpower] = ModContent.ItemType<Dim_Starlight>();

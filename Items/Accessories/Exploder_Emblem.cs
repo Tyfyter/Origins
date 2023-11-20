@@ -1,9 +1,14 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Exploder_Emblem : ModItem {
+	public class Exploder_Emblem : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Explosive"
+		};
 		public override void SetStaticDefaults() {
 			OriginExtensions.InsertIntoShimmerCycle(Type, ItemID.SummonerEmblem);
 		}

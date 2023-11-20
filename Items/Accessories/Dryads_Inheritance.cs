@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Reflection;
 using System;
 using Terraria;
@@ -9,7 +10,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
-	public class Dryads_Inheritance : ModItem {
+	public class Dryads_Inheritance : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 26);
 			Item.value = Item.sellPrice(gold: 8);

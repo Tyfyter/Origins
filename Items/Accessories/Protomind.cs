@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -7,7 +8,11 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Protomind : ModItem {
+    public class Protomind : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Info"
+		};
 		static Message_Cache[] messagesByType;
 		
 		public override void Unload() {

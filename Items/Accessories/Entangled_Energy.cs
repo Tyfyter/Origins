@@ -1,11 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Entangled_Energy : ModItem {
-		
+	public class Entangled_Energy : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Resource"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 30);
 			Item.rare = ItemRarityID.Master;

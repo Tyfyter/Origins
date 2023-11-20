@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Summoner;
 using System;
@@ -8,8 +9,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Lazy_Cloak : ModItem {
-		
+	public class Lazy_Cloak : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 36);
 			Item.damage = 30;

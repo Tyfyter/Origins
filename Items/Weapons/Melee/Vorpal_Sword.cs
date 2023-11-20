@@ -169,7 +169,11 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback * 0.25f, player.whoAmI, ai1: player.ItemUsesThisAnimation == 1 ? 1 : -1);
 			return false;
 		}
-		public string[] Categories => new string[] { "Sword" };
+		public string[] Categories => new string[] {
+			"Sword",
+			"Torn",
+			"TornSource"
+		};
 		public bool? Hardmode => false;
 	}
 	public class Vorpal_Sword_Slash : ModProjectile {

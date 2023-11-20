@@ -1,11 +1,16 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
-	public class Volatile_Charm : ModItem {
-		
+	public class Volatile_Charm : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Misc",
+			"Explosive"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(14, 28);
 			Item.value = Item.sellPrice(gold: 2);

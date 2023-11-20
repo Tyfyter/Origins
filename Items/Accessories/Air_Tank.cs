@@ -1,11 +1,16 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Dev;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
-	public class Air_Tank : ModItem {
+	public class Air_Tank : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Resource",
+			"Misc"
+		};
 		public static int BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Air Tank");

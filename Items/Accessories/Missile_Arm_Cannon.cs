@@ -1,10 +1,15 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
-	public class Missile_Armcannon : ModItem {
+	public class Missile_Armcannon : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Explosive"
+		};
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Missile Armcannon");
 			// Tooltip.SetDefault("30% increased explosive throwing velocity\nIncreases attack speed of thrown explosives\nEnables autouse for all explosive weapons\nShoots rockets as you swing\n'Payload not included'");

@@ -1,10 +1,14 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
     [AutoloadEquip(EquipType.Back)]
-	public class Superjump_Cape : ModItem {
+	public class Superjump_Cape : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Movement"
+		};
 		public static int BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Super-Jump Cape");

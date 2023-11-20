@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Dev;
 using System;
 using System.Linq;
 using Terraria;
@@ -9,8 +10,11 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
-	public class Protozoa_Food : ModItem {
-		
+	public class Protozoa_Food : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Explosive"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 20);
 			Item.damage = 13;

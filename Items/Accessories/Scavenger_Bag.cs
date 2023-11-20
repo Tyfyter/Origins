@@ -1,11 +1,16 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
-	public class Scavenger_Bag : ModItem {
-		
+	public class Scavenger_Bag : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Torn",
+			"TornSource"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 30);
 			Item.value = Item.sellPrice(gold: 9);

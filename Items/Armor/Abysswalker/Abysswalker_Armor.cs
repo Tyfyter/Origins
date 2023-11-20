@@ -26,7 +26,7 @@ namespace Origins.Items.Armor.Abysswalker {
 			float defiledPercentage = 1f; //OriginSystem.totalDefiled / (float)WorldGen.totalSolid;
 
 			player.setBonus = $"Not yet fully implemented\nIncreases max assimilation by 50%\nGain different abilities depending on accrued assimilation amounts from each evil";
-			Origins.SetMimicSetUI();
+			if (player.whoAmI == Main.myPlayer) Origins.SetMimicSetUI();
 
 			int mimicSetLevel = OriginSystem.MimicSetLevel;
 			if (mimicSetLevel >= 1) {

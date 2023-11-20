@@ -1,9 +1,13 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Return_To_Sender : ModItem {
+	public class Return_To_Sender : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Return To Sender");

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
@@ -15,7 +16,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Ocotoral_Bud : ModItem {
+	public class Ocotoral_Bud : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Torn",
+			"TornSource"
+		};
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

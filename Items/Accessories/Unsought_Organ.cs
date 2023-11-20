@@ -1,11 +1,14 @@
 ﻿using Origins.Buffs;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Unsought_Organ : ModItem {
-		
+	public class Unsought_Organ : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 26);
 			Item.rare = ItemRarityID.LightPurple;

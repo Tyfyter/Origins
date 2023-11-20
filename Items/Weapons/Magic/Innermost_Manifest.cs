@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.NPCs;
@@ -9,8 +10,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Innermost_Manifest : ModItem {
-		
+	public class Innermost_Manifest : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Torn",
+			"TornSource"
+		};
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 8;

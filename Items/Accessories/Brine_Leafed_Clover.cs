@@ -1,11 +1,15 @@
-﻿using System;
+﻿using Origins.Dev;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public abstract class Brine_Leafed_Clover : ModItem, IItemObtainabilityProvider {
+	public abstract class Brine_Leafed_Clover : ModItem, IItemObtainabilityProvider, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Misc"
+		};
 		protected static sbyte faceSlot = -1;
 		public abstract int Level { get; }
 		public abstract int NextLowerTier { get; }

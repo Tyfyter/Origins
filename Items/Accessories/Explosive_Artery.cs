@@ -1,12 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Explosive_Artery : ModItem {
-		
+    public class Explosive_Artery : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Explosive"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);
 			Item.damage = 40;

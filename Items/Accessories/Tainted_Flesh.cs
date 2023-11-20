@@ -1,10 +1,15 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Tainted_Flesh : ModItem {
+	public class Tainted_Flesh : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Torn"
+		};
 		static short glowmask;
 		public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(5);
 		public override void SetStaticDefaults() {

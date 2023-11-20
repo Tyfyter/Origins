@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.NPCs;
 using Origins.Tiles.Dusk;
@@ -7,8 +8,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
-    public class Bleeding_Obsidian_Kunai : ModItem {
-		
+    public class Bleeding_Obsidian_Kunai : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Torn",
+			"TornSource"
+		};
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.damage = 38;

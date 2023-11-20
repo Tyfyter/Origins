@@ -1,12 +1,15 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[LegacyName("Last_Descendent")]
 	[AutoloadEquip(EquipType.Neck)]
-	public class Last_Descendant : ModItem {
-		
+	public class Last_Descendant : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 26);
 			Item.value = Item.sellPrice(gold: 4);

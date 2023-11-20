@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -8,8 +9,10 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
-	public class Parasitic_Influence : ModItem {
-		
+	public class Parasitic_Influence : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(34, 26);
 			Item.damage = 20;

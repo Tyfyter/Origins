@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -10,7 +11,10 @@ using Terraria.ModLoader.Default;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Items.Accessories {
-	public class Handy_Helper : ModItem {
+	public class Handy_Helper : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		bool bothGloves = false;
 		bool noGloves = false;
 		

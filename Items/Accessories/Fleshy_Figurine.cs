@@ -1,10 +1,16 @@
-﻿using Terraria;
+﻿using Origins.Dev;
+using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Fleshy_Figurine : ModItem {
+	public class Fleshy_Figurine : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Torn",
+			"TornSource"
+		};
 		public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(8);
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 30);

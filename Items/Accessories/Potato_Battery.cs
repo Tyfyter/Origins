@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
@@ -9,7 +10,11 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Potato_Battery : ModItem {
+    public class Potato_Battery : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat",
+			"Info"
+		};
 		static Message_Type_Count[] messageCountsByType;
 		
 		public override void Unload() {

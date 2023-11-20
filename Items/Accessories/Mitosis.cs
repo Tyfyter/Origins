@@ -1,12 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Mitosis : ModItem {
-		
+	public class Mitosis : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);
 			Item.rare = ItemRarityID.Pink;

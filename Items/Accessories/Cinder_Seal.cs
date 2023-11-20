@@ -1,11 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Cinder_Seal : ModItem {
+	public class Cinder_Seal : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 34);
 			Item.value = Item.sellPrice(gold: 4, silver: 20);

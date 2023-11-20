@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -7,8 +8,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
-	public class Grave_Danger : ModItem {
-		
+	public class Grave_Danger : ModItem, ICustomWikiStat {
+		public string[] Categories => new string[] {
+			"Combat"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(36, 42);
 			Item.defense = 5;
