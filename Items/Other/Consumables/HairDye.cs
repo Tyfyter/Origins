@@ -49,13 +49,13 @@ namespace Origins.Items.Other.Consumables {
 					  PassName: "Textured",
 					  ColorFunc: (hairColor, lightColor) => lightColor,
 					  uColor: Color.Red,
-					  Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/LunarNewYear_Helmet_Head")
+					  Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/LunarNewYear_Hair")
 				)),
 				(Day("Saint Patrick's Day"), new HolidayHairPassData(
 					  PassName: "Overlay",
 					  ColorFunc: (hairColor, lightColor) => lightColor,
 					  uColor: Color.DarkGreen,
-					  Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/StPatricks_Helmet_Head")
+					  Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/StPatricks_Hair")
 				)),
 				(Day("Summer Solstice"), new HolidayHairPassData(
 					  PassName: "SummerSolstace"
