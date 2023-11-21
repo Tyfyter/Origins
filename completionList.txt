@@ -257,39 +257,39 @@ ARMOR:
 
 ACCESSORIES:
 ---
-(^) ACME Crate
+(^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
-(#2, ^2, ♠) ATACS
+(#2, ^2, ♠) ATACS*
 (#2, ^2) Automated Returns Handler
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
-(^) Boomerang Magnet
+(^) Boomerang Magnet*
 (^) Brine-Leafed Clover
-(X) C.F.H.E.S.
+(X) C.F.H.E.S.*
 (^) Celestial Starlight*
-(^) Celestial Stone Mask
-(^) Cirrhosis' Abhorrence
-(^) Comb
-(X) Control Locus
+(^) Celestial Stone Mask*
+(^) Cirrhosis' Abhorrence*
+(^) Comb*
+(X) Control Locus*
 (^) Coologne*
-(^) Danger Barrel
+(^) Danger Barrel*
 (^) Decaying Scale*
-(^) Destructive Claws
+(^) Destructive Claws*
 (^) Dim Starlight*
 (^) Donor Wristband*
-(^) Dryad's Inheritance
-(^) Dysfunctional Endless Explosives Bag
-(^) Exploder Emblem
-(^) Explosive Artery
-(^) Fleshy Figurine
-(^) Focus Crystal
-(^) Grave Danger
-(#2, ^2) Grenade Tube
-(^) Gun Glove
-(^) Haggard Artery
-(^) Handy Helper
+(^) Dryad's Inheritance*
+(^) Dysfunctional Endless Explosives Bag*
+(^) Exploder Emblem*
+(^) Explosive Artery*
+(^) Fleshy Figurine*
+(^) Focus Crystal*
+(^) Grave Danger*
+(#2, ^2) Grenade Tube*
+(^) Gun Glove*
+(^) Haggard Artery*
+(^) Handy Helper*
 (^) Hazard Charm*
 (^) Headphones
 (^) Helium Tank

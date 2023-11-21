@@ -34,7 +34,7 @@ namespace Origins.Items.Armor.Riven {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.Items.GenericTooltip.TornSeverity", 10);
-			player.GetModPlayer<OriginPlayer>().tornStrengthBoost.Flat += 0.10f;
+			player.GetModPlayer<OriginPlayer>().tornStrengthBoost.Flat += 0.1f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

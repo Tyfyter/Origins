@@ -4,7 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	[AutoloadEquip(EquipType.Face)]
+    [AutoloadEquip(EquipType.Face)]
 	public class Celestial_Mask : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat"
@@ -26,5 +26,13 @@ namespace Origins.Items.Accessories {
 			player.moveSpeed *= 0.9f;
 			player.jumpSpeedBoost -= 1.8f;
 		}
-	}
+
+        public override void AddRecipes() {
+            Recipe recipe = CreateRecipe();
+            recipe.AddIngredient(ItemID.CelestialStone);
+            recipe.AddIngredient(ModContent.ItemType<Stone_Mask>());
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.Register();
+        }
+    }
 }

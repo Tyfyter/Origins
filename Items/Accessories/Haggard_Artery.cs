@@ -1,7 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Terraria;
-using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -17,8 +15,8 @@ namespace Origins.Items.Accessories {
 			Item.DamageType = DamageClasses.Explosive;
 			Item.knockBack = 4;
 			Item.useTime = 6;
-			Item.useAnimation = 4;//used as the numerator for the chance
-			Item.reuseDelay = 60;//used as the denominator for the chance
+			Item.useAnimation = 1;//used as the numerator for the chance
+			Item.reuseDelay = 15;//used as the denominator for the chance
 			Item.shoot = ModContent.ProjectileType<Explosive_Artery_P>();
 			Item.rare = ItemRarityID.Green;
 			Item.value = Item.sellPrice(gold: 2);

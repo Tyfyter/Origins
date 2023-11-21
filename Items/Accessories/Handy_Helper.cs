@@ -151,8 +151,8 @@ namespace Origins.Items.Accessories {
 			}
 
 			recipe = CreateRecipe();
-			recipe.AddIngredient(ModContent.ItemType<Amebic_Vial>());
-			recipe.AddIngredient(ItemID.PowerGlove, 2);
+            recipe.AddIngredient(ItemID.PowerGlove, 2);
+            recipe.AddIngredient(ModContent.ItemType<Amebic_Vial>());
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.AprilFools"), () => OriginsModIntegrations.CheckAprilFools());
 			recipe.AddOnCraftCallback((_, result, consumed, _) => {

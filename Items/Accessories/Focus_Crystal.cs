@@ -15,8 +15,8 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Ruby_Reticle>());
-			recipe.AddIngredient(ItemID.ShinyStone);
+            recipe.AddIngredient(ItemID.ShinyStone);
+            recipe.AddIngredient(ModContent.ItemType<Ruby_Reticle>());
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}

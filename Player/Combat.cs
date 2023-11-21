@@ -235,7 +235,7 @@ namespace Origins {
 			if (symbioteSkull) {
 				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.1f, this);
 			}
-			if (decayingScale) {
+			if (decayingScale) { //has the acrid armor bonus been implimeneted?
 				target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
 			}
 			if (messyLeech) {
@@ -245,7 +245,7 @@ namespace Origins {
 				target.AddBuff(BuffID.Bleeding, 480);
 				target.AddBuff(BuffID.OnFire, Main.rand.Next(119, 361));
 			}
-			if (dangerBarrel) { //needs a check for explosive weapon
+			if (dangerBarrel) { //needs a check for explosive weapon!
 				target.AddBuff(BuffID.OnFire, Main.rand.Next(119, 361));
 			}
 			if (target.life <= 0) {

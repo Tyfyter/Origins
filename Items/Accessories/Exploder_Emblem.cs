@@ -22,11 +22,11 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.AvengerEmblem);
-			recipe.AddIngredient(Type);
-			recipe.AddIngredient(ItemID.SoulofMight, 5);
+            recipe.AddIngredient(ItemID.SoulofFright, 5);
+            recipe.AddIngredient(ItemID.SoulofMight, 5);
 			recipe.AddIngredient(ItemID.SoulofSight, 5);
-			recipe.AddIngredient(ItemID.SoulofFright, 5);
-			recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.AddIngredient(Type);
+            recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
 	}

@@ -25,9 +25,9 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Tainted_Flesh>());
-			recipe.AddIngredient(ItemID.GuideVoodooDoll);
-			recipe.AddIngredient(ModContent.ItemType<Symbiote_Skull>());
+            recipe.AddIngredient(ItemID.GuideVoodooDoll);
+            recipe.AddIngredient(ModContent.ItemType<Symbiote_Skull>());
+            recipe.AddIngredient(ModContent.ItemType<Tainted_Flesh>());
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.AddCondition(new Condition(
 				Language.GetOrRegister("Mods.Origins.Conditions.KillsGuide"),
