@@ -94,7 +94,7 @@ Bomb_Yeeter: {
 
 Boomerang_Magnet: {
 	DisplayName: Boomerang Magnet
-	Tooltip: 
+	Tooltip:
 		'''
 		Increased return speed for boomerangs and harpoons
 		Increases pickup range for items

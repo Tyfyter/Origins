@@ -4,7 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class True_Bomb_Yeeter : ModItem, ICustomWikiStat {
+	[LegacyName("True_Bomb_Yeeter")]
+	public class Pneumatic_Bomb_Thrower : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
 			"Explosive"

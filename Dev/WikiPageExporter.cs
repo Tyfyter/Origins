@@ -458,6 +458,7 @@ namespace Origins.Dev {
 			JObject data = new();
 			ICustomWikiStat customStat = item.ModItem as ICustomWikiStat;
 			data["Image"] = WikiPageExporter.GetWikiItemPath(modItem);
+			data["Name"] = item.Name;
 			JArray types = new("Item");
 			if (item.accessory) types.Add("Accessory");
 			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None) {

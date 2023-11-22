@@ -94,7 +94,11 @@ Bomb_Yeeter: {
 
 Boomerang_Magnet: {
 	// DisplayName: Boomerang Magnet
-	// Tooltip: Increased return speed for boomerangs
+	/* Tooltip:
+		'''
+		Increased return speed for boomerangs and harpoons
+		Increases pickup range for items
+		''' */
 }
 
 Brine_Leafed_Clover_0: {
@@ -167,6 +171,7 @@ CFHES: {
 		'''
 		All explosives inflict 'On Fire!' and have a reduced fuse time
 		Greatly increased explosive blast radius
+		Explosives will detonate near enemies
 		''' */
 }
 
@@ -369,8 +374,9 @@ Haggard_Artery: {
 	// DisplayName: Haggard Artery
 	/* Tooltip:
 		'''
+		All attacks inflict Bleeding
+		Prevents Defiled enemies from regenerating
 		Nearby bleeding enemies occasionally explode
-		'Explosions happen near me 'cause I'm that cool!'
 		''' */
 }
 
