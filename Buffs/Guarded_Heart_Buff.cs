@@ -11,7 +11,7 @@ namespace Origins.Buffs {
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.moveSpeed *= 1.5f;
-			player.GetDamage(DamageClass.Generic) *= 1.20f;
+			player.GetDamage(DamageClass.Generic) *= 1.2f;
 		}
 	}
 }

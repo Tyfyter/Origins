@@ -177,7 +177,7 @@ CFHES: {
 
 Cirrhosis_Abhorrence: {
 	DisplayName: Cirrhosis' Abhorrence
-	Tooltip: 5 of the closest enemies have their stats reduced whilst being set ablaze and bleeding
+	Tooltip: 5 of the closest enemies will be inflicted with Bleeding, On Fire, and Rasterize
 }
 
 Comb: {
@@ -457,7 +457,7 @@ Locket_Necklace: {
 
 Lousy_Liver: {
 	DisplayName: Lousy Liver
-	Tooltip: Weakens up to 4 nearby enemies
+	Tooltip: Inflicts Rasterize to 4 nearby enemies
 }
 
 Lovers_Leap: {
@@ -477,7 +477,7 @@ Magic_Glove: {
 		8% reduced mana usage
 		Automatically use mana potions when needed
 		Shoots random magic as you swing
-		'May require magical capability'
+		'May require a prowess in magicks'
 		'''
 }
 

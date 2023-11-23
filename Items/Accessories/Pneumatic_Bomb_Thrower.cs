@@ -19,5 +19,13 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().bombHandlingDevice = true;
 			player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed += 0.5f;
 		}
-	}
+
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ModContent.ItemType<Air_Tank>());
+            recipe.AddIngredient(ModContent.ItemType<Bomb_Handling_Device>());
+			recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.Register();
+        }
+    }
 }

@@ -291,57 +291,55 @@ ACCESSORIES:
 (^) Haggard Artery*
 (^) Handy Helper*
 (^) Hazard Charm*
-(^) Headphones
+(^) Headphones*
 (^) Helium Tank
-(^) I-WTPA Standard
-(^) Keepsake Remains
+(^) I-WTPA Standard*
+(^) Keepsake Remains*
 (@2, #) Laser Tag Vest
-(^) Last Descendent
-(^) Locket Necklace
-(^) Lousy Liver
-(^) Lover's Leap
-(^) Magic Glove
-(^) Magic Tripwire
+(^) Last Descendent*
+(^) Locket Necklace*
+(^) Lousy Liver*
+(^) Lover's Leap*
+(^) Magic Glove*
+(^) Magic Tripwire*
 (^) Makeover Choker*
-(^) Messy Leech
-(^) Messy Magma Leech
-(^) Missile Arm Cannon
+(^) Messy Leech*
+(^) Messy Magma Leech*
+(^) Missile Armcannon*
 (^) Mojo Injection*
-(^) Nitro Crate
+(^) Nitro Crate*
 (^) No U Card*
 (^) Olid Organ*
 (^) Parasitic Influence*
 (^) Pincushion
 (^) Plasma Phial*
 (^) Pneumatic Bomb Thrower*
-(^) Potato Battery
+(^) Potato Battery*
 (^) Powerflower*
-(#2, ^2) Priority Mail !!!
-(X) Proactive Protozoa
-(#3, ^2) Protomind
-(@2, #) Rage Quilt
+(#2, ^2) Priority Mail* !!!
+(#3, ^2) Protomind*
 (^) Razorwire*
 (^) Rebreather
 (^) Resin Shield*
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing
-(^) Ruby Reticle
+(^) Ruby Reticle*
 (#3, ^2) Seal of Cinders* !!!
 (^) Shield of Retribution*
 (^) Sonar Visor*
-(^) Scavenger Bag
+(^) Scavenger Bag*
 (^) Solar Panel*
 (^) Sonic Radar*
-(X) Sniper's Mark
+(X) Sniper's Mark*
 (#2, ^2) Strange Computer*
-(^) Super Turbo Reel
+(^) Super Turbo Reel*
 (^) Superjump Cape*
-(^) Symbiote Skull
-(^) Tainted Flesh
+(^) Symbiote Skull*
+(^) Tainted Flesh*
 (^) Trap Charm*
-(^) Turbo Reel
-(^) Unsought Organ
-(^) Volatile Charm
+(^) Turbo Reel*
+(^) Unsought Organ*
+(^) Volatile Charm*
 
 (X) Bouncy Ravel
 (^) Dash Ravel
