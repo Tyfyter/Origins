@@ -213,7 +213,7 @@ namespace Origins.Items {
 							rule.dropIds[^4] = ModContent.ItemType<Tones_Of_Agony>();
 							rule.dropIds[^3] = ModContent.ItemType<Asylum_Whistle>();
 							rule.dropIds[^2] = ModContent.ItemType<Bomb_Launcher>();
-							rule.dropIds[^1] = ModContent.ItemType<Bomb_Yeeter>();
+							rule.dropIds[^1] = ModContent.ItemType<Bomb_Handling_Device>();
 						} else {
 							Origins.instance.Logger.Warn("Main drop rule not present on Lock Box");
 						}

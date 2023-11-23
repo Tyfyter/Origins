@@ -18,7 +18,7 @@ namespace Origins.Items.Accessories {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.FeralClaws);
-			recipe.AddIngredient(ModContent.ItemType<Bomb_Yeeter>());
+			recipe.AddIngredient(ModContent.ItemType<Bomb_Handling_Device>());
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}

@@ -261,12 +261,12 @@ ACCESSORIES:
 (^) Advanced Imaging*
 (^) Air Tank*
 (#2, ^2, ♠) ATACS*
-(#2, ^2) Automated Returns Handler
+(#2, ^2) Automated Returns Handler*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
 (^) Boomerang Magnet*
-(^) Brine-Leafed Clover
+(^) Brine-Leafed Clover*
 (X) C.F.H.E.S.*
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
@@ -295,7 +295,7 @@ ACCESSORIES:
 (^) Helium Tank
 (^) I-WTPA Standard*
 (^) Keepsake Remains*
-(@2, #) Laser Tag Vest
+(@2, #) Laser Tag Vest*
 (^) Last Descendent*
 (^) Locket Necklace*
 (^) Lousy Liver*
@@ -311,7 +311,7 @@ ACCESSORIES:
 (^) No U Card*
 (^) Olid Organ*
 (^) Parasitic Influence*
-(^) Pincushion
+(^) Pincushion*
 (^) Plasma Phial*
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
@@ -319,7 +319,7 @@ ACCESSORIES:
 (#2, ^2) Priority Mail* !!!
 (#3, ^2) Protomind*
 (^) Razorwire*
-(^) Rebreather
+(^) Rebreather*
 (^) Resin Shield*
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing
@@ -347,26 +347,26 @@ ACCESSORIES:
 (X) Drill Ravel
 (X) Grapple Ravel
 (^) Ninja Ravel
-(X) Ornament of Metamorphosis
-(#2, ^2) Ravel*                                      (new plans)
+(X) Ornament of Metamorphosis*
+(^) Ravel*
 (X) Scroll Ravel
-(X) Sigil of the Machine
+(X) Sigil of the Machine*
 (X) Slick Ravel
 (^) Speed Ravel
 (^) Spider Ravel
 (^) Stealth Ravel
-(X) Strange Feather
+(X) Strange Feather*
 (X) Thrust Ravel
 (X) Versatile Ravel
 
-(^) Asylum Whistle
-(^) Eccentric Stone
-(^) Spirit Shard
-(^) Stone Mask
-(^) Timbre of Hell
-(^) Tripod Nip
+(^) Asylum Whistle*
+(^) Eccentric Stone*
+(^) Spirit Shard*
+(^) Stone Mask*
+(^) Timbre of Hell*
+(^) Tripod Nip*
 
-(^) Amebic Vial
+(^) Amebic Vial*
 (X) Crimson Hymn !!!
 (^) Fiberglass Dagger
 (#2, ^2) Mana Drive

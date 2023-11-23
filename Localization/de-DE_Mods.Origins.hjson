@@ -165,7 +165,7 @@ Dialogue: {
 		// Combat_0: BURN HIS HOUSE DOWN!
 		// Combat_1: Hey! Moron!
 		// Combat_2: It's hard to see, what's that in your hand? Knowing you it's a deep fryer.
-		// The_Part_Where_He_Kills_You_0: Well. This is the part where he kills us
+		// The_Part_Where_He_Kills_You_0: Well. This is the part where he kills us.
 		// The_Part_Where_He_Kills_You_1: Oh no...
 	}
 
@@ -198,7 +198,7 @@ Dialogue: {
 		// Combat_5: This looks challenging... for you, I mean.
 		// Combat_6: If I was a betting artificial intelligence, I'd put money on them killing you now.
 		// Combat_7: Let's not tell them, it will be a surprise.
-		// Falling: Weeeeeeeeeeeeeeeeeeeeee
+		// Falling: Weeeeeeeeeeeeeeeeeeeeee.
 		// Gravitation: Congratulations. You're upside down now.
 		// Idle_0: If you become light headed from thirst, feel free to pass out.
 		// Idle_1: Did you know you can donate one or all of your vital organs to the Aperture Science self esteem fund for (boys/girls)? It's true!
@@ -221,7 +221,7 @@ Dialogue: {
 		// KillVillager_1: You monster.
 		// KillVillager_2: What are you doing? YOU MONSTER! They're one of us.
 		// BoundNPCAppearedThrice: I'm starting to think you don't want to rescue that person.
-		// The_Part_Where_He_Kills_You_0: Well. This is the part where he kills us
+		// The_Part_Where_He_Kills_You_0: Well. This is the part where he kills us.
 		// The_Part_Where_He_Kills_You_1: Oh no...
 	}
 

@@ -3427,3 +3427,13 @@ Eruption: {
 	DisplayName: Eruption
 	Tooltip: ""
 }
+
+Bomb_Handling_Device: {
+	DisplayName: Bomb_ Handling_ Device
+	Tooltip: ""
+}
+
+Pneumatic_Bomb_Thrower: {
+	DisplayName: Pneumatic_ Bomb_ Thrower
+	Tooltip: ""
+}

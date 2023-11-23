@@ -14,8 +14,8 @@ namespace Origins.Items.Accessories {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Asylum_Whistle_Entry).Name;
 		public override void SetStaticDefaults() {
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bomb_Yeeter>()] = ModContent.ItemType<Asylum_Whistle>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Asylum_Whistle>()] = ModContent.ItemType<Bomb_Yeeter>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bomb_Handling_Device>()] = ModContent.ItemType<Asylum_Whistle>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Asylum_Whistle>()] = ModContent.ItemType<Bomb_Handling_Device>();
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 28);
