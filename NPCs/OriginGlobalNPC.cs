@@ -77,7 +77,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Steampunker: {
-					shop.InsertAfter<White_Solution>(ItemID.PurpleSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
+					shop.InsertAfter<Gray_Solution>(ItemID.PurpleSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Defiled_Wastelands_Alt_Biome>()));
 					shop.InsertAfter<Teal_Solution>(ItemID.RedSolution, Condition.EclipseOrBloodMoon.And(ShopConditions.GetWorldEvilCondition<Riven_Hive_Alt_Biome>()));
 					break;
 				}

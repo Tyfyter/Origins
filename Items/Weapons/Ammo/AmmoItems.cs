@@ -82,19 +82,17 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.Register();
 		}
 	}
-	public class White_Solution : ModItem {
+	public class Gray_Solution : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Gray Solution");
-			// Tooltip.SetDefault("Spreads the Defiled");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GreenSolution);
-			Item.shoot = ModContent.ProjectileType<White_Solution_P>() - ProjectileID.PureSpray;
+			Item.shoot = ModContent.ProjectileType<Gray_Solution_P>() - ProjectileID.PureSpray;
 			Item.value = Item.sellPrice(silver: 3);
 		}
 	}
-	public class White_Solution_P : ModProjectile {
+	public class Gray_Solution_P : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PureSpray);

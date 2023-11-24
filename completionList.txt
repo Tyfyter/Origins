@@ -367,24 +367,24 @@ ACCESSORIES:
 (^) Tripod Nip*
 
 (^) Amebic Vial*
-(X) Crimson Hymn !!!
-(^) Fiberglass Dagger
-(#2, ^2) Mana Drive
-(^) Refactoring Pieces
-(X) Soul Scythe !!!
-(^) Stack of Shraps
+(X) Crimson Hymn* !!!
+(^) Fiberglass Dagger*
+(#2, ^2) Mana Drive*
+(^) Refactoring Pieces*
+(X) Soul Scythe* !!!
+(^) Stack of Shraps*
 (X) Void Arcanum
 
 (%3, X) Armored Core
-(^) Entangled Energy
-(X) Forbidden Voice !!!
-(^) Lazy Cloak
-(^) Mysterious Spray
-(^) Protozoa Food
-(#, ^2) Scrap Compactor
-(^) Scribe of the Meat God
-(^) Third Eye
-(X) Weakpoint Analyzer !!!
+(^) Entangled Energy*
+(X) Forbidden Voice* !!!
+(^) Lazy Cloak*
+(^) Mysterious Spray*
+(^) Protozoa Food*
+(#, ^2) Scrap Compactor*
+(^) Scribe of the Meat God*
+(^) Third Eye*
+(X) Weakpoint Analyzer* !!!
 
 (^) Agility Core
 (^) Combat Core
@@ -574,7 +574,6 @@ RANGED WEAPONS:
 (^) Dreikan
 (X) EAC Thunder
 (^) Laser Tag Gun
-(X) Serpentine
 (X) Seventh Spline
 (X) Shroomshot
 (X) Skewr

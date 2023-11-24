@@ -208,12 +208,6 @@ namespace Origins {
 					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);
 				}
 			}
-			if (item.CountsAsClass(DamageClasses.Explosive)) {
-				if (madHand) {
-					target.AddBuff(BuffID.Oiled, 600);
-					target.AddBuff(BuffID.OnFire, 600);
-				}
-			}
 		}
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) {//flasks

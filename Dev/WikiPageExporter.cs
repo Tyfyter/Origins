@@ -543,7 +543,7 @@ namespace Origins.Dev {
 			if (item.damage > 0) {
 				string damageClass = item.DamageType.DisplayName.Value;
 				damageClass = damageClass.Replace(" damage", "");
-				damageClass = Regex.Replace(damageClass, "( |^)(\\w)", (match) => match.Groups[2].Value.ToUpper());
+				damageClass = Regex.Replace(damageClass, "( |^)(\\w)", (match) => match.Groups[1].Value + match.Groups[2].Value.ToUpper());
 				data.Add("DamageClass", damageClass);
 			}
 			data.AppendStat("Knockback", item.knockBack, 0);
