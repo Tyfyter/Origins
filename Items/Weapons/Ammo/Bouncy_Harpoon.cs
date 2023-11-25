@@ -9,7 +9,6 @@ namespace Origins.Items.Weapons.Ammo {
     public class Bouncy_Harpoon : ModItem {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bouncy Harpoon");
 			Item.ResearchUnlockCount = 99;
 			ID = Type;
 		}
@@ -31,8 +30,8 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.Register();
 
 			recipe = Recipe.Create(Type, 8);
-			recipe.AddIngredient(ModContent.ItemType<Harpoon>(), 8);
-			recipe.AddIngredient(ItemID.PinkGel);
+            recipe.AddIngredient(ItemID.PinkGel);
+            recipe.AddIngredient(ModContent.ItemType<Harpoon>(), 8);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
@@ -40,7 +39,6 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Bouncy_Harpoon_P : Harpoon_P {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bouncy Harpoon");
 			ID = Type;
 		}
 		public override void OnSpawn(IEntitySource source) {

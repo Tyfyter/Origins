@@ -30,7 +30,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.CrimtaneBar, 8);
+			recipe.AddIngredient(ItemID.CrimtaneBar, 12);
 			recipe.AddIngredient(ModContent.ItemType<Harpoon_Gun>());
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();

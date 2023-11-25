@@ -24,7 +24,7 @@ namespace Origins.Items.Armor.Scavenger {
 			return body.type == ModContent.ItemType<Scavenger_Breastplate>() && legs.type == ModContent.ItemType<Scavenger_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "All explosives inflict 'Impeding Shrapnel'";
+			player.setBonus = "All explosives inflict 'Impeding Shrapnel'\nAdditional scrap drops from Ashen enemies";
 			//Originplayer.scavvyarmor = true;
 		}
 		public override void AddRecipes() {

@@ -6,16 +6,13 @@ using Origins.Items.Materials;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.Graphics.Shaders;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-	public class Bile_Dart : ModItem {
+    public class Bile_Dart : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bile Dart");
-			// Tooltip.SetDefault("Stuns the target");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -80,7 +77,7 @@ namespace Origins.Items.Weapons.Ammo {
             SoundEngine.PlaySound(SoundID.NPCHit22.WithVolume(0.5f), Projectile.position);
         }
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-            target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 30);
+            target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 60);
         }
 	}
 	public class Bile_Dart_Aura : ModProjectile {
@@ -88,7 +85,6 @@ namespace Origins.Items.Weapons.Ammo {
 		public static ScreenTarget AuraTarget { get; private set; }
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bile Dart Aura");
 			ID = Type;
 		}
 		public override void SetDefaults() {

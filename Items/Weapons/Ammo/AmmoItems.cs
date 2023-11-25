@@ -9,33 +9,28 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-	public class Giant_Metal_Slug : ModItem {
+	public class Metal_Slug : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Giant Metal Slug");
 			Item.ResearchUnlockCount = 199;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.MusketBall);
 			Item.damage = 25;
-			Item.shoot = Giant_Metal_Slug_P.ID;
+			Item.shoot = Metal_Slug_P.ID;
 			Item.ammo = Item.type;
 			Item.value = Item.sellPrice(silver: 3);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 10);
-			recipe.AddIngredient(ItemID.IronBar);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-			recipe = Recipe.Create(Type, 10);
-			recipe.AddIngredient(ItemID.LeadBar);
-			recipe.AddTile(TileID.MythrilAnvil);
+			Recipe recipe = Recipe.Create(Type, 5);
+            recipe.AddIngredient(ItemID.ExplosivePowder);
+            recipe.AddRecipeGroup(RecipeGroupID.IronBar);
+            recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
 	}
-	public class Giant_Metal_Slug_P : ModProjectile {
+	public class Metal_Slug_P : ModProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Giant Metal Slug");
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -55,7 +50,6 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Thermite_Canister : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Thermite Canister");
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 199;
 		}
@@ -104,8 +98,6 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class Teal_Solution : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Teal Solution");
-			// Tooltip.SetDefault("Spreads the Riven");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {

@@ -14,8 +14,6 @@ namespace Origins.Items.Weapons.Ammo {
 			"TornSource"
 		};
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Alkahest Bullet");
-			// Tooltip.SetDefault("Tenderizes the target");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {

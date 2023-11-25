@@ -8,7 +8,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Peatball : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Peatball");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {

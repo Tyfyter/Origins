@@ -531,12 +531,12 @@ MELEE WEAPONS:
 RANGED WEAPONS:
 ---
 (^) Ancient Kruncher
-(^) Bloodletter
-(^) Blotopus
+(^) Bloodletter*
+(^) Blotopus*
 (^) Bolt Gun
 (^) Fiberglass Bow
 (^) Fiberglass Pistol
-(^) Harpoon Gun
+(^) Harpoon Gun*
 (^) Longbone
 (^) Magma Grappler
 (#4, ^2) Neural Network !!!
@@ -549,12 +549,12 @@ RANGED WEAPONS:
 (^) 2-in-1 Shotty
 (^) 3-in-1 Shotty
 
-(^) Acrid Impaler
-(X) Adamantite Harpoon Gun
-(#3, ^2) Boat Rocker
+(^) Acrid Impaler*
+(X) Adamantite Harpoon Gun*
+(#3, ^2) Boat Rocker*
 (^) Boiler
 (^) Cleaver Rifle
-(X) Cobalt Harpoon Gun
+(X) Cobalt Harpoon Gun*
 (X) Dart Crossbow
 (^) Dragon's Breath (replanning soon)
 (^) Firespit
@@ -570,9 +570,9 @@ RANGED WEAPONS:
 (X) Tripod Jawbow
 (^) Vipershot
 
-(X) Disciple Maker
+(X) Disciple Maker*
 (^) Dreikan
-(X) EAC Thunder
+(X) EAC Thunder*
 (^) Laser Tag Gun
 (X) Seventh Spline
 (X) Shroomshot
@@ -682,7 +682,6 @@ EXPLOSIVE WEAPONS:
 (^) Bombardment
 (^) Bomb Launcher (needs to be balanced)
 (^) Brainade
-(^) Defiled Spirit
 (#3, ^2) Eruption !!!
 (^) Flashbang
 (^) Floaty Bomb
@@ -1046,33 +1045,34 @@ MOUNTS & PETS:
 
 AMMO:
 ---
-(^) Bouncy Harpoon
-(^) Explosive Harpoon
-(^) Flammable Harpoon
-(^) Harpoon
+(^) Bouncy Harpoon*
+(^) Defiled Spirit*
+(^) Explosive Harpoon*
+(^) Flammable Harpoon*
+(^) Harpoon*
 (^) Peatball*
-(^) Resizable Mine Mk. 1
-(^) Resizable Mine Mk. 2
+(^) Resizable Mine Mk. 1*
+(^) Resizable Mine Mk. 2*
+(^) Scrap*
 
-(^) Alkahest Arrow
-(^) Alkahest Bullet
-(^) Alkaline Harpoon
-(^) Bile Arrow 
-(^) Bile Bullet
-(^) Bile Dart
-(^) Cursed Harpoon
-(^) Giant Metal Slug
-(^) Resizable Mine Mk. 3
-(^) Thermite Canister
+(^) Alkahest Arrow*
+(^) Alkahest Bullet*
+(^) Alkaline Harpoon*
+(^) Bile Arrow*
+(^) Bile Bullet*
+(^) Bile Dart*
+(^) Cursed Harpoon*
+(^) Metal Slug*
+(^) Resizable Mine Mk. 3*
+(^) Thermite Canister*
 
-(^) Resizable Mine Mk. 4
-(^) Scrap
+(^) Resizable Mine Mk. 4*
 
-(^) Resizable Mine Mk. 5
-(#2, ^2) Starfuze
+(^) Resizable Mine Mk. 5*
+(#2, ^2) Starfuze*
 
-(^) Gray Solution
-(^) Teal Solution
+(^) Gray Solution*
+(^) Teal Solution*
 ---
 
 UI:

@@ -7,8 +7,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Resizable_Mine_One : Resizable_Mine_Two {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Resizable Mine Mk. I");
-			// Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -32,8 +30,6 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class Resizable_Mine_Two : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Resizable Mine Mk. II");
-			// Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -53,12 +49,15 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.AddIngredient(ItemID.IronOre, 2);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
-		}
+            recipe = Recipe.Create(Type, 2);
+            recipe.AddIngredient(ItemID.ExplosivePowder);
+            recipe.AddIngredient(ItemID.LeadOre, 2);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
 	}
 	public class Resizable_Mine_Three : Resizable_Mine_Two {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Resizable Mine Mk. III");
-			// Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -82,8 +81,6 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class Resizable_Mine_Four : Resizable_Mine_Two {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Resizable Mine Mk. IV");
-			// Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -99,16 +96,14 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 2);
-			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(ItemID.ChlorophyteOre, 2);
+            recipe.AddIngredient(ItemID.ChlorophyteOre, 2);
+            recipe.AddIngredient(ItemID.ExplosivePowder);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
 	}
 	public class Resizable_Mine_Five : Resizable_Mine_Two {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Resizable Mine Mk. V");
-			// Tooltip.SetDefault("'Compatible with your garden-variety mine launchers!'");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -133,7 +128,6 @@ namespace Origins.Items.Weapons.Ammo {
 	public abstract class Resizable_Mine_P<TextureItem> : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => (typeof(TextureItem).Namespace + "." + typeof(TextureItem).Name).Replace('.', '/');
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Resizable Mine");
 			Origins.MagicTripwireRange[Type] = 40;
 		}
 		public override void SetDefaults() {

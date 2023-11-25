@@ -1,11 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
-    //extends harpoon gun so it doesn't have to have redundant overrides for CanShoot, CanConsumeAmmo, etc.
     public class Acrid_Impaler : Harpoon_Gun {
 		
 		public override void SetDefaults() {
@@ -27,7 +27,13 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.rare = ItemRarityID.LightRed;
 			Item.autoReuse = true;
 		}
-		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 12);
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
+        }
+        public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override void OnConsumeAmmo(Item ammo, Player player) {
 			if (!Main.rand.NextBool(7)) {
 				ammo.stack++;

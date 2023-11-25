@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useTime = 57;
 			Item.useAnimation = 57;
 			Item.shoot = ModContent.ProjectileType<Boomphracken_P>();
-			Item.useAmmo = ModContent.ItemType<Giant_Metal_Slug>();
+			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
 			Item.knockBack = 10f;
 			Item.shootSpeed = 24f;
 			Item.value = Item.sellPrice(gold: 20);
@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			recipe.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (type == Giant_Metal_Slug_P.ID) type = Item.shoot;
+			if (type == Metal_Slug_P.ID) type = Item.shoot;
 		}
 	}
 	public class Boomphracken_P : ModProjectile {

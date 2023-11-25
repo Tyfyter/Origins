@@ -8,8 +8,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Arrow : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bile Arrow");
-			// Tooltip.SetDefault("Stuns the target");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -41,7 +39,7 @@ namespace Origins.Items.Weapons.Ammo {
 			SoundEngine.PlaySound(SoundID.Item171, Projectile.position);
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 20);
+			target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), 30);
 		}
 	}
 }
