@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Ammo {
 			ID = Type;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.OnFire, Main.rand.Next(270, 360));
+			target.AddBuff(BuffID.OnFire, Main.rand.Next(360, 480));
 		}
 	}
 }

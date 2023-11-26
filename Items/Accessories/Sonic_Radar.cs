@@ -20,11 +20,11 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.MetalDetector);
+            recipe.AddIngredient(ItemID.TrapsightPotion, 5);
+            recipe.AddIngredient(ItemID.MetalDetector);
 			recipe.AddIngredient(ItemID.Radar);
 			recipe.AddIngredient(ItemID.SpelunkerPotion, 5);
-			recipe.AddIngredient(ItemID.TrapsightPotion, 5);
-			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
+			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
 	}

@@ -64,7 +64,7 @@ namespace Origins.World.BiomeData {
 		}
 		public override void Load() {
 			FirstLesionDropRule = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Riven_Splitter>())
-				.WithOnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Harpoon>(), 1, 100, 100));
+				.WithOnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Harpoon>(), 1, 99, 99));
 
 			LesionDropRule = new OneFromRulesRule(1,
 				FirstLesionDropRule,

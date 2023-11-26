@@ -292,7 +292,7 @@ ACCESSORIES:
 (^) Handy Helper*
 (^) Hazard Charm*
 (^) Headphones*
-(^) Helium Tank
+(^) Helium Tank*
 (^) I-WTPA Standard*
 (^) Keepsake Remains*
 (@2, #) Laser Tag Vest*
@@ -322,13 +322,13 @@ ACCESSORIES:
 (^) Rebreather*
 (^) Resin Shield*
 (^) Return To Sender*
-(#2, ^2) Rope of Sharing
+(#2, ^2) Rope of Sharing*
 (^) Ruby Reticle*
 (#3, ^2) Seal of Cinders* !!!
-(^) Shield of Retribution*
-(^) Sonar Visor*
 (^) Scavenger Bag*
+(^) Shield of Retribution*
 (^) Solar Panel*
+(^) Sonar Visor*
 (^) Sonic Radar*
 (X) Sniper's Mark*
 (#2, ^2) Strange Computer*
@@ -538,9 +538,9 @@ RANGED WEAPONS:
 (^) Fiberglass Pistol
 (^) Harpoon Gun*
 (^) Longbone
-(^) Magma Grappler
+(^) Magma Grappler*
 (#4, ^2) Neural Network !!!
-(^) Riven Splitter
+(^) Riven Splitter*
 (^) Shardcannon
 (^) Sleetfire
 (^) Tendon Tear
@@ -560,13 +560,13 @@ RANGED WEAPONS:
 (^) Firespit
 (X) Frequency
 (^) Incision
-(X) Left Click
-(X) Mythril Harpoon Gun
-(X) Orichalcum Harpoon Gun
-(X) Palladium Harpoon Gun
-(X) Spray 'N Pray
+(X) Left Click*
+(X) Mythril Harpoon Gun*
+(X) Orichalcum Harpoon Gun*
+(X) Palladium Harpoon Gun*
+(X) Spray 'N Pray*
 (^) Tiny Sniper
-(X) Titanium Harpoon Gun
+(X) Titanium Harpoon Gun*
 (X) Tripod Jawbow
 (^) Vipershot
 
@@ -580,7 +580,7 @@ RANGED WEAPONS:
 
 (X) Fulcrum
 (X) Journey's Edge
-(X) L.W.M.U.G.
+(X) L.W.M.U.G.*
 (X) Pinpoint
 (X) Synergy
 ---
@@ -714,7 +714,7 @@ EXPLOSIVE WEAPONS:
 (^) Crystal Grenade
 (#2, ^2) Grenado (replanning soon)
 (X) Holy Hand Grenade
-(^) Mine Flayer
+(^) Mine Flayer*
 (^) Nuclear Arm*
 (#2, ^2) Omni-Directional Claymore
 (^) Rocodile

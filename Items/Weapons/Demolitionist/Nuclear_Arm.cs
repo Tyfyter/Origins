@@ -48,7 +48,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Nuclear_Arm_P";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Nuclear Arm");
 			Origins.MagicTripwireRange[Type] = 32;
 			Main.projFrames[Type] = 4;
 			ID = Type;

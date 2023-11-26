@@ -82,6 +82,7 @@ namespace Origins.NPCs {
 					break;
 				}
 				case NPCID.Dryad: {
+					shop.Add<Mojo_Injection>();
 					shop.Add<Cleansing_Station_Item>(Quest.QuestCondition<Cleansing_Station_Quest>());
 					shop.Add<Mojo_Flask>(Quest.QuestCondition<Cleansing_Station_Quest>());
 
