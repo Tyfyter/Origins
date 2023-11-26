@@ -1,20 +1,16 @@
+using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Origins.Items.Materials;
+using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using Origins.Items.Materials;
-using Microsoft.Xna.Framework;
-using System;
-using Origins.Dev;
-using System.Collections.Generic;
 
 namespace Origins.Items.Armor.Felnum {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Felnum_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Felnum Helmet");
-			// Tooltip.SetDefault("4% increased damage");
 			Item.ResearchUnlockCount = 1;
 			GlowMask = Origins.AddGlowMask(Texture + "_Glow_Head");
 		}
@@ -70,8 +66,6 @@ namespace Origins.Items.Armor.Felnum {
 	public class Felnum_Breastplate : ModItem, INoSeperateWikiPage {
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Felnum Breastplate");
-			// Tooltip.SetDefault("2% increased damage\n5% increased movement speed");
 			Item.ResearchUnlockCount = 1;
 			GlowMask = Origins.AddGlowMask(Texture + "_Glow_Body");
 		}
@@ -105,8 +99,6 @@ namespace Origins.Items.Armor.Felnum {
 	public class Felnum_Greaves : ModItem, INoSeperateWikiPage {
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Felnum Greaves");
-			// Tooltip.SetDefault("5% increased movement speed");
 			Item.ResearchUnlockCount = 1;
 			GlowMask = Origins.AddGlowMask(Texture + "_Glow_Legs");
 		}

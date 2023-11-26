@@ -221,7 +221,7 @@ ARMOR:
 (^) Felnum Armor
 (^) Fiberglass Armor
 (^) Lost Armor
-(^) Myth Armor
+(^) Mythic Armor
 (^) Riptide Armor
 (^) Riven Armor
 (#3, ^2) Scavenger Armor !!!

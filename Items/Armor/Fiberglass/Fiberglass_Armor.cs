@@ -1,15 +1,12 @@
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using Origins.Dev;
 
 namespace Origins.Items.Armor.Fiberglass {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Fiberglass_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Fiberglass Helmet");
-			// Tooltip.SetDefault("'This doesn't seem very protective'");
 			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
 			Item.ResearchUnlockCount = 1;
 		}
@@ -37,10 +34,6 @@ namespace Origins.Items.Armor.Fiberglass {
 	public class Fiberglass_Body : ModItem, INoSeperateWikiPage {
 		public static int SlotID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Fiberglass Pauldrons");
-			// Tooltip.SetDefault("These don't seem very protective");
-			//ArmorIDs.Body.Sets.HidesTopSkin[Item.bodySlot] = true;
-			//ArmorIDs.Body.Sets.HidesBottomSkin[Item.bodySlot] = true;
 			Item.ResearchUnlockCount = 1;
 			SlotID = Item.bodySlot;
 		}
@@ -53,11 +46,7 @@ namespace Origins.Items.Armor.Fiberglass {
 	public class Fiberglass_Legs : ModItem, INoSeperateWikiPage {
 		public static int SlotID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Fiberglass Boots");
-			// Tooltip.SetDefault("'These don't seem very protective'");
 			Item.ResearchUnlockCount = 1;
-			//ArmorIDs.Legs.Sets.HidesTopSkin[Item.legSlot] = true;
-			//ArmorIDs.Legs.Sets.HidesBottomSkin[Item.legSlot] = true;
 			SlotID = Item.legSlot;
 		}
 		public override void SetDefaults() {

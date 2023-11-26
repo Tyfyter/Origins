@@ -12,8 +12,6 @@ namespace Origins.Items.Armor.Acrid {
     [AutoloadEquip(EquipType.Head)]
 	public class Acrid_Dome : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acrid Dome");
-			// Tooltip.SetDefault("10% increased explosive critical chance and throwing velocity\nEffect stronger when submerged\nEmit a small aura of light");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Dome_Head_Glow");
 			}
@@ -72,8 +70,6 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Headgear : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acrid Headgear");
-			// Tooltip.SetDefault("10% increased magic damage and 25% reduced mana cost\nEffect stronger when submerged\nEmit a small aura of light");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Headgear_Head_Glow");
 			}
@@ -124,8 +120,6 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Helm : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acrid Helm");
-			// Tooltip.SetDefault("10% increased melee damage and speed\nEffect stronger when submerged\nEmit a small aura of light");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Helm_Head_Glow");
 			}
@@ -176,8 +170,6 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acrid Mask");
-			// Tooltip.SetDefault("10% increased summoning damage\n+1 minion slot\nEffects stronger when submerged\nEmit a small aura of light");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Mask_Head_Glow");
 			}
@@ -228,8 +220,6 @@ namespace Origins.Items.Armor.Acrid {
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Visor : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acrid Visor");
-			// Tooltip.SetDefault("20% increased ranged attack speed\nEffect stronger when submerged\nEmit a small aura of light");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Visor_Head_Glow");
 			}
