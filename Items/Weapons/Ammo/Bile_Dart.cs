@@ -172,7 +172,7 @@ namespace Origins.Items.Weapons.Ammo {
 			if (anyActive) {
 				Filters.Scene["Origins:MaskedRasterizeFilter"].GetShader().UseImage(AuraTarget.RenderTarget, 1);
 			}
-			spriteBatch.Draw(AuraTarget.RenderTarget, Vector2.Zero, Color.White);
+			//spriteBatch.Draw(AuraTarget.RenderTarget, Vector2.Zero, Color.White);
 		}
 	}
 
