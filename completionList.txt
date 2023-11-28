@@ -49,11 +49,11 @@ BOSSES AND MINI-BOSSES:
 (#, ^2) Ichor Storm 
 
 (^) Defiled Amalgamation*
-($, ^2/3) Fiberglass Weaver
+($, ^2/3) Fiberglass Weaver !!!
 (X) Scrapper
-(#2, ^2) World Cracker !!!
+(#3, $3, ^2) World Cracker !!!
 
-(%?, ^2) Lost Diver (Just needs the item/projectile/use sprites)
+(%, ^2) Lost Diver
 (X) Miscreant
 
 (X) Duskord
@@ -61,16 +61,16 @@ BOSSES AND MINI-BOSSES:
 (X) Severus, the Dark One
 
 (%3) Origins final boss
-(@5, #, $) I.C.A.R.U.S
-(#, $, ^2) Quantux
+(X) I.C.A.R.U.S
+(X) Quantux
 ---
 
 
 TOWN NPCs:
 ---
-(#2) TOWN NPC QUEST MECHANICS (general)
+(#3) TOWN NPC QUEST MECHANICS (general)
 
-(#2, %2, ^2) Acid Freak
+(#3, %2, ^2) Acid Freak
 (#, ^2) Defiled Effigy
 
 (%2, X) Dusk Trader
@@ -86,9 +86,9 @@ VANILLA MODIFICATIONS:
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (^) Demolitionist (to sell different items based on peat sold)*
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
-(^) Explosive Defense Punishment (increased affliction from defense)
+(^) Explosive Defense Punishment (increased affliction from defense)*
 (^) Harpoon (new weapon to introduce sub-class)*
-(X) Proximity Mine Launcher to use R-Mines !!!
+(X) Proximity Mine Launcher to use R-Mines* !!!
 ---
 
 
@@ -266,12 +266,12 @@ ACCESSORIES:
 (^) Bomb Handling Device*
 (^) Boomerang Magnet*
 (^) Brine-Leafed Clover*
-(X) C.F.H.E.S.*
+(^) C.F.H.E.S.*
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
-(X) Control Locus*
+(X) Control Locus* !!!
 (^) Coologne*
 (^) Danger Barrel*
 (^) Decaying Scale*
@@ -294,7 +294,7 @@ ACCESSORIES:
 (^) Helium Tank*
 (^) I-WTPA Standard*
 (^) Keepsake Remains*
-(@2, #) Laser Tag Vest*
+(X) Laser Tag Vest*
 (^) Last Descendent*
 (^) Locket Necklace*
 (^) Lousy Liver*
@@ -316,7 +316,7 @@ ACCESSORIES:
 (^) Potato Battery*
 (^) Powerflower*
 (#2, ^2) Priority Mail* !!!
-(#3, ^2) Protomind*
+(#3, ^2) Protomind* !!!
 (^) Razorwire*
 (^) Rebreather*
 (^) Resin Shield*
@@ -371,7 +371,6 @@ ACCESSORIES:
 (#2, ^2) Mana Drive*
 (^) Refactoring Pieces*
 (X) Soul Scythe* !!!
-(^) Stack of Shraps*
 (X) Void Arcanum
 
 (%3, X) Armored Core
@@ -382,6 +381,7 @@ ACCESSORIES:
 (^) Protozoa Food*
 (#, ^2) Scrap Compactor*
 (^) Scribe of the Meat God*
+(^) Stack of Shraps*
 (^) Third Eye*
 (X) Weakpoint Analyzer* !!!
 
@@ -417,7 +417,7 @@ VANITY:
 (X) Well-Gelled Hero's Hair
 
 (^) Tyfyter's Set
-(@, #) The First Dream
+(X) The First Dream
 ---
 
 
@@ -510,7 +510,7 @@ MELEE WEAPONS:
 (X) Fair In Square
 (^) Knee Slapper
 (^) Nematoclaw*
-(%, @, #) Origins Biome Keybrands
+(X) Origins Biome Keybrands
 (^) Telephone Pole*
 (X) Unicorn Lance
 
@@ -519,9 +519,9 @@ MELEE WEAPONS:
 (^) Personal Laser Blade*
 (X) Pile Bunker
 
-(%3, X) Celestial Point
+(X) Celestial Point
 (X) Chromtain Smasher
-(%3, ^) Eyndum Scar
+(X) Eyndum Scar
 (X) Rocket Lance
 (#2, ^2) The Bird
 ---
@@ -538,7 +538,7 @@ RANGED WEAPONS:
 (^) Harpoon Gun*
 (^) Longbone
 (^) Magma Grappler*
-(#4, ^2) Neural Network !!!
+(#3, ^2) Neural Network !!!
 (^) Riven Splitter*
 (^) Shardcannon
 (^) Sleetfire
@@ -550,7 +550,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler*
 (X) Adamantite Harpoon Gun*
-(#3, ^2) Boat Rocker*
+(^) Boat Rocker*
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun*
@@ -660,7 +660,7 @@ SUMMONER WEAPONS:
 (X) Culltivator
 (X) Doom Incantation
 (X) Ego
-(@2/3, #) Fiber Optic Whip
+(@2/3, #2) Fiber Optic Whip
 (X) Obsidian Bone
 (X) Ribatar
 (X) Seraphim Song
@@ -708,10 +708,10 @@ EXPLOSIVE WEAPONS:
 (^) Thermite Launcher
 
 (^) Bomboomstick
-(#2, ^2) Chlorodynamite !!!
+(#2, ^2) Chlorodynamite
 (^) Crystal Bomb
 (^) Crystal Grenade
-(#2, ^2) Grenado (replanning soon)
+(#2, ^2) Grenado (replanning never)
 (X) Holy Hand Grenade
 (^) Mine Flayer*
 (^) Nuclear Arm*
@@ -741,7 +741,7 @@ TILES:
 ---
 (#4, ^2) Amoeba Fluid !!!
 (^) Angelic Cloud
-(#3, ^2) Batholith*
+(^) Batholith*
 (^) Bleeding Obsidian
 (X) Brittle Quartz !!!
 (#, ^2) Carburite
@@ -759,10 +759,10 @@ TILES:
 (^) Encrusted Ore
 (^) Felnum Ore
 (^) Fiberglass
-(#4, ^2) Genesis Grass
+(X) Genesis Grass
 (#, ^2) Geyser Core
 (^) Hardened Defiled Sand
-(#4, ^2) Harmony Brick
+(X) Harmony Brick
 (^) Lost Ore
 (#, ^2) Mildew
 (^) Peat Moss*
@@ -772,9 +772,9 @@ TILES:
 (^) Sanguinite Ore
 (^) Silica
 (^) Spug Flesh
-(@5, ^3) Sulphur Stone
+(^) Sulphur Stone
 (^) White Ice
-(@6?) Riven Cactus !!!
+(@6) Riven Cactus !!!
 (^) Riven Grass
 
 (#, ^2) Batholith Wall
@@ -836,13 +836,14 @@ TILES:
 (^) Acetabularia
 (^) Brineglow Vine
 (^) Defiled Misc Tiles*
-(#2, ^2) Eden Tree
+(^) Defiled Tree
+(X) Eden Tree
 (^) Gel Blister
 (#2, ^2) Laser Tag Console
 (#2, ^2) Riven Foliage !!!
 (^) Riven Lesion
 (^) Riven Pot
-(#4, ^2) Riven Tree !!! (and defiled tree for now)
+(^) Riven Tree
 (^) Soulspore
 (X) Star Cannon Cannon
 (^) Wilting Rose
@@ -850,29 +851,29 @@ TILES:
 
 (^) A Perfect World
 
-(X) Ancient Music Box (Brine Pool)
-(X) Ancient Music Box (Defiled Wastelands)
-(#, ^2) Ancient Music Box (Riven Hive)
-(X) Music Box (Abstract)
-(X) Music Box (Brine Pool)
+(@, #, $3) Ancient Music Box (Brine Pool)
+(@, #, $3) Ancient Music Box (Defiled Wastelands) !!!
+(#, $3, ^2) Ancient Music Box (Riven Hive) !!!
+(@, #, $3) Music Box (Abstract)
+(@, #, $3) Music Box (Brine Pool)
 (X) Music Box (Cosmos)
 (X) Music Box (Cubekon Temple)
 (X) Music Box (Dawn)
 (^) Music Box (Defiled Caverns)
 (^) Music Box (Defiled Wastelands)
 (X) Music Box (Dusk)
-(X) Music Box (Eutrophic Sea)
+(@, #, $3) Music Box (Eutrophic Sea)
 (X) Music Box (Fractured Isles)
-(X) Music Box (Riven Dancer 2081)
+(@, #, $3) Music Box (Riven Dancer 2081)
 (^) Music Box (Riven Hive)
-(X) Otherworldly Music Box (Defiled Wastelands)
+(@, #, $3) Otherworldly Music Box (Defiled Wastelands)
 
 (^) Defiled Amalgamation Trophy
 (^) Defiled Amalgamation Relic
-(^3) Miscreant Trophy
-(^3) Miscreant Relic
-(^3) Quantux Trophy
-(^3) Quantux Relic
+(@, #3) Miscreant Trophy
+(@, #3) Miscreant Relic
+(@, #3) Quantux Trophy
+(@, #3) Quantux Relic
 (^) World Cracker Trophy
 (^) World Cracker Relic
 ---
@@ -963,17 +964,17 @@ CRITTERS AND FISH:
 CONSUMABLES:
 ---
 (^) Quantum Injector
-(@5, #3) The Defiled Will
+(X) The Defiled Will
 
 (^) Absorption Potion
-(#2, ^2) Ambition Potion !!!
+(^) Ambition Potion
 (^) Antisolve Potion
 (^) Fervor Potion
 (^) Flask of Alkahest
 (^) Flask of Black Bile
 (#2, ^2) Focus Potion
 (^) Mojo Flask
-(#2, ^2) Nullification Potion (Nullification potion doesn't need a buff graphic, it's a single-instance effect)
+(@2, #2) Nullification Potion
 (^) Protean Potion
 (^) Purification Potion
 (^) Voidsight Potion
@@ -981,7 +982,7 @@ CONSUMABLES:
 (^) Bileberry
 (^) Blue Bovine
 (^) Bread
-(#3 (needs drop during april fools), ^2) Brine Cheese
+(#3, ^2) Brine Cheese
 (^) Honey Wheat Bread
 (^) Irish Cheddar
 (^) Jam Sandwich
@@ -1013,10 +1014,10 @@ CONSUMABLES:
 (#2, ^2) Ace in the Hole
 (X) Gift of Giving
 (^) Gooey Water
-(#3, ^2) Holiday Hair Dye
+(@2, #3) Holiday Hair Dye !!!
 (#2, ^2) Invisible Ink
 (^) Lottery Ticket
-(#2, ^2) Magic Brine Dropper
+(^) Magic Brine Dropper
 (^) White Water
 (#2, ^2) Void Lock
 
@@ -1027,18 +1028,18 @@ CONSUMABLES:
 
 MOUNTS & PETS:
 ---
-(X) Ever-Watchful Eye (Juvenile Amalgamation)
-(X) Fleshy Globe (Self-Contained Universe)
+(X) Ever-Watchful Eye (Juvenile Amalgamation) !!!
+(X) Fleshy Globe (Self-Contained Universe) !!!
 (^) Strange Power-Up (Platformer Mech)
 (^) Chromatic Scale (Rainbow Pangolin)
 
 (^) Amoeba Toy (Meberoid)
 (#2, ^2) Salty Seed (Eutrophic Cell)
-(@2, #2) Rusty Cross Necklace (Guardian Angel)
+(X) Rusty Cross Necklace (Guardian Angel)
 (X) Smith's Hammer (Walking Furnace) !!!
 (^) Suspicious Looking Pebble (Defiled Blight)
 
-(#, ^2) Chew Toy (Chee Toy)
+(#, ^2) Chew Toy (Chee Toy) !!!
 ---
 
 
@@ -1091,31 +1092,32 @@ UI:
 (#3, ^2) Riven Map/Bestiary Backdrop !!!
 (^) Riven Icon
 
-(@5, ^3) 30x30 Origins Icon
-(#, ^2) Origins Mod Browser Logo
+(#3, ^2) 30x30 Origins Icon
+(@5, ^3) Origins Mod Browser Logo
 ---
 
 MUSIC:
 ---
+($3) Ashen Factory
 (X) Brine Pool
-(^) Cubekon Temple
+($3) Cubekon Temple
 (X) Dawn
-(^) Defiled Caverns
+($3) Defiled Caverns
 (^) Defiled Wastelands
-(^) Defiled Wastelands - Mimic Route
+($3) Defiled Wastelands - Mimic Route?
 (X) Fiberglass Caves
 (X) Fractured Isles
 (^) Riven Hive
-(^) The Dusk
+(X) The Dusk
 
-(^) Defiled Amalgamation
+($3) Defiled Amalgamation
 (X) Duskord
-(X) Fiberglass Threader
+(X) Fiberglass Weaver
 (X) I.C.A.R.U.S
 (X) Lost Diver
 (X) Miscreant
 (X) Quantux
-(O) World Cracker
+($3) World Cracker
 (X) Scrapper
 (X) Severus
 
