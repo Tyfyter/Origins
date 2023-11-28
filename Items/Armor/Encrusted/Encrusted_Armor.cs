@@ -12,8 +12,6 @@ namespace Origins.Items.Armor.Encrusted {
 		public const float lightMagnitude = 0.3f;
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Encrusted Mask");
-			// Tooltip.SetDefault("Increases minion damage by 10%");
 			GlowMask = Origins.AddGlowMask(Texture+"_Head_Glow");
 			Item.ResearchUnlockCount = 1;
 		}
@@ -52,8 +50,6 @@ namespace Origins.Items.Armor.Encrusted {
 	public class Encrusted_Coat : ModItem, INoSeperateWikiPage {
 		public static short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Encrusted Coat");
-			// Tooltip.SetDefault("Increases your max number of minions by 1");
 			GlowMask = Origins.AddGlowMask(Texture + "_Body_Glow");
 			Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Encrusted/Encrusted_Coat_Body_Glow");
 			Item.ResearchUnlockCount = 1;

@@ -18,11 +18,10 @@ namespace Origins.Items.Armor.Cryosten {
 			return body.type == ModContent.ItemType<Cryosten_Breastplate>() && legs.type == ModContent.ItemType<Cryosten_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Life restoration from hearts increased. Resistance to Chilled, Frozen, and Frostburn";
+			player.setBonus = "Life restoration from hearts increased.\nCannot be frozen or chilled";
 			player.GetModPlayer<OriginPlayer>().cryostenSet = true;
 			if (player.HasBuff(BuffID.Chilled)) player.buffTime[player.FindBuffIndex(BuffID.Chilled)]--;
 			if (player.HasBuff(BuffID.Frozen)) player.buffTime[player.FindBuffIndex(BuffID.Frozen)]--;
-			if (player.HasBuff(BuffID.Frostburn)) player.buffTime[player.FindBuffIndex(BuffID.Frostburn)]--;
 		}
 		public override void ArmorSetShadows(Player player) {
 			if (Main.rand.NextBool(5)) {
@@ -34,8 +33,8 @@ namespace Origins.Items.Armor.Cryosten {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.IceBlock, 45);
-			recipe.AddIngredient(ItemID.Shiverthorn, 4);
-			recipe.AddIngredient(ItemID.LifeCrystal);
+            recipe.AddIngredient(ItemID.LifeCrystal);
+            recipe.AddIngredient(ItemID.Shiverthorn, 4);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
@@ -57,8 +56,8 @@ namespace Origins.Items.Armor.Cryosten {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.IceBlock, 60);
-			recipe.AddIngredient(ItemID.Shiverthorn, 6);
-			recipe.AddIngredient(ItemID.LifeCrystal);
+            recipe.AddIngredient(ItemID.LifeCrystal);
+            recipe.AddIngredient(ItemID.Shiverthorn, 6);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
@@ -77,8 +76,8 @@ namespace Origins.Items.Armor.Cryosten {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.IceBlock, 30);
-			recipe.AddIngredient(ItemID.Shiverthorn, 2);
-			recipe.AddIngredient(ItemID.LifeCrystal);
+            recipe.AddIngredient(ItemID.LifeCrystal);
+            recipe.AddIngredient(ItemID.Shiverthorn, 2);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

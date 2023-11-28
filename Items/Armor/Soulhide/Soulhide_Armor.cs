@@ -15,7 +15,7 @@ namespace Origins.Items.Armor.Soulhide {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			//player.weaponSize(DamageClass.Melee) += 0.1f;
+			//player.weaponSize(DamageClass.Melee) += 0.1f; !!!
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Soulhide_Coat>() && legs.type == ModContent.ItemType<Soulhide_Guards>();
@@ -45,8 +45,6 @@ namespace Origins.Items.Armor.Soulhide {
 	[AutoloadEquip(EquipType.Body)]
 	public class Soulhide_Coat : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Soulhide Coat");
-			// Tooltip.SetDefault("+12% melee weapon speed");
 			if (Main.netMode != NetmodeID.Server) {
 				if (Mod.RequestAssetIfExists("Items/Armor/Soulhide/Soulhide_Coat_Cloth_Legs", out Asset<Texture2D> asset)) {
 					Origins.TorsoLegLayers.Add(Item.bodySlot, asset);

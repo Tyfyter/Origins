@@ -9,9 +9,9 @@ namespace Origins.Items.Armor.Defiled {
     [AutoloadEquip(EquipType.Head)]
 	public class Defiled_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Helmet");
-			// Tooltip.SetDefault("5% increased critical strike chance");
-			if (Main.netMode != NetmodeID.Server) {
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled2_Helmet>()] = ModContent.ItemType<Defiled_Helmet>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled_Helmet>()] = ModContent.ItemType<Defiled2_Helmet>();
+            if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Defiled/Defiled_Helmet_Head_Glow");
 			}
 			Item.ResearchUnlockCount = 1;
@@ -45,8 +45,12 @@ namespace Origins.Items.Armor.Defiled {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Defiled_Breastplate : ModItem, INoSeperateWikiPage {
-		
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled2_Breastplate>()] = ModContent.ItemType<Defiled_Breastplate>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled_Breastplate>()] = ModContent.ItemType<Defiled2_Breastplate>();
+        }
+
+        public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
@@ -64,8 +68,12 @@ namespace Origins.Items.Armor.Defiled {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Defiled_Greaves : ModItem, INoSeperateWikiPage {
-		
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled2_Greaves>()] = ModContent.ItemType<Defiled_Greaves>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled_Greaves>()] = ModContent.ItemType<Defiled2_Greaves>();
+        }
+
+        public override void SetDefaults() {
 			Item.defense = 6;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;

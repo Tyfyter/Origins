@@ -67,7 +67,7 @@ namespace Origins {
 		public bool lostSet = false;
 		public bool rivenSet = false;
 		public bool rivenSetBoost = false;
-		public bool riftSet = false;
+		public bool bleedingObsidianSet = false;
 		public bool eyndumSet = false;
 		public bool mimicSet = false;
 		public bool riptideSet = false;
@@ -337,7 +337,7 @@ namespace Origins {
 			reshapingChunk = false;
 			rivenSet = false;
 			rivenSetBoost = false;
-			riftSet = false;
+			bleedingObsidianSet = false;
 			eyndumSet = false;
 			mimicSet = false;
 			riptideSet = false;

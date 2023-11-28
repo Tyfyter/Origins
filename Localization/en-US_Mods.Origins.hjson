@@ -991,6 +991,8 @@ Projectiles: {
 	Orbital_Saw_P.DisplayName: Orbital Saw
 	Eruption_Geyser.DisplayName: Eruption
 	Eruption_P.DisplayName: Eruption
+	Gray_Solution_P.DisplayName: Gray_ Solution_ P
+	Metal_Slug_P.DisplayName: Metal_ Slug_ P
 }
 
 Prefixes: {

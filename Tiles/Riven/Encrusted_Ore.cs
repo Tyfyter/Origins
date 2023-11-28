@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items;
 using Origins.World.BiomeData;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -10,7 +8,7 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-	public class Encrusted_Ore : OriginTile, IGlowingModTile, IComplexMineDamageTile {
+    public class Encrusted_Ore : OriginTile, IGlowingModTile, IComplexMineDamageTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();

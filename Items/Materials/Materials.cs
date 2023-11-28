@@ -1,4 +1,5 @@
-﻿using Origins.Items.Other.Consumables;
+﻿using Origins.Items.Armor.Defiled;
+using Origins.Items.Other.Consumables;
 using Origins.Journal;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
@@ -213,7 +214,12 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Eitrite_Bar : MaterialItem {
-		public override int Value => Item.sellPrice(silver: 81);
+        public override void SetStaticDefaults() {
+            base.SetStaticDefaults();
+            ItemID.Sets.ShimmerTransformToItem[ItemID.HallowedBar] = ModContent.ItemType<Eitrite_Bar>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Eitrite_Bar>()] = ItemID.HallowedBar;
+        }
+        public override int Value => Item.sellPrice(silver: 81);
 		public override int Rare => ItemRarityID.Orange;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

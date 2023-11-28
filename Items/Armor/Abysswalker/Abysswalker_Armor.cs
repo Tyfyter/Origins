@@ -64,7 +64,7 @@ namespace Origins.Items.Armor.Abysswalker {
 					originPlayer.explosiveSelfDamage -= defiledPercentage;
 					//originPlayer.explosiveBlastRadius += 0.5f * defiledPercentage;
 					if (defiledPercentage == 1) {
-						player.GetModPlayer<OriginPlayer>().riftSet = true;
+						player.GetModPlayer<OriginPlayer>().bleedingObsidianSet = true;
 					}
 					break;
 				}

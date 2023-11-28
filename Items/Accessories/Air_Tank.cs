@@ -13,8 +13,6 @@ namespace Origins.Items.Accessories {
 		};
 		public static int BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Air Tank");
-			// Tooltip.SetDefault("Extends underwater breathing\nImmunity to ‘Suffocation’");
 			BackSlot = Item.backSlot;
 			Item.ResearchUnlockCount = 1;
 		}

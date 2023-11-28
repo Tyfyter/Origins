@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Dev;
+using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -12,9 +13,9 @@ namespace Origins.Items.Armor.Riven {
 		public const float lightMagnitude = 0.3f;
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Riven Mask");
-			// Tooltip.SetDefault("6% increased weapon speed");
-			GlowMask = Origins.AddGlowMask(Texture + "_Head_Glow");
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven2_Mask>()] = ModContent.ItemType<Riven_Mask>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Mask>()] = ModContent.ItemType<Riven2_Mask>();
+            GlowMask = Origins.AddGlowMask(Texture + "_Head_Glow");
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
@@ -55,9 +56,9 @@ namespace Origins.Items.Armor.Riven {
 	public class Riven_Coat : ModItem, INoSeperateWikiPage {
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Riven Coat");
-			// Tooltip.SetDefault("6% increased weapon speed");
-			GlowMask = Origins.AddGlowMask(Texture + "_Body_Glow");
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven2_Coat>()] = ModContent.ItemType<Riven_Coat>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Coat>()] = ModContent.ItemType<Riven2_Coat>();
+            GlowMask = Origins.AddGlowMask(Texture + "_Body_Glow");
 			Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Riven/Riven_Coat_Body_Glow");
 			Item.ResearchUnlockCount = 1;
 		}
@@ -87,8 +88,12 @@ namespace Origins.Items.Armor.Riven {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Riven_Pants : ModItem, INoSeperateWikiPage {
-		
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven2_Pants>()] = ModContent.ItemType<Riven_Pants>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven_Pants>()] = ModContent.ItemType<Riven2_Pants>();
+        }
+
+        public override void SetDefaults() {
 			Item.defense = 6;
 			Item.value = Item.sellPrice(silver: 60);
 			Item.rare = ItemRarityID.Blue;

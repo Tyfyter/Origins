@@ -7,12 +7,12 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Armor.Rift {
+namespace Origins.Items.Armor.Bleeding {
     [AutoloadEquip(EquipType.Head)]
-	public class Rift_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
+	public class Bleeding_Obsidian_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Rift/Rift_Helmet_Head_Glow");
+				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Bleeding/Bleeding_Obsidian_Helmet_Head_Glow");
 			}
 			Item.ResearchUnlockCount = 1;
 		}
@@ -25,11 +25,11 @@ namespace Origins.Items.Armor.Rift {
 			player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed += 0.2f;
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
-			return body.type == ModContent.ItemType<Rift_Breastplate>() && legs.type == ModContent.ItemType<Rift_Greaves>();
+			return body.type == ModContent.ItemType<Bleeding_Obsidian_Breastplate>() && legs.type == ModContent.ItemType<Bleeding_Obsidian_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = "Explosive projectiles have a chance to be duplicated";
-			player.GetModPlayer<OriginPlayer>().riftSet = true;
+			player.GetModPlayer<OriginPlayer>().bleedingObsidianSet = true;
 		}
 		public override void ArmorSetShadows(Player player) {
 			if (Main.rand.NextBool(5)) {
@@ -44,17 +44,17 @@ namespace Origins.Items.Armor.Rift {
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
-		public string ArmorSetName => "Rift_Armor";
+		public string ArmorSetName => "Bleeding_Obsidian_Armor";
 		public int HeadItemID => Type;
-		public int BodyItemID => ModContent.ItemType<Rift_Breastplate>();
-		public int LegsItemID => ModContent.ItemType<Rift_Greaves>();
+		public int BodyItemID => ModContent.ItemType<Bleeding_Obsidian_Breastplate>();
+		public int LegsItemID => ModContent.ItemType<Bleeding_Obsidian_Greaves>();
 	}
 	[AutoloadEquip(EquipType.Body)]
-	public class Rift_Breastplate : ModItem, INoSeperateWikiPage {
+	public class Bleeding_Obsidian_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Rift/Rift_Breastplate_Body_Glow");
-				if (Mod.RequestAssetIfExists("Items/Armor/Rift/Rift_Trenchcoat_Cloth_Legs", out Asset<Texture2D> asset)) {
+				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Bleeding/Bleeding_Obsidian_Breastplate_Body_Glow");
+				if (Mod.RequestAssetIfExists("Items/Armor/Bleeding/Bleeding_Obsidian_Breastplate_Cloth_Legs", out Asset<Texture2D> asset)) {
 					Origins.TorsoLegLayers.Add(Item.bodySlot, asset);
 				}
 			}
@@ -77,10 +77,10 @@ namespace Origins.Items.Armor.Rift {
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
-	public class Rift_Greaves : ModItem, INoSeperateWikiPage {
+	public class Bleeding_Obsidian_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
-				Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Rift/Rift_Greaves_Legs_Glow");
+				Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Bleeding/Bleeding_Obsidian_Greaves_Legs_Glow");
 			}
 			Item.ResearchUnlockCount = 1;
 		}

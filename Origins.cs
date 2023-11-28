@@ -124,9 +124,9 @@ namespace Origins {
 			FelnumBodyArmorID = ModContent.GetInstance<Felnum_Breastplate>().Item.bodySlot;
 			FelnumLegsArmorID = ModContent.GetInstance<Felnum_Greaves>().Item.legSlot;
 			PlagueTexanJacketID = ModContent.GetInstance<Plague_Texan_Jacket>().Item.bodySlot;
-			RiftHeadArmorID = ModContent.GetInstance<Rift_Helmet>().Item.headSlot;
-			RiftBodyArmorID = ModContent.GetInstance<Rift_Breastplate>().Item.bodySlot;
-			RiftLegsArmorID = ModContent.GetInstance<Rift_Greaves>().Item.legSlot;
+			RiftHeadArmorID = ModContent.GetInstance<Bleeding_Obsidian_Helmet>().Item.headSlot;
+			RiftBodyArmorID = ModContent.GetInstance<Bleeding_Obsidian_Breastplate>().Item.bodySlot;
+			RiftLegsArmorID = ModContent.GetInstance<Bleeding_Obsidian_Greaves>().Item.legSlot;
 			#endregion
 			Logger.Info("fixing tilemerge for " + OriginTile.IDs.Count + " tiles");
 			Main.tileMerge[TileID.Sand][TileID.Sandstone] = true;

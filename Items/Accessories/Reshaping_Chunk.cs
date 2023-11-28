@@ -10,8 +10,6 @@ namespace Origins.Items.Accessories {
 			"Combat"
 		};
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Refactoring Pieces");
-			// Tooltip.SetDefault("Strengthens the set bonus of Lost Armor\nReduces damage taken by 5% if Lost Armor is not equipped");
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(11, 6));
 			Item.ResearchUnlockCount = 1;
 		}

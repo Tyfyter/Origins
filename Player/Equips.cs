@@ -5,16 +5,13 @@ using Origins.Items.Tools;
 using Origins.Items.Weapons.Magic;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins {
-	public partial class OriginPlayer : ModPlayer {
+    public partial class OriginPlayer : ModPlayer {
 		public override void PostUpdateEquips() {
 			if (eyndumSet) {
 				ApplyEyndumSetBuffs();
@@ -189,7 +186,7 @@ namespace Origins {
 					case WaterStyleID.UndergroundDesert:
 					waterFactor = new Vector3(0.95f, 0.98f, 0.85f) * 0.91f;
 					break;
-					case 13://???
+					case 13://??? what? I didnt add this.
 					waterFactor = new Vector3(0.9f, 1f, 1.02f) * 0.91f;
 					break;
 

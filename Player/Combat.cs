@@ -6,9 +6,6 @@ using Origins.Projectiles;
 using Origins.Questing;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -17,7 +14,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins {
-	public partial class OriginPlayer : ModPlayer {
+    public partial class OriginPlayer : ModPlayer {
 		#region stats
 		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
 			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {
@@ -81,7 +78,7 @@ namespace Origins {
 		#endregion
 		public override bool Shoot(Item item, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			if (item.CountsAsClass(DamageClasses.Explosive)) {
-				if (riftSet) {
+				if (bleedingObsidianSet) {
 					Fraction dmg = new Fraction(2, 2);
 					int c = (madHand ? 1 : 0) + (Main.rand.NextBool(2) ? 1 : 0);
 					dmg.D += c;

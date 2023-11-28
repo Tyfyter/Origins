@@ -41,8 +41,6 @@ namespace Origins.Items.Armor.Lost {
 	[AutoloadEquip(EquipType.Body)]
 	public class Lost_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Lost Breastplate");
-			// Tooltip.SetDefault("15% increased magic damage");
 			if (Main.netMode != NetmodeID.Server) {
 				if (Mod.RequestAssetIfExists("Items/Armor/Lost/Lost_Breastplate_Cloth_Legs", out Asset<Texture2D> asset)) {
 					Origins.TorsoLegLayers.Add(Item.bodySlot, asset);
@@ -75,7 +73,7 @@ namespace Origins.Items.Armor.Lost {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.moveSpeed += 0.06f;
+			player.moveSpeed += 0.05f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

@@ -40,8 +40,8 @@ namespace Origins.Items.Armor.Riptide {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ShellPileBlock, 9);
-			recipe.AddIngredient(ItemID.DivingHelmet);
+            recipe.AddIngredient(ItemID.DivingHelmet);
+            recipe.AddIngredient(ItemID.ShellPileBlock, 9);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
@@ -64,20 +64,20 @@ namespace Origins.Items.Armor.Riptide {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ShellPileBlock, 17);
-			recipe.AddIngredient(ItemID.BlueJellyfish, 3);
+            recipe.AddIngredient(ItemID.BlueJellyfish);
+            recipe.AddIngredient(ItemID.ShellPileBlock, 17);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ShellPileBlock, 17);
-			recipe.AddIngredient(ItemID.GreenJellyfish, 3);
+            recipe.AddIngredient(ItemID.GreenJellyfish);
+            recipe.AddIngredient(ItemID.ShellPileBlock, 17);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
 			recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ShellPileBlock, 17);
-			recipe.AddIngredient(ItemID.PinkJellyfish, 3);
+            recipe.AddIngredient(ItemID.PinkJellyfish);
+            recipe.AddIngredient(ItemID.ShellPileBlock, 17);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
@@ -97,8 +97,8 @@ namespace Origins.Items.Armor.Riptide {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.ShellPileBlock, 13);
-			recipe.AddIngredient(ItemID.Flipper);
+            recipe.AddIngredient(ItemID.Flipper);
+            recipe.AddIngredient(ItemID.ShellPileBlock, 13);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
@@ -106,7 +106,6 @@ namespace Origins.Items.Armor.Riptide {
 	public class Riptide_Dash_P : ModProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Riptide Dash");
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 19;
 			ID = Type;

@@ -9,26 +9,21 @@ using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Tiles.BossDrops;
 using Origins.Tiles.Riven;
-using Origins.Water;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.UI.BigProgressBar;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.NPCs.Riven.World_Cracker.World_Cracker_Head;
 
 namespace Origins.NPCs.Riven.World_Cracker {
-	[AutoloadBossHead]
+    [AutoloadBossHead]
 	public class World_Cracker_Head : WormHead, ILoadExtraTextures, IRivenEnemy {
 		public void LoadTextures() => _ = GlowTexture;
 		public virtual string GlowTexturePath => Texture + "_Glow";

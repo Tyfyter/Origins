@@ -675,7 +675,7 @@ Reshaping_Chunk: {
 	DisplayName: Refactoring Pieces
 	Tooltip:
 		'''
-		Strengthens the set bonus of Lost Armor
+		Increases mana shielding by 10%
 		Reduces damage taken by 5% if Lost Armor is not equipped
 		'''
 }
@@ -954,7 +954,7 @@ Acrid_Visor: {
 
 Amber_Breastplate: {
 	DisplayName: Amber Exploder Resin
-	Tooltip: -34% explosive self-damage
+	Tooltip: -34% self-damage
 }
 
 Amber_Greaves: {
@@ -1112,7 +1112,7 @@ Felnum_Helmet: {
 
 Fiberglass_Body: {
 	DisplayName: Fiberglass Pauldrons
-	Tooltip: These don't seem very protective
+	Tooltip: "'These don't seem very protective'"
 }
 
 Fiberglass_Helmet: {
@@ -1126,12 +1126,12 @@ Fiberglass_Legs: {
 }
 
 Lost_Breastplate: {
-	DisplayName: Lost Breastplate
+	DisplayName: Lost Cloak
 	Tooltip: 15% increased magic damage
 }
 
 Lost_Helm: {
-	DisplayName: Lost Helm
+	DisplayName: Lost Monocle
 	Tooltip: Increased mana regeneration rate
 }
 
@@ -1242,17 +1242,17 @@ Hallowed_Visage: {
 		'''
 }
 
-Rift_Breastplate: {
+Bleeding_Obsidian_Breastplate: {
 	DisplayName: Bleeding Obsidian Trenchcoat
-	Tooltip: -25% explosive self-damage
+	Tooltip: -25% self-damage
 }
 
-Rift_Greaves: {
+Bleeding_Obsidian_Greaves: {
 	DisplayName: Bleeding Obsidian Chaps
 	Tooltip: 15% increased movement speed
 }
 
-Rift_Helmet: {
+Bleeding_Obsidian_Helmet: {
 	DisplayName: Bleeding Obsidian Hardee
 	Tooltip: Increased explosive velocity
 }
@@ -1351,7 +1351,7 @@ Tendon_Helmet: {
 
 Tendon_Pants: {
 	DisplayName: Tendon Pants
-	Tooltip: +20% ammo preservation
+	Tooltip: +20% ammo conservation
 }
 
 Tendon_Shirt: {
@@ -2055,7 +2055,7 @@ Alkahest_Bullet: {
 
 Alkaline_Harpoon: {
 	DisplayName: Alkaline Harpoon
-	Tooltip: "Used as ammo for harpoon guns"
+	Tooltip: Used as ammo for harpoon guns
 }
 
 Bile_Arrow: {
@@ -2075,22 +2075,22 @@ Bile_Dart: {
 
 Bouncy_Harpoon: {
 	DisplayName: Bouncy Harpoon
-	Tooltip: "Used as ammo for harpoon guns"
+	Tooltip: Used as ammo for harpoon guns
 }
 
 Cursed_Harpoon: {
 	DisplayName: Cursed Harpoon
-	Tooltip: "Used as ammo for harpoon guns"
+	Tooltip: Used as ammo for harpoon guns
 }
 
 Explosive_Harpoon: {
 	DisplayName: Explosive Harpoon
-	Tooltip: "Used as ammo for harpoon guns"
+	Tooltip: Used as ammo for harpoon guns
 }
 
 Flammable_Harpoon: {
 	DisplayName: Flammable Harpoon
-	Tooltip: "Used as ammo for harpoon guns"
+	Tooltip: Used as ammo for harpoon guns
 }
 
 Metal_Slug: {
@@ -2100,7 +2100,7 @@ Metal_Slug: {
 
 Harpoon: {
 	DisplayName: Harpoon
-	Tooltip: "Used as ammo for harpoon guns"
+	Tooltip: Used as ammo for harpoon guns
 }
 
 Resizable_Mine_Five: {
@@ -3435,5 +3435,10 @@ Bomb_Handling_Device: {
 
 Pneumatic_Bomb_Thrower: {
 	DisplayName: Pneumatic_ Bomb_ Thrower
+	Tooltip: ""
+}
+
+Gray_Solution: {
+	DisplayName: Gray_ Solution
 	Tooltip: ""
 }

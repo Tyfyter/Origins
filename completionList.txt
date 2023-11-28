@@ -132,7 +132,7 @@ ENEMY NPCS:
 (X) Brine Moccasin
 (@5, #) Carpalfish*
 (X) Defiled Asphyxiator
-(@, #3) Defiled Mimic
+(^) Defiled Mimic
 (X) Defiled Reaper
 (@5, ^3/4) Defiled Tripod
 (^) Flagellant
@@ -212,31 +212,31 @@ NPC DIALOGUE:
 
 ARMOR:
 ---
-(^) Ancient Defiled Armor
-(^) Ancient Encrusted Armor
-(^) Ashen Armor
-(^) Cryosten Armor*
-(^) Defiled Armor*
-(^) Encrusted Armor
-(^) Felnum Armor
-(^) Fiberglass Armor
-(^) Lost Armor
-(^) Mythic Armor
-(^) Riptide Armor
-(^) Riven Armor
-(#3, ^2) Scavenger Armor !!!
-(^) Soulhide Armor
-(^) Tendon Armor
+(^) Ancient Defiled Armor*
+(^) Ancient Riven Armor*
+(^) Ashen Armor*
+(#4, ^2) Cryosten Armor* !!!
+(^) Defiled Armor* 
+(^) Encrusted Armor*
+(^) Felnum Armor*
+(^) Fiberglass Armor*
+(^) Lost Armor*
+(^) Mythic Armor*
+(^) Riptide Armor*
+(^) Riven Armor*
+(#3, ^2) Scavenger Armor* !!!
+(#3, ^2) Soulhide Armor* !!!
+(^) Tendon Armor*
 
-(X) Abysswalker Armor
-(^) Acrid Armor
-(#2, ^2) Amber Exploder Armor
-(^) Bleeding Obsidian Armor
-(X) Ruby Ranger Armor
+(X) Abysswalker Armor*
+(^) Acrid Armor*
+(#2, ^2) Amber Exploder Armor*
+(^) Bleeding Obsidian Armor*
+(X) Ruby Ranger Armor*
 
 (X) Blast Armor
 (X) Chambersite Armor
-(X) Eden Armor
+(X) Edenwood Armor
 (@5, ^3) Necromancer Armor
 (#2, ^2) Sapphire Mediator Armor
 
@@ -246,7 +246,6 @@ ARMOR:
 (X) Locus Armor
 (X) Nanite Armor
 (^) Nova Armor
-(X) Phoenix Skin Armor
 
 (^) Ancient Hallowed Visage
 (^) Chlorophyte Crown
