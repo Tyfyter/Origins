@@ -234,11 +234,11 @@ ARMOR:
 (^) Bleeding Obsidian Armor*
 (X) Ruby Ranger Armor*
 
-(X) Blast Armor
-(X) Chambersite Armor
-(X) Edenwood Armor
-(@5, ^3) Necromancer Armor
-(#2, ^2) Sapphire Mediator Armor
+(X) Blast Armor*
+(X) Chambersite Armor*
+(X) Edenwood Armor*
+(@5, ^3) Necromancer Armor*
+(#2, ^2) Sapphire Mediator Armor*
 
 (X) Ascendant Armor
 (^) Chromtain Armor
