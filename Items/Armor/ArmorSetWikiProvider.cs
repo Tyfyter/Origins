@@ -117,7 +117,7 @@ namespace Origins.Items.Armor {
 					maleSets.Add(setImages[0]);
 					if (setImages.Count > 1) femaleSets.Add(setImages[1]);
 
-					defenseString += $"<img src={WikiPageExporter.GetWikiItemPath(ItemLoader.GetItem(statGroup.Value<int>("IconItem")))}>{statGroup.GetValue("Defense")}";
+					defenseString += $"<img src={WikiPageExporter.GetWikiItemPath(ItemLoader.GetItem(statGroup.Value<int>("IconItem")))}.png>{statGroup.GetValue("Defense")}";
 				}
 				JArray images = new JArray() { maleSets };
 				if (femaleSets.Count > 0) images.Add(femaleSets);
