@@ -271,7 +271,7 @@ ACCESSORIES:
 (^) Celestial Stone Mask*
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
-(X) Control Locus* !!!
+(#, ^2) Control Locus* !!!
 (^) Coologne*
 (^) Danger Barrel*
 (^) Decaying Scale*
@@ -366,16 +366,16 @@ ACCESSORIES:
 (^) Tripod Nip*
 
 (^) Amebic Vial*
-(X) Crimson Hymn* !!!
+(#, ^2) Crimson Hymn* !!!
 (^) Fiberglass Dagger*
 (#2, ^2) Mana Drive*
 (^) Refactoring Pieces*
-(X) Soul Scythe* !!!
+(#, ^2) Soul Scythe* !!!
 (X) Void Arcanum
 
 (%3, X) Armored Core
 (^) Entangled Energy*
-(X) Forbidden Voice* !!!
+(#, ^2) Forbidden Voice* !!!
 (^) Lazy Cloak*
 (^) Mysterious Spray*
 (^) Protozoa Food*
@@ -383,7 +383,7 @@ ACCESSORIES:
 (^) Scribe of the Meat God*
 (^) Stack of Shraps*
 (^) Third Eye*
-(X) Weakpoint Analyzer* !!!
+(#, ^2) Weakpoint Analyzer* !!!
 
 (^) Agility Core
 (^) Combat Core
@@ -448,7 +448,7 @@ WINGS:
 (X) Anti-Gravity Booster
 (X) Futuristic Jetpack
 
-(X) Ascendent Wings (ascendant might be the correct word here, they could just be alternate spellings, or this might be more correct, can't find definitive proof of any of these)
+(X) Ascendant Wings
 (x) Booster Pack
 (X) Celestine Wings
 (X) Fibron Thruster Array
@@ -643,7 +643,7 @@ SUMMONER WEAPONS:
 (#, ^2) Ocean Amulet* !!!
 (^) Ocotoral Bud
 (^) Rotted Worm Staff
-(X) Stubborn Flower* !!!
+(#, ^2) Stubborn Flower* !!!
 (^) Teardown
 (^) Woodsprite Staff
 
@@ -743,7 +743,7 @@ TILES:
 (^) Angelic Cloud
 (^) Batholith*
 (^) Bleeding Obsidian
-(X) Brittle Quartz !!!
+(#, ^2) Brittle Quartz !!!
 (#, ^2) Carburite
 (X) Compacted Scrap
 (X) Cubekon Altar
@@ -767,14 +767,14 @@ TILES:
 (#, ^2) Mildew
 (^) Peat Moss*
 (^) Primordial Permafrost
-(X) Quartz !!!
+(#, ^2) Quartz !!!
 (^) Riven Grass
 (^) Sanguinite Ore
 (^) Silica
 (^) Spug Flesh
 (^) Sulphur Stone
 (^) White Ice
-(@6) Riven Cactus !!!
+(#, ^2) Riven Cactus !!!
 (^) Riven Grass
 
 (#, ^2) Batholith Wall
@@ -789,7 +789,7 @@ TILES:
 (^) Eden Wood Wall
 (#, ^2) Fiberglass Wall
 (^) Harmony Brick Wall
-(X) Quartz Wall !!!
+(#, ^2) Quartz Wall !!!
 (^) Spug Flesh Wall
 (^) Sulphur Stone Wall
 
@@ -800,17 +800,17 @@ TILES:
 (X) Cancer Block
 (X) Chambersite Gem Lock
 (^) Chambersite Gemspark
-(#3, ^2) Chambersite Gemstone
-(#3, ^2) Chambersite Gemstone (Corruption)
-(#3, ^2) Chambersite Gemstone (Crimson)                      for these fellas too
-(#3, ^2) Chambersite Gemstone (Defiled)
-(#3, ^2) Chambersite Gemstone (Riven)
+(^) Chambersite Gemstone
+(^) Chambersite Gemstone (Corruption)
+(^) Chambersite Gemstone (Crimson)
+(^) Chambersite Gemstone (Defiled)
+(^) Chambersite Gemstone (Riven)
 (X) Cubekon Chest
 (X) Cubekon Node
 (X) Dawn Dungeon Chest
 (^) Defiled Campfire
 (^) Defiled Dungeon Chest
-(X (missing water style to apply)) Defiled Water Fountain !!!
+(#?, ^2) Defiled Water Fountain !!!
 (^) Defiled Torch
 (X) Desert Dungeon Chest
 (X) Dusk Dungeon Chest
@@ -852,7 +852,7 @@ TILES:
 (^) A Perfect World
 
 (@, #, $3) Ancient Music Box (Brine Pool)
-(@, #, $3) Ancient Music Box (Defiled Wastelands) !!!
+(#, $3, ^2) Ancient Music Box (Defiled Wastelands) !!!
 (#, $3, ^2) Ancient Music Box (Riven Hive) !!!
 (@, #, $3) Music Box (Abstract)
 (@, #, $3) Music Box (Brine Pool)
@@ -1028,7 +1028,7 @@ CONSUMABLES:
 
 MOUNTS & PETS:
 ---
-(X) Ever-Watchful Eye (Juvenile Amalgamation) !!!
+(#, ^2) Blockus Tube (Juvenile Amalgamation) !!!
 (X) Fleshy Globe (Self-Contained Universe) !!!
 (^) Strange Power-Up (Platformer Mech)
 (^) Chromatic Scale (Rainbow Pangolin)
