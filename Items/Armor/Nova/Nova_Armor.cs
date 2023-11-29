@@ -8,8 +8,6 @@ namespace Origins.Items.Armor.Nova {
     [AutoloadEquip(EquipType.Head)]
 	public class Nova_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Nova Faceshield");
-			// Tooltip.SetDefault("4% increased explosive damage and critical strike chance\n50% increased explosive velocity");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Nova/Nova_Helmet_Head_Glow");
 			}
@@ -78,8 +76,6 @@ namespace Origins.Items.Armor.Nova {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Nova_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Nova Leggings");
-			// Tooltip.SetDefault("4% increased explosive damage and critical strike chance\n15% increased movement speed");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Nova/Nova_Greaves_Legs_Glow");
 			}

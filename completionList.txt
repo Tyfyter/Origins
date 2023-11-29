@@ -245,7 +245,7 @@ ARMOR:
 (@5, #2) Eyndum Armor
 (X) Locus Armor
 (X) Nanite Armor
-(^) Nova Armor
+(^) Nova Armor*
 
 (^) Ancient Hallowed Visage
 (^) Chlorophyte Crown
