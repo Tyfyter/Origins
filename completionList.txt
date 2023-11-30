@@ -240,10 +240,10 @@ ARMOR:
 (@5, ^3) Necromancer Armor*
 (#2, ^2) Sapphire Mediator Armor*
 
-(X) Ascendant Armor
+(X) Ascendant Armor*
 (^) Chromtain Armor
-(@5, #2) Eyndum Armor
-(X) Locus Armor
+(@5, #2) Eyndum Armor*
+(X) Locus Armor*
 (X) Nanite Armor
 (^) Nova Armor*
 

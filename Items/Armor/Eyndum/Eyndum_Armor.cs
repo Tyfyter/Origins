@@ -1,21 +1,19 @@
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using Origins.Dev;
 
 namespace Origins.Items.Armor.Eyndum {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Eyndum_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Eyndum Helmet");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Eyndum/Eyndum_Helmet_Head_Glow");
 			}
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 8;
+			Item.defense = 16;
 			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = CrimsonRarity.ID;
 		}
@@ -44,7 +42,6 @@ namespace Origins.Items.Armor.Eyndum {
 	[AutoloadEquip(EquipType.Body)]
 	public class Eyndum_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Eyndum Breastplate");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Eyndum/Eyndum_Breastplate_Body_Glow");
 				Origins.AddBreastplateGlowmask(-Item.bodySlot, "Items/Armor/Eyndum/Eyndum_Breastplate_FemaleBody_Glow");
@@ -57,8 +54,8 @@ namespace Origins.Items.Armor.Eyndum {
 			Item.rare = CrimsonRarity.ID;
 		}
 		public override void UpdateEquip(Player player) {
-
-		}
+			player.statLifeMax2 += 20;
+        }
 		public override void AddRecipes() {
 			/*Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 25);
@@ -71,7 +68,6 @@ namespace Origins.Items.Armor.Eyndum {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Eyndum_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Eyndum Greaves");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Eyndum/Eyndum_Greaves_Legs_Glow");
 			}
@@ -83,7 +79,7 @@ namespace Origins.Items.Armor.Eyndum {
 			Item.rare = CrimsonRarity.ID;
 		}
 		public override void UpdateEquip(Player player) {
-
+			player.moveSpeed += 0.2f;
 		}
 		public override void AddRecipes() {
 			/*Recipe recipe = Recipe.Create(Type);
