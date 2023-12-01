@@ -241,16 +241,16 @@ ARMOR:
 (#2, ^2) Sapphire Mediator Armor*
 
 (X) Ascendant Armor*
-(^) Chromtain Armor
+(^) Chromtain Armor*
 (@5, #2) Eyndum Armor*
 (X) Locus Armor*
-(X) Nanite Armor
+(X) Nanite Armor*
 (^) Nova Armor*
 
-(^) Ancient Hallowed Visage
-(^) Chlorophyte Crown
-(^) Chlorophyte Visage
-(^) Hallowed Visage
+(^) Ancient Hallowed Visage*
+(^) Chlorophyte Crown*
+(^) Chlorophyte Visage*
+(^) Hallowed Visage*
 ---
 
 
@@ -261,6 +261,7 @@ ACCESSORIES:
 (^) Air Tank*
 (#2, ^2, ♠) ATACS*
 (#2, ^2) Automated Returns Handler*
+(X) Binding Book* !!!
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
@@ -326,10 +327,11 @@ ACCESSORIES:
 (#3, ^2) Seal of Cinders* !!!
 (^) Scavenger Bag*
 (^) Shield of Retribution*
+(X) Sniper's Mark*
 (^) Solar Panel*
 (^) Sonar Visor*
 (^) Sonic Radar*
-(X) Sniper's Mark*
+(X) Speed Booster* !!!
 (#2, ^2) Strange Computer*
 (^) Super Turbo Reel*
 (^) Superjump Cape*
@@ -919,7 +921,7 @@ MATERIALS:
 (^) Dawn Key
 (^) Defiled Key
 (^) Dusk Key
-(^) Eitrite Bar
+(^) Eitrite Bar*
 (^) Hell Key
 (^) Illegal Explosive Parts
 (^) Mushroom Key
@@ -931,8 +933,8 @@ MATERIALS:
 (^) Power Core
 (^) Rotor
 
-(^) Chromtain Bar
-(^) Element-36 Bundle
+(^) Chromtain Bar*
+(^) Material-36 Bundle
 (X) Ethereal Ash
 (^) Eyndum Bar
 (@5, ^3) Fibron Plating

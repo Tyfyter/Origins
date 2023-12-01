@@ -32,7 +32,6 @@ namespace Origins.Items.Weapons.Magic {
 	public class Laseer : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Flying_Exoskeleton";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Laseer");
 			Projectile.penetrate = 1;
 		}
 		public override void SetDefaults() {

@@ -227,15 +227,15 @@ namespace Origins.Items.Materials {
 			recipe.AddTile(TileID.AdamantiteForge);
 			recipe.Register();
 
-			recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.TitaniumBar);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2);
-			recipe.AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>());
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
+            recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.AdamantiteBar);
+            recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2);
+            recipe.AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>());
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
 
-			recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.AdamantiteBar);
+            recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.TitaniumBar);
 			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2);
 			recipe.AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>());
 			recipe.AddTile(TileID.MythrilAnvil);

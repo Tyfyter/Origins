@@ -7,8 +7,6 @@ namespace Origins.Items.Tools {
 	public class Acrid_Pickaxe : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acrid Pickaxe");
-			// Tooltip.SetDefault("Increased mining speed when submerged");
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

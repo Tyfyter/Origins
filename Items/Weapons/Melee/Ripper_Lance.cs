@@ -11,8 +11,6 @@ namespace Origins.Items.Weapons.Melee {
 	public class Ripper_Lance : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ripper Lance");
-			// Tooltip.SetDefault("'Very pointy'");
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

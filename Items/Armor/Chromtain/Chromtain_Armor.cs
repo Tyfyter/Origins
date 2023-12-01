@@ -1,22 +1,20 @@
+using Origins.Dev;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using Origins.Items.Materials;
-using Origins.Dev;
 
 namespace Origins.Items.Armor.Chromtain {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Chromtain_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Chromtain Helmet");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Chromtain/Chromtain_Helmet_Head_Glow");
 			}
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 21;
+			Item.defense = 16;
 			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = CrimsonRarity.ID;
 		}
@@ -43,15 +41,13 @@ namespace Origins.Items.Armor.Chromtain {
 	[AutoloadEquip(EquipType.Body)]
 	public class Chromtain_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Chromtain Breastplate");
-			// Tooltip.SetDefault("+20 max life");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Chromtain/Chromtain_Breastplate_Body_Glow");
 			}
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 54;
+			Item.defense = 40;
 			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = CrimsonRarity.ID;
 		}
@@ -68,14 +64,13 @@ namespace Origins.Items.Armor.Chromtain {
 	[AutoloadEquip(EquipType.Legs)]
 	public class Chromtain_Greaves : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Chromtain Greaves");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Chromtain/Chromtain_Greaves_Legs_Glow");
 			}
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.defense = 33;
+			Item.defense = 25;
 			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = CrimsonRarity.ID;
 		}

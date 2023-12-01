@@ -1,19 +1,18 @@
 ﻿using Origins.Dev;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Other {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Hallowed_Visage : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Ancient_Hallowed_Visage>()] = ModContent.ItemType<Hallowed_Visage>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Hallowed_Visage>()] = ModContent.ItemType<Ancient_Hallowed_Visage>();
+        }
+        public override void SetDefaults() {
 			Item.width = 22;
 			Item.height = 26;
 			Item.defense = 3;

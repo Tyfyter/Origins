@@ -1,16 +1,11 @@
 ﻿using Origins.Dev;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Other {
-	[AutoloadEquip(EquipType.Head)]
+    [AutoloadEquip(EquipType.Head)]
 	public class Chlorophyte_Visage : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		
 		public override void SetDefaults() {

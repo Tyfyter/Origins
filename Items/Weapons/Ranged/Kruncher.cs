@@ -10,8 +10,6 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Kruncher : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("The Kruncher");
-			// Tooltip.SetDefault("'Very pointy'");
 			Origins.FlatDamageMultiplier[Type] = 3f / 8f;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

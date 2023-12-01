@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
-	//TODO: make better (does that help)
 	public class Spiker_Sword : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {

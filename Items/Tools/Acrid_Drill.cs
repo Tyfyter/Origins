@@ -7,8 +7,6 @@ namespace Origins.Items.Tools {
 	public class Acrid_Drill : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acrid Drill");
-			// Tooltip.SetDefault("Increased mining speed when submerged");
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}
@@ -37,7 +35,6 @@ namespace Origins.Items.Tools {
 	}
 	public class Acrid_Drill_P : ModProjectile {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Acrid Drill");
 			Main.projFrames[Projectile.type] = 2;
 		}
 		public override void SetDefaults() {
