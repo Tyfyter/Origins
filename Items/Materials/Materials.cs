@@ -29,6 +29,7 @@ namespace Origins.Items.Materials {
 			if (HasGlowmask) glowmask = Origins.AddGlowMask(GlowTexture);
 		}
 		public override void SetDefaults() {
+			Item.rare = Rare;
 			Item.value = Value;
 			Item.maxStack = Item.CommonMaxStack;
 			Item.glowMask = glowmask;
