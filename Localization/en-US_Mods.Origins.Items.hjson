@@ -3429,16 +3429,16 @@ Eruption: {
 }
 
 Bomb_Handling_Device: {
-	DisplayName: Bomb_ Handling_ Device
+	DisplayName: Bomb Handling Device
 	Tooltip: ""
 }
 
 Pneumatic_Bomb_Thrower: {
-	DisplayName: Pneumatic_ Bomb_ Thrower
+	DisplayName: Pneumatic Bomb Thrower
 	Tooltip: ""
 }
 
 Gray_Solution: {
-	DisplayName: Gray_ Solution
+	DisplayName: Gray Solution
 	Tooltip: ""
 }

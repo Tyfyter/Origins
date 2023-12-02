@@ -675,7 +675,7 @@ Reshaping_Chunk: {
 	// DisplayName: Refactoring Pieces
 	/* Tooltip:
 		'''
-		Strengthens the set bonus of Lost Armor
+		Increases mana shielding by 10%
 		Reduces damage taken by 5% if Lost Armor is not equipped
 		''' */
 }
@@ -954,7 +954,7 @@ Acrid_Visor: {
 
 Amber_Breastplate: {
 	// DisplayName: Amber Exploder Resin
-	// Tooltip: -34% explosive self-damage
+	// Tooltip: -34% self-damage
 }
 
 Amber_Greaves: {
@@ -1077,7 +1077,7 @@ Scavenger_Greaves: {
 }
 
 Eyndum_Breastplate: {
-	// DisplayName: Eyndum Breastplate
+	// DisplayName: Eyndum Mantle
 	// Tooltip: ""
 }
 
@@ -1112,7 +1112,7 @@ Felnum_Helmet: {
 
 Fiberglass_Body: {
 	// DisplayName: Fiberglass Pauldrons
-	// Tooltip: These don't seem very protective
+	// Tooltip: "'These don't seem very protective'"
 }
 
 Fiberglass_Helmet: {
@@ -1126,12 +1126,12 @@ Fiberglass_Legs: {
 }
 
 Lost_Breastplate: {
-	// DisplayName: Lost Breastplate
+	// DisplayName: Lost Cloak
 	// Tooltip: 15% increased magic damage
 }
 
 Lost_Helm: {
-	// DisplayName: Lost Helm
+	// DisplayName: Lost Monocle
 	// Tooltip: Increased mana regeneration rate
 }
 
@@ -1351,7 +1351,7 @@ Tendon_Helmet: {
 
 Tendon_Pants: {
 	// DisplayName: Tendon Pants
-	// Tooltip: +20% ammo preservation
+	// Tooltip: +20% ammo conservation
 }
 
 Tendon_Shirt: {
@@ -1458,7 +1458,7 @@ Eitrite_Bar: {
 	// Tooltip: "'So alkaline-concentrated it could be used as a power source'"
 }
 
-// Element36_Bundle.DisplayName: Element-36 Bundle
+// Element36_Bundle.DisplayName: Material-36 Bundle
 // Encrusted_Bar.DisplayName: Encrusted Bar
 
 Eyndum_Bar: {
@@ -3429,16 +3429,16 @@ Eruption: {
 }
 
 Bomb_Handling_Device: {
-	// DisplayName: Bomb_ Handling_ Device
+	// DisplayName: Bomb Handling Device
 	// Tooltip: ""
 }
 
 Pneumatic_Bomb_Thrower: {
-	// DisplayName: Pneumatic_ Bomb_ Thrower
+	// DisplayName: Pneumatic Bomb Thrower
 	// Tooltip: ""
 }
 
 Gray_Solution: {
-	// DisplayName: Gray_ Solution
+	// DisplayName: Gray Solution
 	// Tooltip: ""
 }

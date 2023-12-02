@@ -542,7 +542,7 @@ namespace Origins.Dev {
 			data.AppendStat("Damage", item.damage, -1);
 			if (item.damage > 0) {
 				string damageClass = item.DamageType.DisplayName.Value;
-				damageClass = damageClass.Replace(" damage", "");
+				damageClass = damageClass.Replace(" damage", "").Trim();
 				damageClass = Regex.Replace(damageClass, "( |^)(\\w)", (match) => match.Groups[1].Value + match.Groups[2].Value.ToUpper());
 				data.Add("DamageClass", damageClass);
 			}

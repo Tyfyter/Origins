@@ -6,7 +6,7 @@ using Origins.Gores.NPCs;
 using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
-using Origins.Items.Armor.Rift;
+using Origins.Items.Armor.Bleeding;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Melee;
