@@ -134,8 +134,10 @@ namespace Origins {
 						for (i = 0; i < ItemLoader.ItemCount; i++) if (ContentSamples.ItemsByType[i].ModItem?.Mod is Origins) break;
 						for (; i < ItemLoader.ItemCount; i++) {
 							Item item = ContentSamples.ItemsByType[i];
-							if (item.ModItem?.Mod is not Origins) break;
-							WikiPageExporter.ExportItemStats(item);
+							if (item.ModItem is not null) {
+								if (item.ModItem?.Mod is not Origins) break;
+								WikiPageExporter.ExportItemStats(item);
+							}
 						}
 					} else {
 						Main.NewText("Shift must be held to export all stats, for safety reasons");
@@ -162,10 +164,12 @@ namespace Origins {
 						for (i = 0; i < ItemLoader.ItemCount; i++) if (ContentSamples.ItemsByType[i].ModItem?.Mod is Origins) break;
 						for (; i < ItemLoader.ItemCount; i++) {
 							Item item = ContentSamples.ItemsByType[i];
-							if (item.ModItem?.Mod is not Origins) break;
-							if ((item.ModItem as ICustomWikiStat)?.ShouldHavePage == false) continue;
-							if (((item.ModItem as ICustomWikiStat)?.FullyGeneratable ?? false) || !File.Exists(WikiPageExporter.GetWikiPagePath(WikiPageExporter.GetWikiName(item.ModItem))))
-								WikiPageExporter.ExportItemPage(item);
+							if (item.ModItem is not null) {
+								if (item.ModItem?.Mod is not Origins) break;
+								if ((item.ModItem as ICustomWikiStat)?.ShouldHavePage == false) continue;
+								if (((item.ModItem as ICustomWikiStat)?.FullyGeneratable ?? false) || !File.Exists(WikiPageExporter.GetWikiPagePath(WikiPageExporter.GetWikiName(item.ModItem))))
+									WikiPageExporter.ExportItemPage(item);
+							}
 						}
 					} else {
 						Main.NewText("Shift must be held to export all stats, for safety reasons");
@@ -191,9 +195,11 @@ namespace Origins {
 					for (i = 0; i < ItemLoader.ItemCount; i++) if (ContentSamples.ItemsByType[i].ModItem?.Mod is Origins) break;
 					for (; i < ItemLoader.ItemCount; i++) {
 						Item item = ContentSamples.ItemsByType[i];
-						if (item.ModItem?.Mod is not Origins) break;
-						if ((item.ModItem as ICustomWikiStat)?.ShouldHavePage == false) continue;
-						WikiPageExporter.ExportItemSprites(item);
+						if (item.ModItem is not null) {
+							if (item.ModItem?.Mod is not Origins) break;
+							if ((item.ModItem as ICustomWikiStat)?.ShouldHavePage == false) continue;
+							WikiPageExporter.ExportItemSprites(item);
+						}
 					}
 				}
 			}

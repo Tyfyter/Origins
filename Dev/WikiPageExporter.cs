@@ -413,7 +413,7 @@ namespace Origins.Dev {
 		void ModifyWikiStats(JObject data) { }
 		string[] Categories => Array.Empty<string>();
 		bool? Hardmode => null;
-		bool FullyGeneratable => false;
+		bool FullyGeneratable => true;
 		bool ShouldHavePage => true;
 		bool NeedsCustomSprite => false;
 		LocalizedText PageTextMain => (this is ILocalizedModType modType) ? WikiPageExporter.GetDefaultMainPageText(modType) : null;
