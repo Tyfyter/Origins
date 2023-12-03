@@ -11,8 +11,6 @@ namespace Origins.Items.Weapons.Melee {
 	public class Outreach : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ripper Lance");
-			// Tooltip.SetDefault("'Very pointy'");
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}
@@ -41,8 +39,8 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 9);
-			recipe.AddIngredient(ModContent.ItemType<NE8>(), 5);
+            recipe.AddIngredient(ModContent.ItemType<NE8>(), 5);
+            recipe.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 9);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

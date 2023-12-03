@@ -4,10 +4,9 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Default;
 
 namespace Origins.Items.Weapons.Melee {
-	public class Triple_Threat : ModItem {
+    public class Triple_Threat : ModItem {
 		public override void SetStaticDefaults() {
 			// These are all related to gamepad controls and don't seem to affect anything else
 			ItemID.Sets.Yoyo[Item.type] = true; // Used to increase the gamepad range when using Strings.

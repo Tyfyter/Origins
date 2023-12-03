@@ -21,7 +21,6 @@ namespace Origins.Items.Weapons.Melee {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Vorpal_Sword_Entry).Name;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Vorpal Sword");
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

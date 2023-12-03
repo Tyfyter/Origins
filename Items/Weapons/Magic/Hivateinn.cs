@@ -10,8 +10,6 @@ namespace Origins.Items.Weapons.Magic {
 	//[LegacyName("Felnum_Staff")]?
 	public class Hivateinn : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Hævateinn");
-			// Tooltip.SetDefault("Receives 50% higher damage bonuses\nsprite needs recoloring");
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 		}

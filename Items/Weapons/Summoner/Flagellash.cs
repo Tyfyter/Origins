@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Items.Materials;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -24,7 +25,13 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
 		}
-		public override bool MeleePrefix() => true;
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 15);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
+        public override bool MeleePrefix() => true;
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			Flagellash_P.pitch = Main.rand.NextFloat(0.1f, 0.5f);
 			float scale = player.GetAdjustedItemScale(Item);
@@ -38,8 +45,6 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static float pitch = 0;
 		float _pitch = 0;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Flagellash");
-			// This makes the projectile use whip collision detection and allows flasks to be applied to it.
 			ProjectileID.Sets.IsAWhip[Type] = true;
 		}
 
@@ -53,7 +58,6 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.tileCollide = false;
 			Projectile.ownerHitCheck = true; // This prevents the projectile from hitting through solid tiles.
 			Projectile.extraUpdates = 1;
-			//Projectile.extraUpdates = 0;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
 		}

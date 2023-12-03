@@ -33,7 +33,6 @@ namespace Origins.Items.Weapons.Magic {
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Amoeba_Bubble";
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amoeba Bubble");
 			Main.projFrames[Projectile.type] = 4;
 			ID = Type;
 		}

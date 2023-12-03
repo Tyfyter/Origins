@@ -56,7 +56,6 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		private Vector2 _targetPos;         //Ending position of the laser beam
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Seam Beam");
 			if (!Main.dedServ) {
 				StartTexture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Seam_Beam_Start");
 				EndTexture = Mod.Assets.Request<Texture2D>("Projectiles/Weapons/Seam_Beam_End");

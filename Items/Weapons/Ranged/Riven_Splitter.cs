@@ -1,12 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
-	public class Riven_Splitter : Harpoon_Gun {
+    public class Riven_Splitter : Harpoon_Gun {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
@@ -30,6 +30,13 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.rare = ItemRarityID.Blue;
 			Item.autoReuse = true;
 			Item.glowMask = glowmask;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 9);
+			recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 3);
+			recipe.AddTile(TileID.Anvils);
+			recipe.Register();
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
 		public override void OnConsumeAmmo(Item ammo, Player player) {

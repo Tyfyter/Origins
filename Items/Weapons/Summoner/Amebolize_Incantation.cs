@@ -56,7 +56,6 @@ namespace Origins.Items.Weapons.Summoner {
 		public const int frameSpeed = 5;
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amoeba Bubble");
 			Main.projFrames[Type] = 4;
 			ProjectileID.Sets.MinionTargettingFeature[Type] = true;
 		}

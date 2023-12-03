@@ -8,8 +8,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Felnum_Shock_Grenade : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Felnum Shock Grenade");
-			// Tooltip.SetDefault("'Quite shocking'");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -37,7 +35,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Felnum_Shock_Grenade_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Felnum_Shock_Grenade";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Felnum Shock Grenade");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

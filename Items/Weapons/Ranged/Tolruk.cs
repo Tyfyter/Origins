@@ -13,9 +13,7 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Tolruk : ModItem {
 		int charge = 0;
 		public static short[] glowmasks;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Tolruk");
-			// Tooltip.SetDefault("Receives 50% higher damage bonuses\n[tɵlɹɘk]\nSprite needs reshaping to be less like dart rifle\nOn it :)");
+		public override void SetStaticDefaults() { //still needs reshaping chee
 			glowmasks = new short[]{
 				-1,
 				Origins.AddGlowMask(Texture + "_Glow_1"),

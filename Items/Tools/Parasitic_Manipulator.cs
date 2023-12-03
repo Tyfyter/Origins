@@ -6,9 +6,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
 	public class Parasitic_Manipulator : ModItem {
-
-		
-
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
 			Item.damage = 0;

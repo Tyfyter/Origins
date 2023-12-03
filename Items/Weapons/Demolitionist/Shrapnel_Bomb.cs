@@ -7,13 +7,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Shrapnel_Bomb : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Shrapnel Bomb");
-			// Tooltip.SetDefault("Explodes into shrapnel");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 89;
+			Item.damage = 46;
 			Item.useTime = (int)(Item.useTime * 1.15);
 			Item.useAnimation = (int)(Item.useAnimation * 1.15);
 			Item.shoot = ModContent.ProjectileType<Shrapnel_Bomb_P>();
@@ -32,7 +30,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Shrapnel_Bomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Shrapnel_Bomb";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Shrapnel Bomb");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

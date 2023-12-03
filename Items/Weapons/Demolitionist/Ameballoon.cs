@@ -13,8 +13,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Ameballoon : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ameballoon");
-			// Tooltip.SetDefault("'Arguably worse than lava balloons'");
 			glowmask = Origins.AddGlowMask(this, "");
 			Item.ResearchUnlockCount = 1;
 		}
@@ -34,12 +32,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 40);
+			Recipe recipe = Recipe.Create(Type);
 			recipe.AddCondition(
 			   Language.GetOrRegister("Mods.Origins.Conditions.RivenWater"),
 			   () => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Riven_Hive>()
 			);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 40);
+			recipe.AddIngredient(ModContent.ItemType<Rubber>());
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
 		}

@@ -208,8 +208,8 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.Magiluminescence);
-			recipe.AddIngredient(Type, 12);
-			recipe.AddIngredient(ItemID.Topaz, 5);
+            recipe.AddIngredient(ItemID.Topaz, 5);
+            recipe.AddIngredient(Type, 12);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
@@ -267,8 +267,8 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.Magiluminescence);
-			recipe.AddIngredient(Type, 12);
-			recipe.AddIngredient(ItemID.Topaz, 5);
+            recipe.AddIngredient(ItemID.Topaz, 5);
+            recipe.AddIngredient(Type, 12);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
@@ -462,8 +462,8 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.Magiluminescence);
-			recipe.AddIngredient(Type, 12);
-			recipe.AddIngredient(ItemID.Topaz, 5);
+            recipe.AddIngredient(ItemID.Topaz, 5);
+            recipe.AddIngredient(Type, 12);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

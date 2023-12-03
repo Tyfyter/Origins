@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Melee
         public override void AddRecipes()
         {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 12);
+            recipe.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 9);
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
         }

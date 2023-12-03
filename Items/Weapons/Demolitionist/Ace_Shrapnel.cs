@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.damage = 150;
+			Item.damage = 36;
 			Item.noMelee = true;
 			Item.useStyle = ItemUseStyleID.Shoot;
 			Item.useTime = 20;
@@ -26,7 +27,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.LightPurple;
 		}
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<NE8>(), 10);
+            recipe.AddIngredient(ModContent.ItemType<Scrap>(), 15);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			type -= ModContent.ProjectileType<Ace_Shrapnel_P>();
 			type /= 3;
 			Projectile.NewProjectile(source, position, velocity, Item.shoot, damage, knockback, player.whoAmI, 6 + type, 0 - type);

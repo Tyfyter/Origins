@@ -3,14 +3,11 @@ using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Default;
 
 namespace Origins.Items.Weapons.Melee {
-	public class Riverang : ModItem {
+    public class Riverang : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault(AprilFools.CheckAprilFools() ? "Lobsterang" : "Riverang");
-			// Tooltip.SetDefault("'Very hydrodynamic'");
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

@@ -39,9 +39,9 @@ namespace Origins.Items.Tools {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 12)
 			.AddIngredient(ModContent.ItemType<NE8>(), 6)
-			.AddTile(TileID.Anvils)
+            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 12)
+            .AddTile(TileID.Anvils)
 			.Register();
 		}
 		public override bool AltFunctionUse(Player player) => true;

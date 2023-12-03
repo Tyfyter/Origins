@@ -14,8 +14,6 @@ namespace Origins.Items.Weapons.Magic {
 	public class Magnus : ModItem {
 		public const int baseDamage = 34;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Magnus");
-			// Tooltip.SetDefault("Receives 50% higher damage bonuses");
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 		}
@@ -29,8 +27,8 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.FallenStar);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 7);
+			recipe.AddIngredient(ItemID.FallenStar, 20);
+			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 10);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

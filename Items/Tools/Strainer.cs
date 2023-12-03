@@ -39,7 +39,6 @@ namespace Origins.Items.Tools {
 	}
 	public class Strainer_P : ModProjectile {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Strainer");
 			Main.projFrames[Type] = 2;
 			//ProjectileID.Sets.HeldProjDoesNotUsePlayerGfxOffY[Type] = true;
 		}

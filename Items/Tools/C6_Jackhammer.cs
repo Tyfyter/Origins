@@ -1,8 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
-using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -11,7 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
-	public class C6_Jackhammer : ModItem {
+    public class C6_Jackhammer : ModItem {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
 		}
@@ -36,8 +34,8 @@ namespace Origins.Items.Tools {
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 10)
-			.AddIngredient(ModContent.ItemType<NE8>(), 5)
+            .AddIngredient(ModContent.ItemType<NE8>(), 5)
+            .AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 10)
 			.AddTile(TileID.Anvils)
 			.Register();
 		}

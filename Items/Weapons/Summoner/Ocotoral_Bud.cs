@@ -1,13 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
 using Origins.Dev;
-using Origins.Items.Weapons.Ammo;
-using Origins.Items.Weapons.Summoner;
 using Origins.NPCs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -16,7 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class Ocotoral_Bud : ModItem, ICustomWikiStat {
+    public class Ocotoral_Bud : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Torn",
 			"TornSource"
@@ -54,7 +50,7 @@ namespace Origins.Items.Weapons.Summoner {
 }
 
 namespace Origins.Items.Weapons.Summoner.Minions {
-	public class Barnacle_Turret : ModProjectile {
+    public class Barnacle_Turret : ModProjectile {
 		public override string Texture => typeof(Barnacle_Turret).GetDefaultTMLName() + "_Base";
 		static readonly AutoLoadingAsset<Texture2D> baseGlowTexture = typeof(Barnacle_Turret).GetDefaultTMLName() + "_Base_Glow";
 		static readonly AutoLoadingAsset<Texture2D> headTexture = typeof(Barnacle_Turret).GetDefaultTMLName() + "_Head";

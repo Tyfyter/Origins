@@ -9,9 +9,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Tools {
 	public class Lightning_Rod : ModItem {
-
-		
-
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ReinforcedFishingPole);
 			Item.damage = 0;
@@ -42,9 +39,6 @@ namespace Origins.Items.Tools {
 		}
 	}
 	public class Lightning_Rod_Bobber : ModProjectile {
-
-		
-
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.BobberReinforced);
 			DrawOriginOffsetY = -8;

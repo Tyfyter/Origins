@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.Book);
-			recipe.AddIngredient(ItemID.FallenStar);
+			recipe.AddIngredient(ItemID.FallenStar, 5);
 			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>(), 7);
 			recipe.AddTile(TileID.Bookcases);
 			recipe.Register();

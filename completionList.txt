@@ -756,12 +756,12 @@ TILES:
 (^) Defiled Stone*
 (@5, ^3) Dusk Stone
 (^) Dusklight
-(^) Eden Wood
+(^) Edenwood
 (^) Eitrite Ore
 (^) Encrusted Ore
 (^) Felnum Ore
 (^) Fiberglass
-(X) Genesis Grass
+(X) Edengrass
 (#, ^2) Geyser Core
 (^) Hardened Defiled Sand
 (X) Harmony Brick
@@ -773,6 +773,7 @@ TILES:
 (^) Riven Grass
 (^) Sanguinite Ore
 (^) Silica
+(X) Sootgrass
 (^) Spug Flesh
 (^) Sulphur Stone
 (^) White Ice
@@ -892,14 +893,14 @@ MATERIALS:
 (^) Carburite
 (^) Defiled Bar*
 (^) Dreadful Powder
-(^) Encrusted Bar
-(^) Felnum Bar
+(^) Encrusted Bar*
+(^) Felnum Bar*
 (^) Fungarust
 (^) Magic Hair Treatment Gel
 (^) NE-9
 (^) Riven Carapace
 (^) Rubber
-(^) Sanguinite Bar
+(^) Sanguinite Bar*
 (^) Sentient Powder
 (^) Silicon
 (^) Soulspore
@@ -936,9 +937,9 @@ MATERIALS:
 (^) Chromtain Bar*
 (^) Material-36 Bundle
 (X) Ethereal Ash
-(^) Eyndum Bar
+(^) Eyndum Bar*
 (@5, ^3) Fibron Plating
-(^) Formium Bar
+(^) Formium Bar*
 (^) Formium Scrap
 (^) Lunar Token
 (#3, ^2) Nova Fragment
@@ -1102,6 +1103,7 @@ MUSIC:
 ---
 ($3) Ashen Factory
 (X) Brine Pool
+(X) Cosmos
 ($3) Cubekon Temple
 (X) Dawn
 ($3) Defiled Caverns

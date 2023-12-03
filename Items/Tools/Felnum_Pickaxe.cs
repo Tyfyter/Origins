@@ -1,3 +1,4 @@
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -19,7 +20,13 @@ namespace Origins.Items.Tools {
 			Item.UseSound = SoundID.Item1;
 			Item.rare = ItemRarityID.Green;
 		}
-		public override float UseTimeMultiplier(Player player) {
+        public override void AddRecipes() {
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<Felnum_Bar>(), 20)
+            .AddTile(TileID.Anvils)
+            .Register();
+        }
+        public override float UseTimeMultiplier(Player player) {
 			return 1f / ((player.pickSpeed - 1) * 0.75f + 1);
 		}
 		public override void ModifyWeaponDamage(Player player, ref StatModifier damage) {

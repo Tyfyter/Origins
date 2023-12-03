@@ -3,10 +3,9 @@ using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Default;
 
 namespace Origins.Items.Weapons.Melee {
-	public class Orbital_Saw : ModItem {
+    public class Orbital_Saw : ModItem {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
 			Item.DamageType = DamageClass.MeleeNoSpeed;
@@ -24,8 +23,8 @@ namespace Origins.Items.Weapons.Melee {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 7);
-			recipe.AddIngredient(ModContent.ItemType<NE8>(), 4);
+            recipe.AddIngredient(ModContent.ItemType<NE8>(), 4);
+            recipe.AddIngredient(ModContent.ItemType<Sanguinite_Bar>(), 7);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

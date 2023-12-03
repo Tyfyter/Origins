@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.Items.Other.Consumables;
 using Origins.NPCs;
 using System.Collections.Generic;
 using Terraria;
@@ -10,7 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Innermost_Manifest : ModItem, ICustomWikiStat {
+    public class Innermost_Manifest : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Torn",
 			"TornSource"
@@ -40,7 +39,6 @@ namespace Origins.Items.Weapons.Magic {
 	}
 	public class Innermost_Manifest_P : ModProjectile {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Innermost Manifest");
 			Main.projFrames[Type] = 2;
 		}
 		public override void SetDefaults() {

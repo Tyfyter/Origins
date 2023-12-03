@@ -1,15 +1,12 @@
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.GameContent.Creative;
-using Origins.Items.Materials;
 
 namespace Origins.Items.Tools {
-	public class Pullinsmash : ModItem {
+    public class Pullinsmash : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Stabsmash");
-			// Tooltip.SetDefault("'Hammer and nail in one package'");
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}
