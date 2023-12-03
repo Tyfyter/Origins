@@ -51,7 +51,7 @@ BOSSES AND MINI-BOSSES:
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver !!!
 (X) Scrapper
-(#3, $3, ^2) World Cracker !!!
+(#3, $3 (music is all set to be implemented in the music mod), ^2) World Cracker !!!
 
 (%, ^2) Lost Diver
 (X) Miscreant

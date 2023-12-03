@@ -706,7 +706,7 @@ namespace Origins {
 
 				SetMusic(ref Defiled, MusicID.Corruption);
 				SetMusic(ref UndergroundDefiled, MusicID.UndergroundCorruption);
-				SetMusic(ref RivenBoss, MusicID.OtherworldlyBoss1);
+				SetMusic(ref DefiledBoss, MusicID.OtherworldlyBoss1);
 
 				SetMusic(ref Riven, MusicID.Crimson);
 				SetMusic(ref UndergroundRiven, MusicID.UndergroundCrimson);

@@ -68,6 +68,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.lifeMax = 4000;
 			NPC.aiStyle = -1;
 			NPC.GravityMultiplier *= 0.5f;
+			Music = Origins.Music.RivenBoss;
 		}
 		public override void AI() {
 			float ArmorHealthPercent = ArmorHealth / (float)MaxArmorHealth;
