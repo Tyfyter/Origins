@@ -3442,3 +3442,8 @@ Gray_Solution: {
 	// DisplayName: Gray Solution
 	// Tooltip: ""
 }
+
+Weakpoint_Analyzer: {
+	// DisplayName: Weakpoint_ Analyzer
+	// Tooltip: ""
+}

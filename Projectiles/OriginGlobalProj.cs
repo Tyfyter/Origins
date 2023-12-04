@@ -20,6 +20,8 @@ namespace Origins.Projectiles {
 	public class OriginGlobalProj : GlobalProjectile {
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
+
+		public const string multishot_context = "multishot";
 		public int fromItemType = -1;
 		//bool init = true;
 		public bool felnumEffect = false;
@@ -88,8 +90,8 @@ namespace Origins.Projectiles {
 			if (projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall && projectile.originalDamage < projectile.damage)
 				projectile.originalDamage = projectile.damage;
 			if (source is EntitySource_ItemUse itemUseSource) {
-				if (itemUseSource.Item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0 &&
-					itemUseSource.Entity is Player player && player.GetModPlayer<OriginPlayer>().entangledEnergy) {
+				OriginPlayer originPlayer = itemUseSource.Player.GetModPlayer<OriginPlayer>();
+				if (itemUseSource.Item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0 && originPlayer.entangledEnergy) {
 					fiberglassLifesteal = true;
 				}
 				prefix = itemUseSource.Item.prefix;
@@ -102,6 +104,32 @@ namespace Origins.Projectiles {
 				fromItemType = itemUseSource.Item.type;
 				if (fromItemType == Neural_Network.ID) {
 					neuralNetworkEffect = true;
+				}
+				if (itemUseSource.Context != multishot_context) {
+					int bocShadows = 0;
+					if (originPlayer.weakpointAnalyzer && projectile.CountsAsClass(DamageClass.Ranged) && projectile.aiStyle != ProjAIStyleID.HeldProjectile) {
+						bocShadows = 2;
+					}
+					EntitySource_ItemUse multishotSource = null;
+					int ammoID = ItemID.None;
+					if (bocShadows > 0) {// separate if statement for future multishot sources
+						if (itemUseSource is EntitySource_ItemUse_WithAmmo sourceWAmmo) {
+							multishotSource = new EntitySource_ItemUse_WithAmmo(sourceWAmmo.Player, sourceWAmmo.Item, sourceWAmmo.AmmoItemIdUsed, multishot_context);
+							ammoID = sourceWAmmo.AmmoItemIdUsed;
+						} else {
+							multishotSource = new EntitySource_ItemUse(itemUseSource.Player, itemUseSource.Item, multishot_context);
+						}
+					}
+					if (bocShadows > 0) {
+						for (int i = bocShadows; i-- > 0;) {
+							float rot = MathHelper.TwoPi * ((i + 1f) / (bocShadows + 1f)) + Main.rand.NextFloat(-0.1f, 0.1f);
+							Vector2 _position = projectile.position.RotatedBy(rot, Main.MouseWorld);
+							Vector2 _velocity = projectile.velocity.RotatedBy(rot);
+							bool free = itemUseSource.Player.IsAmmoFreeThisShot(itemUseSource.Item, new(ammoID), projectile.type);
+							int _damage = free ? projectile.damage : 0;
+							Projectile.NewProjectile(multishotSource, _position, _velocity, projectile.type, _damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1], projectile.ai[2]);
+						}
+					}
 				}
 			} else if (source is EntitySource_Parent source_Parent) {
 				if (source_Parent.Entity is Projectile parentProjectile) {

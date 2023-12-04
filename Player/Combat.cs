@@ -41,6 +41,9 @@ namespace Origins {
 			if (endlessExplosives && ammo.ammo is ItemID.Grenade or ItemID.Bomb or ItemID.Dynamite) {
 				if (Main.rand.NextBool(15, 100)) return false;
 			}
+			if (weakpointAnalyzer && ammo.CountsAsClass(DamageClass.Ranged)) {
+				if (Main.rand.NextBool(8, 100)) return false;
+			}
 			return true;
 		}
 		public override bool? CanAutoReuseItem(Item item) {
@@ -88,15 +91,15 @@ namespace Origins {
 					Vector2 _velocity;
 					int _type;
 					int _damage;
-					float _knockBack;
+					float _knockback;
 					for (int i = c; i-- > 0;) {
 						_position = position;
 						_velocity = velocity.RotatedBy(rot);
 						_type = type;
 						_damage = damage;
-						_knockBack = knockback;
-						if (ItemLoader.Shoot(item, Player, source, _position, _velocity, _type, _damage, _knockBack)) {
-							Projectile.NewProjectile(source, _position, _velocity, _type, _damage, _knockBack, Player.whoAmI);
+						_knockback = knockback;
+						if (ItemLoader.Shoot(item, Player, source, _position, _velocity, _type, _damage, _knockback)) {
+							Projectile.NewProjectile(source, _position, _velocity, _type, _damage, _knockback, Player.whoAmI);
 						}
 						rot = -rot;
 					}
@@ -111,15 +114,15 @@ namespace Origins {
 					Vector2 _velocity;
 					int _type;
 					int _damage;
-					float _knockBack;
+					float _knockback;
 					for (int i = c; i-- > 0;) {
 						_position = position;
 						_velocity = velocity.RotatedBy(rot);
 						_type = type;
 						_damage = damage;
-						_knockBack = knockback;
-						if (ItemLoader.Shoot(item, Player, source, _position, _velocity, _type, _damage, _knockBack)) {
-							Projectile.NewProjectile(source, _position, _velocity, _type, _damage, _knockBack, Player.whoAmI);
+						_knockback = knockback;
+						if (ItemLoader.Shoot(item, Player, source, _position, _velocity, _type, _damage, _knockback)) {
+							Projectile.NewProjectile(source, _position, _velocity, _type, _damage, _knockback, Player.whoAmI);
 						}
 						rot = -rot;
 					}

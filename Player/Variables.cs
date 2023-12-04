@@ -193,6 +193,7 @@ namespace Origins {
 		public Item cinderSealItem = null;
 		public int cinderSealCount = 4;
 		public bool dryadNecklace = false;
+		public bool weakpointAnalyzer = false;
 		#endregion
 
 		#region explosive stats
@@ -490,6 +491,7 @@ namespace Origins {
 			sonarVisor = false;
 			solarPanel = false;
 			dryadNecklace = false;
+			weakpointAnalyzer = false;
 
 			flaskBile = false;
 			flaskSalt = false;
