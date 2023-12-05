@@ -3116,7 +3116,7 @@ Dusk_Light_Item: {
 }
 
 Dusk_Stone_Item: {
-	DisplayName: Dusk Stone
+	DisplayName: Twilith
 	Tooltip: ""
 }
 
@@ -3446,9 +3446,9 @@ Gray_Solution: {
 Weakpoint_Analyzer: {
 	DisplayName: Weakpoint Analyzer
 	Tooltip:
-	'''
-	Ranged projectiles are duplicated twice
-	Duplicates have a chance to deal damage equal to your ammo conservation chance
-	8% chance to save ammo
-	'''
+		'''
+		Ranged projectiles are duplicated twice
+		Duplicates have a chance to deal damage equal to your ammo conservation chance
+		8% chance to save ammo
+		'''
 }

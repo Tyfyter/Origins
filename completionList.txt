@@ -385,7 +385,7 @@ ACCESSORIES:
 (^) Scribe of the Meat God*
 (^) Stack of Shraps*
 (^) Third Eye*
-(#, ^2) Weakpoint Analyzer* !!!
+(#3, ^2) Weakpoint Analyzer* !!!
 
 (^) Agility Core
 (^) Combat Core
@@ -552,7 +552,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler*
 (X) Adamantite Harpoon Gun*
-(^) Boat Rocker*
+(#, ^2) Boat Rocker*
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun*
@@ -745,54 +745,59 @@ TILES:
 (^) Angelic Cloud
 (^) Batholith*
 (^) Bleeding Obsidian
-(#, ^2) Brittle Quartz !!!
+(#, ^2) Brittle Quartz* !!!
 (#, ^2) Carburite
 (X) Compacted Scrap
 (X) Cubekon Altar
 (#, ^2) Defiled Cactus !!!
 (^) Defiled Grass*
-(^) Defiled Sand
-(^) Defiled Sandstone
+(^) Defiled Jungle Grass*
+(^) Defiled Sand*
+(^) Defiled Sandstone*
 (^) Defiled Stone*
-(@5, ^3) Dusk Stone
 (^) Dusklight
+(X) Edengrass*
 (^) Edenwood
 (^) Eitrite Ore
 (^) Encrusted Ore
 (^) Felnum Ore
 (^) Fiberglass
-(X) Edengrass
 (#, ^2) Geyser Core
-(^) Hardened Defiled Sand
+(^) Hardened Defiled Sand*
 (X) Harmony Brick
 (^) Lost Ore
 (#, ^2) Mildew
-(^) Peat Moss*
-(^) Primordial Permafrost
-(#, ^2) Quartz !!!
+(^) Peat Moss Block*
+(^) Primordial Permafrost*
+(#, ^2) Quartz Block* !!!
 (^) Riven Grass
 (^) Sanguinite Ore
-(^) Silica
-(X) Sootgrass
-(^) Spug Flesh
+(^) Silica*
+(X) Sootgrass*
+(^) Spug Flesh*
 (^) Sulphur Stone
-(^) White Ice
+(@5, ^3) Twilith
+(^) White Ice Block*
 (#, ^2) Riven Cactus !!!
-(^) Riven Grass
+(^) Riven Grass*
+(^) Riven Jungle Grass*
 
 (#, ^2) Batholith Wall
+(#, ^2) Brittle Quartz Wall !!!
 (#, ^2) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
-(^) Chambersite Gemstone Wall (Crimson)                         dont forget to add chambersite world gen
+(^) Chambersite Gemstone Wall (Crimson)
 (^) Chambersite Gemstone Wall (Defiled)
 (^) Chambersite Gemstone Wall (Riven)
+(#, ^2) Defiled Grass Wall !!!
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (^) Eden Wood Wall
 (#, ^2) Fiberglass Wall
 (^) Harmony Brick Wall
 (#, ^2) Quartz Wall !!!
+(#, ^2) Riven Grass Wall !!!
 (^) Spug Flesh Wall
 (^) Sulphur Stone Wall
 
@@ -817,15 +822,20 @@ TILES:
 (^) Defiled Torch
 (X) Desert Dungeon Chest
 (X) Dusk Dungeon Chest
+(X) Encrusted Brick !!!
 (#, ^2) Living Alkahest
 (#, ^2) Living Bile
+(X) Lost Brick !!!
 (X) Mushroom Dungeon Chest
+(X) Nova Brick
+(X) Nova Fragment Block
 (X) Ocean Dungeon Chest
 (X) Residue Block
 (^) Riven Campfire
 (^) Riven Dungeon Chest
 (^) Riven Torch
 (^) Riven Water Fountain
+(X) Sanguinite Brick
 (#3, ^2) Traffic Cone !!!
 
 (^) Cleansing Station

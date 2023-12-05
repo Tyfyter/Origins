@@ -20,9 +20,9 @@ namespace Origins.Items.Other.Consumables {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 10);
 			recipe.AddIngredient(ItemID.BottledWater, 10);
-			recipe.AddIngredient(ModContent.ItemType<Silica_Item>());
 			recipe.AddIngredient(ModContent.ItemType<Riven_Grass_Seeds>());
-			recipe.Register();
+            recipe.AddIngredient(ModContent.ItemType<Silica_Item>());
+            recipe.Register();
 		}
 	}
 	public class Gooey_Water_P : ModProjectile {

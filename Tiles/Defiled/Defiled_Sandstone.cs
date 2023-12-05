@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Accessories;
+using Origins.Walls;
 using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
@@ -32,11 +34,44 @@ namespace Origins.Tiles.Defiled {
 	}
 	public class Defiled_Sandstone_Item : ModItem {
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 100;
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled_Sand_Item>()] = ModContent.ItemType<Defiled_Sandstone_Item>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled_Sandstone_Item>()] = ModContent.ItemType<Defiled_Sand_Item>();
+            Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.createTile = TileType<Defiled_Sandstone>();
 		}
-	}
+        public override void AddRecipes() {
+            CreateRecipe()
+            .AddIngredient(ItemID.Sandstone)
+            .AddTile(TileID.ChlorophyteExtractinator)
+            .Register();
+
+            CreateRecipe()
+            .AddIngredient(ItemID.CorruptSandstone)
+            .AddTile(TileID.ChlorophyteExtractinator)
+            .Register();
+
+            CreateRecipe()
+            .AddIngredient(ItemID.CrimsonSandstone)
+			.AddTile(TileID.ChlorophyteExtractinator)
+            .Register();
+
+            //CreateRecipe()
+            //.AddIngredient(ModContent.ItemType<Brittle_Quartz>())
+            //.AddTile(TileID.ChlorophyteExtractinator)
+            //.Register();
+
+            //CreateRecipe()
+            //.AddIngredient(ModContent.ItemType<Ashen_Sandstone>())
+            //.AddTile(TileID.ChlorophyteExtractinator)
+            //.Register();
+
+            CreateRecipe()
+            .AddIngredient(ModContent.ItemType<Defiled_Sandstone_Wall_Item>(), 4)
+            .AddTile(TileID.WorkBenches)
+            .Register();
+        }
+    }
 }

@@ -165,7 +165,13 @@ namespace Origins.Tiles.Defiled {
 		}
 
 		public override void AddRecipes() {
-			CreateRecipe(3)
+            CreateRecipe(3)
+            .AddIngredient(ItemID.Torch, 3)
+            .AddIngredient(ItemType<Defiled_Ice_Item>())
+            .SortAfterFirstRecipesOf(ItemID.Torch)
+            .Register();
+
+            CreateRecipe(3)
 			.AddIngredient(ItemID.Torch, 3)
 			.AddIngredient(ItemType<Defiled_Stone_Item>())
 			.SortAfterFirstRecipesOf(ItemID.Torch)
@@ -174,12 +180,6 @@ namespace Origins.Tiles.Defiled {
 			CreateRecipe(3)
 			.AddIngredient(ItemID.Torch, 3)
 			.AddIngredient(ItemType<Hardened_Defiled_Sand_Item>())
-			.SortAfterFirstRecipesOf(ItemID.Torch)
-			.Register();
-
-			CreateRecipe(3)
-			.AddIngredient(ItemID.Torch, 3)
-			.AddIngredient(ItemType<Defiled_Ice_Item>())
 			.SortAfterFirstRecipesOf(ItemID.Torch)
 			.Register();
 		}

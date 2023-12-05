@@ -391,7 +391,7 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Green;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.ExplosivePowder);
-			recipe.AddIngredient(this, 3);
+			recipe.AddIngredient(this, 2);
 			recipe.AddTile(TileID.GlassKiln);
 			recipe.Register();
 		}

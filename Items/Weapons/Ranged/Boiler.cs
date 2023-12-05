@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.glowMask = glowmask;
 			Item.consumeAmmoOnFirstShotOnly = true;
 		}
-		public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
+		public override Vector2? HoldoutOffset() => new Vector2(2, 0);
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			Vector2 offset = Vector2.Normalize(velocity);
 			offset = offset * 24 + offset.RotatedBy(-MathHelper.PiOver2 * player.direction) * 8;

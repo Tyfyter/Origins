@@ -1,16 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
-	public class Defiled_Sandstone_Wall : ModWall {
+    public class Defiled_Sandstone_Wall : ModWall {
 		public override void SetStaticDefaults() {
 			WallID.Sets.Conversion.Sandstone[Type] = true;
 			Main.wallBlend[Type] = WallID.Sandstone;//what wall type this wall is considered to be when blending

@@ -7,8 +7,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Impact_Grenade : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Impact Grenade");
-			// Tooltip.SetDefault("'Be careful, it's not a book'");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -25,8 +23,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.maxStack = 999;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 3);
-			recipe.AddIngredient(ItemID.Grenade, 3);
+			Recipe recipe = Recipe.Create(Type, 4);
+			recipe.AddIngredient(ItemID.Grenade, 4);
 			recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
@@ -35,7 +33,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Impact_Grenade_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Impact_Grenade";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Impact Grenade");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
