@@ -749,7 +749,7 @@ TILES:
 (#, ^2) Carburite
 (X) Compacted Scrap
 (X) Cubekon Altar
-(#, ^2) Defiled Cactus !!!
+(#, ^2) Defiled Cactus* !!!
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
 (^) Defiled Sand*
@@ -846,11 +846,12 @@ TILES:
 (X) Qube Generator
 (X) Riven Flesh Shredder
 
-(^) Acetabularia
-(^) Brineglow Vine
+(^) Acetabularia*
+(^) Brineglow Vine*
 (^) Defiled Misc Tiles*
 (^) Defiled Tree
 (X) Eden Tree
+(X) Fungarust
 (^) Gel Blister
 (#2, ^2) Laser Tag Console
 (#2, ^2) Riven Foliage !!!

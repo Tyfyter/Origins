@@ -11,8 +11,6 @@ namespace Origins.Items.Materials {
 	public class Sentient_Powder : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Sentient Powder");
-			// Tooltip.SetDefault("Spreads the Riven");
 			Item.ResearchUnlockCount = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.VilePowder];
 			glowmask = Origins.AddGlowMask(this);
 		}

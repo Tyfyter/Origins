@@ -1,13 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
-using Origins.Reflection;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
-using Terraria.GameContent.Drawing;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
@@ -75,7 +73,6 @@ namespace Origins.Tiles.Brine {
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
 			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Brine Leaf Clover");
 			AddMapEntry(new Color(37, 128, 109), name);
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
@@ -94,7 +91,6 @@ namespace Origins.Tiles.Brine {
 
 			HitSound = SoundID.Grass;
 			DustType = DustID.JungleGrass;
-			//RegisterItemDrop(ItemType<Brineglow>());
 		}
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
 			if (Glows(Framing.GetTileSafely(i, j))) yield return new Item(ItemType<Brineglow>());
