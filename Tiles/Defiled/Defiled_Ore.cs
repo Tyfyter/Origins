@@ -17,7 +17,6 @@ namespace Origins.Tiles.Defiled {
 			Main.tileSpelunker[Type] = true;
 			TileID.Sets.Ore[Type] = true;
 			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Lost Ore");
 			AddMapEntry(new Color(225, 225, 225), name);
 			mergeID = TileID.Demonite;
 			DustType = DustID.WhiteTorch;
@@ -34,12 +33,20 @@ namespace Origins.Tiles.Defiled {
 	public class Defiled_Ore_Item : ModItem, IJournalEntryItem {
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Lost_Ore_Entry).Name;
-		
-		public override void SetDefaults() {
+
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.DemoniteOre);
 			Item.createTile = TileType<Defiled_Ore>();
 		}
-	}
+        public override void AddRecipes() {
+            CreateRecipe(ItemID.DeerThing)
+            .AddIngredient(ItemID.FlinxFur, 3)
+            .AddIngredient(ItemID.Lens)
+            .AddIngredient(Type)
+			.AddTile(TileID.DemonAltar)
+            .Register();
+        }
+    }
 	public class Lost_Ore_Entry : JournalEntry {
 		public override string TextKey => "Lost_Ore";
 		public override ArmorShaderData TextShader => null;

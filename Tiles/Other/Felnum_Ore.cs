@@ -6,7 +6,6 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using static Origins.Items.Materials.Felnum_Bar;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
@@ -19,10 +18,11 @@ namespace Origins.Tiles.Other {
 			Main.tileOreFinderPriority[Type] = 450;
 			Main.tileSpelunker[Type] = true;
 			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Felnum Ore");
 			AddMapEntry(new Color(160, 116, 42), name);
 			mergeID = TileID.Demonite;
-		}
+            MinPick = 65;
+            MineResist = 3;
+        }
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (!Main.tile[i, j].HasTile) return;
 			float v = (float)Math.Sin((Main.time - i) / 45) * 2;
@@ -46,9 +46,8 @@ namespace Origins.Tiles.Other {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 50);
-			recipe.AddIngredient(ItemID.CopperOre);
-			recipe.AddIngredient(ItemID.FallenStar, 12);
-			recipe.AddIngredient(ItemID.SpellTome);
+			recipe.AddIngredient(ItemID.CopperOre, 50);
+			recipe.AddIngredient(ItemID.FallenStar, 4);
 			recipe.AddTile(TileID.CrystalBall);
 			recipe.Register();
 		}

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
-using Origins.Tiles.Dusk;
 using Origins.Tiles.Other;
 using System;
 using Terraria;
@@ -11,9 +10,8 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Amber_Of_Embers : ModItem {
+    public class Amber_Of_Embers : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amber of Embers");
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 		}
@@ -35,9 +33,9 @@ namespace Origins.Items.Weapons.Magic {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.Amber, 8);
-			recipe.AddIngredient(ItemID.FallenStar, 10);
 			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 18);
-			recipe.AddTile(TileID.MythrilAnvil);
+            recipe.AddIngredient(ModContent.ItemType<Valkyrum_Bar>(), 10);
+            recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
 	}
@@ -45,7 +43,6 @@ namespace Origins.Items.Weapons.Magic {
 		public override string Texture => "Origins/Projectiles/Weapons/Fire_Wave_P";
 
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Burning Ember");
 			ProjectileID.Sets.TrailingMode[Projectile.type] = 2;
 			ProjectileID.Sets.TrailCacheLength[Projectile.type] = 19;
 		}

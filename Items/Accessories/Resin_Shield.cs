@@ -44,7 +44,7 @@ namespace Origins.Items.Accessories {
 			recipe.AddIngredient(ItemID.Amber, 6);
 			recipe.AddIngredient(ItemID.ObsidianShield);
 			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 12);
-			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
 	}

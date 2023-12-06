@@ -7,7 +7,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
     public class Bled_Out_Staff : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bled Out Staff");
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 		}

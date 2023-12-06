@@ -20,7 +20,6 @@ namespace Origins.Tiles.Riven {
 			Main.tileSpelunker[Type] = true;
 			TileID.Sets.Ore[Type] = true;
 			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Encrusted Ore");
 			AddMapEntry(new Color(40, 148, 207), name);
 			mergeID = TileID.Crimtane;
 		}
@@ -47,5 +46,13 @@ namespace Origins.Tiles.Riven {
 			Item.CloneDefaults(ItemID.CrimtaneOre);
 			Item.createTile = TileType<Encrusted_Ore>();
 		}
-	}
+        public override void AddRecipes() {
+            CreateRecipe(ItemID.DeerThing)
+            .AddIngredient(ItemID.FlinxFur, 3)
+            .AddIngredient(ItemID.Lens)
+            .AddIngredient(Type)
+            .AddTile(TileID.DemonAltar)
+            .Register();
+        }
+    }
 }

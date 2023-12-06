@@ -744,9 +744,9 @@ TILES:
 (#4, ^2) Amoeba Fluid !!!
 (^) Angelic Cloud
 (^) Batholith*
-(^) Bleeding Obsidian
+(^) Bleeding Obsidian*
 (#, ^2) Brittle Quartz* !!!
-(#, ^2) Carburite
+(#, ^2) Carburite*
 (X) Compacted Scrap
 (X) Cubekon Altar
 (#, ^2) Defiled Cactus* !!!
@@ -757,30 +757,29 @@ TILES:
 (^) Defiled Stone*
 (^) Dusklight
 (X) Edengrass*
-(^) Edenwood
-(^) Eitrite Ore
-(^) Encrusted Ore
-(^) Felnum Ore
+(^) Edenwood*
+(^) Eitrite Ore*
+(^) Encrusted Ore*
+(^) Felnum Ore*
 (^) Fiberglass
 (#, ^2) Geyser Core
 (^) Hardened Defiled Sand*
 (X) Harmony Brick
-(^) Lost Ore
+(^) Lost Ore*
 (#, ^2) Mildew
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
 (#, ^2) Quartz Block* !!!
-(^) Riven Grass
-(^) Sanguinite Ore
+(#, ^2) Riven Cactus* !!!
+(^) Riven Grass*
+(^) Riven Jungle Grass*
+(^) Sanguinite Ore*
 (^) Silica*
 (X) Sootgrass*
 (^) Spug Flesh*
 (^) Sulphur Stone
 (@5, ^3) Twilith
 (^) White Ice Block*
-(#, ^2) Riven Cactus !!!
-(^) Riven Grass*
-(^) Riven Jungle Grass*
 
 (#, ^2) Batholith Wall
 (#, ^2) Brittle Quartz Wall !!!
@@ -848,20 +847,21 @@ TILES:
 
 (^) Acetabularia*
 (^) Brineglow Vine*
-(^) Defiled Misc Tiles*
-(^) Defiled Tree
-(X) Eden Tree
-(X) Fungarust
+(^) Defiled Foliage
+(^) Defiled Tree*
+(X) Eden Tree*
+(X) Fungarust*
 (^) Gel Blister
 (#2, ^2) Laser Tag Console
 (#2, ^2) Riven Foliage !!!
 (^) Riven Lesion
+(X) Riven Palm Tree* !!!
 (^) Riven Pot
-(^) Riven Tree
-(^) Soulspore
-(X) Star Cannon Cannon
-(^) Wilting Rose
-(^) Wrycoral
+(^) Riven Tree*
+(^) Soulspore*
+(X) Surveysprout*
+(^) Wilting Rose*
+(^) Wrycoral*
 
 (^) A Perfect World
 
@@ -895,18 +895,18 @@ TILES:
 
 MATERIALS:
 ---
-(^) Acetabularia
+(^) Acetabularia*
 (^) Adhesive Wrap
 (^) Bark
 (^) Bat Hide
 (^) Biocomponent 10
 (^) Bud Barnacle
-(^) Carburite
+(^) Carburite*
 (^) Defiled Bar*
 (^) Dreadful Powder
 (^) Encrusted Bar*
 (^) Felnum Bar*
-(^) Fungarust
+(^) Fungarust*
 (^) Magic Hair Treatment Gel
 (^) NE-9
 (^) Riven Carapace
@@ -914,15 +914,15 @@ MATERIALS:
 (^) Sanguinite Bar*
 (^) Sentient Powder
 (^) Silicon
-(^) Soulspore
+(^) Soulspore*
 (^) Strange String*
-(^) Surveysprout
+(^) Surveysprout*
 (^) Tire
 (^) Tree Sap
 (^) Undead Chunk*
 (^) Urn of Ashes
-(^) Wilting Rose
-(^) Wrycoral
+(^) Wilting Rose*
+(^) Wrycoral*
 
 (^) Alkahest
 (^) Black Bile

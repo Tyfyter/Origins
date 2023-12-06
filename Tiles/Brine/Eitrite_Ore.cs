@@ -13,7 +13,6 @@ namespace Origins.Tiles.Brine
 			Main.tileOreFinderPriority[Type] = 666;
 			Main.tileSpelunker[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
-			// name.SetDefault("Eitrite Ore");
 			AddMapEntry(new Color(79, 86, 207), CreateMapEntryName());
 			mergeID = TileID.Mud;
 			MinPick = 150;

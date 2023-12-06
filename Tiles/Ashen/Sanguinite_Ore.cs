@@ -45,5 +45,13 @@ namespace Origins.Tiles.Ashen {
 			Item.CloneDefaults(ItemID.DemoniteOre);
 			Item.createTile = TileType<Sanguinite_Ore>();
 		}
-	}
+        public override void AddRecipes() {
+            CreateRecipe(ItemID.DeerThing)
+            .AddIngredient(ItemID.FlinxFur, 3)
+            .AddIngredient(ItemID.Lens)
+            .AddIngredient(Type)
+            .AddTile(TileID.DemonAltar)
+            .Register();
+        }
+    }
 }
