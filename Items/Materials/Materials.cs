@@ -38,10 +38,10 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 25;
 		public override int Value => Item.sellPrice(copper: 18);
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 5);
-			recipe.AddIngredient(ModContent.ItemType<Rubber>(), 5);
+			Recipe recipe = Recipe.Create(Type, 3);
 			recipe.AddIngredient(ModContent.ItemType<Silicon>());
-			recipe.AddTile(TileID.WorkBenches);
+            recipe.AddIngredient(ModContent.ItemType<Tree_Sap>());
+            recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.AdhesiveBandage);
@@ -346,8 +346,7 @@ namespace Origins.Items.Materials {
 			Recipe recipe = Recipe.Create(Type, 5);
 			recipe.AddIngredient(ItemID.BottledWater, 5);
 			recipe.AddIngredient(ItemID.FallenStar);
-			recipe.AddIngredient(ItemID.Gel, 5);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 2);
+			recipe.AddIngredient(ModContent.ItemType<Silicon>());
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}
@@ -474,7 +473,32 @@ namespace Origins.Items.Materials {
 			recipe.AddIngredient(ItemID.SandBlock, 3);
 			recipe.AddTile(TileID.GlassKiln);
 			recipe.Register();
-		}
+
+            recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.EbonsandBlock, 3);
+            recipe.AddTile(TileID.GlassKiln);
+            recipe.Register();
+
+            recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.CrimsandBlock, 3);
+            recipe.AddTile(TileID.GlassKiln);
+            recipe.Register();
+
+            recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Defiled_Sand_Item>(), 3);
+            recipe.AddTile(TileID.GlassKiln);
+            recipe.Register();
+
+            recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Silica_Item>(), 3);
+            recipe.AddTile(TileID.GlassKiln);
+            recipe.Register();
+
+            /*recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Ashen_Sand_Item>(), 3);
+            recipe.AddTile(TileID.GlassKiln);
+            recipe.Register();*/
+        }
 	}
 	public class Strange_String : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 2);
@@ -576,7 +600,13 @@ namespace Origins.Items.Materials {
 			recipe.AddIngredient(this);
 			recipe.AddTile(TileID.GlassKiln);
 			recipe.Register();
-		}
+
+            recipe = Recipe.Create(ItemID.LesserHealingPotion, 2);
+            recipe.AddIngredient(ItemID.Bottle, 2);
+            recipe.AddIngredient(ModContent.ItemType<Tree_Sap>());
+            recipe.AddTile(TileID.Bottles);
+            recipe.Register();
+        }
 	}
 	public class Undead_Chunk : MaterialItem {
 		public override bool HasGlowmask => true;

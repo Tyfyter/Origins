@@ -59,7 +59,6 @@ namespace Origins {
 			recipe = Recipe.Create(ItemID.SpelunkerGlowstick, 200);
 			recipe.AddIngredient(ItemID.SpelunkerPotion);
 			recipe.AddIngredient(ItemID.Glowstick, 200);
-			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.CrystalNinjaHelmet);
@@ -97,13 +96,26 @@ namespace Origins {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
-			recipe = Recipe.Create(ItemID.BloodButcherer);
+            recipe = Recipe.Create(ItemID.BallOHurt);
+            recipe.AddIngredient(ItemID.DemoniteBar, 10);
+            recipe.AddIngredient(ItemID.ShadowScale, 5);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.BloodButcherer);
 			recipe.AddIngredient(ItemID.CrimtaneBar, 6);
 			recipe.AddIngredient(ItemID.TissueSample, 3);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
-			recipe = Recipe.Create(ItemID.TheRottedFork);
+            recipe = Recipe.Create(ItemID.CrimsonRod);
+            recipe.AddIngredient(ItemID.CrimtaneBar, 10);
+            recipe.AddIngredient(ItemID.TissueSample, 6);
+            recipe.AddRecipeGroup("Origins:Gem Staves");
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.TheRottedFork);
 			recipe.AddIngredient(ItemID.CrimtaneBar, 9);
 			recipe.AddIngredient(ItemID.TissueSample, 5);
 			recipe.AddTile(TileID.Anvils);
@@ -115,23 +127,10 @@ namespace Origins {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
-			recipe = Recipe.Create(ItemID.CrimsonRod);
-			recipe.AddIngredient(ItemID.CrimtaneBar, 10);
-			recipe.AddIngredient(ItemID.TissueSample, 6);
-			recipe.AddRecipeGroup("Origins:Gem Staves");
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-
 			recipe = Recipe.Create(ItemID.Vilethorn);
 			recipe.AddIngredient(ItemID.DemoniteBar, 10);
 			recipe.AddIngredient(ItemID.ShadowScale, 6);
 			recipe.AddRecipeGroup("Origins:Gem Staves");
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.BallOHurt);
-			recipe.AddIngredient(ItemID.DemoniteBar, 10);
-			recipe.AddIngredient(ItemID.ShadowScale, 5);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 
@@ -144,11 +143,6 @@ namespace Origins {
 			recipe.AddIngredient(ItemID.Wood);
 			recipe.Register();
 
-			recipe = Recipe.Create(ItemID.LesserHealingPotion, 2);
-			recipe.AddIngredient(ItemID.Bottle, 2);
-			recipe.AddIngredient(ModContent.ItemType<Tree_Sap>());
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
 			//this hook is supposed to be used for adding recipes,
 			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
 			Origins.instance.LateLoad();

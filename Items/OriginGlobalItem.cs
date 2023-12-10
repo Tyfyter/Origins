@@ -70,15 +70,15 @@ namespace Origins.Items {
 			if (OriginConfig.Instance.WoodBuffs) switch (item.type) {
 					case ItemID.ShadewoodHelmet:
 					case ItemID.EbonwoodHelmet:
-					item.defense = 4;
+					item.defense = 2;
 					break;
 					case ItemID.ShadewoodBreastplate:
 					case ItemID.EbonwoodBreastplate:
-					item.defense = 6;
+					item.defense = 3;
 					break;
 					case ItemID.ShadewoodGreaves:
 					case ItemID.EbonwoodGreaves:
-					item.defense = 5;
+					item.defense = 3;
 					break;
 					case ItemID.PearlwoodHelmet:
 					case ItemID.PearlwoodGreaves:

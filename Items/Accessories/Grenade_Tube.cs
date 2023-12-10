@@ -16,7 +16,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
-			recipe.AddIngredient(ItemID.IllegalGunParts, 2);
+			recipe.AddIngredient(ItemID.IllegalGunParts);
 			recipe.AddIngredient(ModContent.ItemType<Missile_Armcannon>());
 			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 15);
 			recipe.AddTile(TileID.TinkerersWorkbench);
