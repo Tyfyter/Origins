@@ -85,7 +85,7 @@ namespace Origins.Items.Weapons {
 				Item.NewItem(Projectile.GetSource_FromThis(), Projectile.Center, ModContent.ItemType<Fiberglass_Shard>());
 				target.statLife--;
 				PlayerDeathReason reason = new PlayerDeathReason();
-				reason.SourceCustomReason = target.name + " cut themselves on broken glass"; //Oh, there's already code for death reasons :D
+				reason.SourceCustomReason = target.name + " cut themselves on broken glass";
 				if (target.statLife <= 0) target.Hurt(reason, 1, 0);
 				Projectile.Kill();
 			}

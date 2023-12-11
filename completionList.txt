@@ -742,8 +742,8 @@ CLASSLESS WEAPONS:
 
 TILES:
 ---
-(#4, ^2) Amoeba Fluid !!!
-(^) Angelic Cloud
+(#4, ^2) Amoeba Fluid* !!!
+(^) Angelic Cloud*
 (^) Batholith*
 (^) Bleeding Obsidian*
 (#, ^2) Brittle Quartz* !!!
@@ -756,18 +756,18 @@ TILES:
 (^) Defiled Sand*
 (^) Defiled Sandstone*
 (^) Defiled Stone*
-(^) Dusklight
+(^) Dusklight*
 (X) Edengrass*
 (^) Edenwood*
 (^) Eitrite Ore*
 (^) Encrusted Ore*
 (^) Felnum Ore*
-(^) Fiberglass
-(#, ^2) Geyser Core
+(@5?, ^3) Fiberglass Block* !!!
+(#, ^2) Geyser Core Block*
 (^) Hardened Defiled Sand*
-(X) Harmony Brick
+(X) Harmony Brick*
 (^) Lost Ore*
-(#, ^2) Mildew
+(#, ^2) Mildew Block*
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
 (#, ^2) Quartz Block* !!!
@@ -779,8 +779,8 @@ TILES:
 (X) Silicon Ore* !!!
 (X) Sootgrass*
 (^) Spug Flesh*
-(^) Sulphur Stone
-(@5, ^3) Twilith
+(^) Sulphur Stone*
+(@5, ^3) Twilith*
 (^) White Ice Block*
 
 (#, ^2) Batholith Wall
@@ -797,6 +797,7 @@ TILES:
 (^) Eden Wood Wall
 (#, ^2) Fiberglass Wall
 (^) Harmony Brick Wall
+(X) Nova Brick Wall
 (#, ^2) Quartz Wall !!!
 (#, ^2) Riven Grass Wall !!!
 (^) Spug Flesh Wall
@@ -806,9 +807,9 @@ TILES:
 (^) Alkahest Torch
 (^) Bile Torch
 (X) Brine Water Fountain
-(X) Cancer Block
+(X) Cancer Block*
 (X) Chambersite Gem Lock
-(^) Chambersite Gemspark
+(^) Chambersite Gemspark*
 (X) Chambersite Gemstone*
 (X) Chambersite Gemstone* (Corruption)
 (X) Chambersite Gemstone* (Crimson)
@@ -824,14 +825,14 @@ TILES:
 (X) Desert Dungeon Chest
 (X) Dusk Dungeon Chest
 (X) Encrusted Brick !!!
-(#, ^2) Living Alkahest
-(#, ^2) Living Bile
+(#, ^2) Living Alkahest Block*
+(#, ^2) Living Bile Block*
 (X) Lost Brick !!!
 (X) Mushroom Dungeon Chest
-(X) Nova Brick
-(X) Nova Fragment Block
+(X) Nova Brick*
+(X) Nova Fragment Block*
 (X) Ocean Dungeon Chest
-(X) Residue Block
+(X) Residue Block*
 (^) Riven Campfire
 (^) Riven Dungeon Chest
 (^) Riven Torch

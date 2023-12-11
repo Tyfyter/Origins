@@ -3146,7 +3146,7 @@ Felnum_Ore_Item: {
 }
 
 Fiberglass_Item: {
-	// DisplayName: Fiberglass
+	// DisplayName: Fiberglass Block
 	// Tooltip: ""
 }
 
