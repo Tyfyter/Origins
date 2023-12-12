@@ -270,7 +270,7 @@ namespace Origins.World.BiomeData {
 				const float strength = 2.4f;
 				const float wallThickness = 4f;
 				ushort fleshID = (ushort)ModContent.TileType<Riven_Flesh>();
-				ushort weakFleshID = (ushort)ModContent.TileType<Weak_Riven_Flesh>();
+				ushort weakFleshID = TileID.CrackedBlueDungeonBrick;
 				ushort fleshWallID = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
 				lesionCount = 0;
 				int j2 = j;
