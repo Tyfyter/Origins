@@ -3021,8 +3021,8 @@ Angelic_Cloud_Item: {
 }
 
 Eden_Wood_Item: {
-	// DisplayName: Eden Wood
-	// Tooltip: "'A wood too sacred to chop'"
+	// DisplayName: Edenwood
+	// Tooltip: "'Too sacred to chop'"
 }
 
 Genesis_Grass_Seeds: {
@@ -3111,7 +3111,7 @@ Bleeding_Obsidian_Item: {
 }
 
 Dusk_Light_Item: {
-	// DisplayName: Dusk Light
+	// DisplayName: Dusklight
 	// Tooltip: ""
 }
 

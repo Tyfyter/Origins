@@ -639,5 +639,37 @@ namespace Origins.Dev {
 			}
 			return (recipes, usedIn);
 		}
+		public enum RecipeUseType {
+			NONE,
+			RESULT,
+			INGREDIENT
+		}
+		public static (List<Recipe> recipes, List<Recipe> usedIn) GetRecipes(Func<Recipe, RecipeUseType> condition) {
+			List<Recipe> recipes = new();
+			List<Recipe> usedIn = new();
+			for (int i = 0; i < Main.recipe.Length; i++) {
+				Recipe recipe = Main.recipe[i];
+				switch (condition(recipe)) {
+					case RecipeUseType.NONE:
+					break;
+					case RecipeUseType.RESULT:
+					recipes.Add(recipe);
+					break;
+					case RecipeUseType.INGREDIENT:
+					usedIn.Add(recipe);
+					break;
+				}
+			}
+			return (recipes, usedIn);
+		}
+		public static Func<Recipe, RecipeUseType> GetRecipeAllItemCondition(Func<Item, bool> condition) {
+			return r => {
+				if (condition(r.createItem)) return RecipeUseType.RESULT;
+				for (int i = 0; i < r.requiredItem.Count; i++) {
+					if (condition(r.requiredItem[i])) return RecipeUseType.INGREDIENT;
+				}
+				return RecipeUseType.NONE;
+			};
+		}
 	}
 }

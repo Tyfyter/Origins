@@ -213,8 +213,20 @@ namespace Origins {
 				}
 			}
 		}
+		public bool ExportSpecialPages {
+			get => false;
+			set {
+				if (value && !string.IsNullOrWhiteSpace(WikiPagePath)) {
+					Directory.CreateDirectory(WikiPagePath);
+					foreach (var item in WikiSpecialPage.SpecialPages) {
+						if (item.GeneratePage() is string page) WikiPageExporter.WriteFileNoUnneededRewrites(WikiPageExporter.GetWikiPagePath(item.Name), page);
+					}
+				}
+			}
+		}
 		public string WikiTemplatePath { get; set; }
 		public string WikiArmorTemplatePath { get; set; }
+		public string WikiSpecialTemplatePath { get; set; }
 		public string WikiSpritesPath { get; set; }
 		public string WikiPagePath { get; set; }
 		public bool CheckTextureUsage {

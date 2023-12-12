@@ -1389,6 +1389,16 @@ Configs: {
 			// Label: Check Item Obtainability
 			// Tooltip: ""
 		}
+
+		ExportSpecialPages: {
+			// Label: Export Special Pages
+			// Tooltip: ""
+		}
+
+		WikiSpecialTemplatePath: {
+			// Label: Wiki Special Template Path
+			// Tooltip: ""
+		}
 	}
 }
 

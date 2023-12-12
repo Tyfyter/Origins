@@ -1,0 +1,8 @@
+RecipePage: {
+	PageName: Recipes
+	Template:
+	'''
+	this page has all the recipes
+	§Recipes§
+	'''
+}
