@@ -12,8 +12,8 @@ namespace Origins.Tiles.Other {
 			TileID.Sets.Stone[Type] = true;
 			AddMapEntry(new Color(35, 10, 10));
 			mergeID = TileID.Stone;
-			MinPick = 250;
-			MineResist = 2;
+			MinPick = 235;
+			MineResist = 4;
 		}
 		public override bool CanExplode(int i, int j) {
 			return false;

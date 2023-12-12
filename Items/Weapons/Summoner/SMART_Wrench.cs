@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 15);
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>(), 2);
+			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
 			recipe.AddIngredient(ModContent.ItemType<Rotor>(), 5);
 			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
 			recipe.Register();

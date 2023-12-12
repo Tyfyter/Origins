@@ -102,9 +102,8 @@ OTHER:
 ENEMY NPCS:
 ---
 (^) Amebic Slime
-(^) Ancient Cyclops
+(^) Ancient Defiled Cyclops
 (^) Barnacleback
-(^) Bottomfeeder
 (^) Buckethead Zombie
 (#, ^2) Cellarkeep !!!
 (^) Chunky Slime
@@ -112,15 +111,21 @@ ENEMY NPCS:
 (^) Conehead Zombie
 (^) Cranivore
 (^) Crimbrain
+(^) Defiled Cyclops
+(^) Defiled Digger
 (#2, ^2) Defiled Ekko !!!
+(^) Defiled Krusher
+(^) Defiled Mite
+(^) Defiled Phantom
+(^) Defiled Swarmer
 (^) Defiled Wisp
-(^) Fiberglass Enemies
+(^) Enchanted Fiberglass Bow
+(^) Enchanted Fiberglass Pistol
+(^) Enchanted Fiberglass Sword
 (^) Measly Moeba
 (^) Optiphage
-(^) Pre-H Defiled Enemies
 (^) Riven Protoform
 (#, ^2) Scanner Scout
-(^) Shattered Goldfish
 (^) Single-Cellular Nautilus
 (#, ^2) Spider Amoeba !!!
 (^) Splitooth
@@ -130,6 +135,7 @@ ENEMY NPCS:
 (^) Amoeba Bugger
 (@, #) Angel
 (^) Barnacle Mound
+(^) Bottomfeeder
 (X) Brine Moccasin
 (@5, #) Carpalfish*
 (X) Defiled Asphyxiator
@@ -147,6 +153,7 @@ ENEMY NPCS:
 (@5, #3) Riven Mimic
 (X) Sea Dragon
 (X) Shattered Ghoul
+(^) Shattered Goldfish
 (X) Torn Ghoul
 
 (X) Annihilator
@@ -177,7 +184,8 @@ EVENTS:
 (#, %2) Defiled Invasion
 (#, %2) Riven Invasion
 
-(X) Test of Ancients
+(X) Test of the Ancients
+
 (X) Laser Tag
 ---
 
@@ -581,7 +589,7 @@ RANGED WEAPONS:
 (X) Skewr
 
 (X) Fulcrum
-(X) Journey's Edge
+(X) Journey's End
 (X) L.W.M.U.G.*
 (X) Pinpoint
 (X) Synergy
@@ -840,13 +848,13 @@ TILES:
 (X) Sanguinite Brick
 (#3, ^2) Traffic Cone !!!
 
-(^) Cleansing Station
-(X) Defiled Waste Organ
-(X) Elderforge
-(#, ^2) Fabricator
-(X) Omni-Printer
+(X) Batholith Grindstone
+(^) Cleansing Station*
+(X) Defiled Waste Organ*
+(X) Elderforge*
+(#, ^2) Fabricator*
+(X) Interstellar Sampler*
 (X) Qube Generator
-(X) Riven Flesh Shredder
 
 (^) Acetabularia*
 (^) Brineglow Vine*
@@ -948,16 +956,19 @@ MATERIALS:
 (^) Power Core
 (^) Rotor
 
+(X) Alien Conduit
+(X) Armor Piece Blueprint
 (^) Chromtain Bar*
-(^) Material-36 Bundle
+(X) Core Blueprint
+(X) Endyean Ceramic
 (X) Ethereal Ash
-(^) Eyndum Bar*
 (@5, ^3) Fibron Plating
 (^) Formium Bar*
 (^) Formium Scrap
 (^) Lunar Token
+(^) Material-36 Bundle
 (#3, ^2) Nova Fragment
-(^) Unpowered Eyndum Core
+(X) Weapon Blueprint
 
 (X) Large Chambersite
 ---

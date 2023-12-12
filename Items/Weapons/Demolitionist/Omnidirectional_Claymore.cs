@@ -7,8 +7,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Omnidirectional_Claymore : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Omni-Directional Claymore");
-			// Tooltip.SetDefault("Explodes when enemies cross its laser\nCan aim in different directions");
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
@@ -20,10 +18,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 25);
-			recipe.AddIngredient(ItemID.ExplosivePowder, 50);
-			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 25);
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddIngredient(ModContent.ItemType<Rotor>(), 50);
+			recipe.AddIngredient(ItemID.ExplosivePowder, 7);
+			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 13);
+			recipe.AddIngredient(ModContent.ItemType<Rotor>(), 25);
 			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
 			recipe.Register();
 		}

@@ -39,7 +39,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.ExplosivePowder, 10);
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 20);
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>(), 2);
+			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
 			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
 			recipe.Register();
 		}

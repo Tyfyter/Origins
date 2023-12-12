@@ -24,13 +24,6 @@ namespace Origins.Items.Weapons.Melee {
 			Item.rare = CrimsonRarity.ID;
 			Item.autoReuse = true;
 		}
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eyndum_Bar>(), 30);
-			//recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 20); Undecided material
-			//recipe.AddTile(TileID.Anvils); Omni-printer
-			recipe.Register();
-		}
 		public override void ModifyHitNPC(Player player, NPC target, ref NPC.HitModifiers modifiers) {
 			if (!(target.boss || NPCID.Sets.ShouldBeCountedAsBoss[target.type])) {
 				int quarterHealth = target.lifeMax / 4;

@@ -188,14 +188,6 @@ namespace Origins.Items.Materials {
 	public class Chromtain_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(gold: 1);
 		public override int Rare => CrimsonRarity.ID;
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.FragmentSolar, 4);
-			recipe.AddIngredient(ItemID.SoulofMight, 10);
-			recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
-			recipe.AddTile(TileID.Anvils); //Omni-Printer also not implemented
-			recipe.Register();
-		}
 	}
 	public class Defiled_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 30);
@@ -247,11 +239,10 @@ namespace Origins.Items.Materials {
 		public override int Rare => CrimsonRarity.ID;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.FragmentNebula, 2);
-			recipe.AddIngredient(ItemID.FragmentStardust, 2);
+			recipe.AddIngredient(ItemID.FragmentNebula);
 			recipe.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 4);
-			recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
-			recipe.AddTile(TileID.Anvils); //Omni-Printer also not implemented
+			recipe.AddIngredient(ModContent.ItemType<Formium_Bar>());
+			recipe.AddTile(TileID.Anvils); //Interstellar Sampler also not implemented
 			recipe.Register();
 		}
 	}
@@ -271,10 +262,6 @@ namespace Origins.Items.Materials {
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
-	}
-	public class Eyndum_Bar : MaterialItem {
-		public override int Value => Item.sellPrice(gold: 1);
-		public override int Rare => CrimsonRarity.ID;
 	}
 	public class Felnum_Bar : MaterialItem, IJournalEntryItem {
 		public override int Value => Item.sellPrice(silver: 40);
@@ -617,13 +604,6 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 2;
 		public override int Value => Item.sellPrice(gold: 10);
 		public override int Rare => ButterscotchRarity.ID;
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eyndum_Bar>(), 8);
-			recipe.AddIngredient(ModContent.ItemType<Formium_Bar>(), 4);
-			recipe.AddTile(TileID.Anvils); //Omni-Printer
-			recipe.Register();
-		}
 	}
 	public class Valkyrum_Bar : MaterialItem {
 		//Alloy of Felnum and a Dawn material. I can imagine a pearl-like color now

@@ -21,7 +21,7 @@ namespace Origins.Items.Armor.Chromtain {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Chromtain_Bar>(), 15);
-			recipe.AddTile(TileID.DefendersForge); //Omni-Printer
+			recipe.AddTile(TileID.DefendersForge); //Interstellar Sampler
 			recipe.Register();
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
@@ -57,7 +57,7 @@ namespace Origins.Items.Armor.Chromtain {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Chromtain_Bar>(), 25);
-			recipe.AddTile(TileID.DefendersForge); //Omni-Printer
+			recipe.AddTile(TileID.DefendersForge); //Interstellar Sampler
 			recipe.Register();
 		}
 	}
@@ -77,7 +77,7 @@ namespace Origins.Items.Armor.Chromtain {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Chromtain_Bar>(), 20);
-			recipe.AddTile(TileID.DefendersForge); //Omni-Printer
+			recipe.AddTile(TileID.DefendersForge); //Interstellar Sampler
 			recipe.Register();
 		}
 	}

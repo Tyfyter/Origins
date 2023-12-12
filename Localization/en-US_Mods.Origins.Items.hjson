@@ -3127,7 +3127,7 @@ A_Perfect_World_Item: {
 
 Batholith_Item: {
 	DisplayName: Batholith
-	Tooltip: "'Respect your elders'"
+	Tooltip: "'Patiently awaiting its unearthment...'"
 }
 
 Carburite_Item: {

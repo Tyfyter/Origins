@@ -36,7 +36,7 @@ namespace Origins.Items.Weapons.Magic {
 			recipe.AddRecipeGroup("HellBars", 16);
 			recipe.AddRecipeGroup("AdamantiteBars", 16);
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 14);
-			recipe.AddIngredient(ModContent.ItemType<Power_Core>(), 2);
+			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
 			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
 			recipe.Register();
 		}
