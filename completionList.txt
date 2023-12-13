@@ -127,7 +127,7 @@ ENEMY NPCS:
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
-(#, ^2) Spider Amoeba !!!
+(@) Spider Amoeba !!!
 (^) Splitooth
 
 (X) Amebeye
@@ -150,6 +150,8 @@ ENEMY NPCS:
 (#, ^2) Mildew Creeper
 (^) Mitoworm
 (X) Peat Lobber
+(^) Profaned Bident
+(@5, ^3) Pustule Jelly
 (@5, #3) Riven Mimic
 (X) Sea Dragon
 (X) Shattered Ghoul
@@ -544,7 +546,7 @@ RANGED WEAPONS:
 (^) Bloodletter*
 (^) Blotopus*
 (^) Bolt Gun
-(^) Fiberglass Bow
+(^) Fiberglass Bow 
 (^) Fiberglass Pistol
 (^) Harpoon Gun*
 (^) Longbone

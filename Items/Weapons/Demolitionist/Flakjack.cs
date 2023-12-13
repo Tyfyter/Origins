@@ -6,10 +6,9 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Flakjack : ModItem, ICustomDrawItem {
+    public class Flakjack : ModItem, ICustomDrawItem {
 		public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
 		public static AutoCastingAsset<Texture2D> UseGlowTexture { get; private set; }
 		public override void Unload() {
@@ -18,7 +17,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Flakjack");
 			if (!Main.dedServ) {
 				UseTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Flakjack_Use");
 				UseGlowTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Flakjack_Use_Glow");
