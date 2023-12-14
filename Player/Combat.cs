@@ -173,9 +173,6 @@ namespace Origins {
 			if (target.HasBuff(BuffID.Bleeding)) {
 				target.lifeRegen -= 1;
 			}
-			if (acridSet) {
-				target.AddBuff(Toxic_Shock_Debuff.ID, 300);
-			}
 		}
 		public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers) {
 			if ((proj.CountsAsClass(DamageClass.Melee) || proj.CountsAsClass(DamageClass.Summon) || ProjectileID.Sets.IsAWhip[proj.type]) && felnumShock > 29) {
@@ -229,8 +226,11 @@ namespace Origins {
 			if (symbioteSkull) {
 				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.1f, this);
 			}
-			if (decayingScale) { //has the acrid armor bonus been implimeneted?
+			if (decayingScale || acridSet) {
 				target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
+				if (decayingScale && acridSet) {
+					target.AddBuff(Toxic_Shock_Strengthen_Debuff.ID, 2);
+				}
 			}
 			if (messyLeech) {
 				target.AddBuff(BuffID.Bleeding, 480);
@@ -399,7 +399,7 @@ namespace Origins {
 			return false;
 		}
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */ {
-			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(9) < 3) {
+			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(Player.HasBuff(Toxic_Shock_Strengthen_Debuff.ID) ? 6 : 9) < 3) {
 				modifiers.SourceDamage *= 2;
 			}
 			heliumTankHit = false;

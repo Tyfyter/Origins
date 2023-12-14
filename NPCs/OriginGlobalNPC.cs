@@ -185,6 +185,10 @@ namespace Origins.NPCs {
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				modifiers.CritDamage *= 1.3f;
 				modifiers.Defense -= 0.2f;
+				if (npc.HasBuff(Toxic_Shock_Strengthen_Debuff.ID)) {// roughly 50% boost
+					modifiers.CritDamage *= 1.1f;
+					modifiers.Defense -= 0.1f;
+				}
 			}
 			if (tornCurrentSeverity > 0) {
 				modifiers.FinalDamage /= 1 - tornCurrentSeverity;

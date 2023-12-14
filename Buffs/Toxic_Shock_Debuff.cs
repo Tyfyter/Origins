@@ -25,4 +25,24 @@ namespace Origins.Buffs {
 			return false;
 		}
 	}
+	public class Toxic_Shock_Strengthen_Debuff : ModBuff {
+		public static int ID { get; private set; } = -1;
+		public override void SetStaticDefaults() {
+			ID = Type;
+			Main.buffNoTimeDisplay[Type] = true;
+			BuffID.Sets.GrantImmunityWith[Type] = new() {
+				ModContent.BuffType<Toxic_Shock_Debuff>()
+			};
+		}
+		public override void Update(Player player, ref int buffIndex) {
+			if (player.HasBuff(Toxic_Shock_Debuff.ID)) {
+				player.buffTime[buffIndex]++;
+			}
+		}
+		public override void Update(NPC npc, ref int buffIndex) {
+			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
+				npc.buffTime[buffIndex]++;
+			}
+		}
+	}
 }
