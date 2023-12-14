@@ -1543,12 +1543,6 @@ Strange_String: {
 
 Tree_Sap.DisplayName: Tree Sap
 Undead_Chunk.DisplayName: Undead Chunk
-
-Unpowered_Eyndum_Core: {
-	DisplayName: Unpowered Eyndum Core
-	Tooltip: "'Limitless potential'"
-}
-
 Valkyrum_Bar.DisplayName: Valkyrum Bar
 
 Fungarust: {

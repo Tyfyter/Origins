@@ -127,7 +127,7 @@ ENEMY NPCS:
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
-(@) Spider Amoeba !!!
+(#, ^2) Spider Amoeba !!!
 (^) Splitooth
 
 (X) Amebeye
@@ -272,7 +272,7 @@ ACCESSORIES:
 (^) Air Tank*
 (#2, ^2, ♠) ATACS*
 (#2, ^2) Automated Returns Handler*
-(X) Binding Book* !!!
+(#, ^2) Binding Book* !!!
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
@@ -342,7 +342,7 @@ ACCESSORIES:
 (^) Solar Panel*
 (^) Sonar Visor*
 (^) Sonic Radar*
-(X) Speed Booster* !!!
+(#, ^2) Speed Booster* !!!
 (#2, ^2) Strange Computer*
 (^) Super Turbo Reel*
 (^) Superjump Cape*
@@ -387,6 +387,8 @@ ACCESSORIES:
 (X) Void Arcanum
 
 (%3, X) Armored Core
+(X) Blizzardwalker's Jacket !!!
+(X) Emergency Bee Canister !!!
 (^) Entangled Energy*
 (#, ^2) Forbidden Voice* !!!
 (^) Lazy Cloak*
@@ -395,6 +397,8 @@ ACCESSORIES:
 (#, ^2) Scrap Compactor*
 (^) Scribe of the Meat God*
 (^) Stack of Shraps*
+(X) Strange Tooth !!!
+(X) Terrarian Voodoo Doll
 (^) Third Eye*
 (#3, ^2) Weakpoint Analyzer* !!!
 
@@ -786,7 +790,7 @@ TILES:
 (^) Riven Jungle Grass*
 (^) Sanguinite Ore*
 (^) Silica*
-(X) Silicon Ore* !!!
+(#, ^2) Silicon Ore* !!!
 (X) Sootgrass*
 (^) Spug Flesh*
 (^) Sulphur Stone*

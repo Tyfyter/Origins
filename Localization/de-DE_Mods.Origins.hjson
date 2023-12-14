@@ -735,6 +735,11 @@ Buffs: {
 		// DisplayName: Neural Network
 		// Description: Mods.Origins.Buffs.Neural_Network_Buff.Description
 	}
+
+	Toxic_Shock_Strengthen_Debuff: {
+		// DisplayName: Toxic_ Shock_ Strengthen_ Debuff
+		// Description: Mods.Origins.Buffs.Toxic_Shock_Strengthen_Debuff.Description
+	}
 }
 
 DamageClassName: {

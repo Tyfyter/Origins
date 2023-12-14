@@ -600,11 +600,6 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Blue;
 		public override int Value => Item.sellPrice(silver: 1, copper: 50);
 	}
-	public class Unpowered_Eyndum_Core : MaterialItem {
-		public override int ResearchUnlockCount => 2;
-		public override int Value => Item.sellPrice(gold: 10);
-		public override int Rare => ButterscotchRarity.ID;
-	}
 	public class Valkyrum_Bar : MaterialItem {
 		//Alloy of Felnum and a Dawn material. I can imagine a pearl-like color now
 		public override int Value => Item.sellPrice(gold: 1);
