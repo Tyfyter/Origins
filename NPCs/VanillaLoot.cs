@@ -93,7 +93,7 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Startillery>(), 12));
 				break;
 				case NPCID.Clown:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Happy_Bomb>(), 1, 7, 21));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Happy_Bomb>(), 1, 69));
 				break;
 				case NPCID.PurpleSlime:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plasma_Phial>(), 2));

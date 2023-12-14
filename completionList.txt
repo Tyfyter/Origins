@@ -552,6 +552,7 @@ RANGED WEAPONS:
 (^) Bolt Gun
 (^) Fiberglass Bow 
 (^) Fiberglass Pistol
+(^) Fiberglass Shard
 (^) Harpoon Gun*
 (^) Longbone
 (^) Magma Grappler*
@@ -567,6 +568,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler*
 (X) Adamantite Harpoon Gun*
+(^) Bleeding Obsidian Kunai
 (#, ^2) Boat Rocker*
 (^) Boiler
 (^) Cleaver Rifle
@@ -699,15 +701,17 @@ EXPLOSIVE WEAPONS:
 (^) Bomb Launcher (needs to be balanced)
 (^) Brainade
 (#3, ^2) Eruption !!!
+(^) Felnum Shock Grenade
 (^) Flashbang
 (^) Floaty Bomb
 (^) Hand Grenade Launcher
 (#3, ^2) Hellfire Bomb !!!
 (#3, ^2) Hellfire Grenade !!!
-(^) Impact Explosives
+(^) Impact Bomb
+(^) Impact Dynamite
+(^) Impact Grenade
 (#, ^2) Internal Combustion !!!
-(^) Lightning Grenade
-(#, ^2) Link Grenades !!!
+(#, ^2) Link Grenade !!!
 (#, ^2) Matrix !!!
 (#2, ^2) Outbreak Bomb !!!
 (^) Peatball*
@@ -737,7 +741,7 @@ EXPLOSIVE WEAPONS:
 (X) Self-Destruct
 (X) Starforge
 
-(^) Black Hole Bomb
+(@5, ^3) Black Hole Bomb
 (@5, ^3) Caustica
 (^) Flakjack
 (@, ^3) Missile Minigun
@@ -748,8 +752,6 @@ EXPLOSIVE WEAPONS:
 
 CLASSLESS WEAPONS:
 ---
-(^) Bleeding Obsidian Kunai
-(^) Fiberglass Shard
 (#2, ^2) Potato Launcher !!!
 ---
 
@@ -1036,6 +1038,7 @@ CONSUMABLES:
 (^) Suspicious Looking Ice Cream
 (#2, ^2) The Button
 
+(#2, ^2) Ashen Loot Box
 (#, ^2) Bilious Crate
 (#2, ^2) Corruption Loot Box
 (#2, ^2) Crimson Loot Box
@@ -1045,7 +1048,6 @@ CONSUMABLES:
 (^) Pointy Crate
 (#2, ^2) Riven Loot Box
 
-(#2, ^2) Ace in the Hole
 (X) Gift of Giving
 (^) Gooey Water
 (@2, #3) Holiday Hair Dye !!!
