@@ -8,10 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Flashbang : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Flashbang");
-			// Tooltip.SetDefault("Dazes enemies upon detonation");
 			Item.ResearchUnlockCount = 99;
-
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
@@ -34,7 +31,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Flashbang_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Flashbang";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Flashbang");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
@@ -60,7 +56,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Damage();
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.Confused, 145);
+			target.AddBuff(BuffID.Confused, 220);
 			target.AddBuff(BuffID.Slow, 300);
 		}
 	}

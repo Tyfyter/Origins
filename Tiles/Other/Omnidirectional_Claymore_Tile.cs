@@ -19,7 +19,7 @@ namespace Origins.Tiles.Other {
 			TileID.Sets.DisableSmartCursor[Type] = true;
 
 			// Names
-			AddMapEntry(new Color(125, 125, 125), Language.GetText("Omni-Directional Claymore"));
+			AddMapEntry(new Color(125, 125, 125), Language.GetText("Omni-directional Claymore"));
 
 			// Placement
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);

@@ -10,8 +10,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Chlorodynamite : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Chlorodynamite");
-			// Tooltip.SetDefault("Vines will pull nearby enemies in before detonation");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -29,9 +27,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 
-			recipe = Recipe.Create(Type, 5);
-			recipe.AddIngredient(ItemID.ChlorophyteOre, 5);
-			recipe.AddIngredient(ItemID.Dynamite, 5);
+			recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.ChlorophyteOre);
+			recipe.AddIngredient(ItemID.Dynamite);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
@@ -40,7 +38,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		const int explosion_delay_time = 60;
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Chlorodynamite";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Chlorodynamite");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
@@ -123,7 +120,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Chlorodynamite_Vine : ModProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Chlorodynamite");
 			ID = Type;
 		}
 		public override void SetDefaults() {

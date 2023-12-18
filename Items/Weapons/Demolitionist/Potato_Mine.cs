@@ -7,8 +7,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Potato_Mine : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Potato Mine");
-			// Tooltip.SetDefault("Explodes when stepped on\n'SPUDOW!'");
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {

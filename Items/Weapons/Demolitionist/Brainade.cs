@@ -7,8 +7,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Brainade : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Brainade");
-			// Tooltip.SetDefault("Explodes into a bloody mess\n'Mind blown'");
 			Item.ResearchUnlockCount = 99;
 
 		}
@@ -23,17 +21,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.maxStack = 999;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 50);
-			recipe.AddIngredient(ItemID.Grenade, 50);
-			recipe.AddIngredient(ItemID.CrimtaneOre, 2);
-			recipe.AddIngredient(ItemID.ViciousPowder, 25);
-			recipe.Register();
+			Recipe recipe = Recipe.Create(Type, 25);
+            recipe.AddIngredient(ItemID.CrimtaneOre);
+            recipe.AddIngredient(ItemID.Grenade, 25);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
 		}
 	}
 	public class Brainade_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Brainade";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Brainade");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
@@ -107,7 +104,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.timeLeft > 168 && (Projectile.ai[1] % 1 + 1) % 1 == 0.5f) Projectile.penetrate++;
-			target.AddBuff(BuffID.Confused, 180);
+			target.AddBuff(BuffID.Confused, 120);
 			target.AddBuff(BuffID.Bleeding, 180);
 			Dust dust = Dust.NewDustDirect(target.position, target.width, target.height, DustID.Blood, 0, 0, 100, new Color(255, 0, 0), 1.25f * Projectile.scale);
 			dust.noGravity = false;

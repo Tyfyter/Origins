@@ -19,17 +19,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 20);
-			recipe.AddIngredient(ItemID.Bomb, 20);
-			recipe.AddIngredient(ItemID.Fireblossom, 5);
-			recipe.AddIngredient(ItemID.Hellstone, 2);
+			Recipe recipe = Recipe.Create(Type, 15);
+			recipe.AddIngredient(ItemID.Bomb, 15);
+			recipe.AddIngredient(ItemID.Fireblossom);
+			recipe.AddIngredient(ItemID.Hellstone, 5);
 			recipe.Register();
 		}
 	}
 	public class Hellfire_Bomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Hellfire_Bomb";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Hellfire Bomb");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

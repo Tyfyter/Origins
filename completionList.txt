@@ -552,7 +552,7 @@ RANGED WEAPONS:
 (^) Bolt Gun
 (^) Fiberglass Bow 
 (^) Fiberglass Pistol
-(^) Fiberglass Shard
+(^) Fiberglass Shard*
 (^) Harpoon Gun*
 (^) Longbone
 (^) Magma Grappler*
@@ -568,7 +568,7 @@ RANGED WEAPONS:
 
 (^) Acrid Impaler*
 (X) Adamantite Harpoon Gun*
-(^) Bleeding Obsidian Kunai
+(^) Bleeding Obsidian Kunai*
 (#, ^2) Boat Rocker*
 (^) Boiler
 (^) Cleaver Rifle
@@ -694,54 +694,54 @@ EXPLOSIVE WEAPONS:
 ---
 (#2, ^2) Abrasion Blaster !!!
 (#2, ^2) Ace Shrapnel !!!
-(^) Ameballoon
-(^) Bang Snap
-(^) Bloombomb
+(^) Ameballoon*
+(^) Bang Snap*
+(^) Bloombomb*
 (^) Bombardment
 (^) Bomb Launcher (needs to be balanced)
-(^) Brainade
+(^) Brainade*
 (#3, ^2) Eruption !!!
-(^) Felnum Shock Grenade
-(^) Flashbang
-(^) Floaty Bomb
+(^) Felnum Shock Grenade*
+(^) Flashbang*
+(^) Floaty Bomb*
 (^) Hand Grenade Launcher
-(#3, ^2) Hellfire Bomb !!!
-(#3, ^2) Hellfire Grenade !!!
-(^) Impact Bomb
-(^) Impact Dynamite
-(^) Impact Grenade
+(#2, ^2) Hellfire Bomb* !!!
+(#3, ^2) Hellfire Grenade* !!!
+(^) Impact Bomb*
+(^) Impact Dynamite*
+(^) Impact Grenade*
 (#, ^2) Internal Combustion !!!
-(#, ^2) Link Grenade !!!
+(#, ^2) Link Grenade* !!!
 (#, ^2) Matrix !!!
-(#2, ^2) Outbreak Bomb !!!
+(#2, ^2) Outbreak Bomb* !!!
 (^) Peatball*
-(#3, ^2) Potato Mine !!!
-(#, ^2) Shrapnel Bomb !!!
+(#3, ^2) Potato Mine* !!!
+(#, ^2) Shrapnel Bomb* !!!
+(#, ^2) Sticky Link Grenade* !!!
 
-(^) Alkaline Bomb
-(^) Alkaline Grenade
+(^) Alkaline Bomb*
+(^) Alkaline Grenade*
 (X) Big Surprise
 (#2, ^2) Boomphracken
 (X) Cavitation Cannon
 (X) Chambersite Mine Launcher
-(^) Happy Bomb
+(^) Happy Bomb*
 (^) Sonorous Shredder
 (^) Thermite Launcher
 
 (^) Bomboomstick
-(#2, ^2) Chlorodynamite
-(^) Crystal Bomb
-(^) Crystal Grenade
+(#2, ^2) Chlorodynamite*
+(^) Crystal Bomb*
+(^) Crystal Grenade*
 (#2, ^2) Grenado (replanning never)
-(X) Holy Hand Grenade
 (^) Mine Flayer*
 (^) Nuclear Arm*
-(#2, ^2) Omni-Directional Claymore
+(#2, ^2) Omni-directional Claymore*
 (^) Rocodile
 (X) Self-Destruct
 (X) Starforge
 
-(@5, ^3) Black Hole Bomb
+(@5, ^3) Black Hole Bomb*
 (@5, ^3) Caustica
 (^) Flakjack
 (@, ^3) Missile Minigun
@@ -1035,6 +1035,7 @@ CONSUMABLES:
 (^) Broken Record
 (^) Nerve Impulse Manipulator*
 (#2, ^2) Quantum Cell
+(#, ^2) Shaped Glass !!!
 (^) Suspicious Looking Ice Cream
 (#2, ^2) The Button
 

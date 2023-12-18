@@ -32,7 +32,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
+			Recipe recipe = Recipe.Create(Type, 20);
 			recipe.AddCondition(
 			   Language.GetOrRegister("Mods.Origins.Conditions.RivenWater"),
 			   () => Main.LocalPlayer.adjWater && Main.LocalPlayer.InModBiome<Riven_Hive>()

@@ -6,8 +6,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Outbreak_Bomb : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Outbreak Bomb");
-			// Tooltip.SetDefault("Struck enemies contract a contagious effect");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -18,17 +16,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 30);
-			recipe.AddIngredient(ItemID.Bomb, 30);
-			recipe.AddIngredient(ItemID.DemoniteOre, 2);
-			recipe.AddIngredient(ItemID.VilePowder, 15);
-			recipe.Register();
+			Recipe recipe = Recipe.Create(Type, 15);
+			recipe.AddIngredient(ItemID.Bomb, 15);
+			recipe.AddIngredient(ItemID.DemoniteOre);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
 		}
 	}
 	public class Outbreak_Bomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Outbreak_Bomb";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Outbreak Bomb");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

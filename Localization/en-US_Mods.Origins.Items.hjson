@@ -2249,7 +2249,7 @@ Caustica: {
 
 Chlorodynamite: {
 	DisplayName: Chlorodynamite
-	Tooltip: Vines will pull nearby enemies in before detonation
+	Tooltip: Will pull in and stun any nearby enemies
 }
 
 Crystal_Bomb: {
@@ -2362,7 +2362,7 @@ Nuclear_Arm: {
 }
 
 Omnidirectional_Claymore: {
-	DisplayName: Omni-Directional Claymore
+	DisplayName: Omni-directional Claymore
 	Tooltip:
 		'''
 		Explodes when enemies cross its laser

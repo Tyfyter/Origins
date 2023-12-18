@@ -11,8 +11,6 @@ using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Crystal_Grenade : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Crystal Grenade");
-			// Tooltip.SetDefault("Explodes into several crystal shards");
 			Item.ResearchUnlockCount = 99;
 
 		}
@@ -28,9 +26,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.maxStack = 999;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 5);
+			Recipe recipe = Recipe.Create(Type, 8);
 			recipe.AddIngredient(ItemID.CrystalShard);
-			recipe.AddIngredient(ItemID.Grenade, 5);
+			recipe.AddIngredient(ItemID.Grenade, 8);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
@@ -79,7 +77,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			AlphaDestinationBlend = Blend.InverseSourceAlpha,
 		};
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Crystal Grenade");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {
@@ -102,10 +99,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
 			int t = ModContent.ProjectileType<Crystal_Grenade_Shard>();
-			int count = 14 - Main.rand.Next(3);
+			int count = 11 - Main.rand.Next(3);
 			float rot = TwoPi / count;
 			for (int i = count; i > 0; i--) {
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(rot * i, 6) + Main.rand.NextVector2Unit()) + (Projectile.velocity / 12), t, Projectile.damage / 4, 6, Projectile.owner);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Vec2FromPolar(rot * i, 6) + Main.rand.NextVector2Unit()) + (Projectile.velocity / 12), t, Projectile.damage / 3, 6, Projectile.owner);
 			}
 		}
 		public override void PostDraw(Color lightColor) {
@@ -147,7 +144,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Projectiles/Pixel";
 		public static int ID { get; private set; } = 0;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Crystal Shard");
 			ID = Projectile.type;
 			try {
 				ProjectileID.Sets.TrailingMode[ID] = 0;

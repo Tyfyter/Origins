@@ -13,7 +13,11 @@ namespace Origins.Items.Weapons.Ranged {
 			"Torn",
 			"TornSource"
 		};
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            ItemID.Sets.ShimmerTransformToItem[ItemID.MagicDagger] = ModContent.ItemType<Bleeding_Obsidian_Kunai>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bleeding_Obsidian_Kunai>()] = ItemID.MagicDagger;
+        }
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.damage = 38;
 			Item.useTime = 7;
@@ -28,8 +32,8 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 6);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 12);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 3);
+			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 6);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.Register();
 		}
@@ -54,9 +58,8 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.Bleeding, 300);
-			target.AddBuff(BuffID.CursedInferno, 300);
-			target.AddBuff(BuffID.Ichor, 300);
-			target.AddBuff(BuffID.OnFire, 300);
+			target.AddBuff(BuffID.CursedInferno, 120);
+			target.AddBuff(BuffID.Ichor, 180);
 			OriginGlobalNPC.InflictTorn(target, 300, 180, 0.1f, source: Main.player[Projectile.owner].GetModPlayer<OriginPlayer>());
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {

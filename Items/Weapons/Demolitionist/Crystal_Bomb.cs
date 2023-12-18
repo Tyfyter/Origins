@@ -1,5 +1,3 @@
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -9,8 +7,6 @@ using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Crystal_Bomb : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Crystal Bomb");
-			// Tooltip.SetDefault("Explodes into several crystal shards");
 			Item.ResearchUnlockCount = 99;
 
 		}
@@ -26,8 +22,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 2);
-			recipe.AddIngredient(ItemID.Bomb, 2);
+			Recipe recipe = Recipe.Create(Type, 4);
+			recipe.AddIngredient(ItemID.Bomb, 4);
 			recipe.AddIngredient(ItemID.CrystalShard);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
@@ -36,7 +32,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Crystal_Bomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Crystal_Bomb";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Crystal Bomb");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

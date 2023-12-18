@@ -1,18 +1,13 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Microsoft.Xna.Framework.MathHelper;
 using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Bloombomb : ModItem {
+    public class Bloombomb : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bloombomb");
-			// Tooltip.SetDefault("Explodes into seeds");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -22,21 +17,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed = 5f;
 			Item.knockBack = 5f;
 			Item.ammo = ItemID.Bomb;
-			Item.value = Item.sellPrice(silver: 15);
+			Item.value = Item.sellPrice(silver: 4);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 5);
-			recipe.AddIngredient(ItemID.Seed);
-			recipe.AddIngredient(ItemID.Bomb, 5);
+			Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Bomb);
+            recipe.AddIngredient(ItemID.Seed, 20);
 			recipe.AddTile(TileID.Anvils);
-			//recipe.Register();
+			recipe.Register();
 		}
 	}
 	public class Bloombomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Bloombomb";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bloombomb");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

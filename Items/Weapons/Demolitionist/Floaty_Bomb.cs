@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,8 +5,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Floaty_Bomb : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Floaty Bomb");
-			// Tooltip.SetDefault("Somewhat unaffected by gravity");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -21,16 +18,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 35);
 			recipe.AddIngredient(ItemID.Bomb, 35);
-			recipe.AddIngredient(ItemID.Bone, 70);
-			recipe.AddIngredient(ItemID.Cloud, 7);
-			recipe.AddIngredient(ItemID.Feather, 5);
-			recipe.Register();
+			recipe.AddIngredient(ItemID.Bone, 35);
+			recipe.AddIngredient(ItemID.Cloud);
+			recipe.AddIngredient(ItemID.Feather);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
 		}
 	}
 	public class Floaty_Bomb_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Floaty_Bomb";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Floaty Bomb");
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

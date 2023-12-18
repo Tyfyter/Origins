@@ -12,8 +12,6 @@ using static Microsoft.Xna.Framework.MathHelper;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Black_Hole_Bomb : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Black Hole Bomb");
-			// Tooltip.SetDefault("'Implode. Explode'");
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {

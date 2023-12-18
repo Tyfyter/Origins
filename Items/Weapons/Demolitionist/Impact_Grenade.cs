@@ -23,8 +23,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.maxStack = 999;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 4);
-			recipe.AddIngredient(ItemID.Grenade, 4);
+			Recipe recipe = Recipe.Create(Type, 8);
+			recipe.AddIngredient(ItemID.Grenade, 8);
 			recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();

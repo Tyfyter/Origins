@@ -21,8 +21,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 2);
-			recipe.AddIngredient(ItemID.Bomb, 2);
+			Recipe recipe = Recipe.Create(Type, 5);
+			recipe.AddIngredient(ItemID.Bomb, 5);
 			recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
