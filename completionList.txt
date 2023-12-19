@@ -104,6 +104,8 @@ ENEMY NPCS:
 (^) Amebic Slime
 (^) Ancient Defiled Cyclops
 (^) Barnacleback
+(X) Barnacle Bunny !!!
+(X) Bilebird !!!
 (^) Buckethead Zombie
 (#, ^2) Cellarkeep !!!
 (^) Chunky Slime
@@ -124,6 +126,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Sword
 (^) Measly Moeba
 (^) Optiphage
+(X) Riven Penguin !!!
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
@@ -449,7 +452,6 @@ UTILITIES:
 
 (X) Strange Backpack
 
-(#, ^2) Black Light
 (#, ^2) Impenetrable Trashcan Lid
 (#, ^2) Indestructible Saddle
 ---
@@ -553,6 +555,7 @@ RANGED WEAPONS:
 (^) Fiberglass Bow 
 (^) Fiberglass Pistol
 (^) Fiberglass Shard*
+(X) Gelled Knife !!!
 (^) Harpoon Gun*
 (^) Longbone
 (^) Magma Grappler*
@@ -922,7 +925,7 @@ MATERIALS:
 (^) Bud Barnacle
 (^) Carburite*
 (^) Defiled Bar*
-(^) Dreadful Powder
+(^) Dreadful Powder*
 (^) Encrusted Bar*
 (^) Felnum Bar*
 (^) Fungarust*
@@ -931,7 +934,7 @@ MATERIALS:
 (^) Riven Carapace
 (^) Rubber
 (^) Sanguinite Bar*
-(^) Sentient Powder
+(^) Sentient Powder*
 (^) Silicon*
 (^) Soulspore*
 (^) Strange String*
@@ -939,7 +942,7 @@ MATERIALS:
 (^) Tire
 (^) Tree Sap
 (^) Undead Chunk*
-(^) Urn of Ashes
+(^) Urn of Ashes*
 (^) Wilting Rose*
 (^) Wrycoral*
 
@@ -999,8 +1002,8 @@ CRITTERS AND FISH:
 
 CONSUMABLES:
 ---
-(^) Quantum Injector
-(X) The Defiled Will
+(^) Quantum Injector*
+(%3) The Defiled Will*
 
 (^) Absorption Potion
 (^) Ambition Potion
@@ -1032,12 +1035,12 @@ CONSUMABLES:
 (^) Soul Spaghetti
 (^) Tasty Vanilla Shake
 
-(^) Broken Record
+(^) Broken Record*
 (^) Nerve Impulse Manipulator*
-(#2, ^2) Quantum Cell
-(#, ^2) Shaped Glass !!!
-(^) Suspicious Looking Ice Cream
-(#2, ^2) The Button
+(#2, ^2) Quantum Cell*
+(#, ^2) Shaped Glass* !!!
+(^) Suspicious Looking Ice Cream*
+(#2, ^2) The Button*
 
 (#2, ^2) Ashen Loot Box
 (#, ^2) Bilious Crate
@@ -1049,14 +1052,12 @@ CONSUMABLES:
 (^) Pointy Crate
 (#2, ^2) Riven Loot Box
 
-(X) Gift of Giving
-(^) Gooey Water
+(^) Gooey Water*
 (@2, #3) Holiday Hair Dye !!!
-(#2, ^2) Invisible Ink
-(^) Lottery Ticket
+(^) Lottery Ticket*
 (^) Magic Brine Dropper
-(^) White Water
-(#2, ^2) Void Lock
+(#2, ^2) Void Lock*
+(^) White Water*
 
 (^) Defiled Amalgamation Bag
 (^) Fiberglass Weaver Bag

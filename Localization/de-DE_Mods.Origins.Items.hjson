@@ -1779,7 +1779,7 @@ Quantum_Cell: {
 
 Quantum_Injector: {
 	// DisplayName: Quantum Injector
-	// Tooltip: Permanently increases maximum mana by 10
+	// Tooltip: Permanently increases maximum mana by 40
 }
 
 Riven_Loot_Box: {
@@ -1803,7 +1803,7 @@ Sus_Ice_Cream: {
 
 The_Button: {
 	// DisplayName: The Button
-	// Tooltip: Summons I.C.A.R.U.S
+	// Tooltip: Summons an I.C.A.R.U.S. unit
 }
 
 The_Defiled_Will: {

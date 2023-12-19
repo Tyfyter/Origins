@@ -13,6 +13,5 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.WormFood);
 			Item.rare = CrimsonRarity.ID;
 		}
-		//now sold by Cubekon Tinkerer for 2plat and is infinitely reusable
 	}
 }

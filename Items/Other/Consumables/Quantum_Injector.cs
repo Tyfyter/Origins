@@ -5,11 +5,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Quantum_Injector : ModItem {
-		public const int mana_per_use = 10;
-		public const int max_uses = 20;
+		public const int mana_per_use = 40;
+		public const int max_uses = 5;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Quantum Injector");
-			// Tooltip.SetDefault("Permanently increases maximum mana by 10");
 			Item.ResearchUnlockCount = 30;
 		}
 		public override void SetDefaults() {
@@ -29,8 +27,8 @@ namespace Origins.Items.Other.Consumables {
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.ManaCrystal);
-			recipe.AddIngredient(ModContent.ItemType<Qube>(), 20);
-			recipe.AddTile(TileID.Bottles);
+			recipe.AddIngredient(ModContent.ItemType<Qube>(), 50);
+			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.Register();
 		}
 	}

@@ -5,8 +5,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Quantum_Cell : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Quantum Cell");
-			// Tooltip.SetDefault("Used at the Cubekon Altar");
 
 			Item.ResearchUnlockCount = 3;
 			//ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;

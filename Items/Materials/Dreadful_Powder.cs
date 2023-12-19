@@ -21,7 +21,12 @@ namespace Origins.Items.Materials {
 			recipe.AddIngredient(ModContent.ItemType<Soulspore_Item>());
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
-		}
+
+            recipe = Recipe.Create(ItemID.PoisonedKnife, 50);
+            recipe.AddIngredient(ItemID.ThrowingKnife, 50);
+            recipe.AddIngredient(this);
+            recipe.Register();
+        }
 	}
 	public class Defiled_Powder_P : ModProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VilePowder;
