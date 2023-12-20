@@ -1,15 +1,13 @@
-﻿using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Magic;
+﻿using Origins.Items.Weapons.Magic;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
-	public class Potato : ModItem {
+    public class Potato : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Potato");
-			// Tooltip.SetDefault("{$CommonItemTooltip.MinorStats}\nIt's a potato...");
+
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {

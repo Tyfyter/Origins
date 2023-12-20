@@ -7,7 +7,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Magic_Brine_Dropper : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Magic Brine Dropper");
 			Item.ResearchUnlockCount = 20;
 		}
 		public override void SetDefaults() {

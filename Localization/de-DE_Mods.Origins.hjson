@@ -423,7 +423,7 @@ Doubles: {
 Buffs: {
 	Adaptability_Buff: {
 		// DisplayName: Protean
-		// Description: Weapon boosts are shared to all classes!
+		// Description: Half of all weapon boosts are shared to all classes!
 	}
 
 	Amebolize_Buff: {
@@ -723,11 +723,11 @@ Buffs: {
 
 	Mojo_Flask_Cooldown: {
 		// DisplayName: Mojo Sickness
-		// Description: Can't use your {$Mods.Origins.Items.Mojo_Flask}
+		// Description: A little too refreshing...
 	}
 
 	Ambition_Buff: {
-		// DisplayName: Ambition Buff
+		// DisplayName: Ambition
 		// Description: Increased offensive stats and stat share
 	}
 

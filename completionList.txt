@@ -184,6 +184,7 @@ ENEMY NPCS:
 
 EVENTS:
 ---
+(X) Ashen Invasion
 (#, %2) Corruption Invasion
 (#, %2) Crimson Invasion
 (#, %2) Defiled Invasion
@@ -438,6 +439,12 @@ VANITY:
 
 (^) Tyfyter's Set
 (X) The First Dream
+
+(X) Ancient Dye
+(X) Ashen Dye
+(X) Defiled Dye
+(X) High Contrast Dye
+(X) Riven Dye
 ---
 
 
@@ -1005,35 +1012,34 @@ CONSUMABLES:
 (^) Quantum Injector*
 (%3) The Defiled Will*
 
-(^) Absorption Potion
-(^) Ambition Potion
-(^) Antisolve Potion
-(^) Fervor Potion
-(^) Flask of Alkahest
-(^) Flask of Black Bile
-(#2, ^2) Focus Potion
-(^) Mojo Flask
-(@2, #2) Nullification Potion
-(^) Protean Potion
-(^) Purification Potion
-(^) Voidsight Potion
+(^) Absorption Potion*
+(^) Ambition Potion*
+(^) Antisolve Potion*
+(^) Fervor Potion*
+(^) Flask of Alkahest*
+(^) Flask of Black Bile*
+(#2, ^2) Focus Potion*
+(^) Mojo Flask*
+(^) Protean Potion*
+(^) Purification Potion*
+(^) Voidsight Potion*
 
-(^) Bileberry
-(^) Blue Bovine
-(^) Bread
-(#3, ^2) Brine Cheese
-(^) Honey Wheat Bread
-(^) Irish Cheddar
-(^) Jam Sandwich
-(^) Jelly Schnapps
+(^) Bileberry*
+(^) Blue Bovine*
+(^) Bread*
+(#3, ^2) Brine Cheese*
+(^) Honey Wheat Bread*
+(^) Irish Cheddar*
+(^) Jam Sandwich*
+(^) Jelly Schnapps*
 (^) Krunch Mix*
-(^) Pawpaw
-(^) Periven
-(^) Potato
-(^) Prickly Pear
-(^) Shattered Stout
-(^) Soul Spaghetti
-(^) Tasty Vanilla Shake
+(^) Pawpaw*
+(^) Periven*
+(^) Potato*
+(^) Prickly Pear*
+(^) Shattered Stout*
+(^) Soul Spaghetti*
+(^) Vanilla Shake*
 
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
@@ -1042,26 +1048,26 @@ CONSUMABLES:
 (^) Suspicious Looking Ice Cream*
 (#2, ^2) The Button*
 
-(#2, ^2) Ashen Loot Box
-(#, ^2) Bilious Crate
-(#2, ^2) Corruption Loot Box
-(#2, ^2) Crimson Loot Box
-(^) Crusty Crate
-(#2, ^2) Defiled Loot Box
-(#, ^2) Festering Crate
-(^) Pointy Crate
-(#2, ^2) Riven Loot Box
+(#2, ^2) Ashen Loot Box*
+(#, ^2) Bilious Crate*
+(#2, ^2) Corruption Loot Box*
+(#2, ^2) Crimson Loot Box*
+(^) Crusty Crate*
+(#2, ^2) Defiled Loot Box*
+(#, ^2) Festering Crate*
+(^) Pointy Crate*
+(#2, ^2) Riven Loot Box*
 
 (^) Gooey Water*
 (@2, #3) Holiday Hair Dye !!!
 (^) Lottery Ticket*
-(^) Magic Brine Dropper
+(^) Magic Brine Dropper*
 (#2, ^2) Void Lock*
 (^) White Water*
 
-(^) Defiled Amalgamation Bag
-(^) Fiberglass Weaver Bag
-(^) World Cracker Bag
+(^) Defiled Amalgamation Bag*
+(^) Fiberglass Weaver Bag*
+(^) World Cracker Bag*
 ---
 
 MOUNTS & PETS:

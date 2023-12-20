@@ -57,7 +57,8 @@ namespace Origins.NPCs {
 				case NPCID.AngryBonesBigMuscle:
 				case NPCID.AngryBonesBigHelmet:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolt_Gun>(), 50));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 50));
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 5));
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 50));
 				break;
 				case NPCID.SkeletronPrime:
 				case NPCID.TheDestroyer:
@@ -87,7 +88,7 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>()));
 				break;
 				case NPCID.Wolf:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tasty_Vanilla_Shake>(), 21));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Vanilla_Shake>(), 21));
 				break;
 				case NPCID.WyvernHead:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Startillery>(), 12));

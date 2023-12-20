@@ -3,10 +3,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
-	public class Tasty_Vanilla_Shake : ModItem {
+	public class Vanilla_Shake : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Vanilla Shake");
-			// Tooltip.SetDefault("{$CommonItemTooltip.MediumStats}");
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
@@ -14,7 +12,7 @@ namespace Origins.Items.Other.Consumables.Food {
 			Item.holdStyle = ItemHoldStyleID.None;
 			Item.scale = 0.6f;
 			Item.buffType = BuffID.WellFed2;
-			Item.buffTime = 60 * 60 * 6;
+			Item.buffTime = 60 * 60 * 15;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.LightRed;
 		}

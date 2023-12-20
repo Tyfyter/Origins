@@ -5,8 +5,6 @@ namespace Origins.Buffs {
 	public class Voidsight_Buff : ModBuff {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Voidsight");
-			// Description.SetDefault("Visibility significantly increased");
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {

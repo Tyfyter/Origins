@@ -7,8 +7,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Voidsight_Potion : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Voidsight Potion");
-			// Tooltip.SetDefault("Significantly increases visibility");
 			Item.ResearchUnlockCount = 20;
 		}
 		public override void SetDefaults() {
@@ -20,7 +18,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.Fireblossom);
-			recipe.AddIngredient(ItemID.NightOwlPotion, 2);
+			recipe.AddIngredient(ItemID.NightOwlPotion);
 			recipe.AddIngredient(ModContent.ItemType<Duskarp>());
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();

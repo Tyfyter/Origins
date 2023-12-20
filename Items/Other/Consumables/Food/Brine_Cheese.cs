@@ -5,8 +5,6 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables.Food {
     public class Brine_Cheese : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Brine Cheese");
-			// Tooltip.SetDefault("{$CommonItemTooltip.MajorStats}\n'But, there's a catch...'");
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
