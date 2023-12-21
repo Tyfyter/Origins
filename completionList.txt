@@ -829,7 +829,6 @@ TILES:
 (^) Spug Flesh Wall
 (^) Sulphur Stone Wall
 
-(X) Acid Chest
 (^) Alkahest Torch
 (^) Bile Torch
 (X) Brine Water Fountain
@@ -848,7 +847,6 @@ TILES:
 (^) Defiled Dungeon Chest
 (#?, ^2) Defiled Water Fountain !!!
 (^) Defiled Torch
-(X) Desert Dungeon Chest
 (X) Dusk Dungeon Chest
 (X) Encrusted Brick !!!
 (#, ^2) Living Alkahest Block*
@@ -937,7 +935,7 @@ MATERIALS:
 (^) Felnum Bar*
 (^) Fungarust*
 (^) Magic Hair Treatment Gel
-(^) NE-9
+(^) NE-8
 (^) Riven Carapace
 (^) Rubber
 (^) Sanguinite Bar*
@@ -959,16 +957,9 @@ MATERIALS:
 (^) Bottled Brine
 (^) Brineglow
 (^) Chambersite
-(^) Dawn Key
-(^) Defiled Key
-(^) Dusk Key
 (^) Eitrite Bar*
-(^) Hell Key
 (^) Illegal Explosive Parts
-(^) Mushroom Key
-(^) Ocean Key
 (^) Respyrite
-(^) Riven Key
 
 (^) Busted Servo
 (^) Power Core
@@ -1064,6 +1055,14 @@ CONSUMABLES:
 (^) Magic Brine Dropper*
 (#2, ^2) Void Lock*
 (^) White Water*
+
+(^) Dawn Key*
+(^) Defiled Key*
+(^) Dusk Key*
+(^) Hell Key*
+(^) Mushroom Key*
+(^) Ocean Key*
+(^) Riven Key*
 
 (^) Defiled Amalgamation Bag*
 (^) Fiberglass Weaver Bag*
