@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shield)]
-	public class Retribution_Shield : ModItem, ICustomWikiStat {
+	public class Shield_of_Retribution : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat"
 		};

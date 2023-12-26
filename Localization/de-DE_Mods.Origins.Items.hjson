@@ -74,7 +74,7 @@ Automated_Handler: {
 }
 
 Blast_Resistant_Plate: {
-	// DisplayName: Blast Resistant Plate
+	// DisplayName: Blast-Resistant Plate
 	// Tooltip: Reduces explosive self-damage by 10%
 }
 

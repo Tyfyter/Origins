@@ -85,7 +85,6 @@ namespace Origins.Items.Accessories {
 		public override string GlowTexture => Texture;
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Amebic Tentacle");
 			ID = Type;
 		}
 		public override void SetDefaults() {

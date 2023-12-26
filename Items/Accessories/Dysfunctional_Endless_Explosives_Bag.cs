@@ -5,14 +5,14 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
     [AutoloadEquip(EquipType.Back)]
-	public class Endless_Explosives : ModItem, ICustomWikiStat {
+	public class Dysfunctional_Endless_Explosives_Bag : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Resource",
 			"Explosive"
 		};
 		public override void SetStaticDefaults() {
-			ItemID.Sets.ShimmerTransformToItem[ItemID.MagicQuiver] = ModContent.ItemType<Endless_Explosives>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Endless_Explosives>()] = ItemID.MagicQuiver;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.MagicQuiver] = ModContent.ItemType<Dysfunctional_Endless_Explosives_Bag>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Dysfunctional_Endless_Explosives_Bag>()] = ItemID.MagicQuiver;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	[LegacyName("Mad_Hand")]
-	public class Shrap_Stack : ModItem, ICustomWikiStat {
+	public class Stack_of_Shraps : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
 			"Explosive"

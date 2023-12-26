@@ -16,8 +16,6 @@ namespace Origins.Items.Accessories {
 		};
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ravel");
-			// Tooltip.SetDefault("Double tap down to transform into a small, rolling ball");
 			Item.ResearchUnlockCount = 1;
 			ID = Type;
 		}
@@ -181,8 +179,6 @@ namespace Origins.Items.Accessories {
 		public override string Texture => "Origins/Buffs/Ravel_Generic_Buff";
 		protected virtual int MountID => ModContent.MountType<Ravel_Mount>();
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ravel");
-			// Description.SetDefault("10% chance to dodge");
 
 			BuffID.Sets.BasicMountData[Type] = new BuffID.Sets.BuffMountData() {
 				mountID = MountID
