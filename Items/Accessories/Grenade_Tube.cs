@@ -1,10 +1,10 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Grenade_Tube : ModItem {
+    public class Grenade_Tube : ModItem {
 		
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
@@ -18,7 +18,7 @@ namespace Origins.Items.Accessories {
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.IllegalGunParts);
 			recipe.AddIngredient(ModContent.ItemType<Missile_Armcannon>());
-			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 15);
+			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>(), 15);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}

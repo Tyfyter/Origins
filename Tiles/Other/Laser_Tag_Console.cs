@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -31,7 +30,7 @@ namespace Origins.Tiles.Other {
 			recipe.AddIngredient(ItemID.CopperBar, 2);
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 5);
 			recipe.AddIngredient(ModContent.ItemType<Power_Core>());
-			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 8);
+			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8);
 			recipe.AddTile(TileID.MythrilAnvil); //Fabricator
 			recipe.Register();
 		}

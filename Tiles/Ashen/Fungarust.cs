@@ -1,18 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
-using Origins.Tiles.Other;
-using System.Collections.Generic;
+using Origins.Tiles.Defiled;
+using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-using static Terraria.ModLoader.ModContent;
 
-namespace Origins.Tiles.Defiled {
-    public class Wilted_Rose : OriginTile, DefiledTile {
+namespace Origins.Tiles.Ashen {
+	public class Fungarust : OriginTile, DefiledTile {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
 
 		public override void SetStaticDefaults() {
@@ -29,10 +26,10 @@ namespace Origins.Tiles.Defiled {
 			AddMapEntry(new Color(128, 128, 128), name);
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);
-			TileObjectData.newTile.AnchorValidTiles = new int[] {
-				TileType<Defiled_Grass>(),
-				TileType<Defiled_Stone>()
-			};
+			/*TileObjectData.newTile.AnchorValidTiles = new int[] {
+				TileType<Sootgrass>(),
+				TileType<Compact_Scrap>()
+			};*/
 			TileObjectData.newTile.AnchorAlternateTiles = new int[] {
 				TileID.ClayPot,
 				TileID.PlanterBox
@@ -40,10 +37,10 @@ namespace Origins.Tiles.Defiled {
 			TileObjectData.addTile(Type);
 
 			HitSound = SoundID.Grass;
-			DustType = DustID.WhiteTorch;
+			DustType = DustID.Ash;
 		}
 
-		public override bool CanPlace(int i, int j) {
+		/*public override bool CanPlace(int i, int j) {
 			Tile tile = Framing.GetTileSafely(i, j); // Safe way of getting a tile instance
 
 			if (tile.HasTile) {
@@ -147,14 +144,21 @@ namespace Origins.Tiles.Defiled {
 			Tile tile = Framing.GetTileSafely(i, j);
 			return tile.TileFrameX / FrameWidth;
 		}
+	}*/
+		public class Fungarust_Item : ModItem {
+            public override void SetStaticDefaults() {
+                base.SetStaticDefaults();
+                ItemID.Sets.ShimmerTransformToItem[ItemID.VileMushroom] = ItemID.ViciousMushroom;
+                ItemID.Sets.ShimmerTransformToItem[ItemID.ViciousMushroom] = ModContent.ItemType<Soulspore_Item>();
+                ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Soulspore_Item>()] = ModContent.ItemType<Acetabularia_Item>();
+                ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Acetabularia_Item>()] = ModContent.ItemType<Fungarust_Item>();
+                ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Fungarust_Item>()] = ItemID.VileMushroom;
+                Item.ResearchUnlockCount = 25;
+            }
+			public override void SetDefaults() {
+				Item.CloneDefaults(ItemID.VileMushroom);
+				Item.value = Item.sellPrice(copper: 20);
+			}
+		}
 	}
-    public class Wilting_Rose_Item : ModItem {
-        public override void SetStaticDefaults() {
-            Item.ResearchUnlockCount = 25;
-        }
-        public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.Deathweed);
-            Item.value = Item.sellPrice(copper: 20);
-        }
-    }
 }

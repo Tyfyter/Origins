@@ -3,6 +3,7 @@ using Origins.Items.Materials;
 using Origins.Projectiles;
 using Origins.Questing;
 using Origins.Reflection;
+using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
@@ -135,7 +136,7 @@ namespace Origins {
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.Coal);
-			recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
+			recipe.AddIngredient(ModContent.ItemType<Peat_Moss_Item>());
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.Torch, 5);

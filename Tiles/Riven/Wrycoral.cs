@@ -1,23 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-	public class Wrycoral : OriginTile {
+    public class Wrycoral : OriginTile {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
@@ -29,7 +19,6 @@ namespace Origins.Tiles.Riven {
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
 			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Wrycoral");
 			AddMapEntry(new Color(128, 128, 128), name);
 
 			HitSound = SoundID.Grass;
@@ -45,4 +34,13 @@ namespace Origins.Tiles.Riven {
 			return false;
 		}
 	}
+    public class Wrycoral_Item : ModItem {
+        public override void SetStaticDefaults() {
+            Item.ResearchUnlockCount = 25;
+        }
+        public override void SetDefaults() {
+            Item.CloneDefaults(ItemID.Deathweed);
+            Item.value = Item.sellPrice(copper: 20);
+        }
+    }
 }

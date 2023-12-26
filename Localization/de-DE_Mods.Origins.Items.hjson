@@ -1431,7 +1431,12 @@ Bleeding_Obsidian_Shard: {
 }
 
 // Bottled_Brine.DisplayName: Bottled Brine
-// Brineglow_Item.DisplayName: Brineglow
+
+Brineglow_Item: {
+	// DisplayName: Brineglow
+	// Tooltip: ""
+}
+
 // Brineglow.DisplayName: Brineglow
 // Bud_Barnacle.DisplayName: Bud Barnacle
 // Busted_Servo.DisplayName: Busted Servo
@@ -1550,8 +1555,15 @@ Fungarust: {
 	// Tooltip: Catalyst of rusting metal
 }
 
-// Wilting_Rose_Item.DisplayName: Wilting Rose
-// Wrycoral_Item.DisplayName: Wrycoral
+Wilting_Rose_Item: {
+	// DisplayName: Wilting Rose
+	// Tooltip: ""
+}
+
+Wrycoral_Item: {
+	// DisplayName: Wrycoral
+	// Tooltip: ""
+}
 
 Absorption_Potion: {
 	// DisplayName: Absorption Potion
@@ -3200,7 +3212,7 @@ Riven_Pot_Item: {
 }
 
 Chambersite_Stone_Wall_Item: {
-	// DisplayName: Chambersite Stone Wall Item
+	// DisplayName: Chambersite Stone Wall
 	// Tooltip: ""
 }
 
@@ -3339,7 +3351,7 @@ Festering_Crate: {
 }
 
 Chambersite_Gemspark_Item: {
-	// DisplayName: Chambersite Gemspark Item
+	// DisplayName: Chambersite Gemspark
 	// Tooltip: ""
 }
 
@@ -3445,4 +3457,44 @@ Weakpoint_Analyzer: {
 		Duplicates have a chance to deal damage equal to your ammo conservation chance
 		8% chance to save ammo
 		''' */
+}
+
+Vanilla_Shake: {
+	DisplayName: Vanilla Shake
+	Tooltip: ""
+}
+
+Surveysprout_Item: {
+	DisplayName: Surveysprout
+	Tooltip: ""
+}
+
+Peat_Moss_Item: {
+	DisplayName: Peat Moss
+	Tooltip: The Demolitionist might find this interesting...
+}
+
+Qube_Item: {
+	DisplayName: Qube
+	Tooltip: "'Physical information, like everything else in the world'"
+}
+
+Silicon_Item: {
+	DisplayName: Silicon
+	Tooltip: ""
+}
+
+Stone_Mask_Item: {
+	DisplayName: Stone Mask
+	Tooltip: Increases defense by 8, but your movement is hindered
+}
+
+Fungarust_Item: {
+	DisplayName: Fungarust
+	Tooltip: Catalyst of rusting metal
+}
+
+Chambersite_Item: {
+	DisplayName: Chambersite
+	Tooltip: "'Loses all of its color when exposed to light'"
 }

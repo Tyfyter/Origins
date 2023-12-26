@@ -1,13 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Metadata;
 using Terraria.ID;
 using Terraria.Localization;
@@ -16,7 +9,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
-	public class Soulspore : OriginTile, DefiledTile {
+    public class Soulspore : OriginTile, DefiledTile {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
@@ -28,7 +21,6 @@ namespace Origins.Tiles.Defiled {
 			TileMaterials.SetForTileId(Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
 			LocalizedText name = CreateMapEntryName();
-			// name.SetDefault("Soulspore");
 			AddMapEntry(new Color(128, 128, 128), name);
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.StyleAlch);

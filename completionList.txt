@@ -773,7 +773,7 @@ TILES:
 (^) Batholith*
 (^) Bleeding Obsidian*
 (#, ^2) Brittle Quartz* !!!
-(#, ^2) Carburite*
+(^) Chambersite
 (X) Compacted Scrap
 (X) Cubekon Altar
 (#, ^2) Defiled Cactus* !!!
@@ -802,7 +802,7 @@ TILES:
 (^) Riven Jungle Grass*
 (^) Sanguinite Ore*
 (^) Silica*
-(#, ^2) Silicon Ore* !!!
+(^) Silicon*
 (X) Sootgrass*
 (^) Spug Flesh*
 (^) Sulphur Stone*
@@ -877,16 +877,17 @@ TILES:
 (^) Defiled Foliage
 (^) Defiled Tree*
 (X) Eden Tree*
-(X) Fungarust*
+(#3, ^2) Fungarust*
 (^) Gel Blister
 (#2, ^2) Laser Tag Console
+(X) Moonshine
 (#2, ^2) Riven Foliage !!!
 (^) Riven Lesion
 (X) Riven Palm Tree* !!!
 (^) Riven Pot
 (^) Riven Tree*
 (^) Soulspore*
-(X) Surveysprout*
+(#3, ^2) Surveysprout*
 (^) Wilting Rose*
 (^) Wrycoral*
 
@@ -933,30 +934,23 @@ MATERIALS:
 (^) Dreadful Powder*
 (^) Encrusted Bar*
 (^) Felnum Bar*
-(^) Fungarust*
 (^) Magic Hair Treatment Gel
 (^) NE-8
 (^) Riven Carapace
 (^) Rubber
 (^) Sanguinite Bar*
 (^) Sentient Powder*
-(^) Silicon*
-(^) Soulspore*
 (^) Strange String*
-(^) Surveysprout*
 (^) Tire
 (^) Tree Sap
 (^) Undead Chunk*
 (^) Urn of Ashes*
-(^) Wilting Rose*
-(^) Wrycoral*
 
 (^) Alkahest
 (^) Black Bile
 (^) Bleeding Obsidian Shard
 (^) Bottled Brine
 (^) Brineglow
-(^) Chambersite
 (^) Eitrite Bar*
 (^) Illegal Explosive Parts
 (^) Respyrite

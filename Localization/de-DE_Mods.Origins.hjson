@@ -1221,6 +1221,7 @@ Tiles: {
 	// Music_Box_DW: Music Box (Defiled Wastelands)
 	// Music_Box_RH: Music Box (Riven Hive)
 	// Brineglow_Vine.MapEntry: Brineglow Vine
+	// Brineglow.MapEntry: Brineglow
 	// Bilious_Crate_Tile.MapEntry: Bilious Crate
 	// Chunky_Crate_Tile.MapEntry: Chunky Crate
 	// Crusty_Crate_Tile.MapEntry: Crusty Crate
@@ -1228,7 +1229,10 @@ Tiles: {
 	// Cleansing_Station.MapEntry: Cleansing Station
 	// Potato_Mine_Tile.MapEntry: Potato Mine
 	// Stone_Mask_Tile.MapEntry: Stone Mask
+	// Stone_Mask.MapEntry: Stone_ Mask
 	// Gel_Blister.MapEntry: Gel Blister
+	// Surveysprout.MapEntry: Surveysprout
+	// Fungarust.MapEntry: Fungarust
 }
 
 AltBiomeDescription: {

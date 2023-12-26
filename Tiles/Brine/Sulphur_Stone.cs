@@ -21,7 +21,7 @@ namespace Origins.Tiles.Brine {
 		}
 		public override void RandomUpdate(int i, int j) {
 			if (!Framing.GetTileSafely(i, j + 1).HasTile) {
-				if (TileObject.CanPlace(i, j + 1, TileType<Brineglow_Vine>(), 0, 0, out TileObject objectData, false, checkStay: true)) {
+				if (TileObject.CanPlace(i, j + 1, TileType<Brineglow>(), 0, 0, out TileObject objectData, false, checkStay: true)) {
 					objectData.style = 0;
 					objectData.alternate = 0;
 					objectData.random = 0;

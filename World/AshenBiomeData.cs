@@ -7,6 +7,7 @@ using Origins.Tiles.Ashen;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Tiles.Ashen.Surveysprout;
 
 namespace Origins.World {
     public class AshenBiomeData : ModBiome {
@@ -34,7 +35,7 @@ namespace Origins.World {
 		public override AltMaterialContext MaterialContext => materialContext ??= new AltMaterialContext()
 			.SetEvilOre(ModContent.ItemType<Sanguinite_Ore_Item>())
 			.SetEvilBar(ModContent.ItemType<Sanguinite_Bar>())
-			.SetEvilHerb(ModContent.ItemType<Surveysprout>())
+			.SetEvilHerb(ModContent.ItemType<Surveysprout_Item>())
 			.SetVileComponent(ModContent.ItemType<Respyrite>())
 			.SetVileInnard(ModContent.ItemType<Biocomponent10>())
 			.SetEvilBossDrop(ModContent.ItemType<NE8>());

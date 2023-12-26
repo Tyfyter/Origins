@@ -1,4 +1,5 @@
 ﻿using Origins.Dev;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -30,7 +31,7 @@ namespace Origins.Items.Accessories {
         public override void AddRecipes() {
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.CelestialStone);
-            recipe.AddIngredient(ModContent.ItemType<Stone_Mask>());
+            recipe.AddIngredient(ModContent.ItemType<Stone_Mask_Item>());
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();
         }

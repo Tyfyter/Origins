@@ -90,7 +90,7 @@ namespace Origins.World.BiomeData {
 						tile.WallType = stoneWallID;
 					}
 				}
-				ushort mossID = (ushort)ModContent.TileType<Peat_Moss_Tile>();
+				ushort mossID = (ushort)ModContent.TileType<Peat_Moss>();
 				ushort oreID = (ushort)ModContent.TileType<Eitrite_Ore>();
 				int cellCount = cells.Count;
 				List<Vector2> cellsForOre = cells.ToList();
@@ -261,7 +261,7 @@ namespace Origins.World.BiomeData {
 					);
 				}
 				int vineTries = 0;
-				int vineTile = ModContent.TileType<Brineglow_Vine>();
+				int vineTile = ModContent.TileType<Brineglow>();
 				int vineCount = 0;
 				for (int k = genRand.Next(200, 300); k > 0;) {
 					int posX = genRand.Next(minGenX, maxGenX);
@@ -285,7 +285,7 @@ namespace Origins.World.BiomeData {
 			}
 			public static void SmallCave(float i, float j, float sizeMult = 1f, Vector2 stretch = default) {
 				ushort stoneID = (ushort)ModContent.TileType<Sulphur_Stone>();
-				ushort mossID = (ushort)ModContent.TileType<Peat_Moss_Tile>();
+				ushort mossID = (ushort)ModContent.TileType<Peat_Moss>();
 				ushort stoneWallID = (ushort)ModContent.WallType<Sulphur_Stone_Wall>();
 				float stretchScale = stretch.Length();
 				Vector2 stretchNorm = stretch / stretchScale;

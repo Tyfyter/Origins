@@ -448,7 +448,7 @@ namespace Origins {
 			return true;
 		}
 		public override void PostSellItem(NPC vendor, Item[] shopInventory, Item item) {
-			if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss>()) {
+			if (vendor.type == NPCID.Demolitionist && item.type == ModContent.ItemType<Peat_Moss_Item>()) {
 				OriginSystem originWorld = ModContent.GetInstance<OriginSystem>();
 				if (originWorld.peatSold < 999) {
 					if (item.stack >= 999 - originWorld.peatSold) {

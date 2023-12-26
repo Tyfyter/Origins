@@ -1,12 +1,12 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
+using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Peatball : ModItem {
+    public class Peatball : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
@@ -24,7 +24,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 4);
-			recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
+			recipe.AddIngredient(ModContent.ItemType<Peat_Moss_Item>());
 			recipe.Register();
 		}
 	}

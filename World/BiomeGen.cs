@@ -244,7 +244,7 @@ namespace Origins {
 						int y = 0;
 						for (; !Main.tile[x, y + 1].HasTile; y++) ;
 						if (Main.tileSolid[Main.tile[x, y + 1].TileType] && Main.tileSolid[Main.tile[x + 1, y + 1].TileType]) {
-							if (PlaceTile(x, y, TileType<Stone_Mask_Tile>())) {
+							if (PlaceTile(x, y, TileType<Stone_Mask>())) {
 								break;
 							}
 						}

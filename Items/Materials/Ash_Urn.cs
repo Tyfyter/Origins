@@ -4,6 +4,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Tiles.Ashen.Fungarust;
 
 namespace Origins.Items.Materials
 {
@@ -17,7 +18,7 @@ namespace Origins.Items.Materials
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 5);
-			recipe.AddIngredient(ModContent.ItemType<Fungarust>());
+			recipe.AddIngredient(ModContent.ItemType<Fungarust_Item>());
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 

@@ -1,12 +1,12 @@
 ﻿using Origins.Buffs;
-using Origins.Items.Materials;
 using Origins.Items.Other.Fish;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using static Origins.Tiles.Ashen.Surveysprout;
 
 namespace Origins.Items.Other.Consumables {
-	public class Ambition_Potion : ModItem {
+    public class Ambition_Potion : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}
@@ -19,7 +19,7 @@ namespace Origins.Items.Other.Consumables {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.BottledWater);
 			recipe.AddIngredient(ModContent.ItemType<Polyeel>());
-			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Surveysprout>());
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Surveysprout_Item>());
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}

@@ -1,5 +1,4 @@
-﻿using Origins.Items.Other.Consumables;
-using Origins.Journal;
+﻿using Origins.Journal;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
@@ -12,6 +11,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using static Origins.Tiles.Ashen.Surveysprout;
 
 namespace Origins.Items.Materials {
     public abstract class MaterialItem : ModItem {
@@ -39,7 +39,7 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(copper: 18);
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 3);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>());
+			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
             recipe.AddIngredient(ModContent.ItemType<Tree_Sap>());
             recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
@@ -100,7 +100,7 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.BattlePotion);
 			recipe.AddIngredient(ItemID.BottledWater);
-			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Surveysprout>());
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Surveysprout_Item>());
 			recipe.AddIngredient(Type);
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
@@ -140,11 +140,6 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 40);
 	}
-	public class Brineglow : MaterialItem {
-		public override bool HasGlowmask => true;
-		public override int ResearchUnlockCount => 5;
-		public override int Value => Item.sellPrice(copper: 30);
-	}
 	public class Bud_Barnacle : MaterialItem {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
@@ -172,10 +167,6 @@ namespace Origins.Items.Materials {
 		public override int ResearchUnlockCount => 99;
 		public override int Value => Item.sellPrice(silver: 2);
 		public override int Rare => ItemRarityID.Pink;
-	}
-	public class Chambersite : MaterialItem {
-		public override int Value => Item.sellPrice(silver: 8);
-		public override int Rare => ItemRarityID.Blue;
 	}
 	public class Chromtain_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(gold: 1);
@@ -285,17 +276,6 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(silver: 10);
 		public override int Rare => ItemRarityID.Purple;
 	}
-	public class Fungarust : MaterialItem {
-		public override int Value => Item.sellPrice(copper: 10);
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[ItemID.VileMushroom] = ItemID.ViciousMushroom;
-			ItemID.Sets.ShimmerTransformToItem[ItemID.ViciousMushroom] = ModContent.ItemType<Soulspore_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Soulspore_Item>()] = ModContent.ItemType<Acetabularia_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Acetabularia_Item>()] = ModContent.ItemType<Fungarust>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Fungarust>()] = ItemID.VileMushroom;
-		}
-	}
 	public class Illegal_Explosive_Parts : MaterialItem {
 		public override int ResearchUnlockCount => 1;
 		public override int Value => Item.sellPrice(gold: 4);
@@ -325,7 +305,7 @@ namespace Origins.Items.Materials {
 			Recipe recipe = Recipe.Create(Type, 5);
 			recipe.AddIngredient(ItemID.BottledWater, 5);
 			recipe.AddIngredient(ItemID.FallenStar);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>());
+			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}
@@ -361,18 +341,6 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	[LegacyName("Peat_Moss_Item")]
-	public class Peat_Moss : MaterialItem {
-		public override int ResearchUnlockCount => 99;
-		public override int Value => Item.sellPrice(copper: 60);
-		public override int Rare => ItemRarityID.Green;
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.ExplosivePowder);
-			recipe.AddIngredient(this, 2);
-			recipe.AddTile(TileID.GlassKiln);
-			recipe.Register();
-		}
-	}
 	public class Power_Core : MaterialItem {
 		public override bool HasGlowmask => true;
 		public override int ResearchUnlockCount => 20;
@@ -385,12 +353,6 @@ namespace Origins.Items.Materials {
 			recipe.AddTile(TileID.Anvils); //Fabricator not implemented yet
 			recipe.Register();
 		}
-	}
-	public class Qube : MaterialItem {
-		public override bool HasGlowmask => true;
-		public override int ResearchUnlockCount => 100;
-		public override int Value => Item.sellPrice(gold: 1, silver: 60);
-		public override int Rare => ButterscotchRarity.ID;
 	}
 	public class Respyrite : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 9);
@@ -408,7 +370,7 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.HallowedBar);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>());
+			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
 			recipe.AddTile(TileID.Anvils); //Fabricator not implemented yet
 			recipe.Register();
 		}
@@ -418,13 +380,13 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.Flipper);
 			recipe.AddIngredient(Type, 15);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 8);
+			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.FloatingTube);
 			recipe.AddIngredient(Type, 20);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 10);
+			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>(), 10);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
 		}
@@ -445,40 +407,6 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Silicon : MaterialItem {
-		public override int Value => Item.sellPrice(copper: 44);
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.SandBlock, 3);
-			recipe.AddTile(TileID.GlassKiln);
-			recipe.Register();
-
-            recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.EbonsandBlock, 3);
-            recipe.AddTile(TileID.GlassKiln);
-            recipe.Register();
-
-            recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.CrimsandBlock, 3);
-            recipe.AddTile(TileID.GlassKiln);
-            recipe.Register();
-
-            recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Defiled_Sand_Item>(), 3);
-            recipe.AddTile(TileID.GlassKiln);
-            recipe.Register();
-
-            recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Silica_Item>(), 3);
-            recipe.AddTile(TileID.GlassKiln);
-            recipe.Register();
-
-            /*recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Ashen_Sand_Item>(), 3);
-            recipe.AddTile(TileID.GlassKiln);
-            recipe.Register();*/
-        }
-	}
 	public class Strange_String : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 2);
 		public override void AddRecipes() {
@@ -496,82 +424,6 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	public class Surveysprout : MaterialItem {
-		public override int Value => Item.sellPrice(copper: 20);
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[ItemID.Deathweed] = ModContent.ItemType<Wilting_Rose_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wilting_Rose_Item>()] = ModContent.ItemType<Wrycoral_Item>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wrycoral_Item>()] = ModContent.ItemType<Surveysprout>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Surveysprout>()] = ItemID.Deathweed;
-		}
-        public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(ItemID.GenderChangePotion);
-            recipe.AddIngredient(ItemID.Blinkroot);
-            recipe.AddIngredient(ItemID.BottledWater);
-            recipe.AddIngredient(ItemID.Daybloom);
-            recipe.AddIngredient(ItemID.Fireblossom);
-            recipe.AddIngredient(ItemID.Moonglow);
-            recipe.AddIngredient(ItemID.Shiverthorn);
-            recipe.AddIngredient(ItemID.Waterleaf);
-            recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-            recipe.AddTile(TileID.Bottles);
-            recipe.Register();
-
-            recipe = Recipe.Create(ItemID.GenderChangePotion);
-            recipe.AddIngredient(ItemID.Blinkroot);
-            recipe.AddIngredient(ItemID.BottledWater);
-            recipe.AddIngredient(ItemID.Feather);
-            recipe.AddIngredient(ItemID.Fireblossom);
-            recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-            recipe.AddTile(TileID.Bottles);
-            recipe.Register();
-
-            recipe = Recipe.Create(ItemID.MagicPowerPotion);
-            recipe.AddIngredient(ItemID.BottledWater);
-            recipe.AddIngredient(ItemID.FallenStar);
-            recipe.AddIngredient(ItemID.Moonglow);
-            recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-            recipe.AddTile(TileID.Bottles);
-            recipe.Register();
-
-            recipe = Recipe.Create(ItemID.RagePotion);
-            recipe.AddIngredient(ItemID.BottledWater);
-            recipe.AddIngredient(ItemID.Hemopiranha);
-            recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-            recipe.AddTile(TileID.Bottles);
-            recipe.Register();
-
-            recipe = Recipe.Create(ItemID.StinkPotion);
-            recipe.AddIngredient(ItemID.BottledWater);
-            recipe.AddIngredient(ItemID.Stinkfish);
-            recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-            recipe.AddTile(TileID.Bottles);
-            recipe.Register();
-
-            recipe = Recipe.Create(ItemID.ThornsPotion);
-            recipe.AddIngredient(ItemID.BottledWater);
-            recipe.AddIngredient(ItemID.Cactus);
-            recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-            recipe.AddTile(TileID.Bottles);
-            recipe.Register();
-
-            recipe = Recipe.Create(ItemID.TitanPotion);
-            recipe.AddIngredient(ItemID.BottledWater);
-            recipe.AddIngredient(ItemID.Bone);
-            recipe.AddIngredient(ItemID.Shiverthorn);
-            recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-            recipe.AddTile(TileID.Bottles);
-            recipe.Register();
-
-            recipe = Recipe.Create(ItemID.WrathPotion);
-            recipe.AddIngredient(ItemID.BottledWater);
-            recipe.AddIngredient(ItemID.Ebonkoi);
-            recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-            recipe.AddTile(TileID.Bottles);
-            recipe.Register();
-        }
-    }
 	public class Tree_Sap : MaterialItem {
 		public override int Value => Item.sellPrice(copper: 2);
 		public override void AddRecipes() {
@@ -604,12 +456,6 @@ namespace Origins.Items.Materials {
 			recipe.AddTile(TileID.AdamantiteForge);
 			recipe.Register();
 		}
-	}
-	public class Wilting_Rose_Item : MaterialItem {
-		public override int Value => Item.sellPrice(copper: 20);
-	}
-	public class Wrycoral_Item : MaterialItem {
-		public override int Value => Item.sellPrice(copper: 20);
 	}
 
 	#region biome keys

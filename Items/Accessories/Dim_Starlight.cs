@@ -1,11 +1,10 @@
 ﻿using Origins.Dev;
-using Origins.Items.Materials;
+using Origins.Tiles.Defiled;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Accessories
-{
+namespace Origins.Items.Accessories {
     public class Dim_Starlight : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Resource",

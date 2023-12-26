@@ -1,12 +1,12 @@
 ﻿using Origins.Buffs;
-using Origins.Items.Materials;
 using Origins.Items.Other.Fish;
+using Origins.Tiles.Defiled;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class Fervor_Potion : ModItem {
+    public class Fervor_Potion : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}

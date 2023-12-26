@@ -10,6 +10,7 @@ using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Tiles;
+using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
@@ -50,7 +51,7 @@ namespace Origins.NPCs {
 				case NPCID.GiantMossHornet:
 				case NPCID.LittleMossHornet:
 				case NPCID.TinyMossHornet:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Peat_Moss>(), 2));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Peat_Moss_Item>(), 2));
 				break;
 				case NPCID.AngryBones:
 				case NPCID.AngryBonesBig:

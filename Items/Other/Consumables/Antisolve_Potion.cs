@@ -1,5 +1,6 @@
 ﻿using Origins.Buffs;
 using Origins.Items.Materials;
+using Origins.Tiles.Brine;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -18,8 +19,8 @@ namespace Origins.Items.Other.Consumables {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Bottled_Brine>());
-			recipe.AddIngredient(ModContent.ItemType<Brineglow>());
-			recipe.AddIngredient(ModContent.ItemType<Peat_Moss>());
+			recipe.AddIngredient(ModContent.ItemType<Brineglow_Item>());
+			recipe.AddIngredient(ModContent.ItemType<Peat_Moss_Item>());
 			recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 		}

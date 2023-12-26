@@ -1,10 +1,10 @@
-﻿using Origins.Items.Materials;
+﻿using Origins.Tiles.Cubekon;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class Quantum_Injector : ModItem {
+    public class Quantum_Injector : ModItem {
 		public const int mana_per_use = 40;
 		public const int max_uses = 5;
 		public override void SetStaticDefaults() {
@@ -27,7 +27,7 @@ namespace Origins.Items.Other.Consumables {
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.ManaCrystal);
-			recipe.AddIngredient(ModContent.ItemType<Qube>(), 50);
+			recipe.AddIngredient(ModContent.ItemType<Qube_Item>(), 50);
 			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.Register();
 		}

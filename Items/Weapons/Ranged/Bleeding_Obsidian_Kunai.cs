@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework;
 using Origins.Dev;
-using Origins.Items.Materials;
 using Origins.NPCs;
 using Origins.Tiles.Dusk;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 3);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 6);
+			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>(), 6);
 			recipe.AddTile(TileID.DemonAltar);
 			recipe.Register();
 		}

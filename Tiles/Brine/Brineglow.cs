@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -14,7 +13,7 @@ using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
-    public class Brineglow_Vine : OriginTile, DefiledTile, IGlowingModTile {
+    public class Brineglow : OriginTile, DefiledTile, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
@@ -81,7 +80,7 @@ namespace Origins.Tiles.Brine {
 			TileObjectData.newTile.AnchorTop = new(AnchorType.SolidTile | AnchorType.AlternateTile, 1, 0);
 			TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
 			TileObjectData.newTile.AnchorValidTiles = new int[] {
-				TileType<Peat_Moss_Tile>(),
+				TileType<Peat_Moss>(),
 				TileType<Sulphur_Stone>()
 			};
 			TileObjectData.newTile.AnchorAlternateTiles = new int[] {
@@ -93,7 +92,7 @@ namespace Origins.Tiles.Brine {
 			DustType = DustID.JungleGrass;
 		}
 		public override IEnumerable<Item> GetItemDrops(int i, int j) {
-			if (Glows(Framing.GetTileSafely(i, j))) yield return new Item(ItemType<Brineglow>());
+			if (Glows(Framing.GetTileSafely(i, j))) yield return new Item(ItemType<Brineglow_Item>());
 		}
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			if (Glows(Framing.GetTileSafely(i, j))) b = 0.1f;
@@ -111,7 +110,7 @@ namespace Origins.Tiles.Brine {
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			Tile below = Framing.GetTileSafely(i, j - 1);
-			if (!below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss_Tile>()) && !below.TileIsType(TileType<Sulphur_Stone>())) {
+			if (!below.TileIsType(Type) && !below.TileIsType(TileType<Peat_Moss>()) && !below.TileIsType(TileType<Sulphur_Stone>())) {
 				WorldGen.KillTile(i, j);
 				return false;
 			}
@@ -325,15 +324,23 @@ namespace Origins.Tiles.Brine {
 
 		public override bool IsTileSpelunkable(int i, int j) => true;
 	}
-	public class Brineglow_Debug_Item : ModItem, IItemObtainabilityProvider {
+    public class Brineglow_Item : ModItem {
+        public override void SetStaticDefaults() {
+            Item.ResearchUnlockCount = 5;
+        }
+        public override void SetDefaults() {
+            Item.sellPrice(copper: 30);
+        }
+    }
+    public class Brineglow_Debug_Item : ModItem, IItemObtainabilityProvider {
 		public IEnumerable<int> ProvideItemObtainability() => new int[] { Type };
-		public override string Texture => "Origins/Items/Materials/Brineglow";
+		public override string Texture => "Origins/Tiles/Brine/Brineglow_Item";
 		public override void SetStaticDefaults() {
 			ItemID.Sets.DisableAutomaticPlaceableDrop[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TitaniumOre);
-			Item.createTile = TileType<Brineglow_Vine>();
+			Item.createTile = TileType<Brineglow>();
 		}
 	}
 }

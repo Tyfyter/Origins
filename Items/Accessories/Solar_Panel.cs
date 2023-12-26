@@ -1,5 +1,5 @@
 ﻿using Origins.Dev;
-using Origins.Items.Materials;
+using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -12,8 +12,6 @@ namespace Origins.Items.Accessories {
 		};
 		public static int BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Solar Panel");
-			// Tooltip.SetDefault("Sunlight exposure increases mana regeneration\n'Don't worry, mana was always renewable!'");
 			BackSlot = Item.backSlot;
 			Item.ResearchUnlockCount = 1;
 		}
@@ -29,7 +27,7 @@ namespace Origins.Items.Accessories {
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ItemID.BandofStarpower);
 			recipe.AddIngredient(ItemID.SunStone);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>(), 8);
+			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>(), 8);
 			recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}

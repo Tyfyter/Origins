@@ -3,6 +3,7 @@ using Origins.Dusts;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
+using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -65,13 +66,13 @@ namespace Origins.Items.Weapons.Ammo {
 			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.Fireblossom, 2);
 			recipe.AddIngredient(ItemID.IronBar, 2);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>());
+			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 			recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.Fireblossom, 2);
 			recipe.AddIngredient(ItemID.LeadBar, 2);
-			recipe.AddIngredient(ModContent.ItemType<Silicon>());
+			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
