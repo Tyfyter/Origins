@@ -774,8 +774,8 @@ TILES:
 (^) Bleeding Obsidian*
 (#, ^2) Brittle Quartz* !!!
 (^) Chambersite
-(X) Compacted Scrap
-(X) Cubekon Altar
+(X) Compacted Scrap*
+(X) Cubekon Altar*
 (#, ^2) Defiled Cactus* !!!
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
@@ -833,7 +833,8 @@ TILES:
 (^) Bile Torch
 (X) Brine Water Fountain
 (X) Cancer Block*
-(X) Chambersite Gem Lock
+(X) Cancer Furniture*
+(X) Chambersite Gem Lock*
 (^) Chambersite Gemspark*
 (X) Chambersite Gemstone*
 (X) Chambersite Gemstone* (Corruption)
@@ -843,12 +844,14 @@ TILES:
 (X) Cubekon Chest
 (X) Cubekon Node
 (X) Dawn Dungeon Chest
-(^) Defiled Campfire
+(^) Defiled Campfire*
 (^) Defiled Dungeon Chest
 (#?, ^2) Defiled Water Fountain !!!
 (^) Defiled Torch
 (X) Dusk Dungeon Chest
+(X) Edenwood Furniture*
 (X) Encrusted Brick !!!
+(#2, ^2) Laser Tag Console*
 (#, ^2) Living Alkahest Block*
 (#, ^2) Living Bile Block*
 (X) Lost Brick !!!
@@ -857,18 +860,20 @@ TILES:
 (X) Nova Fragment Block*
 (X) Ocean Dungeon Chest
 (X) Residue Block*
-(^) Riven Campfire
+(X) Residue Furniture*
+(^) Riven Campfire*
 (^) Riven Dungeon Chest
 (^) Riven Torch
 (^) Riven Water Fountain
 (X) Sanguinite Brick
 (#3, ^2) Traffic Cone !!!
 
-(X) Batholith Grindstone
+(X) Batholith Grindstone*
 (^) Cleansing Station*
 (X) Defiled Waste Organ*
 (X) Elderforge*
 (#, ^2) Fabricator*
+(X) Flesh Shredder*
 (X) Interstellar Sampler*
 (X) Qube Generator
 
@@ -879,8 +884,7 @@ TILES:
 (X) Eden Tree*
 (#3, ^2) Fungarust*
 (^) Gel Blister
-(#2, ^2) Laser Tag Console
-(X) Moonshine
+(X) Moonshine*
 (#2, ^2) Riven Foliage !!!
 (^) Riven Lesion
 (X) Riven Palm Tree* !!!
