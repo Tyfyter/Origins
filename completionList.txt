@@ -830,10 +830,13 @@ TILES:
 (^) Sulphur Stone Wall
 
 (^) Alkahest Torch
+(X) Amoeba Buggy Cage*
 (^) Bile Torch
 (X) Brine Water Fountain
+(X) Bug Cage*
 (X) Cancer Block*
 (X) Cancer Furniture*
+(X) Chambersite Bunny Cage*
 (X) Chambersite Gem Lock*
 (^) Chambersite Gemspark*
 (X) Chambersite Gemstone*
@@ -841,13 +844,16 @@ TILES:
 (X) Chambersite Gemstone* (Crimson)
 (X) Chambersite Gemstone* (Defiled)
 (X) Chambersite Gemstone* (Riven)
+(X) Chambersite Squirrel Cage*
+(X) Cicada 3301 Cage*
 (X) Cubekon Chest
 (X) Cubekon Node
 (X) Dawn Dungeon Chest
 (^) Defiled Campfire*
 (^) Defiled Dungeon Chest
-(#?, ^2) Defiled Water Fountain !!!
+(X) Defiled Pylon*
 (^) Defiled Torch
+(#?, ^2) Defiled Water Fountain !!!
 (X) Dusk Dungeon Chest
 (X) Edenwood Furniture*
 (X) Encrusted Brick !!!
@@ -858,6 +864,7 @@ TILES:
 (X) Mushroom Dungeon Chest
 (X) Nova Brick*
 (X) Nova Fragment Block*
+(X) Nova Monolith*
 (X) Ocean Dungeon Chest
 (X) Residue Block*
 (X) Residue Furniture*
@@ -866,7 +873,7 @@ TILES:
 (^) Riven Torch
 (^) Riven Water Fountain
 (X) Sanguinite Brick
-(#3, ^2) Traffic Cone !!!
+(#3, ^2) Traffic Cone* !!!
 
 (X) Batholith Grindstone*
 (^) Cleansing Station*
@@ -985,6 +992,8 @@ CRITTERS AND FISH:
 ---
 (#3, ^2) Amoeba Buggy !!!
 (#3, ^2) Bug
+(X) Chambersite Bunny
+(X) Chambersite Squirrel
 (#3, ^2) Cicada 3301 !!!
 
 (^) Bilemouth
@@ -1038,14 +1047,17 @@ CONSUMABLES:
 (#2, ^2) The Button*
 
 (#2, ^2) Ashen Loot Box*
+(X) Basic Crate*
 (#, ^2) Bilious Crate*
 (#2, ^2) Corruption Loot Box*
 (#2, ^2) Crimson Loot Box*
 (^) Crusty Crate*
 (#2, ^2) Defiled Loot Box*
 (#, ^2) Festering Crate*
+(X) Holy Crate*
 (^) Pointy Crate*
 (#2, ^2) Riven Loot Box*
+(X) Twilight Crate*
 
 (^) Gooey Water*
 (@2, #3) Holiday Hair Dye !!!

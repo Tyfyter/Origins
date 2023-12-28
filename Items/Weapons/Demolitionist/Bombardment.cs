@@ -30,7 +30,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Bombardment_P : ModProjectile, IIsExplodingProjectile {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Floating Mine");
 			Origins.MagicTripwireRange[Type] = 30;
 		}
 		public override void SetDefaults() {

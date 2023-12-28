@@ -1,15 +1,10 @@
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Projectiles;
 using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Eruption : ModItem {
+    public class Eruption : ModItem {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
@@ -22,10 +17,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed = 12;
 			Item.reuseDelay = 6;
 			Item.autoReuse = true;
-			Item.value = Item.sellPrice(gold: 5);
-			Item.rare = CrimsonRarity.ID;
+			Item.value = Item.sellPrice(silver:50);
+			Item.rare = ItemRarityID.Orange;
 		}
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.HellstoneBar, 18);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Item.shoot;
 		}
 	}
