@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Mono.Cecil.Cil;
 using MonoMod.Cil;
+using Origins.Items.Accessories;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
 using Origins.Tiles.Other;
@@ -244,7 +245,7 @@ namespace Origins {
 						int y = 0;
 						for (; !Main.tile[x, y + 1].HasTile; y++) ;
 						if (Main.tileSolid[Main.tile[x, y + 1].TileType] && Main.tileSolid[Main.tile[x + 1, y + 1].TileType]) {
-							if (PlaceTile(x, y, TileType<Stone_Mask>())) {
+							if (PlaceTile(x, y, TileType<Stone_Mask_Tile>())) {
 								break;
 							}
 						}
