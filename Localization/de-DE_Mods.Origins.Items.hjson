@@ -3498,3 +3498,18 @@ Chambersite_Item: {
 	DisplayName: Chambersite
 	Tooltip: "'Loses all of its color when exposed to light'"
 }
+
+Dysfunctional_Endless_Explosives_Bag: {
+	// DisplayName: Dysfunctional_ Endless_ Explosives_ Bag
+	// Tooltip: ""
+}
+
+Shield_of_Retribution: {
+	// DisplayName: Shield_of_ Retribution
+	// Tooltip: ""
+}
+
+Stack_of_Shraps: {
+	// DisplayName: Stack_of_ Shraps
+	// Tooltip: ""
+}
