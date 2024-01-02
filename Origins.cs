@@ -37,6 +37,7 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Origins {
 	public partial class Origins : Mod {

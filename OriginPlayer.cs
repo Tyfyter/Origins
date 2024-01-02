@@ -12,6 +12,7 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Journal;
+using Origins.Misc;
 using Origins.NPCs;
 using Origins.NPCs.Defiled;
 using Origins.Projectiles;

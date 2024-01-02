@@ -230,7 +230,7 @@ ARMOR:
 (^) Ancient Defiled Armor*
 (^) Ancient Riven Armor*
 (^) Ashen Armor*
-(#4, ^2) Cryosten Armor* !!!
+(☻) Cryosten Armor* !!!
 (^) Defiled Armor* 
 (^) Encrusted Armor*
 (^) Felnum Armor*

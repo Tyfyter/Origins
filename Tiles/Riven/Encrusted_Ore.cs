@@ -29,8 +29,8 @@ namespace Origins.Tiles.Riven {
 			b = 0.2f * GlowValue;
 		}
 		public void MinePower(int i, int j, int minePower, ref int damage) {
-			if (minePower >= 55 || j <= Main.worldSurface) {
-				damage = (int)(minePower / MineResist);
+			if (minePower < 55 && j > Main.worldSurface) {
+				damage = 0;
 			}
 		}
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {

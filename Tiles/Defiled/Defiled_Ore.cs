@@ -25,8 +25,8 @@ namespace Origins.Tiles.Defiled {
 			r = g = b = 0.25f;
 		}
 		public void MinePower(int i, int j, int minePower, ref int damage) {
-			if (minePower >= 55 || j <= Main.worldSurface) {
-				damage = (int)(minePower / MineResist);
+			if (minePower < 55 && j > Main.worldSurface) {
+				damage = 0;
 			}
 		}
 	}

@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables;
+using Origins.Misc;
 using Origins.Projectiles.Misc;
 using System;
 using System.Collections.Generic;
@@ -194,6 +195,8 @@ namespace Origins {
 		public int cinderSealCount = 4;
 		public bool dryadNecklace = false;
 		public bool weakpointAnalyzer = false;
+		public bool bindingBookVisual = false;
+		public Physics.Chain[] bindingBookChains = new Physics.Chain[3];
 		#endregion
 
 		#region explosive stats
@@ -492,6 +495,7 @@ namespace Origins {
 			solarPanel = false;
 			dryadNecklace = false;
 			weakpointAnalyzer = false;
+			bindingBookVisual = false;
 
 			flaskBile = false;
 			flaskSalt = false;

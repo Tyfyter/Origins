@@ -3513,3 +3513,8 @@ Stack_of_Shraps: {
 	DisplayName: Stack_of_ Shraps
 	Tooltip: ""
 }
+
+Binding_Book: {
+	DisplayName: Binding_ Book
+	Tooltip: ""
+}
