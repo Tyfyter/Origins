@@ -158,7 +158,8 @@ namespace Origins.Tiles.Ashen {
 			public override void SetDefaults() {
 				Item.CloneDefaults(ItemID.VileMushroom);
 				Item.value = Item.sellPrice(copper: 20);
-			}
+                Item.maxStack = 9999;
+            }
 		}
 	}
 }

@@ -32,6 +32,7 @@ namespace Origins.Tiles.Brine {
         }
         public override void SetDefaults() {
 			Item.sellPrice(copper: 60);
+			Item.maxStack = 9999;
 			Item.rare = ItemRarityID.Green;
         }
         public override void AddRecipes() {

@@ -23,6 +23,7 @@ namespace Origins.Tiles.Other {
             Item.CloneDefaults(ItemID.StoneBlock);
             Item.value = Item.sellPrice(silver: 13);
             Item.rare = ItemRarityID.Blue;
+            Item.maxStack = 9999;
             //Item.createTile = ModContent.TileType<Chmabersite>();
         }
     }

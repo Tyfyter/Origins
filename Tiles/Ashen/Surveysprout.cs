@@ -156,7 +156,8 @@ namespace Origins.Tiles.Ashen {
 			public override void SetDefaults() {
 				Item.CloneDefaults(ItemID.Deathweed);
 				Item.value = Item.sellPrice(copper: 20);
-			}
+                Item.maxStack = 9999;
+            }
 			public override void AddRecipes() {
 				Recipe recipe = Recipe.Create(ItemID.GenderChangePotion);
 				recipe.AddIngredient(ItemID.Blinkroot);
