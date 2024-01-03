@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -15,16 +16,13 @@ namespace Origins.Tiles.Other {
 			MineResist = 3;
 		}
 	}
-    public class Chambersite_Item : ModItem {
-        public override void SetStaticDefaults() {
-            Item.ResearchUnlockCount = 15;
-        }
+    public class Chambersite_Item : MaterialItem {
+		public override int ResearchUnlockCount => 15;
         public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.StoneBlock);
+			Item.DefaultToPlaceableTile(ModContent.TileType<Chambersite>());
             Item.value = Item.sellPrice(silver: 13);
             Item.rare = ItemRarityID.Blue;
-            Item.maxStack = 9999;
-            //Item.createTile = ModContent.TileType<Chmabersite>();
+            Item.maxStack = Item.CommonMaxStack;
         }
     }
 }

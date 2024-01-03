@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Terraria;
@@ -9,7 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Fungarust : OriginTile, DefiledTile {
+	public class Fungarust : OriginTile, AshenTile {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
 
 		public override void SetStaticDefaults() {
@@ -145,21 +146,17 @@ namespace Origins.Tiles.Ashen {
 			return tile.TileFrameX / FrameWidth;
 		}
 	}*/
-		public class Fungarust_Item : ModItem {
-            public override void SetStaticDefaults() {
-                base.SetStaticDefaults();
-                ItemID.Sets.ShimmerTransformToItem[ItemID.VileMushroom] = ItemID.ViciousMushroom;
-                ItemID.Sets.ShimmerTransformToItem[ItemID.ViciousMushroom] = ModContent.ItemType<Soulspore_Item>();
-                ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Soulspore_Item>()] = ModContent.ItemType<Acetabularia_Item>();
-                ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Acetabularia_Item>()] = ModContent.ItemType<Fungarust_Item>();
-                ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Fungarust_Item>()] = ItemID.VileMushroom;
-                Item.ResearchUnlockCount = 25;
-            }
-			public override void SetDefaults() {
-				Item.CloneDefaults(ItemID.VileMushroom);
-				Item.value = Item.sellPrice(copper: 20);
-                Item.maxStack = 9999;
-            }
+	}
+	public class Fungarust_Item : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 10);
+		public override void SetStaticDefaults() {
+			base.SetStaticDefaults();
+			ItemID.Sets.ShimmerTransformToItem[ItemID.VileMushroom] = ItemID.ViciousMushroom;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.ViciousMushroom] = ModContent.ItemType<Soulspore_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Soulspore_Item>()] = ModContent.ItemType<Acetabularia_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Acetabularia_Item>()] = ModContent.ItemType<Fungarust_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Fungarust_Item>()] = ItemID.VileMushroom;
+			Item.ResearchUnlockCount = 25;
 		}
 	}
 }

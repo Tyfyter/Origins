@@ -27,14 +27,9 @@ namespace Origins.Tiles.Brine {
 		}
 	}
     public class Peat_Moss_Item : MaterialItem {
-        public override void SetStaticDefaults() {
-            Item.ResearchUnlockCount = 100;
-        }
-        public override void SetDefaults() {
-			Item.sellPrice(copper: 60);
-			Item.maxStack = 9999;
-			Item.rare = ItemRarityID.Green;
-        }
+		public override int ResearchUnlockCount => 100;
+		public override int Value => Item.sellPrice(copper: 60);
+		public override int Rare => ItemRarityID.Green;
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(ItemID.ExplosivePowder);
             recipe.AddIngredient(this, 2);

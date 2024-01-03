@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
 using Terraria;
@@ -9,7 +10,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Ashen {
-	public class Surveysprout : OriginTile, DefiledTile {
+	public class Surveysprout : OriginTile, AshenTile {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
 
 		public override void SetStaticDefaults() {
@@ -145,85 +146,80 @@ namespace Origins.Tiles.Ashen {
 			return tile.TileFrameX / FrameWidth;
 		}
 	}*/
-		public class Surveysprout_Item : ModItem {
-			public override void SetStaticDefaults() {
-				ItemID.Sets.ShimmerTransformToItem[ItemID.Deathweed] = ModContent.ItemType<Wilting_Rose_Item>();
-				ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wilting_Rose_Item>()] = ModContent.ItemType<Wrycoral_Item>();
-				ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wrycoral_Item>()] = ModContent.ItemType<Surveysprout_Item>();
-				ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Surveysprout_Item>()] = ItemID.Deathweed;
-				Item.ResearchUnlockCount = 25;
-			}
-			public override void SetDefaults() {
-				Item.CloneDefaults(ItemID.Deathweed);
-				Item.value = Item.sellPrice(copper: 20);
-                Item.maxStack = 9999;
-            }
-			public override void AddRecipes() {
-				Recipe recipe = Recipe.Create(ItemID.GenderChangePotion);
-				recipe.AddIngredient(ItemID.Blinkroot);
-				recipe.AddIngredient(ItemID.BottledWater);
-				recipe.AddIngredient(ItemID.Daybloom);
-				recipe.AddIngredient(ItemID.Fireblossom);
-				recipe.AddIngredient(ItemID.Moonglow);
-				recipe.AddIngredient(ItemID.Shiverthorn);
-				recipe.AddIngredient(ItemID.Waterleaf);
-				recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-				recipe.AddTile(TileID.Bottles);
-				recipe.Register();
+	}
+	public class Surveysprout_Item : MaterialItem {
+		public override int Value => Item.sellPrice(copper: 20);
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ItemID.Deathweed] = ModContent.ItemType<Wilting_Rose_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wilting_Rose_Item>()] = ModContent.ItemType<Wrycoral_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Wrycoral_Item>()] = ModContent.ItemType<Surveysprout_Item>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Surveysprout_Item>()] = ItemID.Deathweed;
+		}
+		public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(ItemID.GenderChangePotion);
+			recipe.AddIngredient(ItemID.Blinkroot);
+			recipe.AddIngredient(ItemID.BottledWater);
+			recipe.AddIngredient(ItemID.Daybloom);
+			recipe.AddIngredient(ItemID.Fireblossom);
+			recipe.AddIngredient(ItemID.Moonglow);
+			recipe.AddIngredient(ItemID.Shiverthorn);
+			recipe.AddIngredient(ItemID.Waterleaf);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
 
-				recipe = Recipe.Create(ItemID.GenderChangePotion);
-				recipe.AddIngredient(ItemID.Blinkroot);
-				recipe.AddIngredient(ItemID.BottledWater);
-				recipe.AddIngredient(ItemID.Feather);
-				recipe.AddIngredient(ItemID.Fireblossom);
-				recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-				recipe.AddTile(TileID.Bottles);
-				recipe.Register();
+			recipe = Recipe.Create(ItemID.GenderChangePotion);
+			recipe.AddIngredient(ItemID.Blinkroot);
+			recipe.AddIngredient(ItemID.BottledWater);
+			recipe.AddIngredient(ItemID.Feather);
+			recipe.AddIngredient(ItemID.Fireblossom);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
 
-				recipe = Recipe.Create(ItemID.MagicPowerPotion);
-				recipe.AddIngredient(ItemID.BottledWater);
-				recipe.AddIngredient(ItemID.FallenStar);
-				recipe.AddIngredient(ItemID.Moonglow);
-				recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-				recipe.AddTile(TileID.Bottles);
-				recipe.Register();
+			recipe = Recipe.Create(ItemID.MagicPowerPotion);
+			recipe.AddIngredient(ItemID.BottledWater);
+			recipe.AddIngredient(ItemID.FallenStar);
+			recipe.AddIngredient(ItemID.Moonglow);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
 
-				recipe = Recipe.Create(ItemID.RagePotion);
-				recipe.AddIngredient(ItemID.BottledWater);
-				recipe.AddIngredient(ItemID.Hemopiranha);
-				recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-				recipe.AddTile(TileID.Bottles);
-				recipe.Register();
+			recipe = Recipe.Create(ItemID.RagePotion);
+			recipe.AddIngredient(ItemID.BottledWater);
+			recipe.AddIngredient(ItemID.Hemopiranha);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
 
-				recipe = Recipe.Create(ItemID.StinkPotion);
-				recipe.AddIngredient(ItemID.BottledWater);
-				recipe.AddIngredient(ItemID.Stinkfish);
-				recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-				recipe.AddTile(TileID.Bottles);
-				recipe.Register();
+			recipe = Recipe.Create(ItemID.StinkPotion);
+			recipe.AddIngredient(ItemID.BottledWater);
+			recipe.AddIngredient(ItemID.Stinkfish);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
 
-				recipe = Recipe.Create(ItemID.ThornsPotion);
-				recipe.AddIngredient(ItemID.BottledWater);
-				recipe.AddIngredient(ItemID.Cactus);
-				recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-				recipe.AddTile(TileID.Bottles);
-				recipe.Register();
+			recipe = Recipe.Create(ItemID.ThornsPotion);
+			recipe.AddIngredient(ItemID.BottledWater);
+			recipe.AddIngredient(ItemID.Cactus);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
 
-				recipe = Recipe.Create(ItemID.TitanPotion);
-				recipe.AddIngredient(ItemID.BottledWater);
-				recipe.AddIngredient(ItemID.Bone);
-				recipe.AddIngredient(ItemID.Shiverthorn);
-				recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-				recipe.AddTile(TileID.Bottles);
-				recipe.Register();
+			recipe = Recipe.Create(ItemID.TitanPotion);
+			recipe.AddIngredient(ItemID.BottledWater);
+			recipe.AddIngredient(ItemID.Bone);
+			recipe.AddIngredient(ItemID.Shiverthorn);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
 
-				recipe = Recipe.Create(ItemID.WrathPotion);
-				recipe.AddIngredient(ItemID.BottledWater);
-				recipe.AddIngredient(ItemID.Ebonkoi);
-				recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-				recipe.AddTile(TileID.Bottles);
-				recipe.Register();
-			}
+			recipe = Recipe.Create(ItemID.WrathPotion);
+			recipe.AddIngredient(ItemID.BottledWater);
+			recipe.AddIngredient(ItemID.Ebonkoi);
+			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
+			recipe.AddTile(TileID.Bottles);
+			recipe.Register();
 		}
 	}
 }

@@ -101,4 +101,5 @@ namespace Origins.Tiles {
 	//temp solution
 	public interface DefiledTile { }
 	public interface RivenTile { }
+	public interface AshenTile { }
 }
