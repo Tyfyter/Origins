@@ -3500,21 +3500,33 @@ Chambersite_Item: {
 }
 
 Dysfunctional_Endless_Explosives_Bag: {
-	// DisplayName: Dysfunctional_ Endless_ Explosives_ Bag
-	// Tooltip: ""
+	DisplayName: Dysfunctional Endless Explosives Bag
+	Tooltip: 15% chance not to consume thrown explosives or explosive ammo
 }
 
 Shield_of_Retribution: {
-	// DisplayName: Shield_of_ Retribution
-	// Tooltip: ""
+	DisplayName: Shield of Retribution
+	Tooltip: 
+	'''
+		Grants immunity to knockback
+		Grants immunity to fire blocks
+		67% of damage received is redirected to 3 enemies
+		Enemies are less likely to target you
+	'''
 }
 
 Stack_of_Shraps: {
-	// DisplayName: Stack_of_ Shraps
-	// Tooltip: ""
+	DisplayName: Stack of Shraps
+	Tooltip: Double the gunpowder, double the fun.
 }
 
 Binding_Book: {
-	// DisplayName: Binding_ Book
-	// Tooltip: ""
+	DisplayName: Binding Book
+	Tooltip:
+	'''
+		Increases pickup range for mana stars
+		Increases maximum mana by 20
+		Increases mana shielding by 10%
+		Reduces damage taken by 5% if Lost Armor is not equipped
+	'''
 }

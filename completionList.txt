@@ -130,7 +130,7 @@ ENEMY NPCS:
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
-(#, ^2) Spider Amoeba !!!
+(^) Spider Amoeba
 (^) Splitooth
 
 (X) Amebeye
@@ -230,7 +230,7 @@ ARMOR:
 (^) Ancient Defiled Armor*
 (^) Ancient Riven Armor*
 (^) Ashen Armor*
-(☻) Cryosten Armor* !!!
+(#3, ^2) Cryosten Armor* !!!
 (^) Defiled Armor* 
 (^) Encrusted Armor*
 (^) Felnum Armor*
@@ -276,7 +276,7 @@ ACCESSORIES:
 (^) Air Tank*
 (#2, ^2, ♠) ATACS*
 (#2, ^2) Automated Returns Handler*
-(#, ^2) Binding Book* !!!
+(^) Binding Book*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
