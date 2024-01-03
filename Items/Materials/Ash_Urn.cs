@@ -4,7 +4,7 @@ using Terraria;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Tiles.Ashen.Fungarust;
+using Origins.Tiles.Ashen;
 
 namespace Origins.Items.Materials
 {

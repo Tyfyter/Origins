@@ -3,7 +3,7 @@ using Origins.Items.Other.Fish;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Tiles.Ashen.Surveysprout;
+using Origins.Tiles.Ashen;
 
 namespace Origins.Items.Other.Consumables {
     public class Ambition_Potion : ModItem {

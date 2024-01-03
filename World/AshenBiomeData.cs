@@ -7,7 +7,7 @@ using Origins.Tiles.Ashen;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Tiles.Ashen.Surveysprout;
+using Origins.Tiles.Ashen;
 
 namespace Origins.World {
     public class AshenBiomeData : ModBiome {

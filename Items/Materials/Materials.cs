@@ -11,7 +11,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using static Origins.Tiles.Ashen.Surveysprout;
+using Origins.Tiles.Ashen;
 
 namespace Origins.Items.Materials {
     public abstract class MaterialItem : ModItem {
