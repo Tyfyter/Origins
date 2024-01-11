@@ -541,6 +541,13 @@ namespace Origins.World.BiomeData {
 			return player.ZoneRockLayerHeight && player.InModBiome<Defiled_Wastelands>();
 		}
 	}
+	public class Defiled_Wastelands_Desert : ModBiome {
+		public override int Music => Origins.Music.Defiled;
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override string BestiaryIcon => "Origins/UI/Defiled_Wastelands_Bestiary_Icon";
+		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Desert";
+		public override string MapBackground => BackgroundPath;
+	}
 	public class Defiled_Wastelands_Alt_Biome : AltBiome {
 		public override string WorldIcon => "Origins/UI/WorldGen/IconDefiled";
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";

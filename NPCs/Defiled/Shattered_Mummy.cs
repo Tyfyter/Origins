@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.World.BiomeData;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -28,6 +29,9 @@ namespace Origins.NPCs.Defiled
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 700;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Defiled_Wastelands_Desert>().Type
+			};
 		}
 		public int MaxMana => 100;
 		public int MaxManaDrain => 20;

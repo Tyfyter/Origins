@@ -1174,14 +1174,24 @@ Biomes: {
 
 	Bestiary_Biomes: {
 		TheTemple: {
-			// DisplayName: Bestiary Biomes. The Temple
-			// TownNPCDialogueName: the Bestiary Biomes. The Temple
+			// DisplayName: The Temple
+			// TownNPCDialogueName: the Temple
 		}
 	}
 
 	AshenBiomeData: {
 		// DisplayName: Ashen Biome Data
 		// TownNPCDialogueName: the Ashen Biome Data
+	}
+
+	Defiled_Wastelands_Desert: {
+		// DisplayName: Defiled Desert
+		// TownNPCDialogueName: the Defiled Desert
+	}
+
+	Riven_Hive_Desert: {
+		// DisplayName: Riven Desert
+		// TownNPCDialogueName: the Riven Desert
 	}
 }
 

@@ -22,6 +22,11 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 46;
 			NPC.friendly = false;
 			NPC.value = 7;
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Riven_Hive_Desert>().Type
+			};
+			Mod.Logger.Info("mummy: " + Type);
+			//ModContent.Request<Microsoft.Xna.Framework.Graphics.Texture2D>("Origins/UI/MapBGs/Riven_Desert").Value.Size()
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return SpawnCondition.Mummy.Chance * Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Mummy;

@@ -3530,3 +3530,23 @@ Binding_Book: {
 			Reduces damage taken by 5% if Lost Armor is not equipped
 		'''
 }
+
+Brittle_Quartz_Item: {
+	// DisplayName: Brittle_ Quartz_ Item
+	// Tooltip: ""
+}
+
+Quartz_Item: {
+	// DisplayName: Quartz_ Item
+	// Tooltip: ""
+}
+
+Brittle_Quartz_Wall_Item: {
+	// DisplayName: Brittle_ Quartz_ Wall_ Item
+	// Tooltip: ""
+}
+
+Quartz_Wall_Item: {
+	// DisplayName: Quartz_ Wall_ Item
+	// Tooltip: ""
+}

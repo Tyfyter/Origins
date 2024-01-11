@@ -772,7 +772,7 @@ TILES:
 (^) Angelic Cloud*
 (^) Batholith*
 (^) Bleeding Obsidian*
-(#, ^2) Brittle Quartz* !!!
+(☻) Brittle Quartz* !!!
 (^) Chambersite
 (X) Compacted Scrap*
 (X) Cubekon Altar*
@@ -796,7 +796,7 @@ TILES:
 (#, ^2) Mildew Block*
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
-(#, ^2) Quartz Block* !!!
+(☻) Quartz Block* !!!
 (#, ^2) Riven Cactus* !!!
 (^) Riven Grass*
 (^) Riven Jungle Grass*
@@ -1135,14 +1135,14 @@ UI:
 (X) Cosmos Map/Bestiary Backdrop
 (X) Dawn Map/Bestiary Backdrop
 (X) Dawn Icon
-(#3, ^2) Defiled Map/Bestiary Backdrop !!!
+(☻) Defiled Map/Bestiary Backdrop !!!
 (^) Defiled Icon
 (X) Dusk Map/Bestiary Backdrop
 (X) Dusk Icon
 (X) Fiberglass Map/Bestiary Backdrop
 (X) Fiberglass Icon
 (X) Fractured Isles Icon
-(#3, ^2) Riven Map/Bestiary Backdrop !!!
+(☻) Riven Map/Bestiary Backdrop !!!
 (^) Riven Icon
 
 (#3, ^2) 30x30 Origins Icon

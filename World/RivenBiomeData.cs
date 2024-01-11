@@ -563,9 +563,18 @@ namespace Origins.World.BiomeData {
 	}
 	public class Underground_Riven_Hive_Biome : ModBiome {
 		public override int Music => Origins.Music.UndergroundRiven;
+		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Hive_Caverns";
+		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return base.IsBiomeActive(player);
 		}
+	}
+	public class Riven_Hive_Desert : ModBiome {
+		public override int Music => Origins.Music.Defiled;
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override string BestiaryIcon => "Origins/UI/Defiled_Wastelands_Bestiary_Icon";
+		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Desert";
+		public override string MapBackground => BackgroundPath;
 	}
 	public class Riven_Hive_Alt_Biome : AltBiome {
 		public override string WorldIcon => "";//TODO: Redo tree icons for AltLib

@@ -53,7 +53,7 @@ namespace Origins.Items.Accessories {
 						offset = offset
 					};
 					const float spring = 0.5f;
-					chains[i] = new Physics.Chain() {
+					chains[i] = chain = new Physics.Chain() {
 						anchor = anchor,
 						links = new Physics.Chain.Link[] {
 							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
