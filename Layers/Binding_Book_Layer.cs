@@ -25,67 +25,9 @@ namespace Origins.Layers {
 			Physics.Chain[] chains = drawInfo.drawPlayer.GetModPlayer<OriginPlayer>().bindingBookChains;
 			for (int i = 0; i < chains.Length; i++) {
 				Physics.Chain chain = chains[i];
-				if (chain is null || chain.links[0].position.HasNaNs() || chain.links[0].position.DistanceSQ(drawInfo.drawPlayer.position) > 512 * 512) {
-					Vector2 offset = Vector2.Zero;
-					Vector2 gravMod = Vector2.One;
-					switch (i) {
-						case 0:
-						offset = new Vector2(8, -4);
-						gravMod = new(1.1f, 0.7f);
-						break;
-
-						case 1:
-						offset = new Vector2(-8, 0);
-						gravMod.X = -1;
-						break;
-
-						case 2:
-						offset = new Vector2(6, 10);
-						gravMod = new(0.5f, 1.2f);
-						break;
-					}
-					var anchor = new Physics.EntityAnchorPoint() {
-						entity = drawInfo.drawPlayer,
-						offset = offset
-					};
-					const float spring = 0.5f;
-					chains[i] = chain = new Physics.Chain() {
-						anchor = anchor,
-						links = new Physics.Chain.Link[] {
-							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
-							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
-							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
-							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
-							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
-							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
-							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
-							new(anchor.WorldPosition, default, 8, new Physics.Gravity[] { new Physics.EntityDirectionGravity(new Vector2(0.12f, -0.28f) * gravMod, drawInfo.drawPlayer) }, drag: 0.93f, spring: spring)
-						}
-					};
-				}
-				Vector2[] deltas = chain.Update();
-				if (OriginsModIntegrations.CheckAprilFools()) {
-					for (int j = 0; j < deltas.Length; j++) {
-						drawInfo.drawPlayer.velocity -= deltas[j] * 0.004f;
-					}
-				}
+				if (chain is null) continue;
 				Vector2 startPoint = chain.anchor.WorldPosition;
 				for (int j = 0; j < chain.links.Length; j++) {
-					/*Rectangle drawRect = new Rectangle(
-						(int)Math.Round(startPoint.X - Main.screenPosition.X),
-						(int)Math.Round(startPoint.Y - Main.screenPosition.Y),
-						(int)Math.Round((chain.links[j].position - startPoint).Length()),
-						1);
-
-					drawInfo.DrawDataCache.Add(new(
-						Origins.instance.Assets.Request<Texture2D>("Projectiles/Pixel").Value,
-						drawRect,
-						null,
-						new Color((~(j >> 0) & 1) * 255, (~(j >> 1) & 1) * 255, (~(j >> 2) & 1) * 255),
-						(chain.links[j].position - startPoint).ToRotation(),
-						Vector2.Zero,
-						SpriteEffects.None
-					));*/
 					drawInfo.DrawDataCache.Add(new(
 						TextureAssets.Chain.Value,
 						chain.links[j].position - Main.screenPosition,

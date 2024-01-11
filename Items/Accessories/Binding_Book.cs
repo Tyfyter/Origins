@@ -1,4 +1,6 @@
-﻿using Origins.Dev;
+﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Origins.Misc;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -22,7 +24,50 @@ namespace Origins.Items.Accessories {
 			if (!hideVisual) UpdateVanity(player);
 		}
 		public override void UpdateVanity(Player player) {
-			player.GetModPlayer<OriginPlayer>().bindingBookVisual = true;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.bindingBookVisual = true;
+			Physics.Chain[] chains = originPlayer.bindingBookChains;
+			for (int i = 0; i < chains.Length; i++) {
+				Physics.Chain chain = chains[i];
+				if (chain is null || chain.links[0].position.HasNaNs() || chain.links[0].position.DistanceSQ(player.position) > 512 * 512) {
+					Vector2 offset = Vector2.Zero;
+					Vector2 gravMod = Vector2.One;
+					switch (i) {
+						case 0:
+						offset = new Vector2(8, -4);
+						gravMod = new(1.1f, 0.7f);
+						break;
+
+						case 1:
+						offset = new Vector2(-8, 0);
+						gravMod.X = -1;
+						break;
+
+						case 2:
+						offset = new Vector2(6, 10);
+						gravMod = new(0.5f, 1.2f);
+						break;
+					}
+					var anchor = new Physics.EntityAnchorPoint() {
+						entity = player,
+						offset = offset
+					};
+					const float spring = 0.5f;
+					chains[i] = new Physics.Chain() {
+						anchor = anchor,
+						links = new Physics.Chain.Link[] {
+							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
+							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
+							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
+							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
+							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
+							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
+							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
+							new(anchor.WorldPosition, default, 8, new Physics.Gravity[] { new Physics.EntityDirectionGravity(new Vector2(0.12f, -0.28f) * gravMod, drawInfo.drawPlayer) }, drag: 0.93f, spring: spring)
+						}
+					};
+				}
+			}
 		}
 	}
 }
