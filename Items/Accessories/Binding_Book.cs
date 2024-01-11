@@ -63,7 +63,7 @@ namespace Origins.Items.Accessories {
 							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
 							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
 							new(anchor.WorldPosition, default, 6, null, drag: 0.93f, spring: spring),
-							new(anchor.WorldPosition, default, 8, new Physics.Gravity[] { new Physics.EntityDirectionGravity(new Vector2(0.12f, -0.28f) * gravMod, drawInfo.drawPlayer) }, drag: 0.93f, spring: spring)
+							new(anchor.WorldPosition, default, 8, new Physics.Gravity[] { new Physics.EntityDirectionGravity(new Vector2(0.12f, -0.28f) * gravMod, player) }, drag: 0.93f, spring: spring)
 						}
 					};
 				}
