@@ -67,6 +67,12 @@ namespace Origins.Items.Accessories {
 						}
 					};
 				}
+				Vector2[] deltas = chain.Update();
+				if (OriginsModIntegrations.CheckAprilFools()) {
+					for (int j = 0; j < deltas.Length; j++) {
+						player.velocity -= deltas[j] * 0.004f;
+					}
+				}
 			}
 		}
 	}
