@@ -19,7 +19,8 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.HallowedBar, 13);
-			recipe.Register();
+            recipe.AddTile(TileID.MythrilAnvil);
+            recipe.Register();
 		}
 		public override Vector2? HoldoutOffset() => new Vector2(-18, -2);
 	}

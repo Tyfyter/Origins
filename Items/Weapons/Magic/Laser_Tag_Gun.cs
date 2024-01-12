@@ -17,8 +17,6 @@ namespace Origins.Items.Weapons.Magic {
 		public override DrawAnimation Animation => animation;
 		public override Color? GetGlowmaskTint(Player player) => Main.teamColor[player.team];
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Laser Tag Gun");
-			// Tooltip.SetDefault("‘Defective to some, glory to others’");
 			animation = new DrawAnimationManual(1);
 			Main.RegisterItemAnimation(Item.type, animation);
 			glowmask = Origins.AddGlowMask(this);

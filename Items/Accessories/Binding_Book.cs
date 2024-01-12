@@ -16,7 +16,14 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 12);
 			Item.rare = ItemRarityID.Yellow;
 		}
-		public override void UpdateAccessory(Player player, bool hideVisual) {
+        public override void AddRecipes() {
+            Recipe recipe = CreateRecipe();
+            recipe.AddIngredient(ItemID.CelestialCuffs);
+            recipe.AddIngredient(ModContent.ItemType<Reshaping_Chunk>());
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.Register();
+        }
+        public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.manaMagnet = true;
 			player.magicCuffs = true;
 			player.statManaMax2 += 20;
