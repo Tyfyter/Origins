@@ -25,7 +25,6 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 	}
 	public class Neural_Network_Buff : ModBuff {
-		public const float buff_damage_factor = 1f;
 		public override string Texture => typeof(Neural_Network).GetDefaultTMLName();
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;

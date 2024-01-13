@@ -29,6 +29,9 @@ namespace Origins.Items.Armor.Cryosten {
 				dust.noGravity = true;
 				dust.velocity *= 0.1f;
 			}
+			if (player.GetModPlayer<OriginPlayer>().cryostenLifeRegenCount > 0) {
+				player.armorEffectDrawOutlinesForbidden = true;
+			}
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

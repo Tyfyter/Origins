@@ -107,7 +107,7 @@ namespace Origins.Items {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (originPlayer.cryostenSet) {
 				if (item.type == ItemID.Heart || item.type == ItemID.CandyApple || item.type == ItemID.SugarPlum) {
-					originPlayer.cryostenLifeRegenCount += 20;
+					originPlayer.cryostenLifeRegenCount += 60;
 				}
 			}
 			return true;

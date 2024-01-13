@@ -36,6 +36,7 @@ X: No progress
 ♠: pure combination item (effects are all present on other items, can be implemented by combining effects (if they're all implemented))
 ◘: Pending review before continuation
 ○: Implemented with temp stats/missing recipe/etc.
+†: needs testing (unicode hex code 2020)
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -230,7 +231,7 @@ ARMOR:
 (^) Ancient Defiled Armor*
 (^) Ancient Riven Armor*
 (^) Ashen Armor*
-(#3, ^2) Cryosten Armor* !!!
+(☻) Cryosten Armor* !!!
 (^) Defiled Armor* 
 (^) Encrusted Armor*
 (^) Felnum Armor*
@@ -331,7 +332,7 @@ ACCESSORIES:
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
 (^) Powerflower*
-(#2, ^2) Priority Mail* !!!
+(†) Priority Mail* !!!
 (#3, ^2) Protomind* !!!
 (^) Razorwire*
 (^) Rebreather*
@@ -339,7 +340,7 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing*
 (^) Ruby Reticle*
-(#3, ^2) Seal of Cinders* !!!
+(#3?, ^2) Seal of Cinders* !!!
 (^) Scavenger Bag*
 (^) Shield of Retribution*
 (X) Sniper's Mark*
@@ -404,7 +405,7 @@ ACCESSORIES:
 (X) Strange Tooth !!!
 (X) Terrarian Voodoo Doll
 (^) Third Eye*
-(#3, ^2) Weakpoint Analyzer* !!!
+(#3?, ^2) Weakpoint Analyzer* !!!
 
 (^) Agility Core
 (^) Combat Core
@@ -566,7 +567,7 @@ RANGED WEAPONS:
 (^) Harpoon Gun*
 (^) Longbone
 (^) Magma Grappler*
-(#3, ^2) Neural Network !!!
+(#3?, ^2) Neural Network !!!
 (^) Riven Splitter*
 (^) Shardcannon
 (^) Sleetfire
@@ -810,7 +811,7 @@ TILES:
 (^) White Ice Block*
 
 (#, ^2) Batholith Wall
-(#, ^2) Brittle Quartz Wall !!!
+(☻) Brittle Quartz Wall !!!
 (#, ^2) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
@@ -824,7 +825,7 @@ TILES:
 (#, ^2) Fiberglass Wall
 (^) Harmony Brick Wall
 (X) Nova Brick Wall
-(#, ^2) Quartz Wall !!!
+(☻) Quartz Wall !!!
 (#, ^2) Riven Grass Wall !!!
 (^) Spug Flesh Wall
 (^) Sulphur Stone Wall
@@ -1042,7 +1043,7 @@ CONSUMABLES:
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
 (#2, ^2) Quantum Cell*
-(#, ^2) Shaped Glass* !!!
+(☻) Shaped Glass* !!!
 (^) Suspicious Looking Ice Cream*
 (#2, ^2) The Button*
 

@@ -740,6 +740,11 @@ Buffs: {
 		// DisplayName: Toxic_ Shock_ Strengthen_ Debuff
 		// Description: Mods.Origins.Buffs.Toxic_Shock_Strengthen_Debuff.Description
 	}
+
+	Priority_Mail_Buff: {
+		// DisplayName: Priority_ Mail_ Buff
+		// Description: Mods.Origins.Buffs.Priority_Mail_Buff.Description
+	}
 }
 
 DamageClassName: {

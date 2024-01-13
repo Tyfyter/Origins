@@ -3532,21 +3532,21 @@ Binding_Book: {
 }
 
 Brittle_Quartz_Item: {
-	// DisplayName: Brittle_ Quartz_ Item
+	// DisplayName: Brittle Quartz
 	// Tooltip: ""
 }
 
 Quartz_Item: {
-	// DisplayName: Quartz_ Item
+	// DisplayName: Quartz
 	// Tooltip: ""
 }
 
 Brittle_Quartz_Wall_Item: {
-	// DisplayName: Brittle_ Quartz_ Wall_ Item
+	// DisplayName: Brittle Quartz Wall
 	// Tooltip: ""
 }
 
 Quartz_Wall_Item: {
-	// DisplayName: Quartz_ Wall_ Item
+	// DisplayName: Quartz Wall
 	// Tooltip: ""
 }

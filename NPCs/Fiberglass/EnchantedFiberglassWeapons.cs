@@ -1,8 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Other.Consumables;
 using Origins.Items.Weapons;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
+using Origins.LootConditions;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
@@ -54,7 +56,8 @@ namespace Origins.NPCs.Fiberglass {
 			teleport();
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Broken_Fiberglass_Bow>(), 10));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Broken_Fiberglass_Bow>(), 10));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shaped_Glass>(), 25));
 			npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
@@ -155,6 +158,9 @@ namespace Origins.NPCs.Fiberglass {
 					Main.projectile[proj].hide = false;
 				}
 			}
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.ByCondition(new AnyPlayerInteraction(), ModContent.ItemType<Shaped_Glass>(), 25));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			NPC.velocity.X += hit.HitDirection * 3;
@@ -316,7 +322,8 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.noTileCollide = true;
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Broken_Fiberglass_Sword>(), 10));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Broken_Fiberglass_Sword>(), 10));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Shaped_Glass>(), 25));
 			npcLoot.Add(ItemDropRule.Common(ItemID.SilverCoin));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {

@@ -209,17 +209,24 @@ namespace Origins {
 		}
 		public override void PostUpdateMiscEffects() {
 			if (cryostenHelmet) {
-				if (Player.statLife != Player.statLifeMax2 && (int)Main.time % (cryostenLifeRegenCount > 0 ? 5 : 15) == 0) {
-					for (int i = 0; i < 10; i++) {
-						int num6 = Dust.NewDust(Player.position, Player.width, Player.height, DustID.Frost);
-						Main.dust[num6].noGravity = true;
-						Main.dust[num6].velocity *= 0.75f;
-						int num7 = Main.rand.Next(-40, 41);
-						int num8 = Main.rand.Next(-40, 41);
-						Main.dust[num6].position.X += num7;
-						Main.dust[num6].position.Y += num8;
-						Main.dust[num6].velocity.X = -num7 * 0.075f;
-						Main.dust[num6].velocity.Y = -num8 * 0.075f;
+				if (Player.statLife != Player.statLifeMax2) {
+					bool buffed = cryostenLifeRegenCount > 0;
+					int visualTime = (int)Main.timeForVisualEffects % (buffed ? 15 : 60);
+					if (visualTime == 0 || visualTime == (buffed ? 2 : 8)) {
+						float fadeIn = buffed ? 0.9f : 1.5f;
+						float offsetMult = buffed ? 0.5f : 1;
+						for (int i = 0; i < 4; i++) {
+							Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Frost, Scale: 0.5f);
+							dust.noGravity = true;
+							dust.velocity *= 0.75f;
+							float xOffset = Main.rand.NextFloat(-40, 40) * offsetMult;
+							float yOffset = Main.rand.NextFloat(-40, 40) * offsetMult;
+							dust.position.X += xOffset;
+							dust.position.Y += yOffset;
+							dust.velocity.X = -xOffset * 0.075f;
+							dust.velocity.Y = -yOffset * 0.075f;
+							dust.fadeIn = fadeIn;
+						}
 					}
 				}
 			}
@@ -414,7 +421,7 @@ namespace Origins {
 			}
 		}
 		public override void UpdateLifeRegen() {
-			if (cryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 180 : 1;
+			if (cryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 60 : 1;
 			if (focusCrystal) {
 				float factor = Player.dpsDamage / 200f;
 				int rounded = (int)factor;

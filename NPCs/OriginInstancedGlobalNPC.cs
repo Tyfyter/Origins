@@ -32,10 +32,10 @@ namespace Origins.NPCs {
 		public bool oldSlowDebuff = false;
 		public bool weakShadowflameDebuff = false;
 		public bool soulhideWeakenedDebuff = false;
-		public bool defiledCreature = false;
 		public const float soulhideWeakenAmount = 0.15f;
 		public bool weakenedOnSpawn = false;
 		public Vector2 preAIVelocity = default;
+		public int priorityMailTime = 0;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
 			if (rasterized >= 0) {
@@ -66,27 +66,18 @@ namespace Origins.NPCs {
 			if (barnacleBuff) {
 				barnacleBuff = false;
 			}
-			if (defiledCreature) {
-				/*if  (BuffID.Electrified or BuffID.DryadsWardDebuff) {
-					damageRecieved x2
-                }*/
-				NPCDebuffImmunityData debuffData = new NPCDebuffImmunityData {
-					SpecificallyImmuneTo = new int[] {
-					BuffID.OnFire,
-					BuffID.Poisoned,
-					BuffID.Venom,
-					BuffID.Weak,
-					BuffID.CursedInferno,
-					BuffID.Frostburn,
-					BuffID.ShadowFlame,
-					BuffID.Daybreak
-					}
-				};
-			}
 			oldSlowDebuff = slowDebuff;
 			slowDebuff = false;
 			weakShadowflameDebuff = false;
 			soulhideWeakenedDebuff = false;
+			if (priorityMailTime > 0) priorityMailTime--;
+		}
+		public override void DrawEffects(NPC npc, ref Color drawColor) {
+			if (priorityMailTime > 0) {
+				drawColor.R = (byte)Math.Max(drawColor.R - 85, 0);
+				drawColor.G = (byte)Math.Min(drawColor.G + 50, 255);
+				drawColor.B = (byte)Math.Min(drawColor.B + 85, 255);
+			}
 		}
 		public override void AI(NPC npc) {
 			if (shrapnelTime > 0) {

@@ -268,6 +268,10 @@ namespace Origins {
 					new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
 				);
 			}
+			//TODO: actually test this
+			if (Player.whoAmI != Main.myPlayer && Main.LocalPlayer.GetModPlayer<OriginPlayer>().priorityMail) {
+				target.GetGlobalNPC<OriginGlobalNPC>().priorityMailTime = 300;
+			}
 		}
 		#endregion
 		#region receiving

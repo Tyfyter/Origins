@@ -112,4 +112,13 @@ namespace Origins.LootConditions {
 			return Language.GetTextValue("Mods.Origins.ItemDropConditions.SoulOfNight");
 		}
 	}
+	public class AnyPlayerInteraction : IItemDropRuleCondition, IProvideItemConditionDescription {
+		public bool CanDrop(DropAttemptInfo info) {
+			return info.npc.AnyInteractions();
+		}
+		public bool CanShowItemDropInUI() => true;
+		public string GetConditionDescription() {
+			return "";
+		}
+	}
 }
