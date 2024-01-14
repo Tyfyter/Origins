@@ -3552,6 +3552,6 @@ Quartz_Wall_Item: {
 }
 
 Shaped_Glass: {
+	DisplayName: Shaped Glass
 	Tooltip: ""
-	DisplayName: Shaped_ Glass
 }
