@@ -3550,3 +3550,8 @@ Quartz_Wall_Item: {
 	// DisplayName: Quartz Wall
 	// Tooltip: ""
 }
+
+Shaped_Glass: {
+	// Tooltip: ""
+	// DisplayName: Shaped_ Glass
+}

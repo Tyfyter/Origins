@@ -27,7 +27,7 @@ $3: Needs sound (SFX/music is composed but not implemented)
 ^4: Partial completion (sound completed)
 
 X: No progress
-*: Wiki entry available for entry
+*: Wiki entry available
 !!!: Priority
 
 ☻: Pending review
@@ -52,7 +52,7 @@ BOSSES AND MINI-BOSSES:
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver !!!
 (X) Scrapper
-(#3, $3 (music is all set to be implemented in the music mod), ^2) World Cracker !!!
+(†, $3) World Cracker !!!
 
 (%, ^2) Lost Diver
 (X) Miscreant
@@ -105,8 +105,8 @@ ENEMY NPCS:
 (^) Amebic Slime
 (^) Ancient Defiled Cyclops
 (^) Barnacleback
-(X) Barnacle Bunny !!!
-(X) Bilebird !!!
+(#, ^2) Barnacle Bunny !!!
+(#, ^2) Bile Thrower !!!
 (^) Buckethead Zombie
 (#, ^2) Cellarkeep !!!
 (^) Chunky Slime
@@ -127,7 +127,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Sword
 (^) Measly Moeba
 (^) Optiphage
-(X) Riven Penguin !!!
+(#, ^2) Riven Penguin !!!
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
@@ -231,7 +231,7 @@ ARMOR:
 (^) Ancient Defiled Armor*
 (^) Ancient Riven Armor*
 (^) Ashen Armor*
-(☻) Cryosten Armor* !!!
+(^) Cryosten Armor*
 (^) Defiled Armor* 
 (^) Encrusted Armor*
 (^) Felnum Armor*
@@ -277,7 +277,7 @@ ACCESSORIES:
 (^) Air Tank*
 (#2, ^2, ♠) ATACS*
 (#2, ^2) Automated Returns Handler*
-(^) Binding Book*
+(#4, ^2) Binding Book* !!!
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
@@ -392,8 +392,8 @@ ACCESSORIES:
 (X) Void Arcanum
 
 (%3, X) Armored Core
-(X) Blizzardwalker's Jacket !!!
-(X) Emergency Bee Canister !!!
+(#, ^2) Blizzardwalker's Jacket !!!
+(#, ^2) Emergency Bee Canister !!!
 (^) Entangled Energy*
 (#, ^2) Forbidden Voice* !!!
 (^) Lazy Cloak*
@@ -402,7 +402,7 @@ ACCESSORIES:
 (#, ^2) Scrap Compactor*
 (^) Scribe of the Meat God*
 (^) Stack of Shraps*
-(X) Strange Tooth !!!
+(#, ^2) Strange Tooth !!!
 (X) Terrarian Voodoo Doll
 (^) Third Eye*
 (#3?, ^2) Weakpoint Analyzer* !!!
@@ -563,7 +563,7 @@ RANGED WEAPONS:
 (^) Fiberglass Bow 
 (^) Fiberglass Pistol
 (^) Fiberglass Shard*
-(X) Gelled Knife !!!
+(#, ^2) Gelled Knife !!!
 (^) Harpoon Gun*
 (^) Longbone
 (^) Magma Grappler*
@@ -773,7 +773,7 @@ TILES:
 (^) Angelic Cloud*
 (^) Batholith*
 (^) Bleeding Obsidian*
-(☻) Brittle Quartz* !!!
+(#4, ^2) Brittle Quartz* !!!
 (^) Chambersite
 (X) Compacted Scrap*
 (X) Cubekon Altar*
@@ -797,7 +797,7 @@ TILES:
 (#, ^2) Mildew Block*
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
-(☻) Quartz Block* !!!
+(#4, ^2) Quartz Block* !!!
 (#, ^2) Riven Cactus* !!!
 (^) Riven Grass*
 (^) Riven Jungle Grass*
@@ -811,7 +811,7 @@ TILES:
 (^) White Ice Block*
 
 (#, ^2) Batholith Wall
-(☻) Brittle Quartz Wall !!!
+(#4, ^2) Brittle Quartz Wall !!!
 (#, ^2) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
@@ -825,7 +825,7 @@ TILES:
 (#, ^2) Fiberglass Wall
 (^) Harmony Brick Wall
 (X) Nova Brick Wall
-(☻) Quartz Wall !!!
+(#4, ^2) Quartz Wall !!!
 (#, ^2) Riven Grass Wall !!!
 (^) Spug Flesh Wall
 (^) Sulphur Stone Wall
@@ -1043,7 +1043,7 @@ CONSUMABLES:
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
 (#2, ^2) Quantum Cell*
-(☻) Shaped Glass* !!!
+(#4, ^2) Shaped Glass* !!!
 (^) Suspicious Looking Ice Cream*
 (#2, ^2) The Button*
 
@@ -1136,14 +1136,14 @@ UI:
 (X) Cosmos Map/Bestiary Backdrop
 (X) Dawn Map/Bestiary Backdrop
 (X) Dawn Icon
-(☻) Defiled Map/Bestiary Backdrop !!!
+(^) Defiled Map/Bestiary Backdrop
 (^) Defiled Icon
 (X) Dusk Map/Bestiary Backdrop
 (X) Dusk Icon
 (X) Fiberglass Map/Bestiary Backdrop
 (X) Fiberglass Icon
 (X) Fractured Isles Icon
-(☻) Riven Map/Bestiary Backdrop !!!
+(^) Riven Map/Bestiary Backdrop
 (^) Riven Icon
 
 (#3, ^2) 30x30 Origins Icon
