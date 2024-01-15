@@ -17,7 +17,7 @@ namespace Origins.Tiles.Riven {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.Sandstone];
+			Main.tileMergeDirt[Type] = Main.tileMergeDirt[TileID.HardenedSand];
 			TileID.Sets.Conversion.Sandstone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			//Main.tileMerge[TileID.Sandstone][Type] = true;
@@ -27,14 +27,13 @@ namespace Origins.Tiles.Riven {
                 Main.tileMerge[i][Type] = Main.tileMerge[i][TileID.Sandstone];
             }*/
 			AddMapEntry(new Color(150, 150, 150));
-			mergeID = TileID.Sandstone;
+			mergeID = TileID.HardenedSand;
 			AddDefiledTile();
 			DustType = Riven_Hive.DefaultTileDust;
 		}
 	}
 	public class Brittle_Quartz_Item : ModItem {
 		public override void SetStaticDefaults() {
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Silica_Item>()] = Type;
             ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Silica_Item>();
             Item.ResearchUnlockCount = 100;
 		}
@@ -68,11 +67,6 @@ namespace Origins.Tiles.Riven {
             //.AddIngredient(ModContent.ItemType<Ashen_Sandstone>())
             //.AddTile(TileID.ChlorophyteExtractinator)
             //.Register();
-
-            CreateRecipe()
-            .AddIngredient(ModContent.ItemType<Brittle_Quartz_Wall_Item>(), 4)
-            .AddTile(TileID.WorkBenches)
-            .Register();
         }
     }
 }

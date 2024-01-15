@@ -27,6 +27,7 @@ namespace Origins.Tiles.Riven {
 	}
 	public class Quartz_Item : ModItem {
 		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Silica_Item>();
 			Item.ResearchUnlockCount = 100;
 		}
 		public override void SetDefaults() {

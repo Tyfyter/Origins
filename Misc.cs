@@ -2257,6 +2257,13 @@ namespace Origins {
 			Origins.unloadables.Add(unloadable);
 		}
 		public static string GetDefaultTMLName(this Type type) => (type.Namespace + "." + type.Name).Replace('.', '/');
+		public static IEnumerable<T> GetFlags<T>(this T value) where T : struct, Enum {
+			T[] possibleFlags = Enum.GetValues<T>();
+			for (int i = 0; i < possibleFlags.Length; i++) {
+				if (possibleFlags[i].Equals(default(T))) continue;
+				if (value.HasFlag(possibleFlags[i])) yield return possibleFlags[i];
+			}
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>

@@ -810,8 +810,8 @@ TILES:
 (@5, ^3) Twilith*
 (^) White Ice Block*
 
-(#, ^2) Batholith Wall
-(#4, ^2) Brittle Quartz Wall !!!
+(☻) Batholith Wall
+(☻) Brittle Quartz Wall !!!
 (#, ^2) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
@@ -825,8 +825,8 @@ TILES:
 (#, ^2) Fiberglass Wall
 (^) Harmony Brick Wall
 (X) Nova Brick Wall
-(#4, ^2) Quartz Wall !!!
-(#, ^2) Riven Grass Wall !!!
+(☻) Quartz Wall !!!
+(☻) Riven Grass Wall !!!
 (^) Spug Flesh Wall
 (^) Sulphur Stone Wall
 

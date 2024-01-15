@@ -3133,7 +3133,7 @@ A_Perfect_World_Item: {
 
 Batholith_Item: {
 	DisplayName: Batholith
-	Tooltip: "'Patiently awaiting its unearthment...'"
+	Tooltip: "'Patiently awaiting its unearthing...'"
 }
 
 Carburite_Item: {
@@ -3553,5 +3553,25 @@ Quartz_Wall_Item: {
 
 Shaped_Glass: {
 	DisplayName: Shaped Glass
+	Tooltip: ""
+}
+
+Batholith_Wall_Safe_Item: {
+	DisplayName: Batholith Wall
+	Tooltip: ""
+}
+
+Batholith_Wall_Placed_Unsafe_Item: {
+	DisplayName: Batholith Firewall
+	Tooltip: ""
+}
+
+Riven_Grass_Wall_Safe_Item: {
+	DisplayName: Riven Grass Wall
+	Tooltip: ""
+}
+
+Riven_Grass_Wall_Placed_Unsafe_Item: {
+	DisplayName: Infested Riven Grass Wall
 	Tooltip: ""
 }
