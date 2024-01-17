@@ -28,7 +28,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("Barnaclebacks are a keystone species to the Riven Hive, working hard to maintain it. Their presence is a sure sign that any progress cleansing the Hive is futile."),
+				this.GetBestiaryFlavorText("Barnaclebacks are a keystone species to the Riven Hive, working hard to maintain it. Their presence is a sure sign that any progress cleansing the Hive is futile."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

@@ -32,7 +32,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
-				new FlavorTextBestiaryInfoElement("Conehead Zombie shuffled mindlessly forward like every other zombie. But something made him stop, made him pick up a traffic cone and stick it on his head. Oh yeah. He likes to party."),
+				this.GetBestiaryFlavorText("Conehead Zombie shuffled mindlessly forward like every other zombie. But something made him stop, made him pick up a traffic cone and stick it on his head. Oh yeah. He likes to party."),
 				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime
 			);
 		}

@@ -44,7 +44,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("A great antibody for reaching airborne or hard-to-reach threats. This may have once been a flying creature like a bird."),
+				this.GetBestiaryFlavorText("A great antibody for reaching airborne or hard-to-reach threats. This may have once been a flying creature like a bird."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

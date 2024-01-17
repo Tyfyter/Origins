@@ -1,0 +1,35 @@
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.World.BiomeData;
+using Terraria;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.ModLoader.Utilities;
+
+namespace Origins.NPCs.Riven {
+	public class Riven_Penguin : Glowing_Mod_NPC, IRivenEnemy {
+		public override void SetStaticDefaults() {
+			Main.npcFrameCount[NPC.type] = 3;
+		}
+		public override void SetDefaults() {
+			NPC.CloneDefaults(NPCID.CrimsonPenguin);
+			SpawnModBiomes = new int[] {
+				ModContent.GetInstance<Riven_Hive>().Type
+			};
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
+				this.GetBestiaryFlavorText(),
+			});
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			//spawn gore if npc is dead after being hit
+			if (NPC.life < 0) {
+				for (int i = 0; i < 3; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
+				for (int i = 0; i < 6; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Meat" + Main.rand.Next(2, 4)));
+			}
+		}
+	}
+}

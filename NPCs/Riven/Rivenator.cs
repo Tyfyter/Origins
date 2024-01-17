@@ -22,7 +22,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("A common spreading agent of the Riven parasite. The Mitoworm can reproduce very rapidly if a threat is being persistent."),
+				this.GetBestiaryFlavorText("A common spreading agent of the Riven parasite. The Mitoworm can reproduce very rapidly if a threat is being persistent."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

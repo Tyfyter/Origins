@@ -31,7 +31,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("A rare entity that is released only once its former vessel has been dislodged from its bile interior."),
+				this.GetBestiaryFlavorText("A rare entity that is released only once its former vessel has been dislodged from its bile interior."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

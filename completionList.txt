@@ -105,7 +105,7 @@ ENEMY NPCS:
 (^) Amebic Slime
 (^) Ancient Defiled Cyclops
 (^) Barnacleback
-(#, ^2) Barnacle Bunny !!!
+(☻) Barnacle Bunny !!!
 (#, ^2) Bile Thrower !!!
 (^) Buckethead Zombie
 (#, ^2) Cellarkeep !!!
@@ -127,7 +127,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Sword
 (^) Measly Moeba
 (^) Optiphage
-(#, ^2) Riven Penguin !!!
+(☻) Riven Penguin !!!
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
@@ -277,7 +277,7 @@ ACCESSORIES:
 (^) Air Tank*
 (#2, ^2, ♠) ATACS*
 (#2, ^2) Automated Returns Handler*
-(#4, ^2) Binding Book* !!!
+(☻) Binding Book* !!!
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*

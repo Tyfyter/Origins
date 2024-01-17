@@ -81,7 +81,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("Barnacle mounds act as a self-contained ecosystem of microbes, buggers, and the Riven of course."),
+				this.GetBestiaryFlavorText("Barnacle mounds act as a self-contained ecosystem of microbes, buggers, and the Riven of course."),
 			});
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {

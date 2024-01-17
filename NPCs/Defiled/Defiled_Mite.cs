@@ -47,7 +47,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("Dweller of the {$Defiled} Caverns. Hard to spot as it does not move until prey draws near."),
+				this.GetBestiaryFlavorText("Dweller of the {$Defiled} Caverns. Hard to spot as it does not move until prey draws near."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

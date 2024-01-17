@@ -38,7 +38,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("This Eater is in its first stage of the Eater life cycle. It goes straight for the eyes of its victims in hopes that it can prompt its own eye to grow in."),
+				this.GetBestiaryFlavorText("This Eater is in its first stage of the Eater life cycle. It goes straight for the eyes of its victims in hopes that it can prompt its own eye to grow in."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

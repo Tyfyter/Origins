@@ -74,10 +74,7 @@ namespace Origins.NPCs.TownNPCs {
 			// We can use AddRange instead of calling Add multiple times in order to add multiple items at once
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				Brine_Pool.BestiaryBackground,
-				new FlavorTextBestiaryInfoElement("Secluded from the Temple, she took her ventures to live near the Brine Pool and grew a likeness to its contents."),
-
-				// Sets your NPC's flavor text in the bestiary.
-				new FlavorTextBestiaryInfoElement("Mods.NPCs.Bestiary.Acid_Freak")
+				this.GetBestiaryFlavorText("Secluded from the Temple, she took her ventures to live near the Brine Pool and grew a likeness to its contents.")
 			});
 		}
 		public override string GetChat() {

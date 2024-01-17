@@ -25,7 +25,6 @@ namespace Origins.NPCs.Riven {
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive_Desert>().Type
 			};
-			Mod.Logger.Info("mummy: " + Type);
 			//ModContent.Request<Microsoft.Xna.Framework.Graphics.Texture2D>("Origins/UI/MapBGs/Riven_Desert").Value.Size()
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
@@ -33,7 +32,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("It was only a matter of time before the Riven got to the body. It now wanders aimlessly in the Rivenated deserts in search of new hosts."),
+				this.GetBestiaryFlavorText("It was only a matter of time before the Riven got to the body. It now wanders aimlessly in the Rivenated deserts in search of new hosts."),
 			});
 		}
 		public override void AI() {

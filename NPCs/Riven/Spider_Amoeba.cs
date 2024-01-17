@@ -33,7 +33,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("Spider flavor text key here, not the text itself, the key"),
+				this.GetBestiaryFlavorText("Spider flavor text key here, not the text itself, the key"),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

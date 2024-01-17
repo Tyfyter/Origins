@@ -30,7 +30,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("These entities possess a higher standing within the Crimson heirarchy as they bear the knowledge of its secrets."),
+				this.GetBestiaryFlavorText("These entities possess a higher standing within the Crimson heirarchy as they bear the knowledge of its secrets."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

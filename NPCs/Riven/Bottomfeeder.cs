@@ -23,7 +23,7 @@ namespace Origins.NPCs.Riven
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("Goldfish naturally evolve into dangerous, insolveable carnivores in the Riven Hive which is only further catalyzed by the Blood Moon."),
+				this.GetBestiaryFlavorText("Goldfish naturally evolve into dangerous, insolveable carnivores in the Riven Hive which is only further catalyzed by the Blood Moon."),
 			});
 		}
 		public override void HitEffect(NPC.HitInfo hit) {

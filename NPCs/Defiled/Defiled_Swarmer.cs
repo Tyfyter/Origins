@@ -41,7 +41,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("Not commonly found in the Wastelands. They appear when a massive {$Defiled} being is in distress."),
+				this.GetBestiaryFlavorText("Not commonly found in the Wastelands. They appear when a massive {§Defiled} being is in distress."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

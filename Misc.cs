@@ -36,6 +36,7 @@ using Terraria.GameContent.Personalities;
 using Terraria.Map;
 using static Terraria.ModLoader.PlayerDrawLayer;
 using Origins.Reflection;
+using Terraria.GameContent.Bestiary;
 
 namespace Origins {
 	#region classes
@@ -2263,6 +2264,10 @@ namespace Origins {
 				if (possibleFlags[i].Equals(default(T))) continue;
 				if (value.HasFlag(possibleFlags[i])) yield return possibleFlags[i];
 			}
+		}
+		public static FlavorTextBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc, string defaultValue = null) {
+			Language.GetOrRegister($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}", defaultValue is null ? null : (() => defaultValue));
+			return new FlavorTextBestiaryInfoElement($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}");
 		}
 	}
 	public static class ShopExtensions {

@@ -26,7 +26,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("A gentle swimmer in the amoeba-infested waters. It is flimsy and fragile, so travelers should be weary when approaching it."),
+				this.GetBestiaryFlavorText("A gentle swimmer in the amoeba-infested waters. It is flimsy and fragile, so travelers should be weary when approaching it."),
 			});
 		}
 		public override void FindFrame(int frameHeight) {

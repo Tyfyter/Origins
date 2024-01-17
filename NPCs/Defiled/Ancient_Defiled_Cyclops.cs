@@ -33,7 +33,7 @@ namespace Origins.NPCs.Defiled {
 		public float Mana { get; set; }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("An older design of the Defiled Cyclops before the {$Defiled} improved upon it. The unique composition of Defiled Matter is apparent as it adopts a more leathery outer-layer."),
+				this.GetBestiaryFlavorText("An older design of the Defiled Cyclops before the {§Defiled} improved upon it. The unique composition of Defiled Matter is apparent as it adopts a more leathery outer-layer."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

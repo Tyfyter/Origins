@@ -46,7 +46,7 @@ namespace Origins.NPCs.Defiled
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("The {$Defiled_Wastelands} did not struggle to rapidly break down this fiend. It clunks around the {$Defiled} sands in search of any trespassers."),
+				this.GetBestiaryFlavorText("The {$Defiled_Wastelands} did not struggle to rapidly break down this fiend. It clunks around the {$Defiled} sands in search of any trespassers."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

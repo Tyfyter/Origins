@@ -129,11 +129,11 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 			/*if (heartBroken <= 1) {
-			new FlavorTextBestiaryInfoElement("An elder organism of the Defiled possessing many of the memories of those lost to the {$Defiled} Will. It is merely a shell of its former self.");
+			this.GetBestiaryFlavorText("An elder organism of the Defiled possessing many of the memories of those lost to the {$Defiled} Will. It is merely a shell of its former self.");
 			} else {
-			new FlavorTextBestiaryInfoElement("A murderous super-organism just trying to protect its home.");
+			this.GetBestiaryFlavorText("A murderous super-organism just trying to protect its home.");
 			}*/
-			new FlavorTextBestiaryInfoElement("A murderous super-organism just trying to protect its home."),
+			this.GetBestiaryFlavorText("A murderous super-organism just trying to protect its home."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

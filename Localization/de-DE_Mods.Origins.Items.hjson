@@ -3557,21 +3557,21 @@ Shaped_Glass: {
 }
 
 Batholith_Wall_Safe_Item: {
-	// DisplayName: Batholith_ Wall_ Safe_ Item
+	// DisplayName: Batholith Wall
 	// Tooltip: ""
 }
 
 Batholith_Wall_Placed_Unsafe_Item: {
-	// DisplayName: Batholith_ Wall_ Placed_ Unsafe_ Item
+	// DisplayName: Batholith Firewall
 	// Tooltip: ""
 }
 
 Riven_Grass_Wall_Safe_Item: {
-	// DisplayName: Riven_ Grass_ Wall_ Safe_ Item
+	// DisplayName: Riven Grass Wall
 	// Tooltip: ""
 }
 
 Riven_Grass_Wall_Placed_Unsafe_Item: {
-	// DisplayName: Riven_ Grass_ Wall_ Placed_ Unsafe_ Item
+	// DisplayName: Infested Riven Grass Wall
 	// Tooltip: ""
 }

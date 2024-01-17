@@ -36,7 +36,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("This Riven-infested nautilus has grown accustomed to the amebic water's viscosity making it very agile on land. The sharpness of its shell is an added danger."),
+				this.GetBestiaryFlavorText("This Riven-infested nautilus has grown accustomed to the amebic water's viscosity making it very agile on land. The sharpness of its shell is an added danger."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

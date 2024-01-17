@@ -39,7 +39,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
-				new FlavorTextBestiaryInfoElement("A slime desaturated of its color due to contact with black bile. It now spends the rest of its days to the {$Defiled} will.")
+				this.GetBestiaryFlavorText("A slime desaturated of its color due to contact with black bile. It now spends the rest of its days to the {$Defiled} will.")
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

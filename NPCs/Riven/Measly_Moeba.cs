@@ -118,7 +118,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement(""),
+				this.GetBestiaryFlavorText(""),
 			});
 		}
 		public override void FindFrame(int frameHeight) {

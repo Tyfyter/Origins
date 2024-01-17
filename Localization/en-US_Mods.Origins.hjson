@@ -1132,6 +1132,8 @@ NPCs: {
 	World_Cracker_Tail.DisplayName: World Cracker
 	Bottomfeeder.DisplayName: Bottomfeeder
 	Spider_Amoeba.DisplayName: Spider_ Amoeba
+	Barnacle_Bunny.DisplayName: Barnacle_ Bunny
+	Riven_Penguin.DisplayName: Riven_ Penguin
 }
 
 BiomeName.Bestiary_Biomes.TheTemple: The Temple

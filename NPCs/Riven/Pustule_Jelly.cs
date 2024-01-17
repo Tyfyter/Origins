@@ -25,7 +25,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("A Riven-infected jellyfish living in its new parasite-prevalent environment."),
+				this.GetBestiaryFlavorText("A Riven-infected jellyfish living in its new parasite-prevalent environment."),
 			});
 		}
 		public override void FindFrame(int frameHeight) {

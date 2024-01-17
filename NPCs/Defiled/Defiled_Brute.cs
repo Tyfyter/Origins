@@ -45,7 +45,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("A stumbling defender of the Wastelands. It will be summoned if other {$Defiled} antibodies struggle."),
+				this.GetBestiaryFlavorText("A stumbling defender of the Wastelands. It will be summoned if other {$Defiled} antibodies struggle."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

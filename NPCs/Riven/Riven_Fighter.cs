@@ -33,7 +33,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("The first creature born in the abominable Riven Hive. It is a very agile protector of its home."),
+				this.GetBestiaryFlavorText("The first creature born in the abominable Riven Hive. It is a very agile protector of its home."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

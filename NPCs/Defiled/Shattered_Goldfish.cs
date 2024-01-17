@@ -35,7 +35,7 @@ namespace Origins.NPCs.Defiled {
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("Goldfish "),
+				this.GetBestiaryFlavorText("Goldfish "),
 			});
 		}
         public void SpawnWisp(NPC npc) {

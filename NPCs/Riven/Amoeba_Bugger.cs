@@ -29,7 +29,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				new FlavorTextBestiaryInfoElement("These nasty bugs thrive in conditions like the Riven Hive feeding on flesh decayed from the barnacles. They also love it fresh whenever available."),
+				this.GetBestiaryFlavorText("These nasty bugs thrive in conditions like the Riven Hive feeding on flesh decayed from the barnacles. They also love it fresh whenever available."),
 			});
 		}
 		public override void OnSpawn(IEntitySource source) {
