@@ -82,11 +82,5 @@ namespace Origins.NPCs.Defiled {
 				for (int i = 0; i < 6; i++) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Medium" + Main.rand.Next(1, 4)));
 			}
 		}
-		public override void SendExtraAI(BinaryWriter writer) {
-			writer.Write(Mana);
-		}
-		public override void ReceiveExtraAI(BinaryReader reader) {
-			Mana = reader.ReadSingle();
-		}
 	}
 }

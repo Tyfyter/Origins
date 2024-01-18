@@ -271,8 +271,17 @@ namespace Origins {
 			IL_PlayerDrawLayers.DrawPlayer_28_ArmOverItemComposite += IL_PlayerDrawLayers_DrawPlayer_28_ArmOverItemComposite;
 			IL_Main.DrawSurfaceBG += IL_Main_DrawSurfaceBG;
 			On_Player.ItemCheck_UseMiningTools_TryHittingWall += On_Player_ItemCheck_UseMiningTools_TryHittingWall;
+			IL_NPCUtils.TargetClosestNonBees += IL_NPCUtils_TargetClosestNonBees;
 		}
 
+		private void IL_NPCUtils_TargetClosestNonBees(ILContext il) {
+			ILCursor c = new(il);
+			c.GotoNext(MoveType.Before, ins => ins.MatchLdnull());
+			c.Remove();
+			c.Emit(Ldarg_0);
+			c.EmitDelegate<Func<NPC, NPCUtils.SearchFilter<Player>>>(EmergencyBeeFilter);
+		}
+		public static NPCUtils.SearchFilter<Player> EmergencyBeeFilter(NPC bee) => (player) => bee.playerInteraction[player.whoAmI] || !player.GetModPlayer<OriginPlayer>().emergencyBeeCanister;
 		private static void IL_Main_DrawSurfaceBG(ILContext il) {
 			ILCursor c = new(il);
 			int index = -1;

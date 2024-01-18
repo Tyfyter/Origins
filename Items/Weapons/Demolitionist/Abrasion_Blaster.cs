@@ -9,7 +9,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Abrasion_Blaster : ModItem {
-		
+		public override void SetStaticDefaults() {
+			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
+				proj.extraUpdates += 2;
+			});
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
@@ -35,7 +39,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			if (type == ProjectileID.Bullet) type = Item.shoot;
 			SoundEngine.PlaySound(SoundID.Item40, position);
 			SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
-			OriginGlobalProj.extraUpdatesNext = 2;
 		}
 	}
 }

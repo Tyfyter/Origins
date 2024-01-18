@@ -392,7 +392,7 @@ ACCESSORIES:
 (X) Void Arcanum
 
 (%3, X) Armored Core
-(#, ^2) Blizzardwalker's Jacket !!!
+(X, ^2) Blizzardwalker's Jacket !!!
 (#, ^2) Emergency Bee Canister !!!
 (^) Entangled Energy*
 (#, ^2) Forbidden Voice* !!!
@@ -405,7 +405,7 @@ ACCESSORIES:
 (#, ^2) Strange Tooth !!!
 (X) Terrarian Voodoo Doll
 (^) Third Eye*
-(#3?, ^2) Weakpoint Analyzer* !!!
+(☻) Weakpoint Analyzer* !!!
 
 (^) Agility Core
 (^) Combat Core

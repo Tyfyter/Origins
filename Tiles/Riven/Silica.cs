@@ -52,7 +52,6 @@ namespace Origins.Tiles.Riven {
 
 				if (Main.netMode == NetmodeID.SinglePlayer) {
 					Main.tile[i, j].ClearTile();
-					OriginGlobalProj.hostileNext = true;
 					int proj = Projectile.NewProjectile(new EntitySource_TileBreak(i, j), positionX, positionY, 0f, 0.41f, projectileType, 10, 0f, Main.myPlayer);
 					Main.projectile[proj].ai[0] = 1f;
 					Main.projectile[proj].hostile = true;
@@ -120,7 +119,9 @@ namespace Origins.Tiles.Riven {
 			//Set the tile type to ExampleSand
 			tileType = TileType<Silica>();
 		}
-
+		public override void OnSpawn(IEntitySource source) {
+			if (source is EntitySource_TileBreak) Projectile.hostile = true;
+		}
 		public override void AI() {
 			if (init) {
 				falling = Projectile.hostile;

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Projectiles;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -8,7 +9,16 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle : ModItem {
-		
+		public override void SetStaticDefaults() {
+			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
+				global.viperEffect = true;
+				proj.extraUpdates += 2;
+				if (contextArgs.Contains("barrel")) {
+					proj.extraUpdates = 19;
+					proj.timeLeft = 20;
+				}
+			});
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
 			Item.damage = 60;
@@ -36,15 +46,11 @@ namespace Origins.Items.Weapons.Ranged {
 			position += unit * dist;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			OriginGlobalProj.viperEffectNext = true;
 			Vector2 unit = Vector2.Normalize(velocity);
 			float dist = 80 - velocity.Length();
 			position -= unit * dist;
-			Projectile barrelProj = Projectile.NewProjectileDirect(source, position, unit * (dist / 20), type, damage, knockback, player.whoAmI);
-			barrelProj.extraUpdates = 19;
-			barrelProj.timeLeft = 20;
-			OriginGlobalProj.viperEffectNext = true;
-			OriginGlobalProj.killLinkNext = barrelProj.whoAmI;
+			EntitySource_ItemUse_WithAmmo barrelSource = new EntitySource_ItemUse_WithAmmo(source.Player, source.Item, source.AmmoItemIdUsed, OriginExtensions.MakeContext(source.Context, OriginGlobalProj.no_multishot_context, "barrel"));
+			OriginGlobalProj.killLinkNext = Projectile.NewProjectile(barrelSource, position, unit * (dist / 20), type, damage, knockback, player.whoAmI);
 			return true;
 		}
 	}

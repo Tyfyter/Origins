@@ -17,6 +17,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		static short glowmask;
 		public override void SetStaticDefaults() {
+			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
+				proj.extraUpdates += 2;
+			});
 			if (!Main.dedServ) {
 				UseTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Flakjack_Use");
 				UseGlowTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Flakjack_Use_Glow");
@@ -43,7 +46,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			SoundEngine.PlaySound(SoundID.Item40, position);
 			SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
-			OriginGlobalProj.extraUpdatesNext = 2;
 			Vector2 perp = velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(default);
 			if (player.ItemUsesThisAnimation == 1) {
 				position += perp * player.direction * 2;

@@ -7,7 +7,10 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs;
 using Origins.Questing;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -22,6 +25,7 @@ namespace Origins.Projectiles {
 		protected override bool CloneNewInstances => false;
 
 		public const string multishot_context = "multishot";
+		public const string no_multishot_context = "noMultishot";
 		public int fromItemType = -1;
 		//bool init = true;
 		public bool felnumEffect = false;
@@ -30,11 +34,7 @@ namespace Origins.Projectiles {
 		public int killLink = -1;
 		public float godHunterEffect = 0f;
 		public static bool felnumEffectNext = false;
-		public static bool viperEffectNext = false;
-		public static bool hostileNext = false;
 		public static int killLinkNext = -1;
-		public static int extraUpdatesNext = -1;
-		public static float godHunterEffectNext = 0f;
 		public bool isFromMitosis = false;
 		public bool hasUsedMitosis = false;
 		public int mitosisTimeLeft = 3600;
@@ -42,11 +42,15 @@ namespace Origins.Projectiles {
 		public int prefix;
 		public bool neuralNetworkEffect = false;
 		public bool neuralNetworkHit = false;
+		public Vector2? weakpointAnalyzerTarget = default;
+		public static Dictionary<int, Action<OriginGlobalProj, Projectile, string[]>> itemSourceEffects;
+		public override void Load() {
+			itemSourceEffects = new();
+		}
+		public override void Unload() {
+			itemSourceEffects = null;
+		}
 		public override void SetDefaults(Projectile projectile) {
-			if (hostileNext) {
-				projectile.hostile = true;
-				hostileNext = false;
-			}
 			felnumEffect = felnumEffectNext;
 			felnumEffectNext = false;
 			if (killLinkNext != -1) {
@@ -54,19 +58,6 @@ namespace Origins.Projectiles {
 				//sync killLink ids
 				Main.projectile[killLink].GetGlobalProjectile<OriginGlobalProj>().killLink = projectile.whoAmI;
 				killLinkNext = -1;
-			}
-			if (viperEffectNext) {
-				viperEffect = true;
-				projectile.extraUpdates += 2;
-				viperEffectNext = false;
-			}
-			if (extraUpdatesNext != 0) {
-				projectile.extraUpdates += extraUpdatesNext;
-				extraUpdatesNext = 0;
-			}
-			if (godHunterEffectNext != 0) {
-				godHunterEffect = godHunterEffectNext;
-				godHunterEffectNext = 0;
 			}
 			switch (ExplosiveGlobalProjectile.GetVanillaExplosiveType(projectile)) {
 				case 1:
@@ -87,9 +78,14 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
+			string[] contextArgs = source.Context?.Split(';') ?? Array.Empty<string>();
 			if (projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall && projectile.originalDamage < projectile.damage)
 				projectile.originalDamage = projectile.damage;
+			if (contextArgs.Contains(nameof(OriginPlayer.weakpointAnalyzer))) {
+				weakpointAnalyzerTarget = Main.MouseWorld;
+			}
 			if (source is EntitySource_ItemUse itemUseSource) {
+				if (itemSourceEffects.TryGetValue(itemUseSource.Item.type, out var itemSourceEffect)) itemSourceEffect(this, projectile, contextArgs);
 				OriginPlayer originPlayer = itemUseSource.Player.GetModPlayer<OriginPlayer>();
 				if (itemUseSource.Item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0 && originPlayer.entangledEnergy) {
 					fiberglassLifesteal = true;
@@ -105,7 +101,7 @@ namespace Origins.Projectiles {
 				if (fromItemType == Neural_Network.ID) {
 					neuralNetworkEffect = true;
 				}
-				if (itemUseSource.Context != multishot_context) {
+				if (!contextArgs.Contains(multishot_context) && !contextArgs.Contains(no_multishot_context)) {
 					int bocShadows = 0;
 					if (originPlayer.weakpointAnalyzer && projectile.CountsAsClass(DamageClass.Ranged) && projectile.aiStyle != ProjAIStyleID.HeldProjectile) {
 						bocShadows = 2;
@@ -113,11 +109,12 @@ namespace Origins.Projectiles {
 					EntitySource_ItemUse multishotSource = null;
 					int ammoID = ItemID.None;
 					if (bocShadows > 0) {// separate if statement for future multishot sources
+						string bocContext = OriginExtensions.MakeContext(source.Context, multishot_context, nameof(OriginPlayer.weakpointAnalyzer));
 						if (itemUseSource is EntitySource_ItemUse_WithAmmo sourceWAmmo) {
-							multishotSource = new EntitySource_ItemUse_WithAmmo(sourceWAmmo.Player, sourceWAmmo.Item, sourceWAmmo.AmmoItemIdUsed, multishot_context);
+							multishotSource = new EntitySource_ItemUse_WithAmmo(sourceWAmmo.Player, sourceWAmmo.Item, sourceWAmmo.AmmoItemIdUsed, bocContext);
 							ammoID = sourceWAmmo.AmmoItemIdUsed;
 						} else {
-							multishotSource = new EntitySource_ItemUse(itemUseSource.Player, itemUseSource.Item, multishot_context);
+							multishotSource = new EntitySource_ItemUse(itemUseSource.Player, itemUseSource.Item, bocContext);
 						}
 					}
 					if (bocShadows > 0) {
@@ -263,6 +260,16 @@ namespace Origins.Projectiles {
 				neuralNetworkEffect = false;
 				Main.player[projectile.owner].ClearBuff(ModContent.BuffType<Neural_Network_Buff>());
 			}
+		}
+		public override Color? GetAlpha(Projectile projectile, Color lightColor) {
+			if (weakpointAnalyzerTarget is Vector2 targetPos) {
+				Color baseColor = projectile.ModProjectile?.GetAlpha(lightColor) ?? lightColor;
+				float distSQ = projectile.DistanceSQ(targetPos);
+				const float range = 128;
+				const float rangeSQ = range * range;
+				return baseColor * MathHelper.Min(1f / (((distSQ * distSQ) / (rangeSQ * rangeSQ)) + 1), 1);
+			}
+			return null;
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
 			binaryWriter.Write(prefix);

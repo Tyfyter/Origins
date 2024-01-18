@@ -198,6 +198,7 @@ namespace Origins {
 		public bool bindingBookVisual = false;
 		public Physics.Chain[] bindingBookChains = new Physics.Chain[3];
 		public bool priorityMail = false;
+		public bool emergencyBeeCanister = false;
 		#endregion
 
 		#region explosive stats
@@ -498,6 +499,7 @@ namespace Origins {
 			weakpointAnalyzer = false;
 			bindingBookVisual = false;
 			priorityMail = false;
+			emergencyBeeCanister = false;
 
 			flaskBile = false;
 			flaskSalt = false;

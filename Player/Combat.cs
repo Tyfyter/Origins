@@ -317,6 +317,10 @@ namespace Origins {
 				modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(currentExplosiveSelfDamage);
 			}
 		}
+		public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot) {
+			if (emergencyBeeCanister && (npc.type == NPCID.Bee || npc.type == NPCID.BeeSmall)) return npc.playerInteraction[Player.whoAmI];
+			return true;
+		}
 		public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo) {
 			if (!Player.noKnockback && hurtInfo.Damage != 0) {
 				Player.velocity.X *= MeleeCollisionNPCData.knockbackMult;

@@ -3575,3 +3575,8 @@ Riven_Grass_Wall_Placed_Unsafe_Item: {
 	DisplayName: Infested Riven Grass Wall
 	Tooltip: ""
 }
+
+Emergency_Bee_Canister: {
+	DisplayName: Emergency_ Bee_ Canister
+	Tooltip: ""
+}
