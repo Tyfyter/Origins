@@ -105,7 +105,7 @@ ENEMY NPCS:
 (^) Amebic Slime
 (^) Ancient Defiled Cyclops
 (^) Barnacleback
-(☻) Barnacle Bunny !!!
+(#2, ^2) Barnacle Bunny !!!
 (#, ^2) Bile Thrower !!!
 (^) Buckethead Zombie
 (#, ^2) Cellarkeep !!!
@@ -127,7 +127,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Sword
 (^) Measly Moeba
 (^) Optiphage
-(☻) Riven Penguin !!!
+(#2, ^2) Riven Penguin !!!
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
@@ -204,9 +204,9 @@ STATUS EFFECTS:
 (#3, ^2) Impeding Shrapnel !!!
 (X) Ionizing Radiation
 (^) Rasterized
-(^) Torn
+(^) Torn*
 (^) Totally Safe
-(O) Toxic Shock
+(#2, ^2) Toxic Shock*
 (X) Whiplash
 (X) Workout
 ---
@@ -340,7 +340,7 @@ ACCESSORIES:
 (^) Return To Sender*
 (#2, ^2) Rope of Sharing*
 (^) Ruby Reticle*
-(#3?, ^2) Seal of Cinders* !!!
+(#3, ^2) Seal of Cinders* !!!
 (^) Scavenger Bag*
 (^) Shield of Retribution*
 (X) Sniper's Mark*
@@ -384,21 +384,17 @@ ACCESSORIES:
 (^) Tripod Nip*
 
 (^) Amebic Vial*
-(X) Blizzardwalker's Jacket* !!!
 (#, ^2) Crimson Hymn* !!!
-(X) Cursed Crown !!!
-(#3, ^2) Emergency Bee Canister !!!
 (^) Fiberglass Dagger*
 (#2, ^2) Mana Drive*
 (^) Refactoring Pieces*
 (#, ^2) Soul Scythe* !!!
-(X) Strange Tooth !!!
-(X) Terrarian Voodoo Doll
 (X) Void Arcanum
 
 (%3, X) Armored Core
-(X, ^2) Blizzardwalker's Jacket !!!
-(#, ^2) Emergency Bee Canister !!!
+(X, ^2) Blizzardwalker's Jacket* !!!
+(X) Cursed Crown* !!!
+(#2, ^2) Emergency Bee Canister* !!!
 (^) Entangled Energy*
 (#, ^2) Forbidden Voice* !!!
 (^) Lazy Cloak*
@@ -407,8 +403,8 @@ ACCESSORIES:
 (#, ^2) Scrap Compactor*
 (^) Scribe of the Meat God*
 (^) Stack of Shraps*
-(#, ^2) Strange Tooth !!!
-(X) Terrarian Voodoo Doll
+(#, ^2) Strange Tooth* !!!
+(X) Terrarian Voodoo Doll* !!!
 (^) Third Eye*
 (^) Weakpoint Analyzer*
 
@@ -530,7 +526,7 @@ MELEE WEAPONS:
 (^) Riverang
 (^) Snapthrow
 (^) Spiker Sword
-(#, ^2) Switchblade !!!
+(#, ^2) Switchblade* !!!
 (^) Triple Threat
 (^) Tyrfing
 (^) Vorpal Sword
@@ -568,7 +564,7 @@ RANGED WEAPONS:
 (^) Fiberglass Bow 
 (^) Fiberglass Pistol
 (^) Fiberglass Shard*
-(#, ^2) Gelled Knife !!!
+(#, ^2) Gelled Knife* !!!
 (^) Harpoon Gun*
 (^) Longbone
 (^) Magma Grappler*
@@ -815,23 +811,23 @@ TILES:
 (@5, ^3) Twilith*
 (^) White Ice Block*
 
-(☻) Batholith Wall
-(☻) Brittle Quartz Wall !!!
+(^) Batholith Wall
+(^) Brittle Quartz Wall
 (#, ^2) Chambersite Gemspark Wall
 (^) Chambersite Gemstone Wall
 (^) Chambersite Gemstone Wall (Corruption)
 (^) Chambersite Gemstone Wall (Crimson)
 (^) Chambersite Gemstone Wall (Defiled)
 (^) Chambersite Gemstone Wall (Riven)
-(#, ^2) Defiled Grass Wall !!!
+(#2, ^2) Defiled Grass Wall !!!
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (^) Eden Wood Wall
 (#, ^2) Fiberglass Wall
 (^) Harmony Brick Wall
 (X) Nova Brick Wall
-(☻) Quartz Wall !!!
-(☻) Riven Grass Wall !!!
+(^) Quartz Wall
+(#3, ^2) Riven Grass Wall !!!
 (^) Spug Flesh Wall
 (^) Sulphur Stone Wall
 

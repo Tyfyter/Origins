@@ -3508,10 +3508,10 @@ Shield_of_Retribution: {
 	DisplayName: Shield of Retribution
 	Tooltip:
 		'''
-			Grants immunity to knockback
-			Grants immunity to fire blocks
-			67% of damage received is redirected to 3 enemies
-			Enemies are less likely to target you
+		Grants immunity to knockback
+		Grants immunity to fire blocks
+		67% of damage received is redirected to 3 enemies
+		Enemies are less likely to target you
 		'''
 }
 
@@ -3553,7 +3553,7 @@ Quartz_Wall_Item: {
 
 Shaped_Glass: {
 	DisplayName: Shaped Glass
-	Tooltip: ""
+	Tooltip: Summons the Fiberglass Weaver
 }
 
 Batholith_Wall_Safe_Item: {
@@ -3577,6 +3577,11 @@ Riven_Grass_Wall_Placed_Unsafe_Item: {
 }
 
 Emergency_Bee_Canister: {
-	DisplayName: Emergency Bee Canister
-	Tooltip: ""
+	// DisplayName: Emergency Bee Canister
+	// Tooltip:
+		'''
+		All bees become friendly
+		All bees have a chance to be duplicated
+		The player can move freely through honey
+		'''
 }
