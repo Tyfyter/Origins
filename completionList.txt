@@ -277,7 +277,7 @@ ACCESSORIES:
 (^) Air Tank*
 (#2, ^2, ♠) ATACS*
 (#2, ^2) Automated Returns Handler*
-(☻) Binding Book* !!!
+(^) Binding Book*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
 (^) Bomb Handling Device*
@@ -384,11 +384,16 @@ ACCESSORIES:
 (^) Tripod Nip*
 
 (^) Amebic Vial*
+(X) Blizzardwalker's Jacket* !!!
 (#, ^2) Crimson Hymn* !!!
+(X) Cursed Crown !!!
+(#3, ^2) Emergency Bee Canister !!!
 (^) Fiberglass Dagger*
 (#2, ^2) Mana Drive*
 (^) Refactoring Pieces*
 (#, ^2) Soul Scythe* !!!
+(X) Strange Tooth !!!
+(X) Terrarian Voodoo Doll
 (X) Void Arcanum
 
 (%3, X) Armored Core
@@ -405,7 +410,7 @@ ACCESSORIES:
 (#, ^2) Strange Tooth !!!
 (X) Terrarian Voodoo Doll
 (^) Third Eye*
-(☻) Weakpoint Analyzer* !!!
+(^) Weakpoint Analyzer*
 
 (^) Agility Core
 (^) Combat Core

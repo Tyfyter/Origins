@@ -3524,10 +3524,10 @@ Binding_Book: {
 	DisplayName: Binding Book
 	Tooltip:
 		'''
-			Increases pickup range for mana stars
-			Increases maximum mana by 20
-			Increases mana shielding by 10%
-			Reduces damage taken by 5% if Lost Armor is not equipped
+		Increases pickup range for mana stars
+		Increases maximum mana by 20
+		Increases mana shielding by 10%
+		Reduces damage taken by 5% if Lost Armor is not equipped
 		'''
 }
 
@@ -3577,6 +3577,6 @@ Riven_Grass_Wall_Placed_Unsafe_Item: {
 }
 
 Emergency_Bee_Canister: {
-	DisplayName: Emergency_ Bee_ Canister
+	DisplayName: Emergency Bee Canister
 	Tooltip: ""
 }
