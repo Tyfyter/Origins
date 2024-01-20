@@ -21,8 +21,8 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText(),
-			});
+                this.GetBestiaryFlavorText("Bunnies are pure beings that cannot normally adapt to the Riven Hive's ecosystem, but will be easily capable of under the effects of a Blood Moon."),
+            });
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			//spawn gore if npc is dead after being hit

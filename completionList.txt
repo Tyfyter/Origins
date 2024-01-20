@@ -105,10 +105,10 @@ ENEMY NPCS:
 (^) Amebic Slime
 (^) Ancient Defiled Cyclops
 (^) Barnacleback
-(#2, ^2) Barnacle Bunny !!!
-(#, ^2) Bile Thrower !!!
+(#2, ^2) Barnacle Bunny* !!!
+(#, ^2) Bile Thrower* !!!
 (^) Buckethead Zombie
-(#, ^2) Cellarkeep !!!
+(#, ^2) Cellarkeep* !!!
 (^) Chunky Slime
 (^) Cleaver
 (^) Conehead Zombie
@@ -116,7 +116,7 @@ ENEMY NPCS:
 (^) Crimbrain
 (^) Defiled Cyclops
 (^) Defiled Digger
-(#2, ^2) Defiled Ekko !!!
+(#2, ^2) Defiled Ekko* !!!
 (^) Defiled Krusher
 (^) Defiled Mite
 (^) Defiled Phantom
@@ -127,7 +127,8 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Sword
 (^) Measly Moeba
 (^) Optiphage
-(#2, ^2) Riven Penguin !!!
+(X) Pustule Jellyfish* !!!
+(#2, ^2) Riven Penguin* !!!
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
@@ -201,7 +202,7 @@ STATUS EFFECTS:
 (^) Assimilation
 (X) Celestial Flames
 (^) Defiled Exhaustion
-(#3, ^2) Impeding Shrapnel !!!
+(#3, ^2) Impeding Shrapnel* !!!
 (X) Ionizing Radiation
 (^) Rasterized
 (^) Torn*
@@ -404,7 +405,7 @@ ACCESSORIES:
 (^) Scribe of the Meat God*
 (^) Stack of Shraps*
 (#, ^2) Strange Tooth* !!!
-(X) Terrarian Voodoo Doll* !!!
+(#, ^2) Terrarian Voodoo Doll* !!!
 (^) Third Eye*
 (^) Weakpoint Analyzer*
 
@@ -568,7 +569,7 @@ RANGED WEAPONS:
 (^) Harpoon Gun*
 (^) Longbone
 (^) Magma Grappler*
-(#3?, ^2) Neural Network !!!
+(#3, ^2) Neural Network* !!!
 (^) Riven Splitter*
 (^) Shardcannon
 (^) Sleetfire
@@ -618,7 +619,7 @@ RANGED WEAPONS:
 
 MAGIC WEAPONS:
 ---
-(#, ^2) Area Denial !!!
+(#, ^2) Area Denial* !!!
 (^) Beginner's Tome
 (^) Cryostike
 (^) Eternabrite
@@ -663,13 +664,14 @@ MAGIC WEAPONS:
 SUMMONER WEAPONS:
 ---
 (^) Amebolize Incantation
+(X) Bee Afraid Incantation* !!!
 (^) Bone Latcher
 (^) Brainy Staff*
 (#, ^2) Desert Crown* !!!
 (^) Eyeball Staff
 (^) Flagellash
 (#, ^2) Forest Staff* !!!
-(#, ^2) Joint Pop !!!
+(#, ^2) Joint Pop* !!!
 (^) Maelstrom Incantation
 (#, ^2) Ocean Amulet* !!!
 (^) Ocotoral Bud
@@ -696,6 +698,7 @@ SUMMONER WEAPONS:
 (X) Ribatar
 (X) Seraphim Song
 (@2, #2) SMART Wrench
+(X) Solstice Incantation
 (X) Technomancer 4000
 
 NO POST ML SUMMONER CONTENT YET.
@@ -704,15 +707,15 @@ NO POST ML SUMMONER CONTENT YET.
 
 EXPLOSIVE WEAPONS:
 ---
-(#2, ^2) Abrasion Blaster !!!
-(#2, ^2) Ace Shrapnel !!!
+(#2, ^2) Abrasion Blaster* !!!
+(#2, ^2) Ace Shrapnel* !!!
 (^) Ameballoon*
 (^) Bang Snap*
 (^) Bloombomb*
 (^) Bombardment
 (^) Bomb Launcher (needs to be balanced)
 (^) Brainade*
-(#3, ^2) Eruption !!!
+(#3, ^2) Eruption* !!!
 (^) Felnum Shock Grenade*
 (^) Flashbang*
 (^) Floaty Bomb*
@@ -722,9 +725,9 @@ EXPLOSIVE WEAPONS:
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*
-(#, ^2) Internal Combustion !!!
+(#, ^2) Internal Combustion* !!!
 (#, ^2) Link Grenade* !!!
-(#, ^2) Matrix !!!
+(#, ^2) Matrix* !!!
 (#2, ^2) Outbreak Bomb* !!!
 (^) Peatball*
 (#3, ^2) Potato Mine* !!!
@@ -764,7 +767,10 @@ EXPLOSIVE WEAPONS:
 
 CLASSLESS WEAPONS:
 ---
-(#2, ^2) Potato Launcher !!!
+(#2, ^2) Potato Launcher* !!!
+
+(X) Pressurized Supersoaker
+(X) Tesla Net Gun
 ---
 
 
