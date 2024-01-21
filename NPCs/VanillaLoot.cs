@@ -1,4 +1,5 @@
-﻿using Origins.Items.Accessories;
+﻿using Origins.Buffs;
+using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
@@ -206,6 +207,10 @@ namespace Origins.NPCs {
 				break;
 				default:
 				break;
+			}
+			int shrapnelIndex = npc.FindBuffIndex(Impeding_Shrapnel_Debuff.ID);
+			if (shrapnelIndex > -1) {
+				Impeding_Shrapnel_Debuff.SpawnShrapnel(npc, npc.buffTime[shrapnelIndex]);
 			}
 		}
 		public override void ModifyGlobalLoot(GlobalLoot globalLoot) {

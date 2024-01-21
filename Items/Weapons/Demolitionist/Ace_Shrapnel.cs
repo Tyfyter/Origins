@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
+using Origins.NPCs;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -113,9 +114,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.immune[Projectile.owner] /= 2;
-			if (target.life <= 0 && Projectile.ai[1] < 5) {
+			OriginGlobalNPC.InflictImpedingShrapnel(target, 600);
+			/*if (target.life <= 0 && Projectile.ai[1] < 5) {
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Ace_Shrapnel_P>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 8 - Projectile.ai[1], Projectile.ai[1]);
-			}
+			}*/
 		}
 	}
 	public class Shrapnel_Dust : ModDust {

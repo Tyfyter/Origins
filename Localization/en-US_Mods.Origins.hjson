@@ -745,6 +745,11 @@ Buffs: {
 		DisplayName: Priority_ Mail_ Buff
 		Description: Mods.Origins.Buffs.Priority_Mail_Buff.Description
 	}
+
+	Impeding_Shrapnel_Debuff: {
+		DisplayName: Impeding_ Shrapnel_ Debuff
+		Description: Mods.Origins.Buffs.Impeding_Shrapnel_Debuff.Description
+	}
 }
 
 DamageClassName: {
@@ -1003,6 +1008,7 @@ Projectiles: {
 	Eruption_P.DisplayName: Eruption
 	Gray_Solution_P.DisplayName: Gray Solution
 	Metal_Slug_P.DisplayName: Metal Slug
+	Impeding_Shrapnel_Shard.DisplayName: Impeding_ Shrapnel_ Shard
 }
 
 Prefixes: {

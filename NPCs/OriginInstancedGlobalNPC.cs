@@ -14,8 +14,6 @@ namespace Origins.NPCs {
     public partial class OriginGlobalNPC : GlobalNPC {
 		protected override bool CloneNewInstances => true;
 		public override bool InstancePerEntity => true;
-		internal int shrapnelCount = 0;
-		internal int shrapnelTime = 0;
 		internal int shockTime = 0;
 		internal int rasterizedTime = 0;
 		internal int toxicShockTime = 0;
@@ -80,11 +78,6 @@ namespace Origins.NPCs {
 			}
 		}
 		public override void AI(NPC npc) {
-			if (shrapnelTime > 0) {
-				if (--shrapnelTime < 1) {
-					shrapnelCount = 0;
-				}
-			}
 			if (Main.rand.NextBool(10) && npc.HasBuff(BuffID.Bleeding)) {
 				Dust dust10 = Dust.NewDustDirect(npc.position, npc.width, npc.height, DustID.Blood);
 				dust10.velocity.Y += 0.5f;
@@ -211,6 +204,13 @@ namespace Origins.NPCs {
 				globalNPC.tornTargetTime = targetTime;
 				globalNPC.tornTarget = Math.Max(targetSeverity, float.Epsilon);
 			}*/
+		}
+		public static void InflictImpedingShrapnel(NPC npc, int duration) {
+			if (npc.life > 0) {
+				npc.AddBuff(Impeding_Shrapnel_Debuff.ID, duration);
+			} else if (!npc.HasBuff(Impeding_Shrapnel_Debuff.ID)) {
+				Impeding_Shrapnel_Debuff.SpawnShrapnel(npc, duration);
+			}
 		}
 	}
 }

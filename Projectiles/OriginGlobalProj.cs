@@ -78,7 +78,7 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
-			string[] contextArgs = source.Context?.Split(';') ?? Array.Empty<string>();
+			string[] contextArgs = source?.Context?.Split(';') ?? Array.Empty<string>();
 			if (projectile.aiStyle is ProjAIStyleID.Explosive or ProjAIStyleID.Bobber or ProjAIStyleID.GolfBall && projectile.originalDamage < projectile.damage)
 				projectile.originalDamage = projectile.damage;
 			if (contextArgs.Contains(nameof(OriginPlayer.weakpointAnalyzer))) {
