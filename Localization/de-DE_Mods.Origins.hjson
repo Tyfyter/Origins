@@ -156,6 +156,7 @@ Dialogue: {
 
 	PotatOS: {
 		// Pickup: Oh. Hi.
+		// PotatoLauncher: You aren't planning on putting me in that thing are you?
 		// Death_0: "[clap clap clap]"
 		// Death_1: "[clap clap]"
 		// Death_2: Uh oh.
@@ -171,6 +172,7 @@ Dialogue: {
 
 	ProtOS: {
 		// Pickup: Hi. Again...
+		// PotatoLauncher: It was a nice try, but no, never again.
 		// Craft: Oh... It's you.
 		// Death_0: "[clap clap clap]"
 		// Death_1: "[clap clap]"
@@ -223,6 +225,28 @@ Dialogue: {
 		// BoundNPCAppearedThrice: I'm starting to think you don't want to rescue that person.
 		// The_Part_Where_He_Kills_You_0: Well. This is the part where he kills us.
 		// The_Part_Where_He_Kills_You_1: Oh no...
+	}
+
+	Chee_Toy: {
+		// Summoned_0: What.
+		// Summoned_1: Where in galyet is Oyir?
+		// Summoned_2: Who are you? Where am I? What EVEN AM I?!
+		// Idle_0: This is nothing like Oin.
+		// Idle_1: "'Terrarian', that's what they call you? 'Venisoul', that's what I am."
+		// Idle_2: Yes. I am a Caliph of the Venisoulian Caliphate, why dare question?
+		// Idle_3: WHO TURNED ME INTO A MARKETABLE PLUSHIE?
+		// Dog_0: Please no.
+		// Dog_1: Get me away. Please, put me back into the Void RIGHT NOW!
+		// Dog_2: Good doggie...
+		// Werewolfified_0: Oh hell no.
+		// Werewolfified_1: NO YOU TOO!
+		// Death_0: AHHHHHH!
+		// Death_1: HAHAHAAA!
+		// Combat_0: Primitive technology? I thought you guys were humans.
+		// Combat_1: My royal guards would make easy work of them.
+		// Combat_2: To the left! Wait, everything is flat.
+		// NearCubekonGirl: My god. Her technology surpasses the entire Venisoulian Galactic Fleet! I need to take notes.
+		// The_Part_Where_He_Kills_You_0: Wait, what's going on? Is that some kind of god?
 	}
 
 	Strange_Computer: {

@@ -998,11 +998,11 @@ MATERIALS:
 
 CRITTERS AND FISH:
 ---
-(#3, ^2) Amoeba Buggy !!!
+(#3, ^2) Amoeba Buggy* !!!
 (#3, ^2) Bug
 (X) Chambersite Bunny
 (X) Chambersite Squirrel
-(#3, ^2) Cicada 3301 !!!
+(#3, ^2) Cicada 3301* !!!
 
 (^) Bilemouth
 (^) Bonehead Jellyfish
@@ -1068,7 +1068,7 @@ CONSUMABLES:
 (X) Twilight Crate*
 
 (^) Gooey Water*
-(@2, #3) Holiday Hair Dye !!!
+(@2, #3) Holiday Hair Dye* !!!
 (^) Lottery Ticket*
 (^) Magic Brine Dropper*
 (#2, ^2) Void Lock*
@@ -1089,18 +1089,18 @@ CONSUMABLES:
 
 MOUNTS & PETS:
 ---
-(#, ^2) Blockus Tube (Juvenile Amalgamation) !!!
-(X) Fleshy Globe (Self-Contained Universe) !!!
+(#, ^2) Blockus Tube (Juvenile Amalgamation)* !!!
+(X) Fleshy Globe (Self-Contained Universe)* !!!
 (^) Strange Power-Up (Platformer Mech)
 (^) Chromatic Scale (Rainbow Pangolin)
 
 (^) Amoeba Toy (Meberoid)
 (#2, ^2) Salty Seed (Eutrophic Cell)
 (X) Rusty Cross Necklace (Guardian Angel)
-(X) Smith's Hammer (Walking Furnace) !!!
+(X) Smith's Hammer (Walking Furnace)* !!!
 (^) Suspicious Looking Pebble (Defiled Blight)
 
-(#, ^2) Chew Toy (Chee Toy) !!!
+(#, ^2) Chew Toy (Chee Toy)* !!!
 ---
 
 
