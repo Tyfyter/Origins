@@ -127,7 +127,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Sword
 (^) Measly Moeba
 (^) Optiphage
-(X) Pustule Jellyfish* !!!
+(#, ^2) Pustule Jellyfish* !!!
 (#2, ^2) Riven Penguin* !!!
 (^) Riven Protoform
 (#, ^2) Scanner Scout
@@ -393,8 +393,8 @@ ACCESSORIES:
 (X) Void Arcanum
 
 (%3, X) Armored Core
-(X, ^2) Blizzardwalker's Jacket* !!!
-(X) Cursed Crown* !!!
+(#, ^2) Blizzardwalker's Jacket* !!!
+(#, ^2) Cursed Crown* !!!
 (#2, ^2) Emergency Bee Canister* !!!
 (^) Entangled Energy*
 (#, ^2) Forbidden Voice* !!!
@@ -664,7 +664,7 @@ MAGIC WEAPONS:
 SUMMONER WEAPONS:
 ---
 (^) Amebolize Incantation
-(X) Bee Afraid Incantation* !!!
+(#, ^2) Bee Afraid Incantation* !!!
 (^) Bone Latcher
 (^) Brainy Staff*
 (#, ^2) Desert Crown* !!!
@@ -796,7 +796,7 @@ TILES:
 (^) Eitrite Ore*
 (^) Encrusted Ore*
 (^) Felnum Ore*
-(@5?, ^3) Fiberglass Block* !!!
+(^) Fiberglass Block*
 (#, ^2) Geyser Core Block*
 (^) Hardened Defiled Sand*
 (X) Harmony Brick*
@@ -861,14 +861,14 @@ TILES:
 (^) Defiled Dungeon Chest
 (X) Defiled Pylon*
 (^) Defiled Torch
-(#?, ^2) Defiled Water Fountain !!!
+(^) Defiled Water Fountain
 (X) Dusk Dungeon Chest
 (X) Edenwood Furniture*
-(X) Encrusted Brick !!!
+(#, ^2) Encrusted Brick !!!
 (#2, ^2) Laser Tag Console*
 (#, ^2) Living Alkahest Block*
 (#, ^2) Living Bile Block*
-(X) Lost Brick !!!
+(#, ^2) Lost Brick !!!
 (X) Mushroom Dungeon Chest
 (X) Nova Brick*
 (X) Nova Fragment Block*
@@ -1090,7 +1090,7 @@ CONSUMABLES:
 MOUNTS & PETS:
 ---
 (#, ^2) Blockus Tube (Juvenile Amalgamation)* !!!
-(X) Fleshy Globe (Self-Contained Universe)* !!!
+(#, ^2) Fleshy Globe (Self-Contained Universe)* !!!
 (^) Strange Power-Up (Platformer Mech)
 (^) Chromatic Scale (Rainbow Pangolin)
 
