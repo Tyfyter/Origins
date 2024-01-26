@@ -1,5 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Accessories;
+using Origins.Items.Armor.Riven;
+using Origins.Items.Materials;
+using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
@@ -11,7 +15,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Barnacle_Mound : ModNPC, IRivenEnemy {
+    public class Barnacle_Mound : ModNPC, IRivenEnemy {
 		public virtual string GlowTexturePath => Texture + "_Glow";
 		private Asset<Texture2D> _glowTexture;
 		public Texture2D GlowTexture => (_glowTexture ??= (ModContent.RequestIfExists<Texture2D>(GlowTexturePath, out var asset) ? asset : null))?.Value;
@@ -27,7 +31,10 @@ namespace Origins.NPCs.Riven {
 			NPC.knockBackResist = 0;
 			NPC.value = 100;
 		}
-		public override void AI() {
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 3, 8));
+        }
+        public override void AI() {
 			NPC.TargetClosest(faceTarget: false);
 			if (NPC.HasValidTarget && ++NPC.ai[0] > (Main.masterMode ? 420 : (Main.expertMode ? 540 : 600))) {
 				int type = ModContent.NPCType<Amoeba_Bugger>();

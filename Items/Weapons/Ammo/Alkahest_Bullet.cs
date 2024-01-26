@@ -27,8 +27,8 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 50);
-			recipe.AddIngredient(ItemID.EmptyBullet, 50);
+			Recipe recipe = Recipe.Create(Type, 150);
+			recipe.AddIngredient(ItemID.EmptyBullet, 150);
 			recipe.AddIngredient(ModContent.ItemType<Alkahest>());
 			recipe.Register();
 		}

@@ -685,6 +685,7 @@ SUMMONER WEAPONS:
 (#, ^2) Forsaken Desire
 (X) Mildew Incantation
 (X) Mildew Whip
+(X) Obsidian Bone
 (X) Ziptie
 
 (X) Candlelight
@@ -694,7 +695,6 @@ SUMMONER WEAPONS:
 (X) Doom Incantation
 (X) Ego
 (@2/3, #2) Fiber Optic Whip
-(X) Obsidian Bone
 (X) Ribatar
 (X) Seraphim Song
 (@2, #2) SMART Wrench
@@ -966,8 +966,8 @@ MATERIALS:
 (^) Undead Chunk*
 (^) Urn of Ashes*
 
-(^) Alkahest
-(^) Black Bile
+(^) Alkahest*
+(^) Black Bile*
 (^) Bleeding Obsidian Shard
 (^) Bottled Brine*
 (^) Brineglow*

@@ -3577,8 +3577,8 @@ Riven_Grass_Wall_Placed_Unsafe_Item: {
 }
 
 Emergency_Bee_Canister: {
-	// DisplayName: Emergency Bee Canister
-	// Tooltip:
+	DisplayName: Emergency Bee Canister
+	Tooltip:
 		'''
 		All bees become friendly
 		All bees have a chance to be duplicated
