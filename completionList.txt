@@ -828,7 +828,7 @@ TILES:
 (#2, ^2) Defiled Grass Wall !!!
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
-(^) Eden Wood Wall
+(^) Edenwood Wall
 (#, ^2) Fiberglass Wall
 (^) Harmony Brick Wall
 (X) Nova Brick Wall
@@ -837,9 +837,9 @@ TILES:
 (^) Spug Flesh Wall
 (^) Sulphur Stone Wall
 
-(^) Alkahest Torch
+(^) Alkahest Torch*
 (X) Amoeba Buggy Cage*
-(^) Bile Torch
+(^) Bile Torch*
 (X) Brine Water Fountain
 (X) Bug Cage*
 (X) Cancer Block*
@@ -854,33 +854,34 @@ TILES:
 (X) Chambersite Gemstone* (Riven)
 (X) Chambersite Squirrel Cage*
 (X) Cicada 3301 Cage*
-(X) Cubekon Chest
 (X) Cubekon Node
-(X) Dawn Dungeon Chest
+(X) Dawn Dungeon Chest*
 (^) Defiled Campfire*
-(^) Defiled Dungeon Chest
+(^) Defiled Dungeon Chest*
 (X) Defiled Pylon*
-(^) Defiled Torch
+(^) Defiled Torch*
 (^) Defiled Water Fountain
-(X) Dusk Dungeon Chest
+(X) Dusk Dungeon Chest*
 (X) Edenwood Furniture*
 (#, ^2) Encrusted Brick !!!
 (#2, ^2) Laser Tag Console*
 (#, ^2) Living Alkahest Block*
 (#, ^2) Living Bile Block*
 (#, ^2) Lost Brick !!!
-(X) Mushroom Dungeon Chest
+(X) Mushroom Dungeon Chest*
 (X) Nova Brick*
 (X) Nova Fragment Block*
+(X) Nova Furniture*
 (X) Nova Monolith*
-(X) Ocean Dungeon Chest
+(X) Ocean Dungeon Chest*
 (X) Residue Block*
 (X) Residue Furniture*
 (^) Riven Campfire*
-(^) Riven Dungeon Chest
-(^) Riven Torch
+(^) Riven Dungeon Chest*
+(^) Riven Torch*
 (^) Riven Water Fountain
 (X) Sanguinite Brick
+(X) Shadow Torch*
 (#3, ^2) Traffic Cone* !!!
 
 (X) Batholith Grindstone*
@@ -929,21 +930,21 @@ TILES:
 (^) Music Box (Riven Hive)
 (@, #, $3) Otherworldly Music Box (Defiled Wastelands)
 
-(^) Defiled Amalgamation Trophy
-(^) Defiled Amalgamation Relic
-(@, #3) Miscreant Trophy
-(@, #3) Miscreant Relic
-(@, #3) Quantux Trophy
-(@, #3) Quantux Relic
-(^) World Cracker Trophy
-(^) World Cracker Relic
+(^) Defiled Amalgamation Trophy*
+(^) Defiled Amalgamation Relic*
+(@, #3) Miscreant Trophy*
+(@, #3) Miscreant Relic*
+(@, #3) Quantux Trophy*
+(@, #3) Quantux Relic*
+(^) World Cracker Trophy*
+(^) World Cracker Relic*
 ---
 
 
 MATERIALS:
 ---
 (^) Acetabularia*
-(^) Adhesive Wrap
+(^) Adhesive Wrap*
 (^) Bark
 (^) Bat Hide
 (^) Biocomponent 10
@@ -1097,7 +1098,7 @@ MOUNTS & PETS:
 (^) Amoeba Toy (Meberoid)
 (#2, ^2) Salty Seed (Eutrophic Cell)
 (X) Rusty Cross Necklace (Guardian Angel)
-(X) Smith's Hammer (Walking Furnace)* !!!
+(#, ^2) Smith's Hammer (Walking Furnace)* !!!
 (^) Suspicious Looking Pebble (Defiled Blight)
 
 (#, ^2) Chew Toy (Chee Toy)* !!!
