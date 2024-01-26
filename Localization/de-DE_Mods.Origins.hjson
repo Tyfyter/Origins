@@ -472,7 +472,7 @@ Buffs: {
 
 	Chromatic_Pangolin_Buff: {
 		// DisplayName: Chromatic Pangolin
-		// Description: It rainbow, tooltip coming soon.
+		// Description: It rainbow
 	}
 
 	Corrupt_Assimilation_Debuff: {
@@ -502,7 +502,7 @@ Buffs: {
 
 	Defiled_Exhaustion_Debuff: {
 		// DisplayName: "{§Defiled} Exhaustion"
-		// Description: Mods.Origins.BuffDescription.Defiled_Exhaustion_Debuff
+		// Description: You cannot regenerate mana!
 	}
 
 	Fervor_Buff: {
@@ -541,8 +541,8 @@ Buffs: {
 	}
 
 	Headphones_Buff: {
-		// DisplayName: Mods.Origins.BuffName.Headphones_Buff
-		// Description: Mods.Origins.BuffDescription.Headphones_Buff
+		// DisplayName: Screaming Teammate
+		// Description: You got your target
 	}
 
 	Lazy_Cloak_Buff: {
@@ -577,7 +577,7 @@ Buffs: {
 
 	Optiphage_Debuff: {
 		// DisplayName: Optiphage
-		// Description: It's on your eyeballs!
+		// Description: It's on your eyeball!
 	}
 
 	Platformer_Mech_Buff: {
@@ -727,7 +727,7 @@ Buffs: {
 
 	Stunned_Debuff: {
 		// DisplayName: Stunned
-		// Description: Mods.Origins.BuffDescription.Stunned_Debuff
+		// Description: You cannot move
 	}
 
 	Barnacled_Buff: {
@@ -756,23 +756,23 @@ Buffs: {
 	}
 
 	Neural_Network_Buff: {
-		// DisplayName: Neural Network
-		// Description: Mods.Origins.Buffs.Neural_Network_Buff.Description
+		// DisplayName: Neural Pathing
+		// Description: Don't miss.
 	}
 
 	Toxic_Shock_Strengthen_Debuff: {
-		// DisplayName: Toxic_ Shock_ Strengthen_ Debuff
-		// Description: Mods.Origins.Buffs.Toxic_Shock_Strengthen_Debuff.Description
+		// DisplayName: Toxic Shocker
+		// Description: How could it get worse?
 	}
 
 	Priority_Mail_Buff: {
-		// DisplayName: Priority_ Mail_ Buff
-		// Description: Mods.Origins.Buffs.Priority_Mail_Buff.Description
+		// DisplayName: Shipped
+		// Description: Deliver it to them
 	}
 
 	Impeding_Shrapnel_Debuff: {
-		// DisplayName: Impeding_ Shrapnel_ Debuff
-		// Description: Mods.Origins.Buffs.Impeding_Shrapnel_Debuff.Description
+		// DisplayName: Impeding Shrapnel
+		// Description: You're full of foreign metal.
 	}
 }
 

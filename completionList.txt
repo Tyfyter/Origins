@@ -261,7 +261,7 @@ ARMOR:
 (^) Chromtain Armor*
 (@5, #2) Eyndum Armor*
 (X) Locus Armor*
-(X) Nanite Armor*
+(X) Nano Armor*
 (^) Nova Armor*
 
 (^) Ancient Hallowed Visage*
@@ -946,18 +946,18 @@ MATERIALS:
 (^) Acetabularia*
 (^) Adhesive Wrap*
 (^) Bark
-(^) Bat Hide
-(^) Biocomponent 10
-(^) Bud Barnacle
+(^) Bat Hide*
+(^) Biocomponent 10*
+(^) Bud Barnacle*
 (^) Carburite*
 (^) Defiled Bar*
 (^) Dreadful Powder*
 (^) Encrusted Bar*
 (^) Felnum Bar*
-(^) Magic Hair Treatment Gel
-(^) NE-8
-(^) Riven Carapace
-(^) Rubber
+(^) Magic Hair Spray*
+(^) NE-8*
+(^) Riven Carapace*
+(^) Rubber*
 (^) Sanguinite Bar*
 (^) Sentient Powder*
 (^) Strange String*
@@ -969,8 +969,8 @@ MATERIALS:
 (^) Alkahest
 (^) Black Bile
 (^) Bleeding Obsidian Shard
-(^) Bottled Brine
-(^) Brineglow
+(^) Bottled Brine*
+(^) Brineglow*
 (^) Eitrite Bar*
 (^) Illegal Explosive Parts
 (^) Respyrite
@@ -989,7 +989,7 @@ MATERIALS:
 (^) Formium Bar*
 (^) Formium Scrap
 (^) Lunar Token
-(^) Material-36 Bundle
+(^) Material-36 Bundle*
 (#3, ^2) Nova Fragment
 (X) Weapon Blueprint
 

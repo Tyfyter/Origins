@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
-using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;

@@ -36,7 +36,6 @@ namespace Origins.Items.Weapons.Melee {
 		public override string Texture => "Origins/Items/Weapons/Melee/Crystal_Cutters_P";
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Crystal Ball");
 			ID = Type;
 		}
 		public override void SetDefaults() {

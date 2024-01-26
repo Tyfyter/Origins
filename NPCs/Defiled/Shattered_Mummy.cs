@@ -50,7 +50,6 @@ namespace Origins.NPCs.Defiled
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 10));
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Megaphone, 100));
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Blindfold, 100));

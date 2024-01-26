@@ -1,4 +1,5 @@
-﻿using Origins.Journal;
+﻿using Origins.Items.Other.Consumables;
+using Origins.Journal;
 using Origins.Tiles.Ashen;
 using Origins.Tiles.Brine;
 using Origins.Tiles.Defiled;
@@ -81,7 +82,7 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.Leather);
 			recipe.AddIngredient(this, 4);
-			recipe.AddTile(TileID.HeavyWorkBench);
+			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
 		}
 	}
@@ -95,20 +96,6 @@ namespace Origins.Items.Materials {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Strange_String>()] = ModContent.ItemType<Bud_Barnacle>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bud_Barnacle>()] = ModContent.ItemType<Biocomponent10>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Biocomponent10>()] = ItemID.RottenChunk;
-		}
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.BattlePotion);
-			recipe.AddIngredient(ItemID.BottledWater);
-			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Surveysprout_Item>());
-			recipe.AddIngredient(Type);
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.UnholyArrow, 5);
-			recipe.AddIngredient(ItemID.WoodenArrow, 5);
-			recipe.AddIngredient(Type);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
 		}
 	}
 	public class Black_Bile : MaterialItem, IJournalEntryItem {
@@ -138,29 +125,18 @@ namespace Origins.Items.Materials {
 	public class Bottled_Brine : MaterialItem {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 40);
-	}
+        public override void AddRecipes() {
+			Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ItemID.Bottle);
+            recipe.AddIngredient(ItemID.Stinger, 2);
+            recipe.AddIngredient(ModContent.ItemType<Magic_Brine_Dropper>());
+            recipe.AddTile(TileID.Bottles);
+            recipe.Register();
+        }
+    }
 	public class Bud_Barnacle : MaterialItem {
 		public override int ResearchUnlockCount => 30;
 		public override int Value => Item.sellPrice(copper: 2);
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ItemID.BattlePotion);
-			recipe.AddIngredient(ItemID.BottledWater);
-			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wrycoral_Item>());
-			recipe.AddIngredient(Type);
-			recipe.AddTile(TileID.Bottles);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.MonsterLasagna);
-			recipe.AddIngredient(Type, 8);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.UnholyArrow, 5);
-			recipe.AddIngredient(ItemID.WoodenArrow, 5);
-			recipe.AddIngredient(Type);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-		}
 	}
 	public class Busted_Servo : MaterialItem {
 		public override int ResearchUnlockCount => 99;
@@ -412,14 +388,19 @@ namespace Origins.Items.Materials {
 			Recipe recipe = Recipe.Create(ItemID.BattlePotion);
 			recipe.AddIngredient(ItemID.BottledWater);
 			recipe.AddRecipeGroupWithItem(OriginSystem.DeathweedRecipeGroupID, showItem: ModContent.ItemType<Wilting_Rose_Item>());
-            recipe.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ModContent.ItemType<Strange_String>());
+            recipe.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, ItemID.RottenChunk);
             recipe.AddTile(TileID.Bottles);
 			recipe.Register();
 
-			recipe = Recipe.Create(ItemID.UnholyArrow, 5);
+            recipe = Recipe.Create(ItemID.MonsterLasagna);
+            recipe.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.RottenChunk, 8);
+            recipe.AddTile(TileID.CookingPots);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.UnholyArrow, 5);
 			recipe.AddIngredient(ItemID.WoodenArrow, 5);
-			recipe.AddIngredient(Type);
-			recipe.AddTile(TileID.Anvils);
+            recipe.AddRecipeGroupWithItem(OriginSystem.RottenChunkRecipeGroupID, showItem: ItemID.RottenChunk);
+            recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
 	}
