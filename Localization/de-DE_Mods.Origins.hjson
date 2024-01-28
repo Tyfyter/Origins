@@ -327,7 +327,7 @@ TownNPCMood: {
 		// DislikeBiome_Crimson: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
 		// DislikeBiome_Defiled_Wastelands: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
 		// DislikeBiome_Riven_Hive: "{$Mods.Origins.TownNPCMood.Cubekon_Tinkerer.DislikeBiome_Evil}"
-		# LoveBiome_Temple: I love the Underground, closer to the Cubekons.
+		# LoveBiome_Underground: I love the Underground, closer to the Cubekons.
 		
 		// LoveNPC: There's only one name on my mind right now, Terrarian. Could yah guess?
 		# LoveNPC_Cyborg: "{NPCName} is quite the work of art. I see something beyond all that circuitry."
