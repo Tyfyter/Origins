@@ -13,7 +13,7 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(20, 28);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Green;
-			Item.expert = true;
+			Item.master = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

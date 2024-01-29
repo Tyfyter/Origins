@@ -279,6 +279,9 @@ namespace Origins {
 			if (plasmaPhial && Player.bleed) {
 				Player.lifeRegen -= 12;
 			}
+			if (cursedCrown && Player.onFire) {
+				Player.lifeRegen -= 8;
+			}
 		}
 		public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers) {
 			if (trapCharm && proj.trap) {

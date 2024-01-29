@@ -394,7 +394,7 @@ ACCESSORIES:
 
 (%3, X) Armored Core
 (☻) Blizzardwalker's Jacket* !!!
-(#, ^2) Cursed Crown* !!!
+(☻) Cursed Crown* !!!
 (☻) Emergency Bee Canister* !!!
 (^) Entangled Energy*
 (#, ^2) Forbidden Voice* !!!

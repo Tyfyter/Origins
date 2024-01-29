@@ -40,7 +40,13 @@ namespace Origins {
 			}
 		}
 		public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
-
+			if (cursedCrownVisual) {
+				drawInfo.skinDyePacked = GameShaders.Armor.GetShaderIdFromItemId(ItemID.BlueAcidDye);
+				const float alphaMult = 0.9f;
+				drawInfo.colorHead *= alphaMult;
+				drawInfo.colorBodySkin *= alphaMult;
+				drawInfo.colorLegs *= alphaMult;
+			}
 			if (plagueSight) drawInfo.colorEyes = IsDevName(Player.name, 1) ? new Color(43, 185, 255) : Color.Gold;
 			if (mysteriousSprayMult != 1f) {
 				float lightSaturationMult = (float)Math.Pow(mysteriousSprayMult, 2f);

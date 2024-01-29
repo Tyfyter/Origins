@@ -202,6 +202,8 @@ namespace Origins {
 		public bool blizzardwalkerJacket = false;
 		public bool blizzardwalkerJacketVisual = false;
 		public int blizzardwalkerActiveTime = 0;
+		public bool cursedCrown = false;
+		public bool cursedCrownVisual = false;
 		#endregion
 
 		#region explosive stats
@@ -506,6 +508,8 @@ namespace Origins {
 			if (!blizzardwalkerJacket) blizzardwalkerActiveTime = 0;
 			blizzardwalkerJacket = false;
 			blizzardwalkerJacketVisual = false;
+			cursedCrown = false;
+			cursedCrownVisual = false;
 
 			flaskBile = false;
 			flaskSalt = false;
