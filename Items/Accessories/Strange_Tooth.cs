@@ -1,133 +1,70 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
-using Origins.Items.Weapons.Summoner;
+using Origins.Items.Materials;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginExtensions;
 
-namespace Origins.Items.Weapons.Summoner {
-	public class Eyeball_Staff : ModItem {
-		internal static int projectileID = 0;
-		internal static int buffID = 0;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Eyeball Staff");
-			// Tooltip.SetDefault("Summons a demon eye to fight for you");
-			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
-			Item.ResearchUnlockCount = 1;
-		}
+namespace Origins.Items.Accessories {
+	public class Strange_Tooth : ModItem {
 		public override void SetDefaults() {
-			Item.damage = 8;
+			Item.DefaultToAccessory(28, 20);
 			Item.DamageType = DamageClass.Summon;
-			Item.mana = 11;
-			Item.width = 32;
-			Item.height = 32;
-			Item.useTime = 36;
-			Item.useAnimation = 36;
-			Item.useStyle = ItemUseStyleID.Swing;
-			Item.value = Item.sellPrice(gold: 1);
-			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item44;
-			Item.buffType = buffID;
-			Item.shoot = projectileID;
-			Item.noMelee = true;
+			Item.damage = 13;
+			Item.knockBack = 2;
+			Item.useTime = Item.useAnimation = 45;
+			Item.value = Item.sellPrice(gold: 1, silver: 50);
+			Item.rare = ItemRarityID.Green;
+			Item.master = true;
 		}
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			if (buffID == 0) buffID = ModContent.BuffType<Mini_EOC_Buff>();
-			player.AddBuff(Item.buffType, 2);
-			position = Main.MouseWorld;
-		}
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			if (buffID == 0) buffID = ModContent.BuffType<Wormy_Buff>();
-			player.AddBuff(buffID, 2);
-			player.SpawnMinionOnCursor(source, player.whoAmI, type, Item.damage, knockback);
-			return false;
+		public override void UpdateEquip(Player player) {
+			player.GetModPlayer<OriginPlayer>().strangeToothItem = Item;
 		}
 	}
-}
-namespace Origins.Buffs {
-	public class Mini_EOC_Buff : ModBuff {
+	public class Strange_Tooth_Buff : ModBuff {
+		public static int ID { get; private set; }
+		public override string Texture => "Origins/Buffs/Mini_EOC_Buff";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Demon Eye");
-			// Description.SetDefault("The demon eye will fight for you");
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;
-			Eyeball_Staff.buffID = Type;
-		}
-
-		public override void Update(Player player, ref int buffIndex) {
-			if (player.ownedProjectileCounts[Eyeball_Staff.projectileID] > 0) {
-				player.buffTime[buffIndex] = 18000;
-			} else {
-				player.DelBuff(buffIndex);
-				buffIndex--;
-			}
+			ID = Type;
 		}
 	}
-}
-
-namespace Origins.Items.Weapons.Summoner.Minions {
-	public class Mini_EOC : ModProjectile {
-		public const int frameSpeed = 5;
+	public class Strange_Tooth_Minion : ModProjectile {
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			Eyeball_Staff.projectileID = Projectile.type;
-			// DisplayName.SetDefault("Gerald");
-			// Sets the amount of frames this minion has on its spritesheet
-			Main.projFrames[Projectile.type] = 4;
-			// This is necessary for right-click targeting
-			ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
-
-			// These below are needed for a minion
-			// Denotes that this projectile is a pet or minion
-			Main.projPet[Projectile.type] = true;
-			// This is needed so your minion can properly spawn when summoned and replaced when other minions are summoned
-			ProjectileID.Sets.MinionSacrificable[Projectile.type] = true;
-			ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = true;
+			ID = Type;
+			Main.projFrames[Type] = 4;
+			Main.projPet[Type] = true;
+			ProjectileID.Sets.CultistIsResistantTo[Type] = true;
 		}
-
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClass.Summon;
-			Projectile.width = 28;
-			Projectile.height = 28;
+			Projectile.width = 12;
+			Projectile.height = 12;
 			Projectile.tileCollide = true;
 			Projectile.friendly = true;
 			Projectile.minion = true;
 			Projectile.minionSlots = 0f;
-			Projectile.penetrate = -1;
-			Projectile.usesLocalNPCImmunity = true;
-			Projectile.localNPCHitCooldown = 12;
+			Projectile.penetrate = 1;
 		}
-
-		// Here you can decide if your minion breaks things like grass or pots
-		public override bool? CanCutTiles() {
-			return false;
-		}
-
-		// This is mandatory if your minion deals contact damage (further related stuff in AI() in the Movement region)
 		public override bool MinionContactDamage() {
 			return true;
 		}
-
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
-			if (player.dead || !player.active) {
-				player.ClearBuff(Eyeball_Staff.buffID);
-			}
-			if (player.HasBuff(Eyeball_Staff.buffID)) {
-				Projectile.timeLeft = 2;
-			}
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.minionSubSlots[0] += 0.5f;
-			int eyeCount = player.ownedProjectileCounts[Eyeball_Staff.projectileID] / 2;
-			if (originPlayer.minionSubSlots[0] <= eyeCount) {
-				Projectile.minionSlots = 0.5f;
-			} else {
-				Projectile.minionSlots = 0;
+			int buffIndex = player.FindBuffIndex(Strange_Tooth_Buff.ID);
+			if (buffIndex > -1) {
+				if (player.dead || !player.active || (originPlayer.strangeToothItem?.IsAir ?? true)) {
+					player.DelBuff(buffIndex);
+					return;
+				}
+				player.buffTime[buffIndex] = 2;
+				Projectile.timeLeft = 2;
 			}
 			#endregion
 
@@ -176,7 +113,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Vector2 diff = npc.Hitbox.ClosestPointInRect(Projectile.Center) - Projectile.Center;
 					float dist = diff.Length();
 					if (dist > targetDist) return;
-					float dot = NormDotWithPriorityMult(diff, Projectile.velocity, targetPriorityMultiplier);
+					float dot = OriginExtensions.NormDotWithPriorityMult(diff, Projectile.velocity, targetPriorityMultiplier);
 					bool inRange = dist <= targetDist;
 					bool lineOfSight = Collision.CanHitLine(Projectile.position, Projectile.width, Projectile.height, npc.position, npc.width, npc.height);
 					if (((dot >= targetAngle && inRange) || !foundTarget) && lineOfSight) {
@@ -188,17 +125,16 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					}
 				}
 			}
-			bool foundTarget = player.GetModPlayer<OriginPlayer>().GetMinionTarget(targetingAlgorithm);
+			bool foundTarget = originPlayer.GetMinionTarget(targetingAlgorithm);
 
 
 			Projectile.friendly = foundTarget;
 			#endregion
 
 			#region Movement
-			movement:
 			// Default movement parameters (here for attacking)
-			float speed = 6f + Projectile.localAI[0] / 15;
-			float turnSpeed = 1f + Math.Max((Projectile.localAI[0] - 15) / 30, 0);
+			float speed = 6f;
+			float turnSpeed = 1f;
 			float currentSpeed = Projectile.velocity.Length();
 			Projectile.tileCollide = true;
 			if (foundTarget) {
@@ -228,7 +164,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 					Projectile.tileCollide = false;
 				}
 			}
-			LinearSmoothing(ref currentSpeed, speed, currentSpeed < 1 ? 1 : 0.1f + Projectile.localAI[0] / 60f);
+			OriginExtensions.LinearSmoothing(ref currentSpeed, speed, currentSpeed < 1 ? 1 : 0.1f);
 			Vector2 direction = foundTarget ? targetCenter - Projectile.Center : vectorToIdlePosition;
 			direction.Normalize();
 			Projectile.velocity = Vector2.Normalize(Projectile.velocity + direction * turnSpeed) * currentSpeed;
@@ -241,7 +177,7 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 
 			// This is a simple "loop through all frames from top to bottom" animation
 			Projectile.frameCounter++;
-			if (Projectile.frameCounter >= frameSpeed) {
+			if (Projectile.frameCounter >= 5) {
 				Projectile.frameCounter = 0;
 				Projectile.frame++;
 				if (Projectile.frame >= Main.projFrames[Projectile.type]) {
@@ -249,21 +185,6 @@ namespace Origins.Items.Weapons.Summoner.Minions {
 				}
 			}
 			#endregion
-			if (Projectile.localAI[0] > 0) Projectile.localAI[0]--;
-		}
-		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			modifiers.SourceDamage.Base += (int)(Projectile.localAI[0] / 6);
-		}
-		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			Vector2 intersect = Rectangle.Intersect(Projectile.Hitbox, target.Hitbox).Center.ToVector2() - Projectile.Hitbox.Center.ToVector2();
-			if (intersect.X != 0 && (Math.Sign(intersect.X) == Math.Sign(Projectile.velocity.X))) {
-				Projectile.velocity.X = -Projectile.velocity.X;
-			}
-			if (intersect.Y != 0 && (Math.Sign(intersect.Y) == Math.Sign(Projectile.velocity.Y))) {
-				Projectile.velocity.Y = -Projectile.velocity.Y;
-			}
-			Projectile.localAI[0] += 20 - Projectile.localAI[0] / 6;
-			Projectile.ai[1] = 0;
 		}
 	}
 }

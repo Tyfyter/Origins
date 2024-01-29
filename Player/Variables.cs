@@ -204,6 +204,8 @@ namespace Origins {
 		public int blizzardwalkerActiveTime = 0;
 		public bool cursedCrown = false;
 		public bool cursedCrownVisual = false;
+		public Item strangeToothItem = null;
+		public int strangeToothCooldown = 0;
 		#endregion
 
 		#region explosive stats
@@ -510,6 +512,7 @@ namespace Origins {
 			blizzardwalkerJacketVisual = false;
 			cursedCrown = false;
 			cursedCrownVisual = false;
+			strangeToothItem = null;
 
 			flaskBile = false;
 			flaskSalt = false;
@@ -546,6 +549,8 @@ namespace Origins {
 				gunGloveCooldown--;
 			if (mitosisCooldown > 0)
 				mitosisCooldown--;
+			if (strangeToothCooldown > 0)
+				strangeToothCooldown--;
 
 			if (laserBladeCharge > 0 && !Player.ItemAnimationActive) laserBladeCharge--;
 

@@ -259,7 +259,7 @@ namespace Origins {
 				Player.jumpSpeedBoost += Math.Min(Player.statLife / 167, 5);
 				Player.runAcceleration *= Math.Min((Player.statLife / 167) + 1, 1.85f);
 			}
-			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions) {
+			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay:true)) {
 				Item item = protozoaFoodItem;
 				int damage = Player.GetWeaponDamage(item);
 				Projectile.NewProjectileDirect(
@@ -272,6 +272,20 @@ namespace Origins {
 					Player.whoAmI
 				).originalDamage = damage;
 				protozoaFoodCooldown = item.useTime;
+			}
+			if (Main.myPlayer == Player.whoAmI && (strangeToothItem?.IsAir == false) && strangeToothCooldown <= 0 && Player.ownedProjectileCounts[Strange_Tooth_Minion.ID] < Player.maxMinions) {
+				Item item = strangeToothItem;
+				int damage = Player.GetWeaponDamage(item);
+				Projectile.NewProjectileDirect(
+					Player.GetSource_Accessory(item),
+					Player.Center,
+					OriginExtensions.Vec2FromPolar(Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi), Main.rand.NextFloat(1, 8)),
+					Strange_Tooth_Minion.ID,
+					damage,
+					Player.GetWeaponKnockback(item),
+					Player.whoAmI
+				).originalDamage = damage;
+				strangeToothCooldown = item.useTime;
 			}
 			if (statSharePercent != 0f) {
 				foreach (DamageClass damageClass in DamageClasses.All) {

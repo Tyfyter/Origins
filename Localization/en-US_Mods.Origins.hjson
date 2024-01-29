@@ -774,6 +774,11 @@ Buffs: {
 		DisplayName: Impeding Shrapnel
 		Description: You're full of foreign metal.
 	}
+
+	Strange_Tooth_Buff: {
+		DisplayName: Strange_ Tooth_ Buff
+		Description: Mods.Origins.Buffs.Strange_Tooth_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1033,6 +1038,7 @@ Projectiles: {
 	Gray_Solution_P.DisplayName: Gray Solution
 	Metal_Slug_P.DisplayName: Metal Slug
 	Impeding_Shrapnel_Shard.DisplayName: Impeding_ Shrapnel_ Shard
+	Strange_Tooth_Minion.DisplayName: Strange_ Tooth_ Minion
 }
 
 Prefixes: {
