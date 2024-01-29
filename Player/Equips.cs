@@ -206,6 +206,30 @@ namespace Origins {
 
 				Player.manaRegenCount += (int)(sunFactor * 12);
 			}
+			if (blizzardwalkerJacket) {
+				if (blizzardwalkerActiveTime < Blizzardwalkers_Jacket.max_active_time) {
+					bool blizzardwalkerDanger = false;
+					if (Player.nearbyActiveNPCs > 0) {
+						const int range = 16 * 15;
+						const int rangeSQ = range * range;
+						const int bossRange = 16 * 45;
+						const int bossRangeSQ = bossRange * bossRange;
+						for (int i = 0; i < Main.maxNPCs; i++) {
+							NPC npc = Main.npc[i];
+							if (npc.active && npc.damage > 0 && npc.npcSlots > 0 && Player.DistanceSQ(npc.Center) > (npc.boss ? bossRangeSQ : rangeSQ)) {
+								blizzardwalkerDanger = true;
+							}
+						}
+					}
+					if (blizzardwalkerDanger) {
+						blizzardwalkerActiveTime = 0;
+					} else {
+						blizzardwalkerActiveTime++;
+					}
+				} else {
+					if ((int)Main.timeForVisualEffects % 5 == 0) Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Asphalt, 0f, -3f, 0, default, 1.4f).noGravity = true;
+				}
+			}
 		}
 		public override void PostUpdateMiscEffects() {
 			if (cryostenHelmet) {

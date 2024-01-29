@@ -73,10 +73,25 @@ namespace Origins {
 				Torn_Debuff.cachedTornPlayers.Add(Player);
 				Torn_Debuff.anyActiveTorn = true;
 			}
+			if (blizzardwalkerJacketVisual && blizzardwalkerActiveTime > 0) {
+				float progress = blizzardwalkerActiveTime / (float)Blizzardwalkers_Jacket.max_active_time;
+				drawInfo.colorEyes = Color.Lerp(drawInfo.colorEyes, Color.Red, progress * progress);
+			}
 		}
 		public override void FrameEffects() {
 			for (int i = 13; i < 18 + Player.extraAccessorySlots; i++) {
 				if (Player.armor[i].type == Plague_Texan_Sight.ID) Plague_Texan_Sight.ApplyVisuals(Player);
+			}
+		}
+		public override void DrawEffects(PlayerDrawSet drawInfo, ref float r, ref float g, ref float b, ref float a, ref bool fullBright) {
+			if (blizzardwalkerJacketVisual && blizzardwalkerActiveTime > 0) {
+				float progress = blizzardwalkerActiveTime / (float)Blizzardwalkers_Jacket.max_active_time;
+				progress *= progress;
+				float progressInvColor = 1 - (progress * 0.8f);
+				r = r * (1 - progress) * progressInvColor + (50 / 255f) * progress * 0.8f;
+				g = g * (1 - progress) * progressInvColor;
+				b = b * (1 - progress) * progressInvColor + (160 / 255f) * progress * 0.8f;
+				a = a * (1 - progress) * progressInvColor + progress * 0.9f;
 			}
 		}
 	}

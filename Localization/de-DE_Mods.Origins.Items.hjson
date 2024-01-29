@@ -3585,3 +3585,8 @@ Emergency_Bee_Canister: {
 		The player can move freely through honey
 		''' */
 }
+
+Blizzardwalkers_Jacket: {
+	// DisplayName: Blizzardwalkers_ Jacket
+	// Tooltip: ""
+}

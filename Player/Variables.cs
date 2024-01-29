@@ -199,6 +199,9 @@ namespace Origins {
 		public Physics.Chain[] bindingBookChains = new Physics.Chain[3];
 		public bool priorityMail = false;
 		public bool emergencyBeeCanister = false;
+		public bool blizzardwalkerJacket = false;
+		public bool blizzardwalkerJacketVisual = false;
+		public int blizzardwalkerActiveTime = 0;
 		#endregion
 
 		#region explosive stats
@@ -500,6 +503,9 @@ namespace Origins {
 			bindingBookVisual = false;
 			priorityMail = false;
 			emergencyBeeCanister = false;
+			if (!blizzardwalkerJacket) blizzardwalkerActiveTime = 0;
+			blizzardwalkerJacket = false;
+			blizzardwalkerJacketVisual = false;
 
 			flaskBile = false;
 			flaskSalt = false;

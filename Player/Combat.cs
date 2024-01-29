@@ -404,6 +404,13 @@ namespace Origins {
 					}
 				}
 			}
+			if (blizzardwalkerActiveTime >= Blizzardwalkers_Jacket.max_active_time) {
+				blizzardwalkerActiveTime = 0;
+				Player.SetImmuneTimeForAllTypes(60);
+				for (int i = 0; i < 30; i++) Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Asphalt, 0f, -3f, 0, default, 1.4f).noGravity = true;
+				SoundEngine.PlaySound(SoundID.DeerclopsRubbleAttack);
+				return true;
+			}
 			return false;
 		}
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */ {
