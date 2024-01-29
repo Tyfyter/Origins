@@ -37,6 +37,7 @@ using Terraria.Map;
 using static Terraria.ModLoader.PlayerDrawLayer;
 using Origins.Reflection;
 using Terraria.GameContent.Bestiary;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Origins {
 	#region classes
@@ -668,6 +669,43 @@ namespace Origins {
 			player.handoff = handOffSlot;
 			player.handon = handOnSlot;
 			player.balloon = balloonSlot;
+		}
+	}
+	public class GeneratorCache<TKey, TValue> : IReadOnlyDictionary<TKey, TValue> {
+		readonly Dictionary<TKey, TValue> cache;
+		readonly Func<TKey, TValue> generator;
+		public GeneratorCache(Func<TKey, TValue> generator) {
+			cache = new();
+			this.generator = generator;
+		}
+		public GeneratorCache(Func<TKey, TValue> generator, params TKey[] pregenerate) : this(generator) {
+			for (int i = 0; i < pregenerate.Length; i++) {
+				_ = this[pregenerate[i]];
+			}
+		}
+		public TValue this[TKey key] {
+			get {
+				if (!cache.TryGetValue(key, out TValue value)) {
+					value = generator(key);
+					cache.Add(key, value);
+				}
+				return value;
+			}
+		}
+		public IEnumerable<TKey> Keys => cache.Keys;
+		public IEnumerable<TValue> Values => cache.Values;
+		public int Count => cache.Count;
+		public bool ContainsKey(TKey key) {
+			return cache.ContainsKey(key);
+		}
+		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() {
+			return cache.GetEnumerator();
+		}
+		public bool TryGetValue(TKey key, [MaybeNullWhen(false)] out TValue value) {
+			return cache.TryGetValue(key, out value);
+		}
+		IEnumerator IEnumerable.GetEnumerator() {
+			return cache.GetEnumerator();
 		}
 	}
 	public record SpriteBatchState(SpriteSortMode sortMode = SpriteSortMode.Deferred, BlendState blendState = null, SamplerState samplerState = null, DepthStencilState depthStencilState = null, RasterizerState rasterizerState = null, Effect effect = null, Matrix transformMatrix = default);
@@ -2271,6 +2309,49 @@ namespace Origins {
 		}
 		public static string MakeContext(params string[] args) {
 			return new StringBuilder().AppendJoin(';', args.Where(a => !string.IsNullOrWhiteSpace(a))).ToString();
+		}
+		public static EntitySource_ItemUse WithContext(this EntitySource_ItemUse itemUseSource, params string[] args) {
+			string bocContext = MakeContext(args);
+			if (itemUseSource is EntitySource_ItemUse_WithAmmo sourceWAmmo) {
+				return new EntitySource_ItemUse_WithAmmo(sourceWAmmo.Player, sourceWAmmo.Item, sourceWAmmo.AmmoItemIdUsed, bocContext);
+			} else {
+				return new EntitySource_ItemUse(itemUseSource.Player, itemUseSource.Item, bocContext);
+			}
+		}
+		static GeneratorCache<Type, Func<IEntitySource, string, IEntitySource>> cloneWithContexts = new(GenerateCloneWithContext);
+		public static IEntitySource CloneWithContext(this IEntitySource source, string context) {
+			return cloneWithContexts[source.GetType()](source, context);
+		}
+		static Func<IEntitySource, string, IEntitySource> GenerateCloneWithContext(Type sourceType) {
+			string methodName = sourceType.FullName + ".CloneWithContext";
+			DynamicMethod getterMethod = new DynamicMethod(methodName, typeof(IEntitySource), new Type[] { typeof(IEntitySource), typeof(string) }, true);
+			ILGenerator gen = getterMethod.GetILGenerator();
+
+			ConstructorInfo ctor = sourceType.GetConstructors()[0];
+			Dictionary<string, MemberInfo> vars = sourceType.GetMembers().Where(m => m is FieldInfo or PropertyInfo).ToDictionary(m => m.Name.ToUpperInvariant());
+			foreach (ParameterInfo param in ctor.GetParameters()) {
+				string name = param.Name.ToUpperInvariant();
+				if (name == "CONTEXT") {
+					gen.Emit(OpCodes.Ldarg_1);
+					continue;
+				}
+				if (vars.TryGetValue(name, out MemberInfo mem)) {
+					if (mem is PropertyInfo prop && param.ParameterType == prop?.PropertyType) {
+						gen.Emit(OpCodes.Ldarg_0);
+						gen.Emit(OpCodes.Call, prop.GetMethod);
+						continue;
+					} else if (mem is FieldInfo field && param.ParameterType == field?.FieldType) {
+						gen.Emit(OpCodes.Ldarg_0);
+						gen.Emit(OpCodes.Ldfld, field);
+						continue;
+					}
+				}
+				gen.Emit(OpCodes.Ldnull);
+			}
+			gen.Emit(OpCodes.Newobj, ctor);
+			gen.Emit(OpCodes.Ret);
+
+			return getterMethod.CreateDelegate<Func<IEntitySource, string, IEntitySource>>();
 		}
 	}
 	public static class ShopExtensions {

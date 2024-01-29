@@ -109,12 +109,9 @@ namespace Origins.Projectiles {
 					EntitySource_ItemUse multishotSource = null;
 					int ammoID = ItemID.None;
 					if (bocShadows > 0) {// separate if statement for future multishot sources
-						string bocContext = OriginExtensions.MakeContext(source.Context, multishot_context, nameof(OriginPlayer.weakpointAnalyzer));
+						multishotSource = itemUseSource.WithContext(source.Context, multishot_context, nameof(OriginPlayer.weakpointAnalyzer));
 						if (itemUseSource is EntitySource_ItemUse_WithAmmo sourceWAmmo) {
-							multishotSource = new EntitySource_ItemUse_WithAmmo(sourceWAmmo.Player, sourceWAmmo.Item, sourceWAmmo.AmmoItemIdUsed, bocContext);
 							ammoID = sourceWAmmo.AmmoItemIdUsed;
-						} else {
-							multishotSource = new EntitySource_ItemUse(itemUseSource.Player, itemUseSource.Item, bocContext);
 						}
 					}
 					if (bocShadows > 0) {
@@ -126,6 +123,10 @@ namespace Origins.Projectiles {
 							int _damage = free ? projectile.damage : 0;
 							Projectile.NewProjectile(multishotSource, _position, _velocity, projectile.type, _damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1], projectile.ai[2]);
 						}
+					}
+					if (originPlayer.emergencyBeeCanister && (projectile.type is ProjectileID.Bee or ProjectileID.GiantBee) && Main.rand.NextBool(3)) {
+						multishotSource = itemUseSource.WithContext(source.Context, multishot_context, nameof(OriginPlayer.emergencyBeeCanister));
+						Projectile.NewProjectile(multishotSource, projectile.position, projectile.velocity.RotatedByRandom(0.2f), projectile.type, projectile.damage, projectile.knockBack, projectile.owner, projectile.ai[0], projectile.ai[1], projectile.ai[2]);
 					}
 				}
 			} else if (source is EntitySource_Parent source_Parent) {
@@ -147,6 +148,21 @@ namespace Origins.Projectiles {
 
 					if (projPrefix is IOnSpawnProjectilePrefix spawnPrefix) {
 						spawnPrefix.OnProjectileSpawn(projectile, source);
+					}
+					if (parentProjectile.friendly && parentProjectile.owner == Main.myPlayer && (projectile.type is ProjectileID.Bee or ProjectileID.GiantBee)) {
+						OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
+						if (originPlayer.emergencyBeeCanister && Main.rand.NextBool(3)) {
+							Projectile.NewProjectile(
+								source.CloneWithContext(OriginExtensions.MakeContext(source.Context, multishot_context, nameof(OriginPlayer.emergencyBeeCanister))),
+								projectile.position,
+								projectile.velocity.RotatedByRandom(0.2f),
+								projectile.type,
+								projectile.damage,
+								projectile.knockBack,
+								projectile.owner,
+								projectile.ai[0], projectile.ai[1], projectile.ai[2]
+							);
+						}
 					}
 				} else if (source_Parent.Entity is NPC parentNPC) {
 					if (parentNPC.GetGlobalNPC<OriginGlobalNPC>().soulhideWeakenedDebuff) {
