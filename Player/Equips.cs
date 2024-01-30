@@ -276,6 +276,7 @@ namespace Origins {
 			if (Main.myPlayer == Player.whoAmI && (strangeToothItem?.IsAir == false) && strangeToothCooldown <= 0 && Player.ownedProjectileCounts[Strange_Tooth_Minion.ID] < Player.maxMinions) {
 				Item item = strangeToothItem;
 				int damage = Player.GetWeaponDamage(item);
+				Player.AddBuff(Strange_Tooth_Buff.ID, 5);
 				Projectile.NewProjectileDirect(
 					Player.GetSource_Accessory(item),
 					Player.Center,
