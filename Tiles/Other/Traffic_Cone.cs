@@ -1,6 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items.Materials;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -16,6 +18,31 @@ namespace Origins.Tiles.Other {
 			TileObjectData.addTile(Type);
 
 			AddMapEntry(new Color(200, 80, 0), Language.GetOrRegister(this.GetLocalizationKey("DisplayName")));
+
+			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
+			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<Traffic_Cone_TE>().Hook_AfterPlacement, -1, 0, false);
+			TileObjectData.addTile(Type);
+		}
+	}
+	public class Traffic_Cone_TE : ModTileEntity {
+		public override bool IsTileValidForEntity(int x, int y) => Main.tile[x, y].TileIsType(ModContent.TileType<Traffic_Cone>());
+		public override void OnNetPlace() {
+			// This hook is only ever called on the server; its purpose is to give more freedom in terms of syncing FROM the server to clients, which we take advantage of
+			// by making sure to sync whenever this hook is called:
+			NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
+		}
+		public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate) {
+			return Place(i, j);
+		}
+		public override void Update() {
+			const float range = 12 * 16; // 12 tiles
+			Vector2 pos = Position.ToWorldCoordinates();
+			for (int i = 0; i < Main.maxNPCs; i++) {
+				NPC npc = Main.npc[i];
+				if (npc.CanBeChasedBy(this) && npc.DistanceSQ(pos) < range * range) {
+					npc.AddBuff(Slow_Debuff.ID, 10);
+				}
+			}
 		}
 	}
 	public class Traffic_Cone_Item : ModItem {

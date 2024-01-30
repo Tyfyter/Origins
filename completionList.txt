@@ -1034,7 +1034,7 @@ CONSUMABLES:
 (^) Bileberry*
 (^) Blue Bovine*
 (^) Bread*
-(#3, ^2) Brine Cheese*
+(#3?, ^2) Brine Cheese*
 (^) Honey Wheat Bread*
 (^) Irish Cheddar*
 (^) Jam Sandwich*
@@ -1051,7 +1051,7 @@ CONSUMABLES:
 (^) Broken Record*
 (^) Nerve Impulse Manipulator*
 (#2, ^2) Quantum Cell*
-(#4, ^2) Shaped Glass* !!!
+(#4?, ^2) Shaped Glass* !!!
 (^) Suspicious Looking Ice Cream*
 (#2, ^2) The Button*
 

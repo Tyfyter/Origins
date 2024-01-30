@@ -181,9 +181,22 @@ namespace Origins.NPCs {
 			}
 			return true;
 		}
+		AutoLoadingAsset<Texture2D> slowIndicator = "Origins/Textures/Enemy_Slow_Indicator";
 		public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID) || rasterizedTime > 0) {
 				spriteBatch.Restart();
+			}
+			if (slowDebuff) {
+				Main.EntitySpriteDraw(
+					slowIndicator,
+					npc.Top - new Vector2(0, 24) - screenPos,
+					null,
+					new Color(225, 180, 255, 180),
+					0,
+					new Vector2(14, 9),
+					1,
+					SpriteEffects.None
+				);
 			}
 		}
 		public static void InflictTorn(NPC npc, int duration, int targetTime = 180, float targetSeverity = 0.3f, OriginPlayer source = null) {
