@@ -32,6 +32,68 @@ namespace Origins.NPCs {
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
 			List<IItemDropRule> dropRules = npcLoot.Get(false);
 			switch (npc.netID) {
+				case NPCID.KingSlime:
+				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Cursed_Crown>(), 4));
+				break;
+				case NPCID.EyeofCthulhu:
+				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Strange_Tooth>(), 4));
+				break;
+				case NPCID.QueenBee:
+				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Emergency_Bee_Canister>(), 4));
+				break;
+				case NPCID.Deerclops:
+				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Blizzardwalkers_Jacket>(), 4));
+				break;
+				case NPCID.SkeletronPrime:
+				case NPCID.TheDestroyer:
+				case NPCID.TheDestroyerBody:
+				case NPCID.TheDestroyerTail:
+				case NPCID.Retinazer:
+				case NPCID.Spazmatism:
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Busted_Servo>(), 1, 8, 37));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Power_Core>(), 1, 1, 2));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotor>(), 1, 5, 22));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_Power_Up>(), 50));
+				break;
+				case NPCID.MoonLordCore:
+				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Third_Eye>(), 4));
+				break;
+				case NPCID.WallofFlesh:
+				IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
+				r is LeadingConditionRule conditionRule &&
+				conditionRule.ChainedRules.Any() &&
+				conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
+				dropRule.dropIds.Contains(ItemID.WarriorEmblem));
+				if (rules.Any()) {
+					OneFromOptionsNotScaledWithLuckDropRule rule = rules.First().ChainedRules[0].RuleToChain as OneFromOptionsNotScaledWithLuckDropRule;
+					if (rule is not null) {
+						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
+						rule.dropIds[^1] = ModContent.ItemType<Exploder_Emblem>();
+						woFEmblemsCount = rule.dropIds.Length;
+					} else {
+						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+					}
+				} else {
+					Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+				}
+				rules = dropRules.Where((r) =>
+				r is LeadingConditionRule conditionRule &&
+				conditionRule.ChainedRules.Any() &&
+				conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
+				dropRule.dropIds.Contains(ItemID.BreakerBlade));
+				if (rules.Any()) {
+					OneFromOptionsNotScaledWithLuckDropRule rule = rules.First().ChainedRules[0].RuleToChain as OneFromOptionsNotScaledWithLuckDropRule;
+					if (rule is not null) {
+						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
+						rule.dropIds[^1] = ModContent.ItemType<Thermite_Launcher>();
+					} else {
+						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+					}
+				} else {
+					Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
+				}
+				break;
+
 				case NPCID.CaveBat:
 				case NPCID.GiantBat:
 				case NPCID.IceBat:
@@ -61,17 +123,6 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolt_Gun>(), 50));
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 5));
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 50));
-				break;
-				case NPCID.SkeletronPrime:
-				case NPCID.TheDestroyer:
-				case NPCID.TheDestroyerBody:
-				case NPCID.TheDestroyerTail:
-				case NPCID.Retinazer:
-				case NPCID.Spazmatism:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Busted_Servo>(), 1, 8, 37));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Power_Core>(), 1, 1, 2));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotor>(), 1, 5, 22));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_Power_Up>(), 50));
 				break;
 				case NPCID.GoblinArcher:
 				case NPCID.GoblinPeon:
@@ -147,46 +198,8 @@ namespace Origins.NPCs {
 				case NPCID.TacticalSkeleton:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 5));
 				break;
-				case NPCID.WallofFlesh:
-				IEnumerable<IItemDropRule> rules = dropRules.Where((r) =>
-				r is LeadingConditionRule conditionRule &&
-				conditionRule.ChainedRules.Any() &&
-				conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
-				dropRule.dropIds.Contains(ItemID.WarriorEmblem));
-				if (rules.Any()) {
-					OneFromOptionsNotScaledWithLuckDropRule rule = rules.First().ChainedRules[0].RuleToChain as OneFromOptionsNotScaledWithLuckDropRule;
-					if (rule is not null) {
-						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-						rule.dropIds[^1] = ModContent.ItemType<Exploder_Emblem>();
-						woFEmblemsCount = rule.dropIds.Length;
-					} else {
-						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
-					}
-				} else {
-					Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
-				}
-				rules = dropRules.Where((r) =>
-				r is LeadingConditionRule conditionRule &&
-				conditionRule.ChainedRules.Any() &&
-				conditionRule.ChainedRules[0].RuleToChain is OneFromOptionsNotScaledWithLuckDropRule dropRule &&
-				dropRule.dropIds.Contains(ItemID.BreakerBlade));
-				if (rules.Any()) {
-					OneFromOptionsNotScaledWithLuckDropRule rule = rules.First().ChainedRules[0].RuleToChain as OneFromOptionsNotScaledWithLuckDropRule;
-					if (rule is not null) {
-						Array.Resize(ref rule.dropIds, rule.dropIds.Length + 1);
-						rule.dropIds[^1] = ModContent.ItemType<Thermite_Launcher>();
-					} else {
-						Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
-					}
-				} else {
-					Origins.instance.Logger.Warn("Emblem drop rule not present on WoF");
-				}
-				break;
 				case NPCID.TheGroom:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Comb>()));
-				break;
-				case NPCID.MoonLordCore:
-				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Third_Eye>(), 4));
 				break;
 				default:
 				break;
