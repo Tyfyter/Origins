@@ -394,8 +394,8 @@ ACCESSORIES:
 
 (%3, X) Armored Core
 (☻) Blizzardwalker's Jacket* !!!
-(☻) Cursed Crown* !!!
-(☻) Emergency Bee Canister* !!!
+(^) Cursed Crown*
+(#3, ^2) Emergency Bee Canister* !!!
 (^) Entangled Energy*
 (#, ^2) Forbidden Voice* !!!
 (^) Lazy Cloak*
@@ -404,7 +404,7 @@ ACCESSORIES:
 (#, ^2) Scrap Compactor*
 (^) Scribe of the Meat God*
 (^) Stack of Shraps*
-(☻) Strange Tooth* !!!
+(#3, ^2) Strange Tooth* !!!
 (#, ^2) Terrarian Voodoo Doll* !!!
 (^) Third Eye*
 (^) Weakpoint Analyzer*
@@ -1034,7 +1034,7 @@ CONSUMABLES:
 (^) Bileberry*
 (^) Blue Bovine*
 (^) Bread*
-(#3?, ^2) Brine Cheese*
+(^) Brine Cheese*
 (^) Honey Wheat Bread*
 (^) Irish Cheddar*
 (^) Jam Sandwich*
@@ -1049,10 +1049,10 @@ CONSUMABLES:
 (^) Vanilla Shake*
 
 (^) Broken Record*
-(^) Nerve Impulse Manipulator*
+(#4, ^2) Nerve Impulse Manipulator* !!!
 (#2, ^2) Quantum Cell*
-(#4?, ^2) Shaped Glass* !!!
-(^) Suspicious Looking Ice Cream*
+(#4, ^2) Shaped Glass* !!!
+(#4, ^2) Suspicious Looking Ice Cream* !!!
 (#2, ^2) The Button*
 
 (#2, ^2) Ashen Loot Box*

@@ -3587,16 +3587,26 @@ Emergency_Bee_Canister: {
 }
 
 Blizzardwalkers_Jacket: {
-	DisplayName: Blizzardwalkers_ Jacket
-	Tooltip: ""
+	DisplayName: Blizzardwalkers Jacket
+	Tooltip: The player will dodge their next attack as long as no enemies are nearby
 }
 
 Cursed_Crown: {
-	DisplayName: Cursed_ Crown
-	Tooltip: ""
+	DisplayName: Cursed Crown
+	Tooltip:
+		'''
+		The player adopts the consistency of a slime
+		Reduced movement speed and acceleration
+		Significantly increased jump speed
+		+30% damage reduction
+		'''
 }
 
 Strange_Tooth: {
-	DisplayName: Strange_ Tooth
-	Tooltip: ""
+	DisplayName: Strange Tooth
+	Tooltip: 
+		'''
+		Summons miniature servants to chase after enemies for every minion slot you have
+		Servants have a chance to drop hearts when the player is low on health
+		'''
 }

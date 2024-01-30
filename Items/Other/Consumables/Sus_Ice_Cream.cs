@@ -1,7 +1,9 @@
 ﻿using Origins.Items.Materials;
 using Origins.NPCs.Riven;
+using Origins.NPCs.Riven.World_Cracker;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -23,7 +25,8 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override bool? UseItem(Player player) {
 			if (player.whoAmI == Main.myPlayer) {
-				NPC.SpawnOnPlayer(Main.myPlayer, ModContent.NPCType<Riven_Fighter>());
+				SoundEngine.PlaySound(SoundID.Roar);
+                NPC.SpawnOnPlayer(Main.myPlayer, ModContent.NPCType<World_Cracker_Head>());
 			}
 			return true;
 		}
