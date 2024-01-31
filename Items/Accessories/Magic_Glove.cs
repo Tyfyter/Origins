@@ -14,8 +14,7 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(22, 24);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Green;
-
-			Item.damage -= 69420;
+			Item.damage += 8;
 			Item.DamageType = DamageClass.Magic;
 			Item.useTime = 5;
 			Item.useAnimation = 14;

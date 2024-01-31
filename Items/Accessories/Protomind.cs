@@ -24,7 +24,6 @@ namespace Origins.Items.Accessories {
 			Item.shoot = ModContent.ProjectileType<Protomind_P>();
 			Item.rare = ItemRarityID.LightPurple;
 			Item.value = Item.sellPrice(gold: 3);
-			Item.expert = true;
 		}
 		public override void UpdateInventory(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

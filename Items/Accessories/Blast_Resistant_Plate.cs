@@ -20,13 +20,8 @@ namespace Origins.Items.Accessories {
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.TitaniumBar, 10);
-			recipe.AddIngredient(ItemID.Obsidian, 20);
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-			recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.AdamantiteBar, 10);
-			recipe.AddIngredient(ItemID.Obsidian, 20);
+            recipe.AddRecipeGroup("AdamantiteBars", 10);
+            recipe.AddIngredient(ItemID.Obsidian, 20);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

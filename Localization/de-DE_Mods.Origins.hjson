@@ -899,6 +899,7 @@ Projectiles: {
 	// Flakjack_P_3.DisplayName: Resizable Mine
 	// Flakjack_P_4.DisplayName: Resizable Mine
 	// Flakjack_P_5.DisplayName: Resizable Mine
+	// Flakjack_P.DisplayName: Flakjack_ P
 	// Flash_P.DisplayName: Flash P
 	// Flashbang_P.DisplayName: Flashbang
 	// Floaty_Bomb_P.DisplayName: Floaty Bomb
@@ -977,7 +978,6 @@ Projectiles: {
 	// Bone_Bolt.DisplayName: Bone Bolt
 	// Bone_Shard.DisplayName: BoneS hard
 	// Nineball_P.DisplayName: Nienball
-	// Hailferno_P.DisplayName: Slushflame
 	// Shardcannon_P1.DisplayName: Shardcannon
 	// Shardcannon_P2.DisplayName: Shardcannon
 	// Shardcannon_P3.DisplayName: Shardcannon
@@ -1011,7 +1011,6 @@ Projectiles: {
 	// Gooey_Exaultion_P.DisplayName: Gooey Exaultion
 	// Lava_Shot.DisplayName: Magma Shot
 	// Defiled_Sand_Ball.DisplayName: "{§Defiled} Sand Ball"
-	// Test2.DisplayName: Test2
 	// Defiled_Spike_Explosion_Hostile.DisplayName: Low Signal
 	// Defiled_Spike_Explosion_Spike_Hostile.DisplayName: Low Signal
 	// Low_Signal_Hostile.DisplayName: Low Signal
@@ -1037,8 +1036,11 @@ Projectiles: {
 	// Eruption_P.DisplayName: Eruption
 	// Gray_Solution_P.DisplayName: Gray Solution
 	// Metal_Slug_P.DisplayName: Metal Slug
-	// Impeding_Shrapnel_Shard.DisplayName: Impeding_ Shrapnel_ Shard
-	// Strange_Tooth_Minion.DisplayName: Strange_ Tooth_ Minion
+	// Impeding_Shrapnel_Shard.DisplayName: Frenzying Shrapnel
+	// Strange_Tooth_Minion.DisplayName: Servant of You
+	// Sunflower_Seed_P.DisplayName: Sunflower Seed
+	// Bad_Hand_Black_P.DisplayName: Black Card
+	// Bad_Hand_Red_P.DisplayName: Red Card
 }
 
 Prefixes: {

@@ -2824,11 +2824,6 @@ Firespit: {
 	// Tooltip: Uses fireblossoms as ammo
 }
 
-Hailferno: {
-	// DisplayName: Hailferno
-	// Tooltip: Uses gel as ammo
-}
-
 Hallowed_Cleaver: {
 	// DisplayName: Hallowed Cleaver
 	// Tooltip: "'Crude and dangerous'"
@@ -3286,11 +3281,6 @@ Alkahest_Torch: {
 	// Tooltip: ""
 }
 
-Test: {
-	// DisplayName: Test
-	// Tooltip: ""
-}
-
 // Surveysprout.DisplayName: Surveysprout
 // NE8.DisplayName: NE8
 // Nova_Fragment.DisplayName: Nova Fragment
@@ -3604,9 +3594,23 @@ Cursed_Crown: {
 
 Strange_Tooth: {
 	// DisplayName: Strange Tooth
-	/* Tooltip: 
+	/* Tooltip:
 		'''
 		Summons miniature servants to chase after enemies for every minion slot you have
 		Servants have a chance to drop hearts when the player is low on health
 		''' */
+}
+
+Sunflower_Seed_Shooter: {
+	// DisplayName: Sunflower Seed Shooter
+	/* Tooltip:
+		'''
+		Uses sunflowers as ammo
+		25% chance not to consume ammo
+		''' */
+}
+
+Bad_Hand: {
+	// DisplayName: Bad Hand
+	// Tooltip: 'What a deal!'
 }

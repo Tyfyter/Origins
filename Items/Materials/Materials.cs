@@ -192,18 +192,11 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 
             recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ItemID.AdamantiteBar);
+            recipe.AddRecipeGroup("AdamantiteBars");
             recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2);
             recipe.AddIngredient(ModContent.ItemType<Bottled_Brine>());
             recipe.AddTile(TileID.MythrilAnvil);
             recipe.Register();
-
-            recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.TitaniumBar);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Shard>(), 2);
-			recipe.AddIngredient(ModContent.ItemType<Bottled_Brine>());
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
 		}
 	}
 	public class Element36_Bundle : MaterialItem {
@@ -339,7 +332,7 @@ namespace Origins.Items.Materials {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.HallowedBar, 2);
 			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 4);
-			recipe.AddTile(TileID.Anvils); //Fabricator not implemented yet
+			recipe.AddTile(TileID.MythrilAnvil); //Fabricator not implemented yet
 			recipe.Register();
 		}
 	}
@@ -360,7 +353,7 @@ namespace Origins.Items.Materials {
 			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.HallowedBar);
 			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
-			recipe.AddTile(TileID.Anvils); //Fabricator not implemented yet
+			recipe.AddTile(TileID.MythrilAnvil); //Fabricator not implemented yet
 			recipe.Register();
 		}
 	}

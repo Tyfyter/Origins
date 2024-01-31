@@ -19,7 +19,6 @@ namespace Origins.Projectiles.Weapons {
 		public float frameCount = 15;
 		public override string Texture => "Origins/Projectiles/Weapons/Lava_Cast_P";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Magma Shot");
 			Main.projFrames[Projectile.type] = 2;
 		}
 		public override void SetDefaults() {

@@ -35,8 +35,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.crit = 14;
 			Item.useAnimation = 32;
 			Item.useTime = 17;
-			Item.useAmmo = ModContent.ItemType<Ammo.Resizable_Mine_One>();
-			Item.shoot = ModContent.ProjectileType<Flakjack_P_1>();
+			Item.useAmmo = ModContent.ItemType<Ammo.Metal_Slug>();
+			Item.shoot = ModContent.ProjectileType<Flakjack_P>();
 			Item.shootSpeed = 12;
 			Item.reuseDelay = 6;
 			Item.autoReuse = true;
@@ -131,7 +131,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
 	}
-	public class Flakjack_P_1 : ModProjectile, IIsExplodingProjectile {
+	public class Flakjack_P : ModProjectile, IIsExplodingProjectile {
 		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
@@ -195,8 +195,4 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public bool IsExploding() => false;
 	}
-	public class Flakjack_P_2 : Flakjack_P_1 { }
-	public class Flakjack_P_3 : Flakjack_P_1 { }
-	public class Flakjack_P_4 : Flakjack_P_1 { }
-	public class Flakjack_P_5 : Flakjack_P_1 { }
 }

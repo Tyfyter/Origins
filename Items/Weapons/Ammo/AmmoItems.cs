@@ -65,14 +65,8 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.Fireblossom, 2);
-			recipe.AddIngredient(ItemID.IronBar, 2);
-			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-			recipe = Recipe.Create(Type, 4);
-			recipe.AddIngredient(ItemID.Fireblossom, 2);
-			recipe.AddIngredient(ItemID.LeadBar, 2);
-			recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
+            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 2);
+            recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}

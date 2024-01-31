@@ -9,7 +9,6 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Harpoon : ModItem {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Harpoon");
 			Item.ResearchUnlockCount = 99;
 			ID = Type;
 		}
@@ -32,7 +31,6 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Harpoon_P : ModProjectile {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Harpoon");
 			ID = Type;
 		}
 		public override void SetDefaults() {

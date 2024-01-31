@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -12,7 +11,6 @@ using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Magic {
     public class Manasynk : ModItem {
-		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.maxStack = 1;
@@ -42,7 +40,6 @@ namespace Origins.Items.Weapons.Magic {
 	public class Manasynk_P : ModProjectile {
 		PolarVec2 embedPos;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Manasynk");
 			Main.projFrames[Type] = 4;
 		}
 		public override void SetDefaults() {

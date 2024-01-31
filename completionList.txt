@@ -393,8 +393,8 @@ ACCESSORIES:
 (X) Void Arcanum
 
 (%3, X) Armored Core
-(☻) Blizzardwalker's Jacket* !!!
-(^) Cursed Crown*
+(#3, ^2) Blizzardwalker's Jacket* !!!
+(#4, ^2) Cursed Crown* !!!
 (#3, ^2) Emergency Bee Canister* !!!
 (^) Entangled Energy*
 (#, ^2) Forbidden Voice* !!!
@@ -573,6 +573,7 @@ RANGED WEAPONS:
 (^) Riven Splitter*
 (^) Shardcannon
 (^) Sleetfire
+(#3, ^2) Sunflower Seed Shooter* !!!
 (^) Tendon Tear
 (^) The Kruncher
 (^) Threemoepeater
@@ -604,6 +605,7 @@ RANGED WEAPONS:
 (X) Disciple Maker*
 (^) Dreikan
 (X) EAC Thunder*
+(X) Fungi Pipe
 (^) Laser Tag Gun
 (X) Seventh Spline
 (X) Shroomshot
@@ -631,6 +633,7 @@ MAGIC WEAPONS:
 (^) Slashswarm
 (^) Tones of Agony
 
+(#3/4, ^2) Bad Hand
 (^) Bled Out Staff
 (^) Chemical Laser
 (#, ^2) Communion
@@ -694,7 +697,7 @@ SUMMONER WEAPONS:
 (X) Culltivator
 (X) Doom Incantation
 (X) Ego
-(@2/3, #2) Fiber Optic Whip
+(@2/3, #2) Fiber Optic Whips
 (X) Ribatar
 (X) Seraphim Song
 (@2, #2) SMART Wrench
@@ -741,11 +744,14 @@ EXPLOSIVE WEAPONS:
 (X) Cavitation Cannon
 (X) Chambersite Mine Launcher
 (^) Happy Bomb*
+(X) Rattlesnake
 (^) Sonorous Shredder
 (^) Thermite Launcher
 
+(X) Autohandcannon
 (^) Bomboomstick
 (#2, ^2) Chlorodynamite*
+(X) Chlorophyte Handcannon
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (#2, ^2) Grenado (replanning never)
@@ -755,10 +761,12 @@ EXPLOSIVE WEAPONS:
 (^) Rocodile
 (X) Self-Destruct
 (X) Starforge
+(X) Thundershot
 
 (@5, ^3) Black Hole Bomb*
+(X) Cascade
 (@5, ^3) Caustica
-(^) Flakjack
+(#3, ^2) Flakjack
 (@, ^3) Missile Minigun
 (@5, #) Starburst
 (X) Supernova

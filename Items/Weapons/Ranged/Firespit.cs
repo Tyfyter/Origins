@@ -10,8 +10,6 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Firespit : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Firespit");
-			// Tooltip.SetDefault("Uses fireblossoms as ammo");
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
