@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
+	[AutoloadEquip(EquipType.Back, EquipType.Front)]
 	public class Blizzardwalkers_Jacket : ModItem, ICustomWikiStat {
 		public const int max_active_time = 60 * 6;
 		public string[] Categories => new string[] {
