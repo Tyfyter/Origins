@@ -29,7 +29,7 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().cursedCrownVisual = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = CreateRecipe(ItemID.GoldCrown);
+			Recipe recipe = Recipe.Create(ItemID.GoldCrown);
 			recipe.AddIngredient(Type);
 			recipe.AddTile(TileID.BewitchingTable);
 			recipe.Register();
