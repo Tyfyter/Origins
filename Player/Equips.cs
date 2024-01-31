@@ -364,6 +364,7 @@ namespace Origins {
 					);
 				}
 			}
+			if (emergencyBeeCanister && Player.honeyWet) Player.ignoreWater = true;
 			oldGravDir = Player.gravDir;
 		}
 		public override void UpdateDyes() {
