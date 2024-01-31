@@ -46,13 +46,5 @@ namespace Origins.Tiles.Riven {
 			Item.CloneDefaults(ItemID.CrimtaneOre);
 			Item.createTile = TileType<Encrusted_Ore>();
 		}
-        public override void AddRecipes() {
-            CreateRecipe(ItemID.DeerThing)
-            .AddIngredient(ItemID.FlinxFur, 3)
-            .AddIngredient(ItemID.Lens)
-            .AddIngredient(Type)
-            .AddTile(TileID.DemonAltar)
-            .Register();
-        }
     }
 }

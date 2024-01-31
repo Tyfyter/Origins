@@ -38,14 +38,6 @@ namespace Origins.Tiles.Defiled {
 			Item.CloneDefaults(ItemID.DemoniteOre);
 			Item.createTile = TileType<Defiled_Ore>();
 		}
-        public override void AddRecipes() {
-            CreateRecipe(ItemID.DeerThing)
-            .AddIngredient(ItemID.FlinxFur, 3)
-            .AddIngredient(ItemID.Lens)
-            .AddIngredient(Type)
-			.AddTile(TileID.DemonAltar)
-            .Register();
-        }
     }
 	public class Lost_Ore_Entry : JournalEntry {
 		public override string TextKey => "Lost_Ore";
