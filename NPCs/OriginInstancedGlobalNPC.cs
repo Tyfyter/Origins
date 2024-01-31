@@ -39,8 +39,8 @@ namespace Origins.NPCs {
 			if (rasterized >= 0) {
 				rasterizedTime = Math.Min(Math.Min(rasterizedTime + 1, 16), npc.buffTime[rasterized] - 1);
 				if (Origins.RasterizeAdjustment.TryGetValue(npc.type, out var adjustment)) {
-					rasterizedTime = Math.Min(rasterizedTime, adjustment.Item1);
-					npc.oldVelocity = Vector2.Lerp(npc.oldVelocity, npc.velocity, adjustment.Item2);
+					rasterizedTime = Math.Min(rasterizedTime, adjustment.maxLevel);
+					npc.oldVelocity = Vector2.Lerp(npc.oldVelocity, npc.velocity, adjustment.velDiffMult);
 				}
 			} else {
 				rasterizedTime = 0;
