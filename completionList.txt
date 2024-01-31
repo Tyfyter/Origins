@@ -393,8 +393,8 @@ ACCESSORIES:
 (X) Void Arcanum
 
 (%3, X) Armored Core
-(#3, ^2) Blizzardwalker's Jacket* !!!
-(#4, ^2) Cursed Crown* !!!
+(☻) Blizzardwalker's Jacket* !!!
+(☻) Cursed Crown* !!!
 (#3, ^2) Emergency Bee Canister* !!!
 (^) Entangled Energy*
 (#, ^2) Forbidden Voice* !!!
