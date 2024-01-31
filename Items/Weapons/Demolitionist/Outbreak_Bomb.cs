@@ -10,7 +10,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 94;
+			Item.damage = 74;
 			Item.shoot = ModContent.ProjectileType<Outbreak_Bomb_P>();
 			Item.value *= 5;
 			Item.rare = ItemRarityID.Blue;

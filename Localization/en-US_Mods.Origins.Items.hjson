@@ -3612,5 +3612,5 @@ Sunflower_Seed_Shooter: {
 
 Bad_Hand: {
 	DisplayName: Bad Hand
-	Tooltip: What a deal!
+	Tooltip: "'What a deal!'"
 }

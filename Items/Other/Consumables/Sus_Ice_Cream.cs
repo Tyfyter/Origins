@@ -21,7 +21,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.glowMask = glowmask;
 		}
 		public override bool CanUseItem(Player player) {
-			return player.InModBiome<Riven_Hive>() && !NPC.AnyNPCs(ModContent.NPCType<Riven_Fighter>());
+			return player.InModBiome<Riven_Hive>() && !NPC.AnyNPCs(ModContent.NPCType<World_Cracker_Head>());
 		}
 		public override bool? UseItem(Player player) {
 			if (player.whoAmI == Main.myPlayer) {

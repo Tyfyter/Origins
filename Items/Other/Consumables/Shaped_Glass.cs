@@ -15,7 +15,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.CloneDefaults(ItemID.SuspiciousLookingEye);
 		}
 		public override bool? UseItem(Player player) {
-			if (player.InModBiome<Fiberglass_Undergrowth>()) {
+			if (player.InModBiome<Fiberglass_Undergrowth>() && !NPC.AnyNPCs(ModContent.NPCType<Fiberglass_Weaver>())) {
                 SoundEngine.PlaySound(SoundID.Roar);
                 NPC.SpawnOnPlayer(player.whoAmI, ModContent.NPCType<Fiberglass_Weaver>());
 				return true;

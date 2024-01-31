@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 114;
+			Item.damage = 65;
 			Item.shoot = ModContent.ProjectileType<Hellfire_Bomb_P>();
 			Item.value *= 9;
 			Item.rare = ItemRarityID.Orange;

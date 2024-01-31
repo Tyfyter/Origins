@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 76;
+			Item.damage = 70;
 			Item.shoot = ModContent.ProjectileType<Floaty_Bomb_P>();
 			Item.shootSpeed *= 1.4f;
 			Item.value *= 6;

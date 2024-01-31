@@ -37,11 +37,16 @@ namespace Origins.Items {
 				item.DamageType = DamageClasses.ThrownExplosive;
 				break;
 
-				case ItemID.Fireblossom:
-				item.ammo = ItemID.Fireblossom;
+				case ItemID.Sunflower:
+				item.ammo = ItemID.Sunflower;
 				item.consumable = true;
 				break;
-				case ItemID.Bomb:
+
+                case ItemID.Fireblossom:
+                item.ammo = ItemID.Fireblossom;
+                item.consumable = true;
+                break;
+                case ItemID.Bomb:
 				case ItemID.BouncyBomb:
 				case ItemID.StickyBomb:
 				case ItemID.Dynamite:

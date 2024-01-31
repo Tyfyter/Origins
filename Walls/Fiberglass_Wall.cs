@@ -1,18 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Walls {
-	public class Fiberglass_Wall : ModWall {
+    public class Fiberglass_Wall : ModWall {
 		public override void SetStaticDefaults() {
-			AddMapEntry(new Color(38, 105, 144));
+			AddMapEntry(new Color(16, 83, 122));
 		}
 	}
 	public class Fiberglass_Wall_Safe : Defiled_Stone_Wall {

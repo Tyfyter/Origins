@@ -26,7 +26,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(silver: 80);
 			Item.rare = ItemRarityID.Green;
 		}
-		public override bool AltFunctionUse(Player player) {
+        public override Vector2? HoldoutOffset() {
+            return new Vector2(-16, 2);
+        }
+        public override bool AltFunctionUse(Player player) {
 			return true;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
@@ -44,7 +47,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					type = ModContent.ProjectileType<Acid_Shot>();
 					damage -= 20;
 					for (int i = Main.rand.Next(2); ++i < 5;) {
-						Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * 0.6f, type, damage / 2, knockback, player.whoAmI).scale = 0.85f;
+						Projectile.NewProjectileDirect(source, position, velocity.RotatedByRandom(0.1 * i) * 0.6f, type, damage / 3, knockback, player.whoAmI).scale = 0.85f;
 					}
 					return false;
 				}
@@ -53,7 +56,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					type = ModContent.ProjectileType<Crystal_Grenade_Shard>();
 					damage -= 10;
 					for (int i = Main.rand.Next(3); ++i < 10;) {
-						int p = Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.025 * i) * 0.6f, type, damage / 2, knockback, player.whoAmI);
+						int p = Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.025 * i) * 0.6f, type, damage / 3, knockback, player.whoAmI);
 						Main.projectile[p].timeLeft += 90;
 						Main.projectile[p].extraUpdates++;
 					}

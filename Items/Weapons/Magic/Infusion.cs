@@ -14,8 +14,6 @@ namespace Origins.Items.Weapons.Magic {
 	public class Infusion : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Infusion");
-			// Tooltip.SetDefault("Rapidly fires spikes that will detonate when the target is implanted with enough");
 			Origins.FlatDamageMultiplier[Type] = 2f / 8f;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

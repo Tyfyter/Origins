@@ -393,9 +393,9 @@ ACCESSORIES:
 (X) Void Arcanum
 
 (%3, X) Armored Core
-(☻) Blizzardwalker's Jacket* !!!
-(☻) Cursed Crown* !!!
-(#3, ^2) Emergency Bee Canister* !!!
+(#4, ^2) Blizzardwalker's Jacket* !!!
+(^) Cursed Crown*
+(^) Emergency Bee Canister*
 (^) Entangled Energy*
 (#, ^2) Forbidden Voice* !!!
 (^) Lazy Cloak*
@@ -573,7 +573,7 @@ RANGED WEAPONS:
 (^) Riven Splitter*
 (^) Shardcannon
 (^) Sleetfire
-(#3, ^2) Sunflower Seed Shooter* !!!
+(^) Sunflower Seed Shooter*
 (^) Tendon Tear
 (^) The Kruncher
 (^) Threemoepeater
@@ -716,7 +716,7 @@ EXPLOSIVE WEAPONS:
 (^) Bang Snap*
 (^) Bloombomb*
 (^) Bombardment
-(^) Bomb Launcher (needs to be balanced)
+(^) Bomb Launcher
 (^) Brainade*
 (#3, ^2) Eruption* !!!
 (^) Felnum Shock Grenade*
@@ -837,7 +837,7 @@ TILES:
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (^) Edenwood Wall
-(#, ^2) Fiberglass Wall
+(^) Fiberglass Wall
 (^) Harmony Brick Wall
 (X) Nova Brick Wall
 (^) Quartz Wall
@@ -1057,10 +1057,10 @@ CONSUMABLES:
 (^) Vanilla Shake*
 
 (^) Broken Record*
-(#4, ^2) Nerve Impulse Manipulator* !!!
+(^) Nerve Impulse Manipulator*
 (#2, ^2) Quantum Cell*
-(#4, ^2) Shaped Glass* !!!
-(#4, ^2) Suspicious Looking Ice Cream* !!!
+(^) Shaped Glass*
+(^) Suspicious Looking Ice Cream*
 (#2, ^2) The Button*
 
 (#2, ^2) Ashen Loot Box*

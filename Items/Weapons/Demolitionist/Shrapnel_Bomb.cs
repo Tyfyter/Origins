@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 46;
+			Item.damage = 50;
 			Item.useTime = (int)(Item.useTime * 1.15);
 			Item.useAnimation = (int)(Item.useAnimation * 1.15);
 			Item.shoot = ModContent.ProjectileType<Shrapnel_Bomb_P>();

@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 75;
+			Item.damage = 54;
 			Item.shoot = ModContent.ProjectileType<Bloombomb_P>();
 			Item.shootSpeed = 5f;
 			Item.knockBack = 5f;
@@ -69,13 +69,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.Seed;
 		public static int ID { get; private set; } = 0;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bloombomb");
 			ID = Projectile.type;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Seed);
 			Projectile.DamageType = DamageClasses.ThrownExplosive;
-			Projectile.penetrate = 4;
+            Projectile.timeLeft = 240;
+            Projectile.penetrate = 3;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Vector2 realPos = Projectile.oldPosition + oldVelocity;

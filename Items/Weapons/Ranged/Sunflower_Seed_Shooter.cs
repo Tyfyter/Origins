@@ -1,4 +1,3 @@
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -6,28 +5,28 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
     public class Sunflower_Seed_Shooter : ModItem {
         public override void SetStaticDefaults() {
-            base.SetStaticDefaults();
+            Origins.FlatDamageMultiplier[Type] = 2f / 8f;
         }
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
-			Item.damage = 6;
+			Item.damage = 10;
+			Item.crit -= 4;
 			Item.width = 64;
 			Item.height = 22;
-			Item.useTime = 14;
-			Item.useAnimation = 14;
+			Item.useTime = 8;
+			Item.useAnimation = 30;
 			Item.shoot = ModContent.ProjectileType<Sunflower_Seed_P>();
-            Item.useAmmo = ItemID.Sunflower;
+			Item.useAmmo = ItemID.Sunflower;
             Item.knockBack = 1;
 			Item.shootSpeed = 9f;
 			Item.value = Item.sellPrice(silver: 40);
 			Item.rare = ItemRarityID.White;
-			Item.autoReuse = true;
-		}
-		public override Vector2? HoldoutOffset() {
-			return Vector2.Zero;
-		}
+            Item.reuseDelay = 18;
+            Item.autoReuse = true;
+            Item.consumeAmmoOnFirstShotOnly = true;
+        }
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
-			return !Main.rand.NextBool(4);
+			return !Main.rand.NextBool(3);
 		}
     }
 	public class Sunflower_Seed_P : ModProjectile {
@@ -42,5 +41,5 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.timeLeft = 300;
 			Projectile.alpha = 0;
 		}
-	}
+    }
 }
