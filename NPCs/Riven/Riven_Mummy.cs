@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -22,7 +23,8 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 46;
 			NPC.friendly = false;
 			NPC.value = 7;
-			SpawnModBiomes = new int[] {
+            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
+            SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive_Desert>().Type
 			};
 			//ModContent.Request<Microsoft.Xna.Framework.Graphics.Texture2D>("Origins/UI/MapBGs/Riven_Desert").Value.Size()

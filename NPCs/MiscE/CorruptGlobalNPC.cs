@@ -77,11 +77,11 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (npc.poisoned) {
-				npc.lifeRegen += 2;
+				npc.lifeRegen += 4;
 			}
 			if (npc.onFire2) {// cursed inferno
-				npc.lifeRegen += 24;
-				damage -= 5;
+				npc.lifeRegen += 36;
+				damage -= 8;
 			}
 			if (npc.onFire) {
 				npc.lifeRegen -= 4;
@@ -92,12 +92,11 @@ namespace Origins.NPCs.MiscE {
 				damage += 3;
 			}
 			if (npc.shadowFlame) {
-				npc.lifeRegen -= 15;
-				damage += 3;
+				npc.lifeRegen += 7;
+				damage -= 3;
 			}
 			if (npc.oiled && (npc.onFire || npc.onFire2 || npc.onFire3 || npc.shadowFlame)) {
-				npc.lifeRegen -= 25;
-				damage += 5;
+				npc.lifeRegen -= 15;
 			}
 			if (npc.dryadBane) {
 				const float baseDPS = 2;

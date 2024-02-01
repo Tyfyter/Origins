@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
-using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -25,7 +25,8 @@ namespace Origins.NPCs.Riven {
 			NPC.DeathSound = SoundID.NPCDeath15;
 			NPC.knockBackResist = 0.75f;
 			NPC.value = 76;
-		}
+            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
+        }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				this.GetBestiaryFlavorText("Barnaclebacks are a keystone species to the Riven Hive, working hard to maintain it. Their presence is a sure sign that any progress cleansing the Hive is futile."),

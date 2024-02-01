@@ -1,14 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
-using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Other {
-	[Autoload(false)]
+    [Autoload(false)]
 	public class Bar_Tile : OriginTile {
 		public readonly string name;
 		public readonly LocalizedText displayName;

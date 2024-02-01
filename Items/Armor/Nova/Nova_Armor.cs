@@ -15,7 +15,7 @@ namespace Origins.Items.Armor.Nova {
 		}
 		public override void SetDefaults() {
 			Item.defense = 8;
-			Item.value = Item.sellPrice(gold: 2);
+			Item.value = Item.sellPrice(gold: 7);
 			Item.rare = ItemRarityID.Red;
 		}
 		public override void UpdateEquip(Player player) {
@@ -48,8 +48,6 @@ namespace Origins.Items.Armor.Nova {
 	[AutoloadEquip(EquipType.Body)]
 	public class Nova_Breastplate : ModItem, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Nova Vest");
-			// Tooltip.SetDefault("4% increased explosive damage and critical strike chance\n-60% explosive self-damage");
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Nova/Nova_Breastplate_Body_Glow");
 			}
@@ -57,7 +55,7 @@ namespace Origins.Items.Armor.Nova {
 		}
 		public override void SetDefaults() {
 			Item.defense = 22;
-			Item.value = Item.sellPrice(gold: 2);
+			Item.value = Item.sellPrice(gold: 14);
 			Item.rare = ItemRarityID.Red;
 		}
 		public override void UpdateEquip(Player player) {
@@ -83,7 +81,7 @@ namespace Origins.Items.Armor.Nova {
 		}
 		public override void SetDefaults() {
 			Item.defense = 18;
-			Item.value = Item.sellPrice(gold: 2);
+			Item.value = Item.sellPrice(gold: 10, silver: 50);
 			Item.rare = ItemRarityID.Red;
 		}
 		public override void UpdateEquip(Player player) {

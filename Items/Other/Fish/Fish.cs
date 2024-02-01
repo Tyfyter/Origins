@@ -60,7 +60,6 @@ namespace Origins.Items.Other.Fish {
 	}
 	public class Tire : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Tire");
 			ItemID.Sets.ExtractinatorMode[Type] = 1;
 			Item.ResearchUnlockCount = 1;
 		}

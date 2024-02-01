@@ -86,28 +86,27 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (npc.poisoned) {
-				npc.lifeRegen += 2;
+				npc.lifeRegen -= 5;
 			}
 			if (npc.venom) {
-				npc.lifeRegen += 30;
-				damage -= 5;
+				npc.lifeRegen -= 5;
 			}
-			// not sure how to give resistance to confused, but crimson enemies probably shouldn't be entirely immune to it
-			if (npc.onFire) {
+            if (npc.ichor) {
+                npc.lifeRegen += 25;
+            }
+            if (npc.onFire) {
 				npc.lifeRegen -= 4;
-				damage += 3;
+				damage += 2;
 			}
 			if (npc.onFire3) {
 				npc.lifeRegen -= 15;
 				damage += 3;
 			}
 			if (npc.oiled && (npc.onFire || npc.onFire2 || npc.onFire3 || npc.shadowFlame)) {
-				npc.lifeRegen -= 25;
-				damage += 5;
+				npc.lifeRegen -= 15;
 			}
 			if (npc.daybreak) {
-				npc.lifeRegen -= 50 * 2;
-				damage += 25;
+				npc.lifeRegen -= 25 * 2;
 			}
 			if (npc.dryadBane) {
 				const float baseDPS = 2;

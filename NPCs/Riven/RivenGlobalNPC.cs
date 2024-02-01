@@ -1,4 +1,5 @@
-﻿using Origins.NPCs.Riven.World_Cracker;
+﻿using Origins.Buffs;
+using Origins.NPCs.Riven.World_Cracker;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
@@ -58,32 +59,29 @@ namespace Origins.NPCs.Riven
 				npc.lifeRegen += 4;
 			}
 			if (npc.onFire2) {// cursed inferno
-				npc.lifeRegen += 24;
-				damage -= 5;
+				npc.lifeRegen += 12;
 			}
 			if (npc.onFire3) {// hellfire
 				npc.lifeRegen += 15;
 				damage -= 3;
 			}
 			if (npc.onFrostBurn) {
-				npc.lifeRegen += 16;
-				damage -= 1;
+				npc.lifeRegen -= 12;
 			}
 			if (npc.onFrostBurn2) {
-				npc.lifeRegen += 50;
-				damage -= 5;
+				npc.lifeRegen -= 24;
 			}
 			if (npc.shadowFlame) {
-				npc.lifeRegen += 15;
-				damage -= 3;
+				npc.lifeRegen += 10;
+				damage -= 1;
 			}
 			if (npc.oiled && (npc.onFire || npc.onFire2 || npc.onFire3 || npc.shadowFlame)) {
 				npc.lifeRegen += 10;
 				damage -= 2;
 			}
 			if (npc.daybreak) {
-				npc.lifeRegen += 50 * 2;
-				damage -= 10;
+				npc.lifeRegen += 25 * 2;
+				damage -= 5;
 			}
 			if (npc.javelined) {
 				npc.lifeRegen -= 6;

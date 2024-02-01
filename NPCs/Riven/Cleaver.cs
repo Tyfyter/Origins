@@ -1,4 +1,4 @@
-using Origins.World.BiomeData;
+using Origins.Buffs;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
@@ -16,7 +16,8 @@ namespace Origins.NPCs.Riven {
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath23;
 			NPC.value = 70;
-		}
+            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
+        }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				this.GetBestiaryFlavorText("A vicious defender of the Riven Hive, the Cleaver hides in burrows of spug flesh awaiting any trespassers of its territory."),

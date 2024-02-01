@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items.Materials;
-using Origins.Items.Other.Consumables;
-using Origins.Items.Other.Consumables.Food;
-using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -10,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-	public class Pustule_Jelly : Glowing_Mod_NPC, IRivenEnemy {
+    public class Pustule_Jelly : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 		}
@@ -22,7 +20,8 @@ namespace Origins.NPCs.Riven {
 			NPC.width = 32;
 			NPC.height = 42;
 			NPC.frame.Height = 40;
-		}
+            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
+        }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				this.GetBestiaryFlavorText("A Riven-infected jellyfish living in its new parasite-prevalent environment."),

@@ -158,6 +158,7 @@ ENEMY NPCS:
 (^) Profaned Bident
 (@5, ^3) Pustule Jelly
 (@5, #3) Riven Mimic
+(X) Savage Whip
 (X) Sea Dragon
 (X) Shattered Ghoul
 (^) Shattered Goldfish
@@ -318,6 +319,7 @@ ACCESSORIES:
 (^) Lousy Liver*
 (^) Lover's Leap*
 (^) Magic Glove*
+(^) Magic Pain Glove*
 (^) Magic Tripwire*
 (^) Makeover Choker*
 (^) Messy Leech*
@@ -447,6 +449,7 @@ VANITY:
 (X) Ashen Dye
 (X) Defiled Dye
 (X) High Contrast Dye
+(X) Nova Dye
 (X) Riven Dye
 ---
 
@@ -481,6 +484,7 @@ WINGS:
 (x) Booster Pack
 (X) Celestine Wings
 (X) Fibron Thruster Array
+(X) Nova Backblaster
 ---
 
 
@@ -507,8 +511,9 @@ TOOLS:
 
 (#, %2, ^2) Impactaxe
 
-(X) Terraformer
 (X) Ahe
+(X) Nova Bomb
+(X) Terraformer
 ---
 
 
@@ -756,20 +761,20 @@ EXPLOSIVE WEAPONS:
 (^) Crystal Grenade*
 (#2, ^2) Grenado (replanning never)
 (^) Mine Flayer*
+(X) Nova Cascade
+(X) Nova Starforge
 (^) Nuclear Arm*
 (#2, ^2) Omni-directional Claymore*
 (^) Rocodile
 (X) Self-Destruct
-(X) Starforge
+(X) Supernova
 (X) Thundershot
 
 (@5, ^3) Black Hole Bomb*
-(X) Cascade
 (@5, ^3) Caustica
 (#3, ^2) Flakjack
 (@, ^3) Missile Minigun
 (@5, #) Starburst
-(X) Supernova
 ---
 
 
@@ -953,7 +958,7 @@ MATERIALS:
 ---
 (^) Acetabularia*
 (^) Adhesive Wrap*
-(^) Bark
+(^) Bark*
 (^) Bat Hide*
 (^) Biocomponent 10*
 (^) Bud Barnacle*
@@ -969,14 +974,14 @@ MATERIALS:
 (^) Sanguinite Bar*
 (^) Sentient Powder*
 (^) Strange String*
-(^) Tire
-(^) Tree Sap
+(^) Tire*
+(^) Tree Sap*
 (^) Undead Chunk*
 (^) Urn of Ashes*
 
 (^) Alkahest*
 (^) Black Bile*
-(^) Bleeding Obsidian Shard
+(^) Bleeding Obsidian Shard*
 (^) Bottled Brine*
 (^) Brineglow*
 (^) Eitrite Bar*
@@ -996,10 +1001,10 @@ MATERIALS:
 (@5, ^3) Fibron Plating*
 (^) Formium Bar*
 (^) Formium Scrap*
-(^) Lunar Token
+(^) Lunar Token*
 (^) Material-36 Bundle*
-(#3, ^2) Nova Fragment
-(^) Qube
+(#3, ^2) Nova Fragment*
+(^) Qube*
 (X) Weapon Blueprint
 
 (X) Large Chambersite

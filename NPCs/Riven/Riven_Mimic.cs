@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -20,7 +21,8 @@ namespace Origins.NPCs.Riven {
 			NPC.value = 30000f;
 			NPC.knockBackResist = 0.1f;
 			NPC.rarity = 5;
-		}
+            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
+        }
 		public override int SpawnNPC(int tileX, int tileY) {//should disable spawning
 			return -1;
 		}

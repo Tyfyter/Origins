@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items.Armor.Riven;
 using Origins.World.BiomeData;
 using System;
@@ -24,7 +25,8 @@ namespace Origins.NPCs.Riven {
 			NPC.frame.Height = 22;
 			NPC.alpha = 50;
 			NPC.value = 20;
-		}
+            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
+        }
 		public override void AI() {
 			if (NPC.direction == 0) {
 				NPC.TargetClosest();

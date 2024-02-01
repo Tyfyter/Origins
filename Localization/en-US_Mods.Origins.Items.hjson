@@ -3614,3 +3614,15 @@ Bad_Hand: {
 	DisplayName: Bad Hand
 	Tooltip: "'What a deal!'"
 }
+
+Magic_Pain_Glove: {
+	DisplayName: Magic Pain Glove
+	Tooltip:
+		'''
+		12% increased melee speed
+		8% reduced mana usage
+		Enables auto swing for melee weapons
+		Automatically use mana potions when needed
+		Shoots random magic as you swing
+		'''
+}

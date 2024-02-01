@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Origins.NPCs {
-	public static class BiomeNPCGlobals {
+    public static class BiomeNPCGlobals {
 		public static float CalcDryadDPSMult() {
 			float damageMult = 1f;
 			if (NPC.downedBoss1) {

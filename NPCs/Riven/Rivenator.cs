@@ -1,3 +1,4 @@
+using Origins.Buffs;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
 using Origins.World.BiomeData;
@@ -16,7 +17,8 @@ namespace Origins.NPCs.Riven {
 			NPC.defense = 18;
 			NPC.damage = 52;
 			NPC.value = 1000;
-		}
+            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
+        }
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Worm;
 		}

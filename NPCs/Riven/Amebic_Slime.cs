@@ -1,4 +1,5 @@
-﻿using Origins.Items.Weapons.Demolitionist;
+﻿using Origins.Buffs;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -22,7 +23,8 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 24;
 			NPC.friendly = false;
 			NPC.value = 40;
-		}
+            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
+        }
 		public override void FindFrame(int frameHeight) {
 			NPC.CloneFrame(NPCID.Crimslime, frameHeight);
 		}

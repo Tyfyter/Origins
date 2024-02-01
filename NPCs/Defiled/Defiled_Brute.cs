@@ -100,7 +100,7 @@ namespace Origins.NPCs.Defiled {
             //}else{*/
 			if (++NPC.frameCounter > 9) {
 				//add frame height to frame y position and modulo by frame height multiplied by walking frame count
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 66) % 264, 76, 66);
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + 62) % 248, 74, 60);
 				NPC.frameCounter = 0;
 			}
 			if (NPC.collideY && Math.Sign(NPC.velocity.X) == NPC.direction) NPC.velocity.X *= speedMult;

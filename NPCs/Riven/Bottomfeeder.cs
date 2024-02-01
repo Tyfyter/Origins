@@ -1,12 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.World.BiomeData;
+using Origins.Buffs;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.NPCs.Riven
-{
+namespace Origins.NPCs.Riven {
     public class Bottomfeeder : ModNPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
@@ -20,7 +19,8 @@ namespace Origins.NPCs.Riven
 			NPC.height = 26;
 			NPC.frame.Height = 28;
 			NPC.value = 500;
-		}
+            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
+        }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				this.GetBestiaryFlavorText("Goldfish naturally evolve into dangerous, insolveable carnivores in the Riven Hive which is only further catalyzed by the Blood Moon."),

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -15,7 +16,8 @@ namespace Origins.NPCs.Riven {
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive>().Type
 			};
-		}
+            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
+        }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 this.GetBestiaryFlavorText("During a Blood Moon, the Riven Hive is able to overcome its weakness of the cold and spread, forcing normally docile penguins to adapt."),

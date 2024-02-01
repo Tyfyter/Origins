@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ranged;
-using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -15,7 +15,6 @@ namespace Origins.NPCs.Defiled {
 		public const float speedMult = 1f;
 		bool attacking = false;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Cyclops");
 			Main.npcFrameCount[Type] = 7;
 		}
 		public override void SetDefaults() {
@@ -28,7 +27,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.height = 114;
 			NPC.friendly = false;
 			NPC.value = 10000;
-		}
+        }
 		public bool ForceSyncMana => false;
 		public float Mana { get; set; }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

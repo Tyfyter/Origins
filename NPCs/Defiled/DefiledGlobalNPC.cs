@@ -60,38 +60,40 @@ namespace Origins.NPCs.Defiled
 				Mod.Logger.Error("something has gone extremely wrong and a non-defiled enemy has a DefiledGlobalNPC");
 			}
 			if (npc.poisoned) {
-				npc.lifeRegen += 2;
+				npc.lifeRegen += 6;
 			}
 			if (npc.onFire) {
 				npc.lifeRegen += 4;
 			}
 			if (npc.onFire2) {// cursed inferno
 				npc.lifeRegen += 24;
-				damage -= 5;
 			}
 			if (npc.onFire3) {// hellfire
 				npc.lifeRegen += 15;
-				damage -= 3;
 			}
 			if (npc.onFrostBurn) {
-				npc.lifeRegen += 16;
+				npc.lifeRegen -= 4;
 				damage -= 1;
 			}
 			if (npc.onFrostBurn2) {
-				npc.lifeRegen += 50;
-				damage -= 5;
-			}
-			if (npc.shadowFlame) {
-				npc.lifeRegen += 15;
+				npc.lifeRegen -= 16;
 				damage -= 3;
+			}
+            /*if (npc.electrified) {
+				damage += 10;
+            }
+            if (npc.electrified && npc.wet) {
+                damage += 35;
+            } */
+            if (npc.shadowFlame) {
+				npc.lifeRegen += 15;
 			}
 			if (npc.oiled && (npc.onFire || npc.onFire2 || npc.onFire3 || npc.shadowFlame)) {
 				npc.lifeRegen += 10;
-				damage -= 2;
 			}
 			if (npc.daybreak) {
-				npc.lifeRegen += 50 * 2;
-				damage -= 10;
+				npc.lifeRegen += 25 * 2;
+				damage -= 5;
 			}
 			if (npc.javelined) {
 				npc.lifeRegen -= 6;

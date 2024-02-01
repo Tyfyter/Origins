@@ -144,9 +144,61 @@ namespace Origins {
 			recipe.AddIngredient(ItemID.Wood);
 			recipe.Register();
 
-			//this hook is supposed to be used for adding recipes,
-			//but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
-			Origins.instance.LateLoad();
+            recipe = Recipe.Create(ItemID.CelestialSigil);
+            recipe.AddIngredient(ItemID.FragmentNebula, 12);
+            recipe.AddIngredient(ItemID.FragmentSolar, 12);
+            recipe.AddIngredient(ItemID.FragmentStardust, 12);
+            recipe.AddIngredient(ItemID.FragmentVortex, 12);
+            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 12);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.LunarHook);
+            recipe.AddIngredient(ItemID.FragmentNebula, 6);
+            recipe.AddIngredient(ItemID.FragmentSolar, 6);
+            recipe.AddIngredient(ItemID.FragmentStardust, 6);
+            recipe.AddIngredient(ItemID.FragmentVortex, 6);
+            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 6);
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.SuperHealingPotion, 5);
+            recipe.AddIngredient(ItemID.FragmentNebula);
+            recipe.AddIngredient(ItemID.FragmentSolar);
+            recipe.AddIngredient(ItemID.FragmentStardust);
+            recipe.AddIngredient(ItemID.FragmentVortex);
+            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.FragmentNebula);
+            recipe.AddIngredient(ItemID.FragmentSolar);
+            recipe.AddIngredient(ItemID.FragmentStardust);
+            recipe.AddIngredient(ItemID.FragmentVortex);
+            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.FragmentSolar);
+            recipe.AddIngredient(ItemID.FragmentNebula);
+            recipe.AddIngredient(ItemID.FragmentStardust);
+            recipe.AddIngredient(ItemID.FragmentVortex);
+            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.FragmentStardust);
+            recipe.AddIngredient(ItemID.FragmentNebula);
+            recipe.AddIngredient(ItemID.FragmentSolar);
+            recipe.AddIngredient(ItemID.FragmentVortex);
+            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
+            recipe.Register();
+
+            recipe = Recipe.Create(ItemID.FragmentVortex);
+            recipe.AddIngredient(ItemID.FragmentNebula);
+            recipe.AddIngredient(ItemID.FragmentSolar);
+            recipe.AddIngredient(ItemID.FragmentStardust);
+            recipe.AddIngredient(ModContent.ItemType<Nova_Fragment>());
+            recipe.Register();
+
+            //this hook is supposed to be used for adding recipes,
+            //but since it also runs after a lot of other stuff I tend to use it for a lot of unrelated stuff
+            Origins.instance.LateLoad();
 		}
 		public override void PostUpdateInput() {
 		}
