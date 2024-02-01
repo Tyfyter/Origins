@@ -15,6 +15,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
     public abstract class MaterialItem : ModItem {
+		protected override bool CloneNewInstances => true;
 		public virtual bool HasTooltip => false;
 		public virtual bool HasGlowmask => false;
 		public virtual string GlowTexture => Texture + "_Glow";
@@ -23,11 +24,13 @@ namespace Origins.Items.Materials {
 		public virtual int Rare => ItemRarityID.White;
 		public virtual int Value => 0;
 		protected short glowmask = -1;
+		protected int tileID = -1;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = ResearchUnlockCount;
 			if (HasGlowmask) glowmask = Origins.AddGlowMask(GlowTexture);
 		}
 		public override void SetDefaults() {
+			if (tileID != -1) Item.DefaultToPlaceableTile(tileID);
 			Item.rare = Rare;
 			Item.value = Value;
 			Item.maxStack = Item.CommonMaxStack;
@@ -160,10 +163,18 @@ namespace Origins.Items.Materials {
 	public class Chromtain_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(gold: 1);
 		public override int Rare => CrimsonRarity.ID;
+		public override void Load() {
+			base.Load();
+			tileID = Bar_Tile.AddBarTile(this);
+		}
 	}
 	public class Defiled_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
+		public override void Load() {
+			base.Load();
+			tileID = Bar_Tile.AddBarTile(this);
+		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 3);
@@ -178,9 +189,14 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Eitrite_Bar : MaterialItem {
-        public override void SetStaticDefaults() {
+		public override void Load() {
+			base.Load();
+			tileID = Bar_Tile.AddBarTile(this);
+		}
+
+		public override void SetStaticDefaults() {
             base.SetStaticDefaults();
-            ItemID.Sets.ShimmerTransformToItem[ItemID.HallowedBar] = ModContent.ItemType<Eitrite_Bar>();
+			ItemID.Sets.ShimmerTransformToItem[ItemID.HallowedBar] = ModContent.ItemType<Eitrite_Bar>();
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Eitrite_Bar>()] = ItemID.HallowedBar;
         }
         public override int Value => Item.sellPrice(silver: 81);
@@ -215,6 +231,10 @@ namespace Origins.Items.Materials {
 	public class Encrusted_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
+		public override void Load() {
+			base.Load();
+			tileID = Bar_Tile.AddBarTile(this);
+		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 3);
@@ -233,6 +253,10 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Green;
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;
+		public override void Load() {
+			base.Load();
+			tileID = Bar_Tile.AddBarTile(this);
+		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Felnum_Ore_Item>(), 3);
@@ -247,6 +271,10 @@ namespace Origins.Items.Materials {
 	public class Formium_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 68);
 		public override int Rare => ButterscotchRarity.ID;
+		public override void Load() {
+			base.Load();
+			tileID = Bar_Tile.AddBarTile(this);
+		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Formium_Scrap>(), 6);
@@ -376,6 +404,10 @@ namespace Origins.Items.Materials {
 	public class Sanguinite_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
+		public override void Load() {
+			base.Load();
+			tileID = Bar_Tile.AddBarTile(this);
+		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 3);
@@ -423,6 +455,10 @@ namespace Origins.Items.Materials {
 		//Alloy of Felnum and a Dawn material. I can imagine a pearl-like color now
 		public override int Value => Item.sellPrice(gold: 1);
 		public override int Rare => ItemRarityID.Yellow;
+		public override void Load() {
+			base.Load();
+			tileID = Bar_Tile.AddBarTile(this);
+		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.Ectoplasm);
