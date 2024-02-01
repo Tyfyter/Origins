@@ -331,7 +331,7 @@ namespace Origins.Items.Materials {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.HallowedBar, 2);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 4);
+			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 3);
 			recipe.AddTile(TileID.MythrilAnvil); //Fabricator not implemented yet
 			recipe.Register();
 		}

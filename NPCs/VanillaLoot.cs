@@ -51,7 +51,7 @@ namespace Origins.NPCs {
 				case NPCID.Retinazer:
 				case NPCID.Spazmatism:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Busted_Servo>(), 1, 8, 37));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Power_Core>(), 1, 1, 2));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Power_Core>(), 1, 1, 3));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rotor>(), 1, 5, 22));
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_Power_Up>(), 50));
 				break;

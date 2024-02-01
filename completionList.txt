@@ -393,7 +393,7 @@ ACCESSORIES:
 (X) Void Arcanum
 
 (%3, X) Armored Core
-(#4, ^2) Blizzardwalker's Jacket* !!!
+(^) Blizzardwalker's Jacket*
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
 (^) Entangled Energy*
@@ -899,7 +899,7 @@ TILES:
 (#, ^2) Fabricator*
 (X) Flesh Shredder*
 (X) Interstellar Sampler*
-(X) Qube Generator
+(X) Qube Generator*
 
 (^) Acetabularia*
 (^) Brineglow Vine*
@@ -981,24 +981,25 @@ MATERIALS:
 (^) Brineglow*
 (^) Eitrite Bar*
 (^) Illegal Explosive Parts
-(^) Respyrite
+(^) Respyrite*
 
-(^) Busted Servo
-(^) Power Core
-(^) Rotor
+(^) Busted Servo*
+(^) Power Core*
+(^) Rotor*
 
-(X) Alien Conduit
+(X) Alien Conduit*
 (X) Armor Piece Blueprint
 (^) Chromtain Bar*
 (X) Core Blueprint
-(X) Endyean Ceramic
+(X) Endyean Ceramic*
 (X) Ethereal Ash
-(@5, ^3) Fibron Plating
+(@5, ^3) Fibron Plating*
 (^) Formium Bar*
-(^) Formium Scrap
+(^) Formium Scrap*
 (^) Lunar Token
 (^) Material-36 Bundle*
 (#3, ^2) Nova Fragment
+(^) Qube
 (X) Weapon Blueprint
 
 (X) Large Chambersite

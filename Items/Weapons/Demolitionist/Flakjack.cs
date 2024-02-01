@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using Origins.Projectiles;
+using Origins.Tiles.Cubekon;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -43,7 +45,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = CrimsonRarity.ID;
 		}
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Fibron_Plating>(), 24);
+            recipe.AddIngredient(ModContent.ItemType<Qube_Item>(), 48);
+            recipe.AddTile(TileID.LunarCraftingStation); // Interstellar Sampler
+            recipe.Register();
+        }
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			SoundEngine.PlaySound(SoundID.Item40, position);
 			SoundEngine.PlaySound(SoundID.Item36.WithVolume(0.75f), position);
 			Vector2 perp = velocity.RotatedBy(MathHelper.PiOver2).SafeNormalize(default);
