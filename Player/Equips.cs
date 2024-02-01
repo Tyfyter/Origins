@@ -216,7 +216,7 @@ namespace Origins {
 						const int bossRangeSQ = bossRange * bossRange;
 						for (int i = 0; i < Main.maxNPCs; i++) {
 							NPC npc = Main.npc[i];
-							if (npc.active && npc.damage > 0 && npc.npcSlots > 0 && Player.DistanceSQ(npc.Center) > (npc.boss ? bossRangeSQ : rangeSQ)) {
+							if (npc.active && npc.damage > 0 && npc.npcSlots > 0 && Player.DistanceSQ(npc.Center) <= (npc.boss ? bossRangeSQ : rangeSQ)) {
 								blizzardwalkerDanger = true;
 							}
 						}
