@@ -222,7 +222,12 @@ namespace Origins {
 						}
 					}
 					if (blizzardwalkerDanger) {
-						blizzardwalkerActiveTime = 0;
+						const int decayRate = 6;
+						if (blizzardwalkerActiveTime > decayRate) {
+							blizzardwalkerActiveTime -= decayRate;
+						} else {
+							blizzardwalkerActiveTime = 0;
+						}
 					} else {
 						blizzardwalkerActiveTime++;
 					}
