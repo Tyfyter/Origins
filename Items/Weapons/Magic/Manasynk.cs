@@ -162,7 +162,9 @@ namespace Origins.Items.Weapons.Magic {
 		}
 	}
 	public class Manasynk_Pickup : ModItem {
-		
+		public override void SetStaticDefaults() {
+			ItemID.Sets.IsAPickup[Type] = true;
+		}
 		public override void SetDefaults() {
 			Item.maxStack = 9999;
 		}

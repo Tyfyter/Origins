@@ -333,6 +333,7 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Nova_Fragment : MaterialItem {
+		public override bool HasGlowmask => true;
 		public override string GlowTexture => Texture;
 		public override int Value => Item.sellPrice(silver: 20);
 		public override int Rare => ItemRarityID.Cyan;
