@@ -238,6 +238,12 @@ namespace Origins {
 				if (r.requiredItem.ToList().Exists((ing) => ing.type == ItemID.Deathweed)) {
 					r.acceptedGroups.Add(DeathweedRecipeGroupID);
 				}
+				//example use of Recipe.Matches extension method because I just realized that I don't know which recipes you're trying to disable:
+				//this would match any recipe which creates any number of potato chips, is crafted at pots, and has exactly the ingredients: any number of potato chips, 7 potions of return
+				if (r.Matches((ItemID.PotatoChips, null), new int[] { TileID.Pots }, (ItemID.PotatoChips, null), (ItemID.PotionOfReturn, 7))) {
+					r.DisableRecipe();
+				}
+
 				//recipe = r.Clone();
 				//recipe.requiredItem = recipe.requiredItem.Select((it) => it.type == ItemID.Deathweed ? new Item(roseID) : it.CloneByID()).ToList();
 				//Mod.Logger.Info("adding procedural recipe: " + recipe.Stringify());

@@ -2353,6 +2353,35 @@ namespace Origins {
 
 			return getterMethod.CreateDelegate<Func<IEntitySource, string, IEntitySource>>();
 		}
+		public static bool Matches(this Recipe recipe, (int id, int? count)? result, int[] tiles, params (int id, int? count)[] ingredients) {
+			static bool ItemMatches(Item item, (int id, int? count) pattern) {
+				if (item.type == pattern.id) {
+					return !pattern.count.HasValue || item.stack == pattern.count;
+				}
+				return false;
+			}
+			if (result.HasValue && !ItemMatches(recipe.createItem, result.Value)) return false;
+			if (ingredients is not null) {
+				if (recipe.requiredItem.Count == ingredients.Length) {
+					for (int i = 0; i < ingredients.Length; i++) {
+						(int id, int? count) ingredient = ingredients[i];
+						if (!recipe.requiredItem.Any(req => ItemMatches(req, ingredient))) return false;
+					}
+				} else {
+					return false;
+				}
+			}
+			if (tiles is not null) {
+				if (recipe.requiredTile.Count == tiles.Length) {
+					for (int i = 0; i < ingredients.Length; i++) {
+						if (!recipe.requiredTile.Contains(tiles[i])) return false;
+					}
+				} else {
+					return false;
+				}
+			}
+			return true;
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
