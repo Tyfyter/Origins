@@ -1048,7 +1048,7 @@ Projectiles: {
 	// Bad_Hand_Red_P.DisplayName: Red Card
 	// Joint_Pop_Explosion.DisplayName: Joint Pop
 	// Joint_Pop_P.DisplayName: Joint Pop
-	// Cellarkeep_Barrel_Explosion.DisplayName: Cellarkeep_ Barrel_ Explosion
+	// Cellarkeep_Barrel_Explosion.DisplayName: Explosive Barrel
 }
 
 Prefixes: {
@@ -1181,7 +1181,7 @@ NPCs: {
 	// Barnacle_Bunny.DisplayName: Barnacle_ Bunny
 	// Riven_Penguin.DisplayName: Riven_ Penguin
 	// Cellarkeep.DisplayName: Cellarkeep
-	// Cellarkeep_Barrel.DisplayName: Cellarkeep_ Barrel
+	// Cellarkeep_Barrel.DisplayName: Explosive Barrel
 }
 
 // BiomeName.Bestiary_Biomes.TheTemple: The Temple

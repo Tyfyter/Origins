@@ -143,10 +143,10 @@ namespace Origins.NPCs {
 				}
 			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
-				npc.lifeRegen -= 15;
+				npc.lifeRegen -= 8;
 				damage += 1;
 				if (npc.HasBuff(Toxic_Shock_Strengthen_Debuff.ID)) {
-					npc.lifeRegen -= 15;
+					npc.lifeRegen -= 8;
 					damage += 1;
 				}
 			}

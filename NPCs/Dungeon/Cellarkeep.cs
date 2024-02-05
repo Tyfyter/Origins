@@ -30,7 +30,7 @@ namespace Origins.NPCs.Dungeon {
 			NPC.width = 20;
 			NPC.height = 38;
 			NPC.friendly = false;
-			NPC.HitSound = SoundID.NPCHit13;
+			NPC.HitSound = SoundID.NPCHit2;
 			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
 			NPC.value = 90;
         }
@@ -131,9 +131,9 @@ namespace Origins.NPCs.Dungeon {
 		}
 		public override void SetDefaults() {
 			NPC.aiStyle = -1;
-			NPC.lifeMax = 90;
+			NPC.lifeMax = 40;
 			NPC.defense = 0;
-			NPC.damage = 60;
+			NPC.damage = 67;
 			NPC.height = NPC.width = 26;
 			NPC.knockBackResist = 0;
 			NPC.noGravity = true;
@@ -185,9 +185,9 @@ namespace Origins.NPCs.Dungeon {
 					}
 					NPC.frameCounter = 0;
 				}
-				if (NPC.collideX) {
+				/*if (NPC.collideX) {
 					NPC.StrikeInstantKill();
-				}
+				}*/
 			}
 		}
 		public override void OnKill() {

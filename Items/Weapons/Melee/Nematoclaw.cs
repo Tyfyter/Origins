@@ -17,8 +17,6 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item1;
 		}
 		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.Poisoned, 600);
-			target.AddBuff(BuffID.Venom, 300);
 			target.AddBuff(Toxic_Shock_Debuff.ID, 180);
 		}
 	}

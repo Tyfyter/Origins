@@ -37,6 +37,7 @@ X: No progress
 ◘: Pending review before continuation
 ○: Implemented with temp stats/missing recipe/etc.
 †: needs testing (unicode hex code 2020)
+ᗢ: Implemented, but will need to be revisited in later update
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -108,7 +109,7 @@ ENEMY NPCS:
 (#2, ^2) Barnacle Bunny* !!!
 (#, ^2) Bile Thrower* !!!
 (^) Buckethead Zombie
-(#, ^2) Cellarkeep* !!!
+(^) Cellarkeep*
 (^) Chunky Slime
 (^) Cleaver
 (^) Conehead Zombie
@@ -203,12 +204,12 @@ STATUS EFFECTS:
 (^) Assimilation
 (X) Celestial Flames
 (^) Defiled Exhaustion
-(☻) Impeding Shrapnel* !!!
+(^) Impeding Shrapnel*
 (X) Ionizing Radiation
 (^) Rasterized
 (^) Torn*
 (^) Totally Safe
-(#2?, ^2) Toxic Shock*
+(^) Toxic Shock*
 (X) Whiplash
 (X) Workout
 ---
@@ -242,7 +243,7 @@ ARMOR:
 (^) Mythic Armor*
 (^) Riptide Armor*
 (^) Riven Armor*
-(☻) Scavenger Armor* !!!
+(ᗢ) Scavenger Armor*
 (#3, ^2) Soulhide Armor* !!!
 (^) Tendon Armor*
 
@@ -520,6 +521,7 @@ TOOLS:
 MELEE WEAPONS:
 ---
 (^) Baseball Bat
+(^) Bone Latcher
 (^) Cyah Nara
 (^) Decimator
 (^) Felnum Spear
@@ -673,7 +675,6 @@ SUMMONER WEAPONS:
 ---
 (^) Amebolize Incantation
 (#, ^2) Bee Afraid Incantation* !!!
-(^) Bone Latcher
 (^) Brainy Staff*
 (#, ^2) Desert Crown* !!!
 (^) Eyeball Staff
@@ -989,6 +990,7 @@ MATERIALS:
 (^) Respyrite*
 
 (^) Busted Servo*
+(^) Nova Fragment*
 (^) Power Core*
 (^) Rotor*
 
@@ -1003,7 +1005,6 @@ MATERIALS:
 (^) Formium Scrap*
 (^) Lunar Token*
 (^) Material-36 Bundle*
-(#3, ^2) Nova Fragment*
 (^) Qube*
 (X) Weapon Blueprint
 

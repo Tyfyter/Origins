@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
-			Item.damage = 17;
+			Item.damage = 12;
 			Item.useTime = (int)(Item.useTime * 0.75);
 			Item.useAnimation = (int)(Item.useAnimation * 0.75);
 			Item.shoot = ModContent.ProjectileType<Peatball_P>();
