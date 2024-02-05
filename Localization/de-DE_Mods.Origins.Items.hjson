@@ -3626,3 +3626,8 @@ Magic_Pain_Glove: {
 		Shoots random magic as you swing
 		''' */
 }
+
+Joint_Pop: {
+	// DisplayName: Joint_ Pop
+	// Tooltip: ""
+}

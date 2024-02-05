@@ -1041,6 +1041,8 @@ Projectiles: {
 	Sunflower_Seed_P.DisplayName: Sunflower Seed
 	Bad_Hand_Black_P.DisplayName: Black Card
 	Bad_Hand_Red_P.DisplayName: Red Card
+	Joint_Pop_Explosion.DisplayName: Joint Pop
+	Joint_Pop_P.DisplayName: Joint Pop
 }
 
 Prefixes: {

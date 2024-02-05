@@ -19,6 +19,7 @@ namespace Origins.NPCs {
 		internal int toxicShockStunTime = 0;
 		internal List<int> infusionSpikes;
 		internal bool amebolizeDebuff = false;
+		internal bool jointPopDebuff = false;
 		public bool tornDebuff = false;
 		public float tornCurrentSeverity = 0;
 		public float tornSeverityRate = 0.3f / 180;
@@ -46,6 +47,7 @@ namespace Origins.NPCs {
 				rasterizedTime = 0;
 			}
 			amebolizeDebuff = false;
+			jointPopDebuff = false;
 			if (tornDebuff) {
 				OriginExtensions.LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornSeverityRate);
 				if (tornCurrentSeverity >= 1 && Main.netMode != NetmodeID.MultiplayerClient) {

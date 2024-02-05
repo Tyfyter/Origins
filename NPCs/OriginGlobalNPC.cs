@@ -214,6 +214,9 @@ namespace Origins.NPCs {
 				if (amebolizeDebuff) {
 					damageBoost += 5f;
 				}
+				if (jointPopDebuff) {
+					damageBoost += 3f;
+				}
 				modifiers.FlatBonusDamage += Main.rand.RandomRound(damageBoost);
 			}
 			int forceCritBuff = npc.FindBuffIndex(Headphones_Buff.ID);
