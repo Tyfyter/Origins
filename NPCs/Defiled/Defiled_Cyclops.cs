@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Summoner;
-using Origins.World.BiomeData;
+using Origins.Items.Weapons.Melee;
 using System;
 using System.IO;
 using Terraria;
@@ -11,7 +10,6 @@ using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 
 namespace Origins.NPCs.Defiled {
     public class Defiled_Cyclops : ModNPC, IDefiledEnemy {
