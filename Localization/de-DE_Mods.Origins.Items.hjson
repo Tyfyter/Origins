@@ -3628,6 +3628,12 @@ Magic_Pain_Glove: {
 }
 
 Joint_Pop: {
-	// DisplayName: Joint_ Pop
-	// Tooltip: ""
+	// DisplayName: Joint Pop
+	/* Tooltip:
+		'''
+		Striking with the tip will cause it to explode
+		The explosion will briefly slow enemies
+		3 summon tag damage
+		{$CommonItemTooltip.Whips}
+		''' */
 }

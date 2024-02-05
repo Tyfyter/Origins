@@ -779,6 +779,11 @@ Buffs: {
 		DisplayName: Eye Summon You!
 		Description: The Servants will keep an eye on your enemies
 	}
+
+	Joint_Pop_Buff: {
+		DisplayName: Joint_ Pop_ Buff
+		Description: Mods.Origins.Buffs.Joint_Pop_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1043,6 +1048,7 @@ Projectiles: {
 	Bad_Hand_Red_P.DisplayName: Red Card
 	Joint_Pop_Explosion.DisplayName: Joint Pop
 	Joint_Pop_P.DisplayName: Joint Pop
+	Cellarkeep_Barrel_Explosion.DisplayName: Explosive Barrel
 }
 
 Prefixes: {
@@ -1174,6 +1180,8 @@ NPCs: {
 	Spider_Amoeba.DisplayName: Spider_ Amoeba
 	Barnacle_Bunny.DisplayName: Barnacle_ Bunny
 	Riven_Penguin.DisplayName: Riven_ Penguin
+	Cellarkeep.DisplayName: Cellarkeep
+	Cellarkeep_Barrel.DisplayName: Explosive Barrel
 }
 
 BiomeName.Bestiary_Biomes.TheTemple: The Temple
