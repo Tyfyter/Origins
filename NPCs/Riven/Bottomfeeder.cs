@@ -19,7 +19,6 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 26;
 			NPC.frame.Height = 28;
 			NPC.value = 500;
-            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
         }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

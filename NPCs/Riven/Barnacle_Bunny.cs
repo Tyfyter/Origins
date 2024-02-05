@@ -16,7 +16,6 @@ namespace Origins.NPCs.Riven {
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive>().Type
 			};
-            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
         }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

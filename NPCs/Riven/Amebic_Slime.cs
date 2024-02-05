@@ -23,7 +23,6 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 24;
 			NPC.friendly = false;
 			NPC.value = 40;
-            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
         }
 		public override void FindFrame(int frameHeight) {
 			NPC.CloneFrame(NPCID.Crimslime, frameHeight);

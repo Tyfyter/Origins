@@ -28,7 +28,6 @@ namespace Origins.NPCs.Riven {
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
 			NPC.value = 90;
-            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
         }
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Fighter;

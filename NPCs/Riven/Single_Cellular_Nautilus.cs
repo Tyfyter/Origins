@@ -26,7 +26,6 @@ namespace Origins.NPCs.Riven {
 			NPC.knockBackResist = 1f;
 			NPC.frame.Height = 30;
 			NPC.value = 200;
-            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
         }
 		public override void PostAI() {
 			NPC.rotation += NPC.velocity.X / 24f;

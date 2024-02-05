@@ -27,7 +27,6 @@ namespace Origins.NPCs.Riven {
 			NPC.DeathSound = SoundID.NPCDeath16;
 			NPC.noGravity = true;
 			NPC.npcSlots = 0.25f;
-			NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

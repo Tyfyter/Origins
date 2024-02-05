@@ -50,6 +50,7 @@ namespace Origins.NPCs.Riven
 					entity.ModNPC.SpawnModBiomes = spawnModBiomes;
 				}
 			}
+			entity.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
 		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (npc.poisoned) {

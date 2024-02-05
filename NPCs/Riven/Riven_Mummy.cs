@@ -23,7 +23,6 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 46;
 			NPC.friendly = false;
 			NPC.value = 7;
-            NPC.buffImmune[ModContent.BuffType<Torn_Debuff>()] = true;
             SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive_Desert>().Type
 			};
