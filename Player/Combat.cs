@@ -268,8 +268,12 @@ namespace Origins {
 					new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
 				);
 			}
+			if (scavengerSet && hit.DamageType.CountsAsClass<Explosive>()) {
+				OriginGlobalNPC.InflictImpedingShrapnel(target, 300);
+			}
 			//TODO: actually test this
 			if (Player.whoAmI != Main.myPlayer && Main.LocalPlayer.GetModPlayer<OriginPlayer>().priorityMail) {
+				Mod.Logger.Info("hits from elsewhere are counted for priority mail");
 				target.GetGlobalNPC<OriginGlobalNPC>().priorityMailTime = 300;
 			}
 		}

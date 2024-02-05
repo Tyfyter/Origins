@@ -25,7 +25,7 @@ namespace Origins.Items.Armor.Scavenger {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = "All explosives inflict 'Impeding Shrapnel'\nAdditional scrap drops from Ashen enemies";
-			//Originplayer.scavvyarmor = true;
+			player.GetModPlayer<OriginPlayer>().scavengerSet = true;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

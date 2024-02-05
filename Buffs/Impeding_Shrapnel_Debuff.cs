@@ -1,7 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Ranged;
 using Origins.World;
 using System;
 using Terraria;
+using Terraria.Audio;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -15,7 +19,7 @@ namespace Origins.Buffs {
 		public static void SpawnShrapnel(NPC npc, int buffTime) {
 			int count = Main.rand.Next(5, 8);
 			float rot = MathHelper.TwoPi / count;
-			Vector2 velocity = new Vector2(0.5f, 0).RotatedByRandom(MathHelper.Pi);
+			Vector2 velocity = new Vector2(1f, 0).RotatedByRandom(MathHelper.Pi);
 			int damage = (int)Math.Pow(Math.Log(buffTime, 1.5f), 1.5f);
 			for (int i = count; i-->0;) {
 				Projectile.NewProjectile(
@@ -45,6 +49,7 @@ namespace Origins.Buffs {
 			Projectile.width = Projectile.height = 8;
 			Projectile.timeLeft = 240;
 			Projectile.ignoreWater = true;
+			Projectile.localAI[1] = ModContent.ProjectileType<Shardcannon_P1>() + Main.rand.Next(3);
 		}
 		public override void AI() {
 			if (Projectile.timeLeft == 240) {
@@ -52,11 +57,43 @@ namespace Origins.Buffs {
 				Projectile.ai[0] = Main.rand.Next(256) * 30;
 				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 1.5f);
 			}
-			Vector2 diff = new Vector2(0, (GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.31f)).RotatedBy(Projectile.rotation);
-			Projectile.velocity += diff;
+			Projectile.localAI[0] += GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.31f;
+			//Vector2 diff = new Vector2(0, (GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.31f)).RotatedBy(Projectile.rotation);
+			//Projectile.velocity += diff;
+			Vector2 offset = Projectile.localAI[0] * new Vector2(Projectile.velocity.Y, -Projectile.velocity.X);
+			if (Collision.TileCollision(
+				Projectile.position,
+				offset,
+				Projectile.width,
+				Projectile.height,
+				true
+			) == offset) {
+				Projectile.position += offset;
+			} else {
+				Projectile.velocity = offset;
+				Projectile.Kill();
+			}
 			Projectile.ai[0] += Projectile.ai[1];
 			Dust.NewDustPerfect(Projectile.Center, 6, Vector2.Zero).noGravity = true;
 			//Dust.NewDustPerfect(Projectile.Center, 29, diff * 32);
+		}
+		public override void OnKill(int timeLeft) {
+			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
+			SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Texture2D texture = TextureAssets.Projectile[(int)Projectile.localAI[1]].Value;
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				Projectile.rotation,
+				texture.Size() * 0.5f,
+				1,
+				SpriteEffects.None
+			);
+			return false;
 		}
 	}
 }

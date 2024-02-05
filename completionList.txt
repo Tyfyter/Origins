@@ -203,12 +203,12 @@ STATUS EFFECTS:
 (^) Assimilation
 (X) Celestial Flames
 (^) Defiled Exhaustion
-(#3, ^2) Impeding Shrapnel* !!!
+(☻) Impeding Shrapnel* !!!
 (X) Ionizing Radiation
 (^) Rasterized
 (^) Torn*
 (^) Totally Safe
-(#2, ^2) Toxic Shock*
+(#2?, ^2) Toxic Shock*
 (X) Whiplash
 (X) Workout
 ---
@@ -242,7 +242,7 @@ ARMOR:
 (^) Mythic Armor*
 (^) Riptide Armor*
 (^) Riven Armor*
-(#3, ^2) Scavenger Armor* !!!
+(☻) Scavenger Armor* !!!
 (#3, ^2) Soulhide Armor* !!!
 (^) Tendon Armor*
 

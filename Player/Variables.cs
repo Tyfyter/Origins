@@ -84,6 +84,7 @@ namespace Origins {
 		public int mimicSetChoices = 0;
 		public int setActiveAbility = 0;
 		public int setAbilityCooldown = 0;
+		public bool scavengerSet = false;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -377,6 +378,7 @@ namespace Origins {
 					}
 				}
 			}
+			bool scavengerSet = false;
 
 			bombHandlingDevice = false;
 			destructiveClaws = false;
