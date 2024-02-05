@@ -8,7 +8,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons.Summoner {
+namespace Origins.Items.Weapons.Melee {
 	public class Bone_Latcher : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
