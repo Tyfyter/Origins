@@ -16,7 +16,7 @@ namespace Origins.NPCs {
 		public override bool InstancePerEntity => true;
 		internal int shockTime = 0;
 		internal int rasterizedTime = 0;
-		internal int toxicShockTime = 0;
+		internal int toxicShockStunTime = 0;
 		internal List<int> infusionSpikes;
 		internal bool amebolizeDebuff = false;
 		public bool tornDebuff = false;
@@ -138,6 +138,14 @@ namespace Origins.NPCs {
 						dust.noGravity = false;
 						dust.scale *= 0.5f;
 					}
+				}
+			}
+			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
+				npc.lifeRegen -= 15;
+				damage += 1;
+				if (npc.HasBuff(Toxic_Shock_Strengthen_Debuff.ID)) {
+					npc.lifeRegen -= 15;
+					damage += 1;
 				}
 			}
 		}

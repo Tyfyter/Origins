@@ -17,12 +17,10 @@ namespace Origins.Buffs {
 		public override void Update(Player player, ref int buffIndex) {
 			player.GetModPlayer<OriginPlayer>().toxicShock = true;
 		}
-		public override bool ReApply(NPC npc, int time, int buffIndex) {
-			OriginGlobalNPC globalNPC = npc.GetGlobalNPC<OriginGlobalNPC>();
-			if (globalNPC.toxicShockTime > Toxic_Shock_Debuff.stun_duration * 3) {
-				globalNPC.toxicShockTime = 0;
+		public override void Update(NPC npc, ref int buffIndex) {
+			if (Main.rand.NextBool(400)) {// roughly 15% chance each second
+				npc.GetGlobalNPC<OriginGlobalNPC>().toxicShockStunTime = Toxic_Shock_Debuff.stun_duration;
 			}
-			return false;
 		}
 	}
 	public class Toxic_Shock_Strengthen_Debuff : ModBuff {
@@ -42,6 +40,9 @@ namespace Origins.Buffs {
 		public override void Update(NPC npc, ref int buffIndex) {
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				npc.buffTime[buffIndex]++;
+			}
+			if (Main.rand.NextBool(1200)) {// roughly 5% chance each second
+				npc.GetGlobalNPC<OriginGlobalNPC>().toxicShockStunTime = Toxic_Shock_Debuff.stun_duration;
 			}
 		}
 	}

@@ -154,15 +154,13 @@ namespace Origins.NPCs {
 				npc.position = Vector2.Lerp(npc.oldPosition, npc.position, 1.01f);
 			}
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
-				if (toxicShockTime < Toxic_Shock_Debuff.stun_duration) {
-					toxicShockTime++;
+				if (toxicShockStunTime > 0) {
+					toxicShockStunTime--;
 					npc.position -= npc.velocity;
 					return false;
-				} else if (toxicShockTime <= Toxic_Shock_Debuff.stun_duration * 3) {
-					toxicShockTime++;
 				}
-			} else if (toxicShockTime > 0) {
-				toxicShockTime = 0;
+			} else if (toxicShockStunTime > 0) {
+				toxicShockStunTime = 0;
 			}
 			if (npc.HasBuff(BuffID.OgreSpit) && (npc.collideX || npc.collideY)) {
 				npc.velocity *= 0.95f;
