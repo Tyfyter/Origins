@@ -3629,7 +3629,7 @@ Magic_Pain_Glove: {
 
 Joint_Pop: {
 	DisplayName: Joint Pop
-	Tooltip: 
+	Tooltip:
 		'''
 		Striking with the tip will cause it to explode
 		The explosion will briefly slow enemies

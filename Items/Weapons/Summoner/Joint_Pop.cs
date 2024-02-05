@@ -21,6 +21,7 @@ namespace Origins.Items.Weapons.Summoner {
 		public override void SetDefaults() {
 			// Call this method to quickly set some of the properties below.
 			Item.DefaultToWhip(ModContent.ProjectileType<Joint_Pop_P>(), 20, 2, 4, 60);
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.SummonMeleeSpeed];
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
 		}
@@ -110,7 +111,7 @@ namespace Origins.Items.Weapons.Summoner {
 			} else {
 				Projectile.penetrate++;
 			}
-			target.AddBuff(Amebolize_Buff.ID, 240);
+			target.AddBuff(Joint_Pop_Buff.ID, 240);
 		}
 
 		public override bool PreDraw(ref Color lightColor) {
