@@ -1086,11 +1086,13 @@ namespace Origins {
 		#endregion
 		private void TileLightScanner_GetTileLight(Terraria.Graphics.Light.On_TileLightScanner.orig_GetTileLight orig, Terraria.Graphics.Light.TileLightScanner self, int x, int y, out Vector3 outputColor) {
 			orig(self, x, y, out outputColor);
-			Tile tile = Main.tile[x, y];
+			try {
+				Tile tile = Framing.GetTileSafely(x, y);
 
-			if (tile.LiquidType == LiquidID.Water && LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle) is IGlowingWaterStyle glowingWaterStyle) {
-				glowingWaterStyle.AddLight(ref outputColor, tile.LiquidAmount);
-			}
+				if (tile.LiquidType == LiquidID.Water && LoaderManager.Get<WaterStylesLoader>().Get(Main.waterStyle) is IGlowingWaterStyle glowingWaterStyle) {
+					glowingWaterStyle.AddLight(ref outputColor, tile.LiquidAmount);
+				}
+			} catch (Exception) {}
 		}
 
 		static int npcScoringRoom = -1;
