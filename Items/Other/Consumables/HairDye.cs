@@ -29,6 +29,10 @@ namespace Origins.Items.Other.Consumables {
 		}
 		public override void Load() {
 			Mod HolidayLib = ModLoader.GetMod("HolidayLib");
+			if (HolidayLib is null) {
+				shaders = new();
+				return;
+			}
 			Func<bool> Day(string name) => (Func<bool>)HolidayLib.Call("GETACTIVELOOKUP", name);
 			Func<object[], object> _addHoliday = (Func<object[], object>)HolidayLib.Call("GETFUNC", "ADDHOLIDAY");
 			void AddHoliday(params object[] args) {
