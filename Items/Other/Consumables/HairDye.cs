@@ -16,7 +16,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Holiday_Hair_Dye : HairDye {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.TwilightHairDye;
 		static List<(Func<bool> day, HolidayHairPassData pass)> shaders;
 		public override HairShaderData ShaderData => new HolidayHairShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/HolidayHairDye", AssetRequestMode.ImmediateLoad).Value), "Default");
 		public static HolidayHairPassData CurrentPass {
@@ -77,7 +76,6 @@ namespace Origins.Items.Other.Consumables {
 			base.SetDefaults();
 			Item.value = Item.sellPrice(gold: 6);
 		}
-		public override bool IsLoadingEnabled(Mod mod) => ModLoader.HasMod("HolidayLib");
 	}
 	public abstract class HairDye : ModItem {
 		public abstract HairShaderData ShaderData { get; }
