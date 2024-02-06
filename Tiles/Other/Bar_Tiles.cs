@@ -36,9 +36,8 @@ namespace Origins.Tiles.Other {
 		}
 		public static int AddBarTile(ModItem item, Color? color = null) {
 			Bar_Tile tile = new(item.Name, item.DisplayName, color);
-			if (!ModContent.HasAsset(tile.Texture)) {
-				item.Mod.Logger.Error($"Tried to add bar tile with texture \"{tile.Texture}\", but that no texture exists at that path");
-				return -1;
+			if (!Main.dedServ && !ModContent.HasAsset(tile.Texture)) {
+				throw new System.Exception($"Tried to add bar tile with texture \"{tile.Texture}\", but that no texture exists at that path");
 			}
 			item.Mod.AddContent(tile);
 			return tile.Type;

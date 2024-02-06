@@ -458,7 +458,7 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Yellow;
 		public override void Load() {
 			base.Load();
-			tileID = Bar_Tile.AddBarTile(this);
+			//tileID = Bar_Tile.AddBarTile(this);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
