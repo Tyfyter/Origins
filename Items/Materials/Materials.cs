@@ -180,12 +180,6 @@ namespace Origins.Items.Materials {
 			recipe.AddIngredient(ModContent.ItemType<Defiled_Ore_Item>(), 3);
 			recipe.AddTile(TileID.Furnaces);
 			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.Magiluminescence);
-            recipe.AddIngredient(ItemID.Topaz, 5);
-            recipe.AddIngredient(Type, 12);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
 		}
 	}
 	public class Eitrite_Bar : MaterialItem {
@@ -239,12 +233,6 @@ namespace Origins.Items.Materials {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Encrusted_Ore_Item>(), 3);
 			recipe.AddTile(TileID.Furnaces);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.Magiluminescence);
-            recipe.AddIngredient(ItemID.Topaz, 5);
-            recipe.AddIngredient(Type, 12);
-			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
 	}
@@ -413,12 +401,6 @@ namespace Origins.Items.Materials {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ModContent.ItemType<Sanguinite_Ore_Item>(), 3);
 			recipe.AddTile(TileID.Furnaces);
-			recipe.Register();
-
-			recipe = Recipe.Create(ItemID.Magiluminescence);
-            recipe.AddIngredient(ItemID.Topaz, 5);
-            recipe.AddIngredient(Type, 12);
-			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}
 	}
