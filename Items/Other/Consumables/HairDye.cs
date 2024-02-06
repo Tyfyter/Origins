@@ -27,8 +27,7 @@ namespace Origins.Items.Other.Consumables {
 			}
 		}
 		public override void Load() {
-			Mod HolidayLib = ModLoader.GetMod("HolidayLib");
-			if (HolidayLib is null) {
+			if (ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib)) {
 				shaders = new() { (() => true, new()) };
 				return;
 			}
@@ -144,7 +143,7 @@ namespace Origins.Items.Other.Consumables {
 		readonly Func<object[], object> checkVersion;
 		int lastVersion = -1;
 		public HolidayHairShaderData(Ref<Effect> shader, string passName) : base(shader, passName) {
-			checkVersion = (Func<object[], object>)ModLoader.GetMod("HolidayLib").Call("GETFUNC", "FORCEDHOLIDAYVERSION");
+			checkVersion = ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib) ? (Func<object[], object>)HolidayLib.Call("GETFUNC", "FORCEDHOLIDAYVERSION") : (_) => -1;
 		}
 		public override Color GetColor(Player player, Color lightColor) {
 			Vector4 color = Vector4.One;
