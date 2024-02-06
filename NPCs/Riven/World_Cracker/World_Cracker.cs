@@ -383,8 +383,8 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			AddFrame(npc, new Rectangle(0, 0, 32, 26));
 			totalWidth -= 48;
 			NPC current = Main.npc[(int)npc.ai[0]];
-			int tailType = ModContent.NPCType<World_Cracker_Tail>();
-			while (current.type != tailType) {
+			int bodyType = ModContent.NPCType<World_Cracker_Body>();
+			while (current.type == bodyType) {
 				AddFrame(current, new Rectangle(34, 0, 32, 26));
 				current = Main.npc[(int)current.ai[0]];
 			}
