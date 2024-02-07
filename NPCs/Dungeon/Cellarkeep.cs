@@ -9,6 +9,7 @@ using Origins.Items.Weapons.Summoner;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -204,6 +205,9 @@ namespace Origins.NPCs.Dungeon {
 		}
 		public override void DrawBehind(int index) {
 			Main.instance.DrawCacheNPCProjectiles.Add(index);
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
+			SoundEngine.PlaySound((hit.Damage > NPC.lifeMax / 2 ? SoundID.NPCDeath63 : SoundID.NPCHit3.WithVolumeScale(1.5f)).WithPitchRange(0.6f, 1.0f), NPC.Center);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			SpriteEffects effects = SpriteEffects.None;
