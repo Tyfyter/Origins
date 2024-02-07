@@ -36,7 +36,7 @@ namespace Origins.NPCs.Dungeon {
 			NPC.value = 90;
         }
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			return SpawnCondition.DungeonNormal.Chance * 0.25f;
+			return SpawnCondition.DungeonNormal.Chance * 0.05f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
@@ -186,9 +186,25 @@ namespace Origins.NPCs.Dungeon {
 					}
 					NPC.frameCounter = 0;
 				}
+				if (NPC.collideX) {
+					NPC.direction *= -1;
+					NPC.velocity.X = -4 * System.Math.Sign(NPC.velocity.X);
+					NPC.HitInfo hit = new NPC.HitInfo() {
+						Damage = 4,
+						HideCombatText = true
+					};
+					NPC.StrikeNPC(hit, noPlayerInteraction: true);
+					//NetMessage.SendStrikeNPC(NPC, hit);
+				}
 				/*if (NPC.collideX) {
 					NPC.StrikeInstantKill();
 				}*/
+			}
+		}
+		public override void UpdateLifeRegen(ref int damage) {
+			if (NPC.collideY) {
+				//damage = 0;
+				//NPC.lifeRegen -= 8;
 			}
 		}
 		public override void OnKill() {
@@ -207,7 +223,7 @@ namespace Origins.NPCs.Dungeon {
 			Main.instance.DrawCacheNPCProjectiles.Add(index);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
-			SoundEngine.PlaySound((hit.Damage > NPC.lifeMax / 2 ? SoundID.NPCDeath63 : SoundID.NPCHit3.WithVolumeScale(1.5f)).WithPitchRange(0.6f, 1.0f), NPC.Center);
+			SoundEngine.PlaySound((hit.Damage > NPC.lifeMax / 2 ? SoundID.NPCDeath63.WithPitchRange(0.6f, 1.0f) : SoundID.NPCHit3.WithVolumeScale(1.5f).WithPitchRange(-0.4f, 0.0f)), NPC.Center);
 		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			SpriteEffects effects = SpriteEffects.None;
