@@ -146,12 +146,13 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		static void MaskAura(SpriteBatch spriteBatch) {
 			if (Main.dedServ) return;
+			Vector2 screenCenter = Main.ScreenSize.ToVector2() * 0.5f;
 			for (int i = 0; i < Main.maxProjectiles; i++) {
 				Projectile proj = Main.projectile[i];
 				if (proj.active && proj.type == ID) {
 					spriteBatch.Draw(
 						TextureAssets.Projectile[ID].Value,
-						proj.Center - Main.screenPosition,
+						(proj.Center - Main.screenPosition - screenCenter) * Main.GameViewMatrix.Zoom + screenCenter,
 						null,
 						new Color(
 							MathHelper.Clamp(proj.velocity.X / 16 + 8, 0, 1),
@@ -159,7 +160,7 @@ namespace Origins.Items.Weapons.Ammo {
 						0f),
 						0,
 						new Vector2(36),
-						proj.scale,
+						proj.scale * Main.GameViewMatrix.Zoom.X,
 						0,
 					0);
 				}

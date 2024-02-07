@@ -595,7 +595,21 @@ Parasitic_Influence: {
 
 Pincushion: {
 	// DisplayName: Pincushion
-	// Tooltip: Prevents tile destruction from explosives
+	// BaseTooltip: Prevents tile destruction from explosives when pinned
+	/* Tooltip:
+		'''
+		{$Mods.Origins.Items.Pincushion.BaseTooltip}
+		Right click to unpin
+		''' */
+}
+
+Pincushion_Inactive: {
+	// DisplayName: Pinless Cushion
+	/* Tooltip:
+		'''
+		{$Mods.Origins.Items.Pincushion.BaseTooltip}
+		Right click to pin
+		''' */
 }
 
 Plasma_Phial: {
