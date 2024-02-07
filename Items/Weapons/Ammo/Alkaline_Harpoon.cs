@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = 99;
 			Item.shoot = Alkaline_Harpoon_P.ID;
 			Item.ammo = Harpoon.ID;
-			Item.value = Item.sellPrice(silver: 28);
+			Item.value = Item.sellPrice(silver: 5);
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void AddRecipes() {

@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = 99;
 			Item.shoot = Bouncy_Harpoon_P.ID;
 			Item.ammo = Harpoon.ID;
-			Item.value = Item.sellPrice(silver: 30);
+			Item.value = Item.sellPrice(silver: 4);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {

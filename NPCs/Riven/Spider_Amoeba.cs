@@ -46,7 +46,7 @@ namespace Origins.NPCs.Riven {
 			//increment frameCounter every frame and run the following code when it exceeds 7 (i.e. run the following code every 8 frames)
 			if (NPC.collideY && ++NPC.frameCounter > 7) {
 				//add frame height (with buffer) to frame y position and modulo by frame height (with buffer) multiplied by walking frame count
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 40) % 160, 36, 40);
+				NPC.frame = new Rectangle(0, (NPC.frame.Y + 42) % 126, 92, 40);
 				//reset frameCounter so this doesn't trigger every frame after the first time
 				NPC.frameCounter = 0;
 			}
