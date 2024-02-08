@@ -456,7 +456,8 @@ namespace Origins {
 				MaxInstances = 0
 			};
             Sounds.ShrapnelFest = new SoundStyle("Origins/Sounds/Custom/ShrapnelFest", SoundType.Sound) {
-                MaxInstances = 0
+                MaxInstances = 0,
+				Volume = 0.75f
             };
             //OriginExtensions.initClone();
             Music.LoadMusic();

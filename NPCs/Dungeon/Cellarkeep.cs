@@ -202,22 +202,28 @@ namespace Origins.NPCs.Dungeon {
 			}
 		}
 		public override void UpdateLifeRegen(ref int damage) {
+			if (NPC.onFire || NPC.onFire2 || NPC.onFire3) {
+				NPC.lifeRegen = NPC.lifeMax * 2;
+				damage = NPC.lifeMax;
+			}
 			if (NPC.collideY) {
 				//damage = 0;
 				//NPC.lifeRegen -= 8;
 			}
 		}
 		public override void OnKill() {
-			Projectile.NewProjectile(
-				NPC.GetSource_Death(),
-				NPC.Center,
-				default,
-				ModContent.ProjectileType<Cellarkeep_Barrel_Explosion>(),
-				NPC.damage,
-				4,
-				Main.myPlayer,
-				ai1: NPC.ai[0]
-			);
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				Projectile.NewProjectile(
+					NPC.GetSource_Death(),
+					NPC.Center,
+					default,
+					ModContent.ProjectileType<Cellarkeep_Barrel_Explosion>(),
+					NPC.damage,
+					4,
+					Main.myPlayer,
+					ai1: NPC.ai[0]
+				);
+			}
 		}
 		public override void DrawBehind(int index) {
 			Main.instance.DrawCacheNPCProjectiles.Add(index);
@@ -250,6 +256,7 @@ namespace Origins.NPCs.Dungeon {
 			Projectile.height = 96;
 			Projectile.friendly = true;
 			Projectile.hostile = true;
+			Projectile.trap = true;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;
 			Projectile.timeLeft = 5;
