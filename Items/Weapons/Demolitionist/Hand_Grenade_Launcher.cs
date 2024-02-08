@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
 			Item.width = 44;
 			Item.height = 18;
-			Item.damage = 17;
+			Item.damage = 2;
 			Item.value /= 2;
 			Item.useTime = (int)(Item.useTime * 1.15);
 			Item.useAnimation = (int)(Item.useAnimation * 1.15);

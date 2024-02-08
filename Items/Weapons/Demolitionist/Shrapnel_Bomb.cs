@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Items.Weapons.Ammo;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -49,11 +51,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-			int center = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Ace_Shrapnel_P>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
+            SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest);
+            int center = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Impeding_Shrapnel_Shard>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 			Vector2 v;
 			for (int i = 4; i-- > 0;) {
 				v = Main.rand.NextVector2Unit() * 6;
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + v * 8, v, ModContent.ProjectileType<Ace_Shrapnel_Shard>(), Projectile.damage / 2, Projectile.knockBack / 4, Projectile.owner, center, 4);
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + v * 8, v, ModContent.ProjectileType<Impeding_Shrapnel_Shard>(), Projectile.damage / 2, Projectile.knockBack / 4, Projectile.owner, center, 4);
 			}
 		}
 	}

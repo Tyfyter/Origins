@@ -19,7 +19,8 @@ namespace Origins.Buffs {
 		public static void SpawnShrapnel(NPC npc, int buffTime) {
 			int count = Main.rand.Next(5, 8);
 			float rot = MathHelper.TwoPi / count;
-			Vector2 velocity = new Vector2(1f, 0).RotatedByRandom(MathHelper.Pi);
+            SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest);
+            Vector2 velocity = new Vector2(1f, 0).RotatedByRandom(MathHelper.Pi);
 			int damage = (int)Math.Pow(Math.Log(buffTime, 1.5f), 1.5f);
 			for (int i = count; i-->0;) {
 				Projectile.NewProjectile(

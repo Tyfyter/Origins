@@ -455,8 +455,11 @@ namespace Origins {
 			Sounds.RivenBass = new SoundStyle("Origins/Sounds/Custom/RivenBass", SoundType.Sound) {
 				MaxInstances = 0
 			};
-			//OriginExtensions.initClone();
-			Music.LoadMusic();
+            Sounds.ShrapnelFest = new SoundStyle("Origins/Sounds/Custom/ShrapnelFest", SoundType.Sound) {
+                MaxInstances = 0
+            };
+            //OriginExtensions.initClone();
+            Music.LoadMusic();
 
 			Main.OnPostDraw += IncrementFrameCount;
 			ApplyPatches();
@@ -729,6 +732,7 @@ namespace Origins {
 			public static SoundStyle DefiledKill = SoundID.NPCDeath1;
 			public static SoundStyle PowerUp = SoundID.Item4;
 			public static SoundStyle RivenBass = SoundID.Item4;
+			public static SoundStyle ShrapnelFest = SoundID.Item144;
 		}
 		public override object Call(params object[] args) {
 			return args[0] switch {
