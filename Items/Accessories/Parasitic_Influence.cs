@@ -13,7 +13,12 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => new string[] {
 			"Combat"
 		};
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            ItemID.Sets.ShimmerTransformToItem[ItemID.PanicNecklace] = ModContent.ItemType<Parasitic_Influence>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Parasitic_Influence>()] = ItemID.PanicNecklace;
+            glowmask = Origins.AddGlowMask(this);
+        }
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(34, 26);
 			Item.damage = 20;
 			Item.DamageType = DamageClass.Melee;

@@ -44,12 +44,12 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 2);
+			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.ExplosivePowder);
 			recipe.AddIngredient(ItemID.IronBar, 2);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
-            recipe = Recipe.Create(Type, 2);
+            recipe = Recipe.Create(Type, 4);
             recipe.AddIngredient(ItemID.ExplosivePowder);
             recipe.AddIngredient(ItemID.LeadBar, 2);
             recipe.AddTile(TileID.Anvils);
