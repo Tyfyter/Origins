@@ -22,6 +22,10 @@ namespace Origins {
 			Mod.Logger.Info($"NetInit {netInitialized}, {Player.name}");
 			if (!netInitialized) {
 				netInitialized = true;
+				ModPacket packet = Mod.GetPacket();
+				packet.Write(Origins.NetMessageType.sync_peat);
+				packet.Write((short)OriginSystem.Instance.peatSold);
+				packet.Send(Player.whoAmI);
 				foreach (var quest in Quest_Registry.NetQuests) {
 					quest.Sync(Player.whoAmI);
 				}
