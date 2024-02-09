@@ -19,10 +19,12 @@ namespace Origins {
 				switch (type) {
 					case tile_counts:
 					OriginSystem.tDefiled = reader.ReadByte();
+					OriginSystem.tRiven = reader.ReadByte();
 					break;
 
 					case sync_player:
 					case sync_quest:
+					case sync_peat:
 					altHandle = true;
 					break;
 
@@ -34,10 +36,12 @@ namespace Origins {
 				switch (type) {
 					case tile_counts:
 					OriginSystem.tDefiled = reader.ReadByte();
+					OriginSystem.tRiven = reader.ReadByte();
 					break;
 
 					case sync_player:
 					case sync_quest:
+					case sync_peat:
 					altHandle = true;
 					break;
 
@@ -70,6 +74,18 @@ namespace Origins {
 						}
 						break;
 					}
+					case sync_peat: {
+						OriginSystem.Instance.peatSold = reader.ReadInt16();
+
+						if (Main.netMode == NetmodeID.Server) {
+							// Forward the changes to the other clients
+							ModPacket packet = GetPacket();
+							packet.Write(Origins.NetMessageType.sync_peat);
+							packet.Write((short)OriginSystem.Instance.peatSold);
+							packet.Send(-1, whoAmI);
+						}
+						break;
+					}
 				}
 			}
 		}
@@ -77,6 +93,7 @@ namespace Origins {
 			internal const byte tile_counts = 0;
 			internal const byte sync_player = 1;
 			internal const byte sync_quest = 2;
+			internal const byte sync_peat = 3;
 		}
 	}
 }

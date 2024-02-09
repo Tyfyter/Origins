@@ -717,7 +717,7 @@ namespace Origins {
 						quest.OnDialogue();
 					} else {
 						npcChatQuestListSelected = true;
-						Main.npcChatText = "beans, idk I just need to put something here or the menu will close";// go back to quest list dialogue
+						Main.npcChatText = Language.GetTextValue("Mods.Origins.Interface.Quests");// go back to quest list dialogue
 					}
 				}
 			}

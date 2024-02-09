@@ -464,6 +464,10 @@ namespace Origins {
 						originWorld.peatSold += item.stack;
 						item.TurnToAir();
 					}
+					ModPacket packet = Mod.GetPacket();
+					packet.Write(Origins.NetMessageType.sync_peat);
+					packet.Write((short)OriginSystem.Instance.peatSold);
+					packet.Send(-1, Player.whoAmI);
 				}
 			}
 		}

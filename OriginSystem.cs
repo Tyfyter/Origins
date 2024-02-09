@@ -23,7 +23,8 @@ using ALRecipeGroups = AltLibrary.Common.Systems.RecipeGroups;
 
 namespace Origins {
     public partial class OriginSystem : ModSystem {
-		public static OriginSystem Instance => ModContent.GetInstance<OriginSystem>();
+		static OriginSystem instance;
+		public static OriginSystem Instance => instance ??= ModContent.GetInstance<OriginSystem>();
 		public UserInterface setBonusUI;
 		public UserInterfaceWithDefaultState journalUI;
 		public override void Load() {
@@ -33,7 +34,7 @@ namespace Origins {
 			};
 		}
 		public override void Unload() {
-
+			instance = null;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.MiningHelmet);
