@@ -52,6 +52,7 @@ namespace Origins.Items.Other.Fish {
 					(_, attempt) => attempt.crate),
 
 					new ItemFishingLoot(ItemType<Knee_Slapper>(), (_, attempt) => attempt.legendary && Main.hardMode && Main.rand.NextBool(2)),
+					new ItemFishingLoot(ItemType<Manasynk>(), (_, attempt) => attempt.rare),
 
 					new LeadingConditionFishLoot(
 						new OrderedFishingLoot(
