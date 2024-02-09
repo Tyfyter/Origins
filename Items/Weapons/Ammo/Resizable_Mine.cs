@@ -21,9 +21,9 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.White;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 2);
+			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(ItemID.Wood, 2);
+			recipe.AddIngredient(ItemID.Wood, 4);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
 		}
@@ -46,14 +46,9 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(ItemID.IronBar, 2);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
-            recipe = Recipe.Create(Type, 4);
-            recipe.AddIngredient(ItemID.ExplosivePowder);
-            recipe.AddIngredient(ItemID.LeadBar, 2);
+            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 2);
             recipe.AddTile(TileID.Anvils);
-            recipe.Register();
+			recipe.Register();
         }
 	}
 	public class Resizable_Mine_Three : Resizable_Mine_Two {
@@ -72,9 +67,9 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 2);
+			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 2);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 4);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
@@ -95,8 +90,8 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Yellow;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 2);
-            recipe.AddIngredient(ItemID.ChlorophyteOre, 2);
+			Recipe recipe = Recipe.Create(Type, 4);
+            recipe.AddIngredient(ItemID.ChlorophyteBar, 2);
             recipe.AddIngredient(ItemID.ExplosivePowder);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
@@ -118,9 +113,9 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.rare = ItemRarityID.Cyan;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 2);
+			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(ItemID.LunarOre, 2);
+			recipe.AddIngredient(ItemID.LunarBar, 2);
 			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.Register();
 		}

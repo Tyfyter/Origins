@@ -8,12 +8,10 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.MiscE {
     public class Buckethead_Zombie : ModNPC {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Buckethead Zombie");
 			Main.npcFrameCount[NPC.type] = 3;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
-			NPC.aiStyle = NPCAIStyleID.Fighter;
 			NPC.lifeMax = 45;
 			NPC.defense = 28;
 			NPC.damage = 14;

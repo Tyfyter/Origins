@@ -27,8 +27,8 @@ namespace Origins.Items.Weapons.Ranged {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.IceBlock, 30);
-			recipe.AddIngredient(ItemID.Shiverthorn, 5);
-			recipe.AddIngredient(ItemID.IceTorch);
+            recipe.AddIngredient(ItemID.IceTorch);
+            recipe.AddIngredient(ItemID.Shiverthorn, 5);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
 		}

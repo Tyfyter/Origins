@@ -247,7 +247,7 @@ Donor_Wristband: {
 	Tooltip:
 		'''
 		Increased life regeneration
-		Debuff and healing potion cooldown durations reduced by 37.5%
+		Debuff durations reduced by 37.5%
 		'''
 }
 
@@ -3649,5 +3649,14 @@ Joint_Pop: {
 		The explosion will briefly slow enemies
 		3 summon tag damage
 		{$CommonItemTooltip.Whips}
+		'''
+}
+
+Cold_Snap: {
+	DisplayName: Cold Snap
+	Tooltip:
+		'''
+		Inflicts frostburn to struck enemies
+		Uses mines as ordinance
 		'''
 }

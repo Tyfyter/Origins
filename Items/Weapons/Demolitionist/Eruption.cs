@@ -29,7 +29,10 @@ namespace Origins.Items.Weapons.Demolitionist {
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			type = Item.shoot;
 		}
-	}
+        public override Vector2? HoldoutOffset() {
+            return new Vector2(-2, 0);
+        }
+    }
 	public class Eruption_P : ModProjectile {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);

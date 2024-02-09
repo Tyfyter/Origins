@@ -8,7 +8,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Thermite_Launcher : ModItem {
+    public class Thermite_Launcher : ModItem {
 		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
@@ -18,28 +18,24 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useTime = 32;
 			Item.useAnimation = 32;
 			Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
-			Item.useAmmo = ModContent.ItemType<Thermite_Canister>();
-			Item.knockBack = 2f;
+            Item.useAmmo = ModContent.ItemType<Ammo.Resizable_Mine_One>();
+            Item.knockBack = 2f;
 			Item.shootSpeed = 12f;
 			Item.autoReuse = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.LightRed;
 		}
-		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			//type = Item.shoot;
-		}
 		//can't just chain rules since OneFromOptionsNotScaledWithLuckDropRule drops all the items directly
 		//but that's fine since other bosses that drop a ranged weapon don't show the ammo in the bestiary
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_ItemOpen or EntitySource_Loot) {
-				Item.NewItem(source, Item.position, ModContent.ItemType<Thermite_Canister>(), Main.rand.Next(40, 51));
+				Item.NewItem(source, Item.position, ModContent.ItemType<Resizable_Mine_Three>(), Main.rand.Next(60, 100));
 			}
 		}
 	}
 	public class Thermite_Canister_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Ammo/Thermite_Canister";
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Thermite Canistah"); // https://youtu.be/8MHk0WwrzgY
 			Origins.MagicTripwireRange[Type] = 32;
 		}
 		public override void SetDefaults() {

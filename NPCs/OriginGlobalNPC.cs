@@ -66,13 +66,19 @@ namespace Origins.NPCs {
 				}
 				case NPCID.Demolitionist: {
 					shop.Add(ItemID.ExplosivePowder, Condition.PreHardmode);
-					shop.Add<Peatball>(PeatSoldCondition(5));
-					shop.Add<Flashbang>(PeatSoldCondition(10));
-					shop.Add<Impact_Grenade>(PeatSoldCondition(20));
-					shop.Add<Impact_Bomb>(PeatSoldCondition(35));
-					shop.Add<Impact_Dynamite>(PeatSoldCondition(50), Condition.Hardmode);
-					shop.Add<Alkaline_Grenade>(PeatSoldCondition(75), Condition.Hardmode);
-					shop.Add<Alkaline_Bomb>(PeatSoldCondition(120), Condition.Hardmode);
+					shop.Add<Peatball>(PeatSoldCondition(15));
+					shop.Add<Flashbang>(PeatSoldCondition(25));
+                    shop.Add<IWTPA_Standard>(PeatSoldCondition(35));
+                    shop.Add<Impact_Grenade>(PeatSoldCondition(40));
+					shop.Add<Impact_Bomb>(PeatSoldCondition(70));
+                    shop.Add<Brainade>(PeatSoldCondition(81), Condition.CrimsonWorld);
+                    //shop.Add<Link_Grenade>(PeatSoldCondition(85), Condition.AshenWorld);
+                    shop.Add<Nitro_Crate>(PeatSoldCondition(100));
+                    shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.CorruptWorld);
+                    shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125)); // ", Condition.AshenWorld"
+                    shop.Add<Impact_Dynamite>(PeatSoldCondition(150), Condition.Hardmode);
+					shop.Add<Alkaline_Grenade>(PeatSoldCondition(180), Condition.Hardmode);
+					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Condition.Hardmode);
 					shop.Add<Caustica>(PeatSoldCondition(999), Condition.Hardmode);
 					break;
 				}

@@ -724,7 +724,8 @@ EXPLOSIVE WEAPONS:
 (^) Bombardment
 (^) Bomb Launcher
 (^) Brainade*
-(#3, ^2) Eruption* !!!
+(^) Cold Snap*
+(^) Eruption*
 (^) Felnum Shock Grenade*
 (^) Flashbang*
 (^) Floaty Bomb*
@@ -760,7 +761,6 @@ EXPLOSIVE WEAPONS:
 (X) Chlorophyte Handcannon
 (^) Crystal Bomb*
 (^) Crystal Grenade*
-(#2, ^2) Grenado (replanning never)
 (^) Mine Flayer*
 (X) Nova Cascade
 (X) Nova Starforge
@@ -1141,7 +1141,6 @@ AMMO:
 (^) Cursed Harpoon*
 (^) Metal Slug*
 (^) Resizable Mine Mk. 3*
-(^) Thermite Canister*
 
 (^) Resizable Mine Mk. 4*
 

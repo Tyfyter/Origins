@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -13,7 +12,6 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Crimslime);
-			NPC.aiStyle = NPCAIStyleID.Slime;
 			NPC.lifeMax = 60;
 			NPC.defense = 6;
 			NPC.damage = 30;

@@ -47,30 +47,6 @@ namespace Origins.Items.Weapons.Ammo {
 
 		}
 	}
-
-	public class Thermite_Canister : ModItem {
-		static short glowmask;
-		public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
-			Item.ResearchUnlockCount = 199;
-		}
-		public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.RocketI);
-			Item.damage = 20;
-			Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
-			Item.ammo = Item.type;
-			Item.glowMask = glowmask;
-			Item.value = Item.sellPrice(silver: 3, copper: 2);
-		}
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 4);
-			recipe.AddIngredient(ItemID.Fireblossom, 2);
-            recipe.AddRecipeGroup(RecipeGroupID.IronBar, 2);
-            recipe.AddIngredient(ModContent.ItemType<Silicon_Item>());
-			recipe.AddTile(TileID.MythrilAnvil);
-			recipe.Register();
-		}
-	}
 	public class Gray_Solution : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

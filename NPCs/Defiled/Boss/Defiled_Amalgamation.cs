@@ -84,7 +84,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPC.npcSlots = 200;
 			Music = Origins.Music.DefiledBoss;
 			NPC.knockBackResist = 0; // actually a multiplier
-			NPC.value = Item.sellPrice(gold: 5);
+			NPC.value = Item.sellPrice(gold: 1);
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get => 1; set { } }

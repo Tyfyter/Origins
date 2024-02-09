@@ -1049,6 +1049,7 @@ Projectiles: {
 	// Joint_Pop_Explosion.DisplayName: Joint Pop
 	// Joint_Pop_P.DisplayName: Joint Pop
 	// Cellarkeep_Barrel_Explosion.DisplayName: Explosive Barrel
+	// Cold_Snap_P.DisplayName: Cold_ Snap_ P
 }
 
 Prefixes: {

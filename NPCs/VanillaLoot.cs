@@ -100,7 +100,7 @@ namespace Origins.NPCs {
 				case NPCID.IlluminantBat:
 				case NPCID.JungleBat:
 				case NPCID.VampireBat:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bat_Hide>(), 3, 1, 3));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bat_Hide>(), 1, 2, 4));
 				break;
 				case NPCID.SkeletonSniper: //Tiny skeleton sniper
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tiny_Sniper>(), 24));
@@ -114,7 +114,7 @@ namespace Origins.NPCs {
 				case NPCID.GiantMossHornet:
 				case NPCID.LittleMossHornet:
 				case NPCID.TinyMossHornet:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Peat_Moss_Item>(), 2));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Peat_Moss_Item>(), 1, 3, 7));
 				break;
 				case NPCID.AngryBones:
 				case NPCID.AngryBonesBig:
@@ -150,7 +150,7 @@ namespace Origins.NPCs {
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Happy_Bomb>(), 1, 69, 69));
 				break;
 				case NPCID.PurpleSlime:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plasma_Phial>(), 2));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Plasma_Phial>(), 10));
 				break;
 				case NPCID.AnglerFish:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Rebreather>(), 20));
