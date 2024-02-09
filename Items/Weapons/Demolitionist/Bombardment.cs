@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.Projectiles;
 using Terraria;
@@ -27,7 +28,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			velocity = velocity.RotatedByRandom(0.3f);
 			Terraria.Audio.SoundEngine.PlaySound(SoundID.Item61.WithPitch(0.25f), position);
 		}
-	}
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 10);
+            recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 15);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
+    }
 	public class Bombardment_P : ModProjectile, IIsExplodingProjectile {
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 30;
