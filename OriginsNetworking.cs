@@ -25,6 +25,7 @@ namespace Origins {
 					case sync_player:
 					case sync_quest:
 					case sync_peat:
+					case world_cracker_hit:
 					altHandle = true;
 					break;
 
@@ -42,6 +43,7 @@ namespace Origins {
 					case sync_player:
 					case sync_quest:
 					case sync_peat:
+					case world_cracker_hit:
 					altHandle = true;
 					break;
 
@@ -86,6 +88,30 @@ namespace Origins {
 						}
 						break;
 					}
+					case world_cracker_hit: {
+						NPC npc = Main.npc[reader.ReadUInt16()];
+						NPC.HitInfo hit = new NPC.HitInfo() {
+							SourceDamage = reader.ReadInt32(),
+							Crit = reader.ReadBoolean(),
+							HitDirection = reader.ReadInt32(),
+							Knockback = reader.ReadSingle(),
+						};
+						int armorPenetration = reader.ReadInt32();
+						NPCs.Riven.World_Cracker.World_Cracker_Head.DamageArmor(npc, hit, armorPenetration);
+
+						if (Main.netMode == NetmodeID.Server) {
+							// Forward the changes to the other clients
+							ModPacket packet = Origins.instance.GetPacket();
+							packet.Write(Origins.NetMessageType.world_cracker_hit);
+							packet.Write((int)hit.SourceDamage);
+							packet.Write((bool)hit.Crit);
+							packet.Write((int)hit.HitDirection);
+							packet.Write((float)hit.Knockback);
+							packet.Write((int)armorPenetration);
+							packet.Send(-1, Main.myPlayer);
+						}
+						break;
+					}
 				}
 			}
 		}
@@ -94,6 +120,7 @@ namespace Origins {
 			internal const byte sync_player = 1;
 			internal const byte sync_quest = 2;
 			internal const byte sync_peat = 3;
+			internal const byte world_cracker_hit = 4;
 		}
 	}
 }

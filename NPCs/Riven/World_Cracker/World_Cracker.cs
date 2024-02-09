@@ -140,17 +140,19 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.HitModifiers apMods = new NPC.HitModifiers();
 			apMods.ArmorPenetration += armorPenetration;
 			NPCLoader.ModifyIncomingHit(npc, ref apMods);
-			npc.ai[3] = (int)Math.Max(npc.ai[3] - Math.Max((hit.SourceDamage * (hit.Crit ? 2 : 1)) - Math.Max(15 - apMods.ArmorPenetration.Value, 0) * (1 - apMods.ScalingArmorPenetration.Value), 0), 0);
+			npc.ai[3] = (int)Math.Max(npc.ai[3] - Math.Max((hit.SourceDamage * (hit.Crit ? 2 : 1)) - Math.Max(apMods.Defense.ApplyTo(15) - apMods.ArmorPenetration.Value, 0) * (1 - apMods.ScalingArmorPenetration.Value), 0), 0);
 			if (!hit.HideCombatText) CombatText.NewText(npc.Hitbox, hit.Crit ? new Color(255, 170, 133) : new Color(255, 210, 173), oldArmorHealth - (int)npc.ai[3], hit.Crit);
 			if (npc.ai[3] <= 0) {
-				DropAttemptInfo dropInfo = default(DropAttemptInfo);
-				dropInfo.player = Main.LocalPlayer;
-				dropInfo.npc = npc;
-				dropInfo.IsExpertMode = Main.expertMode;
-				dropInfo.IsMasterMode = Main.masterMode;
-				dropInfo.IsInSimulation = false;
-				dropInfo.rng = Main.rand;
-				OriginExtensions.ResolveRule(armorBreakDropRule, dropInfo);
+				if (Main.netMode != NetmodeID.MultiplayerClient) {
+					DropAttemptInfo dropInfo = default(DropAttemptInfo);
+					dropInfo.player = Main.LocalPlayer;
+					dropInfo.npc = npc;
+					dropInfo.IsExpertMode = Main.expertMode;
+					dropInfo.IsMasterMode = Main.masterMode;
+					dropInfo.IsInSimulation = false;
+					dropInfo.rng = Main.rand;
+					OriginExtensions.ResolveRule(armorBreakDropRule, dropInfo);
+				}
 				int halfWidth = npc.width / 2;
 				int baseX = hit.HitDirection > 0 ? 0 : halfWidth;
 				if (Main.netMode != NetmodeID.Server) {
@@ -162,7 +164,17 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					);
 				}
 			}
-			npc.netUpdate = true;
+			if (Main.netMode == NetmodeID.MultiplayerClient) {
+				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(Origins.NetMessageType.world_cracker_hit);
+				packet.Write((ushort)npc.whoAmI);
+				packet.Write((int)hit.SourceDamage);
+				packet.Write((bool)hit.Crit);
+				packet.Write((int)hit.HitDirection);
+				packet.Write((float)hit.Knockback);
+				packet.Write((int)armorPenetration);
+				packet.Send(-1, Main.myPlayer);
+			}
 		}
 		public static void DrawArmor(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, Rectangle frame, NPC npc) {
 			float ArmorHealthPercent = ((int)npc.ai[3]) / (float)MaxArmorHealth;
