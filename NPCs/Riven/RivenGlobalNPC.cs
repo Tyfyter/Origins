@@ -26,6 +26,7 @@ namespace Origins.NPCs.Riven
 				[ModContent.NPCType<Riven_Fighter>()] = 0.09f,
                 [ModContent.NPCType<Riven_Mummy>()] = 0.07f,
                 [ModContent.NPCType<Single_Cellular_Nautilus>()] = 0.03f,
+                [ModContent.NPCType<Spider_Amoeba>()] = 0.04f,
                 [ModContent.NPCType<World_Cracker_Head>()] = 0.07f,
                 [ModContent.NPCType<World_Cracker_Body>()] = 0.04f,
                 [ModContent.NPCType<World_Cracker_Tail>()] = 0.09f,
