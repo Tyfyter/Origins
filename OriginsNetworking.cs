@@ -103,6 +103,7 @@ namespace Origins {
 							// Forward the changes to the other clients
 							ModPacket packet = Origins.instance.GetPacket();
 							packet.Write(Origins.NetMessageType.world_cracker_hit);
+							packet.Write((ushort)npc.whoAmI);
 							packet.Write((int)hit.SourceDamage);
 							packet.Write((bool)hit.Crit);
 							packet.Write((int)hit.HitDirection);
