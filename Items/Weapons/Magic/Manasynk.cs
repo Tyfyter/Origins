@@ -86,30 +86,35 @@ namespace Origins.Items.Weapons.Magic {
 			return Projectile.ai[0] >= 0 ? target.whoAmI == (int)Projectile.ai[0] : null;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			const float manaStealFactor = 0.5f;
 			if (target.CanBeChasedBy()) {
 				if (Projectile.ai[0] < 0) {
 					Projectile.ai[0] = target.whoAmI;
-					Projectile.ArmorPenetration = (target.defense + 2);
 					Projectile.damage /= 3;
+					Projectile.damage += Projectile.ArmorPenetration;
+					Projectile.ArmorPenetration = (target.defense + 2);
 					Projectile.knockBack = 0;
 					Projectile.velocity = Vector2.Zero;
 					embedPos = ((PolarVec2)(Projectile.Center - target.Center)).RotatedBy(-target.rotation);
 				}
-				Projectile.ai[1] += damageDone;
+				Projectile.ai[1] += damageDone * manaStealFactor;
+				CombatText.NewText(Projectile.Hitbox, new Color(150, 65, 200), (int)(Projectile.ai[1] * manaStealFactor));
 			} else {
 				Projectile.Kill();
 			}
 		}
 		public override void OnKill(int timeLeft) {
-			const float manaStealFactor = 0.5f;
 			if (Projectile.ai[1] > 0) {
 				if (Projectile.owner == Main.myPlayer) {
-					Item.NewItem(
+					int item = Item.NewItem(
 						Projectile.GetSource_Death(),
 						Projectile.Center,
 						ModContent.ItemType<Manasynk_Pickup>(),
-						(int)(Projectile.ai[1] * manaStealFactor)
+						(int)Projectile.ai[1]
 					);
+					if (Main.netMode == NetmodeID.MultiplayerClient) {
+						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
+					}
 				}
 				NPC embedTarget = Main.npc[(int)Projectile.ai[0]];
 				ParticleOrchestrator.RequestParticleSpawn(
