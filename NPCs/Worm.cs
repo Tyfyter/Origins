@@ -118,6 +118,12 @@ namespace Origins.NPCs
 		protected internal virtual void BodyTailAI() { }
 
 		public abstract void Init();
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(NPC.realLife);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			NPC.realLife = reader.ReadInt32();
+		}
 	}
 
 	/// <summary>

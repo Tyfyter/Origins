@@ -272,6 +272,14 @@ namespace Origins {
 			IL_Main.DrawSurfaceBG += IL_Main_DrawSurfaceBG;
 			On_Player.ItemCheck_UseMiningTools_TryHittingWall += On_Player_ItemCheck_UseMiningTools_TryHittingWall;
 			IL_NPCUtils.TargetClosestNonBees += IL_NPCUtils_TargetClosestNonBees;
+			On_CommonCode.ModifyItemDropFromNPC += On_CommonCode_ModifyItemDropFromNPC;
+		}
+
+		private void On_CommonCode_ModifyItemDropFromNPC(On_CommonCode.orig_ModifyItemDropFromNPC orig, NPC npc, int itemIndex) {
+			if (Main.netMode == NetmodeID.Server) {
+				NetMessage.SendData(MessageID.SyncItem, -1, -1, null, itemIndex, 1f);
+			}
+			orig(npc, itemIndex);
 		}
 
 		private void IL_NPCUtils_TargetClosestNonBees(ILContext il) {

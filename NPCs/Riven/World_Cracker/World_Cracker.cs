@@ -241,32 +241,31 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			armorBreakDropRule.OnSuccess(new CommonDrop(ModContent.ItemType<Riven_Carapace>(), 2, 2, 5, 3));
 		}
 		public override bool SpecialOnKill() {
-			if (NPC.life <= 0) {
-				int tailType = TailType;
-				float dist = float.PositiveInfinity;
-				int closest = NPC.whoAmI;
-				NPC current = NPC;
-				while (current is not null) {
-					for (int j = 0; j < Main.maxPlayers; j++) {
-						if (Main.player[j].active && !Main.player[j].dead) {
-							float currentDist = Main.player[j].DistanceSQ(current.Center);
-							if (currentDist < dist) {
-								dist = currentDist;
-								closest = current.whoAmI;
-							}
+			Mod.Logger.Info($"SpecialOnKill on {Main.netMode}, life: {NPC.life}");
+			int tailType = TailType;
+			float dist = float.PositiveInfinity;
+			int closest = NPC.whoAmI;
+			NPC current = NPC;
+			while (current is not null) {
+				for (int j = 0; j < Main.maxPlayers; j++) {
+					if (Main.player[j].active && !Main.player[j].dead) {
+						float currentDist = Main.player[j].DistanceSQ(current.Center);
+						if (currentDist < dist) {
+							dist = currentDist;
+							closest = current.whoAmI;
 						}
 					}
-					DamageArmor(current, new NPC.HitInfo() { SourceDamage = 9999, HideCombatText = true }, 0);
-					if (!Main.dedServ) for (int i = 0; i < 10; i++) Gore.NewGore(
-						current.GetSource_Death(),
-						Main.rand.NextVector2FromRectangle(current.Hitbox),
-						current.oldVelocity,
-						Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
-					);
-					current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
 				}
-				NPC.Center = Main.npc[closest].Center;
+				DamageArmor(current, new NPC.HitInfo() { SourceDamage = 9999, HideCombatText = true }, 0);
+				if (!Main.dedServ) for (int i = 0; i < 10; i++) Gore.NewGore(
+					current.GetSource_Death(),
+					Main.rand.NextVector2FromRectangle(current.Hitbox),
+					current.oldVelocity,
+					Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+				);
+				current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
 			}
+			NPC.Center = Main.npc[closest].Center;
 			return false;
 		}
 	}
