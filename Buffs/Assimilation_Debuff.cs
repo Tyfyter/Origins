@@ -61,16 +61,15 @@ namespace Origins.Buffs {
 		public override void Update(Player player, ref int buffIndex) {
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 			float percent = originPlayer.CrimsonAssimilation * originPlayer.crimsonAssimilationDebuffMult;
-			int buffChosen = Main.rand.Next(0, 2);
 			if (percent >= OriginPlayer.assimilation_max) {
 				player.KillMe(new KeyedPlayerDeathReason() {
 					Key = "Mods.Origins.DeathMessage.Assimilation.Crimson"
 				}, 40, 0);
 			}
-			if (Main.rand.NextFloat(50, 200) < percent) {
-				if (buffChosen == 0) {
+			if (Main.rand.NextFloat(0.5f, 2f) < percent) {
+				if (Main.rand.NextBool(2)) {
 					player.AddBuff(BuffID.Confused, Main.rand.Next(24, 69) * (1 + (int)percent));
-				} else if (buffChosen == 1) {
+				} else {
 					player.AddBuff(BuffID.Bleeding, Main.rand.Next(48, 138) * (1 + (int)percent));
 				}
 			}
