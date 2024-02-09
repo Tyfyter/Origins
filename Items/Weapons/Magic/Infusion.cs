@@ -20,6 +20,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override void SetDefaults() {
 			Item.damage = 4;
+			Item.ArmorPenetration = 8;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
 			Item.mana = 3;
 			Item.noMelee = true;
