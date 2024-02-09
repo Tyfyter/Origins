@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using AltLibrary.Common.AltBiomes;
+using Microsoft.Xna.Framework;
 using Origins.Dusts;
 using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
@@ -58,6 +59,7 @@ namespace Origins.Items.Materials {
 					);
 				}
 			}
+			if (Main.myPlayer != Projectile.owner) return;
 			int minX = (int)(Projectile.position.X / 16f) - 1;
 			int maxX = (int)((Projectile.position.X + Projectile.width) / 16f) + 2;
 			int minY = (int)(Projectile.position.Y / 16f) - 1;
@@ -75,6 +77,7 @@ namespace Origins.Items.Materials {
 				maxY = Main.maxTilesY;
 			}
 			Vector2 comparePos = default;
+			AltBiome biome = ModContent.GetInstance<Riven_Hive_Alt_Biome>();
 			for (int x = minX; x < maxX; x++) {
 				for (int y = minY; y < maxY; y++) {
 					comparePos.X = x * 16;
@@ -83,8 +86,9 @@ namespace Origins.Items.Materials {
 						(Projectile.position.X < comparePos.X + 16f) &&
 						(Projectile.position.Y + Projectile.height > comparePos.Y) &&
 						(Projectile.position.Y < comparePos.Y + 16f) &&
-						Main.myPlayer == Projectile.owner || Main.tile[x, y].HasTile) {
-						AltLibrary.Core.ALConvert.Convert<Riven_Hive_Alt_Biome>(x, y, 1);
+						Main.tile[x, y].HasTile) {
+						AltLibrary.Core.ALConvert.ConvertTile(x, y, biome);
+						AltLibrary.Core.ALConvert.ConvertWall(x, y, biome);
 						//WorldGen.Convert(x, y, OriginSystem.origin_conversion_type, 1);
 					}
 				}
