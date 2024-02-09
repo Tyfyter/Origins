@@ -17,7 +17,7 @@ namespace Origins.NPCs.Defiled
             AssimilationAmounts = new()
             {
                 [ModContent.NPCType<Chunky_Slime>()] = 0.05f,
-                [ModContent.NPCType<Defiled_Amalgamation>()] = 0.11f,
+                [ModContent.NPCType<Defiled_Amalgamation>()] = 0.04f,
                 [ModContent.NPCType<Defiled_Brute>()] = 0.08f,
                 [ModContent.NPCType<Defiled_Cyclops>()] = 0.08f,
                 [ModContent.NPCType<Defiled_Digger_Head>()] = 0.06f,

@@ -46,12 +46,12 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 2);
 			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(ItemID.IronOre, 2);
+			recipe.AddIngredient(ItemID.IronBar, 2);
 			recipe.AddTile(TileID.Anvils);
 			recipe.Register();
             recipe = Recipe.Create(Type, 2);
             recipe.AddIngredient(ItemID.ExplosivePowder);
-            recipe.AddIngredient(ItemID.LeadOre, 2);
+            recipe.AddIngredient(ItemID.LeadBar, 2);
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
         }
