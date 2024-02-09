@@ -103,12 +103,14 @@ namespace Origins.Items.Weapons.Magic {
 		public override void OnKill(int timeLeft) {
 			const float manaStealFactor = 0.5f;
 			if (Projectile.ai[1] > 0) {
-				Item.NewItem(
-					Projectile.GetSource_Death(),
-					Projectile.Center,
-					ModContent.ItemType<Manasynk_Pickup>(),
-					(int)(Projectile.ai[1] * manaStealFactor)
-				);
+				if (Projectile.owner == Main.myPlayer) {
+					Item.NewItem(
+						Projectile.GetSource_Death(),
+						Projectile.Center,
+						ModContent.ItemType<Manasynk_Pickup>(),
+						(int)(Projectile.ai[1] * manaStealFactor)
+					);
+				}
 				NPC embedTarget = Main.npc[(int)Projectile.ai[0]];
 				ParticleOrchestrator.RequestParticleSpawn(
 					false,

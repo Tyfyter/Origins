@@ -140,7 +140,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			NPC.HitModifiers apMods = new NPC.HitModifiers();
 			apMods.ArmorPenetration += armorPenetration;
 			NPCLoader.ModifyIncomingHit(npc, ref apMods);
-			npc.ai[3] = (int)Math.Max(npc.ai[3] - Math.Max(hit.SourceDamage - Math.Max(15 - apMods.ArmorPenetration.Value, 0) * (1 - apMods.ScalingArmorPenetration.Value), 0), 0);
+			npc.ai[3] = (int)Math.Max(npc.ai[3] - Math.Max((hit.SourceDamage * (hit.Crit ? 2 : 1)) - Math.Max(15 - apMods.ArmorPenetration.Value, 0) * (1 - apMods.ScalingArmorPenetration.Value), 0), 0);
 			if (!hit.HideCombatText) CombatText.NewText(npc.Hitbox, hit.Crit ? new Color(255, 170, 133) : new Color(255, 210, 173), oldArmorHealth - (int)npc.ai[3], hit.Crit);
 			if (npc.ai[3] <= 0) {
 				DropAttemptInfo dropInfo = default(DropAttemptInfo);
@@ -162,6 +162,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					);
 				}
 			}
+			npc.netUpdate = true;
 		}
 		public static void DrawArmor(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor, Rectangle frame, NPC npc) {
 			float ArmorHealthPercent = ((int)npc.ai[3]) / (float)MaxArmorHealth;
