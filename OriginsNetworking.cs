@@ -97,7 +97,7 @@ namespace Origins {
 							Knockback = reader.ReadSingle(),
 						};
 						int armorPenetration = reader.ReadInt32();
-						NPCs.Riven.World_Cracker.World_Cracker_Head.DamageArmor(npc, hit, armorPenetration);
+						NPCs.Riven.World_Cracker.World_Cracker_Head.DamageArmor(npc, hit, armorPenetration, fromNet:true);
 
 						if (Main.netMode == NetmodeID.Server) {
 							// Forward the changes to the other clients

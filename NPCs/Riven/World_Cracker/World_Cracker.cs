@@ -135,14 +135,14 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			DamageArmor(NPC, hit, projectile.ArmorPenetration);
 		}
-		public static void DamageArmor(NPC npc, NPC.HitInfo hit, int armorPenetration) {
+		public static void DamageArmor(NPC npc, NPC.HitInfo hit, int armorPenetration, bool fromNet = false) {
 			if (npc.ai[3] <= 0) return;
 			int oldArmorHealth = (int)npc.ai[3];
 			NPC.HitModifiers apMods = new NPC.HitModifiers();
 			apMods.ArmorPenetration += armorPenetration;
 			NPCLoader.ModifyIncomingHit(npc, ref apMods);
 			npc.ai[3] = (int)Math.Max(npc.ai[3] - Math.Max((hit.SourceDamage * (hit.Crit ? 2 : 1)) - Math.Max(apMods.Defense.ApplyTo(15) - apMods.ArmorPenetration.Value, 0) * (1 - apMods.ScalingArmorPenetration.Value), 0), 0);
-			if (!hit.HideCombatText) CombatText.NewText(npc.Hitbox, hit.Crit ? new Color(255, 170, 133) : new Color(255, 210, 173), oldArmorHealth - (int)npc.ai[3], hit.Crit);
+			if (!hit.HideCombatText) CombatText.NewText(npc.Hitbox, hit.Crit ? new Color(255, 170, 133) : new Color(255, 210, 173), oldArmorHealth - (int)npc.ai[3], hit.Crit, fromNet);
 			if (npc.ai[3] <= 0) {
 				if (Main.netMode != NetmodeID.MultiplayerClient) {
 					DropAttemptInfo dropInfo = default(DropAttemptInfo);
@@ -165,7 +165,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					);
 				}
 			}
-			if (Main.netMode == NetmodeID.MultiplayerClient) {
+			if (!fromNet && Main.netMode == NetmodeID.MultiplayerClient) {
 				ModPacket packet = Origins.instance.GetPacket();
 				packet.Write(Origins.NetMessageType.world_cracker_hit);
 				packet.Write((ushort)npc.whoAmI);
