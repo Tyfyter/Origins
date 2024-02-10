@@ -9,6 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.MiscE {
     public class Conehead_Zombie : ModNPC {
 		public override void SetStaticDefaults() {
+			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.Tim;
 			Main.npcFrameCount[NPC.type] = 3;
 		}
 		public override void SetDefaults() {

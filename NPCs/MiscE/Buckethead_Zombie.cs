@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.MiscE {
     public class Buckethead_Zombie : ModNPC {
 		public override void SetStaticDefaults() {
+			NPCID.Sets.ShimmerTransformToNPC[NPC.type] = NPCID.UndeadMiner;//maybe undead viking instead?
 			Main.npcFrameCount[NPC.type] = 3;
 		}
 		public override void SetDefaults() {
