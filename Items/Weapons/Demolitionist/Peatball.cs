@@ -25,6 +25,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ModContent.ItemType<Peat_Moss_Item>());
+			recipe.DisableDecraft();
 			recipe.Register();
 		}
 	}
