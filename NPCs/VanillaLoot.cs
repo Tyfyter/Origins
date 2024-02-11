@@ -124,15 +124,6 @@ namespace Origins.NPCs {
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 5));
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 50));
 				break;
-				case NPCID.GoblinArcher:
-				case NPCID.GoblinPeon:
-				case NPCID.GoblinScout:
-				case NPCID.GoblinSorcerer:
-				case NPCID.GoblinWarrior:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Harpoon_Gun>(), 200));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Harpoon>(), 2, 1, 2));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 34));
-				break;
 				case NPCID.Zombie:
 				case NPCID.Harpy:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 13));
@@ -208,6 +199,20 @@ namespace Origins.NPCs {
 				case NPCID.DemonEye:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Eyeball_Staff>(), 63));
 				break;
+			}
+			CommonDrop harpoonRule = null;
+			foreach (var rule in npcLoot.Get(includeGlobalDrops: false)) {
+				List<DropRateInfo> drops = new();
+				DropRateInfoChainFeed ratesInfo = new();
+				rule.ReportDroprates(drops, ratesInfo);
+				if (drops.Any() && drops[0].itemId == ItemID.Harpoon && rule is CommonDrop harp) {
+					harpoonRule = harp;
+				}
+			}
+			if (harpoonRule is not null) {
+				harpoonRule.itemId = ModContent.ItemType<Harpoon_Gun>();
+				harpoonRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Harpoon>(), 1, 15, 99));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Potato>(), 34));
 			}
 		}
 		public override void OnKill(NPC npc) {

@@ -7,7 +7,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Harpoon_Gun : ModItem {
-		
+		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Harpoon;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.Harpoon] = Type;
+		}
 		public override void SetDefaults() {
 			Item.damage = 17;
 			Item.DamageType = DamageClass.Ranged;

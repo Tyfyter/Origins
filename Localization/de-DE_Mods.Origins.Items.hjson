@@ -2849,7 +2849,9 @@ Harpoon_Gun: {
 		'''
 		Uses harpoons as ammo
 		85.7% chance not to consume ammo
+		'Harpoons not included'
 		''' */
+	// VanillaTooltip: "'Harpoons included'"
 }
 
 Incision: {
