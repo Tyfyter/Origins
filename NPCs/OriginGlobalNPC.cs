@@ -76,6 +76,7 @@ namespace Origins.NPCs {
                     shop.Add<Nitro_Crate>(PeatSoldCondition(100));
                     shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.CorruptWorld);
                     shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125)); // ", Condition.AshenWorld"
+                    shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
                     shop.Add<Impact_Dynamite>(PeatSoldCondition(150), Condition.Hardmode);
 					shop.Add<Alkaline_Grenade>(PeatSoldCondition(180), Condition.Hardmode);
 					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Condition.Hardmode);

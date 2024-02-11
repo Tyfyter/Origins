@@ -1497,11 +1497,6 @@ FragmentNova: {
 
 Hell_Key.DisplayName: Hell Key
 
-Illegal_Explosive_Parts: {
-	DisplayName: Illegal Explosive Parts
-	Tooltip: "'All explosive parts are illegal...'"
-}
-
 Lunar_Token: {
 	DisplayName: Lunar Token
 	Tooltip: "'Valuable to the demented'"

@@ -274,16 +274,6 @@ namespace Origins.Items.Materials {
 		public override int Value => Item.sellPrice(silver: 10);
 		public override int Rare => ItemRarityID.Purple;
 	}
-	public class Illegal_Explosive_Parts : MaterialItem {
-		public override int ResearchUnlockCount => 1;
-		public override int Value => Item.sellPrice(gold: 4);
-		public override int Rare => ItemRarityID.LightRed;
-		public override void SetStaticDefaults() {
-			base.SetStaticDefaults();
-			ItemID.Sets.ShimmerTransformToItem[ItemID.IllegalGunParts] = ModContent.ItemType<Illegal_Explosive_Parts>();
-			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Illegal_Explosive_Parts>()] = ItemID.IllegalGunParts;
-		}
-	}
 	public class Lunar_Token : MaterialItem {
 		public override bool HasGlowmask => true;
 		public override string GlowTexture => Texture;

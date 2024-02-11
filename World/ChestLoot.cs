@@ -5,19 +5,14 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 using static Tyfyter.Utils.ChestLootCache;
 using static Tyfyter.Utils.ChestLootCache.LootQueueAction;
 
 namespace Origins.World {
-	public class ChestLoot : ILoadable, IItemObtainabilityProvider {
+    public class ChestLoot : ILoadable, IItemObtainabilityProvider {
 		public static (LootQueueAction action, int param, float weight)[] Actions => new (LootQueueAction action, int param, float weight)[] {
 			(CHANGE_QUEUE, ChestID.Normal, 0b0000),
 			(ENQUEUE, ModContent.ItemType<Cyah_Nara>(), 1f),

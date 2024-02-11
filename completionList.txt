@@ -986,7 +986,6 @@ MATERIALS:
 (^) Bottled Brine*
 (^) Brineglow*
 (^) Eitrite Bar*
-(^) Illegal Explosive Parts
 (^) Respyrite*
 
 (^) Busted Servo*
@@ -995,18 +994,18 @@ MATERIALS:
 (^) Rotor*
 
 (X) Alien Conduit*
-(X) Armor Piece Blueprint
+(X) Armor Piece Blueprint*
 (^) Chromtain Bar*
-(X) Core Blueprint
+(X) Core Blueprint*
 (X) Endyean Ceramic*
-(X) Ethereal Ash
+(X) Ethereal Ash*
 (@5, ^3) Fibron Plating*
 (^) Formium Bar*
 (^) Formium Scrap*
 (^) Lunar Token*
 (^) Material-36 Bundle*
 (^) Qube*
-(X) Weapon Blueprint
+(X) Weapon Blueprint*
 
 (X) Large Chambersite
 ---
