@@ -208,6 +208,7 @@ namespace Origins.NPCs {
 				if (drops.Any() && drops[0].itemId == ItemID.Harpoon && rule is CommonDrop harp) {
 					harpoonRule = harp;
 				}
+				if (harpoonRule is not null) break;//add any further replacements with &&
 			}
 			if (harpoonRule is not null) {
 				harpoonRule.itemId = ModContent.ItemType<Harpoon_Gun>();
