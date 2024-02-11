@@ -145,6 +145,9 @@ namespace Origins.Items {
 					case ItemID.MiningShirt:
 					tooltips.Insert(3, new TooltipLine(Mod, "Tooltip0", "5% increased explosive damage"));
 					break;
+					case ItemID.Harpoon:
+					tooltips.Insert(5, new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.Origins.Items.Harpoon_Gun.VanillaTooltip")));
+					break;
 				}
 			} catch (Exception e) {
 				Mod.Logger.Error(e);

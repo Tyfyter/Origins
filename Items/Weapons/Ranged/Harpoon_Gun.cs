@@ -8,6 +8,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Harpoon_Gun : ModItem {
 		public override void SetStaticDefaults() {
+			if (GetType() != typeof(Harpoon_Gun)) return;
 			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.Harpoon;
 			ItemID.Sets.ShimmerTransformToItem[ItemID.Harpoon] = Type;
 		}
