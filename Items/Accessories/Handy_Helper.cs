@@ -204,7 +204,6 @@ namespace Origins.Items.Accessories {
 	public class Handy_Helper_Tentacle : Amebic_Vial_Tentacle {
 		public static new int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Handy Tentacle");
 			ID = Type;
 		}
 
@@ -246,7 +245,6 @@ namespace Origins.Items.Accessories {
 		public static AutoCastingAsset<Texture2D> GloveTexture { get; private set; }
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Handy Tentacle");
 			if (ModContent.RequestIfExists<Texture2D>("Origins/Items/Accessories/Handy_Helper_P", out var gloveTexture))
 				GloveTexture = gloveTexture;
 			ID = Type;

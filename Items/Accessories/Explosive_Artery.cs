@@ -17,8 +17,8 @@ namespace Origins.Items.Accessories {
 			Item.DamageType = DamageClasses.Explosive;
 			Item.knockBack = 4;
 			Item.useTime = 6;
-			Item.useAnimation = 2;//used as the numerator for the chance
-			Item.reuseDelay = 25;//used as the denominator for the chance
+			Item.useAnimation = 1;//used as the numerator for the chance
+			Item.reuseDelay = 20;//used as the denominator for the chance
 			Item.shoot = ModContent.ProjectileType<Explosive_Artery_P>();
 			Item.rare = ItemRarityID.Blue;
 			Item.value = Item.sellPrice(gold: 1);

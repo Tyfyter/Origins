@@ -323,6 +323,7 @@ ACCESSORIES:
 (^) Magic Pain Glove*
 (^) Magic Tripwire*
 (^) Makeover Choker*
+(X) Mana Locus*
 (^) Messy Leech*
 (^) Messy Magma Leech*
 (^) Missile Armcannon*

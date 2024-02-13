@@ -30,7 +30,7 @@ namespace Origins {
 				if (explosiveArteryCount > 0) {
 					explosiveArteryCount--;
 				} else {
-					const float maxDist = 512 * 512;
+					const float maxDist = 384 * 384;
 					for (int i = 0; i < Main.maxNPCs; i++) {
 						NPC currentTarget = Main.npc[i];
 						if (Main.rand.NextBool(explosiveArteryItem.useAnimation, explosiveArteryItem.reuseDelay)) {
