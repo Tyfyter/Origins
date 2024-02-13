@@ -1,5 +1,4 @@
 ﻿using Origins.Items.Materials;
-using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.World.BiomeData;
 using Terraria;
@@ -8,7 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
-	public class Sus_Ice_Cream : ModItem {
+    public class Sus_Ice_Cream : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

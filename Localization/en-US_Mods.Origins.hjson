@@ -71,6 +71,24 @@ Dialogue: {
 		BloodMoon2: I've had enough. Acid will be spilt today.
 	}
 
+	ATACS: {
+		Pickup_0: Greetings again, Terrarian. Oh, this is quite an improvement.
+		Pickup_1: Greetings again, Terrarian.
+		PotatoNearby: Conflicting authority, Terrarian. I do advise purging the other unit.
+		ProtomindNearby: Conflicting authority, Terrarian. The Protomind may be an advanced model but that unit will hinder your abilities.
+		CubekonTinkererNearby: W-what? My creator is still alive?
+		Death_0: Oh. According to my calculations, your death was highly improbable.
+		Death_1: See you again, Terrarian.
+		Death_2: Terrarians never die...
+		Combat_0: Providing precision support!
+		Combat_1: This enemy is no match for you, Terrarian.
+		Combat_2: I estimate a success rate no ordinary computer could compute. You got this.
+		GoodAim_0: That's it, Terrarian.
+		GoodAim_1: Strike at them now.
+		GoodAim_2: Bullseye.
+		GoodAim_3: Now's your chance.
+	}
+
 	Cubekon_Tinkerer: {
 		StandardDialogue1: Remember to smile, Terrarian.
 		StandardDialogue2: Usually I'm the one who likes to put up a show, but man, the Cubekons had one in for me that day...
@@ -87,6 +105,8 @@ Dialogue: {
 		InteractionGraveYard: I would be discouraged of quantum immortality... but the undead exist, so...
 		BloodMoon1: Accounting for the various IQT pathway inconsistencies in a single Cuboid matrix alone is certainly a lot, Tourist... what could you be thinking?
 		BloodMoon2: Yeah, my current "situation" sucks right now, but how may I be of assistance, Terrarian?
+		StrangeComputerPresent: Oh wow, one smart cookie he is to have preserved himself in your Fabricator.
+		ATACSPresent: Look what you did to my baby. Well, I have my own updated version of him anyway. He seems he's starting to like you anyway, Tourist.
 	}
 
 	Defiled_Effigy: {
@@ -250,7 +270,9 @@ Dialogue: {
 	}
 
 	Strange_Computer: {
-		Pickup: Greetings, Terrarian.
+		Pickup_0: Greetings, Terrarian. I installed my data onto this Fabricator's chip in hopes of finding you. Glad I could be of assistance.
+		Pickup_1: I need your help, my creator is likely deceased and I need you to carry out her mission. Please read my logs for more information.
+		Pickup_2: Greetings again, Terrarian.
 		PotatoNearby: Conflicting authority, Terrarian. I do advise purging the other unit.
 		ProtomindNearby: Conflicting authority, Terrarian. The Protomind may be an advanced model but that unit will hinder your abilities.
 		CubekonTinkererNearby: W-what? My creator is still alive?

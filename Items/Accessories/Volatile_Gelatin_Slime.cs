@@ -5,19 +5,14 @@ using MonoMod.Cil;
 using Origins.Dev;
 using Origins.Graphics;
 using Origins.Projectiles;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Volatile_Gelatin_Global_Item : GlobalItem, ICustomWikiStat {
+    public class Volatile_Gelatin_Global_Item : GlobalItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
 			"Explosive"

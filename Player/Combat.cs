@@ -435,8 +435,8 @@ namespace Origins {
 				modifiers.ModifyHurtInfo += (ref Player.HurtInfo info) => {
 					float manaDamage = info.Damage;
 					float costMult = 3;
-					float costMult2 = reshapingChunk ? 0.25f : 0.15f;
-					float costMult3 = (float)Math.Pow(reshapingChunk ? 0.25f : 0.15f, Player.manaCost);
+					float costMult2 = refactoringPieces ? 0.25f : 0.15f;
+					float costMult3 = (float)Math.Pow(refactoringPieces ? 0.25f : 0.15f, Player.manaCost);
 					if (Player.magicCuffs) {
 						costMult = 1;
 						Player.magicCuffs = false;
@@ -451,7 +451,7 @@ namespace Origins {
 					info.Damage = (int)(info.Damage - (manaDamage * costMult3));
 					Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
 				};
-			} else if (reshapingChunk) {
+			} else if (refactoringPieces) {
 				modifiers.SourceDamage *= 0.95f;
 			}
 			if (toxicShock) {

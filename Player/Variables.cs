@@ -105,7 +105,7 @@ namespace Origins {
 		public bool mitosis = false;
 		public Item mitosisItem = null;
 		public int mitosisCooldown = 0;
-		public bool reshapingChunk = false;
+		public bool refactoringPieces = false;
 		public float mysteriousSprayMult = 1;
 		public bool protozoaFood = false;
 		public int protozoaFoodCooldown = 0;
@@ -348,7 +348,7 @@ namespace Origins {
 			felnumSet = false;
 			minerSet = false;
 			lostSet = false;
-			reshapingChunk = false;
+			refactoringPieces = false;
 			rivenSet = false;
 			rivenSetBoost = false;
 			bleedingObsidianSet = false;

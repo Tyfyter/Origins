@@ -4,7 +4,6 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	[LegacyName("Bomb_Yeeter")]
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Bomb_Handling_Device : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

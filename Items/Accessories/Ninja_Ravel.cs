@@ -6,8 +6,6 @@ namespace Origins.Items.Accessories {
     public class Ninja_Ravel : Ravel {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Ninja Ravel");
-			// Tooltip.SetDefault("Double tap down to transform into a small, rolling ball\nYou may cling to walls and ceilings when raveled\nEnemies are less likely to target you while raveled");
 			Item.ResearchUnlockCount = 1;
 			ID = Type;
 		}
@@ -43,8 +41,6 @@ namespace Origins.Items.Accessories {
 		protected override int MountID => ModContent.MountType<Ninja_Ravel_Mount>();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			// DisplayName.SetDefault("Ninja Ravel");
-			// Description.SetDefault("10% chance to dodge. Able to climb different surfaces and less likely to be targeted");
 		}
 	}
 }

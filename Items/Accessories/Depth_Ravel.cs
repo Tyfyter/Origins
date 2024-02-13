@@ -7,15 +7,13 @@ namespace Origins.Items.Accessories {
 	public class Depth_Ravel : Ravel {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Depth Ravel");
-			// Tooltip.SetDefault("Double tap down to transform into a small, rolling ball\nGrants extreme underwater capabilities");
 			Item.ResearchUnlockCount = 1;
 			ID = Type;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory();
 			Item.rare = ItemRarityID.Pink;
-			Item.value = Item.sellPrice(gold: 13);
+			Item.value = Item.sellPrice(gold: 6);
 			Item.shoot = ModContent.MountType<Depth_Ravel_Mount>();
 		}
 		protected override void UpdateRaveled(Player player) {
@@ -47,8 +45,6 @@ namespace Origins.Items.Accessories {
 		protected override int MountID => ModContent.MountType<Depth_Ravel_Mount>();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			// DisplayName.SetDefault("Depth Ravel");
-			// Description.SetDefault("10% chance to dodge. Great underwater capabilities");
 		}
 	}
 }

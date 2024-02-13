@@ -83,7 +83,7 @@ Bomb_Charm: {
 	// Tooltip: Reduces explosive self-damage by 15%
 }
 
-Bomb_Yeeter: {
+Bomb_Handling_Device: {
 	// DisplayName: Bomb Handling Device
 	/* Tooltip:
 		'''
@@ -861,7 +861,7 @@ Tripod_Nip: {
 	// Tooltip: Reduces enemy aggression and spawn rates
 }
 
-True_Bomb_Yeeter: {
+Pneumatic_Bomb_Thrower: {
 	// DisplayName: Pneumatic Bomb Thrower
 	/* Tooltip:
 		'''
@@ -3435,16 +3435,6 @@ Eruption: {
 	// Tooltip: ""
 }
 
-Bomb_Handling_Device: {
-	// DisplayName: Bomb Handling Device
-	// Tooltip: ""
-}
-
-Pneumatic_Bomb_Thrower: {
-	// DisplayName: Pneumatic Bomb Thrower
-	// Tooltip: ""
-}
-
 Gray_Solution: {
 	// DisplayName: Gray Solution
 	// Tooltip: ""
@@ -3656,4 +3646,14 @@ Cold_Snap: {
 		Inflicts frostburn to struck enemies
 		Uses mines as ordinance
 		'''
+}
+
+Automated_Returns_Handler: {
+	// DisplayName: Automated_ Returns_ Handler
+	// Tooltip: ""
+}
+
+Refactoring_Pieces: {
+	// DisplayName: Refactoring_ Pieces
+	// Tooltip: ""
 }

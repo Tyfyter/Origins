@@ -18,7 +18,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.explosiveSelfDamage -= 0.2f;
+			originPlayer.explosiveSelfDamage -= 0.15f;
 			originPlayer.explosiveBlastRadius += 0.4f;
 		}
 		public override void AddRecipes() {

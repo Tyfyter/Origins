@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
         public override void AddRecipes() {
             Recipe recipe = CreateRecipe();
             recipe.AddIngredient(ItemID.CelestialCuffs);
-            recipe.AddIngredient(ModContent.ItemType<Reshaping_Chunk>());
+            recipe.AddIngredient(ModContent.ItemType<Refactoring_Pieces>());
             recipe.AddTile(TileID.TinkerersWorkbench);
             recipe.Register();
         }
@@ -27,7 +27,7 @@ namespace Origins.Items.Accessories {
 			player.manaMagnet = true;
 			player.magicCuffs = true;
 			player.statManaMax2 += 20;
-			player.GetModPlayer<OriginPlayer>().reshapingChunk = true;
+			player.GetModPlayer<OriginPlayer>().refactoringPieces = true;
 			if (!hideVisual) UpdateVanity(player);
 		}
 		public override void UpdateVanity(Player player) {

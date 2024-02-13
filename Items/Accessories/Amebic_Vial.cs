@@ -19,6 +19,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 26);
+			Item.maxStack = 1;
 			Item.dye = -1;
 			Item.hairDye = -1;
 			Item.shoot = ModContent.ProjectileType<Amebic_Vial_Tentacle>();

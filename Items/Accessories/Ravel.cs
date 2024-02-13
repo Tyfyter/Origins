@@ -22,7 +22,7 @@ namespace Origins.Items.Accessories {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory();
 			Item.rare = ItemRarityID.Pink;
-			Item.value = Item.sellPrice(gold: 8);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.shoot = ModContent.MountType<Ravel_Mount>();//can't use mountType because that'd make it fit in the mount slot
 			Item.hasVanityEffects = true;
 		}

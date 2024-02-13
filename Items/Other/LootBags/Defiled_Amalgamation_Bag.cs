@@ -15,7 +15,7 @@ namespace Origins.Items.Other.LootBags {
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			IItemDropRuleCondition master = new Conditions.IsMasterMode();
 			itemLoot.Add(Defiled_Amalgamation.normalDropRule);
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Reshaping_Chunk>()));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Refactoring_Pieces>()));
 			//itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Mysterious_Spray>()));
 			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(gold: 3), false));
 		}

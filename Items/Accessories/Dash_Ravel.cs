@@ -10,15 +10,13 @@ namespace Origins.Items.Accessories {
     public class Dash_Ravel : Ravel {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Dash Ravel");
-			// Tooltip.SetDefault("Double tap down to transform into a small, rolling ball that damages enemies as it moves\nDouble tap a direction to dash and instantly morph");
 			Item.ResearchUnlockCount = 1;
 			ID = Type;
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory();
 			Item.rare = ItemRarityID.Pink;
-			Item.value = Item.sellPrice(gold: 8);
+			Item.value = Item.sellPrice(gold: 6);
 			Item.shoot = ModContent.MountType<Dash_Ravel_Mount>();
 		}
 		public override void UpdateEquip(Player player) {
@@ -51,9 +49,9 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			MountData.acceleration = 0.18f;
-			MountData.runSpeed = 10.7f;
-			MountData.dashSpeed = 10f;
+            MountData.acceleration = 0.38f;
+            MountData.runSpeed = 12f;
+            MountData.dashSpeed = 10f;
 		}
 		public override void UpdateEffects(Player player) {
 			base.UpdateEffects(player);
@@ -78,7 +76,6 @@ namespace Origins.Items.Accessories {
 	public class Dash_Ravel_P : ModProjectile {
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Kinetic Wave");
 			ID = Type;
 		}
 		public override void SetDefaults() {
@@ -121,8 +118,6 @@ namespace Origins.Items.Accessories {
 		protected override int MountID => ModContent.MountType<Dash_Ravel_Mount>();
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();
-			// DisplayName.SetDefault("Dash Ravel");
-			// Description.SetDefault("10% chance to dodge. Double tap left or right to dash");
 		}
 	}
 }

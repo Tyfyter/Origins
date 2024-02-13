@@ -362,23 +362,19 @@ ACCESSORIES:
 (^) Unsought Organ*
 (^) Volatile Charm*
 
-(X) Bouncy Ravel
-(^) Dash Ravel
-(^) Depth Ravel
-(X) Drill Ravel
-(X) Grapple Ravel
-(^) Ninja Ravel
+(^) Dash Ravel*
+(^) Depth Ravel*
+(X) Drill Ravel*
+(X) Grapple Ravel*
+(^) Ninja Ravel*
 (X) Ornament of Metamorphosis*
 (^) Ravel*
-(X) Scroll Ravel
 (X) Sigil of the Machine*
-(X) Slick Ravel
-(^) Speed Ravel
-(^) Spider Ravel
-(^) Stealth Ravel
+(^) Spider Ravel*
+(^) Stealth Ravel*
 (X) Strange Feather*
-(X) Thrust Ravel
-(X) Versatile Ravel
+(X) Thrust Ravel*
+(X) True Ravel*
 
 (^) Asylum Whistle*
 (^) Eccentric Stone*
@@ -412,7 +408,7 @@ ACCESSORIES:
 (^) Third Eye*
 (^) Weakpoint Analyzer*
 
-(^) Agility Core
+(^) Agility Core*
 (^) Combat Core
 (^) Construction Core
 (^) Fishing Core

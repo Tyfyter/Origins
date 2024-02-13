@@ -14,10 +14,9 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().priorityMail = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);// non-stackable items can't have their stacks split to make a stack of 2+ different from a stack of 1, and iirc accessories being stackable causes issues
-			recipe.AddIngredient(ItemID.Book);
-			recipe.AddIngredient(ItemID.FallenStar, 2);
-			recipe.AddIngredient(ItemID.PaperAirplaneA, 4);
+			Recipe recipe = Recipe.Create(Type);
+			recipe.AddIngredient(ItemID.FallenStar);
+			recipe.AddIngredient(ItemID.PaperAirplaneA);
 			recipe.AddIngredient(ModContent.ItemType<Asylum_Whistle>());
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();

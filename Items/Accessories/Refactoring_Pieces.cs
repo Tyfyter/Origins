@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Reshaping_Chunk : ModItem, ICustomWikiStat {
+	public class Refactoring_Pieces : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat"
 		};
@@ -20,7 +20,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().reshapingChunk = true;
+			player.GetModPlayer<OriginPlayer>().refactoringPieces = true;
 		}
 	}
 }
