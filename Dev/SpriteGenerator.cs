@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.Renderers;
@@ -22,11 +23,12 @@ namespace Origins.Dev {
 			SpriteBatch spriteBatch = new(Main.graphics.GraphicsDevice);
 			renderTarget.GraphicsDevice.SetRenderTarget(renderTarget);
 			renderTarget.GraphicsDevice.Clear(Color.Transparent);
-			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, Main.Camera.Sampler, DepthStencilState.None, Main.Camera.Rasterizer, null, Main.Camera.GameViewMatrix.TransformationMatrix);
+			spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Matrix.Identity);
 			SpriteBatch realMainSB = Main.spriteBatch;
 			Vector2 screenPosition = Main.screenPosition;
 			int screenWidth = Main.screenWidth;
 			int screenHeight = Main.screenHeight;
+			bool screenMaximized = Main.screenMaximized;
 			try {
 				Main.spriteBatch = spriteBatch;
 				Main.screenWidth = size.X;
@@ -37,6 +39,7 @@ namespace Origins.Dev {
 				Main.screenPosition = screenPosition;
 				Main.screenWidth = screenWidth;
 				Main.screenHeight = screenHeight;
+				Main.screenMaximized = screenMaximized;
 			}
 			spriteBatch.End();
 			return renderTarget;
@@ -146,6 +149,30 @@ namespace Origins.Dev {
 					(16 * 3, 16 * 3)
 				);
 			}
+		}
+		public static (Texture2D texture, int frames)[] GenerateAnimationSprite(Texture2D texture, params (Rectangle frame, int frames)[] frames) {
+			return frames.Select(frame => (Generate(
+				(spriteBatch) => {
+					spriteBatch.Draw(texture, Vector2.Zero, frame.frame, Color.White);
+				},
+				(frame.frame.Width, frame.frame.Height)
+			), frame.frames)).ToArray();
+		}
+		public static (Texture2D texture, int frames)[] GenerateAnimationSprite(Texture2D texture, DrawAnimation animation) {
+			(Texture2D texture, int frames)[] frames = new (Texture2D texture, int frames)[animation.FrameCount];
+			int frameNum = animation.Frame;
+			for (int i = 0; i < animation.FrameCount; i++) {
+				animation.Frame = i;
+				Rectangle frame = animation.GetFrame(texture);
+				frames[i] = (Generate(
+					(spriteBatch) => {
+						spriteBatch.Draw(texture, Vector2.Zero, frame, Color.White, 0, Vector2.Zero, 1f, SpriteEffects.None, 0);
+					},
+					(frame.Width, frame.Height)
+				), animation.TicksPerFrame);
+			}
+			animation.Frame = frameNum;
+			return frames;
 		}
 	}
 	public class SingleItemEnumerator<T> : IEnumerable<T> {

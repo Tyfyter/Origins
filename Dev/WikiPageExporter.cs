@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.Map;
@@ -64,7 +66,28 @@ namespace Origins.Dev {
 				}
 			}
 		}
+		static UInt32[] CRCTable;
+		static bool crc_table_computed = false;
+		static string currentCRCText = "";
+		static int currentCRCLength = 0;
 		public static void ExportItemSprites(Item item) {
+			static void make_crc_table() {
+				CRCTable = new uint[256];
+				uint c;
+				short n, k;
+
+				for (n = 0; n < 256; n++) {
+					c = (uint) n;
+					for (k = 0; k < 8; k++) {
+						if ((c & 1) != 0)
+							c = 0xedb88320u ^ (c >> 1);
+						else
+							c = c >> 1;
+					}
+					CRCTable[n] = c;
+				}
+				crc_table_computed = true;
+			}
 			int screenWidth = Main.screenWidth;
 			int screenHeight = Main.screenHeight;
 			foreach (WikiProvider provider in GetWikiProviders(item.ModItem)) {
@@ -76,11 +99,175 @@ namespace Origins.Dev {
 					sprite.texture.Dispose();
 					stream.Close();
 				}
+				[Obsolete("valid chunk names may appear in chunk data, use NextChunk instead", true)]
+				static int ReadTo(int cursor, byte[] buffer, params byte[] target) {
+					while (cursor + target.Length < buffer.Length) {
+						for (int i = 0; i < target.Length; i++) {
+							if (buffer[cursor + i] != target[i]) {
+								cursor++;
+								goto continue_while;
+							}
+						}
+						return cursor;
+						continue_while:;
+					}
+					throw new IndexOutOfRangeException($"Could not find target {string.Join(" ", target)} ({string.Join(" ", target.Select(c => (char)c))})");
+				}
+				static uint ReadUInt(byte[] data, int position) {
+					return ((uint)data[position + 0] << 8 * 3) | ((uint)data[position + 1] << 8 * 2) | ((uint)data[position + 2] << 8 * 1) | ((uint)data[position + 3] << 8 * 0);
+				}
+				static byte[] ToBytes(uint data) {
+					return new byte[] { (byte)(data >> 8 * 3 & 0xFF), (byte)(data >> 8 * 2 & 0xFF), (byte)(data >> 8 * 1 & 0xFF), (byte)(data >> 8 * 0 & 0xFF) };
+				}
+				static byte[] UShortToBytes(ushort data) {
+					return new byte[] { (byte)(data >> 8 * 1 & 0xFF), (byte)(data >> 8 * 0 & 0xFF) };
+				}
+				static int NextChunk(int cursor, byte[] buffer, params byte[] targetName) {
+					uint targetBytes = 0;
+					string chunkName = null;
+					if (targetName.Length > 0) {
+						chunkName = string.Join("", targetName.Select(c => (char)c));
+						if (targetName.Length != 4) {
+							throw new ArgumentException($"Target chunk type must be 4 bytes, {chunkName} is {targetName.Length} bytes", nameof(targetName));
+						}
+						targetBytes = ReadUInt(targetName, 0);
+						if (targetBytes == ReadUInt(buffer, cursor + 4)) return cursor;
+					}
+					start:
+					int chunkLength = (int)ReadUInt(buffer, cursor);
+					/* length + chunk type + data + crc*/
+					cursor += 4 + 4 + chunkLength + 4;
+					if (targetName.Length > 0) {
+						if (targetBytes != ReadUInt(buffer, cursor + 4)) goto start;
+					}
+					return cursor;
+				}
+				static void WriteAndAdvanceCRC(Stream stream, ref uint crc, byte[] buffer, int offset = 0, int length = -1) {
+					if (!crc_table_computed) make_crc_table();
+					if (length == -1) length = buffer.Length - offset;
+					stream.Write(buffer, offset, length);
+					for (int i = 0; i < length; i++) {
+						crc = CRCTable[(crc ^ buffer[i + offset]) & 0xff] ^ (crc >> 8);
+						if (currentCRCText.Length < 4) {
+							currentCRCText += (char)buffer[i + offset];
+						} else {
+							string h = buffer[i + offset].ToString("X");
+							currentCRCText += " " + (h.Length == 1 ? "0" + h : h);
+						}
+						currentCRCLength++;
+					}
+					currentCRCText += "|";
+				}
+				foreach ((string name, (Texture2D texture, int frames)[] textures) sprite in provider.GetAnimatedSprites(item.ModItem) ?? Array.Empty<(string, (Texture2D texture, int frames)[])>()) {
+					string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, sprite.name) + ".png";
+					Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+					Stream stream = File.Create(filePath);
+					int seqNum = 0;
+					for (int i = 0; i < sprite.textures.Length; i++) {
+						Texture2D texture = sprite.textures[i].texture;
+						int size = texture.Width * texture.Height * 4;
+						MemoryStream memoryStream = new MemoryStream(0);//never actually large enough, but 
+						texture.SaveAsPng(memoryStream, texture.Width, texture.Height);
+						//texture.SaveAsPng(File.Create(Path.Combine(DebugConfig.Instance.WikiSpritesPath, sprite.name) + $"_frame_{i}.png"), texture.Width, texture.Height);
+						texture.Dispose();
+						byte[] buffer = memoryStream.GetBuffer();
+						const int _endSig = 16;
+						const int _width = _endSig;
+						const int _height = _width + 4;
+						const int _bit_depth = _height + 4;
+						const int _color_type = _bit_depth + 1;
+						const int _compression = _color_type + 1;
+						const int _filter = _compression + 1;
+						const int _interlace = _filter + 1;
+						string test = "";
+						string hex = "";
+						for (int j = 0; j < buffer.Length; j++) {
+							test += (char)buffer[j];
+							string h = buffer[j].ToString("X");
+							hex += (h.Length == 1 ? "0" + h : h) + "";
+							if (j % 16 == 15) {
+								//test += '\n';
+								//hex += '\n';
+							}
+						}
+						if (buffer[_color_type] != 6) Origins.instance.Logger.Error("invalid color type " + buffer[_color_type]);
+						int IDAT_pos = NextChunk(0x08, buffer, 0x49, 0x44, 0x41, 0x54);
+						uint IDAT_len = ReadUInt(buffer, IDAT_pos);
+						uint crc32 = 0xFFFFFFFFu;
+						if (i == 0) {
+							stream.Write(buffer, 0, IDAT_pos);
+							stream.Write(new byte[] { 0x00, 0x00, 0x00, 0x08 }, 0, 4);
+							WriteAndAdvanceCRC(stream, ref crc32, new byte[] {
+								/*acTL      */0x61, 0x63, 0x54, 0x4C,
+								/*num_frames*/0x00, 0x00, 0x00, (byte)sprite.textures.Length,
+								/*num_plays */0x00, 0x00, 0x00, 0xFF
+							});
+							crc32 ^= 0xFFFFFFFFu;
+							Origins.instance.Logger.Info(currentCRCLength - 4 + ":" + currentCRCText);
+							currentCRCText = "";
+							currentCRCLength = 0;
+							stream.Write(ToBytes((uint)crc32));
+						}
+
+						stream.Write(new byte[4] {
+							0x00, 0x00, 0x00, 0x1A
+						}, 0, 4);
+						crc32 = 0xFFFFFFFFu;
+						WriteAndAdvanceCRC(stream, ref crc32, new byte[] {
+							/*fcTL           */0x66, 0x63, 0x54, 0x4C
+						});
+						//BinaryWriter writer = new BinaryWriter(stream, Encoding.Default, true);
+						//writer.Flush();
+						//writer.Dispose();
+
+						currentCRCText += "\nsequence_number:"; WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)seqNum++));// sequence_number
+						currentCRCText += "\nwidth:"; WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)texture.Width));// width
+						currentCRCText += "\nheight:"; WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)texture.Height));// height
+						currentCRCText += "\nx_offset:"; WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0));// x_offset
+						currentCRCText += "\ny_offset:"; WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0));// y_offset
+						currentCRCText += "\ndelay_num:"; WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)sprite.textures[i].frames));// delay_num
+						currentCRCText += "\ndelay_den:"; WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)60));// delay_den
+						currentCRCText += "\ndispose_op:"; WriteAndAdvanceCRC(stream, ref crc32, new byte[] { (byte)1 });// dispose_op (APNG_DISPOSE_OP_BACKGROUND)
+						currentCRCText += "\nblend_op:"; WriteAndAdvanceCRC(stream, ref crc32, new byte[] { (byte)0 });// blend_op (APNG_BLEND_OP_SOURCE)
+						crc32 ^= 0xFFFFFFFFu;
+						Origins.instance.Logger.Info(currentCRCLength - 4 + ":" + currentCRCText);
+						currentCRCText = "";
+						currentCRCLength = 0;
+						stream.Write(ToBytes((uint)crc32));
+
+						crc32 = 0xFFFFFFFFu;
+						if (i != 0) {
+							stream.Write(ToBytes((uint)(IDAT_len + 4)));
+							WriteAndAdvanceCRC(stream, ref crc32, new byte[] {
+								/*fdAT          */0x66, 0x64, 0x41, 0x54,
+								/*sequence_number*/0x00, 0x00, 0x00, (byte)seqNum++
+							});
+						} else {
+							stream.Write(ToBytes((uint)IDAT_len));
+							WriteAndAdvanceCRC(stream, ref crc32, new byte[] {
+								/*IDAT          */0x49, 0x44, 0x41, 0x54
+							});
+						}
+						WriteAndAdvanceCRC(stream, ref crc32, buffer, IDAT_pos + 4 + 4, (int)IDAT_len);
+						crc32 ^= 0xFFFFFFFFu;
+						Origins.instance.Logger.Info(currentCRCLength - 4 + ":" + currentCRCText);
+						currentCRCText = "";
+						currentCRCLength = 0;
+						stream.Write(ToBytes((uint)crc32));
+
+						if (i == sprite.textures.Length - 1) {
+							int IEND_pos = NextChunk(IDAT_pos, buffer, 0x49, 0x45, 0x4E, 0x44);
+							uint IEND_len = ReadUInt(buffer, IEND_pos);
+							stream.Write(buffer, IEND_pos, 4 + 4 + (int)IEND_len + 4);
+						}
+					}
+					stream.Close();
+				}
 			}
 			Main.screenWidth = screenWidth;
 			Main.screenHeight = screenHeight;
 		}
-		public static string GetWikiName(ModItem modItem) => modItem.Name.Replace("_Item", "");
+		public static string GetWikiName(ModItem modItem) => modItem.Name.Replace("_Item", "");//maybe switch to WebUtility.UrlEncode(modItem.DisplayName.Value);
 		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
 		public static string GetWikiStatPath(string name) => Path.Combine(DebugConfig.Instance.StatJSONPath, name + ".json");
 		public static string GetWikiItemPath(ModItem modItem) => modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");
@@ -569,6 +756,17 @@ namespace Origins.Dev {
 			data.AppendStat("InternalName", item.ModItem?.Name, null);
 			yield return (PageName(modItem), data);
 		}
+		public override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(ModItem value) {
+			if (Main.itemAnimations[value.Type] is DrawAnimation animation) {
+				yield return (WikiPageExporter.GetWikiName(value), SpriteGenerator.GenerateAnimationSprite(TextureAssets.Item[value.Type].Value, animation));
+			} else {
+				yield return (WikiPageExporter.GetWikiName(value), SpriteGenerator.GenerateAnimationSprite(TextureAssets.Item[value.Type].Value, new DrawAnimation() {
+					FrameCount = 1,
+					TicksPerFrame = 1
+				}));
+			}
+			yield break;
+		}
 	}
 	public interface INoSeperateWikiPage { }
 	public class StatOnlyItemWikiProvider : ItemWikiProvider {
@@ -587,6 +785,7 @@ namespace Origins.Dev {
 		public virtual string GetPage(object value) => default;
 		public virtual IEnumerable<(string name, JObject stats)> GetStats(object value) => default;
 		public virtual IEnumerable<(string name, Texture2D texture)> GetSprites(object value) => default;
+		public virtual IEnumerable<(string name, (Texture2D texture, int frames)[] texture)> GetAnimatedSprites(object value) => default;
 	}
 	public abstract class WikiProvider<T> : WikiProvider {
 		protected override void Register() {
@@ -603,10 +802,12 @@ namespace Origins.Dev {
 		public sealed override string GetPage(object value) => value is T v ? GetPage(v) : default;
 		public sealed override IEnumerable<(string, JObject)> GetStats(object value) => value is T v ? GetStats(v) : null;
 		public sealed override IEnumerable<(string, Texture2D)> GetSprites(object value) => value is T v ? GetSprites(v) : null;
+		public sealed override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(object value) => value is T v ? GetAnimatedSprites(v) : null;
 		public abstract string PageName(T value);
 		public abstract string GetPage(T value);
 		public abstract IEnumerable<(string, JObject)> GetStats(T value);
 		public virtual IEnumerable<(string, Texture2D)> GetSprites(T value) => default;
+		public virtual IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(T value) => default;
 	}
 	public static class WikiExtensions {
 		public static void AppendStat<T>(this JObject data, string name, T value, T defaultValue) {
