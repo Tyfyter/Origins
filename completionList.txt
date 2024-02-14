@@ -1170,14 +1170,14 @@ UI:
 
 MUSIC:
 ---
-($3) Ashen Factory
+(X) Ashen Factory
 (X) Brine Pool
 (X) Cosmos
-($3) Cubekon Temple
+(X) Cubekon Temple
 (X) Dawn
-($3) Defiled Caverns
+(^) Defiled Caverns
 (^) Defiled Wastelands
-($3) Defiled Wastelands - Mimic Route?
+($3) Defiled Wastelands - Mimic Route
 (X) Fiberglass Caves
 (X) Fractured Isles
 (^) Riven Hive
@@ -1190,7 +1190,7 @@ MUSIC:
 (X) Lost Diver
 (X) Miscreant
 (X) Quantux
-($3) World Cracker
+(^) World Cracker
 (X) Scrapper
 (X) Severus
 

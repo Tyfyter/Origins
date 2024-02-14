@@ -687,6 +687,10 @@ namespace Origins {
 			}
 		}
 		public static class Music {
+			public static int Fiberglass;
+
+			public static int BrinePool;
+
 			public static int Dusk;
 
 			public static int Defiled;
@@ -696,6 +700,7 @@ namespace Origins {
 			public static int Riven;
 			public static int UndergroundRiven;
 			public static int RivenBoss;
+			public static int RivenOcean;
 			internal static void LoadMusic() {
 				ReserveMusicID = typeof(MusicLoader).GetMethod("ReserveMusicID", BindingFlags.NonPublic | BindingFlags.Static).CreateDelegate<Func<int>>();
 				static void SetMusic(ref int newID, int baseID) {
@@ -707,7 +712,11 @@ namespace Origins {
 						Main.audioSystem.LoadCue(newID, "Music_" + baseID);
 					}
 				}
-				SetMusic(ref Dusk, MusicID.Eerie);
+                SetMusic(ref Fiberglass, MusicID.Snow);
+
+                SetMusic(ref BrinePool, MusicID.Rain);
+
+                SetMusic(ref Dusk, MusicID.Eerie);
 
 				SetMusic(ref Defiled, MusicID.Corruption);
 				SetMusic(ref UndergroundDefiled, MusicID.UndergroundCorruption);
@@ -716,6 +725,7 @@ namespace Origins {
 				SetMusic(ref Riven, MusicID.Crimson);
 				SetMusic(ref UndergroundRiven, MusicID.UndergroundCrimson);
 				SetMusic(ref RivenBoss, MusicID.OtherworldlyBoss1);
+				SetMusic(ref RivenOcean, MusicID.OtherworldlyOcean);
 			}
 			private static Func<int> ReserveMusicID;
 			internal static void UnloadMusic() {
