@@ -71,23 +71,6 @@ namespace Origins.Dev {
 		static string currentCRCText = "";
 		static int currentCRCLength = 0;
 		public static void ExportItemSprites(Item item) {
-			static void make_crc_table() {
-				CRCTable = new uint[256];
-				uint c;
-				short n, k;
-
-				for (n = 0; n < 256; n++) {
-					c = (uint) n;
-					for (k = 0; k < 8; k++) {
-						if ((c & 1) != 0)
-							c = 0xedb88320u ^ (c >> 1);
-						else
-							c = c >> 1;
-					}
-					CRCTable[n] = c;
-				}
-				crc_table_computed = true;
-			}
 			int screenWidth = Main.screenWidth;
 			int screenHeight = Main.screenHeight;
 			foreach (WikiProvider provider in GetWikiProviders(item.ModItem)) {
@@ -99,19 +82,31 @@ namespace Origins.Dev {
 					sprite.texture.Dispose();
 					stream.Close();
 				}
-				[Obsolete("valid chunk names may appear in chunk data, use NextChunk instead", true)]
-				static int ReadTo(int cursor, byte[] buffer, params byte[] target) {
-					while (cursor + target.Length < buffer.Length) {
-						for (int i = 0; i < target.Length; i++) {
-							if (buffer[cursor + i] != target[i]) {
-								cursor++;
-								goto continue_while;
-							}
+				static void make_crc_table() {
+					CRCTable = new uint[256];
+					uint c;
+					short n, k;
+
+					for (n = 0; n < 256; n++) {
+						c = (uint)n;
+						for (k = 0; k < 8; k++) {
+							if ((c & 1) != 0)
+								c = 0xedb88320u ^ (c >> 1);
+							else
+								c = c >> 1;
 						}
-						return cursor;
-						continue_while:;
+						CRCTable[n] = c;
 					}
-					throw new IndexOutOfRangeException($"Could not find target {string.Join(" ", target)} ({string.Join(" ", target.Select(c => (char)c))})");
+					crc_table_computed = true;
+				}
+				static void FinalizeCRC(uint crc32, Stream stream) {
+					crc32 ^= 0xFFFFFFFFu;
+					stream.Write(ToBytes((uint)crc32));
+#if DEBUG
+					Origins.instance.Logger.Info(currentCRCLength - 4 + ":" + currentCRCText);
+					currentCRCText = "";
+					currentCRCLength = 0;
+#endif
 				}
 				static uint ReadUInt(byte[] data, int position) {
 					return ((uint)data[position + 0] << 8 * 3) | ((uint)data[position + 1] << 8 * 2) | ((uint)data[position + 2] << 8 * 1) | ((uint)data[position + 3] << 8 * 0);
@@ -142,7 +137,10 @@ namespace Origins.Dev {
 					}
 					return cursor;
 				}
-				static void WriteAndAdvanceCRC(Stream stream, ref uint crc, byte[] buffer, int offset = 0, int length = -1) {
+				static void WriteAndAdvanceCRC(Stream stream, ref uint crc, byte[] buffer, int offset = 0, int length = -1, string name = "") {
+#if DEBUG
+					currentCRCText += $"\n{name} :";
+#endif
 					if (!crc_table_computed) make_crc_table();
 					if (length == -1) length = buffer.Length - offset;
 					stream.Write(buffer, offset, length);
@@ -154,9 +152,13 @@ namespace Origins.Dev {
 							string h = buffer[i + offset].ToString("X");
 							currentCRCText += " " + (h.Length == 1 ? "0" + h : h);
 						}
+#if DEBUG
 						currentCRCLength++;
+#endif
 					}
+#if DEBUG
 					currentCRCText += "|";
+#endif
 				}
 				foreach ((string name, (Texture2D texture, int frames)[] textures) sprite in provider.GetAnimatedSprites(item.ModItem) ?? Array.Empty<(string, (Texture2D texture, int frames)[])>()) {
 					string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, sprite.name) + ".png";
@@ -202,11 +204,7 @@ namespace Origins.Dev {
 								/*num_frames*/0x00, 0x00, 0x00, (byte)sprite.textures.Length,
 								/*num_plays */0x00, 0x00, 0x00, 0xFF
 							});
-							crc32 ^= 0xFFFFFFFFu;
-							Origins.instance.Logger.Info(currentCRCLength - 4 + ":" + currentCRCText);
-							currentCRCText = "";
-							currentCRCLength = 0;
-							stream.Write(ToBytes((uint)crc32));
+							FinalizeCRC((uint)crc32, stream);
 						}
 
 						stream.Write(new byte[4] {
@@ -220,20 +218,16 @@ namespace Origins.Dev {
 						//writer.Flush();
 						//writer.Dispose();
 
-						currentCRCText += "\nsequence_number:"; WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)seqNum++));// sequence_number
-						currentCRCText += "\nwidth:"; WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)texture.Width));// width
-						currentCRCText += "\nheight:"; WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)texture.Height));// height
-						currentCRCText += "\nx_offset:"; WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0));// x_offset
-						currentCRCText += "\ny_offset:"; WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0));// y_offset
-						currentCRCText += "\ndelay_num:"; WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)sprite.textures[i].frames));// delay_num
-						currentCRCText += "\ndelay_den:"; WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)60));// delay_den
-						currentCRCText += "\ndispose_op:"; WriteAndAdvanceCRC(stream, ref crc32, new byte[] { (byte)1 });// dispose_op (APNG_DISPOSE_OP_BACKGROUND)
-						currentCRCText += "\nblend_op:"; WriteAndAdvanceCRC(stream, ref crc32, new byte[] { (byte)0 });// blend_op (APNG_BLEND_OP_SOURCE)
-						crc32 ^= 0xFFFFFFFFu;
-						Origins.instance.Logger.Info(currentCRCLength - 4 + ":" + currentCRCText);
-						currentCRCText = "";
-						currentCRCLength = 0;
-						stream.Write(ToBytes((uint)crc32));
+						WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)seqNum++), name: "sequence_number");
+						WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)texture.Width), name: "width");
+						WriteAndAdvanceCRC(stream, ref crc32, ToBytes((uint)texture.Height), name: "height");
+						WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0), name: "x_offset");
+						WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0), name: "y_offset");
+						WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)sprite.textures[i].frames), name: "delay_num");
+						WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)60), name: "delay_den");
+						WriteAndAdvanceCRC(stream, ref crc32, new byte[] { (byte)1 }, name: "dispose_op");//APNG_DISPOSE_OP_BACKGROUND
+						WriteAndAdvanceCRC(stream, ref crc32, new byte[] { (byte)0 }, name: "blend_op");//APNG_BLEND_OP_SOURCE
+						FinalizeCRC((uint)crc32, stream);
 
 						crc32 = 0xFFFFFFFFu;
 						if (i != 0) {
@@ -249,11 +243,7 @@ namespace Origins.Dev {
 							});
 						}
 						WriteAndAdvanceCRC(stream, ref crc32, buffer, IDAT_pos + 4 + 4, (int)IDAT_len);
-						crc32 ^= 0xFFFFFFFFu;
-						Origins.instance.Logger.Info(currentCRCLength - 4 + ":" + currentCRCText);
-						currentCRCText = "";
-						currentCRCLength = 0;
-						stream.Write(ToBytes((uint)crc32));
+						FinalizeCRC((uint)crc32, stream);
 
 						if (i == sprite.textures.Length - 1) {
 							int IEND_pos = NextChunk(IDAT_pos, buffer, 0x49, 0x45, 0x4E, 0x44);
@@ -270,7 +260,7 @@ namespace Origins.Dev {
 		public static string GetWikiName(ModItem modItem) => modItem.Name.Replace("_Item", "");//maybe switch to WebUtility.UrlEncode(modItem.DisplayName.Value);
 		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
 		public static string GetWikiStatPath(string name) => Path.Combine(DebugConfig.Instance.StatJSONPath, name + ".json");
-		public static string GetWikiItemPath(ModItem modItem) => modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");
+		public static string GetWikiItemPath(ModItem modItem) => Main.itemAnimations[modItem.Type] is DrawAnimation ? $"{modItem.Name}" : modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");
 		public static string GetWikiItemRarity(Item item) => (RarityLoader.GetRarity(item.rare)?.Name ?? ItemRarityID.Search.GetName(item.rare)).Replace("Rarity", "");
 		public void Unload() {
 			wikiTemplate = null;
@@ -759,11 +749,6 @@ namespace Origins.Dev {
 		public override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(ModItem value) {
 			if (Main.itemAnimations[value.Type] is DrawAnimation animation) {
 				yield return (WikiPageExporter.GetWikiName(value), SpriteGenerator.GenerateAnimationSprite(TextureAssets.Item[value.Type].Value, animation));
-			} else {
-				yield return (WikiPageExporter.GetWikiName(value), SpriteGenerator.GenerateAnimationSprite(TextureAssets.Item[value.Type].Value, new DrawAnimation() {
-					FrameCount = 1,
-					TicksPerFrame = 1
-				}));
 			}
 			yield break;
 		}

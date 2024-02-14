@@ -39,8 +39,10 @@ namespace Origins.Tiles.Riven {
             Item.ResearchUnlockCount = 25;
         }
         public override void SetDefaults() {
-            Item.CloneDefaults(ItemID.Deathweed);
-            Item.value = Item.sellPrice(copper: 20);
-        }
+			Item.maxStack = Item.CommonMaxStack;
+			Item.width = 12;
+			Item.height = 14;
+			Item.value = Item.sellPrice(copper: 20);
+		}
     }
 }
