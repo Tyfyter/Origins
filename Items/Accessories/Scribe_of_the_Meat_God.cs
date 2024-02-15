@@ -9,7 +9,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Scribe_Of_Meat : ModItem, ICustomWikiStat {
+    public class Scribe_of_the_Meat_God : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Movement",
 			"Combat"
@@ -18,7 +18,7 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(32, 20);
 			Item.damage = 65;
 			Item.knockBack = 3;
-			Item.shoot = Scribe_Of_Meat_P.ID;
+			Item.shoot = Scribe_of_the_Meat_God_P.ID;
 			Item.value = Item.sellPrice(gold: 6);
 			Item.master = true;
 			Item.rare = ItemRarityID.Master;
@@ -30,10 +30,10 @@ namespace Origins.Items.Accessories {
 			}
 		}
 	}
-	public class Scribe_Of_Meat_P : ModProjectile {
+	public class Scribe_of_the_Meat_God_P : ModProjectile {
 		public const int max_updates = 4;
 		public const int dash_duration = 30;
-		public override string Texture => "Origins/Items/Accessories/Scribe_Of_Meat_Use";
+		public override string Texture => "Origins/Items/Accessories/Scribe_of_the_Meat_God_Use";
 		public static AutoCastingAsset<Texture2D> Texture2 { get; private set; }
 		public static AutoCastingAsset<Texture2D> Texture3 { get; private set; }
 		public static AutoCastingAsset<Texture2D> Texture4 { get; private set; }
@@ -41,12 +41,11 @@ namespace Origins.Items.Accessories {
 		public static int ID { get; private set; }
 		Vector2[] hungries;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Scribe of the Meat God");
 			if (!Main.dedServ) {
-				Texture2 = Mod.Assets.Request<Texture2D>("Items/Accessories/Scribe_Of_Meat_Use2");
-				Texture3 = Mod.Assets.Request<Texture2D>("Items/Accessories/Scribe_Of_Meat_Use3");
-				Texture4 = Mod.Assets.Request<Texture2D>("Items/Accessories/Scribe_Of_Meat_Use4");
-				Texture5 = Mod.Assets.Request<Texture2D>("Items/Accessories/Scribe_Of_Meat_Use5");
+				Texture2 = Mod.Assets.Request<Texture2D>("Items/Accessories/Scribe_of_the_Meat_God_Use2");
+				Texture3 = Mod.Assets.Request<Texture2D>("Items/Accessories/Scribe_of_the_Meat_God_Use3");
+				Texture4 = Mod.Assets.Request<Texture2D>("Items/Accessories/Scribe_of_the_Meat_God_Use4");
+				Texture5 = Mod.Assets.Request<Texture2D>("Items/Accessories/Scribe_of_the_Meat_God_Use5");
 			}
 			Main.projFrames[Type] = 2;
 			ID = Type;

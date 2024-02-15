@@ -5,7 +5,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Slashswarm : ModItem {
+	public class Splitsplash : ModItem {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.height = 22;
 			Item.useTime = 8;
 			Item.useAnimation = 24;
-			Item.shoot = ModContent.ProjectileType<Slashswarm_P>();
+			Item.shoot = ModContent.ProjectileType<Splitsplash_P>();
 			Item.shootSpeed = 8.75f;
 			Item.mana = 16;
 			Item.knockBack = 0f;
@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.glowMask = glowmask;
 		}
 	}
-	public class Slashswarm_P : ModProjectile {
+	public class Splitsplash_P : ModProjectile {
 		public static int ID { get; private set; } = -1;
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Amoeba_Bubble";
 		public override string GlowTexture => Texture;
@@ -91,13 +91,13 @@ namespace Origins.Items.Weapons.Magic {
 			return new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f);
 		}
 		void Split() {
-			if (Type != Slashswarm_P.ID) return;
+			if (Type != Splitsplash_P.ID) return;
 			for (int i = 0; i < 2; i++) {
 				Projectile.NewProjectile(
 					Projectile.GetSource_FromAI(),
 					Projectile.Center - new Vector2(15),
 					OriginExtensions.Vec2FromPolar(Main.rand.NextFloat(-MathHelper.Pi, MathHelper.Pi), Projectile.velocity.Length()),
-					Slashswarm_Mini_P.ID,
+					Splitsplash_Smol_P.ID,
 					Projectile.damage / 4,
 					Projectile.knockBack,
 					Projectile.owner
@@ -105,12 +105,11 @@ namespace Origins.Items.Weapons.Magic {
 			}
 		}
 	}
-	public class Slashswarm_Mini_P : Slashswarm_P {
+	public class Splitsplash_Smol_P : Splitsplash_P {
 		public static new int ID { get; private set; } = -1;
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Amoeba_Bubble";
 		public override string GlowTexture => Texture;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Smaller Amoeba Bubble");
 			Main.projFrames[Projectile.type] = 4;
 			ID = Type;
 		}

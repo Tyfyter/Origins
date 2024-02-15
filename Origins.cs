@@ -434,7 +434,8 @@ namespace Origins {
 			Sounds.HeavyCannon = new SoundStyle("Origins/Sounds/Custom/HeavyCannon", SoundType.Sound);
 			Sounds.PowerUp = new SoundStyle("Origins/Sounds/Custom/PowerUp", SoundType.Sound);
 			Sounds.EnergyRipple = new SoundStyle("Origins/Sounds/Custom/EnergyRipple", SoundType.Sound);
-			Sounds.DeepBoom = new SoundStyle("Origins/Sounds/Custom/DeepBoom", SoundType.Sound) {
+            Sounds.PhaserCrash = new SoundStyle("Origins/Sounds/Custom/PhaserCrash", SoundType.Sound);
+            Sounds.DeepBoom = new SoundStyle("Origins/Sounds/Custom/DeepBoom", SoundType.Sound) {
 				MaxInstances = 0
 			};
 			Sounds.DefiledIdle = new SoundStyle("Origins/Sounds/Custom/Defiled_Idle", new int[] { 2, 3 }, SoundType.Sound) {
@@ -452,7 +453,17 @@ namespace Origins {
 				Volume = 0.4f,
 				PitchRange = (0.9f, 1.1f)
 			};
-			Sounds.RivenBass = new SoundStyle("Origins/Sounds/Custom/RivenBass", SoundType.Sound) {
+			Sounds.Amalgamation = new SoundStyle("Origins/Sounds/Custom/ChorusRoar", SoundType.Sound) {
+				MaxInstances = 0,
+				Volume = 1.5f,
+				PitchRange = (0.2f, 0.3f)
+            };
+            Sounds.BeckoningRoar = new SoundStyle("Origins/Sounds/Custom/BeckoningRoar", SoundType.Sound) {
+                MaxInstances = 0,
+				Volume = 0.75f,
+                PitchRange = (0.2f, 0.3f)
+            };
+            Sounds.RivenBass = new SoundStyle("Origins/Sounds/Custom/RivenBass", SoundType.Sound) {
 				MaxInstances = 0
 			};
             Sounds.ShrapnelFest = new SoundStyle("Origins/Sounds/Custom/ShrapnelFest", SoundType.Sound) {
@@ -737,11 +748,14 @@ namespace Origins {
 			public static SoundStyle Krunch = SoundID.Item36;
 			public static SoundStyle HeavyCannon = SoundID.Item36;
 			public static SoundStyle EnergyRipple = SoundID.Item8;
+			public static SoundStyle PhaserCrash = SoundID.Item12;
 			public static SoundStyle DeepBoom = SoundID.Item14;
 			public static SoundStyle DefiledIdle = SoundID.Zombie1;
 			public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;
 			public static SoundStyle DefiledKill = SoundID.NPCDeath1;
-			public static SoundStyle PowerUp = SoundID.Item4;
+			public static SoundStyle Amalgamation = SoundID.Zombie1;
+            public static SoundStyle BeckoningRoar = SoundID.ForceRoar;
+            public static SoundStyle PowerUp = SoundID.Item4;
 			public static SoundStyle RivenBass = SoundID.Item4;
 			public static SoundStyle ShrapnelFest = SoundID.Item144;
 		}

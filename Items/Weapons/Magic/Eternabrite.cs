@@ -7,7 +7,7 @@ namespace Origins.Items.Weapons.Magic {
 		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Flamethrower);
-			Item.damage = 30;
+			Item.damage = 28;
 			Item.DamageType = DamageClass.Magic;
 			Item.mana = 14;
 			Item.useAmmo = AmmoID.None;

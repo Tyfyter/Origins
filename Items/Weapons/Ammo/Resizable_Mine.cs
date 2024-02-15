@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
-			Item.damage = 22;
+			Item.damage = 20;
 			Item.shoot = 2;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4f;

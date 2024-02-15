@@ -134,7 +134,6 @@ ENEMY NPCS:
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
 (^) Spider Amoeba
-(^) Splitooth
 
 (X) Amebeye
 (^) Amebic Mummy
@@ -164,6 +163,7 @@ ENEMY NPCS:
 (X) Shattered Ghoul
 (#3, ^2) Shattered Goldfish
 (X) Torn Ghoul
+(#3, ^2) Trijaw Shark !!!
 
 (X) Annihilator
 (X) Clockwork
@@ -351,7 +351,6 @@ ACCESSORIES:
 (^) Sonar Visor*
 (^) Sonic Radar*
 (#, ^2) Speed Booster* !!!
-(#2, ^2) Strange Computer*
 (^) Super Turbo Reel*
 (^) Superjump Cape*
 (^) Symbiote Skull*
@@ -379,6 +378,7 @@ ACCESSORIES:
 (^) Eccentric Stone*
 (^) Spirit Shard*
 (^) Stone Mask*
+(#2, ^2) Strange Computer*
 (^) Timbre of Hell*
 (^) Tripod Nip*
 
@@ -388,9 +388,7 @@ ACCESSORIES:
 (#2, ^2) Mana Drive*
 (^) Refactoring Pieces*
 (#, ^2) Soul Scythe* !!!
-(X) Void Arcanum
 
-(%3, X) Armored Core
 (^) Blizzardwalker's Jacket*
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
@@ -403,16 +401,16 @@ ACCESSORIES:
 (^) Scribe of the Meat God*
 (^) Stack of Shraps*
 (#3, ^2) Strange Tooth* !!!
-(#, ^2) Terrarian Voodoo Doll* !!!
+(#2, ^2) Terrarian Voodoo Doll* !!!
 (^) Third Eye*
 (^) Weakpoint Analyzer*
 
 (^) Agility Core*
-(^) Combat Core
-(^) Construction Core
-(^) Fishing Core
-(^) Lifeforce Core
-(^) Magic Core
+(^) Combat Core*
+(^) Construction Core*
+(^) Fishing Core*
+(^) Lifeforce Core*
+(^) Magic Core*
 ---
 
 
@@ -626,6 +624,7 @@ RANGED WEAPONS:
 MAGIC WEAPONS:
 ---
 (#, ^2) Area Denial* !!!
+(^) Avulsion
 (^) Beginner's Tome
 (^) Cryostike
 (^) Eternabrite
@@ -634,7 +633,7 @@ MAGIC WEAPONS:
 (^) Low Signal
 (^) Magnus
 (^) Manasynk
-(^) Slashswarm
+(^) Splitsplash
 (^) Tones of Agony
 
 (#3/4, ^2) Bad Hand

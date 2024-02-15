@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.height = 30;
 			Item.useTime = 3;
 			Item.useAnimation = 54;
-			Item.shootSpeed = 14;
+			Item.shootSpeed = 12;
 			Item.mana = 4;
 			Item.shoot = ModContent.ProjectileType<Rigged_Cubix_P>();
 			Item.value = Item.sellPrice(gold: 20);
@@ -49,7 +49,7 @@ namespace Origins.Items.Weapons.Magic {
 			if (player.itemAnimation != 0 && !player.CheckMana(Item, pay: true)) {
 				return false;
 			}
-			SoundEngine.PlaySound(SoundID.Item12, position);
+			SoundEngine.PlaySound(Origins.Sounds.PhaserCrash, position);
 			return true;
 		}
 	}

@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Ranged {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.Harpoon] = Type;
 		}
 		public override void SetDefaults() {
-			Item.damage = 17;
+			Item.damage = 24;
 			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 4;
 			Item.useStyle = ItemUseStyleID.Shoot;

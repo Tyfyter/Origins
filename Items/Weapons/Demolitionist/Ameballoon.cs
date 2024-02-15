@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this, "");
-			Item.ResearchUnlockCount = 1;
+			Item.ResearchUnlockCount = 30;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);

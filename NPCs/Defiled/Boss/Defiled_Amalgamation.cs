@@ -160,7 +160,8 @@ namespace Origins.NPCs.Defiled.Boss {
 		const int state_summon_roar = 5;
 		int AIState { get => (int)NPC.ai[0]; set => NPC.ai[0] = value; }
 		public override void AI() {
-			NPC.TargetClosest();
+            if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.Amalgamation, NPC.Center);
+            NPC.TargetClosest();
 			if (NPC.HasPlayerTarget && Main.player[NPC.target].active && !Main.player[NPC.target].dead) {
 				Player target = Main.player[NPC.target];
 				float leftArmTarget = 0.5f;
@@ -383,10 +384,11 @@ namespace Origins.NPCs.Defiled.Boss {
 
 					//"beckoning roar"
 					case state_summon_roar: {
-						NPC.ai[1]++;
+                        NPC.ai[1]++;
 						NPC.velocity *= 0.9f;
-						if (NPC.ai[1] < 40) {
-							leftArmTarget = 0;
+                        SoundEngine.PlaySound(Origins.Sounds.BeckoningRoar.WithPitchRange(0.1f, 0.2f));
+                        if (NPC.ai[1] < 40) {
+                            leftArmTarget = 0;
 							rightArmTarget = 0;
 							armSpeed *= 0.5f;
 						} else if (NPC.ai[1] > 60) {
@@ -395,7 +397,6 @@ namespace Origins.NPCs.Defiled.Boss {
 						} else if (NPC.ai[1] >= 45) {
 							NPC.velocity = new Vector2(0, -4);
 							if ((int)NPC.ai[1] == 45) {
-								SoundEngine.PlaySound(SoundID.ForceRoar.WithPitchRange(0.1f, 0.2f));
 								if (Main.netMode != NetmodeID.MultiplayerClient) {
 									for (int i = 3 + (difficultyMult * NPC.statsAreScaledForThisManyPlayers); i-- > 0;) {
 										Projectile.NewProjectileDirect(

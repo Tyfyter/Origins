@@ -742,7 +742,7 @@ Scavenger_Bag: {
 		'''
 }
 
-Scribe_Of_Meat: {
+Scribe_of_the_Meat_God: {
 	DisplayName: Scribe of the Meat God
 	Tooltip:
 		'''
@@ -2584,9 +2584,9 @@ Seam_Beam: {
 	Tooltip: ""
 }
 
-Slashswarm: {
+Splitsplash: {
 	DisplayName: Splitsplash
-	Tooltip: ""
+	Tooltip: Casts amoeba bubbles that split on contact
 }
 
 Splashid: {
@@ -3663,4 +3663,9 @@ Terrarian_Voodoo_Doll: {
 	Tooltip: ""
 	TooltipPlayer: It looks kind of like {0}...
 	TooltipYouDoNotRecognizeTheBodiesInTheWater: It doesn't look familiar...
+}
+
+Avulsion: {
+	Tooltip: ""
+	DisplayName: Avulsion
 }

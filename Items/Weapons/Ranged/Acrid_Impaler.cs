@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Ranged {
     public class Acrid_Impaler : Harpoon_Gun {
 		
 		public override void SetDefaults() {
-			Item.damage = 40;
+			Item.damage = 48;
 			Item.DamageType = DamageClass.Ranged;
 			Item.knockBack = 4;
 			Item.useStyle = ItemUseStyleID.Shoot;

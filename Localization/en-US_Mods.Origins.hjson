@@ -847,7 +847,7 @@ Projectiles: {
 	Parasitic_Influence_Tentacle.DisplayName: Parasitic Influence
 	Protomind_P.DisplayName: Protomind
 	Return_To_Sender_Thorns.DisplayName: Return To Sender
-	Scribe_Of_Meat_P.DisplayName: Scribe of the Meat God
+	Scribe_of_the_Meat_God_P.DisplayName: Scribe of the Meat God
 	Third_Eye_Deathray.DisplayName: Phantasmal Deathray
 	Unsought_Organ_P.DisplayName: Unsought Organ
 	Riptide_Dash_P.DisplayName: Riptide Dash
@@ -979,8 +979,8 @@ Projectiles: {
 	Pike_of_Deepneus_P.DisplayName: Pike of Deepneus
 	Rigged_Cubix_P.DisplayName: Quantum Emission
 	Seam_Beam_Beam.DisplayName: Seam Beam
-	Slashswarm_Mini_P.DisplayName: Smaller Amoeba Bubble
-	Slashswarm_P.DisplayName: Amoeba Bubble
+	Splitsplash_Smol_P.DisplayName: Smaller Amoeba Bubble
+	Splitsplash_P.DisplayName: Amoeba Bubble
 	Starshot.DisplayName: Starshot
 	Amenonuhoko_P.DisplayName: Amenonuhoko
 	Broken_Fiberglass_Sword_Stab.DisplayName: Broken Fiberglass Sword
@@ -1071,7 +1071,8 @@ Projectiles: {
 	Joint_Pop_Explosion.DisplayName: Joint Pop
 	Joint_Pop_P.DisplayName: Joint Pop
 	Cellarkeep_Barrel_Explosion.DisplayName: Explosive Barrel
-	Cold_Snap_P.DisplayName: Cold_ Snap_ P
+	Cold_Snap_P.DisplayName: Cold Popper
+	Avulsion_P.DisplayName: Avulsion_ P
 }
 
 Prefixes: {
@@ -1205,6 +1206,7 @@ NPCs: {
 	Riven_Penguin.DisplayName: Riven_ Penguin
 	Cellarkeep.DisplayName: Cellarkeep
 	Cellarkeep_Barrel.DisplayName: Explosive Barrel
+	Trijaw_Shark.DisplayName: Trijaw Shark
 }
 
 BiomeName.Bestiary_Biomes.TheTemple: The Temple

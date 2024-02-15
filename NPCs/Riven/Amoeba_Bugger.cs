@@ -38,7 +38,7 @@ namespace Origins.NPCs.Riven {
 			NPC.netUpdate = true;
 		}
 		public override void AI() {
-			if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(1f, 1.2f), NPC.Center);
+			if (Main.rand.NextBool(900)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle.WithPitchRange(2f, 2.2f), NPC.Center);
 			NPC.FaceTarget();
 			if (NPC.velocity.HasNaNs()) NPC.velocity = default;
 			if (!NPC.HasValidTarget) NPC.direction = Math.Sign(NPC.velocity.X);

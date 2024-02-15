@@ -82,7 +82,7 @@ namespace Origins {
 				Player.dashType = 0;
 				Player.dashTime = 0;
 				const float meatDashTotalSpeed = 12f;
-				const float meatDashSpeed = meatDashTotalSpeed / Scribe_Of_Meat_P.max_updates;
+				const float meatDashSpeed = meatDashTotalSpeed / Scribe_of_the_Meat_God_P.max_updates;
 				if (dashDirection != 0 && (Player.velocity.X * dashDirection < meatDashTotalSpeed)) {
 					Player.dashDelay = -1;
 					Player.dash = 2;
@@ -97,12 +97,12 @@ namespace Origins {
 						new Vector2(dashDirection * meatDashSpeed, 0),
 						meatScribeItem.shoot,
 						meatScribeItem.damage,
-						meatDashSpeed * Scribe_Of_Meat_P.max_updates + meatScribeItem.knockBack,
+						meatDashSpeed * Scribe_of_the_Meat_God_P.max_updates + meatScribeItem.knockBack,
 						Player.whoAmI
 					);
 					SoundEngine.PlaySound(SoundID.NPCDeath10.WithVolumeScale(0.75f), Player.position);
-					dashDelay = Scribe_Of_Meat_P.dash_duration + 6;
-					meatDashCooldown = 120 + Scribe_Of_Meat_P.dash_duration;
+					dashDelay = Scribe_of_the_Meat_God_P.dash_duration + 6;
+					meatDashCooldown = 120 + Scribe_of_the_Meat_God_P.dash_duration;
 				}
 			}
 			if (loversLeap) {

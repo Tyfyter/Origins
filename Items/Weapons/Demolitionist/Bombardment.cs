@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
-			Item.damage = 4;
+			Item.damage = 3;
 			Item.useTime = 6;
 			Item.useAnimation = 36;
 			Item.knockBack = 4f;

@@ -72,7 +72,7 @@ namespace Origins.World.BiomeData {
 			LesionDropRule = new OneFromRulesRule(1,
 				FirstLesionDropRule,
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Amebolize_Incantation>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Slashswarm>()),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Splitsplash>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Riverang>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Amoeba_Toy>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Parasitic_Influence>())

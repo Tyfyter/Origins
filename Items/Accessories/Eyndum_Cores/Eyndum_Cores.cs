@@ -41,7 +41,7 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 		public override Color CoreGlowColor => new Color(160, 0, 255, 160);
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClass.Generic) *= 1.24f;
-			player.GetCritChance(DamageClass.Generic) += 1.1f;///???
+			player.GetCritChance(DamageClass.Generic) += 0.35f;
 			player.GetKnockback(DamageClass.Generic) += 2;
 		}
 	}
@@ -76,7 +76,6 @@ namespace Origins.Items.Accessories.Eyndum_Cores {
 		public override void UpdateEquip(Player player) {
 			player.manaCost *= 0.8f;
 			player.manaFlower = true;
-			player.manaSickReduction *= 0.5f;//this is the damage reduction from mana sickness, it doesn't reduce it
 		}
 	}
 }

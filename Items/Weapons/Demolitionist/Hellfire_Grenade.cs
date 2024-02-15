@@ -39,8 +39,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 135;
 		}
 		public override bool PreKill(int timeLeft) {
-			Projectile.type = ProjectileID.Grenade;
-			return true;
+            Projectile.type = ProjectileID.InfernoFriendlyBlast;
+            return true;
 		}
 		public override void OnKill(int timeLeft) {
 			Projectile.position.X += Projectile.width / 2;

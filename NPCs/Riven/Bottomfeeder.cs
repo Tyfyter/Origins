@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
