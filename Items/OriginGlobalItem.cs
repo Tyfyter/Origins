@@ -117,6 +117,12 @@ namespace Origins.Items {
 			}
 			return true;
 		}
+		public override void GrabRange(Item item, Player player, ref int grabRange) {
+			if (player.TryGetModPlayer(out OriginPlayer originPlayer)) {
+				grabRange += originPlayer.pickupRangeBoost;
+				//if (originPlayer.isVoodooPickup) grabRange -= Player.defaultItemGrabRange - 75; 
+			}
+		}
 		public override string IsArmorSet(Item head, Item body, Item leg) {
 			if (head.type == ItemID.MiningHelmet && body.type == ItemID.MiningShirt && leg.type == ItemID.MiningPants) return "miner";
 			if (OriginConfig.Instance.WoodBuffs && head.type == ItemID.PearlwoodHelmet && body.type == ItemID.PearlwoodBreastplate && leg.type == ItemID.PearlwoodGreaves) return "pearlwood";

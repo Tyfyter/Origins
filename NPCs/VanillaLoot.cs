@@ -38,6 +38,9 @@ namespace Origins.NPCs {
 				case NPCID.EyeofCthulhu:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Strange_Tooth>(), 4));
 				break;
+				case NPCID.SkeletronHead:
+				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Terrarian_Voodoo_Doll>(), 4));
+				break;
 				case NPCID.QueenBee:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Emergency_Bee_Canister>(), 4));
 				break;

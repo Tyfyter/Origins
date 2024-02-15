@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Reflection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -51,6 +52,9 @@ namespace Origins.Items.Accessories {
 				tooltips.Add(new TooltipLine(Mod, "Tooltip0", Language.GetTextValue("Mods.Origins.Items.Terrarian_Voodoo_Doll.TooltipYouDoNotRecognizeTheBodiesInTheWater")));
 			}
 		}
+		public override void UpdateAccessory(Player player, bool hideVisual) {
+			player.GetModPlayer<OriginPlayer>().pickupRangeBoost += 75;
+		}
 		public override void Update(ref float gravity, ref float maxFallSpeed) {
 			if (RefreshPlayer() is OriginPlayer originPlayer) {
 				originPlayer.voodooDollIndex = Item.whoAmI;
@@ -61,8 +65,20 @@ namespace Origins.Items.Accessories {
 						player.AddBuff(353, 60);
 					}
 				}
+				/*Rectangle playerHitbox = player.Hitbox;
+				try {
+					player.Hitbox = Item.Hitbox;
+					originPlayer.isVoodooPickup = true;
+					PlayerMethods.GrabItems(player);
+				} finally {
+					player.Hitbox = playerHitbox;
+					originPlayer.isVoodooPickup = false;
+				}*/
 			}
 		}
+		/*public override bool CanPickup(Player player) {
+			return !player.GetModPlayer<OriginPlayer>().isVoodooPickup;
+		}*/
 		public override void NetSend(BinaryWriter writer) {
 			writer.Write(owner.ToByteArray());
 		}

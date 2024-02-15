@@ -210,6 +210,8 @@ namespace Origins {
 		public Item strangeToothItem = null;
 		public int strangeToothCooldown = 0;
 		public bool controlLocus = false;
+		public int pickupRangeBoost = 0;
+		//public bool isVoodooPickup = false;
 		#endregion
 
 		#region explosive stats
@@ -523,6 +525,7 @@ namespace Origins {
 			cursedCrownVisual = false;
 			strangeToothItem = null;
 			controlLocus = false;
+			pickupRangeBoost = 0;
 
 			flaskBile = false;
 			flaskSalt = false;
