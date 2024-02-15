@@ -106,7 +106,7 @@ ENEMY NPCS:
 (^) Amebic Slime
 (^) Ancient Defiled Cyclops
 (^) Barnacleback
-(☻) Barnacle Bunny* !!!
+(#3, ^2) Barnacle Bunny* !!!
 (#, ^2) Bile Thrower* !!!
 (^) Buckethead Zombie
 (^) Cellarkeep*
@@ -129,7 +129,7 @@ ENEMY NPCS:
 (^) Measly Moeba
 (^) Optiphage
 (#, ^2) Pustule Jellyfish* !!!
-(☻) Riven Penguin* !!!
+(#3, ^2) Riven Penguin* !!!
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
@@ -141,7 +141,7 @@ ENEMY NPCS:
 (^) Amoeba Bugger
 (@, #) Angel
 (^) Barnacle Mound
-(^) Bottomfeeder
+(#3, ^2) Bottomfeeder
 (X) Brine Moccasin
 (@5, #) Carpalfish*
 (X) Defiled Asphyxiator
@@ -162,7 +162,7 @@ ENEMY NPCS:
 (X) Savage Whip
 (X) Sea Dragon
 (X) Shattered Ghoul
-(^) Shattered Goldfish
+(#3, ^2) Shattered Goldfish
 (X) Torn Ghoul
 
 (X) Annihilator
@@ -291,7 +291,7 @@ ACCESSORIES:
 (^) Celestial Stone Mask*
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
-(☻) Control Locus* !!!
+(#3, ^2) Control Locus* !!!
 (^) Coologne*
 (^) Danger Barrel*
 (^) Decaying Scale*

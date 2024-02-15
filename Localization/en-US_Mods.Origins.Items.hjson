@@ -63,7 +63,7 @@ ATACS: {
 		'''
 }
 
-Automated_Handler: {
+Automated_Returns_Handler: {
 	DisplayName: Automated Returns Handler
 	Tooltip:
 		'''
@@ -685,7 +685,7 @@ Rebreather: {
 	Tooltip: Gain more breath as you move in water
 }
 
-Reshaping_Chunk: {
+Refactoring_Pieces: {
 	DisplayName: Refactoring Pieces
 	Tooltip:
 		'''
@@ -3648,19 +3648,14 @@ Cold_Snap: {
 		'''
 }
 
-Automated_Returns_Handler: {
-	DisplayName: Automated_ Returns_ Handler
-	Tooltip: ""
-}
-
-Refactoring_Pieces: {
-	DisplayName: Refactoring_ Pieces
-	Tooltip: ""
-}
-
 Control_Locus: {
 	DisplayName: Control Locus
-	Tooltip: ""
+	Tooltip:
+		'''
+		Ranged projectiles are duplicated 5 times
+		Explosive projectiles are duplicated twice
+		20% chance not to consume ammo
+		'''
 }
 
 Terrarian_Voodoo_Doll: {

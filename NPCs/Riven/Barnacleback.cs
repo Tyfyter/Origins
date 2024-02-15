@@ -28,7 +28,7 @@ namespace Origins.NPCs.Riven {
 			NPC.value = 76;
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-            return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.BBack;
+            return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.BarnBack;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
