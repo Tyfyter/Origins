@@ -15,6 +15,8 @@ using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
 	public class Fiberglass_Undergrowth : ModBiome {
+		public override int Music => Origins.Music.Fiberglass;
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public static SpawnConditionBestiaryInfoElement BestiaryBackground { get; private set; }
 		public override void Load() {
 			BestiaryBackground = new SpawnConditionBestiaryInfoElement("Mods.Origins.Bestiary_Biomes.Fiberglass_Underbrush", 0, "Images/MapBG1");

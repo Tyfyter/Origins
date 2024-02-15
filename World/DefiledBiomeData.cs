@@ -55,6 +55,9 @@ namespace Origins.World.BiomeData {
 			Filters.Scene["Origins:ZoneDefiled"].GetShader().UseProgress(originPlayer.ZoneDefiledProgressSmoothed);
 			player.ManageSpecialBiomeVisuals("Origins:ZoneDefiled", originPlayer.ZoneDefiledProgressSmoothed > 0, player.Center);
 		}
+		public override float GetWeight(Player player) {
+			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress * 0.98f;
+		}
 		public override void Load() {
 			FirstFissureDropRule = ItemDropRule.Common(ModContent.ItemType<Kruncher>());
 			FirstFissureDropRule.OnSuccess(ItemDropRule.Common(ItemID.MusketBall, 1, 100, 100));
@@ -536,7 +539,10 @@ namespace Origins.World.BiomeData {
 	}
 	public class Underground_Defiled_Wastelands_Biome : ModBiome {
 		public override int Music => Origins.Music.UndergroundDefiled;
-		public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override float GetWeight(Player player) {
+			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress;
+		}
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneRockLayerHeight && player.InModBiome<Defiled_Wastelands>();
 		}
@@ -547,6 +553,12 @@ namespace Origins.World.BiomeData {
 		public override string BestiaryIcon => "Origins/UI/Defiled_Wastelands_Bestiary_Icon";
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Desert";
 		public override string MapBackground => BackgroundPath;
+		public override bool IsBiomeActive(Player player) {
+			return player.ZoneDesert && player.InModBiome<Defiled_Wastelands>();
+		}
+		public override float GetWeight(Player player) {
+			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress * 0.99f;
+		}
 	}
 	public class Defiled_Wastelands_Alt_Biome : AltBiome {
 		public override string WorldIcon => "Origins/UI/WorldGen/IconDefiled";

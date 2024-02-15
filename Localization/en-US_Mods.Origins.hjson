@@ -1271,6 +1271,11 @@ Biomes: {
 		DisplayName: Riven Desert
 		TownNPCDialogueName: the Riven Desert
 	}
+
+	Riven_Hive_Ocean: {
+		DisplayName: Riven_ Hive_ Ocean
+		TownNPCDialogueName: the Riven_ Hive_ Ocean
+	}
 }
 
 Tiles: {
