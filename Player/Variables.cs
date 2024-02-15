@@ -118,6 +118,8 @@ namespace Origins {
 		public bool guardedHeart = false;
 		public bool razorwire = false;
 		public Item razorwireItem = null;
+		public bool retributionShield = false;
+		public Item retributionShieldItem = null;
 		public bool unsoughtOrgan = false;
 		public Item unsoughtOrganItem = null;
 		public bool spiritShard = false;
@@ -409,7 +411,9 @@ namespace Origins {
 			gunGlove = false;
 			gunGloveItem = null;
 			razorwire = false;
+			retributionShield = false;
 			razorwireItem = null;
+			retributionShieldItem = null;
 			unsoughtOrgan = false;
 			unsoughtOrganItem = null;
 			spiritShard = false;

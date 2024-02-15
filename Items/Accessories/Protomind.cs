@@ -31,7 +31,7 @@ namespace Origins.Items.Accessories {
 			UpdateMoonlordWarningAndIdle(originPlayer.protOSQuoteCooldown, player);
 		}
 		public override void UpdateEquip(Player player) {
-			//player.brainOfConfusionItem = Item;
+			player.brainOfConfusionItem = Item; // Is there a reason this was commented out?
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.hasProtOS = true;
 			originPlayer.protomindItem = Item;

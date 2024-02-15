@@ -19,7 +19,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Shrapnel_Bomb_P>();
 			Item.shootSpeed *= 0.95f;
 			Item.knockBack = 13f;
-			Item.value = Item.sellPrice(silver: 8);
+			Item.value = Item.sellPrice(silver: 1, copper: 80);
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {

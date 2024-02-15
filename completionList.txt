@@ -332,18 +332,16 @@ ACCESSORIES:
 (^) No U Card*
 (^) Olid Organ*
 (^) Parasitic Influence*
-(#4, ^2) Pincushion* !!!
 (^) Plasma Phial*
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
 (^) Powerflower*
 (†) Priority Mail* !!!
-(#3, ^2) Protomind* !!!
+(#3, ^2) Protomind* !!! 
 (^) Razorwire*
 (^) Rebreather*
 (^) Resin Shield*
 (^) Return To Sender*
-(#2, ^2) Rope of Sharing*
 (^) Ruby Reticle*
 (#3, ^2) Seal of Cinders* !!!
 (^) Scavenger Bag*
@@ -512,6 +510,8 @@ TOOLS:
 (X) Ahe
 (X) Nova Bomb
 (X) Terraformer
+
+(#4, ^2) Pincushion* !!!
 ---
 
 

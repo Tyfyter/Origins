@@ -192,7 +192,10 @@ namespace Origins.NPCs {
 				case NPCID.TheGroom:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Comb>()));
 				break;
-				default:
+                case NPCID.ZombieSuperman:
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Superjump_Cape>(), 3));
+                break;
+                default:
 				break;
 			}
 			switch (npc.type) {

@@ -519,7 +519,49 @@ namespace Origins {
 					);
 				}
 			}
-			if (cinderSealItem is not null) {
+            if (retributionShield) {
+                const float maxDist = 240 * 240;
+                double totalDamage = info.Damage * 0.5f;
+                List<(int id, float weight)> targets = new();
+                NPC npc;
+                for (int i = 0; i < Main.maxNPCs; i++) {
+                    npc = Main.npc[i];
+                    if (npc.active && npc.damage > 0 && !npc.friendly) {
+                        Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Player.MountedCenter);
+                        Vector2 diff = currentPos - Player.MountedCenter;
+                        float dist = diff.LengthSquared();
+                        if (dist > maxDist) continue;
+                        float currentWeight = (1.5f - Vector2.Dot(npc.velocity, diff.SafeNormalize(default))) * (dist / maxDist);
+                        if (totalDamage / 3 > npc.life) {
+                            currentWeight = 0;
+                        }
+                        if (targets.Count >= 3) {
+                            for (int j = 0; j < 3; j++) {
+                                if (targets[j].weight < currentWeight) {
+                                    targets.Insert(j, (i, currentWeight));
+                                    break;
+                                }
+                            }
+                        } else {
+                            targets.Add((i, currentWeight));
+                        }
+                    }
+                }
+                for (int i = 0; i < 3; i++) {
+                    if (i >= targets.Count) break;
+                    Vector2 currentPos = Main.npc[targets[i].id].Hitbox.ClosestPointInRect(Player.MountedCenter);
+                    Projectile.NewProjectile(
+                        Player.GetSource_Accessory(retributionShieldItem),
+                        Player.MountedCenter,
+                        (currentPos - Player.MountedCenter).WithMaxLength(12),
+                        retributionShieldItem.shoot,
+                        (int)(totalDamage / targets.Count) + 1,
+                        10,
+                        Player.whoAmI
+                    );
+                }
+            }
+            if (cinderSealItem is not null) {
 				cinderSealItem.ModItem.Shoot(
 					Player,
 					Player.GetSource_ItemUse_WithPotentialAmmo(cinderSealItem, ItemID.None) as EntitySource_ItemUse_WithAmmo,

@@ -4,7 +4,7 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Accessories {
+namespace Origins.Items.Tools {
     public class Pincushion : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Misc",
@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(20, 34);
 			Item.accessory = false;
 			Item.rare = ItemRarityID.Blue;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateInventory(Player player) {
 			player.GetModPlayer<OriginPlayer>().pincushion = true;

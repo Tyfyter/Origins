@@ -70,12 +70,14 @@ namespace Origins.NPCs {
 					shop.Add<Flashbang>(PeatSoldCondition(25));
                     shop.Add<IWTPA_Standard>(PeatSoldCondition(35));
                     shop.Add<Impact_Grenade>(PeatSoldCondition(40));
-					shop.Add<Impact_Bomb>(PeatSoldCondition(70));
-                    shop.Add<Brainade>(PeatSoldCondition(81), Condition.CrimsonWorld);
+                    shop.Add<Defiled_Spirit>(PeatSoldCondition(50)); // ", Condition.DownedAmalgamation"
+                    shop.Add<Ameballoon>(PeatSoldCondition(60)); // ", Condition.DownedCracker"
+                    shop.Add<Impact_Bomb>(PeatSoldCondition(70));
+                    shop.Add<Brainade>(PeatSoldCondition(81), Condition.DownedBrainOfCthulhu);
                     //shop.Add<Link_Grenade>(PeatSoldCondition(85), Condition.AshenWorld);
                     shop.Add<Nitro_Crate>(PeatSoldCondition(100));
-                    shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.CorruptWorld);
-                    shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125)); // ", Condition.AshenWorld"
+                    shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.DownedEaterOfWorlds);
+                    shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125)); // ", Condition.DownedScrapper"
                     shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
                     shop.Add<Impact_Dynamite>(PeatSoldCondition(150), Condition.Hardmode);
 					shop.Add<Alkaline_Grenade>(PeatSoldCondition(180), Condition.Hardmode);

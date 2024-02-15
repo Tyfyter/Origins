@@ -21,8 +21,8 @@ namespace Origins.Items.Accessories {
 			player.noKnockback = true;
 			player.fireWalk = true;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			originPlayer.razorwire = true;
-			originPlayer.razorwireItem = Item;
+			originPlayer.retributionShield = true;
+			originPlayer.retributionShieldItem = Item;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();

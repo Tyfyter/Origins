@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Defiled_Spirit_P>();
 			Item.shootSpeed = 17;
 			Item.knockBack -= 3;
-			Item.value = Item.sellPrice(copper: 80);
+			Item.value = Item.sellPrice(copper: 40);
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
 		}
