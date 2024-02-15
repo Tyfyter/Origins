@@ -273,6 +273,58 @@ namespace Origins {
 			On_Player.ItemCheck_UseMiningTools_TryHittingWall += On_Player_ItemCheck_UseMiningTools_TryHittingWall;
 			IL_NPCUtils.TargetClosestNonBees += IL_NPCUtils_TargetClosestNonBees;
 			On_CommonCode.ModifyItemDropFromNPC += On_CommonCode_ModifyItemDropFromNPC;
+			IL_Player.Update += (il) => {
+				ILCursor c = new(il);
+				c.GotoNext(MoveType.After,
+					i => i.MatchCall<Collision>("LavaCollision"),
+					i => i.MatchStloc(out int _)
+				);
+				c.Index--;
+				c.EmitDelegate<Func<bool, bool>>((flag) => {
+					if (OriginPlayer.forceLavaCollision) {
+						OriginPlayer.forceLavaCollision = false;
+						return true;
+					}
+					return flag;
+				});
+
+				c.GotoNext(MoveType.After,
+					i => i.MatchCall<Collision>("WetCollision")
+				);
+				c.EmitDelegate<Func<bool, bool>>((flag) => {
+					if (OriginPlayer.forceWetCollision) {
+						OriginPlayer.forceWetCollision = false;
+						return true;
+					}
+					return flag;
+				});
+
+				c.GotoNext(MoveType.After,
+					i => i.MatchLdsfld<Collision>("honey"),
+					i => i.MatchStloc(out int _)
+				);;
+				c.Index--;
+				c.EmitDelegate<Func<bool, bool>>((flag) => {
+					if (OriginPlayer.forceHoneyCollision) {
+						OriginPlayer.forceHoneyCollision = false;
+						return true;
+					}
+					return flag;
+				});
+
+				c.GotoNext(MoveType.After,
+					i => i.MatchLdsfld<Collision>("shimmer"),
+					i => i.MatchStloc(out int _)
+				);;
+				c.Index--;
+				c.EmitDelegate<Func<bool, bool>>((flag) => {
+					if (OriginPlayer.forceShimmerCollision) {
+						OriginPlayer.forceShimmerCollision = false;
+						return true;
+					}
+					return flag;
+				});
+			};
 		}
 
 		private void On_CommonCode_ModifyItemDropFromNPC(On_CommonCode.orig_ModifyItemDropFromNPC orig, NPC npc, int itemIndex) {

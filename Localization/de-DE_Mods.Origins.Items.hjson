@@ -3657,3 +3657,15 @@ Refactoring_Pieces: {
 	// DisplayName: Refactoring_ Pieces
 	// Tooltip: ""
 }
+
+Control_Locus: {
+	// DisplayName: Control_ Locus
+	// Tooltip: ""
+}
+
+Terrarian_Voodoo_Doll: {
+	// DisplayName: Terrarian Voodoo Doll
+	// Tooltip: ""
+	// TooltipPlayer: It looks kind of like {0}...
+	// TooltipYouDoNotRecognizeTheBodiesInTheWater: It doesn't look familiar...
+}

@@ -40,6 +40,7 @@ using static Origins.OriginExtensions;
 
 namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
+		public static Dictionary<Guid, int> playersByGuid;
 		public const float explosive_defense_factor = 2f;
 		public override void PreUpdateMovement() {
 			Origins.hurtCollisionCrimsonVine = false;
@@ -289,6 +290,7 @@ namespace Origins {
 			}*/
 		}
 		public override void PreUpdate() {
+			playersByGuid.Add(guid, Player.whoAmI);
 			if (corruptionAssimilation > 0) {
 				Player.AddBuff(ModContent.BuffType<Corrupt_Assimilation_Debuff>(), 5);
 			}
@@ -517,6 +519,7 @@ namespace Origins {
 			tag.Add("crimsonAssimilation", crimsonAssimilation);
 			tag.Add("defiledAssimilation", defiledAssimilation);
 			tag.Add("rivenAssimilation", rivenAssimilation);
+			tag.Add("GUID", guid.ToByteArray());
 		}
 		public override void LoadData(TagCompound tag) {
 			if (tag.SafeGet<Item>("EyndumCore") is Item eyndumCoreItem) {
@@ -545,6 +548,11 @@ namespace Origins {
 			crimsonAssimilation = tag.SafeGet<float>("crimsonAssimilation");
 			defiledAssimilation = tag.SafeGet<float>("defiledAssimilation");
 			rivenAssimilation = tag.SafeGet<float>("rivenAssimilation");
+			if (tag.TryGet("GUID", out byte[] guidBytes)) {
+				guid = new Guid(guidBytes);
+			} else {
+				guid = Guid.NewGuid();
+			}
 		}
 		TagCompound questsTag;
 		public override void OnEnterWorld() {

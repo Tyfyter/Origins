@@ -6,6 +6,7 @@ namespace Origins.Items.Accessories {
     public class Priority_Mail : ModItem {
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 28);
+			Item.maxStack = 2;
 			Item.accessory = true;
 			Item.rare = ItemRarityID.Green;
 			Item.value = Item.sellPrice(gold: 1);
@@ -14,7 +15,7 @@ namespace Origins.Items.Accessories {
 			player.GetModPlayer<OriginPlayer>().priorityMail = true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
+			Recipe recipe = Recipe.Create(Type, 2);
 			recipe.AddIngredient(ItemID.FallenStar);
 			recipe.AddIngredient(ItemID.PaperAirplaneA);
 			recipe.AddIngredient(ModContent.ItemType<Asylum_Whistle>());

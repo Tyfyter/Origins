@@ -105,6 +105,8 @@ namespace Origins.Projectiles {
 					int bocShadows = 0;
 					if (originPlayer.weakpointAnalyzer && projectile.CountsAsClass(DamageClass.Ranged) && projectile.aiStyle != ProjAIStyleID.HeldProjectile) {
 						bocShadows = 2;
+					} else if (originPlayer.controlLocus && projectile.CountsAsClass(DamageClasses.Explosive) && projectile.aiStyle != ProjAIStyleID.HeldProjectile) {
+						bocShadows = 6;
 					}
 					EntitySource_ItemUse multishotSource = null;
 					int ammoID = ItemID.None;

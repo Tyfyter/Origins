@@ -209,6 +209,7 @@ namespace Origins {
 		public bool cursedCrownVisual = false;
 		public Item strangeToothItem = null;
 		public int strangeToothCooldown = 0;
+		public bool controlLocus = false;
 		#endregion
 
 		#region explosive stats
@@ -315,6 +316,8 @@ namespace Origins {
 		public float lifeRegenTimeSinceHit = 0;
 		public int itemUseOldDirection = 0;
 		public List<Vector2> oldVelocities = new();
+		public Guid guid;
+		public int voodooDollIndex = -1;
 		public override void ResetEffects() {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
@@ -519,6 +522,7 @@ namespace Origins {
 			cursedCrown = false;
 			cursedCrownVisual = false;
 			strangeToothItem = null;
+			controlLocus = false;
 
 			flaskBile = false;
 			flaskSalt = false;
@@ -657,7 +661,19 @@ namespace Origins {
 				dashDelay--;
 			}
 			#endregion
+			if (voodooDollIndex >= 0) {
+				Item voodooDoll = Main.item[voodooDollIndex];
+				Player.wet |= forceWetCollision = voodooDoll.wet;
+				Player.lavaWet |= forceLavaCollision = voodooDoll.lavaWet;
+				Player.honeyWet |= forceHoneyCollision = voodooDoll.honeyWet;
+				Player.shimmerWet |= forceShimmerCollision = voodooDoll.shimmerWet;
+				voodooDollIndex = -1;
+			}
 		}
+		internal static bool forceWetCollision;
+		internal static bool forceLavaCollision;
+		internal static bool forceHoneyCollision;
+		internal static bool forceShimmerCollision;
 		public Vector2 AverageOldVelocity(int count = -1) {
 			if (count == -1 || count > oldVelocities.Count) count = oldVelocities.Count;
 			Vector2 value = Vector2.Zero;

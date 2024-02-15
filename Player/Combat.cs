@@ -44,6 +44,9 @@ namespace Origins {
 			if (weakpointAnalyzer && ammo.CountsAsClass(DamageClass.Ranged)) {
 				if (Main.rand.NextBool(8, 100)) return false;
 			}
+			if (controlLocus && ammo.CountsAsClass(DamageClasses.Explosive)) {
+				if (Main.rand.NextBool(12, 100)) return false;
+			}
 			return true;
 		}
 		public override bool? CanAutoReuseItem(Item item) {

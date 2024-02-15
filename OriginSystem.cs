@@ -379,6 +379,10 @@ namespace Origins {
 				if (--forceThunderstormDelay <= 0) forceThunderstorm = true;
 			}
 		}
+		public override void PreUpdatePlayers() {
+			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = new();
+			else OriginPlayer.playersByGuid.Clear();
+		}
 	}
 	public class TempleBiome : ModBiome {
 		public override string Name => "Bestiary_Biomes.TheTemple";
