@@ -242,8 +242,13 @@ namespace Origins {
 				target.AddBuff(BuffID.Bleeding, 480);
 				target.AddBuff(BuffID.OnFire, Main.rand.Next(119, 361));
 			}
-			if (dangerBarrel) { //needs a check for explosive weapon!
-				target.AddBuff(BuffID.OnFire, Main.rand.Next(119, 361));
+			if (hit.DamageType.CountsAsClass<Explosive>()) {
+				if (dangerBarrel) {
+					target.AddBuff(BuffID.OnFire, Main.rand.Next(119, 361));
+				}
+				if (scavengerSet) {
+					OriginGlobalNPC.InflictImpedingShrapnel(target, 300);
+				}
 			}
 			if (target.life <= 0) {
 				foreach (var quest in Quest_Registry.Quests) {
@@ -270,9 +275,6 @@ namespace Origins {
 					Player.Top,
 					new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
 				);
-			}
-			if (scavengerSet && hit.DamageType.CountsAsClass<Explosive>()) {
-				OriginGlobalNPC.InflictImpedingShrapnel(target, 300);
 			}
 			//TODO: actually test this
 			if (Player.whoAmI != Main.myPlayer && Main.LocalPlayer.GetModPlayer<OriginPlayer>().priorityMail) {
