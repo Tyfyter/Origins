@@ -27,6 +27,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Terraria.GameContent.Personalities;
 using Terraria.ObjectData;
+using Origins.NPCs.Defiled.Boss;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -612,6 +613,9 @@ namespace Origins.World.BiomeData {
 			BiomeKeyItem = ModContent.ItemType<Defiled_Key>();
 
 			MimicType = ModContent.NPCType<Defiled_Mimic>();
+
+			BloodBunny = ModContent.NPCType<Defiled_Tripod>();
+			BloodPenguin = ModContent.NPCType<Defiled_Amalgamation>();
 
 			AddWallConversions<Defiled_Stone_Wall>(
 				WallID.Stone,

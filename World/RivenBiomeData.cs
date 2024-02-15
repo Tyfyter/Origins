@@ -630,6 +630,9 @@ namespace Origins.World.BiomeData {
 
 			MimicType = ModContent.NPCType<Riven_Mimic>();
 
+			BloodBunny = ModContent.NPCType<Barnacle_Bunny>();
+			BloodPenguin = ModContent.NPCType<Riven_Penguin>();
+
 			AddWallConversions<Riven_Flesh_Wall>(
 				WallID.Stone,
 				WallID.CaveUnsafe,
