@@ -84,8 +84,12 @@ namespace Origins.World.BiomeData {
 		public const int ShaderTileCount = 25;
 		public const short DefaultTileDust = DustID.BlueMoss;
 		public static class SpawnRates {
-			public const float AmebSlime = 1;
+			public const float AmebSlime = 0.65f;
 			public const float Fighter = 1;
+			public const float Flajelly = 0.37f;
+			public const float BBack = 0.45f;
+			public const float BlisterBoi = 0.75f;
+			public const float Seashell = 0.6f;
 			public const float Spighter = 1;
 			public const float Mummy = 1;
 			public const float Cleaver = 0.7f;

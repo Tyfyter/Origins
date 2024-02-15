@@ -1,7 +1,10 @@
 using Origins.Buffs;
+using Origins.Items.Weapons.Demolitionist;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -22,9 +25,12 @@ namespace Origins.NPCs.Riven {
 				this.GetBestiaryFlavorText("A vicious defender of the Riven Hive, the Cleaver hides in burrows of spug flesh awaiting any trespassers of its territory."),
 			});
 		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			
-		}
+        public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+            return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Cleaver;
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 3, 6));
+        }
 		public override void AI() {
 			NPC.velocity *= 1.0033f;
 		}

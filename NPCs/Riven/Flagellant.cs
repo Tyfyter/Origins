@@ -1,8 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Summoner;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -37,7 +37,11 @@ namespace Origins.NPCs.Riven {
 			}
 			NPC.frame.Y = 60 * (int)(NPC.frameCounter / 6.0);
 		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+        public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+            if (!spawnInfo.Water) return 0f;
+            return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Flajelly;
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Jam_Sandwich>(), 17));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Flagellash>(), 25));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Mask>(), 525));

@@ -36,7 +36,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 2, 4));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 7, 13));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 3, 6));
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 180, targetSeverity: 1f - 0.9f);

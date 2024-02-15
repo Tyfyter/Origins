@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Materials;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -26,7 +27,11 @@ namespace Origins.NPCs.Riven {
 				this.GetBestiaryFlavorText("A Riven-infected jellyfish living in its new parasite-prevalent environment."),
 			});
 		}
-		public override void FindFrame(int frameHeight) {
+        public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+            if (!spawnInfo.Water) return 0f;
+            return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.BlisterBoi;
+        }
+        public override void FindFrame(int frameHeight) {
 			NPC.spriteDirection = NPC.direction;
 			NPC.frameCounter += 1.0;
 			if (NPC.frameCounter >= 24.0) {

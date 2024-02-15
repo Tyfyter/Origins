@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Terraria;
@@ -58,5 +57,8 @@ namespace Origins.NPCs.Riven {
 				Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, Mod.GetGoreSlot("Gores/NPCs/R_Effect_Meat" + Main.rand.Next(1, 4)));
 			}
 		}
-	}
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
+            OriginPlayer.InflictTorn(target, 180, targetSeverity: 1f - 0.85f);
+        }
+    }
 }

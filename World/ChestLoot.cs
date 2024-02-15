@@ -34,13 +34,11 @@ namespace Origins.World {
 			(CHANGE_QUEUE, ChestID.Gold, 0b0101),
 			(ENQUEUE, ModContent.ItemType<Bomb_Charm>(), 1f),
 			(ENQUEUE, ModContent.ItemType<Beginners_Tome>(), 1f),
-			(ENQUEUE, ModContent.ItemType<Rope_Of_Sharing>(), 1f),
 
 			(CHANGE_QUEUE, ChestID.Gold, 0b1101),
 			(ENQUEUE, ModContent.ItemType<Nitro_Crate>(), 1f),
 			(ENQUEUE, ModContent.ItemType<Bomb_Charm>(), 1f),
 			(ENQUEUE, ModContent.ItemType<Beginners_Tome>(), 1f),
-			(ENQUEUE, ModContent.ItemType<Rope_Of_Sharing>(), 1f),
 
 			(CHANGE_QUEUE, ChestID.DeadMan, 0b0000),
 			(ENQUEUE, ModContent.ItemType<Magic_Tripwire>(), 1f),

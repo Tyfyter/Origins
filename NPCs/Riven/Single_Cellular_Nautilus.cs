@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
+using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -39,7 +40,10 @@ namespace Origins.NPCs.Riven {
 				this.GetBestiaryFlavorText("This Riven-infested nautilus has grown accustomed to the amebic water's viscosity making it very agile on land. The sharpness of its shell is an added danger."),
 			});
 		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+        public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+            return spawnInfo.SpawnTileY < Main.worldSurface ? 0 : Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Seashell;
+        }
+        public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Mask>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Coat>(), 525));
