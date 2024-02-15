@@ -62,6 +62,9 @@ namespace Origins.World.BiomeData {
 			//Filters.Scene["Origins:ZoneRiven"].GetShader().UseProgress(originPlayer.ZoneRivenProgressSmoothed);
 			//player.ManageSpecialBiomeVisuals("Origins:ZoneRiven", originPlayer.ZoneRivenProgressSmoothed > 0, player.Center);
 		}
+		public override float GetWeight(Player player) {
+			return player.GetModPlayer<OriginPlayer>().ZoneRivenProgress * 0.98f;
+		}
 		public override void Load() {
 			FirstLesionDropRule = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Riven_Splitter>())
 				.WithOnSuccess(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Harpoon>(), 1, 99, 99));
