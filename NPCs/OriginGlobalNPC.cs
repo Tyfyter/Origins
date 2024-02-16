@@ -80,8 +80,9 @@ namespace Origins.NPCs {
                     shop.Add<Outbreak_Bomb>(PeatSoldCondition(110), Condition.DownedEaterOfWorlds);
                     shop.Add<Shrapnel_Bomb>(PeatSoldCondition(125)); // ", Condition.DownedScrapper"
                     shop.Add<Magic_Tripwire>(PeatSoldCondition(135));
-                    shop.Add<Impact_Dynamite>(PeatSoldCondition(150), Condition.Hardmode);
-					shop.Add<Alkaline_Grenade>(PeatSoldCondition(180), Condition.Hardmode);
+                    //shop.Add(ItemID.Beenade)(PeatSoldCondition(170));
+                    shop.Add<Impact_Dynamite>(PeatSoldCondition(180), Condition.Hardmode);
+					shop.Add<Alkaline_Grenade>(PeatSoldCondition(200), Condition.Hardmode);
 					shop.Add<Alkaline_Bomb>(PeatSoldCondition(230), Condition.Hardmode);
 					shop.Add<Caustica>(PeatSoldCondition(999), Condition.Hardmode);
 					break;

@@ -2228,7 +2228,11 @@ Bomb_Launcher: {
 
 Bombardment: {
 	DisplayName: Bombardment
-	Tooltip: Fires a barrage of floating mines
+	Tooltip:
+		'''
+		Fires a barrage of floating mines
+		50% chance not to consume ammo
+		'''
 }
 
 Bomboomstick: {
@@ -3518,6 +3522,7 @@ Binding_Book: {
 		Increases pickup range for mana stars
 		Increases maximum mana by 20
 		Increases mana shielding by 10%
+		Restores mana when damaged
 		Reduces damage taken by 5% if Lost Armor is not equipped
 		'''
 }

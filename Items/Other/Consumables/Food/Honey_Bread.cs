@@ -22,7 +22,7 @@ namespace Origins.Items.Other.Consumables.Food {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ModContent.ItemType<Honey_Bread>());
 			recipe.AddIngredient(ItemID.BottledHoney);
-			recipe.AddIngredient(this);
+			recipe.AddIngredient(ModContent.ItemType<Bread>());
 			recipe.AddTile(TileID.CookingPots);
 			recipe.Register();
 		}

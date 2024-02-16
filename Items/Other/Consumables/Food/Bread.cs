@@ -15,12 +15,5 @@ namespace Origins.Items.Other.Consumables.Food {
 			Item.value = Item.sellPrice(silver: 1);
 			Item.rare = ItemRarityID.White;
 		}
-		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ModContent.ItemType<Honey_Bread>());
-			recipe.AddIngredient(ItemID.BottledHoney);
-			recipe.AddIngredient(this);
-			recipe.AddTile(TileID.CookingPots);
-			recipe.Register();
-		}
 	}
 }
