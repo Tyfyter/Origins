@@ -87,19 +87,19 @@ namespace Origins.World.BiomeData {
 		public const int ShaderTileCount = 25;
 		public const short DefaultTileDust = DustID.BlueMoss;
 		public static class SpawnRates {
-			public const float AmebSlime = 0.85f;
-			public const float Fighter = 0.85f;
-			public const float Flajelly = 0.65f;
-			public const float BarnBack = 0.75f;
-			public const float BlisterBoi = 0.55f;
-			public const float Seashell = 0.55f;
+			public const float AmebSlime = 0.65f;
+			public const float Fighter = 1;
+			public const float Flajelly = 0.37f;
+			public const float BarnBack = 0.25f;
+			public const float BlisterBoi = 0.75f;
+			public const float Seashell = 0.6f;
 			public const float Spighter = 1;
 			public const float Mummy = 1;
-			public const float Cleaver = 0.75f;
+			public const float Cleaver = 0.7f;
 			public const float Barnacle = 0.5f;
-			public const float Moeba = 0.25f;
-			public const float Shark1 = 0.75f;
-			public const float Worm = 0.85f;
+			public const float Moeba = 0.8f;
+			public const float Shark1 = 0.4f;
+			public const float Worm = 0.6f;
 			public const float Crawler = 0.8f;
 			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
