@@ -220,10 +220,13 @@ namespace Origins {
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (hit.Crit) {
+			if (hit.Crit && target.type != NPCID.TargetDummy) {
 				if (dimStarlight && dimStarlightCooldown < 1) {
-					Item.NewItem(Player.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
+					int item = Item.NewItem(Player.GetSource_OnHit(target, "Accessory"), target.position, target.width, target.height, ItemID.Star);
 					dimStarlightCooldown = 300;
+					if (Main.netMode == NetmodeID.MultiplayerClient) {
+						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, item, 1f);
+					}
 				}
 			}
 			if (symbioteSkull) {

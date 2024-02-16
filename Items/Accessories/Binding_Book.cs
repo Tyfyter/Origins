@@ -74,10 +74,16 @@ namespace Origins.Items.Accessories {
 						}
 					};
 				}
-				Vector2[] deltas = chain.Update();
-				if (OriginsModIntegrations.CheckAprilFools()) {
-					for (int j = 0; j < deltas.Length; j++) {
-						player.velocity -= deltas[j] * 0.004f;
+				int kMax = 2;
+				for (int k = 0; k < kMax; k++) {
+					Vector2[] deltas = chain.Update();
+					if (OriginsModIntegrations.CheckAprilFools()) {
+						for (int j = 0; j < deltas.Length; j++) {
+							player.velocity -= deltas[j] * 0.004f;
+						}
+					}
+					if (kMax < 20 && (chain.links[0].position - chain.anchor.WorldPosition).LengthSquared() > 128 * 128) {
+						kMax++;
 					}
 				}
 			}
