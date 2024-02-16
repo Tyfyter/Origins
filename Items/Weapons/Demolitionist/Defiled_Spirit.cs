@@ -14,7 +14,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Throwing];
-			Item.damage = 13;
+			Item.damage = 16;
 			Item.useTime = 28;
 			Item.useAnimation = 28;
 			Item.shoot = ModContent.ProjectileType<Defiled_Spirit_P>();

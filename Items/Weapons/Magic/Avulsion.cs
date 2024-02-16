@@ -1,4 +1,5 @@
 using Microsoft.Xna.Framework;
+using Origins.Items.Materials;
 using Origins.NPCs;
 using Terraria;
 using Terraria.ID;
@@ -34,7 +35,14 @@ namespace Origins.Items.Weapons.Magic {
 			Item.autoReuse = true;
             Item.glowMask = glowmask;
         }
-	}
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Encrusted_Bar>(), 5);
+            recipe.AddIngredient(ModContent.ItemType<Riven_Carapace>(), 15);
+            recipe.AddTile(TileID.Anvils);
+            recipe.Register();
+        }
+    }
 	public class Avulsion_P : ModProjectile {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.SpectreWrath);

@@ -35,6 +35,9 @@ namespace Origins.Items.Weapons.Demolitionist {
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
         }
+        public override bool CanConsumeAmmo(Item ammo, Player player) {
+            return !Main.rand.NextBool(2);
+        }
     }
 	public class Bombardment_P : ModProjectile, IIsExplodingProjectile {
 		public override void SetStaticDefaults() {

@@ -36,7 +36,7 @@ namespace Origins.NPCs.MiscE {
 			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ItemID.EmptyBucket, 3));
+			npcLoot.Add(ItemDropRule.Common(ItemID.EmptyBucket, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.Diamond, 20));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {

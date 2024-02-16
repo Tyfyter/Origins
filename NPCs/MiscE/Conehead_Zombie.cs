@@ -38,7 +38,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Diamond, 20));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Traffic_Cone_Item>(), 3));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Traffic_Cone_Item>(), 10));
         }
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0 || OriginsModIntegrations.CheckAprilFools()) {
