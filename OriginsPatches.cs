@@ -648,7 +648,7 @@ namespace Origins {
 			}
 			return orig(self, deadPlayerName);
 		}
-		private void Projectile_ExplodeTiles(Terraria.On_Projectile.orig_ExplodeTiles orig, Projectile self, Vector2 compareSpot, int radius, int minI, int maxI, int minJ, int maxJ, bool wallSplode) {
+		private void Projectile_ExplodeTiles(On_Projectile.orig_ExplodeTiles orig, Projectile self, Vector2 compareSpot, int radius, int minI, int maxI, int minJ, int maxJ, bool wallSplode) {
 			if (self.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global) && global.noTileSplode) return;
 			orig(self, compareSpot, radius, minI, maxI, minJ, maxJ, wallSplode);
 		}

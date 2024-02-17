@@ -157,9 +157,6 @@ namespace Origins {
 					(hook_TileShine)((orig_TileShine orig, ref Vector3 color, Tile tile) => {
 						orig(ref color, tile);
 						if (tile.HasTile) {
-							if (tile.GetTilePosition() == new Point(1773, 277)) {
-								var mtile = TileLoader.GetTile(tile.TileType) is IGlowingModTile;
-							}
 							if (TileLoader.GetTile(tile.TileType) is IGlowingModTile glowingTile) glowingTile.FancyLightingGlowColor(tile, ref color);
 							switch (tile.TileType) {
 								case TileID.Cactus: {
