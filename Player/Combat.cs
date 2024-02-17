@@ -313,22 +313,13 @@ namespace Origins {
 				if (minerSet) {
 					explosiveSelfDamage -= 0.2f;
 					explosiveSelfDamage = explosiveSelfDamage.CombineWith(
-						Player.GetDamage(DamageClasses.Explosive).ScaleMatrix(
-							(0, 0),
-							(-1, -1),
-							(-1, 0),
-							(0, -1)
-						)
+						Player.GetDamage(DamageClasses.Explosive).GetInverse()
 					);
 					//damage = (int)(damage/explosiveDamage);
 					//damage-=damage/5;
 				}
-				StatModifier currentExplosiveSelfDamage = explosiveSelfDamage.ScaleMatrix(
-					(0, 0),
-					(1, 1),
-					(1, 0),
-					(0, 1)
-				);
+				StatModifier currentExplosiveSelfDamage = explosiveSelfDamage;
+				if (proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(global.selfDamageModifier);
 				modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(currentExplosiveSelfDamage);
 			}
 		}
@@ -428,7 +419,7 @@ namespace Origins {
 			}
 			return false;
 		}
-		public override void ModifyHurt(ref Player.HurtModifiers modifiers)/* tModPorter Override ImmuneTo, FreeDodge or ConsumableDodge instead to prevent taking damage */ {
+		public override void ModifyHurt(ref Player.HurtModifiers modifiers) {
 			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(Player.HasBuff(Toxic_Shock_Strengthen_Debuff.ID) ? 6 : 9) < 3) {
 				modifiers.SourceDamage *= 2;
 			}

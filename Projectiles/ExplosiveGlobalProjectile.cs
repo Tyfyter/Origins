@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Reflection;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -19,6 +20,7 @@ namespace Origins.Projectiles {
 		public bool magicTripwire = false;
 		public bool magicTripwireTripped = false;
 		public bool noTileSplode = false;
+		public StatModifier selfDamageModifier = StatModifier.Default;
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
@@ -106,12 +108,29 @@ namespace Origins.Projectiles {
 				case ProjectileID.WetBomb:
 				case ProjectileID.LavaBomb:
 				case ProjectileID.HoneyBomb:
-				case ProjectileID.ScarabBomb:
 				if (hitbox.Width < 32) {
 					hitbox = default;
 				}
 				break;
 			}
+		}
+		public override bool? Colliding(Projectile projectile, Rectangle projHitbox, Rectangle targetHitbox) {
+			if (projectile.type == ProjectileID.ScarabBomb) {
+				if (projectile.timeLeft <= 1) {
+					Point scarabBombDigDirectionSnap = ProjectileMethods.GetScarabBombDigDirectionSnap8(projectile);
+					bool axisAligned = scarabBombDigDirectionSnap.X == 0 || scarabBombDigDirectionSnap.Y == 0;
+					projHitbox.Inflate((48 - projHitbox.Width) / 2, (48 - projHitbox.Height) / 2);
+					for (int i = axisAligned ? 21 : 15; i-->0;) {
+						if (projHitbox.Intersects(targetHitbox)) return true;
+						projHitbox.X += scarabBombDigDirectionSnap.X * 16;
+						projHitbox.Y += scarabBombDigDirectionSnap.Y * 16;
+					}
+					return false;
+				} else {
+					return false;
+				}
+			}
+			return null;
 		}
 		public override void SendExtraAI(Projectile projectile, BitWriter bitWriter, BinaryWriter binaryWriter) {
 			bitWriter.WriteBit(isHoming);
