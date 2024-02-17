@@ -20,12 +20,12 @@ namespace Origins.Items.Tools {
 			player.GetModPlayer<OriginPlayer>().pincushion = true;
 		}
 		public override bool CanRightClick() {
-			if (Terraria.GameInput.PlayerInput.Triggers.JustReleased.MouseRight) {
+			if (Terraria.GameInput.PlayerInput.Triggers.Old.MouseRight) {
 				return false;
 			}
 			Item.ChangeItemType(ModContent.ItemType<Pincushion_Inactive>());
 			SoundEngine.PlaySound(SoundID.Grab);
-			return true;
+			return false;
 		}
 	}
 	public class Pincushion_Inactive : ModItem, ICustomWikiStat {
@@ -37,7 +37,7 @@ namespace Origins.Items.Tools {
 			Item.value = Item.sellPrice(gold: 1);
 		}
 		public override bool CanRightClick() {
-			if (Terraria.GameInput.PlayerInput.Triggers.JustReleased.MouseRight) {
+			if (Terraria.GameInput.PlayerInput.Triggers.Old.MouseRight) {
 				return false;
 			}
 			Item.ChangeItemType(ModContent.ItemType<Pincushion>());
