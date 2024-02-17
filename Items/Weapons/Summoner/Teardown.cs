@@ -1,10 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Summoner;
 using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
@@ -50,9 +52,10 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 	}
 	public class Teardown_P : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Flying_Exoskeleton";
+		const string texture = "Origins/Items/Weapons/Summoner/Minions/Flying_Exoskeleton";
+		public override string Texture => texture;
+		public AutoLoadingAsset<Texture2D> glowTexture = texture + "_Glow";
 		public const int frameSpeed = 5;
-		int armorPenetration;
 		public override void SetStaticDefaults() {
 			Teardown.projectileID = Projectile.type;
 			// DisplayName.SetDefault("Flying Exoskeleton");
@@ -80,9 +83,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Projectile.penetrate = -1;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 12;
-		}
-		public override void OnSpawn(IEntitySource source) {
-			armorPenetration = Projectile.ArmorPenetration;
+			
 		}
 		// Here you can decide if your minion breaks things like grass or pots
 		public override bool? CanCutTiles() {
@@ -218,10 +219,35 @@ namespace Origins.Items.Weapons.Summoner {
 			#endregion
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
-			Projectile.ArmorPenetration = armorPenetration + target.defense / 2;
+			modifiers.DefenseEffectiveness *= 0.5f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Projectile.ai[1] = 0;
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Texture2D texture = TextureAssets.Projectile[Type].Value;
+			Rectangle frame = texture.Frame(verticalFrames: Main.projFrames[Projectile.type], frameY: Projectile.frame);
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.Center - Main.screenPosition,
+				frame,
+				lightColor,
+				Projectile.rotation,
+				new Vector2(25 + 15 * Projectile.direction, 16),
+				Projectile.scale,
+				Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+			);
+			Main.EntitySpriteDraw(
+				glowTexture,
+				Projectile.Center - Main.screenPosition,
+				frame,
+				new Color((lightColor.R + 255) / 510f, (lightColor.G + 255) / 510f, (lightColor.B + 255) / 510f, 0.5f),
+				Projectile.rotation,
+				new Vector2(25 + 15 * Projectile.direction, 16),
+				Projectile.scale,
+				Projectile.spriteDirection == -1 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
+			);
+			return false;
 		}
 	}
 }
