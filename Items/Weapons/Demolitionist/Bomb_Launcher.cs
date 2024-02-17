@@ -1,5 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
+using Origins.Projectiles;
 using Origins.Projectiles.Weapons;
 using Terraria;
 using Terraria.Audio;
@@ -38,8 +40,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 					type = ModContent.ProjectileType<Impact_Bomb_Blast>();
 					position += velocity.SafeNormalize(Vector2.Zero) * 40;
 					SoundEngine.PlaySound(SoundID.Item14.WithPitchRange(1, 1), position);
-					damage *= 10;
-					knockback *= 3; Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
+					damage += damage / 2;
+					knockback *= 3;
+					Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
 					return false;
 				}
 				if (type == ModContent.ProjectileType<Acid_Bomb_P>()) {
@@ -60,6 +63,22 @@ namespace Origins.Items.Weapons.Demolitionist {
 						Main.projectile[p].timeLeft += 90;
 						Main.projectile[p].extraUpdates++;
 					}
+					return false;
+				}
+				if (type == ModContent.ProjectileType<Shrapnel_Bomb_P>()) {
+					position += velocity.SafeNormalize(Vector2.Zero) * 40;
+					velocity /= 2.75f;
+					type = Impeding_Shrapnel_Shard.ID;
+					damage -= 10;
+					for (int i = Main.rand.Next(3); ++i < 10;) {
+						Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.025 * i) * 0.6f, type, damage / 3, knockback, player.whoAmI);
+					}
+					return false;
+				}
+				if (type == ProjectileID.ScarabBomb) {
+					Projectile proj = Projectile.NewProjectileDirect(source, position + velocity.SafeNormalize(velocity / 11) * 16, velocity, type, damage, knockback, player.whoAmI);
+					proj.timeLeft = 2;
+					proj.GetGlobalProjectile<ExplosiveGlobalProjectile>().selfDamageModifier *= 0;
 					return false;
 				}
 			}
