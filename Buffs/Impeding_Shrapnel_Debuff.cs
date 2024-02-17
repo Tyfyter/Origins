@@ -19,8 +19,8 @@ namespace Origins.Buffs {
 		public static void SpawnShrapnel(NPC npc, int buffTime) {
 			int count = Main.rand.Next(5, 8);
 			float rot = MathHelper.TwoPi / count;
-            SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest);
-            Vector2 velocity = new Vector2(1f, 0).RotatedByRandom(MathHelper.Pi);
+            SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest, npc.Center);
+            Vector2 velocity = new Vector2(4f, 0).RotatedByRandom(MathHelper.Pi);
 			int damage = (int)Math.Pow(Math.Log(buffTime, 1.5f), 1.5f);
 			for (int i = count; i-->0;) {
 				Projectile.NewProjectile(
@@ -51,6 +51,7 @@ namespace Origins.Buffs {
 			Projectile.timeLeft = 240;
 			Projectile.ignoreWater = true;
 			Projectile.localAI[1] = ModContent.ProjectileType<Shardcannon_P1>() + Main.rand.Next(3);
+			Projectile.localAI[2] = Main.rand.NextFloat(0.05f, 0.15f) * Main.rand.NextBool().ToDirectionInt();
 		}
 		public override void AI() {
 			if (Projectile.timeLeft == 240) {
@@ -58,7 +59,7 @@ namespace Origins.Buffs {
 				Projectile.ai[0] = Main.rand.Next(256) * 30;
 				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 1.5f);
 			}
-			Projectile.localAI[0] += GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.31f;
+			Projectile.localAI[0] += (GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.295f) * Projectile.localAI[2];
 			//Vector2 diff = new Vector2(0, (GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.31f)).RotatedBy(Projectile.rotation);
 			//Projectile.velocity += diff;
 			Vector2 offset = Projectile.localAI[0] * new Vector2(Projectile.velocity.Y, -Projectile.velocity.X);
