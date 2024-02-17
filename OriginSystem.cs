@@ -391,4 +391,10 @@ namespace Origins {
 			return player.ZoneLihzhardTemple;
 		}
 	}
+	public class SpaceBiome : ModBiome {
+		public override string Name => "Bestiary_Biomes.Space";
+		public override bool IsBiomeActive(Player player) {
+			return player.ZoneSkyHeight;
+		}
+	}
 }

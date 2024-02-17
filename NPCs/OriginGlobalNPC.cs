@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -33,7 +34,11 @@ using static Origins.ConditionExtensions;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {
-		public static ShoppingSettings ShopHelper_GetShoppingSettings(Terraria.GameContent.On_ShopHelper.orig_GetShoppingSettings orig, ShopHelper self, Player player, NPC npc) {
+		public override void SetStaticDefaults() {
+			NPCHappiness.Get(NPCID.PartyGirl)
+			.SetBiomeAffection<SpaceBiome>(AffectionLevel.Love);
+		}
+		public static ShoppingSettings ShopHelper_GetShoppingSettings(On_ShopHelper.orig_GetShoppingSettings orig, ShopHelper self, Player player, NPC npc) {
 			ShoppingSettings settings = orig(self, player, npc);
 			float discount = 0;
 			switch (npc.type) {

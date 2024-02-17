@@ -1099,117 +1099,12 @@ Prefixes: {
 	// Wimpy_Prefix.DisplayName: Wimpy
 }
 
-NPCs: {
-	// Amoeba_Buggy.DisplayName: Amoeba Buggy
-	// Bug.DisplayName: Bug
-	// Cicada_3301.DisplayName: Cicada 3301
-	// Ancient_Defiled_Cyclops.DisplayName: "{§Defiled} Cyclops"
-	// Chunky_Slime.DisplayName: Chunky Slime
-	// Defiled_Amalgamation.DisplayName: "{§Defiled} Amalgamation"
-	// Defiled_Brute.DisplayName: "{§Defiled} Krusher"
-	// Defiled_Cyclops.DisplayName: "{§Defiled} Cyclops"
-	// Defiled_Digger_Body.DisplayName: "{§Defiled} Digger"
-	// Defiled_Digger_Head.DisplayName: "{§Defiled} Digger"
-	// Defiled_Digger_Tail.DisplayName: "{§Defiled} Digger"
-	// Defiled_Ekko.DisplayName: "{§Defiled} Ekko"
-	// Defiled_Flyer.DisplayName: "{§Defiled} Phantom"
-	// Defiled_Mimic.DisplayName: "{§Defiled} Mimic"
-	// Defiled_Mite.DisplayName: "{§Defiled} Mite"
-	// Defiled_Swarmer.DisplayName: "{§Defiled} Swarmer"
-	// Defiled_Tripod.DisplayName: "{§Defiled} Tripod"
-	// Defiled_Wisp.DisplayName: "{§Defiled} Wisp"
-	// Enchanted_Trident.DisplayName: Profaned Bident
-	// Shattered_Goldfish.DisplayName: Shattered Goldfish
-	// Shattered_Mummy.DisplayName: Shattered Mummy
-	// Enchanted_Fiberglass_Bow.DisplayName: Enchanted Fiberglass Bow
-	// Enchanted_Fiberglass_Pistol.DisplayName: Enchanted Fiberglass Pistol
-	// Enchanted_Fiberglass_Sword.DisplayName: Enchanted Fiberglass Sword
-	// Fiberglass_Weaver.DisplayName: Fiberglass Weaver
-	// Swarmer.DisplayName: Swarmer
-	// Buckethead_Zombie.DisplayName: Buckethead Zombie
-	// Conehead_Zombie.DisplayName: Conehead Zombie
-	// Cranivore.DisplayName: Cranivore
-	// Crimbrain.DisplayName: Crimbrain
-	// Optiphage.DisplayName: Optiphage
-	// Amebic_Slime.DisplayName: Amebic Slime
-	// Amoeba_Bugger.DisplayName: Amoeba Bugger
-	// Barnacle_Mound.DisplayName: Barnacle Mound
-	// Barnacleback.DisplayName: Barnacle Back
-	// Cleaver_Body.DisplayName: Cleaver
-	// Cleaver_Head.DisplayName: Cleaver
-	// Cleaver_Tail.DisplayName: Cleaver
-	// Flagellant.DisplayName: Flagellant
-	// Measly_Moeba.DisplayName: Measly 'Moeba
-	// Pustule_Jelly.DisplayName: Pustule Jelly
-	// Riven_Fighter.DisplayName: "{§Riven} Protoform"
-	// Riven_Mimic.DisplayName: "{§Riven} Mimic"
-	// Riven_Mummy.DisplayName: Amebic Mummy
-	// Rivenator_Body.DisplayName: Mitoworm
-	// Rivenator_Head.DisplayName: Mitoworm
-	// Rivenator_Tail.DisplayName: Mitoworm
-	// Single_Cellular_Nautilus.DisplayName: Single-Cellular Nautilus
-
-	Acid_Freak: {
-		// DisplayName: Acid Freak
-
-		TownNPCMood: {
-			// Content: "{$Mods.Origins.TownNPCMood.Acid_Freak.Content}"
-			// NoHome: "{$Mods.Origins.TownNPCMood.Acid_Freak.NoHome}"
-			// FarFromHome: "{$Mods.Origins.TownNPCMood.Acid_Freak.FarFromHome}"
-			// LoveSpace: "{$Mods.Origins.TownNPCMood.Acid_Freak.LoveSpace}"
-			// DislikeCrowded: "{$Mods.Origins.TownNPCMood.Acid_Freak.DislikeCrowded}"
-			// HateCrowded: "{$Mods.Origins.TownNPCMood.Acid_Freak.HateCrowded}"
-			// LoveBiome: "{$Mods.Origins.TownNPCMood.Acid_Freak.LoveBiome}"
-			// LikeBiome: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeBiome}"
-			// HateBiome: "{$Mods.Origins.TownNPCMood.Acid_Freak.HateBiome}"
-			// LoveNPC: "{$Mods.Origins.TownNPCMood.Acid_Freak.LoveNPC}"
-			// LikeNPC: "{$Mods.Origins.TownNPCMood.Acid_Freak.LikeNPC}"
-			// DislikeNPC: "{$Mods.Origins.TownNPCMood.Acid_Freak.DislikeNPC}"
-			// HateNPC: "{$Mods.Origins.TownNPCMood.Acid_Freak.HateNPC}"
-			// LikeNPC_Princess: I like {NPCName}.
-			// Princess_LovesNPC: I like {NPCName}.
-		}
-
-		// Census.SpawnCondition: Conditions unknown
+BiomeName: {
+	Bestiary_Biomes: {
+		// TheTemple: The Temple
+		// Space: Space
 	}
-
-	Defiled_Effigy: {
-		// DisplayName: Defiled Effigy
-
-		TownNPCMood: {
-			// Content: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.Content}"
-			// NoHome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.NoHome}"
-			// FarFromHome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.FarFromHome}"
-			// LoveSpace: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LoveSpace}"
-			// DislikeCrowded: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.DislikeCrowded}"
-			// HateCrowded: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.HateCrowded}"
-			// LoveBiome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LoveBiome}"
-			// LikeBiome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LikeBiome}"
-			// HateBiome: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.HateBiome}"
-			// LoveNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LoveNPC}"
-			// LikeNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.LikeNPC}"
-			// DislikeNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.DislikeNPC}"
-			// HateNPC: "{$Mods.Origins.TownNPCMood.Defiled_Effigy.HateNPC}"
-			// LikeNPC_Princess: We find {NPCName}'s face adorable.
-			// Princess_LovesNPC: The Defiled is my favorite of the world evils. Take that Corruption nostalgics!
-		}
-
-		// Census.SpawnCondition: After sparing the Defiled
-	}
-
-	// World_Cracker_Body.DisplayName: World Cracker
-	// World_Cracker_Head.DisplayName: World Cracker
-	// World_Cracker_Tail.DisplayName: World Cracker
-	// Bottomfeeder.DisplayName: Bottomfeeder
-	// Spider_Amoeba.DisplayName: Spider Amoeba
-	// Barnacle_Bunny.DisplayName: Barnacle_ Bunny
-	// Riven_Penguin.DisplayName: Riven_ Penguin
-	// Cellarkeep.DisplayName: Cellarkeep
-	// Cellarkeep_Barrel.DisplayName: Explosive Barrel
-	// Trijaw_Shark.DisplayName: Trijaw Shark
 }
-
-// BiomeName.Bestiary_Biomes.TheTemple: The Temple
 
 Biomes: {
 	Brine_Pool: {
@@ -1256,6 +1151,11 @@ Biomes: {
 		TheTemple: {
 			// DisplayName: The Temple
 			// TownNPCDialogueName: the Temple
+		}
+
+		Space: {
+			// DisplayName: Bestiary_ Biomes. Space
+			// TownNPCDialogueName: the Bestiary_ Biomes. Space
 		}
 	}
 

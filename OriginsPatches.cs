@@ -52,6 +52,7 @@ using Origins.Backgrounds;
 using System.Threading.Tasks;
 using Origins.Items.Tools;
 using Origins.Tiles;
+using System.Runtime.CompilerServices;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -324,6 +325,118 @@ namespace Origins {
 					}
 					return flag;
 				});
+			};
+			IL_ShopHelper.ApplyNpcRelationshipEffect += (il) => {
+				ILCursor c = new(il);
+				if (c.TryGotoNext(MoveType.After,
+					i => i.MatchCall(typeof(DefaultInterpolatedStringHandler), nameof(DefaultInterpolatedStringHandler.ToStringAndClear))
+				)) {
+					c.EmitLdarg1();
+					c.EmitDelegate<Func<string, int, string>>((key, npcType) => {
+						if (npcType != 0) {
+							NPC talkNPC = Main.npc[Main.LocalPlayer.talkNPC];
+							string talkNPCName = NPCID.Search.GetName(talkNPC.netID);
+							string baseKey = "TownNPCMood_" + talkNPCName;
+							string otherNPC = NPCID.Search.GetName(npcType);
+							string potentialKey = $"{baseKey}.{key}_{otherNPC}";
+							string potentialKey0 = $"Mods.Origins.NPCs.{talkNPCName}.{potentialKey}";
+							if (Language.Exists(potentialKey0)) {
+								return potentialKey0;
+							}
+							if (talkNPC.ModNPC is ModNPC modNPC) {
+								if (talkNPC.ModNPC.Mod is Origins) return key;
+								potentialKey = modNPC.GetLocalizationKey(potentialKey);
+							}
+							if (Language.Exists(potentialKey)) {
+								return potentialKey;
+							}
+						}
+						return key;
+					});
+				} else {
+					instance.Logger.Error("Could not find target IL code in ApplyNpcRelationshipEffect");
+				}
+			};
+			IL_ShopHelper.ApplyBiomeRelationshipEffect += (il) => {
+				ILCursor c = new(il);
+				if (c.TryGotoNext(MoveType.After,
+					i => i.MatchCall(typeof(DefaultInterpolatedStringHandler), nameof(DefaultInterpolatedStringHandler.ToStringAndClear))
+				)) {
+					c.EmitLdarg1();
+					c.EmitDelegate<Func<string, string, string>>((key, biomeName) => {
+						if (biomeName != null) {
+							NPC talkNPC = Main.npc[Main.LocalPlayer.talkNPC];
+							string talkNPCName = NPCID.Search.GetName(talkNPC.netID);
+							string baseKey = "TownNPCMood_" + talkNPCName;
+							string potentialKey = $"{baseKey}.{key}_{biomeName.Split('.')[^2]}";
+							string potentialKey0 = $"Mods.Origins.NPCs.{talkNPCName}.{potentialKey}";
+							if (Language.Exists(potentialKey0)) {
+								return potentialKey0;
+							}
+							if (talkNPC.ModNPC is ModNPC modNPC) {
+								if (talkNPC.ModNPC.Mod is Origins) return key;
+								potentialKey = modNPC.GetLocalizationKey(potentialKey);
+							}
+							if (Language.Exists(potentialKey)) {
+								return potentialKey;
+							}
+						}
+						return key;
+					});
+				} else {
+					instance.Logger.Error("Could not find target IL code in ApplyBiomeRelationshipEffect");
+				}
+			};
+			IL_ShopHelper.AddHappinessReportText += (il) => {
+				ILCursor c = new(il);
+				ShopHelper g;
+				if (c.TryGotoNext(MoveType.Before,
+					i => i.MatchStloc0()
+				)) {
+					c.EmitLdarg1();
+					c.EmitDelegate<Func<string, string, string>>((keyBase, key) => {
+						if (key.StartsWith("Mods.")) {
+							return "";
+						}
+						return keyBase + ".";
+					});
+				} else {
+					instance.Logger.Error("Could not find target IL code in AddHappinessReportText");
+				}
+				c.Index++;
+				MethodInfo concat2 = typeof(String).GetMethod(nameof(String.Concat), BindingFlags.Public | BindingFlags.Static, new Type[] { typeof(String), typeof(String) });
+				while (c.TryGotoNext(MoveType.Before,
+				   i => i.MatchStloc0()
+				)) {
+					c.EmitLdstr(".");
+					c.EmitCall(concat2);
+					c.Index++;
+				}
+				if (c.TryGotoNext(MoveType.Before,
+				   i => i.MatchLdloc0(),
+				   i => i.MatchLdstr("."),
+				   i => i.MatchLdarg1(),
+				   i => i.MatchCall<String>(nameof(String.Concat))
+				)) {
+					c.Index++;
+					c.Remove();
+					c.Index++;
+					c.Remove();
+					c.EmitCall(concat2);
+					/*ILLabel label = c.DefineLabel();
+					c.EmitBr(label);
+					c.GotoNext(MoveType.After, i => i.MatchCall<String>("Concat"));
+					c.EmitLdloc0();
+					c.EmitLdarg1();
+					c.EmitDelegate<Func<string, string, string>>((keyBase, key) => {
+						if (key.StartsWith("Mods.")) {
+							return key;
+						}
+						return keyBase + "." + key;
+					});*/
+				} else {
+					instance.Logger.Error("Could not find target IL code in AddHappinessReportText");
+				}
 			};
 		}
 
