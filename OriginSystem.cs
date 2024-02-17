@@ -382,6 +382,7 @@ namespace Origins {
 		public override void PreUpdatePlayers() {
 			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = new();
 			else OriginPlayer.playersByGuid.Clear();
+			Traffic_Cone_TE.UpdateCones();
 		}
 	}
 	public class TempleBiome : ModBiome {
