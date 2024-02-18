@@ -954,8 +954,6 @@ Projectiles: {
 	// Shrapnel_Bomb_P.DisplayName: Shrapnel Bomb
 	// Sonorous_Shredder_Explosion.DisplayName: Sonorous Shredder Explosion
 	// Sonorous_Shredder_Projectile.DisplayName: Sonorous Shredder Wave
-	// Thermite_Canister_P.DisplayName: Thermite Canistah
-	// Thermite_P.DisplayName: Thermite Canister
 	// Dragons_Breath_P.DisplayName: Dragon's Breath
 	// Felnum_Golf_Ball_P.DisplayName: Felnum Golf Ball
 	// Fiberglass_Shard_P.DisplayName: Fiberglass Shard
@@ -1072,7 +1070,9 @@ Projectiles: {
 	// Joint_Pop_P.DisplayName: Joint Pop
 	// Cellarkeep_Barrel_Explosion.DisplayName: Explosive Barrel
 	// Cold_Snap_P.DisplayName: Cold Popper
-	// Avulsion_P.DisplayName: Avulsion_ P
+	// Avulsion_P.DisplayName: Avulse Pulse
+	// Thermite_Canister_P.DisplayName: Thermite_ Canister_ P
+	// Thermite_P.DisplayName: Thermite_ P
 }
 
 Prefixes: {

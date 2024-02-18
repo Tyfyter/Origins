@@ -5,6 +5,8 @@ using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
 using Origins.Items.Tools;
+using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Summoner;
 using Origins.LootConditions;
 using Origins.Tiles.BossDrops;
@@ -224,7 +226,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Encrusted_Ore_Item>(), 1, 20, 330));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Riven_Carapace>(), 1, 1, 134));
 			normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Amoeba_Hook>(), 1));
-            normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Teardown>(), 1));
+            normalDropRule.OnSuccess(ItemDropRule.OneFromOptions(1, ModContent.ItemType<Teardown>(), ModContent.ItemType<Vorpal_Sword_Cursed>()));
 
             normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Trophy_Item>(), 10));
             normalDropRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<World_Cracker_Mask>(), 10));

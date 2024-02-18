@@ -473,7 +473,14 @@ namespace Origins {
 				Player.lifeRegenCount += rounded;
 				Player.lifeRegenTime += (int)((factor - rounded) * 50);
 			}
-		}
+			if (primordialSoup) {
+				Player.lifeRegenCount += (int)(tornCurrentSeverity * 18);
+            }
+			if (bugZapper) {
+                Player.lifeRegenCount += (int)(tornCurrentSeverity * 18);
+                Player.statDefense += (int)(tornCurrentSeverity * 8);
+            }
+        }
 		public void SetMimicSetChoice(int level, int choice) {
 			mimicSetChoices = (mimicSetChoices & ~(3 << level * 2)) | ((choice & 3) << level * 2);
 		}

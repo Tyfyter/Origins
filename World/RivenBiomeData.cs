@@ -75,7 +75,7 @@ namespace Origins.World.BiomeData {
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Splitsplash>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Riverang>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Amoeba_Toy>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Parasitic_Influence>())
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Primordial_Soup>())
 			);
 		}
 		public override void Unload() {

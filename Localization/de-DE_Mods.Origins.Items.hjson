@@ -885,11 +885,6 @@ Unsought_Organ: {
 		''' */
 }
 
-Volatile_Charm: {
-	// DisplayName: Volatile Charm
-	// Tooltip: Increases explosive blast radius by 40% and reduces explosive self-damage by 20%
-}
-
 Abysswalker_Cloak: {
 	// DisplayName: Abysswalker's Cloak
 	// Tooltip: Increased life regeneration
@@ -2158,11 +2153,6 @@ Teal_Solution: {
 	// Tooltip: Spreads the Riven
 }
 
-Thermite_Canister: {
-	// DisplayName: Thermite Canister
-	// Tooltip: ""
-}
-
 White_Solution: {
 	// DisplayName: Gray Solution
 	// Tooltip: Spreads the Defiled
@@ -2443,7 +2433,7 @@ Thermite_Launcher: {
 	/* Tooltip:
 		'''
 		Burn.
-		Uses Thermite Canisters for ammo
+		Uses mines for ammo
 		''' */
 }
 
@@ -3579,6 +3569,7 @@ Emergency_Bee_Canister: {
 		All bees become friendly
 		All bees have a chance to be duplicated
 		The player can move freely through honey
+		'In case of emergency, break glass for bees'
 		''' */
 }
 
@@ -3673,4 +3664,19 @@ Terrarian_Voodoo_Doll: {
 Avulsion: {
 	// Tooltip: ""
 	// DisplayName: Avulsion
+}
+
+Primordial_Soup: {
+	// DisplayName: Primordial_ Soup
+	// Tooltip: ""
+}
+
+Bug_Zapper: {
+	// DisplayName: Bug_ Zapper
+	// Tooltip: ""
+}
+
+Playtimes_Over: {
+	// DisplayName: Playtimes_ Over
+	// Tooltip: ""
 }

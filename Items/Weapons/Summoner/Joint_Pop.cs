@@ -15,12 +15,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Summoner {
 	public class Joint_Pop : ModItem {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bone Latcher");
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			// Call this method to quickly set some of the properties below.
-			Item.DefaultToWhip(ModContent.ProjectileType<Joint_Pop_P>(), 20, 2, 4, 60);
+			Item.DefaultToWhip(ModContent.ProjectileType<Joint_Pop_P>(), 36, 5, 4, 60);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.SummonMeleeSpeed];
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
@@ -33,8 +31,6 @@ namespace Origins.Items.Weapons.Summoner {
 	}
 	public class Joint_Pop_P : ModProjectile, IWhipProjectile {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bone Latcher");
-			// This makes the projectile use whip collision detection and allows flasks to be applied to it.
 			ProjectileID.Sets.IsAWhip[Type] = true;
 		}
 

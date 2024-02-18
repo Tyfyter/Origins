@@ -58,7 +58,6 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Amalgamation");
 			Main.npcFrameCount[NPC.type] = 8;
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
@@ -93,19 +92,19 @@ namespace Origins.NPCs.Defiled.Boss {
 				case 1:
 				NPC.lifeMax = (int)(2400 * balance);
 				NPC.defense = 14;
-				NPC.damage = 43;
+				NPC.damage = 48;
 				break;
 
 				case 2:
 				NPC.lifeMax = (int)(3840 * balance);
 				NPC.defense = 16;
-				NPC.damage = 70;
+				NPC.damage = 64;
 				break;
 
 				case 3:
 				NPC.lifeMax = (int)(6144 * balance);
 				NPC.defense = 18;
-				NPC.damage = 80;
+				NPC.damage = 72;
 				break;
 			}
 		}

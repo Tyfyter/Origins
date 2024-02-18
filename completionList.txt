@@ -283,9 +283,11 @@ ACCESSORIES:
 (^) Binding Book*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
+(X) Bomb Charm of Regeneration !!!
 (^) Bomb Handling Device*
 (^) Boomerang Magnet*
 (^) Brine-Leafed Clover*
+(@, ^3) Bug Zapper !!!
 (^) C.F.H.E.S.*
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
@@ -293,6 +295,7 @@ ACCESSORIES:
 (^) Comb*
 (#3, ^2) Control Locus* !!!
 (^) Coologne*
+(X) Counter-offensive Scarf !!!
 (^) Danger Barrel*
 (^) Decaying Scale*
 (^) Destructive Claws*
@@ -331,11 +334,12 @@ ACCESSORIES:
 (^) Nitro Crate*
 (^) No U Card*
 (^) Olid Organ*
-(^) Parasitic Influence*
 (^) Plasma Phial*
+(@, ^3) Playtime's Over !!!
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
 (^) Powerflower*
+(@, ^3) Primordial Soup* !!!
 (†) Priority Mail* !!!
 (#3, ^2) Protomind* !!! 
 (^) Razorwire*
@@ -358,7 +362,6 @@ ACCESSORIES:
 (^) Trap Charm*
 (^) Turbo Reel*
 (^) Unsought Organ*
-(^) Volatile Charm*
 
 (^) Dash Ravel*
 (^) Depth Ravel*
@@ -734,6 +737,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Internal Combustion* !!!
 (#, ^2) Link Grenade* !!!
 (#, ^2) Matrix* !!!
+(X) Meteor !!!
 (#2, ^2) Outbreak Bomb* !!!
 (^) Peatball*
 (#3, ^2) Potato Mine* !!!
