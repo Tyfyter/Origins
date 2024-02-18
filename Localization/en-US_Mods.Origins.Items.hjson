@@ -3662,21 +3662,26 @@ Terrarian_Voodoo_Doll: {
 }
 
 Avulsion: {
-	Tooltip: ""
 	DisplayName: Avulsion
+	Tooltip: Fires medium-range pulses
 }
 
 Primordial_Soup: {
-	DisplayName: Primordial_ Soup
-	Tooltip: ""
+	DisplayName: Primordial Soup
+	Tooltip: Increased life regeneration based on the torn severity you're affected by
 }
 
 Bug_Zapper: {
-	DisplayName: Bug_ Zapper
-	Tooltip: ""
+	DisplayName: Bug Trapper
+	Tooltip: Increased life regeneration and defense based on the torn severity you're affected by
 }
 
 Playtimes_Over: {
-	DisplayName: Playtimes_ Over
-	Tooltip: ""
+	DisplayName: Playtime's Over
+	Tooltip
+		'''
+		Attacks tenderize targets
+		+13% torn severity
+		Increased life regeneration, defense and applied torn severity based on the severity you're affected by
+		'''
 }

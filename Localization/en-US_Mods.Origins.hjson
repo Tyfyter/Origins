@@ -723,8 +723,8 @@ Buffs: {
 	}
 
 	Soulhide_Debuff: {
-		DisplayName: Mods.Origins.BuffName.Soulhide_Debuff
-		Description: Mods.Origins.BuffDescription.Soulhide_Debuff
+		DisplayName: Burning up
+		Description: The air around you burns
 	}
 
 	Irish_Cheddar_Buff: {
@@ -759,7 +759,7 @@ Buffs: {
 
 	Volatile_Gelatin_Slime_Debuff: {
 		DisplayName: Volatile Gelatin Slime
-		Description: Mods.Origins.Buffs.Volatile_Gelatin_Slime_Debuff.Description
+		Description: The slime is with you
 	}
 
 	Purifying_Buff: {
@@ -794,7 +794,7 @@ Buffs: {
 
 	Impeding_Shrapnel_Debuff: {
 		DisplayName: Impeding Shrapnel
-		Description: You're full of foreign metal.
+		Description: You're full of foreign metal
 	}
 
 	Strange_Tooth_Buff: {
@@ -803,7 +803,7 @@ Buffs: {
 	}
 
 	Joint_Pop_Buff: {
-		DisplayName: Joint_ Pop_ Buff
+		DisplayName: Joint Pop Buff
 		Description: Mods.Origins.Buffs.Joint_Pop_Buff.Description
 	}
 }
@@ -1071,8 +1071,8 @@ Projectiles: {
 	Cellarkeep_Barrel_Explosion.DisplayName: Explosive Barrel
 	Cold_Snap_P.DisplayName: Cold Popper
 	Avulsion_P.DisplayName: Avulse Pulse
-	Thermite_Canister_P.DisplayName: Thermite_ Canister_ P
-	Thermite_P.DisplayName: Thermite_ P
+	Thermite_Canister_P.DisplayName: Canistah
+	Thermite_P.DisplayName: Canistah but projectile
 }
 
 Prefixes: {

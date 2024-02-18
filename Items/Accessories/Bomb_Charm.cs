@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Bomb_Charm : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Misc",
+			"Vitality",
 			"Explosive"
 		};
 		public override void SetStaticDefaults() {

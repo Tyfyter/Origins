@@ -10,11 +10,16 @@ namespace Origins.Items.Accessories {
 			"Torn",
 			"TornSource"
 		};
-		public override void SetDefaults() {
+        static short glowmask;
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 28);
-			Item.value = Item.sellPrice(gold: 2);
+			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().symbioteSkull = true;
 		}

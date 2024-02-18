@@ -283,11 +283,11 @@ ACCESSORIES:
 (^) Binding Book*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
-(X) Bomb Charm of Regeneration !!!
+(#2, ^2) Bomb Charm of Regeneration !!!
 (^) Bomb Handling Device*
 (^) Boomerang Magnet*
 (^) Brine-Leafed Clover*
-(@, ^3) Bug Zapper !!!
+(#3, ^2) Bug Trapper !!!
 (^) C.F.H.E.S.*
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
@@ -335,11 +335,11 @@ ACCESSORIES:
 (^) No U Card*
 (^) Olid Organ*
 (^) Plasma Phial*
-(@, ^3) Playtime's Over !!!
+(#3, ^2) Playtime's Over !!!
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
 (^) Powerflower*
-(@, ^3) Primordial Soup* !!!
+(^) Primordial Soup*
 (†) Priority Mail* !!!
 (#3, ^2) Protomind* !!! 
 (^) Razorwire*

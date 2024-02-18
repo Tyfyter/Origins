@@ -5,15 +5,21 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
     public class Playtimes_Over : ModItem, ICustomWikiStat {
+        [AutoloadEquip(EquipType.HandsOff)]
         public string[] Categories => new string[] {
             "Vitality",
             "Torn",
             "TornSource"
         };
+        static short glowmask;
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
         public override void SetDefaults() {
             Item.DefaultToAccessory(38, 20);
             Item.value = Item.sellPrice(gold: 8);
             Item.rare = ItemRarityID.LightPurple;
+            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
