@@ -3671,7 +3671,7 @@ Primordial_Soup: {
 	Tooltip: Increased life regeneration based on the torn severity you're affected by
 }
 
-Bug_Zapper: {
+Bug_Trapper: {
 	DisplayName: Bug Trapper
 	Tooltip: Increased life regeneration and defense based on the torn severity you're affected by
 }
@@ -3684,4 +3684,9 @@ Playtimes_Over: {
 		+13% torn severity
 		Increased life regeneration, defense and applied torn severity based on the severity you're affected by
 		'''
+}
+
+Bomb_Charm_of_Regeneration: {
+	DisplayName: Bomb_ Charm_of_ Regeneration
+	Tooltip: ""
 }

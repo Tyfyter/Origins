@@ -1071,8 +1071,8 @@ Projectiles: {
 	// Cellarkeep_Barrel_Explosion.DisplayName: Explosive Barrel
 	// Cold_Snap_P.DisplayName: Cold Popper
 	// Avulsion_P.DisplayName: Avulse Pulse
-	// Thermite_Canister_P.DisplayName: Kanistah
-	// Thermite_P.DisplayName: Kanistah aber projektil
+	// Thermite_Canister_P.DisplayName: Canistah
+	// Thermite_P.DisplayName: Canistah but projectile
 }
 
 Prefixes: {

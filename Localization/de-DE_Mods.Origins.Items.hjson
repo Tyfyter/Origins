@@ -3678,10 +3678,20 @@ Bug_Zapper: {
 
 Playtimes_Over: {
 	// DisplayName: Playtime's Over
-	/* Tooltip
+	/* Tooltip:
 		'''
 		Attacks tenderize targets
 		+13% torn severity
 		Increased life regeneration, defense and applied torn severity based on the severity you're affected by
 		''' */
+}
+
+Bomb_Charm_of_Regeneration: {
+	// DisplayName: Bomb_ Charm_of_ Regeneration
+	// Tooltip: ""
+}
+
+Bug_Trapper: {
+	// DisplayName: Bug_ Trapper
+	// Tooltip: ""
 }
