@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
     [AutoloadEquip(EquipType.HandsOff)]
-    public class Bug_Zapper : ModItem, ICustomWikiStat {
+    public class Bug_Trapper : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Vitality"
         };

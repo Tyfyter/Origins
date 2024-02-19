@@ -23,7 +23,7 @@ namespace Origins.Items.Accessories {
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
-            recipe.AddIngredient(ModContent.ItemType<Bug_Zapper>());
+            recipe.AddIngredient(ModContent.ItemType<Bug_Trapper>());
             recipe.AddIngredient(ModContent.ItemType<Fleshy_Figurine>());
             recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
