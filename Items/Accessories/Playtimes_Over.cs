@@ -4,8 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-    public class Playtimes_Over : ModItem, ICustomWikiStat {
-        [AutoloadEquip(EquipType.HandsOff)]
+	[AutoloadEquip(EquipType.HandsOff)]
+	public class Playtimes_Over : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Vitality",
             "Torn",
