@@ -214,6 +214,7 @@ namespace Origins {
 		//public bool isVoodooPickup = false;
 		public bool primordialSoup = false;
 		public bool bugZapper = false;
+		public bool bombCharminIt = false;
 		#endregion
 
 		#region explosive stats
@@ -290,6 +291,7 @@ namespace Origins {
 
 		internal static bool ItemChecking = false;
 		public int cryostenLifeRegenCount = 0;
+		public int bombCharminItLifeRegenCount = 0;
 		internal byte oldBonuses = 0;
 		public const int minionSubSlotValues = 3;
 		public float[] minionSubSlots = new float[minionSubSlotValues];
@@ -530,6 +532,7 @@ namespace Origins {
 			pickupRangeBoost = 0;
 			primordialSoup = false;
 			bugZapper = false;
+			bombCharminIt = false;
 
 			flaskBile = false;
 			flaskSalt = false;
@@ -553,6 +556,8 @@ namespace Origins {
 			statSharePercent = 0f;
 			if (cryostenLifeRegenCount > 0)
 				cryostenLifeRegenCount--;
+			if (bombCharminItLifeRegenCount > 0)
+				bombCharminItLifeRegenCount--;
 
 			if (dimStarlightCooldown > 0)
 				dimStarlightCooldown--;

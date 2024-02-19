@@ -11,14 +11,21 @@ namespace Origins.Items.Accessories {
 			"Explosive"
 		};
 		public override void SetDefaults() {
-			Item.DefaultToAccessory(20, 26);
+			Item.DefaultToAccessory(28, 22);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Green;
 		}
-		public override void UpdateEquip(Player player) {
+        public override void AddRecipes() {
+            Recipe recipe = CreateRecipe();
+            recipe.AddIngredient(ItemID.BandofRegeneration);
+            recipe.AddIngredient(ModContent.ItemType<Bomb_Charm>());
+            recipe.AddTile(TileID.TinkerersWorkbench);
+            recipe.Register();
+        }
+        public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.15f;
 			player.lifeRegen += 1;
-            //player.GetModPlayer<OriginPlayer>().bombCharminIt = true;
+            player.GetModPlayer<OriginPlayer>().bombCharminIt = true;
         }
 	}
 }

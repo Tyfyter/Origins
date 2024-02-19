@@ -230,7 +230,7 @@ namespace Origins {
 				}
 			}
 			if (symbioteSkull) {
-				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 70), 60, 0.1f, this);
+				OriginGlobalNPC.InflictTorn(target, Main.rand.Next(50, 110), 60, 0.1f, this);
 			}
 			if (decayingScale || acridSet) {
 				target.AddBuff(Toxic_Shock_Debuff.ID, Toxic_Shock_Debuff.default_duration);
@@ -570,7 +570,12 @@ namespace Origins {
 					Player.GetWeaponDamage(cinderSealItem),
 					Player.GetWeaponKnockback(cinderSealItem)
 				);
-			}
+                if (Main.rand.NextBool(5)) {
+                    Dust dust = Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash);
+                    dust.noGravity = true;
+                    dust.velocity *= 0.1f;
+                }
+            }
 			if (unsoughtOrgan) {
 				const float maxDist = 240 * 240;
 				double totalDamage = info.Damage * 0.5f;
@@ -613,7 +618,10 @@ namespace Origins {
 					);
 				}
 			}
-			preHitBuffs = new();
+			if (bombCharminIt && Player.whoAmI == info.DamageSource.SourcePlayerIndex) {
+                   bombCharminItLifeRegenCount += info.SourceDamage;
+            }
+            preHitBuffs = new();
 			for (int i = 0; i < Player.MaxBuffs; i++) {
 				preHitBuffs.Add(new Point(Player.buffType[i], Player.buffTime[i]));
 			}

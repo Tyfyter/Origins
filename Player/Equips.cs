@@ -467,6 +467,7 @@ namespace Origins {
 		}
 		public override void UpdateLifeRegen() {
 			if (cryostenHelmet) Player.lifeRegenCount += cryostenLifeRegenCount > 0 ? 60 : 1;
+			Player.lifeRegenCount += bombCharminItLifeRegenCount;
 			if (focusCrystal) {
 				float factor = Player.dpsDamage / 200f;
 				int rounded = (int)factor;

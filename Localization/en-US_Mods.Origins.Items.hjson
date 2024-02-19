@@ -3687,6 +3687,10 @@ Playtimes_Over: {
 }
 
 Bomb_Charm_of_Regeneration: {
-	DisplayName: Bomb_ Charm_of_ Regeneration
-	Tooltip: ""
+	DisplayName: Bomb Charm of Regeneration
+	Tooltip:
+		'''
+		-15% self-damage
+		Rapidly regenerate life after taking self-damage
+		'''
 }
