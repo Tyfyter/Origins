@@ -3678,7 +3678,7 @@ Bug_Zapper: {
 
 Playtimes_Over: {
 	DisplayName: Playtime's Over
-	Tooltip
+	Tooltip:
 		'''
 		Attacks tenderize targets
 		+13% torn severity
