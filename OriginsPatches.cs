@@ -368,7 +368,7 @@ namespace Origins {
 							NPC talkNPC = Main.npc[Main.LocalPlayer.talkNPC];
 							string talkNPCName = NPCID.Search.GetName(talkNPC.netID);
 							string baseKey = "TownNPCMood_" + talkNPCName;
-							string potentialKey = $"{baseKey}.{key}_{biomeName.Split('.')[^2]}";
+							string potentialKey = $"{baseKey}.{key}_{biomeName.Replace(".TownNPCDialogueName", "").Split('.')[^1]}";
 							string potentialKey0 = $"Mods.Origins.NPCs.{talkNPCName}.{potentialKey}";
 							if (Language.Exists(potentialKey0)) {
 								return potentialKey0;
