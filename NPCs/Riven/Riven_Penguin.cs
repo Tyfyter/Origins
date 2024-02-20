@@ -13,13 +13,15 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CrimsonPenguin);
+			AnimationType = NPCID.CrimsonPenguin;
+			AIType = NPCID.CrimsonPenguin;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive>().Type
 			};
         }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                this.GetBestiaryFlavorText("During a Blood Moon, the Riven Hive is able to overcome its weakness of the cold and spread, forcing normally docile penguins to adapt."),
+                this.GetBestiaryFlavorText(),
             });
 		}
 		public override void HitEffect(NPC.HitInfo hit) {

@@ -8,17 +8,19 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
     public class Barnacle_Bunny : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 3;
+			Main.npcFrameCount[NPC.type] = 7;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CrimsonBunny);
+			AnimationType = NPCID.CrimsonBunny;
+			AIType = NPCID.CrimsonBunny;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive>().Type
 			};
         }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-                this.GetBestiaryFlavorText("Bunnies are pure beings that cannot normally adapt to the Riven Hive's ecosystem, but will be easily capable of under the effects of a Blood Moon."),
+                this.GetBestiaryFlavorText(),
             });
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
