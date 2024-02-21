@@ -46,6 +46,16 @@ Rivenator_Body.DisplayName: Mitoworm
 Rivenator_Head.DisplayName: Mitoworm
 Rivenator_Tail.DisplayName: Mitoworm
 Single_Cellular_Nautilus.DisplayName: Single-Cellular Nautilus
+World_Cracker_Body.DisplayName: World Cracker
+World_Cracker_Head.DisplayName: World Cracker
+World_Cracker_Tail.DisplayName: World Cracker
+Bottomfeeder.DisplayName: Bottomfeeder
+Spider_Amoeba.DisplayName: Spider Amoeba
+Cellarkeep.DisplayName: Cellarkeep
+Cellarkeep_Barrel.DisplayName: Explosive Barrel
+Trijaw_Shark.DisplayName: Trijaw Shark
+Riven_Penguin.DisplayName: "{§Riven} Penguin"
+Barnacle_Bunny.DisplayName: Barnacle Bunny
 
 Acid_Freak: {
 	DisplayName: Acid Freak
@@ -95,14 +105,4 @@ Defiled_Effigy: {
 	Census.SpawnCondition: After sparing the Defiled
 }
 
-World_Cracker_Body.DisplayName: World Cracker
-World_Cracker_Head.DisplayName: World Cracker
-World_Cracker_Tail.DisplayName: World Cracker
-Bottomfeeder.DisplayName: Bottomfeeder
-Spider_Amoeba.DisplayName: Spider Amoeba
-Barnacle_Bunny.DisplayName: Barnacle_ Bunny
-Riven_Penguin.DisplayName: Riven_ Penguin
-Cellarkeep.DisplayName: Cellarkeep
-Cellarkeep_Barrel.DisplayName: Explosive Barrel
-Trijaw_Shark.DisplayName: Trijaw Shark
 PartyGirl.TownNPCMood_PartyGirl.LoveBiome_Space: I finally got to go to space!!!

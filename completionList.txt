@@ -106,7 +106,7 @@ ENEMY NPCS:
 (^) Amebic Slime
 (^) Ancient Defiled Cyclops
 (^) Barnacleback
-(☻) Barnacle Bunny* !!!
+(^) Barnacle Bunny*
 (#, ^2) Bile Thrower* !!!
 (^) Buckethead Zombie
 (^) Cellarkeep*
@@ -129,7 +129,7 @@ ENEMY NPCS:
 (^) Measly Moeba
 (^) Optiphage
 (#, ^2) Pustule Jellyfish* !!!
-(☻) Riven Penguin* !!!
+(^) Riven Penguin*
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
@@ -720,7 +720,7 @@ EXPLOSIVE WEAPONS:
 (^) Ameballoon*
 (^) Bang Snap*
 (^) Bloombomb*
-(^) Bombardment
+(^) Bombardment*
 (^) Bomb Launcher
 (^) Brainade*
 (^) Cold Snap*
@@ -737,7 +737,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Internal Combustion* !!!
 (#, ^2) Link Grenade* !!!
 (#, ^2) Matrix* !!!
-(X) Meteor !!!
+(X) Meteor* !!!
 (#2, ^2) Outbreak Bomb* !!!
 (^) Peatball*
 (#3, ^2) Potato Mine* !!!

@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Comb>()] = ItemID.Shackle;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToAccessory(26, 26);
+			Item.DefaultToAccessory(28, 28);
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Green;
 		}
