@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using Origins.Items.Weapons.Ammo;
 using Origins.Projectiles;
 using Origins.Tiles.Cubekon;
 using Terraria;
@@ -37,7 +38,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.crit = 14;
 			Item.useAnimation = 32;
 			Item.useTime = 17;
-			Item.useAmmo = ModContent.ItemType<Ammo.Metal_Slug>();
+			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
 			Item.shoot = ModContent.ProjectileType<Flakjack_P>();
 			Item.shootSpeed = 12;
 			Item.reuseDelay = 6;

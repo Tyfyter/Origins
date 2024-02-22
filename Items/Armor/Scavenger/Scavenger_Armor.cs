@@ -1,4 +1,5 @@
 using Origins.Dev;
+using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Tiles.Ashen;
 using Terraria;
@@ -10,9 +11,12 @@ namespace Origins.Items.Armor.Scavenger {
 	public class Scavenger_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
-			Item.ResearchUnlockCount = 1;
+            if (Main.netMode != NetmodeID.Server) {
+                Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Scavenger/Scavenger_Helmet_Head_Glow");
+            }
+            Item.ResearchUnlockCount = 1;
 		}
-		public override void SetDefaults() {
+        public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;

@@ -9,7 +9,7 @@
 #: Needs code (not implemented at all)
 #2: Needs code (partial implementation. Includes code of a re-used mechanic)
 #3: Needs code (needs changing to pre-existing code and/or needs to be finalized | Undecided plans)
-#4: Has bug
+#4: Has bug or change specified in bugs channel
 #5: Code complete other than graphical code, for which it needs design
 
 $: Needs sound (music not composed)
@@ -488,7 +488,7 @@ WINGS:
 TOOLS:
 ---
 (^) Brick Breaker
-(^) C6 Jackhammer
+(#4, ^2) C6 Jackhammer !!!
 (^) Dismantler
 (^) Dissector
 (^) Felnum Hamaxe

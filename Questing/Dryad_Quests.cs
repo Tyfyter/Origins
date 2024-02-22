@@ -21,11 +21,11 @@ namespace Origins.Questing {
 			return npc.type == NPCID.Dryad && !ShowInJournal();
 		}
 		public override bool HasDialogue(NPC npc) {
-			if (npc.type != NPCID.Dryad) return false; // NPCs other than the merchant won't have any dialogue related to this quest
+			if (npc.type != NPCID.Dryad) return false; // NPCs other than the dryad won't have any dialogue related to this quest
 			switch (Stage) {
 				case 1:
 				return !LocalPlayerStarted;
-				case 2: // killed enough enemies
+				case 2: // completed objective
 				return true;
 			}
 			return false;
@@ -113,5 +113,5 @@ namespace Origins.Questing {
 				ShouldSync = true;
 			}
 		}
-	}
+    }
 }

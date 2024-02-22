@@ -44,7 +44,8 @@ namespace Origins.Items.Tools {
 			return player.altFunctionUse == 2 ? 0.3f : 1;
 		}
 		public override bool MeleePrefix() => true;
-	}
+        public override Vector2? HoldoutOffset() => new Vector2(-8, 4);
+    }
 	public class C6_Jackhammer_P : ModProjectile {
 		public override void SetStaticDefaults() {
 			Main.projFrames[Type] = 3;

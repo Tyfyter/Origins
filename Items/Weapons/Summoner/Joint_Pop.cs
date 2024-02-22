@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.DefaultToWhip(ModContent.ProjectileType<Joint_Pop_P>(), 36, 5, 4, 60);
+			Item.DefaultToWhip(ModContent.ProjectileType<Joint_Pop_P>(), 33, 5, 4, 60);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.SummonMeleeSpeed];
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
@@ -88,7 +88,7 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.penetrate > 2) {
-				float range = 48;
+				float range = 72;
 				List<Vector2> points = Projectile.WhipPointsForCollision;
 				Projectile.FillWhipControlPoints(Projectile, points);
 				if (target.DistanceSQ(points[^1]) <= range * range) {

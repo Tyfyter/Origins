@@ -15,6 +15,6 @@ namespace Origins.World {
 					cleansingStationQuest.UpdateProgress(-1);
 				}
 			}
-		}
+        }
 	}
 }

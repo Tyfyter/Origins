@@ -2,6 +2,7 @@
 using Origins.Items.Materials;
 using System;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -97,6 +98,9 @@ namespace Origins.Items.Accessories {
 					else Projectile.velocity.Y += overlapVelocity;
 				}
 			}
+			/*if (Player.currentLife < maxLife) {
+                Drop ItemID.Heart with chance (Percentage of life lost)
+            }*/
 			#endregion
 
 			#region Find target
