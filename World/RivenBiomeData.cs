@@ -13,6 +13,7 @@ using Origins.Items.Weapons.Ranged;
 using Origins.Items.Weapons.Summoner;
 using Origins.Misc;
 using Origins.NPCs.Riven;
+using Origins.NPCs.Riven.World_Cracker;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;
@@ -550,7 +551,7 @@ namespace Origins.World.BiomeData {
 				shadowOrbCount++;
 				if (shadowOrbCount >= 3) {
 					shadowOrbCount = 0;
-					NPC.SpawnOnPlayer(plr, ModContent.NPCType<NPCs.Riven.World_Cracker.World_Cracker_Head>());
+					Main.LocalPlayer.SpawnBossOn(ModContent.NPCType<World_Cracker_Head>());
 				} else {
 					LocalizedText localizedText = Lang.misc[10];
 					if (shadowOrbCount == 2) {

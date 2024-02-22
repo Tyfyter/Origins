@@ -25,7 +25,7 @@ namespace Origins.Items.Other.Consumables {
 		public override bool? UseItem(Player player) {
 			if (player.whoAmI == Main.myPlayer) {
 				SoundEngine.PlaySound(SoundID.Roar);
-                NPC.SpawnOnPlayer(Main.myPlayer, ModContent.NPCType<World_Cracker_Head>());
+				player.SpawnBossOn(ModContent.NPCType<World_Cracker_Head>());
 			}
 			return true;
 		}

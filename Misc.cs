@@ -2382,6 +2382,13 @@ namespace Origins {
 			}
 			return true;
 		}
+		public static void SpawnBossOn(this Player player, int type) {
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				NPC.SpawnOnPlayer(player.whoAmI, type);
+			} else {
+				NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, -1, -1, null, player.whoAmI, type);
+			}
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>
