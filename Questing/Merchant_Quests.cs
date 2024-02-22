@@ -115,7 +115,7 @@ namespace Origins.Questing {
 				switch (stage) {
 					case 1:
 					KillEnemyEvent = (npc) => {
-						if (npc.type == NPCID.DoctorBones || npc.type == NPCID.Nymph || npc.type == NPCID.Tim) {
+						if (npc.rarity >= 2) {
 							ShouldSync = true;
 							if (++progress >= target) {
 								HasNotification = true;
