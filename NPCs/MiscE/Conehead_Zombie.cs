@@ -20,6 +20,7 @@ namespace Origins.NPCs.MiscE {
 			NPC.width = 28;
 			NPC.height = 46;
 			NPC.friendly = false;
+			AIType = NPCID.Zombie;
 		}
 		public override void FindFrame(int frameHeight) {
 			NPC.CloneFrame(NPCID.Zombie, frameHeight);

@@ -22,7 +22,8 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 24;
 			NPC.friendly = false;
 			NPC.value = 40;
-        }
+			AIType = NPCID.Crimslime;
+		}
 		public override void FindFrame(int frameHeight) {
 			NPC.CloneFrame(NPCID.Crimslime, frameHeight);
 		}
