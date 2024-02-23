@@ -3,8 +3,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ranged;
 using Origins.World;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -50,6 +52,8 @@ namespace Origins.Buffs {
 			Projectile.width = Projectile.height = 8;
 			Projectile.timeLeft = 240;
 			Projectile.ignoreWater = true;
+		}
+		public override void OnSpawn(IEntitySource source) {
 			Projectile.localAI[1] = ModContent.ProjectileType<Shardcannon_P1>() + Main.rand.Next(3);
 			Projectile.localAI[2] = Main.rand.NextFloat(0.05f, 0.15f) * Main.rand.NextBool().ToDirectionInt();
 		}
@@ -60,6 +64,7 @@ namespace Origins.Buffs {
 				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 1.5f);
 			}
 			Projectile.localAI[0] += (GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.295f) * Projectile.localAI[2];
+			Projectile.localAI[0] = MathHelper.Clamp(Projectile.localAI[0], -8, 8);
 			//Vector2 diff = new Vector2(0, (GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.31f)).RotatedBy(Projectile.rotation);
 			//Projectile.velocity += diff;
 			Vector2 offset = Projectile.localAI[0] * new Vector2(Projectile.velocity.Y, -Projectile.velocity.X);
@@ -96,6 +101,14 @@ namespace Origins.Buffs {
 				SpriteEffects.None
 			);
 			return false;
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(Projectile.localAI[1]);
+			writer.Write(Projectile.localAI[2]);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			Projectile.localAI[1] = reader.ReadSingle();
+			Projectile.localAI[2] = reader.ReadSingle();
 		}
 	}
 }
