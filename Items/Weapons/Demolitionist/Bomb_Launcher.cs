@@ -71,7 +71,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					type = Impeding_Shrapnel_Shard.ID;
 					damage -= 10;
 					for (int i = Main.rand.Next(3); ++i < 10;) {
-						Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.025 * i) * 0.6f, type, damage / 3, knockback, player.whoAmI);
+						Projectile.NewProjectile(source, position, velocity.RotatedByRandom(0.025 * i) * 0.6f, type, damage, knockback, player.whoAmI);
 					}
 					return false;
 				}
