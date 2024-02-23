@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed *= 0.95f;
 			Item.knockBack = 13f;
 			Item.value = Item.sellPrice(silver: 1, copper: 80);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 4);

@@ -16,7 +16,7 @@ Merchant: {
 	}
 
 	Lottery_Ticket: {
-		// Name: Stray of Luck
+		// Name: The Greatest Sin of All, Gambling
 		/* Journal:
 			'''
 			{$Mods.Origins.Quests.Merchant.Lottery_Ticket.Name}
@@ -24,12 +24,12 @@ Merchant: {
 								
 			'{$Mods.Origins.Quests.Merchant.Lottery_Ticket.Start}'
 								
-			- [qs{3}:Slay {2} of any Doctor Bones, Nymph,
-			or Tim enemies ({1}/{2})]
+			- [qs{3}:Slay {2} rare enemies ({1}/{2})]
+
 			Unlocks: [i:Origins/Lottery_Ticket]
 			''' */
-		// Start: Do you know why <Name of world> isn’t allowed to sell lottery tickets? Neither do I. Maybe you can convince the gods of fortune to shine a brighter light on us by killing some rare enemies, eh?
-		// Complete: Ah! Thanks, {0}! Because of you we can gamble now! I'm gonna be rich, you'll see me on the MegaPlatinum!
+		// Start: Do you know why I'm not allowed to sell lottery tickets? Neither do I. Maybe you can convince the gods of fortune to shine a brighter light on us by killing some rare enemies, eh?
+		// Complete: Ah! Thanks, {0}! Because of you we can gamble now! I'm gonna be rich, you'll see me on the Mana Millions!
 	}
 }
 
@@ -44,7 +44,7 @@ Party_Girl: {
 			'{$Mods.Origins.Quests.Party_Girl.Tax_Collector_Hat.Start}'
 								
 				- [qs{3}:Put a Party Hat on the Tax Collector]
-			Unlocks: ... uhhhh...
+			Unlocks: ...DELICIOUS BAKER'S DELIGHT
 			''' */
 		// Start: The party is ready and everything is set in place! But, something is missing... it's that dreary tax collector again. Try and cheer him up with a party hat so he doesn't give bad vibes.
 		// Complete: Thank you so much, {0}! We can now have the best party ever thanks to you cheering that old man up!
@@ -92,7 +92,7 @@ Goblin_Tinkerer: {
 	}
 
 	Rocket_Boosted_Minecart: {
-		// Name: Ride-along Drive
+		// Name: Explosive Result
 		/* Journal:
 			'''
 			{$Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Name}
@@ -113,7 +113,7 @@ Goblin_Tinkerer: {
 
 Arms_Dealer: {
 	Shardcannon: {
-		// Name: A Few Holes
+		// Name: Live Fire
 		/* Journal:
 			'''
 			{$Mods.Origins.Quests.Arms_Dealer.Shardcannon.Name}
@@ -121,7 +121,8 @@ Arms_Dealer: {
 								
 			'{$Mods.Origins.Quests.Arms_Dealer.Shardcannon.Start}'
 								
-			- [qs{2}:Slay {1} Enemies with the Imperfect Shardcannon ({0}/{1})]
+			- [qs{2}:Slay {1} Enemies with the Imperfect
+			Shardcannon ({0}/{1})]
 			Unlocks: [i:Origins/Shardcannon]
 			''' */
 		// Start: Hey buddy, I’ve been workin’ on a little something that needs a qualified gunner to use. Would you be interested? I would do it myself, but my neighbors wouldn’t like it if there were holes in their wall.
@@ -200,7 +201,7 @@ Dryad: {
 	}
 
 	Cleansing_Station_Again?: {
-		// Name: I’ll Give You a Deal
+		// Name: idk, ty needs to tell me why this is here
 		/* Journal:
 			'''
 			{$Mods.Origins.Quests.Dryad.Cleansing_Station_Again?.Name}

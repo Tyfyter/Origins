@@ -151,10 +151,6 @@ namespace Origins.NPCs {
 				npc.velocity = Vector2.Zero;
 				return false;
 			}
-			if (npc.HasBuff(BuffID.Bleeding)) {
-				npc.lifeRegen -= 1;
-				return false;
-			}
 			if (rasterizedTime > 0 && npc.oldPosition != default) {
 				if (npc.velocity.Y == 0) {
 					switch (npc.aiStyle) {

@@ -11,7 +11,6 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.maxStack = 999;
 			Item.damage = 14;
 			Item.shoot = 1;
 			Item.ammo = Type;
