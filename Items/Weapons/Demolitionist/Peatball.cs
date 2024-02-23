@@ -8,7 +8,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Peatball : ModItem {
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 99;
+            ItemID.Sets.ShimmerTransformToItem[ItemID.Coal] = ModContent.ItemType<Peatball>();
+            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Peatball>()] = ItemID.Coal;
+            Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);

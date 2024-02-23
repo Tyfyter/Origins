@@ -4,15 +4,20 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Sonic_Radar : ModItem, ICustomWikiStat {
+    public class Sonic_Radar : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Info"
 		};
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 26);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateEquip(Player player) {
 			player.dangerSense = true;
 			player.findTreasure = true;

@@ -6,15 +6,18 @@ namespace Origins.Items.Accessories {
     public class Ninja_Ravel : Ravel {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
+            glowmask = Origins.AddGlowMask(this);
+            Item.ResearchUnlockCount = 1;
 			ID = Type;
 		}
-		public override void SetDefaults() {
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory();
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 12);
 			Item.shoot = ModContent.MountType<Ninja_Ravel_Mount>();
-		}
+            Item.glowMask = glowmask;
+        }
 		protected override void UpdateRaveled(Player player) {
 			player.GetModPlayer<OriginPlayer>().spiderRavel = true;
 			player.aggro -= 400;

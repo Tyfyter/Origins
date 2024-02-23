@@ -12,12 +12,13 @@ namespace Origins.Items.Accessories {
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.FeralClaws] = ModContent.ItemType<Gun_Glove>();
 			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Gun_Glove>()] = ItemID.FeralClaws;
-		}
-		public override void SetDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 18);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Green;
-
 			Item.damage = 10;
 			Item.DamageType = DamageClass.Ranged;
 			Item.useTime = 5;
@@ -25,7 +26,8 @@ namespace Origins.Items.Accessories {
 			Item.shootSpeed = 5;
 			Item.useAmmo = AmmoID.Bullet;
 			Item.UseSound = SoundID.Item10;
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.gunGlove = true;

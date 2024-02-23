@@ -806,6 +806,11 @@ Buffs: {
 		DisplayName: Joint Pop Buff
 		Description: Mods.Origins.Buffs.Joint_Pop_Buff.Description
 	}
+
+	Petrified_Prickly_Pear_Buff: {
+		DisplayName: Petrified_ Prickly_ Pear_ Buff
+		Description: Mods.Origins.Buffs.Petrified_Prickly_Pear_Buff.Description
+	}
 }
 
 DamageClassName: {

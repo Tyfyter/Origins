@@ -507,7 +507,7 @@ namespace Origins {
 			LeggingGlowMasks = null;
 			TorsoLegLayers = null;
 			instance = null;
-			Defiled_Tree.Unload();
+			Petrified_Tree.Unload();
 			OriginExtensions.unInitExt();
 			OriginTile.IDs = null;
 			OriginTile.DefiledTiles = null;

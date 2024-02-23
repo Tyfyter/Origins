@@ -10,11 +10,16 @@ namespace Origins.Items.Accessories {
 			"Combat",
 			"Explosive"
 		};
-		public override void SetDefaults() {
+        static short glowmask;
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(38, 20);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Green;
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().bombHandlingDevice = true;
 			player.GetModPlayer<OriginPlayer>().explosiveThrowSpeed += 0.25f;

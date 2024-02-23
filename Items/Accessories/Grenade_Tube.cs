@@ -5,12 +5,16 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
     public class Grenade_Tube : ModItem {
-		
-		public override void SetDefaults() {
+        static short glowmask;
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 2);
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateEquip(Player player) {
 			//player.GetModPlayer<OriginPlayer>().noobTube = true;
 		}

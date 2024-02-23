@@ -107,7 +107,7 @@ namespace Origins.NPCs {
 				break;
 				case NPCID.SkeletonSniper: //Tiny skeleton sniper
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tiny_Sniper>(), 24));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 5));
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
                 break;
 				case NPCID.Snatcher:
 				case NPCID.JungleSlime:
@@ -124,7 +124,7 @@ namespace Origins.NPCs {
 				case NPCID.AngryBonesBigMuscle:
 				case NPCID.AngryBonesBigHelmet:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bolt_Gun>(), 50));
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 5));
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Longbone>(), 50));
 				break;
 				case NPCID.Zombie:
@@ -156,11 +156,12 @@ namespace Origins.NPCs {
 				break;
 				case NPCID.UndeadMiner:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IWTPA_Standard>(), 4));
-				break;
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
+                break;
 				case NPCID.SporeSkeleton:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Irish_Cheddar>(), 3));
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 5));
-				break;
+				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Irish_Cheddar>(), 6));
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
+                break;
 				case NPCID.GiantTortoise:
 				npcLoot.Add(new ItemDropWithConditionRule(ModContent.ItemType<Rocodile>(), 17, 1, 1, new LootConditions.DownedPlantera()));
 				break;
@@ -190,13 +191,14 @@ namespace Origins.NPCs {
 				case NPCID.SmallPantlessSkeleton:
 				case NPCID.SmallSkeleton:
 				case NPCID.TacticalSkeleton:
-				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 5));
-				break;
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bread>(), 10));
+                break;
 				case NPCID.TheGroom:
 				npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Comb>()));
 				break;
                 case NPCID.ZombieSuperman:
                 npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Superjump_Cape>(), 3));
+                //npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Well_Gelled_Heroes_Hair>(), 3));
                 break;
                 default:
 				break;

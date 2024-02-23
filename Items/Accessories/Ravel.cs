@@ -18,14 +18,17 @@ namespace Origins.Items.Accessories {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			ID = Type;
-		}
-		public override void SetDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory();
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.shoot = ModContent.MountType<Ravel_Mount>();//can't use mountType because that'd make it fit in the mount slot
 			Item.hasVanityEffects = true;
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ravelEquipped = true;

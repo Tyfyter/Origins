@@ -8,13 +8,16 @@ namespace Origins.Items.Accessories {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			ID = Type;
-		}
-		public override void SetDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory();
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 6);
 			Item.shoot = ModContent.MountType<Spider_Ravel_Mount>();
-		}
+            Item.glowMask = glowmask;
+        }
 		protected override void UpdateRaveled(Player player) {
 			player.GetModPlayer<OriginPlayer>().spiderRavel = true;
 			player.blackBelt = true;

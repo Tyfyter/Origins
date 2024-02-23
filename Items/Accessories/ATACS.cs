@@ -8,11 +8,16 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => new string[] {
 			"Combat"
 		};
-		public override void SetDefaults() {
+        static short glowmask;
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);
 			Item.value = Item.sellPrice(gold: 7);
 			Item.rare = ItemRarityID.Yellow;
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateEquip(Player player) {
 			player.GetCritChance(DamageClass.Generic) += 10f;
 			//player.GetModPlayer<OriginPlayer>().strangeComputer = true; red laser

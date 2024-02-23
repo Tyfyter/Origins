@@ -1,21 +1,23 @@
-﻿using Microsoft.Xna.Framework;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	public class Stealth_Ravel : Ravel {
+    public class Stealth_Ravel : Ravel {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			ID = Type;
-		}
-		public override void SetDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory();
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 6);
 			Item.shoot = ModContent.MountType<Stealth_Ravel_Mount>();
-		}
+            Item.glowMask = glowmask;
+        }
 		protected override void UpdateRaveled(Player player) {
 			player.aggro -= 9999;
 			player.blackBelt = true;

@@ -10,11 +10,16 @@ namespace Origins.Items.Accessories {
 			"Resource",
 			"Exploration"
 		};
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);
 			Item.rare = ItemRarityID.LightRed;
 			Item.value = Item.sellPrice(gold: 2);
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			const float healing = 0.0000444f;
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

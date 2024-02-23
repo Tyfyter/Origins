@@ -11,12 +11,17 @@ namespace Origins.Items.Accessories {
 			"Torn",
 			"TornSource"
 		};
-		public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(8);
+        static short glowmask;
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        public override LocalizedText Tooltip => base.Tooltip.WithFormatArgs(8);
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 30);
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 5);
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (!originPlayer.taintedFlesh2) originPlayer.tornStrengthBoost.Flat += 0.08f;

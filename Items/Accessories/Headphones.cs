@@ -11,11 +11,16 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => new string[] {
 			"Combat"
 		};
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().summonTagForceCrit = true;
 		}

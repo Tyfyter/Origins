@@ -12,13 +12,16 @@ namespace Origins.Items.Accessories {
 		public override void SetStaticDefaults() {
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(11, 6));
 			Item.ResearchUnlockCount = 1;
-		}
-		public override void SetDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 32);
 			Item.rare = ItemRarityID.Expert;
 			Item.expert = true;
 			Item.value = Item.sellPrice(gold: 2);
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().refactoringPieces = true;
 		}

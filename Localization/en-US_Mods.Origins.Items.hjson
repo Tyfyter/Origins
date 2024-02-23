@@ -3694,3 +3694,18 @@ Bomb_Charm_of_Regeneration: {
 		Rapidly regenerate life after taking self-damage
 		'''
 }
+
+Petrified_Prickly_Pear: {
+	DisplayName: Petrified_ Prickly_ Pear
+	Tooltip: ""
+}
+
+Endowood_Item: {
+	DisplayName: Endowood_ Item
+	Tooltip: ""
+}
+
+Marrowick_Item: {
+	DisplayName: Marrowick_ Item
+	Tooltip: ""
+}

@@ -15,7 +15,11 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => new string[] {
 			"Combat"
 		};
-		bool bothGloves = false;
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        bool bothGloves = false;
 		bool noGloves = false;
 		
 		public override void SetDefaults() {
@@ -26,7 +30,8 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Pink;
 			Item.hasVanityEffects = true;
 			Item.value = Item.sellPrice(gold: 8);
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateAccessory(Player player, bool isHidden) {
 			player.kbGlove = true;
 			player.autoReuseGlove = true;

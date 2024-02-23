@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
-using Origins.Reflection;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -9,18 +8,23 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
-	[AutoloadEquip(EquipType.Neck)]
+    [AutoloadEquip(EquipType.Neck)]
 	public class Dryads_Inheritance : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat"
 		};
-		public override void SetDefaults() {
+        static short glowmask;
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 26);
 			Item.value = Item.sellPrice(gold: 8);
 			Item.rare = ItemRarityID.Lime;
 			Item.shoot = ModContent.ProjectileType<Dryad_Ward>();
 			Item.accessory = true;
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
 			recipe.AddIngredient(ItemID.SporeSac);

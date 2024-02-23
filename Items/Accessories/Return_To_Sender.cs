@@ -10,8 +10,6 @@ namespace Origins.Items.Accessories {
 		};
 		static short glowmask;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Return To Sender");
-			// Tooltip.SetDefault("Attackers receive all damage inflicted to the user");
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

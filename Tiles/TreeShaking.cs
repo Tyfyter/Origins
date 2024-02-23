@@ -25,13 +25,16 @@ namespace Origins.Tiles {
 		public delegate double WeightProvider(ITree tree);
 		public record struct TreeShakeLoot(int Type, WeightProvider Weight, int Min = 1, int Max = 1);
 		public static (float chance, TreeShakeLoot[])[] ShakeLoot => _shakeLoot ??= new (float chance, TreeShakeLoot[])[] {
-			(1 / 15f, new TreeShakeLoot[] {// fruit
-				new (ItemType<Bileberry>(), tree => tree is Defiled_Tree ? 1 : 0),
-				new (ItemType<Prickly_Pear>(), tree => tree is Defiled_Tree ? 1 : 0),
-				new (ItemType<Pawpaw>(), tree => tree is Riven_Tree ? 1 : 0),
-				new (ItemType<Periven>(), tree => tree is Riven_Tree ? 1 : 0),
+			(143 / 2000f, new TreeShakeLoot[] {// fruit
+				new (ItemType<Bileberry>(), tree => tree is Petrified_Tree ? 1 : 0),
+				new (ItemType<Prickly_Pear>(), tree => tree is Petrified_Tree ? 1 : 0),
+                new (ItemType<Pawpaw>(), tree => tree is Exoskeletal_Tree ? 1 : 0),
+				new (ItemType<Periven>(), tree => tree is Exoskeletal_Tree ? 1 : 0),
 			}),
-		};
+            (3 / 100f, new TreeShakeLoot[] {
+                new (ItemType<Petrified_Prickly_Pear>(), tree => tree is Petrified_Tree ? 1 : 0),
+            }),
+        };
 		public static (float chance, TreeShakeLoot[])[] DryShakeLoot => _dryShakeLoot ??= new (float chance, TreeShakeLoot[])[] {
 			(1 / 20f, new TreeShakeLoot[] {
 				new (ItemType<Tree_Sap>(), _ => 1),

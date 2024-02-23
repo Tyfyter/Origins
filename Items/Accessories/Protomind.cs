@@ -18,13 +18,18 @@ namespace Origins.Items.Accessories {
 		public override void Unload() {
 			messagesByType = null;
 		}
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 28);
 			Item.accessory = true;
 			Item.shoot = ModContent.ProjectileType<Protomind_P>();
 			Item.rare = ItemRarityID.LightPurple;
 			Item.value = Item.sellPrice(gold: 3);
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateInventory(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.hasProtOS = true;

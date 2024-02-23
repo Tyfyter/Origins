@@ -11,16 +11,15 @@ namespace Origins.Items.Accessories {
 			"Explosive"
 		};
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Missile Armcannon");
-			// Tooltip.SetDefault("30% increased explosive throwing velocity\nIncreases attack speed of thrown explosives\nEnables autouse for all explosive weapons\nShoots rockets as you swing\n'Payload not included'");
 			Item.ResearchUnlockCount = 1;
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];
-		}
-		public override void SetDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(38, 20);
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.LightRed;
-
 			Item.damage = 10;
 			Item.DamageType = DamageClasses.Explosive;
 			Item.useTime = 15;
@@ -28,7 +27,8 @@ namespace Origins.Items.Accessories {
 			Item.shootSpeed = 5;
 			Item.useAmmo = AmmoID.Rocket;
 			Item.UseSound = SoundID.Item61;
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void AddRecipes() {
 			Recipe recipe = CreateRecipe();
 			recipe.AddIngredient(ModContent.ItemType<Destructive_Claws>());

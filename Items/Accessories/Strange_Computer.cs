@@ -5,12 +5,16 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Strange_Computer : ModItem {
-		
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);
 			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Pink;
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateEquip(Player player) {
 			//player.GetModPlayer<OriginPlayer>().strangeComputer = true; blue laser
 		}

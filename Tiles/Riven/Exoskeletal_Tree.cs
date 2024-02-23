@@ -1,21 +1,18 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Other.Consumables.Food;
+using Origins.Items.Armor.Defiled;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
 
 namespace Origins.Tiles.Riven {
-	public class Riven_Tree : ModTree, IGlowingModTile {
+    public class Exoskeletal_Tree : ModTree, IGlowingModTile {
 		private static Mod mod => Origins.instance;
-		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Riven_Tree).GetDefaultTMLName() + "_Glow";
+		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Exoskeletal_Tree).GetDefaultTMLName() + "_Glow";
 		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
@@ -42,11 +39,11 @@ namespace Origins.Tiles.Riven {
 			}
 			return true;
 		}
-		public static Riven_Tree Instance { get; private set; }
+		public static Exoskeletal_Tree Instance { get; private set; }
 		public override TreePaintingSettings TreeShaderSettings => new();
 		public override TreeTypes CountsAsTreeType => TreeTypes.None;
 		internal static void Load() {
-			Instance = new Riven_Tree();
+			Instance = new Exoskeletal_Tree();
 		}
 
 		internal static void Unload() {
@@ -54,11 +51,11 @@ namespace Origins.Tiles.Riven {
 		}
 
 		public override int DropWood() {
-			return ModContent.ItemType<Riven_Flesh_Item>();//temporary drop type
+			return ModContent.ItemType<Marrowick_Item>();
 		}
 
 		public override Asset<Texture2D> GetTexture() {
-			return mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Tree");
+			return mod.Assets.Request<Texture2D>("Tiles/Riven/Exoskeletal_Tree");
 		}
 
 		public override void SetStaticDefaults() {
@@ -69,11 +66,11 @@ namespace Origins.Tiles.Riven {
 		}
 
 		public override Asset<Texture2D> GetTopTextures() {
-			return mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Tree_Tops");
+			return mod.Assets.Request<Texture2D>("Tiles/Riven/Exoskeletal_Tree_Tops");
 		}
 
 		public override Asset<Texture2D> GetBranchTextures() {
-			return mod.Assets.Request<Texture2D>("Tiles/Riven/Riven_Tree_Branches");
+			return mod.Assets.Request<Texture2D>("Tiles/Riven/Exoskeletal_Tree_Branches");
 		}
 
 		public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
@@ -81,11 +78,11 @@ namespace Origins.Tiles.Riven {
 		}
 		public override int SaplingGrowthType(ref int style) {
 			style = 0;
-			return ModContent.TileType<Riven_Tree_Sapling>();
+			return ModContent.TileType<Exoskeletal_Tree_Sapling>();
 		}
 	}
-	public class Riven_Tree_Sapling : SaplingBase, IGlowingModTile {
-		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Riven_Tree_Sapling).GetDefaultTMLName() + "_Glow";
+	public class Exoskeletal_Tree_Sapling : SaplingBase, IGlowingModTile {
+		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Exoskeletal_Tree_Sapling).GetDefaultTMLName() + "_Glow";
 		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();

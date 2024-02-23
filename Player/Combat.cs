@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
+using Origins.Items.Other.Consumables.Food;
 using Origins.NPCs;
 using Origins.Projectiles;
 using Origins.Questing;
@@ -452,7 +453,9 @@ namespace Origins {
 				};
 			} else if (refactoringPieces) {
 				modifiers.SourceDamage *= 0.95f;
-			}
+			} /*else if (pricklyPeared) {
+			+25% mana shielding?
+			}*/
 			if (toxicShock) {
 				modifiers.ScalingArmorPenetration += 0.1f;
 			}

@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
 using Terraria;
 using Terraria.Audio;
@@ -20,12 +19,17 @@ namespace Origins.Items.Accessories {
 		public override void Unload() {
 			messageCountsByType = null;
 		}
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            glowmask = Origins.AddGlowMask(this);
+        }
+        static short glowmask;
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 28);
 			Item.accessory = true;
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 1);
-		}
+            Item.glowMask = glowmask;
+        }
 		public override void UpdateInventory(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.hasPotatOS = true;

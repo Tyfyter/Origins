@@ -11,11 +11,14 @@ namespace Origins.Items.Accessories {
         public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[ItemID.PanicNecklace] = ModContent.ItemType<Primordial_Soup>();
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Primordial_Soup>()] = ItemID.PanicNecklace;
+            glowmask = Origins.AddGlowMask(this);
         }
+        static short glowmask;
         public override void SetDefaults() {
             Item.DefaultToAccessory(38, 20);
             Item.value = Item.sellPrice(gold: 1, silver: 50);
             Item.rare = ItemRarityID.Blue;
+            Item.glowMask = glowmask;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
