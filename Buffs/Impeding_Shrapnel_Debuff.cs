@@ -50,24 +50,22 @@ namespace Origins.Buffs {
 			Projectile.penetrate = 3;
 			Projectile.extraUpdates = 3;
 			Projectile.width = Projectile.height = 8;
-			Projectile.timeLeft = 240;
+			Projectile.timeLeft = 420;
 			Projectile.ignoreWater = true;
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.localAI[1] = ModContent.ProjectileType<Shardcannon_P1>() + Main.rand.Next(3);
-			Projectile.localAI[2] = Main.rand.NextFloat(0.05f, 0.15f) * Main.rand.NextBool().ToDirectionInt();
+			Projectile.localAI[2] = Main.rand.NextFloat(0.25f, 0.50f) * Main.rand.NextBool().ToDirectionInt();
 		}
 		public override void AI() {
-			if (Projectile.timeLeft == 240) {
+			if (Projectile.timeLeft == 420) {
 				Projectile.rotation = Projectile.velocity.ToRotation();
 				Projectile.ai[0] = Main.rand.Next(256) * 30;
 				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 1.5f);
 			}
 			Projectile.localAI[0] += (GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.295f) * Projectile.localAI[2];
-			Projectile.localAI[0] = MathHelper.Clamp(Projectile.localAI[0], -8, 8);
-			//Vector2 diff = new Vector2(0, (GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.31f)).RotatedBy(Projectile.rotation);
-			//Projectile.velocity += diff;
 			Vector2 offset = Projectile.localAI[0] * new Vector2(Projectile.velocity.Y, -Projectile.velocity.X);
+			Projectile.localAI[0] = MathHelper.Clamp(Projectile.localAI[0], -2, 2);
 			if (Collision.TileCollision(
 				Projectile.position,
 				offset,
@@ -82,6 +80,7 @@ namespace Origins.Buffs {
 			}
 			Projectile.ai[0] += Projectile.ai[1];
 			Dust.NewDustPerfect(Projectile.Center, 6, Vector2.Zero).noGravity = true;
+			Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.localAI[0] * 0.01f);
 			//Dust.NewDustPerfect(Projectile.Center, 29, diff * 32);
 		}
 		public override void OnKill(int timeLeft) {
