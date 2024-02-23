@@ -199,6 +199,7 @@ namespace Origins {
 		public bool dryadNecklace = false;
 		public bool weakpointAnalyzer = false;
 		public bool bindingBookVisual = false;
+		public int bindingBookDye = 0;
 		public Physics.Chain[] bindingBookChains = new Physics.Chain[3];
 		public bool priorityMail = false;
 		public bool emergencyBeeCanister = false;

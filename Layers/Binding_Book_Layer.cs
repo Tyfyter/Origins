@@ -22,7 +22,8 @@ namespace Origins.Layers {
 		}
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Backpacks);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {
-			Physics.Chain[] chains = drawInfo.drawPlayer.GetModPlayer<OriginPlayer>().bindingBookChains;
+			OriginPlayer originPlayer = drawInfo.drawPlayer.GetModPlayer<OriginPlayer>();
+			Physics.Chain[] chains = originPlayer.bindingBookChains;
 			for (int i = 0; i < chains.Length; i++) {
 				Physics.Chain chain = chains[i];
 				if (chain is null) continue;
@@ -37,7 +38,9 @@ namespace Origins.Layers {
 						Vector2.Zero,
 						1,
 						SpriteEffects.None
-					));
+					) {
+						shader = originPlayer.bindingBookDye
+					});
 					startPoint = chain.links[j].position;
 				}
 				Rectangle frame = endTexture.Value.Frame(verticalFrames: 4, frameY: ((int)((Main.timeForVisualEffects + i * 2) / 6) + i) % 4);
@@ -50,7 +53,9 @@ namespace Origins.Layers {
 					frame.Size() * new Vector2(0.4f, 0.7f),
 					1,
 					SpriteEffects.None
-				));
+				) {
+					shader = originPlayer.bindingBookDye
+				});
 			}
 		}
 	}
