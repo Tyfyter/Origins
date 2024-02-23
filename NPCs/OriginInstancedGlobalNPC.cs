@@ -115,8 +115,11 @@ namespace Origins.NPCs {
 			}
 		}
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
-			if (npc.lifeRegen > 0 && npc.HasBuff(BuffID.Bleeding)) {
-				npc.lifeRegen -= 1;
+			if (npc.HasBuff(BuffID.Bleeding)) {
+				if (npc.lifeRegen > 0) {
+					npc.lifeRegen = 0;
+				}
+				npc.lifeRegen -= 2;
 			}
 			if (amebolizeDebuff) {
 				if (npc.lifeRegen > 0) {

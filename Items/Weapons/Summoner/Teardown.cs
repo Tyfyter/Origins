@@ -198,8 +198,10 @@ namespace Origins.Items.Weapons.Summoner {
 			}
 			LinearSmoothing(ref currentSpeed, speed, currentSpeed < 1 ? 1 : 0.1f);
 			Vector2 direction = foundTarget ? targetCenter - Projectile.Center : vectorToIdlePosition;
-			direction.Normalize();
-			Projectile.velocity = Vector2.Normalize(Projectile.velocity + direction * turnSpeed) * currentSpeed;
+			if (direction != Vector2.Zero) {
+				direction.Normalize();
+				Projectile.velocity = Vector2.Normalize(Projectile.velocity + direction * turnSpeed) * currentSpeed;
+			}
 			#endregion
 
 			#region Animation and visuals
