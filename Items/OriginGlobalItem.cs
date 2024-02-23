@@ -69,7 +69,7 @@ namespace Origins.Items {
 				item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 				break;
 			}
-			if (Origins.ExplosiveBaseDamage.TryGetValue(item.shoot, out int damage)) {
+			if (item.damage is 0 or -1 && Origins.ExplosiveBaseDamage.TryGetValue(item.shoot, out int damage)) {
 				item.damage = damage;
 			}
 			if (OriginConfig.Instance.WoodBuffs) switch (item.type) {
