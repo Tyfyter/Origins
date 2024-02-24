@@ -8,8 +8,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Ace_Shrapnel : ModItem {
-
-		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Flamethrower);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];

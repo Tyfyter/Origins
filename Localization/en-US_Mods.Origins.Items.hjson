@@ -2169,11 +2169,7 @@ Abrasion_Blaster: {
 
 Ace_Shrapnel: {
 	DisplayName: Ace Shrapnel
-	Tooltip:
-		'''
-		Not implemented the way spriter dev wants it
-		Uses scrap as ammo
-		'''
+	Tooltip: Uses scrap as ammo
 }
 
 Ace_Shrapnel_Old: {
@@ -3696,16 +3692,21 @@ Bomb_Charm_of_Regeneration: {
 }
 
 Petrified_Prickly_Pear: {
-	DisplayName: Petrified_ Prickly_ Pear
-	Tooltip: ""
+	DisplayName: Petrified Prickly Pear
+	Tooltip: "{$CommonItemTooltip.MinorStats} and 25% increased mana shielding"
 }
 
 Endowood_Item: {
-	DisplayName: Endowood_ Item
+	DisplayName: Endowood
 	Tooltip: ""
 }
 
 Marrowick_Item: {
-	DisplayName: Marrowick_ Item
+	DisplayName: Marrowick
+	Tooltip: Feels waxy to the touch.
+}
+
+Marrowick_Wall_Item: {
+	DisplayName: Marrowick_ Wall_ Item
 	Tooltip: ""
 }

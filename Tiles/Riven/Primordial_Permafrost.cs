@@ -1,17 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.World.BiomeData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
-	public class Primordial_Permafrost : OriginTile, RivenTile {
+    public class Primordial_Permafrost : OriginTile, RivenTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.Ices[Type] = true;

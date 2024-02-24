@@ -135,18 +135,18 @@ ENEMY NPCS:
 (^) Single-Cellular Nautilus
 (^) Spider Amoeba
 
-(X) Amebeye
+(X) Amebeye !!!
 (^) Amebic Mummy
 (^) Amoeba Bugger
 (@, #) Angel
 (^) Barnacle Mound
-(#3, ^2) Bottomfeeder
+(#3, ^2) Bottomfeeder !!!
 (X) Brine Moccasin
 (@5, #) Carpalfish*
-(X) Defiled Asphyxiator
+(X) Defiled Asphyxiator !!!
 (^) Defiled Mimic
-(X) Defiled Reaper
-(@5, ^3/4) Defiled Tripod
+(X) Defiled Reaper !!!
+(@5, ^3/4) Defiled Tripod !!!
 (^) Flagellant
 (#, ^2) Hoarder
 (X) Holy Governor
@@ -156,13 +156,13 @@ ENEMY NPCS:
 (^) Mitoworm
 (X) Peat Lobber
 (^) Profaned Bident
-(@5, ^3) Pustule Jelly
-(@5, #3) Riven Mimic
-(X) Savage Whip
+(^) Pustule Jelly
+(@5, #3) Riven Mimic !!!
+(X) Savage Whip !!!
 (X) Sea Dragon
-(X) Shattered Ghoul
-(#3, ^2) Shattered Goldfish
-(X) Torn Ghoul
+(X) Shattered Ghoul !!!
+(#3, ^2) Shattered Goldfish !!!
+(X) Torn Ghoul !!!
 (#3, ^2) Trijaw Shark !!!
 
 (X) Annihilator
@@ -253,10 +253,10 @@ ARMOR:
 (^) Bleeding Obsidian Armor*
 (X) Ruby Ranger Armor*
 
-(X) Blast Armor*
+(X) Blast Armor* !!!
 (X) Chambersite Armor*
 (X) Edenwood Armor*
-(@5, ^3) Necromancer Armor*
+(^) Necromancer Armor*
 (#2, ^2) Sapphire Mediator Armor*
 
 (X) Ancient Chromtain Armor
@@ -282,7 +282,7 @@ ACCESSORIES:
 (^) Advanced Imaging*
 (^) Air Tank*
 (#2, ^2, ♠) ATACS*
-(#2, ^2) Automated Returns Handler*
+(#2, ^2) Automated Returns Handler* !!!
 (^) Binding Book*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
@@ -689,7 +689,7 @@ SUMMONER WEAPONS:
 (^) Eyeball Staff
 (^) Flagellash
 (#, ^2) Forest Staff* !!!
-(#, ^2) Joint Pop* !!!
+(^) Joint Pop*
 (^) Maelstrom Incantation
 (#, ^2) Ocean Amulet* !!!
 (^) Ocotoral Bud
@@ -727,7 +727,7 @@ NO POST ML SUMMONER CONTENT YET.
 EXPLOSIVE WEAPONS:
 ---
 (#2, ^2) Abrasion Blaster* !!!
-(#2, ^2) Ace Shrapnel* !!!
+(#4, ^2) Ace Shrapnel* !!!
 (^) Ameballoon*
 (^) Bang Snap*
 (^) Bloombomb*
@@ -828,7 +828,7 @@ TILES:
 (^) Hardened Defiled Sand*
 (X) Harmony Brick*
 (^) Lost Ore*
-(@, ^3) Marrowick* !!!
+(^) Marrowick*
 (#, ^2) Mildew Block*
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
@@ -860,7 +860,7 @@ TILES:
 (X) Endowood Wall !!!
 (^) Fiberglass Wall
 (^) Harmony Brick Wall
-(X) Marrowick Wall !!!
+(^) Marrowick Wall
 (X) Nova Brick Wall
 (^) Quartz Wall
 (#3, ^2) Riven Grass Wall !!!
