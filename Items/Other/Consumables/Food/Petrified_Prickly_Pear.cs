@@ -38,7 +38,7 @@ namespace Origins.Items.Other.Consumables.Food {
             ID = Type;
         }
         public override void Update(Player player, ref int buffIndex) {
-			//OriginPlayer.pricklyPeared = true;
+			player.GetModPlayer<OriginPlayer>().manaShielding += 0.25f;
         }
     }
 }

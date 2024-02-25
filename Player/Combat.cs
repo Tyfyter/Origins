@@ -356,6 +356,12 @@ namespace Origins {
 			if (hitOriginalDamage <= 0) {
 				return true;
 			}
+			if (allManaDamage) {
+				Player.CheckMana(manaDamageToTake, true);
+				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
+				PlayerLoader.PostHurt(Player, info);
+				return true;
+			}
 			if (Player.whoAmI == Main.myPlayer && !(protomindItem?.IsAir ?? true)) {
 				for (int i = 0; i < 200; i++) {
 					if (!Main.npc[i].active || Main.npc[i].friendly) {
@@ -420,6 +426,8 @@ namespace Origins {
 			}
 			return false;
 		}
+		bool allManaDamage = false;
+		int manaDamageToTake = 0;
 		public override void ModifyHurt(ref Player.HurtModifiers modifiers) {
 			if (Player.HasBuff(Toxic_Shock_Debuff.ID) && Main.rand.Next(Player.HasBuff(Toxic_Shock_Strengthen_Debuff.ID) ? 6 : 9) < 3) {
 				modifiers.SourceDamage *= 2;
@@ -431,25 +439,29 @@ namespace Origins {
 					modifiers.DisableSound();
 				}
 			}
-			if (lostSet) {
+			allManaDamage = false;
+			manaDamageToTake = 0;
+			if (manaShielding > 0) {
+				if (manaShielding > 1) manaShielding = 1;
 				modifiers.ModifyHurtInfo += (ref Player.HurtInfo info) => {
 					float manaDamage = info.Damage;
 					float costMult = 3;
-					float costMult2 = refactoringPieces ? 0.25f : 0.15f;
-					float costMult3 = (float)Math.Pow(refactoringPieces ? 0.25f : 0.15f, Player.manaCost);
+					float costMult3 = (float)Math.Pow(manaShielding, Player.manaCost);
 					if (Player.magicCuffs) {
 						costMult = 1;
 						Player.magicCuffs = false;
 					}
-					if (Player.statMana < manaDamage * costMult * costMult2) {
-						manaDamage = Player.statMana / (costMult * costMult2);
+					if (Player.statMana < manaDamage * costMult * manaShielding) {
+						manaDamage = Player.statMana / (costMult * manaShielding);
 					}
-					if (manaDamage * costMult * costMult2 >= 1f) {
-						Player.ManaEffect((int)-(manaDamage * costMult * costMult2));
+					if (manaDamage * costMult * manaShielding >= 1f) {
+						Player.ManaEffect((int)-(manaDamage * costMult * manaShielding));
 					}
-					Player.CheckMana((int)Math.Floor(manaDamage * costMult * costMult2), true);
-					info.Damage = (int)(info.Damage - (manaDamage * costMult3));
-					Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
+					int damage = (int)(info.Damage - (manaDamage * costMult3));
+					if (damage <= 0) allManaDamage = true;
+					info.Damage = damage;
+					info.Dodgeable = true;
+					manaDamageToTake = (int)Math.Floor(manaDamage * costMult * manaShielding);
 				};
 			} else if (refactoringPieces) {
 				modifiers.SourceDamage *= 0.95f;
@@ -465,6 +477,10 @@ namespace Origins {
 		}
 		public override void PostHurt(Player.HurtInfo info) {
 			lifeRegenTimeSinceHit = 0;
+			if (manaDamageToTake > 0) {
+				Player.CheckMana(manaDamageToTake, true);
+				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
+			}
 			if (heliumTankHit) {
 				if ((Player.wereWolf || Player.forceWerewolf) && !Player.hideWolf) {
 					SoundEngine.PlaySound(SoundID.NPCHit6.WithPitch(1), Player.position);

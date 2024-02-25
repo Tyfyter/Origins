@@ -24,7 +24,9 @@ namespace Origins.Items.Armor.Lost {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = "15% of damage taken is redirected to mana";
-			player.GetModPlayer<OriginPlayer>().lostSet = true;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.lostSet = true;
+			originPlayer.manaShielding += originPlayer.refactoringPieces ? 0.25f : 0.15f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

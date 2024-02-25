@@ -105,7 +105,7 @@ namespace Origins {
 		public bool mitosis = false;
 		public Item mitosisItem = null;
 		public int mitosisCooldown = 0;
-		public bool refactoringPieces = false;
+		public bool refactoringPieces;
 		public float mysteriousSprayMult = 1;
 		public bool protozoaFood = false;
 		public int protozoaFoodCooldown = 0;
@@ -325,6 +325,7 @@ namespace Origins {
 		public List<Vector2> oldVelocities = new();
 		public Guid guid;
 		public int voodooDollIndex = -1;
+		public float manaShielding = 0f;
 		public override void ResetEffects() {
 			oldBonuses = 0;
 			if (fiberglassSet || fiberglassDagger) oldBonuses |= 1;
@@ -390,7 +391,7 @@ namespace Origins {
 					}
 				}
 			}
-			bool scavengerSet = false;
+			scavengerSet = false;
 
 			bombHandlingDevice = false;
 			destructiveClaws = false;
@@ -539,6 +540,8 @@ namespace Origins {
 			flaskSalt = false;
 
 			boatRockerAltUse = false;
+
+			manaShielding = 0f;
 
 			corruptionAssimilationDebuffMult = 1f;
 			crimsonAssimilationDebuffMult = 1f;

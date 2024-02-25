@@ -41,7 +41,12 @@ namespace Origins.Reflection {
 				string name = item.GetCustomAttribute<ReflectionMemberNameAttribute>()?.MemberName ?? item.Name;
 				if (item.FieldType.IsAssignableTo(typeof(Delegate))) {
 					Type parentType = item.GetCustomAttribute<ReflectionParentTypeAttribute>().ParentType;
-					item.SetValue(null, parentType.GetMethod(name, item.GetCustomAttribute<ReflectionParameterTypesAttribute>()?.Types ?? Array.Empty<Type>()).CreateDelegate(item.FieldType));
+					MethodInfo info = parentType.GetMethod(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static, item.GetCustomAttribute<ReflectionParameterTypesAttribute>()?.Types ?? Array.Empty<Type>());
+					if (info.IsStatic) {
+						item.SetValue(null, info.CreateDelegate(item.FieldType));
+					} else {
+						item.SetValue(null, info.CreateDelegate(item.FieldType, Activator.CreateInstance(parentType)));
+					}
 				} else if (item.FieldType.IsGenericType) {
 					Type genericType = item.FieldType.GetGenericTypeDefinition();
 					if (genericType == typeof(FastFieldInfo<,>) || genericType == typeof(FastStaticFieldInfo<,>)) {

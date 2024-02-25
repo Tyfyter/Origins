@@ -1079,7 +1079,7 @@ CONSUMABLES:
 (^) Krunch Mix*
 (^) Pawpaw*
 (^) Periven*
-(#3, ^2) Petrified Prickly Pear* !!!
+(☻) Petrified Prickly Pear* !!!
 (^) Potato*
 (^) Prickly Pear*
 (^) Shattered Stout*

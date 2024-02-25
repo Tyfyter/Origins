@@ -262,7 +262,7 @@ namespace Origins {
 			gen.Emit(OpCodes.Ldarg_1);
 			gen.Emit(OpCodes.Stfld, field);
 			gen.Emit(OpCodes.Ret);
-
+			
 			return (Action<TParent, T>)setterMethod.CreateDelegate(typeof(Action<TParent, T>));
 		}
 	}
