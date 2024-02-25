@@ -277,7 +277,7 @@ ARMOR:
 
 ACCESSORIES:
 ---
-(X) Abyssal Anchor !!!
+(#, ^2) Abyssal Anchor* !!!
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
@@ -329,7 +329,7 @@ ACCESSORIES:
 (^) Magic Pain Glove*
 (^) Magic Tripwire*
 (^) Makeover Choker*
-(X) Mana Locus*
+(X) Mana Locus* !!!
 (^) Messy Leech*
 (^) Messy Magma Leech*
 (^) Missile Armcannon*
@@ -353,7 +353,7 @@ ACCESSORIES:
 (#3, ^2) Seal of Cinders* !!!
 (^) Scavenger Bag*
 (^) Shield of Retribution*
-(X) Sniper's Mark*
+(#, ^2) Sniper's Mark* !!!
 (^) Solar Panel*
 (^) Sonar Visor*
 (^) Sonic Radar*
@@ -501,8 +501,10 @@ TOOLS:
 (#4, ^2) C6 Jackhammer !!!
 (^) Dismantler
 (^) Dissector
+(X) Endowood Hammer !!!
 (^) Felnum Hamaxe
 (^) Felnum Pickaxe
+(X) Marrowick Hammer !!!
 (^) Miter Saw
 (^) Parasitic Manipulator
 (^) Pile Driver
@@ -532,9 +534,11 @@ MELEE WEAPONS:
 (^) Bone Latcher
 (^) Cyah Nara
 (^) Decimator
+(X) Endowood Sword !!!
 (^) Felnum Spear
 (^) Fiberglass Broadsword
 (^) Krakram*
+(X) Marrowick Sword !!!
 (^) Nineball
 (^) Orbital Saw
 (^) Outreach
@@ -577,6 +581,7 @@ RANGED WEAPONS:
 (^) Bloodletter*
 (^) Blotopus*
 (^) Bolt Gun
+(X) Endowood Bow !!!
 (^) Fiberglass Bow 
 (^) Fiberglass Pistol
 (^) Fiberglass Shard*
@@ -584,6 +589,7 @@ RANGED WEAPONS:
 (^) Harpoon Gun*
 (^) Longbone
 (^) Magma Grappler*
+(X) Marrowick Bow !!!
 (#3, ^2) Neural Network* !!!
 (^) Riven Splitter*
 (^) Shardcannon
@@ -894,12 +900,12 @@ TILES:
 (X) Dusk Dungeon Chest*
 (X) Edenwood Furniture*
 (#, ^2) Encrusted Brick !!!
-(X) Endowood Furniture !!!
+(X) Endowood Furniture* !!!
 (#2, ^2) Laser Tag Console*
 (#, ^2) Living Alkahest Block*
 (#, ^2) Living Bile Block*
 (#, ^2) Lost Brick !!!
-(X) Marrowick Furniture !!!
+(X) Marrowick Furniture* !!!
 (X) Mushroom Dungeon Chest*
 (X) Nova Brick*
 (X) Nova Fragment Block*
@@ -930,7 +936,7 @@ TILES:
 (^) Defiled Foliage
 (X) Eden Tree*
 (@5, #3) Exoskeletal Tree* !!!
-(#3, ^2) Fungarust*
+(ᗢ) Fungarust*
 (^) Gel Blister
 (X) Moonshine*
 (^) Petrified Tree*
@@ -938,7 +944,7 @@ TILES:
 (^) Riven Lesion
 (^) Riven Pot
 (^) Soulspore*
-(#3, ^2) Surveysprout*
+(ᗢ) Surveysprout*
 (^) Wilting Rose*
 (^) Wrycoral*
 

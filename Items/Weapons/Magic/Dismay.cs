@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,9 +9,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Dismay : ModItem, ICustomDrawItem {
-		
-		public override void SetDefaults() {
+	public class Dismay : ModItem, ICustomDrawItem, ICustomWikiStat {
+        public string[] Categories => new string[] {
+            "UsesBookcase"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedFlames);
 			Item.damage = 50;
 			Item.DamageType = DamageClass.Magic;

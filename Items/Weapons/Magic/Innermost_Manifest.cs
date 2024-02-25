@@ -12,7 +12,8 @@ namespace Origins.Items.Weapons.Magic {
     public class Innermost_Manifest : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Torn",
-			"TornSource"
+			"TornSource",
+			"UsesBookcase"
 		};
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
