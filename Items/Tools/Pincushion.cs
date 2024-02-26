@@ -23,6 +23,10 @@ namespace Origins.Items.Tools {
 			if (Terraria.GameInput.PlayerInput.Triggers.Old.MouseRight) {
 				return false;
 			}
+#if DEBUG
+			Main.NewText("Old:" + Terraria.GameInput.PlayerInput.Triggers.Old.MouseRight);
+			Main.NewText("JustPressed:" + Terraria.GameInput.PlayerInput.Triggers.JustPressed.MouseRight);
+#endif
 			Item.ChangeItemType(ModContent.ItemType<Pincushion_Inactive>());
 			SoundEngine.PlaySound(SoundID.Grab);
 			return false;
