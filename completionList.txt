@@ -816,7 +816,7 @@ TILES:
 (^) Chambersite
 (X) Compacted Scrap*
 (X) Cubekon Altar*
-(#, ^2) Defiled Cactus* !!!
+(@, ^3) Defiled Cactus* !!!
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
 (^) Defiled Sand*
@@ -839,7 +839,7 @@ TILES:
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
 (#4, ^2) Quartz Block* !!!
-(#, ^2) Riven Cactus* !!!
+(@, ^3) Riven Cactus* !!!
 (^) Riven Grass*
 (^) Riven Jungle Grass*
 (^) Sanguinite Ore*

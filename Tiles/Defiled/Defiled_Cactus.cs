@@ -1,4 +1,4 @@
-﻿/*using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.World.BiomeData;
@@ -22,4 +22,4 @@ namespace Origins.Tiles.Defiled {
 		public override Asset<Texture2D> GetFruitTexture() => ModContent.Request<Texture2D>(typeof(Defiled_Cactus).GetDefaultTMLName() + "_Fruit");// + "_Fruit"
 		public bool ShouldHavePage => false;
 	}
-}*/
+}
