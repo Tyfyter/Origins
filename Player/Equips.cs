@@ -507,7 +507,6 @@ namespace Origins {
             }
 			if (bugZapper) {
                 Player.lifeRegenCount += (int)(tornCurrentSeverity * 18);
-                Player.statDefense += (int)(tornCurrentSeverity * 8);
             }
         }
 		public void SetMimicSetChoice(int level, int choice) {
