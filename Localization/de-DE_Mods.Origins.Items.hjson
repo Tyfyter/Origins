@@ -1252,18 +1252,18 @@ Hallowed_Visage: {
 }
 
 Bleeding_Obsidian_Breastplate: {
-	DisplayName: Bleeding Obsidian Trenchcoat
-	Tooltip: -25% self-damage
+	// DisplayName: Bleeding Obsidian Trenchcoat
+	// Tooltip: -25% self-damage
 }
 
 Bleeding_Obsidian_Greaves: {
-	DisplayName: Bleeding Obsidian Chaps
-	Tooltip: 15% increased movement speed
+	// DisplayName: Bleeding Obsidian Chaps
+	// Tooltip: 15% increased movement speed
 }
 
 Bleeding_Obsidian_Helmet: {
-	DisplayName: Bleeding Obsidian Hardee
-	Tooltip: Increased explosive velocity
+	// DisplayName: Bleeding Obsidian Hardee
+	// Tooltip: Increased explosive velocity
 }
 
 Riptide_Breastplate: {
@@ -3436,76 +3436,76 @@ Weakpoint_Analyzer: {
 }
 
 Vanilla_Shake: {
-	DisplayName: Vanilla Shake
-	Tooltip: ""
+	// DisplayName: Vanilla Shake
+	// Tooltip: ""
 }
 
 Surveysprout_Item: {
-	DisplayName: Surveysprout
-	Tooltip: ""
+	// DisplayName: Surveysprout
+	// Tooltip: ""
 }
 
 Peat_Moss_Item: {
-	DisplayName: Peat Moss
-	Tooltip: The Demolitionist might find this interesting...
+	// DisplayName: Peat Moss
+	// Tooltip: The Demolitionist might find this interesting...
 }
 
 Qube_Item: {
-	DisplayName: Qube
-	Tooltip: "'Physical information, like everything else in the world'"
+	// DisplayName: Qube
+	// Tooltip: "'Physical information, like everything else in the world'"
 }
 
 Silicon_Item: {
-	DisplayName: Silicon
-	Tooltip: ""
+	// DisplayName: Silicon
+	// Tooltip: ""
 }
 
 Stone_Mask_Item: {
-	DisplayName: Stone Mask
-	Tooltip: Increases defense by 8, but your movement is hindered
+	// DisplayName: Stone Mask
+	// Tooltip: Increases defense by 8, but your movement is hindered
 }
 
 Fungarust_Item: {
-	DisplayName: Fungarust
-	Tooltip: Catalyst of rusting metal
+	// DisplayName: Fungarust
+	// Tooltip: Catalyst of rusting metal
 }
 
 Chambersite_Item: {
-	DisplayName: Chambersite
-	Tooltip: "'Loses all of its color when exposed to light'"
+	// DisplayName: Chambersite
+	// Tooltip: "'Loses all of its color when exposed to light'"
 }
 
 Dysfunctional_Endless_Explosives_Bag: {
-	DisplayName: Dysfunctional Endless Explosives Bag
-	Tooltip: 15% chance not to consume thrown explosives or explosive ammo
+	// DisplayName: Dysfunctional Endless Explosives Bag
+	// Tooltip: 15% chance not to consume thrown explosives or explosive ammo
 }
 
 Shield_of_Retribution: {
-	DisplayName: Shield of Retribution
-	Tooltip:
+	// DisplayName: Shield of Retribution
+	/* Tooltip:
 		'''
 		Grants immunity to knockback
 		Grants immunity to fire blocks
 		67% of damage received is redirected to 3 enemies
 		Enemies are less likely to target you
-		'''
+		''' */
 }
 
 Stack_of_Shraps: {
-	DisplayName: Stack of Shraps
-	Tooltip: Double the gunpowder, double the fun.
+	// DisplayName: Stack of Shraps
+	// Tooltip: Double the gunpowder, double the fun.
 }
 
 Binding_Book: {
-	DisplayName: Binding Book
-	Tooltip:
+	// DisplayName: Binding Book
+	/* Tooltip:
 		'''
 		Increases pickup range for mana stars
 		Increases maximum mana by 20
 		Increases mana shielding by 10%
 		Restores mana when damaged
 		Reduces damage taken by 5% if Lost Armor is not equipped
-		'''
+		''' */
 }
 
 Brittle_Quartz_Item: {
@@ -3627,12 +3627,12 @@ Joint_Pop: {
 }
 
 Cold_Snap: {
-	DisplayName: Cold Snap
-	Tooltip:
+	// DisplayName: Cold Snap
+	/* Tooltip:
 		'''
 		Inflicts frostburn to struck enemies
 		Uses mines as ordinance
-		'''
+		''' */
 }
 
 Control_Locus: {
@@ -3744,6 +3744,7 @@ Marrowick_Bow: {
 Gelled_Knife: {
 	// DisplayName: Gelled Knife
 	// Tooltip: Applies progressively higher torn severities after every successful strike
+}
 
 Forbidden_Voice: {
 	// DisplayName: Forbidden Voice
