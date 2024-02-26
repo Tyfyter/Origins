@@ -406,7 +406,7 @@ ACCESSORIES:
 (#, ^2) Scrap Compactor*
 (^) Scribe of the Meat God*
 (^) Stack of Shraps*
-(#3, ^2) Strange Tooth* !!!
+(☻) Strange Tooth* !!!
 (#2, ^2) Terrarian Voodoo Doll* !!!
 (^) Third Eye*
 (^) Weakpoint Analyzer*

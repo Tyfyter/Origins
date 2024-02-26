@@ -191,5 +191,13 @@ namespace Origins.Items.Accessories {
 			}
 			#endregion
 		}
+		public override void OnKill(int timeLeft) {
+			if (Main.netMode != NetmodeID.MultiplayerClient) {
+				Player owner = Main.player[Projectile.owner];
+				if (owner.statLife < owner.statLifeMax2 && Main.rand.NextBool(5)) {
+					Item.NewItem(Projectile.GetSource_Death(), Projectile.Hitbox, ItemID.Heart);
+				}
+			}
+		}
 	}
 }
