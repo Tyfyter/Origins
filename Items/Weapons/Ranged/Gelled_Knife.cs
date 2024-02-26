@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 	}
 	public class Gelled_Knife_P : ModProjectile {
+		public override string Texture => "Origins/Items/Weapons/Ranged/Gelled_Knife";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ThrowingKnife);
 		}
