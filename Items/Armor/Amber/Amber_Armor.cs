@@ -45,7 +45,7 @@ namespace Origins.Items.Armor.Amber {
 			Item.rare = ItemRarityID.LightRed;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.34f;
+			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.2f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

@@ -399,7 +399,7 @@ ACCESSORIES:
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
 (^) Fiberglass Dagger*
-(#, ^2) Forbidden Voice* !!!
+(#3, ^2) Forbidden Voice* !!!
 (^) Lazy Cloak*
 (^) Mysterious Spray*
 (^) Protozoa Food*
@@ -926,6 +926,7 @@ TILES:
 (^) Cleansing Station*
 (X) Defiled Waste Organ*
 (X) Elderforge*
+(X) Enemy Banners* !!!
 (#, ^2) Fabricator*
 (X) Flesh Shredder*
 (X) Interstellar Sampler*

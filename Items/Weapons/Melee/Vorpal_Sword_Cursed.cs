@@ -19,6 +19,8 @@ namespace Origins.Items.Weapons.Melee {
 	public class Vorpal_Sword_Cursed : ModItem, IJournalEntryItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
+			"Torn",
+			"TornSource",
             "Sword",
 			"Cursed"
         };
@@ -208,11 +210,6 @@ namespace Origins.Items.Weapons.Melee {
 				Item.autoReuse = true;
 			}
 		}
-		public string[] Categories => new string[] {
-			"Sword",
-			"Torn",
-			"TornSource"
-		};
 		public bool? Hardmode => false;
 	}
 	public class Cursed_Vorpal_Sword_Slash : ModProjectile {

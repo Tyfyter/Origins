@@ -61,7 +61,7 @@ namespace Origins.Items.Armor.Nova {
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClasses.Explosive) += 0.04f;
 			player.GetCritChance(DamageClasses.Explosive) += 0.04f;
-			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.6f;
+			player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.45f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
