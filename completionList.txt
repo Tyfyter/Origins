@@ -282,7 +282,7 @@ ACCESSORIES:
 (^) Advanced Imaging*
 (^) Air Tank*
 (#2, ^2, ♠) ATACS*
-(☻) Automated Returns Handler* !!!
+(#3, ^2) Automated Returns Handler* !!!
 (^) Binding Book*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
@@ -353,7 +353,7 @@ ACCESSORIES:
 (#3, ^2) Seal of Cinders* !!!
 (^) Scavenger Bag*
 (^) Shield of Retribution*
-(☻) Sniper's Mark* !!!
+(^) Sniper's Mark*
 (^) Solar Panel*
 (^) Sonar Visor*
 (^) Sonic Radar*
@@ -406,7 +406,7 @@ ACCESSORIES:
 (#, ^2) Scrap Compactor*
 (^) Scribe of the Meat God*
 (^) Stack of Shraps*
-(☻) Strange Tooth* !!!
+(^) Strange Tooth*
 (#2, ^2) Terrarian Voodoo Doll* !!!
 (^) Third Eye*
 (^) Weakpoint Analyzer*

@@ -20,13 +20,14 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 6);
 		}
 		public override void UpdateEquip(Player player) {
+			player.GetDamage(DamageClass.Ranged) += 0.15f;
 			player.GetModPlayer<OriginPlayer>().rubyReticle = true;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()
-			.AddIngredient(ModContent.ItemType<Ruby_Reticle>())
 			.AddIngredient(ItemID.RangerEmblem)
-			.AddTile(TileID.TinkerersWorkbench)
+            .AddIngredient(ModContent.ItemType<Ruby_Reticle>())
+            .AddTile(TileID.TinkerersWorkbench)
 			.Register();
 		}
 	}

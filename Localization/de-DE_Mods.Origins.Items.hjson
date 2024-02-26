@@ -3748,10 +3748,14 @@ Gelled_Knife: {
 
 Forbidden_Voice: {
 	// DisplayName: Forbidden Voice
-	// Tooltip: ""
+	// Tooltip: You are Silenced, but the mouth will attack for you
 }
 
 Snipers_Mark: {
-	// DisplayName: Snipers_ Mark
-	// Tooltip: ""
+	// DisplayName: Sniper's Mark
+	/* Tooltip:
+		'''
+		+15% ranged damage
+		Increased critical strike chance by 15% weapon's base damage
+		''' */
 }
