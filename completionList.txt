@@ -353,7 +353,7 @@ ACCESSORIES:
 (#3, ^2) Seal of Cinders* !!!
 (^) Scavenger Bag*
 (^) Shield of Retribution*
-(#, ^2) Sniper's Mark* !!!
+(☻) Sniper's Mark* !!!
 (^) Solar Panel*
 (^) Sonar Visor*
 (^) Sonic Radar*
