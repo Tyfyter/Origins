@@ -8,7 +8,7 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.Items.Weapons {
+namespace Origins.Items.Weapons.Ranged {
 	public class Fiberglass_Shard : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
 		

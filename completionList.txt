@@ -133,7 +133,7 @@ ENEMY NPCS:
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Single-Cellular Nautilus
-(^) Spider Amoeba
+(@3, #3) Spider Amoeba !!!
 
 (X) Amebeye !!!
 (^) Amebic Mummy
@@ -158,7 +158,7 @@ ENEMY NPCS:
 (^) Profaned Bident
 (^) Pustule Jelly
 (@5, #3) Riven Mimic !!!
-(X) Savage Whip !!!
+(#, ^2) Savage Whip !!!
 (X) Sea Dragon
 (X) Shattered Ghoul !!!
 (#3, ^2) Shattered Goldfish !!!
@@ -501,10 +501,10 @@ TOOLS:
 (#4, ^2) C6 Jackhammer !!!
 (^) Dismantler
 (^) Dissector
-(X) Endowood Hammer !!!
+(^) Endowood Hammer
 (^) Felnum Hamaxe
 (^) Felnum Pickaxe
-(X) Marrowick Hammer !!!
+(^) Marrowick Hammer
 (^) Miter Saw
 (^) Parasitic Manipulator
 (^) Pile Driver
@@ -524,7 +524,7 @@ TOOLS:
 (X) Nova Bomb
 (X) Terraformer
 
-(#4, ^2) Pincushion* !!!
+(^) Pincushion*
 ---
 
 
@@ -534,11 +534,11 @@ MELEE WEAPONS:
 (^) Bone Latcher
 (^) Cyah Nara
 (^) Decimator
-(X) Endowood Sword !!!
+(^) Endowood Sword
 (^) Felnum Spear
 (^) Fiberglass Broadsword
 (^) Krakram*
-(X) Marrowick Sword !!!
+(^) Marrowick Sword
 (^) Nineball
 (^) Orbital Saw
 (^) Outreach
@@ -581,15 +581,15 @@ RANGED WEAPONS:
 (^) Bloodletter*
 (^) Blotopus*
 (^) Bolt Gun
-(X) Endowood Bow !!!
+(^) Endowood Bow
 (^) Fiberglass Bow 
 (^) Fiberglass Pistol
 (^) Fiberglass Shard*
-(#, ^2) Gelled Knife* !!!
+(^) Gelled Knife*
 (^) Harpoon Gun*
 (^) Longbone
 (^) Magma Grappler*
-(X) Marrowick Bow !!!
+(^) Marrowick Bow
 (#3, ^2) Neural Network* !!!
 (^) Riven Splitter*
 (^) Shardcannon
@@ -1079,7 +1079,7 @@ CONSUMABLES:
 (^) Krunch Mix*
 (^) Pawpaw*
 (^) Periven*
-(☻) Petrified Prickly Pear* !!!
+(^) Petrified Prickly Pear*qqqqqqq
 (^) Potato*
 (^) Prickly Pear*
 (^) Shattered Stout*

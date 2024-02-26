@@ -808,8 +808,8 @@ Buffs: {
 	}
 
 	Petrified_Prickly_Pear_Buff: {
-		// DisplayName: Petrified_ Prickly_ Pear_ Buff
-		// Description: Mods.Origins.Buffs.Petrified_Prickly_Pear_Buff.Description
+		// DisplayName: Mmm... juicy!
+		// Description: +25% mana shielding
 	}
 }
 

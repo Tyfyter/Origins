@@ -2033,11 +2033,6 @@ Parasitic_Manipulator: {
 	// Tooltip: ""
 }
 
-Pullinsmash: {
-	// DisplayName: Stabsmash
-	// Tooltip: "'Hammer and nail in one package'"
-}
-
 Rivenator: {
 	// DisplayName: "{§Riven}ator"
 	// Tooltip: Able to mine Hellstone
@@ -3707,6 +3702,41 @@ Marrowick_Item: {
 }
 
 Marrowick_Wall_Item: {
-	// DisplayName: Marrowick_ Wall_ Item
+	// DisplayName: Marrowick Wall Item
+	// Tooltip: Feels waxy to the touch.
+}
+
+Endowood_Hammer: {
+	// DisplayName: Endowood Hammer
+	// Tooltip: ""
+}
+
+Marrowick_Hammer: {
+	// DisplayName: Marrowick Hammer
+	// Tooltip: ""
+}
+
+Stabsmash: {
+	// DisplayName: Stabsmash
+	// Tooltip: "'Hammer and nail in one package'"
+}
+
+Endowood_Sword: {
+	// DisplayName: Endowood Sword
+	// Tooltip: ""
+}
+
+Marrowick_Sword: {
+	// DisplayName: Marrowick Sword
+	// Tooltip: ""
+}
+
+Endowood_Bow: {
+	// DisplayName: Endowood Bow
+	// Tooltip: ""
+}
+
+Marrowick_Bow: {
+	// DisplayName: Marrowick Bow
 	// Tooltip: ""
 }
