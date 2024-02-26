@@ -267,13 +267,14 @@ namespace Origins {
 			}
 			if (cursedVoice) {
 				const float maxDist = 384 * 384;
-				Player.AddBuff(BuffID.Cursed, 5);
-				if (cursedVoiceCooldown <= 0) {
+				Player.AddBuff(BuffID.Silenced, 5);
+				if (cursedVoiceCooldown <= 0 && Player.CheckMana(cursedVoiceItem.mana, false)) {
 					for (int i = 0; i < Main.maxNPCs; i++) {
 						NPC currentTarget = Main.npc[i];
 						if (currentTarget.CanBeChasedBy(cursedVoiceItem)) {
 							Vector2 diff = currentTarget.Center - Player.MountedCenter;
 							if (diff.LengthSquared() < maxDist) {
+								Player.CheckMana(cursedVoiceItem.mana, true);
 								Projectile.NewProjectileDirect(
 									Player.GetSource_Accessory(cursedVoiceItem),
 									Player.MountedCenter + new Vector2(8 * Player.direction, -16),

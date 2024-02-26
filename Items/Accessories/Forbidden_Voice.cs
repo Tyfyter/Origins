@@ -19,6 +19,7 @@ namespace Origins.Items.Accessories {
 			Item.DamageType = DamageClass.Generic;
 			Item.knockBack = 4;
 			Item.useTime = 120;
+			Item.mana = 20;
 			Item.shoot = ModContent.ProjectileType<Forbidden_Voice_P>();
 			Item.rare = CursedRarity.ID;
 			Item.value = Item.sellPrice(gold: 2);
