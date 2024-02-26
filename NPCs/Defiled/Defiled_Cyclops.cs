@@ -15,7 +15,6 @@ namespace Origins.NPCs.Defiled {
     public class Defiled_Cyclops : ModNPC, IDefiledEnemy {
 		public const float speedMult = 1f;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Cyclops");
 			Main.npcFrameCount[NPC.type] = 4;
 		}
 		public override void SetDefaults() {

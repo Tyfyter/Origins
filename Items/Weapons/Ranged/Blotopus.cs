@@ -7,6 +7,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
     public class Blotopus : ModItem {
+        public string[] Categories => new string[] {
+            "Gun"
+        };
         public override void SetStaticDefaults() {
             base.SetStaticDefaults();
             ItemID.Sets.ShimmerTransformToItem[ItemID.PurpleClubberfish] = ModContent.ItemType<Blotopus>();

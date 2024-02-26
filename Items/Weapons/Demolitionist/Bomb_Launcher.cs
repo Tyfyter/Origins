@@ -15,8 +15,10 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bomb_Launcher : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Launcher"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
 			Item.damage = 2;
 			Item.useTime = 40;

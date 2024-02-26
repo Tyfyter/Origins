@@ -11,7 +11,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Dismay : ModItem, ICustomDrawItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "UsesBookcase"
+            "UsesBookcase",
+			"SpellBook"
         };
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedFlames);

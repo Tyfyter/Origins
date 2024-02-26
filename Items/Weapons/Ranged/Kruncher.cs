@@ -6,10 +6,12 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
-	[LegacyName("Defiled_Burst")]
 	public class Kruncher : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Gun"
+        };
+        public override void SetStaticDefaults() {
 			Origins.FlatDamageMultiplier[Type] = 3f / 8f;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

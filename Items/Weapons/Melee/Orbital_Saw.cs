@@ -6,7 +6,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
     public class Orbital_Saw : ModItem {
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Boomerang"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThornChakram);
 			Item.DamageType = DamageClass.MeleeNoSpeed;
 			Item.damage = 14;

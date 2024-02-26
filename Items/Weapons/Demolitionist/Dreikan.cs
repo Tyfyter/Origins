@@ -7,7 +7,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Dreikan : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "OtherExplosive"
+        };
+        public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				proj.extraUpdates += 2;
 			});

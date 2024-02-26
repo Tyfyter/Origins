@@ -10,9 +10,12 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Crystal_Grenade : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "ThrownExplosive",
+			"IsGrenade"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
-
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);

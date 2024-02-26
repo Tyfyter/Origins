@@ -13,7 +13,10 @@ using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Magic {
 	public class Infusion : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "MagicGun"
+        };
+        public override void SetStaticDefaults() {
 			Origins.FlatDamageMultiplier[Type] = 2f / 8f;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

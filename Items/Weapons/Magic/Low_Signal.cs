@@ -3,15 +3,16 @@ using Origins.Projectiles.Weapons;
 using System;
 using System.Linq;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Low_Signal : ModItem {
+    public class Low_Signal : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Low Signal");
+        public string[] Categories => new string[] {
+            "MagicStaff"
+        };
+        public override void SetStaticDefaults() {
 			Item.staff[Type] = true;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

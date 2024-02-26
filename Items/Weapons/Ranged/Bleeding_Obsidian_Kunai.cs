@@ -11,7 +11,8 @@ namespace Origins.Items.Weapons.Ranged {
     public class Bleeding_Obsidian_Kunai : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Torn",
-			"TornSource"
+			"TornSource",
+			"OtherRanged"
 		};
         public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[ItemID.MagicDagger] = ModContent.ItemType<Bleeding_Obsidian_Kunai>();

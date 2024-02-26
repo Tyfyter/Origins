@@ -12,9 +12,10 @@ using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Magic {
 	public class Haunted_Vase : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Haunted Vase");
-			// Tooltip.SetDefault("'Try not to disturb the spirits within'");
+        public string[] Categories => new string[] {
+            "OtherMagic"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

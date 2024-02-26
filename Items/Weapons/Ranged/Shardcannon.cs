@@ -7,8 +7,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Shardcannon : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Gun"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
 			Item.damage = 9;
 			Item.useAnimation = Item.useTime = 38;

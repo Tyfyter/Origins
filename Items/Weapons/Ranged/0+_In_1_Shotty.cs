@@ -7,8 +7,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Shotty_x2 : ModItem {
-		public override string Texture => "Origins/Items/Weapons/Ranged/2_In_1_Shotty";
-		
+        public string[] Categories => new string[] {
+            "Gun"
+        };
+        public override string Texture => "Origins/Items/Weapons/Ranged/2_In_1_Shotty";
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Boomstick);
 			Item.value = Item.sellPrice(gold: 4);

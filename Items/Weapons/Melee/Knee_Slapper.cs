@@ -10,9 +10,10 @@ using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Melee {
 	public class Knee_Slapper : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Knee Slapper");
-			// Tooltip.SetDefault("'Fish have feelings too'");
+        public string[] Categories => new string[] {
+            "OtherMelee"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

@@ -7,7 +7,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Arrow : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Arrow",
+			"RasterSource"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {

@@ -7,7 +7,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Defiled_Spirit : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "ThrownExplosive"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 99;
 		}

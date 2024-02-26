@@ -10,7 +10,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Outreach : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Spear"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

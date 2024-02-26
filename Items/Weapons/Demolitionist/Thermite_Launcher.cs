@@ -9,8 +9,11 @@ using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Thermite_Launcher : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Launcher",
+			"MineUser"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
 			Item.damage = 27;
 			Item.width = 44;

@@ -8,8 +8,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Bombardment : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Launcher",
+			"MineUser"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
 			Item.damage = 3;
 			Item.useTime = 6;

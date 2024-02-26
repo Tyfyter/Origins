@@ -1,13 +1,14 @@
-﻿using Origins.Items.Materials;
-using System;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
-	public class Eyndum_Scar : ModItem {
-		
-		public override void SetDefaults() {
+    public class Eyndum_Scar : ModItem {
+        public string[] Categories => new string[] {
+            "Sword",
+			"ReworkExpected"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Katana);
 			Item.damage = 407;
 			Item.DamageType = DamageClass.Melee;

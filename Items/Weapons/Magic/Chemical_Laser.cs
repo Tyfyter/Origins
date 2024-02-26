@@ -7,8 +7,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
     public class Chemical_Laser : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "MagicGun"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadowbeamStaff);
 			Item.damage = 30;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];

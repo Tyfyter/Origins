@@ -11,8 +11,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Tendon_Tear : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Gun"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
 			Item.damage = 18;
 			Item.crit = -2;

@@ -8,7 +8,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
 	public class Bile_Bullet : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Bullet",
+            "RasterSource"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {

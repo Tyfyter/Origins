@@ -10,7 +10,8 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Alkahest_Arrow : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Torn",
-			"TornSource"
+			"TornSource",
+			"Arrow"
 		};
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

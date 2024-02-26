@@ -9,7 +9,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Gun"
+        };
+        public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				global.viperEffect = true;
 				proj.extraUpdates += 2;

@@ -7,8 +7,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Tiny_Sniper : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Gun"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);
 			Item.damage = 96;
 			Item.crit = 36;

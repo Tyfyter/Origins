@@ -12,8 +12,10 @@ using Terraria.ModLoader.IO;
 namespace Origins.Items.Weapons.Melee {
 	//this took seven and a half hours to make, now that's dedication
 	public class Tyrfing : AnimatedModItem {
-
-		protected override bool CloneNewInstances => true;
+        public string[] Categories => new string[] {
+            "Sword"
+        };
+        protected override bool CloneNewInstances => true;
 		internal static DrawAnimationManual animation;
 		public override DrawAnimation Animation {
 			get {

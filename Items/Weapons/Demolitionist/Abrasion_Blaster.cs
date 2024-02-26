@@ -9,7 +9,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Abrasion_Blaster : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Launcher"
+        };
+        public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				proj.extraUpdates += 2;
 			});

@@ -7,9 +7,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
-	//[LegacyName("Felnum_Staff")]?
 	public class Hivateinn : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "MagicStaff"
+        };
+        public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 		}

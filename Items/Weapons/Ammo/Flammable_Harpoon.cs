@@ -4,9 +4,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
 	public class Flammable_Harpoon : ModItem {
-		public override string Texture => "Origins/Items/Weapons/Ammo/Flammable_Harpoon";
 		public static int ID { get; private set; } = -1;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Harpoon"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 			ID = Type;
 		}

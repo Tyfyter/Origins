@@ -10,8 +10,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Longbone : ModItem {
 		internal static int t = ProjectileID.WoodenArrowFriendly;
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Bow"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldBow);
 			Item.damage = 28;
 			Item.knockBack = 5;

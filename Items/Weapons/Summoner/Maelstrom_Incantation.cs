@@ -16,7 +16,10 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Maelstrom_Incantation : ModItem, ICustomDrawItem {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Incantation"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
 			Item.damage = 19;
 			Item.DamageType = DamageClasses.SummonMagicSpeed;

@@ -10,8 +10,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ammo {
     public class Explosive_Harpoon : ModItem {
 		public static int ID { get; private set; } = -1;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Explosive Harpoon");
+        public string[] Categories => new string[] {
+            "Harpoon"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 			ID = Type;
 		}
@@ -42,7 +44,6 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Explosive_Harpoon_P : Harpoon_P {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Explosive Harpoon");
 			ID = Type;
 		}
 		public override void AI() {

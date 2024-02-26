@@ -11,7 +11,10 @@ using Terraria.UI.Chat;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Broken_Fiberglass_Bow : AnimatedModItem, IElementalItem {
-		public ushort Element => Elements.Fiberglass;
+        public string[] Categories => new string[] {
+            "Bow"
+        };
+        public ushort Element => Elements.Fiberglass;
 		protected override bool CloneNewInstances => true;
 		int strung = 0;
 		const int strungMax = 50;
@@ -23,8 +26,6 @@ namespace Origins.Items.Weapons.Ranged {
 			}
 		}
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Unstrung Fiberglass Bow");
-			// Tooltip.SetDefault("Not very useful without a bowstring\nMaybe you could find something to replace it");
 			animation = new DrawAnimationManual(2);
 			Main.RegisterItemAnimation(Item.type, animation);
 			Item.ResearchUnlockCount = 1;

@@ -9,7 +9,10 @@ namespace Origins.Items.Weapons.Melee {
 	[AutoloadEquip(EquipType.HandsOn)]
     public class Personal_Laser_Blade : ModItem, IElementalItem {
 		public const int max_charge = 75;
-		public ushort Element => Elements.Fire;
+        public string[] Categories => new string[] {
+            "Sword"
+        };
+        public ushort Element => Elements.Fire;
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

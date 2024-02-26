@@ -8,9 +8,10 @@ using Tyfyter.Utils;
 namespace Origins.Items.Weapons {
 	public class Dragons_Breath : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Dragon's Breath");
-			// Tooltip.SetDefault("Uses fireblossoms as ammo\nDesperately needs rework");
+        public string[] Categories => new string[] {
+            "ReworkExpected"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

@@ -12,9 +12,10 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Bomb_Artifact : ModItem {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bomb Artifact");
-			// Tooltip.SetDefault("Summons a friendly bomb to fight for you");
+        public string[] Categories => new string[] {
+            "Artifact"
+        };
+        public override void SetStaticDefaults() {
 			ItemID.Sets.GamepadWholeScreenUseRange[Item.type] = true; // This lets the player target anywhere on the whole screen while using a controller
 			ItemID.Sets.LockOnIgnoresCollision[Item.type] = true;
 			Item.ResearchUnlockCount = 1;

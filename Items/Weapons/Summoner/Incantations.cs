@@ -2,16 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
-	public static class Incantations {
+    public static class Incantations {
 		public static Asset<Texture2D> GetSmallTexture(this ModItem item, string suffix = "") => ModContent.RequestIfExists<Texture2D>(item.Texture + "_Smol" + suffix, out var asset) ? asset : null;
 		public static void HoldItemFrame(Player player) {
 			player.SetCompositeArmBack(

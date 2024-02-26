@@ -9,7 +9,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Astoxo : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Bow"
+        };
+        public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {
 				if (contextArgs.Contains("main")) {
 					global.godHunterEffect += 0.5f;

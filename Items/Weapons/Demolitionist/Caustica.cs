@@ -8,9 +8,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Caustica : ModItem, IElementalItem {
-		public ushort Element => Elements.Acid;
+        public string[] Categories => new string[] {
+            "OtherExplosive"
+        };
+        public ushort Element => Elements.Acid;
 
-		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 270;

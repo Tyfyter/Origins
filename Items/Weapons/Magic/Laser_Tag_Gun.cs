@@ -12,7 +12,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Laser_Tag_Gun : AnimatedModItem, IElementalItem {
 		static short glowmask;
-		public ushort Element => Elements.Earth;
+        public string[] Categories => new string[] {
+            "MagicGun"
+        };
+        public ushort Element => Elements.Earth;
 		static DrawAnimationManual animation;
 		public override DrawAnimation Animation => animation;
 		public override Color? GetGlowmaskTint(Player player) => Main.teamColor[player.team];

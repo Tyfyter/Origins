@@ -1,18 +1,14 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
-using Origins.Items.Materials;
-using Origins.Items.Weapons.Summoner;
-using System;
+﻿using Origins.Items.Materials;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using static Origins.OriginExtensions;
 
 namespace Origins.Items.Weapons.Summoner {
-	public class SMART_Wrench : ModItem {
-		
-		public override void SetDefaults() {
+    public class SMART_Wrench : ModItem {
+        public string[] Categories => new string[] {
+            "MinionSummoner"
+        };
+        public override void SetDefaults() {
 			Item.damage = 11;
 			Item.DamageType = DamageClass.Summon;
 			Item.mana = 18;

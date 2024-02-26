@@ -9,7 +9,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Chlorodynamite : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "ThrownExplosive",
+			"IsDynamite"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {

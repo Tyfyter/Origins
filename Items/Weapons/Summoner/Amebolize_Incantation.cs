@@ -16,7 +16,10 @@ namespace Origins.Items.Weapons.Summoner {
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
 		public Texture2D SmolGlowTexture => (_smolGlowTexture ??= this.GetSmallTexture("_Glow"))?.Value;
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Incantation"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {

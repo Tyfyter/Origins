@@ -3740,3 +3740,8 @@ Marrowick_Bow: {
 	DisplayName: Marrowick Bow
 	Tooltip: ""
 }
+
+Gelled_Knife: {
+	DisplayName: Gelled Knife
+	Tooltip: Applies progressively higher torn severities after every successful strike
+}

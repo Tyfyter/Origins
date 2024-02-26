@@ -7,8 +7,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Felnum_Longbow : ModItem {
 		public const int baseDamage = 19;
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Bow"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldBow);
 			Item.damage = baseDamage;
 			Item.width = 18;

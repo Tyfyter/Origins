@@ -7,8 +7,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee
 {
     public class Nineball : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Yoyo"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Code1);
 			Item.damage = 18;
 			Item.crit = 5;

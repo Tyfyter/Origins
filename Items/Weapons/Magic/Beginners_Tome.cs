@@ -5,8 +5,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Beginners_Tome : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "UsesBookcase",
+            "SpellBook"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 16;
 			Item.DamageType = DamageClass.Magic;

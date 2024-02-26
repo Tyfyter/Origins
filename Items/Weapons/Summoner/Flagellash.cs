@@ -13,7 +13,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Summoner {
 	public class Flagellash : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Whip"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

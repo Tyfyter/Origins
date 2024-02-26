@@ -9,9 +9,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Boomphracken : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Boomphracken");
-			// Tooltip.SetDefault("Chance to throw an explosive when used\n'He works his work, I work mine'");
+        public string[] Categories => new string[] {
+            "HandCannon"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

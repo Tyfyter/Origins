@@ -8,8 +8,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Mine_Flayer : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Launcher",
+			"MineUser"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
 			Item.shootsEveryUse = false;
 			Item.damage = 60;

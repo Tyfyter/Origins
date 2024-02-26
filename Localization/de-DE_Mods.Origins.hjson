@@ -1078,6 +1078,7 @@ Projectiles: {
 	// Avulsion_P.DisplayName: Avulse Pulse
 	// Thermite_Canister_P.DisplayName: Canistah
 	// Thermite_P.DisplayName: Hot Coal
+	// Gelled_Knife_P.DisplayName: Gelled Knife
 }
 
 Prefixes: {

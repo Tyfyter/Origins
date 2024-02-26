@@ -4,6 +4,9 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
     public class Sunflower_Seed_Shooter : ModItem {
+        public string[] Categories => new string[] {
+            "Gun"
+        };
         public override void SetStaticDefaults() {
             Origins.FlatDamageMultiplier[Type] = 2f / 8f;
         }

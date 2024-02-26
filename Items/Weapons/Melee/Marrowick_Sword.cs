@@ -4,7 +4,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Marrowick_Sword : ModItem {
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Sword"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodSword);
 			Item.damage = 12;
 			Item.knockBack = 5f;

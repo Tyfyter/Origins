@@ -9,7 +9,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
     public class Neural_Network : ModItem {
-		public static int ID { get; set; }
+        public string[] Categories => new string[] {
+            "Gun"
+        };
+        public static int ID { get; set; }
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}

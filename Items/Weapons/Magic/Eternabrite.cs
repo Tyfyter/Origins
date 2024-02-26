@@ -4,8 +4,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
     public class Eternabrite : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "UsesBookcase",
+            "SpellBook"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Flamethrower);
 			Item.damage = 28;
 			Item.DamageType = DamageClass.Magic;

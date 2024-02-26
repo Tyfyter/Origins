@@ -5,8 +5,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
     public class Nematoclaw : ModItem, IElementalItem {
-		public ushort Element => Elements.Acid;
-		
+        public string[] Categories => new string[] {
+            "OtherMelee"
+        };
+        public ushort Element => Elements.Acid;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FetidBaghnakhs);
 			Item.damage = 48;

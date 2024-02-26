@@ -4,7 +4,6 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Grenado : ModItem {
-		
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
 			Item.damage = 80;

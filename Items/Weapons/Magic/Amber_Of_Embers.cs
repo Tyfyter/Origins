@@ -11,7 +11,10 @@ using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Magic {
     public class Amber_Of_Embers : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "MagicStaff"
+        };
+        public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 		}

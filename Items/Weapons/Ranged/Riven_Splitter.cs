@@ -8,7 +8,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
     public class Riven_Splitter : Harpoon_Gun {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "HarpoonGun"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {

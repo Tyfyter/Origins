@@ -13,7 +13,8 @@ namespace Origins.Items.Weapons.Magic {
 	public class Seam_Beam : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Torn",
-			"TornSource"
+			"TornSource",
+			"MagicGun"
 		};
 		static short glowmask;
 		public override void SetStaticDefaults() {

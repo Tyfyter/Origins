@@ -13,7 +13,10 @@ namespace Origins.Items.Weapons.Ranged {
 	public class Tolruk : ModItem {
 		int charge = 0;
 		public static short[] glowmasks;
-		public override void SetStaticDefaults() { //still needs reshaping chee
+        public string[] Categories => new string[] {
+            "Gun"
+        };
+        public override void SetStaticDefaults() { //still needs reshaping chee
 			glowmasks = new short[]{
 				-1,
 				Origins.AddGlowMask(Texture + "_Glow_1"),

@@ -9,7 +9,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Firespit : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Gun"
+        };
+        public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

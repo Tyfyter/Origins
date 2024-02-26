@@ -5,7 +5,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Cold_Snap : ModItem {
-
+        public string[] Categories => new string[] {
+            "Launcher",
+            "MineUser"
+        };
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.SniperRifle);
             Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];

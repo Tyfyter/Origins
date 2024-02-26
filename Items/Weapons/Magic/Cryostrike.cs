@@ -6,9 +6,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Cryostrike : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Cryostrike");
-			// Tooltip.SetDefault("Shoots a piercing icicle");
+        public string[] Categories => new string[] {
+            "MagicStaff"
+        };
+        public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 		}

@@ -4,8 +4,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Fiberglass_Sword : ModItem, IElementalItem {
 		public ushort Element => Elements.Fiberglass;
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Sword"
+        };
+        public override void SetDefaults() {
 			Item.damage = 18;
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 42;

@@ -227,7 +227,7 @@ namespace Origins.NPCs.Fiberglass {
 				normalDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Fiberglass_Weaver_Bag>(), 1, 1, 1, null)
 			));
-			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Entangled_Energy>(), 4));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Fiberglass_Dagger>(), 4));
 			//npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>(), 1));
 			//npcLoot.Add(ItemDropRule.OneFromOptionsNotScalingWithLuck(ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>(), 1));
 		}

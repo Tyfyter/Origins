@@ -12,9 +12,10 @@ namespace Origins.Items.Weapons.Summoner {
 		static short glowmask;
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Woodsprite Staff");
-			// Tooltip.SetDefault("Summons a woodsprite to fight for you");
+        public string[] Categories => new string[] {
+            "MinionSummoner"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

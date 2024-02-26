@@ -1,5 +1,4 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,8 +7,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons {
     public class Potato_Launcher : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "GenericDamage"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FlintlockPistol);
 			Item.damage = 25;
 			Item.useTime = 32;

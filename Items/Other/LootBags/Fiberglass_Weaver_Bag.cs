@@ -14,8 +14,7 @@ namespace Origins.Items.Other.LootBags {
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
 			IItemDropRuleCondition master = new Conditions.IsMasterMode();
 			itemLoot.Add(Fiberglass_Weaver.normalDropRule);
-			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Fiberglass_Dagger>()));
-			//itemLoot.Add(ItemDropRule.ByCondition(master, ModContent.ItemType<Entangled_Energy>()));
+			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Entangled_Energy>()));
 			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(gold: 3), false));
 		}
 		public override void ModifyResearchSorting(ref ContentSamples.CreativeHelper.ItemGroup itemGroup) {

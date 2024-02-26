@@ -10,9 +10,10 @@ using static Microsoft.Xna.Framework.MathHelper;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Missile_Minigun : ModItem {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.ProximityMineLauncher;
-
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Launcher"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
 			Item.damage = 110;
 			Item.useTime = 12;

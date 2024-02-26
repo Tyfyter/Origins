@@ -12,9 +12,10 @@ namespace Origins.Items.Weapons.Summoner {
 	public class Eyeball_Staff : ModItem {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Eyeball Staff");
-			// Tooltip.SetDefault("Summons a demon eye to fight for you");
+        public string[] Categories => new string[] {
+            "MinionSummoner"
+        };
+        public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;
 			Item.ResearchUnlockCount = 1;
 		}

@@ -11,7 +11,10 @@ using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Magic {
     public class Manasynk : ModItem {
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "OtherMagic"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.maxStack = 1;
 			Item.damage = 8;

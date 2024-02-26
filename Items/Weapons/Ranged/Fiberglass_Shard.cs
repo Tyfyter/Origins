@@ -10,8 +10,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Fiberglass_Shard : ModItem, IElementalItem {
-		public ushort Element => Elements.Fiberglass;
-		
+        public string[] Categories => new string[] {
+            "OtherRanged"
+        };
+        public ushort Element => Elements.Fiberglass;
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ThrowingKnife);
 			Item.width = 12;

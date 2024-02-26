@@ -12,7 +12,10 @@ using Tyfyter.Utils;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ameballoon : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "ThrownExplosive"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this, "");
 			Item.ResearchUnlockCount = 30;
 		}

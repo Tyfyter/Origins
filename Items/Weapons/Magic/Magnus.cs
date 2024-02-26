@@ -13,7 +13,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
 	public class Magnus : ModItem {
 		public const int baseDamage = 34;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "MagicStaff"
+        };
+        public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;
 			Item.ResearchUnlockCount = 1;
 		}

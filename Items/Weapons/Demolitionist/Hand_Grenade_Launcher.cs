@@ -14,7 +14,10 @@ using static Origins.OriginExtensions;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Hand_Grenade_Launcher : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Launcher"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {

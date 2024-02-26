@@ -14,7 +14,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
 	public class Joint_Pop : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Whip"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {

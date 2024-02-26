@@ -49,7 +49,8 @@ namespace Origins.Items.Armor.Riven {
 		public int BodyItemID => ModContent.ItemType<Riven_Coat>();
 		public int LegsItemID => ModContent.ItemType<Riven_Pants>();
 		public string[] SetCategories => new string[] {
-			"Torn"
+			"Torn",
+			"TornSource"
 		};
 	}
 	[AutoloadEquip(EquipType.Body)]

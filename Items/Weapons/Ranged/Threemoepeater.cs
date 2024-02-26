@@ -9,7 +9,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	public class Threemoepeater : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Repeater"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {

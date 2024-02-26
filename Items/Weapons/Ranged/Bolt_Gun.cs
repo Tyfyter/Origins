@@ -6,8 +6,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Bolt_Gun : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Gun"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Handgun);
 			Item.damage = 26;
 			Item.knockBack = 5;

@@ -9,7 +9,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
     public class Amenonuhoko : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Spear"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			ItemID.Sets.Spears[Item.type] = true;
 		}

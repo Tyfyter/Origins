@@ -5,8 +5,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
 	public class Startillery : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "SpellBook"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldenShower);
 			Item.damage = 48;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];

@@ -5,8 +5,12 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class The_Bird : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Sword",
+			"DeveloperItem",
+			"ReworkExpected"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenSword);
 			Item.damage = 99;
 			Item.knockBack = 16f;

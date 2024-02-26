@@ -6,8 +6,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
 	public class Ancient_Kruncher : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Gun"
+        };
+        public override void SetDefaults() {
 			Item.damage = 13;
 			Item.DamageType = DamageClass.Ranged;
 			Item.noMelee = true;

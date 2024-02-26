@@ -7,8 +7,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Ranged {
 	[LegacyName("Defiled_Dart_Burst")]
 	public class Incision : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "DartLauncher"
+        };
+        public override void SetDefaults() {
 			Item.damage = 25;
 			Item.DamageType = DamageClass.Ranged;
 			Item.noMelee = true;

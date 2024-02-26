@@ -7,8 +7,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
     public class Hot_Potato : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "OtherMagic"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Snowball);
 			Item.maxStack = 1;
 			Item.damage = 16;

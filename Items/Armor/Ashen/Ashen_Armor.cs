@@ -48,7 +48,7 @@ namespace Origins.Items.Armor.Ashen
 		
 		public override void SetDefaults() {
 			Item.defense = 7;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.value = Item.sellPrice(silver: 80);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
@@ -67,7 +67,7 @@ namespace Origins.Items.Armor.Ashen
 		
 		public override void SetDefaults() {
 			Item.defense = 6;
-			Item.value = Item.sellPrice(gold: 1);
+			Item.value = Item.sellPrice(silver: 60);
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {

@@ -6,7 +6,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
 	public class Resizable_Mine_One : Resizable_Mine_Two {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Mine"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {

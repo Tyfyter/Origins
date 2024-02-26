@@ -4,8 +4,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Baseball_Bat : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Sword"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenSword);
 			Item.damage = 5;
 			Item.knockBack = 8f;

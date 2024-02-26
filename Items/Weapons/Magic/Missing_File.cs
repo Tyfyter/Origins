@@ -4,8 +4,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Magic {
     public class Missing_File : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "OtherMagic"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
 			Item.shoot = ModContent.ProjectileType<Potato_P>();
 			Item.damage = 64;

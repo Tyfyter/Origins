@@ -15,7 +15,8 @@ namespace Origins.Items.Weapons.Summoner {
     public class Ocotoral_Bud : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Torn",
-			"TornSource"
+			"TornSource",
+			"SentrySummoner"
 		};
 		static short glowmask;
 		public override void SetStaticDefaults() {

@@ -12,8 +12,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Magic {
     public class Pike_of_Deepneus : ModItem {
 		public const int baseDamage = 64;
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "OtherMagic"
+        };
+        public override void SetDefaults() {
 			Item.damage = 160;
 			Item.DamageType = DamageClass.Magic;
 			Item.shoot = ModContent.ProjectileType<Pike_of_Deepneus_P>();

@@ -11,7 +11,11 @@ using static Microsoft.Xna.Framework.MathHelper;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Black_Hole_Bomb : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "ThrownExplosive",
+			"IsBomb"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {

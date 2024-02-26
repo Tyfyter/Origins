@@ -9,8 +9,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Felnum_Boar_Spear : ModItem {
 		public const int baseDamage = 18;
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Spear"
+        };
+        public override void SetDefaults() {
 			Item.damage = baseDamage;
 			Item.DamageType = DamageClass.Melee;
 			Item.noMelee = true;

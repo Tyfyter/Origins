@@ -13,7 +13,8 @@ namespace Origins.Items.Weapons.Magic {
 		public string[] Categories => new string[] {
 			"Torn",
 			"TornSource",
-			"UsesBookcase"
+			"UsesBookcase",
+			"SpellBook"
 		};
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);

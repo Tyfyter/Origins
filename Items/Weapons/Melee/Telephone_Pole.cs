@@ -6,8 +6,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Telephone_Pole : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Sword"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
 			Item.damage = 110;
 			Item.DamageType = DamageClass.Melee;

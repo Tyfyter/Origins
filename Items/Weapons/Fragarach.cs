@@ -8,10 +8,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons {
 	public class Fragarach : ModItem {
 		static short glowmask;
-		//public override bool OnlyShootOnSwing => true;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Fragarach");
-			// Tooltip.SetDefault("Needs to be put in ROTP when it gets devving");
+        //public override bool OnlyShootOnSwing => true;
+        public string[] Categories => new string[] {
+            "DoesntBelongInOrigins"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

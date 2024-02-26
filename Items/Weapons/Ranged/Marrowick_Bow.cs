@@ -5,7 +5,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ranged {
     public class Marrowick_Bow : ModItem {
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Bow"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadewoodBow);
 			Item.damage = 9;
 			Item.width = 26;

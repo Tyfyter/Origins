@@ -7,10 +7,11 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
 	public class Cursed_Harpoon : ModItem {
-		public override string Texture => "Origins/Items/Weapons/Ammo/Cursed_Harpoon";
 		public static int ID { get; private set; } = -1;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Cursed Harpoon");
+        public string[] Categories => new string[] {
+            "Harpoon"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 			ID = Type;
 		}
@@ -41,7 +42,6 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Cursed_Harpoon_P : Harpoon_P {
 		public static new int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Cursed Harpoon");
 			ID = Type;
 		}
 		public override void AI() {//still needs its own AI override since it has unique AI functionality

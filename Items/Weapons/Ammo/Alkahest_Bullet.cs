@@ -11,7 +11,8 @@ namespace Origins.Items.Weapons.Ammo {
 	public class Alkahest_Bullet : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Torn",
-			"TornSource"
+			"TornSource",
+			"Bullet"
 		};
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

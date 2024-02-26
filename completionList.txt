@@ -390,7 +390,7 @@ ACCESSORIES:
 
 (^) Amebic Vial*
 (#, ^2) Crimson Hymn* !!!
-(^) Fiberglass Dagger*
+(^) Entangled Energy*
 (#2, ^2) Mana Drive*
 (^) Refactoring Pieces*
 (#, ^2) Soul Scythe* !!!
@@ -398,7 +398,7 @@ ACCESSORIES:
 (^) Blizzardwalker's Jacket*
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
-(^) Entangled Energy*
+(^) Fiberglass Dagger*
 (#, ^2) Forbidden Voice* !!!
 (^) Lazy Cloak*
 (^) Mysterious Spray*
@@ -582,7 +582,7 @@ RANGED WEAPONS:
 (^) Blotopus*
 (^) Bolt Gun
 (^) Endowood Bow
-(^) Fiberglass Bow 
+(^) Fiberglass Bow
 (^) Fiberglass Pistol
 (^) Fiberglass Shard*
 (^) Gelled Knife*

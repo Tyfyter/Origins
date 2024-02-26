@@ -7,13 +7,14 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bomboomstick : ModItem, ICustomDrawItem {
-		public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
+        public string[] Categories => new string[] {
+            "Launcher"
+        };
+        public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
 		public override void Unload() {
 			UseTexture = null;
 		}
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Bomboomstick");
-			// Tooltip.SetDefault("Fires a cluster of three to five grenades");
 			if (!Main.dedServ) {
 				UseTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Bomboomstick_Use");
 			}

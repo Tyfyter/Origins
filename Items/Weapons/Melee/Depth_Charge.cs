@@ -10,8 +10,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
     public class Depth_Charge : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Depth Charge");
+        public string[] Categories => new string[] {
+            "Flails"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			ItemID.Sets.ToolTipDamageMultiplier[Type] = 2f;
 		}

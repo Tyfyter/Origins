@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
-using Origins.Tiles.Brine;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.Audio;
@@ -10,9 +9,12 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Magic {
-	public class Rigged_Cubix : ModItem {
+    public class Rigged_Cubix : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "MagicGun"
+        };
+        public override void SetStaticDefaults() {
 			ItemID.Sets.SkipsInitialUseSound[Item.type] = true;
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;

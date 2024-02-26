@@ -10,7 +10,8 @@ namespace Origins.Items.Weapons.Magic {
         static short glowmask;
         public string[] Categories => new string[] {
             "Torn",
-            "TornSource"
+            "TornSource",
+            "MagicStaff"
         };
         public override void SetStaticDefaults() {
             Item.staff[Item.type] = true;

@@ -7,7 +7,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
     public class Triple_Threat : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Yoyo"
+        };
+        public override void SetStaticDefaults() {
 			// These are all related to gamepad controls and don't seem to affect anything else
 			ItemID.Sets.Yoyo[Item.type] = true; // Used to increase the gamepad range when using Strings.
 			ItemID.Sets.GamepadExtraRange[Item.type] = 10; // Increases the gamepad range. Some vanilla values: 4 (Wood), 10 (Valor), 13 (Yelets), 18 (The Eye of Cthulhu), 21 (Terrarian).

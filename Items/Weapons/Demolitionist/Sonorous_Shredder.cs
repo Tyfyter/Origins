@@ -10,6 +10,10 @@ using ThoriumMod.Projectiles.Bard;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	[ExtendsFromMod("ThoriumMod")]
+	public string[] Categories => new string[] {
+            "OtherExplosive",
+			"CrossModContent"
+        };
 	public class Sonorous_Shredder : BardItem, IBardDamageClassOverride {
 		public DamageClass DamageType => DamageClasses.ExplosiveVersion[ThoriumDamageBase<BardDamage>.Instance];
 		public override void SetStaticDefaults() {

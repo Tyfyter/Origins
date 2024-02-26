@@ -6,7 +6,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Weapons.Melee {
 	public class Spiker_Sword : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Sword"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}

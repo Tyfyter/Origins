@@ -1,16 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dusts;
-using Origins.Items.Materials;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
-using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-	public class Metal_Slug : ModItem {
+    public class Metal_Slug : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 199;
 		}

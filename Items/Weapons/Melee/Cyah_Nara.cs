@@ -3,10 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Melee {
-	[LegacyName("Syah_Nara")]
 	public class Cyah_Nara : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "Sword"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Katana);
 			Item.damage = 18;
 			Item.DamageType = DamageClass.Melee;
