@@ -3744,4 +3744,8 @@ Marrowick_Bow: {
 Gelled_Knife: {
 	DisplayName: Gelled Knife
 	Tooltip: Applies progressively higher torn severities after every successful strike
+
+Forbidden_Voice: {
+	DisplayName: Forbidden Voice
+	Tooltip: ""
 }
