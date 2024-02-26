@@ -216,6 +216,9 @@ namespace Origins {
 		public bool primordialSoup = false;
 		public bool bugZapper = false;
 		public bool bombCharminIt = false;
+		public bool cursedVoice = false;
+		public Item cursedVoiceItem = null;
+		public int cursedVoiceCooldown = 0;
 		#endregion
 
 		#region explosive stats
@@ -535,6 +538,9 @@ namespace Origins {
 			primordialSoup = false;
 			bugZapper = false;
 			bombCharminIt = false;
+			cursedVoice = false;
+			cursedVoiceItem = null;
+			if (cursedVoiceCooldown > 0) cursedVoiceCooldown--;
 
 			flaskBile = false;
 			flaskSalt = false;

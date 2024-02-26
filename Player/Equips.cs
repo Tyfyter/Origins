@@ -6,6 +6,7 @@ using Origins.Items.Weapons.Magic;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
@@ -262,6 +263,32 @@ namespace Origins {
 						}
 					}
 					explosiveArteryCount = -1;
+				}
+			}
+			if (cursedVoice) {
+				const float maxDist = 384 * 384;
+				Player.AddBuff(BuffID.Cursed, 5);
+				if (cursedVoiceCooldown <= 0) {
+					for (int i = 0; i < Main.maxNPCs; i++) {
+						NPC currentTarget = Main.npc[i];
+						if (currentTarget.CanBeChasedBy(cursedVoiceItem)) {
+							Vector2 diff = currentTarget.Center - Player.MountedCenter;
+							if (diff.LengthSquared() < maxDist) {
+								Projectile.NewProjectileDirect(
+									Player.GetSource_Accessory(cursedVoiceItem),
+									Player.MountedCenter + new Vector2(8 * Player.direction, -16),
+									diff.SafeNormalize(default) * 4,
+									cursedVoiceItem.shoot,
+									Player.GetWeaponDamage(cursedVoiceItem),
+									Player.GetWeaponKnockback(cursedVoiceItem),
+									Player.whoAmI
+								);
+								SoundEngine.PlaySound(SoundID.LucyTheAxeTalk.WithPitchRange(-1, -0.8f));
+								break;
+							}
+						}
+					}
+					cursedVoiceCooldown = CombinedHooks.TotalUseTime(cursedVoiceItem.useTime, Player, cursedVoiceItem);
 				}
 			}
 			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay:true)) {
