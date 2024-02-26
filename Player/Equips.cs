@@ -23,36 +23,6 @@ namespace Origins {
 			if (tornDebuff) {
 				LinearSmoothing(ref tornCurrentSeverity, tornTarget, tornSeverityRate);
 			}
-			if (explosiveArtery) {
-				if (explosiveArteryCount == -1) {
-					explosiveArteryCount = CombinedHooks.TotalUseTime(explosiveArteryItem.useTime, Player, explosiveArteryItem);
-				}
-				if (explosiveArteryCount > 0) {
-					explosiveArteryCount--;
-				} else {
-					const float maxDist = 384 * 384;
-					for (int i = 0; i < Main.maxNPCs; i++) {
-						NPC currentTarget = Main.npc[i];
-						if (Main.rand.NextBool(explosiveArteryItem.useAnimation, explosiveArteryItem.reuseDelay)) {
-							if (currentTarget.CanBeChasedBy() && currentTarget.HasBuff(BuffID.Bleeding)) {
-								Vector2 diff = currentTarget.Center - Player.MountedCenter;
-								if (diff.LengthSquared() < maxDist) {
-									Projectile.NewProjectileDirect(
-										Player.GetSource_Accessory(explosiveArteryItem),
-										currentTarget.Center,
-										new Vector2(Math.Sign(diff.X), 0),
-										explosiveArteryItem.shoot,
-										Player.GetWeaponDamage(explosiveArteryItem),
-										Player.GetWeaponKnockback(explosiveArteryItem),
-										Player.whoAmI
-									);
-								}
-							}
-						}
-					}
-					explosiveArteryCount = -1;
-				}
-			}
 			if (soulhideSet) {
 				const float maxDistTiles = 10f * 16;
 				const float maxDistTiles2 = 15f * 16;
@@ -263,6 +233,36 @@ namespace Origins {
 				Player.moveSpeed *= Math.Min((Player.statLife / 167) + 1, 1.65f);
 				Player.jumpSpeedBoost += Math.Min(Player.statLife / 167, 5);
 				Player.runAcceleration *= Math.Min((Player.statLife / 167) + 1, 1.85f);
+			}
+			if (explosiveArtery) {
+				if (explosiveArteryCount == -1) {
+					explosiveArteryCount = CombinedHooks.TotalUseTime(explosiveArteryItem.useTime, Player, explosiveArteryItem);
+				}
+				if (explosiveArteryCount > 0) {
+					explosiveArteryCount--;
+				} else {
+					const float maxDist = 384 * 384;
+					for (int i = 0; i < Main.maxNPCs; i++) {
+						NPC currentTarget = Main.npc[i];
+						if (Main.rand.NextBool(explosiveArteryItem.useAnimation, explosiveArteryItem.reuseDelay)) {
+							if (currentTarget.CanBeChasedBy() && currentTarget.HasBuff(BuffID.Bleeding)) {
+								Vector2 diff = currentTarget.Center - Player.MountedCenter;
+								if (diff.LengthSquared() < maxDist) {
+									Projectile.NewProjectileDirect(
+										Player.GetSource_Accessory(explosiveArteryItem),
+										currentTarget.Center,
+										new Vector2(Math.Sign(diff.X), 0),
+										explosiveArteryItem.shoot,
+										Player.GetWeaponDamage(explosiveArteryItem),
+										Player.GetWeaponKnockback(explosiveArteryItem),
+										Player.whoAmI
+									);
+								}
+							}
+						}
+					}
+					explosiveArteryCount = -1;
+				}
 			}
 			if (Main.myPlayer == Player.whoAmI && protozoaFood && protozoaFoodCooldown <= 0 && Player.ownedProjectileCounts[Mini_Protozoa_P.ID] < Player.maxMinions && Player.CheckMana(protozoaFoodItem, pay:true)) {
 				Item item = protozoaFoodItem;
