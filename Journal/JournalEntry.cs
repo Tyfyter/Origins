@@ -16,8 +16,10 @@ namespace Origins.Journal {
 		public virtual ArmorShaderData TextShader => null;
 		protected sealed override void Register() {
 			ModTypeLookup<JournalEntry>.Register(this);
-			string partialPath = Language.Exists($"Mods.{Mod.Name}.Journal.Name." + TextKey) ? "Journal.Name" : "ItemName";
-			NameKey = $"Mods.{Mod.Name}.{partialPath}.{TextKey}";
+			NameKey = $"Mods.{Mod.Name}.Journal.{TextKey}.Name";
+			if (!Language.Exists($"Mods.{Mod.Name}.Journal.Name." + TextKey)) {
+				NameKey = $"Mods.{Mod.Name}.Items.{TextKey}.DisplayName";
+			}
 			if (Journal_Registry.Entries is null) Journal_Registry.Entries = new Dictionary<string, JournalEntry>();
 			Journal_Registry.Entries.Add(Mod.Name + "/" + Name, this);
 		}
