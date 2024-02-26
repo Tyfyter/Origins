@@ -20,7 +20,7 @@ namespace Origins.Items.Accessories {
 
 			player.blackBelt = true;
 			player.dashType = 1;
-			player.equippedAnyWallSpeedAcc = true;
+			player.spikedBoots += 2;
 		}
 	}
 }

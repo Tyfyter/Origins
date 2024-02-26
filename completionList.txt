@@ -282,7 +282,7 @@ ACCESSORIES:
 (^) Advanced Imaging*
 (^) Air Tank*
 (#2, ^2, ♠) ATACS*
-(#2, ^2) Automated Returns Handler* !!!
+(☻) Automated Returns Handler* !!!
 (^) Binding Book*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
