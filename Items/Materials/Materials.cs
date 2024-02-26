@@ -197,7 +197,7 @@ namespace Origins.Items.Materials {
 		public override int Rare => ItemRarityID.Orange;
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Eitrite_Ore_Item>(), 4);
+			recipe.AddIngredient(ModContent.ItemType<Eitrite_Ore_Item>(), 3);
 			recipe.AddTile(TileID.AdamantiteForge);
 			recipe.Register();
 
@@ -221,7 +221,6 @@ namespace Origins.Items.Materials {
 			recipe.Register();
 		}
 	}
-	[LegacyName("Infested_Bar")]
 	public class Encrusted_Bar : MaterialItem {
 		public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;

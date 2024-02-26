@@ -108,6 +108,7 @@ ENEMY NPCS:
 (^) Barnacleback
 (^) Barnacle Bunny*
 (#, ^2) Bile Thrower* !!!
+(#3, ^2) Bottomfeeder !!!
 (^) Buckethead Zombie
 (^) Cellarkeep*
 (^) Chunky Slime
@@ -132,6 +133,7 @@ ENEMY NPCS:
 (^) Riven Penguin*
 (^) Riven Protoform
 (#, ^2) Scanner Scout
+(#3, ^2) Shattered Goldfish !!!
 (^) Single-Cellular Nautilus
 (@3, #3) Spider Amoeba !!!
 
@@ -140,7 +142,6 @@ ENEMY NPCS:
 (^) Amoeba Bugger
 (@, #) Angel
 (^) Barnacle Mound
-(#3, ^2) Bottomfeeder !!!
 (X) Brine Moccasin
 (@5, #) Carpalfish*
 (X) Defiled Asphyxiator !!!
@@ -161,7 +162,6 @@ ENEMY NPCS:
 (#, ^2) Savage Whip !!!
 (X) Sea Dragon
 (X) Shattered Ghoul !!!
-(#3, ^2) Shattered Goldfish !!!
 (X) Torn Ghoul !!!
 (#3, ^2) Trijaw Shark !!!
 

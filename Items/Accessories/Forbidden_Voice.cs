@@ -15,10 +15,10 @@ namespace Origins.Items.Accessories {
 		public string EntryName => "Origins/" + typeof(Asylum_Whistle_Entry).Name;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(38, 32);
-			Item.damage = 30;
+			Item.damage = 50;
 			Item.DamageType = DamageClass.Generic;
-			Item.knockBack = 4;
-			Item.useTime = 120;
+			Item.knockBack = 7;
+			Item.useTime = 48;
 			Item.mana = 20;
 			Item.shoot = ModContent.ProjectileType<Forbidden_Voice_P>();
 			Item.rare = CursedRarity.ID;

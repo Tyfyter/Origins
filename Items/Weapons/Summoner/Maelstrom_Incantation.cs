@@ -17,7 +17,8 @@ namespace Origins.Items.Weapons.Summoner {
 		private Asset<Texture2D> _smolTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;
         public string[] Categories => new string[] {
-            "Incantation"
+            "Incantation",
+			"UsesBookcase"
         };
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);
