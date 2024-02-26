@@ -931,8 +931,8 @@ Projectiles: {
 	// Flakjack_P_3.DisplayName: Resizable Mine
 	// Flakjack_P_4.DisplayName: Resizable Mine
 	// Flakjack_P_5.DisplayName: Resizable Mine
-	// Flakjack_P.DisplayName: Flakjack_ P
-	// Flash_P.DisplayName: Flash P
+	// Flakjack_P.DisplayName: Flakjack
+	// Flash_P.DisplayName: Flash
 	// Flashbang_P.DisplayName: Flashbang
 	// Floaty_Bomb_P.DisplayName: Floaty Bomb
 	// Happy_Bomb_P.DisplayName: Happy Bomb
@@ -1079,6 +1079,7 @@ Projectiles: {
 	// Thermite_Canister_P.DisplayName: Canistah
 	// Thermite_P.DisplayName: Hot Coal
 	// Gelled_Knife_P.DisplayName: Gelled Knife
+	// Forbidden_Voice_P.DisplayName: Forbidden Voice
 }
 
 Prefixes: {
@@ -1160,8 +1161,8 @@ Biomes: {
 		}
 
 		Space: {
-			// DisplayName: Bestiary_ Biomes. Space
-			// TownNPCDialogueName: the Bestiary_ Biomes. Space
+			// DisplayName: Space
+			// TownNPCDialogueName: space
 		}
 	}
 
@@ -1181,8 +1182,8 @@ Biomes: {
 	}
 
 	Riven_Hive_Ocean: {
-		// DisplayName: Riven_ Hive_ Ocean
-		// TownNPCDialogueName: the Riven_ Hive_ Ocean
+		// DisplayName: Eutrophic Sea
+		// TownNPCDialogueName: the Eutrophic Sea
 	}
 }
 
@@ -1231,7 +1232,7 @@ Tiles: {
 	// Cleansing_Station.MapEntry: Cleansing Station
 	// Potato_Mine_Tile.MapEntry: Potato Mine
 	// Stone_Mask_Tile.MapEntry: Stone Mask
-	// Stone_Mask.MapEntry: Stone_ Mask
+	// Stone_Mask.MapEntry: Stone Mask
 	// Gel_Blister.MapEntry: Gel Blister
 	// Surveysprout.MapEntry: Surveysprout
 	// Fungarust.MapEntry: Fungarust

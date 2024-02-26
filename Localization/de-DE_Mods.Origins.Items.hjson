@@ -3750,3 +3750,8 @@ Forbidden_Voice: {
 	// DisplayName: Forbidden Voice
 	// Tooltip: ""
 }
+
+Snipers_Mark: {
+	// DisplayName: Snipers_ Mark
+	// Tooltip: ""
+}
