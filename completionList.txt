@@ -755,7 +755,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Link Grenade* !!!
 (#, ^2) Matrix* !!!
 (X) Meteor* !!!
-(#2, ^2) Outbreak Bomb* !!!
+(☻) Outbreak Bomb* !!!
 (^) Peatball*
 (#3, ^2) Potato Mine* !!!
 (#, ^2) Shrapnel Bomb* !!!

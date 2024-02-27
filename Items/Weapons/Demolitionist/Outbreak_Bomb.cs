@@ -1,6 +1,8 @@
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -35,11 +37,13 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
+			Projectile.friendly = false;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 135;
 		}
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.Bomb;
+			Projectile.friendly = true;
 			return true;
 		}
 		public override void OnKill(int timeLeft) {
@@ -49,12 +53,61 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.height = 128;
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
+			Projectile.friendly = true;
 			Projectile.Damage();
-			int center = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Impeding_Shrapnel_Shard>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
-			Vector2 v;
-			for (int i = 4; i-- > 0;) {
-				v = Main.rand.NextVector2Unit() * 6;
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + v * 8, v, ModContent.ProjectileType<Impeding_Shrapnel_Shard>(), Projectile.damage / 2, Projectile.knockBack / 4, Projectile.owner, center, 4);
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.Poisoned, 7 * 60);
+			target.AddBuff(Outbreak_Bomb_Owner_Buff.ID, Projectile.owner + 1);
+		}
+	}
+	public class Outbreak_Bomb_Cloud : ModProjectile {
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.ToxicCloud3;
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.Bomb);
+			Projectile.aiStyle = 0;
+			Projectile.width = Projectile.height = 96;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 15;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
+			Projectile.localAI[0] = Main.rand.Next(ProjectileID.ToxicCloud, ProjectileID.ToxicCloud3 + 1);
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.Poisoned, 7 * 60);
+			target.AddBuff(Outbreak_Bomb_Owner_Buff.ID, Projectile.owner + 1);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			int type = (int)Projectile.localAI[0];
+			Main.instance.LoadProjectile(type);
+			Texture2D texture = TextureAssets.Projectile[type].Value;
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.Center - Main.screenPosition,
+				null,
+				lightColor * 0.5f,
+				Projectile.rotation,
+				texture.Size() * 0.5f,
+				5,
+				0
+			);
+			return false;
+		}
+	}
+	public class Outbreak_Bomb_Owner_Buff : ModBuff {
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.ToxicCloud3;
+		public static int ID { get; private set; } = -1;
+		public override void SetStaticDefaults() {
+			BuffID.Sets.TimeLeftDoesNotDecrease[Type] = true;
+			Main.debuff[Type] = true;
+			ID = Type;
+		}
+		public override void Update(NPC npc, ref int buffIndex) {
+			if (!npc.poisoned) {
+				npc.DelBuff(buffIndex--);
+			} else {
+				npc.buffTime[buffIndex]++;
 			}
 		}
 	}

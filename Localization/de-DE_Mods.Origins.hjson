@@ -811,6 +811,11 @@ Buffs: {
 		// DisplayName: Mmm... juicy!
 		// Description: +25% mana shielding
 	}
+
+	Outbreak_Bomb_Owner_Buff: {
+		// DisplayName: Outbreak_ Bomb_ Owner_ Buff
+		// Description: Mods.Origins.Buffs.Outbreak_Bomb_Owner_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1080,6 +1085,7 @@ Projectiles: {
 	// Thermite_P.DisplayName: Hot Coal
 	// Gelled_Knife_P.DisplayName: Gelled Knife
 	// Forbidden_Voice_P.DisplayName: Forbidden Voice
+	// Outbreak_Bomb_Cloud.DisplayName: Outbreak_ Bomb_ Cloud
 }
 
 Prefixes: {
