@@ -159,6 +159,9 @@ namespace Origins {
 						if (tile.HasTile) {
 							if (TileLoader.GetTile(tile.TileType) is IGlowingModTile glowingTile) glowingTile.FancyLightingGlowColor(tile, ref color);
 							switch (tile.TileType) {
+								case TileID.DyePlants:
+								if (tile.TileFrameX == 204 || tile.TileFrameX == 202) goto case TileID.Cactus;
+								break;
 								case TileID.Cactus: {
 									Point pos = tile.GetTilePosition();
 									WorldGen.GetCactusType(pos.X, pos.Y, tile.TileFrameX, tile.TileFrameY, out int sandType);

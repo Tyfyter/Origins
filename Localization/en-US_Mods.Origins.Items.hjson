@@ -3756,6 +3756,6 @@ Snipers_Mark: {
 	Tooltip:
 		'''
 		+15% ranged damage
-		Increased critical strike chance by 15% weapon's base damage
+		Increased critical strike chance by 15% of the weapon's base damage
 		'''
 }

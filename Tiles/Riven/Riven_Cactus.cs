@@ -16,8 +16,9 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Riven {
 	public class Riven_Cactus : ModCactus, IGlowingModPlant, ICustomWikiStat, INoSeperateWikiPage {
 		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Riven_Cactus).GetDefaultTMLName() + "_Glow";
+		public static AutoLoadingAsset<Texture2D> FruitGlowTexture = typeof(Riven_Cactus).GetDefaultTMLName() + "_Fruit_Glow";
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
-			if (HasScar(tile)) color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
+			if (tile.TileType == TileID.DyePlants || HasScar(tile)) color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
 		}
 		static bool HasScar(Tile tile) {
 			switch ((tile.TileFrameX / 18, tile.TileFrameY / 18)) {
@@ -39,7 +40,7 @@ namespace Origins.Tiles.Riven {
 			GrowsOnTileId = new int[] { ModContent.TileType<Silica>() };
 		}
 		public override Asset<Texture2D> GetTexture() => ModContent.Request<Texture2D>(typeof(Riven_Cactus).GetDefaultTMLName());
-		public override Asset<Texture2D> GetFruitTexture() => ModContent.Request<Texture2D>(typeof(Riven_Cactus).GetDefaultTMLName() + "_Fruit");// + "_Fruit"
+		public override Asset<Texture2D> GetFruitTexture() => ModContent.Request<Texture2D>(typeof(Riven_Cactus).GetDefaultTMLName() + "_Fruit");
 		public bool ShouldHavePage => false;
 	}
 	public class Riven_Cactus_Item : ModItem, ICustomWikiStat, INoSeperateWikiPage {

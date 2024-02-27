@@ -29,6 +29,22 @@ namespace Origins.Tiles {
 						spriteBatch
 					);
 				}
+			} else if (type == TileID.DyePlants) {
+				Tile tile = Main.tile[i, j];
+				if (tile.TileFrameX == 204 || tile.TileFrameX == 202) {
+					WorldGen.GetCactusType(i, j, tile.TileFrameX, tile.TileFrameY, out int sandType);
+					if (sandType == ModContent.TileType<Silica>()) {
+						float glowValue = Riven_Hive.NormalGlowValue.GetValue();
+						Color glowColor = new Color(glowValue, glowValue, glowValue, glowValue);
+						OriginExtensions.DrawTileGlow(
+							Riven_Cactus.FruitGlowTexture,
+							glowColor,
+							i,
+							j,
+							spriteBatch
+						);
+					}
+				}
 			} else if (OriginExtensions.GetTreeType(i, j) is IGlowingModTile glowingTree) {
 				OriginExtensions.DrawTileGlow(
 					glowingTree.GlowTexture,
