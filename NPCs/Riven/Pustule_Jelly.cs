@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
 using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Terraria;

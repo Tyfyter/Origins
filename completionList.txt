@@ -83,7 +83,7 @@ TOWN NPCs:
 
 VANILLA MODIFICATIONS:
 ---
-(O) Recipes General
+(^) Recipes General
 
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (^) Demolitionist (to sell different items based on peat sold)*
@@ -129,25 +129,26 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Sword
 (^) Measly Moeba
 (^) Optiphage
-(#, ^2) Pustule Jellyfish* !!!
+(^) Pustule Jellyfish*
 (^) Riven Penguin*
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (#3, ^2) Shattered Goldfish !!!
 (^) Single-Cellular Nautilus
-(@3, #3) Spider Amoeba !!!
+(#3, ^2) Spider Amoeba !!!
 
-(X) Amebeye !!!
+(#, ^2) Amebeye* !!!
 (^) Amebic Mummy
 (^) Amoeba Bugger
 (@, #) Angel
 (^) Barnacle Mound
 (X) Brine Moccasin
 (@5, #) Carpalfish*
-(X) Defiled Asphyxiator !!!
+(X) Defiled Asphyxiator* !!!
 (^) Defiled Mimic
-(X) Defiled Reaper !!!
+(X) Defiled Squid !!!
 (@5, ^3/4) Defiled Tripod !!!
+(X) Defiled Watcher* !!!
 (^) Flagellant
 (#, ^2) Hoarder
 (X) Holy Governor
@@ -158,11 +159,12 @@ ENEMY NPCS:
 (X) Peat Lobber
 (^) Profaned Bident
 (^) Pustule Jelly
-(@5, #3) Riven Mimic !!!
-(#, ^2) Savage Whip !!!
+(^) Riven Mimic
+(#, ^2) Savage Whip* !!!
 (X) Sea Dragon
-(X) Shattered Ghoul !!!
-(X) Torn Ghoul !!!
+(#, ^2) Shattered Ghoul !!!
+(#3, ^2) Shattered Mummy !!!
+(#, ^2) Torn Ghoul !!!
 (#3, ^2) Trijaw Shark !!!
 
 (X) Annihilator
@@ -755,7 +757,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Link Grenade* !!!
 (#, ^2) Matrix* !!!
 (X) Meteor* !!!
-(☻) Outbreak Bomb* !!!
+(^) Outbreak Bomb*
 (^) Peatball*
 (#3, ^2) Potato Mine* !!!
 (#, ^2) Shrapnel Bomb* !!!
@@ -1198,20 +1200,20 @@ UI:
 
 MUSIC:
 ---
-(X) Ashen Factory
-(X) Brine Pool
+($2) Ashen Factory
+($2) Brine Pool
 (X) Cosmos
 (X) Cubekon Temple
 (X) Dawn
 (^) Defiled Caverns
 (^) Defiled Wastelands
 ($3) Defiled Wastelands - Mimic Route
-(X) Fiberglass Caves
+(^) Fiberglass Caves
 (X) Fractured Isles
 (^) Riven Hive
-(X) The Dusk
+($2) The Dusk
 
-($3) Defiled Amalgamation
+(^) Defiled Amalgamation
 (X) Duskord
 (X) Fiberglass Weaver
 (X) I.C.A.R.U.S
@@ -1225,7 +1227,7 @@ MUSIC:
 (X) Ashen Invasion
 (X) Corruption Invasion
 (X) Crimson Invasion
-(X) Defiled Invasion
+($2) Defiled Invasion
 (X) Riven Invasion
 (X) Test of Ancients
 ---
