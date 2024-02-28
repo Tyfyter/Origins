@@ -644,7 +644,7 @@ RANGED WEAPONS:
 
 MAGIC WEAPONS:
 ---
-(#, ^2) Area Denial* !!!
+(☻) Area Denial* !!!
 (^) Avulsion
 (^) Beginner's Tome
 (^) Cryostike
@@ -702,7 +702,7 @@ SUMMONER WEAPONS:
 (#, ^2) Ocean Amulet* !!!
 (^) Ocotoral Bud
 (^) Rotted Worm Staff
-(#, ^2) Stubborn Flower* !!!
+(#, @2) Stubborn Flower* !!!
 (^) Teardown
 (^) Woodsprite Staff
 
@@ -735,7 +735,7 @@ NO POST ML SUMMONER CONTENT YET.
 EXPLOSIVE WEAPONS:
 ---
 (#2, ^2) Abrasion Blaster* !!!
-(#4, ^2) Ace Shrapnel* !!!
+(☻) Ace Shrapnel* !!!
 (^) Ameballoon*
 (^) Bang Snap*
 (^) Bloombomb*
@@ -748,8 +748,8 @@ EXPLOSIVE WEAPONS:
 (^) Flashbang*
 (^) Floaty Bomb*
 (^) Hand Grenade Launcher
-(#2, ^2) Hellfire Bomb* !!!
-(#3, ^2) Hellfire Grenade* !!!
+(#2, @2 (seemingly missing lingering inferno texture)) Hellfire Bomb* !!!
+(#3, @2 (seemingly missing lingering inferno texture)) Hellfire Grenade* !!!
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*
@@ -760,7 +760,7 @@ EXPLOSIVE WEAPONS:
 (^) Outbreak Bomb*
 (^) Peatball*
 (#3, ^2) Potato Mine* !!!
-(#, ^2) Shrapnel Bomb* !!!
+(#?, ^2) Shrapnel Bomb* !!!
 (#, ^2) Sticky Link Grenade* !!!
 
 (^) Alkaline Bomb*
@@ -814,7 +814,7 @@ TILES:
 (^) Angelic Cloud*
 (^) Batholith*
 (^) Bleeding Obsidian*
-(#4, ^2) Brittle Quartz* !!!
+(#4?, ^2) Brittle Quartz* !!!
 (^) Chambersite
 (X) Compacted Scrap*
 (X) Cubekon Altar*
@@ -840,7 +840,7 @@ TILES:
 (#, ^2) Mildew Block*
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
-(#4, ^2) Quartz Block* !!!
+(#4?, ^2) Quartz Block* !!!
 (@, ^3) Riven Cactus* !!!
 (^) Riven Grass*
 (^) Riven Jungle Grass*

@@ -1086,6 +1086,8 @@ Projectiles: {
 	// Gelled_Knife_P.DisplayName: Gelled Knife
 	// Forbidden_Voice_P.DisplayName: Forbidden Voice
 	// Outbreak_Bomb_Cloud.DisplayName: Outbreak
+	// Area_Denial_Explosion.DisplayName: Area_ Denial_ Explosion
+	// Area_Denial_P.DisplayName: Area_ Denial_ P
 }
 
 Prefixes: {

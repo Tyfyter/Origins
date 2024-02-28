@@ -3759,3 +3759,8 @@ Snipers_Mark: {
 		Increased critical strike chance by 15% of the weapon's base damage
 		'''
 }
+
+Area_Denial: {
+	DisplayName: Area Denial
+	Tooltip: "Launches a probe to bombard the targeted area with explosions"
+}
