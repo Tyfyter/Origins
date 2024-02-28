@@ -41,11 +41,40 @@ namespace Origins.Reflection {
 				string name = item.GetCustomAttribute<ReflectionMemberNameAttribute>()?.MemberName ?? item.Name;
 				if (item.FieldType.IsAssignableTo(typeof(Delegate))) {
 					Type parentType = item.GetCustomAttribute<ReflectionParentTypeAttribute>().ParentType;
-					MethodInfo info = parentType.GetMethod(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static, item.GetCustomAttribute<ReflectionParameterTypesAttribute>()?.Types ?? Array.Empty<Type>());
+					ParameterInfo[] parameters = item.FieldType.GetMethod("Invoke").GetParameters();
+					Type[] paramTypes = new Type[parameters.Length];
+					//ParameterModifier paramMods = new ParameterModifier(parameters.Length);
+					for (int i = 0; i < parameters.Length; i++) {
+						paramTypes[i] = parameters[i].ParameterType;
+						//paramMods[i] = parameters[i].ParameterType.IsByRef;
+					}
+					MethodInfo info = parentType.GetMethod(name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static, paramTypes);
 					if (info.IsStatic) {
 						item.SetValue(null, info.CreateDelegate(item.FieldType));
 					} else {
-						item.SetValue(null, info.CreateDelegate(item.FieldType, Activator.CreateInstance(parentType)));
+						object target;
+						if (item.GetCustomAttribute<ReflectionDefaultInstanceAttribute>() is ReflectionDefaultInstanceAttribute defaultObject) {
+							static object GetValue(object source, string name) {
+								if (source is Type type) {
+									source = null;
+								} else {
+									type = source.GetType();
+								}
+								BindingFlags flags = BindingFlags.Public | BindingFlags.NonPublic | (source is null ? BindingFlags.Static : BindingFlags.Instance);
+								if (type.GetField(name, flags) is FieldInfo field) {
+									return field.GetValue(source);
+								} else {
+									return type.GetProperty(name, flags).GetValue(source);
+								}
+							}
+							target = GetValue(defaultObject.Type, defaultObject.FieldNames[0]);
+							for (int i = 1; i < defaultObject.FieldNames.Length; i++) {
+								target = GetValue(target, defaultObject.FieldNames[i]);
+							}
+						} else {
+							target = Activator.CreateInstance(parentType);
+						}
+						item.SetValue(null, info.CreateDelegate(item.FieldType, target));
 					}
 				} else if (item.FieldType.IsGenericType) {
 					Type genericType = item.FieldType.GetGenericTypeDefinition();
@@ -101,10 +130,12 @@ namespace Origins.Reflection {
 		}
 	}
 	[AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
-	public sealed class ReflectionParameterTypesAttribute : Attribute {
-		public Type[] Types { get; init; }
-		public ReflectionParameterTypesAttribute(params Type[] types) {
-			Types = types;
+	public sealed class ReflectionDefaultInstanceAttribute : Attribute {
+		public Type Type { get; init; }
+		public string[] FieldNames { get; init; }
+		public ReflectionDefaultInstanceAttribute(Type type, params string[] fieldNames) {
+			Type = type;
+			FieldNames = fieldNames;
 		}
 	}
 }

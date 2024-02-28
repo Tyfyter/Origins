@@ -9,7 +9,6 @@ namespace Origins.Reflection {
 		public override Type ParentType => GetType();
 		private delegate void ApplyNPCOnHitEffects_Del(Item sItem, Rectangle itemRectangle, int damage, float knockBack, int npcIndex, int dmgRandomized, int dmgDone);
 		[ReflectionParentType(typeof(Player)), ReflectionMemberName("ApplyNPCOnHitEffects")]
-		[ReflectionParameterTypes(typeof(Item), typeof(Rectangle), typeof(int), typeof(float), typeof(int), typeof(int), typeof(int))]
 		private static ApplyNPCOnHitEffects_Del _ApplyNPCOnHitEffects;
 		//private delegate void GrabItems_Del(int playerIndex);
 		//private static GrabItems_Del _GrabItems;

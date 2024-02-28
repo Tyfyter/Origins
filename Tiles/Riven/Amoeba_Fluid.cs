@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Other.Consumables;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -21,6 +22,7 @@ namespace Origins.Tiles.Riven {
 			}
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = false;
+			Main.tileLighted[Type] = true;
 			Main.tileBouncy[Type] = true;
 			TileID.Sets.DrawsWalls[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
@@ -28,6 +30,11 @@ namespace Origins.Tiles.Riven {
 			MinPick = 10;
 			MineResist = 8f;
 			HitSound = SoundID.NPCHit13;
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			r = 0.002f;
+			g = 0.015f;
+			b = 0.02f;
 		}
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
 			return true;

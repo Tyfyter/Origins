@@ -810,7 +810,7 @@ CLASSLESS WEAPONS:
 
 TILES:
 ---
-(#4, ^2) Amoeba Fluid* !!!
+(☻) Amoeba Fluid* !!!
 (^) Angelic Cloud*
 (^) Batholith*
 (^) Bleeding Obsidian*

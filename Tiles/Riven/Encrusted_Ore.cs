@@ -33,9 +33,6 @@ namespace Origins.Tiles.Riven {
 				damage = 0;
 			}
 		}
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
-			this.DrawTileGlow(i, j, spriteBatch);
-		}
 	}
 	[LegacyName("Infested_Ore_Item")]
 	public class Encrusted_Ore_Item : ModItem {
