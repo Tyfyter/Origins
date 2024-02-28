@@ -59,7 +59,16 @@ namespace Origins.Items.Weapons.Demolitionist {
             Vector2 v;
 			for (int i = 4; i-- > 0;) {
 				v = Main.rand.NextVector2Unit() * 4;
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + v * 8, v, ModContent.ProjectileType<Impeding_Shrapnel_Shard>(), Projectile.damage / 2, Projectile.knockBack / 4, Projectile.owner);
+				Projectile.NewProjectile(
+					Projectile.GetSource_FromThis(),
+					Projectile.Center + v * 8,
+					v,
+					ModContent.ProjectileType<Impeding_Shrapnel_Shard>(),
+					Projectile.damage / 2,
+					Projectile.knockBack / 4,
+					Projectile.owner,
+					ai2: 0.5f
+				);
 			}
 		}
 	}

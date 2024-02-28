@@ -10,6 +10,11 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenArrow);
 			Item.maxStack = 999;
+			Item.damage = 0;
+			Item.knockBack = 0;
+			Item.shoot = ProjectileID.None;
+			Item.shootSpeed = 0;
+			Item.ammo = Type;
 			Item.value = Item.sellPrice(silver: 4, copper: 65);
 			Item.rare = ItemRarityID.Pink;
 		}

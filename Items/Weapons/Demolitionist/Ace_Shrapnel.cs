@@ -20,8 +20,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useTime = 1;
 			Item.useAnimation = 20;
 			Item.shoot = ModContent.ProjectileType<Impeding_Shrapnel_Shard>();
-			Item.shootSpeed /= 4;
-			Item.ammo = ModContent.ItemType<Scrap>();
+			Item.shootSpeed = 2;
+			Item.useAmmo = ModContent.ItemType<Scrap>();
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 			Item.consumeAmmoOnFirstShotOnly = true;
@@ -35,6 +35,7 @@ namespace Origins.Items.Weapons.Demolitionist {
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
             velocity = velocity.RotatedByRandom(0.27f);
-        }
+			type = Item.shoot;
+		}
     }
 }

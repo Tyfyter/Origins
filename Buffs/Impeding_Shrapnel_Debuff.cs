@@ -55,7 +55,7 @@ namespace Origins.Buffs {
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.localAI[1] = ModContent.ProjectileType<Shardcannon_P1>() + Main.rand.Next(3);
-			Projectile.localAI[2] = Main.rand.NextFloat(0.25f, 0.50f) * Main.rand.NextBool().ToDirectionInt();
+			Projectile.localAI[2] = Main.rand.NextFloat(0.15f, 0.25f) * Main.rand.NextBool().ToDirectionInt();
 		}
 		public override void AI() {
 			if (Projectile.timeLeft == 420) {
@@ -64,13 +64,21 @@ namespace Origins.Buffs {
 				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 1.5f);
 			}
 			Projectile.localAI[0] += (GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.295f) * Projectile.localAI[2];
-			Vector2 offset = Projectile.localAI[0] * new Vector2(Projectile.velocity.Y, -Projectile.velocity.X);
+			Vector2 perp = new Vector2(Projectile.velocity.Y, -Projectile.velocity.X);
+			Vector2 offset = Projectile.localAI[0] * perp;
 			Projectile.localAI[0] = MathHelper.Clamp(Projectile.localAI[0], -2, 2);
+			if (Projectile.ai[2] != 0) {
+				float factor =
+					(GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.295f)
+					- (GenRunners.GetWallDistOffset(Projectile.ai[0] - Projectile.ai[1]) + 0.295f);
+				offset -= perp * factor * Projectile.ai[2];
+			}
 			if (Collision.TileCollision(
 				Projectile.position,
 				offset,
 				Projectile.width,
 				Projectile.height,
+				true,
 				true
 			) == offset) {
 				Projectile.position += offset;
