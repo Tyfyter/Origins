@@ -39,6 +39,7 @@ namespace Origins.Items.Weapons.Ranged {
 				player.DelBuff(buffIndex--);
 			} else {
 				player.GetAttackSpeed(DamageClass.Ranged) += 0.05f * player.buffTime[buffIndex];
+				player.GetDamage(DamageClass.Ranged).Base -= 0.13f * player.buffTime[buffIndex];
 			}
 		}
 		public override bool ReApply(Player player, int time, int buffIndex) {
