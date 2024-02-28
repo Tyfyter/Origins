@@ -91,10 +91,9 @@ namespace Origins.Items.Weapons.Summoner {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			if (Projectile.penetrate > 2) {
-				float range = 72;
 				List<Vector2> points = Projectile.WhipPointsForCollision;
 				Projectile.FillWhipControlPoints(Projectile, points);
-				if (target.DistanceSQ(points[^1]) <= range * range) {
+				if (target.Hitbox.Intersects(new Rectangle((int)points[^1].X - 48, (int)points[^1].Y - 48, 96, 96))) {
 					Projectile.NewProjectile(
 						Projectile.GetSource_OnHit(target),
 						points[^1],
