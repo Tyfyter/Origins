@@ -53,7 +53,7 @@ BOSSES AND MINI-BOSSES:
 (^) Defiled Amalgamation*
 ($, ^2/3) Fiberglass Weaver !!!
 (X) Scrapper
-(†, $3) World Cracker !!!
+(^) World Cracker
 
 (%, ^2) Lost Diver
 (X) Miscreant
@@ -145,10 +145,10 @@ ENEMY NPCS:
 (^) Barnacle Mound
 (X) Brine Moccasin
 (@5, #) Carpalfish*
-(X) Defiled Asphyxiator* !!!
+(#, ^2) Defiled Asphyxiator* !!!
 (^) Defiled Mimic
 (^) Defiled Tripod
-(X) Defiled Watcher* !!!
+(#, ^2) Defiled Watcher* !!!
 (^) Flagellant
 (#, ^2) Hoarder
 (X) Holy Governor
@@ -251,7 +251,7 @@ ARMOR:
 
 (X) Abysswalker Armor*
 (^) Acrid Armor*
-(#2, ^2) Amber Exploder Armor*
+(#2, ^2) Amber Exploder Armor* !!!
 (^) Bleeding Obsidian Armor*
 (X) Ruby Ranger Armor*
 
@@ -331,7 +331,6 @@ ACCESSORIES:
 (^) Magic Pain Glove*
 (^) Magic Tripwire*
 (^) Makeover Choker*
-(X) Mana Locus* !!!
 (^) Messy Leech*
 (^) Messy Magma Leech*
 (^) Missile Armcannon*

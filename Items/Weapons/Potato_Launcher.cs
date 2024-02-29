@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons {
     public class Potato_Launcher : ModItem {
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.FlintlockPistol);
-			Item.damage = 25;
+			Item.damage = 17;
 			Item.DamageType = DamageClass.Generic;
 			Item.useTime = 32;
 			Item.useAnimation = 32;
@@ -23,13 +23,11 @@ namespace Origins.Items.Weapons {
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (type == Potato_Battery_P.ID) {
-				int frameReduction = player.itemAnimationMax / 3;
+				int frameReduction = player.itemAnimationMax;
 				player.itemTime -= frameReduction;
 				player.itemTimeMax -= frameReduction;
 				player.itemAnimation -= frameReduction;
 				player.itemAnimationMax -= frameReduction;
-				Item.useTime /= 8;
-				Item.useAnimation /= 8;
 			} else if (type == ModContent.ProjectileType<Magic.Hot_Potato_P>()) {
 				velocity *= 0.6f;
 			}
