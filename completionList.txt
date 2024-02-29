@@ -801,7 +801,7 @@ EXPLOSIVE WEAPONS:
 
 CLASSLESS WEAPONS:
 ---
-(#2, ^2) Potato Launcher* !!!
+(☻) Potato Launcher* !!!
 
 (X) Pressurized Supersoaker
 (X) Tesla Net Gun

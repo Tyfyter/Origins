@@ -51,6 +51,7 @@ namespace Origins.Items.Weapons.Magic {
 			if (player.itemAnimation != 0 && !player.CheckMana(Item, pay: true)) {
 				return false;
 			}
+			player.manaRegenDelay = (int)player.maxRegenDelay;
 			SoundEngine.PlaySound(Origins.Sounds.PhaserCrash, position);
 			return true;
 		}

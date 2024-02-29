@@ -37,6 +37,7 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override bool CanBeConsumedAsAmmo(Item weapon, Player player) {
 			player.CheckMana(Item, pay: true);
+			player.manaRegenDelay = (int)player.maxRegenDelay;
 			return false;
 		}
 	}

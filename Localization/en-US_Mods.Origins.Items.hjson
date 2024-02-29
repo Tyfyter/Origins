@@ -3762,5 +3762,5 @@ Snipers_Mark: {
 
 Area_Denial: {
 	DisplayName: Area Denial
-	Tooltip: "Launches a probe to bombard the targeted area with explosions"
+	Tooltip: Launches a probe to bombard the targeted area with explosions
 }

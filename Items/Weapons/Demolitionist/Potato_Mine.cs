@@ -18,6 +18,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.createTile = ModContent.TileType<Potato_Mine_Tile>();
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.White;
+			Item.ammo = ModContent.ItemType<Potato>();
+			Item.shoot = ModContent.ProjectileType<Potato_Mine_P>();
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 15);

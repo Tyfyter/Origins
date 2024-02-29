@@ -1088,6 +1088,8 @@ Projectiles: {
 	// Outbreak_Bomb_Cloud.DisplayName: Outbreak
 	// Area_Denial_Explosion.DisplayName: Area_ Denial_ Explosion
 	// Area_Denial_P.DisplayName: Area_ Denial_ P
+	// Potato_Battery_P.DisplayName: Potato_ Battery_ P
+	// Potato_Mine_P.DisplayName: Potato_ Mine_ P
 }
 
 Prefixes: {

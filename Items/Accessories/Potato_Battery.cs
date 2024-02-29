@@ -2,6 +2,7 @@
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Items.Weapons;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -27,6 +28,8 @@ namespace Origins.Items.Accessories {
 			Item.DefaultToAccessory(30, 28);
 			Item.accessory = true;
 			Item.rare = ItemRarityID.Pink;
+			Item.ammo = ModContent.ItemType<Potato>();
+			Item.shoot = ModContent.ProjectileType<Potato_Battery_P>();
 			Item.value = Item.sellPrice(gold: 1);
             Item.glowMask = glowmask;
         }
