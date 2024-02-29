@@ -1,7 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Other.Consumables.Food;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
@@ -29,11 +28,14 @@ namespace Origins.Items.Weapons {
 				player.itemTimeMax -= frameReduction;
 				player.itemAnimation -= frameReduction;
 				player.itemAnimationMax -= frameReduction;
+				Item.useTime /= 8;
+				Item.useAnimation /= 8;
 			} else if (type == ModContent.ProjectileType<Magic.Hot_Potato_P>()) {
 				velocity *= 0.6f;
 			}
 		}
-	}
+        public override Vector2? HoldoutOffset() => new Vector2(-8, 0);
+    }
 	public class Potato_P : ModProjectile {
 		public override string Texture => "Origins/Items/Other/Consumables/Food/Potato";
 		public override void SetDefaults() {

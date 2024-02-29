@@ -88,8 +88,10 @@ namespace Origins.Items.Weapons.Magic {
 			Projectile.damage += 2;
 			Projectile.localAI[1] = Projectile.localAI[0];
 			Projectile.localAI[0] = target.whoAmI;
-		}
-		public override void AI() {
+
+            target.AddBuff(BuffID.OnFire, 180);
+        }
+        public override void AI() {
 			if (Main.rand.NextBool(3)) Dust.NewDust(Projectile.Center, Projectile.width, Projectile.height, DustID.Torch);
 		}
 	}

@@ -31,5 +31,8 @@ namespace Origins.Items.Weapons.Magic {
 			recipe.AddTile(TileID.Bookcases);
 			recipe.Register();
 		}
-	}
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
+            target.AddBuff(BuffID.OnFire, 240);
+        }
+    }
 }

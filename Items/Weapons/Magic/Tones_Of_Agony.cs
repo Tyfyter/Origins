@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -26,7 +27,10 @@ namespace Origins.Items.Weapons.Magic {
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Green;
 		}
-	}
+        public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
+            target.AddBuff(BuffID.Bleeding, 300);
+        }
+    }
 	public class Agony_Shard : ModProjectile {
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bullet);

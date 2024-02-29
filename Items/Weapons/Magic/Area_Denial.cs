@@ -1,6 +1,4 @@
 using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
-using Origins.NPCs;
 using Origins.Projectiles;
 using System;
 using Terraria;
@@ -59,7 +57,7 @@ namespace Origins.Items.Weapons.Magic {
 				if (Main.LocalPlayer.ownedProjectileCounts[Type] > 1) Projectile.Kill();
 				if (Projectile.timeLeft % 60 == 0) {
 					Projectile.velocity = Vector2.Zero;
-					Vector2 pos = Projectile.Center + new Vector2(Main.rand.NextFloat(-Projectile.ai[0], Projectile.ai[0]), Main.rand.NextFloat(-Projectile.ai[0], Projectile.ai[0]));
+					Vector2 pos = Projectile.Center; // + new Vector2(Main.rand.NextFloat(-Projectile.ai[0], Projectile.ai[0]), Main.rand.NextFloat(-Projectile.ai[0], Projectile.ai[0]));
 					Projectile.NewProjectile(
 						Projectile.GetSource_FromAI(),
 						pos,
@@ -74,9 +72,11 @@ namespace Origins.Items.Weapons.Magic {
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			Projectile.ai[1] = 0;
-			Projectile.velocity = Vector2.Zero;
+            float speed = oldVelocity.Length();
+            Projectile.velocity = Projectile.velocity + Projectile.velocity - oldVelocity;
+            Projectile.velocity *= speed / Projectile.velocity.Length() * 0.35f;
 			Projectile.timeLeft = 5 * 60 * 60;
-			Projectile.tileCollide = false;
+			Projectile.tileCollide = true;
 			return false;
 		}
 	}
@@ -84,8 +84,8 @@ namespace Origins.Items.Weapons.Magic {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Magic];
-			Projectile.width = 48;
-			Projectile.height = 48;
+			Projectile.width = 96;
+			Projectile.height = 96;
 			Projectile.friendly = true;
 			Projectile.tileCollide = false;
 			Projectile.penetrate = -1;

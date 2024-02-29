@@ -122,6 +122,7 @@ ENEMY NPCS:
 (^) Defiled Krusher
 (^) Defiled Mite
 (^) Defiled Phantom
+(#, ^2) Defiled Squid* !!!
 (^) Defiled Swarmer
 (^) Defiled Wisp
 (^) Enchanted Fiberglass Bow
@@ -146,8 +147,7 @@ ENEMY NPCS:
 (@5, #) Carpalfish*
 (X) Defiled Asphyxiator* !!!
 (^) Defiled Mimic
-(X) Defiled Squid !!!
-(@5, ^3/4) Defiled Tripod !!!
+(^) Defiled Tripod
 (X) Defiled Watcher* !!!
 (^) Flagellant
 (#, ^2) Hoarder
@@ -644,7 +644,7 @@ RANGED WEAPONS:
 
 MAGIC WEAPONS:
 ---
-(☻) Area Denial* !!!
+(^) Area Denial*
 (^) Avulsion
 (^) Beginner's Tome
 (^) Cryostike
@@ -702,7 +702,7 @@ SUMMONER WEAPONS:
 (#, ^2) Ocean Amulet* !!!
 (^) Ocotoral Bud
 (^) Rotted Worm Staff
-(#, @2) Stubborn Flower* !!!
+(#, ^2) Stubborn Flower* !!!
 (^) Teardown
 (^) Woodsprite Staff
 
@@ -735,7 +735,7 @@ NO POST ML SUMMONER CONTENT YET.
 EXPLOSIVE WEAPONS:
 ---
 (#2, ^2) Abrasion Blaster* !!!
-(☻) Ace Shrapnel* !!!
+(#3, ^2) Ace Shrapnel* !!!
 (^) Ameballoon*
 (^) Bang Snap*
 (^) Bloombomb*
@@ -748,8 +748,8 @@ EXPLOSIVE WEAPONS:
 (^) Flashbang*
 (^) Floaty Bomb*
 (^) Hand Grenade Launcher
-(#2, @2 (seemingly missing lingering inferno texture)) Hellfire Bomb* !!!
-(#3, @2 (seemingly missing lingering inferno texture)) Hellfire Grenade* !!!
+(#2, ^2 (is dust like PLB)) Hellfire Bomb* !!!
+(#3, ^2 (is dust like PLB)) Hellfire Grenade* !!!
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*
@@ -760,7 +760,7 @@ EXPLOSIVE WEAPONS:
 (^) Outbreak Bomb*
 (^) Peatball*
 (#3, ^2) Potato Mine* !!!
-(#?, ^2) Shrapnel Bomb* !!!
+(^) Shrapnel Bomb*
 (#, ^2) Sticky Link Grenade* !!!
 
 (^) Alkaline Bomb*
@@ -776,18 +776,18 @@ EXPLOSIVE WEAPONS:
 
 (X) Autohandcannon
 (^) Bomboomstick
-(#2, ^2) Chlorodynamite*
+(#2, ^2) Chlorodynamite* !!!
 (X) Chlorophyte Handcannon
 (^) Crystal Bomb*
 (^) Crystal Grenade*
 (X) Firework Cannon
 (^) Mine Flayer*
-(X) Nova Cascade
+(#, ^2) Nova Cascade* !!!
 (X) Nova Starforge
 (^) Nuclear Arm*
 (#2, ^2) Omni-directional Claymore*
 (^) Rocodile
-(X) Self-Destruct
+(#, ^2) Self-Destruct* !!!
 (X) Supernova
 (X) Thundershot
 
@@ -799,9 +799,9 @@ EXPLOSIVE WEAPONS:
 ---
 
 
-CLASSLESS WEAPONS:
+GENERIC WEAPONS:
 ---
-(☻) Potato Launcher* !!!
+(^) Potato Launcher*
 
 (X) Pressurized Supersoaker
 (X) Tesla Net Gun
@@ -810,11 +810,11 @@ CLASSLESS WEAPONS:
 
 TILES:
 ---
-(☻) Amoeba Fluid* !!!
+(^) Amoeba Fluid*
 (^) Angelic Cloud*
 (^) Batholith*
 (^) Bleeding Obsidian*
-(#4?, ^2) Brittle Quartz* !!!
+(^) Brittle Quartz*
 (^) Chambersite
 (X) Compacted Scrap*
 (X) Cubekon Altar*
@@ -840,7 +840,7 @@ TILES:
 (#, ^2) Mildew Block*
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
-(#4?, ^2) Quartz Block* !!!
+(^) Quartz Block*
 (@, ^3) Riven Cactus* !!!
 (^) Riven Grass*
 (^) Riven Jungle Grass*

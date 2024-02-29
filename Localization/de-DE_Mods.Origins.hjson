@@ -813,7 +813,7 @@ Buffs: {
 	}
 
 	Outbreak_Bomb_Owner_Buff: {
-		// DisplayName: Outbreak_ Bomb_ Owner_ Buff
+		// DisplayName: Outbreak Bomb Owner
 		// Description: Mods.Origins.Buffs.Outbreak_Bomb_Owner_Buff.Description
 	}
 }
@@ -1086,10 +1086,10 @@ Projectiles: {
 	// Gelled_Knife_P.DisplayName: Gelled Knife
 	// Forbidden_Voice_P.DisplayName: Forbidden Voice
 	// Outbreak_Bomb_Cloud.DisplayName: Outbreak
-	// Area_Denial_Explosion.DisplayName: Area_ Denial_ Explosion
-	// Area_Denial_P.DisplayName: Area_ Denial_ P
-	// Potato_Battery_P.DisplayName: Potato_ Battery_ P
-	// Potato_Mine_P.DisplayName: Potato_ Mine_ P
+	// Area_Denial_Explosion.DisplayName: Area Denial
+	// Area_Denial_P.DisplayName: Area Denial
+	// Potato_Battery_P.DisplayName: Potato Battery
+	// Potato_Mine_P.DisplayName: Potato Mine
 }
 
 Prefixes: {

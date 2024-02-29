@@ -8,6 +8,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Tiles.Ashen;
+using Origins.Items.Weapons.Magic;
 
 namespace Origins.World {
     public class AshenBiomeData : ModBiome {
@@ -19,7 +20,7 @@ namespace Origins.World {
 
 			OrbDropRule = new OneFromRulesRule(1,
 				FirstOrbDropRule,
-				//ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Area_Denial>()),
+				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Area_Denial>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Outreach>()),
 				//ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Smiths_Hammer>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Cinder_Seal>())

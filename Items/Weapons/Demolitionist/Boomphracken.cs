@@ -8,19 +8,17 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Boomphracken : ModItem {
-		static short glowmask;
         public string[] Categories => new string[] {
             "HandCannon"
         };
         public override void SetStaticDefaults() {
-			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
 			Item.damage = 68;
 			Item.width = 56;
-			Item.height = 28;
+			Item.height = 26;
 			Item.useTime = 57;
 			Item.useAnimation = 57;
 			Item.shoot = ModContent.ProjectileType<Boomphracken_P>();
