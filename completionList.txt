@@ -591,7 +591,7 @@ RANGED WEAPONS:
 (^) Longbone
 (^) Magma Grappler*
 (^) Marrowick Bow
-(^?) Neural Network*
+(^) Neural Network*
 (^) Riven Splitter*
 (^) Shardcannon
 (^) Sleetfire
@@ -901,12 +901,12 @@ TILES:
 (X) Dusk Dungeon Chest*
 (X) Edenwood Furniture*
 (#, ^2) Encrusted Brick !!!
-(X) Endowood Furniture* !!!
+(#, ^2) Endowood Furniture* !!!
 (#2, ^2) Laser Tag Console*
 (#, ^2) Living Alkahest Block*
 (#, ^2) Living Bile Block*
 (#, ^2) Lost Brick !!!
-(X) Marrowick Furniture* !!!
+(#, ^2) Marrowick Furniture* !!!
 (X) Mushroom Dungeon Chest*
 (X) Nova Brick*
 (X) Nova Fragment Block*
@@ -921,7 +921,7 @@ TILES:
 (^) Riven Water Fountain
 (X) Sanguinite Brick
 (X) Shadow Torch*
-(#3, ^2) Traffic Cone* !!!
+(^) Traffic Cone*
 
 (X) Batholith Grindstone*
 (^) Cleansing Station*
@@ -937,7 +937,7 @@ TILES:
 (^) Brineglow Vine*
 (^) Defiled Foliage
 (X) Eden Tree*
-(@5, #3) Exoskeletal Tree* !!!
+(#3, ^2) Exoskeletal Tree* !!!
 (ᗢ) Fungarust*
 (^) Gel Blister
 (X) Moonshine*
@@ -1179,22 +1179,22 @@ AMMO:
 UI:
 ---
 (X) Ashen Map/Bestiary Backdrop
-(X) Ashen Icon
+(^) Ashen Icon
 (X) Cosmos Map/Bestiary Backdrop
 (X) Dawn Map/Bestiary Backdrop
-(X) Dawn Icon
-(^) Defiled Map/Bestiary Backdrop
+(^) Dawn Icon
+(@5, ^3) Defiled Map/Bestiary Backdrop
 (^) Defiled Icon
 (X) Dusk Map/Bestiary Backdrop
-(X) Dusk Icon
-(X) Fiberglass Map/Bestiary Backdrop
-(X) Fiberglass Icon
+(^) Dusk Icon
+(X) Fiberglass Map/Bestiary Backdrop !!!
+(X) Fiberglass Icon !!!
 (X) Fractured Isles Icon
-(^) Riven Map/Bestiary Backdrop
+(@5, ^3) Riven Map/Bestiary Backdrop
 (^) Riven Icon
 
-(#3, ^2) 30x30 Origins Icon
-(@5, ^3) Origins Mod Browser Logo
+(#3, ^2) 30x30 Origins Icon !!!
+(@5, ^3) Origins Mod Browser Logo !!!
 ---
 
 MUSIC:

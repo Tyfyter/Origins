@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Armor.Defiled;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
@@ -89,7 +88,7 @@ namespace Origins.Tiles.Riven {
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (tile.TileFrameX / 18 != 2) color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
 		}
-		public override Color MapColor => new Color(0, 125, 200);
+		public override Color MapColor => new Color(200, 175, 160);
 		public override int[] ValidAnchorTypes => new[] { ModContent.TileType<Riven_Flesh>(), ModContent.TileType<Riven_Grass>() };
 		public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) {
 			drawData.glowTexture = GlowTexture;
