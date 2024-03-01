@@ -591,7 +591,7 @@ RANGED WEAPONS:
 (^) Longbone
 (^) Magma Grappler*
 (^) Marrowick Bow
-(#3, ^2) Neural Network* !!!
+(^?) Neural Network*
 (^) Riven Splitter*
 (^) Shardcannon
 (^) Sleetfire
@@ -755,7 +755,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Internal Combustion* !!!
 (#, ^2) Link Grenade* !!!
 (#, ^2) Matrix* !!!
-(X) Meteor* !!!
+(#, ^2) Meteor* !!!
 (^) Outbreak Bomb*
 (^) Peatball*
 (#3, ^2) Potato Mine* !!!
@@ -817,7 +817,7 @@ TILES:
 (^) Chambersite
 (X) Compacted Scrap*
 (X) Cubekon Altar*
-(@, ^3) Defiled Cactus* !!!
+(^) Defiled Cactus*
 (^) Defiled Grass*
 (^) Defiled Jungle Grass*
 (^) Defiled Sand*
@@ -840,7 +840,7 @@ TILES:
 (^) Peat Moss Block*
 (^) Primordial Permafrost*
 (^) Quartz Block*
-(@, ^3) Riven Cactus* !!!
+(^) Riven Cactus*
 (^) Riven Grass*
 (^) Riven Jungle Grass*
 (^) Sanguinite Ore*
@@ -864,7 +864,7 @@ TILES:
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (^) Edenwood Wall
-(X) Endowood Wall !!!
+(^) Endowood Wall
 (^) Fiberglass Wall
 (^) Harmony Brick Wall
 (^) Marrowick Wall
@@ -953,8 +953,8 @@ TILES:
 (^) A Perfect World
 
 (@, #, $3) Ancient Music Box (Brine Pool)
-(#, $3, ^2) Ancient Music Box (Defiled Wastelands) !!!
-(#, $3, ^2) Ancient Music Box (Riven Hive) !!!
+(#, $3, ^2) Ancient Music Box (Defiled Wastelands)
+(#, $3, ^2) Ancient Music Box (Riven Hive)
 (@, #, $3) Music Box (Abstract)
 (@, #, $3) Music Box (Brine Pool)
 (X) Music Box (Cosmos)

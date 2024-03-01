@@ -3764,3 +3764,8 @@ Area_Denial: {
 	// DisplayName: Area Denial
 	// Tooltip: Launches a probe to bombard the targeted area with explosions
 }
+
+Endowood_Wall_Item: {
+	// DisplayName: Endowood Wall
+	// Tooltip: ""
+}

@@ -1,11 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Walls;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dawn {
-	public class Eden_Wood : OriginTile {
+    public class Eden_Wood : OriginTile {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
@@ -21,5 +22,16 @@ namespace Origins.Tiles.Dawn {
 			Item.CloneDefaults(ItemID.Wood);
 			Item.createTile = TileType<Eden_Wood>();
 		}
-	}
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Eden_Wood_Wall_Item>(), 4);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+
+            recipe = Recipe.Create(ModContent.ItemType<Eden_Wood_Wall_Item>(), 4);
+            recipe.AddIngredient(this);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+        }
+    }
 }

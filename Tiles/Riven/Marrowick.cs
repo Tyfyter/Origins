@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Walls;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,5 +26,16 @@ namespace Origins.Tiles.Riven {
 			Item.CloneDefaults(ItemID.Wood);
 			Item.createTile = TileType<Marrowick>();
 		}
-	}
+        public override void AddRecipes() {
+            Recipe recipe = Recipe.Create(Type);
+            recipe.AddIngredient(ModContent.ItemType<Marrowick_Wall_Item>(), 4);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+
+            recipe = Recipe.Create(ModContent.ItemType<Marrowick_Wall_Item>(), 4);
+            recipe.AddIngredient(this);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+        }
+    }
 }
