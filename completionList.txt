@@ -255,7 +255,7 @@ ARMOR:
 (^) Bleeding Obsidian Armor*
 (X) Ruby Ranger Armor*
 
-(X) Blast Armor* !!!
+(#, ^2) Blast Armor* !!!
 (X) Chambersite Armor*
 (X) Edenwood Armor*
 (^) Necromancer Armor*
@@ -922,6 +922,7 @@ TILES:
 (X) Sanguinite Brick
 (X) Shadow Torch*
 (^) Traffic Cone*
+(#, ^2) Wilting Rose Planter Box !!!
 
 (X) Batholith Grindstone*
 (^) Cleansing Station*
