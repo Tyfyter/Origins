@@ -1246,6 +1246,8 @@ Tiles: {
 	// Gel_Blister.MapEntry: Gel Blister
 	// Surveysprout.MapEntry: Surveysprout
 	// Fungarust.MapEntry: Fungarust
+	// Endowood_Chest.MapEntry: Endowood_ Chest
+	// Marrowick_Chest.MapEntry: Marrowick_ Chest
 }
 
 AltBiomeDescription: {

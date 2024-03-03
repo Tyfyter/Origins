@@ -3789,3 +3789,33 @@ Endowood_Grandfather_Clock_Item: {
 	// DisplayName: Endowood Clock
 	// Tooltip: ""
 }
+
+Endowood_Chest_Item: {
+	// DisplayName: Endowood_ Chest_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Chair_Item: {
+	// DisplayName: Marrowick_ Chair_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Chest_Item: {
+	// DisplayName: Marrowick_ Chest_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Door_Item: {
+	// DisplayName: Marrowick_ Door_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Grandfather_Clock_Item: {
+	// DisplayName: Marrowick_ Grandfather_ Clock_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Toilet_Item: {
+	// DisplayName: Marrowick_ Toilet_ Item
+	// Tooltip: ""
+}

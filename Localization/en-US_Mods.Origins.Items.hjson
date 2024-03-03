@@ -3702,7 +3702,7 @@ Marrowick_Item: {
 }
 
 Marrowick_Wall_Item: {
-	DisplayName: Marrowick Wall Item
+	DisplayName: Marrowick Wall
 	Tooltip: Feels waxy to the touch.
 }
 
@@ -3787,5 +3787,35 @@ Endowood_Toilet_Item: {
 
 Endowood_Grandfather_Clock_Item: {
 	DisplayName: Endowood Clock
+	Tooltip: ""
+}
+
+Endowood_Chest_Item: {
+	DisplayName: Endowood Chest
+	Tooltip: ""
+}
+
+Marrowick_Chair_Item: {
+	DisplayName: Marrowick Chair
+	Tooltip: ""
+}
+
+Marrowick_Chest_Item: {
+	DisplayName: Marrowick Chest
+	Tooltip: ""
+}
+
+Marrowick_Door_Item: {
+	DisplayName: Marrowick Door
+	Tooltip: ""
+}
+
+Marrowick_Grandfather_Clock_Item: {
+	DisplayName: Marrowick Grandfather Clock
+	Tooltip: ""
+}
+
+Marrowick_Toilet_Item: {
+	DisplayName: Marrowick Toilet
 	Tooltip: ""
 }

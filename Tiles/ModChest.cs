@@ -39,7 +39,7 @@ namespace Origins.Tiles {
 			TileObjectData.addTile(Type);
 		}
 
-		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX < 36 ? 1 : 0);
+		public override ushort GetMapOption(int i, int j) => (ushort)(Main.tile[i, j].TileFrameX < 36 ? 0 : 1);
 
 		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
@@ -51,7 +51,7 @@ namespace Origins.Tiles {
 			return true;
 		}
 
-		public string MapChestName(string name, int i, int j) {
+		public static string MapChestName(string name, int i, int j) {
 			int left = i;
 			int top = j;
 			Tile tile = Main.tile[i, j];
