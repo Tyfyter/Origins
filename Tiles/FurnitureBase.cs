@@ -55,7 +55,7 @@ namespace Origins.Tiles {
 			}
 			TileObjectData.addTile(Type);
 			
-			AddMapEntry(MapColor, Lang._mapLegendCache.FromType(BaseTileID));
+			if (!Main.dedServ) AddMapEntry(MapColor, Lang._mapLegendCache.FromType(BaseTileID));
 			AdjTiles = new int[] {
 				BaseTileID
 			};

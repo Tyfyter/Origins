@@ -3821,26 +3821,26 @@ Marrowick_Toilet_Item: {
 }
 
 Endowood_Bathtub_Item: {
-	// DisplayName: Endowood_ Bathtub_ Item
+	// DisplayName: Endowood Bathtub
 	// Tooltip: ""
 }
 
 Endowood_Bookcase_Item: {
-	// DisplayName: Endowood_ Bookcase_ Item
+	// DisplayName: Endowood Bookcase
 	// Tooltip: ""
 }
 
 Endowood_Piano_Item: {
-	// DisplayName: Endowood_ Piano_ Item
+	// DisplayName: Endowood Piano
 	// Tooltip: ""
 }
 
 Endowood_Table_Item: {
-	// DisplayName: Endowood_ Table_ Item
+	// DisplayName: Endowood Table
 	// Tooltip: ""
 }
 
 Endowood_Work_Bench_Item: {
-	// DisplayName: Endowood_ Work_ Bench_ Item
+	// DisplayName: Endowood Work Bench
 	// Tooltip: ""
 }
