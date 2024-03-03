@@ -3774,3 +3774,18 @@ Endowood_Door_Item: {
 	DisplayName: Endowood Door
 	Tooltip: ""
 }
+
+Endowood_Chair_Item: {
+	DisplayName: Endowood Chair
+	Tooltip: ""
+}
+
+Endowood_Toilet_Item: {
+	DisplayName: Endowood Toilet
+	Tooltip: ""
+}
+
+Endowood_Grandfather_Clock_Item: {
+	DisplayName: Endowood Clock
+	Tooltip: ""
+}

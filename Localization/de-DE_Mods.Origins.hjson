@@ -1314,8 +1314,8 @@ Configs: {
 		}
 
 		TwentyFourHourTime: {
-			// Label: Twenty Four Hour Time
-			// Tooltip: ""
+			// Label: 24 Hour Time
+			// Tooltip: Makes Origins' clocks display time in a 24 hour format
 		}
 	}
 
