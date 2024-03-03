@@ -3819,3 +3819,28 @@ Marrowick_Toilet_Item: {
 	DisplayName: Marrowick Toilet
 	Tooltip: ""
 }
+
+Endowood_Bathtub_Item: {
+	DisplayName: Endowood Bathtub
+	Tooltip: ""
+}
+
+Endowood_Bookcase_Item: {
+	DisplayName: Endowood Bookcase
+	Tooltip: ""
+}
+
+Endowood_Piano_Item: {
+	DisplayName: Endowood Piano
+	Tooltip: ""
+}
+
+Endowood_Table_Item: {
+	DisplayName: Endowood Table
+	Tooltip: ""
+}
+
+Endowood_Work_Bench_Item: {
+	DisplayName: Endowood Work Bench
+	Tooltip: ""
+}

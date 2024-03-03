@@ -61,6 +61,67 @@ namespace Origins.Tiles.Endowood {
 			ToiletHitWire(i, j);
 		}
 	}
+	public class Endowood_Bathtub : FurnitureBase {
+		public override int BaseTileID => TileID.Bathtubs;
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(14)
+				.AddTile(TileID.Sawmill)
+				.Register();
+			};
+		}
+	}
+	public class Endowood_Bookcase : FurnitureBase {
+		public override int BaseTileID => TileID.Bookcases;
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(20)
+				.AddIngredient(ItemID.Book, 10)
+				.AddTile(TileID.Sawmill)
+				.Register();
+			};
+		}
+	}
+	public class Endowood_Piano : FurnitureBase {
+		public override int BaseTileID => TileID.Pianos;
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(20)
+				.AddIngredient(ItemID.Book, 10)
+				.AddTile(TileID.Sawmill)
+				.Register();
+			};
+		}
+	}
+	public class Endowood_Table : FurnitureBase {
+		public override int BaseTileID => TileID.Tables;
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(8)
+				.AddTile(TileID.WorkBenches)
+				.Register();
+			};
+		}
+	}
+	public class Endowood_Work_Bench : FurnitureBase {
+		public override int BaseTileID => TileID.WorkBenches;
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(10)
+				.Register();
+			};
+		}
+	}
 	public class Endowood_Chest : ModChest {
 		public override void SetStaticDefaults() {
 			base.SetStaticDefaults();

@@ -3702,7 +3702,7 @@ Marrowick_Item: {
 }
 
 Marrowick_Wall_Item: {
-	// DisplayName: Marrowick Wall Item
+	// DisplayName: Marrowick Wall
 	// Tooltip: Feels waxy to the touch.
 }
 
@@ -3791,31 +3791,56 @@ Endowood_Grandfather_Clock_Item: {
 }
 
 Endowood_Chest_Item: {
-	// DisplayName: Endowood_ Chest_ Item
+	// DisplayName: Endowood Chest
 	// Tooltip: ""
 }
 
 Marrowick_Chair_Item: {
-	// DisplayName: Marrowick_ Chair_ Item
+	// DisplayName: Marrowick Chair
 	// Tooltip: ""
 }
 
 Marrowick_Chest_Item: {
-	// DisplayName: Marrowick_ Chest_ Item
+	// DisplayName: Marrowick Chest
 	// Tooltip: ""
 }
 
 Marrowick_Door_Item: {
-	// DisplayName: Marrowick_ Door_ Item
+	// DisplayName: Marrowick Door
 	// Tooltip: ""
 }
 
 Marrowick_Grandfather_Clock_Item: {
-	// DisplayName: Marrowick_ Grandfather_ Clock_ Item
+	// DisplayName: Marrowick Grandfather Clock
 	// Tooltip: ""
 }
 
 Marrowick_Toilet_Item: {
-	// DisplayName: Marrowick_ Toilet_ Item
+	// DisplayName: Marrowick Toilet
+	// Tooltip: ""
+}
+
+Endowood_Bathtub_Item: {
+	// DisplayName: Endowood_ Bathtub_ Item
+	// Tooltip: ""
+}
+
+Endowood_Bookcase_Item: {
+	// DisplayName: Endowood_ Bookcase_ Item
+	// Tooltip: ""
+}
+
+Endowood_Piano_Item: {
+	// DisplayName: Endowood_ Piano_ Item
+	// Tooltip: ""
+}
+
+Endowood_Table_Item: {
+	// DisplayName: Endowood_ Table_ Item
+	// Tooltip: ""
+}
+
+Endowood_Work_Bench_Item: {
+	// DisplayName: Endowood_ Work_ Bench_ Item
 	// Tooltip: ""
 }
