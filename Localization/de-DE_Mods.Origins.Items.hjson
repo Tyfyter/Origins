@@ -3769,3 +3769,8 @@ Endowood_Wall_Item: {
 	// DisplayName: Endowood Wall
 	// Tooltip: ""
 }
+
+Endowood_Door_Item: {
+	// DisplayName: Endowood_ Door_ Item
+	// Tooltip: ""
+}

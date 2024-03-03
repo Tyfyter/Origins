@@ -374,6 +374,13 @@ namespace Origins {
 				return asset?.Value;
 			}
 		}
+		public bool Exists {
+			get {
+				LoadAsset();
+				return exists;
+			}
+		}
+		bool exists;
 		bool triedLoading;
 		string assetPath;
 		Asset<T> asset;
@@ -381,12 +388,14 @@ namespace Origins {
 			triedLoading = false;
 			assetPath = "";
 			this.asset = asset;
+			exists = false;
 			this.RegisterForUnload();
 		}
 		AutoLoadingAsset(string asset) {
 			triedLoading = false;
 			assetPath = asset;
 			this.asset = null;
+			exists = false;
 			this.RegisterForUnload();
 		}
 		public void Unload() {
@@ -399,7 +408,12 @@ namespace Origins {
 				if (assetPath is null) {
 					asset = Asset<T>.Empty;
 				} else {
-					asset = !Main.dedServ && ModContent.RequestIfExists<T>(assetPath, out var foundAsset) ? foundAsset : Asset<T>.Empty;
+					if (!Main.dedServ) {
+						exists = ModContent.RequestIfExists(assetPath, out Asset<T> foundAsset);
+						asset = exists ? foundAsset : Asset<T>.Empty;
+					} else {
+						asset = Asset<T>.Empty;
+					}
 				}
 			}
 		}

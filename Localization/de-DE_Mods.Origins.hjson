@@ -1312,6 +1312,11 @@ Configs: {
 			// SecretLabel: Debugging
 			// Tooltip: Click to copy
 		}
+
+		TwentyFourHourTime: {
+			// Label: Twenty Four Hour Time
+			// Tooltip: ""
+		}
 	}
 
 	OriginConfig: {

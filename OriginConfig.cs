@@ -58,26 +58,25 @@ namespace Origins {
 		public static OriginClientConfig Instance;
 		public override ConfigScope Mode => ConfigScope.ClientSide;
 
-		[Label("Use Double Tap For Set Bonus Abilities")]
 		[DefaultValue(false)]
 		public bool SetBonusDoubleTap = false;
 
-		[Header("Journal")]
-
-		[Label("Alternate Journal Layout")]
-		[DefaultValue(false)]
-		public bool TabbyJournal = false;
-
-		[Label("Open Journal Entries on Unlock")]
-		[DefaultValue(true)]
-		public bool OpenJournalOnUnlock = true;
-
-		[Label("Animated Ravel Transformation")]
 		[DefaultValue(true)]
 		public bool AnimatedRavel = true;
 
 		[DefaultValue(true)]
 		public bool ExtraGooeyRivenGores = true;
+
+		[DefaultValue(false)]
+		public bool TwentyFourHourTime = false;
+
+		[Header("Journal")]
+
+		[DefaultValue(false)]
+		public bool TabbyJournal = false;
+
+		[DefaultValue(true)]
+		public bool OpenJournalOnUnlock = true;
 
 		[CustomModConfigItem(typeof(InconspicuousVersionElement))]
 		public DebugConfig debugMenuButton = new();

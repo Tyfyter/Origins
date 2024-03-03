@@ -1312,6 +1312,11 @@ Configs: {
 			SecretLabel: Debugging
 			Tooltip: Click to copy
 		}
+
+		TwentyFourHourTime: {
+			Label: 24 Hour Time
+			Tooltip: "Makes Origins' clocks display time in a 24 hour format"
+		}
 	}
 
 	OriginConfig: {
