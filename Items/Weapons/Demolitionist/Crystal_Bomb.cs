@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Crystal_Bomb_P>();
 			Item.shootSpeed *= 1.5f;
 			Item.knockBack = 5f;
-			Item.ammo = ItemID.Grenade;
+			Item.ammo = ItemID.Bomb;
 			Item.value = Item.sellPrice(silver: 5);
 			Item.rare = ItemRarityID.LightRed;
 		}
