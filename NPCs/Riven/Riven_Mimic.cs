@@ -21,9 +21,6 @@ namespace Origins.NPCs.Riven {
 			NPC.knockBackResist = 0.1f;
 			NPC.rarity = 5;
         }
-		public override int SpawnNPC(int tileX, int tileY) {//should disable spawning
-			return -1;
-		}
 		public override void FindFrame(int frameHeight) {
 			NPC.CloneFrame(NPCID.BigMimicCrimson, frameHeight);
 		}
