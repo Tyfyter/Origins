@@ -528,7 +528,7 @@ Missile_Armcannon: {
 	/* Tooltip:
 		'''
 		30% increased explosive throwing velocity
-		Increases attack speed of thrown explosives
+		Increases explosive attack speed
 		Enables autouse for all explosive weapons
 		Shoots rockets as you swing
 		'Payload not included'

@@ -34,6 +34,7 @@ namespace Origins.Tiles.Brine {
             Recipe recipe = Recipe.Create(ItemID.ExplosivePowder);
             recipe.AddIngredient(this, 2);
             recipe.AddTile(TileID.GlassKiln);
+            recipe.DisableDecraft();
             recipe.Register();
         }
     }

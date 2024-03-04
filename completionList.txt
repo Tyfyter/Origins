@@ -765,7 +765,7 @@ EXPLOSIVE WEAPONS:
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (X) Big Surprise
-(#2, ^2) Boomphracken
+(#2, ^2) Boomphracken !!!
 (X) Cavitation Cannon
 (X) Chambersite Mine Launcher
 (^) Happy Bomb*

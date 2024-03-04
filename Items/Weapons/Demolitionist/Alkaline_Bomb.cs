@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
 			Item.damage = 81;
-			Item.value *= 14;
+			Item.value = 1000;
 			Item.shoot = ModContent.ProjectileType<Acid_Bomb_P>();
 			Item.ammo = ItemID.Bomb;
 			Item.rare = ItemRarityID.LightRed;
