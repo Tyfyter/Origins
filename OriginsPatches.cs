@@ -334,6 +334,7 @@ namespace Origins {
 					c.EmitLdarg1();
 					c.EmitDelegate<Func<string, int, string>>((key, npcType) => {
 						if (npcType != 0) {
+							if (Main.LocalPlayer.talkNPC < 0) return key;
 							NPC talkNPC = Main.npc[Main.LocalPlayer.talkNPC];
 							string talkNPCName = NPCID.Search.GetName(talkNPC.netID);
 							string baseKey = "TownNPCMood_" + talkNPCName;

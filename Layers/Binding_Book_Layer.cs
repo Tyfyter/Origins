@@ -18,7 +18,7 @@ namespace Origins.Layers {
 	public class Binding_Book_Layer : PlayerDrawLayer {
 		AutoLoadingAsset<Texture2D> endTexture = "Origins/Items/Accessories/Binding_Book_P";
 		public override bool GetDefaultVisibility(PlayerDrawSet drawInfo) {
-			return drawInfo.drawPlayer.GetModPlayer<OriginPlayer>().bindingBookVisual;
+			return !drawInfo.drawPlayer.dead && drawInfo.drawPlayer.GetModPlayer<OriginPlayer>().bindingBookVisual;
 		}
 		public override Position GetDefaultPosition() => new AfterParent(PlayerDrawLayers.Backpacks);
 		protected override void Draw(ref PlayerDrawSet drawInfo) {

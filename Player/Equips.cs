@@ -14,6 +14,9 @@ using static Origins.OriginExtensions;
 namespace Origins {
     public partial class OriginPlayer : ModPlayer {
 		public override void PostUpdateEquips() {
+			if (bugZapper) {
+				Player.statDefense += (int)(tornCurrentSeverity * 8);
+			}
 			if (eyndumSet) {
 				ApplyEyndumSetBuffs();
 				if (eyndumCore?.Value?.ModItem is ModItem equippedCore) {

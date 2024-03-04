@@ -424,9 +424,6 @@ namespace Origins {
 					}
 				}
 			}
-			if (bugZapper) {
-				Player.statDefense += (int)(tornCurrentSeverity * 8);
-			}
 		}
 		public override void Kill(double damage, int hitDirection, bool pvp, PlayerDeathReason damageSource) {
 			if (hasPotatOS) {

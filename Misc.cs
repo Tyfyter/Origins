@@ -1521,7 +1521,6 @@ namespace Origins {
 		}
 		public static int GetGoreSlot(this Mod mod, string name) {
 			if (Main.netMode == NetmodeID.Server) {
-				mod.Logger.Error($"Tried to load gore {mod.Name}/{name} on server");
 				return 0;
 			}
 			if (mod.TryFind(name, out ModGore modGore)) {
