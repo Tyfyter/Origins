@@ -454,7 +454,7 @@ namespace Origins {
 		}
 	}
 	public class KeyedPlayerDeathReason : PlayerDeathReason {
-		public string Key { get; init; }
+		public string Key { get => SourceCustomReason; set => SourceCustomReason = value; }
 	}
 	public struct PlayerShaderSet {
 		public int cHead;

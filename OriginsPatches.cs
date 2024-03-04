@@ -244,7 +244,9 @@ namespace Origins {
 			Terraria.GameContent.Drawing.On_TileDrawing.Draw += TileDrawing_Draw;
 			Terraria.GameContent.Drawing.On_TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
 			//Terraria.IL_NPC.StrikeNPC_HitInfo_bool_bool += NPC_StrikeNPC;
-			Terraria.DataStructures.On_PlayerDeathReason.GetDeathText += PlayerDeathReason_GetDeathText;
+			On_PlayerDeathReason.GetDeathText += PlayerDeathReason_GetDeathText;
+			On_PlayerDeathReason.WriteSelfTo += On_PlayerDeathReason_WriteSelfTo;
+			On_PlayerDeathReason.FromReader += On_PlayerDeathReason_FromReader;
 			Terraria.On_Player.KillMe += Player_KillMe;// should have no effect, but is necessary for custom death text somehow
 			Terraria.On_WorldGen.PlacePot += WorldGen_PlacePot;
 			Terraria.On_WorldGen.PlaceSmallPile += WorldGen_PlaceSmallPile;
@@ -748,6 +750,27 @@ namespace Origins {
 			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
 				defense -= (int)(defense * 0.2f);
 			}
+		}
+
+		private void On_PlayerDeathReason_WriteSelfTo(On_PlayerDeathReason.orig_WriteSelfTo orig, PlayerDeathReason self, System.IO.BinaryWriter writer) {
+			orig(self, writer);
+			writer.Write(self is KeyedPlayerDeathReason);
+		}
+
+		private PlayerDeathReason On_PlayerDeathReason_FromReader(On_PlayerDeathReason.orig_FromReader orig, System.IO.BinaryReader reader) {
+			PlayerDeathReason value = orig(reader);
+			if (reader.ReadBoolean()) {
+				return new KeyedPlayerDeathReason() {
+					SourceCustomReason = value.SourceCustomReason,
+					SourceProjectileLocalIndex = value.SourceProjectileLocalIndex,
+					SourceNPCIndex = value.SourceNPCIndex,
+					SourcePlayerIndex = value.SourcePlayerIndex,
+					SourceItem = value.SourceItem,
+					SourceOtherIndex = value.SourceOtherIndex,
+					SourceProjectileType = value.SourceProjectileType
+				};
+			}
+			return value;
 		}
 		private NetworkText PlayerDeathReason_GetDeathText(On_PlayerDeathReason.orig_GetDeathText orig, PlayerDeathReason self, string deadPlayerName) {
 			if (self is KeyedPlayerDeathReason keyedReason) {
