@@ -17,6 +17,9 @@ namespace Origins {
 			if (bugZapper) {
 				Player.statDefense += (int)(tornCurrentSeverity * 8);
 			}
+			if (donorWristband) {
+				Player.pStone = false;
+			}
 			if (eyndumSet) {
 				ApplyEyndumSetBuffs();
 				if (eyndumCore?.Value?.ModItem is ModItem equippedCore) {

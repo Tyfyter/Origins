@@ -23,7 +23,6 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateEquip(Player player) {
 			player.lifeRegen += 2;
-			player.pStone = true;
 			player.GetModPlayer<OriginPlayer>().donorWristband = true;
 		}
 	}
