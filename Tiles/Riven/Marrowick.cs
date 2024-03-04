@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Weapons.Melee;
+using Origins.Items.Weapons.Ranged;
 using Origins.Walls;
 using Terraria;
 using Terraria.ID;
@@ -34,6 +36,16 @@ namespace Origins.Tiles.Riven {
 
             recipe = Recipe.Create(ModContent.ItemType<Marrowick_Wall_Item>(), 4);
             recipe.AddIngredient(this);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+
+            recipe = Recipe.Create(ModContent.ItemType<Marrowick_Bow>());
+            recipe.AddIngredient(ModContent.ItemType<Endowood_Wall_Item>(), 10);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+
+            recipe = Recipe.Create(ModContent.ItemType<Marrowick_Sword>());
+            recipe.AddIngredient(ModContent.ItemType<Endowood_Wall_Item>(), 7);
             recipe.AddTile(TileID.WorkBenches);
             recipe.Register();
         }

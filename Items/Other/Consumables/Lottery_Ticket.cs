@@ -9,7 +9,7 @@ namespace Origins.Items.Other.Consumables {
 			Item.width = 20;
 			Item.height = 16;
 			Item.rare = ItemRarityID.Green;
-			Item.value = Item.sellPrice(gold: 10);
+			Item.value = Item.sellPrice(gold: 1);
 		}
 		public override void UpdateInventory(Player player) {
 			player.GetModPlayer<OriginPlayer>().lotteryTicketItem = Item;

@@ -1184,14 +1184,14 @@ UI:
 (X) Cosmos Map/Bestiary Backdrop
 (X) Dawn Map/Bestiary Backdrop
 (^) Dawn Icon
-(@5, ^3) Defiled Map/Bestiary Backdrop
+(@5, ^3) Defiled Map/Bestiary Backdrop !!!
 (^) Defiled Icon
 (X) Dusk Map/Bestiary Backdrop
 (^) Dusk Icon
 (X) Fiberglass Map/Bestiary Backdrop !!!
 (X) Fiberglass Icon !!!
 (X) Fractured Isles Icon
-(@5, ^3) Riven Map/Bestiary Backdrop
+(^) Riven Map/Bestiary Backdrop
 (^) Riven Icon
 
 (#3, ^2) 30x30 Origins Icon !!!
