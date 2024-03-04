@@ -80,6 +80,7 @@ namespace Origins.NPCs.Riven {
 			NPC.velocity = Vector2.Zero;
 			NPC.oldVelocity = Vector2.Zero;
 			NPC.oldPosition = NPC.position;
+			NPC.netUpdate = true;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Barnacle;
