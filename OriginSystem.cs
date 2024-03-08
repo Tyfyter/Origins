@@ -117,6 +117,11 @@ namespace Origins {
             recipe.AddTile(TileID.Anvils);
             recipe.Register();
 
+            recipe = Recipe.Create(ItemID.ScarabBomb, 3);
+            recipe.AddIngredient(ItemID.Bomb, 3);
+            recipe.AddIngredient(ItemID.FossilOre);
+            recipe.Register();
+
             recipe = Recipe.Create(ItemID.TheRottedFork);
 			recipe.AddIngredient(ItemID.CrimtaneBar, 9);
 			recipe.AddIngredient(ItemID.TissueSample, 5);
@@ -245,11 +250,42 @@ namespace Origins {
 					r.DisableRecipe();
 				}
 
-				//recipe = r.Clone();
-				//recipe.requiredItem = recipe.requiredItem.Select((it) => it.type == ItemID.Deathweed ? new Item(roseID) : it.CloneByID()).ToList();
-				//Mod.Logger.Info("adding procedural recipe: " + recipe.Stringify());
-				//recipe.Create();
-			}
+                if (r.Matches((ItemID.ScarabBomb, null), null, (ItemID.Bomb, 1), (ItemID.FossilOre, 1))) {
+                    r.DisableRecipe();
+                }
+
+                /*if (r.Matches((ItemID.CelestialShell, null), new int[] { TileID.TinkerersWorkbench }, (ItemID.CelestialStone, 1), (ItemID.MoonShell, 1))) {
+                    r.DisableRecipe();
+                } only uncomment when Ornament of Metamorphosis is implemented */
+
+                //Everything below this needs the corresponding recipe in the Nova Fragment class when the Nova Pillar is implemented
+                /*if (r.Matches((ItemID.CelestialSigil, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 12), (ItemID.FragmentSolar, 12), (ItemID.FragmentStardust, 12), (ItemID.FragmentVortex, 12))) {
+                    r.DisableRecipe();
+                }
+                if (r.Matches((ItemID.LunarHook, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 6), (ItemID.FragmentSolar, 6), (ItemID.FragmentStardust, 6), (ItemID.FragmentVortex, 6))) {
+                    r.DisableRecipe();
+                }
+                if (r.Matches((ItemID.FragmentNebula, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentSolar, 1), (ItemID.FragmentStardust, 1), (ItemID.FragmentVortex, 1))) {
+                    r.DisableRecipe();
+                }
+                if (r.Matches((ItemID.FragmentSolar, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 1), (ItemID.FragmentStardust, 1), (ItemID.FragmentVortex, 1))) {
+                    r.DisableRecipe();
+                }
+                if (r.Matches((ItemID.FragmentStardust, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 1), (ItemID.FragmentSolar, 1), (ItemID.FragmentVortex, 1))) {
+                    r.DisableRecipe();
+                }
+                if (r.Matches((ItemID.FragmentVortex, null), new int[] { TileID.LunarCraftingStation }, (ItemID.FragmentNebula, 1), (ItemID.FragmentSolar, 1), (ItemID.FragmentStardust, 1))) {
+                    r.DisableRecipe();
+                }
+                if (r.Matches((ItemID.SuperHealingPotion, null), new int[] { TileID.Bottles }, (ItemID.FragmentNebula, 1), (ItemID.FragmentSolar, 1), (ItemID.FragmentStardust, 1), (ItemID.FragmentVortex, 1), (ItemID.GreaterHealingPotion, 1)) {
+                    r.DisableRecipe();
+                }*/
+
+                //recipe = r.Clone();
+                //recipe.requiredItem = recipe.requiredItem.Select((it) => it.type == ItemID.Deathweed ? new Item(roseID) : it.CloneByID()).ToList();
+                //Mod.Logger.Info("adding procedural recipe: " + recipe.Stringify());
+                //recipe.Create();
+            }
 		}
 		public override void ModifyLightingBrightness(ref float scale) {
 			OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();

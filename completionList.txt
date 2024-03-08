@@ -83,7 +83,7 @@ TOWN NPCs:
 
 VANILLA MODIFICATIONS:
 ---
-(^) Recipes General
+(ᗢ) Recipes General
 
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (^) Demolitionist (to sell different items based on peat sold)*
@@ -901,12 +901,12 @@ TILES:
 (X) Dusk Dungeon Chest*
 (X) Edenwood Furniture*
 (#, ^2) Encrusted Brick !!!
-(#, ^2) Endowood Furniture* !!!
+(#3, ^2) Endowood Furniture* !!!
 (#2, ^2) Laser Tag Console*
 (#, ^2) Living Alkahest Block*
 (#, ^2) Living Bile Block*
 (#, ^2) Lost Brick !!!
-(#, ^2) Marrowick Furniture* !!!
+(#3, ^2) Marrowick Furniture* !!!
 (X) Mushroom Dungeon Chest*
 (X) Nova Brick*
 (X) Nova Fragment Block*
@@ -1193,6 +1193,10 @@ UI:
 (X) Fractured Isles Icon
 (^) Riven Map/Bestiary Backdrop
 (^) Riven Icon
+(X) Underground Ashen Background
+(X) Underground Defiled Background !!!
+(X) Underground Fiberglass Background !!!
+(X) Underground Riven Background !!!
 
 (#3, ^2) 30x30 Origins Icon !!!
 (@5, ^3) Origins Mod Browser Logo !!!

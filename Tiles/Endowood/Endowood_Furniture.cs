@@ -1,17 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
-using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
-using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Endowood {
-	public class Endowood_Door : DoorBase {
+    public class Endowood_Door : DoorBase {
 		public override Color MapColor => new(44, 39, 58);
 		public override void OnLoad() {
 			item.OnAddRecipes += (item) => {
