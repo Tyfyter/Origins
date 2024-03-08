@@ -301,6 +301,7 @@ ACCESSORIES:
 (#3, ^2) Control Locus* !!!
 (^) Coologne*
 (#, ^2) Counter-offensive Scarf* !!!
+(#, ^2) Cruel Angel Wings* !!!
 (^) Danger Barrel*
 (^) Decaying Scale*
 (^) Destructive Claws*
@@ -312,6 +313,7 @@ ACCESSORIES:
 (^) Explosive Artery*
 (^) Fleshy Figurine*
 (^) Focus Crystal*
+(#, ^2) Futurephones* !!!
 (^) Grave Danger*
 (#2, ^2) Grenade Tube*
 (^) Gun Glove*
@@ -1110,7 +1112,7 @@ CONSUMABLES:
 (X) Twilight Crate*
 
 (^) Gooey Water*
-(@2, #3) Holiday Hair Dye* !!!
+(#3, ^2) Holiday Hair Dye* !!!
 (^) Lottery Ticket*
 (^) Magic Brine Dropper*
 (#2, ^2) Void Lock*
