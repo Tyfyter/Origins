@@ -726,7 +726,7 @@ namespace Origins {
 			return value;
 		}
 
-		private void Player_KillMe(Terraria.On_Player.orig_KillMe orig, Player self, PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp) {
+		private void Player_KillMe(On_Player.orig_KillMe orig, Player self, PlayerDeathReason damageSource, double dmg, int hitDirection, bool pvp) {
 			orig(self, damageSource, dmg, hitDirection, pvp);
 		}
 

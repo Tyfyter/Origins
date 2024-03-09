@@ -27,7 +27,7 @@ namespace Origins.Items.Other.Consumables {
 			}
 		}
 		public override void Load() {
-			if (ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib)) {
+			if (!ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib)) {
 				shaders = new() { (() => true, new()) };
 				return;
 			}
@@ -38,6 +38,16 @@ namespace Origins.Items.Other.Consumables {
 			}
 			const string lunarNewYear = "Lunar New Year";
 			const string autismAwareness = "Autism Awareness Day";
+			///<summary>Adds a holiday with the specified information using either the overlay or textured pass</summary>
+			(Func<bool> day, HolidayHairPassData pass) SimpleHoliday(string name, DateTime date, Color? hairColor, string texture, bool overlay = true) {
+				AddHoliday(name, date);
+				return (Day(name), new HolidayHairPassData(
+					  PassName: overlay ? "Overlay" : "Textured",
+					  ColorFunc: (hairColor, lightColor) => lightColor,
+					  uColor: hairColor.HasValue ? new HairColorWrapper(hairColor.Value) : default,
+					  Image: Mod.Assets.Request<Texture2D>("Items/Other/Consumables/HolidayHairs/" + texture)
+				));
+			}
 			AddHoliday(lunarNewYear, (Func<int>)(() => {
 				return new ChineseLunisolarCalendar().GetDayOfYear(DateTime.Now) == 1 ? 1 : 0;
 			}));
@@ -67,6 +77,7 @@ namespace Origins.Items.Other.Consumables {
 					  UsesHairColor: false,
 					  Image: Main.Assets.Request<Texture2D>("Images/Misc/noise")
 				)),
+				SimpleHoliday("World Stroke Day", new DateTime(1999, 10, 29), new Color(33, 33, 33), "WorldStrokeDay_Hair", false),
 				(() => true, new())
 			};
 		}
