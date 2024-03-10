@@ -134,12 +134,12 @@ namespace Origins {
 		public bool messyLeech = false;
 		public bool magmaLeech = false;
 		public bool noU = false;
-		public const float donorWristbandMult = 0.625f;
+		public const float donorWristbandMult = 0.52f;
 		public bool donorWristband = false;
 		public bool oldDonorWristband = false;
 		public HashSet<Point> preHitBuffs;
 		public int lastHitEnemy;
-		public const float plasmaPhialMult = 0.5f;
+		public const float plasmaPhialMult = 0.7f;
 		public bool plasmaPhial = false;
 		public bool oldPlasmaPhial = false;
 		public bool turboReel = false;

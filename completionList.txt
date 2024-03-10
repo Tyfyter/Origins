@@ -107,7 +107,7 @@ ENEMY NPCS:
 (^) Ancient Defiled Cyclops
 (^) Barnacleback
 (^) Barnacle Bunny*
-(☻) Bile Thrower* !!!
+(^) Bile Thrower*
 (#3, ^2) Bottomfeeder !!!
 (^) Buckethead Zombie
 (^) Cellarkeep*
@@ -135,7 +135,6 @@ ENEMY NPCS:
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (#3, ^2) Shattered Goldfish !!!
-(^) Single-Cellular Nautilus
 (#3, ^2) Spider Amoeba !!!
 
 (#, ^2) Amebeye* !!!
@@ -164,6 +163,7 @@ ENEMY NPCS:
 (X) Sea Dragon
 (#, ^2) Shattered Ghoul !!!
 (#3, ^2) Shattered Mummy !!!
+(^) Single-Cellular Nautilus
 (#, ^2) Torn Ghoul !!!
 (#3, ^2) Trijaw Shark !!!
 
@@ -757,7 +757,7 @@ EXPLOSIVE WEAPONS:
 (#, ^2) Internal Combustion* !!!
 (#, ^2) Link Grenade* !!!
 (#, ^2) Matrix* !!!
-(#, ^2) Meteor* !!!
+(^) Meteor*
 (^) Outbreak Bomb*
 (^) Peatball*
 (#3, ^2) Potato Mine* !!!
@@ -770,6 +770,8 @@ EXPLOSIVE WEAPONS:
 (#2, ^2) Boomphracken !!!
 (X) Cavitation Cannon
 (X) Chambersite Mine Launcher
+(^) Crystal Bomb*
+(^) Crystal Grenade*
 (^) Happy Bomb*
 (X) Rattlesnake
 (^) Sonorous Shredder
@@ -779,8 +781,6 @@ EXPLOSIVE WEAPONS:
 (^) Bomboomstick
 (#2, ^2) Chlorodynamite* !!!
 (X) Chlorophyte Handcannon
-(^) Crystal Bomb*
-(^) Crystal Grenade*
 (X) Firework Cannon
 (^) Mine Flayer*
 (#, ^2) Nova Cascade* !!!

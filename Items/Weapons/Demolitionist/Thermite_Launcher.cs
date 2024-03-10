@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Weapons.Ammo;
+using Origins.Projectiles;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -70,7 +71,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.width = (Projectile.height = 52);
 			Projectile.Center = Projectile.position;
 			Projectile.Damage();
-			for (int i = 0; i < 5; i++) {
+            ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
+            for (int i = 0; i < 5; i++) {
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Projectile.velocity / 2) + Vec2FromPolar((i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi, Main.rand.NextFloat(2, 4)), ModContent.ProjectileType<Thermite_P>(), (int)(Projectile.damage * 0.65f), 0, Projectile.owner);
 			}
 		}

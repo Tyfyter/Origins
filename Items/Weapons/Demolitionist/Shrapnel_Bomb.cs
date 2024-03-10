@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Weapons.Ammo;
+using Origins.Projectiles;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -55,6 +56,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
+            ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
             SoundEngine.PlaySound(Origins.Sounds.ShrapnelFest, Projectile.Center);
             Vector2 v;
 			for (int i = 4; i-- > 0;) {

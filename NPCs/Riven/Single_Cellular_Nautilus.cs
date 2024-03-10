@@ -18,15 +18,15 @@ namespace Origins.NPCs.Riven {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Tumbleweed);
 			NPC.aiStyle = NPCAIStyleID.Unicorn;
-			NPC.lifeMax = 70;
-			NPC.defense = 12;
-			NPC.damage = 33;
+			NPC.lifeMax = 210;
+			NPC.defense = 31;
+			NPC.damage = 66;
 			NPC.width = 20;
 			NPC.height = 24;
 			NPC.friendly = false;
 			NPC.knockBackResist = 1f;
 			NPC.frame.Height = 30;
-			NPC.value = 200;
+			NPC.value = 450;
         }
 		public override void PostAI() {
 			NPC.rotation += NPC.velocity.X / 24f;

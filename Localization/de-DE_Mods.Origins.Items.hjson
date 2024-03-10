@@ -247,7 +247,7 @@ Donor_Wristband: {
 	/* Tooltip:
 		'''
 		Increased life regeneration
-		Debuff durations reduced by 37.5%
+		Debuff durations reduced by 48%
 		''' */
 }
 
@@ -613,11 +613,11 @@ Pincushion_Inactive: {
 }
 
 Plasma_Phial: {
-	// DisplayName: Plasma Phial
+	// DisplayName: Plasma Bag
 	/* Tooltip:
 		'''
-		Debuff durations are halved
 		Slightly increased regeneration
+		Debuff durations reduced by 30%
 		Rapidly lose life when inflicted with Bleeding
 		''' */
 }
@@ -3847,10 +3847,10 @@ Endowood_Work_Bench_Item: {
 
 Meteor: {
 	// DisplayName: Meteor
-	// Tooltip: ""
+	// Tooltip: Launches meteorites in a high arc
 }
 
 Self_Destruct: {
-	// DisplayName: Self_ Destruct
-	// Tooltip: ""
+	// DisplayName: Self-Destruct
+	// Tooltip: Deal impressive damage for a massive area
 }

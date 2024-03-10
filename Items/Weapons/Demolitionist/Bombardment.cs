@@ -66,7 +66,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
 			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
-			return false;
+            ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
+            return false;
 		}
 		public bool IsExploding() => Projectile.penetrate == -1;
 	}

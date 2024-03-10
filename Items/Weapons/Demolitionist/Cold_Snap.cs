@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -68,6 +69,7 @@ namespace Origins.Items.Weapons.Demolitionist {
             Projectile.width = (Projectile.height = 72);
             Projectile.Center = Projectile.position;
             Projectile.Damage();
+            ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
         }
         public override void AI() {
             Dust.NewDust(Projectile.Center, 0, 0, DustID.IceTorch, 0, 0, 155, default, 0.75f);

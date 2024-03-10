@@ -1,20 +1,17 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
 using Origins.Projectiles;
-using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
-using Tyfyter.Utils;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Self_Destruct : ModItem {
+    public class Self_Destruct : ModItem {
 		public string[] Categories => new string[] {
-
-		};
+            "OtherExplosive"
+        };
 		public override void SetDefaults() {
 			Item.DamageType = DamageClasses.Explosive;
 			Item.useStyle = ItemUseStyleID.HoldUp;
@@ -22,12 +19,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useTime = 120;
 			Item.useAnimation = 120;
 			Item.shoot = ModContent.ProjectileType<Self_Destruct_P>();
-			Item.rare = ItemRarityID.Orange;
+			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.MeteoriteBar, 20)
-			.AddTile(TileID.Anvils)
+			.AddIngredient(ItemID.SoulofMight, 15)
+            .AddIngredient(ModContent.ItemType<Busted_Servo>(), 28)
+            .AddIngredient(ModContent.ItemType<Power_Core>(), 2)
+            .AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
@@ -81,8 +80,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 5;
 			Projectile.penetrate = -1;
 			Projectile.aiStyle = 0;
-			Projectile.width = 96;
-			Projectile.height = 96;
+			Projectile.width = 608;
+			Projectile.height = 608;
 			Projectile.hide = true;
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.usesLocalNPCImmunity = true;

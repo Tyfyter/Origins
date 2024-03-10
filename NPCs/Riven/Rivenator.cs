@@ -1,7 +1,10 @@
 using Origins.Buffs;
+using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
+using Origins.NPCs.Defiled;
 using Origins.World.BiomeData;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
@@ -104,8 +107,11 @@ namespace Origins.NPCs.Riven {
 		protected static void deathEffect(NPC npc) {
 			//Gore.NewGore(NPC.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
 			for (int i = 0; i < 5; i++) Gore.NewGore(npc.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
-			//for(int i = 0; i < 3; i++)
-		}
+            //for(int i = 0; i < 3; i++)
+            if (Main.rand.NextBool(9)) {
+                NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X + Main.rand.Next(npc.width), (int)npc.position.Y + Main.rand.Next(npc.height), ModContent.NPCType<Cleaver_Head>());
+            }
+        }
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 480, targetSeverity: 1f - 0.67f);
 		}

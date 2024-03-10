@@ -27,7 +27,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed = 8.3f;
 			Item.reuseDelay = 6;
 			Item.autoReuse = true;
-			Item.value = Item.sellPrice(silver:50);
+			Item.UseSound = SoundID.Item61;
+            Item.value = Item.sellPrice(silver:50);
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {

@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Projectiles;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -101,7 +102,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				float force = strength / distSQ;
 				if (force > 1) targetItem.velocity = Vector2.Lerp(targetItem.velocity, (Projectile.Center - targetItem.Center).SafeNormalize(Vector2.Zero) * Min(force, dist), 0.9f);
 			}
-		}
+        }
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			if (Projectile.timeLeft <= totalDur) return false;
 			Projectile.aiStyle = 0;
@@ -132,7 +133,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-		}
+            ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
+        }
 		public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI) {
 			behindNPCsAndTiles.Add(index);
 		}
