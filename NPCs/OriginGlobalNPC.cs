@@ -129,6 +129,10 @@ namespace Origins.NPCs {
 					shop.Add<Shardcannon>(Quest.QuestCondition<Shardcannon_Quest>());
 					break;
 				}
+				case NPCID.Stylist: {
+					shop.Add<Holiday_Hair_Dye>();
+					break;
+				}
 			}
 		}
 		public override bool PreAI(NPC npc) {
