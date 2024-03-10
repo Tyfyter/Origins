@@ -788,7 +788,7 @@ EXPLOSIVE WEAPONS:
 (^) Nuclear Arm*
 (#2, ^2) Omni-directional Claymore*
 (^) Rocodile
-(☻) Self-Destruct* !!!
+(#4, ^2) Self-Destruct* !!!
 (X) Supernova
 (X) Thundershot
 
@@ -1196,9 +1196,9 @@ UI:
 (^) Riven Map/Bestiary Backdrop
 (^) Riven Icon
 (X) Underground Ashen Background
-(X) Underground Defiled Background !!!
-(X) Underground Fiberglass Background !!!
-(X) Underground Riven Background !!!
+(#, ^2) Underground Defiled Background !!!
+(#, ^2) Underground Fiberglass Background !!!
+(#, ^2) Underground Riven Background !!!
 
 (#3, ^2) 30x30 Origins Icon !!!
 (@5, ^3) Origins Mod Browser Logo !!!
