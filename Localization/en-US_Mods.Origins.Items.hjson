@@ -3844,3 +3844,8 @@ Endowood_Work_Bench_Item: {
 	DisplayName: Endowood Work Bench
 	Tooltip: ""
 }
+
+Meteor: {
+	DisplayName: Meteor
+	Tooltip: ""
+}

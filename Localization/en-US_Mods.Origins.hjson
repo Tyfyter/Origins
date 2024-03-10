@@ -1091,6 +1091,9 @@ Projectiles: {
 	Potato_Battery_P.DisplayName: Potato Battery
 	Potato_Mine_P.DisplayName: Potato Mine
 	Defiled_Goop.DisplayName: Black Bile
+	Meteor_Explosion_1.DisplayName: Meteor
+	Meteor_Explosion_2.DisplayName: Meteor
+	Meteor_P.DisplayName: Meteor
 }
 
 Prefixes: {

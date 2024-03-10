@@ -119,7 +119,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Flakjack_Explosion_P : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => "Terraria/Images/Projectile_16";
-		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.timeLeft = 5;
