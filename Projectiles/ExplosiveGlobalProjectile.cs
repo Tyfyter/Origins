@@ -667,5 +667,23 @@ namespace Origins.Projectiles {
 				}
 			}
 		}
+		public static void DealSelfDamage(Projectile projectile) {
+			if (projectile.owner == Main.myPlayer) {
+				Player player = Main.LocalPlayer;
+				if (player.active && !player.dead && !player.immune) {
+					Rectangle projHitbox = projectile.Hitbox;
+					ProjectileLoader.ModifyDamageHitbox(projectile, ref projHitbox);
+					Rectangle playerHitbox = new Rectangle((int)player.position.X, (int)player.position.Y, player.width, player.height);
+					if (projHitbox.Intersects(playerHitbox)) {
+						player.Hurt(
+							PlayerDeathReason.ByProjectile(Main.myPlayer, projectile.whoAmI),
+							Main.DamageVar(projectile.damage, -player.luck),
+							Math.Sign(player.Center.X - projectile.Center.X),
+							true
+						);
+					}
+				}
+			}
+		}
 	}
 }

@@ -3849,3 +3849,8 @@ Meteor: {
 	DisplayName: Meteor
 	Tooltip: ""
 }
+
+Self_Destruct: {
+	DisplayName: Self-Destruct
+	Tooltip: ""
+}

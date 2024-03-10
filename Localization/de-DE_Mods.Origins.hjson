@@ -1094,6 +1094,8 @@ Projectiles: {
 	// Meteor_Explosion_1.DisplayName: Meteor
 	// Meteor_Explosion_2.DisplayName: Meteor
 	// Meteor_P.DisplayName: Meteor
+	// Self_Destruct_Explosion.DisplayName: Self_ Destruct_ Explosion
+	// Self_Destruct_P.DisplayName: Self_ Destruct_ P
 }
 
 Prefixes: {

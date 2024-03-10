@@ -2,6 +2,7 @@
 using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs;
 using Origins.Projectiles;
 using Origins.Questing;
@@ -322,6 +323,9 @@ namespace Origins {
 				StatModifier currentExplosiveSelfDamage = explosiveSelfDamage;
 				if (proj.TryGetGlobalProjectile(out ExplosiveGlobalProjectile global)) currentExplosiveSelfDamage = currentExplosiveSelfDamage.CombineWith(global.selfDamageModifier);
 				modifiers.SourceDamage = modifiers.SourceDamage.CombineWith(currentExplosiveSelfDamage);
+				if (proj.type == ModContent.ProjectileType<Self_Destruct_Explosion>() && modifiers.SourceDamage.ApplyTo(proj.damage) < proj.damage / 5) {
+					modifiers.SourceDamage = new StatModifier(1, 0.2f);
+				}
 			}
 		}
 		public override bool CanBeHitByNPC(NPC npc, ref int cooldownSlot) {
