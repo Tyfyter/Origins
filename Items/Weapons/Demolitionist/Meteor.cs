@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.damage = 12;
+			Item.damage = 18;
 			Item.crit = 0;
 			Item.useAnimation = 32;
 			Item.useTime = 32;
@@ -81,6 +81,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
 				Projectile.velocity.Y += 0.12f;
+				Projectile.rotation += Projectile.velocity.X * 0.075f;
 			} else if (++Projectile.ai[1] > 180) {
 				Projectile.NewProjectile(
 					Projectile.GetSource_Death(),
