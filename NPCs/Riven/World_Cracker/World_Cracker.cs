@@ -501,7 +501,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		public static int ID { get; private set; } = -1;
 		public override string Texture => "Origins/Items/Weapons/Summoner/Minions/Amoeba_Bubble";
 		public override string GlowTexture => Texture;
-		public AssimilationAmount Assimilation => 0.04f;
+		public AssimilationAmount Assimilation = 0.04f;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Amoeba Bubble");
 			Main.projFrames[Projectile.type] = 4;

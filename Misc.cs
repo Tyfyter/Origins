@@ -2363,7 +2363,7 @@ namespace Origins {
 			}
 		}
 		public static FlavorTextBestiaryInfoElement GetBestiaryFlavorText(this ModNPC npc, string defaultValue = null) {
-			Language.GetOrRegister($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}", defaultValue is null ? null : (() => defaultValue));
+			Language.GetOrRegister($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}", defaultValue is null ? (() => "bestiary text here") : (() => defaultValue));
 			return new FlavorTextBestiaryInfoElement($"Mods.{npc.Mod.Name}.Bestiary.{npc.Name}");
 		}
 		public static string MakeContext(params string[] args) {

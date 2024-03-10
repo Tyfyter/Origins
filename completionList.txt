@@ -107,7 +107,7 @@ ENEMY NPCS:
 (^) Ancient Defiled Cyclops
 (^) Barnacleback
 (^) Barnacle Bunny*
-(#, ^2) Bile Thrower* !!!
+(☻) Bile Thrower* !!!
 (#3, ^2) Bottomfeeder !!!
 (^) Buckethead Zombie
 (^) Cellarkeep*

@@ -614,8 +614,8 @@ namespace Origins.World.BiomeData {
 
 			MimicType = ModContent.NPCType<Defiled_Mimic>();
 
-			BloodBunny = ModContent.NPCType<Defiled_Tripod>();
-			BloodPenguin = ModContent.NPCType<Defiled_Amalgamation>();
+			BloodBunny = ModContent.NPCType<Defiled_Mite>();
+			BloodPenguin = ModContent.NPCType<Bile_Thrower>();
 
 			AddWallConversions<Defiled_Stone_Wall>(
 				WallID.Stone,

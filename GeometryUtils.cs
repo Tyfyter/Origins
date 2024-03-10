@@ -168,5 +168,17 @@ namespace Tyfyter.Utils {
 			intersection = a1 + t * b;
 			return true;
 		}
+		public static float? AngleToTarget(Vector2 diff, float speed, float grav = 0.04f, bool high = false) {
+			float v2 = speed * speed;
+			float v4 = speed * speed * speed * speed;
+			grav = -grav;
+			float sqr = v4 - grav * (grav * diff.X * diff.X + 2 * diff.Y * v2);
+			if (sqr >= 0) {
+				sqr = MathF.Sqrt(sqr);
+				float offset = diff.X > 0 ? 0 : MathHelper.Pi;
+				return (high ? MathF.Atan((v2 + sqr) / (grav * diff.X)) : MathF.Atan((v2 - sqr) / (grav * diff.X))) + offset;
+			}
+			return null;
+		}
 	}
 }

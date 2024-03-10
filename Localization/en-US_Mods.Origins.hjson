@@ -1090,6 +1090,7 @@ Projectiles: {
 	Area_Denial_P.DisplayName: Area Denial
 	Potato_Battery_P.DisplayName: Potato Battery
 	Potato_Mine_P.DisplayName: Potato Mine
+	Defiled_Goop.DisplayName: Black Bile
 }
 
 Prefixes: {
