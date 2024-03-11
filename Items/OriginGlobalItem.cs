@@ -5,7 +5,6 @@ using Origins.Items.Weapons.Demolitionist;
 using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Origins.Journal;
-using Origins.LootConditions;
 using Origins.Questing;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Riven;

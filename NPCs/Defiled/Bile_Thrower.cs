@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
 using Origins.Projectiles.Enemies;
 using Origins.World.BiomeData;
 using Terraria;
@@ -10,7 +9,7 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 
 namespace Origins.NPCs.Defiled {
-    public class Bile_Thrower : Glowing_Mod_NPC, IDefiledEnemy {
+	public class Bile_Thrower : Glowing_Mod_NPC, IDefiledEnemy {
 		public int MaxMana => 40;
 		public int MaxManaDrain => 5;
 		public float Mana {

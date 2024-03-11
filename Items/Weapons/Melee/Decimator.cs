@@ -6,8 +6,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-	public class Decimator : ModItem {
+	public class Decimator : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "Spear"

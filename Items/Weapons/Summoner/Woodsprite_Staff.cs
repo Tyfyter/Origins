@@ -7,8 +7,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
-	public class Woodsprite_Staff : ModItem {
+	public class Woodsprite_Staff : ModItem, ICustomWikiStat {
 		static short glowmask;
 		internal static int projectileID = 0;
 		internal static int buffID = 0;

@@ -1,5 +1,4 @@
 ﻿using Origins.Items.Accessories;
-using Origins.NPCs.Defiled;
 using Origins.NPCs.Defiled.Boss;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;

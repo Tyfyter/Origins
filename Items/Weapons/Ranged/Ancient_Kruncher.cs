@@ -4,8 +4,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Ancient_Kruncher : ModItem {
+	public class Ancient_Kruncher : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Gun"
         };

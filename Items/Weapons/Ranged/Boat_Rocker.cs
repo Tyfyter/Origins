@@ -4,8 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-    public class Boat_Rocker : Harpoon_Gun {
+    public class Boat_Rocker : Harpoon_Gun, ICustomWikiStat {
         public string[] Categories => new string[] {
             "HarpoonGun"
         };

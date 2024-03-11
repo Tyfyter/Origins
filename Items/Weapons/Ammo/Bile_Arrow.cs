@@ -1,12 +1,12 @@
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Weapons.Ammo {
-	public class Bile_Arrow : ModItem {
+	public class Bile_Arrow : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Arrow",
 			"RasterSource"

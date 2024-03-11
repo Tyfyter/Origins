@@ -9,8 +9,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Manasynk : ModItem {
+    public class Manasynk : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "OtherMagic"
         };

@@ -18,7 +18,6 @@ using Terraria.Localization;
 using Terraria.Map;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-
 namespace Origins.Dev {
 	public class WikiPageExporter : ILoadable {
 		public delegate string WikiLinkFormatter(string name);

@@ -7,8 +7,9 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Microsoft.Xna.Framework.MathHelper;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Missile_Minigun : ModItem {
+	public class Missile_Minigun : ModItem, ICustomWikiStat {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.ProximityMineLauncher;
         public string[] Categories => new string[] {
             "Launcher"

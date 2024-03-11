@@ -12,8 +12,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
-	public class Joint_Pop : ModItem {
+	public class Joint_Pop : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Whip"
         };

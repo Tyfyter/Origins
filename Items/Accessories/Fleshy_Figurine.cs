@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	public class Fleshy_Figurine : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

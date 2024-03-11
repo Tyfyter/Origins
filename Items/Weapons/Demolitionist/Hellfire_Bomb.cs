@@ -4,8 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Hellfire_Bomb : ModItem {
+    public class Hellfire_Bomb : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "ThrownExplosive",

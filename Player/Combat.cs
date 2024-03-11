@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Accessories;
-using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.NPCs;
 using Origins.Projectiles;
@@ -16,7 +15,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins {
-    public partial class OriginPlayer : ModPlayer {
+	public partial class OriginPlayer : ModPlayer {
 		#region stats
 		public override void ModifyWeaponDamage(Item item, ref StatModifier damage) {
 			if (entangledEnergy && item.ModItem is IElementalItem elementalItem && (elementalItem.Element & Elements.Fiberglass) != 0) {

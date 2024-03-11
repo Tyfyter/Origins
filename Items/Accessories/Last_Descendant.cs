@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	[LegacyName("Last_Descendent")]
 	[AutoloadEquip(EquipType.Neck)]

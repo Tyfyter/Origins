@@ -4,9 +4,8 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
-    public class Explosive_Artery : ModItem, ICustomWikiStat {
+	public class Explosive_Artery : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
 			"Explosive"

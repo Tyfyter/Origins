@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins;
 using Origins.Reflection;
 using Origins.World.BiomeData;
 using ReLogic.Content;

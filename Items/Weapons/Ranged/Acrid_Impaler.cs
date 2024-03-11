@@ -5,8 +5,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-    public class Acrid_Impaler : Harpoon_Gun {
+    public class Acrid_Impaler : Harpoon_Gun, ICustomWikiStat {
         public string[] Categories => new string[] {
             "HarpoonGun"
         };

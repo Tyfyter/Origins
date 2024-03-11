@@ -5,8 +5,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Shotty_x2 : ModItem {
+	public class Shotty_x2 : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Gun"
         };

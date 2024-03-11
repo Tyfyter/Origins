@@ -1,5 +1,4 @@
 ﻿using Origins.Items.Accessories;
-using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;

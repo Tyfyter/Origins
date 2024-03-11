@@ -8,7 +8,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Weapons.Magic {
 	public class Seam_Beam : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

@@ -4,9 +4,9 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ammo {
-	public class Harpoon : ModItem {
+	public class Harpoon : ModItem, ICustomWikiStat {
 		public static int ID { get; private set; } = -1;
         public string[] Categories => new string[] {
             "Harpoon"

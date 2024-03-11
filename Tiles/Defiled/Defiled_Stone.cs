@@ -6,7 +6,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
-
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Stone : OriginTile, DefiledTile {
 		public override void SetStaticDefaults() {

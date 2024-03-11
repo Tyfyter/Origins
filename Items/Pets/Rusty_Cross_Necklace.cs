@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Pets;
-using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

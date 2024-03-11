@@ -11,7 +11,6 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Defiled.Boss;
-using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;
 using Origins.Questing;
 using Origins.Tiles;
@@ -22,15 +21,11 @@ using Origins.World.BiomeData;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Default;
-using Terraria.ModLoader.Utilities;
-using static Origins.ConditionExtensions;
 
 namespace Origins.NPCs {
 	public partial class OriginGlobalNPC : GlobalNPC {

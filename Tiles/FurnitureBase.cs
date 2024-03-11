@@ -1,14 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
-using Origins.NPCs.Defiled;
-using Origins.NPCs.MiscE;
-using Origins.NPCs.Riven;
-using Origins.World.BiomeData;
 using System;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;

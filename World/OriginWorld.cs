@@ -1,11 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Accessories;
-using Origins.Items.Weapons;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.Items.Weapons.Magic;
-using Origins.Items.Weapons.Melee;
-using Origins.Items.Weapons.Ranged;
-using Origins.Items.Weapons.Summoner;
 using Origins.Questing;
 using Origins.Tiles;
 using Origins.Tiles.Brine;

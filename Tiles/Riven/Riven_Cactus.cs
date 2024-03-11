@@ -3,16 +3,9 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.World.BiomeData;
 using ReLogic.Content;
-using System;
 using Terraria;
-using Terraria.Chat;
-using Terraria.DataStructures;
-using Terraria.GameContent.Achievements;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ObjectData;
-
 namespace Origins.Tiles.Riven {
 	public class Riven_Cactus : ModCactus, IGlowingModPlant, ICustomWikiStat, INoSeperateWikiPage {
 		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Riven_Cactus).GetDefaultTMLName() + "_Glow";

@@ -4,8 +4,9 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Brainade : ModItem {
+    public class Brainade : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "ThrownExplosive",
 			"IsGrenade"

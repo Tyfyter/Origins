@@ -9,8 +9,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-	public class Laser_Tag_Gun : AnimatedModItem, IElementalItem {
+	public class Laser_Tag_Gun : AnimatedModItem, IElementalItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "MagicGun"

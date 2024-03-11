@@ -2,9 +2,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
-    [AutoloadEquip(EquipType.Back)]
+	[AutoloadEquip(EquipType.Back)]
     public class CFHES : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat"

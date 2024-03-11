@@ -4,8 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Potato_Mine : ModItem {
+    public class Potato_Mine : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "OtherExplosive"
         };

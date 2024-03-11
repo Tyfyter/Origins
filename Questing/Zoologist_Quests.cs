@@ -1,5 +1,4 @@
 ﻿using Origins.Items.Accessories;
-using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;

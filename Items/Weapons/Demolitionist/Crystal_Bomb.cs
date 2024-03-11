@@ -4,8 +4,9 @@ using Terraria.ModLoader;
 using static Microsoft.Xna.Framework.MathHelper;
 using static Origins.OriginExtensions;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Crystal_Bomb : ModItem {
+    public class Crystal_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "ThrownExplosive",
 			"IsBomb"

@@ -4,8 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-	public class Splitsplash : ModItem {
+	public class Splitsplash : ModItem, ICustomWikiStat {
 		static short glowmask;
 		public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

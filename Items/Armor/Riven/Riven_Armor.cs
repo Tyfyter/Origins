@@ -1,6 +1,5 @@
 using Microsoft.Xna.Framework;
 using Origins.Dev;
-using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;

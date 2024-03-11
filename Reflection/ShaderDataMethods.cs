@@ -1,10 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-using Terraria;
+﻿using System;
 using Terraria.Graphics.Shaders;
-using Terraria.ModLoader;
 
 namespace Origins.Reflection {
 	public class ShaderDataMethods : ReflectionLoader {

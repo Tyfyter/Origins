@@ -1,13 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
-using Origins.Items.Accessories;
-using Origins.Items.Armor.Riven;
-using Origins.Items.Materials;
-using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons.Summoner;
 using Origins.Projectiles;
-using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -18,7 +12,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.Utilities;
 
 namespace Origins.NPCs.Dungeon {
-    public class Cellarkeep : Glowing_Mod_NPC {
+	public class Cellarkeep : Glowing_Mod_NPC {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 18;
 		}

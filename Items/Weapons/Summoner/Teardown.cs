@@ -11,8 +11,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
-	public class Teardown : ModItem {
+	public class Teardown : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
 		static short glowmask;

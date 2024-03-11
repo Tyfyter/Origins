@@ -6,8 +6,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Boomphracken : ModItem {
+    public class Boomphracken : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "HandCannon"
         };

@@ -4,9 +4,9 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Bang_Snap : ModItem {
+	public class Bang_Snap : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "ThrownExplosive"
         };

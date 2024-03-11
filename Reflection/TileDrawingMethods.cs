@@ -1,10 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
-using Terraria.ModLoader;
 
 namespace Origins.Reflection {
 	public class TileDrawingMethods : ReflectionLoader {

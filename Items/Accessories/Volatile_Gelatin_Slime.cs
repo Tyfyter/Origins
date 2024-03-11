@@ -10,9 +10,8 @@ using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
-    public class Volatile_Gelatin_Global_Item : GlobalItem, ICustomWikiStat {
+	public class Volatile_Gelatin_Global_Item : GlobalItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
 			"Explosive"

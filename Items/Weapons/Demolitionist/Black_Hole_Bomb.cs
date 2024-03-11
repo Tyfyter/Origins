@@ -9,9 +9,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Microsoft.Xna.Framework.MathHelper;
-
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Black_Hole_Bomb : ModItem {
+	public class Black_Hole_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "ThrownExplosive",
 			"IsBomb"

@@ -1,10 +1,5 @@
-﻿using Microsoft.Xna.Framework;
-using Mono.Cecil.Cil;
-using MonoMod.Cil;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
-using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader;
 

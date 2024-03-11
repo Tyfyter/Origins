@@ -3,12 +3,9 @@ using Origins.Tiles.Dusk;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ammo {
 	public class Resizable_Mine_One : Resizable_Mine_Two {
-        public string[] Categories => new string[] {
-            "Mine"
-        };
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
@@ -30,7 +27,10 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.Register();
 		}
 	}
-	public class Resizable_Mine_Two : ModItem {
+	public class Resizable_Mine_Two : ModItem, ICustomWikiStat {
+        public string[] Categories => new string[] {
+            "Mine"
+        };
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}

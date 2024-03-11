@@ -7,7 +7,6 @@ using Origins.NPCs.Riven;
 using Origins.World.BiomeData;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
@@ -17,7 +16,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Other {
-    public class Cleansing_Station : ModTile, IGlowingModTile {
+	public class Cleansing_Station : ModTile, IGlowingModTile {
 		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => CanUse(Main.LocalPlayer) ? Color.White : Color.Transparent;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {

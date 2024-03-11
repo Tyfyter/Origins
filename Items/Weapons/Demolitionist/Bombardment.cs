@@ -5,9 +5,9 @@ using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Bombardment : ModItem {
+	public class Bombardment : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Launcher",
 			"MineUser"

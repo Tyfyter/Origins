@@ -2,8 +2,9 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-	public class Baseball_Bat : ModItem {
+	public class Baseball_Bat : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Sword"
         };

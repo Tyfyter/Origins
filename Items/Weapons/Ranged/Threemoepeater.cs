@@ -6,8 +6,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Threemoepeater : ModItem {
+	public class Threemoepeater : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "Repeater"

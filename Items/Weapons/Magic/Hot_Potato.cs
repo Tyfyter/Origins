@@ -5,8 +5,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Hot_Potato : ModItem {
+    public class Hot_Potato : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "OtherMagic"
         };

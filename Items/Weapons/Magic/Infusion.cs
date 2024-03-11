@@ -10,8 +10,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-	public class Infusion : ModItem {
+	public class Infusion : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "MagicGun"

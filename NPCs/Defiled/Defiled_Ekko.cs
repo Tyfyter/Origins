@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.World.BiomeData;
-using System;
-using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -12,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Ekko : ModNPC, IDefiledEnemy {
+	public class Defiled_Ekko : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("{$Defiled} Ekko");
 			Main.npcFrameCount[NPC.type] = 14;

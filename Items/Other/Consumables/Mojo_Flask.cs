@@ -6,12 +6,11 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
 namespace Origins.Items.Other.Consumables {
-    public class Mojo_Flask : ModItem {
+	public class Mojo_Flask : ModItem {
 		public const int cooldown_time = 5 * 60;
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {

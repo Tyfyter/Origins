@@ -1,21 +1,14 @@
-﻿using System.Collections.Generic;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.UI;
 using Terraria.UI.Chat;
-using System;
 using System.Linq;
-using static Tyfyter.Utils.UITools;
-using Origins.Items.Accessories.Eyndum_Cores;
-using Origins.World;
 using Terraria.GameContent;
-using Terraria.UI.Gamepad;
 using Terraria.DataStructures;
 using Origins.Questing;
 

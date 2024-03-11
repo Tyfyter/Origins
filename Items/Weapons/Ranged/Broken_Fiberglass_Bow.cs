@@ -9,8 +9,9 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Broken_Fiberglass_Bow : AnimatedModItem, IElementalItem {
+	public class Broken_Fiberglass_Bow : AnimatedModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Bow"
         };

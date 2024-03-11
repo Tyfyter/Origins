@@ -3,7 +3,6 @@ using Origins.Journal;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	public class Spirit_Shard : ModItem, IJournalEntryItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework;
 using Origins.Backgrounds;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
-using Origins.Items.Other.Testing;
 using Origins.Items.Pets;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Magic;

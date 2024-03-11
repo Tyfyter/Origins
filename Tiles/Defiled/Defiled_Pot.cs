@@ -1,16 +1,11 @@
 ﻿using Origins.Dev;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Pot : ModTile {
 		public override void SetStaticDefaults() {

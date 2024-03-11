@@ -8,7 +8,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Heart : ModTile {
 		public int heartBroken = 0;

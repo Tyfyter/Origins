@@ -11,8 +11,9 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Origins.OriginExtensions;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Hand_Grenade_Launcher : ModItem {
+	public class Hand_Grenade_Launcher : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "Launcher"

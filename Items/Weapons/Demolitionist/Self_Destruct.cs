@@ -7,8 +7,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Self_Destruct : ModItem {
+    public class Self_Destruct : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
             "OtherExplosive"
         };

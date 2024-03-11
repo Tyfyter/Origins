@@ -8,8 +8,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
-	public class Bomb_Artifact : ModItem {
+	public class Bomb_Artifact : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
         public string[] Categories => new string[] {

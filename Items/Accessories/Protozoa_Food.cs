@@ -2,13 +2,11 @@
 using Origins.Buffs;
 using Origins.Dev;
 using System;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.Utilities;
-
 namespace Origins.Items.Accessories {
 	public class Protozoa_Food : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

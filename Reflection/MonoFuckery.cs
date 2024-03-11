@@ -1,9 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Mono.Cecil.Cil;
+﻿using Mono.Cecil.Cil;
 using MonoMod.Cil;
-using System;
 using System.Reflection;
-using Terraria;
 using Terraria.ModLoader;
 
 namespace Origins.Reflection {

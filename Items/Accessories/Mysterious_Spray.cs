@@ -3,7 +3,6 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	public class Mysterious_Spray : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

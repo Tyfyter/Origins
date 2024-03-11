@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back, EquipType.Front)]
 	public class Blizzardwalkers_Jacket : ModItem, ICustomWikiStat {

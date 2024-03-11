@@ -3,8 +3,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-    public class Nematoclaw : ModItem, IElementalItem {
+    public class Nematoclaw : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "OtherMelee"
         };

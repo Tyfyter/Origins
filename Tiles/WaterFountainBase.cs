@@ -1,15 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
-using Origins.NPCs.Defiled;
-using Origins.NPCs.MiscE;
-using Origins.NPCs.Riven;
-using Origins.World.BiomeData;
-using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
 using Terraria.Localization;
@@ -17,7 +8,7 @@ using Terraria.ModLoader;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles {
-    public abstract class WaterFountainBase<TWaterStyle> : ModTile where TWaterStyle : ModWaterStyle {
+	public abstract class WaterFountainBase<TWaterStyle> : ModTile where TWaterStyle : ModWaterStyle {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = true;

@@ -3,7 +3,6 @@ using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Tiles;
-using Origins.World.BiomeData;
 using System;
 using System.IO;
 using Terraria;
@@ -15,7 +14,7 @@ using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Tripod : ModNPC, ICustomCollisionNPC, IDefiledEnemy {
+	public class Defiled_Tripod : ModNPC, ICustomCollisionNPC, IDefiledEnemy {
 		public const float horizontalSpeed = 3.2f;
 		public const float horizontalAirSpeed = 2f;
 		public const float verticalSpeed = 4f;

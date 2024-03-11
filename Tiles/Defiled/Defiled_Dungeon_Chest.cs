@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
+﻿using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using Terraria.ID;
-using Terraria.DataStructures;
-using Terraria.ObjectData;
-using Terraria.Enums;
 using Terraria.Localization;
 using Origins.Items.Materials;
 

@@ -2,16 +2,12 @@
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.World.BiomeData;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
-using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-
 namespace Origins.Tiles.Riven {
 	public class Gel_Blister : ModTile, IGlowingModTile {
 		public static AutoCastingAsset<Texture2D> LesionGlowTexture { get; private set; }

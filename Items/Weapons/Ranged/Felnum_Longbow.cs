@@ -4,8 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Felnum_Longbow : ModItem {
+	public class Felnum_Longbow : ModItem, ICustomWikiStat {
 		public const int baseDamage = 19;
         public string[] Categories => new string[] {
             "Bow"

@@ -5,8 +5,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Flashbang : ModItem {
+    public class Flashbang : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "ThrownExplosive",
 			"IsGrenade"

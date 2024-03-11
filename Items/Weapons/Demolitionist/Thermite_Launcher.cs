@@ -8,8 +8,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Thermite_Launcher : ModItem {
+    public class Thermite_Launcher : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Launcher",
 			"MineUser"

@@ -7,8 +7,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-	public class Ripper_Lance : ModItem {
+	public class Ripper_Lance : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "Spear"

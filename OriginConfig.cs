@@ -1,10 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
 using Origins.Dev;
 using Origins.Items.Accessories;
-using Origins.Items.Materials;
 using Origins.Items.Other.Fish;
 using Origins.Items.Weapons.Melee;
 using Origins.Reflection;
@@ -14,10 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
@@ -25,8 +18,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 using Terraria.ModLoader.Config.UI;
-using Terraria.ObjectData;
-
 namespace Origins {
 	[Label("Settings")]
 	public class OriginConfig : ModConfig {

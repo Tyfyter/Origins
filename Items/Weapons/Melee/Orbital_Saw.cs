@@ -4,8 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-    public class Orbital_Saw : ModItem {
+    public class Orbital_Saw : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Boomerang"
         };

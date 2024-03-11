@@ -1,9 +1,9 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ammo {
-	public class Starfuze : ModItem {
+	public class Starfuze : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "Canistah"

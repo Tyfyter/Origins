@@ -1,4 +1,3 @@
-using Origins.Buffs;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using Terraria;
@@ -9,7 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Cleaver_Head : Cleaver, IRivenEnemy {
+	public class Cleaver_Head : Cleaver, IRivenEnemy {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
 			NPC.width = NPC.height = 12;

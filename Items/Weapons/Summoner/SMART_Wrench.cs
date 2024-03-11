@@ -3,8 +3,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
-    public class SMART_Wrench : ModItem {
+    public class SMART_Wrench : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "MinionSummoner"
         };

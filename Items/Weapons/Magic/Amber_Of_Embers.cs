@@ -9,8 +9,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Amber_Of_Embers : ModItem {
+    public class Amber_Of_Embers : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "MagicStaff"
         };

@@ -9,8 +9,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Pike_of_Deepneus : ModItem {
+    public class Pike_of_Deepneus : ModItem, ICustomWikiStat {
 		public const int baseDamage = 64;
         public string[] Categories => new string[] {
             "OtherMagic"

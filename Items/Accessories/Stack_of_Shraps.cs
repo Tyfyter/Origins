@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	[LegacyName("Mad_Hand")]
 	public class Stack_of_Shraps : ModItem, ICustomWikiStat {

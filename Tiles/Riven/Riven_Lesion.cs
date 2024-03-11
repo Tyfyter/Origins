@@ -10,7 +10,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-
 namespace Origins.Tiles.Riven {
 	public class Riven_Lesion : ModTile, IGlowingModTile {
 		public static AutoCastingAsset<Texture2D> LesionGlowTexture { get; private set; }

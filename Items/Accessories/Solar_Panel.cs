@@ -3,9 +3,8 @@ using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
-    [AutoloadEquip(EquipType.Back)]
+	[AutoloadEquip(EquipType.Back)]
 	public class Solar_Panel : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Resource"

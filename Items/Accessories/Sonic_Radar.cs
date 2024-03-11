@@ -2,9 +2,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
-    public class Sonic_Radar : ModItem, ICustomWikiStat {
+	public class Sonic_Radar : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Info"
 		};

@@ -1,5 +1,4 @@
-﻿using Origins.Buffs;
-using Origins.Items.Weapons.Demolitionist;
+﻿using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -8,7 +7,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Amebic_Slime : Glowing_Mod_NPC, IRivenEnemy {
+	public class Amebic_Slime : Glowing_Mod_NPC, IRivenEnemy {
 		public override string GlowTexturePath => Texture;
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 2;

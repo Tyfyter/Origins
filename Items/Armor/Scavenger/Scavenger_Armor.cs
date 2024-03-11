@@ -1,5 +1,4 @@
 using Origins.Dev;
-using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Tiles.Ashen;
 using Terraria;
@@ -7,7 +6,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Scavenger {
-    [AutoloadEquip(EquipType.Head)]
+	[AutoloadEquip(EquipType.Head)]
 	public class Scavenger_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
 		public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;

@@ -1,9 +1,9 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ammo {
-	public class Flammable_Harpoon : ModItem {
+	public class Flammable_Harpoon : ModItem, ICustomWikiStat {
 		public static int ID { get; private set; } = -1;
         public string[] Categories => new string[] {
             "Harpoon"

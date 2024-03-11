@@ -5,8 +5,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-    public class Blotopus : ModItem {
+    public class Blotopus : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Gun"
         };

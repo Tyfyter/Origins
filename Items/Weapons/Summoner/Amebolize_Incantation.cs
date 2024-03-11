@@ -9,8 +9,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
-	public class Amebolize_Incantation : ModItem, ICustomDrawItem {
+	public class Amebolize_Incantation : ModItem, ICustomDrawItem, ICustomWikiStat {
 		private Asset<Texture2D> _smolTexture;
 		private Asset<Texture2D> _smolGlowTexture;
 		public Texture2D SmolTexture => (_smolTexture ??= this.GetSmallTexture())?.Value;

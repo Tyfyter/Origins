@@ -1,10 +1,10 @@
 ﻿using Origins.Items.Materials;
+using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Weapons.Ammo {
-	public class Alkaline_Harpoon : ModItem {
+	public class Alkaline_Harpoon : ModItem, ICustomWikiStat {
 		public static int ID { get; private set; } = -1;
         public string[] Categories => new string[] {
             "Harpoon"

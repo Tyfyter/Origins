@@ -6,7 +6,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Weapons.Ammo {
 	public class Alkahest_Bullet : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

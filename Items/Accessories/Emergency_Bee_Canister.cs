@@ -1,9 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
+﻿using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	public class Emergency_Bee_Canister : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

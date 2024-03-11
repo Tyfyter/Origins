@@ -9,8 +9,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Tolruk : ModItem {
+	public class Tolruk : ModItem, ICustomWikiStat {
 		int charge = 0;
 		public static short[] glowmasks;
         public string[] Categories => new string[] {

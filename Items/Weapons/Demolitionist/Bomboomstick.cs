@@ -5,8 +5,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Bomboomstick : ModItem, ICustomDrawItem {
+	public class Bomboomstick : ModItem, ICustomDrawItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Launcher"
         };

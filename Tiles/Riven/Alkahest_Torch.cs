@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
 using Origins.Items.Materials;
-using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
 using Terraria.Enums;
@@ -12,7 +11,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
-
 namespace Origins.Tiles.Riven {
 	public class Alkahest_Torch_Tile : OriginTile {
 		private Asset<Texture2D> flameTexture;

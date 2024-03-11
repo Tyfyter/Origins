@@ -9,7 +9,6 @@ using Terraria.WorldBuilding;
 using static Terraria.WorldGen;
 using System;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.GameContent.Achievements;
 using Origins.Projectiles.Misc;
 using Origins.Items.Accessories;
@@ -27,7 +26,6 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Terraria.GameContent.Personalities;
 using Terraria.ObjectData;
-using Origins.NPCs.Defiled.Boss;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {

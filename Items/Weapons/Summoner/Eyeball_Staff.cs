@@ -8,8 +8,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.OriginExtensions;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
-	public class Eyeball_Staff : ModItem {
+	public class Eyeball_Staff : ModItem, ICustomWikiStat {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
         public string[] Categories => new string[] {

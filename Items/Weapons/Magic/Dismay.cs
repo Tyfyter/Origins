@@ -7,7 +7,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Weapons.Magic {
 	public class Dismay : ModItem, ICustomDrawItem, ICustomWikiStat {
         public string[] Categories => new string[] {

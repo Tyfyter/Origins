@@ -5,8 +5,9 @@ using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Tiny_Sniper : ModItem {
+	public class Tiny_Sniper : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Gun"
         };

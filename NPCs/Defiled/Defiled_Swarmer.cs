@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
-using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;

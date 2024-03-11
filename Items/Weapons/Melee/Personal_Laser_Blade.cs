@@ -5,9 +5,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	[AutoloadEquip(EquipType.HandsOn)]
-    public class Personal_Laser_Blade : ModItem, IElementalItem {
+    public class Personal_Laser_Blade : ModItem, IElementalItem, ICustomWikiStat {
 		public const int max_charge = 75;
         public string[] Categories => new string[] {
             "Sword"

@@ -1,7 +1,4 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Reflection;
-using Terraria;
+﻿using System.Reflection;
 using Terraria.GameContent;
 using Terraria.ModLoader;
 

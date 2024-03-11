@@ -6,9 +6,6 @@ using Terraria.ModLoader;
 using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Materials;
 using Terraria.GameContent.Bestiary;
-using Origins.Items.Weapons.Demolitionist;
-using Origins.World.BiomeData;
-using static Origins.Items.Armor.Defiled.Defiled2_Helmet;
 using Origins.Items.Armor.Defiled;
 
 namespace Origins.NPCs.Defiled {

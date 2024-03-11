@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	public class Cinder_Seal : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

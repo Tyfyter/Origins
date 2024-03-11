@@ -1,14 +1,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.Buffs;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-	public class Tones_Of_Agony : ModItem, IElementalItem {
+	public class Tones_Of_Agony : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "SpellBook"
         };

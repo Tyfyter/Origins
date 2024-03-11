@@ -6,8 +6,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Area_Denial : ModItem {
+    public class Area_Denial : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "MagicStaff"
         };

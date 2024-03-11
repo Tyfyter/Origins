@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	public class Celestial_Starlight : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

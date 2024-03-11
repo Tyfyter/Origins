@@ -5,8 +5,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Avulsion : ModItem {
+    public class Avulsion : ModItem, ICustomWikiStat {
         static short glowmask;
         public string[] Categories => new string[] {
             "Torn",

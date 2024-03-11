@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Terraria.Localization;
 using Terraria.ModLoader;
-
 namespace Origins.Dev {
 	public abstract class WikiSpecialPage : ILoadable, ICustomWikiStat, ILocalizedModType {
 		public virtual string LocalizationCategory => "SpecialWikiPages";

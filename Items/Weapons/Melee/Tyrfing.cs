@@ -9,9 +9,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
 	//this took seven and a half hours to make, now that's dedication
-	public class Tyrfing : AnimatedModItem {
+	public class Tyrfing : AnimatedModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Sword"
         };

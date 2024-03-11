@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using static Origins.OriginExtensions;
 using Terraria.DataStructures;
-using Tyfyter.Utils;
 using Terraria.ID;
 using Origins.Graphics;
 using Terraria.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Graphics.Effects;
-using Terraria.GameContent;
 using Origins.World.BiomeData;
 using Terraria.Graphics.Shaders;
 

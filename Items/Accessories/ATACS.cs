@@ -2,9 +2,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
-    public class ATACS : ModItem, ICustomWikiStat {
+	public class ATACS : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat"
 		};

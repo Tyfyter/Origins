@@ -7,7 +7,6 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	public class Lazy_Cloak : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

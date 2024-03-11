@@ -1,6 +1,5 @@
 ﻿using Origins.NPCs.Critters;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader;
 
 //what is this? bees according to California?

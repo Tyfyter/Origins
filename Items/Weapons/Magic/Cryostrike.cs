@@ -4,8 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-	public class Cryostrike : ModItem {
+	public class Cryostrike : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "MagicStaff"
         };

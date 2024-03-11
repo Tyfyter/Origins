@@ -3,8 +3,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-    public class Gelled_Knife : ModItem {
+    public class Gelled_Knife : ModItem, ICustomWikiStat {
         static short glowmask;
         public string[] Categories => new string[] {
             "Torn",

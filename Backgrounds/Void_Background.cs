@@ -1,6 +1,4 @@
-﻿using Origins;
-using Terraria;
-using Terraria.ModLoader;
+﻿using Terraria.ModLoader;
 
 namespace Origins.Backgrounds {
 	public class Void_Background : ModUndergroundBackgroundStyle {

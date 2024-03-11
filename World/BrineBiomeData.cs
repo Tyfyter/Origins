@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Backgrounds;
 using Origins.Tiles.Brine;
 using Origins.Walls;
 using Origins.Water;
@@ -10,7 +9,6 @@ using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.Utilities;
 using Terraria.WorldBuilding;
 using static Terraria.WorldGen;
 

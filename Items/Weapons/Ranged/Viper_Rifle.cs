@@ -7,8 +7,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Viper_Rifle : ModItem {
+	public class Viper_Rifle : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Gun"
         };

@@ -2,8 +2,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Eternabrite : ModItem {
+    public class Eternabrite : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "UsesBookcase",
             "SpellBook"

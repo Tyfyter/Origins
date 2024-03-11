@@ -2,7 +2,6 @@
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
-using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -12,7 +11,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Brute : ModNPC, IDefiledEnemy {
+	public class Defiled_Brute : ModNPC, IDefiledEnemy {
 		public const float speedMult = 0.75f;
 		//public float SpeedMult => npc.frame.Y==510?1.6f:0.8f;
 		//bool attacking = false;

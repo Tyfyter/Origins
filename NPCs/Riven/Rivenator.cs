@@ -1,10 +1,6 @@
-using Origins.Buffs;
-using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
-using Origins.NPCs.Defiled;
 using Origins.World.BiomeData;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;

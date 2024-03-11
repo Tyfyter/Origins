@@ -1,19 +1,12 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Dev;
-using Origins.Reflection;
+﻿using Origins.Dev;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
-
 namespace Origins.Items.Accessories {
 	public class Terrarian_Voodoo_Doll : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

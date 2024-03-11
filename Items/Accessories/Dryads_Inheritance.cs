@@ -6,9 +6,8 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
-    [AutoloadEquip(EquipType.Neck)]
+	[AutoloadEquip(EquipType.Neck)]
 	public class Dryads_Inheritance : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat"

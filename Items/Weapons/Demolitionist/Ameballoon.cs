@@ -8,9 +8,9 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
-
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Ameballoon : ModItem {
+	public class Ameballoon : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "ThrownExplosive"

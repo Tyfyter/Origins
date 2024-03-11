@@ -1,16 +1,8 @@
-﻿using Origins.Tiles.Defiled;
-using Origins.Tiles.Riven;
-using Origins.World.BiomeData;
-using System;
+﻿using Origins.World.BiomeData;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 
 namespace Origins.LootConditions {
 	public class LeadingSuccessRule : IItemDropRule {

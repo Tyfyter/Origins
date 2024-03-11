@@ -2,8 +2,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-    public class Sunflower_Seed_Shooter : ModItem {
+    public class Sunflower_Seed_Shooter : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Gun"
         };

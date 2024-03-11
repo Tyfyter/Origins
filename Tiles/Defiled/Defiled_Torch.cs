@@ -11,7 +11,6 @@ using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
-
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Torch_Tile : OriginTile {
 		private Asset<Texture2D> flameTexture;

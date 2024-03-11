@@ -7,8 +7,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Longbone : ModItem {
+	public class Longbone : ModItem, ICustomWikiStat {
 		internal static int t = ProjectileID.WoodenArrowFriendly;
         public string[] Categories => new string[] {
             "Bow"

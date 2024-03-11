@@ -4,8 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Bled_Out_Staff : ModItem {
+    public class Bled_Out_Staff : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "MagicStaff"
         };

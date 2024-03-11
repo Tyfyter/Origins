@@ -3,15 +3,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Graphics;
 using Origins.Items.Materials;
+using Origins.Dev;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Weapons.Ammo {
-    public class Bile_Dart : ModItem {
+	public class Bile_Dart : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Dart",
             "RasterSource"

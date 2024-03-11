@@ -2,7 +2,6 @@
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
-using Origins.World.BiomeData;
 using System;
 using System.IO;
 using Terraria;
@@ -13,7 +12,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Flyer : ModNPC, IDefiledEnemy {
+	public class Defiled_Flyer : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 		}

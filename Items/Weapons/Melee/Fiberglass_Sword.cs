@@ -1,8 +1,9 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-	public class Fiberglass_Sword : ModItem, IElementalItem {
+	public class Fiberglass_Sword : ModItem, IElementalItem, ICustomWikiStat {
 		public ushort Element => Elements.Fiberglass;
         public string[] Categories => new string[] {
             "Sword"

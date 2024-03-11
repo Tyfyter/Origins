@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	public class Exploder_Emblem : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

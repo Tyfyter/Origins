@@ -1,12 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-    public class Shattered_Goldfish : ModNPC, IDefiledEnemy {
+	public class Shattered_Goldfish : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 6;
 		}

@@ -7,9 +7,8 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
-    public class Scribe_of_the_Meat_God : ModItem, ICustomWikiStat {
+	public class Scribe_of_the_Meat_God : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Movement",
 			"Combat"

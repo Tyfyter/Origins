@@ -2,16 +2,14 @@
 using Origins.Items.Armor.Riven;
 using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
-using System;
 using Terraria;
-using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Trijaw_Shark : ModNPC{
+	public class Trijaw_Shark : ModNPC{
         public override void SetStaticDefaults() {
             Main.npcFrameCount[NPC.type] = 4;
         }

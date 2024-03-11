@@ -1,17 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Tiles.Brine;
-using Origins.Tiles.Other;
+﻿using Origins.Tiles.Other;
 using Origins.Walls;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent.Achievements;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
 	public class Fiberglass_Undergrowth : ModBiome {

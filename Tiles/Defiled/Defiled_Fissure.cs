@@ -6,7 +6,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Fissure : ModTile {
 		public static int ID { get; private set; }

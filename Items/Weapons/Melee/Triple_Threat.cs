@@ -5,8 +5,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-    public class Triple_Threat : ModItem {
+    public class Triple_Threat : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Yoyo"
         };

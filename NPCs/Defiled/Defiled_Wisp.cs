@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Weapons.Demolitionist;
-using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -11,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Wisp : ModNPC {
+	public class Defiled_Wisp : ModNPC {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("{$Defiled} Wisp");
 			Main.npcFrameCount[Type] = 3;

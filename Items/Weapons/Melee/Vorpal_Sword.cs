@@ -13,7 +13,6 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
-
 namespace Origins.Items.Weapons.Melee {
 	public class Vorpal_Sword : ModItem, IJournalEntryItem, ICustomWikiStat {
         public string[] Categories => new string[] {

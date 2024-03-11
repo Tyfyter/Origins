@@ -3,8 +3,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-	public class Startillery : ModItem {
+	public class Startillery : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "SpellBook"
         };

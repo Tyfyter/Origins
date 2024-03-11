@@ -8,9 +8,8 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
-    public class Potato_Battery : ModItem, ICustomWikiStat {
+	public class Potato_Battery : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
 			"Info"

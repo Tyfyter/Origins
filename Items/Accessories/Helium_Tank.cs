@@ -1,9 +1,7 @@
 ﻿using Origins.Dev;
-using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Helium_Tank : ModItem, ICustomWikiStat {

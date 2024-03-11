@@ -1,6 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
-using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;

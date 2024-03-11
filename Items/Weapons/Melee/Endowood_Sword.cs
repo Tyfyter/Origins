@@ -2,8 +2,9 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-	public class Endowood_Sword : ModItem {
+	public class Endowood_Sword : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Sword"
         };

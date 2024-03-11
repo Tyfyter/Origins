@@ -1,30 +1,15 @@
-﻿using Hjson;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-using System.Xml;
-using System.Xml.Linq;
-using System.Text.RegularExpressions;
 using ReLogic.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.World.BiomeData;
-using Origins.Tiles.Defiled;
-using Origins.Items.Materials;
-using MonoMod.RuntimeDetour.HookGen;
 //using ThoriumMod.Items;
 using System.Reflection;
 //using ThoriumMod.Projectiles.Bard;
-using Origins.NPCs.MiscE;
 using Microsoft.Xna.Framework;
-using Origins.Tiles.Other;
 using Origins.Tiles;
 
 namespace Origins {

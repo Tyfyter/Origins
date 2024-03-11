@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.WorldBuilding;
 using Tyfyter.Utils;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Meteor : ModItem {
+	public class Meteor : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Launcher",
 			"MineUser"

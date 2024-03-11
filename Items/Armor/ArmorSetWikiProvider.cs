@@ -5,13 +5,10 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Armor {
 	public class ArmorSetWikiProvider : WikiProvider<IWikiArmorSet> {
 		public override string PageName(IWikiArmorSet set) => set.ArmorSetName;

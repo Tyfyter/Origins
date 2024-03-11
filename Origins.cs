@@ -1,15 +1,12 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Origins.Buffs;
 using Origins.Gores.NPCs;
-using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Felnum;
 using Origins.Items.Armor.Bleeding;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using Origins.Items.Other.Dyes;
-using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.Projectiles;
 using Origins.Reflection;
@@ -19,25 +16,20 @@ using Origins.UI;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-using Terraria.ModLoader.Default;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
-using Microsoft.Xna.Framework.Audio;
 
 namespace Origins {
 	public partial class Origins : Mod {

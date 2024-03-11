@@ -8,8 +8,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-	public class Bone_Latcher : ModItem {
+	public class Bone_Latcher : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "OtherMelee"

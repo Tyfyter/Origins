@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	public class Tainted_Flesh : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

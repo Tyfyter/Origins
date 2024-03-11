@@ -5,9 +5,9 @@ using Origins.Items.Weapons.Ammo;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Ace_Shrapnel : ModItem {
+	public class Ace_Shrapnel : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Launcher"
         };

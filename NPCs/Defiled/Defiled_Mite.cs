@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Armor.Defiled;
-using Origins.Items.Materials;
-using Origins.World.BiomeData;
 using System;
 using System.IO;
 using Terraria;
@@ -12,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Mite : ModNPC, IDefiledEnemy {
+	public class Defiled_Mite : ModNPC, IDefiledEnemy {
 		internal const int spawnCheckDistance = 15;
 		public const int aggroRange = 128;
 		byte frame = 0;

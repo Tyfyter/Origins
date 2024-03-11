@@ -7,10 +7,9 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Terraria.UI.Chat;
 
 namespace Origins.Buffs {
-    public class Corrupt_Assimilation_Debuff : ModBuff {
+	public class Corrupt_Assimilation_Debuff : ModBuff {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("Corrupt Assimilation");

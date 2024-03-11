@@ -1,8 +1,5 @@
-using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 namespace Tyfyter.Utils {
 	public static class FramingUtils {
 		public static (ushort upLeft, ushort up, ushort upRight, ushort left, ushort right, ushort downLeft, ushort down, ushort downRight) GetAdjacentTileTypes(int i, int j) {

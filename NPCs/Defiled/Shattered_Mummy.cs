@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using System.IO;
 using Terraria;
@@ -9,9 +8,8 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace Origins.NPCs.Defiled
-{
-    public class Shattered_Mummy : ModNPC, IDefiledEnemy {
+namespace Origins.NPCs.Defiled {
+	public class Shattered_Mummy : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 4;
 		}

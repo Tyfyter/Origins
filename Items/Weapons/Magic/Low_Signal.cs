@@ -6,8 +6,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Low_Signal : ModItem {
+    public class Low_Signal : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "MagicStaff"

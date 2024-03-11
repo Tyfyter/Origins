@@ -2,9 +2,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
-    public class Primordial_Soup : ModItem, ICustomWikiStat {
+	public class Primordial_Soup : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Vitality"
         };

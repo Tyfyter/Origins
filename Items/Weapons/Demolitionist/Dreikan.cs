@@ -5,8 +5,9 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Dreikan : ModItem {
+	public class Dreikan : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "OtherExplosive"
         };

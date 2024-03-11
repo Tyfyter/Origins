@@ -7,7 +7,6 @@ using Origins.Tiles.Ashen;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Tiles.Ashen;
 using Origins.Items.Weapons.Magic;
 
 namespace Origins.World {

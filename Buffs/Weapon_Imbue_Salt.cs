@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Buffs {
 	public class Weapon_Imbue_Salt : ModBuff, ICustomWikiStat {
 		public string[] Categories => new string[] {

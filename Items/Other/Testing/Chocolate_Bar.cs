@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Origins.World;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Tyfyter.Utils.KinematicUtils;
-using Terraria.GameContent.Creative;
 
 namespace Origins.Items.Other.Testing {
 	public class Chocolate_Bar : ModItem {

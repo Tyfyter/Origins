@@ -14,7 +14,6 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
-
 namespace Origins.Items.Weapons.Melee {
 	public class Vorpal_Sword_Cursed : ModItem, IJournalEntryItem, ICustomWikiStat {
 		static short glowmask;

@@ -2,8 +2,9 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-	public class Cyah_Nara : ModItem {
+	public class Cyah_Nara : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Sword"
         };

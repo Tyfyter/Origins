@@ -13,8 +13,9 @@ using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Origins.OriginExtensions;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Bomb_Launcher : ModItem {
+	public class Bomb_Launcher : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Launcher"
         };

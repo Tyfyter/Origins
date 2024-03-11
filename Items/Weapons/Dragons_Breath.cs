@@ -5,8 +5,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons {
-	public class Dragons_Breath : ModItem {
+	public class Dragons_Breath : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "ReworkExpected"

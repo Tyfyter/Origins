@@ -4,9 +4,10 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	[LegacyName("Defiled_Dart_Burst")]
-	public class Incision : ModItem {
+	public class Incision : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "DartLauncher"
         };

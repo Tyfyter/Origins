@@ -1,17 +1,11 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
 using Origins.Dev;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using Terraria.ModLoader;
-
 namespace Origins.Tiles {
 	public class TileWikiProvider : ItemWikiProvider {
 		public override string PageName(ModItem modItem) => base.PageName(modItem);

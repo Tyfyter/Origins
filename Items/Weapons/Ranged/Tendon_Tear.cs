@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
@@ -8,9 +9,8 @@ using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Weapons.Ranged {
-	public class Tendon_Tear : ModItem {
+	public class Tendon_Tear : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Gun"
         };

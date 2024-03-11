@@ -6,9 +6,8 @@ using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Weapons.Ranged {
-    public class Bleeding_Obsidian_Kunai : ModItem, ICustomWikiStat {
+	public class Bleeding_Obsidian_Kunai : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Torn",
 			"TornSource",

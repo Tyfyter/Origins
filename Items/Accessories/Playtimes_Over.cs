@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOff)]
 	public class Playtimes_Over : ModItem, ICustomWikiStat {

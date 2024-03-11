@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Buffs;
 using Origins.Items.Armor.Riven;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
@@ -11,7 +10,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Barnacleback : ModNPC, IRivenEnemy {
+	public class Barnacleback : ModNPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 3;
 		}

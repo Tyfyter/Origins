@@ -3,8 +3,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Eruption : ModItem {
+    public class Eruption : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Launcher",
 			"MineUser"

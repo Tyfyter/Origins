@@ -1,13 +1,13 @@
 using Microsoft.Xna.Framework;
 using Origins.Buffs;
 using Origins.Items.Materials;
+using Origins.Dev;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Weapons.Ammo {
-	public class Bile_Bullet : ModItem {
+	public class Bile_Bullet : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Bullet",
             "RasterSource"

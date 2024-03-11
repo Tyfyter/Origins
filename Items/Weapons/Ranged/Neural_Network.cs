@@ -7,8 +7,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-    public class Neural_Network : ModItem {
+    public class Neural_Network : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Gun"
         };

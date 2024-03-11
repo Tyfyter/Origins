@@ -5,8 +5,9 @@ using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons {
-	public class Fragarach : ModItem {
+	public class Fragarach : ModItem, ICustomWikiStat {
 		static short glowmask;
         //public override bool OnlyShootOnSwing => true;
         public string[] Categories => new string[] {

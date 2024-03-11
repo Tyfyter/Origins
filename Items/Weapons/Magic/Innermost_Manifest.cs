@@ -7,9 +7,8 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Weapons.Magic {
-    public class Innermost_Manifest : ModItem, ICustomWikiStat {
+	public class Innermost_Manifest : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Torn",
 			"TornSource",

@@ -4,8 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-	public class Broken_Fiberglass_Sword : ModItem, IElementalItem {
+	public class Broken_Fiberglass_Sword : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Sword"
         };

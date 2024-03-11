@@ -1,11 +1,8 @@
 ﻿using AltLibrary.Common.Systems;
-using Origins.Items;
-using Origins.Items.Weapons.Ranged;
 using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {

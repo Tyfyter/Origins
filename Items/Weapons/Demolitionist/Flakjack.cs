@@ -10,8 +10,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Flakjack : ModItem, ICustomDrawItem {
+    public class Flakjack : ModItem, ICustomDrawItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "OtherExplosive"
         };

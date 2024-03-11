@@ -10,8 +10,9 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-	public class Magnus : ModItem {
+	public class Magnus : ModItem, ICustomWikiStat {
 		public const int baseDamage = 34;
         public string[] Categories => new string[] {
             "MagicStaff"

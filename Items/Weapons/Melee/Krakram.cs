@@ -3,8 +3,9 @@ using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-	public class Krakram : ModItem {
+	public class Krakram : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Boomerang"
         };

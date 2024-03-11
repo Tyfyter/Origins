@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	public class Pneumatic_Bomb_Thrower : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

@@ -4,7 +4,6 @@ using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	public class Tripod_Nip : ModItem, IJournalEntryItem, ICustomWikiStat {
 		public string[] Categories => new string[] {

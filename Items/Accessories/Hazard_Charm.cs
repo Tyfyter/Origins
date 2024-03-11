@@ -2,7 +2,6 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 namespace Origins.Items.Accessories {
 	//[AutoloadEquip(EquipType.Neck)] doesn't have neck spritesheet
 	public class Hazard_Charm : ModItem, ICustomWikiStat {

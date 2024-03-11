@@ -1,12 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Accessories;
-using Origins.Walls;
 using Origins.World.BiomeData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

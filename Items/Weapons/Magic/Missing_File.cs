@@ -2,8 +2,9 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Missing_File : ModItem {
+    public class Missing_File : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "OtherMagic"
         };

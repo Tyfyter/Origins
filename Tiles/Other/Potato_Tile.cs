@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Consumables.Food;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.Localization;

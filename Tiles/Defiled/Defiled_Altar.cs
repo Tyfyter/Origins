@@ -2,14 +2,11 @@
 using Origins.Dev;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Chat;
 using Terraria.DataStructures;
-using Terraria.GameContent.Achievements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Altar : ModTile, IComplexMineDamageTile {
 		public static int ID { get; private set; }

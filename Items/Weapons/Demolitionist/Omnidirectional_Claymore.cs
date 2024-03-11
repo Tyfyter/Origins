@@ -4,8 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Omnidirectional_Claymore : ModItem {
+	public class Omnidirectional_Claymore : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "OtherExplosive"
         };

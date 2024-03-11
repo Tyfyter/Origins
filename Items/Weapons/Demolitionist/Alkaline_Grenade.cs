@@ -3,9 +3,9 @@ using Origins.Projectiles.Weapons;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
+using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Alkaline_Grenade : ModItem {
+	public class Alkaline_Grenade : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "ThrownExplosive",
 			"IsGrenade"

@@ -8,9 +8,8 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ObjectData;
-
 namespace Origins.Items.Accessories {
-    [AutoloadEquip(EquipType.Face)]
+	[AutoloadEquip(EquipType.Face)]
     public class Stone_Mask : ModItem, IJournalEntryItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Combat"

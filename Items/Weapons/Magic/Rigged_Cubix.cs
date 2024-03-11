@@ -8,8 +8,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
-    public class Rigged_Cubix : ModItem {
+    public class Rigged_Cubix : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "MagicGun"

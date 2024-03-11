@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.World.BiomeData;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;

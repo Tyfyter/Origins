@@ -8,8 +8,9 @@ using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Fiberglass_Shard : ModItem, IElementalItem {
+	public class Fiberglass_Shard : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "OtherRanged"
         };

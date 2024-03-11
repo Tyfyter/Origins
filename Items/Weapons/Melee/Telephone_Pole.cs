@@ -4,8 +4,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
-	public class Telephone_Pole : ModItem {
+	public class Telephone_Pole : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Sword"
         };

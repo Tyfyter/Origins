@@ -3,8 +3,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
+using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	public class Hallowed_Cleaver : ModItem {
+	public class Hallowed_Cleaver : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Gun"
         };
