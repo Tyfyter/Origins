@@ -8,6 +8,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Terraria.DataStructures;
+
 namespace Origins.Items.Weapons.Demolitionist {
     public class Self_Destruct : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
@@ -15,8 +17,10 @@ namespace Origins.Items.Weapons.Demolitionist {
         };
 		public override void SetDefaults() {
 			Item.DamageType = DamageClasses.Explosive;
+			Item.noMelee = true;
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.damage = 125;
+			Item.crit = 24;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
 			Item.shoot = ModContent.ProjectileType<Self_Destruct_P>();
@@ -38,8 +42,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Self_Destruct_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Self_Destruct_Body";
 		public override void SetDefaults() {
-			Projectile.timeLeft = 120;
-			Projectile.tileCollide = false;
+			Projectile.timeLeft = 80;
+			Projectile.tileCollide = true;
 			Projectile.width = 0;
 			Projectile.height = 0;
 		}
@@ -91,9 +95,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 5;
 			Projectile.penetrate = -1;
 			Projectile.aiStyle = 0;
-			Projectile.width = 608;
-			Projectile.height = 608;
-			Projectile.hide = true;
+			Projectile.width = 352;
+			Projectile.height = 352;
+			Projectile.hide = false;
 			Projectile.localNPCHitCooldown = -1;
 			Projectile.usesLocalNPCImmunity = true;
 		}
@@ -107,8 +111,43 @@ namespace Origins.Items.Weapons.Demolitionist {
 				ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
 				Projectile.ai[0] = 1;
 			}
-		}
+            int t = ModContent.ProjectileType<Self_Destruct_Flash>();
+            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, t, Projectile.damage = 0, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
+        }
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
 	}
+    public class Self_Destruct_Flash : ModProjectile {
+        public override string Texture => "Origins/Items/Weapons/Demolitionist/Self_Destruct_Visual";
+        public override void SetDefaults() {
+            Projectile.timeLeft = 15;
+            Projectile.tileCollide = false;
+            Projectile.alpha = 100;
+        }
+        public override void AI() {
+            Lighting.AddLight(Projectile.Center, new Vector3(2, 0, 0));
+        }
+        public override bool PreDraw(ref Color lightColor) {
+            const float scale = 3f;
+            Main.spriteBatch.Restart(SpriteSortMode.Immediate);
+            DrawData data = new DrawData(
+                Mod.Assets.Request<Texture2D>("Projectiles/Pixel").Value,
+                Projectile.Center - Main.screenPosition,
+                new Rectangle(0, 0, 1, 1),
+                new Color(0, 0, 0, 255),
+                0, new Vector2(0.5f, 0.5f),
+                new Vector2(160, 160) * scale,
+                SpriteEffects.None,
+            0);
+            float percent = Projectile.timeLeft / 10f;
+            Origins.blackHoleShade.UseOpacity(0.985f);
+            Origins.blackHoleShade.UseSaturation(0f + percent);
+            Origins.blackHoleShade.UseColor(3, 0, 0);
+            Origins.blackHoleShade.Shader.Parameters["uScale"].SetValue(0.5f);
+            Origins.blackHoleShade.Apply(data);
+            Main.EntitySpriteDraw(data);
+            Main.spriteBatch.Restart();
+            return false;
+        }
+    }
 }

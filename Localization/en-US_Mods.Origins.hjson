@@ -1096,6 +1096,7 @@ Projectiles: {
 	Meteor_P.DisplayName: Meteor
 	Self_Destruct_Explosion.DisplayName: Self-Destruct
 	Self_Destruct_P.DisplayName: Self-Destruct
+	Self_Destruct_Flash.DisplayName: Self Destruct Flash
 }
 
 Prefixes: {

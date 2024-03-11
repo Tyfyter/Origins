@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Green;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().explosiveBlastRadius *= 1.4f;
+			player.GetModPlayer<OriginPlayer>().explosiveBlastRadius += 0.4f;
 		}
 	}
 }

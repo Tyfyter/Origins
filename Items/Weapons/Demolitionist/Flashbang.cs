@@ -68,7 +68,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Flash_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Flash";
 		public override void SetDefaults() {
-			Projectile.timeLeft = 10;
+			Projectile.timeLeft = 25;
 			Projectile.tileCollide = false;
 			Projectile.alpha = 100;
 		}
