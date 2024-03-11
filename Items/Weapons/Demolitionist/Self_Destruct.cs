@@ -16,8 +16,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.DamageType = DamageClasses.Explosive;
 			Item.useStyle = ItemUseStyleID.HoldUp;
 			Item.damage = 125;
-			Item.useTime = 120;
-			Item.useAnimation = 120;
+			Item.useTime = 18;
+			Item.useAnimation = 18;
 			Item.shoot = ModContent.ProjectileType<Self_Destruct_P>();
 			Item.rare = ItemRarityID.Pink;
 		}
@@ -48,6 +48,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.velocity *= 0.9f;
 			player.MountedCenter = Projectile.position;
 			player.velocity = Projectile.velocity;
+			player.heldProj = Projectile.whoAmI;
 		}
 		public override void OnKill(int timeLeft) {
 			Projectile.NewProjectile(
@@ -60,18 +61,26 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.owner
 			);
 		}
-		public override void PostDraw(Color lightColor) {
-			float factor = (1 - Projectile.ai[1] / 180);
+		public override bool PreDraw(ref Color lightColor) {
+			Player player = Main.player[Projectile.owner];
+			Rectangle frame = new Rectangle((player.bodyFrame.Y / player.bodyFrame.Height == 5 ? 1 : 0) * 40, (player.Male ? 0 : 2) * 56, 40, 56);
+			Vector2 position = new Vector2(
+					(int)(player.position.X - (player.bodyFrame.Width / 2) + (player.width / 2)),
+					(int)(player.position.Y + player.height - player.bodyFrame.Height + 4f)
+				)
+				+ player.bodyPosition
+				+ new Vector2(player.bodyFrame.Width / 2, player.bodyFrame.Height / 2);
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
-				Projectile.Center - Main.screenPosition,
-				null,
-				new Color(factor, factor, factor, factor * 0.5f),
-				Projectile.rotation,
-				new Vector2(15, 13),
-				Projectile.scale,
-				SpriteEffects.None
+				position - Main.screenPosition,
+				frame,
+				Color.White,
+				player.bodyRotation,
+				new Vector2(player.legFrame.Width * 0.5f, player.legFrame.Height * 0.5f),
+				1f,
+				player.direction < 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None
 			);
+			return false;
 		}
 	}
 	public class Self_Destruct_Explosion : ModProjectile, IIsExplodingProjectile {
