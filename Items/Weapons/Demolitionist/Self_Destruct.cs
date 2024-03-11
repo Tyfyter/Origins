@@ -44,6 +44,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
+			if (Projectile.velocity.HasNaNs()) Projectile.velocity = player.velocity;
 			Projectile.velocity *= 0.9f;
 			player.MountedCenter = Projectile.position;
 			player.velocity = Projectile.velocity;
