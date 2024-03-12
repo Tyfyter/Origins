@@ -29,7 +29,7 @@ namespace Origins.NPCs.Defiled {
         }
 		public override void AI() {
 			NPCAimedTarget target = NPC.GetTargetData(false);
-			if (!target.Invalid && Collision.CanHitLine(NPC.position, NPC.width, NPC.height, target.Position, target.Width, target.Height)) {
+			if (!target.Invalid && Collision.CanHitLine(NPC.position, NPC.width, NPC.height, target.Position, target.Width, target.Height) && Mana >= 2.5f) {
 				Vector2 targetPos = target.Hitbox.Center.ToVector2();
 				Vector2 spawnPos = NPC.Top;
 				spawnPos.Y += 6;
@@ -37,6 +37,7 @@ namespace Origins.NPCs.Defiled {
 				float distSQ = diff.LengthSquared();
 				if (++NPC.ai[2] > 300 && distSQ > 0 && distSQ < 480 * 480) {
 					if (Main.netMode != NetmodeID.MultiplayerClient) {
+						Mana -= 2.5f;
 						diff = Main.rand.NextVector2FromRectangle(target.Hitbox) - spawnPos;
 						const float speed = 6;
 						if (GeometryUtils.AngleToTarget(diff, speed, grav: 0.08f, false) is float angle) {
