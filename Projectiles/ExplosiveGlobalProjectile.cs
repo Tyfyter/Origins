@@ -147,10 +147,16 @@ namespace Origins.Projectiles {
 			}
 			switch (projectile.type) {
 				case ProjectileID.VolatileGelatinBall:
+				case ProjectileID.DD2ExplosiveTrapT1:
+				case ProjectileID.DD2ExplosiveTrapT2:
+				case ProjectileID.DD2ExplosiveTrapT3:
 				return false;
 
 				case ProjectileID.FireWhipProj:
 				case ProjectileID.Volcano:
+				case ProjectileID.DD2ExplosiveTrapT1Explosion:
+				case ProjectileID.DD2ExplosiveTrapT2Explosion:
+				case ProjectileID.DD2ExplosiveTrapT3Explosion:
 				return true;
 
 				default:
@@ -387,6 +393,14 @@ namespace Origins.Projectiles {
 
 				case ProjectileID.FireWhipProj:
 				return 4;
+
+				case ProjectileID.DD2ExplosiveTrapT1:
+				case ProjectileID.DD2ExplosiveTrapT1Explosion:
+				case ProjectileID.DD2ExplosiveTrapT2:
+				case ProjectileID.DD2ExplosiveTrapT2Explosion:
+				case ProjectileID.DD2ExplosiveTrapT3:
+				case ProjectileID.DD2ExplosiveTrapT3Explosion:
+				return 5;
 
 				default:
 				return 0;

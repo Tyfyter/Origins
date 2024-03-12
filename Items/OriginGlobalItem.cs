@@ -67,6 +67,11 @@ namespace Origins.Items {
 				case ItemID.HellfireArrow:
 				item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 				break;
+				case ItemID.DD2ExplosiveTrapT1Popper:
+				case ItemID.DD2ExplosiveTrapT2Popper:
+				case ItemID.DD2ExplosiveTrapT3Popper:
+				item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
+				break;
 			}
 			if (item.damage is 0 or -1 && Origins.ExplosiveBaseDamage.TryGetValue(item.shoot, out int damage)) {
 				item.damage = damage;

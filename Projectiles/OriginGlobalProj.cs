@@ -75,6 +75,10 @@ namespace Origins.Projectiles {
 				case 4:
 				projectile.DamageType = DamageClasses.Explosive;
 				break;
+
+				case 5:
+				projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
+				break;
 			}
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
