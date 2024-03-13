@@ -45,16 +45,22 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Projectile.timeLeft = 80;
 			Projectile.tileCollide = true;
-			Projectile.width = 0;
-			Projectile.height = 0;
+			Projectile.width = 32;
+			Projectile.height = 48;
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
 			if (Projectile.velocity.HasNaNs()) Projectile.velocity = player.velocity;
 			Projectile.velocity *= 0.9f;
-			player.MountedCenter = Projectile.position;
+			player.MountedCenter = Projectile.Center;
+			Projectile.width = player.width;
+			Projectile.height = player.height;
+			Projectile.Center = player.MountedCenter;
 			player.velocity = Projectile.velocity;
 			player.heldProj = Projectile.whoAmI;
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			return false;
 		}
 		public override void OnKill(int timeLeft) {
 			Projectile.NewProjectile(
@@ -93,6 +99,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GeyserTrap;
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
+			Projectile.DamageType = DamageClasses.Explosive;
+			Projectile.tileCollide = false;
 			Projectile.timeLeft = 5;
 			Projectile.penetrate = -1;
 			Projectile.aiStyle = 0;
