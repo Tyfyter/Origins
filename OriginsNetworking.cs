@@ -1,4 +1,5 @@
 ﻿using Origins.Questing;
+using System;
 using System.IO;
 using Terraria;
 using Terraria.ID;
@@ -21,6 +22,7 @@ namespace Origins {
 					case sync_quest:
 					case sync_peat:
 					case world_cracker_hit:
+					case sync_guid:
 					altHandle = true;
 					break;
 
@@ -39,6 +41,7 @@ namespace Origins {
 					case sync_quest:
 					case sync_peat:
 					case world_cracker_hit:
+					case sync_guid:
 					altHandle = true;
 					break;
 
@@ -108,6 +111,20 @@ namespace Origins {
 						}
 						break;
 					}
+				case sync_guid: {
+						OriginPlayer originPlayer = Main.player[Main.netMode == NetmodeID.Server ? whoAmI : reader.ReadByte()].GetModPlayer<OriginPlayer>();
+						originPlayer.guid = new(reader.ReadBytes(16));
+						// Forward the changes to the other clients
+						if (Main.netMode == NetmodeID.Server) {
+							// Forward the changes to the other clients
+							ModPacket packet = Origins.instance.GetPacket();
+							packet.Write(Origins.NetMessageType.sync_guid);
+							packet.Write((byte)whoAmI);
+							packet.Write(originPlayer.guid.ToByteArray());
+							packet.Send(-1, Main.myPlayer);
+						}
+						break;
+					}
 				}
 			}
 		}
@@ -117,6 +134,7 @@ namespace Origins {
 			internal const byte sync_quest = 2;
 			internal const byte sync_peat = 3;
 			internal const byte world_cracker_hit = 4;
+			internal const byte sync_guid = 5;
 		}
 	}
 }
