@@ -528,6 +528,8 @@ Missile_Armcannon: {
 	/* Tooltip:
 		'''
 		30% increased explosive throwing velocity
+		50% increased explosive knockback
+		15% increased explosive blast radius
 		Increases explosive attack speed
 		Enables autouse for all explosive weapons
 		Shoots rockets as you swing
@@ -3853,4 +3855,14 @@ Meteor: {
 Self_Destruct: {
 	// DisplayName: Self-Destruct
 	// Tooltip: Deal impressive damage for a massive area
+}
+
+CORE_Generator: {
+	// DisplayName: C O R E_ Generator
+	// Tooltip: ""
+}
+
+Thermite_Canister: {
+	// DisplayName: Thermite_ Canister
+	// Tooltip: ""
 }

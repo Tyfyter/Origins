@@ -10,7 +10,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Bombardment : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Launcher",
-			"MineUser"
+			"CanistahUser"
         };
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);

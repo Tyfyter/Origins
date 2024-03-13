@@ -8,7 +8,7 @@ namespace Origins.Items.Weapons.Demolitionist {
     public class Eruption : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Launcher",
-			"MineUser"
+			"CanistahUser"
         };
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);

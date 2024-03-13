@@ -455,6 +455,10 @@ namespace Origins {
 				Volume = 0.75f,
                 PitchRange = (0.2f, 0.3f)
             };
+            Sounds.IMustScream = new SoundStyle("Origins/Sounds/Custom/IMustScream", SoundType.Sound) {
+                MaxInstances = 0,
+                PitchRange = (0.2f, 0.3f)
+            };
             Sounds.RivenBass = new SoundStyle("Origins/Sounds/Custom/RivenBass", SoundType.Sound) {
 				MaxInstances = 0
 			};
@@ -750,7 +754,8 @@ namespace Origins {
             public static SoundStyle PowerUp = SoundID.Item4;
 			public static SoundStyle RivenBass = SoundID.Item4;
 			public static SoundStyle ShrapnelFest = SoundID.Item144;
-		}
+            public static SoundStyle IMustScream = SoundID.Roar;
+        }
 		public override object Call(params object[] args) {
 			return args[0] switch {
 				"get_explosive_classes_dict" or "GetExplosiveClassesDict" => DamageClasses.ExplosiveVersion,

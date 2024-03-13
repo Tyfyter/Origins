@@ -23,6 +23,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.crit = 24;
 			Item.useTime = 18;
 			Item.useAnimation = 18;
+			Item.UseSound = Origins.Sounds.IMustScream;
 			Item.shoot = ModContent.ProjectileType<Self_Destruct_P>();
 			Item.rare = ItemRarityID.Pink;
 		}

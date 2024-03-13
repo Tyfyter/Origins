@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Mine_Flayer : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Launcher",
-			"MineUser"
+			"CanistahUser"
         };
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);

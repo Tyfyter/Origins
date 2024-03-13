@@ -3,7 +3,6 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	[LegacyName("Last_Descendent")]
 	[AutoloadEquip(EquipType.Neck)]
 	public class Last_Descendant : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
@@ -23,10 +22,10 @@ namespace Origins.Items.Accessories {
 			recipe.Register();
 		}
 		public override void UpdateEquip(Player player) {
-			player.longInvince = true;
+            player.GetModPlayer<OriginPlayer>().guardedHeart = true;
+            player.longInvince = true;
 			player.starCloakItem = Item;
 			player.starCloakItem_starVeilOverrideItem = Item;
-			player.GetModPlayer<OriginPlayer>().guardedHeart = true;
 		}
 	}
 }

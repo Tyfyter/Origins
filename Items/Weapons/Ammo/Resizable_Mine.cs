@@ -29,7 +29,7 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class Resizable_Mine_Two : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "Mine"
+            "Canistah"
         };
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
@@ -60,7 +60,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
-			Item.damage = 31;
+			Item.damage = 26;
 			Item.shoot = 3;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4.4f;
@@ -83,7 +83,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
-			Item.damage = 45;
+			Item.damage = 35;
 			Item.shoot = 4;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4.8f;
@@ -106,7 +106,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
-			Item.damage = 50;
+			Item.damage = 45;
 			Item.shoot = 5;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 5.2f;

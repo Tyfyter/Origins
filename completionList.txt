@@ -300,6 +300,7 @@ ACCESSORIES:
 (^) Comb*
 (#3, ^2) Control Locus* !!!
 (^) Coologne*
+(#2, ^2) CORE Generator* !!!
 (#, ^2) Counter-offensive Scarf* !!!
 (#, ^2) Cruel Angel Wings* !!!
 (^) Danger Barrel*
@@ -775,7 +776,7 @@ EXPLOSIVE WEAPONS:
 (^) Happy Bomb*
 (X) Rattlesnake
 (^) Sonorous Shredder
-(^) Thermite Launcher
+(^) Thermite Launcher*
 
 (X) Autohandcannon
 (^) Bomboomstick
@@ -1159,14 +1160,21 @@ AMMO:
 (^) Resizable Mine Mk. 1*
 (^) Resizable Mine Mk. 2*
 (^) Scrap*
+(X) Sticky Mine !!!
+(^) Thermite Canister*
 
 (^) Alkahest Arrow*
 (^) Alkahest Bullet*
+(X) Alkahest Canister* !!!
+(X) Alkaline Canister* !!!
 (^) Alkaline Harpoon*
 (^) Bile Arrow*
 (^) Bile Bullet*
+(X) Bile Canister* !!!
 (^) Bile Dart*
+(X) Cursed Canister* !!!
 (^) Cursed Harpoon*
+(X) Ichor Canister* !!!
 (^) Metal Slug*
 (^) Resizable Mine Mk. 3*
 
