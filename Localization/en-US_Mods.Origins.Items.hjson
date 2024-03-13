@@ -3858,11 +3858,21 @@ Self_Destruct: {
 }
 
 CORE_Generator: {
-	DisplayName: C O R E_ Generator
-	Tooltip: ""
+	DisplayName: CORE Generator
+	Tooltip:
+		'''
+		30% increased explosive throwing velocity
+		50% increased explosive knockback
+		15% increased explosive blast radius
+		Increases damage, movement speed, and length of invincibility after taking damage
+		Increases explosive attack speed
+		Enables autouse for all explosive weapons
+		Shoots rockets as you swing
+		Additionally causes stars to fall and canisters from your inventory to release after taking damage
+		'''
 }
 
 Thermite_Canister: {
-	DisplayName: Thermite_ Canister
+	DisplayName: Thermite Canister
 	Tooltip: ""
 }
