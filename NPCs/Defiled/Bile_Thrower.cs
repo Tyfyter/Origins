@@ -47,8 +47,7 @@ namespace Origins.NPCs.Defiled {
 								new Vector2(speed, 0).RotatedBy(angle),
 								ModContent.ProjectileType<Defiled_Goop>(),
 								12,
-								3,
-								Main.maxPlayers
+								3
 							);
 						}
 					}

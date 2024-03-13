@@ -12,6 +12,7 @@ namespace Origins.NPCs.Defiled
 {
     public class DefiledGlobalNPC : GlobalNPC {
 		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
+		public static Dictionary<int, int> NPCTransformations { get; private set; }
         public override void Load()
         {
             AssimilationAmounts = new()
@@ -29,9 +30,16 @@ namespace Origins.NPCs.Defiled
                 [ModContent.NPCType<Defiled_Tripod>()] = 0.07f,
                 [ModContent.NPCType<Shattered_Mummy>()] = 0.07f,
             };
+			NPCTransformations = new() {
+				{ NPCID.Bunny, ModContent.NPCType<Defiled_Mite>() },
+				{ NPCID.Penguin, ModContent.NPCType<Bile_Thrower>() },
+				{ NPCID.PenguinBlack, ModContent.NPCType<Bile_Thrower>() },
+				{ NPCID.Squid, ModContent.NPCType<Defiled_Squid>() }
+			};
         }
         public override void Unload() {
 			AssimilationAmounts = null;
+			NPCTransformations = null;
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return entity.ModNPC is IDefiledEnemy;

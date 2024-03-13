@@ -22,7 +22,7 @@ namespace Origins.Dusts {
 			return false;
 		}
 		public override Color? GetAlpha(Dust dust, Color lightColor) {
-			return lightColor with { A = 25 };
+			return lightColor.MultiplyRGBA(dust.color);// with { A = 25 }
 		}
 	}
 }

@@ -1097,6 +1097,7 @@ Projectiles: {
 	// Self_Destruct_Explosion.DisplayName: Self-Destruct
 	// Self_Destruct_P.DisplayName: Self-Destruct
 	// Self_Destruct_Flash.DisplayName: Self Destruct Flash
+	// Squid_Bile_P.DisplayName: Squid_ Bile_ P
 }
 
 Prefixes: {

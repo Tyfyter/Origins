@@ -436,6 +436,13 @@ namespace Origins {
 					instance.Logger.Error("Could not find target IL code in AddHappinessReportText");
 				}
 			};
+			On_NPC.NPCLoot += (orig, self) => {
+				if (self.GetGlobalNPC<OriginGlobalNPC>().transformingThroughDeath) {
+					NPCLoader.OnKill(self);
+				} else {
+					orig(self);
+				}
+			};
 		}
 
 		private void On_CommonCode_ModifyItemDropFromNPC(On_CommonCode.orig_ModifyItemDropFromNPC orig, NPC npc, int itemIndex) {

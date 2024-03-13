@@ -1,0 +1,205 @@
+﻿using AltLibrary.Common.AltBiomes;
+using Microsoft.Xna.Framework;
+using Origins.Dusts;
+using Origins.World.BiomeData;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.Enums;
+using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
+using Terraria.ModLoader;
+using Terraria.Utilities;
+
+namespace Origins.NPCs.Defiled {
+	public class Defiled_Squid : Glowing_Mod_NPC, IDefiledEnemy {
+		public int MaxMana => 32;
+		public int MaxManaDrain => 8;
+		public float Mana {
+			get => NPC.localAI[3];
+			set => NPC.localAI[3] = value;
+		}
+		public override void SetStaticDefaults() {
+			Main.npcFrameCount[Type] = 4;
+			NPCID.Sets.UsesNewTargetting[Type] = true;
+		}
+		public override void SetDefaults() {
+			NPC.CloneDefaults(NPCID.Squid);
+			NPC.lifeMax = 150;
+			NPC.knockBackResist = 0.5f;
+		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (!spawnInfo.Water) return 0;
+			return 0.05f;
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
+		}
+		public override bool CanHitNPC(NPC target) {
+			if (DefiledGlobalNPC.NPCTransformations.ContainsKey(target.type)) return false;
+			return true;
+		}
+		public override bool PreAI() {
+			NPC.friendly = true;
+			if (NPC.direction == 0) {
+				NPC.TargetClosest(true);
+			}
+			if (NPC.wet) {
+				Mana += 0.01f;
+				NPCUtils.TargetSearchResults results = NPCUtils.SearchForTarget(NPC, playerFilter: player => player.wet, npcFilter: npc => npc.wet && DefiledGlobalNPC.NPCTransformations.ContainsKey(npc.type));
+				if (!results.FoundTarget) return true;
+				float distanceSQ = NPC.DistanceSQ(NPC.Center.Clamp(results.NearestTargetHitbox));
+				const float big_range = 18 * 16;
+				if (distanceSQ <= big_range * big_range) {
+					NPC.rotation = NPC.velocity.ToRotation() + MathHelper.PiOver2;
+					bool tooSlow = NPC.velocity.LengthSquared() < 1;
+					const float range = 10 * 16;
+					if (distanceSQ <= range * range) {
+						if (results.NearestTargetType == NPCUtils.TargetType.NPC) {
+							NPC.velocity *= 0.98f;
+							const float small_range = 2 * 16;
+							if (distanceSQ <= small_range * small_range) {
+								if (Mana >= 4f) {
+									NPC.velocity = (NPC.Center - results.NearestNPC.Center).SafeNormalize(NPC.velocity / 8) * 8;
+									Mana -= 4f; Projectile.NewProjectile(
+										NPC.GetSource_FromAI(),
+										NPC.Center,
+										NPC.velocity * -0.5f,
+										ModContent.ProjectileType<Squid_Bile_P>(),
+										12,
+										3
+									);
+
+								}
+							} else if (tooSlow) {
+								NPC.velocity = (results.NearestNPC.Center - NPC.Center).SafeNormalize(NPC.velocity / 8) * 8;
+							}
+						} else {
+							NPC.velocity *= 0.98f;
+							const float small_range = 2 * 16;
+							if (tooSlow || distanceSQ <= small_range * small_range) {
+								NPC.velocity = (NPC.Center - results.NearestTargetHitbox.Center.ToVector2()).SafeNormalize(NPC.velocity / 8) * 8;
+								if (Mana >= 4f) {
+									Mana -= 4f;
+									if (Main.netMode != NetmodeID.MultiplayerClient) {
+										Projectile.NewProjectile(
+											NPC.GetSource_FromAI(),
+											NPC.Center,
+											NPC.velocity * -0.5f,
+											ModContent.ProjectileType<Squid_Bile_P>(),
+											12,
+											3
+										);
+									}
+								}
+							}
+						}
+						return false;
+					}
+				}
+				NPC.target = -1;
+			}
+			return true;
+		}
+		public override void PostAI() {
+			NPC.friendly = false;
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ItemID.BlackInk));
+		}
+	}
+	public class Squid_Bile_P : ModProjectile {
+		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.VilePowder;
+		public AssimilationAmount Assimilation = 0.06f;
+		public override void SetDefaults() {
+			Projectile.CloneDefaults(ProjectileID.VilePowder);
+			Projectile.friendly = true;
+			Projectile.hostile = true;
+			Projectile.aiStyle = 0;
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.GetModPlayer<OriginPlayer>().DefiledAssimilation += Assimilation.GetValue(null, target);
+			target.AddBuff(BuffID.Darkness, 600);
+			target.AddBuff(BuffID.Weak, 240);
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			if (DefiledGlobalNPC.NPCTransformations.TryGetValue(target.type, out int targetType)) {
+				target.Transform(targetType);
+			}
+		}
+		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
+			//modifiers.FinalDamage *= 0;
+			//modifiers.DisableCrit();
+			//modifiers.HideCombatText();
+			//target.life += 1;
+			modifiers.SetInstantKill();
+			target.GetGlobalNPC<OriginGlobalNPC>().transformingThroughDeath = true;
+		}
+		public override bool? CanHitNPC(NPC target) {
+			return DefiledGlobalNPC.NPCTransformations.ContainsKey(target.type);
+		}
+		public override void AI() {
+			Projectile.velocity *= 0.95f;
+			Projectile.ai[0] += 1f;
+			if (Projectile.ai[0] == 90f) {
+				Projectile.Kill();
+			}
+			if (Projectile.ai[1] == 0f) {
+				Projectile.ai[1] = 1f;
+				for (int i = 0; i < 60; i++) {
+					Dust.NewDust(
+						Projectile.position,
+						Projectile.width,
+						Projectile.height,
+						ModContent.DustType<Generic_Powder_Dust>(),
+						Projectile.velocity.X,
+						Projectile.velocity.Y,
+						50,
+						new Color(0.3f, 0.28f, 0.35f, 0.9f)
+					);
+				}
+			}
+			if (Main.netMode == NetmodeID.MultiplayerClient) return;
+			int minX = (int)(Projectile.position.X / 16f) - 1;
+			int maxX = (int)((Projectile.position.X + Projectile.width) / 16f) + 2;
+			int minY = (int)(Projectile.position.Y / 16f) - 1;
+			int maxY = (int)((Projectile.position.Y + Projectile.height) / 16f) + 2;
+			if (minX < 0) {
+				minX = 0;
+			}
+			if (maxX > Main.maxTilesX) {
+				maxX = Main.maxTilesX;
+			}
+			if (minY < 0) {
+				minY = 0;
+			}
+			if (maxY > Main.maxTilesY) {
+				maxY = Main.maxTilesY;
+			}
+			Vector2 comparePos = default;
+			AltBiome biome = ModContent.GetInstance<Defiled_Wastelands_Alt_Biome>();
+			for (int x = minX; x < maxX; x++) {
+				for (int y = minY; y < maxY; y++) {
+					comparePos.X = x * 16;
+					comparePos.Y = y * 16;
+					if ((Projectile.position.X + Projectile.width > comparePos.X) &&
+						(Projectile.position.X < comparePos.X + 16f) &&
+						(Projectile.position.Y + Projectile.height > comparePos.Y) &&
+						(Projectile.position.Y < comparePos.Y + 16f)
+						&& Main.tile[x, y].HasTile) {
+						AltLibrary.Core.ALConvert.ConvertTile(x, y, biome);
+						AltLibrary.Core.ALConvert.ConvertWall(x, y, biome);
+						//WorldGen.Convert(x, y, OriginSystem.origin_conversion_type, 1);
+					}
+				}
+			}
+		}
+	}
+}

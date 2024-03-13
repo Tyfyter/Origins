@@ -52,7 +52,7 @@ namespace Origins.Items.Materials {
 						Projectile.velocity.X,
 						Projectile.velocity.Y,
 						50,
-						new Color(0.7f, 0.7f, 0.7f)
+						new Color(0.7f, 0.7f, 0.7f, 0.1f)
 					);
 				}
 			}
