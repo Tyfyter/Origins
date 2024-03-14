@@ -292,7 +292,7 @@ ACCESSORIES:
 (^) Bomb Handling Device*
 (^) Boomerang Magnet*
 (^) Brine-Leafed Clover*
-(#3, ^2) Bug Trapper* !!!
+(^) Bug Trapper*
 (^) C.F.H.E.S.*
 (^) Celestial Starlight*
 (^) Celestial Stone Mask*
@@ -342,7 +342,7 @@ ACCESSORIES:
 (^) No U Card*
 (^) Olid Organ*
 (^) Plasma Phial*
-(#3, ^2) Playtime's Over* !!!
+(^) Playtime's Over*
 (^) Pneumatic Bomb Thrower*
 (^) Potato Battery*
 (^) Powerflower*

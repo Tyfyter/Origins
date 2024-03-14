@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dusts;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using Terraria;
@@ -17,13 +16,13 @@ namespace Origins.Items.Weapons.Ammo {
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RocketI);
-            Item.damage = 26;
+            Item.damage = 30;
             Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
             Item.glowMask = glowmask;
             Item.value = Item.sellPrice(silver: 3, copper: 2);
         }
         public override void AddRecipes() {
-            Recipe recipe = Recipe.Create(Type, 5);
+            Recipe recipe = Recipe.Create(Type, 10);
             recipe.AddIngredient(ItemID.Fireblossom);
             recipe.AddRecipeGroup(RecipeGroupID.IronBar, 5);
             recipe.AddTile(TileID.Anvils);
@@ -42,7 +41,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 3);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 5);
+			Recipe recipe = Recipe.Create(Type, 10);
             recipe.AddIngredient(ItemID.ExplosivePowder);
             recipe.AddRecipeGroup(RecipeGroupID.IronBar);
             recipe.AddTile(TileID.MythrilAnvil);

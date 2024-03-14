@@ -1,4 +1,4 @@
-author = Tyfyter2002 and chee
+author = Tyfyter2002 and chrersis
 version = 0.5.3.9
 displayName = Terraria Origins
 

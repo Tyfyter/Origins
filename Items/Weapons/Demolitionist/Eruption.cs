@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			"CanistahUser"
         };
         public override void SetDefaults() {
-			Item.CloneDefaults(ItemID.SniperRifle);
+			Item.CloneDefaults(ItemID.GrenadeLauncher);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.damage = 27;
 			Item.crit = 0;

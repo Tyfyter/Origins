@@ -2292,7 +2292,7 @@ Felnum_Shock_Grenade: {
 
 Flakjack: {
 	DisplayName: Flakjack
-	Tooltip: ""
+	Tooltip: Uses metal slugs as ammo
 }
 
 Flashbang: {
@@ -2426,7 +2426,7 @@ Thermite_Launcher: {
 	Tooltip:
 		'''
 		Burn.
-		Uses mines for ammo
+		Uses canisters as ordinance
 		'''
 }
 
@@ -3633,7 +3633,7 @@ Cold_Snap: {
 	Tooltip:
 		'''
 		Inflicts frostburn to struck enemies
-		Uses mines as ordinance
+		Uses canisters as ordinance
 		'''
 }
 

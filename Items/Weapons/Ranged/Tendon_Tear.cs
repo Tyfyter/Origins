@@ -22,6 +22,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.useTime = 38;
 			Item.width = 86;
 			Item.height = 22;
+			Item.UseSound = Origins.Sounds.HeavyCannon;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -38,7 +39,10 @@ namespace Origins.Items.Weapons.Ranged {
 			Projectile.NewProjectile(source, position, velocity, Tendon_Tear_Swing.ID, damage, knockback, player.whoAmI, ai0: -(728 / len), ai1: i);
 			return false;
 		}
-	}
+        public override Vector2? HoldoutOffset() {
+            return new Vector2(-20, 0);
+        }
+    }
 	public class Tendon_Tear_Swing : ModProjectile, IWhipProjectile {
 		public static int ID { get; private set; } = -1;
 		public override string Texture => "Origins/Items/Weapons/Ranged/Tendon_Tear_P";
