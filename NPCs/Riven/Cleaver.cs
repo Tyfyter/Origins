@@ -40,6 +40,7 @@ namespace Origins.NPCs.Riven {
 			int current = 0;
 			int last = NPC.whoAmI;
 			int type = ModContent.NPCType<Cleaver_Body>();
+			NPC.netUpdate = true;
 			for (int k = 0; k < 32; k++) {
 				current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
 				Main.npc[current].ai[3] = NPC.whoAmI;
@@ -47,8 +48,8 @@ namespace Origins.NPCs.Riven {
 				Main.npc[current].ai[1] = last;
 				Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
 				Main.npc[last].ai[0] = current;
-				NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
 				last = current;
+				Main.npc[current].netUpdate = true;
 			}
 			current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Cleaver_Tail>(), NPC.whoAmI);
 			Main.npc[current].ai[3] = NPC.whoAmI;
@@ -56,7 +57,7 @@ namespace Origins.NPCs.Riven {
 			Main.npc[current].ai[1] = last;
 			Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
 			Main.npc[last].ai[0] = current;
-			NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
+			Main.npc[current].netUpdate = true;
 		}
 	}
 

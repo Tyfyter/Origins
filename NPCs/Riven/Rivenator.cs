@@ -1,6 +1,7 @@
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Magic;
 using Origins.World.BiomeData;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
@@ -38,6 +39,7 @@ namespace Origins.NPCs.Riven {
 			int current = NPC.whoAmI;
 			int last = NPC.whoAmI;
 			int type = ModContent.NPCType<Rivenator_Body>();
+			NPC.netUpdate = true;
 			for (int k = 0; k < 17; k++) {
 				current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
 				Main.npc[current].ai[3] = NPC.whoAmI;
@@ -47,8 +49,8 @@ namespace Origins.NPCs.Riven {
 				Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
 				Main.npc[last].ai[0] = current;
 
-				NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
 				last = current;
+				Main.npc[current].netUpdate = true;
 			}
 			current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Rivenator_Tail>(), NPC.whoAmI);
 			Main.npc[current].ai[3] = NPC.whoAmI;
@@ -56,7 +58,23 @@ namespace Origins.NPCs.Riven {
 			Main.npc[current].ai[1] = last;
 			Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
 			Main.npc[last].ai[0] = current;
-			NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, current);
+			Main.npc[current].netUpdate = true;
+		}
+		public override bool SpecialOnKill() {
+			NPC current = NPC;
+			int bodyType = ModContent.NPCType<Rivenator_Body>();
+			HashSet<int> indecies = new();
+			while (current.ai[0] != 0) {
+				Mod.Logger.Info("Wormed the worm");
+				if (indecies.Contains(NPC.whoAmI)) break;
+				indecies.Add(NPC.whoAmI);
+				if (Main.rand.NextBool(9)) {
+					NPC.NewNPC(NPC.GetSource_Death(), (int)NPC.position.X + Main.rand.Next(NPC.width), (int)NPC.position.Y + Main.rand.Next(NPC.height), ModContent.NPCType<Cleaver_Head>());
+				}
+				current = Main.npc[(int)current.ai[0]];
+				if (current.type != bodyType) break;
+			}
+			return false;
 		}
 	}
 
@@ -104,9 +122,6 @@ namespace Origins.NPCs.Riven {
 			//Gore.NewGore(NPC.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
 			for (int i = 0; i < 5; i++) Gore.NewGore(npc.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
             //for(int i = 0; i < 3; i++)
-            if (Main.rand.NextBool(9)) {
-                NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X + Main.rand.Next(npc.width), (int)npc.position.Y + Main.rand.Next(npc.height), ModContent.NPCType<Cleaver_Head>());
-            }
         }
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			OriginPlayer.InflictTorn(target, 480, targetSeverity: 1f - 0.67f);
