@@ -26,6 +26,7 @@ using Origins.Items.Weapons.Magic;
 using Origins.Items.Weapons.Ranged;
 using Terraria.GameContent.Personalities;
 using Terraria.ObjectData;
+using Origins.Tiles;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -87,7 +88,19 @@ namespace Origins.World.BiomeData {
 			public const float Mimic = 0.1f;
 			public const float Bident = 0.2f;
 			public const float Tripod = 0.3f;
+			public const float Sqid = 0.09f;
 			public const float AncientCyclops = 0.03f;
+			public static float LandEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
+				if (hardmode && !Main.hardMode) return 0f;
+				if (TileLoader.GetTile(spawnInfo.SpawnTileType) is DefiledTile || (spawnInfo.Player.InModBiome<Defiled_Wastelands>() && spawnInfo.SpawnTileType == ModContent.TileType<Defiled_Ore>())) {
+					return 1f;
+				}
+				return 0f;
+			}
+			public static float FlyingEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
+				if (hardmode && !Main.hardMode) return 0f;
+				return spawnInfo.Player.InModBiome<Defiled_Wastelands>() ? 0.5f : 0f;
+			}
 		}
 		public static class Gen {
 			public static void StartDefiled(float i, float j) {

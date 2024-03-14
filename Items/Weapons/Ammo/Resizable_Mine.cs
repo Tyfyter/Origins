@@ -5,14 +5,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ammo {
-	public class Resizable_Mine_One : Resizable_Mine_Two {
-        public override void SetStaticDefaults() {
+	public class Resizable_Mine_One : ModItem, ICanisterAmmo {
+		public CanisterData GetCanisterData => new();
+		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.damage = 14;
-			Item.shoot = 1;
 			Item.ammo = Type;
 			Item.shootSpeed = 3.7f;
 			Item.knockBack = 2f;
@@ -27,8 +27,9 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.Register();
 		}
 	}
-	public class Resizable_Mine_Two : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+	public class Resizable_Mine_Two : ModItem, ICustomWikiStat, ICanisterAmmo {
+		public CanisterData GetCanisterData => new();
+		public string[] Categories => new string[] {
             "Canistah"
         };
 		public override void SetStaticDefaults() {
@@ -38,7 +39,6 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
 			Item.damage = 20;
-			Item.shoot = 2;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4f;
             Item.knockBack = 3f;
@@ -53,7 +53,8 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.Register();
         }
 	}
-	public class Resizable_Mine_Three : Resizable_Mine_Two {
+	public class Resizable_Mine_Three : ModItem, ICanisterAmmo {
+		public CanisterData GetCanisterData => new();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
@@ -61,7 +62,6 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
 			Item.damage = 26;
-			Item.shoot = 3;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4.4f;
 			Item.knockBack = 3.6f;
@@ -76,7 +76,8 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.Register();
 		}
 	}
-	public class Resizable_Mine_Four : Resizable_Mine_Two {
+	public class Resizable_Mine_Four : ModItem, ICanisterAmmo {
+		public CanisterData GetCanisterData => new();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
@@ -84,7 +85,6 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
 			Item.damage = 35;
-			Item.shoot = 4;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4.8f;
 			Item.knockBack = 4.3f;
@@ -99,7 +99,8 @@ namespace Origins.Items.Weapons.Ammo {
 			recipe.Register();
 		}
 	}
-	public class Resizable_Mine_Five : Resizable_Mine_Two {
+	public class Resizable_Mine_Five : ModItem, ICanisterAmmo {
+		public CanisterData GetCanisterData => new();
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
@@ -107,7 +108,6 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
 			Item.damage = 45;
-			Item.shoot = 5;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 5.2f;
 			Item.knockBack = 4.8f;

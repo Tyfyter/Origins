@@ -35,7 +35,7 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.Water) return 0;
-			return 0.05f;
+			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.Sqid;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(

@@ -23,7 +23,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useTime = 32;
 			Item.useAnimation = 32;
 			Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
-            Item.useAmmo = ModContent.ItemType<Ammo.Resizable_Mine_One>();
+            Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
             Item.knockBack = 2f;
 			Item.shootSpeed = 12f;
 			Item.autoReuse = false;
@@ -33,9 +33,23 @@ namespace Origins.Items.Weapons.Demolitionist {
 		//can't just chain rules since OneFromOptionsNotScaledWithLuckDropRule drops all the items directly
 		//but that's fine since other bosses that drop a ranged weapon don't show the ammo in the bestiary
 		public override void OnSpawn(IEntitySource source) {
-			if (source is EntitySource_ItemOpen or EntitySource_Loot) {
+			if (Main.netMode != NetmodeID.MultiplayerClient && source is EntitySource_ItemOpen or EntitySource_Loot) {
+				Main.timeItemSlotCannotBeReusedFor[Item.whoAmI] = 1;
 				Item.NewItem(source, Item.position, ModContent.ItemType<Resizable_Mine_Three>(), Main.rand.Next(60, 100));
 			}
+		}
+		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			Projectile.NewProjectile(
+				source,
+				position,
+				velocity,
+				Item.shoot,
+				damage,
+				knockback,
+				player.whoAmI,
+				ai2: type
+			);
+			return false;
 		}
 	}
 	public class Thermite_Canister_P : ModProjectile {
@@ -64,16 +78,20 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 1;
 			return true;
 		}
-		public override void OnKill(int timeLeft) {
-			Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, 0, 0, Projectile.owner, -1, 1);
+		public override void OnKill(int timeLeft) {//TODO: make actually different projectile
 			Projectile.damage = (int)(Projectile.damage * 0.75f);
 			Projectile.knockBack = 16f;
 			Projectile.position = Projectile.Center;
-			Projectile.width = (Projectile.height = 52);
+			Projectile.width = Projectile.height = 52;
 			Projectile.Center = Projectile.position;
 			Projectile.Damage();
             ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
-            for (int i = 0; i < 5; i++) {
+			if (Projectile.ai[2] == CanisterGlobalItem.GetCanisterType(typeof(Thermite_Canister))) {
+				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, 0, 0, Projectile.owner, -1, 1);
+			} else {
+				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);
+			}
+			for (int i = 0; i < 5; i++) {
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, (Projectile.velocity / 2) + Vec2FromPolar((i / Main.rand.NextFloat(5, 7)) * MathHelper.TwoPi, Main.rand.NextFloat(2, 4)), ModContent.ProjectileType<Thermite_P>(), (int)(Projectile.damage * 0.65f), 0, Projectile.owner);
 			}
 		}

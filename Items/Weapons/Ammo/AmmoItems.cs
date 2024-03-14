@@ -8,9 +8,10 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
-    public class Thermite_Canister : ModItem {
+    public class Thermite_Canister : ModItem, ICanisterAmmo {
         static short glowmask;
-        public override void SetStaticDefaults() {
+		public CanisterData GetCanisterData => new();
+		public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
             Item.ResearchUnlockCount = 199;
         }
