@@ -33,9 +33,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		//can't just chain rules since OneFromOptionsNotScaledWithLuckDropRule drops all the items directly
 		//but that's fine since other bosses that drop a ranged weapon don't show the ammo in the bestiary
 		public override void OnSpawn(IEntitySource source) {
-			if (Main.netMode != NetmodeID.MultiplayerClient && source is EntitySource_ItemOpen or EntitySource_Loot) {
+			if (source is EntitySource_ItemOpen or EntitySource_Loot) {
 				Main.timeItemSlotCannotBeReusedFor[Item.whoAmI] = 1;
-				Item.NewItem(source, Item.position, ModContent.ItemType<Resizable_Mine_Three>(), Main.rand.Next(60, 100));
+				int index = Item.NewItem(source, Item.position, ModContent.ItemType<Thermite_Canister>(), Main.rand.Next(60, 100));
+				if (Main.netMode == NetmodeID.MultiplayerClient) {
+					NetMessage.SendData(MessageID.SyncItem, -1, -1, null, index, 1f);
+				}
 			}
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
