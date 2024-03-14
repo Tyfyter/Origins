@@ -362,7 +362,8 @@ namespace Origins {
 				)) {
 					c.EmitLdarg1();
 					c.EmitDelegate<Func<string, string, string>>((key, biomeName) => {
-						if (biomeName != null) {
+						if (biomeName is not null) {
+							if (Main.LocalPlayer.talkNPC <= -1) return key;
 							NPC talkNPC = Main.npc[Main.LocalPlayer.talkNPC];
 							string talkNPCName = NPCID.Search.GetName(talkNPC.netID);
 							string baseKey = "TownNPCMood_" + talkNPCName;
