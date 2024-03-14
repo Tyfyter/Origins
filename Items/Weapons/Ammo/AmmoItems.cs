@@ -18,8 +18,7 @@ namespace Origins.Items.Weapons.Ammo {
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RocketI);
             Item.damage = 26;
-            Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
-            Item.ammo = Item.type;
+            Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
             Item.glowMask = glowmask;
             Item.value = Item.sellPrice(silver: 3, copper: 2);
         }
