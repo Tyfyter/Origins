@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items;
 using Origins.Reflection;
 using System;
 using System.IO;
@@ -17,6 +18,7 @@ namespace Origins.Projectiles {
 		public bool magicTripwireTripped = false;
 		public bool noTileSplode = false;
 		public StatModifier selfDamageModifier = StatModifier.Default;
+		public StatModifier modifierBlastRadius = StatModifier.Default;
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
@@ -74,7 +76,8 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void OnSpawn(Projectile projectile, IEntitySource source) {
-			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
+			Player player = Main.player[projectile.owner];
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			if (originPlayer.novaSet && Origins.HomingEffectivenessMultiplier[projectile.type] != 0) {
 				isHoming = true;
 			}
@@ -87,12 +90,28 @@ namespace Origins.Projectiles {
 			if (originPlayer.pincushion) {
 				noTileSplode = true;
 			}
+			if (source is EntitySource_ItemUse itemUse) {
+				if (PrefixLoader.GetPrefix(itemUse.Item.prefix) is IBlastRadiusPrefix brPrefix) {
+					modifierBlastRadius = brPrefix.BlastRadius();
+				}
+				if (PrefixLoader.GetPrefix(itemUse.Item.prefix) is ISelfDamagePrefix sdPrefix) {
+					selfDamageModifier = selfDamageModifier.CombineWith(sdPrefix.SelfDamage());
+				}
+			} else if (source is EntitySource_Parent sourceParent && sourceParent.Entity is Projectile parent && parent.TryGetGlobalProjectile(out ExplosiveGlobalProjectile parentGlobal)) {
+				modifierBlastRadius = parentGlobal.modifierBlastRadius;
+			}
 		}
 		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
 			OriginPlayer originPlayer = Main.player[projectile.owner].GetModPlayer<OriginPlayer>();
-			if (IsExploding(projectile) && originPlayer.explosiveBlastRadius != StatModifier.Default) {
-				StatModifier modifier = originPlayer.explosiveBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
-				hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
+			if (IsExploding(projectile)) {
+				if (modifierBlastRadius != StatModifier.Default) {
+					StatModifier modifier = modifierBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
+				}
+				if (originPlayer.explosiveBlastRadius != StatModifier.Default) {
+					StatModifier modifier = originPlayer.explosiveBlastRadius.Scale(additive: 0.5f, multiplicative: 0.5f);
+					hitbox.Inflate((int)(modifier.ApplyTo(hitbox.Width) - hitbox.Width), (int)(modifier.ApplyTo(hitbox.Height) - hitbox.Height));
+				}
 			}
 			switch (projectile.type) {
 				case ProjectileID.Bomb:
@@ -613,7 +632,7 @@ namespace Origins.Projectiles {
 					0f,
 					0f,
 					100,
-					default(Color),
+					default,
 					1.5f
 				).velocity *= 1.4f;
 			}
@@ -626,7 +645,7 @@ namespace Origins.Projectiles {
 					0f,
 					0f,
 					100,
-					default(Color),
+					default,
 					3.5f
 				);
 				dust.noGravity = true;
@@ -639,25 +658,25 @@ namespace Origins.Projectiles {
 					0f,
 					0f,
 					100,
-					default(Color),
+					default,
 					1.5f
 				).velocity *= 3f;
 			}
 			for (int i = 0; i < 2; i++) {
 				float velocityMult = 0.4f * (i + 1);
-				Gore gore = Gore.NewGoreDirect(null, center, default(Vector2), Main.rand.Next(61, 64));
+				Gore gore = Gore.NewGoreDirect(null, center, default, Main.rand.Next(61, 64));
 				gore.velocity *= velocityMult;
 				gore.velocity.X += 1f;
 				gore.velocity.Y += 1f;
-				gore = Gore.NewGoreDirect(null, center, default(Vector2), Main.rand.Next(61, 64));
+				gore = Gore.NewGoreDirect(null, center, default, Main.rand.Next(61, 64));
 				gore.velocity *= velocityMult;
 				gore.velocity.X -= 1f;
 				gore.velocity.Y += 1f;
-				gore = Gore.NewGoreDirect(null, center, default(Vector2), Main.rand.Next(61, 64));
+				gore = Gore.NewGoreDirect(null, center, default, Main.rand.Next(61, 64));
 				gore.velocity *= velocityMult;
 				gore.velocity.X += 1f;
 				gore.velocity.Y -= 1f;
-				gore = Gore.NewGoreDirect(null, center, default(Vector2), Main.rand.Next(61, 64));
+				gore = Gore.NewGoreDirect(null, center, default, Main.rand.Next(61, 64));
 				gore.velocity *= velocityMult;
 				gore.velocity.X -= 1f;
 				gore.velocity.Y -= 1f;
