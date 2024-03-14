@@ -20,7 +20,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 45;
+			Item.damage = 56;
 			Item.value *= 14;
 			Item.shoot = ModContent.ProjectileType<Crystal_Grenade_P>();
 			Item.shootSpeed *= 1.5f;

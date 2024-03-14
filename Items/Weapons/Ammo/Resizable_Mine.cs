@@ -38,7 +38,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
-			Item.damage = 20;
+			Item.damage = 22;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4f;
             Item.knockBack = 3f;
@@ -61,7 +61,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
-			Item.damage = 26;
+			Item.damage = 35;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4.4f;
 			Item.knockBack = 3.6f;
@@ -84,7 +84,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
-			Item.damage = 35;
+			Item.damage = 48;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 4.8f;
 			Item.knockBack = 4.3f;
@@ -107,7 +107,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
 			Item.maxStack = 999;
-			Item.damage = 45;
+			Item.damage = 60;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shootSpeed = 5.2f;
 			Item.knockBack = 4.8f;

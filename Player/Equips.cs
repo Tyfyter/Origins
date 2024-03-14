@@ -15,7 +15,7 @@ namespace Origins {
     public partial class OriginPlayer : ModPlayer {
 		public override void PostUpdateEquips() {
 			if (bugZapper) {
-				Player.statDefense += (int)(tornCurrentSeverity * 8);
+				Player.statDefense += (int)(tornCurrentSeverity * 12);
 			}
 			if (donorWristband) {
 				Player.pStone = false;

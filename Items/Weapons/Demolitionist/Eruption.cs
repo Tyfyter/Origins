@@ -13,7 +13,7 @@ namespace Origins.Items.Weapons.Demolitionist {
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.SniperRifle);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.damage = 12;
+			Item.damage = 27;
 			Item.crit = 0;
 			Item.useAnimation = 32;
 			Item.useTime = 32;

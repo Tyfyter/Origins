@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Demolitionist {
         };
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
-			Item.damage = 27;
+			Item.damage = 40;
 			Item.width = 44;
 			Item.height = 18;
 			Item.useTime = 32;
