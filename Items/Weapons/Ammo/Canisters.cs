@@ -27,24 +27,16 @@ namespace Origins.Items.Weapons.Ammo {
 			entity.shoot = ItemToCanisterID[entity.type];
 		}
 		public static int GetCanisterType(int type) {
-			if (ItemToCanisterID.TryGetValue(type, out int canisterID)) {
-				CanisterData data = CanisterDatas[canisterID];
-				return data.TypeOverride == -1 ? canisterID : data.TypeOverride;
-			}
-			return -1;
+			return ItemToCanisterID.TryGetValue(type, out int canisterID) ? canisterID : -1;
 		}
 		public static int GetCanisterType(Type type) {
-			if (TypeToCanisterID.TryGetValue(type, out int canisterID)) {
-				CanisterData data = CanisterDatas[canisterID];
-				return data.TypeOverride == -1 ? canisterID : data.TypeOverride;
-			}
-			return -1;
+			return TypeToCanisterID.TryGetValue(type, out int canisterID) ? canisterID : - 1;
 		}
 	}
 	public interface ICanisterAmmo {
 		CanisterData GetCanisterData { get; }
 	}
-	public record struct CanisterData(Color OuterColor, Color InnerColor, int TypeOverride = -1, int WhatAmI = -999);
+	public record struct CanisterData(Color OuterColor, Color InnerColor, int WhatAmI = -999);
 	public class CanisterGlobalProjectile : GlobalProjectile {
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
 			if (entity.ModProjectile is ICanisterProjectile canister) {

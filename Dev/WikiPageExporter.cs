@@ -716,6 +716,7 @@ namespace Origins.Dev {
 			data.AppendStat("HealLife", item.healLife, 0);
 			data.AppendStat("HealMana", item.healMana, 0);
 			data.AppendStat("Damage", item.damage, -1);
+			data.AppendStat("ArmorPenetration", item.ArmorPenetration, 0);
 			if (item.damage > 0) {
 				string damageClass = item.DamageType.DisplayName.Value;
 				damageClass = damageClass.Replace(" damage", "").Trim();

@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ammo {
 	public class Resizable_Mine_One : ModItem, ICanisterAmmo {
-		public CanisterData GetCanisterData => new();
+		public CanisterData GetCanisterData => new(new(219, 131, 72), new(255, 193, 97));
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
@@ -28,7 +28,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public class Resizable_Mine_Two : ModItem, ICustomWikiStat, ICanisterAmmo {
-		public CanisterData GetCanisterData => new();
+		public CanisterData GetCanisterData => new(new(188, 171, 167), new(246, 69, 84));
 		public string[] Categories => new string[] {
             "Canistah"
         };
@@ -54,7 +54,7 @@ namespace Origins.Items.Weapons.Ammo {
         }
 	}
 	public class Resizable_Mine_Three : ModItem, ICanisterAmmo {
-		public CanisterData GetCanisterData => new();
+		public CanisterData GetCanisterData => new(new(141, 22, 38), new(163, 108, 255));
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
@@ -77,7 +77,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public class Resizable_Mine_Four : ModItem, ICanisterAmmo {
-		public CanisterData GetCanisterData => new();
+		public CanisterData GetCanisterData => new(new(161, 236, 0), new(97, 255, 238));
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
@@ -100,7 +100,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public class Resizable_Mine_Five : ModItem, ICanisterAmmo {
-		public CanisterData GetCanisterData => new();
+		public CanisterData GetCanisterData => new(new(223, 218, 205), new(97, 255, 133));
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
