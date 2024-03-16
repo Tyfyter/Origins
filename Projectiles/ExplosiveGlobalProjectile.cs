@@ -99,6 +99,7 @@ namespace Origins.Projectiles {
 				}
 			} else if (source is EntitySource_Parent sourceParent && sourceParent.Entity is Projectile parent && parent.TryGetGlobalProjectile(out ExplosiveGlobalProjectile parentGlobal)) {
 				modifierBlastRadius = parentGlobal.modifierBlastRadius;
+				selfDamageModifier = selfDamageModifier.CombineWith(parentGlobal.modifierBlastRadius);
 			}
 		}
 		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {

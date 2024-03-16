@@ -62,7 +62,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return new Vector2(-2, 0);
 		}
 	}
-	public class Meteor_P : ModProjectile {
+	public class Meteor_P : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => base.Texture + "_Cooling";
 		protected override bool CloneNewInstances => true;
 		AutoLoadingAsset<Texture2D> hotTexture = "Origins/Items/Weapons/Demolitionist/Meteor_P";
@@ -144,6 +144,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				SpriteEffects.None
 			);
 		}
+		public bool IsExploding() => false;
 	}
 	public class Meteor_Explosion_1 : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GeyserTrap;

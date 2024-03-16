@@ -31,39 +31,42 @@ namespace Origins.Items {
 		}
 		public static IEnumerable<TooltipLine> GetStatLines(this ModPrefix prefix) {
 			static TooltipLine GetLine(float value, string key, BonusStackType stack, bool inverted = false) {
-				bool positive = value > 0;
-				string formattedValue = positive ? "+" : "";
+				bool negative;
+				string text;
 				switch (stack) {
 					case BonusStackType.Base:
 					case BonusStackType.Flat:
-					formattedValue += value;
+					text = $"{(int)value}";
+					negative = value < 0;
 					break;
 
 					case BonusStackType.Additive:
 					case BonusStackType.Multiplicative:
-					formattedValue += $"{value - 1:P0}";
+					text = $"{value - 1:P0}";
+					negative = value < 1;
 					break;
 
 					default:
 					throw new ArgumentException($"{stack} is not a valid BonusStackType", nameof(stack));
 				}
-				return new TooltipLine(Origins.instance, key + stack.ToString(), Language.GetTextValue("Mods.Origins.Tooltips.Modifiers." + key, formattedValue)) {
-					IsModifier = true, IsModifierBad = positive ^ inverted
+				string textPrefix = negative ? "" : "+";
+				return new TooltipLine(Origins.instance, key + stack.ToString(), Language.GetTextValue("Mods.Origins.Tooltips.Modifiers." + key, textPrefix + text)) {
+					IsModifier = true, IsModifierBad = negative ^ inverted
 				};
 			}
 			if (prefix is IBlastRadiusPrefix blastRadiusPrefix) {
 				StatModifier blastRadius = blastRadiusPrefix.BlastRadius();
 				if (blastRadius.Base != 0) yield return GetLine(blastRadius.Base, "BlastRadius", BonusStackType.Base);
-				if (blastRadius.Additive != 0) yield return GetLine(blastRadius.Base, "BlastRadius", BonusStackType.Additive);
-				if (blastRadius.Multiplicative != 0) yield return GetLine(blastRadius.Base, "BlastRadius", BonusStackType.Multiplicative);
-				if (blastRadius.Flat != 0) yield return GetLine(blastRadius.Base, "BlastRadius", BonusStackType.Flat);
+				if (blastRadius.Additive != 1) yield return GetLine(blastRadius.Additive, "BlastRadius", BonusStackType.Additive);
+				if (blastRadius.Multiplicative != 1) yield return GetLine(blastRadius.Multiplicative, "BlastRadius", BonusStackType.Multiplicative);
+				if (blastRadius.Flat != 0) yield return GetLine(blastRadius.Flat, "BlastRadius", BonusStackType.Flat);
 			}
 			if (prefix is ISelfDamagePrefix selfDamagePrefix) {
 				StatModifier selfDamage = selfDamagePrefix.SelfDamage();
 				if (selfDamage.Base != 0) yield return GetLine(selfDamage.Base, "SelfDamage", BonusStackType.Base, true);
-				if (selfDamage.Additive != 0) yield return GetLine(selfDamage.Base, "SelfDamage", BonusStackType.Additive, true);
-				if (selfDamage.Multiplicative != 0) yield return GetLine(selfDamage.Base, "SelfDamage", BonusStackType.Multiplicative, true);
-				if (selfDamage.Flat != 0) yield return GetLine(selfDamage.Base, "SelfDamage", BonusStackType.Flat, true);
+				if (selfDamage.Additive != 1) yield return GetLine(selfDamage.Additive, "SelfDamage", BonusStackType.Additive, true);
+				if (selfDamage.Multiplicative != 1) yield return GetLine(selfDamage.Multiplicative, "SelfDamage", BonusStackType.Multiplicative, true);
+				if (selfDamage.Flat != 0) yield return GetLine(selfDamage.Flat, "SelfDamage", BonusStackType.Flat, true);
 			}
 		}
 	}
@@ -184,7 +187,7 @@ namespace Origins.Items {
 		}
 	}
 	public class Unbounded_Prefix : ModPrefix, IBlastRadiusPrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier BlastRadius() => new(1, 1.15f);
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -195,7 +198,7 @@ namespace Origins.Items {
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
 	}
 	public class Eased_Prefix : ModPrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -204,7 +207,7 @@ namespace Origins.Items {
 		}
 	}
 	public class Loaded_Prefix : ModPrefix, IBlastRadiusPrefix, ISelfDamagePrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier BlastRadius() => new(1, 1.25f);
 		public StatModifier SelfDamage() => new(1, 0.9f);
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
@@ -216,7 +219,7 @@ namespace Origins.Items {
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
 	}
 	public class Penetrative_Prefix : ModPrefix, IBlastRadiusPrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier BlastRadius() => new(1, 1.10f);
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -226,7 +229,7 @@ namespace Origins.Items {
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
 	}
 	public class Catastrophic_Prefix : ModPrefix, IBlastRadiusPrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier BlastRadius() => new(1, 1.10f);
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -239,7 +242,7 @@ namespace Origins.Items {
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
 	}
 	public class Persuasive_Prefix : ModPrefix, IBlastRadiusPrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier BlastRadius() => new(1, 1.15f);
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -249,7 +252,7 @@ namespace Origins.Items {
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
 	}
 	public class Dud_Prefix : ModPrefix, ISelfDamagePrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier SelfDamage() => new(1, 0.9f);
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -261,7 +264,7 @@ namespace Origins.Items {
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
 	}
 	public class Wimpy_Prefix : ModPrefix, IBlastRadiusPrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier BlastRadius() => new(1, 0.75f);
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -272,7 +275,7 @@ namespace Origins.Items {
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
 	}
 	public class Betraying_Prefix : ModPrefix, ISelfDamagePrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier SelfDamage() => new(1, 1.5f);
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -281,7 +284,7 @@ namespace Origins.Items {
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
 	}
 	public class Lightweight_Prefix : ModPrefix, IBlastRadiusPrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier BlastRadius() => new(1, 0.90f);
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -293,7 +296,7 @@ namespace Origins.Items {
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
 	}
 	public class Heavy_Duty_Prefix : ModPrefix, IBlastRadiusPrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier BlastRadius() => new(1, 1.25f);
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -306,7 +309,7 @@ namespace Origins.Items {
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
 	}
 	public class Safe_Prefix : ModPrefix, ISelfDamagePrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier SelfDamage() => new(1, 0.6f);
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
@@ -315,7 +318,7 @@ namespace Origins.Items {
 		public override IEnumerable<TooltipLine> GetTooltipLines(Item item) => this.GetStatLines();
 	}
 	public class Guileless_Prefix : ModPrefix, IBlastRadiusPrefix {
-		public override PrefixCategory Category => PrefixCategory.Custom;
+		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier BlastRadius() => new(1, 1.25f);
 		public override bool CanRoll(Item item) => item.CountsAsClass<Explosive>();
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {

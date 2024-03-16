@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Melee {
 			Item.UseSound = SoundID.Item1;
 		}
 	}
-	public class Depth_Charge_P : ModProjectile {
+	public class Depth_Charge_P : ModProjectile, IIsExplodingProjectile {
 		public static AutoCastingAsset<Texture2D> ChainTexture { get; private set; }
 		const int ai_state_spinning = 0;
 		const int ai_state_launching_forward = 1;
@@ -128,6 +128,8 @@ namespace Origins.Items.Weapons.Melee {
 			}
 			return chainPositions;
 		}
+
+		public bool IsExploding() => false;
 	}
 	public class Depth_Charge_Explosion : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
