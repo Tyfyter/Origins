@@ -1847,6 +1847,17 @@ namespace Origins {
 			self.VanillaFindFrame(frameHeight, false, type);
 			self.type = t;
 		}
+		public static void DoFrames(this NPC self, int counterMax) {
+			int heightEtBuffer = self.frame.Height + 2;
+			self.frameCounter += 1;
+			if (self.frameCounter >= counterMax) {
+				self.frame.Y += heightEtBuffer;
+				self.frameCounter = 0;
+				if (self.frame.Y >= heightEtBuffer * Main.npcFrameCount[self.type]) {
+					self.frame.Y = 0;
+				}
+			}
+		}
 		public static string Get2ndPersonReference(this Player self, string args = "") {
 			return Language.GetTextValue($"Mods.Origins.Words.2ndref{args}{(Main.LocalPlayer.Male ? "male" : "female")}");
 		}

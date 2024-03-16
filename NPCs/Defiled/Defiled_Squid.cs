@@ -22,7 +22,7 @@ namespace Origins.NPCs.Defiled {
 		public int MaxManaDrain => 8;
 		public float Mana {
 			get => NPC.localAI[3];
-			set => NPC.localAI[3] = value;
+			set => NPC.localAI[3] = MathHelper.Clamp(value, 0, MaxMana);
 		}
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[Type] = 4;
@@ -67,6 +67,7 @@ namespace Origins.NPCs.Defiled {
 							const float small_range = 2 * 16;
 							if (distanceSQ <= small_range * small_range) {
 								if (Mana >= 4f) {
+									NPC.DoFrames(1);
 									NPC.velocity = (NPC.Center - results.NearestNPC.Center).SafeNormalize(NPC.velocity / 8) * 8;
 									Mana -= 4f; Projectile.NewProjectile(
 										NPC.GetSource_FromAI(),
@@ -85,6 +86,7 @@ namespace Origins.NPCs.Defiled {
 							NPC.velocity *= 0.98f;
 							const float small_range = 2 * 16;
 							if (tooSlow || distanceSQ <= small_range * small_range) {
+								NPC.DoFrames(1);
 								NPC.velocity = (NPC.Center - results.NearestTargetHitbox.Center.ToVector2()).SafeNormalize(NPC.velocity / 8) * 8;
 								if (Mana >= 4f) {
 									Mana -= 4f;
@@ -101,10 +103,14 @@ namespace Origins.NPCs.Defiled {
 								}
 							}
 						}
+						NPC.DoFrames(7);
 						return false;
+					} else {
+						NPC.DoFrames(13);
 					}
 				}
 				NPC.target = -1;
+				NPC.DoFrames(13);
 			}
 			return true;
 		}
