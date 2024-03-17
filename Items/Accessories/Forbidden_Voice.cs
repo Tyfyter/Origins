@@ -5,7 +5,7 @@ using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	[AutoloadEquip(EquipType.Face)]
+	[AutoloadEquip(EquipType.Beard)]
 	public class Forbidden_Voice : ModItem, IJournalEntryItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat"
