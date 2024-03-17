@@ -502,7 +502,7 @@ WINGS:
 TOOLS:
 ---
 (^) Brick Breaker
-(#4, ^2) C6 Jackhammer !!!
+(☻) C6 Jackhammer !!!
 (^) Dismantler
 (^) Dissector
 (^) Endowood Hammer
@@ -789,7 +789,7 @@ EXPLOSIVE WEAPONS:
 (^) Nuclear Arm*
 (#2, ^2) Omni-directional Claymore*
 (^) Rocodile
-(#4, ^2) Self-Destruct* !!!
+(^) Self-Destruct* !!!
 (X) Supernova
 (X) Thundershot
 

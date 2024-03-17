@@ -120,8 +120,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
 				Projectile.ai[0] = 1;
 			}
-            int t = ModContent.ProjectileType<Self_Destruct_Flash>();
-            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, t, 0, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
+            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Self_Destruct_Flash>(), 0, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
         }
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
