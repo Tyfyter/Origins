@@ -44,19 +44,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Self_Destruct_Body";
 		public override void SetDefaults() {
 			Projectile.timeLeft = 80;
-			Projectile.tileCollide = true;
+			Projectile.tileCollide = false;
 			Projectile.width = 32;
 			Projectile.height = 48;
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			if (Projectile.velocity.HasNaNs()) Projectile.velocity = player.velocity;
-			Projectile.velocity *= 0.9f;
-			player.MountedCenter = Projectile.Center;
-			Projectile.width = player.width;
-			Projectile.height = player.height;
+			player.velocity *= 0.9f;
 			Projectile.Center = player.MountedCenter;
-			player.velocity = Projectile.velocity;
+			Projectile.velocity = player.velocity;
 			player.heldProj = Projectile.whoAmI;
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
@@ -78,10 +74,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Rectangle frame = new Rectangle((player.bodyFrame.Y / player.bodyFrame.Height == 5 ? 1 : 0) * 40, (player.Male ? 0 : 2) * 56, 40, 56);
 			Vector2 position = new Vector2(
 					(int)(player.position.X - (player.bodyFrame.Width / 2) + (player.width / 2)),
-					(int)(player.position.Y + player.height - player.bodyFrame.Height + 4f)
+					(int)(player.position.Y + player.height - player.bodyFrame.Height)
 				)
 				+ player.bodyPosition
-				+ new Vector2(player.bodyFrame.Width / 2, player.bodyFrame.Height / 2);
+				+ new Vector2(player.bodyFrame.Width / 2, player.bodyFrame.Height / 2)
+				+ Main.OffsetsPlayerHeadgear[player.bodyFrame.Y / player.bodyFrame.Height];
 			Main.EntitySpriteDraw(
 				TextureAssets.Projectile[Type].Value,
 				position - Main.screenPosition,
