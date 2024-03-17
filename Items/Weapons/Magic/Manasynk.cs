@@ -28,13 +28,14 @@ namespace Origins.Items.Weapons.Magic {
 			Item.mana = 7;
 			Item.consumable = true;
 			Item.autoReuse = true;
+			Item.ammo = AmmoID.None;
 			Item.shoot = ModContent.ProjectileType<Manasynk_P>();
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override bool ConsumeItem(Player player) => false;
 		public override bool? CanBeChosenAsAmmo(Item weapon, Player player) {
-			return weapon.useAmmo == Item.ammo && player.CheckMana(Item, pay: false);
+			return weapon.useAmmo == AmmoID.Snowball && player.CheckMana(Item, pay: false);
 		}
 		public override bool CanBeConsumedAsAmmo(Item weapon, Player player) {
 			player.CheckMana(Item, pay: true);

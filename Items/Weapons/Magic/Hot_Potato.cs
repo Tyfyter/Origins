@@ -24,14 +24,14 @@ namespace Origins.Items.Weapons.Magic {
 			Item.consumable = true;
 			Item.autoReuse = true;
 			Item.mana = 8;
-			Item.ammo = ModContent.ItemType<Potato>();
+			Item.ammo = AmmoID.None;
 			Item.shoot = ModContent.ProjectileType<Hot_Potato_P>();
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override bool ConsumeItem(Player player) => false;
 		public override bool? CanBeChosenAsAmmo(Item weapon, Player player) {
-			return weapon.useAmmo == Item.ammo && player.CheckMana(Item, pay: false);
+			return weapon.useAmmo == ModContent.ItemType<Potato>() && player.CheckMana(Item, pay: false);
 		}
 		public override bool CanBeConsumedAsAmmo(Item weapon, Player player) {
 			player.CheckMana(Item, pay: true);
