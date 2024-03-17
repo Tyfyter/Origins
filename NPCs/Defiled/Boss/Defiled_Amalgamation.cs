@@ -4,6 +4,7 @@ using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Materials;
 using Origins.Items.Other.LootBags;
+using Origins.Items.Pets;
 using Origins.Items.Weapons.Magic;
 using Origins.LootConditions;
 using Origins.Projectiles.Enemies;
@@ -151,6 +152,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Mysterious_Spray>(), 4));
 			npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<Defiled_Amalgamation_Relic_Item>()));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Blockus_Tube>(), 4));
 		}
 		const int state_single_dash = 1;
 		const int state_projectiles = 2;

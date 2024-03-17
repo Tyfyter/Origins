@@ -826,8 +826,13 @@ Buffs: {
 	}
 
 	Futurephones_Buff: {
-		DisplayName: Futurephones_ Buff
+		DisplayName: Futurephones
 		Description: Mods.Origins.Buffs.Futurephones_Buff.Description
+	}
+
+	Juvenile_Amalgamation_Buff: {
+		DisplayName: Juvenile_ Amalgamation_ Buff
+		Description: Mods.Origins.Buffs.Juvenile_Amalgamation_Buff.Description
 	}
 }
 
@@ -1111,6 +1116,7 @@ Projectiles: {
 	Self_Destruct_P.DisplayName: Self-Destruct
 	Self_Destruct_Flash.DisplayName: Self Destruct Flash
 	Squid_Bile_P.DisplayName: Black Bile
+	Juvenile_Amalgamation.DisplayName: Juvenile Amalgamation
 }
 
 Prefixes: {

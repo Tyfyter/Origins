@@ -28,6 +28,7 @@ Tooltips: {
 	Modifiers: {
 		// BlastRadius: "{0} blast radius"
 		// SelfDamage: "{0} self damage"
+		// Spread: "{0}° Spread"
 	}
 }
 
@@ -828,6 +829,11 @@ Buffs: {
 		// DisplayName: Futurephones_ Buff
 		// Description: Mods.Origins.Buffs.Futurephones_Buff.Description
 	}
+
+	Juvenile_Amalgamation_Buff: {
+		// DisplayName: Juvenile_ Amalgamation_ Buff
+		// Description: Mods.Origins.Buffs.Juvenile_Amalgamation_Buff.Description
+	}
 }
 
 DamageClassName: {
@@ -1110,6 +1116,7 @@ Projectiles: {
 	// Self_Destruct_P.DisplayName: Self-Destruct
 	// Self_Destruct_Flash.DisplayName: Self Destruct Flash
 	// Squid_Bile_P.DisplayName: Black Bile
+	// Juvenile_Amalgamation.DisplayName: Juvenile_ Amalgamation
 }
 
 Prefixes: {
