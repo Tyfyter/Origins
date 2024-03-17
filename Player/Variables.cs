@@ -215,6 +215,7 @@ namespace Origins {
 		public bool cursedVoice = false;
 		public Item cursedVoiceItem = null;
 		public int cursedVoiceCooldown = 0;
+		public bool futurephones = false;
 		#endregion
 
 		#region explosive stats
@@ -537,6 +538,7 @@ namespace Origins {
 			cursedVoice = false;
 			cursedVoiceItem = null;
 			if (cursedVoiceCooldown > 0) cursedVoiceCooldown--;
+			futurephones = false;
 
 			flaskBile = false;
 			flaskSalt = false;

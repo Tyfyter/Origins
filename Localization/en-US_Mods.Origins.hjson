@@ -818,6 +818,11 @@ Buffs: {
 		DisplayName: Outbreak Bomb Owner
 		Description: Mods.Origins.Buffs.Outbreak_Bomb_Owner_Buff.Description
 	}
+
+	Futurephones_Buff: {
+		DisplayName: Futurephones_ Buff
+		Description: Mods.Origins.Buffs.Futurephones_Buff.Description
+	}
 }
 
 DamageClassName: {

@@ -209,6 +209,10 @@ namespace Origins {
 					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);
 				}
 			}
+			if (futurephones) {
+				target.AddBuff(Futurephones_Buff.ID, 300);
+				Player.MinionAttackTargetNPC = target.whoAmI;
+			}
 		}
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) {//flasks
@@ -218,6 +222,10 @@ namespace Origins {
 				if (flaskSalt) {
 					OriginGlobalNPC.InflictTorn(target, 300, 180, 0.2f, this);
 				}
+			}
+			if (futurephones && !(proj.minion || ProjectileID.Sets.MinionShot[proj.type])) {
+				target.AddBuff(Futurephones_Buff.ID, 300);
+				Player.MinionAttackTargetNPC = target.whoAmI;
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {

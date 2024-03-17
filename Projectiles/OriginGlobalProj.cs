@@ -215,7 +215,6 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers) {
-			//this is actually how vanilla does projectile crits, which might explain why there are no vanilla multiclass weapons, since a 4% crit chance with a 4-class weapon would crit ~15% of the time
 			if (viperEffect) {
 				for (int i = 0; i < target.buffType.Length; i++) {
 					if (Main.debuff[target.buffType[i]] && target.buffType[i] != Toxic_Shock_Debuff.ID) {

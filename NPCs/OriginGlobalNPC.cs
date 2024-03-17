@@ -225,6 +225,9 @@ namespace Origins.NPCs {
 						damageBoost += 2.65f;
 					} else if (buffType == Maelstrom_Buff_Damage.ID) {
 						damageBoost += npc.HasBuff(Maelstrom_Buff_Zap.ID) ? 7f : 5f;
+					} else if (buffType == Futurephones_Buff.ID) {
+						modifiers.SourceDamage *= 1.05f;
+						if (Main.rand.NextBool(10)) modifiers.SetCrit();
 					}
 				}
 				if (amebolizeDebuff) {
@@ -234,6 +237,9 @@ namespace Origins.NPCs {
 					damageBoost += 3f;
 				}
 				modifiers.FlatBonusDamage += Main.rand.RandomRound(damageBoost);
+			} else if (npc.HasBuff(Futurephones_Buff.ID)) {
+				modifiers.SourceDamage *= 1.05f;
+				if (Main.rand.NextBool(10)) modifiers.SetCrit();
 			}
 			int forceCritBuff = npc.FindBuffIndex(Headphones_Buff.ID);
 			if (forceCritBuff >= 0) {
