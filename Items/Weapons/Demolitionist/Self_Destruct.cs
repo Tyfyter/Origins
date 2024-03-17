@@ -98,8 +98,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Self_Destruct_Explosion : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.GeyserTrap;
 		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.ProximityMineI);
 			Projectile.DamageType = DamageClasses.Explosive;
+			Projectile.friendly = true;
 			Projectile.tileCollide = false;
 			Projectile.timeLeft = 5;
 			Projectile.penetrate = -1;
@@ -121,7 +121,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.ai[0] = 1;
 			}
             int t = ModContent.ProjectileType<Self_Destruct_Flash>();
-            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, t, Projectile.damage = 0, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
+            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, t, 0, 6, Projectile.owner, ai1: -0.5f).scale = 1f;
         }
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
