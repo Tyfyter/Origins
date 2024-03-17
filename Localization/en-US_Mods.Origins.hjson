@@ -24,7 +24,13 @@ ItemDropConditions: {
 	DownedPlantBoss: Found after defeating Plantera
 }
 
-Tooltips.Modifiers.BlastRadius: "{0} blast radius"
+Tooltips: {
+	Modifiers: {
+		BlastRadius: "{0} blast radius"
+		SelfDamage: "{0} self damage"
+		Spread: "{0}° Spread"
+	}
+}
 
 FishQuest: {
 	Prikish: {

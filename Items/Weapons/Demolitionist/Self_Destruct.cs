@@ -35,6 +35,7 @@ namespace Origins.Items.Weapons.Demolitionist {
             .AddTile(TileID.MythrilAnvil)
 			.Register();
 		}
+		public override bool WeaponPrefix() => true;
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			position = player.MountedCenter;
 			velocity = player.velocity;

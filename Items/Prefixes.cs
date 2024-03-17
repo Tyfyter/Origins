@@ -86,6 +86,7 @@ namespace Origins.Items {
 			knockbackMult += 0.20f;// knockback
 		}
 	}
+	#region accessory prefixes
 	public class Assuring_Prefix : ModPrefix {
 		public override PrefixCategory Category => PrefixCategory.Accessory;
 		
@@ -186,6 +187,7 @@ namespace Origins.Items {
 			item.manaIncrease += 40;
 		}
 	}
+	#endregion accessory prefixes
 	public class Unbounded_Prefix : ModPrefix, IBlastRadiusPrefix {
 		public override PrefixCategory Category => PrefixCategory.AnyWeapon;
 		public StatModifier BlastRadius() => new(1, 1.15f);
@@ -359,7 +361,7 @@ namespace Origins.Items {
 			yield return new TooltipLine(
 				Mod,
 				"PrefixSpread",
-				"+10° Spread"
+				Language.GetTextValue("Mods.Origins.Tooltips.Modifiers.Spread", "+10")
 				) {
 				IsModifier = true,
 				IsModifierBad = true
