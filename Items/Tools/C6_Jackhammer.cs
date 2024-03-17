@@ -77,7 +77,7 @@ namespace Origins.Items.Tools {
 		}
 		public override void AI() {
 			Projectile.rotation -= MathHelper.PiOver2;
-			Projectile.Center = Main.player[Projectile.owner].MountedCenter + Projectile.velocity.SafeNormalize(default) * 50 * Projectile.scale;
+			Projectile.Center = Main.player[Projectile.owner].MountedCenter + Projectile.velocity.SafeNormalize(default) * 42 * Projectile.scale;
 			Projectile.friendly = false;
 			if (++Projectile.frameCounter > (Main.player[Projectile.owner].altFunctionUse == 2 ? 6 : 4)) {
 				Projectile.frameCounter = 0;
