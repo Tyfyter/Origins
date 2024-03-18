@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
-			Item.damage = 4;
+			Item.damage = 6;
 			Item.DamageType = DamageClass.Ranged;
 			Item.noMelee = true;
 			Item.crit = -1;

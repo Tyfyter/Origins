@@ -2,6 +2,7 @@
 using Origins.Items.Pets;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -46,7 +47,8 @@ namespace Origins.Items.Pets {
 		}
 
 		public override void AI() {
-			Player player = Main.player[Projectile.owner];
+            if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.Amalgamation.WithPitch(2.2f).WithVolume(0.35f));
+            Player player = Main.player[Projectile.owner];
 
 			#region Active check
 			// This is the "active check", makes sure the minion is alive while the player is alive, and despawns if not
