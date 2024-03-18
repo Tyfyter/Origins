@@ -12,7 +12,7 @@ namespace Origins.Items.Pets {
 		
 		public override void SetDefaults() {
 			Item.DefaultToVanitypet(projectileID, buffID);
-			Item.value = Item.sellPrice(gold: 7, silver: 50);
+			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Blue;
 		}
 
@@ -137,7 +137,6 @@ namespace Origins.Items.Pets {
 
 namespace Origins.Buffs {
 	public class Juvenile_Amalgamation_Buff : ModBuff {
-		public override string Texture => "Origins/Items/Pets/Juvenile_Amalgamation";
 		public override void SetStaticDefaults() {
 			Main.buffNoSave[Type] = true;
 			Main.buffNoTimeDisplay[Type] = true;

@@ -2,14 +2,7 @@
 using Microsoft.Xna.Framework;
 using Origins.Dusts;
 using Origins.World.BiomeData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
-using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -17,7 +10,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.NPCs.Defiled {
-	public class Defiled_Squid : Glowing_Mod_NPC, IDefiledEnemy {
+    public class Defiled_Squid : Glowing_Mod_NPC, IDefiledEnemy {
 		public int MaxMana => 32;
 		public int MaxManaDrain => 8;
 		public float Mana {
@@ -32,7 +25,9 @@ namespace Origins.NPCs.Defiled {
 			NPC.CloneDefaults(NPCID.Squid);
 			NPC.lifeMax = 150;
 			NPC.knockBackResist = 0.5f;
-		}
+            NPC.HitSound = Origins.Sounds.DefiledHurt;
+            NPC.DeathSound = Origins.Sounds.DefiledKill;
+        }
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.Water) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.Sqid;

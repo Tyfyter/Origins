@@ -51,7 +51,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void AI() {
 			Player player = Main.player[Projectile.owner];
-			player.velocity *= 0.9f;
+			//player.velocity *= 0.95f;
 			Projectile.Center = player.MountedCenter;
 			Projectile.velocity = player.velocity;
 			player.heldProj = Projectile.whoAmI;

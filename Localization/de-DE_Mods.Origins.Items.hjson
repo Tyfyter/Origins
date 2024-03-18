@@ -3872,19 +3872,23 @@ CORE_Generator: {
 		''' */
 }
 
-Thermite_Canister: {
-	// DisplayName: Thermite Canister
-	// Tooltip: ""
+Napalm_Canister: {
+	// DisplayName: Napalm Canister
+	// Tooltip: Releases napalm after landing
 }
 
 Futurephones: {
 	// DisplayName: Futurephones
-	// Tooltip: ""
+	/* Tooltip:
+		'''
+		All attacks other than from your minion can tag enemies
+		5% increased damage and 10% critical strike chance against tagged enemies
+		''' */
 }
 
 Blockus_Tube: {
 	// DisplayName: Blockus Tube
-	// Tooltip: Tooltip goes here
+	// Tooltip: Summons a Juvenile Amalgamation to watch over your nasal cavity
 }
 
 Endowood_Candelabra_Item: {

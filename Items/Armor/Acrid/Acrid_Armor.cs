@@ -11,7 +11,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Acrid {
     [AutoloadEquip(EquipType.Head)]
 	public class Acrid_Dome : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "HardmodeArmorSet",
+            "ExplosiveBoostGear"
+        };
+        public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Dome_Head_Glow");
 			}
@@ -69,7 +73,11 @@ namespace Origins.Items.Armor.Acrid {
 	}
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Headgear : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "HardmodeArmorSet",
+            "MagicBoostGear"
+        };
+        public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Headgear_Head_Glow");
 			}
@@ -119,7 +127,11 @@ namespace Origins.Items.Armor.Acrid {
 	}
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Helm : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "HardmodeArmorSet",
+            "MeleeBoostGear"
+        };
+        public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Helm_Head_Glow");
 			}
@@ -169,7 +181,11 @@ namespace Origins.Items.Armor.Acrid {
 	}
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "HardmodeArmorSet",
+            "SummmonBoostGear"
+        };
+        public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Mask_Head_Glow");
 			}
@@ -219,7 +235,11 @@ namespace Origins.Items.Armor.Acrid {
 	}
 	[AutoloadEquip(EquipType.Head)]
 	public class Acrid_Visor : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "HardmodeArmorSet",
+            "RangedBoostGear"
+        };
+        public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Visor_Head_Glow");
 			}

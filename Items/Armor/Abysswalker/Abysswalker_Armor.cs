@@ -7,8 +7,13 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Abysswalker {
     [AutoloadEquip(EquipType.Head)]
 	public class Abysswalker_Hood : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "HardmodeArmorSet",
+            "ManaShielding",
+            "SummmonBoostGear",
+            "ExplosiveBoostGear"
+        };
+        public override void SetDefaults() {
 			Item.defense = 5;
 			Item.value = Item.sellPrice(silver: 40);
 			Item.rare = ItemRarityID.LightRed;

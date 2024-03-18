@@ -827,12 +827,12 @@ Buffs: {
 
 	Futurephones_Buff: {
 		// DisplayName: Futurephones
-		// Description: Mods.Origins.Buffs.Futurephones_Buff.Description
+		// Description: Feel her warcry
 	}
 
 	Juvenile_Amalgamation_Buff: {
-		// DisplayName: Juvenile_ Amalgamation_ Buff
-		// Description: Mods.Origins.Buffs.Juvenile_Amalgamation_Buff.Description
+		// DisplayName: Juvenile Amalgamation
+		// Description: The Juvenile Amalgamation is protecting your holes!
 	}
 }
 
@@ -1099,7 +1099,6 @@ Projectiles: {
 	// Cellarkeep_Barrel_Explosion.DisplayName: Explosive Barrel
 	// Cold_Snap_P.DisplayName: Cold Popper
 	// Avulsion_P.DisplayName: Avulse Pulse
-	// Thermite_Canister_P.DisplayName: Canistah
 	// Thermite_P.DisplayName: Hot Coal
 	// Gelled_Knife_P.DisplayName: Gelled Knife
 	// Forbidden_Voice_P.DisplayName: Forbidden Voice
@@ -1117,6 +1116,7 @@ Projectiles: {
 	// Self_Destruct_Flash.DisplayName: Self Destruct Flash
 	// Squid_Bile_P.DisplayName: Black Bile
 	// Juvenile_Amalgamation.DisplayName: Juvenile Amalgamation
+	// Napalm_Canister_P.DisplayName: Napalm Canistah
 }
 
 Prefixes: {

@@ -10,7 +10,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Bleeding {
     [AutoloadEquip(EquipType.Head)]
 	public class Bleeding_Obsidian_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "HardmodeArmorSet",
+            "ExplosiveBoostGear"
+        };
+        public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Bleeding/Bleeding_Obsidian_Helmet_Head_Glow");
 			}

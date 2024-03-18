@@ -25,7 +25,7 @@ namespace Origins.Items.Weapons.Ranged {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
-			Item.damage = 60;
+			Item.damage = 68;
 			Item.crit = 9;
 			Item.knockBack = 7.75f;
 			Item.useAnimation = Item.useTime = 23;

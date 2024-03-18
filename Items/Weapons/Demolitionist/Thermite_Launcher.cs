@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.height = 18;
 			Item.useTime = 32;
 			Item.useAnimation = 32;
-			Item.shoot = ModContent.ProjectileType<Thermite_Canister_P>();
+			Item.shoot = ModContent.ProjectileType<Napalm_Canister_P>();
             Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
             Item.knockBack = 2f;
 			Item.shootSpeed = 12f;
@@ -35,7 +35,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void OnSpawn(IEntitySource source) {
 			if (source is EntitySource_ItemOpen or EntitySource_Loot) {
 				Main.timeItemSlotCannotBeReusedFor[Item.whoAmI] = 1;
-				int index = Item.NewItem(source, Item.position, ModContent.ItemType<Thermite_Canister>(), Main.rand.Next(60, 100));
+				int index = Item.NewItem(source, Item.position, ModContent.ItemType<Napalm_Canister>(), Main.rand.Next(60, 100));
 				if (Main.netMode == NetmodeID.MultiplayerClient) {
 					NetMessage.SendData(MessageID.SyncItem, -1, -1, null, index, 1f);
 				}
@@ -55,8 +55,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			return false;
 		}
 	}
-	public class Thermite_Canister_P : ModProjectile {
-		public override string Texture => "Origins/Items/Weapons/Ammo/Thermite_Canister";
+	public class Napalm_Canister_P : ModProjectile {
+		public override string Texture => "Origins/Items/Weapons/Ammo/Napalm_Canister";
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
 		}
@@ -89,7 +89,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Center = Projectile.position;
 			Projectile.Damage();
             ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
-			if (Projectile.ai[2] == CanisterGlobalItem.GetCanisterType(typeof(Thermite_Canister))) {
+			if (Projectile.ai[2] == CanisterGlobalItem.GetCanisterType(typeof(Napalm_Canister))) {
 				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion, 0, 0, Projectile.owner, -1, 1);
 			} else {
 				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62);

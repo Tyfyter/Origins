@@ -7,7 +7,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Amber {
     [AutoloadEquip(EquipType.Head)]
 	public class Amber_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "HardmodeArmorSet",
+            "ExplosiveBoostGear"
+        };
+        public override void SetStaticDefaults() {
             ArmorIDs.Head.Sets.DrawFullHair[Item.headSlot] = true;
 		}
 		public override void SetDefaults() {

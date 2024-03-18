@@ -9,7 +9,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Riven {
 	[AutoloadEquip(EquipType.Head)]
 	public class Riven_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public const float lightMagnitude = 0.3f;
+        public string[] Categories => new string[] {
+            "ArmorSet",
+            "GenericBoostGear"
+        };
+        public const float lightMagnitude = 0.3f;
 		public short GlowMask = -1;
 		public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Riven2_Mask>()] = ModContent.ItemType<Riven_Mask>();

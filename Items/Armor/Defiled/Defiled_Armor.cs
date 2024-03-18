@@ -8,7 +8,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Defiled {
     [AutoloadEquip(EquipType.Head)]
 	public class Defiled_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "ArmorSet",
+            "GenericBoostGear"
+        };
+        public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled2_Helmet>()] = ModContent.ItemType<Defiled_Helmet>();
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Defiled_Helmet>()] = ModContent.ItemType<Defiled2_Helmet>();
             if (Main.netMode != NetmodeID.Server) {

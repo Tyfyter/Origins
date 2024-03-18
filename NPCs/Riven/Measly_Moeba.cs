@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Armor.Riven;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using System;
 using Terraria;
@@ -130,7 +131,8 @@ namespace Origins.NPCs.Riven {
 			NPC.frame.Y = 24 * (int)(NPC.frameCounter / 6.0);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Mask>(), 525));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 2, 4));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Mask>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Coat>(), 525));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 525));
 		}

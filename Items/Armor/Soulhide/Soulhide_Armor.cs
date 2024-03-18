@@ -8,8 +8,12 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Soulhide {
     [AutoloadEquip(EquipType.Head)]
 	public class Soulhide_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "ArmorSet",
+            "MeleeBoostGear",
+			"GenericBoostGear"
+        };
+        public override void SetDefaults() {
 			Item.defense = 3;
 			Item.value = Item.sellPrice(silver: 30);
 			Item.rare = ItemRarityID.Blue;

@@ -9,7 +9,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Felnum {
     [AutoloadEquip(EquipType.Head)]
 	public class Felnum_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public short GlowMask = -1;
+        public string[] Categories => new string[] {
+            "ArmorSet",
+            "GenericBoostGear"
+        };
+        public short GlowMask = -1;
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
 			GlowMask = Origins.AddGlowMask(Texture + "_Glow_Head");

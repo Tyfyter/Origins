@@ -6,13 +6,17 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Fiberglass {
     [AutoloadEquip(EquipType.Head)]
 	public class Fiberglass_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "ArmorSet",
+            "GenericBoostGear"
+        };
+        public override void SetStaticDefaults() {
 			ArmorIDs.Head.Sets.DrawHatHair[Item.headSlot] = true;
 			Item.ResearchUnlockCount = 1;
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
-			Item.value = Item.sellPrice(silver: 75);
+			Item.value = Item.sellPrice(silver: 45);
 		}
 		public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Fiberglass_Body>() && legs.type == ModContent.ItemType<Fiberglass_Legs>();
@@ -21,9 +25,9 @@ namespace Origins.Items.Armor.Fiberglass {
 			player.setBonus = "Weapon damage increased by 4";
 			player.GetDamage(DamageClass.Default).Flat += 4;
 			player.GetDamage(DamageClass.Generic).Flat += 4;
-			//player.GetModPlayer<OriginPlayer>().fiberglassSet = true;
+			/*player.GetModPlayer<OriginPlayer>().fiberglassSet = true;
 			int inv = player.FindBuffIndex(BuffID.Invisibility);
-			if (inv > -1) player.buffTime[inv]++;
+			if (inv > -1) player.buffTime[inv]++;*/
 		}
 		public string ArmorSetName => "Fiberglass_Armor";
 		public int HeadItemID => Type;
@@ -39,7 +43,7 @@ namespace Origins.Items.Armor.Fiberglass {
 		}
 		public override void SetDefaults() {
 			Item.defense = 6;
-			Item.value = Item.sellPrice(silver: 60);
+			Item.value = Item.sellPrice(silver: 75);
 		}
 	}
 	[AutoloadEquip(EquipType.Legs)]
@@ -51,7 +55,7 @@ namespace Origins.Items.Armor.Fiberglass {
 		}
 		public override void SetDefaults() {
 			Item.defense = 5;
-			Item.value = Item.sellPrice(silver: 45);
+			Item.value = Item.sellPrice(silver: 60);
 		}
 	}
 }

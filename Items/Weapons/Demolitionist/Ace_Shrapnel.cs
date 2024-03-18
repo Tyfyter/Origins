@@ -6,6 +6,9 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
+using Origins.Projectiles;
+using Terraria.DataStructures;
+
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ace_Shrapnel : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
@@ -37,5 +40,14 @@ namespace Origins.Items.Weapons.Demolitionist {
             velocity = velocity.RotatedByRandom(0.27f);
 			type = Item.shoot;
 		}
+        // Pulled from Viper code. Attempted to align projectile spawn location to the front of the barrel
+        /*public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+            Vector2 unit = Vector2.Normalize(velocity);
+            float dist = 56 - velocity.Length();
+            position -= unit * dist;
+            EntitySource_ItemUse_WithAmmo barrelSource = new EntitySource_ItemUse_WithAmmo(source.Player, source.Item, source.AmmoItemIdUsed, OriginExtensions.MakeContext(source.Context, OriginGlobalProj.no_multishot_context, "barrel"));
+            OriginGlobalProj.killLinkNext = Projectile.NewProjectile(barrelSource, position, unit * (dist / 20), type, damage, knockback, player.whoAmI);
+            return true;
+        } */
     }
 }

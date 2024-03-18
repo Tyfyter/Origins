@@ -98,6 +98,8 @@ VANILLA MODIFICATIONS:
 OTHER:
 ---
 (^) Journal (page sprites, button/pseudoitem sprite)
+(^) Explosive Modifiers*
+(X) Cubekon Tinkerer's Modifiers*
 ---
 
 
@@ -122,7 +124,7 @@ ENEMY NPCS:
 (^) Defiled Krusher
 (^) Defiled Mite
 (^) Defiled Phantom
-(#, ^2) Defiled Squid* !!!
+(#4, ^2) Defiled Squid* !!!
 (^) Defiled Swarmer
 (^) Defiled Wisp
 (^) Enchanted Fiberglass Bow
@@ -314,7 +316,7 @@ ACCESSORIES:
 (^) Explosive Artery*
 (^) Fleshy Figurine*
 (^) Focus Crystal*
-(#, ^2) Futurephones* !!!
+(^) Futurephones*
 (^) Grave Danger*
 (#2, ^2) Grenade Tube*
 (^) Gun Glove*
@@ -502,7 +504,7 @@ WINGS:
 TOOLS:
 ---
 (^) Brick Breaker
-(☻) C6 Jackhammer !!!
+(^) C6 Jackhammer
 (^) Dismantler
 (^) Dissector
 (^) Endowood Hammer
@@ -789,7 +791,7 @@ EXPLOSIVE WEAPONS:
 (^) Nuclear Arm*
 (#2, ^2) Omni-directional Claymore*
 (^) Rocodile
-(^) Self-Destruct* !!!
+(^) Self-Destruct*
 (X) Supernova
 (X) Thundershot
 
@@ -1134,7 +1136,7 @@ CONSUMABLES:
 
 MOUNTS & PETS:
 ---
-(☻) Blockus Tube (Juvenile Amalgamation)* !!!
+(#4, ^2) Blockus Tube (Juvenile Amalgamation)* !!!
 (#, ^2) Fleshy Globe (Self-Contained Universe)* !!!
 (^) Strange Power-Up (Platformer Mech)
 (^) Chromatic Scale (Rainbow Pangolin)
@@ -1172,6 +1174,7 @@ AMMO:
 (^) Bile Bullet*
 (X) Bile Canister* !!!
 (^) Bile Dart*
+(X) Coolant Canister* !!! 
 (X) Cursed Canister* !!!
 (^) Cursed Harpoon*
 (X) Ichor Canister* !!!

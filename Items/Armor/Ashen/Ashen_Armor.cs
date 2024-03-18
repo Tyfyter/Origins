@@ -8,7 +8,12 @@ namespace Origins.Items.Armor.Ashen
 {
     [AutoloadEquip(EquipType.Head)]
 	public class Ashen_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "ArmorSet",
+            "ExplosiveBoostGear",
+			"GenericBoostGear"
+        };
+        public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Ashen/Ashen_Helmet_Head_Glow");
 			}

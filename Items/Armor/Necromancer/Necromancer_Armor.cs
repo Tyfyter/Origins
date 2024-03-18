@@ -8,8 +8,11 @@ using Terraria.ModLoader;
 namespace Origins.Items.Armor.Necromancer {
     [AutoloadEquip(EquipType.Head)]
 	public class Necromancer_Helmet : ModItem, IWikiArmorSet, INoSeperateWikiPage {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "HardmodeArmorSet",
+            "SummonBoostGear"
+        };
+        public override void SetDefaults() {
 			Item.defense = 7;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.Yellow;
