@@ -56,6 +56,19 @@ namespace Origins.Tiles.Endowood {
 			ToiletHitWire(i, j);
 		}
 	}
+	public class Endowood_Sofa : ChairBase {
+		public override int BaseTileID => TileID.Benches;
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(5)
+				.AddIngredient(ItemID.Silk, 2)
+				.AddTile(TileID.Sawmill)
+				.Register();
+			};
+		}
+	}
 	public class Endowood_Bathtub : FurnitureBase {
 		public override int BaseTileID => TileID.Bathtubs;
 		public override Color MapColor => new(44, 39, 58);
@@ -66,6 +79,107 @@ namespace Origins.Tiles.Endowood {
 				.AddTile(TileID.Sawmill)
 				.Register();
 			};
+		}
+	}
+	public class Endowood_Candle : LightFurnitureBase {
+		public override int BaseTileID => TileID.Candles;
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(4)
+				.AddIngredient(ItemID.Torch)
+				.AddTile(TileID.WorkBenches)
+				.Register();
+			};
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (IsOn(Main.tile[i, j])) {
+				TorchID.TorchColor(TorchID.Torch, out r, out g, out b);
+				g *= 0.8f;
+				b *= 0.6f;
+			}
+		}
+	}
+	public class Endowood_Candelabra : LightFurnitureBase {
+		public override int BaseTileID => TileID.Candelabras;
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(5)
+				.AddIngredient(ItemID.Torch, 3)
+				.AddTile(TileID.WorkBenches)
+				.Register();
+			};
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (IsOn(Main.tile[i, j])) {
+				TorchID.TorchColor(TorchID.Torch, out r, out g, out b);
+				g *= 0.8f;
+				b *= 0.6f;
+			}
+		}
+	}
+	public class Endowood_Lamp : LightFurnitureBase {
+		public override int BaseTileID => TileID.Lamps;
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient(ItemID.Torch)
+				.AddIngredient<Endowood_Item>(3)
+				.AddTile(TileID.WorkBenches)
+				.Register();
+			};
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (IsOn(Main.tile[i, j])) {
+				TorchID.TorchColor(TorchID.Torch, out r, out g, out b);
+				g *= 0.8f;
+				b *= 0.6f;
+			}
+		}
+	}
+	public class Endowood_Chandelier : LightFurnitureBase {
+		public override int BaseTileID => TileID.Chandeliers;
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(4)
+				.AddIngredient(ItemID.Torch, 4)
+				.AddIngredient(ItemID.Chain)
+				.AddTile(TileID.Anvils)
+				.Register();
+			};
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (IsOn(Main.tile[i, j])) {
+				TorchID.TorchColor(TorchID.Torch, out r, out g, out b);
+				g *= 0.8f;
+				b *= 0.6f;
+			}
+		}
+	}
+	public class Endowood_Lantern : LightFurnitureBase {
+		public override int BaseTileID => TileID.HangingLanterns;
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(6)
+				.AddIngredient(ItemID.Torch)
+				.AddTile(TileID.WorkBenches)
+				.Register();
+			};
+		}
+		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
+			if (IsOn(Main.tile[i, j])) {
+				TorchID.TorchColor(TorchID.Torch, out r, out g, out b);
+				g *= 0.8f;
+				b *= 0.6f;
+			}
 		}
 	}
 	public class Endowood_Bookcase : FurnitureBase {
@@ -113,6 +227,29 @@ namespace Origins.Tiles.Endowood {
 			item.OnAddRecipes += (item) => {
 				Recipe.Create(item.type)
 				.AddIngredient<Endowood_Item>(10)
+				.Register();
+			};
+		}
+	}
+	public class Endowood_Dresser : DresserBase {
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(16)
+				.AddTile(TileID.Sawmill)
+				.Register();
+			};
+		}
+	}
+	public class Endowood_Bed : BedBase {
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(15)
+				.AddIngredient(ItemID.Silk, 5)
+				.AddTile(TileID.Sawmill)
 				.Register();
 			};
 		}

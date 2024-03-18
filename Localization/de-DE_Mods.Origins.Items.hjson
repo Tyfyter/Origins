@@ -3883,6 +3883,46 @@ Futurephones: {
 }
 
 Blockus_Tube: {
-	// DisplayName: Blockus_ Tube
+	// DisplayName: Blockus Tube
+	// Tooltip: Tooltip goes here
+}
+
+Endowood_Candelabra_Item: {
+	// DisplayName: Endowood Candelabra
+	// Tooltip: ""
+}
+
+Endowood_Candle_Item: {
+	// DisplayName: Endowood Candle
+	// Tooltip: ""
+}
+
+Endowood_Chandelier_Item: {
+	// DisplayName: Endowood Chandelier
+	// Tooltip: ""
+}
+
+Endowood_Lamp_Item: {
+	// DisplayName: Endowood Lamp
+	// Tooltip: ""
+}
+
+Endowood_Sofa_Item: {
+	// DisplayName: Endowood Sofa
+	// Tooltip: ""
+}
+
+Endowood_Lantern_Item: {
+	// DisplayName: Endowood Lantern
+	// Tooltip: ""
+}
+
+Endowood_Bed_Item: {
+	// DisplayName: Endowood Bed
+	// Tooltip: ""
+}
+
+Endowood_Dresser_Item: {
+	// DisplayName: Endowood Dresser
 	// Tooltip: ""
 }

@@ -826,7 +826,7 @@ Buffs: {
 	}
 
 	Futurephones_Buff: {
-		// DisplayName: Futurephones_ Buff
+		// DisplayName: Futurephones
 		// Description: Mods.Origins.Buffs.Futurephones_Buff.Description
 	}
 
@@ -1116,7 +1116,7 @@ Projectiles: {
 	// Self_Destruct_P.DisplayName: Self-Destruct
 	// Self_Destruct_Flash.DisplayName: Self Destruct Flash
 	// Squid_Bile_P.DisplayName: Black Bile
-	// Juvenile_Amalgamation.DisplayName: Juvenile_ Amalgamation
+	// Juvenile_Amalgamation.DisplayName: Juvenile Amalgamation
 }
 
 Prefixes: {
@@ -1275,6 +1275,7 @@ Tiles: {
 	// Fungarust.MapEntry: Fungarust
 	// Endowood_Chest.MapEntry: Endowood Chest
 	// Marrowick_Chest.MapEntry: Marrowick Chest
+	// Endowood_Dresser.MapEntry: Endowood Dresser
 }
 
 AltBiomeDescription: {

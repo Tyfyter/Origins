@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
@@ -27,6 +28,7 @@ namespace Origins.Tiles {
 		public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileLavaDeath[Type] = LavaDeath;
+			Main.tileContainer[Type] = Main.tileContainer[BaseTileID];
 
 			Main.tileTable[Type] = Main.tileTable[BaseTileID];
 			Main.tileSolidTop[Type] = Main.tileSolidTop[BaseTileID];
@@ -35,9 +37,15 @@ namespace Origins.Tiles {
 			TileID.Sets.DisableSmartCursor[Type] = TileID.Sets.DisableSmartCursor[BaseTileID];
 			TileID.Sets.IgnoredByNpcStepUp[Type] = TileID.Sets.IgnoredByNpcStepUp[BaseTileID];
 
+			TileID.Sets.DisableSmartCursor[Type] = TileID.Sets.DisableSmartCursor[BaseTileID];
+			TileID.Sets.BasicDresser[Type] = TileID.Sets.BasicDresser[BaseTileID];
+			TileID.Sets.AvoidedByNPCs[Type] = TileID.Sets.AvoidedByNPCs[BaseTileID];
+			TileID.Sets.InteractibleByNPCs[Type] = TileID.Sets.InteractibleByNPCs[BaseTileID];
+
 			TileID.Sets.CanBeSleptIn[Type] = TileID.Sets.CanBeSleptIn[BaseTileID];
 			TileID.Sets.CanBeSatOnForPlayers[Type] = TileID.Sets.CanBeSatOnForPlayers[BaseTileID];
 			TileID.Sets.CanBeSatOnForNPCs[Type] = TileID.Sets.CanBeSatOnForNPCs[BaseTileID];
+			TileID.Sets.IsValidSpawnPoint[Type] = TileID.Sets.IsValidSpawnPoint[BaseTileID];
 			//TileID.Sets.HasOutlines[Type] = true;
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(BaseTileID, 0));
@@ -47,6 +55,7 @@ namespace Origins.Tiles {
 				TileObjectData.newAlternate.Direction = TileObjectData.newTile.Direction ^ (TileObjectDirection.PlaceLeft | TileObjectDirection.PlaceRight);
 				TileObjectData.addAlternate(1);
 			}
+			ModifyTileData();
 			TileObjectData.addTile(Type);
 			
 			if (!Main.dedServ) AddMapEntry(MapColor, Lang._mapLegendCache.FromType(BaseTileID));
@@ -56,6 +65,7 @@ namespace Origins.Tiles {
 			if (TileID.Sets.RoomNeeds.CountsAsTable.Contains(BaseTileID)) AddToArray(ref TileID.Sets.RoomNeeds.CountsAsTable);
 			if (TileID.Sets.RoomNeeds.CountsAsChair.Contains(BaseTileID)) AddToArray(ref TileID.Sets.RoomNeeds.CountsAsChair);
 		}
+		public virtual void ModifyTileData() {}
 	}
 	public abstract class ChairBase : FurnitureBase {
 		public override int BaseTileID => TileID.Chairs;
@@ -209,6 +219,203 @@ namespace Origins.Tiles {
 			// Whack it all together to get a HH:MM format
 			Main.NewText($"Time: {intTime}:{text2} {text}", 255, 240, 20);
 			return true;
+		}
+	}
+	public abstract class DresserBase : FurnitureBase {
+		public override int BaseTileID => TileID.Dressers;
+		public override void ModifyTileData() {
+			TileObjectData.newTile.HookCheckIfCanPlace = new PlacementHook(Chest.FindEmptyChest, -1, 0, true);
+			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(Chest.AfterPlacement_Hook, -1, 0, false);
+			TileObjectData.newTile.AnchorInvalidTiles = new int[] {
+				TileID.MagicalIceBlock,
+				TileID.Boulder,
+				TileID.BouncyBoulder,
+				TileID.LifeCrystalBoulder,
+				TileID.RollingCactus
+			};
+		}
+
+		public static string MapChestName(string name, int i, int j) {
+			int left = i;
+			int top = j;
+			Tile tile = Main.tile[i, j];
+			if (tile.TileFrameX % 36 != 0) {
+				left--;
+			}
+			if (tile.TileFrameY != 0) {
+				top--;
+			}
+			int chest = Chest.FindChest(left, top);
+			if (chest < 0) {
+				return Language.GetTextValue("LegacyDresserType.0");
+			} else if (Main.chest[chest].name == "") {
+				return name;
+			} else {
+				return name + ": " + Main.chest[chest].name;
+			}
+		}
+		public override LocalizedText DefaultContainerName(int frameX, int frameY) => CreateMapEntryName();
+		public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
+		public override void ModifySmartInteractCoords(ref int width, ref int height, ref int frameWidth, ref int frameHeight, ref int extraY) {
+			width = 3;
+			height = 1;
+			extraY = 0;
+		}
+		public override bool RightClick(int i, int j) {
+			Player player = Main.LocalPlayer;
+			int left = Main.tile[i, j].TileFrameX / 18;
+			left %= 3;
+			left = i - left;
+			int top = j - Main.tile[i, j].TileFrameY / 18;
+			if (Main.tile[i, j].TileFrameY == 0) {
+				Main.CancelClothesWindow(true);
+				Main.mouseRightRelease = false;
+				player.CloseSign();
+				player.SetTalkNPC(-1);
+				Main.npcChatCornerItem = 0;
+				Main.npcChatText = "";
+				if (Main.editChest) {
+					SoundEngine.PlaySound(SoundID.MenuTick);
+					Main.editChest = false;
+					Main.npcChatText = string.Empty;
+				}
+				if (player.editedChestName) {
+					NetMessage.SendData(MessageID.SyncPlayerChest, -1, -1, NetworkText.FromLiteral(Main.chest[player.chest].name), player.chest, 1f);
+					player.editedChestName = false;
+				}
+				if (Main.netMode == NetmodeID.MultiplayerClient) {
+					if (left == player.chestX && top == player.chestY && player.chest != -1) {
+						player.chest = -1;
+						Recipe.FindRecipes();
+						SoundEngine.PlaySound(SoundID.MenuClose);
+					} else {
+						NetMessage.SendData(MessageID.RequestChestOpen, -1, -1, null, left, top);
+						Main.stackSplit = 600;
+					}
+				} else {
+					player.piggyBankProjTracker.Clear();
+					player.voidLensChest.Clear();
+					int chestIndex = Chest.FindChest(left, top);
+					if (chestIndex != -1) {
+						Main.stackSplit = 600;
+						if (chestIndex == player.chest) {
+							player.chest = -1;
+							Recipe.FindRecipes();
+							SoundEngine.PlaySound(SoundID.MenuClose);
+						} else if (chestIndex != player.chest && player.chest == -1) {
+							player.OpenChest(left, top, chestIndex);
+							SoundEngine.PlaySound(SoundID.MenuOpen);
+						} else {
+							player.OpenChest(left, top, chestIndex);
+							SoundEngine.PlaySound(SoundID.MenuTick);
+						}
+						Recipe.FindRecipes();
+					}
+				}
+			} else {
+				Main.playerInventory = false;
+				player.chest = -1;
+				Recipe.FindRecipes();
+				player.SetTalkNPC(-1);
+				Main.npcChatCornerItem = 0;
+				Main.npcChatText = "";
+				Main.interactedDresserTopLeftX = left;
+				Main.interactedDresserTopLeftY = top;
+				Main.OpenClothesWindow();
+			}
+			return true;
+		}
+		public void MouseOverNearAndFarSharedLogic(Player player, int i, int j) {
+			Tile tile = Main.tile[i, j];
+			int left = i;
+			int top = j;
+			left -= tile.TileFrameX % 54 / 18;
+			if (tile.TileFrameY % 36 != 0) {
+				top--;
+			}
+			int chestIndex = Chest.FindChest(left, top);
+			player.cursorItemIconID = -1;
+			if (chestIndex < 0) {
+				player.cursorItemIconText = Language.GetTextValue("LegacyDresserType.0");
+			} else {
+				string defaultName = TileLoader.DefaultContainerName(tile.TileType, tile.TileFrameX, tile.TileFrameY); // This gets the ContainerName text for the currently selected language
+
+				if (Main.chest[chestIndex].name != "") {
+					player.cursorItemIconText = Main.chest[chestIndex].name;
+				} else {
+					player.cursorItemIconText = defaultName;
+				}
+				if (player.cursorItemIconText == defaultName) {
+					player.cursorItemIconID = item.Type;
+					player.cursorItemIconText = "";
+				}
+			}
+			player.noThrow = 2;
+			player.cursorItemIconEnabled = true;
+		}
+		public override void MouseOverFar(int i, int j) {
+			Player player = Main.LocalPlayer;
+			MouseOverNearAndFarSharedLogic(player, i, j);
+			if (player.cursorItemIconText == "") {
+				player.cursorItemIconEnabled = false;
+				player.cursorItemIconID = 0;
+			}
+		}
+		public override void MouseOver(int i, int j) {
+			Player player = Main.LocalPlayer;
+			MouseOverNearAndFarSharedLogic(player, i, j);
+			if (Main.tile[i, j].TileFrameY > 0) {
+				player.cursorItemIconID = ItemID.FamiliarShirt;
+				player.cursorItemIconText = "";
+			}
+		}
+	}
+	public abstract class BedBase : FurnitureBase {
+		public override int BaseTileID => TileID.Beds;
+		public override void ModifySmartInteractCoords(ref int width, ref int height, ref int frameWidth, ref int frameHeight, ref int extraY) {
+			// Because beds have special smart interaction, this splits up the left and right side into the necessary 2x2 sections
+			width = 2; // Default to the Width defined for TileObjectData.newTile
+			height = 2; // Default to the Height defined for TileObjectData.newTile
+						//extraY = 0; // Depends on how you set up frameHeight and CoordinateHeights and CoordinatePaddingFix.Y
+		}
+		public override bool RightClick(int i, int j) {
+			Player player = Main.LocalPlayer;
+			Tile tile = Main.tile[i, j];
+			int spawnX = (i - (tile.TileFrameX / 18)) + (tile.TileFrameX >= 72 ? 5 : 2);
+			int spawnY = j + 2;
+			if (tile.TileFrameY != 0) {
+				spawnY--;
+			}
+			if (!Player.IsHoveringOverABottomSideOfABed(i, j)) { // This assumes your bed is 4x2 with 2x2 sections. You have to write your own code here otherwise
+				if (player.IsWithinSnappngRangeToTile(i, j, PlayerSleepingHelper.BedSleepingMaxDistance)) {
+					player.GamepadEnableGrappleCooldown();
+					player.sleeping.StartSleeping(player, i, j);
+				}
+			} else {
+				player.FindSpawn();
+				if (player.SpawnX == spawnX && player.SpawnY == spawnY) {
+					player.RemoveSpawn();
+					Main.NewText(Language.GetTextValue("Game.SpawnPointRemoved"), 255, 240, 20);
+				} else if (Player.CheckSpawn(spawnX, spawnY)) {
+					player.ChangeSpawn(spawnX, spawnY);
+					Main.NewText(Language.GetTextValue("Game.SpawnPointSet"), 255, 240, 20);
+				}
+			}
+			return true;
+		}
+		public override void MouseOver(int i, int j) {
+			Player player = Main.LocalPlayer;
+			if (!Player.IsHoveringOverABottomSideOfABed(i, j)) {
+				if (player.IsWithinSnappngRangeToTile(i, j, PlayerSleepingHelper.BedSleepingMaxDistance)) { // Match condition in RightClick. Interaction should only show if clicking it does something
+					player.noThrow = 2;
+					player.cursorItemIconEnabled = true;
+					player.cursorItemIconID = ItemID.SleepingIcon;
+				}
+			} else {
+				player.noThrow = 2;
+				player.cursorItemIconEnabled = true;
+				player.cursorItemIconID = item.Type;
+			}
 		}
 	}
 	public abstract class LightFurnitureBase : FurnitureBase {
