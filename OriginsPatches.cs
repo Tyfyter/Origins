@@ -238,7 +238,6 @@ namespace Origins {
 			Terraria.On_Player.RollLuck += Player_RollLuck;
 			Terraria.GameContent.Drawing.On_TileDrawing.Draw += TileDrawing_Draw;
 			Terraria.GameContent.Drawing.On_TileDrawing.DrawTiles_GetLightOverride += TileDrawing_DrawTiles_GetLightOverride;
-			//Terraria.IL_NPC.StrikeNPC_HitInfo_bool_bool += NPC_StrikeNPC;
 			On_PlayerDeathReason.GetDeathText += PlayerDeathReason_GetDeathText;
 			On_PlayerDeathReason.WriteSelfTo += On_PlayerDeathReason_WriteSelfTo;
 			On_PlayerDeathReason.FromReader += On_PlayerDeathReason_FromReader;
@@ -253,6 +252,8 @@ namespace Origins {
 					c.EmitDelegate<Action<int>>((type) => {
 						if (type == TileID.CrimsonThorns) hurtCollisionCrimsonVine = true;
 					});
+				} else {
+					Logger.Error("Could not find KillTile call in HurtTiles");
 				}
 			};
 			Terraria.GameContent.On_ShopHelper.GetShoppingSettings += OriginGlobalNPC.ShopHelper_GetShoppingSettings;
@@ -734,27 +735,6 @@ namespace Origins {
 		}
 
 		#region combat
-		delegate void _ModifyNPCDefense(NPC npc, ref int defense);
-		private static void NPC_StrikeNPC(ILContext il) {
-			ILCursor c = new(il);
-			if (c.TryGotoNext(op => op.MatchLdarg(0), op => op.MatchLdfld<NPC>("ichor"), op => op.MatchBrfalse(out _))) {
-				c.Emit(OpCodes.Ldarg_0);
-				c.Emit(OpCodes.Ldloca_S, (byte)2);
-				c.EmitDelegate<_ModifyNPCDefense>(ModifyNPCDefense);
-			}
-		}
-		public static void ModifyNPCDefense(NPC npc, ref int defense) {
-			if (npc.ichor && CrimsonGlobalNPC.NPCTypes.Contains(npc.type)) {
-				defense += 5;
-			}
-			if (npc.GetGlobalNPC<OriginGlobalNPC>().barnacleBuff) {
-				defense += (int)(defense * 0.25f);
-			}
-			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
-				defense -= (int)(defense * 0.2f);
-			}
-		}
-
 		private void On_PlayerDeathReason_WriteSelfTo(On_PlayerDeathReason.orig_WriteSelfTo orig, PlayerDeathReason self, System.IO.BinaryWriter writer) {
 			orig(self, writer);
 			writer.Write(self is KeyedPlayerDeathReason);

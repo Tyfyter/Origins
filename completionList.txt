@@ -1048,7 +1048,7 @@ CRITTERS AND FISH:
 (#3, ^2) Bug
 (X) Chambersite Bunny
 (X) Chambersite Squirrel
-(#3, ^2) Cicada 3301* !!!
+(☻) Cicada 3301* !!!
 
 (^) Bilemouth
 (^) Bonehead Jellyfish
