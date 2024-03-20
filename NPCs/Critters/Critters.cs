@@ -1,6 +1,7 @@
 ﻿using Origins.Items.Other.Fish;
 using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -72,6 +73,9 @@ namespace Origins.NPCs.Critters {
 			NPC.catchItem = ModContent.ItemType<Cicada_3301_Item>();
 		}
 		public override void AI() {
+			if (Main.rand.NextBool(350)) {
+				SoundEngine.PlaySound(Origins.Sounds.Amalgamation.WithPitch(1), NPC.Center);
+			}
 			NPC.spriteDirection = Math.Sign(NPC.velocity.X);
 			if (++NPC.frameCounter >= 7) {
 				NPC.frameCounter = 0;
