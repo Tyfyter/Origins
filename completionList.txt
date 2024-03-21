@@ -786,7 +786,7 @@ EXPLOSIVE WEAPONS:
 (X) Chlorophyte Handcannon
 (X) Firework Cannon
 (^) Mine Flayer*
-(#, ^2) Nova Cascade* !!!
+(☻) Nova Cascade* !!!
 (X) Nova Starforge
 (^) Nuclear Arm*
 (#2, ^2) Omni-directional Claymore*
@@ -906,7 +906,7 @@ TILES:
 (X) Dusk Dungeon Chest*
 (X) Edenwood Furniture*
 (#, ^2) Encrusted Brick !!!
-(#3, ^2) Endowood Furniture* !!!
+(☻) Endowood Furniture* !!!
 (#2, ^2) Laser Tag Console*
 (#, ^2) Living Alkahest Block*
 (#, ^2) Living Bile Block*
@@ -1136,7 +1136,7 @@ CONSUMABLES:
 
 MOUNTS & PETS:
 ---
-(#4, ^2) Blockus Tube (Juvenile Amalgamation)* !!!
+(☻) Blockus Tube (Juvenile Amalgamation)* !!!
 (#, ^2) Fleshy Globe (Self-Contained Universe)* !!!
 (^) Strange Power-Up (Platformer Mech)
 (^) Chromatic Scale (Rainbow Pangolin)

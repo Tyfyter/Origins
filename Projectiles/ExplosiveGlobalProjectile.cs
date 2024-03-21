@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Reflection;
 using System;
 using System.IO;
@@ -17,6 +18,7 @@ namespace Origins.Projectiles {
 		public bool magicTripwire = false;
 		public bool magicTripwireTripped = false;
 		public bool noTileSplode = false;
+		public bool novaCascade = false;
 		public StatModifier selfDamageModifier = StatModifier.Default;
 		public StatModifier modifierBlastRadius = StatModifier.Default;
 		public override bool InstancePerEntity => true;
@@ -97,9 +99,11 @@ namespace Origins.Projectiles {
 				if (PrefixLoader.GetPrefix(itemUse.Item.prefix) is ISelfDamagePrefix sdPrefix) {
 					selfDamageModifier = selfDamageModifier.CombineWith(sdPrefix.SelfDamage());
 				}
+				novaCascade = itemUse.Item.type == Nova_Cascade.ID;
 			} else if (source is EntitySource_Parent sourceParent && sourceParent.Entity is Projectile parent && parent.TryGetGlobalProjectile(out ExplosiveGlobalProjectile parentGlobal)) {
 				modifierBlastRadius = parentGlobal.modifierBlastRadius;
 				selfDamageModifier = selfDamageModifier.CombineWith(parentGlobal.modifierBlastRadius);
+				novaCascade = parentGlobal.novaCascade;
 			}
 		}
 		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
@@ -310,6 +314,34 @@ namespace Origins.Projectiles {
 			if (originPlayer.madHand) {
 				target.AddBuff(BuffID.Oiled, 600);
 				target.AddBuff(BuffID.OnFire, 600);
+			}
+			if (novaCascade && projectile.owner == Main.myPlayer) {
+				int type = ModContent.ProjectileType<Nova_Cascade_Explosion>();
+				if (projectile.type != type) {
+					Projectile.NewProjectile(
+						projectile.GetSource_OnHit(target),
+						projectile.Center,
+						default,
+						type,
+						projectile.damage,
+						projectile.knockBack
+					);
+				}
+			}
+		}
+		public override void OnKill(Projectile projectile, int timeLeft) {
+			if (novaCascade && projectile.penetrate != 0 && projectile.owner == Main.myPlayer) {
+				int type = ModContent.ProjectileType<Nova_Cascade_Explosion>();
+				if (projectile.type != type) {
+					Projectile.NewProjectile(
+						projectile.GetSource_Death(),
+						projectile.Center,
+						default,
+						type,
+						projectile.damage,
+						projectile.knockBack
+					);
+				}
 			}
 		}
 		public static int GetVanillaExplosiveType(Projectile projectile) {

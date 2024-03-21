@@ -44,7 +44,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useTime = 17;
 			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
 			Item.shoot = ModContent.ProjectileType<Flakjack_P>();
-			Item.shootSpeed = 12;
+			Item.shootSpeed = 6;
 			Item.reuseDelay = 6;
 			Item.autoReuse = true;
 			Item.value = Item.sellPrice(gold: 5);

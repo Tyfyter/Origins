@@ -3930,3 +3930,8 @@ Endowood_Dresser_Item: {
 	// DisplayName: Endowood Dresser
 	// Tooltip: ""
 }
+
+Nova_Cascade: {
+	// DisplayName: Nova_ Cascade
+	// Tooltip: ""
+}

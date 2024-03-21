@@ -35,6 +35,8 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.MusketBall);
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Item.shootSpeed = 0f;
 			Item.damage = 25;
 			Item.shoot = Metal_Slug_P.ID;
 			Item.ammo = Item.type;
@@ -55,15 +57,21 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Projectile.aiStyle = 0;
 			Projectile.width = 10;
 			Projectile.height = 8;
 			Projectile.friendly = true;
-			Projectile.penetrate = -1;
+			Projectile.penetrate = 7;
 			Projectile.timeLeft = 900;
 			Projectile.alpha = 0;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = 10;
+			Projectile.extraUpdates = 4;
 		}
 		public override void AI() {
-
+			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
+			Projectile.velocity.Y += 0.02f;
 		}
 	}
 	public class Gray_Solution : ModItem {

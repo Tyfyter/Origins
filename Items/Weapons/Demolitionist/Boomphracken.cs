@@ -5,16 +5,13 @@ using Origins.Tiles.Dusk;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
 using Origins.Dev;
+
 namespace Origins.Items.Weapons.Demolitionist {
     public class Boomphracken : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "HandCannon"
         };
-        public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
-		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
 			Item.damage = 68;
@@ -25,7 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = ModContent.ProjectileType<Boomphracken_P>();
 			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
 			Item.knockBack = 10f;
-			Item.shootSpeed = 24f;
+			Item.shootSpeed = 12f;
 			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.25f);
