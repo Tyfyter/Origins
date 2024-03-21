@@ -35,6 +35,7 @@ namespace Origins.Items.Pets {
 		}
 
 		public sealed override void SetDefaults() {
+			Projectile.timeLeft = 5;
 			Projectile.width = 24;
 			Projectile.height = 22;
 			Projectile.tileCollide = false;
@@ -129,6 +130,10 @@ namespace Origins.Items.Pets {
 				if (Projectile.frame >= Main.projFrames[Projectile.type]) {
 					Projectile.frame = 0;
 				}
+			}
+			int velDir = Math.Sign(Projectile.velocity.X);
+			if (velDir != 0) {
+				Projectile.direction = velDir;
 			}
 
 			// Some visuals here

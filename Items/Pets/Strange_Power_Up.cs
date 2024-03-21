@@ -65,6 +65,7 @@ namespace Origins.Items.Pets {
 
 		public sealed override void SetDefaults() {
 			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
+			Projectile.timeLeft = 5;
 			Projectile.width = 20;
 			Projectile.height = 28;
 			Projectile.tileCollide = true;
