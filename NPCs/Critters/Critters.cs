@@ -74,7 +74,7 @@ namespace Origins.NPCs.Critters {
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(350)) {
-				SoundEngine.PlaySound(Origins.Sounds.Amalgamation.WithPitch(1), NPC.Center);
+				SoundEngine.PlaySound(Origins.Sounds.Amalgamation.WithPitch(1).WithVolumeScale(0.5f), NPC.Center);
 			}
 			NPC.spriteDirection = Math.Sign(NPC.velocity.X);
 			if (++NPC.frameCounter >= 7) {
