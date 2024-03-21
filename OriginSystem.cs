@@ -415,10 +415,15 @@ namespace Origins {
 				if (--forceThunderstormDelay <= 0) forceThunderstorm = true;
 			}
 		}
+		bool hasLoggedPUP = false;
 		public override void PreUpdatePlayers() {
 			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = new();
 			else OriginPlayer.playersByGuid.Clear();
 			Traffic_Cone_TE.UpdateCones();
+			if (!hasLoggedPUP) {
+				hasLoggedPUP = true;
+				Mod.Logger.Info($"Running {nameof(PreUpdatePlayers)} in netmode {Main.netMode}");
+			}
 		}
 	}
 	public class TempleBiome : ModBiome {

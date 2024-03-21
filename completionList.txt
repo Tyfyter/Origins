@@ -552,7 +552,7 @@ MELEE WEAPONS:
 (^) Riverang
 (^) Snapthrow
 (^) Spiker Sword
-(#, ^2) Switchblade* !!!
+(☻) Switchblade* !!!
 (^) Triple Threat
 (^) Tyrfing
 (^) Vorpal Sword
@@ -738,8 +738,8 @@ NO POST ML SUMMONER CONTENT YET.
 
 EXPLOSIVE WEAPONS:
 ---
-(#2, ^2) Abrasion Blaster* !!!
-(#3, ^2) Ace Shrapnel* !!!
+(#2, @2(I can do a lot with dusts, but this really needs projectile sprites, ideally at least 3 for the 3 discretely different charge states)) Abrasion Blaster* !!!
+(#3?, ^2) Ace Shrapnel* !!!
 (^) Ameballoon*
 (^) Bang Snap*
 (^) Bloombomb*

@@ -113,6 +113,7 @@ namespace Origins {
 					}
 				}
 			}
+			hasLoggedPUP = false;
 		}
 		internal TagCompound questsTag;
 		public override void SaveWorldData(TagCompound tag) {

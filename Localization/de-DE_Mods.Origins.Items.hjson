@@ -3932,6 +3932,16 @@ Endowood_Dresser_Item: {
 }
 
 Nova_Cascade: {
-	// DisplayName: Nova_ Cascade
+	// DisplayName: Nova Cascade
+	// Tooltip: ""
+}
+
+Switchblade_Broadsword: {
+	// DisplayName: Switchblade_ Broadsword
+	// Tooltip: ""
+}
+
+Switchblade_Shortsword: {
+	// DisplayName: Switchblade_ Shortsword
 	// Tooltip: ""
 }

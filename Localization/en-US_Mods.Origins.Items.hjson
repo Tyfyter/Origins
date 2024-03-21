@@ -3935,3 +3935,13 @@ Nova_Cascade: {
 	DisplayName: Nova Cascade
 	Tooltip: ""
 }
+
+Switchblade_Broadsword: {
+	DisplayName: Switchblade
+	Tooltip: ""
+}
+
+Switchblade_Shortsword: {
+	DisplayName: Switchblade
+	Tooltip: ""
+}
