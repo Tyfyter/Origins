@@ -341,6 +341,8 @@ namespace Origins.Tiles.Brine {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TitaniumOre);
 			Item.createTile = TileType<Brineglow>();
+
+			Item.maxStack = 9999;
 		}
 	}
 }

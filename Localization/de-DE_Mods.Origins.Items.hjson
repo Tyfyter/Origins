@@ -2159,7 +2159,7 @@ Abrasion_Blaster: {
 	// DisplayName: Abrasion Blaster
 	/* Tooltip:
 		'''
-		Shots can destroy tiles
+		Charged shots can destroy tiles
 		Uses scrap as ammo
 		''' */
 }
@@ -3933,20 +3933,85 @@ Endowood_Dresser_Item: {
 
 Nova_Cascade: {
 	// DisplayName: Nova Cascade
-	// Tooltip: ""
+	// Tooltip: Causes an explosion after piercing enemies
 }
 
 Switchblade_Broadsword: {
 	// DisplayName: Switchblade
-	// Tooltip: ""
+	// Tooltip: Right-click to retract
 }
 
 Switchblade_Shortsword: {
 	// DisplayName: Switchblade
-	// Tooltip: ""
+	// Tooltip: Right-click to extend
 }
 
 Amber_Dye: {
-	// DisplayName: Amber_ Dye
+	// DisplayName: Amber Dye
+	// Tooltip: ""
+}
+
+Marrowick_Bathtub_Item: {
+	// DisplayName: Marrowick_ Bathtub_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Bed_Item: {
+	// DisplayName: Marrowick_ Bed_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Bookcase_Item: {
+	// DisplayName: Marrowick_ Bookcase_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Candelabra_Item: {
+	// DisplayName: Marrowick_ Candelabra_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Candle_Item: {
+	// DisplayName: Marrowick_ Candle_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Chandelier_Item: {
+	// DisplayName: Marrowick_ Chandelier_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Dresser_Item: {
+	// DisplayName: Marrowick_ Dresser_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Lamp_Item: {
+	// DisplayName: Marrowick_ Lamp_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Lantern_Item: {
+	// DisplayName: Marrowick_ Lantern_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Piano_Item: {
+	// DisplayName: Marrowick_ Piano_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Sofa_Item: {
+	// DisplayName: Marrowick_ Sofa_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Table_Item: {
+	// DisplayName: Marrowick_ Table_ Item
+	// Tooltip: ""
+}
+
+Marrowick_Work_Bench_Item: {
+	// DisplayName: Marrowick_ Work_ Bench_ Item
 	// Tooltip: ""
 }

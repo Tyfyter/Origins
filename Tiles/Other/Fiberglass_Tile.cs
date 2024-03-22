@@ -21,7 +21,8 @@ namespace Origins.Tiles.Other {
 			Main.tileMergeDirt[Type] = false;
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(42, 116, 160), name);
-		}
+            HitSound = SoundID.Shatter;
+        }
 		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			var curr = Framing.GetTileSafely(i, j).Get<TileExtraVisualData>();
 			//spriteBatch.Draw(VineTexture, new Vector2((i + 12) * 16, (j + 12) * 16) - Main.screenPosition, new Rectangle(curr.TileFrameX * 18, curr.TileFrameY * 18, 16, 16), Lighting.GetColor(i, j));
@@ -39,7 +40,6 @@ namespace Origins.Tiles.Other {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Glass);
 			Item.createTile = TileType<Fiberglass_Tile>();
-			Item.rare = ItemRarityID.Green;
 		}
 	}
 }

@@ -51,7 +51,7 @@ BOSSES AND MINI-BOSSES:
 (#, ^2) Ichor Storm 
 
 (^) Defiled Amalgamation*
-($, ^2/3) Fiberglass Weaver !!!
+(†, $, ^2/3) Fiberglass Weaver !!!
 (X) Scrapper
 (^) World Cracker
 
@@ -457,6 +457,7 @@ VANITY:
 
 (^) Tyfyter's Set
 
+(^) Amber Dye
 (X) Ancient Dye
 (X) Anti-gray Dye
 (X) Ashen Dye
@@ -552,7 +553,7 @@ MELEE WEAPONS:
 (^) Riverang
 (^) Snapthrow
 (^) Spiker Sword
-(☻) Switchblade* !!!
+(^) Switchblade*
 (^) Triple Threat
 (^) Tyrfing
 (^) Vorpal Sword
@@ -786,7 +787,7 @@ EXPLOSIVE WEAPONS:
 (X) Chlorophyte Handcannon
 (X) Firework Cannon
 (^) Mine Flayer*
-(☻) Nova Cascade* !!!
+(^) Nova Cascade*
 (X) Nova Starforge
 (^) Nuclear Arm*
 (#2, ^2) Omni-directional Claymore*
@@ -835,7 +836,7 @@ TILES:
 (^) Encrusted Ore*
 (^) Endowood*
 (^) Felnum Ore*
-(^) Fiberglass Block*
+(@5) Fiberglass Block* !!!
 (#, ^2) Geyser Core Block*
 (^) Hardened Defiled Sand*
 (X) Harmony Brick*
@@ -906,7 +907,7 @@ TILES:
 (X) Dusk Dungeon Chest*
 (X) Edenwood Furniture*
 (#, ^2) Encrusted Brick !!!
-(☻) Endowood Furniture* !!!
+(#3, ^2) Endowood Furniture* !!!
 (#2, ^2) Laser Tag Console*
 (#, ^2) Living Alkahest Block*
 (#, ^2) Living Bile Block*
@@ -1136,7 +1137,7 @@ CONSUMABLES:
 
 MOUNTS & PETS:
 ---
-(☻) Blockus Tube (Juvenile Amalgamation)* !!!
+(#4, ^2) Blockus Tube (Juvenile Amalgamation)* !!!
 (#, ^2) Fleshy Globe (Self-Contained Universe)* !!!
 (^) Strange Power-Up (Platformer Mech)
 (^) Chromatic Scale (Rainbow Pangolin)
