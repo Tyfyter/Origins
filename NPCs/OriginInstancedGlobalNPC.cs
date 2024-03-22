@@ -33,6 +33,7 @@ namespace Origins.NPCs {
 		public bool soulhideWeakenedDebuff = false;
 		public const float soulhideWeakenAmount = 0.15f;
 		public bool weakenedOnSpawn = false;
+		public bool amberDebuff = false;
 		public Vector2 preAIVelocity = default;
 		public int priorityMailTime = 0;
 		public bool transformingThroughDeath = false;
@@ -71,6 +72,7 @@ namespace Origins.NPCs {
 			slowDebuff = false;
 			weakShadowflameDebuff = false;
 			soulhideWeakenedDebuff = false;
+			amberDebuff = false;
 			if (priorityMailTime > 0) priorityMailTime--;
 		}
 		public override void DrawEffects(NPC npc, ref Color drawColor) {

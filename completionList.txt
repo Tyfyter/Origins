@@ -253,7 +253,7 @@ ARMOR:
 
 (X) Abysswalker Armor*
 (^) Acrid Armor*
-(#2, ^2) Amber Exploder Armor* !!!
+(☻) Amber Exploder Armor* !!!
 (^) Bleeding Obsidian Armor*
 (X) Ruby Ranger Armor*
 

@@ -1,7 +1,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Items.Weapons.Ranged;
+using Origins.NPCs;
 using Origins.Tiles.Other;
 using System.Collections.Generic;
 using Terraria;
@@ -129,10 +131,10 @@ namespace Origins.Items.Armor.Amber {
 		}
 	}
 	public class Amber_Debuff_Shard : ModDust {
-		public record struct AmberDebuffShardData(Entity Parent, int Texture);
+		public record struct AmberDebuffShardData(Entity Parent, int Texture, Vector2 Offset, float Rotation);
 		public override string Texture => "Terraria/Images/Item_" + ItemID.Amber;
 		public override void OnSpawn(Dust dust) {
-			dust.customData = new AmberDebuffShardData(null, ModContent.ProjectileType<Shardcannon_P1>() + Main.rand.Next(3));
+			dust.customData = new AmberDebuffShardData(null, ModContent.ProjectileType<Shardcannon_P1>() + Main.rand.Next(3), default, Main.rand.NextFloat(MathHelper.TwoPi));
 		}
 		public override bool Update(Dust dust) {
 			bool remain = true;
@@ -141,23 +143,23 @@ namespace Origins.Items.Armor.Amber {
 				return false;
 			}
 			if (!data.Parent.active) remain = false;
-			Vector2 center = dust.position + (data.Parent.position - data.Parent.oldPosition);
-			float rot = data.Parent.GetRotation();
-			float rotDiff = rot - dust.fadeIn;
-			if (data.Parent.direction != data.Parent.oldDirection) {
-				center.X -= center.X - data.Parent.Center.X;
-			}
+			Vector2 center = data.Parent.Center;
+
+			Vector2 direction = new(data.Parent.direction, 1);
 			if (data.Parent is NPC npc) {
 				if (remain && !npc.HasBuff(Amber_Debuff.ID)) remain = false;
-				if (npc.directionY != npc.oldDirectionY) {
-					center.Y -= center.Y - data.Parent.Center.Y;
-				}
+				center += npc.netOffset;
+				center.Y += npc.gfxOffY;
+				direction.Y = npc.directionY;
 			} else if (data.Parent is Projectile && !data.Parent.active) {
 				dust.active = false;
 			}
-			dust.position = center.RotatedBy(rotDiff, data.Parent.Center);
-			dust.fadeIn = rot;
-			if (!remain && (dust.alpha += 12) >= 255) dust.active = false;
+
+			float rotation = data.Parent.GetRotation();
+			dust.position = (data.Offset * direction).RotatedBy(rotation) + center;
+			dust.rotation = data.Rotation + rotation;
+
+			if (!remain && (dust.alpha += 7) >= 255) dust.active = false;
 			return false;
 		}
 		public override bool PreDraw(Dust dust) {
@@ -171,8 +173,8 @@ namespace Origins.Items.Armor.Amber {
 				texture,
 				dust.position - Main.screenPosition,
 				null,
-				lightColor,
-				dust.rotation + data.Parent.GetRotation(),
+				lightColor * (1 - dust.alpha / 255f),
+				dust.rotation,
 				texture.Size() * 0.5f,
 				1,
 				SpriteEffects.None,
@@ -184,6 +186,10 @@ namespace Origins.Items.Armor.Amber {
 			int type = ModContent.DustType<Amber_Debuff_Shard>();
 			int size = entity.width + entity.height;
 			List<Vector2> points = OriginExtensions.FelisCatusSampling(entity.Hitbox, (int)(size * 0.3f), size * 0.05f + 4, size * 0.25f + 8);
+			Vector2 direction = new(entity.direction, 1);
+			if (entity is NPC npc) {
+				direction.Y = npc.directionY;
+			}
 			for (int i = 0; i < points.Count; i++) {
 				Dust dust = Dust.NewDustPerfect(
 					points[i],
@@ -191,7 +197,13 @@ namespace Origins.Items.Armor.Amber {
 					Vector2.Zero
 				);
 				dust.shader = shader;
-				dust.customData = ((AmberDebuffShardData)dust.customData) with { Parent = entity };
+				if (dust.customData is AmberDebuffShardData data) {
+					dust.customData = data with {
+						Parent = entity,
+						Offset = (points[i] - entity.Center).RotatedBy(-entity.GetRotation()) * direction
+					};
+				}
+				
 			}
 		}
 	}
@@ -206,6 +218,10 @@ namespace Origins.Items.Armor.Amber {
 				Amber_Debuff_Shard.SpawnDusts(npc);
 			}
 			npc.AddBuff(ID, duration);
+		}
+		public override void Update(NPC npc, ref int buffIndex) {
+			npc.AddBuff(Slow_Debuff.ID, 5);
+			npc.GetGlobalNPC<OriginGlobalNPC>().amberDebuff = true;
 		}
 	}
 }
