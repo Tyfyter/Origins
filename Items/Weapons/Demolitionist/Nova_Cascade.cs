@@ -1,18 +1,14 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
-using Origins.Items.Weapons.Ranged;
-using Origins.Tiles.Dusk;
+using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Items.Materials;
-using Origins.Projectiles;
-using Terraria.DataStructures;
-using System;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Nova_Cascade : ModItem, ICustomWikiStat {
+    public class Nova_Cascade : ModItem, ICustomWikiStat {
 		static short glowmask;
 		public string[] Categories => new string[] {
 			"HandCannon"
@@ -36,7 +32,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.knockBack = 10f;
 			Item.shootSpeed = 12f;
 			Item.value = Item.sellPrice(gold: 20);
-			Item.rare = ItemRarityID.Pink;
+			Item.rare = ItemRarityID.Red;
 			Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(1f);
 			Item.autoReuse = true;
 			Item.glowMask = glowmask;

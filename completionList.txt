@@ -241,9 +241,11 @@ ARMOR:
 (^) Cryosten Armor*
 (^) Defiled Armor* 
 (^) Encrusted Armor*
+(X) Endowood Armor
 (^) Felnum Armor*
 (^) Fiberglass Armor*
 (^) Lost Armor*
+(X) Marrowick Armor
 (^) Mythic Armor*
 (^) Riptide Armor*
 (^) Riven Armor*
@@ -253,7 +255,7 @@ ARMOR:
 
 (X) Abysswalker Armor*
 (^) Acrid Armor*
-(☻) Amber Exploder Armor* !!!
+(#3, ^2) Amber Exploder Armor* !!!
 (^) Bleeding Obsidian Armor*
 (X) Ruby Ranger Armor*
 
@@ -552,7 +554,7 @@ MELEE WEAPONS:
 (^) Ripper Lance
 (^) Riverang
 (^) Snapthrow
-(^) Spiker Sword
+(#, ^2) Spiker Sword !!!
 (^) Switchblade*
 (^) Triple Threat
 (^) Tyrfing

@@ -42,7 +42,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
 			if (type == Metal_Slug_P.ID) type = Item.shoot;
-		}
+            Vector2 offset = (velocity.RotatedBy(MathHelper.PiOver2 * -player.direction) * 5) / velocity.Length();
+            position += offset;
+        }
 	}
 	public class Boomphracken_P : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Ammo/Boomphracken_P";
