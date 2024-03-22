@@ -81,6 +81,7 @@ namespace Origins {
 		public int setActiveAbility = 0;
 		public int setAbilityCooldown = 0;
 		public bool scavengerSet = false;
+		public bool amberSet = false;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -377,11 +378,12 @@ namespace Origins {
 				necroSetAmount -= 1 + necroSetAmount * 0.01f;
 			}
 			soulhideSet = false;
-			setActiveAbility = 0;
+			scavengerSet = false;
+			amberSet = false;
 
+			setActiveAbility = 0;
 			if (setAbilityCooldown > 0) {
-				setAbilityCooldown--;
-				if (setAbilityCooldown == 0) {
+				if (--setAbilityCooldown == 0) {
 					SoundEngine.PlaySound(SoundID.MaxMana.WithPitch(-1).WithVolume(0.5f));
 					for (int i = 0; i < 5; i++) {
 						int dust = Dust.NewDust(Player.position, Player.width, Player.height, DustID.PortalBoltTrail, 0f, 0f, 255, Color.Black, (float)Main.rand.Next(20, 26) * 0.1f);
@@ -391,7 +393,6 @@ namespace Origins {
 					}
 				}
 			}
-			scavengerSet = false;
 
 			bombHandlingDevice = false;
 			destructiveClaws = false;

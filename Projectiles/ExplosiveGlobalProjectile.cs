@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items;
+using Origins.Items.Armor.Amber;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Reflection;
 using System;
@@ -7,6 +8,7 @@ using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
@@ -19,6 +21,8 @@ namespace Origins.Projectiles {
 		public bool magicTripwireTripped = false;
 		public bool noTileSplode = false;
 		public bool novaCascade = false;
+		public bool hasAmber = false;
+		public bool fromDeath = false;
 		public StatModifier selfDamageModifier = StatModifier.Default;
 		public StatModifier modifierBlastRadius = StatModifier.Default;
 		public override bool InstancePerEntity => true;
@@ -92,7 +96,14 @@ namespace Origins.Projectiles {
 			if (originPlayer.pincushion) {
 				noTileSplode = true;
 			}
-			if (source is EntitySource_ItemUse itemUse) {
+			if (originPlayer.amberSet) {
+				hasAmber = true;
+				if (!IsExploding(projectile)) {
+					Amber_Debuff_Shard.SpawnDusts(projectile);
+				}
+			}
+			if (source is EntitySource_Death) fromDeath = true;
+			else if (source is EntitySource_ItemUse itemUse) {
 				if (PrefixLoader.GetPrefix(itemUse.Item.prefix) is IBlastRadiusPrefix brPrefix) {
 					modifierBlastRadius = brPrefix.BlastRadius();
 				}
@@ -157,11 +168,20 @@ namespace Origins.Projectiles {
 			bitWriter.WriteBit(magicTripwire);
 			bitWriter.WriteBit(magicTripwireTripped);
 			bitWriter.WriteBit(noTileSplode);
+			bitWriter.WriteBit(hasAmber);
+			bitWriter.WriteBit(fromDeath);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			isHoming = bitReader.ReadBit();
 			magicTripwire = bitReader.ReadBit();
 			magicTripwireTripped = bitReader.ReadBit();
+			noTileSplode = bitReader.ReadBit();
+			if (bitReader.ReadBit()) {
+				if (!hasAmber) Amber_Debuff_Shard.SpawnDusts(projectile);
+				hasAmber = true;
+			} else {
+				hasAmber = false;
+			}
 			noTileSplode = bitReader.ReadBit();
 		}
 		public static bool IsExploding(Projectile projectile) {
@@ -315,7 +335,7 @@ namespace Origins.Projectiles {
 				target.AddBuff(BuffID.Oiled, 600);
 				target.AddBuff(BuffID.OnFire, 600);
 			}
-			if (novaCascade && projectile.owner == Main.myPlayer) {
+			if (novaCascade) {
 				int type = ModContent.ProjectileType<Nova_Cascade_Explosion>();
 				if (projectile.type != type) {
 					Projectile.NewProjectile(
@@ -330,17 +350,30 @@ namespace Origins.Projectiles {
 			}
 		}
 		public override void OnKill(Projectile projectile, int timeLeft) {
-			if (novaCascade && projectile.penetrate != 0 && projectile.owner == Main.myPlayer) {
-				int type = ModContent.ProjectileType<Nova_Cascade_Explosion>();
-				if (projectile.type != type) {
+			if (!fromDeath && projectile.owner == Main.myPlayer) {
+				if (novaCascade && projectile.penetrate != 0) { // don't spawn on death from running out of penetration since the hit already spawned an explosion
 					Projectile.NewProjectile(
 						projectile.GetSource_Death(),
 						projectile.Center,
 						default,
-						type,
+						ModContent.ProjectileType<Nova_Cascade_Explosion>(),
 						projectile.damage,
 						projectile.knockBack
 					);
+				}
+				if (hasAmber) {
+					const int count = 6;
+					const float portion = MathHelper.TwoPi / count;
+					for (int i = 0; i < count; i++) {
+						Projectile.NewProjectile(
+							projectile.GetSource_Death(),
+							projectile.Center,
+							new Vector2(6, 0).RotatedByRandom(i * portion + Main.rand.NextFloat(-0.1f, 0.1f)),
+							ModContent.ProjectileType<Amber_Shard>(),
+							projectile.damage / 4,
+							projectile.knockBack / 8
+						);
+					}
 				}
 			}
 		}

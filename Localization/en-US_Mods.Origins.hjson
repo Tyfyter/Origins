@@ -834,6 +834,11 @@ Buffs: {
 		DisplayName: Juvenile Amalgamation
 		Description: The Juvenile Amalgamation is protecting your holes!
 	}
+
+	Amber_Debuff: {
+		DisplayName: Amber_ Debuff
+		Description: Mods.Origins.Buffs.Amber_Debuff.Description
+	}
 }
 
 DamageClassName: {
@@ -1119,6 +1124,7 @@ Projectiles: {
 	Napalm_Canister_P.DisplayName: Napalm Canistah
 	Nova_Cascade_Explosion.DisplayName: Nova Cascade
 	Switchblade_Shortsword_P.DisplayName: Switchblade
+	Amber_Shard.DisplayName: Amber_ Shard
 }
 
 Prefixes: {

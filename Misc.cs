@@ -1749,6 +1749,40 @@ namespace Origins {
 		public static float OldRot(this NPC self, int index) {
 			return index == -1 ? self.rotation : self.oldRot[index];
 		}
+		public static float GetRotation(this Entity self) {
+			if (self is NPC npc) return npc.rotation;
+			if (self is Projectile projectile) return projectile.rotation;
+			if (self is Player player) return player.fullRotation;
+			return 0f;
+		}
+		public static float GetOldRotation(this Entity self) {
+			if (self is NPC npc) return npc.oldRot.Length >= 1 ? npc.oldRot[0] : npc.rotation;
+			if (self is Projectile projectile) return projectile.oldRot.Length >= 1 ? projectile.oldRot[0] : projectile.rotation;
+			if (self is Player player) return player.fullRotation;
+			return 0f;
+		}
+		//named for the author of https://www.reddit.com/r/learnmath/comments/rrz697/topology_efficiently_create_a_set_of_random/
+		public static List<Vector2> FelisCatusSampling(Rectangle area, int maxCount, float minSpread, float maxSpread) {
+			List<Vector2> points = new();
+			Queue<Vector2> newPoints = new();
+			newPoints.Enqueue(area.Center.ToVector2());
+			int retries = 0;
+			for (int i = 0; i < maxCount; i++) {
+				if (!newPoints.Any()) break;
+				Vector2 next = newPoints.Peek() + Vec2FromPolar(Main.rand.NextFloat(MathHelper.TwoPi), Main.rand.NextFloat(minSpread, maxSpread));
+				if (!area.Contains(next) || points.Any((p) => p.DistanceSQ(next) < minSpread * minSpread)) {
+					if (++retries > 20) {
+						retries = 0;
+						newPoints.Dequeue();
+					}
+				} else {
+					retries = 0;
+					points.Add(next);
+					newPoints.Enqueue(next);
+				}
+			}
+			return points;
+		}
 		public static Recipe AddRecipeGroupWithItem(this Recipe recipe, int recipeGroupId, int showItem, int stack = 1) {
 			if (!RecipeGroup.recipeGroups.ContainsKey(recipeGroupId)) {
 				DefaultInterpolatedStringHandler defaultInterpolatedStringHandler = new DefaultInterpolatedStringHandler(43, 1);

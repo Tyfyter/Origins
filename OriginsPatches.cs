@@ -183,7 +183,7 @@ namespace Origins {
 				}
 				return orig(self, player);
 			};
-			Terraria.On_Main.GetProjectileDesiredShader += (orig, projectile) => {
+			On_Main.GetProjectileDesiredShader += (orig, projectile) => {
 				if (projectile.TryGetGlobalProjectile(out OriginGlobalProj originGlobalProj) && originGlobalProj.isFromMitosis) {
 					return GameShaders.Armor.GetShaderIdFromItemId(ItemID.StardustDye);
 				}

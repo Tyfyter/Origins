@@ -1,6 +1,14 @@
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
+using Origins.Items.Weapons.Ranged;
 using Origins.Tiles.Other;
+using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.Dyes;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -24,8 +32,9 @@ namespace Origins.Items.Armor.Amber {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = "-38% explosive blast radius. All explosives are preserved in amber and release amber shards upon detonation\nAmber shards slow enemies, heal the player of any self-damage received, and decrease the defense of struck enemies by half";
-			player.GetModPlayer<OriginPlayer>().explosiveBlastRadius -= 0.38f;
-			//player.GetModPlayer<OriginPlayer>().amberSet = true;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.explosiveBlastRadius -= 0.38f;
+			originPlayer.amberSet = true;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -78,6 +87,125 @@ namespace Origins.Items.Armor.Amber {
 			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 24);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
+		}
+	}
+	public class Amber_Dye : ModItem {
+		public override string Texture => "Terraria/Images/Item_" + ItemID.Amber;
+		public static int ID { get; private set; }
+		public static int ShaderID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+			GameShaders.Armor.BindShader(Type, new ArmorShaderData(Main.PixelShaderRef, "ArmorStardust"))
+			.UseImage("Images/Misc/noise")
+			.UseColor(1.5f, 0.8f, 0.4f)
+			.UseSecondaryColor(2.0f, 1.2f, 0.4f)
+			.UseSaturation(1f);
+			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
+		}
+	}
+	public class Amber_Shard : ModProjectile, IShadedProjectile {
+		public override string Texture => "Terraria/Images/Item_" + ItemID.Amber;
+		public int Shader => Amber_Dye.ShaderID;
+		public override void SetDefaults() {
+			Projectile.friendly = true;
+			Projectile.localAI[2] = ModContent.ProjectileType<Shardcannon_P1>() + Main.rand.Next(3);
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			Amber_Debuff.Inflict(target, 300);
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Texture2D texture = TextureAssets.Projectile[(int)Projectile.localAI[2]].Value;
+			Main.EntitySpriteDraw(
+				texture,
+				Projectile.Center - Main.screenPosition,
+				null,
+				lightColor,
+				Projectile.rotation,
+				texture.Size() * 0.5f,
+				1,
+				SpriteEffects.None
+			);
+			return false;
+		}
+	}
+	public class Amber_Debuff_Shard : ModDust {
+		public record struct AmberDebuffShardData(Entity Parent, int Texture);
+		public override string Texture => "Terraria/Images/Item_" + ItemID.Amber;
+		public override void OnSpawn(Dust dust) {
+			dust.customData = new AmberDebuffShardData(null, ModContent.ProjectileType<Shardcannon_P1>() + Main.rand.Next(3));
+		}
+		public override bool Update(Dust dust) {
+			bool remain = true;
+			if(dust.customData is not AmberDebuffShardData data) {
+				dust.active = false;
+				return false;
+			}
+			if (!data.Parent.active) remain = false;
+			Vector2 center = dust.position + (data.Parent.position - data.Parent.oldPosition);
+			float rot = data.Parent.GetRotation();
+			float rotDiff = rot - dust.fadeIn;
+			if (data.Parent.direction != data.Parent.oldDirection) {
+				center.X -= center.X - data.Parent.Center.X;
+			}
+			if (data.Parent is NPC npc) {
+				if (remain && !npc.HasBuff(Amber_Debuff.ID)) remain = false;
+				if (npc.directionY != npc.oldDirectionY) {
+					center.Y -= center.Y - data.Parent.Center.Y;
+				}
+			} else if (data.Parent is Projectile && !data.Parent.active) {
+				dust.active = false;
+			}
+			dust.position = center.RotatedBy(rotDiff, data.Parent.Center);
+			dust.fadeIn = rot;
+			if (!remain && (dust.alpha += 12) >= 255) dust.active = false;
+			return false;
+		}
+		public override bool PreDraw(Dust dust) {
+			if (dust.customData is not AmberDebuffShardData data) {
+				dust.active = false;
+				return false;
+			}
+			Color lightColor = Lighting.GetColor((int)(dust.position.X + 4) / 16, (int)(dust.position.Y + 4) / 16);
+			Texture2D texture = TextureAssets.Projectile[data.Texture].Value;
+			Main.spriteBatch.Draw(
+				texture,
+				dust.position - Main.screenPosition,
+				null,
+				lightColor,
+				dust.rotation + data.Parent.GetRotation(),
+				texture.Size() * 0.5f,
+				1,
+				SpriteEffects.None,
+			0);
+			return false;
+		}
+		public static void SpawnDusts(Entity entity) {
+			ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(Amber_Dye.ID);
+			int type = ModContent.DustType<Amber_Debuff_Shard>();
+			int size = entity.width + entity.height;
+			List<Vector2> points = OriginExtensions.FelisCatusSampling(entity.Hitbox, (int)(size * 0.3f), size * 0.05f + 4, size * 0.25f + 8);
+			for (int i = 0; i < points.Count; i++) {
+				Dust dust = Dust.NewDustPerfect(
+					points[i],
+					type,
+					Vector2.Zero
+				);
+				dust.shader = shader;
+				dust.customData = ((AmberDebuffShardData)dust.customData) with { Parent = entity };
+			}
+		}
+	}
+	public class Amber_Debuff : ModBuff {
+		public override string Texture => "Terraria/Images/Item_" + ItemID.Amber;
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
+		public static void Inflict(NPC npc, int duration) {
+			if (!npc.HasBuff(ID)) {
+				Amber_Debuff_Shard.SpawnDusts(npc);
+			}
+			npc.AddBuff(ID, duration);
 		}
 	}
 }

@@ -3945,3 +3945,8 @@ Switchblade_Shortsword: {
 	DisplayName: Switchblade
 	Tooltip: ""
 }
+
+Amber_Dye: {
+	DisplayName: Amber_ Dye
+	Tooltip: ""
+}
