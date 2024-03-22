@@ -110,10 +110,8 @@ namespace Origins.Items.Pets {
 				vectorToIdlePosition.Normalize();
 				vectorToIdlePosition *= speed;
 				Projectile.velocity = (Projectile.velocity * (inertia - 1) + vectorToIdlePosition) / inertia;
-			} else if (Projectile.velocity == Vector2.Zero) {
-				// If there is a case where it's not moving at all, give it a little "poke"
-				Projectile.velocity.X = -0.15f;
-				Projectile.velocity.Y = -0.05f;
+			} else if (Projectile.velocity != Vector2.Zero) {
+				Projectile.velocity *= 0.95f;
 			}
 			#endregion
 
@@ -132,8 +130,10 @@ namespace Origins.Items.Pets {
 				}
 			}
 			int velDir = Math.Sign(Projectile.velocity.X);
-			if (velDir != 0) {
-				Projectile.direction = velDir;
+			if (velDir == 0) {
+				Projectile.spriteDirection = player.direction;
+			} else {
+				Projectile.spriteDirection = velDir;
 			}
 
 			// Some visuals here
