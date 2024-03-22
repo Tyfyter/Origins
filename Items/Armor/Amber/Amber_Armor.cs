@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
 using Origins.Dev;
+using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs;
 using Origins.Tiles.Other;
@@ -91,26 +92,17 @@ namespace Origins.Items.Armor.Amber {
 			recipe.Register();
 		}
 	}
-	public class Amber_Dye : ModItem {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.Amber;
-		public static int ID { get; private set; }
-		public static int ShaderID { get; private set; }
-		public override void SetStaticDefaults() {
-			ID = Type;
-			GameShaders.Armor.BindShader(Type, new ArmorShaderData(Main.PixelShaderRef, "ArmorStardust"))
-			.UseImage("Images/Misc/noise")
-			.UseColor(1.5f, 0.8f, 0.4f)
-			.UseSecondaryColor(2.0f, 1.2f, 0.4f)
-			.UseSaturation(1f);
-			ShaderID = GameShaders.Armor.GetShaderIdFromItemId(Type);
-		}
-	}
 	public class Amber_Shard : ModProjectile, IShadedProjectile {
 		public override string Texture => "Terraria/Images/Item_" + ItemID.Amber;
 		public int Shader => Amber_Dye.ShaderID;
 		public override void SetDefaults() {
 			Projectile.friendly = true;
+			Projectile.extraUpdates = 1;
+			Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
 			Projectile.localAI[2] = ModContent.ProjectileType<Shardcannon_P1>() + Main.rand.Next(3);
+		}
+		public override void AI() {
+			Projectile.velocity.Y += 0.04f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Amber_Debuff.Inflict(target, 300);
@@ -159,7 +151,7 @@ namespace Origins.Items.Armor.Amber {
 			dust.position = (data.Offset * direction).RotatedBy(rotation) + center;
 			dust.rotation = data.Rotation + rotation;
 
-			if (!remain && (dust.alpha += 7) >= 255) dust.active = false;
+			if (!remain && (dust.alpha += 16) >= 255) dust.active = false;
 			return false;
 		}
 		public override bool PreDraw(Dust dust) {
@@ -185,7 +177,7 @@ namespace Origins.Items.Armor.Amber {
 			ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(Amber_Dye.ID);
 			int type = ModContent.DustType<Amber_Debuff_Shard>();
 			int size = entity.width + entity.height;
-			List<Vector2> points = OriginExtensions.FelisCatusSampling(entity.Hitbox, (int)(size * 0.3f), size * 0.05f + 4, size * 0.25f + 8);
+			List<Vector2> points = OriginExtensions.FelisCatusSampling(entity.Hitbox, (int)(size * 0.3f), size * 0.075f + 1, size * 0.25f + 8);
 			Vector2 direction = new(entity.direction, 1);
 			if (entity is NPC npc) {
 				direction.Y = npc.directionY;
