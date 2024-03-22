@@ -4,6 +4,7 @@ using Origins.Items.Materials;
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Felnum {
@@ -36,7 +37,7 @@ namespace Origins.Items.Armor.Felnum {
 		}
 		public override void UpdateArmorSet(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
-			player.setBonus = "Moving quickly will build up a static charge to boost your next attack's damage";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Felnum");
 			originPlayer.felnumSet = true;
 			if (player.velocity.Length() > 4) {
 				originPlayer.felnumShock += player.velocity.Length() / 4;

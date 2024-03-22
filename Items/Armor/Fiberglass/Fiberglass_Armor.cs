@@ -1,6 +1,7 @@
 using Origins.Dev;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Fiberglass {
@@ -22,7 +23,7 @@ namespace Origins.Items.Armor.Fiberglass {
 			return body.type == ModContent.ItemType<Fiberglass_Body>() && legs.type == ModContent.ItemType<Fiberglass_Legs>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Weapon damage increased by 4";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Fiberglass");
 			player.GetDamage(DamageClass.Default).Flat += 4;
 			player.GetDamage(DamageClass.Generic).Flat += 4;
 			/*player.GetModPlayer<OriginPlayer>().fiberglassSet = true;

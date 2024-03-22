@@ -2,6 +2,7 @@ using Origins.Dev;
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Myth {
@@ -23,7 +24,7 @@ namespace Origins.Items.Armor.Myth {
 			return body.type == ModContent.ItemType<Mythic_Shell>() && legs.type == ModContent.ItemType<Mythic_Leggings>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Explosive damage and velocity increased by movement speed";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Mythic");
 			ref StatModifier explosiveProjectileSpeed = ref player.GetModPlayer<OriginPlayer>().explosiveProjectileSpeed;
 			ref StatModifier explosiveDamage = ref player.GetDamage(DamageClasses.Explosive);
 			const float maxSpeed = 16f;

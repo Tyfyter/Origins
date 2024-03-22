@@ -5,6 +5,7 @@ using Origins.Tiles.Dusk;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Bleeding {
@@ -32,7 +33,7 @@ namespace Origins.Items.Armor.Bleeding {
 			return body.type == ModContent.ItemType<Bleeding_Obsidian_Breastplate>() && legs.type == ModContent.ItemType<Bleeding_Obsidian_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Explosive projectiles have a chance to be duplicated";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.BleedingObsidian");
 			player.GetModPlayer<OriginPlayer>().bleedingObsidianSet = true;
 		}
 		public override void ArmorSetShadows(Player player) {

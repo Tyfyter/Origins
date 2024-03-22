@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Defiled {
@@ -32,7 +33,7 @@ namespace Origins.Items.Armor.Defiled {
 			return body.type == ModContent.ItemType<Defiled_Breastplate>() && legs.type == ModContent.ItemType<Defiled_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Greatly increased maximum life";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Defiled");
 			player.statLifeMax2 += (int)(player.statLifeMax2 * 0.25);
 		}
 		public override void AddRecipes() {

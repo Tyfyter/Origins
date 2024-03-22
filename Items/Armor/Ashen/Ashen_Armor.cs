@@ -2,6 +2,7 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Ashen
@@ -31,7 +32,7 @@ namespace Origins.Items.Armor.Ashen
 			return body.type == ModContent.ItemType<Ashen_Breastplate>() && legs.type == ModContent.ItemType<Ashen_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "+15% knockback and knockback resistance\n-15% self-damage";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Ashen");
             player.GetModPlayer<OriginPlayer>().ashenKBReduction = true;
             player.GetKnockback(DamageClass.Generic) += 0.15f;
             player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.15f;

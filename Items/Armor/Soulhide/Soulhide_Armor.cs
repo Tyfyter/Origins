@@ -3,6 +3,7 @@ using Origins.Dev;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Soulhide {
@@ -25,7 +26,7 @@ namespace Origins.Items.Armor.Soulhide {
 			return body.type == ModContent.ItemType<Soulhide_Coat>() && legs.type == ModContent.ItemType<Soulhide_Guards>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Nearby enemies are afflicted 'Shadowflame' and 'Weak'";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Souldhide");
 			player.GetModPlayer<OriginPlayer>().soulhideSet = true;
 		}
         public override void ArmorSetShadows(Player player) {

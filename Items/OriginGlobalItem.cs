@@ -135,12 +135,12 @@ namespace Origins.Items {
 		public override void UpdateArmorSet(Player player, string set) {
 			switch (set) {
 				case "miner":
-				player.setBonus += "\n20% reduced self-damage";
+				player.setBonus += Language.GetTextValue("Mods.Origins.SetBonuses.Miner");
 				player.GetModPlayer<OriginPlayer>().minerSet = true;
 				return;
 			}
 			if (OriginConfig.Instance.WoodBuffs && set == "pearlwood") {
-				player.setBonus += "\n15% increased damage\nReduces damage taken by 5%";
+				player.setBonus += Language.GetTextValue("Mods.Origins.SetBonuses.Pearlwood");
 				player.GetDamage(DamageClass.Generic) += 0.15f;
 				player.endurance += 0.05f;
 				return;

@@ -3,6 +3,7 @@ using Origins.Items.Materials;
 using System;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Necromancer {
@@ -24,7 +25,7 @@ namespace Origins.Items.Armor.Necromancer {
 			return body.type == ModContent.ItemType<Necromancer_Breastplate>() && legs.type == ModContent.ItemType<Necromancer_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Slain enemies provide a temporary boost to all stats\nMana usage is halved when in a Graveyard and artifact minions cost half as much\nEnemies spawn more frequently\n+3 minion slots";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Necromancer");
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.artifactManaCost *= 0.5f;
 			if (player.ZoneGraveyard) {

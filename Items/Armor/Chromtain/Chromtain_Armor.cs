@@ -2,6 +2,7 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Chromtain {
@@ -32,7 +33,7 @@ namespace Origins.Items.Armor.Chromtain {
 			return body.type == ModContent.ItemType<Chromtain_Breastplate>() && legs.type == ModContent.ItemType<Chromtain_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Enemies are more likely to target you. Your armor is unbreakable.";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Chromtain");
 			player.aggro += 400;
 			player.buffImmune[BuffID.BrokenArmor] = true;
 			player.buffImmune[BuffID.WitheredArmor] = true;

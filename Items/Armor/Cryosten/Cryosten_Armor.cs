@@ -1,6 +1,7 @@
 using Origins.Dev;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Cryosten {
@@ -20,7 +21,7 @@ namespace Origins.Items.Armor.Cryosten {
 			return body.type == ModContent.ItemType<Cryosten_Breastplate>() && legs.type == ModContent.ItemType<Cryosten_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Life restoration from hearts increased.\nCannot be frozen or chilled";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Cryosten");
 			player.GetModPlayer<OriginPlayer>().cryostenSet = true;
 			if (player.HasBuff(BuffID.Chilled)) player.buffTime[player.FindBuffIndex(BuffID.Chilled)]--;
 			if (player.HasBuff(BuffID.Frozen)) player.buffTime[player.FindBuffIndex(BuffID.Frozen)]--;

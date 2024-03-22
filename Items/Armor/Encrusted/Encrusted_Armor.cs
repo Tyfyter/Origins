@@ -4,6 +4,7 @@ using Origins.Items.Materials;
 using Origins.Tiles.Riven;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Encrusted {
@@ -35,7 +36,7 @@ namespace Origins.Items.Armor.Encrusted {
 			return body.type == ModContent.ItemType<Encrusted_Coat>() && legs.type == ModContent.ItemType<Encrusted_Pants>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Increases minion damage by up to 30% when over half health";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Encrusted");
 			player.GetDamage(DamageClass.Summon) *= player.GetModPlayer<OriginPlayer>().rivenMult;
 		}
 		public override void AddRecipes() {

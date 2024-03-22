@@ -13,6 +13,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.Dyes;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Amber {
@@ -34,7 +35,7 @@ namespace Origins.Items.Armor.Amber {
 			return body.type == ModContent.ItemType<Amber_Breastplate>() && legs.type == ModContent.ItemType<Amber_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "-38% explosive blast radius. All explosives are preserved in amber and release amber shards upon detonation\nAmber shards slow enemies, heal the player of any self-damage received, and decrease the defense of struck enemies by half";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Amber");
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.explosiveBlastRadius -= 0.38f;
 			originPlayer.amberSet = true;

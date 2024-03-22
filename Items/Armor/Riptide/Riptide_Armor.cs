@@ -5,6 +5,7 @@ using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 
@@ -28,7 +29,7 @@ namespace Origins.Items.Armor.Riptide {
 			return body.type == ModContent.ItemType<Riptide_Breastplate>() && legs.type == ModContent.ItemType<Riptide_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "5% increased magic damage when submerged or in rain\nGrants the ability to dash which releases a tidal wave";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Riptide");
 			player.GetModPlayer<OriginPlayer>().riptideSet = true;
 			if (player.wet) {//TODO: rain
 				player.GetDamage(DamageClass.Magic) += 0.05f;

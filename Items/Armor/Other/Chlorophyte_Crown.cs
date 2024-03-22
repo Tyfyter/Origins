@@ -28,7 +28,7 @@ namespace Origins.Items.Armor.Other {
 			return body.type == ItemID.ChlorophytePlateMail && legs.type == ItemID.ChlorophyteGreaves;
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = Language.GetTextValue("ArmorSetBonus.Chlorophyte") + ",\nand increases your max number of minions by 2";
+			player.setBonus = Language.GetTextValue("ArmorSetBonus.Chlorophyte") + "\n" + Language.GetTextValue("Mods.Origins.SetBonuses.Chlorohpyte_Summoner");
 			player.maxMinions += 2;
 			player.AddBuff(BuffID.LeafCrystal, 18000);
 		}

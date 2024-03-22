@@ -2,6 +2,7 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Nova {
@@ -31,7 +32,7 @@ namespace Origins.Items.Armor.Nova {
 			return body.type == ModContent.ItemType<Nova_Breastplate>() && legs.type == ModContent.ItemType<Nova_Greaves>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Massively increased explosive blast radius\nExplosive projectiles have a chance to be duplicated\nExplosives home to nearby enemies";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Nova");
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.explosiveBlastRadius.Base += 32;
 			originPlayer.explosiveBlastRadius *= 2f;

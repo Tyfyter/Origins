@@ -5,6 +5,7 @@ using Origins.Tiles.Defiled;
 using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Lost {
@@ -27,7 +28,7 @@ namespace Origins.Items.Armor.Lost {
 			return body.type == ModContent.ItemType<Lost_Breastplate>() && legs.type == ModContent.ItemType<Lost_Pants>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "15% of damage taken is redirected to mana";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Lost");
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.lostSet = true;
 			originPlayer.manaShielding += originPlayer.refactoringPieces ? 0.25f : 0.15f;

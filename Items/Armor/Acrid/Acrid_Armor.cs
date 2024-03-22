@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Acrid {
@@ -41,7 +42,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.GetModPlayer<OriginPlayer>().acridSet = true;
-			player.setBonus = "All attacks inflict 'Toxic Shock'\nImmunity to acid venom, poisoned and toxic shock\nExtends underwater breathing";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Acrid");
 			player.buffImmune[BuffID.Poisoned] = true;
 			player.buffImmune[BuffID.Venom] = true;
 			player.buffImmune[Toxic_Shock_Debuff.ID] = true;
@@ -103,7 +104,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.GetModPlayer<OriginPlayer>().acridSet = true;
-			player.setBonus = "All attacks inflict 'Toxic Shock'\nImmunity to 'Toxic Shock', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Acrid");
 			player.buffImmune[BuffID.Poisoned] = true;
 			player.buffImmune[BuffID.Venom] = true;
 			player.buffImmune[Toxic_Shock_Debuff.ID] = true;
@@ -157,7 +158,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.GetModPlayer<OriginPlayer>().acridSet = true;
-			player.setBonus = "All attacks inflict 'Toxic Shock'\nImmunity to 'Toxic Shock', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Acrid");
 			player.buffImmune[BuffID.Poisoned] = true;
 			player.buffImmune[BuffID.Venom] = true;
 			player.buffImmune[Toxic_Shock_Debuff.ID] = true;
@@ -211,7 +212,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.GetModPlayer<OriginPlayer>().acridSet = true;
-			player.setBonus = "All attacks inflict 'Toxic Shock'\nImmunity to 'Toxic Shock', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Acrid");
 			player.buffImmune[BuffID.Poisoned] = true;
 			player.buffImmune[BuffID.Venom] = true;
 			player.buffImmune[Toxic_Shock_Debuff.ID] = true;
@@ -263,7 +264,7 @@ namespace Origins.Items.Armor.Acrid {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.GetModPlayer<OriginPlayer>().acridSet = true;
-			player.setBonus = "All attacks inflict 'Toxic Shock'\nImmunity to 'Toxic Shock', 'Acid Venom', and 'Poisoned' debuffs\nExtends underwater breathing";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Acrid");
 			player.buffImmune[BuffID.Poisoned] = true;
 			player.buffImmune[BuffID.Venom] = true;
 			player.buffImmune[Toxic_Shock_Debuff.ID] = true;

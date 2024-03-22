@@ -1472,3 +1472,84 @@ AltBiomes: {
 	Riven_Hive_Alt_Biome.DisplayName: Riven Hive
 	Ashen_Alt_Biome.Description: Ashen Biome
 }
+
+SetBonuses: {
+	Acrid:
+		'''
+		All attacks inflict Toxic Shock
+		Immunity to acid venom, poisoned and toxic shock
+		Extends underwater breathing
+		'''
+	Amber:
+		'''
+		-38% explosive blast radius.
+		All explosives are preserved in amber and release amber shards upon detonation
+		Amber shards slow enemies, heal the player of any self-damage received, and decrease the defense of struck enemies by half
+		'''
+	Ashen:
+		'''
+		+15% knockback and knockback resistance
+		-15% self-damage
+		'''
+	BleedingObsidian: Explosive projectiles have a chance to be duplicated
+	Chromtain:
+		'''
+		Enemies are more likely to target you
+		Your armor is unbreakable
+		'''
+	Cryosten:
+		'''
+		Life restoration from hearts increased.
+		Cannot be frozen or chilled
+		'''
+	Defiled: Greatly increased maximum life
+	Encrusted: Increases minion damage by up to 30% when over half health
+	Felnum: Moving quickly will build up a static charge to boost your next attack's damage
+	Fiberglass: Weapon damage increased by 4
+	Lost: 15% of damage taken is redirected to mana
+	Mythic: Explosive damage and velocity increased based on how fast you're moving
+	Necromancer:
+		'''
+		Slain enemies provide a temporary boost to all stats
+		Mana usage is halved when in a Graveyard and artifact minions cost half as much
+		Enemies spawn more frequently
+		Increases your max number of minions by 3
+		'''
+	Nova:
+		'''
+		Massively increased explosive blast radius
+		Explosive projectiles have a chance to be duplicated
+		Explosives home towards nearby enemies
+		'''
+	Chlorohpyte_Summoner: Increases your max number of minions by 2
+	Riptide:
+		'''
+		5% increased magic damage when submerged or in rain
+		Grants the ability to dash, releasing a tidal wave
+		'''
+	Sapphire:
+		'''
+		Generate a massive aura that pushes away enemies and projectiles
+		harder the closer they are to you
+		Allies receive a minor boost in stats when in the aura
+		The aura fades as you run out of mana
+		'''
+	Scavenger:
+		'''
+		All explosives inflict Impeding Shrapnel
+		Additional scrap drops from Ashen enemies
+		'''
+	Souldhide: Nearby enemies are weakened and afflicted with Shadowflame
+	Tendon: Mobility is based on remaining health
+	Miner:
+		'''
+
+		20% reduced self-damage
+		'''
+	Pearlwood:
+		'''
+
+		15% increased damage
+		Reduces damage taken by 5%
+		'''
+}

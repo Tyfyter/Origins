@@ -2,6 +2,7 @@ using Origins.Dev;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Sapphire {
@@ -23,7 +24,7 @@ namespace Origins.Items.Armor.Sapphire {
 			return body.type == ModContent.ItemType<Sapphire_Vest>() && legs.type == ModContent.ItemType<Sapphire_Tights>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Generate a massive aura that pushes away enemies and projectiles\nharder the closer they are to you. Allies receive a minor boost in stats when in\nthe aura. Fades as you run out of mana";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Sapphire");
 			//player.GetModPlayer<OriginPlayer>().sapphireSet = true;
 		}
 		public override void AddRecipes() {

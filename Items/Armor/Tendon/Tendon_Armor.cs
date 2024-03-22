@@ -1,6 +1,7 @@
 using Origins.Dev;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Armor.Tendon {
@@ -24,7 +25,7 @@ namespace Origins.Items.Armor.Tendon {
 			return body.type == ModContent.ItemType<Tendon_Shirt>() && legs.type == ModContent.ItemType<Tendon_Pants>();
 		}
 		public override void UpdateArmorSet(Player player) {
-			player.setBonus = "Mobility is based on available lifeforce";
+			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Tendon");
 			player.GetModPlayer<OriginPlayer>().tendonSet = true;
 		}
 		public override void AddRecipes() {
