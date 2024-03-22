@@ -33,6 +33,7 @@ namespace Origins.World {
 	public class Ashen_Alt_Biome : AltBiome {
 		AltMaterialContext materialContext;
 		public override AltMaterialContext MaterialContext => materialContext ??= new AltMaterialContext()
+			.SetEvilSword(ModContent.ItemType<Switchblade_Broadsword>())
 			.SetEvilOre(ModContent.ItemType<Sanguinite_Ore_Item>())
 			.SetEvilBar(ModContent.ItemType<Sanguinite_Bar>())
 			.SetEvilHerb(ModContent.ItemType<Surveysprout_Item>())

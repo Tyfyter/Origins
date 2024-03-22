@@ -7,6 +7,7 @@ using Origins.Items.Other.Consumables;
 using Origins.Items.Other.Fish;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Melee;
 using Origins.Journal;
 using Origins.Questing;
 using Origins.Reflection;
@@ -434,7 +435,24 @@ namespace Origins {
 			if (Player.InModBiome<Brine_Pool>()) {
 				Player.adjWater = false;
 			}
-			return base.AddMaterialsForCrafting(out itemConsumedCallback);
+			List<Item> items = new();
+			Dictionary<int, Item> substituteItems = new();
+			int switchblade = ModContent.ItemType<Switchblade_Shortsword>();
+			Item currentItem;
+			for (int i = 0; i < Player.inventory.Length; i++) {
+				currentItem = Player.inventory[i];
+				if (currentItem.type == switchblade) {
+					substituteItems.Add(items.Count, currentItem);
+					items.Add(new Item(ModContent.ItemType<Switchblade_Broadsword>(), currentItem.stack, currentItem.prefix));
+				}
+			}
+			itemConsumedCallback = (item, index) => {
+				if (substituteItems.TryGetValue(index, out Item consumed)) {
+					consumed.stack = item.stack;
+					if (consumed.stack <= 0) consumed.TurnToAir();
+				}
+			};
+			return items;
 		}
 		public override bool CanSellItem(NPC vendor, Item[] shopInventory, Item item) {
 			if (item.prefix == ModContent.PrefixType<Imperfect_Prefix>()) return false;

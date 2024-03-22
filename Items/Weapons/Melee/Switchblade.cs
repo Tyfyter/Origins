@@ -8,6 +8,7 @@ using Terraria.GameContent.Prefixes;
 using Terraria.GameContent;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.DataStructures;
+using Terraria.Audio;
 
 namespace Origins.Items.Weapons.Melee {
 	public class Switchblade_Broadsword : ModItem, ICustomWikiStat {
@@ -56,6 +57,7 @@ namespace Origins.Items.Weapons.Melee {
 		};
 		public override void SetStaticDefaults() {
 			PrefixLegacy.ItemSets.SwordsHammersAxesPicks[Type] = true;
+			ItemID.Sets.SkipsInitialUseSound[Type] = true;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gladius);
@@ -63,8 +65,9 @@ namespace Origins.Items.Weapons.Melee {
 			Item.DamageType = DamageClass.Melee;
 			Item.width = 46;
 			Item.height = 50;
-			Item.useTime = 11;
-			Item.useAnimation = 22;
+			Item.useTime = 9;
+			Item.useAnimation = 18;
+			Item.reuseDelay = 5;
 			Item.knockBack = 5f;
 			Item.shoot = ModContent.ProjectileType<Switchblade_Shortsword_P>();
 			Item.shootSpeed = 2;
@@ -104,6 +107,7 @@ namespace Origins.Items.Weapons.Melee {
 			Projectile.position.Y = ownerMountedCenter.Y - (Projectile.height / 2);
 			if (!player.frozen) {
 				if (movementFactor == 0f) {
+					SoundEngine.PlaySound(player.HeldItem.UseSound, Projectile.Center);
 					movementFactor = 1f * Projectile.scale;
 					Projectile.scale = player.GetAdjustedItemScale(player.HeldItem);
 					Projectile.netUpdate = true;

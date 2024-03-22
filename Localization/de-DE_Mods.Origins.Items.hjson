@@ -3937,11 +3937,11 @@ Nova_Cascade: {
 }
 
 Switchblade_Broadsword: {
-	// DisplayName: Switchblade_ Broadsword
+	// DisplayName: Switchblade
 	// Tooltip: ""
 }
 
 Switchblade_Shortsword: {
-	// DisplayName: Switchblade_ Shortsword
+	// DisplayName: Switchblade
 	// Tooltip: ""
 }
