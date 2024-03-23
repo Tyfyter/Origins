@@ -23,6 +23,7 @@ namespace Origins.Tiles.Other {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.StoneBlock);
 			Item.value = Item.sellPrice(silver: 1);
+			Item.rare = ItemRarityID.Blue;// to match the vanilla ores which require 55 pickaxe power to mine
 			Item.createTile = TileType<Carburite>();
 		}
 	}

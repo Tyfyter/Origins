@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
 using Origins.Tiles.Defiled;
 using Origins.Tiles.Dusk;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.World;
@@ -246,6 +247,19 @@ namespace Origins {
 					}
 				} finally {
 					Main.tileSolid[TileID.LeafBlock] = leavesSolid;
+				}
+			}));
+			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Shinies"));
+			tasks.Insert(genIndex + 1, new PassLegacy("Shiny (Singular)", (GenerationProgress progress, GameConfiguration _) => {
+				int type = TileType<Carburite>();
+				for (int i = 0; i < (int)((Main.maxTilesX * Main.maxTilesY) * 3.75E-05); i++) {
+					TileRunner(
+						genRand.Next(0, Main.maxTilesX),
+						genRand.Next((int)Main.worldSurface, (int)Main.rockLayer),
+						genRand.Next(3, 6),
+						genRand.Next(4, 8),
+						type
+					);
 				}
 			}));
 		}
