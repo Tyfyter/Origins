@@ -90,7 +90,7 @@ VANILLA MODIFICATIONS:
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
 (^) Explosive Defense Punishment (increased affliction from defense)*
 (^) Harpoon (new weapon to introduce sub-class)*
-(X) Proximity Mine Launcher to use R-Mines* !!!
+(X) Proximity Mine Launcher to use Canisters* !!!
 (^) Wooden armor buffs*
 ---
 
@@ -120,7 +120,7 @@ ENEMY NPCS:
 (^) Crimbrain
 (^) Defiled Cyclops
 (^) Defiled Digger
-(#2, ^2) Defiled Ekko* !!!
+(#2, ^2) Defiled Ekko*
 (^) Defiled Krusher
 (^) Defiled Mite
 (^) Defiled Phantom
@@ -164,7 +164,7 @@ ENEMY NPCS:
 (#, ^2) Savage Whip* !!!
 (X) Sea Dragon
 (#, ^2) Shattered Ghoul !!!
-(#3, ^2) Shattered Mummy !!!
+(#3, ^2) Shattered Mummy
 (^) Single-Cellular Nautilus
 (#, ^2) Torn Ghoul !!!
 (#3, ^2) Trijaw Shark !!!
@@ -741,8 +741,8 @@ NO POST ML SUMMONER CONTENT YET.
 
 EXPLOSIVE WEAPONS:
 ---
-(#2, @2(I can do a lot with dusts, but this really needs projectile sprites, ideally at least 3 for the 3 discretely different charge states)) Abrasion Blaster* !!!
-(#3?, ^2) Ace Shrapnel* !!!
+(#2, ^2) Abrasion Blaster* !!!
+(#3, ^2) Ace Shrapnel* !!!
 (^) Ameballoon*
 (^) Bang Snap*
 (^) Bloombomb*
@@ -838,7 +838,7 @@ TILES:
 (^) Encrusted Ore*
 (^) Endowood*
 (^) Felnum Ore*
-(@5) Fiberglass Block* !!!
+(^) Fiberglass Block*
 (#, ^2) Geyser Core Block*
 (^) Hardened Defiled Sand*
 (X) Harmony Brick*
@@ -945,13 +945,14 @@ TILES:
 (^) Acetabularia*
 (^) Brineglow Vine*
 (^) Defiled Foliage
+(^) Defiled Pot
 (X) Eden Tree*
 (#3, ^2) Exoskeletal Tree* !!!
 (ᗢ) Fungarust*
 (^) Gel Blister
 (X) Moonshine*
 (^) Petrified Tree*
-(#2, ^2) Riven Foliage !!!
+(#3, ^2) Riven Foliage !!!
 (^) Riven Lesion
 (^) Riven Pot
 (^) Soulspore*
@@ -1051,7 +1052,7 @@ CRITTERS AND FISH:
 (#3, ^2) Bug
 (X) Chambersite Bunny
 (X) Chambersite Squirrel
-(☻) Cicada 3301* !!!
+(^) Cicada 3301*
 
 (^) Bilemouth
 (^) Bonehead Jellyfish
@@ -1165,7 +1166,7 @@ AMMO:
 (^) Resizable Mine Mk. 1*
 (^) Resizable Mine Mk. 2*
 (^) Scrap*
-(X) Sticky Mine !!!
+(#, ^2) Sticky Mine !!!
 (^) Thermite Canister*
 
 (^) Alkahest Arrow*

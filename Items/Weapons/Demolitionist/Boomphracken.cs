@@ -48,7 +48,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Boomphracken_P : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Ammo/Boomphracken_P";
-		
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
 			Projectile.width = 10;
