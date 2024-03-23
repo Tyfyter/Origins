@@ -25,7 +25,7 @@ namespace Origins.Items.Armor.Sapphire {
 		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Sapphire");
-			//player.GetModPlayer<OriginPlayer>().sapphireSet = true;
+			player.GetModPlayer<OriginPlayer>().sapphireSet = true;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

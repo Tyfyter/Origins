@@ -432,12 +432,12 @@ namespace Origins.Items.Materials {
 			//tileID = Bar_Tile.AddBarTile(this);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.Ectoplasm);
-			recipe.AddIngredient(ModContent.ItemType<Felnum_Bar>());
-			//recipe.AddIngredient(ModContent.ItemType<_Bar>(), 1);
-			recipe.AddTile(TileID.AdamantiteForge);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.Ectoplasm)
+			.AddIngredient(ModContent.ItemType<Felnum_Bar>())
+			//.AddIngredient(ModContent.ItemType<_Bar>(), 1)
+			.AddTile(TileID.AdamantiteForge)
+			.Register();
 		}
 	}
 

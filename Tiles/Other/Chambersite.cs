@@ -2,6 +2,7 @@
 using Origins.Items.Materials;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Other {
@@ -24,5 +25,17 @@ namespace Origins.Tiles.Other {
             Item.rare = ItemRarityID.Blue;
             Item.maxStack = Item.CommonMaxStack;
         }
-    }
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.CrystalShard, 10)
+			.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.ShimmerDecrafting"), () => false)
+			.AddDecraftCondition(Condition.Hardmode)
+			.Register();
+
+			Recipe.Create(ItemID.CrystalShard, 10)
+			.AddIngredient(Type)
+			.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.ShimmerDecrafting"), () => false)
+			.Register();
+		}
+	}
 }

@@ -18,6 +18,7 @@ namespace Origins.Tiles.Other {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = false;
 			Main.tileLighted[Type] = false;
+			TileID.Sets.DrawsWalls[Type] = true;
 			Main.tileMergeDirt[Type] = false;
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(42, 116, 160), name);

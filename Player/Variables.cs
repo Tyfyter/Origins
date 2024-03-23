@@ -82,6 +82,7 @@ namespace Origins {
 		public int setAbilityCooldown = 0;
 		public bool scavengerSet = false;
 		public bool amberSet = false;
+		public bool sapphireSet = false;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -380,6 +381,7 @@ namespace Origins {
 			soulhideSet = false;
 			scavengerSet = false;
 			amberSet = false;
+			sapphireSet = false;
 
 			setActiveAbility = 0;
 			if (setAbilityCooldown > 0) {

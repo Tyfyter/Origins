@@ -10,6 +10,7 @@ Conditions: {
 	PeatSoldCondition: Mods.Origins.Conditions.PeatSoldCondition
 	Brine: Mods.Origins.Conditions.Brine
 	RivenWater: Mods.Origins.Conditions.RivenWater
+	ShimmerDecrafting: Shimmer decrafting only
 }
 
 Status_Messages: {
