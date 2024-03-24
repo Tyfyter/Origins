@@ -1,3 +1,4 @@
+using AltLibrary.Common.Systems;
 using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
 using Origins.Tiles.Defiled;
@@ -120,6 +121,8 @@ namespace Origins {
 					Mod.Logger.Info("Pooling Brine");
 					progress.Message = "Pooling Brine";
 					//for (int i = 0; i < Main.maxTilesX / 5000; i++) {
+					int tries = 0;
+					retry:
 					int X = WorldGen.genRand.Next(GenVars.JungleX - 100, GenVars.JungleX + 100);
 					int Y;
 					if (WorldGen.remixWorldGen) {
@@ -128,6 +131,7 @@ namespace Origins {
 						for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
 						Y += WorldGen.genRand.Next(100, 125);
 					}
+					if (++tries < 1000 && !GenVars.structures.CanPlace(new Rectangle(X, Y, 1, 1), 48)) goto retry;
 					Mod.Logger.Info("BrineGen:" + X + ", " + Y);
 					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
 					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);
@@ -259,6 +263,20 @@ namespace Origins {
 						genRand.Next(3, 6),
 						genRand.Next(4, 8),
 						type
+					);
+				}
+			}));
+			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
+			tasks.Insert(genIndex + 1, new PassLegacy("Gem (Singular)", (GenerationProgress progress, GameConfiguration _) => {
+				Dictionary<ushort, ushort> types = Chambersite_Stone_Wall.AddChambersite;
+				for (float i = 0; i < ((Main.maxTilesX * Main.maxTilesY) * 1.75E-05); i++) {
+					Vector2 pos = genRand.NextVector2FromRectangle(genRand.Next(WorldBiomeGeneration.EvilBiomeGenRanges));
+					GenRunners.DictionaryWallRunner(
+						(int)pos.X,
+						(int)pos.X,
+						genRand.Next(2, 4),
+						genRand.Next(3, 6),
+						types
 					);
 				}
 			}));

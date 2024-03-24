@@ -1,4 +1,5 @@
 ﻿using AltLibrary.Common.AltBiomes;
+using AltLibrary.Common.Systems;
 using AltLibrary.Core.Generation;
 using Microsoft.Xna.Framework;
 using Origins.Backgrounds;
@@ -662,6 +663,7 @@ namespace Origins.World.BiomeData {
 				WallID.CrimsonUnsafe4
 			);
 			AddWallConversions<Chambersite_Riven_Flesh_Wall>((ushort)ModContent.WallType<Chambersite_Stone_Wall>());
+			EvilBiomeGenerationPass = new Riven_Hive_Generation_Pass();
 		}
 		public override AltMaterialContext MaterialContext {
 			get {
@@ -676,15 +678,16 @@ namespace Origins.World.BiomeData {
 				return context;
 			}
 		}
-		public override EvilBiomeGenerationPass GetEvilBiomeGenerationPass() {
-			return new Riven_Hive_Generation_Pass();
-		}
 		public class Riven_Hive_Generation_Pass : EvilBiomeGenerationPass {
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
+				GenRunners.ResetChangeRanges();
 				int y = (int)GenVars.worldSurface - 50;
 				for (; !Main.tile[evilBiomePosition, y].HasSolidTile(); y++) ;
+
 				Riven_Hive.Gen.StartHive(evilBiomePosition, y);
-				OriginSystem.Instance.hasDefiled = true;
+
+				WorldBiomeGeneration.EvilBiomeGenRanges.Add(GenRunners.GetChangeRange());
+				OriginSystem.Instance.hasRiven = true;
 			}
 
 			public override void PostGenerateEvil() { }

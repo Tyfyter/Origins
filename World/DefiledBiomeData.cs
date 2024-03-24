@@ -27,6 +27,8 @@ using Origins.Items.Weapons.Ranged;
 using Terraria.GameContent.Personalities;
 using Terraria.ObjectData;
 using Origins.Tiles;
+using AltLibrary.Common.Systems;
+using System.Linq;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -107,6 +109,7 @@ namespace Origins.World.BiomeData {
 				const float strength = 2.8f; //width of tunnels
 				const float wallThickness = 3.1f;
 				const float distance = 40; //tunnel length
+
 				ushort stoneID = (ushort)ModContent.TileType<Defiled_Stone>();
 				ushort stoneWallID = (ushort)ModContent.WallType<Defiled_Stone_Wall>();
 				Vector2 startVec = new Vector2(i, j);
@@ -249,13 +252,14 @@ namespace Origins.World.BiomeData {
 					}
 					fissureCheckSpots.RemoveAt(ch);
 				}
+				Rectangle genRange = GenRunners.GetChangeRange();
 				ushort defiledAltar = (ushort)ModContent.TileType<Defiled_Altar>();
 				for (int i0 = genRand.Next(10, 15); i0-- > 0;) {
 					int tries = 0;
 					bool placed = false;
 					while (!placed && ++tries < 10000) {
-						int x = (int)i + genRand.Next(-100, 101);
-						int y = (int)j + genRand.Next(-80, 81);
+						int x = genRange.X + genRand.Next(0, genRange.Width);
+						int y = genRange.Y + genRand.Next(0, genRange.Height);
 						if (!Framing.GetTileSafely(x, y).HasTile) {
 							for (; !Framing.GetTileSafely(x, y).HasTile; y++) {
 								if (y > Main.maxTilesY) break;
@@ -363,6 +367,10 @@ namespace Origins.World.BiomeData {
 				Vector2 direction = speed / (float)decay;
 				bool hasWall = wallType != -1;
 				ushort _wallType = hasWall ? (ushort)wallType : (ushort)0;
+				Dictionary<ushort, bool> dirtWalls = new() {
+					[WallID.DirtUnsafe] = true,
+					[WallID.MudUnsafe] = true
+				};
 				while (length > 0) {
 					length -= decay;
 					int minX = (int)(pos.X - (strength + wallThickness) * 0.5);
@@ -402,10 +410,7 @@ namespace Origins.World.BiomeData {
 									//WorldGen.SquareTileFrame(l, k);
 									if (hasWall) {
 										if (tile.WallType == WallID.DirtUnsafe || tile.WallType == WallID.MudUnsafe) {
-											OriginExtensions.SpreadWall(l, k, _wallType, new Dictionary<ushort, bool>() {
-												[WallID.DirtUnsafe] = true,
-												[WallID.MudUnsafe] = true
-											});
+											OriginExtensions.SpreadWall(l, k, _wallType, dirtWalls);
 										}
 										tile.WallType = _wallType;
 									}
@@ -421,16 +426,10 @@ namespace Origins.World.BiomeData {
 								if (hasWall && !openAir) {
 									tile.WallType = _wallType;
 								}
-								if (l > X1) {
-									X1 = l;
-								} else if (l < X0) {
-									X0 = l;
-								}
-								if (k > Y1) {
-									Y1 = k;
-								} else if (k < Y0) {
-									Y0 = k;
-								}
+								if (l > X1) X1 = l;
+								if (l < X0) X0 = l;
+								if (k > Y1) Y1 = k;
+								if (k < Y0) Y0 = k;
 							}
 						}
 					}
@@ -452,7 +451,9 @@ namespace Origins.World.BiomeData {
 					Y1 = Main.maxTilesY - 1;
 				}
 				RangeFrame(X0, Y0, X1, Y1);
-				NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
+				NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y0);
+				GenRunners.AddChangeToRanges(X0, Y0);
+				GenRunners.AddChangeToRanges(X1, Y1);
 				return (pos, speed);
 			}
 		}
@@ -662,6 +663,7 @@ namespace Origins.World.BiomeData {
 				WallID.HallowHardenedSand
 			);
 			AddWallConversions<Chambersite_Defiled_Stone_Wall>((ushort)ModContent.WallType<Chambersite_Stone_Wall>());
+			EvilBiomeGenerationPass = new Defiled_Wastelands_Generation_Pass();
 		}
 		public override bool PreConvertMultitileAway(int i, int j, int width, int height, ref int newTile, AltBiome targetBiome) {
 			Tile corner = Main.tile[i, j];
@@ -742,15 +744,13 @@ namespace Origins.World.BiomeData {
 				return context;
 			}
 		}
-		public override EvilBiomeGenerationPass GetEvilBiomeGenerationPass() {
-			return new Defiled_Wastelands_Generation_Pass();
-		}
 		public static List<int> defiledWastelandsWestEdge;
 		public static List<int> defiledWastelandsEastEdge;
 		public class Defiled_Wastelands_Generation_Pass : EvilBiomeGenerationPass {
 			Stack<Point> defiledHearts = new Stack<Point>() { };
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
-				for (int offset = 0; offset < 150; offset = offset > 0 ? (-offset) : ((-offset) + 1)) {
+				int offset;
+				for (offset = 0; offset < 300; offset = offset > 0 ? (-offset) : ((-offset) + 2)) {
 					if (evilBiomePositionWestBound + offset < 0 || evilBiomePositionEastBound + offset > Main.maxTilesX) continue;
 					for (int j = (int)OriginSystem.worldSurfaceLow; j < Main.maxTilesY; j++) {
 						Tile tile = Framing.GetTileSafely(evilBiomePosition + offset, j);
@@ -762,17 +762,30 @@ namespace Origins.World.BiomeData {
 						goto positioned;
 					}
 				}
+				if (Math.Abs(evilBiomePosition - GenVars.jungleMaxX) < Math.Abs(evilBiomePosition - GenVars.jungleMinX)) {
+					offset = evilBiomePosition - GenVars.jungleMaxX;
+					if (WorldBiomeGeneration.EvilBiomeGenRanges.Any(r => r.X < evilBiomePosition && r.X + r.Width > evilBiomePosition)) offset = evilBiomePosition - GenVars.jungleMinX;
+				} else {
+					offset = evilBiomePosition - GenVars.jungleMinX;
+					if (WorldBiomeGeneration.EvilBiomeGenRanges.Any(r => r.X < evilBiomePosition && r.X + r.Width > evilBiomePosition)) offset = evilBiomePosition - GenVars.jungleMaxX;
+				}
+				evilBiomePosition += offset;
+				evilBiomePositionWestBound += offset;
+				evilBiomePositionEastBound += offset;
+
 				positioned:
 				defiledWastelandsWestEdge ??= new();
 				defiledWastelandsEastEdge ??= new();
 				defiledWastelandsWestEdge.Add(evilBiomePositionWestBound);
 				defiledWastelandsEastEdge.Add(evilBiomePositionEastBound);
+				GenRunners.ResetChangeRanges();
 				int startY;
 				for (startY = (int)GenVars.worldSurfaceLow; !Main.tile[evilBiomePosition, startY].HasTile; startY++) ;
 				Point start = new Point(evilBiomePosition, startY + genRand.Next(105, 150));//range of depths
 
 				Defiled_Wastelands.Gen.StartDefiled(start.X, start.Y);
 				defiledHearts.Push(start);
+				WorldBiomeGeneration.EvilBiomeGenRanges.Add(GenRunners.GetChangeRange());
 				OriginSystem.Instance.hasDefiled = true;
 			}
 

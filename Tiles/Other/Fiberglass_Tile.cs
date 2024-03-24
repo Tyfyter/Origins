@@ -24,7 +24,7 @@ namespace Origins.Tiles.Other {
 			AddMapEntry(new Color(42, 116, 160), name);
             HitSound = SoundID.Shatter;
         }
-		public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
+		/*public override void PostDraw(int i, int j, SpriteBatch spriteBatch) {
 			var curr = Framing.GetTileSafely(i, j).Get<TileExtraVisualData>();
 			//spriteBatch.Draw(VineTexture, new Vector2((i + 12) * 16, (j + 12) * 16) - Main.screenPosition, new Rectangle(curr.TileFrameX * 18, curr.TileFrameY * 18, 16, 16), Lighting.GetColor(i, j));
 		}
@@ -32,7 +32,7 @@ namespace Origins.Tiles.Other {
 			OriginSystem originWorld = OriginSystem.Instance;
 			originWorld.AddFiberglassFrameTile(i, j);
 			return true;
-		}
+		}*/
 	}
 	public class Fiberglass_Item : ModItem {
 		public override void SetStaticDefaults() {

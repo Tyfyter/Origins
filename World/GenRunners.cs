@@ -5,9 +5,33 @@ using Terraria.ID;
 using Terraria;
 using static Origins.World.AdjID;
 using static Terraria.WorldGen;
+using System.Collections.Generic;
 
 namespace Origins.World {
 	public class GenRunners {
+		public static int minX, maxX, minY, maxY;
+		public static void ResetChangeRanges() {
+			minX = int.MaxValue;
+			maxX = int.MinValue;
+
+			minY = int.MaxValue;
+			maxY = int.MinValue;
+		}
+		public static void AddChangeToRanges(int i, int j) {
+			if (i < minX) minX = i;
+			if (i > maxX) maxX = i;
+
+			if (j < minY) minY = j;
+			if (j > maxY) maxY = j;
+		}
+		public static Rectangle GetChangeRange() {
+			return new(
+				minX,
+				minY,
+				maxX - minX,
+				maxY - minY
+			);
+		}
 		public static Point SpikeRunner(int i, int j, int type, Vector2 speed, int size, float twist = 0, bool randomtwist = false) {
 			float x = i;
 			float y = j;
@@ -548,9 +572,6 @@ namespace Origins.World {
 				speed.Y = speedY;
 			}
 			while (currStrength > 0.0 && step > 0f) {
-				if (pos.Y < 0f && step > 0f && type == 59) {
-					step = 0f;
-				}
 				currStrength = strength * (step / steps);
 				step -= 1f;
 				int num3 = (int)(pos.X - currStrength * 0.5);
@@ -603,6 +624,153 @@ namespace Origins.World {
 					speed.Y = -1f;
 				}
 			}
+		}
+		public static int DictionaryRunner(int i, int j, double strength, int steps, Dictionary<ushort, ushort> types, float speedX = 0f, float speedY = 0f) {
+			double currStrength = strength;
+			float step = steps;
+			Vector2 pos = default;
+			pos.X = i;
+			pos.Y = j;
+			Vector2 speed = default;
+			speed.X = genRand.Next(-10, 11) * 0.1f;
+			speed.Y = genRand.Next(-10, 11) * 0.1f;
+			if (speedX != 0f || speedY != 0f) {
+				speed.X = speedX;
+				speed.Y = speedY;
+			}
+			int totalChanged = 0;
+			while (currStrength > 0.0 && step > 0f) {
+				currStrength = strength * (step / steps);
+				step -= 1f;
+				int num3 = (int)(pos.X - currStrength * 0.5);
+				int num4 = (int)(pos.X + currStrength * 0.5);
+				int num5 = (int)(pos.Y - currStrength * 0.5);
+				int num6 = (int)(pos.Y + currStrength * 0.5);
+				if (num3 < 1) {
+					num3 = 1;
+				}
+				if (num4 > Main.maxTilesX - 1) {
+					num4 = Main.maxTilesX - 1;
+				}
+				if (num5 < 1) {
+					num5 = 1;
+				}
+				if (num6 > Main.maxTilesY - 1) {
+					num6 = Main.maxTilesY - 1;
+				}
+				int changedCount = 0;
+				for (int k = num3; k < num4; k++) {
+					for (int l = num5; l < num6; l++) {
+						if (!((Math.Abs(k - pos.X) + Math.Abs(l - pos.Y)) < strength * 0.5 * (1.0 + genRand.Next(-10, 11) * 0.015))) {
+							continue;
+						}
+						Tile tile = Main.tile[k, l];
+						if (types.TryGetValue(tile.TileType, out ushort type)) {
+							tile.TileType = type;
+							if (!tile.HasTile && OriginSystem.GetAdjTileCount(k, l) > 3) {
+								tile.HasTile = true;
+							}
+							SquareTileFrame(k, l);
+							if (Main.netMode == NetmodeID.Server) {
+								NetMessage.SendTileSquare(-1, k, l, 1);
+							}
+						}
+					}
+				}
+				if (changedCount != 0) {
+					break;
+				} else {
+					totalChanged += changedCount;
+				}
+				pos += speed;
+				speed.X += genRand.Next(-10, 11) * 0.05f;
+				if (speed.X > 1f) {
+					speed.X = 1f;
+				}
+				if (speed.X < -1f) {
+					speed.X = -1f;
+				}
+				speed.Y += genRand.Next(-10, 11) * 0.05f;
+				if (speed.Y > 1f) {
+					speed.Y = 1f;
+				}
+				if (speed.Y < -1f) {
+					speed.Y = -1f;
+				}
+			}
+			return totalChanged;
+		}
+		public static int DictionaryWallRunner(int i, int j, double strength, int steps, Dictionary<ushort, ushort> types, float speedX = 0f, float speedY = 0f) {
+			double currStrength = strength;
+			float step = steps;
+			Vector2 pos = default;
+			pos.X = i;
+			pos.Y = j;
+			Vector2 speed = default;
+			speed.X = genRand.Next(-10, 11) * 0.1f;
+			speed.Y = genRand.Next(-10, 11) * 0.1f;
+			if (speedX != 0f || speedY != 0f) {
+				speed.X = speedX;
+				speed.Y = speedY;
+			}
+			int totalChanged = 0;
+			while (currStrength > 0.0 && step > 0f) {
+				currStrength = strength * (step / steps);
+				step -= 1f;
+				int num3 = (int)(pos.X - currStrength * 0.5);
+				int num4 = (int)(pos.X + currStrength * 0.5);
+				int num5 = (int)(pos.Y - currStrength * 0.5);
+				int num6 = (int)(pos.Y + currStrength * 0.5);
+				if (num3 < 1) {
+					num3 = 1;
+				}
+				if (num4 > Main.maxTilesX - 1) {
+					num4 = Main.maxTilesX - 1;
+				}
+				if (num5 < 1) {
+					num5 = 1;
+				}
+				if (num6 > Main.maxTilesY - 1) {
+					num6 = Main.maxTilesY - 1;
+				}
+				int changedCount = 0;
+				for (int k = num3; k < num4; k++) {
+					for (int l = num5; l < num6; l++) {
+						if (!((Math.Abs(k - pos.X) + Math.Abs(l - pos.Y)) < strength * 0.5 * (1.0 + genRand.Next(-10, 11) * 0.015))) {
+							continue;
+						}
+						Tile tile = Main.tile[k, l];
+						if (types.TryGetValue(tile.WallType, out ushort type)) {
+							tile.WallType = type;
+							SquareTileFrame(k, l);
+							if (Main.netMode == NetmodeID.Server) {
+								NetMessage.SendTileSquare(-1, k, l, 1);
+							}
+						}
+					}
+				}
+				if (changedCount != 0) {
+					break;
+				} else {
+					totalChanged += changedCount;
+				}
+				pos += speed;
+				speed.X += genRand.Next(-10, 11) * 0.05f;
+				if (speed.X > 1f) {
+					speed.X = 1f;
+				}
+				if (speed.X < -1f) {
+					speed.X = -1f;
+				}
+				speed.Y += genRand.Next(-10, 11) * 0.05f;
+				if (speed.Y > 1f) {
+					speed.Y = 1f;
+				}
+				if (speed.Y < -1f) {
+					speed.Y = -1f;
+				}
+			}
+			return totalChanged;
 		}
 		public static void AutoSlope(int i, int j, bool resetSlope = false) {
 			byte adj = 0;

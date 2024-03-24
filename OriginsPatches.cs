@@ -524,8 +524,8 @@ namespace Origins {
 				c.Emit(Ldloc, index);
 				c.Emit(Ldloc, color);
 				c.Emit(Ldloc, cloudAlpha);
-				foreach (var item in cloudYInstructions) {
-					c.Emit(item.code, item.operand);
+				foreach (var (code, operand) in cloudYInstructions) {
+					c.Emit(code, operand);
 				}
 				c.EmitDelegate<Action<int, Color, float, float>>(static (i, color, cloudAlpha, cloudY) => {
 					//return;

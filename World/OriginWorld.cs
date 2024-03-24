@@ -47,9 +47,9 @@ namespace Origins {
 			}
 		}
 		internal bool hasDefiled = false;
-		public bool HasDefiledWastelands => Instance.hasDefiled;
+		public static bool HasDefiledWastelands => Instance.hasDefiled;
 		internal bool hasRiven = false;
-		public bool HasRivenHive => Instance.hasRiven;
+		public static bool HasRivenHive => Instance.hasRiven;
 		private static double? _worldSurfaceLow;
 		public static double worldSurfaceLow => _worldSurfaceLow ?? Main.worldSurface - 165;
 		public static byte WorldEvil => Instance.worldEvil;
@@ -201,13 +201,13 @@ namespace Origins {
 				if (q-- < 0) {
 					break;
 				}
-			}
+			}/*
 			if (fiberglassNeedsFraming) {
 				if (fiberglassFrameTask?.IsCompleted ?? true)
 					fiberglassFrameTask = Task.Run(FrameFiberglass);
-			}
+			}*/
 		}
-		public void FrameFiberglass() {
+		/*public void FrameFiberglass() {
 			return;
 			fiberglassNeedsFraming = false;
 			Point fiberglassMin = this.fiberglassMin;
@@ -314,8 +314,8 @@ namespace Origins {
                     Framing.GetTileSafely(i, j).Get<TileExtraVisualData>().TileFrameY = Y;
                     //}
                 }
-            }*/
-		}
+            }* /
+		}*/
 		public void QueueKillTile(int i, int j) {
 			if (queuedKillTiles is null) {
 				queuedKillTiles = new Queue<(int, int)>();
