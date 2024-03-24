@@ -9,6 +9,7 @@ using Origins.Walls;
 using Origins.World;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
@@ -131,7 +132,7 @@ namespace Origins {
 						for (Y = (int)GenVars.worldSurfaceLow; !Main.tile[X, Y].HasTile; Y++) ;
 						Y += WorldGen.genRand.Next(100, 125);
 					}
-					if (++tries < 1000 && !GenVars.structures.CanPlace(new Rectangle(X, Y, 1, 1), 48)) goto retry;
+					if (++tries < 1000 && (!GenVars.structures.CanPlace(new Rectangle(X, Y, 1, 1), 48) || WorldBiomeGeneration.EvilBiomeGenRanges.Any(r => r.Contains(X, Y)))) goto retry;
 					Mod.Logger.Info("BrineGen:" + X + ", " + Y);
 					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, true, 8f, 8f, true, true);
 					//WorldGen.TileRunner(X, Y, 50, WorldGen.genRand.Next(10, 50), TileID.Stone, false, 8f, 8f, true, true);
@@ -269,16 +270,27 @@ namespace Origins {
 			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
 			tasks.Insert(genIndex + 1, new PassLegacy("Gem (Singular)", (GenerationProgress progress, GameConfiguration _) => {
 				Dictionary<ushort, ushort> types = Chambersite_Stone_Wall.AddChambersite;
-				for (float i = 0; i < ((Main.maxTilesX * Main.maxTilesY) * 1.75E-05); i++) {
-					Vector2 pos = genRand.NextVector2FromRectangle(genRand.Next(WorldBiomeGeneration.EvilBiomeGenRanges));
-					GenRunners.DictionaryWallRunner(
+				int totalCount = 0;
+				float tryCount = 0;
+				for (float i = 0; i < ((Main.maxTilesX * Main.maxTilesY) * 0.5E-05f); i++) {
+					Rectangle area = genRand.Next(WorldBiomeGeneration.EvilBiomeGenRanges);
+					if (area.Y < GenVars.worldSurfaceHigh) {
+						area.Height -= area.Y - (int)GenVars.worldSurfaceHigh;
+						area.Y = (int)GenVars.worldSurfaceHigh;
+					}
+					Vector2 pos = genRand.NextVector2FromRectangle(area);
+					int count = GenRunners.DictionaryWallRunner(
 						(int)pos.X,
-						(int)pos.X,
+						(int)pos.Y,
 						genRand.Next(2, 4),
 						genRand.Next(3, 6),
 						types
 					);
+					totalCount += count;
+					if (count == 0) i -= 0.9f;
+					tryCount++;
 				}
+				Origins.instance.Logger.Info($"Generated {totalCount} chambersite walls over {tryCount} tries");
 			}));
 		}
 		public static void RemoveTree(int i, int j) {

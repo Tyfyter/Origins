@@ -754,11 +754,20 @@ namespace Origins.World.BiomeData {
 					if (evilBiomePositionWestBound + offset < 0 || evilBiomePositionEastBound + offset > Main.maxTilesX) continue;
 					for (int j = (int)OriginSystem.worldSurfaceLow; j < Main.maxTilesY; j++) {
 						Tile tile = Framing.GetTileSafely(evilBiomePosition + offset, j);
-						if (!tile.HasTile) continue;
-						if (tile.TileType == TileID.JungleGrass) break;
+						if (!tile.HasTile || !Main.tileSolid[tile.TileType]) continue;
+						bool fail = false;
+						for (int k = 0; k < 10; k++) {
+							tile = Framing.GetTileSafely(evilBiomePosition + offset, j + k);
+							if (tile.HasTile && (tile.TileType == TileID.JungleGrass || tile.TileType == TileID.Mud)) {
+								fail = true;
+								break;
+							}
+						}
+						if (fail) break;
 						evilBiomePosition += offset;
 						evilBiomePositionWestBound += offset;
 						evilBiomePositionEastBound += offset;
+						Origins.instance.Logger.Info($"Picked offset {offset} for Defiled Wastelands normally");
 						goto positioned;
 					}
 				}
@@ -772,6 +781,7 @@ namespace Origins.World.BiomeData {
 				evilBiomePosition += offset;
 				evilBiomePositionWestBound += offset;
 				evilBiomePositionEastBound += offset;
+				Origins.instance.Logger.Info($"Picked offset {offset} for Defiled Wastelands after failure to find a position without jungle grass");
 
 				positioned:
 				defiledWastelandsWestEdge ??= new();

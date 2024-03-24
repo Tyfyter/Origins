@@ -742,6 +742,7 @@ namespace Origins.World {
 						Tile tile = Main.tile[k, l];
 						if (types.TryGetValue(tile.WallType, out ushort type)) {
 							tile.WallType = type;
+							changedCount++;
 							SquareTileFrame(k, l);
 							if (Main.netMode == NetmodeID.Server) {
 								NetMessage.SendTileSquare(-1, k, l, 1);
@@ -749,7 +750,7 @@ namespace Origins.World {
 						}
 					}
 				}
-				if (changedCount != 0) {
+				if (changedCount == 0) {
 					break;
 				} else {
 					totalChanged += changedCount;

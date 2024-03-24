@@ -31,26 +31,20 @@ namespace Origins.Walls {
 	}
 	public class Chambersite_Crimstone_Wall : ModWall {
 		public override void SetStaticDefaults() {
-			Main.wallBlend[Type] = WallID.CrimsonUnsafe1;//what wall type this wall is considered to be when blending
-			AddMapEntry(GetWallMapColor(WallID.CrimsonUnsafe1));
+			Main.wallBlend[Type] = WallID.CrimstoneEcho;//what wall type this wall is considered to be when blending
+			AddMapEntry(GetWallMapColor(WallID.CrimstoneUnsafe));
 			Chambersite_Stone_Wall.AddChild(Type, GetInstance<CrimsonAltBiome>());
 			RegisterItemDrop(ItemType<Chambersite_Item>());
-			Chambersite_Stone_Wall.AddChambersite.Add(WallID.CrimsonUnsafe1, Type);
-			Chambersite_Stone_Wall.AddChambersite.Add(WallID.CrimsonUnsafe2, Type);
-			Chambersite_Stone_Wall.AddChambersite.Add(WallID.CrimsonUnsafe3, Type);
-			Chambersite_Stone_Wall.AddChambersite.Add(WallID.CrimsonUnsafe4, Type);
+			Chambersite_Stone_Wall.AddChambersite.Add(WallID.CrimstoneUnsafe, Type);
 		}
 	}
 	public class Chambersite_Ebonstone_Wall : ModWall {
 		public override void SetStaticDefaults() {
-			Main.wallBlend[Type] = WallID.CorruptionUnsafe1;//what wall type this wall is considered to be when blending
-			AddMapEntry(GetWallMapColor(WallID.CorruptionUnsafe1));
+			Main.wallBlend[Type] = WallID.EbonstoneEcho;//what wall type this wall is considered to be when blending
+			AddMapEntry(GetWallMapColor(WallID.EbonstoneUnsafe));
 			Chambersite_Stone_Wall.AddChild(Type, GetInstance<CorruptionAltBiome>());
 			RegisterItemDrop(ItemType<Chambersite_Item>());
-			Chambersite_Stone_Wall.AddChambersite.Add(WallID.CorruptionUnsafe1, Type);
-			Chambersite_Stone_Wall.AddChambersite.Add(WallID.CorruptionUnsafe2, Type);
-			Chambersite_Stone_Wall.AddChambersite.Add(WallID.CorruptionUnsafe3, Type);
-			Chambersite_Stone_Wall.AddChambersite.Add(WallID.CorruptionUnsafe4, Type);
+			Chambersite_Stone_Wall.AddChambersite.Add(WallID.EbonstoneUnsafe, Type);
 		}
 	}
 	public class Chambersite_Defiled_Stone_Wall : ModWall {
