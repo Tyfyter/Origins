@@ -274,6 +274,16 @@ namespace Origins.World.BiomeData {
 						placed = Framing.GetTileSafely(x, y).TileIsType(defiledAltar);
 					}
 				}
+				ushort defiledLargePile = (ushort)ModContent.TileType<Defiled_Large_Foliage>();
+				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
+					int tries = 18;
+					int x = genRange.X + genRand.Next(0, genRange.Width);
+					int y = genRange.Y + genRand.Next(0, genRange.Height);
+					while (!PlaceObject(x, y, defiledLargePile)) {
+						y--;
+						if (tries-->0) break;
+					}
+				}
 				/*ushort defiledPot = (ushort)ModContent.TileType<Defiled_Pot>();
 				int placedPots = 0;
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
