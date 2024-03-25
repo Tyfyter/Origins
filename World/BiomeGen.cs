@@ -267,31 +267,28 @@ namespace Origins {
 					);
 				}
 			}));
-			genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
-			tasks.Insert(genIndex + 1, new PassLegacy("Gem (Singular)", (GenerationProgress progress, GameConfiguration _) => {
-				Dictionary<ushort, ushort> types = Chambersite_Stone_Wall.AddChambersite;
-				int totalCount = 0;
-				float tryCount = 0;
-				for (float i = 0; i < ((Main.maxTilesX * Main.maxTilesY) * 0.5E-05f); i++) {
-					Rectangle area = genRand.Next(WorldBiomeGeneration.EvilBiomeGenRanges);
-					if (area.Y < GenVars.worldSurfaceHigh) {
-						area.Height -= area.Y - (int)GenVars.worldSurfaceHigh;
-						area.Y = (int)GenVars.worldSurfaceHigh;
+			if (WorldGen.remixWorldGen) {
+				genIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
+				tasks.Insert(genIndex + 1, new PassLegacy("Gem (Singular)", (GenerationProgress progress, GameConfiguration _) => {
+					Dictionary<ushort, ushort> types = Chambersite_Stone_Wall.AddChambersite;
+					int totalCount = 0;
+					float tryCount = 0;
+					for (float i = 0; i < ((Main.maxTilesX * Main.maxTilesY) * 0.5E-05f); i++) {
+						Vector2 pos = genRand.NextVector2FromRectangle(genRand.Next(WorldBiomeGeneration.EvilBiomeGenRanges));
+						int count = GenRunners.DictionaryWallRunner(
+							(int)pos.X,
+							(int)pos.Y,
+							genRand.Next(2, 4),
+							genRand.Next(3, 6),
+							types
+						);
+						totalCount += count;
+						if (count == 0) i -= 0.9f;
+						tryCount++;
 					}
-					Vector2 pos = genRand.NextVector2FromRectangle(area);
-					int count = GenRunners.DictionaryWallRunner(
-						(int)pos.X,
-						(int)pos.Y,
-						genRand.Next(2, 4),
-						genRand.Next(3, 6),
-						types
-					);
-					totalCount += count;
-					if (count == 0) i -= 0.9f;
-					tryCount++;
-				}
-				Origins.instance.Logger.Info($"Generated {totalCount} chambersite walls over {tryCount} tries");
-			}));
+					Origins.instance.Logger.Info($"Generated {totalCount} chambersite walls over {tryCount} tries");
+				}));
+			}
 		}
 		public static void RemoveTree(int i, int j) {
 			Tile tile = Main.tile[i, j];
