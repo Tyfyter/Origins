@@ -30,6 +30,9 @@ using Terraria.UI;
 using Terraria.UI.Chat;
 using static Origins.OriginExtensions;
 using MC = Terraria.ModLoader.ModContent;
+using Origins.Walls;
+using Origins.Tiles.Other;
+using AltLibrary.Common.AltBiomes;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -159,6 +162,8 @@ namespace Origins {
 					Main.tileMerge[pair.Item2][pair.Item1] = true;
 				}
 			}
+			MC.GetInstance<CorruptionAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Ebonstone>(), MC.WallType<Chambersite_Ebonstone_Wall>());
+			MC.GetInstance<CrimsonAltBiome>().AddChambersiteConversions(MC.TileType<Chambersite_Ore_Crimstone>(), MC.WallType<Chambersite_Crimstone_Wall>());
 			OriginsModIntegrations.LateLoad();
 		}
 		public override void Load() {

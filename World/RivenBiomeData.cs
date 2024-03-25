@@ -16,6 +16,7 @@ using Origins.NPCs.Riven;
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.Tiles;
 using Origins.Tiles.Defiled;
+using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.Walls;
 using Origins.Water;
@@ -662,7 +663,7 @@ namespace Origins.World.BiomeData {
 				WallID.CrimsonUnsafe3,
 				WallID.CrimsonUnsafe4
 			);
-			AddWallConversions<Chambersite_Riven_Flesh_Wall>((ushort)ModContent.WallType<Chambersite_Stone_Wall>());
+			this.AddChambersiteConversions(ModContent.TileType<Chambersite_Ore_Riven_Flesh>(), ModContent.WallType<Chambersite_Riven_Flesh_Wall>());
 			EvilBiomeGenerationPass = new Riven_Hive_Generation_Pass();
 		}
 		public override AltMaterialContext MaterialContext {

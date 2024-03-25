@@ -29,6 +29,7 @@ using Terraria.ObjectData;
 using Origins.Tiles;
 using AltLibrary.Common.Systems;
 using System.Linq;
+using Origins.Tiles.Other;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -672,7 +673,8 @@ namespace Origins.World.BiomeData {
 				WallID.CrimsonHardenedSand,
 				WallID.HallowHardenedSand
 			);
-			AddWallConversions<Chambersite_Defiled_Stone_Wall>((ushort)ModContent.WallType<Chambersite_Stone_Wall>());
+			this.AddChambersiteConversions(ModContent.TileType<Chambersite_Ore_Defiled_Stone>(), ModContent.WallType<Chambersite_Defiled_Stone_Wall>());
+
 			EvilBiomeGenerationPass = new Defiled_Wastelands_Generation_Pass();
 		}
 		public override bool PreConvertMultitileAway(int i, int j, int width, int height, ref int newTile, AltBiome targetBiome) {

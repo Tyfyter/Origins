@@ -29,6 +29,8 @@ using Terraria.Map;
 using Origins.Reflection;
 using Terraria.GameContent.Bestiary;
 using System.Diagnostics.CodeAnalysis;
+using AltLibrary.Common.AltBiomes;
+using Origins.Walls;
 
 namespace Origins {
 	#region classes
@@ -2483,6 +2485,15 @@ namespace Origins {
 			} else {
 				NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, -1, -1, null, player.whoAmI, type);
 			}
+		}
+		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {
+			biome.AddWallConversions(wall, ModContent.WallType<Chambersite_Stone_Wall>());
+			biome.GERunnerWallConversions.Add(WallID.AmethystUnsafe, wall);
+			biome.GERunnerWallConversions.Add(WallID.TopazUnsafe, wall);
+			biome.GERunnerWallConversions.Add(WallID.SapphireUnsafe, wall);
+			biome.GERunnerWallConversions.Add(WallID.EmeraldUnsafe, wall);
+			biome.GERunnerWallConversions.Add(WallID.RubyUnsafe, wall);
+			biome.GERunnerWallConversions.Add(WallID.DiamondUnsafe, wall);
 		}
 	}
 	public static class ShopExtensions {
