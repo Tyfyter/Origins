@@ -122,9 +122,9 @@ namespace Origins.Items.Weapons.Magic {
 			dust.noGravity = false;
 			dust.velocity *= 8f;
 
-			dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.Firework_Yellow, 0, 0, 50, default, 0.6f);
+			/*Dust dust = Dust.NewDustDirect(Projectile.Center, -11, 0, DustID.Firework_Yellow, 0, 0, 50, default, 0.6f);
 			dust.noGravity = false;
-			dust.velocity *= 4f;
+			dust.velocity *= 4f;*/
 
 			if (Projectile.ai[0] != 0) {
 				Player player = Main.player[Projectile.owner];
