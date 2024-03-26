@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Magic {
 			Item.shoot = ModContent.ProjectileType<Pike_of_Deepneus_P>();
 			Item.knockBack = 8;
 			Item.shootSpeed = 24f;
-			Item.mana = 16;
+			Item.mana = 34;
 			Item.useStyle = -1;
 			Item.useTime = 17;
 			Item.useAnimation = 17;

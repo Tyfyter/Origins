@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.TerraBlade);
 			Item.shootsEveryUse = false;
-			Item.damage = 60;
+			Item.damage = 48;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTime = 4;
@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 2;
         }
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
-			return Main.rand.NextBool(6);
+			return !Main.rand.NextBool(6);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
