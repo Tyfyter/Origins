@@ -124,7 +124,7 @@ ENEMY NPCS:
 (^) Defiled Krusher
 (^) Defiled Mite
 (^) Defiled Phantom
-(#4, ^2) Defiled Squid* !!!
+(^) Defiled Squid*
 (^) Defiled Swarmer
 (^) Defiled Wisp
 (^) Enchanted Fiberglass Bow

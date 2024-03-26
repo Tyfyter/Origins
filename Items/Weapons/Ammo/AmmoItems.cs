@@ -67,6 +67,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.penetrate = 7;
 			Projectile.timeLeft = 900;
 			Projectile.alpha = 0;
+			Projectile.hide = true;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.extraUpdates = 4;
