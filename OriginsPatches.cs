@@ -673,6 +673,9 @@ namespace Origins {
 
 		private void On_Rain_Update(On_Rain.orig_Update orig, Rain self) {
 			orig(self);
+			if (rivenRain && Main.remixWorld && Collision.SolidCollision(self.position, 2, 2)) {
+				self.active = false;
+			}
 			int rainSmokeChance = 1000;
 			bool splash = false;
 			if (umbrellaHitbox.Contains(self.position)) {
