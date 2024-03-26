@@ -27,7 +27,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(copper: 40);
 			Item.rare = ItemRarityID.Blue;
 			Item.glowMask = glowmask;
-		}
+            Item.ArmorPenetration += 1;
+        }
 	}
 	public class Defiled_Spirit_P : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Weapons/Defiled_Spirit_P";

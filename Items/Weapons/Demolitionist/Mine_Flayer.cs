@@ -30,7 +30,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.reuseDelay = 60;
 			Item.autoReuse = false;
 			Item.UseSound = null;
-		}
+            Item.ArmorPenetration += 2;
+        }
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
 			return Main.rand.NextBool(6);
 		}

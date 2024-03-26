@@ -23,7 +23,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value *= 9;
 			Item.rare = ItemRarityID.Orange;
 			Item.glowMask = glowmask;
-		}
+            Item.ArmorPenetration += 1;
+        }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 15);
 			recipe.AddIngredient(ItemID.Bomb, 15);

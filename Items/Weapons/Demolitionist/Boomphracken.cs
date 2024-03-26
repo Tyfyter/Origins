@@ -28,8 +28,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Pink;
 			Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.25f);
 			Item.autoReuse = true;
-
-		}
+            Item.ArmorPenetration += 8;
+        }
 		public override Vector2? HoldoutOffset() {
 			return Vector2.Zero;
 		}

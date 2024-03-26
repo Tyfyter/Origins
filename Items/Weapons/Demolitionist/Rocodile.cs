@@ -24,7 +24,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Lime;
 			Item.autoReuse = true;
 			Item.glowMask = glowmask;
-		}
+            Item.ArmorPenetration += 1;
+        }
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			type = Item.shoot + (type - Item.shoot) / 3;
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 8);

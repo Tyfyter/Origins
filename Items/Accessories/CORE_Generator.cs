@@ -22,9 +22,9 @@ namespace Origins.Items.Accessories {
         }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.StarVeil);
-			recipe.AddIngredient(ModContent.ItemType<Locket_Necklace>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
+			recipe.AddIngredient(ModContent.ItemType<Last_Descendant>());
+            recipe.AddIngredient(ModContent.ItemType<Missile_Armcannon>());
+            recipe.AddTile(TileID.TinkerersWorkbench);
 			recipe.Register();
 		}
 		public override void UpdateEquip(Player player) {

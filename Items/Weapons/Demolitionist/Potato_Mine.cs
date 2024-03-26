@@ -21,7 +21,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.White;
 			Item.ammo = ModContent.ItemType<Potato>();
 			Item.shoot = ModContent.ProjectileType<Potato_Mine_P>();
-		}
+            Item.ArmorPenetration += 6;
+        }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 15);
 			recipe.AddIngredient(ItemID.ExplosivePowder);

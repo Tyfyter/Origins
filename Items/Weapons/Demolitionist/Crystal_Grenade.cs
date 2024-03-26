@@ -28,7 +28,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.ammo = ItemID.Grenade;
 			Item.rare = ItemRarityID.LightRed;
 			Item.maxStack = 999;
-		}
+            Item.ArmorPenetration += 3;
+        }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 8);
 			recipe.AddIngredient(ItemID.CrystalShard);

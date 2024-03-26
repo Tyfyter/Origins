@@ -32,7 +32,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.glowMask = glowmask;
-		}
+            Item.ArmorPenetration += 3;
+        }
 		public override void HoldStyle(Player player, Rectangle heldItemFrame) {
 			//player.handon = Item.handOnSlot;
 		}

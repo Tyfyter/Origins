@@ -24,7 +24,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Orange;
 			Item.maxStack = 999;
 			Item.glowMask = glowmask;
-		}
+            Item.ArmorPenetration += 1;
+        }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 35);
 			recipe.AddIngredient(ItemID.Grenade, 35);

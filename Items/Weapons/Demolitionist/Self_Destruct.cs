@@ -26,7 +26,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.UseSound = Origins.Sounds.IMustScream;
 			Item.shoot = ModContent.ProjectileType<Self_Destruct_P>();
 			Item.rare = ItemRarityID.Pink;
-		}
+            Item.ArmorPenetration += 6;
+        }
 		public override void AddRecipes() {
 			Recipe.Create(Type)
 			.AddIngredient(ItemID.SoulofMight, 15)

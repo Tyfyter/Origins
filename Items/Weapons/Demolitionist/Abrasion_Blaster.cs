@@ -30,7 +30,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.autoReuse = true;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.rare = ItemRarityID.LightPurple;
-		}
+            Item.ArmorPenetration += 2;
+        }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<Biocomponent10>(), 35);

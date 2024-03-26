@@ -28,7 +28,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(gold: 1);
 			Item.rare = ItemRarityID.Blue;
 			Item.consumeAmmoOnFirstShotOnly = true;
-		}
+            Item.ArmorPenetration += 2;
+        }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type);
             recipe.AddIngredient(ModContent.ItemType<NE8>(), 10);

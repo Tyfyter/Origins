@@ -19,7 +19,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed *= 1.4f;
 			Item.value *= 6;
 			Item.rare = ItemRarityID.Green;
-		}
+            Item.ArmorPenetration += 2;
+        }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 35);
 			recipe.AddIngredient(ItemID.Bomb, 35);

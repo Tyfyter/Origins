@@ -17,11 +17,12 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 74;
+			Item.damage = 65;
 			Item.shoot = ModContent.ProjectileType<Outbreak_Bomb_P>();
 			Item.value *= 2;
 			Item.rare = ItemRarityID.Blue;
-		}
+            Item.ArmorPenetration += 2;
+        }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 15);
 			recipe.AddIngredient(ItemID.Bomb, 15);
@@ -37,7 +38,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
-			Projectile.friendly = false;
+			Projectile.friendly = true;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 135;
 		}

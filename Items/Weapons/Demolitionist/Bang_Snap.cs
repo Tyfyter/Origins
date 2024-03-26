@@ -21,7 +21,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed = 12;
             Item.knockBack = 0;
 			Item.value = Item.sellPrice(copper: 1);
-		}
+            Item.ArmorPenetration += 3;
+        }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 150);
 			recipe.AddIngredient(ItemID.SilverOre);

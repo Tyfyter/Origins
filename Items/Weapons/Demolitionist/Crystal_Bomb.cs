@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 71;
+			Item.damage = 69;
 			Item.value *= 14;
 			Item.shoot = ModContent.ProjectileType<Crystal_Bomb_P>();
 			Item.shootSpeed *= 1.5f;
@@ -24,7 +24,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.ammo = ItemID.Bomb;
 			Item.value = Item.sellPrice(silver: 5);
 			Item.rare = ItemRarityID.LightRed;
-		}
+            Item.ArmorPenetration += 2;
+        }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ItemID.Bomb, 4);

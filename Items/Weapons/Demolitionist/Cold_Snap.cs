@@ -25,6 +25,7 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.autoReuse = true;
             Item.value = Item.sellPrice(silver: 50);
             Item.rare = ItemRarityID.Orange;
+            Item.ArmorPenetration += 3;
         }
         public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

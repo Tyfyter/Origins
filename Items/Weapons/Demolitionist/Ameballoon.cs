@@ -33,7 +33,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Blue;
 			Item.UseSound = SoundID.Item1;
 			Item.glowMask = glowmask;
-		}
+            Item.ArmorPenetration += 1;
+        }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 20);
 			recipe.AddCondition(

@@ -29,6 +29,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.autoReuse = false;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.LightRed;
+			Item.ArmorPenetration += 3;
 		}
 		//can't just chain rules since OneFromOptionsNotScaledWithLuckDropRule drops all the items directly
 		//but that's fine since other bosses that drop a ranged weapon don't show the ammo in the bestiary
@@ -67,6 +68,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.friendly = true;
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 900;
+			Projectile.ArmorPenetration += 3;
 			//projectile.aiStyle = 14;
 			//projectile.usesLocalNPCImmunity = true;
 			//projectile.localNPCHitCooldown = 7;

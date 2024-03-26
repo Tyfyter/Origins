@@ -29,6 +29,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.CloneDefaults(ProjectileID.Bomb);
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 135;
+			Projectile.friendly = true;
 		}
 		public override void AI() {
 			if (Projectile.timeLeft < 60 && Main.rand.Next(0, Projectile.timeLeft) == 0) Projectile.Kill();

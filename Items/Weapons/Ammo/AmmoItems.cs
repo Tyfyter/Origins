@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dusts;
-using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using Terraria;
@@ -21,6 +20,7 @@ namespace Origins.Items.Weapons.Ammo {
             Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
             Item.glowMask = glowmask;
             Item.value = Item.sellPrice(silver: 3, copper: 2);
+            Item.ArmorPenetration += 3;
         }
         public override void AddRecipes() {
             Recipe recipe = Recipe.Create(Type, 10);
@@ -42,7 +42,8 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.shoot = Metal_Slug_P.ID;
 			Item.ammo = Item.type;
 			Item.value = Item.sellPrice(silver: 3);
-		}
+            Item.ArmorPenetration += 2;
+        }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 10);
             recipe.AddIngredient(ItemID.ExplosivePowder);
