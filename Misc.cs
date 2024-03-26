@@ -1884,7 +1884,7 @@ namespace Origins {
 			self.type = t;
 		}
 		public static void DoFrames(this NPC self, int counterMax) {
-			int heightEtBuffer = self.frame.Height + 2;
+			int heightEtBuffer = self.frame.Height;
 			self.frameCounter += 1;
 			if (self.frameCounter >= counterMax) {
 				self.frame.Y += heightEtBuffer;
