@@ -351,16 +351,6 @@ namespace Origins.Projectiles {
 		}
 		public override void OnKill(Projectile projectile, int timeLeft) {
 			if (!fromDeath && projectile.owner == Main.myPlayer) {
-				if (novaCascade && projectile.penetrate != 0) { // don't spawn on death from running out of penetration since the hit already spawned an explosion
-					Projectile.NewProjectile(
-						projectile.GetSource_Death(),
-						projectile.Center,
-						default,
-						ModContent.ProjectileType<Nova_Cascade_Explosion>(),
-						projectile.damage,
-						projectile.knockBack
-					);
-				}
 				if (hasAmber) {
 					const int count = 6;
 					const float portion = MathHelper.TwoPi / count;
@@ -672,24 +662,28 @@ namespace Origins.Projectiles {
 			magicTripwireDetonationStyle[ProjectileID.LavaGrenade] = 2;
 			magicTripwireDetonationStyle[ProjectileID.HoneyGrenade] = 2;
 		}
-		public static void ExplosionVisual(Projectile projectile, bool applyHitboxModifiers, bool adjustDustAmount = false, SoundStyle? sound = null, float dustAmount = 1f, bool debugOutline = false) {
+		public static void ExplosionVisual(Projectile projectile, bool applyHitboxModifiers, bool adjustDustAmount = false, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, bool debugOutline = false) {
 			if (applyHitboxModifiers) {
 				Rectangle hitbox = projectile.Hitbox;
 				float baseWidth = hitbox.Width;
 				ProjectileLoader.ModifyDamageHitbox(projectile, ref hitbox);
-				if (adjustDustAmount) dustAmount *= hitbox.Width / baseWidth;
-				ExplosionVisual(hitbox, sound, dustAmount, debugOutline);
+				if (adjustDustAmount) {
+					float dustMult = hitbox.Width / baseWidth;
+					fireDustAmount = (int)(fireDustAmount * dustMult);
+					smokeDustAmount = (int)(smokeDustAmount * dustMult);
+				}
+				ExplosionVisual(hitbox, sound, fireDustAmount, smokeDustAmount, debugOutline);
 			} else {
-				ExplosionVisual(projectile.Hitbox, sound, dustAmount, debugOutline);
+				ExplosionVisual(projectile.Hitbox, sound, fireDustAmount, smokeDustAmount, debugOutline);
 			}
 		}
-		public static void ExplosionVisual(Rectangle area, SoundStyle? sound = null, float dustAmount = 1f, bool debugOutline = false) {
+		public static void ExplosionVisual(Rectangle area, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, bool debugOutline = false) {
 			Vector2 center = area.Center.ToVector2();
 			if (sound.HasValue) {
 				SoundEngine.PlaySound(in sound, center);
 			}
 			Vector2 topLeft = area.TopLeft();
-			for (int i = 0; i < 30 * dustAmount; i++) {
+			for (int i = 0; i < smokeDustAmount; i++) {
 				Dust.NewDustDirect(
 					topLeft,
 					area.Width,
@@ -702,7 +696,7 @@ namespace Origins.Projectiles {
 					1.5f
 				).velocity *= 1.4f;
 			}
-			for (int i = 0; i < 20 * dustAmount; i++) {
+			for (int i = 0; i < fireDustAmount; i++) {
 				Dust dust = Dust.NewDustDirect(
 					topLeft,
 					area.Width,

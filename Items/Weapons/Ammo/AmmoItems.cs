@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dusts;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using Terraria;
@@ -73,6 +74,41 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2;
 			Projectile.velocity.Y += 0.02f;
 		}
+		public override void OnKill(int timeLeft) {
+			if (Projectile.penetrate != 0) { // don't spawn on death from running out of penetration since the hit already spawned an explosion
+				Projectile.NewProjectile(
+					Projectile.GetSource_Death(),
+					Projectile.Center,
+					default,
+					ModContent.ProjectileType<Metal_Slug_Explosion>(),
+					Projectile.damage,
+					Projectile.knockBack
+				);
+			}
+		}
+	}
+	public class Metal_Slug_Explosion : ModProjectile, IIsExplodingProjectile {
+		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Projectile.width = 72;
+			Projectile.height = 72;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 5;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
+		}
+		public override void AI() {
+			if (Projectile.ai[0] == 0) {
+				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: SoundID.Item62, fireDustAmount: 0);
+				Projectile.ai[0] = 1;
+			}
+			ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
+		}
+		public void Explode(int delay = 0) { }
+		public bool IsExploding() => true;
 	}
 	public class Gray_Solution : ModItem {
 		public override void SetStaticDefaults() {

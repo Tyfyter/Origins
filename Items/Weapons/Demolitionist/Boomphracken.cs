@@ -14,6 +14,7 @@ namespace Origins.Items.Weapons.Demolitionist {
         };
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.damage = 68;
 			Item.width = 56;
 			Item.height = 26;
@@ -46,19 +47,7 @@ namespace Origins.Items.Weapons.Demolitionist {
             position += offset;
         }
 	}
-	public class Boomphracken_P : ModProjectile {
+	public class Boomphracken_P : Metal_Slug_P {
 		public override string Texture => "Origins/Projectiles/Ammo/Boomphracken_P";
-		public override void SetDefaults() {
-			Projectile.CloneDefaults(ProjectileID.ExplosiveBullet);
-			Projectile.width = 10;
-			Projectile.height = 8;
-			Projectile.friendly = true;
-			Projectile.penetrate = -1;
-			Projectile.timeLeft = 900;
-			Projectile.alpha = 0;
-		}
-		public override void AI() {
-
-		}
 	}
 }
