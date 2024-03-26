@@ -6,12 +6,17 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Dev;
+using Terraria.GameInput;
 
 namespace Origins.Items.Weapons.Demolitionist {
     public class Boomphracken : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "HandCannon"
         };
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
@@ -30,6 +35,24 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.autoReuse = true;
             Item.ArmorPenetration += 8;
         }
+		public override bool AltFunctionUse(Player player) {
+			if (player.selectedItem == 58 || player.mouseInterface) return false;
+			for (int i = Main.InventoryItemSlotsStart; i < Main.InventoryItemSlotsCount; i++) {
+				Item item = player.inventory[i];
+				if (!item.IsAir && item.useStyle != ItemUseStyleID.None && item.CountsAsClass<Thrown_Explosive>()) {
+					//PlayerInput.TryEnteringFastUseModeForInventorySlot(i);
+					if (player.nonTorch == -1) {
+						player.nonTorch = player.selectedItem;
+					}
+					player.selectedItem = i;
+					player.controlUseItem = true;
+					player.releaseUseItem = true;
+					player.controlUseTile = false;
+					break;
+				}
+			}
+			return false;
+		}
 		public override Vector2? HoldoutOffset() {
 			return Vector2.Zero;
 		}

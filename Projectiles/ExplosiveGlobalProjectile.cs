@@ -351,6 +351,19 @@ namespace Origins.Projectiles {
 		}
 		public override void OnKill(Projectile projectile, int timeLeft) {
 			if (!fromDeath && projectile.owner == Main.myPlayer) {
+				if (novaCascade) {
+					int type = ModContent.ProjectileType<Nova_Cascade_Explosion>();
+					if (projectile.type != type) {
+						Projectile.NewProjectile(
+							projectile.GetSource_Death(),
+							projectile.Center,
+							default,
+							type,
+							projectile.damage,
+							projectile.knockBack
+						);
+					}
+				}
 				if (hasAmber) {
 					const int count = 6;
 					const float portion = MathHelper.TwoPi / count;

@@ -24,12 +24,15 @@ namespace Origins {
 			List<DamageClass> damageClasses = All;
 			int len = damageClasses.Count;
 			ExplosiveVersion = new Dictionary<DamageClass, DamageClass>(new DamageClass_Equality_Comparer());
+			mod.AddContent(explosive = new Explosive());
+			mod.AddContent(thrownExplosive = new Thrown_Explosive());
 			for (int i = 0; i < len; i++) {
 				DamageClass other = damageClasses[i];
-				if (other is not ExplosivePlus) {
+				if (!other.GetEffectInheritance(explosive) && other is not ThrowingDamageClass) {
 					ExplosiveVersion.Add(other, ExplosivePlus.CreateAndRegister(other));
 				}
 			}
+			ExplosiveVersion.Add(DamageClass.Throwing, thrownExplosive);
 		}
 
 		public void Unload() {
@@ -41,9 +44,9 @@ namespace Origins {
 	}
 	public class DamageClass_Equality_Comparer : IEqualityComparer<DamageClass> {
 		public bool Equals(DamageClass x, DamageClass y) => x.Type == y.Type;
-
 		public int GetHashCode([DisallowNull] DamageClass obj) => obj.Type;
 	}
+	[Autoload(false)]
 	public class Explosive : DamageClass {
 		public override void SetStaticDefaults() {
 			// DisplayName.SetDefault("explosive damage");
@@ -57,6 +60,7 @@ namespace Origins {
 			//player.GetCritChance(this) += 4;
 		}
 	}
+	[Autoload(false)]
 	public class Thrown_Explosive : DamageClass {
 		
 		public override bool GetEffectInheritance(DamageClass damageClass) {

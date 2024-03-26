@@ -12,6 +12,8 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Item.useStyle = ItemUseStyleID.None;
 			Item.damage = 14;
 			Item.ammo = Type;
 			Item.shootSpeed = 3.7f;
@@ -38,6 +40,8 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Item.useStyle = ItemUseStyleID.None;
 			Item.maxStack = 999;
 			Item.damage = 22;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
@@ -62,6 +66,8 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Item.useStyle = ItemUseStyleID.None;
 			Item.maxStack = 999;
 			Item.damage = 35;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
@@ -86,6 +92,8 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Item.useStyle = ItemUseStyleID.None;
 			Item.maxStack = 999;
 			Item.damage = 48;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
@@ -110,6 +118,8 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Item.useStyle = ItemUseStyleID.None;
 			Item.maxStack = 999;
 			Item.damage = 60;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();

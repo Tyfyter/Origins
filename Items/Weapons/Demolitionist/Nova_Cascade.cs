@@ -33,7 +33,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shootSpeed = 12f;
 			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = ItemRarityID.Red;
-			Item.UseSound = Origins.Sounds.HeavyCannon.WithPitch(1f);
+			Item.UseSound = Origins.Sounds.HeavyCannon.WithPitchRange(0.9f, 1f);
 			Item.autoReuse = true;
 			Item.glowMask = glowmask;
 		}

@@ -109,6 +109,13 @@ namespace Origins.Items {
 				item.height = 4;
 			}
 		}
+		public override bool? CanAutoReuseItem(Item item, Player player) {
+			if (player.nonTorch != -1 && player.inventory[player.nonTorch].type == Boomphracken.ID && player.HeldItem.CountsAsClass<Thrown_Explosive>()) {
+				player.selectItemOnNextUse = true;
+				return false;
+			}
+			return null;
+		}
 		public override void UpdateEquip(Item item, Player player) {
 			switch (item.type) {
 				case ItemID.MiningHelmet:

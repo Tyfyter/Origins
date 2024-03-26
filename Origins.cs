@@ -289,6 +289,7 @@ namespace Origins {
 				ProjectileID.ClusterFragmentsI, 0f,
 				ProjectileID.ClusterFragmentsII, 0f,
 				ProjectileID.BloodCloudMoving, 0f,
+				ProjectileID.BloodCloudRaining, 0f,
 				ProjectileID.RainCloudMoving, 0f,
 				ProjectileID.RainCloudRaining, 0f,
 				ProjectileID.PrincessWeapon, 0f,

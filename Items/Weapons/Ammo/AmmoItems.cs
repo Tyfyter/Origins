@@ -16,7 +16,9 @@ namespace Origins.Items.Weapons.Ammo {
         }
         public override void SetDefaults() {
             Item.CloneDefaults(ItemID.RocketI);
-            Item.damage = 30;
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Item.useStyle = ItemUseStyleID.None;
+			Item.damage = 30;
             Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
             Item.glowMask = glowmask;
             Item.value = Item.sellPrice(silver: 3, copper: 2);
@@ -67,7 +69,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.penetrate = 7;
 			Projectile.timeLeft = 900;
 			Projectile.alpha = 0;
-			Projectile.hide = true;
+			Projectile.hide = false;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = 10;
 			Projectile.extraUpdates = 4;
@@ -77,16 +79,15 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.velocity.Y += 0.02f;
 		}
 		public override void OnKill(int timeLeft) {
-			if (Projectile.penetrate != 0) { // don't spawn on death from running out of penetration since the hit already spawned an explosion
-				Projectile.NewProjectile(
-					Projectile.GetSource_Death(),
-					Projectile.Center,
-					default,
-					ModContent.ProjectileType<Metal_Slug_Explosion>(),
-					Projectile.damage,
-					Projectile.knockBack
-				);
-			}
+			if (Projectile.GetGlobalProjectile<ExplosiveGlobalProjectile>().novaCascade) return;
+			Projectile.NewProjectile(
+				Projectile.GetSource_Death(),
+				Projectile.Center,
+				default,
+				ModContent.ProjectileType<Metal_Slug_Explosion>(),
+				Projectile.damage,
+				Projectile.knockBack
+			);
 		}
 	}
 	public class Metal_Slug_Explosion : ModProjectile, IIsExplodingProjectile {
@@ -101,6 +102,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Projectile.timeLeft = 5;
 			Projectile.usesLocalNPCImmunity = true;
 			Projectile.localNPCHitCooldown = -1;
+			Projectile.hide = true;
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
