@@ -1265,7 +1265,7 @@ Bleeding_Obsidian_Greaves: {
 
 Bleeding_Obsidian_Helmet: {
 	DisplayName: Bleeding Obsidian Hardee
-	Tooltip: 15% increased explosive velocity
+	Tooltip: 20% increased explosive velocity
 }
 
 Riptide_Breastplate: {

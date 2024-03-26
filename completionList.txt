@@ -1140,7 +1140,7 @@ CONSUMABLES:
 
 MOUNTS & PETS:
 ---
-(#4, ^2) Blockus Tube (Juvenile Amalgamation)* !!!
+(^) Blockus Tube (Juvenile Amalgamation)*
 (#, ^2) Fleshy Globe (Self-Contained Universe)* !!!
 (^) Strange Power-Up (Platformer Mech)
 (^) Chromatic Scale (Rainbow Pangolin)
