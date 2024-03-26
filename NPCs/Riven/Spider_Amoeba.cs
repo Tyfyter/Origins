@@ -10,7 +10,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
     public class Spider_Amoeba : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 3;
+			Main.npcFrameCount[NPC.type] = 5;
 		}
 		public override void SetDefaults() {// could not add stats because 
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -43,12 +43,7 @@ namespace Origins.NPCs.Riven {
 				NPC.spriteDirection = NPC.direction;
 			}
 			//increment frameCounter every frame and run the following code when it exceeds 7 (i.e. run the following code every 8 frames)
-			if (NPC.collideY && ++NPC.frameCounter > 7) {
-				//add frame height (with buffer) to frame y position and modulo by frame height (with buffer) multiplied by walking frame count
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 42) % 126, 92, 40);
-				//reset frameCounter so this doesn't trigger every frame after the first time
-				NPC.frameCounter = 0;
-			}
+			if (NPC.collideY) NPC.DoFrames(7);
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			//spawn gore if npc is dead after being hit
