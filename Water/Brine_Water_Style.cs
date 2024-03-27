@@ -17,9 +17,9 @@ namespace Origins.Water {
 	}
 	public class Brine_Waterfall_Style : ModWaterfallStyle {
 		public override void ColorMultiplier(ref float r, ref float g, ref float b, float a) {
-			r = 0.5f;
-			g = 0.9f;
-			b = 0.83f;
+			r *= 0.5f;
+			g *= 0.9f;
+			b *= 0.83f;
 		}
 	}
 }

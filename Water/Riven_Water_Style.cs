@@ -15,7 +15,6 @@ namespace Origins.Water {
 			b = 1f * glowValue;
 		}
 		public override Color BiomeHairColor() => new Color(50, 250, 230);
-
 		public void AddLight(ref Vector3 color, byte liquidAmount) {
 			float mult = (liquidAmount > 200 ? 1 : liquidAmount / 200) * World.BiomeData.Riven_Hive.NormalGlowValue.GetValue();
 
@@ -26,15 +25,16 @@ namespace Origins.Water {
 	public class Riven_Waterfall_Style : ModWaterfallStyle {
 		public override void ColorMultiplier(ref float r, ref float g, ref float b, float a) {
             float glowValue = World.BiomeData.Riven_Hive.NormalGlowValue.GetValue() * 0.5f + 0.25f;
-            r = 0.1f * glowValue;
-			g = 1.05f * glowValue;
-			b = 1f * glowValue;
+            r = 0.1f * glowValue * 255f * 0.91f;
+			g = 1.05f * glowValue * 255f * 0.91f;
+			b = 1f * glowValue * 255f * 0.91f;
+			//r *= 0.1f * glowValue;
+			//g *= 1.05f * glowValue;
+			//b *= 1f * glowValue;
 		}
-        public void AddLight(ref Vector3 color, byte liquidAmount) {
-            float mult = (liquidAmount > 200 ? 1 : liquidAmount / 200) * World.BiomeData.Riven_Hive.NormalGlowValue.GetValue();
-
-            color.Y += 0.9f * mult;
-            color.Z += 1f * mult;
-        }
+		public override void AddLight(int i, int j) {
+			float mult = 0.333f * World.BiomeData.Riven_Hive.NormalGlowValue.GetValue();
+			Lighting.AddLight(i, j, 0, 0.9f * mult, 1f * mult);
+		}
     }
 }
