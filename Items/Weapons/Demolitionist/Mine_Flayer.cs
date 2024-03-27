@@ -21,11 +21,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Melee];
 			Item.useStyle = ItemUseStyleID.Swing;
 			Item.useTime = 4;
-			Item.useAnimation = 36;
+			Item.useAnimation = 40;
 			Item.knockBack = 4f;
 			Item.useAmmo = ModContent.ItemType<Resizable_Mine_One>();
 			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P_1>();
-			Item.shootSpeed = 9;
+			Item.shootSpeed = 5;
 			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 5);
 			Item.reuseDelay = 60;
@@ -135,7 +135,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 #endif
 		public override bool CanConsumeAmmo(Item ammo, Player player) {
-			return !Main.rand.NextBool(6);
+			return !Main.rand.NextBool(3, 5);
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

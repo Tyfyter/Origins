@@ -70,10 +70,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.penetrate = 1;
 			Projectile.timeLeft = 900;
 			Projectile.ArmorPenetration += 3;
-			//projectile.aiStyle = 14;
-			//projectile.usesLocalNPCImmunity = true;
-			//projectile.localNPCHitCooldown = 7;
-		}
+            Projectile.scale = 0.5f;
+            //projectile.aiStyle = 14;
+            //projectile.usesLocalNPCImmunity = true;
+            //projectile.localNPCHitCooldown = 7;
+        }
 		public override bool OnTileCollide(Vector2 oldVelocity) {
 			if (Projectile.velocity.X == 0f) {
 				Projectile.velocity.X = -oldVelocity.X;

@@ -22,6 +22,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 2, copper: 33);
 			Item.rare = ItemRarityID.White;
             Item.ArmorPenetration += 1;
+			Item.maxStack = 9999;
         }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 8);
@@ -52,6 +53,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 4, copper: 65);
 			Item.rare = ItemRarityID.Green;
             Item.ArmorPenetration += 2;
+            Item.maxStack = 9999;
         }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 8);
@@ -79,6 +81,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 8, copper: 80);
 			Item.rare = ItemRarityID.Pink;
             Item.ArmorPenetration += 3;
+            Item.maxStack = 9999;
         }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 8);
@@ -106,6 +109,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 13);
 			Item.rare = ItemRarityID.Yellow;
             Item.ArmorPenetration += 4;
+            Item.maxStack = 9999;
         }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 8);
@@ -133,6 +137,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.value = Item.sellPrice(silver: 26);
 			Item.rare = ItemRarityID.Cyan;
             Item.ArmorPenetration += 5;
+            Item.maxStack = 9999;
         }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 8);

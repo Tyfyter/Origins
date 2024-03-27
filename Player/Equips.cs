@@ -182,7 +182,6 @@ namespace Origins {
 				sunFactor += DoTileCalcs((int)(Player.TopRight.X - 1) / 16, top, sunLight, waterFactor).Length() / 1.56f;
 
 				Player.manaRegenCount += (int)(sunFactor * 12);
-				//the line below displays how much the solar panel is adding to manaRegenCount
 				//Player.chatOverhead.NewMessage("" + (int)(sunFactor * 12), 5);
 			}
 			if (blizzardwalkerJacket) {

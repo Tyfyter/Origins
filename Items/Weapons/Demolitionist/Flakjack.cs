@@ -38,16 +38,16 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.CloneDefaults(ItemID.SniperRifle);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.glowMask = glowmask;
-			Item.damage = 96;
+			Item.damage = 192;
 			Item.crit = 14;
 			Item.useAnimation = 32;
 			Item.useTime = 17;
 			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
 			Item.shoot = ModContent.ProjectileType<Flakjack_P>();
-			Item.shootSpeed = 6;
+			Item.shootSpeed = 12;
 			Item.reuseDelay = 6;
 			Item.autoReuse = true;
-			Item.value = Item.sellPrice(gold: 5);
+			Item.value = Item.sellPrice(gold: 15);
 			Item.rare = CrimsonRarity.ID;
 		}
         public override void AddRecipes() {

@@ -800,7 +800,7 @@ EXPLOSIVE WEAPONS:
 
 (@5, ^3) Black Hole Bomb*
 (@5, ^3) Caustica
-(#3, ^2) Flakjack
+(^) Flakjack
 (@, ^3) Missile Minigun
 (@5, #) Starburst
 ---
@@ -909,12 +909,12 @@ TILES:
 (X) Dusk Dungeon Chest*
 (X) Edenwood Furniture*
 (#, ^2) Encrusted Brick !!!
-(@4 (sink is misaligned), ^3) Endowood Furniture* !!!
+(^) Endowood Furniture*
 (#2, ^2) Laser Tag Console*
 (#, ^2) Living Alkahest Block*
 (#, ^2) Living Bile Block*
 (#, ^2) Lost Brick !!!
-(@4 (sink is misaligned), ^3) Marrowick Furniture* !!!
+(^) Marrowick Furniture*
 (X) Mushroom Dungeon Chest*
 (X) Nova Brick*
 (X) Nova Fragment Block*
@@ -1171,12 +1171,12 @@ AMMO:
 
 (^) Alkahest Arrow*
 (^) Alkahest Bullet*
-(X) Alkahest Canister* !!!
-(X) Alkaline Canister* !!!
+(#, ^2) Alkahest Canister* !!!
+(#, ^2) Alkaline Canister* !!!
 (^) Alkaline Harpoon*
 (^) Bile Arrow*
 (^) Bile Bullet*
-(X) Bile Canister* !!!
+(#, ^2) Bile Canister* !!!
 (^) Bile Dart*
 (X) Coolant Canister* !!! 
 (X) Cursed Canister* !!!

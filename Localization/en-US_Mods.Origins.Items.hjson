@@ -2354,8 +2354,8 @@ Mine_Flayer: {
 	DisplayName: Mine Flayer
 	Tooltip:
 		'''
-		Releases a barrage of mines when swung
-		16.7% chance not to consume ammo
+		Releases a barrage of canisters when swung
+		60% chance not to consume ammo
 		'''
 }
 

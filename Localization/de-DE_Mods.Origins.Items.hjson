@@ -2354,8 +2354,8 @@ Mine_Flayer: {
 	// DisplayName: Mine Flayer
 	/* Tooltip:
 		'''
-		Releases a barrage of mines when swung
-		16.7% chance not to consume ammo
+		Releases a barrage of canisters when swung
+		60% chance not to consume ammo
 		''' */
 }
 
@@ -4017,11 +4017,11 @@ Marrowick_Work_Bench_Item: {
 }
 
 Endowood_Sink_Item: {
-	// DisplayName: Endowood_ Sink_ Item
+	// DisplayName: Endowood Sink
 	// Tooltip: ""
 }
 
 Marrowick_Sink_Item: {
-	// DisplayName: Marrowick_ Sink_ Item
+	// DisplayName: Marrowick Sink
 	// Tooltip: ""
 }
