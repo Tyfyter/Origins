@@ -23,9 +23,6 @@ namespace Origins.Items.Weapons.Ammo {
 			}
 			return false;
 		}
-		public override void SetDefaults(Item entity) {
-			entity.shoot = ItemToCanisterID[entity.type];
-		}
 		public static int GetCanisterType(int type) {
 			return ItemToCanisterID.TryGetValue(type, out int canisterID) ? canisterID : -1;
 		}

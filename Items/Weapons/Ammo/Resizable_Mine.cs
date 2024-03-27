@@ -16,6 +16,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.useStyle = ItemUseStyleID.None;
 			Item.damage = 14;
 			Item.ammo = Type;
+			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P_1>();
 			Item.shootSpeed = 3.7f;
 			Item.knockBack = 2f;
 			Item.value = Item.sellPrice(silver: 2, copper: 33);
@@ -45,6 +46,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = 999;
 			Item.damage = 22;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
+			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P_2>();
 			Item.shootSpeed = 4f;
             Item.knockBack = 3f;
 			Item.value = Item.sellPrice(silver: 4, copper: 65);
@@ -71,6 +73,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = 999;
 			Item.damage = 35;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
+			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P_3>();
 			Item.shootSpeed = 4.4f;
 			Item.knockBack = 3.6f;
 			Item.value = Item.sellPrice(silver: 8, copper: 80);
@@ -97,6 +100,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = 999;
 			Item.damage = 48;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
+			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P_4>();
 			Item.shootSpeed = 4.8f;
 			Item.knockBack = 4.3f;
 			Item.value = Item.sellPrice(silver: 13);
@@ -123,6 +127,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.maxStack = 999;
 			Item.damage = 60;
 			Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
+			Item.shoot = ModContent.ProjectileType<Resizable_Mine_P_5>();
 			Item.shootSpeed = 5.2f;
 			Item.knockBack = 4.8f;
 			Item.value = Item.sellPrice(silver: 26);

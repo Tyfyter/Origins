@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Dusts;
+using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
 using Origins.World.BiomeData;
 using Terraria;
@@ -20,6 +21,7 @@ namespace Origins.Items.Weapons.Ammo {
 			Item.useStyle = ItemUseStyleID.None;
 			Item.damage = 30;
             Item.ammo = ModContent.ItemType<Resizable_Mine_One>();
+			Item.shoot = ModContent.ProjectileType<Napalm_Canister_P>();
             Item.glowMask = glowmask;
             Item.value = Item.sellPrice(silver: 3, copper: 2);
             Item.ArmorPenetration += 3;

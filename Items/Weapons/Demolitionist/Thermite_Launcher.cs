@@ -43,6 +43,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			}
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+			CanisterGlobalItem.ItemToCanisterID.TryGetValue(source.AmmoItemIdUsed, out type);
 			Projectile.NewProjectile(
 				source,
 				position,
