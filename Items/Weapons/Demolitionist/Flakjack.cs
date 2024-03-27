@@ -66,7 +66,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			} else {
 				position -= perp * player.direction * 6;
 			}
-			type += Item.shoot - 1;
+			type = Item.shoot;
 		}
 
 		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
