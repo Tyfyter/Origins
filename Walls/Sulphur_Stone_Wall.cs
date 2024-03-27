@@ -7,7 +7,6 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Walls {
     public class Sulphur_Stone_Wall : ModWall {
 		public override void SetStaticDefaults() {
-			WallID.Sets.Conversion.Stone[Type] = true;
 			Main.wallBlend[Type] = WallID.Stone;//what wall type this wall is considered to be when blending
 			Origins.WallHammerRequirement[Type] = 70;
 			AddMapEntry(new Color(6, 26, 19));

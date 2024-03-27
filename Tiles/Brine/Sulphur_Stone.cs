@@ -9,7 +9,6 @@ namespace Origins.Tiles.Brine {
 		public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
-			TileID.Sets.Conversion.Stone[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			AddMapEntry(new Color(18, 73, 56));
 			mergeID = TileID.Stone;
