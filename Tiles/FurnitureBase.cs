@@ -46,7 +46,8 @@ namespace Origins.Tiles {
 			TileID.Sets.CanBeSatOnForPlayers[Type] = TileID.Sets.CanBeSatOnForPlayers[BaseTileID];
 			TileID.Sets.CanBeSatOnForNPCs[Type] = TileID.Sets.CanBeSatOnForNPCs[BaseTileID];
 			TileID.Sets.IsValidSpawnPoint[Type] = TileID.Sets.IsValidSpawnPoint[BaseTileID];
-			//TileID.Sets.HasOutlines[Type] = true;
+
+			TileID.Sets.CountsAsWaterSource[Type] = TileID.Sets.CountsAsWaterSource[BaseTileID];
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.GetTileData(BaseTileID, 0));
 			TileObjectData.newTile.LavaDeath = LavaDeath;

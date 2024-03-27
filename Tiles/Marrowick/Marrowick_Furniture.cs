@@ -81,6 +81,19 @@ namespace Origins.Tiles.Marrowick {
 			};
 		}
 	}
+	public class Marrowick_Sink : FurnitureBase {
+		public override int BaseTileID => TileID.Sinks;
+		public override Color MapColor => new(245, 225, 143);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Marrowick_Item>(6)
+				.AddIngredient(ItemID.WaterBucket)
+				.AddTile(TileID.WorkBenches)
+				.Register();
+			};
+		}
+	}
 	public class Marrowick_Candle : LightFurnitureBase {
 		public override int BaseTileID => TileID.Candles;
 		public override Color MapColor => new(245, 225, 143);

@@ -909,12 +909,12 @@ TILES:
 (X) Dusk Dungeon Chest*
 (X) Edenwood Furniture*
 (#, ^2) Encrusted Brick !!!
-(#3, ^2) Endowood Furniture* !!!
+(@4 (sink is misaligned), ^3) Endowood Furniture* !!!
 (#2, ^2) Laser Tag Console*
 (#, ^2) Living Alkahest Block*
 (#, ^2) Living Bile Block*
 (#, ^2) Lost Brick !!!
-(#3, ^2) Marrowick Furniture* !!!
+(@4 (sink is misaligned), ^3) Marrowick Furniture* !!!
 (X) Mushroom Dungeon Chest*
 (X) Nova Brick*
 (X) Nova Fragment Block*

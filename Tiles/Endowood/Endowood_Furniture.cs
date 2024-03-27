@@ -81,6 +81,19 @@ namespace Origins.Tiles.Endowood {
 			};
 		}
 	}
+	public class Endowood_Sink : FurnitureBase {
+		public override int BaseTileID => TileID.Sinks;
+		public override Color MapColor => new(44, 39, 58);
+		public override void OnLoad() {
+			item.OnAddRecipes += (item) => {
+				Recipe.Create(item.type)
+				.AddIngredient<Endowood_Item>(6)
+				.AddIngredient(ItemID.WaterBucket)
+				.AddTile(TileID.WorkBenches)
+				.Register();
+			};
+		}
+	}
 	public class Endowood_Candle : LightFurnitureBase {
 		public override int BaseTileID => TileID.Candles;
 		public override Color MapColor => new(44, 39, 58);

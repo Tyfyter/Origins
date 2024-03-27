@@ -4015,3 +4015,13 @@ Marrowick_Work_Bench_Item: {
 	DisplayName: Marrowick_ Work_ Bench_ Item
 	Tooltip: ""
 }
+
+Endowood_Sink_Item: {
+	DisplayName: Endowood Sink
+	Tooltip: ""
+}
+
+Marrowick_Sink_Item: {
+	DisplayName: Marrowick Sink
+	Tooltip: ""
+}
