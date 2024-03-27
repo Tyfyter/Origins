@@ -1,4 +1,5 @@
-﻿using Origins.Questing;
+﻿using Origins.Buffs;
+using Origins.Questing;
 using System;
 using System.IO;
 using Terraria;
@@ -64,12 +65,14 @@ namespace Origins {
 			PlayerSyncDatas syncDatas = None;
 			if (clone.quantumInjectors != quantumInjectors) syncDatas |= QuantumInjectors;
 			if (clone.defiledWill != defiledWill) syncDatas |= DefiledWills;
-			if (
-				clone.corruptionAssimilation != corruptionAssimilation ||
+
+			if ((clone.corruptionAssimilation != corruptionAssimilation ||
 				clone.crimsonAssimilation != crimsonAssimilation ||
 				clone.defiledAssimilation != defiledAssimilation ||
-				clone.rivenAssimilation != rivenAssimilation
-			) syncDatas |= Assimilation;
+				clone.rivenAssimilation != rivenAssimilation)
+				&& !Player.HasBuff(Purifying_Buff.ID)
+				) syncDatas |= Assimilation;
+
 			SyncPlayer(-1, Main.myPlayer, false, syncDatas);
 		}
 		public override void SyncPlayer(int toWho, int fromWho, bool newPlayer) {
