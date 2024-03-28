@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 8);
 			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(ItemID.Wood, 4);
+			recipe.AddIngredient(ItemID.Wood, 2);
 			recipe.AddTile(TileID.WorkBenches);
 			recipe.Register();
 		}
@@ -86,7 +86,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 8);
 			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 4);
+			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 2);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
@@ -113,7 +113,7 @@ namespace Origins.Items.Weapons.Ammo {
         }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 8);
-            recipe.AddIngredient(ItemID.ChlorophyteBar, 2);
+            recipe.AddIngredient(ItemID.ChlorophyteOre, 2);
             recipe.AddIngredient(ItemID.ExplosivePowder);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();

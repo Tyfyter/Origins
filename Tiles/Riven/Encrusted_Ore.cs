@@ -22,7 +22,8 @@ namespace Origins.Tiles.Riven {
 			LocalizedText name = CreateMapEntryName();
 			AddMapEntry(new Color(40, 148, 207), name);
 			mergeID = TileID.Crimtane;
-		}
+            HitSound = SoundID.Tink;
+        }
 		public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b) {
 			r = 0.02f * GlowValue;
 			g = 0.15f * GlowValue;

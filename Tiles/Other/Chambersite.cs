@@ -27,12 +27,12 @@ namespace Origins.Tiles.Other {
         }
 		public override void AddRecipes() {
 			Recipe.Create(Type)
-			.AddIngredient(ItemID.CrystalShard, 10)
+			.AddIngredient(ItemID.CrystalShard, 16)
 			.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.ShimmerDecrafting"), () => false)
 			.AddDecraftCondition(Condition.Hardmode)
 			.Register();
 
-			Recipe.Create(ItemID.CrystalShard, 10)
+			Recipe.Create(ItemID.CrystalShard, 16)
 			.AddIngredient(Type)
 			.AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.ShimmerDecrafting"), () => false)
 			.Register();

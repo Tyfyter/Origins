@@ -6,14 +6,14 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Terraria.Localization;
+
 namespace Origins.Items.Weapons.Demolitionist {
     public class Peatball : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "ThrownExplosive"
         };
         public override void SetStaticDefaults() {
-            ItemID.Sets.ShimmerTransformToItem[ItemID.Coal] = ModContent.ItemType<Peatball>();
-            ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Peatball>()] = ItemID.Coal;
             Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
@@ -29,11 +29,24 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void AddRecipes() {
+			const int coalNumber = 4;
+
 			Recipe recipe = Recipe.Create(Type, 4);
 			recipe.AddIngredient(ModContent.ItemType<Peat_Moss_Item>());
 			recipe.DisableDecraft();
 			recipe.Register();
-		}
+
+            Recipe.Create(Type)
+            .AddIngredient(ItemID.Coal, coalNumber)
+            .AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.ShimmerDecrafting"), () => false)
+            .AddDecraftCondition(Condition.Hardmode)
+            .Register();
+
+            Recipe.Create(ItemID.Coal, coalNumber)
+            .AddIngredient(Type)
+            .AddCondition(Language.GetOrRegister("Mods.Origins.Conditions.ShimmerDecrafting"), () => false)
+            .Register();
+        }
 	}
 	public class Peatball_P : ModProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Peatball";

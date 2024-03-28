@@ -122,6 +122,11 @@ namespace Origins {
             recipe.AddIngredient(ItemID.FossilOre);
             recipe.Register();
 
+            recipe = Recipe.Create(ItemID.Beenade, 6);
+            recipe.AddIngredient(ItemID.BeeWax);
+            recipe.AddIngredient(ItemID.Grenade, 6);
+            recipe.Register();
+
             recipe = Recipe.Create(ItemID.TheRottedFork);
 			recipe.AddIngredient(ItemID.CrimtaneBar, 9);
 			recipe.AddIngredient(ItemID.TissueSample, 5);
@@ -251,6 +256,10 @@ namespace Origins {
 				}
 
                 if (r.Matches((ItemID.ScarabBomb, null), null, (ItemID.Bomb, 1), (ItemID.FossilOre, 1))) {
+                    r.DisableRecipe();
+                }
+
+                if (r.Matches((ItemID.Beenade, null), null, (ItemID.Grenade, 1), (ItemID.BeeWax, 1))) {
                     r.DisableRecipe();
                 }
 
