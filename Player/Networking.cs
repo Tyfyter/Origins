@@ -55,10 +55,12 @@ namespace Origins {
 			OriginPlayer clone = (OriginPlayer)targetCopy;// shoot this one
 			clone.quantumInjectors = quantumInjectors;
 			clone.defiledWill = defiledWill;
-			clone.corruptionAssimilation = corruptionAssimilation;
-			clone.crimsonAssimilation = crimsonAssimilation;
-			clone.defiledAssimilation = defiledAssimilation;
-			clone.rivenAssimilation = rivenAssimilation;
+			if (!Player.HasBuff(Purifying_Buff.ID)) {
+				clone.corruptionAssimilation = corruptionAssimilation;
+				clone.crimsonAssimilation = crimsonAssimilation;
+				clone.defiledAssimilation = defiledAssimilation;
+				clone.rivenAssimilation = rivenAssimilation;
+			}
 		}
 		public override void SendClientChanges(ModPlayer clientPlayer) {
 			OriginPlayer clone = (OriginPlayer)clientPlayer;// shoot this one
