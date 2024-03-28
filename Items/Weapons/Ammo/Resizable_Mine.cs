@@ -142,7 +142,7 @@ namespace Origins.Items.Weapons.Ammo {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 8);
 			recipe.AddIngredient(ItemID.ExplosivePowder);
-			recipe.AddIngredient(ItemID.LunarBar, 2);
+			recipe.AddIngredient(ItemID.LunarOre, 2);
 			recipe.AddTile(TileID.LunarCraftingStation);
 			recipe.Register();
 		}
