@@ -65,21 +65,21 @@ namespace Origins {
 
 			recipe = Recipe.Create(ItemID.CrystalNinjaHelmet);
 			recipe.AddIngredient(ItemID.CrystalShard, 30);
-			recipe.AddIngredient(ItemID.SoulofNight, 5);
+			recipe.AddIngredient(ItemID.SoulofLight, 5);
 			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 15);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.CrystalNinjaChestplate);
 			recipe.AddIngredient(ItemID.CrystalShard, 60);
-			recipe.AddIngredient(ItemID.SoulofNight, 7);
+			recipe.AddIngredient(ItemID.SoulofLight, 7);
 			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 30);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 
 			recipe = Recipe.Create(ItemID.CrystalNinjaLeggings);
 			recipe.AddIngredient(ItemID.CrystalShard, 45);
-			recipe.AddIngredient(ItemID.SoulofNight, 3);
+			recipe.AddIngredient(ItemID.SoulofLight, 3);
 			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 23);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();

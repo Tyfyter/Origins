@@ -868,7 +868,7 @@ TILES:
 (^) Chambersite Gemstone Wall (Crimson)
 (^) Chambersite Gemstone Wall (Defiled)
 (^) Chambersite Gemstone Wall (Riven)
-(#2, ^2) Defiled Grass Wall !!!
+(^) Defiled Grass Wall
 (^) Defiled Sandstone Wall
 (^) Defiled Stone Wall
 (^) Edenwood Wall
@@ -878,7 +878,7 @@ TILES:
 (^) Marrowick Wall
 (X) Nova Brick Wall
 (^) Quartz Wall
-(#3, ^2) Riven Grass Wall !!!
+(^) Riven Grass Wall
 (^) Spug Flesh Wall
 (^) Sulphur Stone Wall
 

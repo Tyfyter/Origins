@@ -4054,3 +4054,13 @@ Blast_Helmet: {
 		-5% self-damage
 		''' */
 }
+
+Defiled_Grass_Wall_Safe_Item: {
+	// DisplayName: Defiled_ Grass_ Wall_ Safe_ Item
+	// Tooltip: ""
+}
+
+Defiled_Grass_Wall_Placed_Unsafe_Item: {
+	// DisplayName: Defiled_ Grass_ Wall_ Placed_ Unsafe_ Item
+	// Tooltip: ""
+}

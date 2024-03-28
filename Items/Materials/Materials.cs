@@ -55,7 +55,10 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Alkahest : MaterialItem, IJournalEntryItem {
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
+        public string[] Categories => new string[] {
+            "LoreItem"
+        };
+        public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Alkahest_Mat_Entry).Name;
 		public override int ResearchUnlockCount => 25;
 		public override int Rare => ItemRarityID.Orange;
@@ -109,7 +112,10 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Black_Bile : MaterialItem, IJournalEntryItem {
-		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
+        public string[] Categories => new string[] {
+            "LoreItem"
+        };
+        public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Black_Bile_Entry).Name;
 		public override int Rare => ItemRarityID.Orange;
 		public override int Value => Item.sellPrice(silver: 10);
@@ -169,7 +175,10 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Defiled_Bar : MaterialItem {
-		public override int Value => Item.sellPrice(silver: 30);
+        public string[] Categories => new string[] {
+            "LoreItem"
+        };
+        public override int Value => Item.sellPrice(silver: 30);
 		public override int Rare => ItemRarityID.Blue;
 		public override void Load() {
 			base.Load();
@@ -236,7 +245,10 @@ namespace Origins.Items.Materials {
 		}
 	}
 	public class Felnum_Bar : MaterialItem, IJournalEntryItem {
-		public override int Value => Item.sellPrice(silver: 40);
+        public string[] Categories => new string[] {
+            "LoreItem"
+        };
+        public override int Value => Item.sellPrice(silver: 40);
 		public override int Rare => ItemRarityID.Green;
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Other";
 		public string EntryName => "Origins/" + typeof(Felnum_Mat_Entry).Name;

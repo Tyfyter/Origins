@@ -663,6 +663,9 @@ namespace Origins.World.BiomeData {
 				WallID.CrimsonUnsafe3,
 				WallID.CrimsonUnsafe4
 			);
+			/*AddWallConversions<Riven_Grass_Wall>(
+				WallID.GrassUnsafe
+			);*/
 			this.AddChambersiteConversions(ModContent.TileType<Chambersite_Ore_Riven_Flesh>(), ModContent.WallType<Chambersite_Riven_Flesh_Wall>());
 			EvilBiomeGenerationPass = new Riven_Hive_Generation_Pass();
 		}
