@@ -7,7 +7,6 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Air_Tank : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Resource",
 			"Misc"
 		};
 		public static int BackSlot { get; private set; }

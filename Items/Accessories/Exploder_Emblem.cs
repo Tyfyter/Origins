@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	public class Exploder_Emblem : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"Explosive"
+			"ExplosiveBoostAcc"
 		};
 		public override void SetStaticDefaults() {
 			OriginExtensions.InsertIntoShimmerCycle(Type, ItemID.SummonerEmblem);

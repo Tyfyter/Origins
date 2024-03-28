@@ -5,6 +5,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Strange_Computer : ModItem {
+        public string[] Categories => new string[] {
+            "Info",
+            "LoreItem"
+        };
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
         }

@@ -12,7 +12,7 @@ namespace Origins.Items.Accessories {
 	public class Potato_Battery : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"Info"
+			"MagicBoostAcc"
 		};
 		static Message_Type_Count[] messageCountsByType;
 		

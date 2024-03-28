@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Coologne : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Vitality"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 32);

@@ -7,12 +7,12 @@ namespace Origins.Items.Accessories {
 	public class Blizzardwalkers_Jacket : ModItem, ICustomWikiStat {
 		public const int max_active_time = 60 * 6;
 		public string[] Categories => new string[] {
-			"Combat"
+			"MasterAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 28);
 			Item.value = Item.sellPrice(gold: 2);
-			Item.rare = ItemRarityID.Orange;
+			Item.rare = ItemRarityID.Master;
 			Item.master = true;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {

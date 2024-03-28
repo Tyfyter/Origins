@@ -8,7 +8,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Beard)]
 	public class Forbidden_Voice : ModItem, IJournalEntryItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"MasterAcc"
 		};
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Asylum_Whistle_Entry).Name;

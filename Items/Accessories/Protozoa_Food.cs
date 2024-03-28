@@ -11,7 +11,7 @@ namespace Origins.Items.Accessories {
 	public class Protozoa_Food : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"Explosive"
+			"SummonBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 20);

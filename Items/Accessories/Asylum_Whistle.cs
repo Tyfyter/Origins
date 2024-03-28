@@ -8,7 +8,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Neck)]
 	public class Asylum_Whistle : ModItem, IJournalEntryItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Combat",
+			"SummonBoostAcc"
 		};
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Asylum_Whistle_Entry).Name;

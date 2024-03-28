@@ -5,7 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Snipers_Mark : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Combat",
+			"RangedBoostAcc"
 		};
 		public static int BackSlot { get; private set; }
 		public override void SetStaticDefaults() {
@@ -14,7 +15,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 34);
-			Item.rare = ItemRarityID.Yellow;
+			Item.rare = ItemRarityID.Pink;
 			Item.value = Item.sellPrice(gold: 6);
 		}
 		public override void UpdateEquip(Player player) {

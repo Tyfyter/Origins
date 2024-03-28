@@ -6,8 +6,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mojo_Injection : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Resource",
-			"Exploration"
+			"Misc"
 		};
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);

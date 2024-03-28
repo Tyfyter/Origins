@@ -5,7 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class ATACS : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Combat",
+			"GenericBoostAcc"
 		};
         static short glowmask;
         public override void SetStaticDefaults() {

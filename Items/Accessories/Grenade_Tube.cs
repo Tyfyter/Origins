@@ -6,6 +6,9 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
     public class Grenade_Tube : ModItem {
         static short glowmask;
+        public string[] Categories => new string[] {
+            "Combat"
+        };
         public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
         }

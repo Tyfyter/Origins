@@ -6,8 +6,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Shoes)]
 	public class Lovers_Leap : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Movement",
-			"Combat"
+			"Combat",
+			"GenericBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 24);

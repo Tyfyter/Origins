@@ -6,8 +6,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Powerflower : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Resource",
-			"Exploration"
+			"Vitality",
+			"MagicBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 28);

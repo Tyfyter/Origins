@@ -3,11 +3,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	[LegacyName("Mad_Hand")]
 	public class Stack_of_Shraps : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"Explosive"
+			"ExplosiveBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 26);

@@ -6,8 +6,8 @@ namespace Origins.Items.Accessories {
 	public class Control_Locus : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"Resource",
-			"Ranged"
+			"RangedBoostAcc",
+			"ExplosiveBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(14, 28);

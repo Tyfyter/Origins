@@ -5,8 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Donor_Wristband : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat",
-			"Resource"
+			"Vitality"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);

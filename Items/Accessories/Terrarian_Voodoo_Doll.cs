@@ -10,13 +10,13 @@ using Terraria.ModLoader.IO;
 namespace Origins.Items.Accessories {
 	public class Terrarian_Voodoo_Doll : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Misc"
+			"MasterAcc"
 		};
 		Guid owner;
 		Player player;
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(32, 20);
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Master;
 		}
 		public override bool OnPickup(Player player) {
 			if (!Main.dedServ && owner == Guid.Empty) {

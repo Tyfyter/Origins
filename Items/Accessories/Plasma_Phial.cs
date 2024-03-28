@@ -6,8 +6,7 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Balloon)]
 	public class Plasma_Phial : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat",
-			"Resource"
+			"Vitality"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(24, 24);

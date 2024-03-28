@@ -1543,15 +1543,16 @@ SetBonuses: {
 		'''
 	Souldhide: Nearby enemies are weakened and afflicted with Shadowflame
 	Tendon: Mobility is based on remaining health
-	Miner:
-		'''
-
-		20% reduced self-damage
-		'''
+	Miner: 20% reduced self-damage
 	Pearlwood:
 		'''
-
 		15% increased damage
 		Reduces damage taken by 5%
+		'''
+	Blast:
+		'''
+		-25% self-damage
+		Allows you to go berserk after recieving any kind of damage
+		All explosive combat stats are increased by 50% while berserked
 		'''
 }

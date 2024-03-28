@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	public class ACME_Crate : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"Explosive"
+			"ExplosiveBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 26);

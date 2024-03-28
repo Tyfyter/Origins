@@ -3,11 +3,10 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	//[AutoloadEquip(EquipType.Neck)] doesn't have neck spritesheet
 	public class Hazard_Charm : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Misc",
-			"Explosive"
+			"ExplosiveBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 26);

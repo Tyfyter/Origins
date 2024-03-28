@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	public class Bomb_Charm : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Vitality",
-			"Explosive"
+			"ExplosiveBoostAcc"
 		};
 		public override void SetStaticDefaults() {
 			ItemID.Sets.ShimmerTransformToItem[ItemID.BandofRegeneration] = ModContent.ItemType<Bomb_Charm>();

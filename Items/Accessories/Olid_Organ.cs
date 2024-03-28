@@ -5,7 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Olid_Organ : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Combat",
+			"GenericBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 24);

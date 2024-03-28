@@ -8,7 +8,9 @@ namespace Origins.Items.Accessories {
 		public string[] Categories => new string[] {
 			"Combat",
 			"Torn",
-			"TornSource"
+			"TornSource",
+			"SummonBoostAcc",
+			"GenericBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 30);

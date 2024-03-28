@@ -4,7 +4,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mana_Drive : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Vitality"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {

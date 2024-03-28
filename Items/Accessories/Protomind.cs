@@ -9,8 +9,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Protomind : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat",
-			"Info"
+			"Combat"
 		};
 		static Message_Cache[] messagesByType;
 		

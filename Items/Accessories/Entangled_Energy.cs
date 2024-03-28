@@ -6,14 +6,13 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Entangled_Energy : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat",
-			"Resource"
+			"ExpertAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 30);
 			Item.rare = ItemRarityID.Expert;
-			Item.master = true;
-			Item.value = Item.sellPrice(gold: 6);
+			Item.expert = true;
+			Item.value = Item.sellPrice(gold: 2);
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().entangledEnergy = true;

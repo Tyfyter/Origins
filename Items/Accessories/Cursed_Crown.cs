@@ -6,11 +6,11 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Cursed_Crown : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"MasterAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(22, 32);
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Master;
 			Item.value = Item.sellPrice(gold: 1);
 			Item.master = true;
 		}

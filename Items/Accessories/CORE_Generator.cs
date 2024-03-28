@@ -6,7 +6,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Waist)]
 	public class CORE_Generator : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Combat",
+            "ExplosiveBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(26, 26);
@@ -18,7 +19,7 @@ namespace Origins.Items.Accessories {
             Item.useTime = 15;
             Item.useAnimation = 15;
             Item.shootSpeed = 5;
-            Item.useAmmo = AmmoID.Rocket; //and mines?
+            Item.useAmmo = AmmoID.Rocket; //and canistahs?
         }
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -31,7 +32,7 @@ namespace Origins.Items.Accessories {
             OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
             player.GetAttackSpeed(DamageClasses.Explosive) += 0.1f;
             player.GetModPlayer<OriginPlayer>().explosiveBlastRadius += 0.15f;
-            player.GetKnockback(DamageClasses.Explosive) += 0.5f;
+            player.GetKnockback(DamageClasses.Explosive) += 0.2f;
             originPlayer.explosiveProjectileSpeed += 0.3f;
 
             originPlayer.destructiveClaws = true;

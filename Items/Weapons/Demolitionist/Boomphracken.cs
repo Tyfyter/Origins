@@ -27,7 +27,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.useAnimation = 57;
 			Item.shoot = ModContent.ProjectileType<Boomphracken_P>();
 			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
-			Item.knockBack = 10f;
+			Item.knockBack = 8f;
 			Item.shootSpeed = 12f;
 			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = ItemRarityID.Pink;

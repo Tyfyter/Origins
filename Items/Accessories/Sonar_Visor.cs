@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	public class Sonar_Visor : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"Info"
+			"GenericBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);

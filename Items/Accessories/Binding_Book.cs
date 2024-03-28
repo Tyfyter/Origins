@@ -8,7 +8,8 @@ namespace Origins.Items.Accessories {
 	public class Binding_Book : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"ManaShielding"
+			"ManaShielding",
+			"MagicBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);

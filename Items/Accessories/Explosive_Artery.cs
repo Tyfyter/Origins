@@ -7,8 +7,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Explosive_Artery : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat",
-			"Explosive"
+			"Combat"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(20, 20);

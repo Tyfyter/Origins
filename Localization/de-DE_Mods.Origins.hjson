@@ -1126,7 +1126,7 @@ Projectiles: {
 	// Nova_Cascade_Explosion.DisplayName: Nova Cascade
 	// Switchblade_Shortsword_P.DisplayName: Switchblade
 	// Amber_Shard.DisplayName: Amber Shard
-	// Metal_Slug_Explosion.DisplayName: Metal_ Slug_ Explosion
+	// Metal_Slug_Explosion.DisplayName: Metal Slug Explosion
 }
 
 Prefixes: {
@@ -1543,15 +1543,16 @@ SetBonuses: {
 		''' */
 	// Souldhide: Nearby enemies are weakened and afflicted with Shadowflame
 	// Tendon: Mobility is based on remaining health
-	/* Miner:
-		'''
-
-		20% reduced self-damage
-		''' */
+	// Miner: 20% reduced self-damage
 	/* Pearlwood:
 		'''
-
 		15% increased damage
 		Reduces damage taken by 5%
+		''' */
+	/* Blast:
+		'''
+		-25% self-damage
+		Allows you to go berserk after recieving any kind of damage
+		All explosive combat stats are increased by 50% while berserked
 		''' */
 }

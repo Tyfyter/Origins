@@ -259,7 +259,7 @@ ARMOR:
 (^) Bleeding Obsidian Armor*
 (X) Ruby Ranger Armor*
 
-(#, ^2) Blast Armor* !!!
+(#2, ^2) Blast Armor* !!!
 (X) Chambersite Armor*
 (X) Edenwood Armor*
 (^) Necromancer Armor*
@@ -1179,9 +1179,9 @@ AMMO:
 (#, ^2) Bile Canister* !!!
 (^) Bile Dart*
 (#, ^2) Coolant Canister* !!! 
-(X) Cursed Canister* !!!
+(#, ^2) Cursed Canister* !!!
 (^) Cursed Harpoon*
-(X) Ichor Canister* !!!
+(#, ^2) Ichor Canister* !!!
 (^) Metal Slug*
 (^) Resizable Mine Mk. 3*
 

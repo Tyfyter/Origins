@@ -15,7 +15,7 @@ namespace Origins {
     public partial class OriginPlayer : ModPlayer {
 		public override void PostUpdateEquips() {
 			if (bugZapper) {
-				Player.statDefense += (int)(tornCurrentSeverity * 12);
+				Player.statDefense += (int)(tornCurrentSeverity * 30);
 			}
 			if (donorWristband) {
 				Player.pStone = false;
@@ -514,7 +514,7 @@ namespace Origins {
 				Player.lifeRegenCount += (int)(tornCurrentSeverity * 18);
             }
 			if (bugZapper) {
-                Player.lifeRegenCount += (int)(tornCurrentSeverity * 18);
+                Player.lifeRegenCount += (int)(tornCurrentSeverity * 22);
             }
         }
 		public void SetMimicSetChoice(int level, int choice) {

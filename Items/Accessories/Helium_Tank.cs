@@ -6,7 +6,6 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Helium_Tank : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Resource",
 			"Misc"
 		};
 		public override void SetDefaults() {

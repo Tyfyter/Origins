@@ -6,13 +6,12 @@ namespace Origins.Items.Accessories {
 	public class Weakpoint_Analyzer : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"Resource",
-			"Ranged"
+			"RangedBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(14, 28);
 			Item.value = Item.sellPrice(gold: 2);
-			Item.rare = ItemRarityID.Orange;
+			Item.rare = ItemRarityID.Master;
 			Item.master = true;
 		}
 		public override void UpdateEquip(Player player) {

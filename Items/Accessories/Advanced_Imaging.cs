@@ -6,7 +6,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Face)]
 	public class Advanced_Imaging : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Combat",
+			"GenericBoostAcc"
 		};
 		static short glowmask;
 		public override void SetStaticDefaults() {

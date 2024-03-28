@@ -6,7 +6,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Unsought_Organ : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Combat",
+			"GenericBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 26);

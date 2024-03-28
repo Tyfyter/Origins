@@ -6,7 +6,7 @@ namespace Origins.Items.Accessories {
 	public class IWTPA_Standard : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"Explosive"
+			"ExplosiveBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 34);
@@ -14,7 +14,7 @@ namespace Origins.Items.Accessories {
 			Item.rare = ItemRarityID.Blue;
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().explosiveFuseTime *= 0.666f;
+			player.GetModPlayer<OriginPlayer>().explosiveFuseTime *= 0.667f;
 		}
 	}
 }

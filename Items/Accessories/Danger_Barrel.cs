@@ -6,7 +6,8 @@ namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.Back)]
 	public class Danger_Barrel : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Combat",
+			"ExplosiveBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 34);
@@ -15,7 +16,7 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().dangerBarrel = true;
-			player.GetModPlayer<OriginPlayer>().explosiveFuseTime *= 0.666f;
+			player.GetModPlayer<OriginPlayer>().explosiveFuseTime *= 0.667f;
 		}
 		public override void AddRecipes() {
 			CreateRecipe()

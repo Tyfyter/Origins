@@ -6,14 +6,17 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Accessories {
 	public class Strange_Tooth : ModItem {
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "MasterAcc"
+        };
+        public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 20);
 			Item.DamageType = DamageClass.Summon;
 			Item.damage = 13;
 			Item.knockBack = 2;
 			Item.useTime = Item.useAnimation = 45;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
-			Item.rare = ItemRarityID.Green;
+			Item.rare = ItemRarityID.Master;
 			Item.master = true;
 		}
 		public override void UpdateEquip(Player player) {

@@ -5,7 +5,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Trap_Charm : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Misc"
+			"Vitality"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 24);

@@ -7,7 +7,8 @@ namespace Origins.Items.Accessories {
 	public class Spirit_Shard : ModItem, IJournalEntryItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"Lore"
+			"LoreItem",
+			"SummonBoostAcc"
 		};
 		public string IndicatorKey => "Mods.Origins.Journal.Indicator.Whispers";
 		public string EntryName => "Origins/" + typeof(Eccentric_Stone_Entry).Name;

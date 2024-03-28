@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	public class Missile_Armcannon : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"Explosive"
+			"ExplosiveBoostAcc"
 		};
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;
@@ -40,7 +40,7 @@ namespace Origins.Items.Accessories {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			player.GetAttackSpeed(DamageClasses.Explosive) += 0.1f;
             player.GetModPlayer<OriginPlayer>().explosiveBlastRadius += 0.15f;
-			player.GetKnockback(DamageClasses.Explosive) += 0.5f;
+			player.GetKnockback(DamageClasses.Explosive) += 0.2f;
             originPlayer.explosiveThrowSpeed += 0.3f;
             originPlayer.destructiveClaws = true;
 			originPlayer.gunGlove = true;

@@ -7,7 +7,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Mitosis : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Combat",
+			"Shouldntexist"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(16, 26);

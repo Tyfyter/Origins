@@ -528,7 +528,7 @@ Missile_Armcannon: {
 	Tooltip:
 		'''
 		30% increased explosive throwing velocity
-		50% increased explosive knockback
+		20% increased explosive knockback
 		15% increased explosive blast radius
 		Increases explosive attack speed
 		Enables autouse for all explosive weapons
@@ -3862,7 +3862,7 @@ CORE_Generator: {
 	Tooltip:
 		'''
 		30% increased explosive throwing velocity
-		50% increased explosive knockback
+		20% increased explosive knockback
 		15% increased explosive blast radius
 		Increases damage, movement speed, and length of invincibility after taking damage
 		Increases explosive attack speed
@@ -3952,67 +3952,67 @@ Amber_Dye: {
 }
 
 Marrowick_Bathtub_Item: {
-	DisplayName: Marrowick_ Bathtub_ Item
+	DisplayName: Marrowick Bathtub
 	Tooltip: ""
 }
 
 Marrowick_Bed_Item: {
-	DisplayName: Marrowick_ Bed_ Item
+	DisplayName: Marrowick Bed
 	Tooltip: ""
 }
 
 Marrowick_Bookcase_Item: {
-	DisplayName: Marrowick_ Bookcase_ Item
+	DisplayName: Marrowick Bookcase
 	Tooltip: ""
 }
 
 Marrowick_Candelabra_Item: {
-	DisplayName: Marrowick_ Candelabra_ Item
+	DisplayName: Marrowick Candelabra
 	Tooltip: ""
 }
 
 Marrowick_Candle_Item: {
-	DisplayName: Marrowick_ Candle_ Item
+	DisplayName: Marrowick Candle
 	Tooltip: ""
 }
 
 Marrowick_Chandelier_Item: {
-	DisplayName: Marrowick_ Chandelier_ Item
+	DisplayName: Marrowick Chandelier
 	Tooltip: ""
 }
 
 Marrowick_Dresser_Item: {
-	DisplayName: Marrowick_ Dresser_ Item
+	DisplayName: Marrowick Dresser
 	Tooltip: ""
 }
 
 Marrowick_Lamp_Item: {
-	DisplayName: Marrowick_ Lamp_ Item
+	DisplayName: Marrowick Lamp
 	Tooltip: ""
 }
 
 Marrowick_Lantern_Item: {
-	DisplayName: Marrowick_ Lantern_ Item
+	DisplayName: Marrowick Lantern
 	Tooltip: ""
 }
 
 Marrowick_Piano_Item: {
-	DisplayName: Marrowick_ Piano_ Item
+	DisplayName: Marrowick Piano
 	Tooltip: ""
 }
 
 Marrowick_Sofa_Item: {
-	DisplayName: Marrowick_ Sofa_ Item
+	DisplayName: Marrowick Sofa
 	Tooltip: ""
 }
 
 Marrowick_Table_Item: {
-	DisplayName: Marrowick_ Table_ Item
+	DisplayName: Marrowick Table
 	Tooltip: ""
 }
 
 Marrowick_Work_Bench_Item: {
-	DisplayName: Marrowick_ Work_ Bench_ Item
+	DisplayName: Marrowick Work Bench
 	Tooltip: ""
 }
 
@@ -4024,4 +4024,33 @@ Endowood_Sink_Item: {
 Marrowick_Sink_Item: {
 	DisplayName: Marrowick Sink
 	Tooltip: ""
+}
+
+Blast_Breastplate: {
+	DisplayName: Blast Plate
+	Tooltip:
+		'''
+		Immune to knockback
+		-5% self-damage
+		'''
+}
+
+Blast_Greaves: {
+	DisplayName: Blast Guards
+	Tooltip:
+		'''
+		+25% movement speed
+		+2% acceleration
+		Increased jump speed
+		-5% self-damage
+		'''
+}
+
+Blast_Helmet: {
+	DisplayName: Blast Helmet
+	Tooltip:
+		'''
+		+10% generic critical strike chance
+		-5% self-damage
+		'''
 }

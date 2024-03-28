@@ -1,4 +1,5 @@
 ﻿using Origins.NPCs.Fiberglass;
+using Origins.Tiles.Other;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Audio;
@@ -22,5 +23,11 @@ namespace Origins.Items.Other.Consumables {
 			}
 			return false;
 		}
-	}
+        public override void AddRecipes() {
+            Recipe recipe = CreateRecipe();
+            recipe.AddIngredient<Fiberglass_Item>(12);
+            recipe.AddTile(TileID.WorkBenches);
+            recipe.Register();
+        }
+    }
 }

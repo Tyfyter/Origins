@@ -5,7 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Turbo_Reel : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Combat",
+			"RangedBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 22);

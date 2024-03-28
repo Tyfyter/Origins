@@ -7,7 +7,7 @@ namespace Origins.Items.Accessories {
 	public class Bomb_Handling_Device : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"Explosive"
+			"ExplosiveBoostAcc"
 		};
         static short glowmask;
         public override void SetStaticDefaults() {

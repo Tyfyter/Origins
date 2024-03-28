@@ -5,7 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Celestial_Starlight : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Vitality",
+			"MagicBoostAcc"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(30, 30);

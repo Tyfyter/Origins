@@ -6,8 +6,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Dim_Starlight : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Resource",
-			"Exploration"
+			"Vitality",
+			"MagicBoostAcc"
 		};
 		static short glowmask;
 		public override void SetStaticDefaults() {
