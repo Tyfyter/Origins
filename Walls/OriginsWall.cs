@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using Terraria;
 using Terraria.Audio;
@@ -18,6 +19,9 @@ namespace Origins.Walls {
 		public abstract WallVersion WallVersions { get; }
 		public abstract Color MapColor { get; }
 		public virtual int TileItem => -1;
+		public Dictionary<WallVersion, OriginsWall> Versions { get; private set; }
+		public int GetWallID(WallVersion version) => Versions[version].Type;
+		public static int GetWallID<T>(WallVersion version) where T : OriginsWall => ModContent.GetInstance<T>().GetWallID(version);
 		public override void SetStaticDefaults() {
 			AddMapEntry(MapColor);
 			if (WallVersion == WallVersion.Safe) {
@@ -48,10 +52,21 @@ namespace Origins.Walls {
 		public override bool IsLoadingEnabled(Mod mod) {
 			if (WallVersion == WallVersion.None) {
 				ConstructorInfo ctor = GetType().GetConstructor(Array.Empty<Type>());
+				Dictionary<WallVersion, OriginsWall> versions = new();
+				bool first = true;
 				foreach (WallVersion version in WallVersions.GetFlags()) {
-					OriginsWall newWall = (OriginsWall)ctor.Invoke(Array.Empty<object>());
-					newWall.WallVersion = version;
-					mod.AddContent(newWall);
+					OriginsWall newWall;
+					if (!first) {
+						newWall = (OriginsWall)ctor.Invoke(Array.Empty<object>());
+						newWall.WallVersion = version;
+						mod.AddContent(newWall);
+					} else {
+						WallVersion = version;
+						newWall = this;
+						first = false;
+					}
+					newWall.Versions = versions;
+					versions.Add(version, newWall);
 					switch (version) {
 						case WallVersion.Safe:
 						case WallVersion.Placed_Unsafe:
@@ -59,9 +74,9 @@ namespace Origins.Walls {
 						break;
 					}
 				}
-				return false;
+				return true;
 			}
-			return true;
+			return false;
 		}
 		public OriginsWall() : base() {}
 	}

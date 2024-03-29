@@ -673,9 +673,10 @@ namespace Origins.World.BiomeData {
 				WallID.CrimsonHardenedSand,
 				WallID.HallowHardenedSand
 			);
-            /*AddWallConversions<Defiled_Grass_Wall>(
-                WallID.GrassUnsafe
-            );*/
+            AddWallConversions(OriginsWall.GetWallID<Defiled_Grass_Wall>(WallVersion.Natural),
+                WallID.GrassUnsafe,
+                WallID.Grass
+            );
             this.AddChambersiteConversions(ModContent.TileType<Chambersite_Ore_Defiled_Stone>(), ModContent.WallType<Chambersite_Defiled_Stone_Wall>());
 
 			EvilBiomeGenerationPass = new Defiled_Wastelands_Generation_Pass();
