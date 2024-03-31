@@ -4,7 +4,10 @@ using ReLogic.Content;
 using Terraria.ModLoader;
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Cactus : ModCactus, ICustomWikiStat, INoSeperateWikiPage {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Plant"
+        };
+        public override void SetStaticDefaults() {
 			GrowsOnTileId = new int[] { ModContent.TileType<Defiled_Sand>() };
 		}
 		public override Asset<Texture2D> GetTexture() => ModContent.Request<Texture2D>(typeof(Defiled_Cactus).GetDefaultTMLName());

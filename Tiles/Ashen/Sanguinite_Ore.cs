@@ -9,7 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Ashen {
     public class Sanguinite_Ore : OriginTile, IComplexMineDamageTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Ore"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileLighted[Type] = true;

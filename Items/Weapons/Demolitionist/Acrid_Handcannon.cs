@@ -1,15 +1,15 @@
 using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Origins.Items.Weapons.Ranged;
 using Origins.Tiles.Dusk;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Terraria.GameInput;
 
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Boomphracken : ModItem, ICustomWikiStat {
+    public class Acrid_Handcannon : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "HandCannon"
         };
@@ -20,47 +20,27 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
-			Item.damage = 80;
+			Item.damage = 72;
 			Item.width = 56;
 			Item.height = 26;
 			Item.useTime = 57;
 			Item.useAnimation = 57;
-			Item.shoot = ModContent.ProjectileType<Boomphracken_P>();
+			Item.shoot = ModContent.ProjectileType<Acrid_Slug_P>();
 			Item.useAmmo = ModContent.ItemType<Metal_Slug>();
 			Item.knockBack = 8f;
 			Item.shootSpeed = 12f;
-			Item.value = Item.sellPrice(gold: 20);
-			Item.rare = ItemRarityID.Pink;
+			Item.value = Item.sellPrice(gold: 10);
+			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = Origins.Sounds.Krunch.WithPitch(-0.25f);
 			Item.autoReuse = true;
-            Item.ArmorPenetration += 8;
+            Item.ArmorPenetration += 6;
         }
-		public override bool AltFunctionUse(Player player) {
-			if (player.selectedItem == 58 || player.mouseInterface) return false;
-			for (int i = Main.InventoryItemSlotsStart; i < Main.InventoryItemSlotsCount; i++) {
-				Item item = player.inventory[i];
-				if (!item.IsAir && item.useStyle != ItemUseStyleID.None && item.CountsAsClass<Thrown_Explosive>()) {
-					//PlayerInput.TryEnteringFastUseModeForInventorySlot(i);
-					if (player.nonTorch == -1) {
-						player.nonTorch = player.selectedItem;
-					}
-					player.selectedItem = i;
-					player.controlUseItem = true;
-					player.releaseUseItem = true;
-					player.controlUseTile = false;
-					break;
-				}
-			}
-			return false;
-		}
 		public override Vector2? HoldoutOffset() {
 			return Vector2.Zero;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.IllegalGunParts, 2);
-			recipe.AddIngredient(ModContent.ItemType<Bleeding_Obsidian_Item>(), 8);
-			recipe.AddIngredient(ModContent.ItemType<Hallowed_Cleaver>());
+			recipe.AddIngredient(ModContent.ItemType<Eitrite_Bar>(), 18);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
 		}
@@ -70,7 +50,7 @@ namespace Origins.Items.Weapons.Demolitionist {
             position += offset;
         }
 	}
-	public class Boomphracken_P : Metal_Slug_P {
-		public override string Texture => "Origins/Projectiles/Ammo/Boomphracken_P";
+	public class Acrid_Slug_P : Metal_Slug_P {
+		public override string Texture => "Origins/Projectiles/Ammo/Acrid_Slug_P";
 	}
 }

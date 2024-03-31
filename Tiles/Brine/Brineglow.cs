@@ -14,7 +14,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Brine {
     public class Brineglow : OriginTile, DefiledTile, IGlowingModTile {
-		public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
+        public string[] Categories => new string[] {
+            "Plant"
+        };
+        public AutoCastingAsset<Texture2D> GlowTexture { get; set; }
 		public Color GlowColor => Color.White;
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (Glows(tile)) color.Z += MathHelper.Max(1 - color.Z * 0.5f, 0);

@@ -7,7 +7,10 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Brine
 {
     public class Eitrite_Ore : OriginTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Ore"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			Main.tileOreFinderPriority[Type] = 666;

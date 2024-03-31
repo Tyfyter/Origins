@@ -6,7 +6,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
     public class Carburite : OriginTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Ore"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileMerge[Type][TileID.Dirt] = true;

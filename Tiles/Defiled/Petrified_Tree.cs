@@ -8,7 +8,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Defiled {
     public class Petrified_Tree : ModTree {
-		private static Mod mod => Origins.instance;
+        public string[] Categories => new string[] {
+            "Plant"
+        };
+        private static Mod mod => Origins.instance;
 		public static Petrified_Tree Instance { get; private set; }
 		public override TreePaintingSettings TreeShaderSettings => new();
 		public override TreeTypes CountsAsTreeType => TreeTypes.None;

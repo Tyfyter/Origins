@@ -10,7 +10,10 @@ namespace Origins.Tiles.Riven {
 	public class Riven_Cactus : ModCactus, IGlowingModPlant, ICustomWikiStat, INoSeperateWikiPage {
 		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Riven_Cactus).GetDefaultTMLName() + "_Glow";
 		public static AutoLoadingAsset<Texture2D> FruitGlowTexture = typeof(Riven_Cactus).GetDefaultTMLName() + "_Fruit_Glow";
-		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
+        public string[] Categories => new string[] {
+            "Plant"
+        };
+        public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (tile.TileType == TileID.DyePlants || HasScar(tile)) color = new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue();
 		}
 		static bool HasScar(Tile tile) {

@@ -3010,7 +3010,7 @@ Eitrite_Ore_Item: {
 }
 
 Sulphur_Stone_Item: {
-	// DisplayName: Sulphur Stone
+	// DisplayName: Dolomite
 	// Tooltip: ""
 }
 

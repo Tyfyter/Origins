@@ -7,10 +7,12 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
-    //current sprites are very unfinished
     public class Fiberglass_Tile : OriginTile {
 		static AutoCastingAsset<Texture2D>? vineTexture;
-		public static AutoCastingAsset<Texture2D>? VineTexture => vineTexture ??= Origins.instance.Assets.Request<Texture2D>("Tiles/Other/Fiberglass_Vines");
+        public string[] Categories => new string[] {
+            "OtherBlock"
+        };
+        public static AutoCastingAsset<Texture2D>? VineTexture => vineTexture ??= Origins.instance.Assets.Request<Texture2D>("Tiles/Other/Fiberglass_Vines");
 		public override void Unload() {
 			vineTexture = null;
 		}

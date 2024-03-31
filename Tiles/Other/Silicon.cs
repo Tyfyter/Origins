@@ -7,7 +7,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Other {
     public class Silicon : OriginTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Ore"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;
 			Main.tileMerge[Type][TileID.Dirt] = true;

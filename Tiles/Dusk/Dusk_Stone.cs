@@ -6,7 +6,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dusk {
     public class Dusk_Stone : OriginTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Stone"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.CanBeClearedDuringGeneration[Type] = true;

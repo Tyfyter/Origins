@@ -6,7 +6,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
     public class Chambersite_Gemspark : OriginTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Brick"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileLighted[Type] = true;
 			Main.tileMerge[Type][TileType<Chambersite_Gemspark_Off>()] = true;

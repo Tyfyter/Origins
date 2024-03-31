@@ -6,7 +6,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Other {
 	public class Batholith : OriginTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Stone"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			TileID.Sets.Stone[Type] = true;

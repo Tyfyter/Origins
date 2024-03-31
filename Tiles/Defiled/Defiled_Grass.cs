@@ -6,7 +6,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Grass : OriginTile, DefiledTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Grass"
+        };
+        public override void SetStaticDefaults() {
 			TileID.Sets.Grass[Type] = true;
 			TileID.Sets.NeedsGrassFraming[Type] = true;
 			TileID.Sets.ChecksForMerge[Type] = true;

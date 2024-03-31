@@ -207,9 +207,9 @@ STATUS EFFECTS:
 ---
 (^) Assimilation
 (X) Celestial Flames
-(^) Defiled Exhaustion
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
+(^) Mana Buffer
 (^) Rasterized
 (^) Torn*
 (^) Totally Safe
@@ -397,11 +397,10 @@ ACCESSORIES:
 (^) Tripod Nip*
 
 (^) Amebic Vial*
-(#, ^2) Crimson Hymn* !!!
 (^) Entangled Energy*
 (#2, ^2) Mana Drive*
 (^) Refactoring Pieces*
-(#, ^2) Soul Scythe* !!!
+(X) Retaliatory Tendril*
 
 (^) Blizzardwalker's Jacket*
 (^) Cursed Crown*
@@ -409,6 +408,7 @@ ACCESSORIES:
 (^) Fiberglass Dagger*
 (#3, ^2) Forbidden Voice* !!!
 (^) Lazy Cloak*
+(X) Mildewy Diving Helmet*
 (^) Mysterious Spray*
 (^) Protozoa Food*
 (#, ^2) Scrap Compactor*
@@ -464,7 +464,7 @@ VANITY:
 (X) Anti-gray Dye
 (X) Ashen Dye
 (X) Defiled Dye
-(X) High Contrast Dye
+(^) High Contrast Dye
 (X) Nova Dye
 (X) Riven Dye
 ---
@@ -670,7 +670,6 @@ MAGIC WEAPONS:
 (#, ^2) Communion
 (^) Dismay
 (^) Innermost Manifest
-(#, ^2) Meltdown
 (#2, ^2) Missing File
 (^) Seam Beam
 (X) Shinedown
@@ -770,9 +769,9 @@ EXPLOSIVE WEAPONS:
 (^) Shrapnel Bomb*
 (#, ^2) Sticky Link Grenade* !!!
 
+(#3, ^2) Acrid Handcannon* !!!
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
-(X) Big Surprise
 (#2, ^2) Boomphracken !!!
 (X) Cavitation Cannon
 (X) Chambersite Mine Launcher
@@ -831,6 +830,7 @@ TILES:
 (^) Defiled Sand*
 (^) Defiled Sandstone*
 (^) Defiled Stone*
+(^) Dolomite*
 (^) Dusklight*
 (X) Edengrass*
 (^) Edenwood*
@@ -856,7 +856,6 @@ TILES:
 (^) Silicon*
 (X) Sootgrass*
 (^) Spug Flesh*
-(^) Sulphur Stone*
 (@5, ^3) Twilith*
 (^) White Ice Block*
 
@@ -1115,6 +1114,7 @@ CONSUMABLES:
 (#, ^2) Festering Crate*
 (X) Holy Crate*
 (^) Pointy Crate*
+(X) Residual Crate
 (#2, ^2) Riven Loot Box*
 (X) Twilight Crate*
 

@@ -369,7 +369,7 @@ namespace Origins {
 			}
 			if (allManaDamage) {
 				Player.CheckMana(manaDamageToTake, true);
-				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
+				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 192);
 				PlayerLoader.PostHurt(Player, info);
 				return true;
 			}

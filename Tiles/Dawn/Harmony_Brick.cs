@@ -6,7 +6,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dawn {
 	public class Harmony_Brick : OriginTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Brick"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(150, 30, 75));

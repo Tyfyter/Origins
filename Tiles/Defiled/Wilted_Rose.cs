@@ -12,8 +12,10 @@ using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Defiled {
 	public class Wilted_Rose : OriginTile, DefiledTile {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
-
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Plant"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
 			Main.tileCut[Type] = true;

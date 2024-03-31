@@ -11,7 +11,10 @@ using Terraria.ObjectData;
 
 namespace Origins.Tiles.Dawn {
 	public class Eden_Tree : ModTree {
-		private Mod mod => Origins.instance;
+        public string[] Categories => new string[] {
+            "Plant"
+        };
+        private Mod mod => Origins.instance;
 
 		public static Eden_Tree Instance { get; private set; }
 		public override TreePaintingSettings TreeShaderSettings => new();

@@ -10,7 +10,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
     public class Acetabularia : OriginTile, DefiledTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Plant"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
 			Main.tileCut[Type] = true;

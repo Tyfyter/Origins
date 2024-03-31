@@ -8,7 +8,10 @@ using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 namespace Origins.Tiles.Defiled {
 	public class Defiled_Stone : OriginTile, DefiledTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Stone"
+        };
+        public override void SetStaticDefaults() {
 			Origins.PotType.Add(Type, ((ushort)TileType<Defiled_Pot>(), 0, 0));
 			Origins.PileType.Add(Type, ((ushort)TileType<Defiled_Foliage>(), 0, 6));
 			Main.tileSolid[Type] = true;

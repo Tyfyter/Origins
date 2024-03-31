@@ -9,7 +9,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Defiled {
 	public class Endowood : OriginTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Plant"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(40, 10, 40));

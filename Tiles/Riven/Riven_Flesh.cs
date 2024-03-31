@@ -8,7 +8,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Riven {
 	public class Riven_Flesh : OriginTile, RivenTile, IGlowingModTile {
-		public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
+        public string[] Categories => new string[] {
+            "Stone"
+        };
+        public AutoCastingAsset<Texture2D> GlowTexture { get; private set; }
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {

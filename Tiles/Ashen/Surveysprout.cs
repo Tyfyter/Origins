@@ -12,8 +12,10 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Ashen {
 	public class Surveysprout : OriginTile, AshenTile {
 		private const int FrameWidth = 18; // A constant for readability and to kick out those magic numbers
-
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Plant"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileFrameImportant[Type] = true;
 			Main.tileObsidianKill[Type] = true;
 			Main.tileCut[Type] = true;

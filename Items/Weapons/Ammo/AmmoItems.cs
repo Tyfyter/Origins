@@ -2,6 +2,7 @@
 using Origins.Dusts;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
+using Origins.Projectiles.Weapons;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -91,7 +92,11 @@ namespace Origins.Items.Weapons.Ammo {
 				Projectile.damage,
 				Projectile.knockBack
 			);
-		}
+            /*if (Projectile.GetGlobalProjectile<ExplosiveGlobalProjectile>().acridHandcannon) return;
+            int t = ModContent.ProjectileType<Acid_Shot>();
+            for (int i = Main.rand.Next(1); i < 3; i++) Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, (Main.rand.NextVector2Unit() * 4) + (Projectile.velocity / 8), t, Projectile.damage / 5, 6, Projectile.owner, ai1: -0.5f).scale = 0.85f;
+            );*/
+        }
 	}
 	public class Metal_Slug_Explosion : ModProjectile, IIsExplodingProjectile {
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";

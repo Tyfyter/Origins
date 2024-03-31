@@ -10,7 +10,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Tiles.Riven {
     public class Exoskeletal_Tree : ModTree, IGlowingModTile {
-		private static Mod mod => Origins.instance;
+        public string[] Categories => new string[] {
+            "Plant"
+        };
+        private static Mod mod => Origins.instance;
 		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Exoskeletal_Tree).GetDefaultTMLName() + "_Glow";
 		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);

@@ -27,7 +27,13 @@ namespace Origins.NPCs {
 		public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot) {
 			List<IItemDropRule> dropRules = npcLoot.Get(false);
 			switch (npc.netID) {
-				case NPCID.KingSlime:
+                /*case NPCID.EaterofWorldsBody:
+                npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Forbidden_Voice>(), 4));
+                break;*/
+                case NPCID.BrainofCthulhu:
+                npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Weakpoint_Analyzer>(), 4));
+                break;
+                case NPCID.KingSlime:
 				npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Cursed_Crown>(), 4));
 				break;
 				case NPCID.EyeofCthulhu:

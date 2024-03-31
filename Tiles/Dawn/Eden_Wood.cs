@@ -7,7 +7,10 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Origins.Tiles.Dawn {
     public class Eden_Wood : OriginTile {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Plant"
+        };
+        public override void SetStaticDefaults() {
 			Main.tileSolid[Type] = true;
 			Main.tileBlockLight[Type] = true;
 			AddMapEntry(new Color(150, 40, 40));
