@@ -25,7 +25,7 @@ namespace Origins.NPCs.Riven {
 			});
 		}
         public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-            return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Cleaver;
+            return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Cleaver;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 3, 6));

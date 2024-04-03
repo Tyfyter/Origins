@@ -102,7 +102,7 @@ namespace Origins.World.BiomeData {
 			}
 			public static float FlyingEnemyRate(NPCSpawnInfo spawnInfo, bool hardmode = false) {
 				if (hardmode && !Main.hardMode) return 0f;
-				return spawnInfo.Player.InModBiome<Defiled_Wastelands>() ? 0.5f : 0f;
+				return spawnInfo.Player.InModBiome<Defiled_Wastelands>() ? 0.25f : 0f;
 			}
 		}
 		public static class Gen {
