@@ -11,6 +11,7 @@ using Origins.Items.Weapons.Melee;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs.Defiled;
 using Origins.NPCs.Defiled.Boss;
+using Origins.NPCs.Riven;
 using Origins.Projectiles.Misc;
 using Origins.Questing;
 using Origins.Tiles;
@@ -396,8 +397,8 @@ namespace Origins.NPCs {
 						pool.Add(ModContent.NPCType<Enchanted_Trident>(), Defiled_Wastelands.SpawnRates.Bident);
 					}
 					if (player.InModBiome<Riven_Hive>()) {
-						//pool.Add(ModContent.NPCType<Riven_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
-						//pool.Add(ModContent.NPCType<Enchanted_Trident>(), Defiled_Wastelands.SpawnRates.Bident);
+						pool.Add(ModContent.NPCType<Riven_Mimic>(), Riven_Hive.SpawnRates.Mimic);
+						pool.Add(ModContent.NPCType<Savage_Whip>(), Riven_Hive.SpawnRates.Whip);
 					}
 				}
 			}

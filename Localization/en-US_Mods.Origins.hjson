@@ -1127,6 +1127,7 @@ Projectiles: {
 	Switchblade_Shortsword_P.DisplayName: Switchblade
 	Amber_Shard.DisplayName: Amber Shard
 	Metal_Slug_Explosion.DisplayName: Metal Slug Explosion
+	Acrid_Slug_P.DisplayName: Acrid Slug
 }
 
 Prefixes: {

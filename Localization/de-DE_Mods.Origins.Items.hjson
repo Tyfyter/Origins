@@ -4064,3 +4064,8 @@ Defiled_Grass_Wall_Placed_Unsafe_Item: {
 	// DisplayName: Defiled_ Grass_ Wall_ Placed_ Unsafe_ Item
 	// Tooltip: ""
 }
+
+Acrid_Handcannon: {
+	// DisplayName: Acrid_ Handcannon
+	// Tooltip: ""
+}
