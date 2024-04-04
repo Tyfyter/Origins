@@ -161,7 +161,7 @@ ENEMY NPCS:
 (^) Profaned Bident
 (^) Pustule Jelly
 (^) Riven Mimic
-(#, ^2) Savage Whip* !!!
+(#3, ^2) Savage Whip* !!! (just needs the Riven glow and its solid)
 (X) Sea Dragon
 (#, ^2) Shattered Ghoul !!!
 (#3, ^2) Shattered Mummy
@@ -451,11 +451,10 @@ VANITY:
 (X) Decay Protector Set !!!
 (X) Defiled Sorcerer Set
 (X) Gore Protector Set !!!
-(X) Newsboy Cap !!!
+(^) Newsboy Cap
 (X) Riven Druid Set
 (X) Steampunk Mechanist Set
 (^) Sunflower Sandals
-(X) Well-Gelled Hero's Hair !!!
 
 (^) Tyfyter's Set
 

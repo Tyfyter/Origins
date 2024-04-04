@@ -4056,16 +4056,16 @@ Blast_Helmet: {
 }
 
 Defiled_Grass_Wall_Safe_Item: {
-	// DisplayName: Defiled_ Grass_ Wall_ Safe_ Item
+	// DisplayName: Defiled Grass Wall
 	// Tooltip: ""
 }
 
 Defiled_Grass_Wall_Placed_Unsafe_Item: {
-	// DisplayName: Defiled_ Grass_ Wall_ Placed_ Unsafe_ Item
+	// DisplayName: Infested Defiled Grass Wall Placed
 	// Tooltip: ""
 }
 
 Acrid_Handcannon: {
-	// DisplayName: Acrid_ Handcannon
+	// DisplayName: Acrid Handcannon
 	// Tooltip: ""
 }

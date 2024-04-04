@@ -4,6 +4,8 @@ Generic: {
 	Defiled: Blŏkus
 	Defiled_Wastelands: Blŏkusland
 	The_Defiled_Wastelands: "{$Mods.Origins.AprilFools.Generic.Defiled_Wastelands}"
+	Defiled_Amalgamation: District Attorney
+	Hoarder: Chimney Smoker
 }
 
 Status_Messages: {
@@ -22,10 +24,13 @@ Items: {
 	Mine_Flayer.Tooltip:
 		'''
 		Doesn't actually flay mines
-		Releases a barrage of mines when swung
-		16.7% chance not to consume ammo
+		Releases a barrage of canisters when swung
+		60% chance not to consume ammo
 		'''
 	Hot_Potato.Tooltip: "'Be careful, it's a potato'"
+	Grenade_Tube.DisplayName: Noob Tube
+	Bottled_Brine.DisplayName: Pickle Jar
+	No_U_Card.Tooltip: "The greatest 'fuck you' ever"
 }
 
 Dialogue.Acid_Freak.InteractionWind: It fucken WIMDY!

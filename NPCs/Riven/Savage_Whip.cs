@@ -12,12 +12,12 @@ namespace Origins.NPCs.Riven {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.CursedHammer);
 			NPC.aiStyle = NPCAIStyleID.None;
-			NPC.lifeMax = 175;
-			NPC.defense = 16;
+			NPC.lifeMax = 200;
+			NPC.defense = 18;
 			NPC.damage = 85;
 			NPC.width = 32;
 			NPC.height = 32;
-			NPC.knockBackResist = 0.35f;
+			NPC.knockBackResist = 0.6f;
 			NPC.value = 1000;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
@@ -27,8 +27,8 @@ namespace Origins.NPCs.Riven {
 			set => NPC.ai[0] = value;
 		}
 		public override void AI() {
-			const float charge_time = 120f;
-			const float swing_time = 45f;
+			const float charge_time = 15f;
+			const float swing_time = 25f;
 			const float spin_range = 240f;
 			Lighting.AddLight(NPC.Center, 0.05f, 0.15f, 0.3f);
 
@@ -66,11 +66,11 @@ namespace Origins.NPCs.Riven {
 							NPC.ai[1] = 0;
 						}
 
-						NPC.velocity *= 0.96f;
+						//NPC.velocity *= 0.97f;
 						if (NPC.ai[1] < charge_time) NPC.ai[1]++;
 						else NPC.ai[1] = charge_time;
 						float spinSpeed = NPC.ai[1] / charge_time;
-						spinSpeed = 0.05f + spinSpeed * 0.15f;
+						spinSpeed = 0.05f + spinSpeed * 0.50f;
 						NPC.localAI[0] = spinSpeed;
 						if (NPC.ai[1] >= charge_time) {
 							if (NPC.ai[2] != 0 && Vector2.Dot(diff.SafeNormalize(default), new Vector2(-1, 0).RotatedBy(NPC.rotation + 3f)) > 0.9f) {
@@ -89,7 +89,7 @@ namespace Origins.NPCs.Riven {
 
 					NPC.velocity *= 0.96f;
 					NPC.ai[1] += 1f;
-					float spinSpeed = 0.2f;
+					float spinSpeed = 0.4f;
 					NPC.localAI[0] = spinSpeed;
 					if (NPC.ai[1] >= swing_time) {
 						NPC.netUpdate = true;
@@ -100,7 +100,7 @@ namespace Origins.NPCs.Riven {
 				case 3: {
 					NPC.velocity *= 0.96f;
 					float spinSpeed = NPC.ai[1] / swing_time;
-					spinSpeed = 0.1f + spinSpeed * 0.1f;
+					spinSpeed = 0.1f + spinSpeed * 0.35f;
 					NPC.localAI[0] = spinSpeed;
 					NPC.ai[1] -= 1f;
 					if (NPC.ai[1] <= 0) {

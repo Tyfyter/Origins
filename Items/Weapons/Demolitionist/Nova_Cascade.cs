@@ -22,6 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Musket);
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+			Item.noMelee = true;
 			Item.damage = 180;
 			Item.width = 56;
 			Item.height = 26;
