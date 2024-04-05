@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -30,7 +31,7 @@ namespace Origins.NPCs.Riven {
 			const float charge_time = 15f;
 			const float swing_time = 25f;
 			const float spin_range = 240f;
-			Lighting.AddLight(NPC.Center, 0.05f, 0.15f, 0.3f);
+			DoGlow(NPC.Center);
 
 			if (NPC.target < 0 || NPC.target == 255 || Main.player[NPC.target].dead) NPC.TargetClosest();
 			if (NPC.ai[3] <= 0) {
@@ -182,6 +183,9 @@ namespace Origins.NPCs.Riven {
 			nextNPC.ai[2] = depthLeft == 0 ? 3 : Main.rand.Next(3);
 			if (depthLeft > 0) SpawnSegment(nextNPC, depthLeft - 1);
 		}
+		public static void DoGlow(Vector2 position) {
+			Lighting.AddLight(position, new Vector3(0.394f, 0.879f, 0.912f) * Riven_Hive.NormalGlowValue.GetValue());
+		}
 	}
 	public class Savage_Whip_Segment : Savage_Whip {
 		public override string Texture => "Origins/NPCs/Riven/Savage_Whip";
@@ -198,7 +202,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override bool PreAI() {
 			NPC.dontTakeDamage = false;
-			Lighting.AddLight(NPC.Center, 0.05f, 0.15f, 0.3f);
+			DoGlow(NPC.Center);
 			NPC parentNPC = ParentNPC;
 			if (!parentNPC.active) {
 				NPC.active = false;

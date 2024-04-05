@@ -51,7 +51,7 @@ namespace Origins.World.BiomeData {
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Hive_Caverns";
 		public override string MapBackground => BackgroundPath;
 		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => ModContent.GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;
-		public static FrameCachedValue<float> NormalGlowValue { get; private set; }  = new(() => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f);
+		public static FrameCachedValue<float> NormalGlowValue { get; private set; } = new(() => (float)(Math.Sin(Main.GlobalTimeWrappedHourly) + 2) * 0.5f);
 		public override bool IsBiomeActive(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.ZoneRivenProgress = Math.Min(OriginSystem.rivenTiles - (NeededTiles - ShaderTileCount), ShaderTileCount) / ShaderTileCount;
