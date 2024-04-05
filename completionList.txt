@@ -250,12 +250,12 @@ ARMOR:
 (^) Riptide Armor*
 (^) Riven Armor*
 (ᗢ) Scavenger Armor*
-(#3, ^2) Soulhide Armor* !!!
+(#3?, ^2) Soulhide Armor* !!!
 (^) Tendon Armor*
 
 (X) Abysswalker Armor*
 (^) Acrid Armor*
-(#3, ^2) Amber Exploder Armor* !!!
+(#3?, ^2) Amber Exploder Armor* !!!
 (^) Bleeding Obsidian Armor*
 (X) Ruby Ranger Armor*
 
@@ -288,7 +288,7 @@ ACCESSORIES:
 (^) Advanced Imaging*
 (^) Air Tank*
 (#2, ^2, ♠) ATACS*
-(#3, ^2) Automated Returns Handler* !!!
+(#3?, ^2) Automated Returns Handler* !!!
 (^) Binding Book*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
@@ -302,7 +302,7 @@ ACCESSORIES:
 (^) Celestial Stone Mask*
 (^) Cirrhosis' Abhorrence*
 (^) Comb*
-(#3, ^2) Control Locus* !!!
+(☻) Control Locus* !!!
 (^) Coologne*
 (#2, ^2) CORE Generator* !!!
 (#, ^2) Counter-offensive Scarf* !!!
@@ -358,7 +358,7 @@ ACCESSORIES:
 (^) Resin Shield*
 (^) Return To Sender*
 (^) Ruby Reticle*
-(#3, ^2) Seal of Cinders* !!!
+(#3?, ^2) Seal of Cinders* !!!
 (^) Scavenger Bag*
 (^) Shield of Retribution*
 (^) Sniper's Mark*
@@ -406,7 +406,7 @@ ACCESSORIES:
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
 (^) Fiberglass Dagger*
-(#3, ^2) Forbidden Voice* !!!
+(☻) Forbidden Voice* !!!
 (^) Lazy Cloak*
 (X) Mildewy Diving Helmet*
 (^) Mysterious Spray*
@@ -768,7 +768,7 @@ EXPLOSIVE WEAPONS:
 (^) Shrapnel Bomb*
 (#, ^2) Sticky Link Grenade* !!!
 
-(#3, ^2) Acrid Handcannon* !!!
+(#3?, ^2) Acrid Handcannon* !!!
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (#2, ^2) Boomphracken !!!
@@ -1046,7 +1046,7 @@ MATERIALS:
 
 CRITTERS AND FISH:
 ---
-(#3, ^2) Amoeba Buggy* !!!
+(#3?, ^2) Amoeba Buggy* !!!
 (#3, ^2) Bug
 (X) Chambersite Bunny
 (X) Chambersite Squirrel
