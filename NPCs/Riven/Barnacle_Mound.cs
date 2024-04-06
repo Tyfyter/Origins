@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Materials;
+using Origins.NPCs.Critters;
 using Origins.World.BiomeData;
 using ReLogic.Content;
 using Terraria;
@@ -31,7 +32,15 @@ namespace Origins.NPCs.Riven {
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 3, 8));
         }
-        public override void AI() {
+		public override void OnKill() {
+			if (Main.rand.NextBool(4, 7)) {
+				int type = ModContent.NPCType<Amoeba_Buggy>();
+				for (int i = Main.rand.Next(1, 3); i-- > 0;) {
+					NPC.NewNPCDirect(NPC.GetSource_FromAI(), (int)NPC.position.X, (int)NPC.position.Y, type);
+				}
+			}
+		}
+		public override void AI() {
 			NPC.TargetClosest(faceTarget: false);
 			if (NPC.HasValidTarget && ++NPC.ai[0] > (Main.masterMode ? 420 : (Main.expertMode ? 540 : 600))) {
 				int type = ModContent.NPCType<Amoeba_Bugger>();
