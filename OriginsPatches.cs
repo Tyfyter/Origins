@@ -48,6 +48,7 @@ using Origins.Backgrounds;
 using Origins.Items.Tools;
 using Origins.Tiles;
 using System.Runtime.CompilerServices;
+using Terraria.ModLoader.Core;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -445,8 +446,27 @@ namespace Origins {
 					orig(self);
 				}
 			};
+			foreach (Mod mod in ModLoader.Mods) {
+				if (mod.Code is null) continue;
+				foreach (Type type in from t in AssemblyManager.GetLoadableTypes(mod.Code) where t.IsAssignableTo(typeof(IItemDropRule)) select t) {
+					FieldInfo chanceNumerator = type.GetField("chanceNumerator", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+					if (chanceNumerator != null) {
+						chanceNumerators.Add(type, new(chanceNumerator));
+					}
+				}
+			}
+			On_ItemDropResolver.ResolveRule += (orig, self, rule, info) => {
+				currentChanceNumerator = 1;
+				if (chanceNumerators.TryGetValue(rule.GetType(), out var chanceNumerator)) {
+					currentChanceNumerator = chanceNumerator.GetValue(rule);
+				}
+				ItemDropAttemptResult result = orig(self, rule, info);
+				currentChanceNumerator = 1;
+				return result;
+			};
 		}
-
+		public static int currentChanceNumerator = 1;
+		public static Dictionary<Type, FastFieldInfo<IItemDropRule, int>> chanceNumerators;
 		private void On_CommonCode_ModifyItemDropFromNPC(On_CommonCode.orig_ModifyItemDropFromNPC orig, NPC npc, int itemIndex) {
 			if (Main.netMode == NetmodeID.Server) {
 				NetMessage.SendData(MessageID.SyncItem, -1, -1, null, itemIndex, 1f);
@@ -779,10 +799,17 @@ namespace Origins {
 		internal static bool hurtCollisionCrimsonVine;
 		internal static bool rollingLotteryTicket;
 		private int Player_RollLuck(Terraria.On_Player.orig_RollLuck orig, Player self, int range) {
+			const int lottery_ticket_min_denominator = 25;
 			OriginPlayer originPlayer = self.GetModPlayer<OriginPlayer>();
-			if (!rollingLotteryTicket && range >= 25 && originPlayer.lotteryTicketItem is not null) {
+			originPlayer.Mod.Logger.Info(originPlayer.lotteryTicketItem);
+			if (!rollingLotteryTicket && range >= lottery_ticket_min_denominator * currentChanceNumerator && originPlayer.lotteryTicketItem is not null) {
 				rollingLotteryTicket = true;
-				if (self.RollLuck(2 + range / 25) == 0) {
+				if (self.RollLuck(2 + range * currentChanceNumerator / lottery_ticket_min_denominator) == 0) {
+					if (Main.netMode == NetmodeID.Server && !originPlayer.lotteryTicketItem.IsAir) {
+						ModPacket packet = instance.GetPacket();
+						packet.Write(NetMessageType.win_lottery);
+						packet.Send(self.whoAmI, -1);
+					}
 					originPlayer.lotteryTicketItem.TurnToAir();
 					rollingLotteryTicket = false;
 					return 0;
@@ -791,20 +818,25 @@ namespace Origins {
 			rollingLotteryTicket = false;
 			int roll = orig(self, range);
 			int rerollCount = OriginExtensions.RandomRound(Main.rand, originPlayer.brineClover / 4f);
-			if (roll != 0 && rerollCount > 0 && range > 1) {
+			if (roll >= currentChanceNumerator && rerollCount > 0 && range > 1) {
 				Item brineCloverItem = originPlayer.brineCloverItem;
 				bool wilt = false;
 				while (rerollCount > 0) {
 					int newRoll = orig(self, range);
 					if (newRoll < roll) {
 						roll = newRoll;
-						if (newRoll == 0 && range >= 20) wilt = true;
+						if (newRoll < currentChanceNumerator && range >= 20 * currentChanceNumerator) wilt = true;
 					}
 					rerollCount--;
 				}
 				if (wilt) {
+					if (Main.netMode == NetmodeID.Server) {
+						ModPacket packet = instance.GetPacket();
+						packet.Write(NetMessageType.pickle_lottery);
+						packet.Send(self.whoAmI, -1);
+					}
 					int prefix = brineCloverItem.prefix;
-					brineCloverItem.SetDefaults((brineCloverItem.ModItem as Brine_Leafed_Clover)?.NextLowerTier ?? 0);
+					brineCloverItem.SetDefaults((brineCloverItem.ModItem as Brine_Leafed_Clover)?.NextLowerTier ?? ItemID.None);
 					brineCloverItem.Prefix(prefix);
 				}
 			}

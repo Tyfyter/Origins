@@ -48,10 +48,16 @@ namespace Origins.NPCs.Fiberglass {
 			NPC.value = Item.sellPrice(gold: 3); // troll face
 		}
 		public override void OnSpawn(IEntitySource source) {
+		}
+		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			//bestiaryEntry.
+
+		}
+		public override void AI() {
+			NPCAimedTarget target = NPC.GetTargetData();
 			if (legs is null) {
 				legs = new Arm[8];
 				legTargets = new Vector2[8];
-				NPCAimedTarget target = NPC.GetTargetData();
 				NPC.rotation = NPC.AngleTo(target.Center) + MathHelper.PiOver2;
 				for (int i = 0; i < 8; i++) {
 					legs[i] = new Arm() {
@@ -75,13 +81,6 @@ namespace Origins.NPCs.Fiberglass {
 					legTargets[i] = ((legs[i].start + new Vector2(0, 20)) * new Vector2(1, 1.5f)).RotatedBy(NPC.rotation) * 4 + NPC.Center + new Vector2(0, (((i / 2) % 2) == i % 2 ? 12f : -12f));
 				}
 			}
-		}
-		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			//bestiaryEntry.
-
-		}
-		public override void AI() {
-			NPCAimedTarget target = NPC.GetTargetData();
 			float jumpSpeed = 10 + DifficultyMult * 2;
 			switch ((int)NPC.ai[0]) {
 				case 0: {

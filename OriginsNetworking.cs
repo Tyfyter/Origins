@@ -1,4 +1,5 @@
-﻿using Origins.Questing;
+﻿using Origins.Items.Accessories;
+using Origins.Questing;
 using System;
 using System.IO;
 using Terraria;
@@ -25,6 +26,19 @@ namespace Origins {
 					case sync_guid:
 					altHandle = true;
 					break;
+
+					case win_lottery: {
+						Main.LocalPlayer.GetModPlayer<OriginPlayer>().lotteryTicketItem.TurnToAir();
+						break;
+					}
+
+					case pickle_lottery: {
+						Item brineCloverItem = Main.LocalPlayer.GetModPlayer<OriginPlayer>().brineCloverItem;
+						int prefix = brineCloverItem.prefix;
+						brineCloverItem.SetDefaults((brineCloverItem.ModItem as Brine_Leafed_Clover)?.NextLowerTier ?? ItemID.None);
+						brineCloverItem.Prefix(prefix);
+						break;
+					}
 
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on client");
@@ -111,7 +125,7 @@ namespace Origins {
 						}
 						break;
 					}
-				case sync_guid: {
+					case sync_guid: {
 						OriginPlayer originPlayer = Main.player[Main.netMode == NetmodeID.Server ? whoAmI : reader.ReadByte()].GetModPlayer<OriginPlayer>();
 						originPlayer.guid = new(reader.ReadBytes(16));
 						// Forward the changes to the other clients
@@ -135,6 +149,8 @@ namespace Origins {
 			internal const byte sync_peat = 3;
 			internal const byte world_cracker_hit = 4;
 			internal const byte sync_guid = 5;
+			internal const byte win_lottery = 6;
+			internal const byte pickle_lottery = 7;
 		}
 	}
 }
