@@ -780,7 +780,7 @@ namespace Origins {
 		internal static bool rollingLotteryTicket;
 		private int Player_RollLuck(Terraria.On_Player.orig_RollLuck orig, Player self, int range) {
 			OriginPlayer originPlayer = self.GetModPlayer<OriginPlayer>();
-			if (!rollingLotteryTicket && range > 25 && originPlayer.lotteryTicketItem is not null) {
+			if (!rollingLotteryTicket && range >= 25 && originPlayer.lotteryTicketItem is not null) {
 				rollingLotteryTicket = true;
 				if (self.RollLuck(2 + range / 25) == 0) {
 					originPlayer.lotteryTicketItem.TurnToAir();
@@ -791,7 +791,7 @@ namespace Origins {
 			rollingLotteryTicket = false;
 			int roll = orig(self, range);
 			int rerollCount = OriginExtensions.RandomRound(Main.rand, originPlayer.brineClover / 4f);
-			if (rerollCount > 0 && range > 1) {
+			if (roll != 0 && rerollCount > 0 && range > 1) {
 				Item brineCloverItem = originPlayer.brineCloverItem;
 				bool wilt = false;
 				while (rerollCount > 0) {
