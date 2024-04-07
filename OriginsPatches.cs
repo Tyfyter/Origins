@@ -446,6 +446,7 @@ namespace Origins {
 					orig(self);
 				}
 			};
+			chanceNumerators = new();
 			foreach (Mod mod in ModLoader.Mods) {
 				if (mod.Code is null) continue;
 				foreach (Type type in from t in AssemblyManager.GetLoadableTypes(mod.Code) where t.IsAssignableTo(typeof(IItemDropRule)) select t) {
