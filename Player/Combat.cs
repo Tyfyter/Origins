@@ -671,6 +671,10 @@ namespace Origins {
 				Origins.hurtCollisionCrimsonVine = false;
 				CrimsonAssimilation += 0.03f;
 			}
+			if (blastSet) {
+				blastSetCharge += info.Damage * 0.2f;
+				if (blastSetCharge > blast_set_charge_max) blastSetCharge = blast_set_charge_max;
+			}
 		}
 		#endregion
 		/// <param name="target">the potential target</param>

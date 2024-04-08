@@ -474,10 +474,14 @@ namespace Origins {
 			Player.blockRange += Player.blockRange / 2;
 			#endregion
 		}
-		public void TriggerSetBonus() {
+		public void TriggerSetBonus(bool fromNet = false) {
 			if (setAbilityCooldown > 0) return;
+			if (!fromNet && Main.netMode != NetmodeID.SinglePlayer) {
+
+			}
 			switch (setActiveAbility) {
 				case 1: {
+					if (fromNet) break;
 					Vector2 speed = Vector2.Normalize(Main.MouseWorld - Player.MountedCenter) * 14;
 					int type = ModContent.ProjectileType<Infusion_P>();
 					for (int i = -5; i < 6; i++) {
@@ -485,18 +489,25 @@ namespace Origins {
 					}
 					setAbilityCooldown = 30;
 					if (Player.manaRegenDelay < 60) Player.manaRegenDelay = 60;
+					break;
 				}
-				break;
+
 				case 2: {
 					if (Player.CheckMana((int)(40 * Player.manaCost), true)) {
 						setAbilityCooldown = 1800;
 						Player.AddBuff(Mimic_Buff.ID, 600);
 						Player.AddBuff(BuffID.Heartreach, 30);
 					}
+					break;
 				}
-				break;
+
 				case 3:
 				break;
+
+				case SetActiveAbility.blast_armor: {
+					blastSetActive = true;
+					break;
+				}
 				default:
 				break;
 			}
@@ -523,5 +534,8 @@ namespace Origins {
 		public int GetMimicSetChoice(int level) {
 			return (mimicSetChoices >> level * 2) & 3;
 		}
+	}
+	public static class SetActiveAbility {
+		public const int blast_armor = 4;
 	}
 }

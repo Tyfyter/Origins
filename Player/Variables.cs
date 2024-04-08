@@ -83,6 +83,10 @@ namespace Origins {
 		public bool scavengerSet = false;
 		public bool amberSet = false;
 		public bool sapphireSet = false;
+		public bool blastSet = false;
+		public float blastSetCharge = 0;
+		public const int blast_set_charge_max = 100;
+		public bool blastSetActive = false;
 		#endregion armor/set bonuses
 
 		#region accessories
@@ -382,6 +386,14 @@ namespace Origins {
 			scavengerSet = false;
 			amberSet = false;
 			sapphireSet = false;
+			if (blastSetActive) {
+				if (!blastSet || (blastSetCharge -= (14 / 60f)) <= 0) {
+					blastSetActive = false;
+					blastSetCharge = 0;
+				}
+			}
+			if (blastSetCharge > blast_set_charge_max) blastSetCharge = blast_set_charge_max;
+			blastSet = false;
 
 			setActiveAbility = 0;
 			if (setAbilityCooldown > 0) {

@@ -589,13 +589,13 @@ namespace Origins {
 		}
 
 		public static void SetEyndumCoreUI() {
-			UserInterface setBonusUI = OriginSystem.Instance.setBonusUI;
+			UserInterface setBonusUI = OriginSystem.Instance.setBonusInventoryUI;
 			if (setBonusUI.CurrentState is not Eyndum_Core_UI) {
 				setBonusUI.SetState(new Eyndum_Core_UI());
 			}
 		}
 		public static void SetMimicSetUI() {
-			UserInterface setBonusUI = OriginSystem.Instance.setBonusUI;
+			UserInterface setBonusUI = OriginSystem.Instance.setBonusInventoryUI;
 			if (setBonusUI.CurrentState is not Mimic_Selection_UI) {
 				setBonusUI.SetState(new Mimic_Selection_UI());
 			}

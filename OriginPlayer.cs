@@ -30,6 +30,7 @@ namespace Origins {
 	public partial class OriginPlayer : ModPlayer {
 		public static Dictionary<Guid, int> playersByGuid;
 		public const float explosive_defense_factor = 2f;
+		public static OriginPlayer LocalOriginPlayer { get; internal set; }
 		public override void PreUpdateMovement() {
 			Origins.hurtCollisionCrimsonVine = false;
 			if (riptideLegs && Player.wet) {

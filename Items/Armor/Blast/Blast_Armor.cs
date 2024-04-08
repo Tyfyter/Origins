@@ -13,23 +13,33 @@ namespace Origins.Items.Armor.Blast {
             "HardmodeArmorSet",
             "ExplosiveBoostGear"
         };
+		public static int BerserkerModeHead { get; private set; }
+		public override void Load() {
+			BerserkerModeHead = EquipLoader.AddEquipTexture(Mod, $"{Texture}_Head_Berserker", EquipType.Head, name: $"{Name}_Head_Berserker");
+		}
 		public override void SetDefaults() {
 			Item.defense = 8;
 			Item.value = Item.sellPrice(gold: 7, silver: 50);
 			Item.rare = ItemRarityID.Yellow;
 		}
         public override void UpdateEquip(Player player) {
-			player.GetCritChance(DamageClass.Generic) += 0.1f;
+			player.GetCritChance(DamageClass.Generic) += 10f;
             player.GetModPlayer<OriginPlayer>().explosiveSelfDamage -= 0.05f;
         }
         public override bool IsArmorSet(Item head, Item body, Item legs) {
 			return body.type == ModContent.ItemType<Blast_Breastplate>() && legs.type == ModContent.ItemType<Blast_Greaves>();
 		}
+		public override void EquipFrameEffects(Player player, EquipType type) {
+			if (player.GetModPlayer<OriginPlayer>().blastSetActive) {
+				player.head = BerserkerModeHead;
+			}
+		}
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Blast");
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.explosiveSelfDamage -= 0.25f;
-			//originPlayer.blastSet = true;
+			originPlayer.blastSet = true;
+			originPlayer.setActiveAbility = SetActiveAbility.blast_armor;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

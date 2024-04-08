@@ -8,6 +8,7 @@ using Origins.Tiles.Defiled;
 using Origins.Tiles.Other;
 using Origins.Tiles.Riven;
 using Origins.UI;
+using Origins.UI.SetBonus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,16 @@ namespace Origins {
     public partial class OriginSystem : ModSystem {
 		static OriginSystem instance;
 		public static OriginSystem Instance => instance ??= ModContent.GetInstance<OriginSystem>();
-		public UserInterface setBonusUI;
+		public UserInterface setBonusInventoryUI;
+		UserInterface setBonusHUDInterface;
+		public State_Switching_UI SetBonusHUD { get; private set; }
 		public UserInterfaceWithDefaultState journalUI;
 		public override void Load() {
-			setBonusUI = new UserInterface();
+			setBonusInventoryUI = new UserInterface();
+			setBonusHUDInterface = new UserInterface();
+			setBonusHUDInterface.SetState(SetBonusHUD = new(
+				new Berserker_Meter()
+			));
 			journalUI = new UserInterfaceWithDefaultState() {
 				DefaultUIState = new Journal_UI_Button()
 			};
@@ -307,46 +314,55 @@ namespace Origins {
 		}
 		public override void UpdateUI(GameTime gameTime) {
 			if (Main.playerInventory) {
-				if (setBonusUI?.CurrentState is Eyndum_Core_UI eyndumCoreUIState) {
+				if (setBonusInventoryUI?.CurrentState is Eyndum_Core_UI eyndumCoreUIState) {
 					OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 					if (eyndumCoreUIState?.itemSlot?.item == originPlayer.eyndumCore) {
 						if (!originPlayer.eyndumSet) {
 							if (eyndumCoreUIState?.itemSlot?.item?.Value?.IsAir ?? true) {
-								setBonusUI.SetState(null);
+								setBonusInventoryUI.SetState(null);
 							} else {
 								eyndumCoreUIState.hasSetBonus = false;
-								setBonusUI.Update(gameTime);
+								setBonusInventoryUI.Update(gameTime);
 							}
 						} else {
-							setBonusUI.Update(gameTime);
+							setBonusInventoryUI.Update(gameTime);
 						}
 					} else {
-						setBonusUI.SetState(null);
+						setBonusInventoryUI.SetState(null);
 					}
-				} else if (setBonusUI?.CurrentState is Mimic_Selection_UI) {
+				} else if (setBonusInventoryUI?.CurrentState is Mimic_Selection_UI) {
 					OriginPlayer originPlayer = Main.LocalPlayer.GetModPlayer<OriginPlayer>();
 					if (originPlayer.mimicSet) {
-						setBonusUI.Update(gameTime);
+						setBonusInventoryUI.Update(gameTime);
 					} else {
-						setBonusUI.SetState(null);
+						setBonusInventoryUI.SetState(null);
 					}
 				}
 				if (journalUI?.CurrentState is not null) {
 
 				}
 			}
+			setBonusHUDInterface.Update(gameTime);
 		}
 		public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers) {
 			int inventoryIndex = layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 			if (inventoryIndex != -1) {//error prevention & null check
 				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
-					"Origins: Set Bonus UI",
+					"Origins: Set Bonus Inventory UI",
 					delegate {
-						setBonusUI?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
+						setBonusInventoryUI?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
 						return true;
 					},
 					InterfaceScaleType.UI) { Active = Main.playerInventory }
 				);
+				layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
+					 "Origins: Set Bonus HUD",
+					 delegate {
+						 setBonusHUDInterface?.Draw(Main.spriteBatch, Main._drawInterfaceGameTime);
+						 return true;
+					 },
+					 InterfaceScaleType.UI)
+				 );
 				if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().journalUnlocked) {
 					layers.Insert(inventoryIndex + 1, new LegacyGameInterfaceLayer(
 						"Origins: Journal UI",
@@ -426,6 +442,7 @@ namespace Origins {
 		}
 		bool hasLoggedPUP = false;
 		public override void PreUpdatePlayers() {
+			OriginPlayer.LocalOriginPlayer = Main.LocalPlayer.TryGetModPlayer(out OriginPlayer localPlayer) ? localPlayer : null;
 			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = new();
 			else OriginPlayer.playersByGuid.Clear();
 			Traffic_Cone_TE.UpdateCones();
