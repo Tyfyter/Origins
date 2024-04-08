@@ -672,7 +672,7 @@ namespace Origins {
 				CrimsonAssimilation += 0.03f;
 			}
 			if (blastSet) {
-				blastSetCharge += info.Damage * 0.2f;
+				blastSetCharge += info.Damage * blast_set_charge_gain;
 				if (blastSetCharge > blast_set_charge_max) blastSetCharge = blast_set_charge_max;
 			}
 		}

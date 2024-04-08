@@ -40,6 +40,9 @@ namespace Origins.Items.Armor.Blast {
 			originPlayer.explosiveSelfDamage -= 0.25f;
 			originPlayer.blastSet = true;
 			originPlayer.setActiveAbility = SetActiveAbility.blast_armor;
+			if (originPlayer.blastSetActive) {// buffs in here
+
+			}
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

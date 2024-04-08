@@ -23,11 +23,12 @@ namespace Origins.UI.SetBonus {
 			OverrideSamplerState = SamplerState.PointClamp;
 		}
 		protected override void DrawSelf(SpriteBatch spriteBatch) {
-			const int meterWidth = 52;
-			const int barMaxWidth = 18;
-			const int barStartXOffset = 14;
-			const int frameHeight = 14;
-			const int activeYOffset = 16;
+			const int meterWidth = 52;// width of the meter itself in the spritesheet
+			const int meterXOffset = -meterWidth / 2;// the offset necessary to center the meter
+			const int barMaxWidth = 18;// the width of the empty area
+			const int barStartXOffset = 14;// the starting x coordinate of the empty area
+			const int frameHeight = 14;// the height of the frames
+			const int activeYOffset = frameHeight + 2;// the y coordinate of the "in use" frames
 
 			OriginPlayer originPlayer = OriginPlayer.LocalOriginPlayer;
 			if (originPlayer.blastSetCharge > 0) {
@@ -39,7 +40,7 @@ namespace Origins.UI.SetBonus {
 			Player player = Main.LocalPlayer;
 			Color white = Color.White * alpha;
 			Vector2 pos = player.MountedCenter - Main.screenPosition;
-			pos.X -= 26;
+			pos.X += meterXOffset;
 			pos.Y += player.height * 0.5f + 8;
 
 			Main.UIScaleMatrix.Decompose(out Vector3 scale, out _, out _);
@@ -53,7 +54,7 @@ namespace Origins.UI.SetBonus {
 				white,
 				0,
 				default,
-				new Vector2((int)((originPlayer.blastSetCharge / (float)OriginPlayer.blast_set_charge_max) * barMaxWidth), 1),
+				new Vector2((int)((originPlayer.blastSetCharge / OriginPlayer.blast_set_charge_max) * barMaxWidth), 1),
 				0,
 			0);
 			spriteBatch.Draw(
