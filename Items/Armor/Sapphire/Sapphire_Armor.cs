@@ -1,6 +1,10 @@
+using Microsoft.Xna.Framework;
+using Origins.Buffs;
 using Origins.Dev;
 using Origins.Tiles.Other;
 using Terraria;
+using Terraria.Graphics;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
@@ -26,6 +30,17 @@ namespace Origins.Items.Armor.Sapphire {
 		public override void UpdateArmorSet(Player player) {
 			player.setBonus = Language.GetTextValue("Mods.Origins.SetBonuses.Sapphire");
 			player.GetModPlayer<OriginPlayer>().sapphireSet = true;
+			int type = ModContent.ProjectileType<Sapphire_Aura>();
+			if (player.whoAmI == Main.myPlayer && player.ownedProjectileCounts[type] <= 0) {
+				Projectile.NewProjectile(
+					player.GetSource_Misc("Sapphire_Set"),
+					player.MountedCenter,
+					default,
+					type,
+					0,
+					0
+				);
+			}
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
@@ -78,6 +93,98 @@ namespace Origins.Items.Armor.Sapphire {
 			recipe.AddIngredient(ModContent.ItemType<Carburite_Item>(), 24);
 			recipe.AddTile(TileID.MythrilAnvil);
 			recipe.Register();
+		}
+	}
+	public class Sapphire_Aura : ModProjectile {
+		const float range = 256;
+		public override string Texture => "Terraria/Images/Extra_194";
+		public override void SetDefaults() {
+			Projectile.width = 0;
+			Projectile.height = 0;
+		}
+		public override void AI() {
+			Player player = Main.player[Projectile.owner];
+			Projectile.position = player.MountedCenter;
+			if (!player.dead && player.GetModPlayer<OriginPlayer>().sapphireSet) {
+				Projectile.timeLeft = 5;
+			} else {
+				Projectile.Kill();
+				return;
+			}
+			float manaFactor = 1 - player.statMana / (float)player.statManaMax2;
+			manaFactor = 1 - manaFactor * manaFactor;
+			if (manaFactor <= 0) return;
+			for (int i = 0; i < Main.maxProjectiles; i++) {
+				if (i == Projectile.whoAmI) continue;
+				Projectile other = Main.projectile[i];
+				if (other.active && other.hostile && other.damage > 0) {
+					Vector2 diff = other.Center - Projectile.position;
+					float dist = diff.LengthSquared();
+					if (dist <= range * range) {
+						Vector2 normalizedDir = diff.SafeNormalize(-Vector2.UnitY);
+						float otherSpeed = other.velocity.Length();
+						other.velocity += normalizedDir * (10f / System.MathF.Pow(dist, 0.75f) + 0.6f);
+						//other.velocity -= (0.1f + 0.2f / MathHelper.Max(System.MathF.Pow(other.damage, 0.5f) - 2, 1)) * Vector2.Dot(other.velocity, normalizedDir) * normalizedDir;
+						if (other.velocity != Vector2.Zero) other.velocity *= otherSpeed / other.velocity.Length();
+						Dust.NewDustDirect(other.position, other.width, other.height,
+							DustID.Wet,
+							normalizedDir.X * 4, normalizedDir.Y * 4
+						).noGravity = true;
+					}
+				}
+			}
+			for (int i = 0; i < Main.maxPlayers; i++) {
+				if (i == Projectile.owner) continue;
+				Player other = Main.player[i];
+				if (other.active && (!other.hostile || other.team == player.team)) {
+					other.AddBuff(Sapphire_Aura_Buff.ID, 5);
+				}
+			}
+		}
+		public override bool PreDraw(ref Color lightColor) {
+			Sapphire_Aura_Drawer drawer = default;
+			drawer.Length = range;
+			drawer.Draw(Projectile);
+			return false;
+		}
+	}
+	public struct Sapphire_Aura_Drawer {
+		public const int TotalIllusions = 1;
+
+		public const int FramesPerImportantTrail = 60;
+
+		private static VertexStrip _vertexStrip = new VertexStrip();
+
+		public float Length;
+		public void Draw(Projectile proj) {
+			MiscShaderData miscShaderData = GameShaders.Misc["Origins:SapphireAura"];
+			int num = 1;//1
+			int num2 = 0;//0
+			int num3 = 0;//0
+			float w = 0f;//0.6f
+			miscShaderData.UseShaderSpecificData(new Vector4(num, num2, num3, w));
+			miscShaderData.Apply();
+			float uTime = (float)Main.timeForVisualEffects / 44;
+			const int verts = 128;
+			float[] rot = new float[verts + 1];
+			Vector2[] pos = new Vector2[verts + 1];
+			Vector2 playerVelocity = Main.player[proj.owner].velocity;
+			for (int i = 0; i < verts + 1; i++) {
+				rot[i] = (i * MathHelper.TwoPi) / verts + uTime;
+				pos[i] = proj.position + new Vector2(Length, 0).RotatedBy(rot[i] + MathHelper.PiOver2);
+				Lighting.AddLight(pos[i] + playerVelocity, 0, 0.1f, 0.4f);
+			}
+			_vertexStrip.PrepareStrip(pos, rot, StripColors, StripWidth, -Main.screenPosition, pos.Length, includeBacksides: true);
+			_vertexStrip.DrawTrail();
+			Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+		}
+
+		private Color StripColors(float progressOnStrip) {
+			return new Color(0, 50, 200, 175);
+		}
+
+		private float StripWidth(float progressOnStrip) {
+			return 64;
 		}
 	}
 }

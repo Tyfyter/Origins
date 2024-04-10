@@ -11,6 +11,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Effects\Strip.fx" />
     <None Remove="Localization\en-US_WikiGenerator.Origins.SpecialWikiPages.hjson" />
   </ItemGroup>
   <ItemGroup>

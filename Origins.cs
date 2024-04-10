@@ -318,52 +318,55 @@ namespace Origins {
 
 			if (!Main.dedServ) {
 				//OriginExtensions.drawPlayerItemPos = (Func<float, int, Vector2>)typeof(Main).GetMethod("DrawPlayerItemPos", BindingFlags.NonPublic | BindingFlags.Instance).CreateDelegate(typeof(Func<float, int, Vector2>), Main.instance);
-				perlinFade0 = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/PerlinFade", AssetRequestMode.ImmediateLoad).Value), "RedFade");
+				perlinFade0 = new MiscShaderData(Assets.Request<Effect>("Effects/PerlinFade", AssetRequestMode.ImmediateLoad), "RedFade");
 				//perlinFade0.UseImage("Images/Misc/Perlin");
 				perlinFade0.Shader.Parameters["uThreshold0"].SetValue(0.6f);
 				perlinFade0.Shader.Parameters["uThreshold1"].SetValue(0.6f);
-				blackHoleShade = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BlackHole", AssetRequestMode.ImmediateLoad).Value), "BlackHole");
+				blackHoleShade = new MiscShaderData(Assets.Request<Effect>("Effects/BlackHole"), "BlackHole");
 
-				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade", AssetRequestMode.ImmediateLoad).Value), "VoidShade"), EffectPriority.High);
-				Filters.Scene["Origins:ZoneDefiled"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade", AssetRequestMode.ImmediateLoad).Value), "DefiledShade"), EffectPriority.High);
-				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/MaskedRasterizeFilter", AssetRequestMode.ImmediateLoad).Value), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
-				Filters.Scene["Origins:VolatileGelatinFilter"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/MaskedPurpleJellyFilter", AssetRequestMode.ImmediateLoad).Value), "MaskedPurpleJellyFilter"), EffectPriority.VeryHigh);
-				Filters.Scene["Origins:RivenBloodCoating"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/RivenBloodCoating", AssetRequestMode.ImmediateLoad).Value), "RivenBloodCoating"), EffectPriority.VeryHigh);
+				Filters.Scene["Origins:ZoneDusk"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/BiomeShade"), "VoidShade"), EffectPriority.High);
+				Filters.Scene["Origins:ZoneDefiled"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/BiomeShade"), "DefiledShade"), EffectPriority.High);
+				Filters.Scene["Origins:MaskedRasterizeFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedRasterizeFilter"), "MaskedRasterizeFilter"), EffectPriority.VeryHigh);
+				Filters.Scene["Origins:VolatileGelatinFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedPurpleJellyFilter"), "MaskedPurpleJellyFilter"), EffectPriority.VeryHigh);
+				Filters.Scene["Origins:RivenBloodCoating"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/RivenBloodCoating"), "RivenBloodCoating"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:RivenBloodCoating"].GetShader().UseImage(Assets.Request<Texture2D>("Textures/Riven_Blood_Map"), 0, SamplerState.PointWrap);
-				Filters.Scene["Origins:MaskedTornFilter"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/MaskedTornFilter", AssetRequestMode.ImmediateLoad).Value), "MaskedTornFilter"), EffectPriority.VeryHigh);
+				Filters.Scene["Origins:MaskedTornFilter"] = new Filter(new ScreenShaderData(Assets.Request<Effect>("Effects/MaskedTornFilter"), "MaskedTornFilter"), EffectPriority.VeryHigh);
 				Filters.Scene["Origins:MaskedTornFilter"].GetShader().UseImage(Assets.Request<Texture2D>("Textures/Torn_Example"), 0, SamplerState.PointWrap);
-				//Filters.Scene["Origins:ZoneRiven"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade", AssetRequestMode.ImmediateLoad).Value), "RivenShade"), EffectPriority.High);
+				//Filters.Scene["Origins:ZoneRiven"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade").Value), "RivenShade"), EffectPriority.High);
 
-				solventShader = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/Solvent", AssetRequestMode.ImmediateLoad).Value), "Dissolve");
+				solventShader = new MiscShaderData(Assets.Request<Effect>("Effects/Solvent"), "Dissolve");
 				GameShaders.Misc["Origins:Solvent"] = solventShader;
 				cellNoiseTexture = Assets.Request<Texture2D>("Textures/Cell_Noise_Pixel");
 				Filters.Scene["Origins:MaskedRasterizeFilter"].GetShader().UseImage(cellNoiseTexture, 2);
 				Filters.Scene["Origins:VolatileGelatinFilter"].GetShader().UseImage(cellNoiseTexture, 2);
 
-				rasterizeShader = new MiscShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/Rasterize", AssetRequestMode.ImmediateLoad).Value), "Rasterize");
+				rasterizeShader = new MiscShaderData(Assets.Request<Effect>("Effects/Rasterize"), "Rasterize");
 				GameShaders.Misc["Origins:Rasterize"] = rasterizeShader;
 
-				amebicProtectionShader = new ArmorShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/AmebicProtection", AssetRequestMode.ImmediateLoad).Value), "AmebicProtection");
+				amebicProtectionShader = new ArmorShaderData(Assets.Request<Effect>("Effects/AmebicProtection"), "AmebicProtection");
 				GameShaders.Armor.BindShader(MC.ItemType<Amebic_Vial>(), amebicProtectionShader);
 				amebicProtectionShaderID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
 
-				amebicProtectionHairShader = new HairShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/AmebicProtection", AssetRequestMode.ImmediateLoad).Value), "AmebicProtection");
+				amebicProtectionHairShader = new HairShaderData(Assets.Request<Effect>("Effects/AmebicProtection"), "AmebicProtection");
 				GameShaders.Hair.BindShader(MC.ItemType<Amebic_Vial>(), amebicProtectionHairShader);
 				amebicProtectionHairShaderID = GameShaders.Hair.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
 
-				coordinateMaskFilter = new ArmorShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/CoordinateMaskFilter", AssetRequestMode.ImmediateLoad).Value), "CoordinateMask");
+				coordinateMaskFilter = new ArmorShaderData(Assets.Request<Effect>("Effects/CoordinateMaskFilter"), "CoordinateMask");
 				GameShaders.Armor.BindShader(MC.ItemType<Tainted_Flesh>(), coordinateMaskFilter);
 				coordinateMaskFilterID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Tainted_Flesh>());
 
-				ArmorShaderData transparencyFilter = new ArmorShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/CoordinateMaskFilter", AssetRequestMode.ImmediateLoad).Value), "Transparency");
+				ArmorShaderData transparencyFilter = new ArmorShaderData(Assets.Request<Effect>("Effects/CoordinateMaskFilter"), "Transparency");
 				GameShaders.Armor.BindShader(MC.ItemType<Defiled_Altar_Item>(), transparencyFilter);
 				transparencyFilterID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Defiled_Altar_Item>());
 
-				tileOutlineShader = new ArmorShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/TileOutline", AssetRequestMode.ImmediateLoad).Value), "TileOutline");
+				tileOutlineShader = new ArmorShaderData(Assets.Request<Effect>("Effects/TileOutline", AssetRequestMode.ImmediateLoad), "TileOutline");
 				GameShaders.Armor.BindShader(MC.ItemType<High_Contrast_Dye>(), tileOutlineShader);
 				tileOutlineShader.Shader.Parameters["uImageSize0"].SetValue(Main.ScreenSize.ToVector2());
 				tileOutlineShader.Shader.Parameters["uScale"].SetValue(2);
 				tileOutlineShader.Shader.Parameters["uColor"].SetValue(new Vector3(1f, 1f, 1f));
+
+				GameShaders.Misc["Origins:SapphireAura"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "SapphireAura");
+				GameShaders.Misc["Origins:SapphireAura"].UseImage0(TextureAssets.Extra[194]);
 
 				//amebicProtectionShaderID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
 				//Filters.Scene["Origins:ZoneDusk"].GetShader().UseOpacity(0.35f);
