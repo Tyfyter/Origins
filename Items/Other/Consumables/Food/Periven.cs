@@ -4,9 +4,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
     public class Periven : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Periven");
-			// Tooltip.SetDefault("{$CommonItemTooltip.MinorStats}");
+        public string[] Categories => new string[] {
+            "Food"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {

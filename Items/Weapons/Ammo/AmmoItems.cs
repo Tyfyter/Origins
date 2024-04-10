@@ -2,7 +2,6 @@
 using Origins.Dusts;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.Projectiles;
-using Origins.Projectiles.Weapons;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
@@ -12,7 +11,10 @@ namespace Origins.Items.Weapons.Ammo {
     public class Napalm_Canister : ModItem, ICanisterAmmo {
         static short glowmask;
 		public CanisterData GetCanisterData => new(new(211, 194, 182), new(255, 163, 68));
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Canistah"
+        };
+        public override void SetStaticDefaults() {
             glowmask = Origins.AddGlowMask(this);
             Item.ResearchUnlockCount = 199;
         }

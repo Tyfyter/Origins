@@ -3,8 +3,11 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
-    public class Honey_Bread : ModItem {
-		public override void SetStaticDefaults() {
+    public class Honey_Wheat_Bread : ModItem {
+        public string[] Categories => new string[] {
+            "Food"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {
@@ -20,7 +23,7 @@ namespace Origins.Items.Other.Consumables.Food {
 			return true;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(ModContent.ItemType<Honey_Bread>());
+			Recipe recipe = Recipe.Create(ModContent.ItemType<Honey_Wheat_Bread>());
 			recipe.AddIngredient(ItemID.BottledHoney);
 			recipe.AddIngredient(ModContent.ItemType<Bread>());
 			recipe.AddTile(TileID.CookingPots);

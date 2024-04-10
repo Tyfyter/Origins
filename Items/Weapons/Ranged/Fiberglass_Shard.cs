@@ -12,7 +12,8 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Fiberglass_Shard : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "OtherRanged"
+            "OtherRanged",
+            "SpendableWeapon"
         };
         public ushort Element => Elements.Fiberglass;
 		public override void SetDefaults() {

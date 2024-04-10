@@ -8,7 +8,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Alkaline_Grenade : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "ThrownExplosive",
-			"IsGrenade"
+			"IsGrenade",
+            "SpendableWeapon"
         };
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

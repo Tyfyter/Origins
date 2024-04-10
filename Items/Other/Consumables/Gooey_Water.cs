@@ -9,7 +9,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Gooey_Water : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "SpendableTool"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {

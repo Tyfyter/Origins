@@ -6,8 +6,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
     public class Broken_Record : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "BossSummon"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);
 			Item.maxStack = Item.CommonMaxStack;
 			Item.rare = ItemRarityID.Blue;

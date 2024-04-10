@@ -10,7 +10,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		static short glowmask;
         public string[] Categories => new string[] {
             "ThrownExplosive",
-			"IsGrenade"
+			"IsGrenade",
+            "SpendableWeapon"
         };
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

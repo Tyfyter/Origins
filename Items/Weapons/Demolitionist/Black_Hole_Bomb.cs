@@ -14,7 +14,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Black_Hole_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "ThrownExplosive",
-			"IsBomb"
+			"IsBomb",
+            "SpendableWeapon"
         };
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

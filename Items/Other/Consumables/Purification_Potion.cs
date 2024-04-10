@@ -5,7 +5,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Purification_Potion : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Potion"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;
 		}
 		public override void SetDefaults() {

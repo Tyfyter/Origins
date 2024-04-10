@@ -4,7 +4,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Quantum_Cell : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "BossSummon"
+        };
+        public override void SetStaticDefaults() {
 
 			Item.ResearchUnlockCount = 3;
 			//ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;

@@ -4,7 +4,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
 	public class Krunch_Mix : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Food"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {

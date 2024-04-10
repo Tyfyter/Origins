@@ -13,7 +13,13 @@ namespace Origins.Items.Armor.Blast {
             "HardmodeArmorSet",
             "ExplosiveBoostGear"
         };
-		public static int BerserkerModeHead { get; private set; }
+        public override void SetStaticDefaults() {
+            if (Main.netMode != NetmodeID.Server) {
+                Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Blast/Blast_Helmet_Head_Glow");
+            }
+            Item.ResearchUnlockCount = 1;
+        }
+        public static int BerserkerModeHead { get; private set; }
 		public override void Load() {
 			BerserkerModeHead = EquipLoader.AddEquipTexture(Mod, $"{Texture}_Head_Berserker", EquipType.Head, name: $"{Name}_Head_Berserker");
 		}
@@ -41,7 +47,12 @@ namespace Origins.Items.Armor.Blast {
 			originPlayer.blastSet = true;
 			originPlayer.setActiveAbility = SetActiveAbility.blast_armor;
 			if (originPlayer.blastSetActive) {// buffs in here
-
+				player.GetModPlayer<OriginPlayer>().explosiveProjectileSpeed += 0.5f;
+				player.GetModPlayer<OriginPlayer>().explosiveBlastRadius += 0.5f;
+				player.GetAttackSpeed(DamageClasses.Explosive) += 0.5f;
+				player.GetModPlayer<OriginPlayer>().explosiveFuseTime -= 0.5f;
+				player.GetKnockback(DamageClasses.Explosive) += 0.5f;
+				// crit chance boost in Combat.cs
 			}
 		}
 		public override void AddRecipes() {
@@ -59,8 +70,12 @@ namespace Origins.Items.Armor.Blast {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Blast_Breastplate : ModItem, INoSeperateWikiPage {
-		
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            if (Main.netMode != NetmodeID.Server) {
+                Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Blast/Blast_Breastplate_Body_Glow");
+            }
+        }
+        public override void SetDefaults() {
 			Item.defense = 18;
 			Item.value = Item.sellPrice(gold: 6);
 			Item.rare = ItemRarityID.Yellow;
@@ -82,8 +97,12 @@ namespace Origins.Items.Armor.Blast {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Blast_Greaves : ModItem, INoSeperateWikiPage {
-		
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            if (Main.netMode != NetmodeID.Server) {
+                Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Blast/Blast_Greaves_Legs_Glow");
+            }
+        }
+        public override void SetDefaults() {
 			Item.defense = 13;
 			Item.value = Item.sellPrice(gold: 4, silver: 50);
 			Item.rare = ItemRarityID.Yellow;

@@ -10,7 +10,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Nerve_Impulse_Manipulator : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "BossSummon"
+        };
+        public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);
 			Item.ResearchUnlockCount = 3;
 			ItemID.Sets.SortingPriorityBossSpawns[Type] = 3;

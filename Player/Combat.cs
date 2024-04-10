@@ -32,6 +32,9 @@ namespace Origins {
 			if (rubyReticle) {
 				crit += Player.GetWeaponDamage(item) * 0.15f;
 			}
+			if (blastSetActive) {
+				crit += Player.GetWeaponDamage(item) * 0.5f;
+			}
 		}
 		public override void ModifyManaCost(Item item, ref float reduce, ref float mult) {
 			if (Origins.ArtifactMinion[item.shoot]) {

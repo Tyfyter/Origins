@@ -4,9 +4,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
     public class Jelly_Schnapps : ModItem {
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Jelly Schnapps");
-			// Tooltip.SetDefault("{$CommonItemTooltip.MinorStats}\n'Schnapp. Crackle. Schplit apart'");
+        public string[] Categories => new string[] {
+            "Food"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 5;
 		}
 		public override void SetDefaults() {

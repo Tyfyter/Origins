@@ -6,6 +6,9 @@ using Terraria.ModLoader;
 using Origins.Tiles.Ashen;
 
 namespace Origins.Items.Other.Consumables {
+    public string[] Categories => new string[] {
+            "Potion"
+        };
     public class Ambition_Potion : ModItem {
 		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 20;

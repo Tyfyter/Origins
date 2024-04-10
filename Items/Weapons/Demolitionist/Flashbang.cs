@@ -10,7 +10,8 @@ namespace Origins.Items.Weapons.Demolitionist {
     public class Flashbang : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "ThrownExplosive",
-			"IsGrenade"
+			"IsGrenade",
+            "SpendableWeapon"
         };
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

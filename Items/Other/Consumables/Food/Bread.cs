@@ -4,7 +4,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables.Food {
 	public class Bread : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "Food"
+        };
+        public override void SetStaticDefaults() {
             ItemID.Sets.ShimmerTransformToItem[ItemID.ArtisanLoaf] = ModContent.ItemType<Bread>();
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Bread>()] = ItemID.ArtisanLoaf;
             Item.ResearchUnlockCount = 5;

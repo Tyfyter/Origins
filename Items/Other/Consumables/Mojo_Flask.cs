@@ -13,9 +13,10 @@ namespace Origins.Items.Other.Consumables {
 	public class Mojo_Flask : ModItem {
 		public const int cooldown_time = 5 * 60;
 		public static int ID { get; private set; } = -1;
-		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Mojo Flask");
-			// Tooltip.SetDefault("Mitigates all assimilation by 20% each for five uses");
+        public string[] Categories => new string[] {
+            "Potion"
+        };
+        public override void SetStaticDefaults() {
 			Main.RegisterItemAnimation(Item.type, new DrawAnimationDelegated(GetFrame));
 			Item.ResearchUnlockCount = 1;
 			ID = Type;

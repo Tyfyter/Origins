@@ -288,8 +288,12 @@ namespace Origins.Items.Armor.Acrid {
 	}
 	[AutoloadEquip(EquipType.Body)]
 	public class Acrid_Breastplate : ModItem, INoSeperateWikiPage {
-		
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            if (Main.netMode != NetmodeID.Server) {
+                Origins.AddBreastplateGlowmask(Item.bodySlot, "Items/Armor/Acrid/Acrid_Breastplate_Body_Glow");
+            }
+        }
+        public override void SetDefaults() {
 			Item.defense = 18;
 			Item.value = Item.sellPrice(gold: 2, silver: 40);
 			Item.rare = ItemRarityID.LightRed;
@@ -307,8 +311,12 @@ namespace Origins.Items.Armor.Acrid {
 	}
 	[AutoloadEquip(EquipType.Legs)]
 	public class Acrid_Greaves : ModItem, INoSeperateWikiPage {
-		
-		public override void SetDefaults() {
+        public override void SetStaticDefaults() {
+            if (Main.netMode != NetmodeID.Server) {
+                Origins.AddLeggingGlowMask(Item.legSlot, "Items/Armor/Acrid/Acrid_Greaves_Legs_Glow");
+            }
+        }
+        public override void SetDefaults() {
 			Item.defense = 14;
 			Item.value = Item.sellPrice(gold: 1, silver: 80);
 			Item.rare = ItemRarityID.LightRed;

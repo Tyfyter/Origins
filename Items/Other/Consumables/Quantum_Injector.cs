@@ -7,7 +7,10 @@ namespace Origins.Items.Other.Consumables {
     public class Quantum_Injector : ModItem {
 		public const int mana_per_use = 40;
 		public const int max_uses = 5;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "PermaBoost"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 30;
 		}
 		public override void SetDefaults() {

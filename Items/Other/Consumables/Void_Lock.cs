@@ -4,8 +4,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Void_Lock : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "SpendableTool"
+        };
+        public override void SetDefaults() {
 			Item.rare = ItemRarityID.Orange;
 		}
 		public override void AddRecipes() {

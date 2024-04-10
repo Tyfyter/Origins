@@ -11,7 +11,8 @@ using Terraria.Localization;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Peatball : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "ThrownExplosive"
+            "ThrownExplosive",
+            "SpendableWeapon"
         };
         public override void SetStaticDefaults() {
             Item.ResearchUnlockCount = 99;

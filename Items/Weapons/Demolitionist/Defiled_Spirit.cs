@@ -9,7 +9,8 @@ namespace Origins.Items.Weapons.Demolitionist {
     public class Defiled_Spirit : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
-            "ThrownExplosive"
+            "ThrownExplosive",
+            "SpendableWeapon"
         };
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

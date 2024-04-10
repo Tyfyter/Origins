@@ -10,7 +10,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Materials {
 	public class Dreadful_Powder : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "SpendableTool"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.VilePowder];
 		}
 		public override void SetDefaults() {

@@ -11,7 +11,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Materials {
 	public class Sentient_Powder : ModItem {
 		static short glowmask;
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "SpendableTool"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.VilePowder];
 			glowmask = Origins.AddGlowMask(this);
 		}

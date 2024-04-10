@@ -12,7 +12,8 @@ namespace Origins.Items.Weapons.Demolitionist {
     public class Chlorodynamite : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "ThrownExplosive",
-			"IsDynamite"
+			"IsDynamite",
+            "SpendableWeapon"
         };
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;

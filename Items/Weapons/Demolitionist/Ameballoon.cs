@@ -13,7 +13,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Ameballoon : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
-            "ThrownExplosive"
+            "ThrownExplosive",
+            "SpendableWeapon"
         };
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this, "");

@@ -5,8 +5,10 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class The_Defiled_Will : ModItem {
 		public const int max_uses = 1;
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "PermaBoost"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ManaCrystal);
 			Item.rare = ItemRarityID.Gray;
 			Item.UseSound = SoundID.Item139.WithPitch(0.2f);

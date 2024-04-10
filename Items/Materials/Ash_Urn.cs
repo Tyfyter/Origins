@@ -9,7 +9,10 @@ using Origins.Tiles.Ashen;
 namespace Origins.Items.Materials
 {
     public class Ash_Urn : ModItem {
-		public override void SetStaticDefaults() {
+        public string[] Categories => new string[] {
+            "SpendableTool"
+        };
+        public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.VilePowder];
 		}
 		public override void SetDefaults() {

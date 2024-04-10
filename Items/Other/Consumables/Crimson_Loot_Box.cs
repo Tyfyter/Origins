@@ -4,8 +4,10 @@ using Terraria.ModLoader;
 
 namespace Origins.Items.Other.Consumables {
 	public class Crimson_Loot_Box : ModItem {
-		
-		public override void SetDefaults() {
+        public string[] Categories => new string[] {
+            "GrabBag"
+        };
+        public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CultistBossBag);
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
