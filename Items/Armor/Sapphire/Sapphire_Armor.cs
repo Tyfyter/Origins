@@ -123,7 +123,7 @@ namespace Origins.Items.Armor.Sapphire {
 					if (dist <= range * range) {
 						Vector2 normalizedDir = diff.SafeNormalize(-Vector2.UnitY);
 						float otherSpeed = other.velocity.Length();
-						other.velocity += normalizedDir * (10f / System.MathF.Pow(dist, 0.75f) + 0.6f);
+						other.velocity += normalizedDir * (10f / System.MathF.Pow(dist, 0.75f) + 2.5f);
 						//other.velocity -= (0.1f + 0.2f / MathHelper.Max(System.MathF.Pow(other.damage, 0.5f) - 2, 1)) * Vector2.Dot(other.velocity, normalizedDir) * normalizedDir;
 						if (other.velocity != Vector2.Zero) other.velocity *= otherSpeed / other.velocity.Length();
 						Dust.NewDustDirect(other.position, other.width, other.height,

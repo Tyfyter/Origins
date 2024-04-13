@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.BossMasks;
 using Origins.Items.Materials;
@@ -354,7 +355,7 @@ namespace Origins.NPCs.Defiled.Boss {
 								armSpeed *= 3;
 							} else {
 								AIState = -state_triple_dash;
-								NPC.ai[1] = 0;
+								NPC.ai[1] += 100;
 							}
 						}
 					}
@@ -519,7 +520,15 @@ namespace Origins.NPCs.Defiled.Boss {
 				break;
 			}
 		}
-		public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
+        public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
+			if (DifficultyMult >= 2) {
+				if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
+                    target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 67);
+                    this.DrainMana(target);
+                }
+            }
+        }
+        public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
 			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_OnHurt(projectile), Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
 		}
@@ -651,7 +660,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 	}
 	public class Defiled_Spike_Explosion_Hostile : ModProjectile {
-		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
+        public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
 		public override void SetDefaults() {
 			Projectile.timeLeft = 600;
 			Projectile.usesLocalNPCImmunity = true;
@@ -681,13 +690,13 @@ namespace Origins.NPCs.Defiled.Boss {
 				);
 			}
 		}
-	}
+    }
 	public class Defiled_Spike_Explosion_Spike_Hostile : ModProjectile {
-		public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
+        public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
+        public override string Texture => "Origins/Projectiles/Weapons/Dismay_End";
 		public static int ID { get; private set; } = -1;
 		Vector2 realPosition;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Spike Eruption");
 			ID = Projectile.type;
 		}
 		public override void SetDefaults() {
@@ -741,7 +750,14 @@ namespace Origins.NPCs.Defiled.Boss {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			ParentProjectile.localNPCImmunity[target.whoAmI] = -1;
 		}
-		public override bool PreDraw(ref Color lightColor) {
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+            if (DifficultyMult >= 2) {
+                if (Main.rand.NextBool(2 * DifficultyMult, 9)) {
+                    target.AddBuff(ModContent.BuffType<Rasterized_Debuff>(), DifficultyMult * 67);
+                }
+            }
+        }
+        public override bool PreDraw(ref Color lightColor) {
 			float totalLength = Projectile.velocity.Length() * movementFactor;
 			int avg = (lightColor.R + lightColor.G + lightColor.B) / 3;
 			lightColor = Color.Lerp(lightColor, new Color(avg, avg, avg), 0.5f);

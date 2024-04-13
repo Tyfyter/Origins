@@ -263,7 +263,7 @@ ARMOR:
 (X) Chambersite Armor*
 (X) Edenwood Armor*
 (^) Necromancer Armor*
-(#2, ^2) Sapphire Mediator Armor*
+(^) Sapphire Mediator Armor*
 
 (X) Ancient Chromtain Armor
 (X) Ancient Eyndum Armor

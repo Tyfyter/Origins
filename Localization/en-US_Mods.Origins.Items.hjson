@@ -1653,7 +1653,7 @@ Brine_Cheese: {
 		'''
 }
 
-Honey_Bread: {
+Honey_Wheat_Bread: {
 	DisplayName: Honey Wheat Bread
 	Tooltip:
 		'''
@@ -4067,7 +4067,7 @@ Defiled_Grass_Wall_Placed_Unsafe_Item: {
 
 Acrid_Handcannon: {
 	DisplayName: Acrid Handcannon
-	Tooltip: ""
+	Tooltip: Releases brine droplets upon slug detonation
 }
 
 Newsboy_Cap: {

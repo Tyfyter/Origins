@@ -840,6 +840,11 @@ Buffs: {
 		// DisplayName: Calcified
 		// Description: You're being preserved
 	}
+
+	Sapphire_Aura_Buff: {
+		// DisplayName: Sapphire Aura Buff
+		// Description: Mods.Origins.Buffs.Sapphire_Aura_Buff.Description
+	}
 }
 
 DamageClassName: {
