@@ -144,6 +144,9 @@ namespace Origins.Items.Armor.Sapphire {
 		public override bool PreDraw(ref Color lightColor) {
 			Sapphire_Aura_Drawer drawer = default;
 			drawer.Length = range;
+			Player player = Main.player[Projectile.owner];
+			float manaFactor = 1 - player.statMana / (float)player.statManaMax2;
+			drawer.ManaFactor = 1 - manaFactor * manaFactor;
 			drawer.Draw(Projectile);
 			return false;
 		}
@@ -156,6 +159,8 @@ namespace Origins.Items.Armor.Sapphire {
 		private static VertexStrip _vertexStrip = new VertexStrip();
 
 		public float Length;
+
+		public float ManaFactor;
 		public void Draw(Projectile proj) {
 			MiscShaderData miscShaderData = GameShaders.Misc["Origins:SapphireAura"];
 			int num = 1;//1
@@ -180,7 +185,7 @@ namespace Origins.Items.Armor.Sapphire {
 		}
 
 		private Color StripColors(float progressOnStrip) {
-			return new Color(0, 50, 200, 175);
+			return new Color(0, 50, 200, 175) * ManaFactor;
 		}
 
 		private float StripWidth(float progressOnStrip) {
