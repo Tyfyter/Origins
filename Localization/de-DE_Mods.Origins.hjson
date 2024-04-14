@@ -1133,7 +1133,10 @@ Projectiles: {
 	// Amber_Shard.DisplayName: Amber Shard
 	// Metal_Slug_Explosion.DisplayName: Metal Slug Explosion
 	// Acrid_Slug_P.DisplayName: Acrid Slug
-	// Sapphire_Aura.DisplayName: Sapphire_ Aura
+	// Sapphire_Aura.DisplayName: Sapphire Aura
+	// Abrasion_Blaster_Charge_P.DisplayName: Abrasion Blaster
+	// Abrasion_Blaster_P.DisplayName: Abrasion Blaster
+	// Abrasion_Blaster_Explosion.DisplayName: Abrasion_ Blaster_ Explosion
 }
 
 Prefixes: {

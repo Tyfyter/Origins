@@ -788,4 +788,34 @@ namespace Origins.Projectiles {
 			}
 		}
 	}
+	public abstract class ExplosionProjectile : ModProjectile, IIsExplodingProjectile {
+		public override string Texture => "Origins/Items/Weapons/Demolitionist/Sonorous_Shredder_P";
+		public abstract DamageClass DamageType { get; }
+		public abstract int Size { get; }
+		public virtual bool DealsSelfDamage => true;
+		public virtual SoundStyle? Sound => SoundID.Item62;
+		public virtual int FireDustAmount => 20;
+		public virtual int SmokeDustAmount => 30;
+		public override void SetDefaults() {
+			Projectile.DamageType = DamageType;
+			Projectile.width = Size;
+			Projectile.height = Size;
+			Projectile.friendly = true;
+			Projectile.tileCollide = false;
+			Projectile.penetrate = -1;
+			Projectile.timeLeft = 5;
+			Projectile.usesLocalNPCImmunity = true;
+			Projectile.localNPCHitCooldown = -1;
+			Projectile.hide = true;
+		}
+		public override void AI() {
+			if (Projectile.ai[0] == 0) {
+				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: Sound, fireDustAmount: FireDustAmount, smokeDustAmount: SmokeDustAmount);
+				Projectile.ai[0] = 1;
+			}
+			if (DealsSelfDamage) ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
+		}
+		public void Explode(int delay = 0) { }
+		public bool IsExploding() => true;
+	}
 }
