@@ -379,7 +379,7 @@ namespace Origins {
 				Journal_UI_Open.BackTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Use_Back");
 				Journal_UI_Open.PageTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Use");
 				Journal_UI_Open.TabsTexture = Assets.Request<Texture2D>("UI/Lore/Journal_Tabs");
-				Terraria.On_Player.KeyDoubleTap += (Terraria.On_Player.orig_KeyDoubleTap orig, Player self, int keyDir) => {
+				On_Player.KeyDoubleTap += (On_Player.orig_KeyDoubleTap orig, Player self, int keyDir) => {
 					orig(self, keyDir);
 					if (OriginClientConfig.Instance.SetBonusDoubleTap) {
 						if (keyDir == (Main.ReversedUpDownArmorSetBonuses ? 1 : 0)) {
