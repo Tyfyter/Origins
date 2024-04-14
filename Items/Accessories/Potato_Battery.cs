@@ -3,6 +3,7 @@ using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
 using Origins.Items.Weapons;
+using Origins.NPCs.Defiled.Boss;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -158,7 +159,7 @@ namespace Origins.Items.Accessories {
 				return true;
 
 				default:
-				return false;
+				return OriginsModIntegrations.CheckAprilFools() && npcType == ModContent.NPCType<Defiled_Amalgamation>();
 			}
 		}
 		public enum QuoteType {

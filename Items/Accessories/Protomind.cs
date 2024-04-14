@@ -33,13 +33,13 @@ namespace Origins.Items.Accessories {
 			originPlayer.hasProtOS = true;
 			UpdateMoonlordWarningAndIdle(originPlayer.protOSQuoteCooldown, player);
 		}
-		public override void UpdateEquip(Player player) {
+		public override void UpdateAccessory(Player player, bool hideVisual) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.hasProtOS = true;
 			originPlayer.protomindItem = Item;
-			UpdateMoonlordWarningAndIdle(originPlayer.protOSQuoteCooldown, player);
+			UpdateMoonlordWarningAndIdle(originPlayer.protOSQuoteCooldown, player, hideVisual);
 		}
-		static void UpdateMoonlordWarningAndIdle(int[] cooldowns, Player player) {
+		static void UpdateMoonlordWarningAndIdle(int[] cooldowns, Player player, bool disableIdle = false) {
 			if (cooldowns[(int)QuoteType.The_Part_Where_He_Kills_You] <= 0) {
 				int index = NPC.FindFirstNPC(NPCID.MoonLordHead);
 				if (index != -1 && Main.npc[index].ai[0] == 1f) {
