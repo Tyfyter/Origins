@@ -38,6 +38,7 @@ X: No progress
 ○: Implemented with temp stats/missing recipe/etc.
 †: needs testing (unicode hex code 2020)
 ᗢ: Implemented, but will need to be revisited in later update
+♫: rough implementation, functional, but needs polish (sound, balancing, etc.)
 
 [NOTE: Entries will often have ","'s, "-"'s, and "/"'s to signify multiple elements at once]
 ---
@@ -406,7 +407,8 @@ ACCESSORIES:
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
 (^) Fiberglass Dagger*
-(#2, ^2) Forbidden Voice* !!!
+(^) Forbidden Voice (Cursed)* !!!
+(#, ^2) Forbidden Voice (Uncursed)* !!!
 (^) Lazy Cloak*
 (X) Mildewy Diving Helmet*
 (^) Mysterious Spray*
@@ -739,7 +741,7 @@ NO POST ML SUMMONER CONTENT YET.
 
 EXPLOSIVE WEAPONS:
 ---
-(#2, ^2) Abrasion Blaster* !!!
+(♫) Abrasion Blaster* !!!
 (#3, ^2) Ace Shrapnel* !!!
 (^) Ameballoon*
 (^) Bang Snap*

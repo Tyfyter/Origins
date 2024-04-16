@@ -95,20 +95,40 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Player player = Main.player[Projectile.owner];
 			player.GetModPlayer<OriginPlayer>().heldProjectile = Projectile.whoAmI;
 			if (!player.channel) {
-				Projectile.NewProjectile(
-					player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, player.HeldItem.useAmmo),
-					Projectile.Center,
-					Projectile.velocity,
-					Abrasion_Blaster_P.ID,
-					Projectile.damage,
-					Projectile.knockBack,
-					Projectile.owner,
-					Projectile.ai[0]
-				);
+				if (Projectile.ai[2] != 1) {
+					Projectile.NewProjectile(
+						player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, player.HeldItem.useAmmo),
+						Projectile.Center,
+						Projectile.velocity,
+						Abrasion_Blaster_P.ID,
+						Projectile.damage,
+						Projectile.knockBack,
+						Projectile.owner,
+						Projectile.ai[0]
+					);
+				} else {
+					Projectile.NewProjectile(
+						player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, player.HeldItem.useAmmo),
+						Projectile.Center,
+						Projectile.velocity,
+						ModContent.ProjectileType<Abrasion_Blaster_Explosion>(),
+						Projectile.damage,
+						Projectile.knockBack,
+						Projectile.owner,
+						ai1: Projectile.ai[0]
+					);
+				}
 				Projectile.Kill();
 			} else {
-				Projectile.Center = player.RotatedRelativePoint(player.MountedCenter) + Projectile.velocity.SafeNormalize(default) * 36;
+				Projectile.Center = player.RotatedRelativePoint(player.MountedCenter);
+				Vector2 offset = Projectile.velocity.SafeNormalize(default) * 36;
 				bool breakChannel = false;
+				if (Collision.CanHit(Projectile.position, Projectile.width, Projectile.height, Projectile.position + offset, Projectile.width, Projectile.height)) {
+					Projectile.ai[2] = 0;
+				} else {
+					Projectile.ai[2] = 1;
+				}
+				Projectile.position += offset;
 				if (++Projectile.ai[1] >= player.itemAnimationMax) {
 					try {
 						Abrasion_Blaster.consumeFromProjectile = true;
@@ -156,6 +176,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 			} else if (Projectile.ai[0] > 2) {
 				Projectile.extraUpdates = 1;
 			}
+		}
+		public override void ModifyDamageHitbox(ref Rectangle hitbox) {
+			
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.SourceDamage *= 1 + Projectile.ai[0] * 0.5f;
@@ -226,17 +249,18 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool DealsSelfDamage => Projectile.ai[1] > 2;
 		public override void AI() {
 			if (Projectile.ai[0] == 0 && Projectile.ai[1] > 5) {
+				const int rad = 4;
 				Vector2 center = Projectile.Center;
 				int i = (int)(center.X / 16);
-				int j = (int)(center.X / 16);
+				int j = (int)(center.Y / 16);
 				Projectile.ExplodeTiles(
 					center,
-					2,
-					i - 2,
-					j - 2,
-					i - 2,
-					j - 2,
-					Projectile.ShouldWallExplode(center, 2, i - 2, j - 2, i - 2, j - 2)
+					rad,
+					i - rad,
+					i + rad,
+					j - rad,
+					j + rad,
+					Projectile.ShouldWallExplode(center, rad, i - rad, i + rad, j - rad, j + rad)
 				);
 			}
 			base.AI();

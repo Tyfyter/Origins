@@ -33,11 +33,12 @@ namespace Origins.Items.Accessories {
 		public override string Texture => "Origins/Items/Accessories/Forbidden_Voice";
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.PurificationPowder);
+			Projectile.aiStyle = 0;
 			Projectile.width = 38;
 			Projectile.height = 38;
 			Projectile.DamageType = DamageClass.Generic;
-			Projectile.timeLeft = 15;
-			Projectile.extraUpdates = 15;
+			Projectile.timeLeft = 90;
+			Projectile.extraUpdates = 90;
 			Projectile.penetrate = 1;
 			Projectile.friendly = true;
 		}

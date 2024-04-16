@@ -273,18 +273,19 @@ namespace Origins {
 				}
 			}
 			if (cursedVoice) {
-				const float maxDist = 384 * 384;
+				const float maxDist = 256 * 256;
 				Player.AddBuff(BuffID.Silenced, 5);
-				if (cursedVoiceCooldown <= 0 && Player.CheckMana(cursedVoiceItem.mana, false)) {
+				if (cursedVoiceCooldown <= 0 && Player.MouthPosition is Vector2 mouthPosition && Player.CheckMana(cursedVoiceItem.mana, false)) {
 					for (int i = 0; i < Main.maxNPCs; i++) {
 						NPC currentTarget = Main.npc[i];
 						if (currentTarget.CanBeChasedBy(cursedVoiceItem)) {
 							Vector2 diff = currentTarget.Center - Player.MountedCenter;
 							if (diff.LengthSquared() < maxDist) {
 								Player.CheckMana(cursedVoiceItem.mana, true);
+								Player.manaRegenDelay = (int)Player.maxRegenDelay;
 								Projectile.NewProjectileDirect(
 									Player.GetSource_Accessory(cursedVoiceItem),
-									Player.MountedCenter + new Vector2(8 * Player.direction, -16),
+									mouthPosition,
 									diff.SafeNormalize(default) * 4,
 									cursedVoiceItem.shoot,
 									Player.GetWeaponDamage(cursedVoiceItem),
