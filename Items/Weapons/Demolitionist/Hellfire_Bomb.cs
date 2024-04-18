@@ -5,6 +5,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Projectiles;
+using Terraria.Audio;
+
 namespace Origins.Items.Weapons.Demolitionist {
     public class Hellfire_Bomb : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -45,7 +48,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 135;
 		}
 		public override bool PreKill(int timeLeft) {
-			Projectile.type = ProjectileID.InfernoFriendlyBlast;
+			Projectile.type = ProjectileID.Bomb;
 			return true;
 		}
 		public override void OnKill(int timeLeft) {
@@ -56,11 +59,40 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-			Vector2 v;
-			for (int i = 4; i-- > 0;) {
-				v = Main.rand.NextVector2Unit() * 6;
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + v * 8, v, ModContent.ProjectileType<Impeding_Shrapnel_Shard>(), Projectile.damage / 2, Projectile.knockBack / 4, Projectile.owner);
-			}
+			Projectile.NewProjectile(
+				Projectile.GetSource_Death(),
+				Projectile.Center,
+				default,
+				ModContent.ProjectileType<Hellfire_Bomb_Fire>(),
+				Projectile.damage,
+				Projectile.knockBack,
+				Projectile.owner
+			);
+		}
+	}
+	public class Hellfire_Bomb_Fire : ExplosionProjectile {
+		public override DamageClass DamageType => DamageClasses.ThrownExplosive;
+		public override int Size => 128;
+		public override SoundStyle? Sound => null;
+		public override int FireDustAmount => 2;
+		public override int SmokeDustAmount => 1;
+		public override int SmokeGoreAmount => 0;
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.timeLeft = 60;
+			Projectile.usesLocalNPCImmunity = false;
+			Projectile.usesIDStaticNPCImmunity = false;
+			Projectile.idStaticNPCHitCooldown = 6;
+		}
+		public override void AI() {
+			base.AI();
+			Projectile.ai[0] = 0;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(BuffID.OnFire3, 180);
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			target.AddBuff(BuffID.OnFire3, 180);
 		}
 	}
 }

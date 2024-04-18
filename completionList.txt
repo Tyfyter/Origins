@@ -755,8 +755,8 @@ EXPLOSIVE WEAPONS:
 (^) Flashbang*
 (^) Floaty Bomb*
 (^) Hand Grenade Launcher
-(#2, ^2 (is dust like PLB)) Hellfire Bomb* !!!
-(#3, ^2 (is dust like PLB)) Hellfire Grenade* !!!
+(☻) Hellfire Bomb* !!!
+(☻) Hellfire Grenade* !!!
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*

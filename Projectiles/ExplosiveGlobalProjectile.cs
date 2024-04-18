@@ -675,7 +675,7 @@ namespace Origins.Projectiles {
 			magicTripwireDetonationStyle[ProjectileID.LavaGrenade] = 2;
 			magicTripwireDetonationStyle[ProjectileID.HoneyGrenade] = 2;
 		}
-		public static void ExplosionVisual(Projectile projectile, bool applyHitboxModifiers, bool adjustDustAmount = false, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, bool debugOutline = false) {
+		public static void ExplosionVisual(Projectile projectile, bool applyHitboxModifiers, bool adjustDustAmount = false, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, bool debugOutline = false) {
 			if (applyHitboxModifiers) {
 				Rectangle hitbox = projectile.Hitbox;
 				float baseWidth = hitbox.Width;
@@ -685,12 +685,12 @@ namespace Origins.Projectiles {
 					fireDustAmount = (int)(fireDustAmount * dustMult);
 					smokeDustAmount = (int)(smokeDustAmount * dustMult);
 				}
-				ExplosionVisual(hitbox, sound, fireDustAmount, smokeDustAmount, debugOutline);
+				ExplosionVisual(hitbox, sound, fireDustAmount, smokeDustAmount, smokeGoreAmount, debugOutline);
 			} else {
-				ExplosionVisual(projectile.Hitbox, sound, fireDustAmount, smokeDustAmount, debugOutline);
+				ExplosionVisual(projectile.Hitbox, sound, fireDustAmount, smokeDustAmount, smokeGoreAmount, debugOutline);
 			}
 		}
-		public static void ExplosionVisual(Rectangle area, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, bool debugOutline = false) {
+		public static void ExplosionVisual(Rectangle area, SoundStyle? sound = null, int fireDustAmount = 20, int smokeDustAmount = 30, int smokeGoreAmount = 2, bool debugOutline = false) {
 			Vector2 center = area.Center.ToVector2();
 			if (sound.HasValue) {
 				SoundEngine.PlaySound(in sound, center);
@@ -735,7 +735,7 @@ namespace Origins.Projectiles {
 					1.5f
 				).velocity *= 3f;
 			}
-			for (int i = 0; i < 2; i++) {
+			for (int i = 0; i < smokeGoreAmount; i++) {
 				float velocityMult = 0.4f * (i + 1);
 				Gore gore = Gore.NewGoreDirect(null, center, default, Main.rand.Next(61, 64));
 				gore.velocity *= velocityMult;
@@ -796,6 +796,7 @@ namespace Origins.Projectiles {
 		public virtual SoundStyle? Sound => SoundID.Item62;
 		public virtual int FireDustAmount => 20;
 		public virtual int SmokeDustAmount => 30;
+		public virtual int SmokeGoreAmount => 2;
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageType;
 			Projectile.width = Size;
@@ -810,7 +811,7 @@ namespace Origins.Projectiles {
 		}
 		public override void AI() {
 			if (Projectile.ai[0] == 0) {
-				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: Sound, fireDustAmount: FireDustAmount, smokeDustAmount: SmokeDustAmount);
+				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: Sound, fireDustAmount: FireDustAmount, smokeDustAmount: SmokeDustAmount, smokeGoreAmount: SmokeGoreAmount);
 				Projectile.ai[0] = 1;
 			}
 			if (DealsSelfDamage) ExplosiveGlobalProjectile.DealSelfDamage(Projectile);

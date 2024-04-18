@@ -46,7 +46,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 135;
 		}
 		public override bool PreKill(int timeLeft) {
-            Projectile.type = ProjectileID.InfernoFriendlyBlast;
+            Projectile.type = ProjectileID.Grenade;
             return true;
 		}
 		public override void OnKill(int timeLeft) {
@@ -57,12 +57,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
-			int center = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Impeding_Shrapnel_Shard>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
-			Vector2 v;
-			for (int i = 4; i-- > 0;) {
-				v = Main.rand.NextVector2Unit() * 6;
-				Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + v * 8, v, ModContent.ProjectileType<Impeding_Shrapnel_Shard>(), Projectile.damage / 2, Projectile.knockBack / 4, Projectile.owner, center, 4);
-			}
+			Projectile.NewProjectile(
+				Projectile.GetSource_Death(),
+				Projectile.Center,
+				default,
+				ModContent.ProjectileType<Hellfire_Bomb_Fire>(),
+				Projectile.damage,
+				Projectile.knockBack,
+				Projectile.owner
+			);
 		}
 	}
 }
