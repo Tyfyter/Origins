@@ -16,7 +16,9 @@ namespace Origins.Items.Accessories {
 		}
 		public override void UpdateEquip(Player player) {
 			player.hasMagiluminescence = true;
-			player.GetModPlayer<OriginPlayer>().turboReel2 = true;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.turboReel2 = true;
+			originPlayer.automatedReturnsHandler = true;
 
 			player.blackBelt = true;
 			player.dashType = 1;

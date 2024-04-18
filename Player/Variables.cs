@@ -148,6 +148,7 @@ namespace Origins {
 		public bool oldPlasmaPhial = false;
 		public bool turboReel = false;
 		public bool turboReel2 = false;
+		public bool automatedReturnsHandler = false;
 		public bool boomerangMagnet = false;
 		public bool trapCharm = false;
 		public bool rebreather = false;
