@@ -359,7 +359,7 @@ ACCESSORIES:
 (^) Resin Shield*
 (^) Return To Sender*
 (^) Ruby Reticle*
-(#3, ^2) Seal of Cinders* !!!
+(^ (unless the dusts are supposed to be emitted while it's not active)) Seal of Cinders* !!!
 (^) Scavenger Bag*
 (^) Shield of Retribution*
 (^) Sniper's Mark*

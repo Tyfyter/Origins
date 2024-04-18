@@ -10,9 +10,6 @@ namespace Origins.Projectiles {
 	//separate global for organization
 	public class HookGlobalProjectile : GlobalProjectile {
 		bool isRetracting = false;
-		bool slamming = false;
-		bool justHit = false;
-		public bool bloodletter = false;
 		public override bool InstancePerEntity => true;
 		protected override bool CloneNewInstances => false;
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
