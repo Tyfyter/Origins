@@ -495,6 +495,9 @@ namespace Origins {
 				Player.CheckMana(manaDamageToTake, true);
 				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
 			}
+			if (info.PvP && info.CooldownCounter == ImmunityCooldownID.WrongBugNet) {
+				Player.hurtCooldowns[ImmunityCooldownID.WrongBugNet] = Player.longInvince ? 10 : 6;
+			}
 			if (heliumTankHit) {
 				if ((Player.wereWolf || Player.forceWerewolf) && !Player.hideWolf) {
 					SoundEngine.PlaySound(SoundID.NPCHit6.WithPitch(1), Player.position);

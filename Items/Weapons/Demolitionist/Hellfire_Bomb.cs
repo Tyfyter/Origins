@@ -65,7 +65,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				default,
 				ModContent.ProjectileType<Hellfire_Bomb_Fire>(),
 				Projectile.damage,
-				Projectile.knockBack,
+				0,
 				Projectile.owner
 			);
 		}
@@ -77,6 +77,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override int FireDustAmount => 2;
 		public override int SmokeDustAmount => 1;
 		public override int SmokeGoreAmount => 0;
+		public override int SelfDamageCooldownCounter => ImmunityCooldownID.WrongBugNet;
 		public override void SetDefaults() {
 			base.SetDefaults();
 			Projectile.timeLeft = 60;
@@ -90,6 +91,10 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			target.AddBuff(BuffID.OnFire3, 180);
+		}
+		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+			modifiers.Knockback *= 0;
+			modifiers.FinalDamage *= 0.5f;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			target.AddBuff(BuffID.OnFire3, 180);

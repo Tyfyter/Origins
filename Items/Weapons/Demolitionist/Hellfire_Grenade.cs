@@ -63,7 +63,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 				default,
 				ModContent.ProjectileType<Hellfire_Bomb_Fire>(),
 				Projectile.damage,
-				Projectile.knockBack,
+				0,
 				Projectile.owner
 			);
 		}

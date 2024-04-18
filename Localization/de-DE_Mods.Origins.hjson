@@ -1136,8 +1136,8 @@ Projectiles: {
 	// Sapphire_Aura.DisplayName: Sapphire Aura
 	// Abrasion_Blaster_Charge_P.DisplayName: Abrasion Blaster
 	// Abrasion_Blaster_P.DisplayName: Abrasion Blaster
-	// Abrasion_Blaster_Explosion.DisplayName: Abrasion_ Blaster_ Explosion
-	// Hellfire_Bomb_Fire.DisplayName: Hellfire_ Bomb_ Fire
+	// Abrasion_Blaster_Explosion.DisplayName: Abrasion Blaster
+	// Hellfire_Bomb_Fire.DisplayName: Hellfire Bomb
 }
 
 Prefixes: {

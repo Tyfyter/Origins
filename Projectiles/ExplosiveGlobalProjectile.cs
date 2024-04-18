@@ -769,7 +769,7 @@ namespace Origins.Projectiles {
 				}
 			}
 		}
-		public static void DealSelfDamage(Projectile projectile) {
+		public static void DealSelfDamage(Projectile projectile, int cooldownCounter = -1) {
 			if (projectile.owner == Main.myPlayer) {
 				Player player = Main.LocalPlayer;
 				if (player.active && !player.dead && !player.immune) {
@@ -781,7 +781,8 @@ namespace Origins.Projectiles {
 							PlayerDeathReason.ByProjectile(Main.myPlayer, projectile.whoAmI),
 							Main.DamageVar(projectile.damage, -player.luck),
 							Math.Sign(player.Center.X - projectile.Center.X),
-							true
+							true,
+							cooldownCounter: cooldownCounter
 						);
 					}
 				}
@@ -797,6 +798,7 @@ namespace Origins.Projectiles {
 		public virtual int FireDustAmount => 20;
 		public virtual int SmokeDustAmount => 30;
 		public virtual int SmokeGoreAmount => 2;
+		public virtual int SelfDamageCooldownCounter => ImmunityCooldownID.General;
 		public override void SetDefaults() {
 			Projectile.DamageType = DamageType;
 			Projectile.width = Size;
@@ -814,7 +816,7 @@ namespace Origins.Projectiles {
 				ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true, sound: Sound, fireDustAmount: FireDustAmount, smokeDustAmount: SmokeDustAmount, smokeGoreAmount: SmokeGoreAmount);
 				Projectile.ai[0] = 1;
 			}
-			if (DealsSelfDamage) ExplosiveGlobalProjectile.DealSelfDamage(Projectile);
+			if (DealsSelfDamage) ExplosiveGlobalProjectile.DealSelfDamage(Projectile, SelfDamageCooldownCounter);
 		}
 		public void Explode(int delay = 0) { }
 		public bool IsExploding() => true;
