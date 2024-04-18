@@ -233,6 +233,7 @@ namespace Origins {
 		public StatModifier explosiveSelfDamage = StatModifier.Default;
 		public StatModifier explosiveBlastRadius = StatModifier.Default;
 		public StatModifier explosiveFuseTime = StatModifier.Default;
+		public int selfDamageRally = 0;
 		#endregion
 
 		#region summon stats

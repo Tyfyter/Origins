@@ -256,7 +256,7 @@ ARMOR:
 
 (X) Abysswalker Armor*
 (^) Acrid Armor*
-(#3?, ^2) Amber Exploder Armor* !!!
+(☻) Amber Exploder Armor* !!!
 (^) Bleeding Obsidian Armor*
 (X) Ruby Ranger Armor*
 
@@ -359,7 +359,7 @@ ACCESSORIES:
 (^) Resin Shield*
 (^) Return To Sender*
 (^) Ruby Reticle*
-(^ (unless the dusts are supposed to be emitted while it's not active)) Seal of Cinders* !!!
+(^) Seal of Cinders* !!!
 (^) Scavenger Bag*
 (^) Shield of Retribution*
 (^) Sniper's Mark*
@@ -415,7 +415,7 @@ ACCESSORIES:
 (^) Protozoa Food*
 (#, ^2) Scrap Compactor*
 (^) Scribe of the Meat God*
-(^) Stack of Shraps*
+(#2, ^2) Stack of Shraps*
 (^) Strange Tooth*
 (#2, ^2) Terrarian Voodoo Doll* !!!
 (^) Third Eye*

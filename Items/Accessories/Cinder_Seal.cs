@@ -19,7 +19,7 @@ namespace Origins.Items.Accessories {
 			Item.ArmorPenetration = 6;
 			Item.knockBack = 3;
 		}
-		public override void UpdateEquip(Player player) {
+		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.GetModPlayer<OriginPlayer>().cinderSealItem = Item;
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {

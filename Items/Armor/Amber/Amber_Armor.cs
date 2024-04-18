@@ -6,6 +6,7 @@ using Origins.Items.Other.Dyes;
 using Origins.Items.Weapons.Ranged;
 using Origins.NPCs;
 using Origins.Tiles.Other;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
@@ -103,7 +104,37 @@ namespace Origins.Items.Armor.Amber {
 			Projectile.localAI[2] = ModContent.ProjectileType<Shardcannon_P1>() + Main.rand.Next(3);
 		}
 		public override void AI() {
-			Projectile.velocity.Y += 0.04f;
+			bool gravity = true;
+			Player player = Main.player[Projectile.owner];
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			if (originPlayer.selfDamageRally > 0) {
+				if (Projectile.Hitbox.Intersects(player.Hitbox)) {
+					int maxHeal = Math.Min(originPlayer.selfDamageRally, Projectile.damage / 3);
+					Main.LocalPlayer.Heal(maxHeal);
+					ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(Amber_Dye.ID);
+					for (int i = 0; i < 16; i++) {
+						Dust dust = Dust.NewDustDirect(
+							player.position,
+							player.width,
+							player.height,
+							DustID.CrystalSerpent
+						);
+						dust.noGravity = true;
+						dust.shader = shader;
+					}
+					originPlayer.selfDamageRally -= maxHeal;
+					Projectile.Kill();
+				} else if (Projectile.timeLeft < 3600 - 15) {
+					Vector2 diff = player.MountedCenter - Projectile.Center;
+					const int grabRange = 6 * 16;
+					if (diff.LengthSquared() < grabRange * grabRange) {
+						diff.Normalize();
+						Projectile.velocity = Vector2.Lerp(Projectile.velocity, diff * 4, 0.5f);
+						gravity = false;
+					}
+				}
+			}
+			if (gravity) Projectile.velocity.Y += 0.04f;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			Amber_Debuff.Inflict(target, 300);

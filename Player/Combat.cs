@@ -495,6 +495,9 @@ namespace Origins {
 				Player.CheckMana(manaDamageToTake, true);
 				Player.AddBuff(ModContent.BuffType<Defiled_Exhaustion_Debuff>(), 50);
 			}
+			if (info.DamageSource.SourcePlayerIndex == Player.whoAmI) {
+				selfDamageRally = info.Damage;
+			}
 			if (info.PvP && info.CooldownCounter == ImmunityCooldownID.WrongBugNet) {
 				Player.hurtCooldowns[ImmunityCooldownID.WrongBugNet] = Player.longInvince ? 10 : 6;
 			}

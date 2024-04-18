@@ -387,10 +387,14 @@ namespace Origins {
 			tornCurrentSeverity = 0;
 			tornTarget = 0f;
 			mojoFlaskCount = mojoFlaskCountMax;
+
 			corruptionAssimilation = 0;
 			crimsonAssimilation = 0;
 			defiledAssimilation = 0;
 			rivenAssimilation = 0;
+
+			selfDamageRally = 0;
+			blastSetCharge = 0;
 		}
 		public override void ModifyMaxStats(out StatModifier health, out StatModifier mana) {
 			health = StatModifier.Default;

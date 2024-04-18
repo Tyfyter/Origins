@@ -404,6 +404,7 @@ namespace Origins {
 						Player.GetWeaponDamage(cinderSealItem),
 						Player.GetWeaponKnockback(cinderSealItem)
 					);
+
 				}
 			}
 			if (emergencyBeeCanister && Player.honeyWet) Player.ignoreWater = true;

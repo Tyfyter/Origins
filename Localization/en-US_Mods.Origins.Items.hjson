@@ -3938,12 +3938,12 @@ Nova_Cascade: {
 
 Switchblade_Broadsword: {
 	DisplayName: Switchblade
-	Tooltip: Right-click to retract
+	Tooltip: <right> to retract
 }
 
 Switchblade_Shortsword: {
 	DisplayName: Switchblade
-	Tooltip: Right-click to extend
+	Tooltip: <right> to extend
 }
 
 Amber_Dye: {
