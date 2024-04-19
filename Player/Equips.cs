@@ -471,7 +471,7 @@ namespace Origins {
 			#region utility
 			Player.wallSpeed += (Player.wallSpeed - 1) * 0.5f;
 			Player.tileSpeed += (Player.tileSpeed - 1) * 0.5f;
-			Player.pickSpeed *= (Player.pickSpeed - 1) * 0.5f;
+			Player.pickSpeed += (Player.pickSpeed - 1) * 0.5f;
 			Player.aggro += Player.aggro / 2;
 			Player.blockRange += Player.blockRange / 2;
 			#endregion

@@ -4074,3 +4074,8 @@ Newsboy_Cap: {
 	DisplayName: Newsboy Cap
 	Tooltip: ""
 }
+
+Abyssal_Anchor: {
+	DisplayName: Abyssal_ Anchor
+	Tooltip: ""
+}

@@ -19,8 +19,8 @@ namespace Origins.Items.Accessories {
 			player.GetCritChance(DamageClass.Generic) += 4f;
 			player.lifeRegen += 4;
 			player.statDefense += 8;
-			player.pickSpeed += 0.25f;
-			player.GetKnockback(DamageClass.Summon) += 1;
+			player.pickSpeed -= 0.25f;
+			player.GetKnockback(DamageClass.Summon).Base += 1;
 
 			player.moveSpeed *= 0.9f;
 			player.jumpSpeedBoost -= 1.8f;
