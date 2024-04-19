@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Bomb);
-			Item.damage = 65;
+			Item.damage = 48;
 			Item.shoot = ModContent.ProjectileType<Hellfire_Bomb_P>();
 			Item.value *= 9;
 			Item.rare = ItemRarityID.Orange;
@@ -90,11 +90,11 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.ai[0] = 0;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			target.AddBuff(BuffID.OnFire3, 180);
+			target.AddBuff(BuffID.OnFire3, 300);
 		}
 		public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
 			modifiers.Knockback *= 0;
-			modifiers.FinalDamage *= 0.5f;
+			modifiers.FinalDamage *= 0.3f;
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			target.AddBuff(BuffID.OnFire3, 180);

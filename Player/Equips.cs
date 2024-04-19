@@ -392,7 +392,9 @@ namespace Origins {
 			}
 
 			if (cinderSealItem?.ModItem is not null && cinderSealCount > 0 && Player.immuneTime > 0) { 
-				Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash, Alpha: 100).noGravity = true;
+				for (int i = 0; i < cinderSealCount; i++) {
+                    Dust.NewDustDirect(Player.position, Player.width, Player.height, DustID.Ash).noGravity = true;
+                }
 				if (Player.immuneTime % 15 == 1) {
 					cinderSealCount--;
 					cinderSealItem.ModItem.Shoot(

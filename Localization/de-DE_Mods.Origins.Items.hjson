@@ -4076,6 +4076,22 @@ Newsboy_Cap: {
 }
 
 Abyssal_Anchor: {
-	// DisplayName: Abyssal_ Anchor
-	// Tooltip: ""
+	// DisplayName: Abyssal Anchor
+	/* Tooltip:
+		'''
+		+15% melee speed
+		+10% generic damage
+		+5% magic damage
+		+4% critical strike chance
+		+4 HP/s life regeneration
+		+20 mana
+		+8 defense
+		+5% damage reduction
+		+25% mana shielding
+		+25% mining speed
+		+1 minion knockback
+		Increased pick-up range for stars
+		-25% movement speed
+		-40% jump speed
+		''' */
 }

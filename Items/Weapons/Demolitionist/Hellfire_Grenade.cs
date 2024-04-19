@@ -5,6 +5,9 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Origins.Projectiles;
+using Terraria.Audio;
+
 namespace Origins.Items.Weapons.Demolitionist {
     public class Hellfire_Grenade : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -19,7 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Grenade);
-			Item.damage = 67;
+			Item.damage = 36;
 			Item.shoot = ModContent.ProjectileType<Hellfire_Grenade_P>();
 			Item.value *= 9;
 			Item.rare = ItemRarityID.Orange;
@@ -52,8 +55,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void OnKill(int timeLeft) {
 			Projectile.position.X += Projectile.width / 2;
 			Projectile.position.Y += Projectile.height / 2;
-			Projectile.width = 128;
-			Projectile.height = 128;
+			Projectile.width = 80;
+			Projectile.height = 80;
 			Projectile.position.X -= Projectile.width / 2;
 			Projectile.position.Y -= Projectile.height / 2;
 			Projectile.Damage();
@@ -61,11 +64,41 @@ namespace Origins.Items.Weapons.Demolitionist {
 				Projectile.GetSource_Death(),
 				Projectile.Center,
 				default,
-				ModContent.ProjectileType<Hellfire_Bomb_Fire>(),
+				ModContent.ProjectileType<Hellfire_Grenade_Fire>(),
 				Projectile.damage,
 				0,
 				Projectile.owner
 			);
 		}
 	}
+    public class Hellfire_Grenade_Fire : ExplosionProjectile {
+        public override DamageClass DamageType => DamageClasses.ThrownExplosive;
+        public override int Size => 80;
+        public override SoundStyle? Sound => null;
+        public override int FireDustAmount => 2;
+        public override int SmokeDustAmount => 1;
+        public override int SmokeGoreAmount => 0;
+        public override int SelfDamageCooldownCounter => ImmunityCooldownID.WrongBugNet;
+        public override void SetDefaults() {
+            base.SetDefaults();
+            Projectile.timeLeft = 60;
+            Projectile.usesLocalNPCImmunity = false;
+            Projectile.usesIDStaticNPCImmunity = false;
+            Projectile.idStaticNPCHitCooldown = 6;
+        }
+        public override void AI() {
+            base.AI();
+            Projectile.ai[0] = 0;
+        }
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+            target.AddBuff(BuffID.OnFire3, 180);
+        }
+        public override void ModifyHitPlayer(Player target, ref Player.HurtModifiers modifiers) {
+            modifiers.Knockback *= 0;
+            modifiers.FinalDamage *= 0.3f;
+        }
+        public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+            target.AddBuff(BuffID.OnFire3, 100);
+        }
+    }
 }

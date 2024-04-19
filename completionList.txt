@@ -251,12 +251,12 @@ ARMOR:
 (^) Riptide Armor*
 (^) Riven Armor*
 (ᗢ) Scavenger Armor*
-(#3?, ^2) Soulhide Armor* !!!
+(^) Soulhide Armor*
 (^) Tendon Armor*
 
 (X) Abysswalker Armor*
 (^) Acrid Armor*
-(☻) Amber Exploder Armor* !!!
+(^) Amber Exploder Armor*
 (^) Bleeding Obsidian Armor*
 (X) Ruby Ranger Armor*
 
@@ -284,12 +284,13 @@ ARMOR:
 
 ACCESSORIES:
 ---
-(#, ^2) Abyssal Anchor* !!!
+(^) Abyssal Anchor*
 (^) ACME Crate*
 (^) Advanced Imaging*
 (^) Air Tank*
+(X) ASH Attack Relay
 (#2, ^2, ♠) ATACS*
-(☻) Automated Returns Handler* !!!
+(^) Automated Returns Handler*
 (^) Binding Book*
 (^) Blast-Resistant Plate*
 (^) Bomb Charm*
@@ -359,7 +360,7 @@ ACCESSORIES:
 (^) Resin Shield*
 (^) Return To Sender*
 (^) Ruby Reticle*
-(^) Seal of Cinders* !!!
+(^) Seal of Cinders*
 (^) Scavenger Bag*
 (^) Shield of Retribution*
 (^) Sniper's Mark*
@@ -407,7 +408,7 @@ ACCESSORIES:
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
 (^) Fiberglass Dagger*
-(^) Forbidden Voice (Cursed)* !!!
+(^) Forbidden Voice (Cursed)*
 (#, ^2) Forbidden Voice (Uncursed)* !!!
 (^) Lazy Cloak*
 (X) Mildewy Diving Helmet*
@@ -559,7 +560,8 @@ MELEE WEAPONS:
 (^) Switchblade*
 (^) Triple Threat
 (^) Tyrfing
-(^) Vorpal Sword
+(^) Vorpal Sword (Cursed)
+(^) Vorpal Sword (Uncursed)
 
 (#2, ^2) Amenonuhoko
 (X) Amoebash
@@ -755,8 +757,8 @@ EXPLOSIVE WEAPONS:
 (^) Flashbang*
 (^) Floaty Bomb*
 (^) Hand Grenade Launcher
-(☻) Hellfire Bomb* !!!
-(☻) Hellfire Grenade* !!!
+(^) Hellfire Bomb*
+(^) Hellfire Grenade*
 (^) Impact Bomb*
 (^) Impact Dynamite*
 (^) Impact Grenade*

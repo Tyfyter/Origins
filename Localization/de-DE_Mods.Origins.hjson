@@ -1138,6 +1138,7 @@ Projectiles: {
 	// Abrasion_Blaster_P.DisplayName: Abrasion Blaster
 	// Abrasion_Blaster_Explosion.DisplayName: Abrasion Blaster
 	// Hellfire_Bomb_Fire.DisplayName: Hellfire Bomb
+	// Hellfire_Grenade_Fire.DisplayName: Hellfire Grenade
 }
 
 Prefixes: {

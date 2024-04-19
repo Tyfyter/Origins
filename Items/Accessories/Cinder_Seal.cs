@@ -11,13 +11,13 @@ namespace Origins.Items.Accessories {
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 34);
-			Item.value = Item.sellPrice(gold: 4, silver: 20);
+			Item.value = Item.sellPrice(gold: 2);
 			Item.rare = ItemRarityID.Blue;
 
 			Item.shoot = ModContent.ProjectileType<Cinder_Seal_Dust>();
-			Item.damage = 12;
+			Item.damage = 24;
 			Item.ArmorPenetration = 6;
-			Item.knockBack = 3;
+			Item.knockBack = 6;
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			player.GetModPlayer<OriginPlayer>().cinderSealItem = Item;

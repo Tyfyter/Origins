@@ -1,11 +1,9 @@
-﻿using Microsoft.Xna.Framework;
-using Origins.Dev;
-using Origins.Misc;
+﻿using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
-	public class Abyssal_Anchor : ModItem, ICustomWikiStat {
+    public class Abyssal_Anchor : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
 			"ManaShielding",
@@ -27,9 +25,9 @@ namespace Origins.Items.Accessories {
 			player.manaMagnet = true;
 			player.magicCuffs = true;
 			player.statManaMax2 += 20;
-			player.GetModPlayer<OriginPlayer>().refactoringPieces = true;
+            player.GetModPlayer<OriginPlayer>().manaShielding += 0.25f;
 
-			player.GetAttackSpeed(DamageClass.Melee) += 0.15f;
+            player.GetAttackSpeed(DamageClass.Melee) += 0.15f;
 			player.GetDamage(DamageClass.Generic) += 0.1f;
 			player.GetCritChance(DamageClass.Generic) += 4f;
 			player.lifeRegen += 4;
