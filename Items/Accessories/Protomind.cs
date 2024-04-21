@@ -31,18 +31,20 @@ namespace Origins.Items.Accessories {
 		public override void UpdateInventory(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.hasProtOS = true;
-			UpdateMoonlordWarningAndIdle(originPlayer.protOSQuoteCooldown, player);
+			UpdateMoonlordWarningAndIdle(originPlayer);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
 			originPlayer.hasProtOS = true;
 			originPlayer.protomindItem = Item;
-			UpdateMoonlordWarningAndIdle(originPlayer.protOSQuoteCooldown, player, hideVisual);
+			UpdateMoonlordWarningAndIdle(originPlayer, hideVisual);
 		}
-		static void UpdateMoonlordWarningAndIdle(int[] cooldowns, Player player, bool disableIdle = false) {
+		static void UpdateMoonlordWarningAndIdle(OriginPlayer originPlayer, bool disableIdle = false) {
+			Player player = originPlayer.Player;
+			int[] cooldowns = originPlayer.protOSQuoteCooldown;
 			if (cooldowns[(int)QuoteType.The_Part_Where_He_Kills_You] <= 0) {
 				int index = NPC.FindFirstNPC(NPCID.MoonLordHead);
-				if (index != -1 && Main.npc[index].ai[0] == 1f) {
+				if (index != -1 && Main.npc[index].ai[0] == 1f) { //charging up deathray
 					PlayRandomMessage(
 						QuoteType.The_Part_Where_He_Kills_You,
 						cooldowns,
@@ -53,8 +55,40 @@ namespace Origins.Items.Accessories {
 			if (cooldowns[(int)QuoteType.Idle] <= 0) {
 				PlayRandomMessage(QuoteType.Idle, cooldowns, player.Top);
 			}
+			if (player.companionCube && cooldowns[(int)QuoteType.Companion_Cube] <= 0) {
+				PlayRandomMessage(QuoteType.Companion_Cube, cooldowns, player.Top);
+			}
 			if (player.position.Y > Main.UnderworldLayer * 16 && player.oldPosition.Y <= Main.UnderworldLayer * 16) {
-				PlayRandomMessage(QuoteType.InHell, cooldowns, player.Top);
+				PlayRandomMessage(QuoteType.In_Hell, cooldowns, player.Top);
+			}
+			if (player.gravDir != originPlayer.lastGravDir) {
+				PlayRandomMessage(QuoteType.Gravitation, cooldowns, player.Top);
+			}
+			int boundNPCType = -1;
+			const float boundNPCRange = 50 * 16;
+			if (originPlayer.nearbyBoundNPCType == -1) {
+				for (int i = 0; i < Main.maxNPCs; i++) {
+					NPC npc = Main.npc[i];
+					if (npc.active && player.DistanceSQ(npc.Center) < boundNPCRange * boundNPCRange) {
+						bool isVanillaBoundNPC = npc.type is 105 or 106 or 123 or 354 or 376 or 579 or 453 or 589;
+						if (isVanillaBoundNPC || (npc.aiStyle == 0 && (NPCLoader.CanChat(npc) ?? false))) {
+							boundNPCType = npc.type;
+						}
+					}
+				}
+			} else {
+				for (int i = 0; i < Main.maxNPCs; i++) {
+					NPC npc = Main.npc[i];
+					if (npc.active && npc.type == originPlayer.nearbyBoundNPCType && player.DistanceSQ(npc.Center) < boundNPCRange * boundNPCRange) {
+						boundNPCType = npc.type;
+					}
+				}
+			}
+			originPlayer.nearbyBoundNPCType = boundNPCType;
+			if (boundNPCType == -1) {
+				originPlayer.nearbyBoundNPCTime = 0;
+			} else if (++originPlayer.nearbyBoundNPCTime == 60 * 90) {// 90 seconds
+				PlayRandomMessage(QuoteType.Bound_NPC, cooldowns, player.Top);
 			}
 		}
 		public override bool OnPickup(Player player) {
@@ -74,53 +108,55 @@ namespace Origins.Items.Accessories {
 		}
 		public static string GetRandomVariation(QuoteType type) {
 			messagesByType ??= new Message_Cache[(int)QuoteType.Count];
-			if (messagesByType[(int)type].LastCulture?.IsActive ?? false) {
+			Message_Cache refreshCache = messagesByType[(int)type];
+			if (refreshCache.LastCulture?.IsActive == true && refreshCache.LastGameMode == Main.GameModeInfo.Id) {
 				return Main.rand.Next(messagesByType[(int)type].Cache);
-			} else {
-				List<string> cache = new();
-				string quote;
-				static bool TryGetText(string key, out string text) {
-					if (Language.Exists(key)) {
-						text = Language.GetTextValue(key);
-						return true;
-					}
-					text = key;
-					return false;
+			}
+			List<string> cache = new();
+			static bool TryGetText(string key, out string text) {
+				if (Language.Exists(key)) {
+					text = Language.GetTextValue(key);
+					return true;
 				}
-				if (TryGetText($"Mods.Origins.Dialogue.ProtOS.{type}", out quote)) {
+				text = key;
+				return false;
+			}
+			if (TryGetText($"Mods.Origins.Dialogue.ProtOS.{type}", out string quote)) {
+				cache.Add(quote);
+			} else {
+				int count = 0;
+				while (TryGetText($"Mods.Origins.Dialogue.ProtOS.{type}_{count}", out quote)) {
+					cache.Add(quote);
+					count++;
+				}
+			}
+			if (Main.expertMode) {
+				if (TryGetText($"Mods.Origins.Dialogue.ProtOS.{type}_Expert", out quote)) {
 					cache.Add(quote);
 				} else {
 					int count = 0;
-					while (TryGetText($"Mods.Origins.Dialogue.ProtOS.{type}_{count}", out quote)) {
+					while (TryGetText($"Mods.Origins.Dialogue.ProtOS.{type}_Expert_{count}", out quote)) {
 						cache.Add(quote);
 						count++;
 					}
 				}
-				if (!Main.expertMode) {
-					if (TryGetText($"Mods.Origins.Dialogue.ProtOS.{type}_Expert", out quote)) {
-						cache.Add(quote);
-					} else {
-						int count = 0;
-						while (TryGetText($"Mods.Origins.Dialogue.ProtOS.{type}_Expert_{count}", out quote)) {
-							cache.Add(quote);
-							count++;
-						}
-					}
-				}
-				if (!Main.masterMode) {
-					if (TryGetText($"Mods.Origins.Dialogue.ProtOS.{type}_Master", out quote)) {
-						cache.Add(quote);
-					} else {
-						int count = 0;
-						while (TryGetText($"Mods.Origins.Dialogue.ProtOS.{type}_Master_{count}", out quote)) {
-							cache.Add(quote);
-							count++;
-						}
-					}
-				}
-				messagesByType[(int)type] = new Message_Cache(cache.ToArray(), LanguageManager.Instance.ActiveCulture);
-				return Main.rand.Next(cache);
 			}
+			if (Main.masterMode) {
+				if (TryGetText($"Mods.Origins.Dialogue.ProtOS.{type}_Master", out quote)) {
+					cache.Add(quote);
+				} else {
+					int count = 0;
+					while (TryGetText($"Mods.Origins.Dialogue.ProtOS.{type}_Master_{count}", out quote)) {
+						cache.Add(quote);
+						count++;
+					}
+				}
+			}
+			messagesByType[(int)type] = new Message_Cache(cache.ToArray(), LanguageManager.Instance.ActiveCulture, Main.GameModeInfo.Id);
+			if (cache.Count == 0) {
+				return $"missingno (Mods.Origins.Dialogue.ProtOS.{type})";
+			}
+			return Main.rand.Next(cache);
 		}
 		public static void PlayRandomMessage(QuoteType type, int[] cooldowns, Vector2 position, Vector2? velocity = null) {
 			TryPlayMessage(
@@ -142,23 +178,31 @@ namespace Origins.Items.Accessories {
 					case QuoteType.Pickup:
 					cooldowns[(int)type] = Main.rand.Next(1200, 1801);
 					break;
+
 					case QuoteType.Death:
-					cooldowns[(int)type] = 0;
+					case QuoteType.Kill_Villager:
+					case QuoteType.Bound_NPC:// no need to do something here since the cooldown is already at the desired value of 0
 					break;
+
 					case QuoteType.Bird:
 					cooldowns[(int)type] = Main.rand.Next(200, 481);
 					break;
+
 					case QuoteType.Combat:
 					cooldowns[(int)type] = Main.rand.Next(240, 361);
 					break;
+
+					case QuoteType.Gravitation:
 					case QuoteType.The_Part_Where_He_Kills_You:
 					cooldowns[(int)type] = Main.rand.Next(600, 901);
 					break;
-					case QuoteType.InHell:
+
+					case QuoteType.In_Hell:
 					cooldowns[(int)type] = Main.rand.Next(1200, 1801);
 					break;
 				}
 				cooldowns[(int)QuoteType.Idle] = Main.rand.Next(1800, 3601);
+				cooldowns[(int)QuoteType.Companion_Cube] = Main.rand.Next(1800, 3601);
 			}
 		}
 		public static void PlayMessage(string text, Vector2 position, Vector2? velocity = null) {
@@ -171,18 +215,18 @@ namespace Origins.Items.Accessories {
 			SoundEngine.PlaySound(SoundID.LucyTheAxeTalk, position);
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ItemID.BrainOfConfusion);
-			recipe.AddIngredient(ModContent.ItemType<Potato_Battery>());
-			recipe.AddTile(TileID.TinkerersWorkbench);
-			recipe.AddOnCraftCallback((_, _, _, _) => {
+			Recipe.Create(Type)
+			.AddIngredient(ItemID.BrainOfConfusion)
+			.AddIngredient(ModContent.ItemType<Potato_Battery>())
+			.AddTile(TileID.TinkerersWorkbench)
+			.AddOnCraftCallback((_, _, _, _) => {
 				PlayRandomMessage(
 					QuoteType.Craft,
 					Main.LocalPlayer.GetModPlayer<OriginPlayer>().protOSQuoteCooldown,
 					Main.LocalPlayer.Top
 				);
-			});
-			recipe.Register();
+			})
+			.Register();
 		}
 		public enum QuoteType {
 			Pickup,
@@ -193,24 +237,26 @@ namespace Origins.Items.Accessories {
 			Craft,
 			Respawn,
 			Falling,
-			Gravitation,//←TODO
+			Gravitation,
 			Idle,
-			CompanionCube,//←TODO
-			InHell,
-			ItemIsBad,//←TODO
-			ItemIsExplosive,//←TODO
-			SmashingEvilTile,//←TODO
-			KillVillager,//←TODO
-			BoundNPCAppearedThrice,//←TODO
+			Companion_Cube,
+			In_Hell,
+			Item_Is_Bad,//←TODO
+			Item_Is_Explosive,//←TODO
+			Smashing_Evil_Tile,//←TODO
+			Kill_Villager,
+			Bound_NPC,
 
 			Count
 		}
 		struct Message_Cache {
 			public string[] Cache { get; init; }
 			public GameCulture LastCulture { get; init; }
-			public Message_Cache(string[] cache, GameCulture lastCulture) {
+			public int LastGameMode { get; init; }
+			public Message_Cache(string[] cache, GameCulture lastCulture, int lastGameMode) {
 				Cache = cache;
 				LastCulture = lastCulture;
+				LastGameMode = lastGameMode;
 			}
 		}
 	}

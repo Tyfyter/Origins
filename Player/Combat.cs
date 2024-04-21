@@ -283,13 +283,22 @@ namespace Origins {
 					new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
 				);
 			}
-			if (hasProtOS && Main.rand.NextBool(10)) {
-				Protomind.PlayRandomMessage(
-					Protomind.QuoteType.Combat,
-					protOSQuoteCooldown,
-					Player.Top,
-					new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
-				);
+			if (hasProtOS) {
+				if (target.life <= 0 && target.townNPC) {
+					Protomind.PlayRandomMessage(
+						Protomind.QuoteType.Kill_Villager,
+						protOSQuoteCooldown,
+						Player.Top,
+						new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
+					);
+				} else if (Main.rand.NextBool(10)) {
+					Protomind.PlayRandomMessage(
+						Protomind.QuoteType.Combat,
+						protOSQuoteCooldown,
+						Player.Top,
+						new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
+					);
+				}
 			}
 			//TODO: actually test this
 			if (Player.whoAmI != Main.myPlayer && Main.LocalPlayer.GetModPlayer<OriginPlayer>().priorityMail) {

@@ -46,7 +46,7 @@ namespace Origins.Items.Accessories {
 		}
 		static void UpdateMoonlordWarning(int[] cooldowns, Vector2 position) {
 			int index = NPC.FindFirstNPC(NPCID.MoonLordHead);
-			if (index != -1 && Main.npc[index].ai[0] == 1f) {
+			if (index != -1 && Main.npc[index].ai[0] == 1f) { //charging up deathray
 				PlayRandomMessage(
 					QuoteType.The_Part_Where_He_Kills_You,
 					cooldowns,

@@ -91,5 +91,8 @@ namespace Origins {
 				a = a * (1 - progress) * progressInvColor + progress * 0.9f;
 			}
 		}
+		public override void PostUpdateRunSpeeds() {
+			oldGravDir = Player.gravDir;
+		}
 	}
 }

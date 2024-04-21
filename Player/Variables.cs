@@ -180,6 +180,9 @@ namespace Origins {
 		public bool hasProtOS = false;
 		public int[] potatOSQuoteCooldown;
 		public int[] protOSQuoteCooldown;
+		public int lastGravDir = 1;
+		public int nearbyBoundNPCTime = 0;
+		public int nearbyBoundNPCType = 0;
 		public bool resinShield = false;
 		public int resinShieldCooldown = 0;
 		public bool ResinShield {
