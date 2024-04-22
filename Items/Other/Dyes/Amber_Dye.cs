@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 using Terraria.Graphics.Shaders;
 
 namespace Origins.Items.Other.Dyes {
@@ -10,7 +11,7 @@ namespace Origins.Items.Other.Dyes {
         };
         public override void SetStaticDefaults() {
 			ID = Type;
-			GameShaders.Armor.BindShader(Type, new ArmorShaderData(Main.PixelShaderRef, "ArmorStardust"))
+			GameShaders.Armor.BindShader(Type, new ArmorShaderData(Main.Assets.Request<Effect>("PixelShader"), "ArmorStardust"))
 			.UseImage("Images/Misc/noise")
 			.UseColor(1.5f, 0.8f, 0.4f)
 			.UseSecondaryColor(2.0f, 1.2f, 0.4f)

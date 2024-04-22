@@ -14,7 +14,7 @@ using Terraria.ModLoader;
 namespace Origins.Items.Other.Consumables {
 	public class Holiday_Hair_Dye : HairDye {
 		static List<(Func<bool> day, HolidayHairPassData pass)> shaders;
-		public override HairShaderData ShaderData => new HolidayHairShaderData(new Ref<Effect>(Mod.Assets.Request<Effect>("Effects/HolidayHairDye", AssetRequestMode.ImmediateLoad).Value), "Default");
+		public override HairShaderData ShaderData => new HolidayHairShaderData(Mod.Assets.Request<Effect>("Effects/HolidayHairDye"), "Default");
 		public static HolidayHairPassData CurrentPass {
 			get {
 				for (int i = 0; i < shaders.Count; i++) {
@@ -150,7 +150,7 @@ namespace Origins.Items.Other.Consumables {
 	public class HolidayHairShaderData : HairShaderData {
 		readonly Func<object[], object> checkVersion;
 		int lastVersion = -1;
-		public HolidayHairShaderData(Ref<Effect> shader, string passName) : base(shader, passName) {
+		public HolidayHairShaderData(Asset<Effect> shader, string passName) : base(shader, passName) {
 			checkVersion = ModLoader.TryGetMod("HolidayLib", out Mod HolidayLib) ? (Func<object[], object>)HolidayLib.Call("GETFUNC", "FORCEDHOLIDAYVERSION") : (_) => -1;
 		}
 		public override Color GetColor(Player player, Color lightColor) {
