@@ -3,6 +3,8 @@ using Origins.Dev;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
+
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Magic_Glove : ModItem, ICustomWikiStat {
@@ -67,5 +69,6 @@ namespace Origins.Items.Accessories {
 				break;
 			}
 		}
+		public override bool MagicPrefix() => false;
 	}
 }

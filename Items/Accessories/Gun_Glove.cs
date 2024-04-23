@@ -2,6 +2,8 @@
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
+
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Gun_Glove : ModItem, ICustomWikiStat {
@@ -32,5 +34,6 @@ namespace Origins.Items.Accessories {
 			originPlayer.gunGlove = true;
 			originPlayer.gunGloveItem = Item;
 		}
+		public override bool RangedPrefix() => false;
 	}
 }

@@ -7,6 +7,8 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
+
 namespace Origins.Items.Accessories {
 	public class Lazy_Cloak : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
@@ -41,6 +43,7 @@ namespace Origins.Items.Accessories {
 			Item.backSlot = 5;
 			Item.frontSlot = 3;
 		}
+		public override bool MagicPrefix() => false;
 	}
 	public class Lazy_Cloak_P : ModProjectile {
 		public const int frameSpeed = 5;

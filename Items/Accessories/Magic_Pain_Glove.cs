@@ -4,6 +4,8 @@ using Origins.Items.Weapons.Magic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
+
 namespace Origins.Items.Accessories {
 	[AutoloadEquip(EquipType.HandsOn)]
 	public class Magic_Pain_Glove : ModItem, ICustomWikiStat {
@@ -74,5 +76,6 @@ namespace Origins.Items.Accessories {
                 break;
             }
 		}
+		public override bool MagicPrefix() => false;
 	}
 }

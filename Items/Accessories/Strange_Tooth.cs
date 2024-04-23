@@ -3,6 +3,7 @@ using System;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
 
 namespace Origins.Items.Accessories {
 	public class Strange_Tooth : ModItem {
@@ -22,6 +23,7 @@ namespace Origins.Items.Accessories {
 		public override void UpdateEquip(Player player) {
 			player.GetModPlayer<OriginPlayer>().strangeToothItem = Item;
 		}
+		public override bool MagicPrefix() => false;
 	}
 	public class Strange_Tooth_Buff : ModBuff {
 		public static int ID { get; private set; }

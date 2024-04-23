@@ -4,6 +4,8 @@ using Origins.Projectiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.Utilities;
+
 namespace Origins.Items.Accessories {
 	public class Mitosis : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
@@ -27,6 +29,7 @@ namespace Origins.Items.Accessories {
 			originPlayer.mitosis = true;
 			originPlayer.mitosisItem = Item;
 		}
+		public override bool RangedPrefix() => false;
 	}
 	public class Amoeba_Bubble : ModProjectile {
 		public override string Texture => "Origins/Items/Accessories/Mitosis_P";
