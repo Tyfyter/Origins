@@ -787,7 +787,7 @@ EXPLOSIVE WEAPONS:
 
 (X) Autohandcannon
 (^) Bomboomstick
-(#2, ^2) Chlorodynamite* !!!
+(☻) Chlorodynamite* !!!
 (X) Chlorophyte Handcannon
 (X) Firework Cannon
 (^) Mine Flayer*
