@@ -8,6 +8,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using static Humanizer.In;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Chlorodynamite : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
@@ -21,6 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Dynamite);
 			Item.damage = 186;
+			Item.knockBack = 8;
 			Item.shoot = ModContent.ProjectileType<Chlorodynamite_P>();
 			Item.shootSpeed *= 1.5f;
 			Item.value = Item.sellPrice(silver: 22);
@@ -41,7 +43,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 	}
 	public class Chlorodynamite_P : ModProjectile, IIsExplodingProjectile {
-		const int explosion_delay_time = 60;
+		public const int explosion_delay_time = 60;
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Chlorodynamite";
 		public override void SetStaticDefaults() {
 			Origins.MagicTripwireRange[Type] = 32;
@@ -53,13 +55,15 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.timeLeft = 300;
 		}
 		public override void AI() {
+			Projectile.friendly = false;
+			Projectile.damage = (int)Main.player[Projectile.owner].GetTotalDamage(Projectile.DamageType).ApplyTo(Projectile.originalDamage);
 			if (Projectile.timeLeft == explosion_delay_time) {
 				const float maxDist = 240 * 240;
 				List<(Vector2 pos, float weight)> targets = new();
 				NPC npc;
 				for (int i = 0; i < Main.maxNPCs; i++) {
 					npc = Main.npc[i];
-					if (npc.active && npc.damage > 0 && !npc.friendly) {
+					if (npc.active && npc.CanBeChasedBy(Projectile)) {
 						Vector2 currentPos = npc.Hitbox.ClosestPointInRect(Projectile.Center);
 						Vector2 diff = currentPos - Projectile.Center;
 						float dist = diff.LengthSquared();
@@ -86,10 +90,9 @@ namespace Origins.Items.Weapons.Demolitionist {
 						(currentPos - Projectile.Center).WithMaxLength(12),
 						Chlorodynamite_Vine.ID,
 						Projectile.damage / 9,
-						10,
+						Projectile.knockBack / 10,
 						Projectile.owner,
-						Projectile.Center.X,
-						Projectile.Center.Y
+						Projectile.whoAmI
 					);
 				}
 			}
@@ -105,6 +108,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.Grenade;
 			Projectile.aiStyle = ProjAIStyleID.Explosive;
+			Projectile.friendly = true;
 			return true;
 		}
 		public override bool? CanHitNPC(NPC target) => null;//Projectile.type == ProjectileID.Grenade ? null : false;
@@ -125,26 +129,53 @@ namespace Origins.Items.Weapons.Demolitionist {
 	}
 	public class Chlorodynamite_Vine : ModProjectile {
 		public static int ID { get; private set; }
+		public int ParentProjectile { 
+			get => (int)Projectile.ai[0]; 
+			set => Projectile.ai[0] = value;
+		}
+		public int TargetNPC { 
+			get => (int)Projectile.ai[1]; 
+			set => Projectile.ai[1] = value;
+		}
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}
 		public override void SetDefaults() {
 			Projectile.CloneDefaults(ProjectileID.Grenade);
+			Projectile.friendly = true;
+			Projectile.aiStyle = 0;
 			Projectile.penetrate = -1;
 			Projectile.width = Projectile.height = 16;
-			Projectile.timeLeft = 60;
+			Projectile.timeLeft = Chlorodynamite_P.explosion_delay_time;
 			Projectile.tileCollide = false;
+			Projectile.localNPCHitCooldown = 10;
+			Projectile.usesLocalNPCImmunity = true;
+		}
+		public override void OnSpawn(IEntitySource source) {
+			TargetNPC = -1;
+		}
+		public override void AI() {
+			if (TargetNPC != -1) {
+				Projectile parent = Main.projectile[ParentProjectile];
+				NPC target = Main.npc[TargetNPC];
+				if (!target.active) {
+					Projectile.Kill();
+					return;
+				}
+				Vector2 direction = parent.DirectionTo(target.Center);
+				if (!direction.HasNaNs()) target.velocity -= direction * Projectile.ai[2];
+				Projectile.Center = target.Center;
+			}
 		}
 		public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers) {
 			modifiers.HitDirectionOverride = 0;
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
-			if (Projectile.velocity != default) {
-				target.velocity -= Vector2.Normalize(Projectile.velocity) * hit.Knockback * target.knockBackResist;
-			}
+			TargetNPC = target.whoAmI;
+			Projectile.ai[2] = hit.Knockback;
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			Vector2 ownerCenter = new Vector2(Projectile.ai[0], Projectile.ai[1]);
+			Vector2 ownerCenter = Main.projectile[ParentProjectile].Center;
 			Vector2 center = Projectile.Center;
 			Vector2 distToProj = ownerCenter - Projectile.Center;
 			float projRotation = distToProj.ToRotation() - 1.57f;
