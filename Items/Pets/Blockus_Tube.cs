@@ -49,7 +49,7 @@ namespace Origins.Items.Pets {
 		}
 
 		public override void AI() {
-            if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.Amalgamation.WithPitch(2.2f).WithVolume(0.35f));
+            if (Main.rand.NextBool(650)) SoundEngine.PlaySound(Origins.Sounds.Amalgamation.WithPitch(2.2f).WithVolume(0.35f), Projectile.Center);
             Player player = Main.player[Projectile.owner];
 
 			#region Active check
