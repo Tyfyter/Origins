@@ -23,6 +23,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.value = 30000f;
 			NPC.knockBackResist = 0.1f;
 			NPC.rarity = 5;
+			AIType = NPCID.BigMimicCorruption;
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get; set; }

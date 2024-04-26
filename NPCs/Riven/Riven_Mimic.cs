@@ -20,7 +20,8 @@ namespace Origins.NPCs.Riven {
 			NPC.value = 30000f;
 			NPC.knockBackResist = 0.1f;
 			NPC.rarity = 5;
-        }
+			AIType = NPCID.BigMimicCrimson;
+		}
 		public override void FindFrame(int frameHeight) {
 			NPC.CloneFrame(NPCID.BigMimicCrimson, frameHeight);
 		}
