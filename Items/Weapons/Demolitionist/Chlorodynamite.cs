@@ -183,7 +183,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			float distance = distToProj.Length();
 			distToProj.Normalize();
 			distToProj *= 8f;
-			DrawData data;
 			while (distance > 8f && !float.IsNaN(distance)) {
 				center += distToProj;
 				distance = (ownerCenter - center).Length();
@@ -206,7 +205,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 					frame = new Rectangle(14, 18, 10, 10);
 					break;
 				}
-				data = new DrawData(
+				Main.EntitySpriteDraw(new DrawData(
 					TextureAssets.Projectile[Type].Value,
 					center - Main.screenPosition,
 					frame,
@@ -214,9 +213,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 					projRotation,
 					frame.Size() * 0.5f,
 					new Vector2(1, 1),
-					SpriteEffects.None, 
-				0);
-				Main.EntitySpriteDraw(data);
+					SpriteEffects.None
+				));
 			}
 			return false;
 		}
