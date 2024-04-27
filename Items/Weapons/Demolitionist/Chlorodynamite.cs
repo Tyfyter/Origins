@@ -173,6 +173,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
 			TargetNPC = target.whoAmI;
 			Projectile.ai[2] = hit.Knockback;
+			Projectile.netUpdate = true;
 		}
 		public override bool PreDraw(ref Color lightColor) {
 			Vector2 ownerCenter = Main.projectile[ParentProjectile].Center;
