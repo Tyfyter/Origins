@@ -787,7 +787,7 @@ EXPLOSIVE WEAPONS:
 
 (X) Autohandcannon
 (^) Bomboomstick
-(☻) Chlorodynamite* !!!
+(^) Chlorodynamite*
 (X) Chlorophyte Handcannon
 (X) Firework Cannon
 (^) Mine Flayer*
@@ -983,6 +983,7 @@ TILES:
 
 (^) Defiled Amalgamation Trophy*
 (^) Defiled Amalgamation Relic*
+(ᗢ) Enemy Banners*
 (@, #3) Miscreant Trophy*
 (@, #3) Miscreant Relic*
 (@, #3) Quantux Trophy*
