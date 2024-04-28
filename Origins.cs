@@ -517,7 +517,7 @@ namespace Origins {
 			OriginTile.IDs = null;
 			OriginTile.DefiledTiles = null;
 			OriginSystem worldInstance = ModContent.GetInstance<OriginSystem>();
-			if (!(worldInstance is null)) {
+			if (worldInstance is not null) {
 				worldInstance.defiledResurgenceTiles = null;
 				worldInstance.defiledAltResurgenceTiles = null;
 			}
