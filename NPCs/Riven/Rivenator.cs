@@ -31,34 +31,35 @@ namespace Origins.NPCs.Riven {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Alkahest>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Seam_Beam>(), 40));
 		}
-		public override void AI() { }
-		public override void OnSpawn(IEntitySource source) {
-			NPC.spriteDirection = Main.rand.NextBool() ? 1 : -1;
-			NPC.ai[3] = NPC.whoAmI;
-			NPC.realLife = NPC.whoAmI;
-			int current = NPC.whoAmI;
-			int last = NPC.whoAmI;
-			int type = ModContent.NPCType<Rivenator_Body>();
-			NPC.netUpdate = true;
-			for (int k = 0; k < 17; k++) {
-				current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
+		public override void AI() {
+			if (Main.netMode != NetmodeID.MultiplayerClient && NPC.localAI[0] == 0) {
+				NPC.localAI[0] = 1;
+				NPC.spriteDirection = Main.rand.NextBool() ? 1 : -1;
+				NPC.ai[3] = NPC.whoAmI;
+				int current;
+				int last = NPC.whoAmI;
+				int type = ModContent.NPCType<Rivenator_Body>();
+				NPC.netUpdate = true;
+				for (int k = 0; k < 17; k++) {
+					current = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (int)NPC.Center.X, (int)NPC.Center.Y, type, NPC.whoAmI);
+					Main.npc[current].ai[3] = NPC.whoAmI;
+					Main.npc[current].realLife = NPC.whoAmI;
+
+					Main.npc[current].ai[1] = last;
+					Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
+					Main.npc[last].ai[0] = current;
+
+					last = current;
+					Main.npc[current].netUpdate = true;
+				}
+				current = NPC.NewNPC(NPC.GetSource_NaturalSpawn(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Rivenator_Tail>(), NPC.whoAmI);
 				Main.npc[current].ai[3] = NPC.whoAmI;
 				Main.npc[current].realLife = NPC.whoAmI;
-
 				Main.npc[current].ai[1] = last;
 				Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
 				Main.npc[last].ai[0] = current;
-
-				last = current;
 				Main.npc[current].netUpdate = true;
 			}
-			current = NPC.NewNPC(source, (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<Rivenator_Tail>(), NPC.whoAmI);
-			Main.npc[current].ai[3] = NPC.whoAmI;
-			Main.npc[current].realLife = NPC.whoAmI;
-			Main.npc[current].ai[1] = last;
-			Main.npc[current].spriteDirection = Main.rand.NextBool() ? 1 : -1;
-			Main.npc[last].ai[0] = current;
-			Main.npc[current].netUpdate = true;
 		}
 		public override bool SpecialOnKill() {
 			NPC current = NPC;
