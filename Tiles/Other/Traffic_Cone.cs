@@ -58,10 +58,9 @@ namespace Origins.Tiles.Other {
 			Projectile.height = 0;
 			Projectile.tileCollide = false;
 			Projectile.netImportant = true;
-			//Projectile.hide = true;
+			Projectile.hide = true;
 		}
 		public override void AI() {
-			Dust.NewDust(Projectile.position, 0, 0, DustID.Torch);
 			const float range = 12 * 16; // 12 tiles
 			for (int i = 0; i < Main.maxNPCs; i++) {
 				NPC npc = Main.npc[i];
