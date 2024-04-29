@@ -468,6 +468,7 @@ VANITY:
 (X) Defiled Dye
 (^) High Contrast Dye
 (X) Nova Dye
+(^) Rasterized Dye
 (X) Riven Dye
 ---
 
