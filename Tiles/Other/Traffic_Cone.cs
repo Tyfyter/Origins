@@ -27,7 +27,14 @@ namespace Origins.Tiles.Other {
 		}
 		public static HashSet<Point16> coneLocations;
 		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			if (Main.tile[i, j].TileFrameY != 0) return true;
+			TrySpawnProjectile(i, j);
+			return true;
+		}
+		public override void NearbyEffects(int i, int j, bool closer) {
+			TrySpawnProjectile(i, j);
+		}
+		static void TrySpawnProjectile(int i, int j) {
+			if (Main.tile[i, j].TileFrameY != 0) return;
 			coneLocations ??= new();
 			if (!coneLocations.Contains(new(i, j))) {
 				Projectile.NewProjectile(
@@ -40,7 +47,6 @@ namespace Origins.Tiles.Other {
 					Owner: Main.maxPlayers
 				);
 			}
-			return true;
 		}
 		internal static void ResetLocations() {
 			coneLocations ??= new();

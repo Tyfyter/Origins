@@ -413,6 +413,7 @@ namespace Origins {
 					Main.player[Main.projectile[i].owner].ownedProjectileCounts[Main.projectile[i].type]--;
 				}
 			}
+			Traffic_Cone.ResetLocations();
 		}
 		FastStaticFieldInfo<Main, float> _minWind;
 		FastStaticFieldInfo<Main, float> _maxWind;
@@ -439,14 +440,12 @@ namespace Origins {
 			}else if (forceThunderstormDelay > 0) {
 				if (--forceThunderstormDelay <= 0) forceThunderstorm = true;
 			}
-			Traffic_Cone.ResetLocations();
 		}
 		bool hasLoggedPUP = false;
 		public override void PreUpdatePlayers() {
 			OriginPlayer.LocalOriginPlayer = Main.LocalPlayer.TryGetModPlayer(out OriginPlayer localPlayer) ? localPlayer : null;
 			if (OriginPlayer.playersByGuid is null) OriginPlayer.playersByGuid = new();
 			else OriginPlayer.playersByGuid.Clear();
-			//Traffic_Cone_TE.UpdateCones();
 			if (!hasLoggedPUP) {
 				hasLoggedPUP = true;
 				Mod.Logger.Info($"Running {nameof(PreUpdatePlayers)} in netmode {Main.netMode}");
