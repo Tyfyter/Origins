@@ -211,7 +211,7 @@ STATUS EFFECTS:
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
 (^) Mana Buffer
-(^) Rasterized
+(#4, ^2) Rasterized !!!
 (^) Torn*
 (^) Totally Safe
 (^) Toxic Shock*
@@ -353,7 +353,7 @@ ACCESSORIES:
 (^) Potato Battery*
 (^) Powerflower*
 (^) Primordial Soup*
-(†) Priority Mail* !!!
+(#4, ^2) Priority Mail* !!!
 (#3, ^2) Protomind* !!! 
 (^) Razorwire*
 (^) Rebreather*

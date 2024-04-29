@@ -645,7 +645,12 @@ Powerflower: {
 
 Priority_Mail: {
 	// DisplayName: Priority Mail
-	// Tooltip: Enemies recently struck by a teammate receive 18% more damage
+	/* Tooltip: 
+		'''
+		Enemies recently struck by a teammate or minion receive 18% more damage
+		Summons can target two enemies at once
+		Increases minion damage by 10%
+		''' */
 }
 
 Protomind: {
