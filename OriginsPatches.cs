@@ -1413,7 +1413,6 @@ namespace Origins {
 			try {
 				OriginPlayer originPlayer = drawPlayer.GetModPlayer<OriginPlayer>();
 				if (drawPlayersWithShader < 0 && originPlayer.rasterizedTime > 0) {
-					GameShaders.Armor.GetShaderFromItemId(Rasterized_Dye.ID).Shader.Parameters["uOffset"].SetValue(drawPlayer.velocity.WithMaxLength(4) * 0.125f * originPlayer.rasterizedTime);
 					forcePlayerShader = Rasterized_Dye.ShaderID;
 				}
 				if (drawPlayersWithShader >= 0) {

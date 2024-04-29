@@ -1,5 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -64,6 +67,18 @@ namespace Origins.Items.Other.Dyes {
 				return;
 			}
 			Main.spriteBatch.Restart(lastState);
+		}
+	}
+	public class DelegatedArmorShaderData : ArmorShaderData {
+		public readonly Action<DelegatedArmorShaderData, Entity, DrawData?> setParameters;
+		[Obsolete]
+		public DelegatedArmorShaderData(Ref<Effect> shader, string passName) : base(shader, passName) {
+		}
+		public DelegatedArmorShaderData(Asset<Effect> shader, string passName, Action<DelegatedArmorShaderData, Entity, DrawData?> setParameters) : base(shader, passName) {
+			this.setParameters = setParameters;
+		}
+		public override void Apply(Entity entity, DrawData? drawData = null) {
+			setParameters(this, entity, drawData);
 		}
 	}
 }
