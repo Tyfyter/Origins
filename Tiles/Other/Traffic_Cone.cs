@@ -26,6 +26,9 @@ namespace Origins.Tiles.Other {
 			TileObjectData.addTile(Type);
 			ID = Type;
 		}
+		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
+			
+		}
 	}
 	public class Traffic_Cone_TE : ModTileEntity {
 		public static new int ID { get; private set; } = -1;
@@ -64,9 +67,10 @@ namespace Origins.Tiles.Other {
 			Projectile.height = 0;
 			Projectile.tileCollide = false;
 			Projectile.netImportant = true;
-			//Projectile.hide = true; uncomment once we see that they work
+			Projectile.hide = true;
 		}
 		public override void AI() {
+			Dust.NewDust(Projectile.position, 0, 0, DustID.Torch);
 			const float range = 12 * 16; // 12 tiles
 			for (int i = 0; i < Main.maxNPCs; i++) {
 				NPC npc = Main.npc[i];
@@ -81,7 +85,18 @@ namespace Origins.Tiles.Other {
 			}
 			Projectile.timeLeft = 60;
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
-			Point16 tilePos = Projectile.position.ToTileCoordinates16();
+			Vector2 offset = Vector2.Zero;
+			Player player = Main.player[0];
+			float dist = float.PositiveInfinity;
+			foreach (Player _player in Main.ActivePlayers) {
+				float _dist = _player.DistanceSQ(Projectile.position);
+				if (_dist < dist) {
+					player = _player;
+					dist = _dist;
+				}
+			}
+			if (player.HeldItem.type == ItemID.RainbowRod) offset = new(8);
+			Point16 tilePos = (Projectile.position + offset).ToTileCoordinates16();
 			if (Main.tile[tilePos.X, tilePos.Y].TileIsType(Traffic_Cone.ID)) {
 				Traffic_Cone_TE.coneLocations ??= new() {
 					tilePos
