@@ -216,6 +216,10 @@ namespace Origins {
 				target.AddBuff(Futurephones_Buff.ID, 300);
 				Player.MinionAttackTargetNPC = target.whoAmI;
 			}
+			if (LocalOriginPlayer.priorityMail && Player.whoAmI == Main.myPlayer) {
+				OriginGlobalNPC originGlobalNPC = target.GetGlobalNPC<OriginGlobalNPC>();
+				originGlobalNPC.priorityMailTime = originGlobalNPC.prevPriorityMailTime;
+			}
 		}
 		public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone) {
 			if (proj.CountsAsClass(DamageClass.Melee) || ProjectileID.Sets.IsAWhip[proj.type]) {//flasks
@@ -229,6 +233,10 @@ namespace Origins {
 			if (futurephones && !(proj.minion || ProjectileID.Sets.MinionShot[proj.type])) {
 				target.AddBuff(Futurephones_Buff.ID, 300);
 				Player.MinionAttackTargetNPC = target.whoAmI;
+			}
+			if (LocalOriginPlayer.priorityMail && Player.whoAmI == Main.myPlayer && !(proj.minion || ProjectileID.Sets.MinionShot[proj.type])) {
+				OriginGlobalNPC originGlobalNPC = target.GetGlobalNPC<OriginGlobalNPC>();
+				originGlobalNPC.priorityMailTime = originGlobalNPC.prevPriorityMailTime;
 			}
 		}
 		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
@@ -299,11 +307,6 @@ namespace Origins {
 						new Vector2(Math.Sign(target.Center.X - Player.Center.X) * 7f, -2f + Main.rand.NextFloat() * -2f)
 					);
 				}
-			}
-			//TODO: actually test this
-			if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().priorityMail) {
-				Mod.Logger.Info($"priority mail elsefolkness: {Player.whoAmI != Main.myPlayer}");
-				if (Player.whoAmI != Main.myPlayer) target.GetGlobalNPC<OriginGlobalNPC>().priorityMailTime = 300;
 			}
 		}
 		#endregion

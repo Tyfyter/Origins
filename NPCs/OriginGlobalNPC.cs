@@ -306,6 +306,12 @@ namespace Origins.NPCs {
 				}
 			}
 		}
+		public override void HitEffect(NPC npc, NPC.HitInfo hit) {
+			if (OriginPlayer.LocalOriginPlayer.priorityMail) {
+				prevPriorityMailTime = priorityMailTime;
+				priorityMailTime = 300;
+			}
+		}
 		/*public override void OnHitNPC(NPC npc, NPC target, int damage, float knockback, bool crit) {
 			knockback*=MeleeCollisionNPCData.knockbackMult;
 			MeleeCollisionNPCData.knockbackMult = 1f;

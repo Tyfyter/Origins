@@ -36,6 +36,7 @@ namespace Origins.NPCs {
 		public bool amberDebuff = false;
 		public Vector2 preAIVelocity = default;
 		public int priorityMailTime = 0;
+		public int prevPriorityMailTime = 0;
 		public bool transformingThroughDeath = false;
 		public override void ResetEffects(NPC npc) {
 			int rasterized = npc.FindBuffIndex(Rasterized_Debuff.ID);
