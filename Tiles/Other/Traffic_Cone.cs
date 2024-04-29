@@ -22,44 +22,25 @@ namespace Origins.Tiles.Other {
 			AddMapEntry(new Color(200, 80, 0), Language.GetOrRegister(this.GetLocalizationKey("DisplayName")));
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
-			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<Traffic_Cone_TE>().Hook_AfterPlacement, -1, 0, false);
 			TileObjectData.addTile(Type);
 			ID = Type;
-			TileEntity._UpdateEnd += Traffic_Cone_TE.ResetLocations;
-		}
-		public override void Unload() {
-			TileEntity._UpdateEnd -= Traffic_Cone_TE.ResetLocations;
-		}
-		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			if (!Main.tile[i, j].TileIsType(ID)) {
-				ModContent.GetInstance<Traffic_Cone_TE>().Kill(i, j);
-			}
-		}
-	}
-	public class Traffic_Cone_TE : ModTileEntity {
-		public static new int ID { get; private set; } = -1;
-		public override bool IsTileValidForEntity(int x, int y) => Main.tile[x, y].TileIsType(Traffic_Cone.ID);
-		public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate) {
-			return Place(i, j);
 		}
 		public static HashSet<Point16> coneLocations;
-		public override void Update() {
-			if (Main.netMode == NetmodeID.MultiplayerClient) return;
-			if (!IsTileValidForEntity(Position.X, Position.Y)) {
-				return;
-			}
-			if (ID == -1) ID = ModContent.TileEntityType<Traffic_Cone_TE>();
+		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
+			if (Main.tile[i, j].TileFrameY != 0) return true;
 			coneLocations ??= new();
-			if (!coneLocations.Contains(Position)) {
+			if (!coneLocations.Contains(new(i, j))) {
 				Projectile.NewProjectile(
 					Entity.GetSource_None(),
-					Position.ToWorldCoordinates(0, 0),
+					new Vector2(i + 0.5f, j + 0.5f) * 16,
 					default,
 					Traffic_Cone_Projectile.ID,
 					0,
-					0
+					0,
+					Owner: Main.maxPlayers
 				);
 			}
+			return true;
 		}
 		internal static void ResetLocations() {
 			coneLocations ??= new();
@@ -84,21 +65,25 @@ namespace Origins.Tiles.Other {
 			const float range = 12 * 16; // 12 tiles
 			for (int i = 0; i < Main.maxNPCs; i++) {
 				NPC npc = Main.npc[i];
-				if (npc.CanBeChasedBy(Projectile) && npc.DistanceSQ(Projectile.position) < range * range) {
-					int index = npc.FindBuffIndex(Slow_Debuff.ID);
-					if (index >= 0) {
-						npc.buffTime[index] = 10;
-					} else {
-						npc.AddBuff(Slow_Debuff.ID, 10);
+				if (npc.CanBeChasedBy(Projectile)) {
+					if (Projectile.position.DistanceSQ(Projectile.position.Clamp(npc.Hitbox)) < range * range) {
+						int index = npc.FindBuffIndex(Slow_Debuff.ID);
+						if (index >= 0) {
+							npc.buffTime[index] = 10;
+						} else {
+							npc.AddBuff(Slow_Debuff.ID, 10);
+						}
 					}
 				}
 			}
-			Projectile.timeLeft = 60;
+			Projectile.timeLeft = 5;
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			Point16 tilePos = Projectile.position.ToTileCoordinates16();
 			if (Main.tile[tilePos.X, tilePos.Y].TileIsType(Traffic_Cone.ID)) {
-				Traffic_Cone_TE.coneLocations ??= new();
-				Traffic_Cone_TE.coneLocations.Add(tilePos);
+				Traffic_Cone.coneLocations ??= new();
+				if (!Traffic_Cone.coneLocations.Add(tilePos)) {
+					Projectile.Kill();
+				}
 			} else {
 				Projectile.Kill();
 			}

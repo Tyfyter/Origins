@@ -439,6 +439,7 @@ namespace Origins {
 			}else if (forceThunderstormDelay > 0) {
 				if (--forceThunderstormDelay <= 0) forceThunderstorm = true;
 			}
+			Traffic_Cone.ResetLocations();
 		}
 		bool hasLoggedPUP = false;
 		public override void PreUpdatePlayers() {
