@@ -29,12 +29,7 @@ namespace Origins.Tiles.Other {
 	}
 	public class Traffic_Cone_TE : ModTileEntity {
 		public static new int ID { get; private set; } = -1;
-		public override bool IsTileValidForEntity(int x, int y) => Main.tile[x, y].TileIsType(ModContent.TileType<Traffic_Cone>());
-		public override void OnNetPlace() {
-			// This hook is only ever called on the server; its purpose is to give more freedom in terms of syncing FROM the server to clients, which we take advantage of
-			// by making sure to sync whenever this hook is called:
-			NetMessage.SendData(MessageID.TileEntitySharing, number: ID, number2: Position.X, number3: Position.Y);
-		}
+		public override bool IsTileValidForEntity(int x, int y) => Main.tile[x, y].TileIsType(Traffic_Cone.ID);
 		public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate) {
 			return Place(i, j);
 		}
@@ -46,7 +41,7 @@ namespace Origins.Tiles.Other {
 			if (!coneLocations.Contains(Position)) {
 				Projectile.NewProjectile(
 					Entity.GetSource_None(),
-					Position.ToWorldCoordinates(),
+					Position.ToWorldCoordinates(0, 0),
 					default,
 					Traffic_Cone_Projectile.ID,
 					0,
