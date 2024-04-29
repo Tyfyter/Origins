@@ -115,6 +115,7 @@ namespace Origins.Projectiles {
 				modifierBlastRadius = parentGlobal.modifierBlastRadius;
 				selfDamageModifier = selfDamageModifier.CombineWith(parentGlobal.modifierBlastRadius);
 				novaCascade = parentGlobal.novaCascade;
+				noTileSplode = parentGlobal.noTileSplode;
 			}
 		}
 		public override void ModifyDamageHitbox(Projectile projectile, ref Rectangle hitbox) {
