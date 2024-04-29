@@ -25,9 +25,15 @@ namespace Origins.Tiles.Other {
 			TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(ModContent.GetInstance<Traffic_Cone_TE>().Hook_AfterPlacement, -1, 0, false);
 			TileObjectData.addTile(Type);
 			ID = Type;
+			TileEntity._UpdateEnd += Traffic_Cone_TE.ResetLocations;
+		}
+		public override void Unload() {
+			TileEntity._UpdateEnd -= Traffic_Cone_TE.ResetLocations;
 		}
 		public override void KillMultiTile(int i, int j, int frameX, int frameY) {
-			
+			if (!Main.tile[i, j].TileIsType(ID)) {
+				ModContent.GetInstance<Traffic_Cone_TE>().Kill(i, j);
+			}
 		}
 	}
 	public class Traffic_Cone_TE : ModTileEntity {
@@ -39,6 +45,9 @@ namespace Origins.Tiles.Other {
 		public static HashSet<Point16> coneLocations;
 		public override void Update() {
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
+			if (!IsTileValidForEntity(Position.X, Position.Y)) {
+				return;
+			}
 			if (ID == -1) ID = ModContent.TileEntityType<Traffic_Cone_TE>();
 			coneLocations ??= new();
 			if (!coneLocations.Contains(Position)) {
@@ -52,7 +61,8 @@ namespace Origins.Tiles.Other {
 				);
 			}
 		}
-		public override void PostGlobalUpdate() {
+		internal static void ResetLocations() {
+			coneLocations ??= new();
 			coneLocations.Clear();
 		}
 	}
@@ -67,7 +77,7 @@ namespace Origins.Tiles.Other {
 			Projectile.height = 0;
 			Projectile.tileCollide = false;
 			Projectile.netImportant = true;
-			Projectile.hide = true;
+			//Projectile.hide = true;
 		}
 		public override void AI() {
 			Dust.NewDust(Projectile.position, 0, 0, DustID.Torch);
@@ -85,22 +95,10 @@ namespace Origins.Tiles.Other {
 			}
 			Projectile.timeLeft = 60;
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
-			Vector2 offset = Vector2.Zero;
-			Player player = Main.player[0];
-			float dist = float.PositiveInfinity;
-			foreach (Player _player in Main.ActivePlayers) {
-				float _dist = _player.DistanceSQ(Projectile.position);
-				if (_dist < dist) {
-					player = _player;
-					dist = _dist;
-				}
-			}
-			if (player.HeldItem.type == ItemID.RainbowRod) offset = new(8);
-			Point16 tilePos = (Projectile.position + offset).ToTileCoordinates16();
+			Point16 tilePos = Projectile.position.ToTileCoordinates16();
 			if (Main.tile[tilePos.X, tilePos.Y].TileIsType(Traffic_Cone.ID)) {
-				Traffic_Cone_TE.coneLocations ??= new() {
-					tilePos
-				};
+				Traffic_Cone_TE.coneLocations ??= new();
+				Traffic_Cone_TE.coneLocations.Add(tilePos);
 			} else {
 				Projectile.Kill();
 			}
