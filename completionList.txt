@@ -468,7 +468,7 @@ VANITY:
 (X) Defiled Dye
 (^) High Contrast Dye
 (X) Nova Dye
-(^) Rasterized Dye
+(ᗢ) Rasterized Dye
 (X) Riven Dye
 ---
 
@@ -773,7 +773,7 @@ EXPLOSIVE WEAPONS:
 (^) Shrapnel Bomb*
 (#, ^2) Sticky Link Grenade* !!!
 
-(#3?, ^2) Acrid Handcannon* !!!
+(#3, ^2) Acrid Handcannon* !!!
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
 (#2, ^2) Boomphracken !!!

@@ -17,7 +17,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenArrow);
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.damage = 17;
 			Item.shoot = ModContent.ProjectileType<Alkahest_Arrow_P>();
 			Item.shootSpeed = 4f;

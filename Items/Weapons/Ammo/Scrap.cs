@@ -9,7 +9,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.WoodenArrow);
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.damage = 0;
 			Item.knockBack = 0;
 			Item.shoot = ProjectileID.None;

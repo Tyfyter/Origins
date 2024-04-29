@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CursedBullet);
-			Item.maxStack = 999;
+			Item.maxStack = 9999;
 			Item.damage = 12;
 			Item.shoot = ModContent.ProjectileType<Alkahest_Bullet_P>();
 			Item.shootSpeed = 5f;
