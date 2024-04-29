@@ -343,6 +343,7 @@ namespace Origins {
 				rasterizeShader = new MiscShaderData(Assets.Request<Effect>("Effects/Rasterize"), "Rasterize");
 				GameShaders.Misc["Origins:Rasterize"] = rasterizeShader;
 
+
 				amebicProtectionShader = new ArmorShaderData(Assets.Request<Effect>("Effects/AmebicProtection"), "AmebicProtection");
 				GameShaders.Armor.BindShader(MC.ItemType<Amebic_Vial>(), amebicProtectionShader);
 				amebicProtectionShaderID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());

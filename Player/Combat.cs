@@ -301,9 +301,9 @@ namespace Origins {
 				}
 			}
 			//TODO: actually test this
-			if (Player.whoAmI != Main.myPlayer && Main.LocalPlayer.GetModPlayer<OriginPlayer>().priorityMail) {
-				Mod.Logger.Info("hits from elsewhere are counted for priority mail");
-				target.GetGlobalNPC<OriginGlobalNPC>().priorityMailTime = 300;
+			if (Main.LocalPlayer.GetModPlayer<OriginPlayer>().priorityMail) {
+				Mod.Logger.Info($"priority mail elsefolkness: {Player.whoAmI != Main.myPlayer}");
+				if (Player.whoAmI != Main.myPlayer) target.GetGlobalNPC<OriginGlobalNPC>().priorityMailTime = 300;
 			}
 		}
 		#endregion

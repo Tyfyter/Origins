@@ -645,7 +645,7 @@ Powerflower: {
 
 Priority_Mail: {
 	// DisplayName: Priority Mail
-	/* Tooltip: 
+	/* Tooltip:
 		'''
 		Enemies recently struck by a teammate or minion receive 18% more damage
 		Summons can target two enemies at once
@@ -4099,4 +4099,9 @@ Abyssal_Anchor: {
 		-25% movement speed
 		-40% jump speed
 		''' */
+}
+
+Rasterized_Dye: {
+	// DisplayName: Rasterized_ Dye
+	// Tooltip: ""
 }

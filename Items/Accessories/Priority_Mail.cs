@@ -16,7 +16,10 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 1);
 		}
 		public override void UpdateEquip(Player player) {
-			player.GetModPlayer<OriginPlayer>().priorityMail = true;
+			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();
+			originPlayer.priorityMail = true;
+			originPlayer.asylumWhistle = true;
+			player.GetDamage(DamageClass.Summon) += 0.1f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 2);

@@ -49,6 +49,7 @@ using Origins.Items.Tools;
 using Origins.Tiles;
 using System.Runtime.CompilerServices;
 using Terraria.ModLoader.Core;
+using Origins.Items.Other.Dyes;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -1411,6 +1412,10 @@ namespace Origins {
 			forcePlayerShader = -1;
 			try {
 				OriginPlayer originPlayer = drawPlayer.GetModPlayer<OriginPlayer>();
+				if (drawPlayersWithShader < 0 && originPlayer.rasterizedTime > 0) {
+					GameShaders.Armor.GetShaderFromItemId(Rasterized_Dye.ID).Shader.Parameters["uOffset"].SetValue(drawPlayer.velocity.WithMaxLength(4) * 0.125f * originPlayer.rasterizedTime);
+					forcePlayerShader = Rasterized_Dye.ShaderID;
+				}
 				if (drawPlayersWithShader >= 0) {
 					forcePlayerShader = drawPlayersWithShader;
 					if (drawPlayersWithShader == coordinateMaskFilterID) {
@@ -1443,7 +1448,7 @@ namespace Origins {
 					forcePlayerShader = -1;
 					drawPlayer.itemAnimation = itemAnimation;
 				}
-				int rasterizedTime = originPlayer.rasterizedTime;
+				/*int rasterizedTime = originPlayer.rasterizedTime;
 				if (rasterizedTime > 0) {
 					shaded = true;
 					rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
@@ -1452,7 +1457,7 @@ namespace Origins {
 					rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(40, 1120, 0));
 					Main.graphics.GraphicsDevice.Textures[1] = cellNoiseTexture;
 					Main.spriteBatch.Restart(SpriteSortMode.Immediate, effect: rasterizeShader.Shader);
-				}
+				}*/
 				orig(self, camera, drawPlayer, position, rotation, rotationOrigin, shadow, alpha, scale, headOnly);
 			} finally {
 				if (shaded) {

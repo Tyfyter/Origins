@@ -39,24 +39,22 @@ namespace Origins.Tiles.Other {
 			return Place(i, j);
 		}
 		public static HashSet<Point16> coneLocations;
-		public static void UpdateCones() {
+		public override void Update() {
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			if (ID == -1) ID = ModContent.TileEntityType<Traffic_Cone_TE>();
 			coneLocations ??= new();
-			foreach (TileEntity entity in ByID.Values) {
-				if (entity.type == ID) {
-					if (!coneLocations.Contains(entity.Position)) {
-						Projectile.NewProjectile(
-							Entity.GetSource_None(),
-							entity.Position.ToWorldCoordinates(),
-							default,
-							Traffic_Cone_Projectile.ID,
-							0,
-							0
-						);
-					}
-				}
+			if (!coneLocations.Contains(Position)) {
+				Projectile.NewProjectile(
+					Entity.GetSource_None(),
+					Position.ToWorldCoordinates(),
+					default,
+					Traffic_Cone_Projectile.ID,
+					0,
+					0
+				);
 			}
+		}
+		public override void PostGlobalUpdate() {
 			coneLocations.Clear();
 		}
 	}
@@ -70,6 +68,8 @@ namespace Origins.Tiles.Other {
 			Projectile.width = 0;
 			Projectile.height = 0;
 			Projectile.tileCollide = false;
+			Projectile.netImportant = true;
+			//Projectile.hide = true; uncomment once we see that they work
 		}
 		public override void AI() {
 			const float range = 12 * 16; // 12 tiles
@@ -81,7 +81,9 @@ namespace Origins.Tiles.Other {
 			}
 			Point16 tilePos = Projectile.position.ToTileCoordinates16();
 			if (Main.tile[tilePos.X, tilePos.Y].TileIsType(Traffic_Cone.ID)) {
-				Traffic_Cone_TE.coneLocations.Add(tilePos);
+				Traffic_Cone_TE.coneLocations ??= new() {
+					tilePos
+				};
 				Projectile.timeLeft = 60;
 			} else {
 				Projectile.Kill();

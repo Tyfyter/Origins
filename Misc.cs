@@ -352,7 +352,7 @@ namespace Origins {
 		public bool IsLoaded => asset?.IsLoaded ?? false;
 		public T Value => asset?.Value;
 
-		readonly Asset<T> asset;
+		public readonly Asset<T> asset;
 		AutoCastingAsset(Asset<T> asset) {
 			this.asset = asset;
 		}
