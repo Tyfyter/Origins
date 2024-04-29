@@ -79,6 +79,7 @@ namespace Origins.Items.Other.Dyes {
 		}
 		public override void Apply(Entity entity, DrawData? drawData = null) {
 			setParameters(this, entity, drawData);
+			base.Apply(entity, drawData);
 		}
 	}
 }
