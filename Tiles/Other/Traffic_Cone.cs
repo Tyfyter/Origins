@@ -71,15 +71,21 @@ namespace Origins.Tiles.Other {
 			for (int i = 0; i < Main.maxNPCs; i++) {
 				NPC npc = Main.npc[i];
 				if (npc.CanBeChasedBy(Projectile) && npc.DistanceSQ(Projectile.position) < range * range) {
-					npc.AddBuff(Slow_Debuff.ID, 10);
+					int index = npc.FindBuffIndex(Slow_Debuff.ID);
+					if (index >= 0) {
+						npc.buffTime[index] = 10;
+					} else {
+						npc.AddBuff(Slow_Debuff.ID, 10);
+					}
 				}
 			}
+			Projectile.timeLeft = 60;
+			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			Point16 tilePos = Projectile.position.ToTileCoordinates16();
 			if (Main.tile[tilePos.X, tilePos.Y].TileIsType(Traffic_Cone.ID)) {
 				Traffic_Cone_TE.coneLocations ??= new() {
 					tilePos
 				};
-				Projectile.timeLeft = 60;
 			} else {
 				Projectile.Kill();
 			}
