@@ -72,6 +72,8 @@ namespace Origins.Items {
 				case ItemID.ProximityMineLauncher:
 				case ItemID.GrenadeLauncher:
 				case ItemID.HellfireArrow:
+				case ItemID.Stynger:
+				case ItemID.StyngerBolt:
 				item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 				break;
 
