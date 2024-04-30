@@ -126,6 +126,11 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public class Gray_Solution : ModItem {
 		public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[ItemID.PurpleSolution] = ItemID.RedSolution;
+			ItemID.Sets.ShimmerTransformToItem[ItemID.RedSolution] = Type;
+			ItemID.Sets.ShimmerTransformToItem[Type] = ModContent.ItemType<Teal_Solution>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Teal_Solution>()] = ItemID.PurpleSolution;//ModContent.ItemType<NE8>();
+			//ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<NE8>()] = ItemID.PurpleSolution;
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {
