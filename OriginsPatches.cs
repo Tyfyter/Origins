@@ -829,7 +829,7 @@ namespace Origins {
 		internal static bool hurtCollisionCrimsonVine;
 		internal static bool rollingLotteryTicket;
 		private int Player_RollLuck(Terraria.On_Player.orig_RollLuck orig, Player self, int range) {
-			const int lottery_ticket_min_denominator = 25;
+			const int lottery_ticket_min_denominator = 50;
 			OriginPlayer originPlayer = self.GetModPlayer<OriginPlayer>();
 			originPlayer.Mod.Logger.Info(originPlayer.lotteryTicketItem);
 			if (!rollingLotteryTicket && range >= lottery_ticket_min_denominator * currentChanceNumerator && originPlayer.lotteryTicketItem is not null) {
