@@ -840,7 +840,7 @@ namespace Origins {
 						packet.Write(NetMessageType.win_lottery);
 						packet.Send(self.whoAmI, -1);
 					}
-					originPlayer.lotteryTicketItem.TurnToAir();
+					if (--originPlayer.lotteryTicketItem.stack <= 0) originPlayer.lotteryTicketItem.TurnToAir();
 					rollingLotteryTicket = false;
 					return 0;
 				}

@@ -28,7 +28,8 @@ namespace Origins {
 					break;
 
 					case win_lottery: {
-						Main.LocalPlayer.GetModPlayer<OriginPlayer>().lotteryTicketItem.TurnToAir();
+						Item lotteryTicketItem = Main.LocalPlayer.GetModPlayer<OriginPlayer>().lotteryTicketItem;
+						if (--lotteryTicketItem.stack <= 0) lotteryTicketItem.TurnToAir();
 						break;
 					}
 
