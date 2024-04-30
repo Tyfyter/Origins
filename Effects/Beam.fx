@@ -23,7 +23,7 @@ float4 Beam(float4 color : COLOR0, float2 uv : TEXCOORD0) : COLOR0 {
 	} else if (uv.x > 1 - uLoopData.y) { // end
 		uv.x = ((uv.x - (1 - uLoopData.y)) / uLoopData.y + 2) * uLoopData.x;
 	} else {
-		uv.x = fmod((uv.x / uLoopData.y - 1), 1) * uLoopData.x;
+		uv.x = (fmod((uv.x / uLoopData.y - 1), 1) + 1) * uLoopData.x;
 		//return float4(uv.x, 0, 0, 1);
 	}
 	uv = (uv * uShaderSpecificData.zw) + uShaderSpecificData.xy;
