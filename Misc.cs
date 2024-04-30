@@ -1542,6 +1542,25 @@ namespace Origins {
 		public static Rectangle Add(this Rectangle a, Vector2 b) {
 			return new Rectangle(a.X + (int)b.X, a.Y + (int)b.Y, a.Width, a.Height);
 		}
+		public static Rectangle Recentered(this Rectangle a, Vector2 b) {
+			return new Rectangle((int)b.X - a.Width / 2, (int)b.Y - a.Height / 2, a.Width, a.Height);
+		}
+		public static Vector4 FrameToUV(this Rectangle frame, Vector2 save) {
+			return new Vector4(frame.X / save.X, frame.Y / save.Y, frame.Width / save.X, frame.Height / save.Y);
+		}
+		public static Vector4 UVFrame(this Asset<Texture2D> frame, int horizontalFrames = 1, int verticalFrames = 1, int frameX = 0, int frameY = 0, int sizeOffsetX = 0, int sizeOffsetY = 0) {
+			return frame.Value.UVFrame(horizontalFrames, verticalFrames, frameX, frameY, sizeOffsetX, sizeOffsetY);
+		}
+		public static Vector4 UVFrame(this Texture2D frame, int horizontalFrames = 1, int verticalFrames = 1, int frameX = 0, int frameY = 0, int sizeOffsetX = 0, int sizeOffsetY = 0) {
+			Vector2 sizeOffset = new Vector2(sizeOffsetX, sizeOffsetY) / frame.Size();
+			Vector2 frameSize = new(1f / horizontalFrames, 1f / verticalFrames);
+			return new Vector4(
+				frameX * frameSize.X,
+				frameY * frameSize.Y,
+				frameSize.X + sizeOffset.X,
+				frameSize.Y + sizeOffset.Y
+			);
+		}
 		public static float AngleDif(float alpha, float beta, out int dir) {
 			float phi = Math.Abs(beta - alpha) % MathHelper.TwoPi;       // This is either the distance or 360 - distance
 			dir = ((phi > MathHelper.Pi) ^ (alpha > beta)) ? -1 : 1;

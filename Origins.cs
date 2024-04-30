@@ -369,6 +369,9 @@ namespace Origins {
 				GameShaders.Misc["Origins:SapphireAura"] = new MiscShaderData(Assets.Request<Effect>("Effects/Strip"), "SapphireAura");
 				GameShaders.Misc["Origins:SapphireAura"].UseImage0(TextureAssets.Extra[194]);
 
+				GameShaders.Misc["Origins:Beam"] = new MiscShaderData(Assets.Request<Effect>("Effects/Beam"), "Beam");
+				GameShaders.Misc["Origins:Beam"].UseSamplerState(SamplerState.PointClamp);
+
 				//amebicProtectionShaderID = GameShaders.Armor.GetShaderIdFromItemId(MC.ItemType<Amebic_Vial>());
 				//Filters.Scene["Origins:ZoneDusk"].GetShader().UseOpacity(0.35f);
 				//Ref<Effect> screenRef = new Ref<Effect>(GetEffect("Effects/ScreenDistort")); // The path to the compiled shader file.

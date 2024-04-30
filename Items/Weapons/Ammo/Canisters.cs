@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,5 +44,7 @@ namespace Origins.Items.Weapons.Ammo {
 		}
 	}
 	public interface ICanisterProjectile {
+		public abstract AutoLoadingAsset<Texture2D> OuterTexture { get; }
+		public abstract AutoLoadingAsset<Texture2D> InnerTexture { get; }
 	}
 }
