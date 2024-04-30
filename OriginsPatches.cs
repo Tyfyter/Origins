@@ -50,6 +50,7 @@ using Origins.Tiles;
 using System.Runtime.CompilerServices;
 using Terraria.ModLoader.Core;
 using Origins.Items.Other.Dyes;
+using Terraria.GameContent.UI.ResourceSets;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -466,7 +467,34 @@ namespace Origins {
 				currentChanceNumerator = 1;
 				return result;
 			};
+			IL_PlayerStatsSnapshot.ctor += IL_PlayerStatsSnapshot_ctor;
+			On_PlayerStatsSnapshot.ctor += On_PlayerStatsSnapshot_ctor;
 		}
+
+		private static void On_PlayerStatsSnapshot_ctor(On_PlayerStatsSnapshot.orig_ctor orig, ref PlayerStatsSnapshot self, Player player) {
+			orig(ref self, player);
+			if (self.AmountOfLifeHearts <= 0) self.AmountOfLifeHearts = 1;
+		}
+		private void IL_PlayerStatsSnapshot_ctor(ILContext il) {
+			ILCursor c = new(il);
+			int num = -1;
+			if (c.TryGotoNext(MoveType.After,
+				i => i.MatchLdloc(out num),
+				i => i.MatchLdloc(out _),
+				i => i.MatchLdloc(out _),
+				i => i.MatchDiv(),
+				i => i.MatchConvR4(),
+				i => i.MatchAdd(),
+				i => i.MatchStloc(num)
+			)) {
+				c.Index -= 4;
+				c.EmitLdcI4(1);
+				c.EmitCall(typeof(Math).GetMethod(nameof(Math.Max), [typeof(int), typeof(int)]));
+			} else {
+				Logger.Error("Could not find potential division by zero in PlayerStatsSnapshot ctor");
+			}
+		}
+
 		public static int currentChanceNumerator = 1;
 		public static Dictionary<Type, FastFieldInfo<IItemDropRule, int>> chanceNumerators;
 		private void On_CommonCode_ModifyItemDropFromNPC(On_CommonCode.orig_ModifyItemDropFromNPC orig, NPC npc, int itemIndex) {
