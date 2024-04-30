@@ -489,7 +489,7 @@ namespace Origins {
 			)) {
 				c.Index -= 4;
 				c.EmitLdcI4(1);
-				c.EmitCall(typeof(Math).GetMethod(nameof(Math.Max), [typeof(int), typeof(int)]));
+				c.EmitCall(typeof(Math).GetMethod(nameof(Math.Max), new Type[] { typeof(int), typeof(int) }));
 			} else {
 				Logger.Error("Could not find potential division by zero in PlayerStatsSnapshot ctor");
 			}
