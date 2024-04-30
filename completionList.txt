@@ -744,7 +744,7 @@ NO POST ML SUMMONER CONTENT YET.
 
 EXPLOSIVE WEAPONS:
 ---
-(♫) Abrasion Blaster* !!!
+(#3, ^2) Abrasion Blaster* !!!
 (#3, ^2) Ace Shrapnel* !!!
 (^) Ameballoon*
 (^) Bang Snap*
@@ -776,7 +776,7 @@ EXPLOSIVE WEAPONS:
 (#3, ^2) Acrid Handcannon* !!!
 (^) Alkaline Bomb*
 (^) Alkaline Grenade*
-(#2, ^2) Boomphracken !!!
+(^) Boomphracken
 (X) Cavitation Cannon
 (X) Chambersite Mine Launcher
 (^) Crystal Bomb*
@@ -793,7 +793,7 @@ EXPLOSIVE WEAPONS:
 (X) Firework Cannon
 (^) Mine Flayer*
 (^) Nova Cascade*
-(X) Nova Starforge
+(@, ^3) Nova Swarm !!!
 (^) Nuclear Arm*
 (#2, ^2) Omni-directional Claymore*
 (^) Rocodile
@@ -804,7 +804,6 @@ EXPLOSIVE WEAPONS:
 (@5, ^3) Black Hole Bomb*
 (@5, ^3) Caustica
 (^) Flakjack
-(@, ^3) Missile Minigun
 (@5, #) Starburst
 ---
 
@@ -939,7 +938,7 @@ TILES:
 (^) Cleansing Station*
 (X) Defiled Waste Organ*
 (X) Elderforge*
-(X) Enemy Banners* !!!
+(#, ^2) Enemy Banners* !!!
 (#, ^2) Fabricator*
 (X) Flesh Shredder*
 (X) Interstellar Sampler*
@@ -1211,7 +1210,7 @@ UI:
 (X) Dusk Map/Bestiary Backdrop
 (^) Dusk Icon
 (X) Fiberglass Map/Bestiary Backdrop !!!
-(X) Fiberglass Icon !!!
+(#, ^2) Fiberglass Icon !!!
 (X) Fractured Isles Icon
 (^) Riven Map/Bestiary Backdrop
 (^) Riven Icon
