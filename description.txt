@@ -1,1 +1,11 @@
-you should probably be the one to make the description, Chee
+Terraria Origins is a content mod that adds new ways of playing Terraria with content designed and balanced around the vanilla game.
+
+Origins is currently in its early release/Beta version, but still offers 680+ items, 60 enemies, 143 tiles and 6 cool biomes: meaning there's already a ton of variety within. Additionally, there is a new explosive-themed Demolitionist class that can be played up to post-Moon Lord and is balanced with the other classes.
+
+Origins' content is designed to allow for alternatives in almost every crevice of gameplay reinforced by its two new and nearly completed world evils: the Defiled and the Riven. It will be impossible not to find something new a fun in Origins, even in its current Beta state.
+
+This mod does not include the music tracks composed for each of the biomes and bosses, and can be found here: https://github.com/Tyfyter/OriginsMusic
+
+Origins' wiki is currently in development and will hopefully get up and running soon so Origins' players have a sense of direction. In the meantime, you can join Origins' official Discord server to talk with other players on your discoveries and any bugs you may find! Use this link to join: https://discord.gg/NK7jERXsTN
+
+This mod, its music mod and its wiki are all made by a collaboration between Tyfyter2002 and chrersis. Origins' content is open source for all to view and use so long as our BSD 3-Clause license is not breached. We thank you for expressing interest in this mod and hope you have fun with it!

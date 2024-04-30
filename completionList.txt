@@ -211,7 +211,7 @@ STATUS EFFECTS:
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
 (^) Mana Buffer
-(#4, ^2) Rasterized !!!
+(^) Rasterized*
 (^) Torn*
 (^) Totally Safe
 (^) Toxic Shock*
@@ -242,11 +242,11 @@ ARMOR:
 (^) Cryosten Armor*
 (^) Defiled Armor* 
 (^) Encrusted Armor*
-(X) Endowood Armor
+(^) Endowood Armor*
 (^) Felnum Armor*
 (^) Fiberglass Armor*
 (^) Lost Armor*
-(X) Marrowick Armor
+(^) Marrowick Armor*
 (^) Mythic Armor*
 (^) Riptide Armor*
 (^) Riven Armor*
@@ -353,7 +353,7 @@ ACCESSORIES:
 (^) Potato Battery*
 (^) Powerflower*
 (^) Primordial Soup*
-(#4, ^2) Priority Mail* !!!
+(^) Priority Mail*
 (#3, ^2) Protomind* !!! 
 (^) Razorwire*
 (^) Rebreather*

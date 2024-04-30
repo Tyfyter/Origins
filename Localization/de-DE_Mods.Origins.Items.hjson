@@ -4105,3 +4105,33 @@ Rasterized_Dye: {
 	// DisplayName: Rasterized Dye
 	// Tooltip: ""
 }
+
+Marrowick_Breastplate: {
+	// DisplayName: Marrowick Coat
+	// Tooltip: ""
+}
+
+Marrowick_Greaves: {
+	// DisplayName: Marrowick Greaves
+	// Tooltip: ""
+}
+
+Marrowick_Helmet: {
+	// DisplayName: Marrowick Cove
+	// Tooltip: ""
+}
+
+Endowood_Breastplate: {
+	// DisplayName: Endowood Breastplate
+	// Tooltip: ""
+}
+
+Endowood_Greaves: {
+	// DisplayName: Endowood Greaves
+	// Tooltip: ""
+}
+
+Endowood_Helmet: {
+	// DisplayName: Endowood Helmet
+	// Tooltip: ""
+}
