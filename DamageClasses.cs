@@ -67,8 +67,11 @@ namespace Origins {
 			return damageClass == DamageClasses.Explosive || damageClass == Throwing;
 		}
 		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
-			if (damageClass == Generic || damageClass == DamageClasses.Explosive) {
+			if (damageClass == DamageClasses.Explosive) {
 				return StatInheritanceData.Full;
+			}
+			if (damageClass == Generic) {
+				return new StatInheritanceData(0.5f, 1, 1, 1, 1);
 			}
 			if (damageClass == Throwing) {
 				return new StatInheritanceData(attackSpeedInheritance: 1);
