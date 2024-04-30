@@ -4,6 +4,7 @@ using Origins.Items;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Riptide;
 using Origins.Items.Other.Consumables;
+using Origins.Items.Other.Dyes;
 using Origins.Items.Other.Fish;
 using Origins.Items.Tools;
 using Origins.Items.Weapons.Demolitionist;
@@ -583,6 +584,13 @@ namespace Origins {
 		}
 		public override void CatchFish(FishingAttempt attempt, ref int itemDrop, ref int npcSpawn, ref AdvancedPopupRequest sonar, ref Vector2 sonarPosition) {
 			FishingLoot.Pool.CatchFish(Player, attempt, ref itemDrop, ref npcSpawn, ref sonar, ref sonarPosition);
+		}
+		public override void GetDyeTraderReward(List<int> rewardPool) {
+			rewardPool.AddRange(new int[]{
+				ModContent.ItemType<Amber_Dye>(),
+				ModContent.ItemType<High_Contrast_Dye>(),
+				ModContent.ItemType<Rasterized_Dye>(),// temp
+			});
 		}
 		public override bool CanUseItem(Item item) {
 			if (ravel) {
