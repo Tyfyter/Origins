@@ -38,7 +38,8 @@ namespace Origins.Items.Weapons.Demolitionist {
             recipe.Register();
         }
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-            velocity = velocity.RotatedByRandom(0.27f);
+			if (velocity != default) position += Vector2.Normalize(velocity) * 54;
+			velocity = velocity.RotatedByRandom(0.27f);
 			type = Item.shoot;
 		}
         // Pulled from Viper code. Attempted to align projectile spawn location to the front of the barrel
