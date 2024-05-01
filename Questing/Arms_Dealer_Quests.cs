@@ -36,11 +36,33 @@ namespace Origins.Questing {
 			if (npc.type != NPCID.ArmsDealer) return false; // NPCs other than the merchant won't have any dialogue related to this quest
 			switch (Stage) {
 				case 1:
-				for (int i = 0; i < Main.InventoryItemSlotsCount; i++) {
-					Item item = Main.LocalPlayer.inventory[i];
-					if (item.type == ModContent.ItemType<Shardcannon>() && item.prefix == ModContent.PrefixType<Imperfect_Prefix>()) {
-						return false;
+				static bool IsShardcannon(Item item) {
+					return item.type == Shardcannon.ID && item.prefix == Imperfect_Prefix.ID && item.stack > 0;
+				}
+				static bool HasShardcannon(Item[] inventory) {
+					for (int i = 0; i < inventory.Length; i++) {
+						Item item = inventory[i];
+						if (IsShardcannon(item)) {
+							return true;
+						}
 					}
+					return false;
+				}
+				if (HasShardcannon(Main.LocalPlayer.inventory)) {
+					return false;
+				}
+				if (IsShardcannon(Main.LocalPlayer.inventory[Main.InventorySlotsTotal]) || IsShardcannon(Main.LocalPlayer.trashItem)) return false;
+				if (HasShardcannon(Main.LocalPlayer.bank.item)) {
+					return false;
+				}
+				if (HasShardcannon(Main.LocalPlayer.bank2.item)) {
+					return false;
+				}
+				if (HasShardcannon(Main.LocalPlayer.bank3.item)) {
+					return false;
+				}
+				if (HasShardcannon(Main.LocalPlayer.bank4.item)) {
+					return false;
 				}
 				return true;
 				case 2: // killed enough enemies

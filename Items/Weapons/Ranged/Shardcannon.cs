@@ -11,7 +11,11 @@ namespace Origins.Items.Weapons.Ranged {
         public string[] Categories => new string[] {
             "Gun"
         };
-        public override void SetDefaults() {
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
 			Item.damage = 9;
 			Item.useAnimation = Item.useTime = 38;

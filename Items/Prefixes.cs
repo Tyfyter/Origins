@@ -335,7 +335,11 @@ namespace Origins.Items {
 	}
 	public class Imperfect_Prefix : ModPrefix, IOnSpawnProjectilePrefix, IModifyTooltipsPrefix, ICanReforgePrefix {
 		public override PrefixCategory Category => PrefixCategory.Ranged;
-		
+
+		public static int ID { get; private set; }
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
 		public override bool CanRoll(Item item) => true;
 		public override float RollChance(Item item) => 0f;
 		public override void SetStats(ref float damageMult, ref float knockbackMult, ref float useTimeMult, ref float scaleMult, ref float shootSpeedMult, ref float manaMult, ref int critBonus) {
