@@ -43,10 +43,10 @@ namespace Origins.Tiles.Other {
 		public HashSet<Point16> projLocations;
 		public override void PreUpdateEntities() {
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
+			projLocations ??= new();
 			for (int i = 0; i < coneLocations.Count; i++) {
 				Point16 pos = coneLocations[i];
 				if (Main.tile[pos.X, pos.Y].TileIsType(Traffic_Cone.ID)) {
-					projLocations ??= new();
 					if (!projLocations.Contains(pos)) {
 						Projectile.NewProjectile(
 							Entity.GetSource_None(),
@@ -64,6 +64,7 @@ namespace Origins.Tiles.Other {
 					continue;
 				}
 			}
+			projLocations.Clear();
 		}
 		public override void SaveWorldData(TagCompound tag) {
 			tag[nameof(coneLocations)] = coneLocations;
