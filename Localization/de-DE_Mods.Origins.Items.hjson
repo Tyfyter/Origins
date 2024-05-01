@@ -2364,11 +2364,6 @@ Mine_Flayer: {
 		''' */
 }
 
-Missile_Minigun: {
-	// DisplayName: Missile Minigun
-	// Tooltip: "'Light 'em up'"
-}
-
 Nuclear_Arm: {
 	// DisplayName: Nuclear Arm
 	// Tooltip: "'Like nuclear arms? Well now you can have nuclear arms on your... arms'"
@@ -4137,6 +4132,10 @@ Endowood_Helmet: {
 }
 
 Nova_Swarm: {
-	// DisplayName: Nova_ Swarm
-	// Tooltip: ""
+	// DisplayName: Nova Swarm
+	/* Tooltip:
+		'''
+		Rapidly fires homing rockets
+		'Light 'em up'
+		''' */
 }

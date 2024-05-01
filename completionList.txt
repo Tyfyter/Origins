@@ -747,7 +747,7 @@ NO POST ML SUMMONER CONTENT YET.
 EXPLOSIVE WEAPONS:
 ---
 (#3, ^2) Abrasion Blaster* !!!
-(#3, ^2) Ace Shrapnel* !!!
+(^) Ace Shrapnel*
 (^) Ameballoon*
 (^) Bang Snap*
 (^) Bloombomb*

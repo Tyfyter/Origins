@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ranged;
+using Origins.NPCs;
 using Origins.World;
 using System;
 using System.IO;
@@ -70,7 +71,7 @@ namespace Origins.Buffs {
 			if (Projectile.ai[2] != 0) {
 				float factor =
 					(GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.295f)
-					- (GenRunners.GetWallDistOffset(Projectile.ai[0] - Projectile.ai[1]) + 0.295f);
+					- (GenRunners.GetWallDistOffset(Projectile.ai[0] - Projectile.ai[1]) + 0.76f);
 				offset -= perp * factor * Projectile.ai[2];
 			}
 			if (Collision.TileCollision(
@@ -88,8 +89,11 @@ namespace Origins.Buffs {
 			}
 			Projectile.ai[0] += Projectile.ai[1];
 			Dust.NewDustPerfect(Projectile.Center, 6, Vector2.Zero).noGravity = true;
-			Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.localAI[0] * 0.01f);
+			Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.localAI[0] * 0.02f);
 			//Dust.NewDustPerfect(Projectile.Center, 29, diff * 32);
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			target.AddBuff(Impeding_Shrapnel_Debuff.ID, 300);
 		}
 		public override void OnKill(int timeLeft) {
 			Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
