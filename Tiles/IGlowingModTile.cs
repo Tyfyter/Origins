@@ -11,4 +11,9 @@ namespace Origins.Tiles {
 	public interface IGlowingModPlant {
 		void FancyLightingGlowColor(Tile tile, ref Vector3 color);
 	}
+	public interface IGlowingModTree : IGlowingModTile {
+		AutoLoadingAsset<Texture2D> TopTexture { get; }
+		AutoLoadingAsset<Texture2D> TopGlowTexture { get; }
+		(float r, float g, float b) LightEmission { get; }
+	}
 }

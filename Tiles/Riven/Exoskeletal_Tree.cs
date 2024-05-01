@@ -9,15 +9,24 @@ using Terraria.GameContent;
 using Terraria.ModLoader;
 
 namespace Origins.Tiles.Riven {
-    public class Exoskeletal_Tree : ModTree, IGlowingModTile {
+    public class Exoskeletal_Tree : ModTree, IGlowingModTree {
         public string[] Categories => new string[] {
             "Plant"
         };
-        private static Mod mod => Origins.instance;
 		public static AutoLoadingAsset<Texture2D> GlowTexture = typeof(Exoskeletal_Tree).GetDefaultTMLName() + "_Glow";
 		AutoCastingAsset<Texture2D> IGlowingModTile.GlowTexture => GlowTexture;
+		public static AutoLoadingAsset<Texture2D> TopTexture = typeof(Exoskeletal_Tree).GetDefaultTMLName() + "_Tops";
+		AutoLoadingAsset<Texture2D> IGlowingModTree.TopTexture => TopTexture;
+		public static AutoLoadingAsset<Texture2D> TopGlowTexture = typeof(Exoskeletal_Tree).GetDefaultTMLName() + "_Tops_Glow";
+		AutoLoadingAsset<Texture2D> IGlowingModTree.TopGlowTexture => TopGlowTexture;
 		public Color GlowColor => new Color(GlowValue, GlowValue, GlowValue, GlowValue);
 		public float GlowValue => Riven_Hive.NormalGlowValue.GetValue();
+		public (float r, float g, float b) LightEmission {
+			get {
+				float glowValue = GlowValue;
+				return (0.394f * glowValue, 0.879f * glowValue, 0.912f * glowValue);
+			}
+		}
 		public void FancyLightingGlowColor(Tile tile, ref Vector3 color) {
 			if (HasScar(tile)) color = new Vector3(0.394f, 0.879f, 0.912f) * GlowValue;
 		}
@@ -44,6 +53,7 @@ namespace Origins.Tiles.Riven {
 		public static Exoskeletal_Tree Instance { get; private set; }
 		public override TreePaintingSettings TreeShaderSettings => new();
 		public override TreeTypes CountsAsTreeType => TreeTypes.None;
+
 		internal static void Load() {
 			Instance = new Exoskeletal_Tree();
 		}
@@ -57,22 +67,19 @@ namespace Origins.Tiles.Riven {
 		}
 
 		public override Asset<Texture2D> GetTexture() {
-			return mod.Assets.Request<Texture2D>("Tiles/Riven/Exoskeletal_Tree");
+			return ModContent.Request<Texture2D>(typeof(Exoskeletal_Tree).GetDefaultTMLName());
 		}
-
 		public override void SetStaticDefaults() {
 			GrowsOnTileId = new int[] {
 				ModContent.TileType<Riven_Flesh>(),
 				ModContent.TileType<Riven_Grass>()
 			};
 		}
-
 		public override Asset<Texture2D> GetTopTextures() {
-			return mod.Assets.Request<Texture2D>("Tiles/Riven/Exoskeletal_Tree_Tops");
+			return Asset<Texture2D>.Empty;
 		}
-
 		public override Asset<Texture2D> GetBranchTextures() {
-			return mod.Assets.Request<Texture2D>("Tiles/Riven/Exoskeletal_Tree_Branches");
+			return ModContent.Request<Texture2D>(typeof(Exoskeletal_Tree).GetDefaultTMLName() + "_Branches");
 		}
 
 		public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight) {
