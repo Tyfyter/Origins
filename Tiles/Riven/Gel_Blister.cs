@@ -41,11 +41,11 @@ namespace Origins.Tiles.Riven {
 			HitSound = SoundID.NPCDeath1;
 		}
 		public override bool CreateDust(int i, int j, ref int type) {
-			Gore.NewGore(
+			Origins.instance.SpawnGoreByName(
 				new EntitySource_TileBreak(i, j),
 				new Vector2(i * 16, j * 16),
 				default,
-				Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+				"Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)
 			);
 			return false;
 		}

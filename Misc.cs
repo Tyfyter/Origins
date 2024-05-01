@@ -1521,6 +1521,12 @@ namespace Origins {
 			}
 			return mod.TryFind(name.Split('/', 3)[^1], out modGore) ? modGore.Type : 0;
 		}
+		public static int SpawnGoreByName(this Mod mod, IEntitySource source, Vector2 Position, Vector2 Velocity, string name, float Scale = 1) {
+			if (Main.netMode == NetmodeID.Server) {
+				return 0;
+			}
+			return Gore.NewGore(source, Position, Velocity, mod.GetGoreSlot(name), Scale);
+		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
 		public static Vector2 DrawPlayerItemPos(float gravdir, int itemtype) {
 			return drawPlayerItemPos(gravdir, itemtype);

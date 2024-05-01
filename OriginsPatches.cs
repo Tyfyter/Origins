@@ -738,7 +738,7 @@ namespace Origins {
 				splash = true;
 				rainSmokeChance /= 5;
 			}
-			if (rivenRain && !self.active && Main.rand.Next(rainSmokeChance) < Main.gfxQuality * 100f) {
+			if (rivenRain && !self.active && Main.netMode != NetmodeID.Server && Main.rand.Next(rainSmokeChance) < Main.gfxQuality * 100f) {
 				Gore.NewGore(Entity.GetSource_None(), self.position, default, GoreID.ChimneySmoke1 + Main.rand.Next(3));
 			}
 			if (splash) {

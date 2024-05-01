@@ -152,7 +152,7 @@ namespace Origins.NPCs.Defiled {
 				}
 			}
 			Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
-			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
+			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), Main.rand.NextVectorIn(spawnbox), projectile.velocity, "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 		}
 		public override bool? CanBeHitByProjectile(Projectile projectile) {
 			if (NPC.realLife == NPC.whoAmI || NPC.realLife == -1) return null;
@@ -164,7 +164,7 @@ namespace Origins.NPCs.Defiled {
 		public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone) {
 			int halfWidth = NPC.width / 2;
 			int baseX = player.direction > 0 ? 0 : halfWidth;
-			for (int i = Main.rand.Next(3); i-- > 0;) Gore.NewGore(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(), Mod.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
+			for (int i = Main.rand.Next(3); i-- > 0;) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(NPC.height)), hit.GetKnockbackFromHit(), "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			if (NPC.life < 0) {
@@ -176,9 +176,9 @@ namespace Origins.NPCs.Defiled {
 			}
 		}
 		protected static void deathEffect(NPC npc) {
-			Gore.NewGore(npc.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF3_Gore"));
+			Origins.instance.SpawnGoreByName(npc.GetSource_Death(), npc.position, npc.velocity, "Gores/NPCs/DF3_Gore");
 			//Gore.NewGore(NPC.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
-			Gore.NewGore(npc.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4)));
+			Origins.instance.SpawnGoreByName(npc.GetSource_Death(), npc.position, npc.velocity, "Gores/NPCs/DF_Effect_Small" + Main.rand.Next(1, 4));
 			//for(int i = 0; i < 3; i++)
 		}
 	}

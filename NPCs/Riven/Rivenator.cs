@@ -121,7 +121,7 @@ namespace Origins.NPCs.Riven {
 		}
 		protected static void deathEffect(NPC npc) {
 			//Gore.NewGore(NPC.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/DF_Effect_Medium"+Main.rand.Next(1,4)));
-			for (int i = 0; i < 5; i++) Gore.NewGore(npc.GetSource_Death(), npc.position, npc.velocity, Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)));
+			for (int i = 0; i < 5; i++) Origins.instance.SpawnGoreByName(npc.GetSource_Death(), npc.position, npc.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));
             //for(int i = 0; i < 3; i++)
         }
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {

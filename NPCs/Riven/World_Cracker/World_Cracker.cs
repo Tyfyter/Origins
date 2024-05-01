@@ -158,11 +158,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				int halfWidth = npc.width / 2;
 				int baseX = hit.HitDirection > 0 ? 0 : halfWidth;
 				if (Main.netMode != NetmodeID.Server) {
-					Gore.NewGore(
+					Origins.instance.SpawnGoreByName(
 						npc.GetSource_OnHit(npc),
 						npc.position + new Vector2(baseX + Main.rand.Next(halfWidth), Main.rand.Next(npc.height)),
 						hit.GetKnockbackFromHit(),
-						Origins.instance.GetGoreSlot("Gores/NPCs/WC_Cracked_Armor" + Main.rand.Next(1, 5))
+						"Gores/NPCs/WC_Cracked_Armor" + Main.rand.Next(1, 5)
 					);
 				}
 			}
@@ -259,11 +259,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 					}
 				}
 				DamageArmor(current, new NPC.HitInfo() { SourceDamage = 9999, HideCombatText = true }, 0);
-				if (!Main.dedServ) for (int i = 0; i < 10; i++) Gore.NewGore(
+				if (!Main.dedServ) for (int i = 0; i < 10; i++) Origins.instance.SpawnGoreByName(
 					current.GetSource_Death(),
 					Main.rand.NextVector2FromRectangle(current.Hitbox),
 					current.oldVelocity,
-					Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+					"Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)
 				);
 				current = current.type == tailType ? null : Main.npc[(int)current.ai[0]];
 			}
@@ -548,11 +548,11 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		}
 		public override void OnKill(int timeLeft) {
 			if (timeLeft > 0 && OriginClientConfig.Instance.ExtraGooeyRivenGores) {
-				Gore.NewGore(
+				Origins.instance.SpawnGoreByName(
 					 Projectile.GetSource_Death(),
 					 Projectile.Center,
 					 Projectile.oldVelocity,
-					 Origins.instance.GetGoreSlot("Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4))
+					 "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4)
 				 );
 			}
 		}
