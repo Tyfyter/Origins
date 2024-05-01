@@ -169,8 +169,7 @@ namespace Origins {
 					})
 				);
 			} catch (Exception e) {
-				Origins.instance.Logger.Error("Exception thrown while loading Fancy Lighting Integration:");
-				Origins.instance.Logger.Error(e);
+				Origins.LogError("Exception thrown while loading Fancy Lighting Integration:", e);
 				FancyLighting = null;
 #if DEBUG
 				throw;

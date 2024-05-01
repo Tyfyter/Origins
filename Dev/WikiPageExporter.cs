@@ -191,7 +191,7 @@ namespace Origins.Dev {
 								//hex += '\n';
 							}
 						}
-						if (buffer[_color_type] != 6) Origins.instance.Logger.Error("invalid color type " + buffer[_color_type]);
+						if (buffer[_color_type] != 6) Origins.LogError("invalid color type " + buffer[_color_type]);
 						int IDAT_pos = NextChunk(0x08, buffer, 0x49, 0x44, 0x41, 0x54);
 						uint IDAT_len = ReadUInt(buffer, IDAT_pos);
 						uint crc32 = 0xFFFFFFFFu;

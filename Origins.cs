@@ -95,6 +95,7 @@ namespace Origins {
 		public static AutoCastingAsset<Texture2D> eyndumCoreTexture;
 		public static Texture2D[] CloudBottoms;
 		public static List<IUnloadable> unloadables = new();
+		public static List<object> loggedErrors = new();
 		public override uint ExtraPlayerBuffSlots => 4;
 		public Origins() {
 			instance = this;
@@ -535,6 +536,7 @@ namespace Origins {
 			Music.UnloadMusic();
 			Main.OnPostDraw -= IncrementFrameCount;
 			Array.Resize(ref TextureAssets.GlowMask, GlowMaskID.Count);
+			loggedErrors.Clear();
 		}
 		public static uint gameFrameCount = 0;
 		static void IncrementFrameCount(GameTime gameTime) {
@@ -774,6 +776,14 @@ namespace Origins {
 				"get_explosive_classes_dict" or "GetExplosiveClassesDict" => DamageClasses.ExplosiveVersion,
 				_ => base.Call(args),
 			};
+		}
+		public static void LogError(object message) {
+			instance.Logger.Error(message);
+			loggedErrors.Add(message);
+		}
+		public static void LogError(object message, Exception exception) {
+			instance.Logger.Error(message, exception);
+			loggedErrors.Add((message, exception));
 		}
 	}
 }

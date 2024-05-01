@@ -248,16 +248,25 @@ namespace Origins {
 			Terraria.On_WorldGen.PlacePot += WorldGen_PlacePot;
 			Terraria.On_WorldGen.PlaceSmallPile += WorldGen_PlaceSmallPile;
 			Terraria.On_Projectile.ExplodeTiles += Projectile_ExplodeTiles;
-			Terraria.IL_Collision.HurtTiles += (il) => {
+			IL_Player.Update += (il) => {
 				ILCursor c = new(il);
-				if (c.TryGotoNext(MoveType.Before, op => op.MatchCall<WorldGen>("KillTile"))) {
-					c.Emit(OpCodes.Ldloc_S, (byte)9);
-					c.EmitDelegate<Action<int>>((type) => {
-						if (type == TileID.CrimsonThorns) hurtCollisionCrimsonVine = true;
+				int index = -1;
+				if (c.TryGotoNext(MoveType.After,
+					i => i.MatchLdloc(out index),
+					i => i.MatchLdfld<Collision.HurtTile>(nameof(Collision.HurtTile.type)),
+					i => i.MatchLdcI4(0),
+					i => i.MatchBlt(out _)
+				)) {
+					c.EmitLdloca(index);
+					c.EmitDelegate((in Collision.HurtTile hurtTile) => {
+						if (hurtTile.type == TileID.CrimsonThorns) hurtCollisionCrimsonVine = true;
 					});
 				} else {
-					Logger.Error("Could not find KillTile call in HurtTiles");
+					LogError("Could not find GetHurtTile call in Player.Update");
 				}
+
+			};
+			Terraria.IL_Collision.HurtTiles += (il) => {
 			};
 			Terraria.GameContent.On_ShopHelper.GetShoppingSettings += OriginGlobalNPC.ShopHelper_GetShoppingSettings;
 			On_Player.HurtModifiers.ToHurtInfo += (On_Player.HurtModifiers.orig_ToHurtInfo orig, ref Player.HurtModifiers self, int damage, int defense, float defenseEffectiveness, float knockback, bool knockbackImmune) => {
@@ -356,7 +365,7 @@ namespace Origins {
 						return key;
 					});
 				} else {
-					instance.Logger.Error("Could not find target IL code in ApplyNpcRelationshipEffect");
+					LogError("Could not find target IL code in ApplyNpcRelationshipEffect");
 				}
 			};
 			IL_ShopHelper.ApplyBiomeRelationshipEffect += (il) => {
@@ -387,7 +396,7 @@ namespace Origins {
 						return key;
 					});
 				} else {
-					instance.Logger.Error("Could not find target IL code in ApplyBiomeRelationshipEffect");
+					LogError("Could not find target IL code in ApplyBiomeRelationshipEffect");
 				}
 			};
 			IL_ShopHelper.AddHappinessReportText += (il) => {
@@ -404,7 +413,7 @@ namespace Origins {
 						return keyBase + ".";
 					});
 				} else {
-					instance.Logger.Error("Could not find target IL code in AddHappinessReportText");
+					LogError("Could not find target IL code in AddHappinessReportText");
 				}
 				c.Index++;
 				MethodInfo concat2 = typeof(String).GetMethod(nameof(String.Concat), BindingFlags.Public | BindingFlags.Static, new Type[] { typeof(String), typeof(String) });
@@ -438,7 +447,7 @@ namespace Origins {
 						return keyBase + "." + key;
 					});*/
 				} else {
-					instance.Logger.Error("Could not find target IL code in AddHappinessReportText");
+					LogError("Could not find target IL code in AddHappinessReportText");
 				}
 			};
 			On_NPC.NPCLoot += (orig, self) => {
@@ -491,7 +500,7 @@ namespace Origins {
 				c.EmitLdcI4(1);
 				c.EmitCall(typeof(Math).GetMethod(nameof(Math.Max), new Type[] { typeof(int), typeof(int) }));
 			} else {
-				Logger.Error("Could not find potential division by zero in PlayerStatsSnapshot ctor");
+				LogError("Could not find potential division by zero in PlayerStatsSnapshot ctor");
 			}
 		}
 

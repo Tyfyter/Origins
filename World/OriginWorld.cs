@@ -539,7 +539,7 @@ namespace Origins {
 				for (; i-- > 0;) {
 					lootType = random.Get();
 					if (cache[lootType].Count == 0) {
-						Origins.instance.Logger.Error($"broke on {Lang.GetItemNameValue(newLootType.param)} with {i} remaining, no further valid chests");
+						Origins.LogError($"broke on {Lang.GetItemNameValue(newLootType.param)} with {i} remaining, no further valid chests");
 						break;
 					}
 					chestIndex = WorldGen.genRand.Next(cache[lootType]);

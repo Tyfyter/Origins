@@ -36,10 +36,12 @@ namespace Origins.NPCs.Defiled
 				{ NPCID.PenguinBlack, ModContent.NPCType<Bile_Thrower>() },
 				{ NPCID.Squid, ModContent.NPCType<Defiled_Squid>() }
 			};
-        }
+			hasErroredAboutWrongNPC = [];
+		}
         public override void Unload() {
 			AssimilationAmounts = null;
 			NPCTransformations = null;
+			hasErroredAboutWrongNPC = null;
 		}
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return entity.ModNPC is IDefiledEnemy;
@@ -58,6 +60,7 @@ namespace Origins.NPCs.Defiled
 				}
 			}
 		}
+		static HashSet<int> hasErroredAboutWrongNPC;
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (npc.ModNPC is IDefiledEnemy defiledEnemy) {
 				if (npc.life < npc.lifeMax && defiledEnemy.Mana > 0) {
@@ -65,7 +68,9 @@ namespace Origins.NPCs.Defiled
 					if (!npc.HasBuff(BuffID.Bleeding)) npc.lifeRegen += lifeRegen;
 				}
 			} else {
-				Mod.Logger.Error("something has gone extremely wrong and a non-defiled enemy has a DefiledGlobalNPC");
+				if (!hasErroredAboutWrongNPC.Add(npc.type)) {
+					Origins.LogError($"something has gone extremely wrong and a non-defiled enemy ({npc.ModNPC}) has a DefiledGlobalNPC");
+				}
 			}
 			if (npc.poisoned) {
 				npc.lifeRegen += 6;
