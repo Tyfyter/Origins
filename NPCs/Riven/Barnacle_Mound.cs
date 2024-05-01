@@ -41,8 +41,47 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public override void AI() {
+			NPC.netOffset = Vector2.Zero;
+			if (NPC.ai[1] == 0) {
+				NPC.ai[1] = 1;
+				const float offsetLen = 10;
+				NPC.velocity = new Vector2(0, 1);
+				Vector2 offset = new Vector2(0, offsetLen);
+				for (int i = 0; i < 10; i++) {
+					if (Framing.GetTileSafely(NPC.Center + new Vector2(0, 16 * i)).HasSolidTile()) {
+						NPC.velocity = new Vector2(0, 1);
+						NPC.rotation = 0;
+						offset = new Vector2(0, offsetLen);
+						break;
+					} else if (Framing.GetTileSafely(NPC.Center + new Vector2(0, -16 * i)).HasSolidTile()) {
+						NPC.velocity = new Vector2(0, -1);
+						NPC.rotation = MathHelper.Pi;
+						offset = new Vector2(0, -offsetLen);
+						break;
+					} else if (Framing.GetTileSafely(NPC.Center + new Vector2(-16 * i, 0)).HasSolidTile()) {
+						NPC.velocity = new Vector2(-1, 0);
+						NPC.rotation = MathHelper.PiOver2;
+						offset = new Vector2(-offsetLen, 0);
+						break;
+					} else if (Framing.GetTileSafely(NPC.Center + new Vector2(16 * i, 0)).HasSolidTile()) {
+						NPC.velocity = new Vector2(1, 0);
+						NPC.rotation = -MathHelper.PiOver2;
+						offset = new Vector2(offsetLen, 0);
+						break;
+					}
+				}
+				int tries = 0;
+				while (!Framing.GetTileSafely(NPC.Center + offset + NPC.velocity).HasSolidTile()) {
+					NPC.position += NPC.velocity;
+					if (++tries > 160) break;
+				}
+				//NPC.velocity = Vector2.Zero;
+				NPC.oldVelocity = Vector2.Zero;
+				NPC.oldPosition = NPC.position;
+				NPC.netUpdate = true;
+			}
 			NPC.TargetClosest(faceTarget: false);
-			if (NPC.HasValidTarget && ++NPC.ai[0] > (Main.masterMode ? 420 : (Main.expertMode ? 540 : 600))) {
+			if (Main.netMode != NetmodeID.MultiplayerClient && NPC.HasValidTarget && ++NPC.ai[0] > (Main.masterMode ? 420 : (Main.expertMode ? 540 : 600))) {
 				int type = ModContent.NPCType<Amoeba_Bugger>();
 				NPC.ai[0] = 0;
 				for (int i = Main.rand.Next(4, 7); i-- > 0;) {
@@ -51,44 +90,7 @@ namespace Origins.NPCs.Riven {
 				}
 			}
 			NPC.position = NPC.oldPosition;
-			NPC.velocity = Vector2.Zero;
-		}
-		public override void OnSpawn(IEntitySource source) {
-			const float offsetLen = 10;
-			NPC.velocity = new Vector2(0, 1);
-			Vector2 offset = new Vector2(0, offsetLen);
-			for (int i = 0; i < 10; i++) {
-				if (Framing.GetTileSafely(NPC.Center + new Vector2(0, 16 * i)).HasSolidTile()) {
-					NPC.velocity = new Vector2(0, 1);
-					NPC.rotation = 0;
-					offset = new Vector2(0, offsetLen);
-					break;
-				} else if (Framing.GetTileSafely(NPC.Center + new Vector2(0, -16 * i)).HasSolidTile()) {
-					NPC.velocity = new Vector2(0, -1);
-					NPC.rotation = MathHelper.Pi;
-					offset = new Vector2(0, -offsetLen);
-					break;
-				} else if (Framing.GetTileSafely(NPC.Center + new Vector2(-16 * i, 0)).HasSolidTile()) {
-					NPC.velocity = new Vector2(-1, 0);
-					NPC.rotation = MathHelper.PiOver2;
-					offset = new Vector2(-offsetLen, 0);
-					break;
-				} else if (Framing.GetTileSafely(NPC.Center + new Vector2(16 * i, 0)).HasSolidTile()) {
-					NPC.velocity = new Vector2(1, 0);
-					NPC.rotation = -MathHelper.PiOver2;
-					offset = new Vector2(offsetLen, 0);
-					break;
-				}
-			}
-			int tries = 0;
-			while (!Framing.GetTileSafely(NPC.Center + offset + NPC.velocity).HasSolidTile()) {
-				NPC.position += NPC.velocity;
-				if (++tries > 160) break;
-			}
-			NPC.velocity = Vector2.Zero;
-			NPC.oldVelocity = Vector2.Zero;
-			NPC.oldPosition = NPC.position;
-			NPC.netUpdate = true;
+			//NPC.velocity = Vector2.Zero;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Barnacle;
@@ -98,9 +100,13 @@ namespace Origins.NPCs.Riven {
 				this.GetBestiaryFlavorText("Barnacle mounds act as a self-contained ecosystem of microbes, buggers, and the Riven of course."),
 			});
 		}
+		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
+			modifiers.DisableKnockback();
+		}
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 halfSize = new Vector2(GlowTexture.Width / 2, GlowTexture.Height / Main.npcFrameCount[NPC.type]);
 			Vector2 position = NPC.Center + new Vector2(0, 12).RotatedBy(NPC.rotation);
+			Dust.NewDustPerfect(position, 6, Vector2.Zero);
 			spriteBatch.Draw(
 				TextureAssets.Npc[Type].Value,
 				position - screenPos,
