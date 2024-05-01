@@ -10,7 +10,8 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Viper_Rifle : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
+		static short glowmask;
+		public string[] Categories => new string[] {
             "Gun"
         };
         public override void SetStaticDefaults() {
@@ -22,6 +23,7 @@ namespace Origins.Items.Weapons.Ranged {
 					proj.timeLeft = 20;
 				}
 			});
+			glowmask = Origins.AddGlowMask(this);
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.Gatligator);
@@ -35,6 +37,7 @@ namespace Origins.Items.Weapons.Ranged {
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.LightRed;
 			Item.UseSound = Origins.Sounds.HeavyCannon;
+			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

@@ -1140,6 +1140,10 @@ Projectiles: {
 	Hellfire_Bomb_Fire.DisplayName: Hellfire Bomb
 	Hellfire_Grenade_Fire.DisplayName: Hellfire Grenade
 	Traffic_Cone_Projectile.DisplayName: Traffic Cone
+	Nova_Swarm_P1.DisplayName: Nova_ Swarm_ P1
+	Nova_Swarm_P2.DisplayName: Nova_ Swarm_ P2
+	Nova_Swarm_P3.DisplayName: Nova_ Swarm_ P3
+	Nova_Swarm_P4.DisplayName: Nova_ Swarm_ P4
 }
 
 Prefixes: {

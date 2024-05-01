@@ -16,7 +16,7 @@ namespace Origins.Items.Weapons.Ranged {
             ItemID.Sets.ShimmerTransformToItem[ItemID.PurpleClubberfish] = ModContent.ItemType<Blotopus>();
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Blotopus>()] = ModContent.ItemType<Manasynk>();
             ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Manasynk>()] = ModContent.ItemType<Ocotoral_Bud>();
-            //ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Ocotoral_Bud>()] = ModContent.ItemType<Internal_Combustion>();
+			ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Ocotoral_Bud>()] = ItemID.PurpleClubberfish; //ModContent.ItemType<Internal_Combustion>();
             //ItemID.Sets.ShimmerTransformToItem[ModContent.ItemType<Internal_Combustion>()] = ItemID.PurpleClubberfish;
         }
         public override void SetDefaults() {

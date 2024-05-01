@@ -8,29 +8,47 @@ using Tyfyter.Utils;
 using static Microsoft.Xna.Framework.MathHelper;
 
 using Origins.Dev;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Materials;
+
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Missile_Minigun : ModItem, ICustomWikiStat {
-		public override string Texture => "Terraria/Images/Item_" + ItemID.ProximityMineLauncher;
+	public class Nova_Swarm : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "Launcher"
         };
-        public override void SetDefaults() {
+		public override void SetStaticDefaults() {
+			Item.ResearchUnlockCount = 1;
+		}
+		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
+			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
 			Item.damage = 110;
+			Item.noMelee = true;
+			Item.width = 60;
+			Item.height = 30;
 			Item.useTime = 12;
 			Item.useAnimation = 12;
-			Item.shoot = ModContent.ProjectileType<Missile_Minigun_P1>();
+			Item.shoot = ModContent.ProjectileType<Nova_Swarm_P1>();
 			Item.value = Item.sellPrice(gold: 20);
-			Item.rare = CrimsonRarity.ID;
+			Item.rare = ItemRarityID.Red;
 			Item.autoReuse = true;
+		}
+		public override void AddRecipes() {
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Nova_Fragment>(), 18)
+			.AddTile(TileID.LunarCraftingStation)
+			.Register();
 		}
 		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
 			type = Item.shoot + (type - Item.shoot) / 3;
 			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 8);
 			return false;
 		}
+		public override Vector2? HoldoutOffset() {
+			return new Vector2(-7, -4);
+		}
 	}
-	public class Missile_Minigun_P1 : ModProjectile {
+	public class Nova_Swarm_P1 : ModProjectile {
 
 		const float force = 1;
 
@@ -83,14 +101,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Damage();
 		}
 	}
-	public class Missile_Minigun_P2 : Missile_Minigun_P1 {
+	public class Nova_Swarm_P2 : Nova_Swarm_P1 {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RocketII;
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.RocketII;
 			return true;
 		}
 	}
-	public class Missile_Minigun_P3 : Missile_Minigun_P1 {
+	public class Nova_Swarm_P3 : Nova_Swarm_P1 {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RocketIII;
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.RocketIII;
@@ -106,7 +124,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Projectile.Damage();
 		}
 	}
-	public class Missile_Minigun_P4 : Missile_Minigun_P3 {
+	public class Nova_Swarm_P4 : Nova_Swarm_P3 {
 		public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.RocketIV;
 		public override bool PreKill(int timeLeft) {
 			Projectile.type = ProjectileID.RocketIV;

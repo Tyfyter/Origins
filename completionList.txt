@@ -86,6 +86,7 @@ VANILLA MODIFICATIONS:
 ---
 (ᗢ) Recipes General
 
+(X) Advanced weapon functionality in PVP*
 (^) Boss Immunities (make every boss immune to anything with Stun)*
 (^) Demolitionist (to sell different items based on peat sold)*
 (^) Eater of Worlds (Expert explosive damage reduction: 50%, Master: 80%)*
@@ -692,6 +693,7 @@ MAGIC WEAPONS:
 (X) Shocktrain
 (X) Spectra
 (X) Steam Blaster
+(X) True Seam Beam
 
 (X) Ion Minigun
 (^) Rigged Cubix
@@ -793,7 +795,7 @@ EXPLOSIVE WEAPONS:
 (X) Firework Cannon
 (^) Mine Flayer*
 (^) Nova Cascade*
-(@, ^3) Nova Swarm !!!
+(#3, ^2) Nova Swarm !!!
 (^) Nuclear Arm*
 (#2, ^2) Omni-directional Claymore*
 (^) Rocodile

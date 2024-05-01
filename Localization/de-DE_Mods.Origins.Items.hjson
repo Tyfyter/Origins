@@ -4135,3 +4135,8 @@ Endowood_Helmet: {
 	// DisplayName: Endowood Helmet
 	// Tooltip: ""
 }
+
+Nova_Swarm: {
+	// DisplayName: Nova_ Swarm
+	// Tooltip: ""
+}
