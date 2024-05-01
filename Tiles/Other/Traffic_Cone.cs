@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 
 namespace Origins.Tiles.Other {
@@ -25,32 +26,55 @@ namespace Origins.Tiles.Other {
 			TileObjectData.addTile(Type);
 			ID = Type;
 		}
-		public static HashSet<Point16> coneLocations;
-		public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak) {
-			TrySpawnProjectile(i, j);
-			return true;
-		}
-		public override void NearbyEffects(int i, int j, bool closer) {
-			TrySpawnProjectile(i, j);
-		}
-		static void TrySpawnProjectile(int i, int j) {
-			if (Main.tile[i, j].TileFrameY != 0) return;
-			coneLocations ??= new();
-			if (!coneLocations.Contains(new(i, j))) {
-				Projectile.NewProjectile(
-					Entity.GetSource_None(),
-					new Vector2(i + 0.5f, j + 0.5f) * 16,
-					default,
-					Traffic_Cone_Projectile.ID,
-					0,
-					0,
-					Owner: Main.maxPlayers
-				);
+		public override void PlaceInWorld(int i, int j, Item item) {
+			if (Main.netMode == NetmodeID.MultiplayerClient) {
+				ModPacket packet = Mod.GetPacket();
+				packet.Write(Origins.NetMessageType.place_cone);
+				packet.Write((short)i);
+				packet.Write((short)j);
+				packet.Send(-1, Main.myPlayer);
+			} else {
+				ModContent.GetInstance<Traffic_Cone_TE_System>().coneLocations.Add(new(i, j));
 			}
 		}
-		internal static void ResetLocations() {
-			coneLocations ??= new();
-			coneLocations.Clear();
+	}
+	public class Traffic_Cone_TE_System : ModSystem {
+		public List<Point16> coneLocations = new();
+		public HashSet<Point16> projLocations;
+		public override void PreUpdateEntities() {
+			if (Main.netMode == NetmodeID.MultiplayerClient) return;
+			for (int i = 0; i < coneLocations.Count; i++) {
+				Point16 pos = coneLocations[i];
+				if (Main.tile[pos.X, pos.Y].TileIsType(Traffic_Cone.ID)) {
+					projLocations ??= new();
+					if (!projLocations.Contains(pos)) {
+						Projectile.NewProjectile(
+							Entity.GetSource_None(),
+							new Vector2(pos.X + 0.5f, pos.Y + 0.5f) * 16,
+							default,
+							Traffic_Cone_Projectile.ID,
+							0,
+							0,
+							Owner: Main.maxPlayers
+						);
+					}
+				} else {
+					coneLocations.RemoveAt(i);
+					i--;
+					continue;
+				}
+			}
+		}
+		public override void SaveWorldData(TagCompound tag) {
+			tag[nameof(coneLocations)] = coneLocations;
+		}
+		public override void LoadWorldData(TagCompound tag) {
+			coneLocations = tag.Get<List<Point16>>(nameof(coneLocations));
+		}
+		internal static bool RegisterProjPosition(Point16 pos) {
+			Traffic_Cone_TE_System instance = ModContent.GetInstance<Traffic_Cone_TE_System>();
+			instance.projLocations ??= new();
+			return instance.projLocations.Add(pos);
 		}
 	}
 	public class Traffic_Cone_Projectile : ModProjectile {
@@ -85,8 +109,7 @@ namespace Origins.Tiles.Other {
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			Point16 tilePos = Projectile.position.ToTileCoordinates16();
 			if (Main.tile[tilePos.X, tilePos.Y].TileIsType(Traffic_Cone.ID)) {
-				Traffic_Cone.coneLocations ??= new();
-				if (!Traffic_Cone.coneLocations.Add(tilePos)) {
+				if (!Traffic_Cone_TE_System.RegisterProjPosition(tilePos)) {
 					Projectile.Kill();
 				}
 			} else {

@@ -1,5 +1,6 @@
 ﻿using Origins.Items.Accessories;
 using Origins.Questing;
+using Origins.Tiles.Other;
 using System;
 using System.IO;
 using Terraria;
@@ -58,6 +59,10 @@ namespace Origins {
 					case world_cracker_hit:
 					case sync_guid:
 					altHandle = true;
+					break;
+
+					case place_cone:
+					ModContent.GetInstance<Traffic_Cone_TE_System>().coneLocations.Add(new(reader.ReadInt16(), reader.ReadInt16()));
 					break;
 
 					default:
@@ -152,6 +157,7 @@ namespace Origins {
 			internal const byte sync_guid = 5;
 			internal const byte win_lottery = 6;
 			internal const byte pickle_lottery = 7;
+			internal const byte place_cone = 8;
 		}
 	}
 }
