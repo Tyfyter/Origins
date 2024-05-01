@@ -1522,9 +1522,7 @@ namespace Origins {
 			return mod.TryFind(name.Split('/', 3)[^1], out modGore) ? modGore.Type : 0;
 		}
 		public static int SpawnGoreByName(this Mod mod, IEntitySource source, Vector2 Position, Vector2 Velocity, string name, float Scale = 1) {
-			if (Main.netMode == NetmodeID.Server) {
-				return 0;
-			}
+			if (Main.netMode == NetmodeID.Server) return 0;
 			return Gore.NewGore(source, Position, Velocity, mod.GetGoreSlot(name), Scale);
 		}
 		[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1902,9 +1900,11 @@ namespace Origins {
 			self.identity = id;
 			self.owner = owner;
 		}
+		[Obsolete("No longer incompatible with multiplayer, but just use AnimationType")]
 		public static void CloneFrame(this NPC self, int type, int frameHeight) {
 			int t = self.type;
 			self.type = type;
+			self.position += self.netOffset;
 			self.VanillaFindFrame(frameHeight, false, type);
 			self.type = t;
 		}

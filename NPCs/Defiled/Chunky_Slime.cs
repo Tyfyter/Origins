@@ -21,9 +21,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 40;
 			AIType = NPCID.Crimslime;
-		}
-		public override void FindFrame(int frameHeight) {
-			NPC.CloneFrame(NPCID.Crimslime, frameHeight);
+			AnimationType = NPCID.Crimslime;
 		}
 		public int MaxMana => 50;
 		public int MaxManaDrain => 10;

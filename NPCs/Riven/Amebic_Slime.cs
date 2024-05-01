@@ -22,9 +22,7 @@ namespace Origins.NPCs.Riven {
 			NPC.friendly = false;
 			NPC.value = 40;
 			AIType = NPCID.Crimslime;
-		}
-		public override void FindFrame(int frameHeight) {
-			NPC.CloneFrame(NPCID.Crimslime, frameHeight);
+			AnimationType = NPCID.Crimslime;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.AmebSlime;

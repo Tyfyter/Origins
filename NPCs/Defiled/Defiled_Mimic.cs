@@ -10,6 +10,10 @@ namespace Origins.NPCs.Defiled {
     public class Defiled_Mimic : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 14;
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Poisoned] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire] = true;
+			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.OnFire3] = true;
 		}
 		public override void SetDefaults() {
 			NPC.width = 28;
@@ -23,13 +27,10 @@ namespace Origins.NPCs.Defiled {
 			NPC.value = 30000f;
 			NPC.knockBackResist = 0.1f;
 			NPC.rarity = 5;
-			AIType = NPCID.BigMimicCorruption;
+			AnimationType = NPCID.BigMimicCorruption;
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get; set; }
-		public override void FindFrame(int frameHeight) {
-			NPC.CloneFrame(NPCID.BigMimicCorruption, frameHeight);
-		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.OneFromOptions(1,
 				ItemID.SoulDrain,

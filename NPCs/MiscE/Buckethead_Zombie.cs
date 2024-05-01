@@ -20,10 +20,8 @@ namespace Origins.NPCs.MiscE {
 			NPC.height = 44;
 			NPC.friendly = false;
 			AIType = NPCID.Zombie;
+			AnimationType = NPCID.Zombie;
 			Banner = NPCID.Zombie;
-		}
-		public override void FindFrame(int frameHeight) {
-			NPC.CloneFrame(NPCID.Zombie, frameHeight);
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if ((spawnInfo.Player.ZoneGraveyard || !Main.dayTime) && spawnInfo.Player.ZoneForest) {
