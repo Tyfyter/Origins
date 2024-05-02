@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Ammo {
@@ -36,10 +37,54 @@ namespace Origins.Items.Weapons.Ammo {
 	}
 	public record struct CanisterData(Color OuterColor, Color InnerColor, int WhatAmI = -999);
 	public class CanisterGlobalProjectile : GlobalProjectile {
+		public override bool InstancePerEntity => true;
+		ICanisterProjectile canister;
+		int canisterID;
+		CanisterData canisterData;
+		public int CanisterID { 
+			get => canisterID;
+			set {
+				canisterID = value;
+				if (canisterID == -1) return;
+				canisterData = CanisterGlobalItem.CanisterDatas[value];
+			}
+		}
 		public override bool AppliesToEntity(Projectile entity, bool lateInstantiation) {
-			if (entity.ModProjectile is ICanisterProjectile canister) {
+			if (entity.ModProjectile is ICanisterProjectile) {
 				return true;
 			}
+			return false;
+		}
+		public override void OnSpawn(Projectile projectile, IEntitySource source) {
+			canister = projectile.ModProjectile as ICanisterProjectile;
+			if (source is EntitySource_ItemUse_WithAmmo ammoSource) {
+				CanisterID = CanisterGlobalItem.GetCanisterType(ammoSource.AmmoItemIdUsed);
+			}
+		}
+		public override bool PreDraw(Projectile projectile, ref Color lightColor) {
+			Vector2 origin = canister.OuterTexture.Value.Size() * 0.5f;
+			SpriteEffects spriteEffects = SpriteEffects.None;
+			if (projectile.spriteDirection == -1) spriteEffects |= SpriteEffects.FlipHorizontally;
+			Main.EntitySpriteDraw(
+				canister.InnerTexture,
+				projectile.Center - Main.screenPosition,
+				null,
+				canisterData.InnerColor,
+				projectile.rotation,
+				origin,
+				projectile.scale,
+				spriteEffects
+			);
+			Main.EntitySpriteDraw(
+				canister.OuterTexture,
+				projectile.Center - Main.screenPosition,
+				null,
+				canisterData.OuterColor.MultiplyRGBA(lightColor),
+				projectile.rotation,
+				origin,
+				projectile.scale,
+				spriteEffects
+			);
 			return false;
 		}
 	}

@@ -21,6 +21,7 @@ namespace Origins.Projectiles {
 		public bool magicTripwireTripped = false;
 		public bool noTileSplode = false;
 		public bool novaCascade = false;
+		public bool novaSwarm = false;
 		public bool hasAmber = false;
 		public bool fromDeath = false;
 		public StatModifier selfDamageModifier = StatModifier.Default;
@@ -58,6 +59,29 @@ namespace Origins.Projectiles {
 					Vector2 targetVelocity = (targetPos - projectile.Center).SafeNormalize(-Vector2.UnitY) * scaleFactor;
 					projectile.velocity = Vector2.Lerp(projectile.velocity, targetVelocity, 0.083333336f);
 				}
+			}
+			if (novaSwarm) {
+				const float force = 1;
+				float angle = projectile.velocity.ToRotation();
+				projectile.rotation = angle + MathHelper.PiOver2;
+				float targetOffset = 0.9f;
+				float targetAngle = 1;
+				NPC target;
+				float dist = 641;
+				for (int i = 0; i < Main.npc.Length; i++) {
+					target = Main.npc[i];
+					if (!target.CanBeChasedBy()) continue;
+					Vector2 toHit = (projectile.Center.Clamp(target.Hitbox.Add(target.velocity)) - projectile.Center);
+					if (!Collision.CanHitLine(projectile.Center + projectile.velocity, 1, 1, projectile.Center + toHit, 1, 1)) continue;
+					float tdist = toHit.Length();
+					float ta = (float)Math.Abs(Tyfyter.Utils.GeometryUtils.AngleDif(toHit.ToRotation(), angle, out _));
+					if (tdist <= dist && ta <= targetOffset) {
+						targetAngle = ((target.Center + target.velocity) - projectile.Center).ToRotation();
+						targetOffset = ta;
+						dist = tdist;
+					}
+				}
+				if (dist < 641) projectile.velocity = (projectile.velocity + new Vector2(force, 0).RotatedBy(targetAngle)).SafeNormalize(Vector2.Zero) * projectile.velocity.Length();
 			}
 			if (magicTripwire && Origins.MagicTripwireRange[projectile.type] > 0) {
 				int magicTripwireRange = Origins.MagicTripwireRange[projectile.type];
@@ -111,10 +135,14 @@ namespace Origins.Projectiles {
 					selfDamageModifier = selfDamageModifier.CombineWith(sdPrefix.SelfDamage());
 				}
 				novaCascade = itemUse.Item.type == Nova_Cascade.ID;
+				novaSwarm = itemUse.Item.type == Nova_Swarm.ID;
+				if (novaSwarm) projectile.scale *= Nova_Swarm.rocket_scale;
 			} else if (source is EntitySource_Parent sourceParent && sourceParent.Entity is Projectile parent && parent.TryGetGlobalProjectile(out ExplosiveGlobalProjectile parentGlobal)) {
 				modifierBlastRadius = parentGlobal.modifierBlastRadius;
 				selfDamageModifier = selfDamageModifier.CombineWith(parentGlobal.modifierBlastRadius);
 				novaCascade = parentGlobal.novaCascade;
+				novaSwarm = parentGlobal.novaSwarm;
+				if (!novaSwarm) projectile.scale *= Nova_Swarm.rocket_scale;
 				noTileSplode = parentGlobal.noTileSplode;
 			}
 		}
@@ -171,6 +199,7 @@ namespace Origins.Projectiles {
 			bitWriter.WriteBit(noTileSplode);
 			bitWriter.WriteBit(hasAmber);
 			bitWriter.WriteBit(fromDeath);
+			bitWriter.WriteBit(novaSwarm);
 		}
 		public override void ReceiveExtraAI(Projectile projectile, BitReader bitReader, BinaryReader binaryReader) {
 			isHoming = bitReader.ReadBit();
@@ -183,7 +212,13 @@ namespace Origins.Projectiles {
 			} else {
 				hasAmber = false;
 			}
-			noTileSplode = bitReader.ReadBit();
+			if (bitReader.ReadBit()) {
+				if (!novaSwarm) projectile.scale *= Nova_Swarm.rocket_scale;
+				novaSwarm = true;
+			} else {
+				if (novaSwarm) projectile.scale /= Nova_Swarm.rocket_scale;
+				novaSwarm = false;
+			}
 		}
 		public static bool IsExploding(Projectile projectile) {
 			if (!projectile.CountsAsClass(DamageClasses.Explosive)) return false;

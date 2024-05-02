@@ -116,8 +116,6 @@ namespace Origins.NPCs.TownNPCs {
 			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue3"));
 			chat.Add(Language.GetTextValue("Mods.Origins.Dialogue.Acid_Freak.StandardDialogue4"));
 
-			var b = Main.ShopHelper;
-
 			return chat; // chat is implicitly cast to a string.
 		}
 

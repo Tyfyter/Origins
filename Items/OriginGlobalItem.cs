@@ -69,6 +69,7 @@ namespace Origins.Items {
 				break;
 
 				case ItemID.RocketLauncher:
+				case ItemID.SnowmanCannon:
 				case ItemID.ProximityMineLauncher:
 				case ItemID.GrenadeLauncher:
 				case ItemID.HellfireArrow:

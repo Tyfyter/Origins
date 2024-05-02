@@ -13,11 +13,14 @@ using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Nova_Swarm : ModItem, ICustomWikiStat {
+		public const float rocket_scale = 0.85f;
         public string[] Categories => new string[] {
             "Launcher"
         };
+		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {
-			Item.ResearchUnlockCount = 1;
+			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];
+			ID = Type;
 		}
 		public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ProximityMineLauncher);
@@ -28,7 +31,6 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.height = 30;
 			Item.useTime = 12;
 			Item.useAnimation = 12;
-			Item.shoot = ModContent.ProjectileType<Nova_Swarm_P1>();
 			Item.value = Item.sellPrice(gold: 20);
 			Item.rare = ItemRarityID.Red;
 			Item.autoReuse = true;
@@ -39,10 +41,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.AddTile(TileID.LunarCraftingStation)
 			.Register();
 		}
-		public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
-			type = Item.shoot + (type - Item.shoot) / 3;
-			Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 8);
-			return false;
+		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
+			
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-7, -4);

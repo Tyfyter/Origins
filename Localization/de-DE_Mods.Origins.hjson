@@ -1144,6 +1144,7 @@ Projectiles: {
 	// Nova_Swarm_P2.DisplayName: Nova_ Swarm_ P2
 	// Nova_Swarm_P3.DisplayName: Nova_ Swarm_ P3
 	// Nova_Swarm_P4.DisplayName: Nova_ Swarm_ P4
+	// Mine_Flayer_P.DisplayName: Mine_ Flayer_ P
 }
 
 Prefixes: {

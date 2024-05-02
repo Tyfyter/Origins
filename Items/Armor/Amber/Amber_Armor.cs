@@ -206,6 +206,7 @@ namespace Origins.Items.Armor.Amber {
 			return false;
 		}
 		public static void SpawnDusts(Entity entity) {
+			if (Main.dedServ) return;
 			ArmorShaderData shader = GameShaders.Armor.GetShaderFromItemId(Amber_Dye.ID);
 			int type = ModContent.DustType<Amber_Debuff_Shard>();
 			int size = entity.width + entity.height;
