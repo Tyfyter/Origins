@@ -8,25 +8,32 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Origins.Items.Weapons.Magic;
+using Origins.Items.Weapons.Demolitionist;
+using Origins.Items.Weapons.Ammo;
 
 namespace Origins.World {
     public class AshenBiomeData : ModBiome {
 		public static IItemDropRule FirstOrbDropRule;
+		public static IItemDropRule AceShrapnelRule;
 		public static IItemDropRule OrbDropRule;
 		public override void Load() {
 			FirstOrbDropRule = ItemDropRule.Common(ModContent.ItemType<Neural_Network>());
 			FirstOrbDropRule.OnSuccess(ItemDropRule.Common(ItemID.MusketBall, 1, 100, 100));
 
+			AceShrapnelRule = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Ace_Shrapnel>());
+			AceShrapnelRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Scrap>(), 1, 200, 200));
+
 			OrbDropRule = new OneFromRulesRule(1,
 				FirstOrbDropRule,
+				AceShrapnelRule,
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Area_Denial>()),
-				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Outreach>()),
 				//ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Smiths_Hammer>()),
 				ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Cinder_Seal>())
 			);
 		}
 		public override void Unload() {
 			FirstOrbDropRule = null;
+			AceShrapnelRule = null;
 			OrbDropRule = null;
 		}
 	}

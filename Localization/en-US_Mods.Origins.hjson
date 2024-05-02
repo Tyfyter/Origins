@@ -978,10 +978,6 @@ Projectiles: {
 	Impact_Golf_Ball_P.DisplayName: Impact Golf Ball
 	Impact_Grenade_Blast.DisplayName: Blast Grenade
 	Impact_Grenade_P.DisplayName: Impact Grenade
-	Missile_Minigun_P1.DisplayName: Missile Minigun I
-	Missile_Minigun_P2.DisplayName: Missile Minigun II
-	Missile_Minigun_P3.DisplayName: Missile Minigun III
-	Missile_Minigun_P4.DisplayName: Missile Minigun IV
 	Nuclear_Arm_P.DisplayName: Nuclear Arm
 	Outbreak_Bomb_P.DisplayName: Outbreak Bomb
 	Peatball_P.DisplayName: Peatball
@@ -1140,11 +1136,11 @@ Projectiles: {
 	Hellfire_Bomb_Fire.DisplayName: Hellfire Bomb
 	Hellfire_Grenade_Fire.DisplayName: Hellfire Grenade
 	Traffic_Cone_Projectile.DisplayName: Traffic Cone
-	Nova_Swarm_P1.DisplayName: Nova_ Swarm_ P1
-	Nova_Swarm_P2.DisplayName: Nova_ Swarm_ P2
-	Nova_Swarm_P3.DisplayName: Nova_ Swarm_ P3
+	Mine_Flayer_P.DisplayName: Mine Flayer Mine
 	Nova_Swarm_P4.DisplayName: Nova_ Swarm_ P4
-	Mine_Flayer_P.DisplayName: Mine_ Flayer_ P
+	Nova_Swarm_P3.DisplayName: Nova_ Swarm_ P3
+	Nova_Swarm_P2.DisplayName: Nova_ Swarm_ P2
+	Nova_Swarm_P1.DisplayName: Nova_ Swarm_ P1
 }
 
 Prefixes: {

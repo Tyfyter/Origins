@@ -1,15 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
+using Origins.Items.Materials;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
 using static Microsoft.Xna.Framework.MathHelper;
-
-using Origins.Dev;
-using Microsoft.Xna.Framework.Graphics;
-using Origins.Items.Materials;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Nova_Swarm : ModItem, ICustomWikiStat {
@@ -42,7 +39,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			.Register();
 		}
 		public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback) {
-			
+			if (velocity != default) position += Vector2.Normalize(velocity) * 54;
+			velocity = velocity.RotatedByRandom(0.15f);
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-7, -4);

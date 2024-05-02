@@ -795,7 +795,7 @@ EXPLOSIVE WEAPONS:
 (X) Firework Cannon
 (^) Mine Flayer*
 (^) Nova Cascade*
-(#3, ^2) Nova Swarm !!!
+(^) Nova Swarm
 (^) Nuclear Arm*
 (#2, ^2) Omni-directional Claymore*
 (^) Rocodile
