@@ -9,29 +9,6 @@ using System.Collections.Generic;
 
 namespace Origins.World {
 	public class GenRunners {
-		public static int minX, maxX, minY, maxY;
-		public static void ResetChangeRanges() {
-			minX = int.MaxValue;
-			maxX = int.MinValue;
-
-			minY = int.MaxValue;
-			maxY = int.MinValue;
-		}
-		public static void AddChangeToRanges(int i, int j) {
-			if (i < minX) minX = i;
-			if (i > maxX) maxX = i;
-
-			if (j < minY) minY = j;
-			if (j > maxY) maxY = j;
-		}
-		public static Rectangle GetChangeRange() {
-			return new(
-				minX,
-				minY,
-				maxX - minX,
-				maxY - minY
-			);
-		}
 		public static Point SpikeRunner(int i, int j, int type, Vector2 speed, int size, float twist = 0, bool randomtwist = false) {
 			float x = i;
 			float y = j;

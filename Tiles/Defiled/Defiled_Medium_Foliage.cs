@@ -18,9 +18,10 @@ namespace Origins.Tiles.Defiled {
 
 			TileObjectData.newTile.CopyFrom(TileObjectData.Style2x1);
 
-			TileObjectData.newTile.AnchorValidTiles = new int[]{
-				ModContent.TileType<Defiled_Grass>()
-			};
+			TileObjectData.newTile.AnchorValidTiles = [
+				ModContent.TileType<Defiled_Grass>(),
+				ModContent.TileType<Defiled_Stone>()
+			];
 
 			TileObjectData.addTile(Type);
 			//soundType = SoundID.Grass;

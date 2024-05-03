@@ -30,6 +30,7 @@ using Origins.Tiles;
 using AltLibrary.Common.Systems;
 using System.Linq;
 using Origins.Tiles.Other;
+using AltLibrary;
 
 namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands : ModBiome {
@@ -253,7 +254,7 @@ namespace Origins.World.BiomeData {
 					}
 					fissureCheckSpots.RemoveAt(ch);
 				}
-				Rectangle genRange = GenRunners.GetChangeRange();
+				Rectangle genRange = WorldBiomeGeneration.ChangeRange.GetRange();
 				ushort defiledAltar = (ushort)ModContent.TileType<Defiled_Altar>();
 				for (int i0 = genRand.Next(10, 15); i0-- > 0;) {
 					int tries = 0;
@@ -279,8 +280,18 @@ namespace Origins.World.BiomeData {
 				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
 					int tries = 18;
 					int x = genRange.X + genRand.Next(0, genRange.Width);
-					int y = genRange.Y + genRand.Next(0, genRange.Height);
+					int y = genRange.Y + genRand.Next(0, genRange.Height) - 1;
 					while (!PlaceObject(x, y, defiledLargePile)) {
+						y--;
+						if (tries-->0) break;
+					}
+				}
+				ushort defiledMediumPile = (ushort)ModContent.TileType<Defiled_Medium_Foliage>();
+				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
+					int tries = 18;
+					int x = genRange.X + genRand.Next(0, genRange.Width);
+					int y = genRange.Y + genRand.Next(0, genRange.Height) - 1;
+					while (!PlaceObject(x, y, defiledMediumPile)) {
 						y--;
 						if (tries-->0) break;
 					}
@@ -325,6 +336,7 @@ namespace Origins.World.BiomeData {
 							Tile tile0 = Main.tile[x, y];
 							tile0.HasTile = false;
 						}
+						WorldBiomeGeneration.ChangeRange.AddChangeToRange(x, y);
 					}
 				}
 			}
@@ -463,8 +475,8 @@ namespace Origins.World.BiomeData {
 				}
 				RangeFrame(X0, Y0, X1, Y1);
 				NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y0);
-				GenRunners.AddChangeToRanges(X0, Y0);
-				GenRunners.AddChangeToRanges(X1, Y1);
+				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X0, Y0);
+				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X1, Y1);
 				return (pos, speed);
 			}
 		}
@@ -805,14 +817,14 @@ namespace Origins.World.BiomeData {
 				defiledWastelandsEastEdge ??= new();
 				defiledWastelandsWestEdge.Add(evilBiomePositionWestBound);
 				defiledWastelandsEastEdge.Add(evilBiomePositionEastBound);
-				GenRunners.ResetChangeRanges();
+				WorldBiomeGeneration.ChangeRange.ResetRange();
 				int startY;
 				for (startY = (int)GenVars.worldSurfaceLow; !Main.tile[evilBiomePosition, startY].HasTile; startY++) ;
 				Point start = new Point(evilBiomePosition, startY + genRand.Next(105, 150));//range of depths
 
 				Defiled_Wastelands.Gen.StartDefiled(start.X, start.Y);
-				defiledHearts.Push(start);
-				WorldBiomeGeneration.EvilBiomeGenRanges.Add(GenRunners.GetChangeRange());
+				defiledHearts.Push(start); 
+				WorldBiomeGeneration.EvilBiomeGenRanges.Add(WorldBiomeGeneration.ChangeRange.GetRange());
 				OriginSystem.Instance.hasDefiled = true;
 			}
 

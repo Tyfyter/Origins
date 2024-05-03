@@ -231,6 +231,8 @@ namespace Origins.World.BiomeData {
 				if (Y1 > Main.maxTilesY - 1) {
 					Y1 = Main.maxTilesY - 1;
 				}
+				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X0, Y0);
+				WorldBiomeGeneration.ChangeRange.AddChangeToRange(X1, Y1);
 				for (int index = 0; index < features.Count; index++) {
 					(int x, int y, FeatureType type, bool rightSide) = features[index];
 					tile = Main.tile[x, y];
@@ -274,6 +276,48 @@ namespace Origins.World.BiomeData {
 						break;
 					}
 					tile.HasTile = true;
+				}
+				Rectangle genRange = WorldBiomeGeneration.ChangeRange.GetRange();
+				ushort rivenAltar = (ushort)ModContent.TileType<Riven_Altar>();
+				for (int i0 = genRand.Next(10, 15); i0-- > 0;) {
+					int tries = 0;
+					bool placed = false;
+					while (!placed && ++tries < 10000) {
+						int x = genRange.X + genRand.Next(0, genRange.Width);
+						int y = genRange.Y + genRand.Next(0, genRange.Height);
+						if (!Framing.GetTileSafely(x, y).HasTile) {
+							for (; !Framing.GetTileSafely(x, y).HasTile; y++) {
+								if (y > Main.maxTilesY) break;
+							}
+							y--;
+						} else {
+							while (Framing.GetTileSafely(x, y).HasTile && y > Main.worldSurface) {
+								y--;
+							}
+						}
+						Place3x2(x, y, rivenAltar);
+						placed = Framing.GetTileSafely(x, y).TileIsType(rivenAltar);
+					}
+				}
+				ushort rivenLargePile = (ushort)ModContent.TileType<Riven_Large_Foliage>();
+				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
+					int tries = 18;
+					int x = genRange.X + genRand.Next(0, genRange.Width);
+					int y = genRange.Y + genRand.Next(0, genRange.Height) - 1;
+					while (!PlaceObject(x, y, rivenLargePile)) {
+						y--;
+						if (tries-- > 0) break;
+					}
+				}
+				ushort rivenMediumPile = (ushort)ModContent.TileType<Riven_Medium_Foliage>();
+				for (int i0 = genRand.Next(100, 150); i0-- > 0;) {
+					int tries = 18;
+					int x = genRange.X + genRand.Next(0, genRange.Width);
+					int y = genRange.Y + genRand.Next(0, genRange.Height) - 1;
+					while (!PlaceObject(x, y, rivenMediumPile)) {
+						y--;
+						if (tries-- > 0) break;
+					}
 				}
 				WorldGen.RangeFrame(X0, Y0, X1, Y1);
 				NetMessage.SendTileSquare(Main.myPlayer, X0, Y0, X1 - X0, Y1 - Y1);
@@ -386,6 +430,7 @@ namespace Origins.World.BiomeData {
 									lesionPlacementSpots.Enqueue(new Point(x, y));
 								}
 							}
+							WorldBiomeGeneration.ChangeRange.AddChangeToRange(x, y);
 						}
 					}
 				}
@@ -688,13 +733,13 @@ namespace Origins.World.BiomeData {
 		}
 		public class Riven_Hive_Generation_Pass : EvilBiomeGenerationPass {
 			public override void GenerateEvil(int evilBiomePosition, int evilBiomePositionWestBound, int evilBiomePositionEastBound) {
-				GenRunners.ResetChangeRanges();
+				WorldBiomeGeneration.ChangeRange.ResetRange();
 				int y = (int)GenVars.worldSurface - 50;
 				for (; !Main.tile[evilBiomePosition, y].HasSolidTile(); y++) ;
 
 				Riven_Hive.Gen.StartHive(evilBiomePosition, y);
 
-				WorldBiomeGeneration.EvilBiomeGenRanges.Add(GenRunners.GetChangeRange());
+				WorldBiomeGeneration.EvilBiomeGenRanges.Add(WorldBiomeGeneration.ChangeRange.GetRange());
 				OriginSystem.Instance.hasRiven = true;
 			}
 
