@@ -18,7 +18,8 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 26;
 			NPC.frame.Height = 28;
 			NPC.value = 500;
-        }
+			AnimationType = NPCID.CorruptGoldfish;
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				this.GetBestiaryFlavorText("Goldfish naturally evolve into dangerous, insolveable carnivores in the Riven Hive which is only further catalyzed by the Blood Moon."),

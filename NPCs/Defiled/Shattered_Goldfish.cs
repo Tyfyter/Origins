@@ -18,6 +18,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.height = 18;
 			NPC.frame.Height = 28;
 			NPC.value = 500;
+			AnimationType = NPCID.CorruptGoldfish;
 		}
         public bool ForceSyncMana => false;
         public float Mana { get => 1; set { } }
