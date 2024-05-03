@@ -349,27 +349,17 @@ namespace Origins.NPCs {
 					return;
 				}
 			}
+			if (spawnInfo.DesertCave) {
+				if (player.InModBiome<Defiled_Wastelands>() || player.InModBiome<Riven_Hive>()) {
+					pool[NPCID.DesertDjinn] = 1f;
+					pool[NPCID.DesertLamiaDark] = 1f;
+					pool[NPCID.DesertBeast] = 1f;
+				}
+			}
 			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is DefiledTile) {
 				if (Main.invasionType <= 0) pool[0] = 0;
 
-				pool.Add(ModContent.NPCType<Defiled_Cyclops>(), Defiled_Wastelands.SpawnRates.Cyclops);
-				pool.Add(ModContent.NPCType<Chunky_Slime>(), Defiled_Wastelands.SpawnRates.ChunkSlime);
-
-				if (NPC.downedBoss1 || NPC.downedBoss2 || NPC.downedBoss3 || NPC.downedQueenBee || NPC.downedDeerclops || Main.hardMode) pool.Add(ModContent.NPCType<Ancient_Defiled_Cyclops>(), Defiled_Wastelands.SpawnRates.AncientCyclops);
-
-				if (Main.hardMode) {
-					if (TileID.Sets.Conversion.Sand[Main.tile[spawnInfo.SpawnTileX, spawnInfo.SpawnTileY].TileType]) {
-						pool.Add(ModContent.NPCType<Shattered_Mummy>(), Defiled_Wastelands.SpawnRates.Cyclops);
-					}
-					if (!spawnInfo.PlayerSafe) {
-						pool.Add(ModContent.NPCType<Defiled_Tripod>(), Defiled_Wastelands.SpawnRates.Tripod);
-					}
-				}
-
-				if (spawnInfo.SpawnTileY > Main.worldSurface) {
-					if (!spawnInfo.PlayerSafe) {
-						pool.Add(ModContent.NPCType<Defiled_Digger_Head>(), Defiled_Wastelands.SpawnRates.Worm);
-					}
+				if (spawnInfo.SpawnTileY > Main.worldSurface && !spawnInfo.DesertCave) {
 					int yPos = spawnInfo.SpawnTileY;
 					Tile tile;
 					for (int i = 0; i < Defiled_Mite.spawnCheckDistance; i++) {
@@ -389,23 +379,19 @@ namespace Origins.NPCs {
 					}
 					pool.Add(ModContent.NPCType<Defiled_Mite>(), Defiled_Wastelands.SpawnRates.Mite);
 					SkipMiteSpawn:;
-				} else {
-					pool.Add(ModContent.NPCType<Defiled_Brute>(), Defiled_Wastelands.SpawnRates.Brute);
 				}
 			}
 			if (TileLoader.GetTile(spawnInfo.SpawnTileType) is RivenTile || player.InModBiome<Riven_Hive>()) {
 				if (Main.invasionType <= 0) pool[0] = 0;
 			}
-			if (Main.hardMode && !spawnInfo.PlayerSafe) {
-				if (spawnInfo.SpawnTileY > Main.rockLayer) {
-					if (player.InModBiome<Defiled_Wastelands>()) {
-						pool.Add(ModContent.NPCType<Defiled_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
-						pool.Add(ModContent.NPCType<Enchanted_Trident>(), Defiled_Wastelands.SpawnRates.Bident);
-					}
-					if (player.InModBiome<Riven_Hive>()) {
-						pool.Add(ModContent.NPCType<Riven_Mimic>(), Riven_Hive.SpawnRates.Mimic);
-						pool.Add(ModContent.NPCType<Savage_Whip>(), Riven_Hive.SpawnRates.Whip);
-					}
+			if (Main.hardMode && !spawnInfo.PlayerSafe && spawnInfo.SpawnTileY > Main.rockLayer && !spawnInfo.DesertCave) {
+				if (player.InModBiome<Defiled_Wastelands>()) {
+					pool.Add(ModContent.NPCType<Defiled_Mimic>(), Defiled_Wastelands.SpawnRates.Mimic);
+					pool.Add(ModContent.NPCType<Enchanted_Trident>(), Defiled_Wastelands.SpawnRates.Bident);
+				}
+				if (player.InModBiome<Riven_Hive>()) {
+					pool.Add(ModContent.NPCType<Riven_Mimic>(), Riven_Hive.SpawnRates.Mimic);
+					pool.Add(ModContent.NPCType<Savage_Whip>(), Riven_Hive.SpawnRates.Whip);
 				}
 			}
 		}

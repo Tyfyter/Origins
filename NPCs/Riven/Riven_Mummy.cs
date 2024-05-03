@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Tiles.Riven;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -23,13 +24,14 @@ namespace Origins.NPCs.Riven {
 			NPC.friendly = false;
 			NPC.value = 7;
 			AnimationType = NPCID.BloodMummy;
-			SpawnModBiomes = new int[] {
+			SpawnModBiomes = [
 				ModContent.GetInstance<Riven_Hive_Desert>().Type
-			};
+			];
 			//ModContent.Request<Microsoft.Xna.Framework.Graphics.Texture2D>("Origins/UI/MapBGs/Riven_Desert").Value.Size()
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			return SpawnCondition.Mummy.Chance * Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Mummy;
+			if (spawnInfo.DesertCave) return 0;
+			return spawnInfo.SpecificTilesEnemyRate([ModContent.TileType<Silica>()], true) * Riven_Hive.SpawnRates.Mummy / 3f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

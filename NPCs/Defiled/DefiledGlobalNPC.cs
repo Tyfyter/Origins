@@ -29,6 +29,7 @@ namespace Origins.NPCs.Defiled
                 [ModContent.NPCType<Defiled_Swarmer>()] = 0.02f,
                 [ModContent.NPCType<Defiled_Tripod>()] = 0.07f,
                 [ModContent.NPCType<Shattered_Mummy>()] = 0.07f,
+                [ModContent.NPCType<Shattered_Ghoul>()] = 0.10f,
             };
 			NPCTransformations = new() {
 				{ NPCID.Bunny, ModContent.NPCType<Defiled_Mite>() },

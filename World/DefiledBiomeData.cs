@@ -86,6 +86,8 @@ namespace Origins.World.BiomeData {
 			public const float ChunkSlime = 1;
 			public const float Cyclops = 1;
 			public const float Mite = 1;
+			public const float Mummy = 1;
+			public const float Ghoul = 1;
 			public const float Brute = 0.6f;
 			public const float Flyer = 0.6f;
 			public const float Worm = 0.6f;
@@ -587,14 +589,27 @@ namespace Origins.World.BiomeData {
 	public class Defiled_Wastelands_Desert : ModBiome {
 		public override int Music => Origins.Music.Defiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-		public override string BestiaryIcon => "Origins/UI/IconEvilDefiled"; // todo: give own icon
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Desert";
+		public override string BestiaryIcon => "Origins/UI/IconEvilDefiled"; // todo: give own icon
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneDesert && player.InModBiome<Defiled_Wastelands>();
 		}
 		public override float GetWeight(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress * 0.99f;
+		}
+	}
+	public class Defiled_Wastelands_Underground_Desert : ModBiome {
+		public override int Music => Origins.Music.UndergroundDefiled;
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Desert";
+		public override string BestiaryIcon => "Origins/UI/IconEvilDefiled"; // todo: give own icon
+		public override string MapBackground => BackgroundPath;
+		public override bool IsBiomeActive(Player player) {
+			return player.ZoneRockLayerHeight && player.ZoneDesert && player.InModBiome<Defiled_Wastelands>();
+		}
+		public override float GetWeight(Player player) {
+			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress;
 		}
 	}
 	public class Defiled_Wastelands_Alt_Biome : AltBiome {
@@ -604,7 +619,7 @@ namespace Origins.World.BiomeData {
 		public override Color OuterColor => new(170, 170, 170);
 		public override IShoppingBiome Biome => ModContent.GetInstance<Defiled_Wastelands>();
 		public override void SetStaticDefaults() {
-			BiomeType = AltLibrary.BiomeType.Evil;
+			BiomeType = BiomeType.Evil;
 			//DisplayName.SetDefault(Language.GetTextValue("{$Defiled_Wastelands}"));
 			//Description.SetDefault(Language.GetTextValue("A desaturated and bleak environment that is actually a living organism growing its body."));
 			//GenPassName.SetDefault(Language.GetTextValue("{$Mods.Origins.Generic.Riven_Hive}"));

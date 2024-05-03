@@ -3,6 +3,7 @@ using Origins.Buffs;
 using Origins.Items.Accessories;
 using Origins.Items.Materials;
 using Origins.Tiles;
+using Origins.World.BiomeData;
 using System;
 using System.IO;
 using Terraria;
@@ -48,6 +49,10 @@ namespace Origins.NPCs.Defiled {
 			int factor = 20;
 			lifeRegen = factor;
 			Mana -= factor / 60f;// 2 mana for every 1 health regenerated
+		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.PlayerSafe || spawnInfo.DesertCave) return 0;
+			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Tripod;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

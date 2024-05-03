@@ -2,6 +2,7 @@
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -41,6 +42,10 @@ namespace Origins.NPCs.Defiled {
 			int factor = 37 / ((NPC.life / 40) + 2);
 			lifeRegen = factor;
 			Mana -= factor / 90f;// 3 mana for every 2 health regenerated
+		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.SpawnTileY > Main.worldSurface || spawnInfo.DesertCave) return 0;
+			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Brute;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

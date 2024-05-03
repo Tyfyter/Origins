@@ -22,6 +22,7 @@ using Origins.Walls;
 using Origins.Water;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Chat;
@@ -97,6 +98,7 @@ namespace Origins.World.BiomeData {
 			public const float Seashell = 0.6f;
 			public const float Spighter = 1;
 			public const float Mummy = 1;
+			public const float Ghoul = 1;
 			public const float Cleaver = 0.7f;
 			public const float Barnacle = 0.5f;
 			public const float Moeba = 0.8f;
@@ -632,14 +634,27 @@ namespace Origins.World.BiomeData {
 	public class Riven_Hive_Desert : ModBiome {
 		public override int Music => Origins.Music.Riven;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-		public override string BestiaryIcon => "Origins/UI/IconEvilRiven"; // todo: give own icon
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Desert";
+		public override string BestiaryIcon => "Origins/UI/IconEvilRiven"; // todo: give own icon
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneDesert && player.InModBiome<Riven_Hive>();
 		}
 		public override float GetWeight(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneRivenProgress * 0.99f;
+		}
+	}
+	public class Riven_Hive_Underground_Desert : ModBiome {
+		public override int Music => Origins.Music.UndergroundRiven;
+		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
+		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Desert";
+		public override string BestiaryIcon => "Origins/UI/IconEvilRiven"; // todo: give own icon
+		public override string MapBackground => BackgroundPath;
+		public override bool IsBiomeActive(Player player) {
+			return player.ZoneRockLayerHeight && player.ZoneDesert && player.InModBiome<Riven_Hive>();
+		}
+		public override float GetWeight(Player player) {
+			return player.GetModPlayer<OriginPlayer>().ZoneRivenProgress;
 		}
 	}
 	public class Riven_Hive_Ocean : ModBiome {
@@ -671,8 +686,8 @@ namespace Origins.World.BiomeData {
 			AddTileConversion(ModContent.TileType<Riven_Jungle_Grass>(), TileID.JungleGrass);
 			AddTileConversion(ModContent.TileType<Riven_Flesh>(), TileID.Stone);
 			AddTileConversion(ModContent.TileType<Silica>(), TileID.Sand);
-			AddTileConversion(ModContent.TileType<Defiled_Sandstone>(), TileID.Sandstone);
-			AddTileConversion(ModContent.TileType<Hardened_Defiled_Sand>(), TileID.HardenedSand);
+			AddTileConversion(ModContent.TileType<Quartz>(), TileID.Sandstone);
+			AddTileConversion(ModContent.TileType<Brittle_Quartz>(), TileID.HardenedSand);
 			AddTileConversion(ModContent.TileType<Primordial_Permafrost>(), TileID.IceBlock);
 
 			SeedType = ModContent.ItemType<Riven_Grass_Seeds>();

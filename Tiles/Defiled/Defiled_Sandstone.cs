@@ -61,11 +61,6 @@ namespace Origins.Tiles.Defiled {
             //.AddIngredient(ModContent.ItemType<Ashen_Sandstone>())
             //.AddTile(TileID.ChlorophyteExtractinator)
             //.Register();
-
-            CreateRecipe()
-            .AddIngredient(ModContent.ItemType<Defiled_Sandstone_Wall_Item>(), 4)
-            .AddTile(TileID.WorkBenches)
-            .Register();
         }
     }
 }

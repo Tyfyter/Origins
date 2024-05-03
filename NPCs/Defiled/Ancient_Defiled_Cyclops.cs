@@ -2,6 +2,7 @@
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ranged;
+using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -29,6 +30,10 @@ namespace Origins.NPCs.Defiled {
         }
 		public bool ForceSyncMana => false;
 		public float Mana { get; set; }
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.DesertCave) return 0;
+			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.AncientCyclops;
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				this.GetBestiaryFlavorText("An older design of the Defiled Cyclops before the {§Defiled} improved upon it. The unique composition of Defiled Matter is apparent as it adopts a more leathery outer-layer."),

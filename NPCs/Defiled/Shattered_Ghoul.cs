@@ -1,4 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Buffs;
+using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
 using Origins.World.BiomeData;
 using System.IO;
@@ -10,15 +12,15 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.NPCs.Defiled {
-	public class Shattered_Mummy : ModNPC, IDefiledEnemy {
+	public class Shattered_Ghoul : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 16;
+			Main.npcFrameCount[NPC.type] = 8;
 		}
 		public override void SetDefaults() {
-			NPC.CloneDefaults(NPCID.Zombie);
+			NPC.CloneDefaults(NPCID.DesertGhoulCorruption);
 			NPC.aiStyle = NPCAIStyleID.Fighter;
-			NPC.lifeMax = 180;
-			NPC.defense = 18;
+			NPC.lifeMax = 280;
+			NPC.defense = 30;
 			NPC.knockBackResist = 0.5f;
 			NPC.damage = 60;
 			NPC.width = 20;
@@ -27,17 +29,20 @@ namespace Origins.NPCs.Defiled {
 			NPC.friendly = false;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
-			NPC.value = 700;
-			AnimationType = NPCID.DarkMummy;
+			NPC.value = Item.buyPrice(silver: 6, copper: 50);
+			Banner = NPCID.DesertGhoul;
+			AnimationType = NPCID.DesertGhoulCorruption;
 			SpawnModBiomes = [
-				ModContent.GetInstance<Defiled_Wastelands_Desert>().Type
+				ModContent.GetInstance<Defiled_Wastelands_Underground_Desert>().Type
 			];
 		}
 		public int MaxMana => 100;
 		public int MaxManaDrain => 20;
 		public float Mana { get; set; }
+		public bool ForceSyncMana => true;
 		public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
 			this.DrainMana(target);
+			target.AddBuff(Rasterized_Debuff.ID, 36);
 		}
 		public void Regenerate(out int lifeRegen) {
 			int factor = Main.rand.RandomRound((180f / NPC.life) * 8);
@@ -45,21 +50,18 @@ namespace Origins.NPCs.Defiled {
 			Mana -= factor / 180f;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.DesertCave) return 0;
-			return spawnInfo.SpecificTilesEnemyRate([ModContent.TileType<Defiled_Sand>()], true) * Defiled_Wastelands.SpawnRates.Mummy / 3f;
+			if (!spawnInfo.DesertCave) return 0;
+			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Ghoul;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("The {$Defiled_Wastelands} did not struggle to rapidly break down this fiend. It clunks around the {$Defiled} sands in search of any trespassers."),
+				this.GetBestiaryFlavorText(),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 10));
-			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Megaphone, 100));
-			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Blindfold, 100));
-			npcLoot.Add(ItemDropRule.Common(ItemID.MummyMask, 75));
-			npcLoot.Add(ItemDropRule.Common(ItemID.MummyShirt, 75));
-			npcLoot.Add(ItemDropRule.Common(ItemID.MummyPants, 75));
+			npcLoot.Add(ItemDropRule.Common(ItemID.AncientCloth, 10));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 3));
+			npcLoot.Add(ItemDropRule.Common(ItemID.DarkShard, 15));
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);

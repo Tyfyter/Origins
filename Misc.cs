@@ -2520,6 +2520,13 @@ namespace Origins {
 			biome.GERunnerWallConversions.Add(WallID.RubyUnsafe, wall);
 			biome.GERunnerWallConversions.Add(WallID.DiamondUnsafe, wall);
 		}
+		public static float SpecificTilesEnemyRate(this NPCSpawnInfo spawnInfo, HashSet<int> tiles, bool hardmode = false) {
+			if (hardmode && !Main.hardMode) return 0f;
+			if (tiles.Contains(spawnInfo.SpawnTileType)) {
+				return 1f;
+			}
+			return 0f;
+		}
 	}
 	public static class ShopExtensions {
 		public static NPCShop InsertAfter<T>(this NPCShop shop, int targetItem, params Condition[] condition) where T : ModItem =>

@@ -7,6 +7,7 @@ using Terraria.GameContent.ItemDropRules;
 using Origins.Items.Materials;
 using Terraria.GameContent.Bestiary;
 using Origins.Items.Armor.Defiled;
+using Origins.World.BiomeData;
 
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Digger_Head : Defiled_Digger {
@@ -26,6 +27,10 @@ namespace Origins.NPCs.Defiled {
 			if (NPC.life > 20) {
 				NPC.lifeRegen += 24 / (NPC.life / 20);
 			}
+		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.SpawnTileY <= Main.worldSurface || spawnInfo.PlayerSafe || spawnInfo.DesertCave) return 0;
+			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Worm;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

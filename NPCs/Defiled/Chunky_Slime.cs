@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
@@ -33,6 +34,10 @@ namespace Origins.NPCs.Defiled {
 			int factor = 48 / ((NPC.life / 10) + 1);
 			lifeRegen = factor;
 			Mana -= factor / 120f;// 1 mana for every 1 health regenerated
+		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.DesertCave) return 0;
+			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.ChunkSlime;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(

@@ -30,6 +30,7 @@ namespace Origins.NPCs.Riven
                 [ModContent.NPCType<World_Cracker_Head>()] = 0.07f,
                 [ModContent.NPCType<World_Cracker_Body>()] = 0.04f,
                 [ModContent.NPCType<World_Cracker_Tail>()] = 0.09f,
+                [ModContent.NPCType<Torn_Ghoul>()] = 0.10f,
             };
 		}
 		public override void Unload() {
