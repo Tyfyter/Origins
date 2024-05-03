@@ -7,6 +7,7 @@ using Terraria.ModLoader.IO;
 
 namespace Origins.Questing {
 	public class Turbo_Reel_Quest : Quest {
+		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -46,7 +47,7 @@ namespace Origins.Questing {
 						} else if (RecipeGroup.recipeGroups[RecipeGroupID.IronBar].ContainsItem(item.type)) {
 							ironBars += item.stack;
 						}
-						if (!hasNotified && CanComplete) {
+						if (!hasNotified && HasRequiredItems) {
 							hasNotified = true;
 							HasNotification = true;
 						}
@@ -62,59 +63,33 @@ namespace Origins.Questing {
 			}
 		}
 		bool hasNotified = false;
-		bool CanComplete => ironBars >= ironBarTarget && chains >= chainTarget && adhesiveWraps >= adhesiveWrapTarget && hasWatch;
+		bool HasRequiredItems => ironBars >= ironBarTarget && chains >= chainTarget && adhesiveWraps >= adhesiveWrapTarget && hasWatch;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
-		public override bool HasStartDialogue(NPC npc) {
+		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.GoblinTinkerer && Stage == 0;
 		}
-		public override bool HasDialogue(NPC npc) {
-			if (npc.type != NPCID.GoblinTinkerer) return false; // NPCs other than the merchant won't have any dialogue related to this quest
-			switch (Stage) {
-				case 1:
-				return CanComplete;
-			}
-			return false;
+		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Inquire");
+		public override void OnAccept(NPC npc) {
+			Stage = 1;
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Start");
+			ShouldSync = true;
 		}
-		public override string GetDialogue() {
-			switch (Stage) {
-				case 1:
-				return "Complete Quest";
-
-				default:
-				if (Origins.npcChatQuestSelected) {
-					return "Accept";
-				}
-				return Language.GetTextValue(NameKey);
-			}
-		}
-		public override void OnDialogue() {
-			switch (stage) {
-				case 0: {
-					if (Origins.npcChatQuestSelected) {
-						Stage = 1;
-					} else {
-						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Start");
-						Origins.npcChatQuestSelected = true;// (npcChatQuestSelected is reset to false when the player closes the dialogue box)
-					}
-					break;
-				}
-				case 1: {
-					Item[] inventory = Main.LocalPlayer.inventory;
-					RecipeGroup ironBarGroup = RecipeGroup.recipeGroups[RecipeGroupID.IronBar];
-					ConsumeItems(
-						inventory,
-						((i) => i.type == ItemID.GoldWatch || i.type == ItemID.PlatinumWatch, 1),
-						((i) => i.type == ModContent.ItemType<Adhesive_Wrap>(), adhesiveWrapTarget),
-						((i) => i.type == ItemID.Chain, chainTarget),
-						((i) => ironBarGroup.ContainsItem(i.type), ironBarTarget)
-					);
-					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Complete");
-					Stage = 2;
-					ShouldSync = true;
-					break;
-				}
-			}
+		public override bool CanComplete(NPC npc) => npc.type == NPCID.GoblinTinkerer && HasRequiredItems;
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.ReadyToComplete").Value;
+		public override void OnComplete(NPC npc) {
+			Item[] inventory = Main.LocalPlayer.inventory;
+			RecipeGroup ironBarGroup = RecipeGroup.recipeGroups[RecipeGroupID.IronBar];
+			ConsumeItems(
+				inventory,
+				((i) => i.type == ItemID.GoldWatch || i.type == ItemID.PlatinumWatch, 1),
+				((i) => i.type == ModContent.ItemType<Adhesive_Wrap>(), adhesiveWrapTarget),
+				((i) => i.type == ItemID.Chain, chainTarget),
+				((i) => ironBarGroup.ContainsItem(i.type), ironBarTarget)
+			);
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Turbo_Reel.Complete");
+			Stage = 2;
+			ShouldSync = true;
 		}
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
@@ -149,6 +124,7 @@ namespace Origins.Questing {
 		}
 	}
 	public class Gun_Glove_Quest : Quest {
+		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -187,7 +163,7 @@ namespace Origins.Questing {
 							hasArm = true;
 							break;
 						}
-						if (!hasNotified && CanComplete) {
+						if (!hasNotified && HasRequiredItems) {
 							hasNotified = true;
 							HasNotification = true;
 						}
@@ -202,60 +178,35 @@ namespace Origins.Questing {
 			}
 		}
 		bool hasNotified = false;
-		bool CanComplete => leather >= leatherTarget && hasPistol && hasArm;
+		bool HasRequiredItems => leather >= leatherTarget && hasPistol && hasArm;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
-		public override bool HasStartDialogue(NPC npc) {
+		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.GoblinTinkerer && Stage == 0 && ModContent.GetInstance<Turbo_Reel_Quest>().Completed;
 		}
-		public override bool HasDialogue(NPC npc) {
-			if (npc.type != NPCID.GoblinTinkerer) return false; // NPCs other than the merchant won't have any dialogue related to this quest
-			switch (Stage) {
-				case 1:
-				return CanComplete;
-			}
-			return false;
-		}
-		public override string GetDialogue() {
-			switch (Stage) {
-				case 1:
-				return "Complete Quest";
-
-				default:
-				if (Origins.npcChatQuestSelected) {
-					return "Accept";
-				}
-				return Language.GetTextValue(NameKey);
-			}
-		}
-		public override void OnDialogue() {
-			switch (stage) {
-				case 0: {
-					if (Origins.npcChatQuestSelected) {
-						Stage = 1;
-					} else {
-						Main.npcChatText = Language.GetTextValue(
-							"Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Start",
+		public override string GetInquireText(NPC npc) => Language.GetTextValue(
+							"Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Inquire",
 							NPC.GetFirstNPCNameOrNull(NPCID.ArmsDealer) ?? Language.GetTextValue("Mods.Origins.Generic.Arms_Dealer")
 						);
-						Origins.npcChatQuestSelected = true;// (npcChatQuestSelected is reset to false when the player closes the dialogue box)
-					}
-					break;
-				}
-				case 1: {
-					Item[] inventory = Main.LocalPlayer.inventory;
-					RecipeGroup ironBarGroup = RecipeGroup.recipeGroups[RecipeGroupID.IronBar];
-					ConsumeItems(
-						inventory,
-						((i) => i.type == ItemID.Leather, leatherTarget),
-						((i) => i.type == ItemID.FlintlockPistol, 1),
-						((i) => i.type == ItemID.ZombieArm, 1)
-					);
-					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Complete");
-					Stage = 2;
-					break;
-				}
-			}
+		public override void OnAccept(NPC npc) {
+			Stage = 1;
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Start");
+			ShouldSync = true;
+		}
+		public override bool CanComplete(NPC npc) => npc.type == NPCID.GoblinTinkerer && HasRequiredItems;
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.ReadyToComplete").Value;
+		public override void OnComplete(NPC npc) {
+			Item[] inventory = Main.LocalPlayer.inventory;
+			RecipeGroup ironBarGroup = RecipeGroup.recipeGroups[RecipeGroupID.IronBar];
+			ConsumeItems(
+				inventory,
+				((i) => i.type == ItemID.Leather, leatherTarget),
+				((i) => i.type == ItemID.FlintlockPistol, 1),
+				((i) => i.type == ItemID.ZombieArm, 1)
+			);
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Gun_Glove.Complete");
+			Stage = 2;
+			ShouldSync = true;
 		}
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
@@ -285,6 +236,7 @@ namespace Origins.Questing {
 		}
 	}
 	public class Rocket_Boosted_Minecart_Quest : Quest {
+		public override bool SaveToWorld => true;
 		//backing field for Stage property
 		int stage = 0;
 
@@ -324,7 +276,7 @@ namespace Origins.Questing {
 						} else if (item.type == ItemID.AdamantiteBar || item.type == ItemID.TitaniumBar) {
 							adamantiteBars += item.stack;
 						}
-						if (!hasNotified && CanComplete) {
+						if (!hasNotified && HasRequiredItems) {
 							hasNotified = true;
 							HasNotification = true;
 						}
@@ -340,61 +292,35 @@ namespace Origins.Questing {
 			}
 		}
 		bool hasNotified = false;
-		bool CanComplete => rockets >= rocketTarget && adamantiteBars >= adamantiteBarTarget && adhesiveWraps >= adhesiveWrapTarget && hasMinecart;
+		bool HasRequiredItems => rockets >= rocketTarget && adamantiteBars >= adamantiteBarTarget && adhesiveWraps >= adhesiveWrapTarget && hasMinecart;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
-		public override bool HasStartDialogue(NPC npc) {
+		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.GoblinTinkerer && Stage == 0 && Main.hardMode && ModContent.GetInstance<Gun_Glove_Quest>().Completed;
 		}
-		public override bool HasDialogue(NPC npc) {
-			if (npc.type != NPCID.GoblinTinkerer) return false; // NPCs other than the merchant won't have any dialogue related to this quest
-			switch (Stage) {
-				case 1:
-				return CanComplete;
-			}
-			return false;
-		}
-		public override string GetDialogue() {
-			switch (Stage) {
-				case 1:
-				return "Complete Quest";
-
-				default:
-				if (Origins.npcChatQuestSelected) {
-					return "Accept";
-				}
-				return Language.GetTextValue(NameKey);
-			}
-		}
-		public override void OnDialogue() {
-			switch (stage) {
-				case 0: {
-					if (Origins.npcChatQuestSelected) {
-						Stage = 1;
-					} else {
-						Main.npcChatText = Language.GetTextValue(
-							"Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Start",
+		public override string GetInquireText(NPC npc) => Language.GetTextValue(
+							"Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Inquire",
 							NPC.GetFirstNPCNameOrNull(NPCID.Mechanic) ?? Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Generic.Mechanic")
 						);
-						Origins.npcChatQuestSelected = true;// (npcChatQuestSelected is reset to false when the player closes the dialogue box)
-					}
-					break;
-				}
-				case 1: {
-					Item[] inventory = Main.LocalPlayer.inventory;
-					ConsumeItems(
-						inventory,
-						((i) => i.type == ItemID.Minecart, 1),
-						((i) => i.type == ItemID.RocketI, rocketTarget),
-						((i) => i.type == ModContent.ItemType<Adhesive_Wrap>(), adhesiveWrapTarget),
-						((i) => i.type == ItemID.AdamantiteBar || i.type == ItemID.TitaniumBar, adamantiteBarTarget)
-					);
-					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Complete");
-					Stage = 2;
-					ShouldSync = true;
-					break;
-				}
-			}
+		public override void OnAccept(NPC npc) {
+			Stage = 1;
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Start");
+			ShouldSync = true;
+		}
+		public override bool CanComplete(NPC npc) => npc.type == NPCID.GoblinTinkerer && HasRequiredItems;
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.ReadyToComplete").Value;
+		public override void OnComplete(NPC npc) {
+			Item[] inventory = Main.LocalPlayer.inventory;
+			ConsumeItems(
+				inventory,
+				((i) => i.type == ItemID.Minecart, 1),
+				((i) => i.type == ItemID.RocketI, rocketTarget),
+				((i) => i.type == ModContent.ItemType<Adhesive_Wrap>(), adhesiveWrapTarget),
+				((i) => i.type == ItemID.AdamantiteBar || i.type == ItemID.TitaniumBar, adamantiteBarTarget)
+			);
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Goblin_Tinkerer.Rocket_Boosted_Minecart.Complete");
+			Stage = 2;
+			ShouldSync = true;
 		}
 		public override string GetJournalPage() {
 			return Language.GetTextValue(

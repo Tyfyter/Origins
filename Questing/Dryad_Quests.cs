@@ -14,61 +14,25 @@ namespace Origins.Questing {
 		public override bool SaveToWorld => true;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
-		public override bool HasStartDialogue(NPC npc) {
+		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.Dryad && !ShowInJournal();
 		}
-		public override bool HasDialogue(NPC npc) {
-			if (npc.type != NPCID.Dryad) return false; // NPCs other than the dryad won't have any dialogue related to this quest
-			switch (Stage) {
-				case 1:
-				return !LocalPlayerStarted;
-				case 2: // completed objective
-				return true;
-			}
-			return false;
+		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Dryad.Cleansing_Station.Inquire", Main.LocalPlayer.name, WorldBiomeManager.GetWorldEvil(true).DisplayName);
+		public override void OnAccept(NPC npc) {
+			Stage = 1;// - set stage to 1 (kill harpies)
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Dryad.Cleansing_Station.Start");
+			LocalPlayerStarted = true;
 		}
-		public override string GetDialogue() {
-			switch (Stage) {
-				case 2:
-				return "Complete Quest";
-
-				default:
-				if (Origins.npcChatQuestSelected) {
-					return "Accept";
-				}
-				return Language.GetTextValue(NameKey);
-			}
+		public override bool CanComplete(NPC npc) {
+			return npc.type == NPCID.Dryad && Stage == 2;
 		}
-		//when the player clicks the dialogue button - 
-		public override void OnDialogue() {
-			// - if they're on -
-			switch (Stage) {
-				case 0: {// - stage 0 (not started) - 
-					if (Origins.npcChatQuestSelected) {// - if the player has already inquired about a quest -
-						Stage = 1;// - set stage to 1 (kill harpies)
-						LocalPlayerStarted = true;
-					} else {// - otherwise -
-							// - set npc chat text to "start" text and mark that the player has inquired about a quest
-						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Dryad.Cleansing_Station.Start", Main.LocalPlayer.name, WorldBiomeManager.GetWorldEvil(true).DisplayName);
-						Origins.npcChatQuestSelected = true;// (npcChatQuestSelected is reset to false when the player closes the dialogue box)
-					}
-					break;
-				}
-				case 1: {
-					if (!LocalPlayerStarted) goto case 0;
-					break;
-				}
-				case 2: {// - stage 2 (killed enough harpies) - 
-						 // - set npc chat text to "complete" text and quest stage to 3 (completed)
-
-					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Dryad.Cleansing_Station.Complete");
-					Stage = 3;
-					ShouldSync = true;
-					break;
-				}
-			}
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Dryad.Cleansing_Station.ReadyToComplete").Value;
+		public override void OnComplete(NPC npc) {
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Dryad.Cleansing_Station.Complete");
+			Stage = 3;
+			ShouldSync = true;
 		}
-		public override bool ShowInJournal() => base.ShowInJournal() && LocalPlayerStarted;
+		public override bool ShowInJournal() => Completed || (base.ShowInJournal() && LocalPlayerStarted);
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
 				"Mods.Origins.Quests.Dryad.Cleansing_Station.Journal", //translation key

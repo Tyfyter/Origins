@@ -224,7 +224,7 @@ namespace Origins {
 				}
 				return fail;
 			};
-			Terraria.On_Main.DrawNPCChatButtons += Main_DrawNPCChatButtons;
+			//Terraria.On_Main.DrawNPCChatButtons += Main_DrawNPCChatButtons;
 			Terraria.On_Player.SetTalkNPC += Player_SetTalkNPC;
 			Terraria.On_Item.CanFillEmptyAmmoSlot += (orig, self) => {
 				if (self.ammo == ItemID.Grenade || self.ammo == ItemID.Bomb || self.ammo == ItemID.Dynamite) {
@@ -840,7 +840,6 @@ namespace Origins {
 		private int Player_RollLuck(Terraria.On_Player.orig_RollLuck orig, Player self, int range) {
 			const int lottery_ticket_min_denominator = 50;
 			OriginPlayer originPlayer = self.GetModPlayer<OriginPlayer>();
-			originPlayer.Mod.Logger.Info(originPlayer.lotteryTicketItem);
 			if (!rollingLotteryTicket && range >= lottery_ticket_min_denominator * currentChanceNumerator && originPlayer.lotteryTicketItem is not null) {
 				rollingLotteryTicket = true;
 				if (self.RollLuck(2 + range * currentChanceNumerator / lottery_ticket_min_denominator) == 0) {
@@ -883,12 +882,8 @@ namespace Origins {
 		}
 		#region quests
 		private void Player_SetTalkNPC(Terraria.On_Player.orig_SetTalkNPC orig, Player self, int npcIndex, bool fromNet) {
+			Questing.Questing.ExitChat();
 			orig(self, npcIndex, fromNet);
-			if (npcIndex == -1) {
-				npcChatQuestSelected = false;
-				npcChatQuestListSelected = false;
-				npcChatQuestIndexSelected = -1;
-			}
 		}
 
 		static bool npcChatQuestsFocus = false;
@@ -897,188 +892,6 @@ namespace Origins {
 		static bool npcChatQuestListBackFocus = false;
 		static int npcChatQuestIndexSelected = -1;
 		public static bool npcChatQuestSelected = false;
-		private void Main_DrawNPCChatButtons(Terraria.On_Main.orig_DrawNPCChatButtons orig, int superColor, Color chatColor, int numLines, string focusText, string focusText3) {
-			Player player = Main.LocalPlayer;
-			if (player.talkNPC < 0) {
-				orig(superColor, chatColor, numLines, focusText, focusText3);
-				return;
-			}
-			Quest quest = null;
-			List<Quest> startableQuests = new();
-			NPC talkNPC = Main.npc[player.talkNPC];
-			foreach (var currentQuest in Quest_Registry.Quests) {
-				if (currentQuest.HasDialogue(talkNPC)) {
-					quest = currentQuest;
-					break;
-				} else if (currentQuest.HasStartDialogue(talkNPC)) {
-					startableQuests.Add(currentQuest);
-				}
-			}
-			if (npcChatQuestListSelected) {
-				DrawQuestList(startableQuests, 130 + numLines * 30, superColor);
-				return;
-			}
-			orig(superColor, chatColor, numLines, focusText, focusText3);
-
-			bool hasQuest = quest is not null;
-			if (hasQuest || startableQuests.Any()) {
-				DynamicSpriteFont font = FontAssets.MouseText.Value;
-				float x = 180 + (Main.screenWidth - 800) / 2;
-				x += ChatManager.GetStringSize(font, focusText, new Vector2(0.9f)).X + 30f;
-				x += ChatManager.GetStringSize(font, Lang.inter[52].Value, new Vector2(0.9f)).X + 30f;
-				if (!string.IsNullOrWhiteSpace(focusText3)) x += ChatManager.GetStringSize(font, focusText3, new Vector2(0.9f)).X + 30f;
-				x += ChatManager.GetStringSize(font, Language.GetTextValue("UI.NPCCheckHappiness"), new Vector2(0.9f)).X + 30f;
-				Vector2 position = new Vector2(x, 130 + numLines * 30);
-
-				string textValue = hasQuest ? quest.GetDialogue() : Language.GetTextValue("Mods.Origins.Interface.Quests");
-				Vector2 scale = new Vector2(0.9f);
-				Vector2 stringSize = ChatManager.GetStringSize(font, textValue, scale);
-				Color baseColor = new Color(superColor, (int)(superColor / 1.1), superColor / 2, superColor);
-
-				if (Main.MouseScreen.Between(position, position + stringSize * scale) && !PlayerInput.IgnoreMouseInterface) {
-					player.mouseInterface = true;
-					player.releaseUseItem = false;
-					scale *= 1.2f;
-					if (!npcChatQuestsFocus) {
-						SoundEngine.PlaySound(SoundID.MenuTick);
-					}
-					npcChatQuestsFocus = true;
-				} else {
-					if (npcChatQuestsFocus) {
-						SoundEngine.PlaySound(SoundID.MenuTick);
-					}
-					npcChatQuestsFocus = false;
-				}
-				ChatManager.DrawColorCodedStringWithShadow(
-					Main.spriteBatch,
-					font,
-					textValue,
-					position + stringSize * 0.5f,
-					baseColor,
-					(!npcChatQuestsFocus) ? Color.Black : Color.Brown,
-					0f,
-					stringSize * 0.5f,
-					scale
-				);
-				UILinkPointNavigator.SetPosition(2503, position + stringSize * 0.5f);
-				UILinkPointNavigator.Shortcuts.NPCCHAT_ButtonsRight2 = true;
-				if (npcChatQuestsFocus && !PlayerInput.IgnoreMouseInterface && Main.mouseLeft && Main.mouseLeftRelease) {
-					Main.mouseLeftRelease = false;
-					player.releaseUseItem = false;
-					player.mouseInterface = true;
-					SoundEngine.PlaySound(SoundID.MenuTick);
-					if (hasQuest) {
-						quest.OnDialogue();
-					} else {
-						npcChatQuestListSelected = true;
-						Main.npcChatText = Language.GetTextValue("Mods.Origins.Interface.Quests");// go back to quest list dialogue
-					}
-				}
-			}
-		}
-		void DrawQuestList(List<Quest> quests, float y, int superColor) {
-			Player player = Main.LocalPlayer;
-			int maxWidth = TextureAssets.ChatBack.Width();
-			DynamicSpriteFont font = FontAssets.MouseText.Value;
-			float x = 180 + (Main.screenWidth - 800) / 2;
-			float startX = x;
-			int index = 0;
-			int hoveredIndex = -1;
-			bool selectedSpecificQuest = npcChatQuestIndexSelected != -1;
-
-			string backTextValue = Language.GetTextValue("UI.Back");
-			Vector2 backScale = new Vector2(0.9f);
-			Vector2 backSize = ChatManager.GetStringSize(font, backTextValue, backScale);
-			maxWidth -= (int)(backSize.X + 30);
-
-			foreach (Quest quest in quests) {
-				if (selectedSpecificQuest && index != npcChatQuestIndexSelected) continue;
-				Vector2 position = new Vector2(x, y);
-				string textValue = quest.GetDialogue();
-				Vector2 scale = new Vector2(0.9f);
-				Vector2 stringSize = ChatManager.GetStringSize(font, textValue, scale);
-				if (x + stringSize.X - startX > maxWidth) break;
-				Color baseColor = new Color(superColor, (int)(superColor / 1.1), superColor / 2, superColor);
-
-				if (Main.MouseScreen.Between(position, position + stringSize * scale) && !PlayerInput.IgnoreMouseInterface) {
-					player.mouseInterface = true;
-					player.releaseUseItem = false;
-					scale *= 1.2f;
-					hoveredIndex = index;
-				}
-				ChatManager.DrawColorCodedStringWithShadow(
-					Main.spriteBatch,
-					font,
-					textValue,
-					position + stringSize * 0.5f,
-					baseColor,
-					(hoveredIndex != index) ? Color.Black : Color.Brown,
-					0f,
-					stringSize * 0.5f,
-					scale
-				);
-				//UILinkPointNavigator.SetPosition(2503, position + stringSize * 0.5f);
-				//UILinkPointNavigator.Shortcuts.NPCCHAT_ButtonsRight2 = true;
-				if (hoveredIndex == index && !PlayerInput.IgnoreMouseInterface && Main.mouseLeft && Main.mouseLeftRelease) {
-					Main.mouseLeftRelease = false;
-					player.releaseUseItem = false;
-					player.mouseInterface = true;
-					SoundEngine.PlaySound(SoundID.MenuTick);
-					quest.OnDialogue();
-					npcChatQuestIndexSelected = index;
-				}
-				x += ChatManager.GetStringSize(font, textValue, new Vector2(0.9f)).X + 30f;
-			}
-
-			Vector2 backPosition = new Vector2(x, y);
-			Color backBaseColor = new Color(superColor, (int)(superColor / 1.1), superColor / 2, superColor);
-
-			if (Main.MouseScreen.Between(backPosition, backPosition + backSize * backScale) && !PlayerInput.IgnoreMouseInterface) {
-				player.mouseInterface = true;
-				player.releaseUseItem = false;
-				backScale *= 1.2f;
-				if (!npcChatQuestListBackFocus) {
-					SoundEngine.PlaySound(SoundID.MenuTick);
-				}
-				npcChatQuestListBackFocus = true;
-			} else {
-				if (npcChatQuestListBackFocus) {
-					SoundEngine.PlaySound(SoundID.MenuTick);
-				}
-				npcChatQuestListBackFocus = false;
-			}
-			ChatManager.DrawColorCodedStringWithShadow(
-				Main.spriteBatch,
-				font,
-				backTextValue,
-				backPosition + backSize * 0.5f,
-				backBaseColor,
-				(!npcChatQuestListBackFocus) ? Color.Black : Color.Brown,
-				0f,
-				backSize * 0.5f,
-				backScale
-			);
-			//UILinkPointNavigator.SetPosition(2503, position + stringSize * 0.5f);
-			//UILinkPointNavigator.Shortcuts.NPCCHAT_ButtonsRight2 = true;
-			if (npcChatQuestListBackFocus && !PlayerInput.IgnoreMouseInterface && Main.mouseLeft && Main.mouseLeftRelease) {
-				Main.mouseLeftRelease = false;
-				player.releaseUseItem = false;
-				player.mouseInterface = true;
-				SoundEngine.PlaySound(SoundID.MenuTick);
-				if (selectedSpecificQuest) {
-					npcChatQuestIndexSelected = -1;
-					npcChatQuestSelected = false;
-					Main.npcChatText = "beans, idk I just need to put something here or the menu will close";// go back to quest list dialogue
-				} else {
-					npcChatQuestListSelected = false;
-					Main.npcChatText = Main.npc[player.talkNPC].GetChat();// go back to normal dialogue
-				}
-			}
-			if (hoveredIndex != npcChatQuestListFocus) {
-				SoundEngine.PlaySound(SoundID.MenuTick);
-				npcChatQuestListFocus = hoveredIndex;
-			}
-		}
 		#endregion quests
 		#region plants
 		private void WorldGen_PlantAlchIL(ILContext il) {

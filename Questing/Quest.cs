@@ -1,5 +1,7 @@
-﻿using System;
+﻿using BetterDialogue.UI;
+using System;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -14,6 +16,7 @@ namespace Origins.Questing {
 		public virtual bool SaveToWorld => false;
 		public virtual bool Started => false;
 		public virtual bool Completed => false;
+		public virtual string CompleteButtonText => Language.GetOrRegister("Mods.Origins.Interface.CompleteQuestGeneric").Value;
 		public string NameKey { get; protected set; }
 		public string NameValue => Language.GetOrRegister(NameKey).Value;
 		public virtual int Stage { get; set; }
@@ -30,18 +33,13 @@ namespace Origins.Questing {
 				}
 			}
 		}
-		public virtual bool HasStartDialogue(NPC npc) {
-			return false;
-		}
-		public virtual bool HasDialogue(NPC npc) {
-			return false;
-		}
-		public virtual string GetDialogue() {
-			return "";
-		}
-		public virtual void OnDialogue() {
 
-		}
+		public abstract string GetInquireText(NPC npc);
+		public abstract bool CanStart(NPC npc);
+		public virtual bool CanComplete(NPC npc) => false;
+		public abstract string ReadyToCompleteText(NPC npc);
+		public abstract void OnComplete(NPC npc);
+		public abstract void OnAccept(NPC npc);
 		public virtual bool ShowInJournal() {
 			return Started;
 		}
@@ -68,6 +66,9 @@ namespace Origins.Questing {
 			ModTypeLookup<Quest>.Register(this);
 			NameKey ??= $"Mods.{FullName}";
 			Quest_Registry.RegisterQuest(this);
+			Mod.AddContent(new QuestInquireChatButton(this));
+			Mod.AddContent(new QuestAcceptChatButton(this));
+			Mod.AddContent(new QuestCompleteChatButton(this));
 		}
 		public int Type { get; internal set; }
 		public int NetID { get; internal set; } = -1;
@@ -114,5 +115,23 @@ namespace Origins.Questing {
 				() => ModContent.GetInstance<T>().Completed
 			);
 		}
+	}
+	public static class Questing {
+		public static bool questListSelected = false;
+		public static Quest selectedQuest = null;
+		public static void ExitChat() {
+			questListSelected = false;
+			selectedQuest = null;
+		}
+		public static void EnterQuestList(NPC npc) {
+			if (CanEnterQuestList(npc)) {
+				questListSelected = true;
+				Main.npcChatText = Language.GetOrRegister($"Mods.Origins.Interface.Quests.{npc.ModNPC?.Name ?? NPCID.Search.GetName(npc.type)}").Value;
+			} else {
+				questListSelected = false;
+				Main.npcChatText = npc.GetChat();
+			}
+		}
+		public static bool CanEnterQuestList(NPC npc) => Quest_Registry.Quests.Any(q => q.CanStart(npc) || (!q.Completed && q.CanComplete(npc)));
 	}
 }

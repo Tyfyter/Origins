@@ -404,6 +404,8 @@ TownNPCMood: {
 Interface: {
 	// Journal: Journal
 	// Quests: Quests
+	// AcceptQuest: Accept
+	// CompleteQuestGeneric: Complete Quest
 }
 
 DeathMessage: {

@@ -29,119 +29,47 @@ namespace Origins.Questing {
 		public override bool SaveToWorld => true;
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 2;
-		public override bool HasStartDialogue(NPC npc) {
+		public override bool CanStart(NPC npc) {
 			return npc.type == NPCID.ArmsDealer && !ShowInJournal();
 		}
-		public override bool HasDialogue(NPC npc) {
-			if (npc.type != NPCID.ArmsDealer) return false; // NPCs other than the merchant won't have any dialogue related to this quest
-			switch (Stage) {
-				case 1:
-				static bool IsShardcannon(Item item) {
-					return item.type == Shardcannon.ID && item.prefix == Imperfect_Prefix.ID && item.stack > 0;
-				}
-				static bool HasShardcannon(Item[] inventory) {
-					for (int i = 0; i < inventory.Length; i++) {
-						Item item = inventory[i];
-						if (IsShardcannon(item)) {
-							return true;
-						}
-					}
-					return false;
-				}
-				if (HasShardcannon(Main.LocalPlayer.inventory)) {
-					return false;
-				}
-				if (IsShardcannon(Main.LocalPlayer.inventory[Main.InventorySlotsTotal]) || IsShardcannon(Main.LocalPlayer.trashItem)) return false;
-				if (HasShardcannon(Main.LocalPlayer.bank.item)) {
-					return false;
-				}
-				if (HasShardcannon(Main.LocalPlayer.bank2.item)) {
-					return false;
-				}
-				if (HasShardcannon(Main.LocalPlayer.bank3.item)) {
-					return false;
-				}
-				if (HasShardcannon(Main.LocalPlayer.bank4.item)) {
-					return false;
-				}
-				return true;
-				case 2: // killed enough enemies
-				return true;
-			}
-			return false;
+		public override void OnAccept(NPC npc) {
+			if (Stage < 1) Stage = 1;// - set stage to 1 (kill harpies)
+			LocalPlayerStarted = true;
+			GiveGun();
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.Start");
 		}
-		public override string GetDialogue() {
-			switch (Stage) {
-				case 1:
-				if (!LocalPlayerStarted) goto default;
-				return "Lost Gun";
-
-				case 2:
-				return "Complete Quest";
-
-				default:
-				if (Origins.npcChatQuestSelected) {
-					return "Accept";
-				}
-				return Language.GetTextValue(NameKey);
-			}
-		}
-		//when the player clicks the dialogue button - 
-		public override void OnDialogue() {
-			static void GiveGun() {
-				int index = Item.NewItem(
-					Main.LocalPlayer.GetSource_GiftOrReward(),
-					Main.LocalPlayer.position,
-					Main.LocalPlayer.Size,
-					ModContent.ItemType<Shardcannon>(),
-					1,
-					prefixGiven: ModContent.PrefixType<Imperfect_Prefix>()
-				);
-				if (Main.netMode == NetmodeID.MultiplayerClient) {
-					NetMessage.SendData(MessageID.SyncItem, -1, -1, null, index, 1f);
-				}
-			}
-			// - if they're on -
-			switch (stage) {
-				case 0: {// - stage 0 (not started) - 
-					if (Origins.npcChatQuestSelected) {// - if the player has already inquired about a quest -
-						Stage = 1;// - set stage to 1 (kill harpies)
-						LocalPlayerStarted = true;
-						GiveGun();
-					} else {// - otherwise -
-							// - set npc chat text to "start" text and mark that the player has inquired about a quest
-						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.Start", Main.LocalPlayer.Get2ndPersonReference("casual"));
-						Origins.npcChatQuestSelected = true;// (npcChatQuestSelected is reset to false when the player closes the dialogue box)
-					}
-					break;
-				}
-				case 1: {
-					if (!LocalPlayerStarted) goto case 0;
-					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.WhereGun");
-					GiveGun();
-					break;
-				}
-				case 2: {// - stage 2 (killed enough harpies) - 
-						 // - set npc chat text to "complete" text and quest stage to 3 (completed)
-
-					for (int i = 0; i < Main.InventoryItemSlotsCount; i++) {
-						Item item = Main.LocalPlayer.inventory[i];
-						if (item.type == ModContent.ItemType<Shardcannon>() && item.prefix == ModContent.PrefixType<Imperfect_Prefix>()) {
-							item.TurnToAir();
-							Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.Complete");
-							Stage = 3;
-							ShouldSync = true;
-							return;
-						}
-					}
-					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.WhereGun");
+		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.Inquire", Main.LocalPlayer.Get2ndPersonReference("casual"));
+		public override bool CanComplete(NPC npc) => npc.type == NPCID.ArmsDealer && Stage == 2;
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Arms_Dealer.Shardcannon.ReadyToComplete").Value;
+		public override void OnComplete(NPC npc) {
+			for (int i = 0; i < Main.InventoryItemSlotsCount; i++) {
+				Item item = Main.LocalPlayer.inventory[i];
+				if (item.type == ModContent.ItemType<Shardcannon>() && item.prefix == ModContent.PrefixType<Imperfect_Prefix>()) {
+					item.TurnToAir();
+					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.Complete");
 					Stage = 3;
 					ShouldSync = true;
-					break;
+					return;
 				}
 			}
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.WhereGun");
+			Stage = 3;
+			ShouldSync = true;
 		}
-		public override bool ShowInJournal() => base.ShowInJournal() && LocalPlayerStarted;
+		public static void GiveGun() {
+			int index = Item.NewItem(
+				Main.LocalPlayer.GetSource_GiftOrReward(),
+				Main.LocalPlayer.position,
+				Main.LocalPlayer.Size,
+				ModContent.ItemType<Shardcannon>(),
+				1,
+				prefixGiven: ModContent.PrefixType<Imperfect_Prefix>()
+			);
+			if (Main.netMode == NetmodeID.MultiplayerClient) {
+				NetMessage.SendData(MessageID.SyncItem, -1, -1, null, index, 1f);
+			}
+		}
+		public override bool ShowInJournal() => Completed || (base.ShowInJournal() && LocalPlayerStarted);
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
 				"Mods.Origins.Quests.Arms_Dealer.Shardcannon.Journal", //translation key
@@ -171,6 +99,48 @@ namespace Origins.Questing {
 		public override void ReceiveSync(BinaryReader reader) {
 			Stage = reader.ReadInt32();
 			progress = reader.ReadInt32();
+		}
+	}
+	[Autoload(false)]
+	file class Lost_Shardcannon_Chat_Button(Quest quest) : QuestChatButton(quest) {
+		public override string Name => $"{base.Name}_{Quest.Name}";
+		public override double Priority => 101;
+		public override void OnClick(NPC npc, Player player) {
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Arms_Dealer.Shardcannon.WhereGun");
+			Shardcannon_Quest.GiveGun();
+		}
+		public override string Text(NPC npc, Player player) => "missingno";
+		public override bool IsActive(NPC npc, Player player) {
+			if (Questing.questListSelected || npc.type != NPCID.ArmsDealer) return false;
+			static bool IsShardcannon(Item item) {
+				return item.type == Shardcannon.ID && item.prefix == Imperfect_Prefix.ID && item.stack > 0;
+			}
+			static bool HasShardcannon(Item[] inventory) {
+				for (int i = 0; i < inventory.Length; i++) {
+					Item item = inventory[i];
+					if (IsShardcannon(item)) {
+						return true;
+					}
+				}
+				return false;
+			}
+			if (HasShardcannon(Main.LocalPlayer.inventory)) {
+				return false;
+			}
+			if (IsShardcannon(Main.LocalPlayer.inventory[Main.InventorySlotsTotal]) || IsShardcannon(Main.LocalPlayer.trashItem)) return false;
+			if (HasShardcannon(Main.LocalPlayer.bank.item)) {
+				return false;
+			}
+			if (HasShardcannon(Main.LocalPlayer.bank2.item)) {
+				return false;
+			}
+			if (HasShardcannon(Main.LocalPlayer.bank3.item)) {
+				return false;
+			}
+			if (HasShardcannon(Main.LocalPlayer.bank4.item)) {
+				return false;
+			}
+			return Quest.Stage == 1;
 		}
 	}
 }

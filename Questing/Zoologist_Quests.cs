@@ -39,10 +39,14 @@ namespace Origins.Questing {
 		}
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
-		public override bool HasStartDialogue(NPC npc) {
-			return npc.type == NPCID.BestiaryGirl && Stage == 0;
+		public override bool CanStart(NPC npc) => npc.type == NPCID.BestiaryGirl && Stage == 0;
+		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Zoologist.Discount_1_Quest.Inquire");
+		public override void OnAccept(NPC npc) {
+			Stage = 1;
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Discount_1_Quest.Start");
 		}
-		public override bool HasDialogue(NPC npc) {
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Zoologist.Discount_1_Quest.ReadyToComplete").Value;
+		public override bool CanComplete(NPC npc) {
 			if (npc.type != NPCID.BestiaryGirl) return false; // NPCs other than the merchant won't have any dialogue related to this quest
 			switch (Stage) {
 				case 1:
@@ -50,37 +54,11 @@ namespace Origins.Questing {
 			}
 			return false;
 		}
-		public override string GetDialogue() {
-			switch (Stage) {
-				case 1:
-				return "Complete Quest";
-
-				default:
-				if (Origins.npcChatQuestSelected) {
-					return "Accept";
-				}
-				return Language.GetTextValue(NameKey);
-			}
-		}
-		public override void OnDialogue() {
-			switch (stage) {
-				case 0: {
-					if (Origins.npcChatQuestSelected) {
-						Stage = 1;
-					} else {
-						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Discount_1_Quest.Start");
-						Origins.npcChatQuestSelected = true;// (npcChatQuestSelected is reset to false when the player closes the dialogue box)
-					}
-					break;
-				}
-				case 1: {
-					ConsumeItems(Main.LocalPlayer.inventory, ((i) => i.makeNPC > 0, wormTarget));
-					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Discount_1_Quest.Complete");
-					Stage = 2;
-					ShouldSync = true;
-					break;
-				}
-			}
+		public override void OnComplete(NPC npc) {
+			ConsumeItems(Main.LocalPlayer.inventory, ((i) => i.makeNPC > 0, wormTarget));
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Discount_1_Quest.Complete");
+			Stage = 2;
+			ShouldSync = true;
 		}
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
@@ -138,50 +116,28 @@ namespace Origins.Questing {
 		}
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
-		public override bool HasStartDialogue(NPC npc) {
-			return npc.type == NPCID.BestiaryGirl && Stage == 0 && ModContent.GetInstance<Discount_1_Quest>().Completed;
+		public override bool CanStart(NPC npc) => npc.type == NPCID.BestiaryGirl && Stage == 0 && ModContent.GetInstance<Discount_1_Quest>().Completed;
+		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Zoologist.Discount_2_Quest.Inquire");
+		public override void OnAccept(NPC npc) {
+			Stage = 1;
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Discount_2_Quest.Start");
 		}
-		public override bool HasDialogue(NPC npc) {
+		public override bool CanComplete(NPC npc) {
 			if (npc.type != NPCID.BestiaryGirl) return false; // NPCs other than the merchant won't have any dialogue related to this quest
 			switch (Stage) {
 				case 1:
-				return hasSquirrel = true;
+				return hasSquirrel;
 			}
 			return false;
 		}
-		public override string GetDialogue() {
-			switch (Stage) {
-				case 1:
-				return "Complete Quest";
-
-				default:
-				if (Origins.npcChatQuestSelected) {
-					return "Accept";
-				}
-				return Language.GetTextValue(NameKey);
-			}
-		}
-		public override void OnDialogue() {
-			switch (stage) {
-				case 0: {
-					if (Origins.npcChatQuestSelected) {
-						Stage = 1;
-					} else {
-						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Discount_2_Quest.Start");
-						Origins.npcChatQuestSelected = true;// (npcChatQuestSelected is reset to false when the player closes the dialogue box)
-					}
-					break;
-				}
-				case 1: {
-					Item[] inventory = Main.LocalPlayer.inventory;
-					RecipeGroup ironBarGroup = RecipeGroup.recipeGroups[RecipeGroupID.IronBar];
-					ConsumeItems(inventory, ((i) => i.type == ItemID.SquirrelGold, 1));
-					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Discount_2_Quest.Complete");
-					Stage = 2;
-					ShouldSync = true;
-					break;
-				}
-			}
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Zoologist.Discount_2_Quest.ReadyToComplete").Value;
+		public override void OnComplete(NPC npc) {
+			Item[] inventory = Main.LocalPlayer.inventory;
+			RecipeGroup ironBarGroup = RecipeGroup.recipeGroups[RecipeGroupID.IronBar];
+			ConsumeItems(inventory, ((i) => i.type == ItemID.SquirrelGold, 1));
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Discount_2_Quest.Complete");
+			Stage = 2;
+			ShouldSync = true;
 		}
 		public override string GetJournalPage() {
 			return Language.GetTextValue(
@@ -238,10 +194,13 @@ namespace Origins.Questing {
 		}
 		public override bool Started => Stage > 0;
 		public override bool Completed => Stage > 1;
-		public override bool HasStartDialogue(NPC npc) {
-			return npc.type == NPCID.BestiaryGirl && Stage == 0 && ModContent.GetInstance<Discount_2_Quest>().Completed;
+		public override bool CanStart(NPC npc) => npc.type == NPCID.BestiaryGirl && Stage == 0 && ModContent.GetInstance<Discount_2_Quest>().Completed;
+		public override string GetInquireText(NPC npc) => Language.GetTextValue("Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Inquire");
+		public override void OnAccept(NPC npc) {
+			Stage = 1;
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Start");
 		}
-		public override bool HasDialogue(NPC npc) {
+		public override bool CanComplete(NPC npc) {
 			if (npc.type != NPCID.BestiaryGirl) return false; // NPCs other than the merchant won't have any dialogue related to this quest
 			switch (Stage) {
 				case 1:
@@ -249,51 +208,26 @@ namespace Origins.Questing {
 			}
 			return false;
 		}
-		public override string GetDialogue() {
-			switch (Stage) {
-				case 1:
-				return "Complete Quest";
+		public override string ReadyToCompleteText(NPC npc) => Language.GetOrRegister("Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.ReadyToComplete").Value;
+		public override void OnComplete(NPC npc) {
+			Item[] inventory = Main.LocalPlayer.inventory;
+			RecipeGroup ironBarGroup = RecipeGroup.recipeGroups[RecipeGroupID.IronBar];
+			ConsumeItems(inventory, ((i) => i.type == ItemID.EnchantedNightcrawler, wormTarget));
+			Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Complete");
 
-				default:
-				if (Origins.npcChatQuestSelected) {
-					return "Accept";
-				}
-				return Language.GetTextValue(NameKey);
+
+			int index = Item.NewItem(
+				Main.LocalPlayer.GetSource_GiftOrReward(),
+				Main.LocalPlayer.position,
+				Main.LocalPlayer.Size,
+				ModContent.ItemType<Eccentric_Stone>()
+			);
+			if (Main.netMode == NetmodeID.MultiplayerClient) {
+				NetMessage.SendData(MessageID.SyncItem, -1, -1, null, index, 1f);
 			}
-		}
-		public override void OnDialogue() {
-			switch (stage) {
-				case 0: {
-					if (Origins.npcChatQuestSelected) {
-						Stage = 1;
-					} else {
-						Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Start");
-						Origins.npcChatQuestSelected = true;// (npcChatQuestSelected is reset to false when the player closes the dialogue box)
-					}
-					break;
-				}
-				case 1: {
-					Item[] inventory = Main.LocalPlayer.inventory;
-					RecipeGroup ironBarGroup = RecipeGroup.recipeGroups[RecipeGroupID.IronBar];
-					ConsumeItems(inventory, ((i) => i.type == ItemID.EnchantedNightcrawler, wormTarget));
-					Main.npcChatText = Language.GetTextValue("Mods.Origins.Quests.Zoologist.Eccentric_Stone_Quest.Complete");
 
-
-					int index = Item.NewItem(
-						Main.LocalPlayer.GetSource_GiftOrReward(),
-						Main.LocalPlayer.position,
-						Main.LocalPlayer.Size,
-						ModContent.ItemType<Eccentric_Stone>()
-					);
-					if (Main.netMode == NetmodeID.MultiplayerClient) {
-						NetMessage.SendData(MessageID.SyncItem, -1, -1, null, index, 1f);
-					}
-
-					Stage = 2;
-					ShouldSync = true;
-					break;
-				}
-			}
+			Stage = 2;
+			ShouldSync = true;
 		}
 		public override string GetJournalPage() {
 			return Language.GetTextValue(

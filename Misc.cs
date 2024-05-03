@@ -1920,7 +1920,7 @@ namespace Origins {
 			}
 		}
 		public static string Get2ndPersonReference(this Player self, string args = "") {
-			return Language.GetTextValue($"Mods.Origins.Words.2ndref{args}{(Main.LocalPlayer.Male ? "male" : "female")}");
+			return Language.GetTextValue($"Mods.Origins.Words.2ndref{args}{(self.Male ? "male" : "female")}");
 		}
 		public static string GetCooldownText(int time) {
 			return ((time / 60 < 60)
