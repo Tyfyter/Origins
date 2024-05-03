@@ -5,6 +5,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Potato_Mine : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
@@ -21,9 +23,14 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.value = Item.sellPrice(silver: 50);
 			Item.rare = ItemRarityID.White;
 			Item.ammo = ModContent.ItemType<Potato>();
-			Item.shoot = ModContent.ProjectileType<Potato_Mine_P>();
             Item.ArmorPenetration += 6;
         }
+		public override void HoldItem(Player player) {
+			Item.shoot = ProjectileID.None;
+		}
+		public override void UpdateInventory(Player player) {
+			Item.shoot = Potato_Mine_P.ID; // has to be done here somewhere like this because it blocks placing the tile if it's not 0 when the player uses the item
+		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type, 15);
 			recipe.AddIngredient(ItemID.ExplosivePowder);

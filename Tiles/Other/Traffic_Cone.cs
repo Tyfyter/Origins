@@ -21,31 +21,19 @@ namespace Origins.Tiles.Other {
 			TileObjectData.addTile(Type);
 
 			AddMapEntry(new Color(200, 80, 0), Language.GetOrRegister(this.GetLocalizationKey("DisplayName")));
-
-			TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
-			TileObjectData.addTile(Type);
 			ID = Type;
 		}
 		public override void PlaceInWorld(int i, int j, Item item) {
-			if (Main.netMode == NetmodeID.MultiplayerClient) {
-				ModPacket packet = Mod.GetPacket();
-				packet.Write(Origins.NetMessageType.place_cone);
-				packet.Write((short)i);
-				packet.Write((short)j);
-				packet.Send(-1, Main.myPlayer);
-			} else {
-				ModContent.GetInstance<Traffic_Cone_TE_System>().coneLocations.Add(new(i, j));
-			}
+			ModContent.GetInstance<Traffic_Cone_TE_System>().AddTileEntity(new(i, j));
 		}
 	}
-	public class Traffic_Cone_TE_System : ModSystem {
-		public List<Point16> coneLocations = new();
+	public class Traffic_Cone_TE_System : TESystem {
 		public HashSet<Point16> projLocations;
 		public override void PreUpdateEntities() {
 			if (Main.netMode == NetmodeID.MultiplayerClient) return;
 			projLocations ??= new();
-			for (int i = 0; i < coneLocations.Count; i++) {
-				Point16 pos = coneLocations[i];
+			for (int i = 0; i < tileEntityLocations.Count; i++) {
+				Point16 pos = tileEntityLocations[i];
 				if (Main.tile[pos.X, pos.Y].TileIsType(Traffic_Cone.ID)) {
 					if (!projLocations.Contains(pos)) {
 						Projectile.NewProjectile(
@@ -59,18 +47,12 @@ namespace Origins.Tiles.Other {
 						);
 					}
 				} else {
-					coneLocations.RemoveAt(i);
+					tileEntityLocations.RemoveAt(i);
 					i--;
 					continue;
 				}
 			}
 			projLocations.Clear();
-		}
-		public override void SaveWorldData(TagCompound tag) {
-			tag[nameof(coneLocations)] = coneLocations;
-		}
-		public override void LoadWorldData(TagCompound tag) {
-			coneLocations = tag.Get<List<Point16>>(nameof(coneLocations));
 		}
 		internal static bool RegisterProjPosition(Point16 pos) {
 			Traffic_Cone_TE_System instance = ModContent.GetInstance<Traffic_Cone_TE_System>();

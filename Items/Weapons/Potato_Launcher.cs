@@ -1,6 +1,9 @@
 using Microsoft.Xna.Framework;
 using Origins.Items.Other.Consumables.Food;
+using Origins.Projectiles;
+using Origins.Tiles.Other;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using Tyfyter.Utils;
@@ -81,9 +84,35 @@ namespace Origins.Items.Weapons {
 		}
 	}
 	public class Potato_Mine_P : Potato_P {
+		public static int ID { get; private set; }
 		public override string Texture => "Origins/Items/Weapons/Demolitionist/Potato_Mine";
-		public override void OnKill(int timeLeft) {
-			//TODO: figure out how to get potato mines working and make them explode with the same AoE in this
+		public override void SetStaticDefaults() {
+			ID = Type;
+		}
+		public override void SetDefaults() {
+			base.SetDefaults();
+			Projectile.penetrate = -1;
+		}
+		public override bool OnTileCollide(Vector2 oldVelocity) {
+			Explode();
+			return false;
+		}
+		public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone) {
+			Explode();
+		}
+		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
+			Explode();
+		}
+		void Explode() {
+			Projectile.position.X += Projectile.width / 2;
+			Projectile.position.Y += Projectile.height / 2;
+			Projectile.width = 96;
+			Projectile.height = 96;
+			Projectile.position.X -= Projectile.width / 2;
+			Projectile.position.Y -= Projectile.height / 2;
+			ExplosiveGlobalProjectile.ExplosionVisual(Projectile, true);
+			Projectile.Damage();
+			Projectile.Kill();
 		}
 	}
 }

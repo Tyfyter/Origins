@@ -1139,6 +1139,7 @@ Projectiles: {
 	Hellfire_Grenade_Fire.DisplayName: Hellfire Grenade
 	Traffic_Cone_Projectile.DisplayName: Traffic Cone
 	Mine_Flayer_P.DisplayName: Mine Flayer Mine
+	Potato_Mine_Projectile.DisplayName: Potato Mine
 }
 
 Prefixes: {

@@ -1,9 +1,11 @@
 ﻿using Origins.Items.Accessories;
 using Origins.Questing;
+using Origins.Tiles;
 using Origins.Tiles.Other;
 using System;
 using System.IO;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Origins.Origins.NetMessageType;
@@ -61,8 +63,8 @@ namespace Origins {
 					altHandle = true;
 					break;
 
-					case place_cone:
-					ModContent.GetInstance<Traffic_Cone_TE_System>().coneLocations.Add(new(reader.ReadInt16(), reader.ReadInt16()));
+					case place_tile_entity:
+					TESystem.Get(reader.ReadUInt16()).AddTileEntity(new(reader.ReadInt16(), reader.ReadInt16()));
 					break;
 
 					default:
@@ -157,7 +159,7 @@ namespace Origins {
 			internal const byte sync_guid = 5;
 			internal const byte win_lottery = 6;
 			internal const byte pickle_lottery = 7;
-			internal const byte place_cone = 8;
+			internal const byte place_tile_entity = 8;
 		}
 	}
 }
