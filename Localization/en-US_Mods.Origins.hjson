@@ -1338,11 +1338,11 @@ Configs: {
 			Tooltip: ""
 		}
 
-		Headers.Journal: Journal Header
+		Headers.Journal: Journal
 
 		TabbyJournal: {
 			Label: Alternate Journal Layout
-			Tooltip: ""
+			Tooltip: Currently the "normal" layout is still unimplemented
 		}
 
 		OpenJournalOnUnlock: {

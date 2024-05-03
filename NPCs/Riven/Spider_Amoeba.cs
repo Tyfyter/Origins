@@ -15,16 +15,19 @@ namespace Origins.NPCs.Riven {
 		public override void SetDefaults() {// could not add stats because 
 			NPC.CloneDefaults(NPCID.Zombie);
 			NPC.aiStyle = NPCAIStyleID.Fighter;
+			NPC.width = 68;
+			NPC.height = 30;
+			SetSharedDefaults();
+		}
+		public void SetSharedDefaults() {
 			NPC.lifeMax = 81;
 			NPC.defense = 10;
 			NPC.damage = 33;
-			NPC.width = 92;
-			NPC.height = 40;
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
 			NPC.value = 90;
-        }
+		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return spawnInfo.SpawnTileY < Main.worldSurface ? 0 : Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Spighter;
 		}
@@ -43,7 +46,15 @@ namespace Origins.NPCs.Riven {
 				NPC.spriteDirection = NPC.direction;
 			}
 			//increment frameCounter every frame and run the following code when it exceeds 7 (i.e. run the following code every 8 frames)
-			if (NPC.collideY) NPC.DoFrames(7);
+			
+			if (NPC.collideY) {
+				NPC.DoFrames(7);
+				if (NPC.collideX) NPC.velocity.Y = -6f;
+			}
+			if (Main.netMode == NetmodeID.MultiplayerClient) return;
+			if (NPC.velocity.Y == 0f && NPC.NPCCanStickToWalls()) {
+				NPC.Transform(ModContent.NPCType<Spider_Amoeba_Wall>());
+			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
 			//spawn gore if npc is dead after being hit
@@ -55,5 +66,27 @@ namespace Origins.NPCs.Riven {
         public override void OnHitPlayer(Player target, Player.HurtInfo hurtInfo) {
             OriginPlayer.InflictTorn(target, 180, targetSeverity: 1f - 0.85f);
         }
-    }
+    }public class Spider_Amoeba_Wall : Spider_Amoeba {
+		public override void SetStaticDefaults() {
+			Main.npcFrameCount[NPC.type] = 4;
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(Type, new() {
+				Hide = true
+			});
+		}
+		public override void SetDefaults() {// could not add stats because 
+			NPC.CloneDefaults(NPCID.WallCreeperWall);
+			NPC.aiStyle = NPCAIStyleID.Spider;
+			NPC.width = 68;
+			NPC.height = 68;
+			SetSharedDefaults();
+		}
+		public override float SpawnChance(NPCSpawnInfo spawnInfo) => 0;
+		public override void AI() {
+			NPC.DoFrames(7);
+			if (Main.netMode == NetmodeID.MultiplayerClient) return;
+			if (!NPC.NPCCanStickToWalls()) {
+				NPC.Transform(ModContent.NPCType<Spider_Amoeba>());
+			}
+		}
+	}
 }

@@ -51,6 +51,7 @@ World_Cracker_Head.DisplayName: World Cracker
 World_Cracker_Tail.DisplayName: World Cracker
 Bottomfeeder.DisplayName: Bottomfeeder
 Spider_Amoeba.DisplayName: Spider Amoeba
+Spider_Amoeba_Wall.DisplayName: "{$Mods.Origins.NPCs.Spider_Amoeba.DisplayName}"
 Cellarkeep.DisplayName: Cellarkeep
 Cellarkeep_Barrel.DisplayName: Explosive Barrel
 Trijaw_Shark.DisplayName: Trijaw Shark
