@@ -62,11 +62,6 @@ namespace Origins {
 		public bool TwentyFourHourTime = false;
 
 		[Header("Journal")]
-
-		//[DefaultValue(true)] // "normal" journal isn't actually implented yet, is it?
-		public bool TabbyJournal => true;
-
-		[Header("Journal")]
 		[DefaultValue(true)]
 		public bool OpenJournalOnUnlock = true;
 

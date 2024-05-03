@@ -32,9 +32,8 @@ namespace Origins.UI {
 		Journal_UI_Mode lastMode = Journal_UI_Mode.Normal_Page;
 		Journal_UI_Mode mode = Journal_UI_Mode.Normal_Page;
 		ArmorShaderData currentEffect = null;
-		bool tabLayout = false;
+		const bool tabLayout = true;
 		public override void OnInitialize() {
-			tabLayout = OriginClientConfig.Instance.TabbyJournal;
 			this.RemoveAllChildren();
 			baseElement = new UIElement();
 			baseElement.Width.Set(0f, 0.875f);
@@ -48,7 +47,7 @@ namespace Origins.UI {
 			xMargin = baseElement.GetDimensions().Width * 0.075f;
 			yMargin = baseElement.GetDimensions().Height * 0.1f;
 			//SetText(loremIpsum);
-			SwitchMode(tabLayout ? Journal_UI_Mode.Index_Page : Journal_UI_Mode.Search_Page, "");
+			SwitchMode(Journal_UI_Mode.Index_Page, "");
 		}
 		public void SetText(string text) {
 			CalculatedStyle bounds = baseElement.GetDimensions();
@@ -316,7 +315,7 @@ namespace Origins.UI {
 			spriteBatch.Restart(spriteBatchState, samplerState: SamplerState.PointClamp);
 			Rectangle bounds = baseElement.GetDimensions().ToRectangle();
 			spriteBatch.Draw(BackTexture, bounds, Color.White);
-			if (OriginClientConfig.Instance.TabbyJournal) {
+			{ // block to put position out of scope everywhere else because I didn't want to have to fix the name conflict some other way
 				Vector2 position = default;
 				Rectangle frame = default;
 				Texture2D texture = TabsTexture;
@@ -634,7 +633,7 @@ namespace Origins.UI {
 							0
 						);
 					}
-					if (tabLayout && pageOffset > 0) {
+					if (pageOffset > 0) {
 						Vector2 position = new Vector2(bounds.X + xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
 						Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
 						//temp highlight
@@ -974,7 +973,7 @@ namespace Origins.UI {
 							0
 						);
 					}
-					if (tabLayout && pageOffset > 0) {
+					if (pageOffset > 0) {
 						Vector2 position = new Vector2(bounds.X + xMargin * 0.9f, bounds.Y + bounds.Height - yMargin * 0.9f);
 						Rectangle rectangle = new Rectangle((int)position.X - 20, (int)position.Y - 9, 40, 18);
 						//temp highlight
