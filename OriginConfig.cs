@@ -63,9 +63,10 @@ namespace Origins {
 
 		[Header("Journal")]
 
-		[DefaultValue(false)]
-		public bool TabbyJournal = false;
+		//[DefaultValue(true)] // "normal" journal isn't actually implented yet, is it?
+		public bool TabbyJournal => true;
 
+		[Header("Journal")]
 		[DefaultValue(true)]
 		public bool OpenJournalOnUnlock = true;
 
