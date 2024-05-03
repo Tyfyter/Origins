@@ -13,14 +13,14 @@ using Origins.Items.Weapons.Ammo;
 
 namespace Origins.World {
     public class AshenBiomeData : ModBiome {
+		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilAshen";
 		public static IItemDropRule FirstOrbDropRule;
-		public static IItemDropRule AceShrapnelRule;
 		public static IItemDropRule OrbDropRule;
 		public override void Load() {
 			FirstOrbDropRule = ItemDropRule.Common(ModContent.ItemType<Neural_Network>());
 			FirstOrbDropRule.OnSuccess(ItemDropRule.Common(ItemID.MusketBall, 1, 100, 100));
 
-			AceShrapnelRule = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Ace_Shrapnel>());
+			IItemDropRule AceShrapnelRule = ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Ace_Shrapnel>());
 			AceShrapnelRule.OnSuccess(ItemDropRule.Common(ModContent.ItemType<Scrap>(), 1, 200, 200));
 
 			OrbDropRule = new OneFromRulesRule(1,
@@ -33,7 +33,6 @@ namespace Origins.World {
 		}
 		public override void Unload() {
 			FirstOrbDropRule = null;
-			AceShrapnelRule = null;
 			OrbDropRule = null;
 		}
 	}

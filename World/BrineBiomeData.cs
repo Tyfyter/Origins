@@ -14,6 +14,7 @@ using static Terraria.WorldGen;
 
 namespace Origins.World.BiomeData {
 	public class Brine_Pool : ModBiome {
+		public override string BestiaryIcon => "Origins/UI/WorldGen/IconBrine";
 		public static SpawnConditionBestiaryInfoElement BestiaryBackground { get; private set; }
 		public override ModWaterStyle WaterStyle => ModContent.GetInstance<Brine_Water_Style>();
 		public override void Load() {

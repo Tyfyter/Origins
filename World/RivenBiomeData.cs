@@ -47,7 +47,7 @@ namespace Origins.World.BiomeData {
 		public override int BiomeTorchItemType => ModContent.ItemType<Riven_Torch>();
 		public override int BiomeCampfireItemType => ModContent.ItemType<Riven_Campfire_Item>();
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-		public override string BestiaryIcon => "Origins/UI/Cleaver_Preview";
+		public override string BestiaryIcon => "Origins/UI/WorldGen/IconEvilRiven";
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Hive_Caverns";
 		public override string MapBackground => BackgroundPath;
 		public static ModBiomeBestiaryInfoElement BestiaryInfoElement => ModContent.GetInstance<Riven_Hive>().ModBiomeBestiaryInfoElement;
@@ -575,18 +575,19 @@ namespace Origins.World.BiomeData {
 	public class Underground_Riven_Hive_Biome : ModBiome {
 		public override int Music => Origins.Music.UndergroundRiven;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Hive_Caverns";
+		public override string BestiaryIcon => "Origins/UI/IconEvilRiven"; // todo: give own icon
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneRockLayerHeight && player.InModBiome<Riven_Hive>();
 		}
 		public override float GetWeight(Player player) {
-			return player.GetModPlayer<OriginPlayer>().ZoneRivenProgress;
+			return player.GetModPlayer<OriginPlayer>().ZoneRivenProgress * 0.99f;
 		}
 	}
 	public class Riven_Hive_Desert : ModBiome {
 		public override int Music => Origins.Music.Riven;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-		public override string BestiaryIcon => "Origins/UI/Defiled_Wastelands_Bestiary_Icon";
+		public override string BestiaryIcon => "Origins/UI/IconEvilRiven"; // todo: give own icon
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Desert";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
