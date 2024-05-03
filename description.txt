@@ -9,3 +9,6 @@ This mod does not include the music tracks composed for each of the biomes and b
 Origins' wiki is currently in development and will be up and running soon so Origins' players have a sense of direction. In the meantime, you can join Origins' official Discord server to talk with other players about your discoveries and any bugs you may find! Use this link to join now: https://discord.gg/NK7jERXsTN
 
 This mod, its music mod and its wiki are all made by a collaboration between Tyfyter2002 and chrersis. Origins' content is open source for all to view and use so long as our BSD 3-Clause license is not breached. We thank you for expressing interest in this mod and hope you have fun with it!
+
+If you have any questions, comments or a bug you have found from anything Origins-related, please reach out to us through our Discord server!
+If you would rather not join the server, instead E-mail us at developmentorigins@gmail.com

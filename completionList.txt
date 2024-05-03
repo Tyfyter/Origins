@@ -99,9 +99,10 @@ VANILLA MODIFICATIONS:
 
 OTHER:
 ---
-(^) Journal (page sprites, button/pseudoitem sprite)
-(^) Explosive Modifiers*
 (X) Cubekon Tinkerer's Modifiers*
+(^) Explosive Modifiers*
+(^) Journal (page sprites, button/pseudoitem sprite)
+(O) Quest System General
 ---
 
 
@@ -112,7 +113,7 @@ ENEMY NPCS:
 (^) Barnacleback
 (^) Barnacle Bunny*
 (^) Bile Thrower*
-(#3, ^2) Bottomfeeder !!!
+(^) Bottomfeeder
 (^) Buckethead Zombie
 (^) Cellarkeep*
 (^) Chunky Slime
@@ -138,8 +139,8 @@ ENEMY NPCS:
 (^) Riven Penguin*
 (^) Riven Protoform
 (#, ^2) Scanner Scout
-(#3, ^2) Shattered Goldfish !!!
-(#3, ^2) Spider Amoeba !!!
+(^) Shattered Goldfish
+(^) Spider Amoeba
 
 (#, ^2) Amebeye* !!!
 (^) Amebic Mummy
@@ -165,10 +166,10 @@ ENEMY NPCS:
 (^) Riven Mimic
 (^) Savage Whip*
 (X) Sea Dragon
-(#, ^2) Shattered Ghoul !!!
-(#3, ^2) Shattered Mummy
+(^) Shattered Ghoul
+(^) Shattered Mummy
 (^) Single-Cellular Nautilus
-(#, ^2) Torn Ghoul !!!
+(^) Torn Ghoul
 (#3, ^2) Trijaw Shark !!!
 
 (X) Annihilator
@@ -558,7 +559,7 @@ MELEE WEAPONS:
 (^) Ripper Lance
 (^) Riverang
 (^) Snapthrow
-(#, ^2) Spiker Sword !!!
+(^) Spiker Sword
 (^) Switchblade*
 (^) Triple Threat
 (^) Tyrfing
@@ -771,7 +772,7 @@ EXPLOSIVE WEAPONS:
 (^) Meteor*
 (^) Outbreak Bomb*
 (^) Peatball*
-(#3, ^2) Potato Mine* !!!
+(^) Potato Mine*
 (^) Shrapnel Bomb*
 (#, ^2) Sticky Link Grenade* !!!
 
@@ -951,12 +952,12 @@ TILES:
 (^) Defiled Foliage
 (^) Defiled Pot
 (X) Eden Tree*
-(#3, ^2) Exoskeletal Tree* !!!
+(^) Exoskeletal Tree*
 (ᗢ) Fungarust*
 (^) Gel Blister
 (X) Moonshine*
 (^) Petrified Tree*
-(#3, ^2) Riven Foliage !!!
+(^) Riven Foliage
 (^) Riven Lesion
 (^) Riven Pot
 (^) Soulspore*
@@ -1204,18 +1205,28 @@ UI:
 ---
 (X) Ashen Map/Bestiary Backdrop
 (^) Ashen Icon
+(X) Ashen Mines Icon
 (X) Cosmos Map/Bestiary Backdrop
 (X) Dawn Map/Bestiary Backdrop
 (^) Dawn Icon
 (@5, ^3) Defiled Map/Bestiary Backdrop !!!
-(^) Defiled Icon
+(#, ^2) Defiled Caverns Icon !!!
+(#, ^2) Defiled Desert Icon !!!
+(#, ^2) Defiled Snow Icon !!!
+(#, ^2) Defiled Underground Desert !!!
+(^) Defiled Wastelands Icon
 (X) Dusk Map/Bestiary Backdrop
 (^) Dusk Icon
+(#, ^2) Eutrophic Sea Icon !!!
 (X) Fiberglass Map/Bestiary Backdrop !!!
 (#, ^2) Fiberglass Icon !!!
 (X) Fractured Isles Icon
 (^) Riven Map/Bestiary Backdrop
-(^) Riven Icon
+(#, ^2) Riven Caverns Icon !!!
+(#, ^2) Riven Desert Icon !!!
+(^) Riven Hive Icon
+(#, ^2) Riven Snow Icon !!!
+(#, ^2) Riven Underground Desert Icon !!!
 (X) Underground Ashen Background
 (#, ^2) Underground Defiled Background !!!
 (#, ^2) Underground Fiberglass Background !!!

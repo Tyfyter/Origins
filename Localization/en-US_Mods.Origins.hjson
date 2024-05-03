@@ -443,9 +443,16 @@ Generic: {
 	Arms_Dealer: the Arms Dealer
 }
 
-AltBiomeName: {
-	Defiled_Wastelands_Alt_Biome: Defiled Wastelands
-	Riven_Hive_Alt_Biome: Riven Hive
+AltBiomes: {
+	Defiled_Wastelands_Alt_Biome: {
+		DisplayName: Defiled Wastelands
+		Description: An alien entity that seeks out its growth in the Terrarian realm with its own way of life.
+	}
+
+	Riven_Hive_Alt_Biome: {
+		DisplayName: Riven Hive
+		Description: A natural biome manifested by an all-devouring parasite. Its blue beauty is used to attract more creatures to adapt to its aquatic conditions.
+	}
 }
 
 GuideAdvice: {

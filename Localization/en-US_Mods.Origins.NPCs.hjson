@@ -1,7 +1,7 @@
 Amoeba_Buggy.DisplayName: Amoeba Buggy
 Bug.DisplayName: Bug
 Cicada_3301.DisplayName: Cicada 3301
-Ancient_Defiled_Cyclops.DisplayName: "{§Defiled} Cyclops"
+Ancient_Defiled_Cyclops.DisplayName: Ancient {§Defiled} Cyclops
 Chunky_Slime.DisplayName: Chunky Slime
 Defiled_Amalgamation.DisplayName: "{§Defiled} Amalgamation"
 Defiled_Brute.DisplayName: "{§Defiled} Krusher"
@@ -32,7 +32,7 @@ Optiphage.DisplayName: Optiphage
 Amebic_Slime.DisplayName: Amebic Slime
 Amoeba_Bugger.DisplayName: Amoeba Bugger
 Barnacle_Mound.DisplayName: Barnacle Mound
-Barnacleback.DisplayName: Barnacle Back
+Barnacleback.DisplayName: Barnacleback
 Cleaver_Body.DisplayName: Cleaver
 Cleaver_Head.DisplayName: Cleaver
 Cleaver_Tail.DisplayName: Cleaver
