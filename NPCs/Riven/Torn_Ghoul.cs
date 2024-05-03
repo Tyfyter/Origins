@@ -38,7 +38,8 @@ namespace Origins.NPCs.Riven {
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.DesertCave) return 0;
-			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Ghoul;
+			if (!spawnInfo.Player.InModBiome<Riven_Hive>()) return 0;
+			return Riven_Hive.SpawnRates.Ghoul;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

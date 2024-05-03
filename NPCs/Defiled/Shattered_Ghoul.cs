@@ -51,7 +51,8 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.DesertCave) return 0;
-			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Ghoul;
+			if (!spawnInfo.Player.InModBiome<Defiled_Wastelands>()) return 0;
+			return Defiled_Wastelands.SpawnRates.Ghoul;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

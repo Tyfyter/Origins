@@ -98,7 +98,7 @@ namespace Origins.World.BiomeData {
 			public const float Seashell = 0.6f;
 			public const float Spighter = 1;
 			public const float Mummy = 1;
-			public const float Ghoul = 1;
+			public const float Ghoul = 2;
 			public const float Cleaver = 0.7f;
 			public const float Barnacle = 0.5f;
 			public const float Moeba = 0.8f;
