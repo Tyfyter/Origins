@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Origins.Items.Weapons.Melee;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -25,6 +27,13 @@ namespace Origins.Projectiles.Weapons {
 				Projectile.hostile = false;
 				Projectile.friendly = parentProj.friendly;
 				Projectile.DamageType = parentProj.DamageType;
+			} else if (source is EntitySource_OnHit onHit) {
+				switch (onHit.Context) {
+					case nameof(Spiker_Sword):
+					Projectile.friendly = true;
+					Projectile.DamageType = DamageClass.Melee;
+					break;
+				}
 			}
 		}
 		public override bool? CanHitNPC(NPC target) => false;
@@ -44,6 +53,17 @@ namespace Origins.Projectiles.Weapons {
 					ai1: Projectile.whoAmI
 				);
 			}
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(new BitsByte(Projectile.npcProj, Projectile.hostile, Projectile.friendly));
+			writer.Write(Projectile.DamageType.Type);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			BitsByte bits = reader.ReadByte();
+			Projectile.npcProj = bits[0];
+			Projectile.hostile = bits[1];
+			Projectile.friendly = bits[2];
+			Projectile.DamageType = DamageClassLoader.GetDamageClass(reader.ReadInt32());
 		}
 	}
 	public class Defiled_Spike_Explosion_Spike : ModProjectile {
@@ -124,6 +144,17 @@ namespace Origins.Projectiles.Weapons {
 				Main.EntitySpriteDraw(texture, pos, new Rectangle(0, 0, 18, Math.Min(58, i)), lightColor, Projectile.rotation, new Vector2(9, 0), Projectile.scale, SpriteEffects.None, 0);
 			}
 			return false;
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write(new BitsByte(Projectile.npcProj, Projectile.hostile, Projectile.friendly));
+			writer.Write(Projectile.DamageType.Type);
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			BitsByte bits = reader.ReadByte();
+			Projectile.npcProj = bits[0];
+			Projectile.hostile = bits[1];
+			Projectile.friendly = bits[2];
+			Projectile.DamageType = DamageClassLoader.GetDamageClass(reader.ReadInt32());
 		}
 	}
 }

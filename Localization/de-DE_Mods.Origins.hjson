@@ -847,6 +847,11 @@ Buffs: {
 		// DisplayName: Sapphire Aura Buff
 		// Description: Mods.Origins.Buffs.Sapphire_Aura_Buff.Description
 	}
+
+	Spiker_Counter_Debuff: {
+		// DisplayName: Spiker_ Counter_ Debuff
+		// Description: Mods.Origins.Buffs.Spiker_Counter_Debuff.Description
+	}
 }
 
 DamageClassName: {

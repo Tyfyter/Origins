@@ -4,6 +4,8 @@ using Terraria.ID;
 using Terraria.ModLoader;
 
 using Origins.Dev;
+using Microsoft.Xna.Framework;
+using Origins.Projectiles.Weapons;
 namespace Origins.Items.Weapons.Melee {
 	public class Spiker_Sword : ModItem, ICustomWikiStat {
 		static short glowmask;
@@ -30,11 +32,35 @@ namespace Origins.Items.Weapons.Melee {
 			Item.glowMask = glowmask;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type);
-			recipe.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 6);
-			recipe.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 3);
-			recipe.AddTile(TileID.Anvils);
-			recipe.Register();
+			Recipe.Create(Type)
+			.AddIngredient(ModContent.ItemType<Defiled_Bar>(), 6)
+			.AddIngredient(ModContent.ItemType<Undead_Chunk>(), 3)
+			.AddTile(TileID.Anvils)
+			.Register();
+		}
+		public override void OnHitNPC(Player player, NPC target, NPC.HitInfo hit, int damageDone) {
+			int buffType = ModContent.BuffType<Spiker_Counter_Debuff>();
+			target.AddBuff(buffType, 120);
+			int buffIndex = target.FindBuffIndex(buffType);
+			if (buffIndex > -1 && target.buffTime[buffIndex] > 120 * 2) {
+				Projectile.NewProjectileDirect(
+					player.GetSource_OnHit(target, nameof(Spiker_Sword)),
+					target.Center,
+					Vector2.Zero,
+					ModContent.ProjectileType<Defiled_Spike_Explosion>(),
+					damageDone,
+					hit.Knockback,
+					player.whoAmI,
+				7);
+				target.DelBuff(buffIndex);
+			}
+		}
+	}
+	public class Spiker_Counter_Debuff : ModBuff {
+		public override string Texture => typeof(Spiker_Sword).GetDefaultTMLName();
+		public override bool ReApply(NPC npc, int time, int buffIndex) {
+			npc.buffTime[buffIndex] += time;
+			return true;
 		}
 	}
 }
