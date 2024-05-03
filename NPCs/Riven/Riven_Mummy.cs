@@ -22,7 +22,8 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 46;
 			NPC.friendly = false;
 			NPC.value = 7;
-            SpawnModBiomes = new int[] {
+			AnimationType = NPCID.BloodMummy;
+			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Riven_Hive_Desert>().Type
 			};
 			//ModContent.Request<Microsoft.Xna.Framework.Graphics.Texture2D>("Origins/UI/MapBGs/Riven_Desert").Value.Size()
@@ -40,13 +41,6 @@ namespace Origins.NPCs.Riven {
 			if (NPC.HasPlayerTarget) {
 				NPC.FaceTarget();
 				NPC.spriteDirection = NPC.direction;
-			}
-			//increment frameCounter every frame and run the following code when it exceeds 7 (i.e. run the following code every 8 frames)
-			if (++NPC.frameCounter > 7) {
-				//add frame height (with buffer) to frame y position and modulo by frame height (with buffer) multiplied by walking frame count
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 56) % 896, 36, 56);
-				//reset frameCounter so this doesn't trigger every frame after the first time
-				NPC.frameCounter = 0;
 			}
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

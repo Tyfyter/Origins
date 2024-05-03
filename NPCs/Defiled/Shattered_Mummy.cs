@@ -11,7 +11,7 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
 	public class Shattered_Mummy : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
-			Main.npcFrameCount[NPC.type] = 4;
+			Main.npcFrameCount[NPC.type] = 16;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -27,6 +27,7 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 700;
+			AnimationType = NPCID.DarkMummy;
 			SpawnModBiomes = new int[] {
 				ModContent.GetInstance<Defiled_Wastelands_Desert>().Type
 			};
@@ -61,13 +62,6 @@ namespace Origins.NPCs.Defiled {
 			if (NPC.HasPlayerTarget) {
 				NPC.FaceTarget();
 				NPC.spriteDirection = NPC.direction;
-			}
-			//increment frameCounter every frame and run the following code when it exceeds 7 (i.e. run the following code every 8 frames)
-			if (++NPC.frameCounter > 7) {
-				//add frame height (with buffer) to frame y position and modulo by frame height (with buffer) multiplied by walking frame count
-				NPC.frame = new Rectangle(0, (NPC.frame.Y + 50) % 200, 32, 48);
-				//reset frameCounter so this doesn't trigger every frame after the first time
-				NPC.frameCounter = 0;
 			}
 		}
 		public override void HitEffect(NPC.HitInfo hit) {
