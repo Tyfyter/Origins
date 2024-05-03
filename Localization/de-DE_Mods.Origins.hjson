@@ -1137,10 +1137,6 @@ Projectiles: {
 	// Hellfire_Grenade_Fire.DisplayName: Hellfire Grenade
 	// Traffic_Cone_Projectile.DisplayName: Traffic Cone
 	// Mine_Flayer_P.DisplayName: Mine Flayer Mine
-	// Nova_Swarm_P4.DisplayName: Nova_ Swarm_ P4
-	// Nova_Swarm_P3.DisplayName: Nova_ Swarm_ P3
-	// Nova_Swarm_P2.DisplayName: Nova_ Swarm_ P2
-	// Nova_Swarm_P1.DisplayName: Nova_ Swarm_ P1
 }
 
 Prefixes: {
