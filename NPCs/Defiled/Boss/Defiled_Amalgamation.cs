@@ -129,12 +129,7 @@ namespace Origins.NPCs.Defiled.Boss {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-			/*if (heartBroken <= 1) {
-			this.GetBestiaryFlavorText("An elder organism of the Defiled possessing many of the memories of those lost to the {$Defiled} Will. It is merely a shell of its former self.");
-			} else {
-			this.GetBestiaryFlavorText("A murderous super-organism just trying to protect its home.");
-			}*/
-			this.GetBestiaryFlavorText("A murderous super-organism just trying to protect its home."),
+				this.GetBestiaryFlavorText(),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
@@ -388,7 +383,7 @@ namespace Origins.NPCs.Defiled.Boss {
 					case state_summon_roar: {
                         NPC.ai[1]++;
 						NPC.velocity *= 0.9f;
-                        SoundEngine.PlaySound(Origins.Sounds.BeckoningRoar.WithPitchRange(0.1f, 0.2f), NPC.Center);
+                        SoundEngine.PlaySound(Origins.Sounds.BeckoningRoar.WithPitchRange(0.1f, 0.2f).WithVolumeScale(0.25f), NPC.Center);
                         if (NPC.ai[1] < 40) {
                             leftArmTarget = 0;
 							rightArmTarget = 0;
@@ -474,6 +469,7 @@ namespace Origins.NPCs.Defiled.Boss {
 			int activeLength = cycleLength * 2 + dashLength;
 			if (AIState == state_triple_dash && NPC.ai[1] > activeLength) {
 				NPC.frame = new Rectangle(0, (frameHeight * (int)(Math.Pow((NPC.ai[1] - activeLength) / TripleDashCD, 3) * 5) + frameHeight * 7) % (frameHeight * 8), 122, frameHeight);
+				armFrame = 3;
 			} else if (++NPC.frameCounter > 7) {
 				NPC.frame = new Rectangle(0, (NPC.frame.Y + frameHeight) % (frameHeight * 3) + frameHeight * 4, 122, frameHeight);
 				NPC.frameCounter = 0;
