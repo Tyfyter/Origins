@@ -444,9 +444,17 @@ Generic: {
 }
 
 AltBiomes: {
-	Defiled_Wastelands_Alt_Biome.DisplayName: Defiled Wastelands
-	Riven_Hive_Alt_Biome.DisplayName: Riven Hive
-	Ashen_Alt_Biome.Description: Ashen Biome
+	Defiled_Wastelands_Alt_Biome: {
+		DisplayName: "{§Defiled_Wastelands}"
+		Description: An alien entity that seeks out its growth in the Terrarian realm with its own way of life.
+	}
+
+	Riven_Hive_Alt_Biome: {
+		DisplayName: "{$Mods.Origins.Generic.Riven_Hive}"
+		Description: A natural biome manifested by an all-devouring parasite. Its blue beauty is used to attract more creatures to adapt to its aquatic conditions.
+	}
+
+	Ashen_Alt_Biome.DisplayName: Ashen Biome
 }
 
 GuideAdvice: {
@@ -1315,16 +1323,6 @@ Tiles: {
 	Endowood_Chest.MapEntry: Endowood Chest
 	Marrowick_Chest.MapEntry: Marrowick Chest
 	Endowood_Dresser.MapEntry: Endowood Dresser
-}
-
-AltBiomeDescription: {
-	Defiled_Wastelands_Alt_Biome: A desaturated and bleak environment that is actually a living organism growing its body.
-	Riven_Hive_Alt_Biome: A flourishing and beautiful ecosystem soon to replace the status quo dominated by a now sentient amoeba.
-}
-
-AltBiomeGen: {
-	Defiled_Wastelands_Alt_Biome: "{§Defiled_Wastelands}"
-	Riven_Hive_Alt_Biome: "{$Mods.Origins.Generic.Riven_Hive}"
 }
 
 MapObject: {
