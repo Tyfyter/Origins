@@ -622,7 +622,7 @@ namespace Origins.World.BiomeData {
 	public class Underground_Riven_Hive_Biome : ModBiome {
 		public override int Music => Origins.Music.UndergroundRiven;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Hive_Caverns";
-		public override string BestiaryIcon => "Origins/UI/IconEvilRiven"; // todo: give own icon
+		public override string BestiaryIcon => "Origins/UI/IconStonerRiven"; // todo: give own icon
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneRockLayerHeight && player.InModBiome<Riven_Hive>();
@@ -635,7 +635,7 @@ namespace Origins.World.BiomeData {
 		public override int Music => Origins.Music.Riven;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Desert";
-		public override string BestiaryIcon => "Origins/UI/IconEvilRiven"; // todo: give own icon
+		public override string BestiaryIcon => "Origins/UI/IconDesertRiven"; // todo: give own icon
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneDesert && player.InModBiome<Riven_Hive>();
@@ -648,7 +648,7 @@ namespace Origins.World.BiomeData {
 		public override int Music => Origins.Music.UndergroundRiven;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Desert";
-		public override string BestiaryIcon => "Origins/UI/IconEvilRiven"; // todo: give own icon
+		public override string BestiaryIcon => "Origins/UI/IconCatacombsRiven"; // todo: give own icon
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneRockLayerHeight && player.ZoneDesert && player.InModBiome<Riven_Hive>();
@@ -660,7 +660,7 @@ namespace Origins.World.BiomeData {
 	public class Riven_Hive_Ocean : ModBiome {
 		public override int Music => Origins.Music.RivenOcean;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-		public override string BestiaryIcon => "Origins/UI/Defiled_Wastelands_Bestiary_Icon";
+		public override string BestiaryIcon => "Origins/UI/IconEutrophicSea";
 		public override string BackgroundPath => "Origins/UI/MapBGs/Eutrophic_Sea";
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {

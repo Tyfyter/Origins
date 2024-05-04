@@ -1210,23 +1210,23 @@ UI:
 (X) Dawn Map/Bestiary Backdrop
 (^) Dawn Icon
 (@5, ^3) Defiled Map/Bestiary Backdrop !!!
-(#, ^2) Defiled Caverns Icon !!!
-(#, ^2) Defiled Desert Icon !!!
-(#, ^2) Defiled Snow Icon !!!
-(#, ^2) Defiled Underground Desert !!!
+(^) Defiled Caverns Icon
+(^) Defiled Desert Icon
+(^) Defiled Snow Icon
+(^) Defiled Underground Desert
 (^) Defiled Wastelands Icon
 (X) Dusk Map/Bestiary Backdrop
 (^) Dusk Icon
-(#, ^2) Eutrophic Sea Icon !!!
+(^) Eutrophic Sea Icon
 (X) Fiberglass Map/Bestiary Backdrop !!!
-(#, ^2) Fiberglass Icon !!!
+(^) Fiberglass Icon
 (X) Fractured Isles Icon
 (^) Riven Map/Bestiary Backdrop
-(#, ^2) Riven Caverns Icon !!!
-(#, ^2) Riven Desert Icon !!!
+(^) Riven Caverns Icon
+(^) Riven Desert Icon
 (^) Riven Hive Icon
-(#, ^2) Riven Snow Icon !!!
-(#, ^2) Riven Underground Desert Icon !!!
+(^) Riven Snow Icon
+(^) Riven Underground Desert Icon
 (X) Underground Ashen Background
 (#, ^2) Underground Defiled Background !!!
 (#, ^2) Underground Fiberglass Background !!!

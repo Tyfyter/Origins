@@ -578,7 +578,7 @@ namespace Origins.World.BiomeData {
 	public class Underground_Defiled_Wastelands_Biome : ModBiome {
 		public override int Music => Origins.Music.UndergroundDefiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
-		public override string BestiaryIcon => "Origins/UI/IconEvilDefiled"; // todo: give own icon
+		public override string BestiaryIcon => "Origins/UI/IconStonerDefiled"; // todo: give own icon
 		public override float GetWeight(Player player) {
 			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress * 0.99f;
 		}
@@ -590,7 +590,7 @@ namespace Origins.World.BiomeData {
 		public override int Music => Origins.Music.Defiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Desert";
-		public override string BestiaryIcon => "Origins/UI/IconEvilDefiled"; // todo: give own icon
+		public override string BestiaryIcon => "Origins/UI/IconDesertDefiled"; // todo: give own icon
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneDesert && player.InModBiome<Defiled_Wastelands>();
@@ -603,7 +603,7 @@ namespace Origins.World.BiomeData {
 		public override int Music => Origins.Music.UndergroundDefiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Defiled_Wastelands_Desert";
-		public override string BestiaryIcon => "Origins/UI/IconEvilDefiled"; // todo: give own icon
+		public override string BestiaryIcon => "Origins/UI/IconCatacombsDefiled"; // todo: give own icon
 		public override string MapBackground => BackgroundPath;
 		public override bool IsBiomeActive(Player player) {
 			return player.ZoneRockLayerHeight && player.ZoneDesert && player.InModBiome<Defiled_Wastelands>();
