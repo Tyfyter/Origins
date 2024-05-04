@@ -56,13 +56,13 @@ namespace Origins.Buffs {
 		}
 		public override void OnSpawn(IEntitySource source) {
 			Projectile.localAI[1] = ModContent.ProjectileType<Shardcannon_P1>() + Main.rand.Next(3);
-			Projectile.localAI[2] = Main.rand.NextFloat(0.15f, 0.25f) * Main.rand.NextBool().ToDirectionInt();
+			Projectile.localAI[2] = Main.rand.NextFloat(0.35f, 0.5f) * Main.rand.NextBool().ToDirectionInt();
 		}
 		public override void AI() {
 			if (Projectile.timeLeft == 420) {
 				Projectile.rotation = Projectile.velocity.ToRotation();
 				Projectile.ai[0] = Main.rand.Next(256) * 30;
-				Projectile.ai[1] = Main.rand.NextFloat(0.5f, 1.5f);
+				Projectile.ai[1] = Main.rand.NextFloat(0.75f, 2.5f);
 			}
 			Projectile.localAI[0] += (GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.295f) * Projectile.localAI[2];
 			Vector2 perp = new Vector2(Projectile.velocity.Y, -Projectile.velocity.X);
@@ -70,8 +70,8 @@ namespace Origins.Buffs {
 			Projectile.localAI[0] = MathHelper.Clamp(Projectile.localAI[0], -2, 2);
 			if (Projectile.ai[2] != 0) {
 				float factor =
-					(GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.295f)
-					- (GenRunners.GetWallDistOffset(Projectile.ai[0] - Projectile.ai[1]) + 0.76f);
+					(GenRunners.GetWallDistOffset(Projectile.ai[0]) + 0.75f)
+					- (GenRunners.GetWallDistOffset(Projectile.ai[0] - Projectile.ai[1]) + 0.17f);
 				offset -= perp * factor * Projectile.ai[2];
 			}
 			if (Collision.TileCollision(
