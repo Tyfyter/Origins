@@ -16,7 +16,6 @@ namespace Origins.NPCs.Defiled {
 		byte frame = 0;
 		byte anger = 0;
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Mite");
 			Main.npcFrameCount[NPC.type] = 4;
 		}
 		public override void SetDefaults() {
@@ -75,7 +74,7 @@ namespace Origins.NPCs.Defiled {
 					if (anger > 1) anger--;
 					NPC.aiStyle = NPCAIStyleID.Tortoise;
 				} else if (NPC.aiStyle == NPCAIStyleID.None) {
-					NPC.velocity.X *= 1.2f;
+					//NPC.velocity.X *= 1.2f;
 				}
 				if (Math.Sign(NPC.velocity.X) == NPC.direction) {
 					frame = (byte)((frame + 1) & 15);

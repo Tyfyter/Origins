@@ -38,9 +38,6 @@ namespace Origins.NPCs.Defiled {
 				this.GetBestiaryFlavorText("Goldfish "),
 			});
 		}
-        public void SpawnWisp(NPC npc) {
-                NPC.NewNPC(npc.GetSource_Death(), (int)npc.position.X, (int)npc.position.Y, ModContent.NPCType<Defiled_Wisp>());
-        }
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);
