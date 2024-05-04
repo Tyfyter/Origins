@@ -74,7 +74,7 @@ namespace Origins.NPCs.Defiled {
 					if (anger > 1) anger--;
 					NPC.aiStyle = NPCAIStyleID.Tortoise;
 				} else if (NPC.aiStyle == NPCAIStyleID.None) {
-					//NPC.velocity.X *= 1.2f;
+					NPC.velocity.X *= 0.95f;
 				}
 				if (Math.Sign(NPC.velocity.X) == NPC.direction) {
 					frame = (byte)((frame + 1) & 15);
