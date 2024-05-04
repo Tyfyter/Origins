@@ -7,6 +7,7 @@ using Terraria.ModLoader;
 using Terraria.ModLoader.IO;
 using Origins.NPCs.Defiled.Boss;
 using Origins.World.BiomeData;
+using System.Linq;
 
 namespace Origins.NPCs.Defiled
 {
@@ -49,14 +50,15 @@ namespace Origins.NPCs.Defiled
 		}
 		public override void SetDefaults(NPC entity) {
 			if (entity.ModNPC is not null) {
+				int biomeType = ModContent.GetInstance<Defiled_Wastelands>().Type;
 				if ((entity.ModNPC.SpawnModBiomes?.Length ?? 0) == 0) {
-					entity.ModNPC.SpawnModBiomes = new int[] {
-						ModContent.GetInstance<Defiled_Wastelands>().Type
-					};
-				} else {
+					entity.ModNPC.SpawnModBiomes = [
+						biomeType
+					];
+				} else if (!entity.ModNPC.SpawnModBiomes.Contains(biomeType)) {
 					int[] spawnModBiomes = new int[entity.ModNPC.SpawnModBiomes.Length + 1];
 					entity.ModNPC.SpawnModBiomes.CopyTo(spawnModBiomes, 1);
-					spawnModBiomes[0] = ModContent.GetInstance<Defiled_Wastelands>().Type;
+					spawnModBiomes[0] = biomeType;
 					entity.ModNPC.SpawnModBiomes = spawnModBiomes;
 				}
 			}

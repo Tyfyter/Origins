@@ -2,6 +2,7 @@
 using Origins.NPCs.Riven.World_Cracker;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 
@@ -41,14 +42,15 @@ namespace Origins.NPCs.Riven
 		}
 		public override void SetDefaults(NPC entity) {
 			if (entity.ModNPC is not null) {
+				int biomeType = ModContent.GetInstance<Riven_Hive>().Type;
 				if ((entity.ModNPC.SpawnModBiomes?.Length ?? 0) == 0) {
-					entity.ModNPC.SpawnModBiomes = new int[] {
-						ModContent.GetInstance<Riven_Hive>().Type
-					};
-				} else {
+					entity.ModNPC.SpawnModBiomes = [
+						biomeType
+					];
+				} else if (!entity.ModNPC.SpawnModBiomes.Contains(biomeType)) {
 					int[] spawnModBiomes = new int[entity.ModNPC.SpawnModBiomes.Length + 1];
 					entity.ModNPC.SpawnModBiomes.CopyTo(spawnModBiomes, 1);
-					spawnModBiomes[0] = ModContent.GetInstance<Riven_Hive>().Type;
+					spawnModBiomes[0] = biomeType;
 					entity.ModNPC.SpawnModBiomes = spawnModBiomes;
 				}
 			}
