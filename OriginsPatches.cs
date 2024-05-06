@@ -51,6 +51,7 @@ using System.Runtime.CompilerServices;
 using Terraria.ModLoader.Core;
 using Origins.Items.Other.Dyes;
 using Terraria.GameContent.UI.ResourceSets;
+using Origins.Water;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -478,6 +479,32 @@ namespace Origins {
 			};
 			IL_PlayerStatsSnapshot.ctor += IL_PlayerStatsSnapshot_ctor;
 			On_PlayerStatsSnapshot.ctor += On_PlayerStatsSnapshot_ctor;
+			IL_WaterfallManager.GetAlpha += FixWrongWaterfallAlpha_IL;
+		}
+
+		private void FixWrongWaterfallAlpha_IL(ILContext il) {
+			ILCursor c = new(il);
+			ILLabel defaultCase = null;
+			if (c.TryGotoNext(MoveType.Before,
+				i => i.MatchBr(out defaultCase)
+			)) {
+				c.GotoLabel(defaultCase, MoveType.AfterLabel);
+				c.Prev.MatchBr(out ILLabel end);
+				c.EmitLdarg2();
+				c.EmitLdarg0();
+				c.EmitLdloca(0);
+				c.EmitCall(GetType().GetMethod(nameof(FixWrongWaterfallAlpha), BindingFlags.NonPublic | BindingFlags.Static));
+				c.EmitBrtrue(end);
+			} else {
+				LogError($"Could not find default switch case in WaterfallManager.GetAlpha");
+			}
+		}
+		static bool FixWrongWaterfallAlpha(int type, float baseAlpha, ref float alpha) {
+			if (type == Riven_Waterfall_Style.ID) {
+				alpha = baseAlpha * Riven_Water_Style.GlowValue;
+				return true;
+			}
+			return false;
 		}
 
 		private static void On_PlayerStatsSnapshot_ctor(On_PlayerStatsSnapshot.orig_ctor orig, ref PlayerStatsSnapshot self, Player player) {
