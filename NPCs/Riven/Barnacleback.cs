@@ -28,7 +28,13 @@ namespace Origins.NPCs.Riven {
 			NPC.value = 76;
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-            return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.BarnBack;
+			float rate = Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.BarnBack;
+			if (rate == 0) return 0; // skip counting other barnaclebacks if it's already not going to spawn
+			int count = 1;
+			foreach (NPC npc in Main.ActiveNPCs) {
+				if (npc.type == Type) count++;
+			}
+			return rate / count;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
