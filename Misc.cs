@@ -2508,7 +2508,11 @@ namespace Origins {
 			if (Main.netMode != NetmodeID.MultiplayerClient) {
 				NPC.SpawnOnPlayer(player.whoAmI, type);
 			} else {
-				NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, -1, -1, null, player.whoAmI, type);
+				ModPacket packet = Origins.instance.GetPacket();
+				packet.Write(Origins.NetMessageType.spawn_boss_on_player);
+				packet.Write((ushort)player.whoAmI);
+				packet.Write(type);
+				packet.Send();
 			}
 		}
 		public static void AddChambersiteConversions(this AltBiome biome, int tile, int wall) {

@@ -67,6 +67,10 @@ namespace Origins {
 					TESystem.Get(reader.ReadUInt16()).AddTileEntity(new(reader.ReadInt16(), reader.ReadInt16()));
 					break;
 
+					case spawn_boss_on_player:
+					Main.player[reader.ReadUInt16()].SpawnBossOn(reader.ReadInt32());
+					break;
+
 					default:
 					Logger.Warn($"Invalid packet type ({type}) received on server");
 					break;
@@ -160,6 +164,7 @@ namespace Origins {
 			internal const byte win_lottery = 6;
 			internal const byte pickle_lottery = 7;
 			internal const byte place_tile_entity = 8;
+			internal const byte spawn_boss_on_player = 9;
 		}
 	}
 }
