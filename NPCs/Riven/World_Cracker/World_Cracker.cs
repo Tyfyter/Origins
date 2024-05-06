@@ -42,13 +42,13 @@ namespace Origins.NPCs.Riven.World_Cracker {
 		internal static IItemDropRule armorBreakDropRule;
 		int ArmorHealth { get => (int)NPC.ai[3]; set => NPC.ai[3] = (int)value; }
 		public override void SetStaticDefaults() {
-			/*var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0) { // Influences how the NPC looks in the Bestiary
-				CustomTexturePath = "Origins/NPCs/Riven/World_Cracker_Bestiary", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
+			var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
+				CustomTexturePath = "Origins/UI/World_Cracker_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
 				Position = new Vector2(40f, 24f),
 				PortraitPositionXOverride = 0f,
 				PortraitPositionYOverride = 12f
 			};
-			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);*/
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
 			if (!Main.dedServ) {
 				ArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor");
 				HPBarArmorTexture = ModContent.Request<Texture2D>("Origins/NPCs/Riven/World_Cracker/World_Cracker_Armor_Health_Bar");

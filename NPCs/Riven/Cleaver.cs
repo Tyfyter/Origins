@@ -1,3 +1,4 @@
+using Microsoft.Xna.Framework;
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using Terraria;
@@ -8,6 +9,14 @@ using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Cleaver_Head : Cleaver, IRivenEnemy {
+		public override void SetStaticDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
+				CustomTexturePath = "Origins/UI/Cleaver_Preview", // If the NPC is multiple parts like a worm, a custom texture for the Bestiary is encouraged.
+				Position = new Vector2(40f, 24f),
+				PortraitPositionXOverride = 0f,
+				PortraitPositionYOverride = 12f
+			});
+		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
 			NPC.width = NPC.height = 12;

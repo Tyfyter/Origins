@@ -13,6 +13,9 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
 	public class Torn_Ghoul : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
+				Velocity = 1
+			});
 			Main.npcFrameCount[NPC.type] = 8;
 		}
 		public override void SetDefaults() {
