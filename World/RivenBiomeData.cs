@@ -99,11 +99,11 @@ namespace Origins.World.BiomeData {
 			public const float Spighter = 1;
 			public const float Mummy = 1;
 			public const float Ghoul = 2;
-			public const float Cleaver = 0.7f;
+			public const float Cleaver = 0.5f;
 			public const float Barnacle = 0.5f;
 			public const float Moeba = 0.8f;
 			public const float Shark1 = 0.4f;
-			public const float Worm = 0.6f;
+			public const float Worm = 0.4f;
 			public const float Crawler = 0.8f;
 			public const float Mimic = 0.1f;
 			public const float Whip = 0.2f;
