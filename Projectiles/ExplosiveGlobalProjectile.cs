@@ -212,6 +212,7 @@ namespace Origins.Projectiles {
 			} else {
 				hasAmber = false;
 			}
+			fromDeath = bitReader.ReadBit();
 			if (bitReader.ReadBit()) {
 				if (!novaSwarm) projectile.scale *= Nova_Swarm.rocket_scale;
 				novaSwarm = true;
