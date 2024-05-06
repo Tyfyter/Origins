@@ -4,12 +4,14 @@ using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Summoner {
     public static class Incantations {
 		public static Asset<Texture2D> GetSmallTexture(this ModItem item, string suffix = "") => ModContent.RequestIfExists<Texture2D>(item.Texture + "_Smol" + suffix, out var asset) ? asset : null;
 		public static void HoldItemFrame(Player player) {
+			if (Main.menuMode is MenuID.FancyUI or MenuID.CharacterSelect) return;
 			player.SetCompositeArmBack(
 				true,
 				player.ItemAnimationActive ? Player.CompositeArmStretchAmount.Quarter : Player.CompositeArmStretchAmount.Full,
