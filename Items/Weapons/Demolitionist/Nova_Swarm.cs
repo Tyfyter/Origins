@@ -1,21 +1,27 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Origins.Dev;
 using Origins.Items.Materials;
-using System;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Tyfyter.Utils;
-using static Microsoft.Xna.Framework.MathHelper;
 
 namespace Origins.Items.Weapons.Demolitionist {
-	public class Nova_Swarm : ModItem, ICustomWikiStat {
+	public class Nova_Swarm : ModItem, ICustomDrawItem, ICustomWikiStat {
 		public const float rocket_scale = 0.85f;
         public string[] Categories => new string[] {
             "Launcher"
         };
 		public static int ID { get; private set; }
+		public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
+		public override void Unload() {
+			UseTexture = null;
+		}
 		public override void SetStaticDefaults() {
+			if (!Main.dedServ) {
+				UseTexture = Mod.Assets.Request<Texture2D>("Items/Weapons/Demolitionist/Nova_Swarm_Use");
+			}
 			AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[Type] = AmmoID.Sets.SpecificLauncherAmmoProjectileMatches[ItemID.RocketLauncher];
 			ID = Type;
 		}
@@ -44,6 +50,57 @@ namespace Origins.Items.Weapons.Demolitionist {
 		}
 		public override Vector2? HoldoutOffset() {
 			return new Vector2(-7, -4);
+		}
+		public void DrawInHand(Texture2D itemTexture, ref PlayerDrawSet drawInfo, Vector2 itemCenter, Color lightColor, Vector2 drawOrigin) {
+			Player drawPlayer = drawInfo.drawPlayer;
+			float itemRotation = drawPlayer.itemRotation;
+
+			Vector2 pos = new Vector2((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
+
+			int frame;
+			switch (drawPlayer.itemAnimationMax - drawPlayer.itemAnimation) {
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				frame = 1;
+				break;
+
+				case 5:
+				case 6:
+				case 7:
+				case 8:
+				frame = 2;
+				break;
+
+				case 9:
+				case 10:
+				case 11:
+				case 12:
+				frame = 3;
+				break;
+
+				case 13:
+				case 14:
+				case 15:
+				case 16:
+				frame = 4;
+				break;
+				default:
+				frame = 0;
+				break;
+			}
+
+			drawInfo.DrawDataCache.Add(new DrawData(
+				UseTexture,
+				pos,
+				new Rectangle(0, 32 * frame, 60, 30),
+				Item.GetAlpha(lightColor),
+				itemRotation,
+				drawOrigin,
+				drawPlayer.GetAdjustedItemScale(Item),
+				drawInfo.itemEffect,
+				0));
 		}
 	}
 }

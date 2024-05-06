@@ -21,7 +21,7 @@ namespace Origins.Items.Weapons.Magic {
         }
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.RubyStaff);
-			Item.damage = 20;
+			Item.damage = 28;
             Item.noMelee = true;
             Item.width = 44;
             Item.height = 44;
