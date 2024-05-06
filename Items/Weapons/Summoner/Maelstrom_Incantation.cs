@@ -35,6 +35,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.rare = ItemRarityID.Green;
 			Item.value = Item.sellPrice(silver: 60);
 			Item.holdStyle = ItemHoldStyleID.HoldLamp;
+			Item.UseSound = SoundID.Item8;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);

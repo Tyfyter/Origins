@@ -1,7 +1,6 @@
 using Origins.Items.Weapons.Demolitionist;
 using Origins.World.BiomeData;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -12,7 +11,7 @@ namespace Origins.NPCs.Riven {
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.DiggerHead);
 			NPC.width = NPC.height = 12;
-			NPC.lifeMax = 60;
+			NPC.lifeMax = 50;
 			NPC.defense = 7;
 			NPC.damage = 23;
 			NPC.HitSound = SoundID.NPCHit13;

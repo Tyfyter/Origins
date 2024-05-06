@@ -25,32 +25,32 @@ namespace Origins.Items.Weapons.Demolitionist {
             Item.ArmorPenetration += 3;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 150);
+			Recipe recipe = Recipe.Create(Type, 60);
 			recipe.AddIngredient(ItemID.SilverOre);
             recipe.AddIngredient(ItemID.SandBlock);
             recipe.Register();
 
-            recipe = Recipe.Create(Type, 150);
+            recipe = Recipe.Create(Type, 60);
             recipe.AddIngredient(ItemID.SilverOre);
             recipe.AddIngredient(ItemID.EbonsandBlock);
             recipe.Register();
 
-            recipe = Recipe.Create(Type, 150);
+            recipe = Recipe.Create(Type, 60);
             recipe.AddIngredient(ItemID.SilverOre);
             recipe.AddIngredient(ItemID.CrimsandBlock);
             recipe.Register();
 
-            recipe = Recipe.Create(Type, 150);
+            recipe = Recipe.Create(Type, 60);
             recipe.AddIngredient(ItemID.SilverOre);
             recipe.AddIngredient(ModContent.ItemType<Defiled_Sand_Item>());
             recipe.Register();
 
-            recipe = Recipe.Create(Type, 150);
+            recipe = Recipe.Create(Type, 60);
             recipe.AddIngredient(ItemID.SilverOre);
             recipe.AddIngredient(ModContent.ItemType<Silica_Item>());
             recipe.Register();
 
-            /*recipe = Recipe.Create(Type, 150);
+            /*recipe = Recipe.Create(Type, 60);
             recipe.AddIngredient(ItemID.SilverOre);
             recipe.AddIngredient(ModContent.ItemType<Ashen_Sand_Item>());
             recipe.Register();*/

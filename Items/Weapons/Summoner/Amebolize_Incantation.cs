@@ -37,7 +37,7 @@ namespace Origins.Items.Weapons.Summoner {
 			Item.knockBack = 0f;
 			Item.value = Item.sellPrice(gold: 1, silver: 50);
 			Item.rare = ItemRarityID.Blue;
-			Item.UseSound = SoundID.Item7;
+			Item.UseSound = SoundID.Item8;
 			Item.glowMask = glowmask;
 			Item.channel = true;
 			Item.holdStyle = ItemHoldStyleID.HoldLamp;

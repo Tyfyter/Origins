@@ -16,9 +16,9 @@ namespace Origins.NPCs.Riven {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.BloodJelly);
-			NPC.lifeMax = 380;
-			NPC.defense = 20;
-			NPC.damage = 70;
+			NPC.lifeMax = 135;
+			NPC.defense = 14;
+			NPC.damage = 35;
 			NPC.width = 33;
 			NPC.height = 50;
 			NPC.frame.Height = 58;

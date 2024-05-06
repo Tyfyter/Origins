@@ -133,6 +133,7 @@ ENEMY NPCS:
 (^) Enchanted Fiberglass Bow
 (^) Enchanted Fiberglass Pistol
 (^) Enchanted Fiberglass Sword
+(^) Flagellant
 (^) Measly Moeba
 (^) Optiphage
 (^) Pustule Jellyfish*
@@ -140,6 +141,7 @@ ENEMY NPCS:
 (^) Riven Protoform
 (#, ^2) Scanner Scout
 (^) Shattered Goldfish
+(^) Single-Cellular Nautilus
 (^) Spider Amoeba
 
 (#, ^2) Amebeye* !!!
@@ -153,7 +155,6 @@ ENEMY NPCS:
 (^) Defiled Mimic
 (^) Defiled Tripod
 (#, ^2) Defiled Watcher* !!!
-(^) Flagellant
 (#, ^2) Hoarder
 (X) Holy Governor
 (X) Holy Warrior
@@ -168,7 +169,6 @@ ENEMY NPCS:
 (X) Sea Dragon
 (^) Shattered Ghoul
 (^) Shattered Mummy
-(^) Single-Cellular Nautilus
 (^) Torn Ghoul
 (#3, ^2) Trijaw Shark !!!
 
@@ -670,7 +670,6 @@ MAGIC WEAPONS:
 (^) Splitsplash
 (^) Tones of Agony
 
-(#3/4, ^2) Bad Hand
 (^) Bled Out Staff
 (^) Chemical Laser
 (#, ^2) Communion
