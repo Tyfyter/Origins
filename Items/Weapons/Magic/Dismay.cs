@@ -55,7 +55,7 @@ namespace Origins.Items.Weapons.Magic {
 
 			drawOrigin = new Vector2(20, 35);
 
-			Vector2 pos = new Vector2((int)(drawInfo.ItemLocation.X - Main.screenPosition.X + itemCenter.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
+			Vector2 pos = new Vector2((int)(drawInfo.ItemLocation.X - Main.screenPosition.X), (int)(drawInfo.ItemLocation.Y - Main.screenPosition.Y + itemCenter.Y));
 
 			drawInfo.DrawDataCache.Add(new DrawData(
 				itemTexture,
