@@ -4,6 +4,7 @@ using Origins.Items.Other.Consumables.Food;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
+using Terraria.GameContent.Events;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -37,10 +38,9 @@ namespace Origins.NPCs.Riven {
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.Water) {
-				if (/*TODO: sandsoitnrm*/) {
-
+				if (!Sandstorm.Happening || !spawnInfo.Player.ZoneSandstorm || !TileID.Sets.Conversion.Sand[spawnInfo.SpawnTileType] || !NPC.Spawning_SandstoneCheck(spawnInfo.SpawnTileX, spawnInfo.SpawnTileY)) {
+					return 0f;
 				}
-				return 0f;
 			}
             return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Shark1;
         }
