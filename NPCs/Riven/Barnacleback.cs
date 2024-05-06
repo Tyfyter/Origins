@@ -26,7 +26,11 @@ namespace Origins.NPCs.Riven {
 			NPC.DeathSound = SoundID.NPCDeath15;
 			NPC.knockBackResist = 0.75f;
 			NPC.value = 76;
-        }
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type,
+				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
+			];
+		}
         public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			float rate = Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.BarnBack;
 			if (rate == 0) return 0; // skip counting other barnaclebacks if it's already not going to spawn

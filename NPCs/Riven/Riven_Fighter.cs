@@ -27,7 +27,11 @@ namespace Origins.NPCs.Riven {
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath24.WithPitch(0.6f);
 			NPC.value = 90;
-        }
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type,
+				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
+			];
+		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Fighter;
 		}

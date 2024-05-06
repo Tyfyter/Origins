@@ -704,6 +704,7 @@ namespace Origins.World.BiomeData {
 
 			BloodBunny = ModContent.NPCType<Barnacle_Bunny>();
 			BloodPenguin = ModContent.NPCType<Riven_Penguin>();
+			BloodGoldfish = ModContent.NPCType<Bottomfeeder>();
 
 			AddWallConversions<Riven_Flesh_Wall>(
 				WallID.Stone,

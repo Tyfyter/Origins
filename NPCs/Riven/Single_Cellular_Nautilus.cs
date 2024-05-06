@@ -26,7 +26,11 @@ namespace Origins.NPCs.Riven {
 			NPC.knockBackResist = 1f;
 			NPC.frame.Height = 30;
 			NPC.value = 450;
-        }
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type,
+				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
+			];
+		}
 		public override void PostAI() {
 			NPC.rotation += NPC.velocity.X / 24f;
 			NPC.frameCounter++;

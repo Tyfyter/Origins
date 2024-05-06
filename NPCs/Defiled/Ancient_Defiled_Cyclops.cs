@@ -27,7 +27,11 @@ namespace Origins.NPCs.Defiled {
 			NPC.height = 114;
 			NPC.friendly = false;
 			NPC.value = 10000;
-        }
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type,
+				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
+			];
+		}
 		public bool ForceSyncMana => false;
 		public float Mana { get; set; }
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {

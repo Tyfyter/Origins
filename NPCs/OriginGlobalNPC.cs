@@ -23,6 +23,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
 using Terraria.ID;
 using Terraria.Localization;
@@ -190,6 +191,17 @@ namespace Origins.NPCs {
 				if (Math.Abs(preAIVelocity.Y) <= 0.075f && npc.velocity.Y < preAIVelocity.Y) {
 					npc.velocity.Y *= 1.2f;//
 				}
+			}
+		}
+		public override void SetBestiary(NPC npc, BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
+			switch (npc.type) {
+				case NPCID.DesertDjinn:
+				case NPCID.DesertLamiaDark:
+				bestiaryEntry.AddTags(
+					ModContent.GetInstance<Defiled_Wastelands_Underground_Desert>().ModBiomeBestiaryInfoElement,
+					ModContent.GetInstance<Riven_Hive_Underground_Desert>().ModBiomeBestiaryInfoElement
+				);
+				break;
 			}
 		}
 		public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot) {

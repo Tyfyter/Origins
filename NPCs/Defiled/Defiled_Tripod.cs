@@ -37,6 +37,9 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 5000;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
+			];
 		}
 		public int MaxMana => 160;
 		public int MaxManaDrain => 32;
@@ -51,7 +54,7 @@ namespace Origins.NPCs.Defiled {
 			Mana -= factor / 60f;// 2 mana for every 1 health regenerated
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.PlayerSafe || spawnInfo.DesertCave) return 0;
+			if (spawnInfo.PlayerSafe || spawnInfo.DesertCave || spawnInfo.SpawnTileY <= Main.worldSurface) return 0;
 			return Defiled_Wastelands.SpawnRates.LandEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Tripod;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

@@ -64,9 +64,6 @@ namespace Origins.NPCs.Defiled.Boss {
 			NPCID.Sets.SpecificDebuffImmunity[Type][BuffID.Confused] = true;
 			NPCID.Sets.CantTakeLunchMoney[Type] = true;
 			ID = Type;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Zombie);
@@ -86,6 +83,9 @@ namespace Origins.NPCs.Defiled.Boss {
 			Music = Origins.Music.DefiledBoss;
 			NPC.knockBackResist = 0; // actually a multiplier
 			NPC.value = Item.sellPrice(gold: 1);
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			];
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get => 1; set { } }

@@ -2,6 +2,7 @@
 using Origins.Items.Armor.Defiled;
 using Origins.Items.Materials;
 using Origins.Items.Other.Consumables.Food;
+using Origins.World.BiomeData;
 using System;
 using System.IO;
 using Terraria;
@@ -29,6 +30,9 @@ namespace Origins.NPCs.Defiled {
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.knockBackResist = 0.75f;
 			NPC.value = 76;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			];
 		}
 		public int MaxMana => 35;
 		public int MaxManaDrain => 15;

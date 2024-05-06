@@ -23,9 +23,6 @@ namespace Origins.NPCs.Defiled {
 			NPC.CloneDefaults(NPCID.CorruptPenguin);
 			AnimationType = NPCID.CorruptPenguin;
 			AIType = NPCID.CorruptPenguin;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Defiled_Wastelands>().Type
-			};
         }
 		public override void AI() {
 			NPCAimedTarget target = NPC.GetTargetData(false);
@@ -62,7 +59,8 @@ namespace Origins.NPCs.Defiled {
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 this.GetBestiaryFlavorText(),
-            });
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon
+			});
 		}
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone) {
             Rectangle spawnbox = projectile.Hitbox.MoveToWithin(NPC.Hitbox);

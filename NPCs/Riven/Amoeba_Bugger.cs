@@ -10,6 +10,9 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Riven {
 	public class Amoeba_Bugger : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
+				Hide = true,
+			});
 			Main.npcFrameCount[NPC.type] = 2;
 		}
 		public override void SetDefaults() {

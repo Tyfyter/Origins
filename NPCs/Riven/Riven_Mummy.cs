@@ -25,12 +25,12 @@ namespace Origins.NPCs.Riven {
 			NPC.value = 7;
 			AnimationType = NPCID.BloodMummy;
 			SpawnModBiomes = [
-				ModContent.GetInstance<Riven_Hive_Desert>().Type
+				ModContent.GetInstance<Riven_Hive_Desert>().Type,
+				ModContent.GetInstance<Riven_Hive_Underground_Desert>().Type
 			];
 			//ModContent.Request<Microsoft.Xna.Framework.Graphics.Texture2D>("Origins/UI/MapBGs/Riven_Desert").Value.Size()
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.DesertCave) return 0;
 			return spawnInfo.SpecificTilesEnemyRate([ModContent.TileType<Silica>()], true) * Riven_Hive.SpawnRates.Mummy / 3f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

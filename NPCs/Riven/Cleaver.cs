@@ -26,14 +26,18 @@ namespace Origins.NPCs.Riven {
 			NPC.HitSound = SoundID.NPCHit13;
 			NPC.DeathSound = SoundID.NPCDeath23;
 			NPC.value = 70;
-        }
+			SpawnModBiomes = [
+				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
+			];
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				this.GetBestiaryFlavorText("A vicious defender of the Riven Hive, the Cleaver hides in burrows of spug flesh awaiting any trespassers of its territory."),
 			});
 		}
         public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-            return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Cleaver;
+			if (spawnInfo.SpawnTileY <= Main.worldSurface || spawnInfo.PlayerSafe || spawnInfo.DesertCave) return 0;
+			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Cleaver;
         }
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 3, 6));

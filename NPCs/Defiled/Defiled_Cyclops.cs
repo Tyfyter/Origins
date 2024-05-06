@@ -30,6 +30,10 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 90;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type,
+				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
+			];
 		}
 		public int MaxMana => 50;
 		public int MaxManaDrain => 10;

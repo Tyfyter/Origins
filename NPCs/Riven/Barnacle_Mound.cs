@@ -28,7 +28,11 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 24;
 			NPC.knockBackResist = 0;
 			NPC.value = 100;
-        }
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type,
+				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
+			];
+		}
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Bud_Barnacle>(), 1, 3, 8));
         }

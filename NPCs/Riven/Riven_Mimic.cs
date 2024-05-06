@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -25,6 +26,10 @@ namespace Origins.NPCs.Riven {
 			NPC.knockBackResist = 0.1f;
 			NPC.rarity = 5;
 			AnimationType = NPCID.BigMimicCrimson;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type,
+				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
+			];
 		}
         public override void HitEffect(NPC.HitInfo hit) {
 			if (Main.netMode == NetmodeID.Server) return;

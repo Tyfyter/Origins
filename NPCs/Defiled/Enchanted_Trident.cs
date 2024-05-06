@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Origins.World.BiomeData;
+using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -19,6 +20,9 @@ namespace Origins.NPCs.Defiled {
 			NPC.height = 40;
 			NPC.knockBackResist = 0.35f;
 			NPC.value = 1000;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
+			];
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get; set; }

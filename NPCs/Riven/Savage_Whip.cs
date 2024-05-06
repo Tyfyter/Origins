@@ -22,6 +22,9 @@ namespace Origins.NPCs.Riven {
 			NPC.value = 1000;
 			NPC.noGravity = true;
 			NPC.noTileCollide = true;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
+			];
 		}
 		public int AIState {
 			get => (int)NPC.ai[0];

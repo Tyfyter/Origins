@@ -48,21 +48,6 @@ namespace Origins.NPCs.Defiled
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) {
 			return entity.ModNPC is IDefiledEnemy;
 		}
-		public override void SetDefaults(NPC entity) {
-			if (entity.ModNPC is not null) {
-				int biomeType = ModContent.GetInstance<Defiled_Wastelands>().Type;
-				if ((entity.ModNPC.SpawnModBiomes?.Length ?? 0) == 0) {
-					entity.ModNPC.SpawnModBiomes = [
-						biomeType
-					];
-				} else if (!entity.ModNPC.SpawnModBiomes.Contains(biomeType)) {
-					int[] spawnModBiomes = new int[entity.ModNPC.SpawnModBiomes.Length + 1];
-					entity.ModNPC.SpawnModBiomes.CopyTo(spawnModBiomes, 1);
-					spawnModBiomes[0] = biomeType;
-					entity.ModNPC.SpawnModBiomes = spawnModBiomes;
-				}
-			}
-		}
 		static HashSet<int> hasErroredAboutWrongNPC;
 		public override void UpdateLifeRegen(NPC npc, ref int damage) {
 			if (npc.ModNPC is IDefiledEnemy defiledEnemy) {

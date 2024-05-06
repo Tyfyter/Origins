@@ -23,6 +23,9 @@ namespace Origins.NPCs.Riven {
 			NPC.value = 40;
 			AIType = NPCID.Crimslime;
 			AnimationType = NPCID.Crimslime;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type,
+			];
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.AmebSlime;

@@ -35,8 +35,9 @@ namespace Origins.NPCs.Defiled {
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("Goldfish "),
-			});
+				this.GetBestiaryFlavorText(),
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon
+            });
 		}
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {

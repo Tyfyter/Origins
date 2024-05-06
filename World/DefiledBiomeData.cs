@@ -667,6 +667,7 @@ namespace Origins.World.BiomeData {
 
 			BloodBunny = ModContent.NPCType<Defiled_Mite>();
 			BloodPenguin = ModContent.NPCType<Bile_Thrower>();
+			BloodGoldfish = ModContent.NPCType<Shattered_Goldfish>();
 
 			AddWallConversions<Defiled_Stone_Wall>(
 				WallID.Stone,

@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
 using Origins.Tiles.Defiled;
+using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -28,6 +29,9 @@ namespace Origins.NPCs.Defiled {
 			NPC.catchItem = 0;
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			];
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get => 1; set { } }

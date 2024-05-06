@@ -14,13 +14,11 @@ namespace Origins.NPCs.Riven {
 			NPC.CloneDefaults(NPCID.CrimsonBunny);
 			AnimationType = NPCID.CrimsonBunny;
 			AIType = NPCID.CrimsonBunny;
-			SpawnModBiomes = new int[] {
-				ModContent.GetInstance<Riven_Hive>().Type
-			};
         }
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 this.GetBestiaryFlavorText(),
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon
             });
 		}
 		public override void HitEffect(NPC.HitInfo hit) {

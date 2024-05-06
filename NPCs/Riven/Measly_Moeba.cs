@@ -25,7 +25,11 @@ namespace Origins.NPCs.Riven {
 			NPC.frame.Height = 22;
 			NPC.alpha = 50;
 			NPC.value = 20;
-        }
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type,
+				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
+			];
+		}
 		public override void AI() {
 			if (NPC.direction == 0) {
 				NPC.TargetClosest();
@@ -115,6 +119,7 @@ namespace Origins.NPCs.Riven {
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.Water) return 0f;
+			if (spawnInfo.Player.ZoneBeach) return 0f;
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Moeba;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

@@ -22,7 +22,11 @@ namespace Origins.NPCs.Riven {
             NPC.height = 32;
             NPC.frame.Height = 38;
             NPC.value = 400;
-        }
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type,
+				ModContent.GetInstance<Riven_Hive_Ocean>().Type
+			];
+		}
         public override void ModifyNPCLoot(NPCLoot npcLoot) {
             npcLoot.Add(ItemDropRule.Common(ItemID.SharkFin, 8));
             npcLoot.Add(ItemDropRule.Common(ItemID.Nachos, 30));
@@ -32,12 +36,18 @@ namespace Origins.NPCs.Riven {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Riven2_Pants>(), 25));
         }
         public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-            if (!spawnInfo.Water) return 0f;
+			if (!spawnInfo.Water) {
+				if (/*TODO: sandsoitnrm*/) {
+
+				}
+				return 0f;
+			}
             return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo) * Riven_Hive.SpawnRates.Shark1;
         }
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
             bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
                 this.GetBestiaryFlavorText("This menacing shark has adapted to the Hive's ecosystem quite well, taking on a triple-mandible design used for crushing and cracking nautili caught in its path."),
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.Sandstorm
             });
         }
         public override void AI() {

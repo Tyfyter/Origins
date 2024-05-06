@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Accessories;
 using Origins.Items.Weapons.Ranged;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -28,6 +29,10 @@ namespace Origins.NPCs.Defiled {
 			NPC.knockBackResist = 0.1f;
 			NPC.rarity = 5;
 			AnimationType = NPCID.BigMimicCorruption;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type,
+				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type,
+			];
 		}
 		public bool ForceSyncMana => false;
 		public float Mana { get; set; }

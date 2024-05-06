@@ -26,8 +26,12 @@ namespace Origins.NPCs.Riven {
 			NPC.defense = 18;
 			NPC.damage = 52;
 			NPC.value = 1000;
-        }
+			SpawnModBiomes = [
+				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
+			];
+		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
+			if (spawnInfo.SpawnTileY <= Main.worldSurface || spawnInfo.PlayerSafe || spawnInfo.DesertCave) return 0;
 			return Riven_Hive.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Worm;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

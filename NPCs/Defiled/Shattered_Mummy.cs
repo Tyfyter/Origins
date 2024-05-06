@@ -30,7 +30,8 @@ namespace Origins.NPCs.Defiled {
 			NPC.value = 700;
 			AnimationType = NPCID.DarkMummy;
 			SpawnModBiomes = [
-				ModContent.GetInstance<Defiled_Wastelands_Desert>().Type
+				ModContent.GetInstance<Defiled_Wastelands_Desert>().Type,
+				ModContent.GetInstance<Defiled_Wastelands_Underground_Desert>().Type
 			];
 		}
 		public int MaxMana => 100;
@@ -45,7 +46,6 @@ namespace Origins.NPCs.Defiled {
 			Mana -= factor / 180f;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
-			if (spawnInfo.DesertCave) return 0;
 			return spawnInfo.SpecificTilesEnemyRate([ModContent.TileType<Defiled_Sand>()], true) * Defiled_Wastelands.SpawnRates.Mummy / 3f;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {

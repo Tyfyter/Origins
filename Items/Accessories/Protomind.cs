@@ -107,7 +107,13 @@ namespace Origins.Items.Accessories {
 			}
 		}
 		public static string GetRandomVariation(QuoteType type) {
-			messagesByType ??= new Message_Cache[(int)QuoteType.Count];
+			if ((int)type >= (int)QuoteType.Count) {
+				Origins.instance.Logger.Error($"{nameof(Protomind)}.{nameof(GetRandomVariation)} called with invalid parameter {type} ({(int)type})");
+				return "misingno";
+			}
+			if (messagesByType is null || messagesByType.Length != (int)QuoteType.Count) {
+				messagesByType = new Message_Cache[(int)QuoteType.Count];
+			}
 			Message_Cache refreshCache = messagesByType[(int)type];
 			if (refreshCache.LastCulture?.IsActive == true && refreshCache.LastGameMode == Main.GameModeInfo.Id) {
 				return Main.rand.Next(messagesByType[(int)type].Cache);

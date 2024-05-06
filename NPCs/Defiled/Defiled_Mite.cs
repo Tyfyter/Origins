@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Armor.Defiled;
+using Origins.World.BiomeData;
 using System;
 using System.IO;
 using Terraria;
@@ -30,6 +31,9 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			NPC.value = 20;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
+			];
 		}
 		public int MaxMana => 16;
 		public int MaxManaDrain => 8;
@@ -45,6 +49,7 @@ namespace Origins.NPCs.Defiled {
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				this.GetBestiaryFlavorText("Dweller of the {$Defiled} Caverns. Hard to spot as it does not move until prey draws near."),
+				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Events.BloodMoon
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {

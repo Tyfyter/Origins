@@ -27,7 +27,11 @@ namespace Origins.NPCs.Defiled {
 			NPC.knockBackResist = 0.5f;
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
-        }
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type,
+				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
+			];
+		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.Water) return 0;
 			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.Sqid;

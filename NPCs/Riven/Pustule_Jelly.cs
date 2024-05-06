@@ -20,7 +20,12 @@ namespace Origins.NPCs.Riven {
 			NPC.width = 32;
 			NPC.height = 42;
 			NPC.frame.Height = 40;
-        }
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type,
+				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type,
+				ModContent.GetInstance<Riven_Hive_Ocean>().Type,
+			];
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				this.GetBestiaryFlavorText("A Riven-infected jellyfish living in its new parasite-prevalent environment."),

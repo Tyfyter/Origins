@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Materials;
+using Origins.World.BiomeData;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Bestiary;
@@ -25,6 +26,9 @@ namespace Origins.NPCs.Defiled {
 			NPC.HitSound = Origins.Sounds.DefiledHurt;
 			NPC.DeathSound = Origins.Sounds.DefiledKill;
 			AnimationType = NPCID.Merchant;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			];
 		}
 		public int MaxMana => 50;
 		public int MaxManaDrain => 10;

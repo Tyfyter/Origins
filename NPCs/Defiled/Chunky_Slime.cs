@@ -23,6 +23,10 @@ namespace Origins.NPCs.Defiled {
 			NPC.value = 40;
 			AIType = NPCID.Crimslime;
 			AnimationType = NPCID.Crimslime;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type,
+				ModContent.GetInstance<Underground_Defiled_Wastelands_Biome>().Type
+			];
 		}
 		public int MaxMana => 50;
 		public int MaxManaDrain => 10;

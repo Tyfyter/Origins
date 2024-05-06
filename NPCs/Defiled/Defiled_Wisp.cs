@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Items.Weapons.Demolitionist;
+using Origins.World.BiomeData;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -27,6 +28,9 @@ namespace Origins.NPCs.Defiled {
 			NPC.friendly = false;
 			NPC.HitSound = SoundID.NPCHit36;
 			NPC.DeathSound = SoundID.NPCDeath39;
+			SpawnModBiomes = [
+				ModContent.GetInstance<Defiled_Wastelands>().Type
+			];
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {

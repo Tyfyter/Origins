@@ -23,7 +23,12 @@ namespace Origins.NPCs.Riven {
 			NPC.height = 50;
 			NPC.frame.Height = 58;
 			NPC.value = 500;
-        }
+			SpawnModBiomes = [
+				ModContent.GetInstance<Riven_Hive>().Type,
+				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type,
+				ModContent.GetInstance<Riven_Hive_Ocean>().Type
+			];
+		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
 				this.GetBestiaryFlavorText("A gentle swimmer in the amoeba-infested waters. It is flimsy and fragile, so travelers should be weary when approaching it."),
