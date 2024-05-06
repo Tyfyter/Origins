@@ -30,7 +30,7 @@ namespace Origins.NPCs.Riven {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Ameballoon>(), 1, 3, 6));
         }
 		public override void AI() {
-			NPC.velocity *= 1.0033f;
+			//NPC.velocity *= 1.0033f;
 			if (Main.netMode != NetmodeID.MultiplayerClient && NPC.localAI[0] == 0) {
 				NPC.localAI[0] = 1;
 				NPC.spriteDirection = Main.rand.NextBool() ? 1 : -1;
