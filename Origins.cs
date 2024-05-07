@@ -454,9 +454,14 @@ namespace Origins {
 				Volume = 0.4f,
 				PitchRange = (0.9f, 1.1f)
 			};
-			Sounds.DefiledKill = new SoundStyle("Origins/Sounds/Custom/Defiled_Kill1", SoundType.Sound) {
+			Sounds.defiledKill = new SoundStyle("Origins/Sounds/Custom/Defiled_Kill1", SoundType.Sound) {
 				MaxInstances = 0,
 				Volume = 0.4f,
+				PitchRange = (0.9f, 1.1f)
+			};
+			Sounds.defiledKillAF = new SoundStyle("Origins/Sounds/Custom/BlockusLand", SoundType.Sound) {
+				MaxInstances = 0,
+				Volume = 1.0f,
 				PitchRange = (0.9f, 1.1f)
 			};
 			Sounds.Amalgamation = new SoundStyle("Origins/Sounds/Custom/ChorusRoar", SoundType.Sound) {
@@ -763,7 +768,9 @@ namespace Origins {
 			public static SoundStyle DeepBoom = SoundID.Item14;
 			public static SoundStyle DefiledIdle = SoundID.Zombie1;
 			public static SoundStyle DefiledHurt = SoundID.DD2_SkeletonHurt;
-			public static SoundStyle DefiledKill = SoundID.NPCDeath1;
+			public static SoundStyle DefiledKill => OriginsModIntegrations.CheckAprilFools() ? defiledKillAF : defiledKill;
+			public static SoundStyle defiledKill = SoundID.NPCDeath1;
+			public static SoundStyle defiledKillAF = SoundID.NPCDeath1;
 			public static SoundStyle Amalgamation = SoundID.Zombie1;
             public static SoundStyle BeckoningRoar = SoundID.ForceRoar;
             public static SoundStyle PowerUp = SoundID.Item4;
