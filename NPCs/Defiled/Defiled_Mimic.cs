@@ -38,11 +38,11 @@ namespace Origins.NPCs.Defiled {
 		public float Mana { get; set; }
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.OneFromOptions(1,
-				ItemID.SoulDrain,
+				ItemID.SoulDrain, // Communion
 				ModContent.ItemType<Incision>(),
-				ItemID.FetidBaghnakhs,
+				ItemID.FetidBaghnakhs, // Ziptie
 				ModContent.ItemType<Ravel>(),
-				ItemID.TendonHook
+				ItemID.TendonHook // Chunky Hook
 			));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
 			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));

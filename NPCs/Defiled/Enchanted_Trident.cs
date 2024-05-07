@@ -43,6 +43,7 @@ namespace Origins.NPCs.Defiled {
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ItemID.MeatGrinder, 200));
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Nazar, 100));
 		}
 		public override void HitEffect(NPC.HitInfo hit) {

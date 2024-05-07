@@ -104,6 +104,13 @@ namespace Origins.Items.Other.Fish {
 			recipe.AddIngredient(this, 2);
 			recipe.AddTile(TileID.CookingPots);
 			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.HeartreachPotion);
+			recipe.AddIngredient(ItemID.BottledWater);
+			recipe.AddIngredient(ItemID.Daybloom);
+			recipe.AddIngredient(this);
+			recipe.AddTile(TileID.CookingPots);
+			recipe.Register();
 		}
 	}
 	public class Bilemouth : ModItem {
@@ -122,6 +129,13 @@ namespace Origins.Items.Other.Fish {
 			recipe.AddIngredient(this, 2);
 			recipe.AddTile(TileID.CookingPots);
 			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.HeartreachPotion);
+			recipe.AddIngredient(ItemID.BottledWater);
+			recipe.AddIngredient(ItemID.Daybloom);
+			recipe.AddIngredient(this);
+			recipe.AddTile(TileID.CookingPots);
+			recipe.Register();
 		}
 	}
 	public class Polyeel : ModItem {
@@ -138,6 +152,13 @@ namespace Origins.Items.Other.Fish {
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(ItemID.SeafoodDinner);
 			recipe.AddIngredient(this, 2);
+			recipe.AddTile(TileID.CookingPots);
+			recipe.Register();
+
+			recipe = Recipe.Create(ItemID.HeartreachPotion);
+			recipe.AddIngredient(ItemID.BottledWater);
+			recipe.AddIngredient(ItemID.Daybloom);
+			recipe.AddIngredient(this);
 			recipe.AddTile(TileID.CookingPots);
 			recipe.Register();
 		}

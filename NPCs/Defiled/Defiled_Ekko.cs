@@ -11,7 +11,6 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Ekko : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Ekko");
 			Main.npcFrameCount[NPC.type] = 14;
 		}
 		public override void SetDefaults() {
@@ -43,16 +42,12 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				/*if (heartBroken <= 1) {
-				this.GetBestiaryFlavorText("Please just be my friend... I even tried to look like you. Am I beautiful?");
-				} else {
-				this.GetBestiaryFlavorText("An attempt for the Defiled to copy the abilities of the Terrarian, this being serves as a huge threat to anything that is cleasning the Defiled.");
-				}*/
 				this.GetBestiaryFlavorText("An attempt for the Defiled to copy the abilities of the Terrarian, this being serves as a huge threat to anything that is cleasning the Defiled."),
 			});
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			// npcLoot.Add(ItemDropRule.ByCondition(hardmodeEnabled), ItemID.MeatGrinder, 200));
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(800)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);

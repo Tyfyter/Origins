@@ -66,7 +66,7 @@ namespace Origins.NPCs.Defiled {
 			npcLoot.Add(ItemDropRule.StatusImmunityItem(ItemID.Vitamins, 100));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
 			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tripod_Nip>(), 87));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Tripod_Nip>(), 48));
 		}
 		public override void AI() {
 			if (Main.rand.NextBool(400)) SoundEngine.PlaySound(Origins.Sounds.DefiledIdle, NPC.Center);

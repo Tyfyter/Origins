@@ -13,7 +13,6 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
 	public class Defiled_Wisp : ModNPC {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("{$Defiled} Wisp");
 			Main.npcFrameCount[Type] = 3;
 			NPCID.Sets.DontDoHardmodeScaling[Type] = true;
 		}

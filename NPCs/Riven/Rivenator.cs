@@ -4,7 +4,6 @@ using Origins.Items.Weapons.Magic;
 using Origins.World.BiomeData;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;

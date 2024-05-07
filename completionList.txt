@@ -127,7 +127,6 @@ ENEMY NPCS:
 (^) Defiled Krusher
 (^) Defiled Mite
 (^) Defiled Phantom
-(^) Defiled Squid*
 (^) Defiled Swarmer
 (^) Defiled Wisp
 (^) Enchanted Fiberglass Bow
@@ -153,7 +152,8 @@ ENEMY NPCS:
 (@5, #) Carpalfish*
 (#, ^2) Defiled Asphyxiator* !!!
 (^) Defiled Mimic
-(X) Defiled Pigron !!!
+(#, ^2) Defiled Pigron !!!
+(^) Defiled Squid*
 (^) Defiled Tripod
 (#, ^2) Defiled Watcher* !!!
 (#, ^2) Hoarder
@@ -166,7 +166,7 @@ ENEMY NPCS:
 (^) Profaned Bident
 (^) Pustule Jelly
 (^) Riven Mimic
-(X) Riven Pigron !!!
+(#, ^2) Riven Pigron !!!
 (^) Savage Whip*
 (X) Sea Dragon
 (^) Shattered Ghoul
@@ -480,7 +480,7 @@ VANITY:
 UTILITIES:
 ---
 (^) Amoeba Hook
-(X) Chunky Hook
+(X) Chunky Hook !!!
 (#, ^2) Nano Hook
 (#, ^2) Quantum Hook
 
@@ -672,10 +672,10 @@ MAGIC WEAPONS:
 
 (^) Bled Out Staff
 (^) Chemical Laser
-(#, ^2) Communion
+(#, ^2) Communion !!!
 (^) Dismay
 (^) Innermost Manifest
-(#2, ^2) Missing File
+(#2, ^2) Missing File !!!
 (^) Seam Beam
 (X) Shinedown
 (^) Splashid
@@ -724,7 +724,7 @@ SUMMONER WEAPONS:
 (X) Mildew Incantation
 (X) Mildew Whip
 (X) Obsidian Bone
-(X) Ziptie
+(X) Ziptie !!!
 
 (X) Candlelight
 (X) Controller/Patrol Bot Controller
@@ -845,6 +845,7 @@ TILES:
 (^) Felnum Ore*
 (^) Fiberglass Block*
 (#, ^2) Geyser Core Block*
+(^) Gray Ice Block*
 (^) Hardened Defiled Sand*
 (X) Harmony Brick*
 (^) Lost Ore*
@@ -862,7 +863,6 @@ TILES:
 (X) Sootgrass*
 (^) Spug Flesh*
 (@5, ^3) Twilith*
-(^) White Ice Block*
 
 (^) Batholith Wall
 (^) Brittle Quartz Wall
@@ -1147,9 +1147,10 @@ CONSUMABLES:
 MOUNTS & PETS:
 ---
 (^) Blockus Tube (Juvenile Amalgamation)*
+(^) Chromatic Scale (Rainbow Pangolin)
 (#, ^2) Fleshy Globe (Self-Contained Universe)* !!!
 (^) Strange Power-Up (Platformer Mech)
-(^) Chromatic Scale (Rainbow Pangolin)
+(X) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)
 (#2, ^2) Salty Seed (Eutrophic Cell)

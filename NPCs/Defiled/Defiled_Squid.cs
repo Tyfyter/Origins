@@ -1,6 +1,7 @@
 ﻿using AltLibrary.Common.AltBiomes;
 using Microsoft.Xna.Framework;
 using Origins.Dusts;
+using Origins.Items.Materials;
 using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
@@ -10,7 +11,7 @@ using Terraria.ModLoader;
 using Terraria.Utilities;
 
 namespace Origins.NPCs.Defiled {
-    public class Defiled_Squid : Glowing_Mod_NPC, IDefiledEnemy {
+	public class Defiled_Squid : Glowing_Mod_NPC, IDefiledEnemy {
 		public int MaxMana => 32;
 		public int MaxManaDrain => 8;
 		public float Mana {
@@ -23,8 +24,10 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.Squid);
-			NPC.lifeMax = 150;
-			NPC.knockBackResist = 0.5f;
+			NPC.damage = 75;
+			NPC.lifeMax = 165;
+			NPC.defense = 22;
+			NPC.knockBackResist = 0;
             NPC.HitSound = Origins.Sounds.DefiledHurt;
             NPC.DeathSound = Origins.Sounds.DefiledKill;
 			SpawnModBiomes = [
@@ -34,12 +37,17 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			if (!spawnInfo.Water) return 0;
-			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo) * Defiled_Wastelands.SpawnRates.Sqid;
+			return Defiled_Wastelands.SpawnRates.FlyingEnemyRate(spawnInfo, true) * Defiled_Wastelands.SpawnRates.Sqid;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
 			bestiaryEntry.AddTags(
 				this.GetBestiaryFlavorText()
 			);
+		}
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.Common(ItemID.BlackInk));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Strange_String>(), 1, 1, 3));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Black_Bile>(), 1, 1, 3));
 		}
 		public override bool CanHitNPC(NPC target) {
 			if (DefiledGlobalNPC.NPCTransformations.ContainsKey(target.type)) return false;
@@ -115,9 +123,6 @@ namespace Origins.NPCs.Defiled {
 		}
 		public override void PostAI() {
 			NPC.friendly = false;
-		}
-		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			npcLoot.Add(ItemDropRule.Common(ItemID.BlackInk));
 		}
 	}
 	public class Squid_Bile_P : ModProjectile {
