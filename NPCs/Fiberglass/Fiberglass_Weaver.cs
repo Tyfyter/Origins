@@ -151,12 +151,22 @@ namespace Origins.NPCs.Fiberglass {
 						Vector2 position;
 						if (Main.netMode != NetmodeID.MultiplayerClient) {
 							int projectileType = ModContent.ProjectileType<Fiberglass_Thread>();
-							for (int i = 5 + DifficultyMult; i-- > 0;) {
+							for (int i = 5; i-- > 0;) {
 								PolarVec2 vec = new PolarVec2(Main.rand.Next(8 - DifficultyMult, 12 - DifficultyMult) * 64, Main.rand.NextFloat(0, MathHelper.TwoPi));
 								Collision.AimingLaserScan(target.Center, target.Center + (Vector2)vec, 2, 3, out position, out float[] samples);
 								position = position.SafeNormalize(Vector2.One) * samples.Average() + target.Center;
-								Vector2 velocity = (Vector2)vec.RotatedBy(MathHelper.PiOver2 + Main.rand.NextFloat(0.1f, 0.1f)).WithLength(12);
-								Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, projectileType, 10, 1, Main.myPlayer, ai0: -velocity.X, ai1: -velocity.Y);
+								Vector2 velocity = (Vector2)vec.RotatedBy(MathHelper.PiOver2 + Main.rand.NextFloat(-0.1f, 0.1f)).WithLength(12);
+								Projectile.NewProjectile(
+									NPC.GetSource_FromAI(),
+									position,
+									velocity,
+									projectileType,
+									10,
+									0,
+									Main.myPlayer,
+									ai0: -velocity.X,
+									ai1: -velocity.Y
+								);
 							}
 							NPC.ai[1] = 0;
 							NPC.ai[0] = 0;
@@ -294,8 +304,8 @@ namespace Origins.NPCs.Fiberglass {
 			return Collision.CheckAABBvLineCollision2(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, OtherEndPos + new Vector2(4));
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
-			if (Main.masterMode && Main.rand.NextBool(4)) {
-				target.AddBuff(BuffID.Webbed, 30);
+			if (Main.rand.NextBool(32 >> Fiberglass_Weaver.DifficultyMult)) {
+				target.AddBuff(BuffID.Webbed, 10 * Fiberglass_Weaver.DifficultyMult);
 			}
 		}
 		public override bool OnTileCollide(Vector2 oldVelocity) {
