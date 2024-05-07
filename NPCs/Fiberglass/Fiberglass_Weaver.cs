@@ -156,14 +156,7 @@ namespace Origins.NPCs.Fiberglass {
 								Collision.AimingLaserScan(target.Center, target.Center + (Vector2)vec, 2, 3, out position, out float[] samples);
 								position = position.SafeNormalize(Vector2.One) * samples.Average() + target.Center;
 								Vector2 velocity = (Vector2)vec.RotatedBy(MathHelper.PiOver2 + Main.rand.NextFloat(0.1f, 0.1f)).WithLength(12);
-								int firstEnd = Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, projectileType, 10, 1, Main.myPlayer, ai1: i + 1);
-								int secondEnd = Projectile.NewProjectile(NPC.GetSource_FromAI(), position, -velocity, projectileType, 10, 1, Main.myPlayer, firstEnd, ai1: i + 1);
-
-								int durBoost = Main.rand.Next(60, 120) * DifficultyMult;
-								Main.projectile[firstEnd].timeLeft += durBoost;
-								Main.projectile[firstEnd].netUpdate = true;
-								Main.projectile[secondEnd].timeLeft += durBoost;
-								Main.projectile[secondEnd].netUpdate = true;
+								Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, projectileType, 10, 1, Main.myPlayer, ai0: -velocity.X, ai1: -velocity.Y);
 							}
 							NPC.ai[1] = 0;
 							NPC.ai[0] = 0;
@@ -265,35 +258,40 @@ namespace Origins.NPCs.Fiberglass {
 	}
 	public class Fiberglass_Thread : ModProjectile {
 		public override string Texture => "Origins/Projectiles/Pixel";
-		
+		public Vector2 OtherEndPos {
+			get => new(Projectile.localAI[0], Projectile.localAI[1]);
+			set {
+				Projectile.localAI[0] = value.X;
+				Projectile.localAI[1] = value.Y;
+			}
+		}
 		public override void SetDefaults() {
 			Projectile.hostile = true;
-			Projectile.timeLeft = 600;
+			Projectile.timeLeft = 600 + Main.rand.Next(60, 120) * Fiberglass_Weaver.DifficultyMult;
 			Projectile.width = Projectile.height = 8;
 		}
-		public override void OnSpawn(IEntitySource source) {
-			//if (source.Context is string s) {
-			//Projectile.ai[0] = s[0];
-			Projectile other;
-			for (int i = 0; i < Main.maxProjectiles; i++) {
-				if (i == Projectile.whoAmI) continue;
-				other = Main.projectile[i];
-				if (i == Projectile.ai[0]) {
-					other.ai[0] = Projectile.whoAmI;
-					continue;
-				}
-				if (other.type == Type && other.ai[1] == Projectile.ai[1]) {
-					other.Kill();
-				}
+		public override void AI() {
+			if (Projectile.ai[2] == 0) {
+				Projectile.ai[2] = 1;
+				Projectile.localAI[0] = Projectile.position.X;
+				Projectile.localAI[1] = Projectile.position.Y;
 			}
-			//}
+			Vector2 vel = Collision.AnyCollision(
+				new(Projectile.localAI[0], Projectile.localAI[1]),
+				new(Projectile.ai[0], Projectile.ai[1]),
+				8,
+				8
+			);
+			if (Projectile.ai[0] != vel.X || Projectile.ai[1] != vel.Y) {
+				Projectile.ai[0] = 0;
+				Projectile.ai[1] = 0;
+			}
+
+			Projectile.localAI[0] = vel.X;
+			Projectile.localAI[1] = vel.Y;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
-			if (Projectile.ai[0] > -1) {
-				Projectile other = Main.projectile[(int)Projectile.ai[0]];
-				return Collision.CheckAABBvLineCollision2(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, other.Center);
-			}
-			return false;
+			return Collision.CheckAABBvLineCollision2(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, OtherEndPos + new Vector2(4));
 		}
 		public override void OnHitPlayer(Player target, Player.HurtInfo info) {
 			if (Main.masterMode && Main.rand.NextBool(4)) {
@@ -305,13 +303,11 @@ namespace Origins.NPCs.Fiberglass {
 			return false;
 		}
 		public override bool PreDraw(ref Color lightColor) {
-			if (Projectile.ai[0] > -1) {
-				Projectile other = Main.projectile[(int)Projectile.ai[0]];
-				Vector2 pos = new Vector2(Projectile.Center.X - Main.screenPosition.X, Projectile.Center.Y - Main.screenPosition.Y);
-				Vector2 scale = new Vector2((other.Center - Projectile.Center).Length(), 2);
+			Vector2 pos = new Vector2(Projectile.Center.X - Main.screenPosition.X, Projectile.Center.Y - Main.screenPosition.Y);
+			Vector2 diff = OtherEndPos + new Vector2(4) - Projectile.Center;
+			Vector2 scale = new Vector2(diff.Length(), 2);
 
-				Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, pos, null, lightColor, (other.Center - Projectile.Center).ToRotation(), new Vector2(0.5f, 0), scale, SpriteEffects.None, 0);
-			}
+			Main.EntitySpriteDraw(TextureAssets.Projectile[Type].Value, pos, null, lightColor * 0.8f, diff.ToRotation(), new Vector2(0.5f, 0), scale, SpriteEffects.None, 0);
 			return false;
 		}
 	}
