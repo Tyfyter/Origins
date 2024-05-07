@@ -22,6 +22,7 @@ namespace Origins.Items.Accessories {
 			player.noFallDmg = true;
 			player.moveSpeed *= 0.9f;
 			player.jumpSpeedBoost += 3.75f;
+			player.endurance += (1 - player.endurance) * 0.3f;
 			if (!hideVisual) originPlayer.cursedCrownVisual = true;
 		}
 		public override void UpdateVanity(Player player) {
