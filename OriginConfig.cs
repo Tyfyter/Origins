@@ -113,7 +113,11 @@ namespace Origins {
 		public bool ExportAllStatsJSON {
 			get => false;
 			set {
-				if (value && !string.IsNullOrWhiteSpace(StatJSONPath)) {
+				if (value) {
+					if (!string.IsNullOrWhiteSpace(StatJSONPath)) {
+						Origins.LogError($"StatJSONPath is null or whitespace");
+						return;
+					}
 					if (Terraria.UI.ItemSlot.ShiftInUse) {
 						Directory.CreateDirectory(StatJSONPath);
 						int i;
@@ -126,7 +130,9 @@ namespace Origins {
 							}
 						}
 					} else {
-						Main.NewText("Shift must be held to export all stats, for safety reasons");
+						const string text = "Shift must be held to export all stats, for safety reasons";
+						Origins.LogError(text);
+						Main.NewText(text);
 					}
 				}
 			}
@@ -134,7 +140,11 @@ namespace Origins {
 		public ItemDefinition ExportItemStatsJSON {
 			get => default;
 			set {
-				if ((value?.Type ?? 0) > ItemID.None && !string.IsNullOrWhiteSpace(StatJSONPath)) {
+				if ((value?.Type ?? 0) > ItemID.None) {
+					if (!string.IsNullOrWhiteSpace(StatJSONPath)) {
+						Origins.LogError($"StatJSONPath is null or whitespace");
+						return;
+					}
 					Directory.CreateDirectory(StatJSONPath);
 					WikiPageExporter.ExportItemStats(ContentSamples.ItemsByType[value.Type]);
 				}
@@ -143,7 +153,15 @@ namespace Origins {
 		public bool ExportAllItemPages {
 			get => false;
 			set {
-				if (value && !string.IsNullOrWhiteSpace(WikiPagePath)) {
+				if (value) {
+					if (!string.IsNullOrWhiteSpace(WikiTemplatePath)) {
+						Origins.LogError($"WikiTemplatePath is null or whitespace");
+						return;
+					}
+					if (!string.IsNullOrWhiteSpace(WikiPagePath)) {
+						Origins.LogError($"WikiPagePath is null or whitespace");
+						return;
+					}
 					if (Terraria.UI.ItemSlot.ShiftInUse) {
 						Directory.CreateDirectory(WikiPagePath);
 						int i;
@@ -166,7 +184,15 @@ namespace Origins {
 		public ItemDefinition ExportItemPage {
 			get => default;
 			set {
-				if ((value?.Type ?? 0) > ItemID.None && !string.IsNullOrWhiteSpace(WikiTemplatePath) && !string.IsNullOrWhiteSpace(WikiPagePath)) {
+				if ((value?.Type ?? 0) > ItemID.None) {
+					if (!string.IsNullOrWhiteSpace(WikiTemplatePath)) {
+						Origins.LogError($"WikiTemplatePath is null or whitespace");
+						return;
+					}
+					if (!string.IsNullOrWhiteSpace(WikiPagePath)) {
+						Origins.LogError($"WikiPagePath is null or whitespace");
+						return;
+					}
 					Directory.CreateDirectory(WikiPagePath);
 					WikiPageExporter.ExportItemPage(ContentSamples.ItemsByType[value.Type]);
 				}
@@ -175,7 +201,11 @@ namespace Origins {
 		public bool ExportAllItemImages {
 			get => default;
 			set {
-				if (value && !string.IsNullOrWhiteSpace(WikiSpritesPath)) {
+				if (value) {
+					if (!string.IsNullOrWhiteSpace(WikiSpritesPath)) {
+						Origins.LogError($"WikiSpritesPath is null or whitespace");
+						return;
+					}
 					Directory.CreateDirectory(WikiSpritesPath);
 					int i;
 					for (i = 0; i < ItemLoader.ItemCount; i++) if (ContentSamples.ItemsByType[i].ModItem?.Mod is Origins) break;
@@ -193,7 +223,11 @@ namespace Origins {
 		public ItemDefinition ExportItemImages {
 			get => default;
 			set {
-				if ((value?.Type ?? 0) > ItemID.None && !string.IsNullOrWhiteSpace(WikiTemplatePath) && !string.IsNullOrWhiteSpace(WikiPagePath)) {
+				if ((value?.Type ?? 0) > ItemID.None) {
+					if (!string.IsNullOrWhiteSpace(WikiSpritesPath)) {
+						Origins.LogError($"WikiSpritesPath is null or whitespace");
+						return;
+					}
 					Directory.CreateDirectory(WikiSpritesPath);
 					WikiPageExporter.ExportItemSprites(ContentSamples.ItemsByType[value.Type]);
 				}
@@ -202,7 +236,11 @@ namespace Origins {
 		public bool ExportSpecialPages {
 			get => false;
 			set {
-				if (value && !string.IsNullOrWhiteSpace(WikiPagePath)) {
+				if (value) {
+					if (!string.IsNullOrWhiteSpace(WikiPagePath)) {
+						Origins.LogError($"WikiPagePath is null or whitespace");
+						return;
+					}
 					Directory.CreateDirectory(WikiPagePath);
 					foreach (var item in WikiSpecialPage.SpecialPages) {
 						if (item.GeneratePage() is string page) WikiPageExporter.WriteFileNoUnneededRewrites(WikiPageExporter.GetWikiPagePath(item.Name), page);
