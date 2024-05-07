@@ -31,6 +31,9 @@ Items: {
 	// Grenade_Tube.DisplayName: Noob Tube
 	// Bottled_Brine.DisplayName: Pickle Jar
 	// No_U_Card.Tooltip: The greatest 'fuck you' ever
+	// Kruncher.DisplayName: Crunker
+	// Ancient_Kruncher.DisplayName: Cranker
+	// Suspicious_Looking_Pebble.DisplayName: Sus Looking Unusually Round Pebble
 }
 
 // Dialogue.Acid_Freak.InteractionWind: It fucken WIMDY!
