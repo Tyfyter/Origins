@@ -173,7 +173,16 @@ namespace Origins.Items.Armor {
 		}
 		public static IEnumerable<(Player dummyPlayer, IWikiArmorSet set)> ApplySets(IEnumerable<IWikiArmorSet> sets) {
 			return sets.Select(set => {
-				Player dummyPlayer = Main.player[Main.maxPlayers];
+				int dummyIndex;
+				Player dummyPlayer;
+				for (dummyIndex = 0; dummyIndex < Main.maxPlayers; dummyIndex++) {
+					dummyPlayer = Main.player[dummyIndex];
+					if (!dummyPlayer.active) {
+						goto foundIndex;
+					}
+				}
+				throw new Exception("Every single real player slot is in use and tML doesn't like us using the fake one for this");
+				foundIndex:
 				for (int i = 0; i < dummyPlayer.armor.Length; i++) {
 					dummyPlayer.armor[i].TurnToAir();
 				}
@@ -181,8 +190,8 @@ namespace Origins.Items.Armor {
 				dummyPlayer.armor[0].SetDefaults(set.HeadItemID);
 				dummyPlayer.armor[1].SetDefaults(set.BodyItemID);
 				dummyPlayer.armor[2].SetDefaults(set.LegsItemID);
-				dummyPlayer.UpdateEquips(Main.maxPlayers);
-				dummyPlayer.UpdateArmorSets(Main.maxPlayers);
+				dummyPlayer.UpdateEquips(dummyIndex);
+				dummyPlayer.UpdateArmorSets(dummyIndex);
 				return (dummyPlayer, set);
 			});
 		}
