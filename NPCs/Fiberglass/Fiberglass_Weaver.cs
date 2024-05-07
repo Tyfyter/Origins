@@ -149,23 +149,25 @@ namespace Origins.NPCs.Fiberglass {
 					legTargets[1] = NPC.Center + (Vector2)new PolarVec2(86 + (8 * leg1Factor), NPC.rotation - MathHelper.PiOver2 - 0.09f - leg1Factor2 * 0.10f);
 					if (NPC.ai[1] > 180 - DifficultyMult * 30) {
 						Vector2 position;
-						int projectileType = ModContent.ProjectileType<Fiberglass_Thread>();
-						for (int i = 5 + DifficultyMult; i-- > 0;) {
-							PolarVec2 vec = new PolarVec2(Main.rand.Next(8 - DifficultyMult, 12 - DifficultyMult) * 64, Main.rand.NextFloat(0, MathHelper.TwoPi));
-							Collision.AimingLaserScan(target.Center, target.Center + (Vector2)vec, 2, 3, out position, out float[] samples);
-							position = position.SafeNormalize(Vector2.One) * samples.Average() + target.Center;
-							Vector2 velocity = (Vector2)vec.RotatedBy(MathHelper.PiOver2 + Main.rand.NextFloat(0.1f, 0.1f)).WithLength(12);
-							int firstEnd = Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, projectileType, 10, 1, Main.myPlayer, ai1: i + 1);
-							int secondEnd = Projectile.NewProjectile(NPC.GetSource_FromAI(), position, -velocity, projectileType, 10, 1, Main.myPlayer, firstEnd, ai1: i + 1);
+						if (Main.netMode != NetmodeID.MultiplayerClient) {
+							int projectileType = ModContent.ProjectileType<Fiberglass_Thread>();
+							for (int i = 5 + DifficultyMult; i-- > 0;) {
+								PolarVec2 vec = new PolarVec2(Main.rand.Next(8 - DifficultyMult, 12 - DifficultyMult) * 64, Main.rand.NextFloat(0, MathHelper.TwoPi));
+								Collision.AimingLaserScan(target.Center, target.Center + (Vector2)vec, 2, 3, out position, out float[] samples);
+								position = position.SafeNormalize(Vector2.One) * samples.Average() + target.Center;
+								Vector2 velocity = (Vector2)vec.RotatedBy(MathHelper.PiOver2 + Main.rand.NextFloat(0.1f, 0.1f)).WithLength(12);
+								int firstEnd = Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, projectileType, 10, 1, Main.myPlayer, ai1: i + 1);
+								int secondEnd = Projectile.NewProjectile(NPC.GetSource_FromAI(), position, -velocity, projectileType, 10, 1, Main.myPlayer, firstEnd, ai1: i + 1);
 
-							int durBoost = Main.rand.Next(60, 120) * DifficultyMult;
-							Main.projectile[firstEnd].timeLeft += durBoost;
-							Main.projectile[firstEnd].netUpdate = true;
-							Main.projectile[secondEnd].timeLeft += durBoost;
-							Main.projectile[secondEnd].netUpdate = true;
+								int durBoost = Main.rand.Next(60, 120) * DifficultyMult;
+								Main.projectile[firstEnd].timeLeft += durBoost;
+								Main.projectile[firstEnd].netUpdate = true;
+								Main.projectile[secondEnd].timeLeft += durBoost;
+								Main.projectile[secondEnd].netUpdate = true;
+							}
+							NPC.ai[1] = 0;
+							NPC.ai[0] = 0;
 						}
-						NPC.ai[1] = 0;
-						NPC.ai[0] = 0;
 					}
 					break;
 				}
@@ -205,6 +207,7 @@ namespace Origins.NPCs.Fiberglass {
 			return target;
 		}
 		public void GetMeleeCollisionData(Rectangle victimHitbox, int enemyIndex, ref int specialHitSetter, ref float damageMultiplier, ref Rectangle npcRect, ref float knockbackMult) {
+			if (legs is null) return;
 			Rectangle legHitbox = new Rectangle(-4, -4, 8, 8);
 			for (int i = 0; i < 8; i++) {
 				Rectangle hitbox = legHitbox;
