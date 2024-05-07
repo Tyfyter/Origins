@@ -1,4 +1,5 @@
 ﻿using Origins.Items.Accessories;
+using Origins.Items.Armor.Fiberglass;
 using Origins.NPCs.Fiberglass;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -12,8 +13,8 @@ namespace Origins.Items.Other.LootBags {
 			Item.CloneDefaults(ItemID.CultistBossBag);
 		}
 		public override void ModifyItemLoot(ItemLoot itemLoot) {
-			IItemDropRuleCondition master = new Conditions.IsMasterMode();
-			itemLoot.Add(Fiberglass_Weaver.normalDropRule);
+			itemLoot.Add(ItemDropRule.FewFromOptionsNotScalingWithLuck(2, 1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>()));
+			itemLoot.Add(Fiberglass_Weaver.weaponDropRule);
 			itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Entangled_Energy>()));
 			itemLoot.Add(ItemDropRule.Coins(Item.sellPrice(gold: 3), false));
 		}

@@ -26,13 +26,15 @@ namespace Origins.NPCs.Fiberglass {
 		static AutoLoadingAsset<Texture2D> LowerLegTexture = "Origins/NPCs/Fiberglass/Fiberglass_Weaver_Leg_Lower";
 		Arm[] legs;
 		Vector2[] legTargets;
-		internal static IItemDropRule normalDropRule;
+		internal static IItemDropRule armorDropRule;
+		internal static IItemDropRule weaponDropRule;
 		const float upperLegLength = 70.1f;
 		const float lowerLegLength = 76f;
 		const float totalLegLength = upperLegLength + lowerLegLength;
 		public static int DifficultyMult => Main.masterMode ? 3 : (Main.expertMode ? 2 : 1);
 		public override void Unload() {
-			normalDropRule = null;
+			armorDropRule = null;
+			weaponDropRule = null;
 		}
 		public override void SetDefaults() {
 			NPC.CloneDefaults(NPCID.PossessedArmor);
@@ -225,11 +227,12 @@ namespace Origins.NPCs.Fiberglass {
 			}
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
-			normalDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>());
-			normalDropRule.OnSuccess(ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>()));
+			armorDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Helmet>(), ModContent.ItemType<Fiberglass_Body>(), ModContent.ItemType<Fiberglass_Legs>());
+			weaponDropRule = ItemDropRule.OneFromOptionsNotScalingWithLuck(1, ModContent.ItemType<Fiberglass_Bow>(), ModContent.ItemType<Fiberglass_Sword>(), ModContent.ItemType<Fiberglass_Pistol>());
+			armorDropRule.OnSuccess(weaponDropRule);
 
 			npcLoot.Add(new DropBasedOnExpertMode(
-				normalDropRule,
+				armorDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<Fiberglass_Weaver_Bag>(), 1, 1, 1, null)
 			));
 			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Fiberglass_Dagger>(), 4));
@@ -287,7 +290,7 @@ namespace Origins.NPCs.Fiberglass {
 				Projectile.localAI[1] = Projectile.position.Y;
 			}
 			Vector2 vel = Collision.AnyCollision(
-				new(Projectile.localAI[0], Projectile.localAI[1]),
+				OtherEndPos,
 				new(Projectile.ai[0], Projectile.ai[1]),
 				8,
 				8
@@ -296,9 +299,7 @@ namespace Origins.NPCs.Fiberglass {
 				Projectile.ai[0] = 0;
 				Projectile.ai[1] = 0;
 			}
-
-			Projectile.localAI[0] = vel.X;
-			Projectile.localAI[1] = vel.Y;
+			OtherEndPos += vel;
 		}
 		public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) {
 			return Collision.CheckAABBvLineCollision2(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, OtherEndPos + new Vector2(4));
