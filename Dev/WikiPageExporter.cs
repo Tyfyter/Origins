@@ -76,7 +76,7 @@ namespace Origins.Dev {
 				foreach ((string name, Texture2D texture) sprite in provider.GetSprites(item.ModItem) ?? Array.Empty<(string, Texture2D)>()) {
 					string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, sprite.name) + ".png";
 					Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-					Stream stream = File.Exists(filePath) ? File.OpenWrite(filePath) : File.Create(filePath);
+					FileStream stream = File.Exists(filePath) ? File.OpenWrite(filePath) : File.Create(filePath);
 					sprite.texture.SaveAsPng(stream, sprite.texture.Width, sprite.texture.Height);
 					sprite.texture.Dispose();
 					stream.Close();
@@ -92,7 +92,7 @@ namespace Origins.Dev {
 							if ((c & 1) != 0)
 								c = 0xedb88320u ^ (c >> 1);
 							else
-								c = c >> 1;
+								c >>= 1;
 						}
 						CRCTable[n] = c;
 					}
@@ -111,10 +111,10 @@ namespace Origins.Dev {
 					return ((uint)data[position + 0] << 8 * 3) | ((uint)data[position + 1] << 8 * 2) | ((uint)data[position + 2] << 8 * 1) | ((uint)data[position + 3] << 8 * 0);
 				}
 				static byte[] ToBytes(uint data) {
-					return new byte[] { (byte)(data >> 8 * 3 & 0xFF), (byte)(data >> 8 * 2 & 0xFF), (byte)(data >> 8 * 1 & 0xFF), (byte)(data >> 8 * 0 & 0xFF) };
+					return [(byte)(data >> 8 * 3 & 0xFF), (byte)(data >> 8 * 2 & 0xFF), (byte)(data >> 8 * 1 & 0xFF), (byte)(data >> 8 * 0 & 0xFF)];
 				}
 				static byte[] UShortToBytes(ushort data) {
-					return new byte[] { (byte)(data >> 8 * 1 & 0xFF), (byte)(data >> 8 * 0 & 0xFF) };
+					return [(byte)(data >> 8 * 1 & 0xFF), (byte)(data >> 8 * 0 & 0xFF)];
 				}
 				static int NextChunk(int cursor, byte[] buffer, params byte[] targetName) {
 					uint targetBytes = 0;
@@ -162,7 +162,7 @@ namespace Origins.Dev {
 				foreach ((string name, (Texture2D texture, int frames)[] textures) sprite in provider.GetAnimatedSprites(item.ModItem) ?? Array.Empty<(string, (Texture2D texture, int frames)[])>()) {
 					string filePath = Path.Combine(DebugConfig.Instance.WikiSpritesPath, sprite.name) + ".png";
 					Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-					Stream stream = File.Create(filePath);
+					FileStream stream = File.Create(filePath);
 					int seqNum = 0;
 					for (int i = 0; i < sprite.textures.Length; i++) {
 						Texture2D texture = sprite.textures[i].texture;
@@ -192,27 +192,25 @@ namespace Origins.Dev {
 							}
 						}
 						if (buffer[_color_type] != 6) Origins.LogError("invalid color type " + buffer[_color_type]);
-						int IDAT_pos = NextChunk(0x08, buffer, 0x49, 0x44, 0x41, 0x54);
+						int IDAT_pos = NextChunk(0x08, buffer, "IDAT"u8.ToArray());
 						uint IDAT_len = ReadUInt(buffer, IDAT_pos);
 						uint crc32 = 0xFFFFFFFFu;
 						if (i == 0) {
 							stream.Write(buffer, 0, IDAT_pos);
-							stream.Write(new byte[] { 0x00, 0x00, 0x00, 0x08 }, 0, 4);
-							WriteAndAdvanceCRC(stream, ref crc32, new byte[] {
+							stream.Write([0x00, 0x00, 0x00, 0x08], 0, 4);
+							WriteAndAdvanceCRC(stream, ref crc32, [
 								/*acTL      */0x61, 0x63, 0x54, 0x4C,
 								/*num_frames*/0x00, 0x00, 0x00, (byte)sprite.textures.Length,
 								/*num_plays */0x00, 0x00, 0x00, 0xFF
-							});
+							]);
 							FinalizeCRC((uint)crc32, stream);
 						}
 
-						stream.Write(new byte[4] {
+						stream.Write([
 							0x00, 0x00, 0x00, 0x1A
-						}, 0, 4);
+						], 0, 4);
 						crc32 = 0xFFFFFFFFu;
-						WriteAndAdvanceCRC(stream, ref crc32, new byte[] {
-							/*fcTL           */0x66, 0x63, 0x54, 0x4C
-						});
+						WriteAndAdvanceCRC(stream, ref crc32, "fcTL"u8.ToArray());
 						//BinaryWriter writer = new BinaryWriter(stream, Encoding.Default, true);
 						//writer.Flush();
 						//writer.Dispose();
@@ -224,28 +222,26 @@ namespace Origins.Dev {
 						WriteAndAdvanceCRC(stream, ref crc32, BitConverter.GetBytes((uint)0), name: "y_offset");
 						WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)sprite.textures[i].frames), name: "delay_num");
 						WriteAndAdvanceCRC(stream, ref crc32, UShortToBytes((ushort)60), name: "delay_den");
-						WriteAndAdvanceCRC(stream, ref crc32, new byte[] { (byte)1 }, name: "dispose_op");//APNG_DISPOSE_OP_BACKGROUND
-						WriteAndAdvanceCRC(stream, ref crc32, new byte[] { (byte)0 }, name: "blend_op");//APNG_BLEND_OP_SOURCE
+						WriteAndAdvanceCRC(stream, ref crc32, [(byte)1], name: "dispose_op");//APNG_DISPOSE_OP_BACKGROUND
+						WriteAndAdvanceCRC(stream, ref crc32, [(byte)0], name: "blend_op");//APNG_BLEND_OP_SOURCE
 						FinalizeCRC((uint)crc32, stream);
 
 						crc32 = 0xFFFFFFFFu;
 						if (i != 0) {
 							stream.Write(ToBytes((uint)(IDAT_len + 4)));
-							WriteAndAdvanceCRC(stream, ref crc32, new byte[] {
+							WriteAndAdvanceCRC(stream, ref crc32, [
 								/*fdAT          */0x66, 0x64, 0x41, 0x54,
 								/*sequence_number*/0x00, 0x00, 0x00, (byte)seqNum++
-							});
+							]);
 						} else {
 							stream.Write(ToBytes((uint)IDAT_len));
-							WriteAndAdvanceCRC(stream, ref crc32, new byte[] {
-								/*IDAT          */0x49, 0x44, 0x41, 0x54
-							});
+							WriteAndAdvanceCRC(stream, ref crc32, "IDAT"u8.ToArray());
 						}
 						WriteAndAdvanceCRC(stream, ref crc32, buffer, IDAT_pos + 4 + 4, (int)IDAT_len);
 						FinalizeCRC((uint)crc32, stream);
 
 						if (i == sprite.textures.Length - 1) {
-							int IEND_pos = NextChunk(IDAT_pos, buffer, 0x49, 0x45, 0x4E, 0x44);
+							int IEND_pos = NextChunk(IDAT_pos, buffer, "IEND"u8.ToArray());
 							uint IEND_len = ReadUInt(buffer, IEND_pos);
 							stream.Write(buffer, IEND_pos, 4 + 4 + (int)IEND_len + 4);
 						}
