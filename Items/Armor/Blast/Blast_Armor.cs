@@ -46,7 +46,7 @@ namespace Origins.Items.Armor.Blast {
 			originPlayer.explosiveSelfDamage -= 0.25f;
 			originPlayer.blastSet = true;
 			originPlayer.setActiveAbility = SetActiveAbility.blast_armor;
-			if (originPlayer.blastSetActive) {// buffs in here
+			if (originPlayer.blastSetActive) {
 				player.GetModPlayer<OriginPlayer>().explosiveProjectileSpeed += 0.5f;
 				player.GetModPlayer<OriginPlayer>().explosiveBlastRadius += 0.5f;
 				player.GetAttackSpeed(DamageClasses.Explosive) += 0.5f;

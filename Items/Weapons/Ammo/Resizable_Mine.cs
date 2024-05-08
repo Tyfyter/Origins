@@ -140,7 +140,7 @@ namespace Origins.Items.Weapons.Ammo {
             Item.maxStack = 9999;
         }
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 8);
+			Recipe recipe = Recipe.Create(Type, 16);
 			recipe.AddIngredient(ItemID.ExplosivePowder);
 			recipe.AddIngredient(ItemID.LunarOre, 2);
 			recipe.AddTile(TileID.LunarCraftingStation);

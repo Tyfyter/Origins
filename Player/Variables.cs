@@ -85,8 +85,8 @@ namespace Origins {
 		public bool sapphireSet = false;
 		public bool blastSet = false;
 		public float blastSetCharge = 0;
-		public const int blast_set_charge_max = 100;
-		public const float blast_set_charge_gain = 0.5f;
+		public const int blast_set_charge_max = 200;
+		public const float blast_set_charge_gain = 0.8f;
 		public const float blast_set_charge_decay = 12;
 		public bool blastSetActive = false;
 		#endregion armor/set bonuses

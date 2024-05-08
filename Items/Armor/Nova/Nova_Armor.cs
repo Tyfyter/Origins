@@ -92,8 +92,8 @@ namespace Origins.Items.Armor.Nova {
 		public override void UpdateEquip(Player player) {
 			player.GetDamage(DamageClasses.Explosive) += 0.04f;
 			player.GetCritChance(DamageClasses.Explosive) += 0.04f;
-			player.moveSpeed += 0.15f;
-			player.accRunSpeed += 0.15f;
+			player.moveSpeed += 0.25f;
+			player.accRunSpeed += 0.25f;
 		}
 		public override void AddRecipes() {
 			Recipe recipe = Recipe.Create(Type);
