@@ -17,6 +17,7 @@ namespace Origins.Items.Other.Dyes {
 				Mod.Assets.Request<Effect>("Effects/Rasterize"),
 				"Rasterize",
 				(self, entity, _) => {
+					if (entity is null) return;
 					float rasterizedTime = 0;
 					if (entity is Player player) {
 						rasterizedTime = player.GetModPlayer<OriginPlayer>().rasterizedTime;
