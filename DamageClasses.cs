@@ -59,6 +59,15 @@ namespace Origins {
 		public override void SetDefaultStats(Player player) {
 			//player.GetCritChance(this) += 4;
 		}
+		public override StatInheritanceData GetModifierInheritance(DamageClass damageClass) {
+			if (damageClass == DamageClasses.Explosive) {
+				return StatInheritanceData.Full;
+			}
+			if (damageClass == Generic) {
+				return new StatInheritanceData(0.5f, 1, 1, 1, 1);
+			}
+			return StatInheritanceData.None;
+		}
 	}
 	[Autoload(false)]
 	public class Thrown_Explosive : DamageClass {
