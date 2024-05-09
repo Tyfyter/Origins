@@ -20,6 +20,7 @@ namespace Origins.Items.Accessories {
 			Item.value = Item.sellPrice(gold: 4);
 			Item.glowMask = glowmask;
 			Item.dye = 0;
+			Item.maxStack = 1;
 		}
 		public override void UpdateEquip(Player player) {
 			OriginPlayer originPlayer = player.GetModPlayer<OriginPlayer>();

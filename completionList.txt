@@ -340,8 +340,8 @@ ACCESSORIES:
 (^) Locket Necklace*
 (^) Lousy Liver*
 (^) Lover's Leap*
-(^) Magic Glove*
-(^) Magic Pain Glove*
+(†) Magic Glove* !!!
+(†) Magic Pain Glove* !!!
 (^) Magic Tripwire*
 (^) Makeover Choker*
 (^) Messy Leech*

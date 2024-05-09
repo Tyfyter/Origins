@@ -6,7 +6,10 @@ Origins' content adds alternatives for almost every crevice of gameplay reinforc
 
 This mod does not include the music tracks composed for each of the biomes and bosses, and can be found with the music mod here: https://github.com/Tyfyter/OriginsMusic
 
-Origins' wiki is currently in development and will be up and running soon so Origins' players have a sense of direction. In the meantime, you can join Origins' official Discord server to talk with other players about your discoveries and any bugs you may find! Use this link to join now: https://discord.gg/NK7jERXsTN
+Origins' wiki is currently in development so Origins' players have a sense of direction. It is not finished, but we are hard at work making it work. The link can be found below:
+https://tyfyter.github.io/OriginsWiki/
+
+In the meantime, you can join Origins' official Discord server to talk with other players about your discoveries and any bugs you may find! Use this link to join now: https://discord.gg/NK7jERXsTN
 
 This mod, its music mod and its wiki are all made by a collaboration between Tyfyter2002 and chrersis. Origins' content is open source for all to view and use so long as our BSD 3-Clause license is not breached. We thank you for expressing interest in this mod and hope you have fun with it!
 
