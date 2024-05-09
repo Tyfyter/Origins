@@ -364,8 +364,8 @@ namespace Origins {
 			if (preHitBuffs is not null && lastHitEnemy >= 0) {
 				NPC npc = Main.npc[lastHitEnemy];
 				for (int i = 0; i < Player.MaxBuffs; i++) {
-					if (!preHitBuffs.Contains(new Point(Player.buffType[i], Player.buffTime[i]))) {
-						int buffType = Player.buffType[i];
+					int buffType = Player.buffType[i];
+					if (Main.debuff[buffType] && !BuffID.Sets.NurseCannotRemoveDebuff[buffType] && !preHitBuffs.Contains(new Point(buffType, Player.buffTime[i]))) {
 						if (noU) {
 							bool immune = npc.buffImmune[buffType];
 							npc.buffImmune[buffType] = false;

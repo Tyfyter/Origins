@@ -16,7 +16,9 @@ namespace Origins.Items.Accessories {
 			player.thorns += 0.5f;
 			player.GetModPlayer<OriginPlayer>().noU = true;
 			for (int i = 0; i < Player.MaxBuffs; i++) {
-				switch (player.buffType[i]) {
+				int buffType = player.buffType[i];
+				if (!Main.debuff[buffType] || BuffID.Sets.NurseCannotRemoveDebuff[buffType]) continue;
+				switch (buffType) {
 					case BuffID.Weak:
 					case BuffID.BrokenArmor:
 					case BuffID.Bleeding:
