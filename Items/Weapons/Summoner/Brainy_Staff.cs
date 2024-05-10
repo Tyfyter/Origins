@@ -13,7 +13,8 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
         public string[] Categories => new string[] {
-            "MinionSummoner"
+            "MinionSummoner",
+			"Minion"
         };
         public override void SetDefaults() {
 			Item.damage = 10;

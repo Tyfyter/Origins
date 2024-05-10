@@ -1,20 +1,19 @@
 ﻿#define ANIMATED
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
+using Origins.Projectiles;
 using Terraria;
-using Terraria.DataStructures;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Projectiles;
-using Microsoft.Xna.Framework.Graphics;
-using Terraria.Audio;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Mine_Flayer : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "Launcher",
+            "HardmodeLauncher",
 			"CanistahUser"
         };
         public override void SetDefaults() {

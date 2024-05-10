@@ -9,7 +9,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Bomboomstick : ModItem, ICustomDrawItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "Launcher"
+            "HardmodeLauncher"
         };
         public static AutoCastingAsset<Texture2D> UseTexture { get; private set; }
 		public override void Unload() {

@@ -4,9 +4,10 @@ using Terraria.ModLoader;
 namespace Origins.Buffs {
 	public class Guarded_Heart_Buff : ModBuff {
 		public static int ID { get; private set; } = -1;
+		public string[] Categories => new string[] {
+			"GenericBoostBuff"
+		};
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Guarded");
-			// Description.SetDefault("Movement speed and damage increased");
 			ID = Type;
 		}
 		public override void Update(Player player, ref int buffIndex) {

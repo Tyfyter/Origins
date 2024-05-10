@@ -12,12 +12,12 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Thermite_Launcher : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "Launcher",
+            "HardmodeLauncher",
 			"CanistahUser"
         };
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GrenadeLauncher);
-			Item.damage = 40;
+			Item.damage = 45;
 			Item.width = 44;
 			Item.height = 18;
 			Item.useTime = 32;

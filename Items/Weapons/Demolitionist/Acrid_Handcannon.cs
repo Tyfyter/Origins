@@ -2,16 +2,14 @@ using Microsoft.Xna.Framework;
 using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
-using Origins.Items.Weapons.Ranged;
-using Origins.Tiles.Dusk;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Acrid_Handcannon : ModItem, ICustomWikiStat {
+	public class Acrid_Handcannon : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "HandCannon"
+            "HardmodeHandCannon"
         };
 		public static int ID { get; private set; }
 		public override void SetStaticDefaults() {

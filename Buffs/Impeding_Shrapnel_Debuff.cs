@@ -1,7 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Items.Weapons.Ranged;
-using Origins.NPCs;
 using Origins.World;
 using System;
 using System.IO;

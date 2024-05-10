@@ -11,7 +11,7 @@ namespace Origins.Items.Weapons.Demolitionist {
     public class Nova_Cascade : ModItem, ICustomWikiStat {
 		static short glowmask;
 		public string[] Categories => new string[] {
-			"HandCannon"
+			"HardmodeHandCannon"
 		};
 		public static int ID { get; private set; }
 

@@ -8,10 +8,10 @@ namespace Origins.Items.Other.Dyes {
     public class Rasterized_Dye : Dye_Item, ICustomWikiStat {
 		public static int ID { get; private set; }
 		public static int ShaderID { get; private set; }
-        public string[] Categories => new string[] {
-            "Dye"
-        };
-        public override void SetStaticDefaults() {
+		public string[] Categories => new string[] {
+			"SpecialEffectDye"
+		};
+		public override void SetStaticDefaults() {
 			ID = Type;
 			GameShaders.Armor.BindShader(Type, new DelegatedArmorShaderData(
 				Mod.Assets.Request<Effect>("Effects/Rasterize"),

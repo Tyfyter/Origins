@@ -7,7 +7,8 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Summoner {
     public class SMART_Wrench : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "MinionSummoner"
+            "MinionSummoner",
+			"HardmodeMinion"
         };
         public override void SetDefaults() {
 			Item.damage = 11;

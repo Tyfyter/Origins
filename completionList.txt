@@ -312,7 +312,6 @@ ACCESSORIES:
 (^) Coologne*
 (#2, ^2) CORE Generator* !!!
 (#, ^2) Counter-offensive Scarf* !!!
-(#, ^2) Cruel Angel Wings* !!!
 (^) Danger Barrel*
 (^) Decaying Scale*
 (^) Destructive Claws*
@@ -326,7 +325,6 @@ ACCESSORIES:
 (^) Focus Crystal*
 (^) Futurephones*
 (^) Grave Danger*
-(#2, ^2) Grenade Tube*
 (^) Gun Glove*
 (^) Haggard Artery*
 (^) Handy Helper*
@@ -724,7 +722,7 @@ SUMMONER WEAPONS:
 (X) Mildew Incantation
 (X) Mildew Whip
 (X) Obsidian Bone
-(X) Ziptie !!!
+(#, ^2) Ziptie !!!
 
 (X) Candlelight
 (X) Controller/Patrol Bot Controller
@@ -1194,10 +1192,13 @@ AMMO:
 
 (^) Resizable Mine Mk. 4*
 
+(X) Homing Rocket I
+(X) Homing Rocket II
 (^) Resizable Mine Mk. 5*
 (#2, ^2) Starfuze*
 
 (^) Gray Solution*
+(X) Orange Solution
 (^) Teal Solution*
 ---
 

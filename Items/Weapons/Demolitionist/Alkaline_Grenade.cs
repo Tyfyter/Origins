@@ -7,7 +7,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Alkaline_Grenade : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "ThrownExplosive",
+            "ThrownHardmodeExplosive",
 			"IsGrenade",
             "SpendableWeapon"
         };

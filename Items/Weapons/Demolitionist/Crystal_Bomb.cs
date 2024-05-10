@@ -8,7 +8,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Crystal_Bomb : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "ThrownExplosive",
+            "ThrownHardmodeExplosive",
 			"IsBomb",
             "SpendableWeapon"
         };

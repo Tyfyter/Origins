@@ -4,6 +4,9 @@ using Terraria.ModLoader;
 namespace Origins.Buffs {
 	public class Ambition_Buff : ModBuff {
 		public static int ID { get; private set; } = -1;
+		public string[] Categories => new string[] {
+			"GenericBoostBuff"
+		};
 		public override void SetStaticDefaults() {
 			ID = Type;
 		}

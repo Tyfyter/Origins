@@ -48,7 +48,10 @@ namespace Origins.World {
 			(ENQUEUE, ModContent.ItemType<Tones_Of_Agony>(), 1f),
 			(ENQUEUE, ModContent.ItemType<Asylum_Whistle>(), 1f),
 			(ENQUEUE, ModContent.ItemType<Bomb_Launcher>(), 1f),
-			(ENQUEUE, ModContent.ItemType<Bomb_Handling_Device>(), 1f)
+			(ENQUEUE, ModContent.ItemType<Bomb_Handling_Device>(), 1f),
+
+			//(CHANGE_QUEUE, ChestID.Gold, 0b0011), Desert Crown doesn't exist???
+			//(ENQUEUE, ModContent.ItemType<Desert_Crown>(), 1f)
 		};
 		public IEnumerable<int> ProvideItemObtainability() => Actions.Where(a => a.action == ENQUEUE).Select(a => a.param);
 		public void Load(Mod mod) { }

@@ -15,7 +15,8 @@ namespace Origins.Items.Weapons.Summoner {
 		public string[] Categories => new string[] {
 			"Torn",
 			"TornSource",
-			"SentrySummoner"
+			"SentrySummoner",
+			"Minion"
 		};
 		static short glowmask;
 		public override void SetStaticDefaults() {

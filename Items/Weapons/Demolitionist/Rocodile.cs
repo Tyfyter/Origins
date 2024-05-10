@@ -1,15 +1,13 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Dev;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Rocodile : ModItem, ICustomWikiStat {
+	public class Rocodile : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
-            "Launcher"
+            "HardmodeLauncher"
         };
         public override void SetStaticDefaults() {
 			glowmask = Origins.AddGlowMask(this);

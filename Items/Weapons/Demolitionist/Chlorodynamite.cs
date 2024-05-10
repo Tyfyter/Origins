@@ -12,7 +12,7 @@ using static Humanizer.In;
 namespace Origins.Items.Weapons.Demolitionist {
     public class Chlorodynamite : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "ThrownExplosive",
+            "ThrownHardmodeExplosive",
 			"IsDynamite",
             "SpendableWeapon"
         };

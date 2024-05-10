@@ -7,6 +7,9 @@ namespace Origins.Buffs {
     public class Amebolize_Buff : ModBuff {
 		public override string Texture => "Terraria/Images/Buff_160";
 		public static int ID { get; private set; } = -1;
+		public string[] Categories => new string[] {
+			"GenericBoostBuff"
+		};
 		public override void SetStaticDefaults() {
 			BuffID.Sets.IsATagBuff[Type] = true;
 			ID = Type;
