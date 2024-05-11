@@ -4139,3 +4139,8 @@ Nova_Swarm: {
 		'Light 'em up'
 		''' */
 }
+
+Counter_Offensive_Scarf: {
+	// DisplayName: Counter_ Offensive_ Scarf
+	// Tooltip: ""
+}
