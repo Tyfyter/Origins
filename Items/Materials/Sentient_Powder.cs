@@ -15,6 +15,7 @@ namespace Origins.Items.Materials {
             "SpendableTool"
         };
         public override void SetStaticDefaults() {
+			ItemID.Sets.ShimmerTransformToItem[Type] = ItemID.PurificationPowder;
 			Item.ResearchUnlockCount = CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[ItemID.VilePowder];
 			glowmask = Origins.AddGlowMask(this);
 		}
