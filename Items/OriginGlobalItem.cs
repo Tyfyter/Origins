@@ -22,11 +22,13 @@ using Terraria.ModLoader;
 namespace Origins.Items {
 	public class OriginGlobalItem : GlobalItem {
 		public override void SetDefaults(Item item) {
+			bool statsModified = false;
 			switch (item.type) {
 				case ItemID.Grenade:
 				item.damage = (int)(item.damage * 0.8);
 				item.ammo = ItemID.Grenade;
 				item.DamageType = DamageClasses.ThrownExplosive;
+				statsModified = true;
 				break;
 
 				case ItemID.BouncyGrenade:
@@ -35,6 +37,7 @@ namespace Origins.Items {
 				case ItemID.Beenade:
 				item.ammo = ItemID.Grenade;
 				item.DamageType = DamageClasses.ThrownExplosive;
+				statsModified = true;
 				break;
 
 				case ItemID.Sunflower:
@@ -45,7 +48,7 @@ namespace Origins.Items {
                 case ItemID.Fireblossom:
                 item.ammo = ItemID.Fireblossom;
                 item.consumable = true;
-                break;
+				break;
 
                 case ItemID.Bomb:
 				case ItemID.BouncyBomb:
@@ -59,6 +62,7 @@ namespace Origins.Items {
 				case ItemID.DirtBomb:
 				item.ammo = ItemID.Bomb;
 				item.DamageType = DamageClasses.ThrownExplosive;
+				statsModified = true;
 				break;
 
 				case ItemID.Dynamite:
@@ -66,6 +70,7 @@ namespace Origins.Items {
 				case ItemID.StickyDynamite:
 				case ItemID.MolotovCocktail:
 				item.DamageType = DamageClasses.ThrownExplosive;
+				statsModified = true;
 				break;
 
 				case ItemID.RocketLauncher:
@@ -76,41 +81,61 @@ namespace Origins.Items {
 				case ItemID.Stynger:
 				case ItemID.StyngerBolt:
 				item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Ranged];
+				statsModified = true;
 				break;
 
 				case ItemID.DD2ExplosiveTrapT1Popper:
 				case ItemID.DD2ExplosiveTrapT2Popper:
 				case ItemID.DD2ExplosiveTrapT3Popper:
 				item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
+				statsModified = true;
+				break;
+
+				case ItemID.MiningHelmet:
+				case ItemID.MiningShirt:
+				statsModified = true;
 				break;
 			}
 			if (item.damage is 0 or -1 && Origins.ExplosiveBaseDamage.TryGetValue(item.shoot, out int damage)) {
 				item.damage = damage;
+				statsModified = true;
 			}
 			if (OriginConfig.Instance.WoodBuffs) switch (item.type) {
 					case ItemID.ShadewoodHelmet:
 					case ItemID.EbonwoodHelmet:
 					item.defense = 2;
+					statsModified = true;
 					break;
+
 					case ItemID.ShadewoodBreastplate:
 					case ItemID.EbonwoodBreastplate:
 					item.defense = 3;
+					statsModified = true;
 					break;
+
 					case ItemID.ShadewoodGreaves:
 					case ItemID.EbonwoodGreaves:
 					item.defense = 3;
+					statsModified = true;
 					break;
+
 					case ItemID.PearlwoodHelmet:
 					case ItemID.PearlwoodGreaves:
 					item.defense = 6;
+					statsModified = true;
 					break;
+
 					case ItemID.PearlwoodBreastplate:
 					item.defense = 7;
+					statsModified = true;
 					break;
 				}
 			if (item.width == 0 && item.height == 0) {
 				item.width = 4;
 				item.height = 4;
+			}
+			if (statsModified) {
+				item.StatsModifiedBy.Add(Mod);
 			}
 		}
 		public override bool? CanAutoReuseItem(Item item, Player player) {
