@@ -478,11 +478,11 @@ namespace Origins.Dev {
 				object value = context[name];
 				if (value is List<Recipe> recipes) {
 					string GetItemText(Item item) {
-						string text = $"[link {item.Name}]";
+						string text = $"`[link {item.Name}]`";
 						if (item.ModItem?.Mod is Origins) {
-							text = $"\"[link {item.Name} | $fromStats]\"";
+							text = $"`[link {item.Name} | $fromStats]`";
 						} else if (WikiPageExporter.LinkFormatters.TryGetValue(item.ModItem?.Mod, out var formatter)) {
-							text = $"\"[link {formatter(item.Name)}]\"";
+							text = $"`[link {formatter(item.Name)}]`";
 						}
 						if (item.stack != 1) text += $"({item.stack})";
 						return text;
@@ -495,7 +495,7 @@ namespace Origins.Dev {
 							builder.AppendLine("stations:[");
 							foreach (var requirement in group.Key.requirements) {
 								if (WikiPageExporter.LinkFormatters.TryGetValue(requirement.mod, out var formatter)) {
-									builder.AppendLine($"\"[link {formatter(requirement.name)}]\"");
+									builder.AppendLine($"`[link {formatter(requirement.name)}]`");
 								} else {
 									Origins.instance.Logger.Warn($"No wiki link formatter for mod {requirement.mod}, skipping requirement for {requirement.name}");
 								}
@@ -505,7 +505,7 @@ namespace Origins.Dev {
 						builder.AppendLine("items:[");
 						foreach (Recipe recipe in group) {
 							builder.AppendLine("{");
-							builder.AppendLine("result:\"" + GetItemText(recipe.createItem) + "\",");
+							builder.AppendLine("result:" + GetItemText(recipe.createItem) + ",");
 							builder.AppendLine("ingredients:[");
 							for (int i = 0; i < recipe.requiredItem.Count; i++) {
 								if (i > 0) builder.Append(",");
