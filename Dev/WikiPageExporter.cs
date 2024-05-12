@@ -488,7 +488,7 @@ namespace Origins.Dev {
 						return text;
 					}
 					StringBuilder builder = new();
-					builder.AppendLine("{recipes");
+					builder.AppendLine("<recipes>");
 					foreach (var group in recipes.GroupBy((r) => new RecipeRequirements(r))) {
 						builder.AppendLine("{");
 						if (group.Key.requirements.Length > 0) {
@@ -518,7 +518,7 @@ namespace Origins.Dev {
 						builder.AppendLine("]");
 						builder.AppendLine("}");
 					}
-					builder.Append("recipes}");
+					builder.Append("</recipes>");
 					return builder.ToString();
 				}
 				return CombineSnippets(Parse(value.ToString()), context);
