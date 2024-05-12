@@ -311,7 +311,7 @@ ACCESSORIES:
 (^) Control Locus*
 (^) Coologne*
 (#2, ^2) CORE Generator* !!!
-(#, ^2) Counter-offensive Scarf* !!!
+(^) Counter-offensive Scarf*
 (^) Danger Barrel*
 (^) Decaying Scale*
 (^) Destructive Claws*

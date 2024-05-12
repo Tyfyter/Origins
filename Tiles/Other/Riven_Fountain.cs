@@ -20,6 +20,9 @@ namespace Origins.Tiles.Other {
 		}
 	}
 	public class Riven_Fountain_Item : ModItem {
+		public string[] Categories => new string[] {
+			"WaterFountain"
+		};
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Riven_Fountain>());
 		}

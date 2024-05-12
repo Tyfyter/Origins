@@ -19,6 +19,9 @@ using Terraria.ObjectData;
 namespace Origins.Tiles.Other {
 	public class Defiled_Fountain : WaterFountainBase<Defiled_Water_Style> { }
 	public class Defiled_Fountain_Item : ModItem {
+	public string[] Categories => new string[] {
+		"WaterFountain"
+	};
 		public override void SetDefaults() {
 			Item.DefaultToPlaceableTile(ModContent.TileType<Defiled_Fountain>());
 		}

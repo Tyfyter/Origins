@@ -22,7 +22,7 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.rare = ItemRarityID.Pink;
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 25);
+			Recipe recipe = Recipe.Create(Type, 250);
 			recipe.AddIngredient(ItemID.ExplosivePowder, 7);
 			recipe.AddIngredient(ModContent.ItemType<Busted_Servo>(), 13);
 			recipe.AddIngredient(ModContent.ItemType<Rotor>(), 25);

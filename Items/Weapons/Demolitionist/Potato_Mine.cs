@@ -1,14 +1,11 @@
-﻿using Origins.Items.Other.Consumables.Food;
+﻿using Origins.Dev;
+using Origins.Items.Other.Consumables.Food;
 using Origins.Tiles.Other;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
-
-using Origins.Dev;
-using Terraria.DataStructures;
-using Microsoft.Xna.Framework;
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Potato_Mine : ModItem, ICustomWikiStat {
+	public class Potato_Mine : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
             "OtherExplosive",
             "SpendableWeapon"
@@ -32,8 +29,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 			Item.shoot = Potato_Mine_P.ID; // has to be done here somewhere like this because it blocks placing the tile if it's not 0 when the player uses the item
 		}
 		public override void AddRecipes() {
-			Recipe recipe = Recipe.Create(Type, 15);
-			recipe.AddIngredient(ItemID.ExplosivePowder);
+			Recipe recipe = Recipe.Create(Type, 150);
+			recipe.AddIngredient(ItemID.ExplosivePowder, 15);
 			recipe.AddIngredient(ModContent.ItemType<Potato>());
 			recipe.Register();
 		}
