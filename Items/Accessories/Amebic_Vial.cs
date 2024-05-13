@@ -22,8 +22,8 @@ namespace Origins.Items.Accessories {
 			Item.dye = -1;
 			Item.hairDye = -1;
 			Item.shoot = ModContent.ProjectileType<Amebic_Vial_Tentacle>();
-			Item.rare = ItemRarityID.Expert;
-			Item.expert = true;
+			Item.rare = ItemRarityID.Master;
+			Item.master = true;
 			Item.hasVanityEffects = true;
 			Item.value = Item.sellPrice(gold: 2);
 			Item.glowMask = glowmask;

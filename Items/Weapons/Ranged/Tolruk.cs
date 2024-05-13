@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Ranged {
 		int charge = 0;
 		public static short[] glowmasks;
         public string[] Categories => new string[] {
-            "Gun"
+            "HardmodeGun"
         };
         public override void SetStaticDefaults() { //still needs reshaping chee
 			glowmasks = new short[]{

@@ -1,6 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Origins.Items.Accessories;
+using Origins.Items.Weapons.Ranged;
 using Origins.World.BiomeData;
 using Terraria;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -31,7 +34,18 @@ namespace Origins.NPCs.Riven {
 				ModContent.GetInstance<Underground_Riven_Hive_Biome>().Type
 			];
 		}
-        public override void HitEffect(NPC.HitInfo hit) {
+		public override void ModifyNPCLoot(NPCLoot npcLoot) {
+			npcLoot.Add(ItemDropRule.OneFromOptions(1,
+				ItemID.SoulDrain, // Super Cell
+				ItemID.DartRifle, // Dart Crossbow
+				ItemID.FetidBaghnakhs, // Amoebash
+				ModContent.ItemType<Tainted_Flesh>(),
+				ItemID.TendonHook // Salty Seed (Eutrophic Cell, aka Mitosis)
+			));
+			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterHealingPotion, 1, 5, 10));
+			npcLoot.Add(ItemDropRule.Common(ItemID.GreaterManaPotion, 1, 5, 15));
+		}
+		public override void HitEffect(NPC.HitInfo hit) {
 			if (Main.netMode == NetmodeID.Server) return;
 			if (NPC.life < 0) {
                 for (int i = 0; i < 3; i++) Origins.instance.SpawnGoreByName(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), NPC.velocity, "Gores/NPCs/R_Effect_Blood" + Main.rand.Next(1, 4));

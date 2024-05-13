@@ -1,9 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
 	public class Riven_Penguin : Glowing_Mod_NPC, IRivenEnemy {

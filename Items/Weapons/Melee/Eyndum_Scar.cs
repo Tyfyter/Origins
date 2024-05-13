@@ -6,7 +6,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
     public class Eyndum_Scar : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "Sword",
+            "HardmodeSword",
 			"ReworkExpected"
         };
         public override void SetDefaults() {

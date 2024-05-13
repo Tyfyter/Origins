@@ -10,7 +10,6 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.MiscE {
     public class Crimbrain : ModNPC {
 		public override void SetStaticDefaults() {
-			// DisplayName.SetDefault("Crimbrain");
 			Main.npcFrameCount[NPC.type] = 4;
 			CrimsonGlobalNPC.NPCTypes.Add(Type);
 		}
@@ -35,7 +34,7 @@ namespace Origins.NPCs.MiscE {
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			npcLoot.Add(ItemDropRule.Common(ItemID.Vertebrae));
-			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brainy_Staff>(), 5));
+			npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Brainy_Staff>(), 17));
 		}
 		public override void AI() {
 			NPC.FaceTarget();

@@ -15,7 +15,7 @@ namespace Origins.Items.Weapons.Magic {
 	public class Magnus : ModItem, ICustomWikiStat {
 		public const int baseDamage = 34;
         public string[] Categories => new string[] {
-            "MagicStaff"
+            "Wand"
         };
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;

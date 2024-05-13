@@ -6,7 +6,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
     public class Missing_File : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "OtherMagic"
+            "HardmodeOtherMagic"
         };
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.CrystalVileShard);

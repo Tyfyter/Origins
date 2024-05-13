@@ -9,7 +9,8 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
     public class Acrid_Impaler : Harpoon_Gun, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "HarpoonGun"
+            "HardmodeHarpoonGun",
+			"ToxicSource"
         };
         public override void SetDefaults() {
 			Item.damage = 48;

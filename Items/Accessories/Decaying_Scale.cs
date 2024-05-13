@@ -5,7 +5,8 @@ using Terraria.ModLoader;
 namespace Origins.Items.Accessories {
 	public class Decaying_Scale : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
-			"Combat"
+			"Combat",
+			"ToxicSource"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(18, 22);

@@ -1,15 +1,12 @@
-using Microsoft.Xna.Framework;
-using Origins.Buffs;
+using Origins.Dev;
+using Origins.Projectiles;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-using Origins.Dev;
-using Origins.Projectiles;
-using Terraria.Audio;
-
 namespace Origins.Items.Weapons.Demolitionist {
-    public class Hellfire_Grenade : ModItem, ICustomWikiStat {
+	public class Hellfire_Grenade : ModItem, ICustomWikiStat {
 		static short glowmask;
         public string[] Categories => new string[] {
             "ThrownExplosive",

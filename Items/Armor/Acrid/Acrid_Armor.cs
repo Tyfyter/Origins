@@ -14,7 +14,8 @@ namespace Origins.Items.Armor.Acrid {
 	public class Acrid_Dome : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => new string[] {
             "HardmodeArmorSet",
-            "ExplosiveBoostGear"
+            "ExplosiveBoostGear",
+			"ToxicSource"
         };
         public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
@@ -76,8 +77,9 @@ namespace Origins.Items.Armor.Acrid {
 	public class Acrid_Headgear : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => new string[] {
             "HardmodeArmorSet",
-            "MagicBoostGear"
-        };
+            "MagicBoostGear",
+			"ToxicSource"
+		};
         public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Headgear_Head_Glow");
@@ -130,8 +132,9 @@ namespace Origins.Items.Armor.Acrid {
 	public class Acrid_Helm : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => new string[] {
             "HardmodeArmorSet",
-            "MeleeBoostGear"
-        };
+            "MeleeBoostGear",
+			"ToxicSource"
+		};
         public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Helm_Head_Glow");
@@ -184,8 +187,9 @@ namespace Origins.Items.Armor.Acrid {
 	public class Acrid_Mask : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => new string[] {
             "HardmodeArmorSet",
-            "SummmonBoostGear"
-        };
+            "SummmonBoostGear",
+			"ToxicSource"
+		};
         public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Mask_Head_Glow");
@@ -238,8 +242,9 @@ namespace Origins.Items.Armor.Acrid {
 	public class Acrid_Visor : ModItem, IWikiArmorSet, INoSeperateWikiPage {
         public string[] Categories => new string[] {
             "HardmodeArmorSet",
-            "RangedBoostGear"
-        };
+            "RangedBoostGear",
+			"ToxicSource"
+		};
         public override void SetStaticDefaults() {
 			if (Main.netMode != NetmodeID.Server) {
 				Origins.AddHelmetGlowmask(Item.headSlot, "Items/Armor/Acrid/Acrid_Visor_Head_Glow");

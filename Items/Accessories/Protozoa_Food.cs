@@ -20,8 +20,8 @@ namespace Origins.Items.Accessories {
 			Item.useTime = Item.useAnimation = 45;
 			Item.mana = 10;
 			Item.DamageType = DamageClasses.ExplosiveVersion[DamageClass.Summon];
-			Item.rare = ItemRarityID.Master;
-			Item.master = true;
+			Item.rare = ItemRarityID.Expert;
+			Item.expert = true;
 			Item.value = Item.sellPrice(gold: 6);
 		}
 		public override void UpdateAccessory(Player player, bool hideVisual) {

@@ -164,7 +164,6 @@ ENEMY NPCS:
 (^) Mitoworm
 (X) Peat Lobber
 (^) Profaned Bident
-(^) Pustule Jelly
 (^) Riven Mimic
 (#, ^2) Riven Pigron !!!
 (^) Savage Whip*
@@ -400,12 +399,13 @@ ACCESSORIES:
 (^) Timbre of Hell*
 (^) Tripod Nip*
 
-(^) Amebic Vial*
 (^) Entangled Energy*
 (#2, ^2) Mana Drive*
+(^) Protozoa Food*
 (^) Refactoring Pieces*
 (X) Retaliatory Tendril*
 
+(^) Amebic Vial*
 (^) Blizzardwalker's Jacket*
 (^) Cursed Crown*
 (^) Emergency Bee Canister*
@@ -415,7 +415,6 @@ ACCESSORIES:
 (^) Lazy Cloak*
 (X) Mildewy Diving Helmet*
 (^) Mysterious Spray*
-(^) Protozoa Food*
 (#, ^2) Scrap Compactor*
 (^) Scribe of the Meat God*
 (#2, ^2) Stack of Shraps*
@@ -478,7 +477,7 @@ VANITY:
 UTILITIES:
 ---
 (^) Amoeba Hook
-(X) Chunky Hook !!!
+(#, ^2) Chunky Hook !!!
 (#, ^2) Nano Hook
 (#, ^2) Quantum Hook
 
@@ -486,6 +485,7 @@ UTILITIES:
 
 (#, ^2) Impenetrable Trashcan Lid
 (#, ^2) Indestructible Saddle
+(#2, ^2) Salty Seed (Eutrophic Cell) !!!
 ---
 
 
@@ -565,7 +565,7 @@ MELEE WEAPONS:
 (^) Vorpal Sword (Uncursed)
 
 (#2, ^2) Amenonuhoko
-(X) Amoebash
+(#, ^2) Amoebash !!!
 (^) Crystal Cutters
 (^) Depth Charge
 (X) Fair In Square
@@ -621,7 +621,7 @@ RANGED WEAPONS:
 (^) Boiler
 (^) Cleaver Rifle
 (X) Cobalt Harpoon Gun*
-(X) Dart Crossbow
+(#, ^2) Dart Crossbow !!!
 (^) Dragon's Breath (replanning soon)
 (^) Firespit
 (X) Frequency
@@ -678,7 +678,7 @@ MAGIC WEAPONS:
 (X) Shinedown
 (^) Splashid
 (^) Startillery
-(X) Super Solvent IV
+(#, ^2) Super Cell* !!!
 
 (^) Amber of Embers
 (X) Divine Lite
@@ -716,7 +716,6 @@ SUMMONER WEAPONS:
 (^) Teardown
 (^) Woodsprite Staff
 
-(X) Amoeba Zapper
 (^) Bomb Artifact
 (#, ^2) Forsaken Desire
 (X) Mildew Incantation
@@ -1151,7 +1150,6 @@ MOUNTS & PETS:
 (X) Wet Wood (Mildew Blob)
 
 (^) Amoeba Toy (Meberoid)
-(#2, ^2) Salty Seed (Eutrophic Cell)
 (X) Rusty Cross Necklace (Guardian Angel)
 (#, ^2) Smith's Hammer (Walking Furnace)* !!!
 (^) Suspicious Looking Pebble (Defiled Blight)

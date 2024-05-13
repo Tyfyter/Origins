@@ -13,7 +13,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
     public class Amber_Of_Embers : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "MagicStaff"
+            "HardmodeWand"
         };
         public override void SetStaticDefaults() {
 			Item.staff[Item.type] = true;

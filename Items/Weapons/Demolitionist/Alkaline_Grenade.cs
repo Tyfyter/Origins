@@ -6,12 +6,13 @@ using Terraria.ModLoader;
 using Origins.Dev;
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Alkaline_Grenade : ModItem, ICustomWikiStat {
-        public string[] Categories => new string[] {
-            "ThrownHardmodeExplosive",
-			"IsGrenade",
-            "SpendableWeapon"
-        };
-        public override void SetStaticDefaults() {
+		public string[] Categories => new string[] {
+			"ThrownHardmodeExplosive",
+			"IsBomb",
+			"SpendableWeapon",
+			"ToxicSource"
+		};
+		public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 99;
 		}
 		public override void SetDefaults() {

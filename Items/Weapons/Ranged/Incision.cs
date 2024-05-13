@@ -6,10 +6,9 @@ using Terraria.ModLoader;
 
 using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
-	[LegacyName("Defiled_Dart_Burst")]
 	public class Incision : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "DartLauncher"
+            "HardmodeDartLauncher"
         };
         public override void SetDefaults() {
 			Item.damage = 25;

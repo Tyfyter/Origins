@@ -18,7 +18,7 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int buffID = 0;
 		static short glowmask;
         public string[] Categories => new string[] {
-            "MinionSummoner",
+            "MinionWeapon",
 			"Minion"
         };
         public override void SetStaticDefaults() {

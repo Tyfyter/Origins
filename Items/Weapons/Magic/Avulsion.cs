@@ -12,7 +12,7 @@ namespace Origins.Items.Weapons.Magic {
         public string[] Categories => new string[] {
             "Torn",
             "TornSource",
-            "MagicStaff"
+            "Wand"
         };
         public override void SetStaticDefaults() {
             Item.staff[Item.type] = true;

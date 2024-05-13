@@ -7,7 +7,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
 	public class Startillery : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "SpellBook"
+            "HardmodeSpellBook"
         };
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.GoldenShower);

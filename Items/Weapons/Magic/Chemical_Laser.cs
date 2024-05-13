@@ -9,7 +9,8 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Magic {
     public class Chemical_Laser : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "MagicGun"
+            "HardmodeMagicGun",
+			"ToxicSource"
         };
         public override void SetDefaults() {
 			Item.CloneDefaults(ItemID.ShadowbeamStaff);

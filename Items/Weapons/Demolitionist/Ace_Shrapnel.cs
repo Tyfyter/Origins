@@ -1,13 +1,12 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Dev;
 using Origins.Items.Materials;
 using Origins.Items.Weapons.Ammo;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
-using Origins.Dev;
-using Origins.Projectiles;
-using Terraria.DataStructures;
 
 namespace Origins.Items.Weapons.Demolitionist {
 	public class Ace_Shrapnel : ModItem, ICustomWikiStat {

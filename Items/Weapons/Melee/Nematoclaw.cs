@@ -7,7 +7,8 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
     public class Nematoclaw : ModItem, IElementalItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "OtherMelee"
+            "HardmodeOtherMelee",
+			"ToxicSource"
         };
         public ushort Element => Elements.Acid;
 		public override void SetDefaults() {

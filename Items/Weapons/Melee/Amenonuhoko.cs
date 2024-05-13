@@ -11,7 +11,8 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Melee {
     public class Amenonuhoko : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "Spear"
+            "HardmodeSpear",
+			"ToxicSource"
         };
         public override void SetStaticDefaults() {
 			Item.ResearchUnlockCount = 1;

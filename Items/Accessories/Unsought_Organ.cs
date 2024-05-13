@@ -7,7 +7,8 @@ namespace Origins.Items.Accessories {
 	public class Unsought_Organ : ModItem, ICustomWikiStat {
 		public string[] Categories => new string[] {
 			"Combat",
-			"GenericBoostAcc"
+			"GenericBoostAcc",
+			"ToxicSource"
 		};
 		public override void SetDefaults() {
 			Item.DefaultToAccessory(28, 26);

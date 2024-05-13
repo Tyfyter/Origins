@@ -237,7 +237,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 				normalDropRule,
 				new DropLocalPerClientAndResetsNPCMoneyTo0(ModContent.ItemType<World_Cracker_Bag>(), 1, 1, 1, null)
 			));
-			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Protozoa_Food>(), 4));
+			npcLoot.Add(ItemDropRule.MasterModeDropOnAllPlayers(ModContent.ItemType<Amebic_Vial>(), 4));
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<World_Cracker_Relic_Item>()));
 
             armorBreakDropRule = new LeadingSuccessRule();

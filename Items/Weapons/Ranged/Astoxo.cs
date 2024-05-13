@@ -11,7 +11,7 @@ using Origins.Dev;
 namespace Origins.Items.Weapons.Ranged {
 	public class Astoxo : ModItem, ICustomWikiStat {
         public string[] Categories => new string[] {
-            "Bow"
+            "HardmodeBow"
         };
         public override void SetStaticDefaults() {
 			OriginGlobalProj.itemSourceEffects.Add(Type, (global, proj, contextArgs) => {

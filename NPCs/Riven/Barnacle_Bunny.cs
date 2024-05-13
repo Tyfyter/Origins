@@ -1,12 +1,10 @@
 ﻿using Microsoft.Xna.Framework;
-using Origins.World.BiomeData;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Origins.NPCs.Riven {
-    public class Barnacle_Bunny : Glowing_Mod_NPC, IRivenEnemy {
+	public class Barnacle_Bunny : Glowing_Mod_NPC, IRivenEnemy {
 		public override void SetStaticDefaults() {
 			Main.npcFrameCount[NPC.type] = 7;
 		}
