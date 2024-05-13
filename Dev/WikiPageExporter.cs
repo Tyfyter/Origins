@@ -13,6 +13,7 @@ using System.Text.RegularExpressions;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.Map;
@@ -253,6 +254,7 @@ namespace Origins.Dev {
 			Main.screenHeight = screenHeight;
 		}
 		public static string GetWikiName(ModItem modItem) => modItem.Name.Replace("_Item", "");//maybe switch to WebUtility.UrlEncode(modItem.DisplayName.Value);
+		public static string GetWikiName(ModNPC modNPC) => modNPC.Name;//maybe switch to WebUtility.UrlEncode(modItem.DisplayName.Value);
 		public static string GetWikiPagePath(string name) => Path.Combine(DebugConfig.Instance.WikiPagePath, name + ".html");
 		public static string GetWikiStatPath(string name) => Path.Combine(DebugConfig.Instance.StatJSONPath, name + ".json");
 		public static string GetWikiItemPath(ModItem modItem) => Main.itemAnimations[modItem.Type] is DrawAnimation ? $"{modItem.Name}" : modItem.Texture.Replace(modItem.Mod.Name, "§ModImage§");
@@ -477,16 +479,6 @@ namespace Origins.Dev {
 			public string Resolve(Dictionary<string, object> context) {
 				object value = context[name];
 				if (value is List<Recipe> recipes) {
-					string GetItemText(Item item) {
-						string text = $"`[link {item.Name}]`";
-						if (item.ModItem?.Mod is Origins) {
-							text = $"`[link {item.Name} | $fromStats]`";
-						} else if (WikiPageExporter.LinkFormatters.TryGetValue(item.ModItem?.Mod, out var formatter)) {
-							text = $"`[link {formatter(item.Name)}]`";
-						}
-						if (item.stack != 1) text += $"({item.stack})";
-						return text;
-					}
 					StringBuilder builder = new();
 					builder.AppendLine("<recipes>");
 					foreach (var group in recipes.GroupBy((r) => new RecipeRequirements(r))) {
@@ -505,11 +497,11 @@ namespace Origins.Dev {
 						builder.AppendLine("items:[");
 						foreach (Recipe recipe in group) {
 							builder.AppendLine("{");
-							builder.AppendLine("result:" + GetItemText(recipe.createItem) + ",");
+							builder.AppendLine("result:" + WikiExtensions.GetItemText(recipe.createItem) + ",");
 							builder.AppendLine("ingredients:[");
 							for (int i = 0; i < recipe.requiredItem.Count; i++) {
-								if (i > 0) builder.Append(",");
-								builder.Append(GetItemText(recipe.requiredItem[i]));
+								if (i > 0) builder.Append(',');
+								builder.Append(WikiExtensions.GetItemText(recipe.requiredItem[i]));
 							}
 							builder.AppendLine();
 							builder.AppendLine("]");
@@ -749,6 +741,93 @@ namespace Origins.Dev {
 			yield break;
 		}
 	}
+	public interface IWikiNPC {
+		Rectangle DrawRect { get; }
+		int AnimationFrames { get; }
+	}
+	public class NPCWikiProvider : WikiProvider<ModNPC> {
+		public override string PageName(ModNPC modNPC) => WikiPageExporter.GetWikiName(modNPC);
+		public override string GetPage(ModNPC modNPC) {
+			NPC npc = modNPC.NPC;
+			Dictionary<string, object> context = new() {
+				["Name"] = WikiPageExporter.GetWikiName(modNPC),
+				["DisplayName"] = Lang.GetNPCNameValue(npc.type)
+			};
+
+			IEnumerable<(string name, LocalizedText text)> pageTexts;
+			if (modNPC is ICustomWikiStat wikiStats) {
+				context["PageTextMain"] = wikiStats.PageTextMain.Value;
+				pageTexts = wikiStats.PageTexts;
+			} else {
+				string key = $"WikiGenerator.{modNPC.Mod?.Name}.{modNPC.LocalizationCategory}.{context["Name"]}.MainText";
+				context["PageTextMain"] = Language.GetOrRegister(key).Value;
+				pageTexts = WikiPageExporter.GetDefaultPageTexts(modNPC);
+			}
+			foreach (var text in pageTexts) {
+				context[text.name] = text.text;
+			}
+			return WikiPageExporter.WikiTemplate.Resolve(context);
+		}
+		public override IEnumerable<(string, JObject)> GetStats(ModNPC modNPC) {
+			NPC npc = modNPC.NPC;
+			JObject data = [];
+			ICustomWikiStat customStat = modNPC as ICustomWikiStat;
+			data["Image"] = modNPC.Texture.Replace(modNPC.Mod.Name, "§ModImage§");
+			data["Name"] = npc.TypeName;
+			JArray types = new("NPC");
+			if (npc.boss || NPCID.Sets.ShouldBeCountedAsBoss[npc.type]) types.Add("Boss");
+			if (customStat is not null) foreach (string cat in customStat.Categories) types.Add(cat);
+			data.Add("Types", types);
+
+			bool getGoodWorld = Main.getGoodWorld;
+			Main.getGoodWorld = false;
+			int gameMode = Main.GameMode;
+			JObject expertData = [];
+			JObject masterData = [];
+			try {
+				Main.GameMode = GameModeID.Normal;
+				npc.SetDefaults(npc.netID);
+				data.AppendStat("MaxLife", npc.lifeMax, 0);
+				data.AppendStat("Defense", npc.defense, 0);
+				data.AppendStat("KBResist", 1 - npc.knockBackResist, 0);
+				data.AppendJStat("Immunities", npc.GetImmunities(), []);
+				data.AppendStat("Coins", npc.value, 0);
+				data.Add("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForItemID(npc.type).GetDropRates()));
+
+				Main.GameMode = GameModeID.Expert;
+				npc.SetDefaults(npc.netID);
+				expertData.AppendAltStat(data, "MaxLife", npc.lifeMax);
+				expertData.AppendAltStat(data, "Defense", npc.defense);
+				expertData.AppendAltStat(data, "KBResist", 1 - npc.knockBackResist);
+				expertData.AppendAltStat(data, "Immunities", npc.GetImmunities());
+				expertData.AppendAltStat(data, "Coins", npc.value);
+				expertData.Add("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForItemID(npc.type).GetDropRates()));
+
+				Main.GameMode = GameModeID.Master;
+				npc.SetDefaults(npc.netID);
+				masterData.AppendAltStat(data, "MaxLife", npc.lifeMax);
+				masterData.AppendAltStat(data, "Defense", npc.defense);
+				masterData.AppendAltStat(data, "KBResist", 1 - npc.knockBackResist);
+				masterData.AppendAltStat(data, "Immunities", npc.GetImmunities());
+				masterData.AppendAltStat(data, "Coins", npc.value);
+				masterData.Add("Drops", new JArray().FillWithLoot(Main.ItemDropsDB.GetRulesForItemID(npc.type).GetDropRates()));
+			} finally {
+				Main.GameMode = gameMode;
+				Main.getGoodWorld = getGoodWorld;
+				npc.SetDefaults(npc.netID);
+			}
+
+
+			customStat?.ModifyWikiStats(data);
+			data.AppendStat("SpriteWidth", modNPC is null ? npc.width : ModContent.Request<Texture2D>(modNPC.Texture).Width(), 0);
+			data.AppendStat("InternalName", modNPC?.Name, null);
+			yield return (PageName(modNPC), data);
+		}
+		public override IEnumerable<(string, (Texture2D, int)[])> GetAnimatedSprites(ModNPC modNPC) {
+			if (modNPC is not IWikiNPC wikiNPC) yield break;
+			yield return (WikiPageExporter.GetWikiName(modNPC), SpriteGenerator.GenerateAnimationSprite(modNPC.NPC, wikiNPC.DrawRect, wikiNPC.AnimationFrames));
+		}
+	}
 	public interface INoSeperateWikiPage { }
 	public class StatOnlyItemWikiProvider : ItemWikiProvider {
 		protected override void Register() {
@@ -800,6 +879,70 @@ namespace Origins.Dev {
 			if (!JToken.DeepEquals(value, defaultValue)) {
 				data.Add(name, JToken.FromObject(value));
 			}
+		}
+		public static void AppendAltStat<T>(this JObject data, JObject normalData, string name, T value) {
+			JToken jValue = (value as JToken) ?? new JValue(value);
+			if (!JToken.DeepEquals(jValue, normalData.GetValue(name))) {
+				data.Add(name, JToken.FromObject(value));
+			}
+		}
+		public static List<DropRateInfo> GetDropRates(this List<IItemDropRule> rules, DropRateInfoChainFeed? ratesInfo = null) {
+			List<DropRateInfo> ruleList = [];
+			ratesInfo ??= new(1f);
+			for (int j = 0; j < rules.Count; j++) {
+				rules[j].ReportDroprates(ruleList, ratesInfo.Value);
+			}
+			return ruleList;
+		}
+		public static JArray FillWithLoot(this JArray self, List<DropRateInfo> loot, Func<bool, string> prefix = null) {
+			prefix ??= _ => "";
+			bool first = true;
+			for (int i = 0; i < loot.Count; i++) {
+				DropRateInfo info = loot[i];
+				for (int j = 0; j < info.conditions.Count; j++) {
+					if (!info.conditions[j].CanShowItemDropInUI()) goto skip;
+				}
+				string suffixText = $"{info.dropRate}%";
+				if (info.stackMin != 1 || info.stackMax != 1) {
+					suffixText = $"({info.stackMin}‒{info.stackMax}) " + suffixText;
+				}
+				self.Add(prefix(first) + GetItemText(ContentSamples.ItemsByType[info.itemId], string.Join(" | ", info.conditions.Select(c => c.GetConditionDescription()))) + " - " + suffixText);
+				first = false;
+				List<DropRateInfo> itemLoot = Main.ItemDropsDB.GetRulesForItemID(info.itemId).GetDropRates(new(info.dropRate));
+				if (itemLoot.Count != 0) {
+					self.FillWithLoot(itemLoot, first => first ? "§l§ " : "§L§ ");
+				}
+				skip:;
+			}
+			return self;
+		}
+		public static string GetItemText(Item item, string note = "") {
+			string[] args = [item.Name, "$default", "$default", note];
+			string text;
+			if (item.ModItem?.Mod is Origins) {
+				args[1] = "$fromStats";
+			} else if (WikiPageExporter.LinkFormatters.TryGetValue(item.ModItem?.Mod, out var formatter)) {
+				text = $"`[link {formatter(item.Name)}]`";
+				goto formatted;
+			}
+			text = "`[link " + string.Join(" | ", args) + "]`";
+			formatted:
+			if (item.stack != 1) text += $"({item.stack})";
+			return text;
+		}
+		public static string GetBuffText(int type) {
+			string[] args = [Lang.GetBuffName(type), "$default", "$default"];
+			if (BuffLoader.GetBuff(type)?.Mod is Origins) {
+				args[1] = "$fromStats";
+			}
+			return "`[link " + string.Join(" | ", args) + "]`";
+		}
+		public static JArray GetImmunities(this NPC npc) {
+			JArray immunities = [];
+			for (int i = 0; i < npc.buffImmune.Length; i++) {
+				if (npc.buffImmune[i]) immunities.Add(GetBuffText(i));
+			}
+			return immunities;
 		}
 		public static (List<Recipe> recipes, List<Recipe> usedIn) GetRecipes(Item item) {
 			List<Recipe> recipes = new();

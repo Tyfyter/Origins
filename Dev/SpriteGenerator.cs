@@ -7,6 +7,7 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.ObjectData;
 
 namespace Origins.Dev {
@@ -167,17 +168,23 @@ namespace Origins.Dev {
 			animation.Frame = frameNum;
 			return frames;
 		}
-	}
-	public class SingleItemEnumerator<T> : IEnumerable<T> {
-		readonly T item;
-		public SingleItemEnumerator(T item) {
-			this.item = item;
-		}
-		public IEnumerator<T> GetEnumerator() {
-			yield return item;
-		}
-		IEnumerator IEnumerable.GetEnumerator() {
-			yield return item;
+		public static (Texture2D texture, int frames)[] GenerateAnimationSprite(NPC npc, Rectangle area, int ticks) {
+			(Texture2D texture, int frames)[] frames = new (Texture2D texture, int frames)[ticks];
+			UnlockableNPCEntryIcon icon = new(npc.netID);
+			EntryIconDrawSettings iconDrawSettings = new() {
+				IsPortrait = true,
+				iconbox = area
+			};
+			for (int i = 0; i < ticks; i++) {
+				icon.Update(default, default, iconDrawSettings);
+				frames[i] = (Generate(
+					(spriteBatch) => {
+						icon.Draw(default, spriteBatch, iconDrawSettings);
+					},
+					(area.Width, area.Height)
+				), 1);
+			}
+			return frames;
 		}
 	}
 }
