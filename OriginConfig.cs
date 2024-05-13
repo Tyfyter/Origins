@@ -150,6 +150,54 @@ namespace Origins {
 				}
 			}
 		}
+		public bool ExportAllNPCPages {
+			get => false;
+			set {
+				if (value) {
+					if (!string.IsNullOrWhiteSpace(WikiTemplatePath)) {
+						Origins.LogError($"WikiTemplatePath is null or whitespace");
+						return;
+					}
+					if (!string.IsNullOrWhiteSpace(WikiPagePath)) {
+						Origins.LogError($"WikiPagePath is null or whitespace");
+						return;
+					}
+					if (Terraria.UI.ItemSlot.ShiftInUse) {
+						Directory.CreateDirectory(WikiPagePath);
+						int i;
+						for (i = 0; i < ItemLoader.ItemCount; i++) if (ContentSamples.NpcsByNetId[i].ModNPC?.Mod is Origins) break;
+						for (; i < ItemLoader.ItemCount; i++) {
+							NPC npc = ContentSamples.NpcsByNetId[i];
+							if (npc.ModNPC is not null) {
+								if (npc.ModNPC?.Mod is not Origins) break;
+								if (npc.ModNPC is ICustomWikiStat { ShouldHavePage: false }) continue;
+								if (npc.ModNPC is ICustomWikiStat { FullyGeneratable: true } || !File.Exists(WikiPageExporter.GetWikiPagePath(WikiPageExporter.GetWikiName(npc.ModNPC))))
+									WikiPageExporter.ExportNPCPage(npc);
+							}
+						}
+					} else {
+						Main.NewText("Shift must be held to export all stats, for safety reasons");
+					}
+				}
+			}
+		}
+		public NPCDefinition ExportNPCPage {
+			get => default;
+			set {
+				if ((value?.Type ?? 0) != NPCID.None) {
+					if (!string.IsNullOrWhiteSpace(WikiTemplatePath)) {
+						Origins.LogError($"WikiTemplatePath is null or whitespace");
+						return;
+					}
+					if (!string.IsNullOrWhiteSpace(WikiPagePath)) {
+						Origins.LogError($"WikiPagePath is null or whitespace");
+						return;
+					}
+					Directory.CreateDirectory(WikiPagePath);
+					WikiPageExporter.ExportNPCPage(ContentSamples.NpcsByNetId[value.Type]);
+				}
+			}
+		}
 		public bool ExportAllItemPages {
 			get => false;
 			set {

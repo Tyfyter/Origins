@@ -128,9 +128,9 @@ namespace Origins.NPCs.Defiled.Boss {
 			}
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText(),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText()
+			);
 		}
 		public override void ModifyNPCLoot(NPCLoot npcLoot) {
 			normalDropRule = new LeadingSuccessRule();

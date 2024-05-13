@@ -66,6 +66,21 @@ namespace Origins.Dev {
 				}
 			}
 		}
+		public static void ExportNPCPage(NPC npc) {
+			foreach (WikiProvider provider in GetWikiProviders(npc.ModNPC)) {
+				if (provider.GetPage(npc.ModNPC) is string page) WriteFileNoUnneededRewrites(GetWikiPagePath(provider.PageName(npc.ModNPC)), page);
+			}
+		}
+		public static void ExportNPCStats(NPC npc) {
+			foreach (WikiProvider provider in GetWikiProviders(npc.ModNPC)) {
+				foreach ((string name, JObject stats) stats in provider.GetStats(npc.ModNPC)) {
+					WriteFileNoUnneededRewrites(
+						GetWikiStatPath(stats.name),
+						JsonConvert.SerializeObject(stats.stats, Formatting.Indented)
+					);
+				}
+			}
+		}
 		static UInt32[] CRCTable;
 		static bool crc_table_computed = false;
 		static string currentCRCText = "";
