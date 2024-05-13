@@ -4,6 +4,8 @@ using Origins.Items.Materials;
 using Origins.NPCs.Critters;
 using Origins.World.BiomeData;
 using ReLogic.Content;
+using System;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -45,7 +47,6 @@ namespace Origins.NPCs.Riven {
 			}
 		}
 		public override void AI() {
-			NPC.netOffset = Vector2.Zero;
 			if (NPC.ai[1] == 0) {
 				NPC.ai[1] = 1;
 				const float offsetLen = 10;
@@ -79,10 +80,11 @@ namespace Origins.NPCs.Riven {
 					NPC.position += NPC.velocity;
 					if (++tries > 160) break;
 				}
-				//NPC.velocity = Vector2.Zero;
 				NPC.oldVelocity = Vector2.Zero;
 				NPC.oldPosition = NPC.position;
 				NPC.netUpdate = true;
+			} else {
+				NPC.position = NPC.oldPosition;
 			}
 			NPC.TargetClosest(faceTarget: false);
 			if (Main.netMode != NetmodeID.MultiplayerClient && NPC.HasValidTarget && ++NPC.ai[0] > (Main.masterMode ? 420 : (Main.expertMode ? 540 : 600))) {
@@ -93,16 +95,21 @@ namespace Origins.NPCs.Riven {
 					NPC.ai[0] -= 30;
 				}
 			}
-			NPC.position = NPC.oldPosition;
-			//NPC.velocity = Vector2.Zero;
+			NPC.velocity = Vector2.Zero;
+		}
+		public override void SendExtraAI(BinaryWriter writer) {
+			writer.Write((sbyte)Math.Round(NPC.rotation / MathHelper.PiOver2));
+		}
+		public override void ReceiveExtraAI(BinaryReader reader) {
+			NPC.rotation = reader.ReadSByte() * MathHelper.PiOver2;
 		}
 		public override float SpawnChance(NPCSpawnInfo spawnInfo) {
 			return Riven_Hive.SpawnRates.LandEnemyRate(spawnInfo, true) * Riven_Hive.SpawnRates.Barnacle;
 		}
 		public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry) {
-			bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				this.GetBestiaryFlavorText("Barnacle mounds act as a self-contained ecosystem of microbes, buggers, and the Riven of course."),
-			});
+			bestiaryEntry.AddTags(
+				this.GetBestiaryFlavorText("Barnacle mounds act as a self-contained ecosystem of microbes, buggers, and the Riven of course.")
+			);
 		}
 		public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers) {
 			modifiers.DisableKnockback();
@@ -110,7 +117,6 @@ namespace Origins.NPCs.Riven {
 		public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
 			Vector2 halfSize = new Vector2(GlowTexture.Width / 2, GlowTexture.Height / Main.npcFrameCount[NPC.type]);
 			Vector2 position = NPC.Center + new Vector2(0, 12).RotatedBy(NPC.rotation);
-			Dust.NewDustPerfect(position, 6, Vector2.Zero);
 			spriteBatch.Draw(
 				TextureAssets.Npc[Type].Value,
 				position - screenPos,

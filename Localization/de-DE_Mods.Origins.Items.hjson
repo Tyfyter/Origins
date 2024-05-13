@@ -4144,7 +4144,7 @@ Counter_Offensive_Scarf: {
 	// DisplayName: Counter Offensive Scarf
 	/* Tooltip:
 		'''
-		Reduces damage you take by up to 20% when enemies are far away
-		Increases damage you deal by up to 10% when enemies are nearby
+		Reduces damage you take by up to 20% when enemies gain distance from you
+		Increases damage you deal by up to 10% when enemies draw near
 		''' */
 }

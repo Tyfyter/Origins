@@ -1493,6 +1493,16 @@ Configs: {
 			// Label: Wiki Special Template Path
 			// Tooltip: ""
 		}
+
+		ExportAllNPCPages: {
+			// Label: Export All NPC Pages
+			// Tooltip: ""
+		}
+
+		ExportNPCPage: {
+			// Label: Export NPC Page
+			// Tooltip: ""
+		}
 	}
 }
 
