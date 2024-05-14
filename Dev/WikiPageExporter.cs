@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Origins.Items.Weapons.Ammo;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -642,9 +643,7 @@ namespace Origins.Dev {
 			if (item.accessory) types.Add("Accessory");
 			if (item.damage > 0 && item.useStyle != ItemUseStyleID.None) {
 				types.Add("Weapon");
-				if (!item.noMelee && item.useStyle == ItemUseStyleID.Swing) {
-					types.Add("Sword");
-				}
+				if (!item.noMelee && item.useStyle == ItemUseStyleID.Swing) types.Add("Sword");
 				if (item.shoot > ProjectileID.None) {
 					switch (ContentSamples.ProjectilesByType[item.shoot].aiStyle) {
 						case ProjAIStyleID.Boomerang:
@@ -663,6 +662,11 @@ namespace Origins.Dev {
 					case ItemID.MusketBall:
 					types.Add("Gun");
 					break;
+
+					default:
+					if (item.useAmmo == ModContent.ItemType<Metal_Slug>()) types.Add("Handcannon");
+					else if (item.useAmmo == ModContent.ItemType<Harpoon>()) types.Add("HarpoonGun");
+					break;
 				}
 				switch (item.ammo) {
 					case ItemID.WoodenArrow:
@@ -670,6 +674,10 @@ namespace Origins.Dev {
 					break;
 					case ItemID.MusketBall:
 					types.Add("Bullet");
+					break;
+
+					default:
+					if (item.ammo == ModContent.ItemType<Harpoon>()) types.Add("Harpoon");
 					break;
 				}
 			}

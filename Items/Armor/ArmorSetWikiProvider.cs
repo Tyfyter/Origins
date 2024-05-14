@@ -225,7 +225,7 @@ namespace Origins.Items.Armor {
 		int HeadItemID { get; }
 		int BodyItemID { get; }
 		int LegsItemID { get; }
-		string[] SetCategories => Array.Empty<string>();
+		string[] SetCategories => [];
 		IEnumerable<int> SharedPageItems {
 			get {
 				yield break;
