@@ -110,7 +110,7 @@ namespace Origins.NPCs.Riven.World_Cracker {
 						npc.Center,
 						Vector2.Normalize(playerTarget.MountedCenter - npc.Center).RotatedByRandom(0.15f) * 9 * Main.rand.NextFloat(0.9f, 1.1f),
 						Amoeball.ID,
-						20 + (DifficultyMult * 3), // for some reason NPC projectile damage is just arbitrarily doubled
+						10 + (DifficultyMult * 3), // for some reason NPC projectile damage is just arbitrarily doubled
 						0f,
 						Main.myPlayer
 					);

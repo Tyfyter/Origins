@@ -3600,11 +3600,6 @@ Sunflower_Seed_Shooter: {
 		''' */
 }
 
-Bad_Hand: {
-	// DisplayName: Bad Hand
-	// Tooltip: "'What a deal!'"
-}
-
 Magic_Pain_Glove: {
 	// DisplayName: Magic Pain Glove
 	/* Tooltip:

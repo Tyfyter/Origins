@@ -52,8 +52,8 @@ namespace Origins.Items.Weapons.Demolitionist {
 	public class Acrid_Slug_P : Metal_Slug_P {
 		public override string Texture => "Origins/Projectiles/Ammo/Acrid_Slug_P";
 	}
-		/*public override void OnKill(int timeLeft) {
-			int t = ModContent.ProjectileType<Acid_Shot>();
-			for (int i = Main.rand.Next(3); i < 6; i++) Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, (Main.rand.NextVector2Unit() * 4) + (Projectile.velocity / 8), t, Projectile.damage / 8, 6, Projectile.owner, ai1: -0.5f).scale = 0.85f; */
-	}
+	/*public override void OnKill(int timeLeft) {
+		int t = ModContent.ProjectileType<Acid_Shot>();
+		for (int i = Main.rand.Next(3); i < 6; i++) Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, (Main.rand.NextVector2Unit() * 4) + (Projectile.velocity / 8), t, Projectile.damage / 8, 6, Projectile.owner, ai1: -0.5f).scale = 0.85f;
+	} */
 }
