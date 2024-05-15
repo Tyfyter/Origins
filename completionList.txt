@@ -209,7 +209,7 @@ EVENTS:
 
 STATUS EFFECTS:
 ---
-(^) Assimilation
+(^) Assimilation*
 (X) Celestial Flames
 (^) Impeding Shrapnel*
 (X) Ionizing Radiation
@@ -954,7 +954,6 @@ TILES:
 (X) Moonshine*
 (^) Petrified Tree*
 (^) Riven Foliage
-(^) Riven Lesion
 (^) Riven Pot
 (^) Soulspore*
 (ᗢ) Surveysprout*

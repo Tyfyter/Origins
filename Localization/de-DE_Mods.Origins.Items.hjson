@@ -1968,7 +1968,7 @@ Rusty_Cross_Necklace: {
 }
 
 Strange_Power_Up: {
-	// DisplayName: Strange Power Up
+	// DisplayName: Strange Power-Up
 	// Tooltip: The very first sprite.
 }
 
@@ -3191,11 +3191,6 @@ Riven_Flesh_Item: {
 
 Riven_Grass_Seeds: {
 	// DisplayName: Riven Seeds
-	// Tooltip: ""
-}
-
-Riven_Lesion_Item: {
-	// DisplayName: "{§Riven} Lesion (Debugging Item)"
 	// Tooltip: ""
 }
 

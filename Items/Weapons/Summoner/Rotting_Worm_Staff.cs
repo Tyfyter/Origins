@@ -15,7 +15,8 @@ namespace Origins.Items.Weapons.Summoner {
 		internal static int projectileID = 0;
 		internal static int buffID = 0;
         public string[] Categories => new string[] {
-            "MinionWeapon"
+            "MinionWeapon",
+			"Minion"
         };
         public override void SetStaticDefaults() {
 			ItemID.Sets.StaffMinionSlotsRequired[Item.type] = 1;

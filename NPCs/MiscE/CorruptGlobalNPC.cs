@@ -57,7 +57,7 @@ namespace Origins.NPCs.MiscE {
                 [NPCID.Slimer] = 0.06f,
                 [NPCID.VileSpit] = 0.14f,
 				[NPCID.VileSpitEaterOfWorlds] = 0.05f,
-                [ModContent.NPCType<Cranivore>()] = 0.02f,
+                [ModContent.NPCType<Cranivore>()] = 0.03f,
                 [ModContent.NPCType<Optiphage>()] = 0.02f,
 			};
 		}

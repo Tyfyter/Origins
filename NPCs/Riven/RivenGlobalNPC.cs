@@ -1,14 +1,11 @@
 ﻿using Origins.Buffs;
 using Origins.NPCs.Riven.World_Cracker;
-using Origins.World.BiomeData;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 using Terraria.ModLoader;
 
-namespace Origins.NPCs.Riven
-{
-    public class RivenGlobalNPC : GlobalNPC {
+namespace Origins.NPCs.Riven {
+	public class RivenGlobalNPC : GlobalNPC {
 		public static Dictionary<int, AssimilationAmount> AssimilationAmounts { get; private set; }
 		public override void Load() {
 			AssimilationAmounts = new() {
