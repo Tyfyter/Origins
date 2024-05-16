@@ -1282,6 +1282,10 @@ namespace Origins {
 		}
 		static ShaderLayerTargetHandler shaderOroboros = new();
 		private void On_Main_DrawNPCDirect(On_Main.orig_DrawNPCDirect orig, Main self, SpriteBatch mySpriteBatch, NPC rCurrentNPC, bool behindTiles, Vector2 screenPos) {
+			if (GraphicsUtils.drawingEffect) {
+				orig(self, mySpriteBatch, rCurrentNPC, behindTiles, screenPos);
+				return;
+			}
 			List<ArmorShaderData> shaders = rCurrentNPC.GetGlobalNPC<OriginGlobalNPC>().GetShaders(rCurrentNPC);
 			if (shaders.Count != 0) shaderOroboros.Capture();
 			orig(self, mySpriteBatch, rCurrentNPC, behindTiles, screenPos);

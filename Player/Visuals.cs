@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Origins.Buffs;
+using Origins.Graphics;
 using Origins.Items.Accessories;
 using Origins.Items.Armor.Vanity.Dev.PlagueTexan;
 using System;
@@ -66,7 +67,7 @@ namespace Origins {
 			if (drawInfo.drawPlayer.shield == Resin_Shield.ShieldID && resinShieldCooldown > 0) {
 				drawInfo.drawPlayer.shield = (sbyte)Resin_Shield.InactiveShieldID;
 			}
-			if (tornCurrentSeverity > 0 && !Torn_Debuff.drawingTorn) {
+			if (tornCurrentSeverity > 0 && !GraphicsUtils.drawingEffect) {
 				Torn_Debuff.cachedTornPlayers.Add(Player);
 				Torn_Debuff.anyActiveTorn = true;
 			}

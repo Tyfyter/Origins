@@ -46,7 +46,6 @@ namespace Origins.Buffs {
 		internal static List<Player> cachedTornPlayers;
 		internal static List<NPC> cachedTornNPCs;
 		internal static bool anyActiveTorn;
-		internal static bool drawingTorn;
 		public static ScreenTarget TornScreenTarget { get; private set; }
 		public override void Load() {
 			if (Main.dedServ) return;
@@ -74,7 +73,7 @@ namespace Origins.Buffs {
 			SpriteBatchState state = spriteBatch.GetState();
 			try {
 				//Main.spriteBatch = spriteBatch;
-				drawingTorn = true;
+				GraphicsUtils.drawingEffect = true;
 				//spriteBatch.End();
 				//spriteBatch.Restart(state);
 				Origins.drawPlayersWithShader = Origins.coordinateMaskFilterID;
@@ -133,7 +132,7 @@ namespace Origins.Buffs {
 				Origins.keepPlayerShader = -1;
 				cachedTornPlayers.Clear();
 				cachedTornNPCs.Clear();
-				drawingTorn = false;
+				GraphicsUtils.drawingEffect = false;
 				spriteBatch.Restart(state);
 				//Main.spriteBatch = mainSpriteBatch;
 			}

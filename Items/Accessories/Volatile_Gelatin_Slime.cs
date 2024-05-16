@@ -61,7 +61,6 @@ namespace Origins.Items.Accessories {
 	public class Volatile_Gelatin_Slime_Global : GlobalNPC {
 		internal static List<int> cachedNPCs;
 		internal static bool anyActive;
-		internal static bool drawingSlime;
 		public static ScreenTarget SlimeTarget { get; private set; }
 		public override bool InstancePerEntity => true;
 		public override bool AppliesToEntity(NPC entity, bool lateInstantiation) => !entity.friendly || entity.type is NPCID.Guide or NPCID.Clothier;
@@ -133,7 +132,7 @@ namespace Origins.Items.Accessories {
 			//SpriteBatch mainSpriteBatch = Main.spriteBatch;
 			try {
 				//Main.spriteBatch = spriteBatch;
-				drawingSlime = true;
+				GraphicsUtils.drawingEffect = true;
 				for (int i = 0; i < cachedNPCs.Count; i++) {
 					int index = cachedNPCs[i];
 					NPC npc = Main.npc[index];
@@ -143,7 +142,7 @@ namespace Origins.Items.Accessories {
 				}
 			} finally {
 				cachedNPCs.Clear();
-				drawingSlime = false;
+				GraphicsUtils.drawingEffect = false;
 				//Main.spriteBatch = mainSpriteBatch;
 			}
 		}
@@ -157,14 +156,14 @@ namespace Origins.Items.Accessories {
 			spriteBatch.Draw(SlimeTarget.RenderTarget, Vector2.Zero, Color.Blue);
 		}
 		public override void DrawEffects(NPC npc, ref Color drawColor) {
-			if (drawingSlime) {
+			if (GraphicsUtils.drawingEffect) {
 				const float fadeTime = 180;
 				drawColor = Color.Lerp(drawColor, Color.White, 0.5f);
 				drawColor *= slimeTime < fadeTime ? (slimeTime / fadeTime) : 1;
 			}
 		}
 		public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (slimeTime > 0 && npc.type != NPCID.TargetDummy && !drawingSlime) {
+			if (slimeTime > 0 && npc.type != NPCID.TargetDummy && !GraphicsUtils.drawingEffect) {
 				cachedNPCs.Add(npc.whoAmI);
 				anyActive = true;
 			}

@@ -50,12 +50,12 @@ namespace Origins.Graphics {
 		public void Release() {
 			Capturing = false;
 			Main.spriteBatch.Restart(spriteBatchState);
-			RenderTargetUsage renderTargetUsage = Origins.currentScreenTarget.RenderTargetUsage;
+			RenderTargetUsage? renderTargetUsage = Origins.currentScreenTarget?.RenderTargetUsage;
 			try {
-				GraphicsMethods.SetRenderTargetUsage(Origins.currentScreenTarget, RenderTargetUsage.PreserveContents);
+				if (renderTargetUsage.HasValue) GraphicsMethods.SetRenderTargetUsage(Origins.currentScreenTarget, RenderTargetUsage.PreserveContents);
 				Main.graphics.GraphicsDevice.SetRenderTarget(Origins.currentScreenTarget);
 			} finally {
-				GraphicsMethods.SetRenderTargetUsage(Origins.currentScreenTarget, renderTargetUsage);
+				if (renderTargetUsage.HasValue) GraphicsMethods.SetRenderTargetUsage(Origins.currentScreenTarget, renderTargetUsage.Value);
 			}
 			Main.spriteBatch.Draw(renderTarget, Vector2.Zero, null, Color.White, 0, Vector2.Zero, Vector2.One, SpriteEffects.None, 0);
 		}

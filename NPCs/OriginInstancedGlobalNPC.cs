@@ -179,7 +179,7 @@ namespace Origins.NPCs {
 
 		}
 		public override bool PreDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (tornCurrentSeverity > 0 && !Torn_Debuff.drawingTorn) {
+			if (tornCurrentSeverity > 0 && !GraphicsUtils.drawingEffect) {
 				Torn_Debuff.cachedTornNPCs.Add(npc);
 				Torn_Debuff.anyActiveTorn = true;
 			}
