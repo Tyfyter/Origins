@@ -54,36 +54,6 @@ namespace Origins.Tiles.Riven {
 			WorldGen.TileFrame(i, j, resetFrame, noBreak);
 			recursion = false;
 			Tile tile = Main.tile[i, j];
-			if (Main.tile[i, j - 1].TileType == TileType<Riven_Lesion>()) {
-				switch ((tile.TileFrameX / 18, (tile.TileFrameY / 18) % 5)) {
-					case (6, 4):
-					case (7, 4):
-					case (8, 4):
-					tile.TileFrameX -= 18 * 5;
-					tile.TileFrameY -= 18 * 2;
-					break;
-
-					case (1, 0):
-					case (2, 0):
-					case (3, 0):
-					tile.TileFrameY += 18 * 1;
-					break;
-
-					case (1, 3):
-					case (3, 3):
-					case (5, 3):
-					tile.TileFrameY = (short)(((tile.TileFrameX / 18) / 2) * 18);
-					tile.TileFrameX = 18 * 4;
-					break;
-
-					case (0, 3):
-					case (2, 3):
-					case (4, 3):
-					tile.TileFrameY = (short)(tile.TileFrameX / 2);
-					tile.TileFrameX = 18 * 0;
-					break;
-				}
-			}
 			if ((!WorldGen.genRand.NextBool(tile.TileFrameX == 54 ? 12 : 8)) || CheckOtherTilesGlow(i, j)) {
 				Main.tile[i, j].TileFrameY += 90;
 			}

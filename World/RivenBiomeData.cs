@@ -409,7 +409,6 @@ namespace Origins.World.BiomeData {
 			public static Point HiveCave_Old(int i, int j, float sizeMult = 1f) {
 				ushort fleshID = (ushort)ModContent.TileType<Riven_Flesh>();
 				ushort fleshWallID = (ushort)ModContent.WallType<Riven_Flesh_Wall>();
-				ushort lesionID = (ushort)ModContent.TileType<Riven_Lesion>();
 				ushort blisterID = (ushort)ModContent.TileType<Gel_Blister>();
 				int i2 = i + (int)(genRand.Next(-26, 26) * sizeMult);
 				int j2 = j + (int)(genRand.Next(-2, 22) * sizeMult);
@@ -465,23 +464,9 @@ namespace Origins.World.BiomeData {
 						}
 					}
 				}
-				bool placedLesion = false;
-				for (int index = 0; index < 4; index++) {
-					if (validLesionPlacementSpots.Count < 1 || lesionCount > 18) {
-						break;
-					}
-					Point current = genRand.Next(validLesionPlacementSpots);
-
-					placedLesion |= PlaceTile(current.X, current.Y, lesionID);
-
-					lesionCount++;
-					validLesionPlacementSpots.Remove(current.OffsetBy(-1));
-					validLesionPlacementSpots.Remove(current);
-					validLesionPlacementSpots.Remove(current.OffsetBy(1));
-					validLesionPlacementSpots.Remove(current.OffsetBy(2));
-				}
-				while (!placedLesion) {
-					placedLesion |= PlaceTile(i2 + genRand.Next(-2, 3), j2 + genRand.Next(-2, 3), blisterID);
+				bool placedBlister = false;
+				while (!placedBlister) {
+					placedBlister |= PlaceTile(i2 + genRand.Next(-2, 3), j2 + genRand.Next(-2, 3), blisterID);
 				}
 				return new Point(i2, j2);
 			}
