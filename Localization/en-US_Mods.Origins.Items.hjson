@@ -4143,3 +4143,8 @@ Dart_Crossbow: {
 	DisplayName: Dart Crossbow
 	Tooltip: ""
 }
+
+Acrid_Dye: {
+	DisplayName: Acrid_ Dye
+	Tooltip: ""
+}

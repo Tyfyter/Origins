@@ -12,6 +12,9 @@ using Terraria.ModLoader;
 namespace Origins.NPCs.Defiled {
 	public class Shattered_Mummy : ModNPC, IDefiledEnemy {
 		public override void SetStaticDefaults() {
+			NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers() { // Influences how the NPC looks in the Bestiary
+				Velocity = 1
+			});
 			Main.npcFrameCount[NPC.type] = 16;
 		}
 		public override void SetDefaults() {

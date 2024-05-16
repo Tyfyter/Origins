@@ -81,7 +81,7 @@ namespace Origins {
 
 		public static MiscShaderData perlinFade0;
 		public static MiscShaderData blackHoleShade;
-		public static MiscShaderData solventShader;
+		public static ArmorShaderData solventShader;
 		public static MiscShaderData rasterizeShader;
 		public static ArmorShaderData amebicProtectionShader;
 		public static HairShaderData amebicProtectionHairShader;
@@ -336,8 +336,7 @@ namespace Origins {
 				Filters.Scene["Origins:MaskedTornFilter"].GetShader().UseImage(Assets.Request<Texture2D>("Textures/Torn_Example"), 0, SamplerState.PointWrap);
 				//Filters.Scene["Origins:ZoneRiven"] = new Filter(new ScreenShaderData(new Ref<Effect>(Assets.Request<Effect>("Effects/BiomeShade").Value), "RivenShade"), EffectPriority.High);
 
-				solventShader = new MiscShaderData(Assets.Request<Effect>("Effects/Solvent"), "Dissolve");
-				GameShaders.Misc["Origins:Solvent"] = solventShader;
+				solventShader = new ArmorShaderData(Assets.Request<Effect>("Effects/Solvent"), "Dissolve");
 				cellNoiseTexture = Assets.Request<Texture2D>("Textures/Cell_Noise_Pixel");
 				Filters.Scene["Origins:MaskedRasterizeFilter"].GetShader().UseImage(cellNoiseTexture, 2);
 				Filters.Scene["Origins:VolatileGelatinFilter"].GetShader().UseImage(cellNoiseTexture, 2);
@@ -551,6 +550,7 @@ namespace Origins {
 			unchecked {
                 gameFrameCount++;
             }
+			currentScreenTarget = null;
 		}
 		public override void PostSetupContent() {
 			for (int i = 0; i < NPCID.Sets.SpecificDebuffImmunity.Length; i++) {

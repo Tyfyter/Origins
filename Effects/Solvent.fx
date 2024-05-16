@@ -15,12 +15,14 @@ float2 uImageSize1;
 float2 uOffset;
 float uScale;
 float uFrameCount;
+float2 uTargetPosition;
+float4 uLegacyArmorSourceRect;
+float2 uLegacyArmorSheetSize;
 
 float4 Dissolve(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0 {
 	float4 color = tex2D(uImage0, coords);
 	float fade = uTime%3;
-	float frameY = frac(coords.y * uSaturation); //((coords.y * uSecondaryColor.b) % uSecondaryColor.g) / uSecondaryColor.g;
-	float2 noiseCoords = float2(coords.x, frameY); ///uImageSize1;*uSecondaryColor.b
+	float2 noiseCoords = (coords - uTargetPosition) * uImageSize0 / uImageSize1; ///uImageSize1;*uSecondaryColor.b
 	float2 offset = float2(0.5+sin(uTime), 0.5+cos(uTime))*0.1;
 	float2 coords2 = noiseCoords + offset;
 	coords2.x %= 1;

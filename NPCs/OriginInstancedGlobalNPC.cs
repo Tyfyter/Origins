@@ -1,12 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Origins.Buffs;
+using Origins.Graphics;
+using Origins.Items.Other.Dyes;
 using Origins.Projectiles.Weapons;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -180,29 +183,10 @@ namespace Origins.NPCs {
 				Torn_Debuff.cachedTornNPCs.Add(npc);
 				Torn_Debuff.anyActiveTorn = true;
 			}
-			if (rasterizedTime > 0) {
-				Origins.rasterizeShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
-				Origins.rasterizeShader.Shader.Parameters["uOffset"].SetValue(npc.velocity.WithMaxLength(4) * 0.0625f * rasterizedTime);
-				Origins.rasterizeShader.Shader.Parameters["uWorldPosition"].SetValue(npc.position);
-				Origins.rasterizeShader.Shader.Parameters["uSecondaryColor"].SetValue(new Vector3(TextureAssets.Npc[npc.type].Value.Width, TextureAssets.Npc[npc.type].Value.Height, 0));
-				Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;
-				spriteBatch.Restart(spriteBatch.GetState() with { effect = Origins.rasterizeShader.Shader });
-				return true;
-			}
-			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
-				Origins.solventShader.Shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly);
-				Origins.solventShader.Shader.Parameters["uSaturation"].SetValue(Main.npcFrameCount[npc.type]);
-				Main.graphics.GraphicsDevice.Textures[1] = Origins.cellNoiseTexture;
-				spriteBatch.Restart(SpriteSortMode.Immediate, effect: Origins.solventShader.Shader);
-				return true;
-			}
 			return true;
 		}
 		AutoLoadingAsset<Texture2D> slowIndicator = "Origins/Textures/Enemy_Slow_Indicator";
 		public override void PostDraw(NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor) {
-			if (npc.HasBuff(Toxic_Shock_Debuff.ID) || rasterizedTime > 0) {
-				spriteBatch.Restart();
-			}
 			if (slowDebuff) {
 				Main.EntitySpriteDraw(
 					slowIndicator,
@@ -215,6 +199,17 @@ namespace Origins.NPCs {
 					SpriteEffects.None
 				);
 			}
+		}
+		static List<ArmorShaderData> shaderDatas = [];
+		public List<ArmorShaderData> GetShaders(NPC npc) {
+			shaderDatas.Clear();
+			if (npc.HasBuff(Toxic_Shock_Debuff.ID)) {
+				ArmorShaderData shaderData = GameShaders.Armor.GetSecondaryShader(Acrid_Dye.ShaderID, null);
+				shaderData.UseTargetPosition((npc.Center - Main.screenPosition) / Main.ScreenSize.ToVector2());
+				shaderDatas.Add(shaderData);
+			}
+			if (rasterizedTime > 0) shaderDatas.Add(GameShaders.Armor.GetSecondaryShader(Rasterized_Dye.ShaderID, null));
+			return shaderDatas;
 		}
 		public static void InflictTorn(NPC npc, int duration, int targetTime = 180, float targetSeverity = 0.3f, OriginPlayer source = null) {
 			if (source is not null) {

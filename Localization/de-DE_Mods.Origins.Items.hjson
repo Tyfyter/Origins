@@ -4140,6 +4140,11 @@ Counter_Offensive_Scarf: {
 }
 
 Dart_Crossbow: {
-	// DisplayName: Dart_ Crossbow
+	// DisplayName: Dart Crossbow
+	// Tooltip: ""
+}
+
+Acrid_Dye: {
+	// DisplayName: Acrid_ Dye
 	// Tooltip: ""
 }

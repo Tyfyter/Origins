@@ -10,15 +10,12 @@ namespace Origins.Buffs {
 		public static int ID { get; private set; } = -1;
 		public override void SetStaticDefaults() {
 			ID = Type;
-			BuffID.Sets.GrantImmunityWith[Type] = new() {
-				BuffID.Confused
-			};
 		}
 		public override void Update(Player player, ref int buffIndex) {
 			player.GetModPlayer<OriginPlayer>().toxicShock = true;
 		}
 		public override void Update(NPC npc, ref int buffIndex) {
-			if (Main.rand.NextBool(400)) {// roughly 15% chance each second
+			if (!npc.buffImmune[BuffID.Confused] && Main.rand.NextBool(400)) {// roughly 15% chance each second
 				npc.GetGlobalNPC<OriginGlobalNPC>().toxicShockStunTime = Toxic_Shock_Debuff.stun_duration;
 			}
 		}

@@ -52,6 +52,8 @@ using Terraria.ModLoader.Core;
 using Origins.Items.Other.Dyes;
 using Terraria.GameContent.UI.ResourceSets;
 using Origins.Water;
+using Origins.Graphics;
+using Terraria.Graphics.Effects;
 
 namespace Origins {
 	public partial class Origins : Mod {
@@ -480,8 +482,9 @@ namespace Origins {
 			IL_PlayerStatsSnapshot.ctor += IL_PlayerStatsSnapshot_ctor;
 			On_PlayerStatsSnapshot.ctor += On_PlayerStatsSnapshot_ctor;
 			IL_WaterfallManager.GetAlpha += FixWrongWaterfallAlpha_IL;
+			On_Main.DrawNPCDirect += On_Main_DrawNPCDirect;
+			On_FilterManager.BeginCapture += On_FilterManager_BeginCapture;
 		}
-
 		private void FixWrongWaterfallAlpha_IL(ILContext il) {
 			ILCursor c = new(il);
 			ILLabel defaultCase = null;
@@ -1272,6 +1275,23 @@ namespace Origins {
 		}
 		#endregion worldgen
 		#region graphics
+		public static RenderTarget2D currentScreenTarget;
+		private void On_FilterManager_BeginCapture(On_FilterManager.orig_BeginCapture orig, FilterManager self, RenderTarget2D screenTarget1, Color clearColor) {
+			orig(self, screenTarget1, clearColor);
+			currentScreenTarget = screenTarget1;
+		}
+		static ShaderLayerTargetHandler shaderOroboros = new();
+		private void On_Main_DrawNPCDirect(On_Main.orig_DrawNPCDirect orig, Main self, SpriteBatch mySpriteBatch, NPC rCurrentNPC, bool behindTiles, Vector2 screenPos) {
+			List<ArmorShaderData> shaders = rCurrentNPC.GetGlobalNPC<OriginGlobalNPC>().GetShaders(rCurrentNPC);
+			if (shaders.Count != 0) shaderOroboros.Capture();
+			orig(self, mySpriteBatch, rCurrentNPC, behindTiles, screenPos);
+			if (shaders.Count != 0) {
+				for (int i = 0; i < shaders.Count; i++) {
+					shaderOroboros.Stack(shaders[i], rCurrentNPC);
+				}
+				shaderOroboros.Release();
+			}
+		}
 		public static int drawPlayersWithShader = -1;
 		public static int keepPlayerShader = -1;
 		static int forcePlayerShader = -1;
