@@ -575,6 +575,7 @@ namespace Origins.World.BiomeData {
 			destroyObject = false;
 		}
 	}
+	#region variations
 	public class Underground_Defiled_Wastelands_Biome : ModBiome {
 		public override int Music => Origins.Music.UndergroundDefiled;
 		public override SceneEffectPriority Priority => SceneEffectPriority.BiomeHigh;
@@ -612,6 +613,7 @@ namespace Origins.World.BiomeData {
 			return player.GetModPlayer<OriginPlayer>().ZoneDefiledProgress;
 		}
 	}
+	#endregion variations
 	public class Defiled_Wastelands_Alt_Biome : AltBiome {
 		public override string WorldIcon => "Origins/UI/WorldGen/IconDefiled";
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Defiled";
@@ -839,8 +841,27 @@ namespace Origins.World.BiomeData {
 				Point start = new Point(evilBiomePosition, startY + genRand.Next(105, 150));//range of depths
 
 				Defiled_Wastelands.Gen.StartDefiled(start.X, start.Y);
-				defiledHearts.Push(start); 
-				WorldBiomeGeneration.EvilBiomeGenRanges.Add(WorldBiomeGeneration.ChangeRange.GetRange());
+				defiledHearts.Push(start);
+
+				int minY = WorldBiomeGeneration.ChangeRange.GetRange().Top;
+				WorldBiomeGeneration.ChangeRange.AddChangeToRange(evilBiomePositionWestBound, minY);
+				WorldBiomeGeneration.ChangeRange.AddChangeToRange(evilBiomePositionEastBound, minY);
+				Rectangle range = WorldBiomeGeneration.ChangeRange.GetRange();
+				WorldBiomeGeneration.EvilBiomeGenRanges.Add(range);
+				AltBiome biome = ModContent.GetInstance<Defiled_Wastelands_Alt_Biome>();
+				for (int i = range.Left; i < range.Right; i++) {
+					int slopeFactor = Math.Min(Math.Min(i - range.Left, range.Right - i), 99);
+					for (int j = range.Top - 10; j < range.Bottom; j++) {
+						if (genRand.NextBool(5) &&  genRand.Next(slopeFactor, 100) < 20) break;
+						if (range.Bottom - j < 5 && genRand.NextBool(5)) break;
+						Tile tile = Framing.GetTileSafely(i, j);
+						if (tile.HasTile) {
+							AltLibrary.Core.ALConvert.ConvertTile(i, j, biome);
+							AltLibrary.Core.ALConvert.ConvertWall(i, j, biome);
+						}
+					}
+				}
+
 				OriginSystem.Instance.hasDefiled = true;
 			}
 

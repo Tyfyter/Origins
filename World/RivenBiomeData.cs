@@ -604,6 +604,7 @@ namespace Origins.World.BiomeData {
 			destroyObject = false;
 		}
 	}
+	#region variations
 	public class Underground_Riven_Hive_Biome : ModBiome {
 		public override int Music => Origins.Music.UndergroundRiven;
 		public override string BackgroundPath => "Origins/UI/MapBGs/Riven_Hive_Caverns";
@@ -655,6 +656,7 @@ namespace Origins.World.BiomeData {
 			return player.GetModPlayer<OriginPlayer>().ZoneRivenProgress * 0.99f;
 		}
 	}
+	#endregion variations
 	public class Riven_Hive_Alt_Biome : AltBiome {
 		public override string WorldIcon => "";//TODO: Redo tree icons for AltLib
 		public override string OuterTexture => "Origins/UI/WorldGen/Outer_Riven";
@@ -740,7 +742,24 @@ namespace Origins.World.BiomeData {
 
 				Riven_Hive.Gen.StartHive(evilBiomePosition, y);
 
-				WorldBiomeGeneration.EvilBiomeGenRanges.Add(WorldBiomeGeneration.ChangeRange.GetRange());
+				int minY = WorldBiomeGeneration.ChangeRange.GetRange().Top;
+				WorldBiomeGeneration.ChangeRange.AddChangeToRange(evilBiomePositionWestBound, minY);
+				WorldBiomeGeneration.ChangeRange.AddChangeToRange(evilBiomePositionEastBound, minY);
+				Rectangle range = WorldBiomeGeneration.ChangeRange.GetRange();
+				WorldBiomeGeneration.EvilBiomeGenRanges.Add(range);
+				AltBiome biome = ModContent.GetInstance<Riven_Hive_Alt_Biome>();
+				for (int i = range.Left; i < range.Right; i++) {
+					int slopeFactor = Math.Min(Math.Min(i - range.Left, range.Right - i), 99);
+					for (int j = range.Top - 10; j < range.Bottom; j++) {
+						if (genRand.NextBool(5) && genRand.Next(slopeFactor, 100) < 20) break;
+						if (range.Bottom - j < 5 && genRand.NextBool(5)) break;
+						Tile tile = Framing.GetTileSafely(i, j);
+						if (tile.HasTile) {
+							AltLibrary.Core.ALConvert.ConvertTile(i, j, biome);
+							AltLibrary.Core.ALConvert.ConvertWall(i, j, biome);
+						}
+					}
+				}
 				OriginSystem.Instance.hasRiven = true;
 			}
 
